@@ -1,0 +1,4 @@
+Footer {
+	height: wrap;
+	z-index: 100;
+}

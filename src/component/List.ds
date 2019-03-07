@@ -1,0 +1,5 @@
+List {
+	height: fill;
+	scrollable: true;
+	scrollbars: true;
+}

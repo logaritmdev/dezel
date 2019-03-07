@@ -1,0 +1,4 @@
+SegmentedBar {
+	content-orientation: horizontal;
+	height: 36px;
+}

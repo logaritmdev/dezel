@@ -1,0 +1,4 @@
+Header {
+	height: wrap;
+	z-index: 100;
+}

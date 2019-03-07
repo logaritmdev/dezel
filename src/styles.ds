@@ -1,0 +1,59 @@
+/**
+ * $mixin col-layout
+ * $since 0.1.0
+ */
+.col-layout($valign, $halign) {
+	content-orientation: vertical;
+	content-disposition: $valign;
+	content-arrangement: $halign;
+}
+
+/**
+ * $mixin row-layout
+ * $since 0.1.0
+ */
+.row-layout($valign, $halign) {
+	content-orientation: horizontal;
+	content-disposition: $halign;
+	content-arrangement: $valign;
+}
+/*
+.position($a: null; $b: null; $c: null; $d: null) {
+
+    & when (top = $a) {
+        top: 0;
+        bottom: auto;
+    }
+
+    & when (bottom = $a) {
+        top: auto;
+        bottom: 0;
+    }
+
+    & when (left = $b) {
+        left: 0;
+        right: auto;
+    }
+
+    & when (right = $b) {
+        left: auto;
+        right: 0;
+    }
+
+    & when not (null = $a) and not (~'-' = $a) and not (top = $a) and not (bottom = $a) {
+        top: $a;
+    }
+
+    & when not (null = $b) and not (~'-' = $b) and not (top = $b) and not (bottom = $b) {
+        right: $b;
+    }
+
+    & when not (null = $c) and not (~'-' = $c) {
+        bottom: $c;
+    }
+
+    & when not (null = $d) and not (~'-' = $d) {
+        left: $d;
+    }
+}
+*/

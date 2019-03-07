@@ -1,0 +1,9 @@
+TabBar {
+	background-color: #ffffff;
+	border-top-color: #e2e2e2;
+	border-top-width: thin;
+	content-orientation: horizontal;
+	content-disposition: center;
+	height: 60px + $safe-area-bottom-inset;
+	padding-bottom: $safe-area-bottom-inset;
+}

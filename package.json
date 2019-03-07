@@ -1,0 +1,33 @@
+{
+  "name": "dezel",
+  "description": "Mobile Native JavaScript Library",
+  "version": "0.5.0",
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "license": "MIT",
+  "keywords": [],
+  "homepage": "https://github.com/logaritmdev/dezel",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/logaritmdev/dezel.git"
+  },
+  "author": "Jean-Philippe Dery <jean-philippe.dery@logaritm.ca>",
+  "engines": {
+    "node": "*"
+  },
+  "scripts": {
+    "copy-ds": "copyfiles --up 1 \"src/**/*.ds\" \"src/**/*.ds.android\" \"src/**/*.ds.ios\" lib"
+  },
+  "dependencies": {
+    "fast-array-diff": "^0.2.0",
+    "lodash": "^4.17.11",
+    "npm": "^6.2.0"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.98",
+    "copy-webpack-plugin": "^4.5.1",
+    "copyfiles": "^2.0.0",
+    "ts-loader": "^4.2.0",
+    "typescript": "^2.8.1"
+  }
+}

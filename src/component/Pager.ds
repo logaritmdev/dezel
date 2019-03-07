@@ -1,0 +1,6 @@
+Pager {
+	content-orientation: horizontal;
+	paged: true;
+	scrollbars: false;
+	scrollable: true;
+}

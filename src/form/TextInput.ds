@@ -1,0 +1,4 @@
+TextInput {
+	background-color: #ffffff;
+	height: 40px;
+}
