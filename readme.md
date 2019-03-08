@@ -8,8 +8,8 @@ The Dezel framework is a native mobile application platform whose primary goal i
 
 ## Core concepts
 
-### Good performance
-In order to achieve good performance, all the heavy lifting stuff such as **layout calculations**, **style resolutions**, **animations** are done natively. The TypeScript code is a thin layer sitting on top of that.
+### Speed
+To achieve native-like performance, all the heavy lifting stuff such as **layout calculations**, **style resolutions**, **animations** are done natively. The TypeScript code is a thin layer sitting on top of that.
 
 ### Fast development
 Dezel makes development faster by making your code truly cross platform and by providing unified solutions to common development problems. Some of these are:
