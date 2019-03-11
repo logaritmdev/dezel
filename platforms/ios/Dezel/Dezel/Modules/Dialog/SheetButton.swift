@@ -39,7 +39,7 @@ open class SheetButton: JavaScriptClass {
 	 * @since 0.5.0
 	 * @hidden
 	 */
-	@objc open func jsGet_label(callback: JavaScriptSetterCallback) {
+	@objc open func jsGet_label(callback: JavaScriptGetterCallback) {
 		callback.returns(self.label)
 	}
 
@@ -59,7 +59,7 @@ open class SheetButton: JavaScriptClass {
 	 * @since 0.5.0
 	 * @hidden
 	 */
-	@objc open func jsGet_style(callback: JavaScriptSetterCallback) {
+	@objc open func jsGet_style(callback: JavaScriptGetterCallback) {
 		callback.returns(self.style)
 	}
 
@@ -79,7 +79,7 @@ open class SheetButton: JavaScriptClass {
 	 * @since 0.5.0
 	 * @hidden
 	 */
-	@objc open func jsGet_image(callback: JavaScriptSetterCallback) {
+	@objc open func jsGet_image(callback: JavaScriptGetterCallback) {
 		callback.returns(self.image)
 	}
 
