@@ -941,6 +941,11 @@ DLLayoutNodeInvalidateSize(DLLayoutNodeRef node)
 
 	node->invalidSize = true;
 
+	if (node->root) {
+		DLLayoutNodeInvalidateLayout(node);
+		return;
+	}
+
 	DLLayoutNodeInvalidateParentLayout(node);
 }
 
@@ -1283,13 +1288,13 @@ DLLayoutNodeResolveRoot(DLLayoutNodeRef node)
 
 	if (node->width.type != kDLLayoutSizeTypeLength ||
 		node->width.unit != kDLLayoutSizeUnitPX) {
-		cerr << "The root node viewport must be specified in pixels.";
+		cerr << "The root node size must be specified in pixels.";
 		abort();
 	}
 
 	if (node->height.type != kDLLayoutSizeTypeLength ||
 		node->height.unit != kDLLayoutSizeUnitPX) {
-		cerr << "The root node viewport must be specified in pixels.";
+		cerr << "The root node size must be specified in pixels.";
 		abort();
 	}
 
