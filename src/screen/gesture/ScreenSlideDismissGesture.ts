@@ -178,7 +178,7 @@ export class ScreenSlideDismissGesture extends ScreenDismissGesture {
 	 * @hidden
 	 */
 	private get finished(): boolean {
-		return Date.now() - this.touchStartT < 350 || this.state > 0.5
+		return this.touchStarted && this.touchDragged && (Date.now() - this.touchStartT < 350 || this.state > 0.5)
 	}
 
 	/**

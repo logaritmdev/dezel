@@ -204,6 +204,19 @@ export class ScreenDismissGesture {
 				return
 			}
 
+			if (presentedScreen.visible == false) {
+
+				/*
+				 * Its possible that this method will be called before the
+				 * begin method is called. This is probsably
+				 */
+
+				throw new Error(`
+					 ScreenDismissGestureError:
+					 The begin method has not been called.
+				 `)
+			}
+
 			window.touchable = false
 
 			await transition.dismiss(
