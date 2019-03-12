@@ -2428,12 +2428,15 @@ open class View: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelegate, Scroll
 		if (self.originX.type == .number) { originX = self.originX.number }
 		if (self.originY.type == .number) { originY = self.originY.number }
 
-		self.wrapper.layer.anchorPoint = CGPoint(x: originX, y: originY)
-
 		let t = self.resolvedTop
 		let l = self.resolvedLeft
 		let w = self.resolvedWidth
 		let h = self.resolvedHeight
+
+		self.wrapper.layer.anchorPoint = CGPoint(
+			x: originX,
+			y: originY
+		)
 
 		let center = CGPoint(
 			x: CGFloat(l) + ((1 + CGFloat(originX)) * CGFloat(w)) - CGFloat(w),

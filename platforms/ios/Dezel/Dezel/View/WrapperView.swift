@@ -597,16 +597,35 @@ open class WrapperView: UIView, TransitionListener {
 		let borderWidthR = self.borderRightWidth
 		let borderWidthB = self.borderBottomWidth
 
-		let frame = CGRect(
-			x: borderWidthL,
-			y: borderWidthT,
-			width: self.bounds.width - borderWidthL - borderWidthR,
-			height: self.bounds.height - borderWidthT - borderWidthB
+		let x = borderWidthL
+		let y = borderWidthT
+		let w = self.bounds.width - borderWidthL - borderWidthR
+		let h = self.bounds.height - borderWidthT - borderWidthB
+
+		let center = CGPoint(
+			x: x + w / 2,
+			y: y + h / 2
 		)
 
-		self.content.frame = frame
+		let bounds = CGRect(
+			x: 0,
+			y: 0,
+			width: w,
+			height: h
+		)
+
+		self.content.center = center
+		self.content.bounds = bounds
 
 		if let content = self.content as? Resizable {
+
+			let frame = CGRect(
+				x: x,
+				y: y,
+				width: w,
+				height: h
+			)
+
 			content.didResize(frame: frame)
 			return
 		}

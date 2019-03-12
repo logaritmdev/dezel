@@ -496,6 +496,66 @@ open class DezelApplicationController: UIViewController {
 	}
 
 	//--------------------------------------------------------------------------
+	// MARK: Orientation Transition
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @inherited
+	 * @method viewWillTransition
+	 * @since 0.6.0
+	 */
+	open override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+
+		super.viewWillTransition(to: size, with: coordinator)
+
+		guard let window = self.application?.window else {
+			return
+		}
+
+		coordinator.animate(alongsideTransition: { context in
+
+			let duration = self.getRotationAnimationDuration(context: context)
+			let equation = self.getRotationAnimationEquation(context: context)
+
+			Transition.create(application: self, duration: duration, equation: equation, delay: 0) { }
+
+			window.width = Property(number: Double(size.width))
+			window.height = Property(number: Double(size.height))
+
+			self.updateDisplayManager.dispatch()
+
+			Transition.commit()
+
+			self.statusBar.frame = UIApplication.shared.statusBarFrame
+
+		}, completion: nil)
+	}
+
+	/**
+	 * @method getRotationAnimationDuration
+	 * @since 0.6.0
+ 	 * @hidden
+	 */
+	open func getRotationAnimationDuration(context: UIViewControllerTransitionCoordinatorContext) -> TimeInterval {
+		return context.transitionDuration
+	}
+
+	/**
+	 * @method getRotationAnimationEquation
+	 * @since 0.6.0
+ 	 * @hidden
+	 */
+	open func getRotationAnimationEquation(context: UIViewControllerTransitionCoordinatorContext) -> CAMediaTimingFunction {
+
+	 	/*
+	 	 * Right now, on iOS 12, the context completionCurve does not match the
+	 	 * available curves. Ease in out seems to be the closest
+	 	 */
+
+		return CAMediaTimingFunction(name: .easeInEaseOut)
+	}
+
+	//--------------------------------------------------------------------------
 	// MARK: Methods - Application Status Bar Management
 	//--------------------------------------------------------------------------
 
