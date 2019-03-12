@@ -22,6 +22,7 @@ TabBarButton {
 	}
 
 	.badge {
+		anchor-left: center;
 		background-color: #ff3b30;
 		border-top-left-radius: 6px;
 		border-top-right-radius: 6px;
@@ -30,13 +31,12 @@ TabBarButton {
 		font-size: 8px;
 		font-weight: 600;
 		height: 12px;
-		left: 8px;
+		left: 12px;
 		lines: 1;
 		min-width: 12px;
 		top: 8px;
 		text-color: #fff;
 		text-alignment: center;
-		text-overflow: clip;
 		width: wrap;
 	}
 
