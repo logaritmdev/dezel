@@ -14,15 +14,25 @@ open class AlertController: UIAlertController {
 	 * @method create
 	 * @since 0.1.0
 	 */
-	public static func create(title: String, message: String, style: UIAlertController.Style = .alert) -> AlertController {
+	public static func create(style: String, title: String, message: String) -> AlertController {
 
-		let title = title.trim()
-		let message = message.trim()
+		let preferredStyle: AlertController.Style
+
+		switch (style) {
+
+			case "alert":
+				preferredStyle = .alert
+			case "sheet":
+				preferredStyle = .actionSheet
+
+			default:
+				preferredStyle = .alert
+		}
 
 		return AlertController(
 			title: title.length > 0 ? title : nil,
 			message: message.length > 0 ? message : nil,
-			preferredStyle: style
+			preferredStyle: preferredStyle
 		)
 	}
 

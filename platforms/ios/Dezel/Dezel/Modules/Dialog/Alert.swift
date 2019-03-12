@@ -31,11 +31,12 @@ open class Alert: JavaScriptClass, AlertControllerDelegate {
 
 		self.context.application.presentedViewController?.dismiss(animated: true, completion: nil)
 
-		let title   = callback.argument(0).string
-		let message = callback.argument(1).string
-		let buttons = callback.argument(2)
+		let style   = callback.argument(0).string
+		let title   = callback.argument(1).string.trim()
+		let message = callback.argument(2).string.trim()
+		let buttons = callback.argument(3)
 
-		let alertController = AlertController.create(title: title, message: message)
+		let alertController = AlertController.create(style: style, title: title, message: message)
 
 		buttons.forEach { index, value in
 
@@ -57,6 +58,34 @@ open class Alert: JavaScriptClass, AlertControllerDelegate {
 
 				let action = UIAlertAction(title: button.label.string, style: style) { action in
 					button.holder.callMethod("nativePress")
+				}
+
+				if (button.image.type == .string ||
+					button.image.type == .object) {
+
+					ImageLoader.main.load(button.image) { image in
+
+						guard let image = image else {
+							return
+						}
+
+						let size = CGSize(width: 32, height: 32)
+
+						UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
+
+						image.draw(in: CGRect(
+							x: 0,
+							y: 0,
+							width: size.width,
+							height: size.height
+						))
+
+						if let image = UIGraphicsGetImageFromCurrentImageContext() {
+							action.setValue(image, forKey: "image")
+						}
+
+						UIGraphicsEndImageContext()
+					}
 				}
 
 				alertController.addAction(action)

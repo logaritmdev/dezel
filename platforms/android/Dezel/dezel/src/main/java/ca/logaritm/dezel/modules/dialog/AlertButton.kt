@@ -1,5 +1,6 @@
 package ca.logaritm.dezel.modules.dialog
 
+import android.util.Log
 import ca.logaritm.dezel.core.*
 
 /**
@@ -19,6 +20,13 @@ open class AlertButton(context: JavaScriptContext) : JavaScriptClass(context) {
 	 * @since 0.1.0
 	 */
 	open var label: Property = Property("")
+
+	/**
+	 * The alert button's image.
+	 * @property image
+	 * @since 0.6.0
+	 */
+	open var image: Property = Property()
 
 	/**
 	 * The alert button's renderNode.
@@ -49,6 +57,28 @@ open class AlertButton(context: JavaScriptContext) : JavaScriptClass(context) {
 	@Suppress("unused")
 	open fun jsSet_label(callback: JavaScriptSetterCallback) {
 		this.label = Property(callback.value)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_image
+	 * @since 0.6.0
+	 * @hidden
+	 */
+	@Suppress("unused")
+	open fun jsGet_image(callback: JavaScriptGetterCallback) {
+		callback.returns(this.image)
+	}
+
+	/**
+	 * @method jsSet_image
+	 * @since 0.6.0
+	 * @hidden
+	 */
+	@Suppress("unused")
+	open fun jsSet_image(callback: JavaScriptSetterCallback) {
+		this.image = Property(callback.value)
 	}
 
 	//--------------------------------------------------------------------------

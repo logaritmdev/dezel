@@ -17,7 +17,5 @@ open class DialogModule: Module {
 	override open func initialize() {
 		self.context.registerClass("dezel.dialog.Alert", type: Alert.self)
 		self.context.registerClass("dezel.dialog.AlertButton", type: AlertButton.self)
-		self.context.registerClass("dezel.dialog.Sheet", type: Sheet.self)
-		self.context.registerClass("dezel.dialog.SheetButton", type: SheetButton.self)
 	}
 }

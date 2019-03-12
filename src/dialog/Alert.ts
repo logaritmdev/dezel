@@ -1,8 +1,8 @@
 import { bound } from '../decorator/bound'
 import { bridge } from '../decorator/bridge'
 import { native } from '../decorator/native'
-import { Event } from '../event/Event'
 import { Emitter } from '../event/Emitter'
+import { Event } from '../event/Event'
 import { AlertButton } from './AlertButton'
 
 /**
@@ -23,6 +23,7 @@ export const PRESENTED = Symbol('presented')
  * @since 0.1.0
  */
 export interface AlertOptions {
+	style?: 'alert' | 'sheet'
 	title?: string
 	message?: string
 	buttons?: Array<AlertButton>
@@ -41,6 +42,13 @@ export class Alert extends Emitter {
 	//--------------------------------------------------------------------------
 	// Properties
 	//--------------------------------------------------------------------------
+
+	/**
+	 * The alert's style.
+	 * @property style
+	 * @since 0.1.0
+	 */
+	public readonly style: 'alert' | 'sheet'
 
 	/**
 	 * The alert's title.
@@ -85,6 +93,7 @@ export class Alert extends Emitter {
 
 		super()
 
+		this.style = options.style || 'sheet'
 		this.title = options.title || ''
 		this.message = options.message || ''
 		this.buttons = options.buttons || []
@@ -112,6 +121,7 @@ export class Alert extends Emitter {
 		this[SELECTION] = 'ok'
 
 		this.native.present(
+			this.style,
 			this.title,
 			this.message,
 			this.buttons.map(button => button.native)

@@ -17,6 +17,13 @@ open class AlertButton: JavaScriptClass {
 	open var label: Property = Property(string: "")
 
 	/**
+	 * The alert button's image.
+	 * @property image
+	 * @since 0.6.0
+	 */
+	open var image: Property = Property()
+
+	/**
 	 * The alert button's style.
 	 * @property style
 	 * @since 0.1.0
@@ -43,6 +50,26 @@ open class AlertButton: JavaScriptClass {
 	 */
 	@objc open func jsSet_label(callback: JavaScriptSetterCallback) {
 		self.label = Property(value: callback.value)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_image
+	 * @since 0.6.0
+	 * @hidden
+	 */
+	@objc open func jsGet_image(callback: JavaScriptGetterCallback) {
+		callback.returns(self.image)
+	}
+
+	/**
+	 * @method jsSet_style
+	 * @since 0.6.0
+	 * @hidden
+	 */
+	@objc open func jsSet_image(callback: JavaScriptSetterCallback) {
+		self.image = Property(value: callback.value)
 	}
 
 	//--------------------------------------------------------------------------

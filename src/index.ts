@@ -119,10 +119,6 @@ export { Alert } from './dialog/Alert'
 export { AlertOptions } from './dialog/Alert'
 export { AlertButton } from './dialog/AlertButton'
 export { AlertButtonOptions } from './dialog/AlertButton'
-export { Sheet } from './dialog/Sheet'
-export { SheetOptions } from './dialog/Sheet'
-export { SheetButton } from './dialog/SheetButton'
-export { SheetButtonOptions } from './dialog/SheetButton'
 
 /*
  * Event

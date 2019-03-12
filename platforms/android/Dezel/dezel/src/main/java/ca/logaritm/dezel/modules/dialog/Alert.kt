@@ -2,10 +2,23 @@ package ca.logaritm.dezel.modules.dialog
 
 import android.app.AlertDialog
 import android.content.DialogInterface
+import android.content.res.ColorStateList
+import android.graphics.*
+import android.graphics.drawable.BitmapDrawable
 import android.os.Handler
+import android.support.design.widget.BottomSheetDialog
+import android.util.Log
+import android.view.View
+import android.widget.Button
+import android.widget.LinearLayout
+import android.widget.TextView
 import ca.logaritm.dezel.core.JavaScriptClass
 import ca.logaritm.dezel.core.JavaScriptContext
 import ca.logaritm.dezel.core.JavaScriptFunctionCallback
+import ca.logaritm.dezel.core.PropertyType
+import ca.logaritm.dezel.extension.setIcon
+import ca.logaritm.dezel.modules.graphic.ImageLoader
+import ca.logaritm.dezel.view.graphic.Convert
 
 /**
  * @class Alert
@@ -25,6 +38,20 @@ open class Alert(context: JavaScriptContext) : JavaScriptClass(context) {
 	 */
 	private var alertDialog: AlertDialog? = null
 
+	/**
+	 * @property sheetDialog
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	private var sheetDialog: BottomSheetDialog? = null
+
+	/**
+	 * @property loader
+	 * @since 0.6.0
+	 * @hidden
+	 */
+	private var loader: ImageLoader = ImageLoader(context.application)
+
 	//--------------------------------------------------------------------------
 	// JS Functions
 	//--------------------------------------------------------------------------
@@ -39,10 +66,48 @@ open class Alert(context: JavaScriptContext) : JavaScriptClass(context) {
 
 		this.protect()
 
-		val title   = callback.argument(0).string
-		val message = callback.argument(1).string
-		val buttons = callback.argument(2)
-		
+		val style   = callback.argument(0).string
+		val title   = callback.argument(1).string
+		val message = callback.argument(2).string
+		val buttons = mutableListOf<AlertButton>()
+
+		callback.argument(3).forEach { _, value ->
+			value.cast(AlertButton::class.java)?.let {
+				buttons.add(it)
+			}
+		}
+
+		when (style) {
+			"alert" -> this.presentAlert(title, message, buttons)
+			"sheet" -> this.presentSheet(title, message, buttons)
+		}
+
+		Handler().postDelayed({
+			this.holder.callMethod("nativePresent")
+		}, 50)
+	}
+
+	/**
+	 * @method jsFunction_dismiss
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@Suppress("unused")
+	open fun jsFunction_dismiss(callback: JavaScriptFunctionCallback) {
+		this.alertDialog?.hide()
+	}
+
+	//--------------------------------------------------------------------------
+	// Private API
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method presentAlert
+	 * @since 0.6.0
+	 * @hidden
+	 */
+	private fun presentAlert(title: String, message: String, buttons: List<AlertButton>) {
+
 		val builder = AlertDialog.Builder(this.context.application)
 		builder.setTitle(title)
 		builder.setMessage(message)
@@ -56,12 +121,7 @@ open class Alert(context: JavaScriptContext) : JavaScriptClass(context) {
 
 		var empty = true
 
-		buttons.forEach { _, value ->
-
-			val button = value.cast(AlertButton::class.java)
-			if (button == null) {
-				return@forEach
-			}
+		for (button in buttons) {
 
 			val listener = DialogInterface.OnClickListener { _, _ ->
 				button.holder.callMethod("nativePress")
@@ -91,19 +151,195 @@ open class Alert(context: JavaScriptContext) : JavaScriptClass(context) {
 
 		this.alertDialog = builder.create()
 		this.alertDialog?.show()
-
-		Handler().postDelayed({
-			this.holder.callMethod("nativePresent")
-		}, 50)
 	}
 
 	/**
-	 * @method jsFunction_dismiss
-	 * @since 0.1.0
+	 * @method presentSheet
+	 * @since 0.6.0
 	 * @hidden
 	 */
-	@Suppress("unused")
-	open fun jsFunction_dismiss(callback: JavaScriptFunctionCallback) {
-		this.alertDialog?.hide()
+	private fun presentSheet(title: String, message: String, buttons: List<AlertButton>) {
+
+		val normalButtons = mutableListOf<AlertButton>()
+		val cancelButtons = mutableListOf<AlertButton>()
+		var icons = false
+
+		for (button in buttons) {
+			
+			if (button.style.string == "cancel") {
+				cancelButtons.add(button)
+			} else {
+				normalButtons.add(button)
+			}
+
+			if (button.image.type == PropertyType.STRING ||
+				button.image.type == PropertyType.OBJECT) {
+				icons = true
+			}
+		}
+
+		val sheet = BottomSheetDialog(this.context.application)
+
+		sheet.setOnDismissListener {
+			Handler().postDelayed({
+				this.holder.callMethod("nativeDismiss")
+				this.unprotect()
+			}, 50)
+		}
+
+		val padding = Convert.toPx(12f).toInt()
+		val heading = LinearLayout(this.context.application)
+		val content = LinearLayout(this.context.application)
+
+		heading.orientation = LinearLayout.VERTICAL
+		content.orientation = LinearLayout.VERTICAL
+
+		heading.setPadding(0, padding / 2, 0, padding / 2)
+		content.setPadding(0, padding / 2, 0, padding / 2)
+
+		if (title.length > 0) {
+			heading.addView(this.createSheetTitleText(title))
+		}
+
+		if (message.length > 0) {
+			heading.addView(this.createSheetContentText(message))
+		}
+
+		for (source in normalButtons) {
+			content.addView(this.createSheetButton(sheet, source, icons))
+		}
+
+		for (source in cancelButtons) {
+			content.addView(this.createSheetButton(sheet, source, icons))
+		}
+
+		val layout = LinearLayout(this.context.application)
+
+		layout.orientation = LinearLayout.VERTICAL
+
+		layout.setPadding(
+			padding,
+			padding / 2,
+			padding,
+			padding / 2
+		)
+
+		if (heading.childCount > 0) layout.addView(heading)
+		if (content.childCount > 0) layout.addView(content)
+
+		sheet.setContentView(layout)
+		sheet.show()
+
+		this.sheetDialog = sheet
+	}
+
+	/**
+	 * @method createSheetTitleText
+	 * @since 0.6.0
+	 * @hidden
+	 */
+	private fun createSheetTitleText(text: String): TextView {
+
+		val padding = Convert.toPx(12f).toInt()
+
+		val textView = TextView(this.context.application)
+		textView.text = text
+		textView.textSize = 17f
+		textView.typeface = Typeface.DEFAULT_BOLD
+
+		textView.setPadding(
+			padding,
+			padding / 2,
+			padding,
+			padding / 2
+		)
+
+		return textView
+	}
+
+	/**
+	 * @method createSheetContentText
+	 * @since 0.6.0
+	 * @hidden
+	 */
+	private fun createSheetContentText(text: String): TextView {
+
+		val padding = Convert.toPx(12f).toInt()
+
+		val textView = TextView(this.context.application)
+		textView.text = text
+		textView.textSize = 15f
+		textView.typeface = Typeface.DEFAULT
+
+		textView.setPadding(
+			padding,
+			padding / 2,
+			padding,
+			padding / 2
+		)
+
+		return textView
+	}
+
+	/**
+	 * @method createSheetButton
+	 * @since 0.6.0
+	 * @hidden
+	 */
+	private fun createSheetButton(sheet: BottomSheetDialog, source: AlertButton, icons: Boolean): Button {
+
+		val button = Button(this.context.application)
+		button.text = source.label.string
+		button.textSize = 17f
+		button.textAlignment = View.TEXT_ALIGNMENT_VIEW_START
+		button.transformationMethod = null
+		button.backgroundTintList = ColorStateList.valueOf(Color.WHITE)
+		button.stateListAnimator = null
+
+		if (source.style.string == "destructive") {
+			button.setTextColor(Color.argb(255, 255, 0, 0))
+		}
+
+		val size = Convert.toPx(12f).toInt()
+
+		if (source.image.type == PropertyType.STRING ||
+			source.image.type == PropertyType.OBJECT) {
+
+			this.loader.load(source.image) { image ->
+
+				if (image == null) {
+					return@load
+				}
+
+				button.setIcon(
+					this.context.application,
+					image,
+					size * 2,
+					size * 2,
+					size
+				)
+			}
+
+		} else if (icons) {
+
+			val paddingT = button.paddingTop
+			val paddingL = button.paddingLeft
+			val paddingR = button.paddingRight
+			val paddingB = button.paddingBottom
+
+			button.setPadding(
+				paddingL + size * 3,
+				paddingT,
+				paddingR,
+				paddingB
+			)
+		}
+
+		button.setOnClickListener {
+			source.holder.callMethod("nativePress")
+			sheet.hide()
+		}
+
+		return button
 	}
 }

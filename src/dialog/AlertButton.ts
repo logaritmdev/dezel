@@ -1,7 +1,8 @@
 import { bridge } from '../decorator/bridge'
 import { native } from '../decorator/native'
-import { Event } from '../event/Event'
 import { Emitter } from '../event/Emitter'
+import { Event } from '../event/Event'
+import { Image } from '../graphic/Image'
 
 /**
  * @interface AlertButtonOptions
@@ -10,6 +11,7 @@ import { Emitter } from '../event/Emitter'
 export interface AlertButtonOptions {
 	id?: string
 	label?: string
+	image?: string | Image
 	style?: 'normal' | 'cancel' | 'destructive'
 }
 
@@ -42,6 +44,13 @@ export class AlertButton extends Emitter {
 	@native public readonly label!: string
 
 	/**
+	 * The alert button's image.
+	 * @property image
+	 * @since 0.6.0
+	 */
+	@native public readonly image!: string | Image | null
+
+	/**
 	 * The alert button's style.
 	 * @property style
 	 * @since 0.1.0
@@ -60,6 +69,7 @@ export class AlertButton extends Emitter {
 	constructor(options: AlertButtonOptions) {
 		super()
 		this.id = options.id || 'ok'
+		this.image = options.image || null
 		this.label = options.label || 'OK'
 		this.style = options.style || 'normal'
 	}

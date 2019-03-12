@@ -25,6 +25,13 @@ open class ImageLoader: NSObject {
 	 */
 	private static var diskCache: ImageDiskCache = ImageDiskCache()
 
+	/**
+	 * The default image loader.
+	 * @property main
+	 * @since 0.6.0
+	 */
+	public static var main: ImageLoader = ImageLoader()
+
 	//--------------------------------------------------------------------------
 	// MARK: Properties
 	//--------------------------------------------------------------------------

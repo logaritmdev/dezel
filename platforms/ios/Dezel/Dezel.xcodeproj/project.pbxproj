@@ -32,8 +32,6 @@
 		C70B58E12087C2BD008B2137 /* LocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C70B58E02087C2BD008B2137 /* LocalStorage.swift */; };
 		C70B58E32087DC5D008B2137 /* WebRuntime.js in Resources */ = {isa = PBXBuildFile; fileRef = C70B58E22087DC5D008B2137 /* WebRuntime.js */; };
 		C70B58E520880943008B2137 /* Conversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = C70B58E420880943008B2137 /* Conversion.swift */; };
-		C70BB22A21E5505A00CDA70E /* Sheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C70BB22921E5505A00CDA70E /* Sheet.swift */; };
-		C70BB22C21E5506900CDA70E /* SheetButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C70BB22B21E5506900CDA70E /* SheetButton.swift */; };
 		C70BB25921ED664B00CDA70E /* BluetoothManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C70BB25821ED664B00CDA70E /* BluetoothManager.swift */; };
 		C70BB25B21ED665500CDA70E /* BluetoothModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C70BB25A21ED665500CDA70E /* BluetoothModule.swift */; };
 		C718A0A92066E24400EFEC15 /* ImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C718A0A82066E24400EFEC15 /* ImageView.swift */; };
@@ -350,8 +348,6 @@
 		C70B58E02087C2BD008B2137 /* LocalStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorage.swift; sourceTree = "<group>"; };
 		C70B58E22087DC5D008B2137 /* WebRuntime.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = WebRuntime.js; sourceTree = "<group>"; };
 		C70B58E420880943008B2137 /* Conversion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conversion.swift; sourceTree = "<group>"; };
-		C70BB22921E5505A00CDA70E /* Sheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sheet.swift; sourceTree = "<group>"; };
-		C70BB22B21E5506900CDA70E /* SheetButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetButton.swift; sourceTree = "<group>"; };
 		C70BB25821ED664B00CDA70E /* BluetoothManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothManager.swift; sourceTree = "<group>"; };
 		C70BB25A21ED665500CDA70E /* BluetoothModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothModule.swift; sourceTree = "<group>"; };
 		C718A0A82066E24400EFEC15 /* ImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageView.swift; sourceTree = "<group>"; };
@@ -1166,8 +1162,6 @@
 			children = (
 				C7E5D080209DDF730098C5FD /* Alert.swift */,
 				C7E5D089209DE2DC0098C5FD /* AlertButton.swift */,
-				C70BB22921E5505A00CDA70E /* Sheet.swift */,
-				C70BB22B21E5506900CDA70E /* SheetButton.swift */,
 				C7E5D082209DE1AD0098C5FD /* DialogModule.swift */,
 			);
 			path = Dialog;
@@ -1670,7 +1664,6 @@
 				C732E7A62086EA59006014A0 /* WebGlobal.swift in Sources */,
 				C7BFD15C207D50A300AAD31C /* FormModule.swift in Sources */,
 				C7B9CEA9202CDB8D002409D5 /* DezelApplicationDelegate.swift in Sources */,
-				C70BB22A21E5505A00CDA70E /* Sheet.swift in Sources */,
 				C7E5D07C209CBAE80098C5FD /* Resizable.swift in Sources */,
 				C7BFD15E207D50F000AAD31C /* SpinnerView.swift in Sources */,
 				C70BB25921ED664B00CDA70E /* BluetoothManager.swift in Sources */,
@@ -1719,7 +1712,6 @@
 				C7E8A4C620159E08005139F6 /* DLLayoutNodePrivate.cpp in Sources */,
 				C7B9CEAF202CDBD8002409D5 /* Window.swift in Sources */,
 				C7E8A5012016244F005139F6 /* Runtime.m in Sources */,
-				C70BB22C21E5506900CDA70E /* SheetButton.swift in Sources */,
 				C76864732039147100D1903B /* PropertyUnit.swift in Sources */,
 				C7B9CEA8202CDB8D002409D5 /* DezelApplicationWindow.swift in Sources */,
 				C7D8926520657B0000E85115 /* UIFont.swift in Sources */,
