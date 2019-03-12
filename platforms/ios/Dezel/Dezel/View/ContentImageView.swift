@@ -11,10 +11,10 @@ open class ContentImageView: UIView, Updatable, Clippable, TransitionListener {
 
 	/**
 	 * @inherited
-	 * @property frame
-	 * @since 0.2.0
+	 * @property bounds
+	 * @since 0.6.0
 	 */
-	override open var frame: CGRect {
+	override open var bounds: CGRect {
 		willSet {
 			self.imageLayerInvalidFrame = true
 		}
