@@ -93,7 +93,7 @@ export class Alert extends Emitter {
 
 		super()
 
-		this.style = options.style || 'sheet'
+		this.style = options.style || 'alert'
 		this.title = options.title || ''
 		this.message = options.message || ''
 		this.buttons = options.buttons || []
