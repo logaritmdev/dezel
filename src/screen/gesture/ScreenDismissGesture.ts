@@ -12,6 +12,12 @@ import { TRANSITION } from '../Screen'
 export const SCREEN = Symbol('screen')
 
 /**
+ * @symbol STARTED
+ * @since 0.6.0
+ */
+export const STARTED = Symbol('started')
+
+/**
  * The base class to implement dismiss gestures.
  * @class ScreenDismissGesture
  * @since 0.5.0
@@ -44,6 +50,13 @@ export class ScreenDismissGesture {
 
 		try {
 
+			if (this[STARTED]) {
+				throw new Error(`
+					ScreenDismissGesture error:
+					The dismiss gesture has already started.
+				`)
+			}
+
 			let screen = this.screen
 			if (screen == null) {
 				return
@@ -64,6 +77,8 @@ export class ScreenDismissGesture {
 			if (transition == null) {
 				return
 			}
+
+			this[STARTED] = true
 
 			transition.onBeforeDismiss(
 				presentedScreen,
@@ -88,6 +103,13 @@ export class ScreenDismissGesture {
 	public async progress(progress: number) {
 
 		try {
+
+			if (this[STARTED] == false) {
+				throw new Error(`
+					ScreenDismissGesture error:
+					The dismiss gesture has not started.
+				`)
+			}
 
 			let screen = this.screen
 			if (screen == null) {
@@ -124,6 +146,13 @@ export class ScreenDismissGesture {
 	public async cancel() {
 
 		try {
+
+			if (this[STARTED] == false) {
+				throw new Error(`
+					ScreenDismissGesture error:
+					The dismiss gesture has not started.
+				`)
+			}
 
 			let screen = this.screen
 			if (screen == null) {
@@ -169,6 +198,8 @@ export class ScreenDismissGesture {
 
 			window.touchable = true
 
+			this[STARTED] = false
+
 		} catch (e) {
 			console.error(e)
 		}
@@ -182,6 +213,13 @@ export class ScreenDismissGesture {
 	public async finish() {
 
 		try {
+
+			if (this[STARTED] == false) {
+				throw new Error(`
+					ScreenDismissGesture error:
+					The dismiss gesture has not started.
+				`)
+			}
 
 			let screen = this.screen
 			if (screen == null) {
@@ -202,19 +240,6 @@ export class ScreenDismissGesture {
 			let transition = this.transition
 			if (transition == null) {
 				return
-			}
-
-			if (presentedScreen.visible == false) {
-
-				/*
-				 * Its possible that this method will be called before the
-				 * begin method is called. This is probsably
-				 */
-
-				throw new Error(`
-					 ScreenDismissGestureError:
-					 The begin method has not been called.
-				 `)
 			}
 
 			window.touchable = false
@@ -248,6 +273,8 @@ export class ScreenDismissGesture {
 			}
 
 			window.touchable = true
+
+			this[STARTED] = false
 
 		} catch (e) {
 			console.error(e)
@@ -361,6 +388,13 @@ export class ScreenDismissGesture {
 	 * @hidden
 	 */
 	private [SCREEN]: Screen
+
+	/**
+	 * @property [STARTED]
+	 * @since 0.6.0
+	 * @hidden
+	 */
+	private [STARTED]: boolean = false
 
 	/**
 	 * @property transition
