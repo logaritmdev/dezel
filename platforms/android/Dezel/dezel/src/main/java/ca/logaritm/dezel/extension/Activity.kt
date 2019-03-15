@@ -1,12 +1,22 @@
 package ca.logaritm.dezel.extension
 
 import android.app.Activity
+import android.content.Context
 import android.graphics.Point
 import android.os.Build
 import android.provider.Settings
 import android.util.Size
 import android.util.SizeF
 import ca.logaritm.dezel.view.graphic.Convert
+
+/**
+ * @property Context.applicationName
+ * @since 0.6.0
+ * @hidden
+ */
+public val Context.applicationName: String; get() {
+	return if (this.applicationInfo.labelRes == 0) this.applicationInfo.nonLocalizedLabel.toString() else this.getString(this.applicationInfo.labelRes)
+}
 
 /**
  * @property Activity.viewport

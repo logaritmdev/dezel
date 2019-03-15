@@ -1,7 +1,8 @@
+import { bound } from '../decorator/bound'
 import { bridge } from '../decorator/bridge'
 import { native } from '../decorator/native'
-import { bound } from '../decorator/bound'
 import { Emitter } from '../event/Emitter'
+import { Event } from '../event/Event'
 
 export type NotificationEvent = {
 
@@ -104,8 +105,44 @@ export class NotificationManager extends Emitter {
 	 * @since 0.1.0
 	 */
 	public notify(notification: Notification) {
-		this.native.notify(notification)
+
+		this.native.notify(
+			notification.id || '',
+			notification.title || '',
+			notification.message || ''
+		)
+
 		return this
+	}
+
+	//--------------------------------------------------------------------------
+	// Events
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @inherited
+	 * @method onEmit
+	 * @since 0.6.0
+	 */
+	public onEmit(event: Event) {
+
+		switch (event.type) {
+
+			case 'receivetoken':
+				this.onReceiveToken(event)
+				break
+		}
+
+		return super.onEmit(event)
+	}
+
+	/**
+	 * Called when the remote token is received.
+	 * @method onReceiveToken
+	 * @since 0.6.0
+	 */
+	public onReceiveToken(event: Event) {
+
 	}
 
 	//--------------------------------------------------------------------------
@@ -138,6 +175,15 @@ export class NotificationManager extends Emitter {
 	}
 
 	/**
+	 * @method nativeReceiveToken
+	 * @since 0.6.0
+	 * @hidden
+	 */
+	private nativeReceiveToken(token: string, provider: string) {
+		this.emit('receivetoken', { data: { token, provider } })
+	}
+
+	/**
 	 * @method nativeNotification
 	 * @since 0.1.0
 	 * @hidden
@@ -145,6 +191,15 @@ export class NotificationManager extends Emitter {
 	private nativeNotification(data: any) {
 		this.emit('notification', { data: { data } })
 	}
+}
+
+/**
+ * @type NotificationManagerReceiveTokenEvent
+ * @since 0.6.0
+ */
+export type NotificationManagerReceiveTokenEvent = {
+	token: string
+	provider: string
 }
 
 /**

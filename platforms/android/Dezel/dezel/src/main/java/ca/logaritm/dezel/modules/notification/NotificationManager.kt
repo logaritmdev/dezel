@@ -1,7 +1,7 @@
 package ca.logaritm.dezel.modules.notification
 
 import android.app.Notification
-import android.app.NotificationManager
+import android.app.NotificationChannel
 import android.app.PendingIntent
 import android.app.Service
 import android.content.BroadcastReceiver
@@ -10,11 +10,17 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.BitmapFactory
 import android.media.RingtoneManager
+import android.os.Build
 import android.support.v4.app.NotificationManagerCompat
 import android.support.v4.content.LocalBroadcastManager
 import ca.logaritm.dezel.core.JavaScriptClass
 import ca.logaritm.dezel.core.JavaScriptContext
 import ca.logaritm.dezel.core.JavaScriptFunctionCallback
+import ca.logaritm.dezel.extension.applicationName
+import ca.logaritm.dezel.extension.setMessage
+import ca.logaritm.dezel.extension.setTitle
+import ca.logaritm.dezel.modules.notification.fcm.NotificationMessagingToken
+import android.app.NotificationManager as AndroidNotificationManager
 
 /**
  * @class NotificationManager
@@ -22,6 +28,21 @@ import ca.logaritm.dezel.core.JavaScriptFunctionCallback
  * @hidden
  */
 open class NotificationManager(context: JavaScriptContext) : JavaScriptClass(context) {
+
+	//--------------------------------------------------------------------------
+	// Static
+	//--------------------------------------------------------------------------
+
+	companion object {
+
+		/**
+		 * Whether or not remote notifications are enabled
+		 * @property enableRemoteNotifications
+		 * @since 0.6.0
+		 */
+		public var enableRemoteNotifications: Boolean = false
+
+	}
 
 	//--------------------------------------------------------------------------
 	// Properties
@@ -48,8 +69,8 @@ open class NotificationManager(context: JavaScriptContext) : JavaScriptClass(con
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	private val notificationManager: NotificationManager
-		get() = this.context.application.getSystemService(Service.NOTIFICATION_SERVICE) as NotificationManager
+	private val notificationManager: AndroidNotificationManager
+		get() = this.context.application.getSystemService(Service.NOTIFICATION_SERVICE) as AndroidNotificationManager
 
 	/**
 	 * @property applicationEnterForegroundReceiver
@@ -73,6 +94,31 @@ open class NotificationManager(context: JavaScriptContext) : JavaScriptClass(con
 		}
 	}
 
+	/**
+	 * @property messagingServiceTokenReceiver
+	 * @since 0.6.0
+	 * @hidden
+	 */
+	private val messagingServiceTokenReceiver: BroadcastReceiver = object: BroadcastReceiver() {
+		override fun onReceive(ctx: Context, intent: Intent) {
+			updateRemoteNotificationsToken(intent.getStringExtra("token"))
+		}
+	}
+
+	/**
+	 * @property messagingServiceMessageReceiver
+	 * @since 0.6.0
+	 * @hidden
+	 */
+	private val messagingServiceMessageReceiver: BroadcastReceiver = object: BroadcastReceiver() {
+		override fun onReceive(ctx: Context, intent: Intent) {
+			val notification = NotificationData()
+			notification.title = intent.getStringExtra("title")
+			notification.message = intent.getStringExtra("message")
+			notify(notification)
+		}
+	}
+
 	//--------------------------------------------------------------------------
 	// Methods
 	//--------------------------------------------------------------------------
@@ -85,6 +131,8 @@ open class NotificationManager(context: JavaScriptContext) : JavaScriptClass(con
 	init {
 		LocalBroadcastManager.getInstance(this.context.application).registerReceiver(this.applicationEnterBackgroundReceiver, IntentFilter("dezel.application.BACKGROUND"))
 		LocalBroadcastManager.getInstance(this.context.application).registerReceiver(this.applicationEnterForegroundReceiver, IntentFilter("dezel.application.FOREGROUND"))
+		LocalBroadcastManager.getInstance(this.context.application).registerReceiver(this.messagingServiceMessageReceiver, IntentFilter("dezel.notification.messaging.MESSAGE"))
+		LocalBroadcastManager.getInstance(this.context.application).registerReceiver(this.messagingServiceTokenReceiver, IntentFilter("dezel.notification.messaging.TOKEN"))
 	}
 
 	/**
@@ -96,6 +144,81 @@ open class NotificationManager(context: JavaScriptContext) : JavaScriptClass(con
 	protected fun finalize() {
 		LocalBroadcastManager.getInstance(this.context.application).unregisterReceiver(this.applicationEnterBackgroundReceiver)
 		LocalBroadcastManager.getInstance(this.context.application).unregisterReceiver(this.applicationEnterForegroundReceiver)
+		LocalBroadcastManager.getInstance(this.context.application).unregisterReceiver(this.messagingServiceMessageReceiver)
+		LocalBroadcastManager.getInstance(this.context.application).unregisterReceiver(this.messagingServiceTokenReceiver)
+	}
+
+	/**
+	 * @method notify
+	 * @since 0.6.0
+	 * @hidden
+	 */
+	public fun notify(notification: NotificationData)  {
+
+		val sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+
+		val builder: Notification.Builder
+
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
+			builder = Notification.Builder(this.context.application, "application_fcm_channel")
+			builder.setTitle(notification.title)
+			builder.setMessage(notification.message)
+			builder.setVisibility(Notification.VISIBILITY_PUBLIC)
+
+			val channel = NotificationChannel(
+				"application_fcm_channel",
+				this.context.application.applicationName,
+				AndroidNotificationManager.IMPORTANCE_HIGH
+			)
+
+			channel.setSound(sound, null)
+			channel.enableLights(true)
+			channel.enableVibration(true)
+			channel.lockscreenVisibility = Notification.VISIBILITY_PUBLIC
+
+			this.notificationManager.createNotificationChannel(channel)
+
+		} else {
+
+			builder = Notification.Builder(this.context.application)
+			builder.setTitle(notification.title)
+			builder.setMessage(notification.message)
+			builder.setVisibility(Notification.VISIBILITY_PUBLIC)
+			builder.setPriority(Notification.PRIORITY_MAX)
+			builder.setSound(sound)
+
+		}
+
+		val largeIcon = this.context.application.resources.getIdentifier("notification_large_icon", "drawable", this.context.application.packageName)
+		var smallIcon = this.context.application.resources.getIdentifier("notification_small_icon", "drawable", this.context.application.packageName)
+
+		if (smallIcon == 0) {
+			smallIcon = this.context.application.applicationInfo.icon
+		}
+
+		if (largeIcon > 0) builder.setLargeIcon(BitmapFactory.decodeResource(this.context.application.resources, largeIcon))
+		if (smallIcon > 0) builder.setSmallIcon(smallIcon)
+
+		builder.setContentIntent(
+			PendingIntent.getActivity(
+				this.context.application.applicationContext, 0, Intent(
+				this.context.application.applicationContext,
+				this.context.application.javaClass
+			), 0)
+		)
+
+		if (notification.id == "") {
+			notification.id = "0"
+		}
+
+		this.notificationManager.notify(notification.id.toInt(), builder.build())
+
+		val data = this.context.createEmptyObject()
+		data.property("id", notification.id)
+		data.property("title", notification.title)
+		data.property("message", notification.message)
+		this.holder.callMethod("nativeNotification", arrayOf(data), null)
 	}
 
 	//--------------------------------------------------------------------------
@@ -109,10 +232,8 @@ open class NotificationManager(context: JavaScriptContext) : JavaScriptClass(con
 	 */
 	@Suppress("unused")
 	open fun jsFunction_init(callback: JavaScriptFunctionCallback) {
-
 		this.requested = this.isServiceRequested()
 		this.authorized = this.isServiceAuthorized()
-
 		this.property("requested", this.requested)
 		this.property("authorized", this.authorized)
 	}
@@ -124,7 +245,7 @@ open class NotificationManager(context: JavaScriptContext) : JavaScriptClass(con
 	 */
 	@Suppress("unused")
 	open fun jsFunction_requestAuthorization(callback: JavaScriptFunctionCallback) {
-		// nothing to do
+		this.requestRemoteNotificationsToken()
 	}
 
 	/**
@@ -134,50 +255,11 @@ open class NotificationManager(context: JavaScriptContext) : JavaScriptClass(con
 	 */
 	@Suppress("unused")
 	open fun jsFunction_notify(callback: JavaScriptFunctionCallback) {
-
-		if (callback.arguments < 3) {
-			return
-		}
-
-		val application = this.context.application
-
-		val id = callback.argument(0).number
-
-		val ringtone = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
-
-		val builder = Notification.Builder(application)
-		builder.setContentTitle(callback.argument(1).string)
-		builder.setContentText(callback.argument(2).string)
-		builder.setSound(ringtone)
-		builder.setPriority(Notification.PRIORITY_HIGH)
-		builder.setVisibility(Notification.VISIBILITY_PUBLIC)
-
-		val largeIcon = application.resources.getIdentifier("notification_large_icon", "drawable", application.packageName)
-		var smallIcon = application.resources.getIdentifier("notification_small_icon", "drawable", application.packageName)
-
-		if (smallIcon == 0) {
-			smallIcon = application.applicationInfo.icon
-		}
-
-		if (largeIcon > 0) builder.setLargeIcon(BitmapFactory.decodeResource(application.resources, largeIcon))
-		if (smallIcon > 0) builder.setSmallIcon(smallIcon)
-
-		builder.setContentIntent(
-			PendingIntent.getActivity(
-				application.applicationContext, 0, Intent(
-					application.applicationContext,
-					application.javaClass
-				), 0
-			)
-		)
-
-		this.notificationManager.notify(id.toInt(), builder.build())
-
-		val data = this.context.createEmptyObject()
-		data.property("title", callback.argument(1))
-		data.property("message", callback.argument(2))
-
-		this.holder.callMethod("nativeNotification", arrayOf(data), null)
+		val notification = NotificationData()
+		notification.id = callback.argument(0).string
+		notification.title = callback.argument(1).string
+		notification.message = callback.argument(2).string
+		this.notify(notification)
 	}
 
 	//--------------------------------------------------------------------------
@@ -226,4 +308,36 @@ open class NotificationManager(context: JavaScriptContext) : JavaScriptClass(con
 			}
 		}
 	}
+
+	/**
+	 * @method requestRemoteNotificationsToken
+	 * @since 0.6.0
+	 * @hidden
+	 */
+	private fun requestRemoteNotificationsToken() {
+		if (NotificationManager.enableRemoteNotifications) {
+			NotificationMessagingToken.getToken { token ->
+				this.updateRemoteNotificationsToken(token)
+			}
+		}
+	}
+
+	/**
+	 * @method updateRemoteNotificationsToken
+	 * @since 0.6.0
+	 * @hidden
+	 */
+	private fun updateRemoteNotificationsToken(token: String) {
+		this.holder.callMethod("nativeReceiveToken", arrayOf(this.context.createString(token), this.context.createString("fcm")))
+	}
+
+	//--------------------------------------------------------------------------
+	// Classes
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @class NotificationData
+	 * @since 0.6.0
+	 */
+	public data class NotificationData(var id: String = "", var title: String = "", var message: String = "")
 }

@@ -195,10 +195,6 @@ export class Application extends Emitter {
 			case 'handlelink':
 				this.onHandleLink(event)
 				break
-
-			case 'receiveremotenotificationstoken':
-				this.onReceiveRemoteNotificationsToken(event)
-				break
 		}
 
 		return super.onEmit(event)
@@ -283,14 +279,6 @@ export class Application extends Emitter {
 	 * @since 0.1.0
 	 */
 	public onHandleLink(event: Event<ApplicationHandleLinkEvent>) {
-
-	}
-
-	/**
-	 * @method onReceiveRemoteNotificationsToken
-	 * @since 0.1.0
-	 */
-	public onReceiveRemoteNotificationsToken(event: Event<ApplicationReceiveRemoteNotificationsTokenEvent>) {
 
 	}
 
@@ -672,15 +660,6 @@ export class Application extends Emitter {
 	}
 
 	/**
-	 * @method nativeReceiveRemoteNotificationsToken
-	 * @since 0.5.0
-	 * @hidden
-	 */
-	private nativeReceiveRemoteNotificationsToken(token: string) {
-		this.emit<ApplicationReceiveRemoteNotificationsTokenEvent>('receiveremotenotificationstoken', { data: { token } })
-	}
-
-	/**
 	 * @method nativeHandleLink
 	 * @since 0.5.0
 	 * @hidden
@@ -751,14 +730,6 @@ export type ApplicationKeyboardEvent = {
  */
 export type ApplicationHandleLinkEvent = {
 	url: string
-}
-
-/**
- * @type ApplicationReceiveRemoteNotificationsTokenEvent
- * @since 0.5.0
- */
-export type ApplicationReceiveRemoteNotificationsTokenEvent = {
-	token: string
 }
 
 /**

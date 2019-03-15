@@ -163,7 +163,6 @@ open class DezelApplicationController: UIViewController {
 		NotificationCenter.default.addObserver(self, selector: #selector(handleTouchMoved), name: Notification.Name("touchesmoved"), object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(handleTouchEnded), name: Notification.Name("touchesended"), object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(handleTouchCancelled), name: Notification.Name("touchescancelled"), object: nil)
-		NotificationCenter.default.addObserver(self, selector: #selector(applicationDidReceiveRemoteNotificationsToken), name: Notification.Name("receiveremotenotificationstoken"), object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(applicationDidHandleLink), name: Notification.Name("handlelink"), object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(applicationDidEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(applicationDidEnterBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
@@ -853,17 +852,6 @@ open class DezelApplicationController: UIViewController {
 	}
 
 	/**
-	 * @method applicationDidReceiveRemoteNotificationsToken
-	 * @since 0.5.0
- 	 * @hidden
-	 */
-	@objc open func applicationDidReceiveRemoteNotificationsToken(notification: Notification) {
-		if let token = notification.userInfo?["token"] as? String {
-			self.application?.holder.callMethod("nativeReceiveRemoteNotificationsToken", arguments: [self.context.createString(token)])
-		}
-	}
-
-	/**
 	 * @method applicationDidHandleLink
 	 * @since 0.5.0
  	 * @hidden
@@ -873,6 +861,4 @@ open class DezelApplicationController: UIViewController {
 			self.application?.holder.callMethod("nativeHandleLink", arguments: [self.context.createString(link.absoluteString)])
 		}
 	}
-
-
 }

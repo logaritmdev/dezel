@@ -8,6 +8,17 @@ import UserNotifications
 public class NotificationManager: JavaScriptClass, UNUserNotificationCenterDelegate {
 
 	//--------------------------------------------------------------------------
+	// MARK: Static
+	//--------------------------------------------------------------------------
+
+	/**
+	 * Whether or not remote notifications are enabled
+	 * @property enableRemoteNotifications
+	 * @since 0.6.0
+	 */
+	public static var enableRemoteNotifications: Bool = false
+
+	//--------------------------------------------------------------------------
 	// MARK: Properties
 	//--------------------------------------------------------------------------
 
@@ -45,6 +56,7 @@ public class NotificationManager: JavaScriptClass, UNUserNotificationCenterDeleg
 		super.init(context: context)
 		NotificationCenter.default.addObserver(self, selector: #selector(applicationDidEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(applicationDidEnterBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(applicationDidReceiveRemoteNotificationsToken), name: Notification.Name("receiveremotenotificationstoken"), object: nil)
 		self.userNotificationCenter.delegate = self
 	}
 
@@ -56,7 +68,34 @@ public class NotificationManager: JavaScriptClass, UNUserNotificationCenterDeleg
 	deinit {
 		NotificationCenter.default.removeObserver(self, name: UIApplication.willEnterForegroundNotification, object: nil)
 		NotificationCenter.default.removeObserver(self, name: UIApplication.didEnterBackgroundNotification, object: nil)
+		NotificationCenter.default.removeObserver(self, name:Notification.Name("receiveremotenotificationstoken"), object: nil)
 	}
+
+	/**
+	 * Displays a notification.
+	 * @since 0.6.0
+	 * @hidden
+	 */
+	public func notify(_ notification: NotificationData) {
+
+		let content = UNMutableNotificationContent()
+
+		content.sound = UNNotificationSound.default
+		content.title = notification.title
+		content.body = notification.message
+
+		let request = UNNotificationRequest(identifier: notification.id == "" ? "0" : notification.id, content: content, trigger: nil)
+
+		self.userNotificationCenter.add(request) { error in
+			if let error = error {
+				print("Error adding notifictaion: \(error)")
+			}
+		}
+	}
+
+	//--------------------------------------------------------------------------
+	// MARK: Methods - Application Lifecycle
+	//--------------------------------------------------------------------------
 
 	/**
 	 * @method applicationDidEnterBackground
@@ -95,6 +134,17 @@ public class NotificationManager: JavaScriptClass, UNUserNotificationCenterDeleg
 					}
 				}
 			}
+		}
+	}
+
+	/**
+	 * @method applicationDidReceiveRemoteNotificationsToken
+	 * @since 0.6.0
+ 	 * @hidden
+	 */
+	@objc open func applicationDidReceiveRemoteNotificationsToken(notification: Notification) {
+		if let token = notification.userInfo?["token"] as? String {
+			self.updateRemoteNotificationsToken(token)
 		}
 	}
 
@@ -157,8 +207,7 @@ public class NotificationManager: JavaScriptClass, UNUserNotificationCenterDeleg
 				}
 
 				if (self.authorized) {
-					// TODO make this optional via parameter
-					UIApplication.shared.registerForRemoteNotifications()
+					self.requestRemoteNotificationsToken()
 				}
 			}
 		}
@@ -183,8 +232,7 @@ public class NotificationManager: JavaScriptClass, UNUserNotificationCenterDeleg
 					self.property("requested", boolean: self.requested)
 					self.property("authorized", boolean: self.authorized)
 
-					// TODO make this optional via parameter
-					UIApplication.shared.registerForRemoteNotifications()
+					self.requestRemoteNotificationsToken()
 
 					if (authorized) {
 						self.holder.callMethod("nativeAuthorize")
@@ -202,25 +250,11 @@ public class NotificationManager: JavaScriptClass, UNUserNotificationCenterDeleg
 	 * @hidden
 	 */
 	@objc open func jsFunction_notify(callback: JavaScriptFunctionCallback) {
-
-		if (callback.arguments < 3) {
-			return
-		}
-
-		let id = callback.argument(0).number
-
-		let content = UNMutableNotificationContent()
-		content.sound = UNNotificationSound.default
-		content.title = callback.argument(1).string
-		content.body = callback.argument(2).string
-
-		let request = UNNotificationRequest(identifier: String(id), content: content, trigger: nil)
-
-		self.userNotificationCenter.add(request) { error in
-			if let error = error {
-				print("Error adding notifictaion: \(error)")
-			}
-		}
+		var notification = NotificationData()
+		notification.id = callback.argument(0).string
+		notification.title = callback.argument(1).string
+		notification.message = callback.argument(2).string
+		self.notify(notification)
 	}
 
 	//--------------------------------------------------------------------------
@@ -243,5 +277,39 @@ public class NotificationManager: JavaScriptClass, UNUserNotificationCenterDeleg
      */
 	private func isServiceAuthorized(_ settings: UNNotificationSettings) -> Bool {
 		return settings.authorizationStatus == .authorized
+	}
+
+	/**
+     * @method registerForRemoteNotifications
+     * @since 0.6.0
+	 * @hidden
+     */
+	private func requestRemoteNotificationsToken() {
+		if (NotificationManager.enableRemoteNotifications) {
+			UIApplication.shared.registerForRemoteNotifications()
+		}
+	}
+
+	/**
+     * @method updateRemoteNotificationsToken
+     * @since 0.6.0
+	 * @hidden
+     */
+	private func updateRemoteNotificationsToken(_ token: String) {
+		self.holder.callMethod("nativeReceiveToken", arguments: [self.context.createString(token), self.context.createString("apn")])
+	}
+
+	//--------------------------------------------------------------------------
+	// Classes
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @class NotificationData
+	 * @since 0.6.0
+	 */
+	public struct NotificationData {
+		public var id: String = ""
+		public var title: String = ""
+		public var message: String = ""
 	}
 }

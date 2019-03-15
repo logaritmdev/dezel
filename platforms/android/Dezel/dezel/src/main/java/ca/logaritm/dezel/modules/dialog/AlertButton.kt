@@ -1,6 +1,5 @@
 package ca.logaritm.dezel.modules.dialog
 
-import android.util.Log
 import ca.logaritm.dezel.core.*
 
 /**

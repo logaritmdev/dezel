@@ -7,7 +7,6 @@
 export { Application } from './application/Application'
 export { ApplicationKeyboardEvent } from './application/Application'
 export { ApplicationHandleLinkEvent } from './application/Application'
-export { ApplicationReceiveRemoteNotificationsTokenEvent } from './application/Application'
 export { ApplicationLauncher } from './application/ApplicationLauncher'
 
 /*
@@ -185,6 +184,7 @@ export { LocationManagerOptions } from './location/LocationManager'
 
 export { NotificationManager } from './notification/NotificationManager'
 export { NotificationManagerOptions } from './notification/NotificationManager'
+export { NotificationManagerReceiveTokenEvent } from './notification/NotificationManager'
 
 /*
  * Translation
