@@ -5,12 +5,13 @@ import android.app.AlertDialog
 import android.content.*
 import android.content.pm.PackageManager
 import android.os.Build
-import android.provider.Settings
 import android.support.v4.content.LocalBroadcastManager
+import android.util.Log
 import ca.logaritm.dezel.R
 import ca.logaritm.dezel.core.JavaScriptClass
 import ca.logaritm.dezel.core.JavaScriptContext
 import ca.logaritm.dezel.core.JavaScriptFunctionCallback
+import android.location.LocationManager as AndroidLocationManager
 
 /**
  * @class LocationManager
@@ -54,6 +55,15 @@ open class LocationManager(context: JavaScriptContext) : JavaScriptClass(context
 	 */
 	public var authorization: String = "none"
 		private set
+
+	/**
+	 * @property locationManager
+	 * @since 0.6.0
+	 * @hidden
+	 */
+	private val locationManager: AndroidLocationManager by lazy {
+		this.context.application.getSystemService(Context.LOCATION_SERVICE) as AndroidLocationManager
+	}
 
 	/**
 	 * @property preferences
@@ -249,7 +259,7 @@ open class LocationManager(context: JavaScriptContext) : JavaScriptClass(context
 		AlertDialog.Builder(this.context.application)
 			.setTitle(this.getAlertTitle())
 			.setMessage(this.getAlertMessage())
-			.setPositiveButton("OK", { _, _ -> request() })
+			.setPositiveButton("OK") { _, _ -> request() }
 			.create()
 			.show()
 	}
@@ -264,7 +274,21 @@ open class LocationManager(context: JavaScriptContext) : JavaScriptClass(context
 	 * @hidden
 	 */
 	private fun isServiceEnabled(): Boolean {
-		return Settings.Secure.getInt(this.context.application.contentResolver, Settings.Secure.LOCATION_MODE) != Settings.Secure.LOCATION_MODE_OFF
+
+		var gps = false
+		var net = false
+
+		try {
+			gps = this.locationManager.isProviderEnabled(AndroidLocationManager.GPS_PROVIDER)
+		} catch (e: Exception) {
+		}
+
+		try {
+			net = this.locationManager.isProviderEnabled(AndroidLocationManager.NETWORK_PROVIDER)
+		} catch (e: Exception) {
+		}
+
+		return gps || net
 	}
 
 	/**

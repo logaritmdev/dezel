@@ -8,7 +8,7 @@ import { Emitter } from '../event/Emitter'
  * @since 0.1.0
  */
 export interface LocationManagerOptions {
-	authorization?: 'always' | 'wheninuse'
+	authorization?: 'always' | 'wheninuse' | 'fine' | 'coarse'
 }
 
 @bridge('dezel.location.LocationManager')
@@ -33,7 +33,20 @@ export class LocationManager extends Emitter {
 	public static get main(): LocationManager {
 
 		if (main == null) {
-			main = new LocationManager({ authorization: 'always' })
+
+			switch (platform.name) {
+
+				case 'ios':
+					main = new LocationManager({ authorization: 'always' })
+					break
+
+				case 'android':
+					main = new LocationManager({ authorization: 'fine' })
+					break
+
+				default:
+					throw new Error('LocationManager Error: Invalid platform')
+			}
 		}
 
 		return main
