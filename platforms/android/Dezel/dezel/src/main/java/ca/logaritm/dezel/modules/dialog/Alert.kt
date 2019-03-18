@@ -291,6 +291,7 @@ open class Alert(context: JavaScriptContext) : JavaScriptClass(context) {
 		button.text = source.label.string
 		button.textSize = 17f
 		button.textAlignment = View.TEXT_ALIGNMENT_VIEW_START
+		button.typeface = Typeface.DEFAULT
 		button.transformationMethod = null
 		button.backgroundTintList = ColorStateList.valueOf(Color.WHITE)
 		button.stateListAnimator = null
