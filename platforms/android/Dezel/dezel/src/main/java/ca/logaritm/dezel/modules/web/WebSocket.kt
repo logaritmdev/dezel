@@ -250,9 +250,12 @@ open class WebSocket(context: JavaScriptContext) : EventTarget(context) {
 			readyState == WebSocket.Closed) {
 			return
 		}
+
 		this.readyState = Property(WebSocket.Closing.toDouble())
 
-		this.socket.disconnect()
+		if (this::socket.isInitialized) {
+			this.socket.disconnect()
+		}
 	}
 
 	//--------------------------------------------------------------------------
