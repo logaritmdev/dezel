@@ -5,6 +5,7 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.text.Spanned
+import android.text.TextPaint
 import android.util.SizeF
 import android.view.MotionEvent
 import android.view.View
@@ -13,7 +14,6 @@ import ca.logaritm.dezel.font.Font
 import ca.logaritm.dezel.geom.Rect
 import ca.logaritm.dezel.geom.Size
 import ca.logaritm.dezel.text.TextLayout
-import ca.logaritm.dezel.text.TextPaint
 import ca.logaritm.dezel.text.TextParser
 import ca.logaritm.dezel.text.span.*
 import ca.logaritm.dezel.view.graphic.Convert

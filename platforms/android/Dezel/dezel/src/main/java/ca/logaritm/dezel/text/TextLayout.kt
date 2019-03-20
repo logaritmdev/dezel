@@ -4,6 +4,7 @@ import android.graphics.Canvas
 import android.graphics.Rect
 import android.text.Spanned
 import android.text.StaticLayout
+import android.text.TextPaint
 import android.util.SizeF
 import ca.logaritm.dezel.extension.Delegates
 import ca.logaritm.dezel.extension.SpannableString
