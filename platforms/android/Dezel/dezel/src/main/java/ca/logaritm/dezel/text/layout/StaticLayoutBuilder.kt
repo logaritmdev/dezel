@@ -80,8 +80,8 @@ public object StaticLayoutBuilder {
 	 * @since 0.5.0
 	 * @hidden
 	 */
-	private fun create(text: CharSequence, paint: TextPaint, width: Float, sa: Float, ellipsize: Boolean, lines: Int): StaticLayout {
-		return this.create(text, 0, text.length, paint, width, 1f, sa, if (ellipsize) TextUtils.TruncateAt.END else null, lines)
+	private fun create(text: CharSequence, paint: TextPaint, width: Float, sa: Float, ellipsize: Boolean, maxLines: Int): StaticLayout {
+		return this.create(text, 0, text.length, paint, width, 1f, sa, if (ellipsize) TextUtils.TruncateAt.END else null, maxLines)
 	}
 
 	/**
@@ -89,7 +89,12 @@ public object StaticLayoutBuilder {
 	 * @since 0.5.0
 	 * @hidden
 	 */
-	private fun create(text: CharSequence, bs: Int, be: Int, paint: TextPaint, width: Float, sm: Float, sa: Float, ellipsize: TextUtils.TruncateAt?, lines: Int): StaticLayout {
+	private fun create(text: CharSequence, bs: Int, be: Int, paint: TextPaint, width: Float, sm: Float, sa: Float, ellipsize: TextUtils.TruncateAt?, maxLines: Int): StaticLayout {
+
+		var lines = maxLines
+		if (lines == 0) {
+			lines = Int.MAX_VALUE
+		}
 
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
