@@ -2,12 +2,10 @@ package ca.logaritm.dezel.modules.dialog
 
 import android.app.AlertDialog
 import android.content.DialogInterface
-import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Handler
 import android.support.design.widget.BottomSheetDialog
-import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -15,7 +13,7 @@ import ca.logaritm.dezel.core.JavaScriptClass
 import ca.logaritm.dezel.core.JavaScriptContext
 import ca.logaritm.dezel.core.JavaScriptFunctionCallback
 import ca.logaritm.dezel.core.PropertyType
-import ca.logaritm.dezel.extension.setIcon
+import ca.logaritm.dezel.extension.BottomSheetButton
 import ca.logaritm.dezel.modules.graphic.ImageLoader
 import ca.logaritm.dezel.view.graphic.Convert
 
@@ -287,14 +285,7 @@ open class Alert(context: JavaScriptContext) : JavaScriptClass(context) {
 	 */
 	private fun createSheetButton(sheet: BottomSheetDialog, source: AlertButton, icons: Boolean): Button {
 
-		val button = Button(this.context.application)
-		button.text = source.label.string
-		button.textSize = 17f
-		button.textAlignment = View.TEXT_ALIGNMENT_VIEW_START
-		button.typeface = Typeface.DEFAULT
-		button.transformationMethod = null
-		button.backgroundTintList = ColorStateList.valueOf(Color.WHITE)
-		button.stateListAnimator = null
+		val button = BottomSheetButton(this.context.application, source.label.string)
 
 		if (source.style.string == "destructive") {
 			button.setTextColor(Color.argb(255, 255, 0, 0))
@@ -312,11 +303,10 @@ open class Alert(context: JavaScriptContext) : JavaScriptClass(context) {
 				}
 
 				button.setIcon(
-					this.context.application,
 					image,
 					size * 2,
 					size * 2,
-					size
+					size * 3
 				)
 			}
 
@@ -328,7 +318,7 @@ open class Alert(context: JavaScriptContext) : JavaScriptClass(context) {
 			val paddingB = button.paddingBottom
 
 			button.setPadding(
-				paddingL + size * 3,
+				paddingL + size * 5,
 				paddingT,
 				paddingR,
 				paddingB
