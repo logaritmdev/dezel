@@ -240,6 +240,10 @@ open class DezelApplicationActivity : Activity(), KeyboardObserverListener {
 				WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
 			)
 
+			this.window.setFlags(
+				WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION,
+				WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION
+			)
 		}
 
 		this.window.decorView.setOnSystemUiVisibilityChangeListener {
