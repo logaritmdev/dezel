@@ -90,7 +90,11 @@ private let JavaScriptClassConstructorWrapperCallback: @convention(c) (JSContext
 	}
 
 	let instance = klass.init(context: wrapper.context)
-	instance.reset(object, protect: false)
+
+	instance.reset(
+		object,
+		protect: false
+	)
 
 	DLValueSetAssociatedObject(context, object, UnsafeMutableRawPointer(Unmanaged.passRetained(instance).toOpaque()))
 

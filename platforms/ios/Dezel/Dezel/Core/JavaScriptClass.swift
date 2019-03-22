@@ -13,7 +13,7 @@ open class JavaScriptClass: JavaScriptObject {
 	private(set) public var holder: JavaScriptValue!
 
 	//--------------------------------------------------------------------------
-	// MARK: Methods - Extensions
+	// MARK: Methods
 	//--------------------------------------------------------------------------
 
 	/**
