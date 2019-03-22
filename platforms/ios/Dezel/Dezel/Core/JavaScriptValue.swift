@@ -297,6 +297,10 @@ open class JavaScriptValue : NSObject {
 	 */
 	public func unprotect() {
 
+		if (self.handle == nil) {
+			return
+		}
+
 		if (self.protected == 1) {
 			DLValueUnprotect(self.context.handle, self.handle)
 		}
