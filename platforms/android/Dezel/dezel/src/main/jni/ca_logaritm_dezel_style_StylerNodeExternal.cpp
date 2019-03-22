@@ -11,9 +11,9 @@
  * Signature: ()J
  */
 jlong Java_ca_logaritm_dezel_style_StylerNodeExternal_create(JNIEnv *env, jclass, jobject object) {
-	DLStylerNodeRef handle = DLStylerNodeCreate();
-	DLStylerNodeSetData(handle, StylesNodeWrapperCreate(env, object, handle));
-	return reinterpret_cast<jlong>(handle);
+	DLStylerNodeRef styler = DLStylerNodeCreate();
+	DLStylerNodeSetData(styler, StylerNodeWrapperCreate(env, object, styler));
+	return reinterpret_cast<jlong>(styler);
 }
 
 /*
@@ -22,11 +22,15 @@ jlong Java_ca_logaritm_dezel_style_StylerNodeExternal_create(JNIEnv *env, jclass
  * Signature: (J)V
  */
 void Java_ca_logaritm_dezel_style_StylerNodeExternal_delete(JNIEnv *env, jclass, jlong stylerNodePtr) {
+
 	DLStylerNodeRef node = reinterpret_cast<DLStylerNodeRef>(stylerNodePtr);
-	StylerNodeWrapperRef wrapper = reinterpret_cast<StylerNodeWrapperRef>(DLStylerNodeGetData(node));
-	wrapper->env->DeleteGlobalRef(wrapper->object);
-	delete wrapper;
-	DLStylerNodeDelete(node);
+	if (node == NULL) {
+		return;
+	}
+
+	StylerNodeWrapperDelete(env, reinterpret_cast<StylerNodeWrapperRef>(DLStylerNodeGetData(node)));
+
+	delete node;
 }
 
 /*

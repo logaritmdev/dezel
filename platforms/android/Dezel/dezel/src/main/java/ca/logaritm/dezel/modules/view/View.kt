@@ -1975,6 +1975,13 @@ open class View(context: JavaScriptContext) : JavaScriptClass(context), LayoutNo
 	private var naturalOrder: Boolean = true
 
 	/**
+	 * @property destroyed
+	 * @since 0.5.0
+	 * @hidden
+	 */
+	private var destroyed: Boolean = false
+
+	/**
 	 * @property applicationReloadReceiver
 	 * @since 0.1.0
 	 * @hidden
@@ -2040,13 +2047,37 @@ open class View(context: JavaScriptContext) : JavaScriptClass(context), LayoutNo
 	 */
 	open fun destroy() {
 
-		this.application.updateDisplayManager.cancel(this)
+		if (this.destroyed) {
+			return
+		}
+
+		this.destroyed = true
 
 		this.canvas?.unprotect()
 		this.canvas?.dispose()
 		this.canvas = null
 
+		this.wrapper.removeFromParent()
+		this.content.removeFromParent()
+
 		LocalBroadcastManager.getInstance(this.context.application).unregisterReceiver(this.applicationReloadReceiver)
+
+		/**
+		 * This method might be called from the finalizer thread. Calling
+		 * dispose will be safe here because this class is not actually
+		 * protected. This will only remove the associated object.
+		 */
+
+		this.dispose()
+	}
+
+	/**
+	 * @destructor
+	 * @since 0.6.0
+	 */
+	@Throws(Throwable::class)
+	protected open fun finalize() {
+		this.destroy()
 	}
 
 	/**
@@ -6881,6 +6912,10 @@ open class View(context: JavaScriptContext) : JavaScriptClass(context), LayoutNo
 	//--------------------------------------------------------------------------
 	// JavaScript Functions
 	//--------------------------------------------------------------------------
+
+	override fun onResetValue() {
+		super.onResetValue()
+	}
 
 	/**
 	 * @method jsFunction_destroy

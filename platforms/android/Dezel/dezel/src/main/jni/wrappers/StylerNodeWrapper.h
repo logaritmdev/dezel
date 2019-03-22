@@ -20,9 +20,15 @@ struct StylerNodeWrapper {
 typedef struct StylerNodeWrapper *StylerNodeWrapperRef;
 
 /**
- * @function StylesNodeWrapperCreate
+ * @function StylerNodeWrapperCreate
  * @since 0.1.0
  */
-StylerNodeWrapperRef StylesNodeWrapperCreate(JNIEnv *env, jobject object, DLStylerNodeRef node);
+StylerNodeWrapperRef StylerNodeWrapperCreate(JNIEnv *env, jobject object, DLStylerNodeRef node);
+
+/**
+ * @function StylerNodeWrapperDelete
+ * @since 0.6.0
+ */
+void StylerNodeWrapperDelete(JNIEnv *env, StylerNodeWrapperRef wrapper);
 
 #endif

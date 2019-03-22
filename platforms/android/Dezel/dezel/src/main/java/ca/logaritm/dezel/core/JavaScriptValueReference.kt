@@ -11,7 +11,12 @@ public class JavaScriptValueReference(referent: JavaScriptValue, queue: Referenc
 
 	companion object {
 
-		private val refs: MutableMap<Long, JavaScriptValueReference> = mutableMapOf()
+		/**
+		 * @property refs
+		 * @since 0.4.0
+		 * @hidden
+		 */
+		private val refs: MutableMap<Int, JavaScriptValueReference> = mutableMapOf()
 
 		/**
 		 * Registers a JavaScript value reference.
@@ -20,15 +25,18 @@ public class JavaScriptValueReference(referent: JavaScriptValue, queue: Referenc
 		 */
 		public fun protect(referent: JavaScriptValue) {
 
-			val reference = this.refs[referent.handle]
-			if (reference == null) {
-				this.refs[referent.handle] = JavaScriptValueReference(referent, Finalizer.queue)
+			val hash = referent.hashCode()
+
+			var reference = this.refs[hash]
+			if (reference != null) {
+				reference.protected = true
 				return
 			}
 
+			reference = JavaScriptValueReference(referent, Finalizer.queue)
 			reference.protected = true
-			reference.context = referent.context
-			reference.handle = referent.handle
+
+			this.refs[hash] = reference
 		}
 
 		/**
@@ -38,14 +46,12 @@ public class JavaScriptValueReference(referent: JavaScriptValue, queue: Referenc
 		 */
 		public fun unprotect(referent: JavaScriptValue) {
 
-			val reference = this.refs[referent.handle]
-			if (reference == null) {
-				return
-			}
+			val hash = referent.hashCode()
 
-			reference.protected = false
-			reference.context = null
-			reference.handle = 0
+			val reference = this.refs[hash]
+			if (reference != null) {
+				reference.protected = false
+			}
 		}
 	}
 
@@ -61,14 +67,21 @@ public class JavaScriptValueReference(referent: JavaScriptValue, queue: Referenc
 	 * @since 0.4.0
 	 * @hidden
 	 */
-	private var context: JavaScriptContext? = null
+	private var context: JavaScriptContext? = referent.context
 
 	/**
 	 * @property handle
 	 * @since 0.4.0
 	 * @hidden
 	 */
-	private var handle: Long = 0L
+	private var handle: Long = referent.handle
+
+	/**
+	 * @property hash
+	 * @since 0.6.0
+	 * @hidden
+	 */
+	private var hash: Int = referent.hashCode()
 
 	/**
 	 * @inherited
@@ -86,6 +99,8 @@ public class JavaScriptValueReference(referent: JavaScriptValue, queue: Referenc
 			}
 		}
 
-		refs.remove(this.handle)
+		this.context = null
+
+		refs.remove(this.hash)
 	}
 }

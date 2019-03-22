@@ -7,21 +7,6 @@ LOCAL_SRC_FILES := libs/$(TARGET_ARCH_ABI)/libjsc.so
 include $(PREBUILT_SHARED_LIBRARY)
 
 include $(CLEAR_VARS)
-LOCAL_MODULE    := icuuc_jsc
-LOCAL_SRC_FILES := libs/$(TARGET_ARCH_ABI)/libicuuc_jsc.so
-include $(PREBUILT_SHARED_LIBRARY)
-
-include $(CLEAR_VARS)
-LOCAL_MODULE    := icui18n_jsc
-LOCAL_SRC_FILES := libs/$(TARGET_ARCH_ABI)/libicui18n_jsc.so
-include $(PREBUILT_SHARED_LIBRARY)
-
-include $(CLEAR_VARS)
-LOCAL_MODULE    := icudata_jsc
-LOCAL_SRC_FILES := libs/$(TARGET_ARCH_ABI)/libicudata_jsc.so
-include $(PREBUILT_SHARED_LIBRARY)
-
-include $(CLEAR_VARS)
 LOCAL_MODULE    := i18n
 LOCAL_SRC_FILES := $(SHARED_PATH)/i18n/lib/jni/$(TARGET_ARCH_ABI)/libi18n.so
 include $(PREBUILT_SHARED_LIBRARY)
@@ -67,7 +52,7 @@ LOCAL_SRC_FILES := wrappers/JavaScriptFunction.cpp \
                    $(wildcard $(SHARED_PATH)/layout/*.cpp) \
                    $(wildcard $(SHARED_PATH)/i18n/*.cpp) \
 
-LOCAL_SHARED_LIBRARIES := jsc icuuc_jsc icui18n_jsc icudata_jsc i18n style
+LOCAL_SHARED_LIBRARIES := jsc i18n style
 
 LOCAL_CPPFLAGS := -std=c++11 \
                   -fexceptions \

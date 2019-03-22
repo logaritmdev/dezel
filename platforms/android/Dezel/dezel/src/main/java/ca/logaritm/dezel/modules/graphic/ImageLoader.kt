@@ -190,7 +190,7 @@ open class ImageLoader(val context: Context) {
 		}
 
 		val downloadTask = DownloadTask()
-		downloadTask.execute(DownloadTaskData(this, source))
+		downloadTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, DownloadTaskData(this, source))
 		this.downloadTask = downloadTask
 	}
 

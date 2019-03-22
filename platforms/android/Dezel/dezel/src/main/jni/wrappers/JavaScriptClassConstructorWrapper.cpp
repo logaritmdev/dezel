@@ -58,6 +58,7 @@ JavaScriptClassConstructorWrapperFinalize(JSContextRef context, DLValueDataRef h
 	}
 
 	wrapper->env->DeleteGlobalRef(wrapper->ctx);
+	wrapper->env->DeleteGlobalRef(wrapper->cls);
 }
 
 JavaScriptClassConstructorWrapperRef

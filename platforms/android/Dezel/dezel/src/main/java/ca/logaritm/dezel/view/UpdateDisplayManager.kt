@@ -1,6 +1,7 @@
 package ca.logaritm.dezel.view
 
 import android.view.Choreographer
+import java.lang.ref.WeakReference
 
 /**
  * @class UpdateDisplayManager
@@ -24,7 +25,7 @@ public class UpdateDisplayManager {
 	 * @since 0.2.0
 	 * @hidden
 	 */
-	private var callbacks: MutableList<UpdateDisplayCallback> = mutableListOf()
+	private var callbacks: MutableList<WeakReference<UpdateDisplayCallback>> = mutableListOf()
 
 	//--------------------------------------------------------------------------
 	// Methods
@@ -52,7 +53,7 @@ public class UpdateDisplayManager {
 			}
 		}
 
-		this.callbacks.add(callback)
+		this.callbacks.add(WeakReference(callback))
 	}
 
 	/**
@@ -75,21 +76,17 @@ public class UpdateDisplayManager {
 		 */
 
 		while (index < this.callbacks.size) {
-			this.callbacks[index].performUpdate()
+
+			val callback = this.callbacks[index].get()
+			if (callback != null) {
+				callback.performUpdate()
+			}
+
 			index++
 		}
 
 		this.callbacks = mutableListOf()
 		this.scheduled = false
-	}
-
-	/**
-	 * Cancels a scheduled callback.
-	 * @method cancel
-	 * @since 0.5.0
-	 */
-	public fun cancel(callback: UpdateDisplayCallback) {
-		this.callbacks.remove(callback)
 	}
 
 	/**

@@ -47,7 +47,7 @@ public class JavaScriptFinalizeCallback {
 	 * @since 0.4.0
 	 */
 	public fun attribute(key: Any): Any? {
-		return JavaScriptValueExternal.getGhostAttribute(this.handle, key.hashCode())
+		return JavaScriptValueExternal.getAttribute(this.handle, key.hashCode())
 	}
 
 	/**
@@ -56,6 +56,6 @@ public class JavaScriptFinalizeCallback {
 	 * @since 0.4.0
 	 */
 	public fun deleteAttribute(key: Any) {
-		JavaScriptValueExternal.deleteGhostAttribute(this.handle, key.hashCode())
+		JavaScriptValueExternal.deleteAttribute(this.handle, key.hashCode())
 	}
 }

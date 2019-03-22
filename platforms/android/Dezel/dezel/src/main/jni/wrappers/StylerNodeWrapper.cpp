@@ -56,15 +56,22 @@ DLFetchCallback(DLStylerNodeRef node, DLStylerStyleItemRef item)
 }
 
 StylerNodeWrapperRef
-StylesNodeWrapperCreate(JNIEnv *env, jobject object, DLStylerNodeRef node)
+StylerNodeWrapperCreate(JNIEnv *env, jobject object, DLStylerNodeRef node)
 {
 	StylerNodeWrapperRef wrapper = new StylerNodeWrapper();
 	wrapper->env = env;
-	wrapper->object = env->NewGlobalRef(object);
+	wrapper->object = env->NewWeakGlobalRef(object);
 
 	DLStylerNodeSetApplyCallback(node, &DLApplyCallback);
 	DLStylerNodeSetFetchCallback(node, &DLFetchCallback);
 	DLStylerNodeSetInvalidateCallback(node, &DLInvalidateCallback);
 
 	return wrapper;
+}
+
+void
+StylerNodeWrapperDelete(JNIEnv *env, StylerNodeWrapperRef wrapper)
+{
+	env->DeleteWeakGlobalRef(wrapper->object);
+	delete wrapper;
 }

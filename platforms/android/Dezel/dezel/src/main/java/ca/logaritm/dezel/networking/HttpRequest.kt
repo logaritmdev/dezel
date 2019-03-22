@@ -180,13 +180,13 @@ open class HttpRequest(url: String, method: String) {
 		try {
 			this.url = URL(this.requestUrl)
 		} catch (e: MalformedURLException) {
+			Log.d("DEZEL", "HttpRequest", e)
 			return
 		}
 
 		task = RequestTask()
 		task.data = data.toByteArray(charset("UTF-8"))
-		task.execute(this.url)
-
+		task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, this.url)
 		this.task = task
 
 		this.onSend(data)
@@ -223,6 +223,7 @@ open class HttpRequest(url: String, method: String) {
 	 * @since 0.1.0
 	 */
 	private fun onSend(data: String) {
+		Log.d("DEZEL", "onSend")
 		this.listener?.onSend(this, data)
 	}
 
@@ -239,6 +240,7 @@ open class HttpRequest(url: String, method: String) {
 	 * @since 0.1.0
 	 */
 	private fun onTimeout() {
+		Log.d("DEZEL", "onTimeout")
 		this.listener?.onTimeout(this)
 	}
 
@@ -247,6 +249,7 @@ open class HttpRequest(url: String, method: String) {
 	 * @since 0.1.0
 	 */
 	private fun onFail(code: Int) {
+		Log.d("DEZEL", "onFail")
 		this.listener?.onFail(this, code)
 	}
 
@@ -255,6 +258,7 @@ open class HttpRequest(url: String, method: String) {
 	 * @since 0.1.0
 	 */
 	private fun onAbort() {
+		Log.d("DEZEL", "onAbort")
 		this.listener?.onAbort(this)
 	}
 
@@ -263,19 +267,8 @@ open class HttpRequest(url: String, method: String) {
 	 * @since 0.1.0
 	 */
 	private fun onComplete() {
+		Log.d("DEZEL", "onComplete")
 		this.listener?.onComplete(this)
-	}
-
-	//--------------------------------------------------------------------------
-	// Static
-	//--------------------------------------------------------------------------
-
-	companion object {
-
-		init {
-
-		}
-
 	}
 
 	//--------------------------------------------------------------------------
@@ -314,6 +307,7 @@ open class HttpRequest(url: String, method: String) {
 		 */
 		private lateinit var connection: HttpURLConnection
 
+
 		/**
 		 * @method doInBackground
 		 * @since 0.1.0
@@ -327,29 +321,29 @@ open class HttpRequest(url: String, method: String) {
 				if (url == null) {
 					return REQUEST_FAIL
 				}
-
+				Log.d("DEZEL", "BEGIN TASK to " + url.toString())
 				this.connection = url.openConnection() as HttpURLConnection
 
 				val locale = Locale.getDefault()
 				val l = locale.language
 				val r = locale.country
 
-				this.connection.setRequestProperty("Accept-Language", "${l}-${r},${l};q=0.5")
+				this.connection.setRequestProperty("Accept-Language", "$l-$r,$l;q=0.5")
 
 				for ((key, value) in requestHeaders.entries) {
 					this.connection.setRequestProperty(key, value)
 				}
 
-				this.connection.setDoInput(true)
-				this.connection.setRequestMethod(requestMethod)
-				this.connection.setConnectTimeout(requestTimeout)
-				this.connection.setReadTimeout(requestTimeout)
+				this.connection.doInput = true
+				this.connection.requestMethod = requestMethod
+				this.connection.connectTimeout = requestTimeout
+				this.connection.readTimeout = requestTimeout
 
 				if (requestMethod.toUpperCase() != "GET") {
 					this.connection.doOutput = true
-					this.connection.outputStream.use({ output ->
+					this.connection.outputStream.use { output ->
 						output.write(this.data)
-					})
+					}
 				}
 
 				this.connection.connect()
@@ -402,12 +396,16 @@ open class HttpRequest(url: String, method: String) {
 					bytesRead = stream.read(data)
 				}
 
+				stream.close()
+
 				response = string.toString()
 
 			} catch (e: SocketTimeoutException) {
 				return REQUEST_TIMEOUT
 			} catch (e: IOException) {
 				return REQUEST_FAIL
+			} finally {
+				this.connection.disconnect()
 			}
 
 			return REQUEST_COMPLETE

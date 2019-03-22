@@ -215,7 +215,7 @@ open class WebSocket(context: JavaScriptContext) : EventTarget(context) {
 
 		this.url = Property(callback.argument(0))
 
-		WebSocketCreator().execute(this.url.string)
+		WebSocketCreator().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, this.url.string)
 	}
 
 	/**

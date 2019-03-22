@@ -43,6 +43,7 @@ public class LayoutNodeReference(referent: LayoutNode, queue: ReferenceQueue<Any
 	 * @since 0.4.0
 	 */
 	override fun finally() {
+
 		refs.remove(this)
 		LayoutNodeExternal.delete(this.handle)
 	}

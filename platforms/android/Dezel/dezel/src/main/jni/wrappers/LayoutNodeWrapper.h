@@ -25,4 +25,10 @@ typedef struct LayoutNodeWrapper *LayoutNodeWrapperRef;
  */
 LayoutNodeWrapperRef LayoutNodeWrapperCreate(JNIEnv *env, jobject object, DLLayoutNodeRef node);
 
+/**
+ * @function LayoutNodeWrapperDelete
+ * @since 0.6.0
+ */
+void LayoutNodeWrapperDelete(JNIEnv *env, LayoutNodeWrapperRef node);
+
 #endif

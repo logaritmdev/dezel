@@ -12,6 +12,16 @@ open class JavaScriptObject(context: JavaScriptContext): JavaScriptValue(context
 	//--------------------------------------------------------------------------
 
 	/**
+	 * @overridden
+	 * @method dispose
+	 * @since 0.6.0
+	 */
+	override fun dispose() {
+		JavaScriptValueExternal.deleteAssociatedObject(this.context.handle, this.handle)
+		super.dispose()
+	}
+
+	/**
 	 * Returns an internal attribute from this object.
 	 * @method attribute
 	 * @since 0.1.0
@@ -58,7 +68,7 @@ open class JavaScriptObject(context: JavaScriptContext): JavaScriptValue(context
 	 */
 	override fun onResetValue() {
 		this.finalize { callback ->
-			JavaScriptValueExternal.deleteGhostAssociatedObject(callback.handle)
+			JavaScriptValueExternal.deleteAssociatedObject(callback.handle)
 		}
 	}
 }

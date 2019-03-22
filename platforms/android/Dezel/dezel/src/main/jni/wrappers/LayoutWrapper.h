@@ -25,4 +25,10 @@ typedef struct LayoutWrapper* LayoutWrapperRef;
  */
 LayoutWrapperRef LayoutWrapperCreate(JNIEnv *env, jobject object, DLLayoutRef context);
 
+/**
+ * @function LayoutWrapperDelete
+ * @since 0.6.0
+ */
+void LayoutWrapperDelete(JNIEnv *env, LayoutWrapperRef wrapper);
+
 #endif //CLASSIPRO_LAYOUTCONTEXTWRAPPER_H

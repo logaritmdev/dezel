@@ -287,6 +287,10 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	 */
 	public fun unprotect() {
 
+		if (this.handle == 0L) {
+			return
+		}
+
 		if (this.protected == 1) {
 			JavaScriptValueExternal.unprotect(this.context.handle, this.handle)
 			JavaScriptValueReference.unprotect(this)
@@ -300,11 +304,11 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	}
 
 	/**
-	 * Disposes the value's execute.
+	 * Disposes the value's.
 	 * @method dispose
 	 * @since 0.1.0
 	 */
-	public fun dispose() {
+	open fun dispose() {
 
 		if (this.handle == 0L) {
 			return

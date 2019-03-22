@@ -211,11 +211,25 @@ public class JavaScriptValueExternal {
 	static native public Object getAttribute(long context, long value, int key);
 
 	/**
+	 * @method getAttribute
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	static native public Object getAttribute(long handle, int key);
+
+	/**
 	 * @method deleteAttribute
 	 * @since 0.1.0
 	 * @hidden
 	 */
 	static native public void deleteAttribute(long context, long value, int key);
+
+	/**
+	 * @method deleteAttribute
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	static native public void deleteAttribute(long handle, int key);
 
 	/**
 	 * @method setAssociatedObject
@@ -225,6 +239,13 @@ public class JavaScriptValueExternal {
 	static native public void setAssociatedObject(long context, long value, Object object);
 
 	/**
+	 * @method setAssociatedObject
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	static native public void setAssociatedObject(long handle, Object object);
+
+	/**
 	 * @method getAssociatedObject
 	 * @since 0.1.0
 	 * @hidden
@@ -232,11 +253,25 @@ public class JavaScriptValueExternal {
 	static native public Object getAssociatedObject(long context, long value);
 
 	/**
+	 * @method getAssociatedObject
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	static native public Object getAssociatedObject(long handle);
+
+	/**
 	 * @method deleteAssociatedObject
 	 * @since 0.1.0
 	 * @hidden
 	 */
 	static native public void deleteAssociatedObject(long context, long value);
+
+	/**
+	 * @method deleteAssociatedObject
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	static native public void deleteAssociatedObject(long handle);
 
 	/**
 	 * @method setFinalizeHandler
@@ -357,52 +392,4 @@ public class JavaScriptValueExternal {
 	 */
 	static native public boolean toBoolean(long context, long value);
 
-	/**
-	 * @method getGhostHash
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	static native public long getGhostHash(long ghost);
-
-	/**
-	 * @method setGhostAttribute
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	static native public void setGhostAttribute(long ghost, int key, Object val);
-
-	/**
-	 * @method getGhostAttribute
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	static native public Object getGhostAttribute(long ghost, int key);
-
-	/**
-	 * @method deleteGhostAttribute
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	static native public void deleteGhostAttribute(long ghost, int key);
-
-	/**
-	 * @method setGhostAssociatedObject
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	static native public void setGhostAssociatedObject(long ghost, Object object);
-
-	/**
-	 * @method getGhostAssociatedObject
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	static native public Object getGhostAssociatedObject(long ghost);
-
-	/**
-	 * @method deleteGhostAssociatedObject
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	static native public void deleteGhostAssociatedObject(long ghost);
 }

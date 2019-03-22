@@ -47,217 +47,217 @@ open class LayoutNode(layout: Layout) {
 	 * @property measuredTop
 	 * @since 0.1.0
 	 */
-	open var measuredTop: Double = 0.0
+	open val measuredTop: Double
 		get() = LayoutNodeExternal.getMeasuredTop(this.handle)
 
 	/**
 	 * @property measuredLeft
 	 * @since 0.1.0
 	 */
-	open var measuredLeft: Double = 0.0
+	open val measuredLeft: Double
 		get() = LayoutNodeExternal.getMeasuredLeft(this.handle)
 
 	/**
 	 * @property measuredRight
 	 * @since 0.1.0
 	 */
-	open var measuredRight: Double = 0.0
+	open val measuredRight: Double
 		get() = LayoutNodeExternal.getMeasuredRight(this.handle)
 
 	/**
 	 * @property measuredBottom
 	 * @since 0.1.0
 	 */
-	open var measuredBottom: Double = 0.0
+	open val measuredBottom: Double
 		get() = LayoutNodeExternal.getMeasuredBottom(this.handle)
 
 	/**
 	 * @property measuredWidth
 	 * @since 0.1.0
 	 */
-	open var measuredWidth: Double = 0.0
+	open val measuredWidth: Double
 		get() = LayoutNodeExternal.getMeasuredWidth(this.handle)
 
 	/**
 	 * @property measuredHeight
 	 * @since 0.1.0
 	 */
-	open var measuredHeight: Double = 0.0
+	open val measuredHeight: Double
 		get() = LayoutNodeExternal.getMeasuredHeight(this.handle)
 
 	/**
 	 * @property measuredInnerWidth
 	 * @since 0.1.0
 	 */
-	open var measuredInnerWidth: Double = 0.0
+	open val measuredInnerWidth: Double
 		get() = LayoutNodeExternal.getMeasuredInnerWidth(this.handle)
 
 	/**
 	 * @property measuredInnerHeight
 	 * @since 0.1.0
 	 */
-	open var measuredInnerHeight: Double = 0.0
+	open val measuredInnerHeight: Double
 		get() = LayoutNodeExternal.getMeasuredInnerHeight(this.handle)
 
 	/**
 	 * @property measuredContentWidth
 	 * @since 0.1.0
 	 */
-	open var measuredContentWidth: Double = 0.0
+	open val measuredContentWidth: Double
 		get() = LayoutNodeExternal.getMeasuredContentWidth(this.handle)
 
 	/**
 	 * @property measuredContentHeight
 	 * @since 0.1.0
 	 */
-	open var measuredContentHeight: Double = 0.0
+	open val measuredContentHeight: Double
 		get() = LayoutNodeExternal.getMeasuredContentHeight(this.handle)
 
 	/**
 	 * @property measuredMarginTop
 	 * @since 0.1.0
 	 */
-	open var measuredMarginTop: Double = 0.0
+	open val measuredMarginTop: Double
 		get() = LayoutNodeExternal.getMeasuredMarginTop(this.handle)
 
 	/**
 	 * @property measuredMarginLeft
 	 * @since 0.1.0
 	 */
-	open var measuredMarginLeft: Double = 0.0
+	open val measuredMarginLeft: Double
 		get() = LayoutNodeExternal.getMeasuredMarginLeft(this.handle)
 
 	/**
 	 * @property measuredMarginRight
 	 * @since 0.1.0
 	 */
-	open var measuredMarginRight: Double = 0.0
+	open val measuredMarginRight: Double
 		get() = LayoutNodeExternal.getMeasuredMarginRight(this.handle)
 
 	/**
 	 * @property measuredMarginBottom
 	 * @since 0.1.0
 	 */
-	open var measuredMarginBottom: Double = 0.0
+	open val measuredMarginBottom: Double
 		get() = LayoutNodeExternal.getMeasuredMarginBottom(this.handle)
 
 	/**
 	 * @property measuredPaddingTop
 	 * @since 0.1.0
 	 */
-	open var measuredPaddingTop: Double = 0.0
+	open val measuredPaddingTop: Double
 		get() = LayoutNodeExternal.getMeasuredPaddingTop(this.handle)
 
 	/**
 	 * @property measuredBorderTop
 	 * @since 0.1.0
 	 */
-	open var measuredBorderTop: Double = 0.0
+	open val measuredBorderTop: Double
 		get() = LayoutNodeExternal.getMeasuredBorderTop(this.handle)
 
 	/**
 	 * @property measuredBorderLeft
 	 * @since 0.1.0
 	 */
-	open var measuredBorderLeft: Double = 0.0
+	open val measuredBorderLeft: Double
 		get() = LayoutNodeExternal.getMeasuredBorderLeft(this.handle)
 
 	/**
 	 * @property measuredBorderRight
 	 * @since 0.1.0
 	 */
-	open var measuredBorderRight: Double = 0.0
+	open val measuredBorderRight: Double
 		get() = LayoutNodeExternal.getMeasuredBorderRight(this.handle)
 
 	/**
 	 * @property measuredBorderBottom
 	 * @since 0.1.0
 	 */
-	open var measuredBorderBottom: Double = 0.0
+	open val measuredBorderBottom: Double
 		get() = LayoutNodeExternal.getMeasuredBorderBottom(this.handle)
 
 	/**
 	 * @property measuredPaddingLeft
 	 * @since 0.1.0
 	 */
-	open var measuredPaddingLeft: Double = 0.0
+	open val measuredPaddingLeft: Double
 		get() = LayoutNodeExternal.getMeasuredPaddingLeft(this.handle)
 
 	/**
 	 * @property measuredPaddingRight
 	 * @since 0.1.0
 	 */
-	open var measuredPaddingRight: Double = 0.0
+	open val measuredPaddingRight: Double
 		get() = LayoutNodeExternal.getMeasuredPaddingRight(this.handle)
 
 	/**
 	 * @property measuredPaddingBottom
 	 * @since 0.1.0
 	 */
-	open var measuredPaddingBottom: Double = 0.0
+	open val measuredPaddingBottom: Double
 		get() = LayoutNodeExternal.getMeasuredPaddingBottom(this.handle)
 
 	/**
 	 * @property viewportWidth
 	 * @since 0.1.0
 	 */
-	open var viewportWidth: Double = 0.0
+	open val viewportWidth: Double
 		get() = LayoutNodeExternal.getViewportWidth(this.handle)
 
 	/**
 	 * @property viewportHeight
 	 * @since 0.1.0
 	 */
-	open var viewportHeight: Double = 0.0
+	open val viewportHeight: Double
 		get() = LayoutNodeExternal.getViewportHeight(this.handle)
 
 	/**
 	 * @property fillsParentWidth
 	 * @since 0.1.0
 	 */
-	open var fillsParentWidth: Boolean = true
+	open val fillsParentWidth: Boolean
 		get() = LayoutNodeExternal.fillsParentWidth(this.handle)
 
 	/**
 	 * @property fillsParentHeight
 	 * @since 0.1.0
 	 */
-	open var fillsParentHeight: Boolean = true
+	open val fillsParentHeight: Boolean
 		get() = LayoutNodeExternal.fillsParentHeight(this.handle)
 
 	/**
 	 * @property wrapsContentWidth
 	 * @since 0.1.0
 	 */
-	open var wrapsContentWidth: Boolean = true
+	open val wrapsContentWidth: Boolean
 		get() = LayoutNodeExternal.wrapsContentWidth(this.handle)
 
 	/**
 	 * @property wrapsContentHeight
 	 * @since 0.1.0
 	 */
-	open var wrapsContentHeight: Boolean = true
+	open val wrapsContentHeight: Boolean
 		get() = LayoutNodeExternal.wrapsContentHeight(this.handle)
 
 	/**
 	 * @property hasInvalidSize
 	 * @since 0.2.0
 	 */
-	open var hasInvalidSize: Boolean = false
+	open val hasInvalidSize: Boolean
 		get() = LayoutNodeExternal.hasInvalidSize(this.handle)
 
 	/**
 	 * @property hasInvalidPosition
 	 * @since 0.2.0
 	 */
-	open var hasInvalidPosition: Boolean = false
+	open val hasInvalidPosition: Boolean
 		get() = LayoutNodeExternal.hasInvalidPosition(this.handle)
 
 	/**
 	 * @property hasInvalidLayout
 	 * @since 0.1.0
 	 */
-	open var hasInvalidLayout: Boolean = false
+	open val hasInvalidLayout: Boolean
 		get() = LayoutNodeExternal.hasInvalidLayout(this.handle)
 
 	/**

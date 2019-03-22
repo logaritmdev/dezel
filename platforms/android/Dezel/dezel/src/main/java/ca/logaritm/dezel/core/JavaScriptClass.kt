@@ -19,6 +19,52 @@ open class JavaScriptClass(context: JavaScriptContext) : JavaScriptObject(contex
 	public lateinit var holder: JavaScriptValue
 		private set
 
+	/**
+	 * @property holderIsInitialized
+	 * @since 0.6.0
+	 * @hidden
+	 */
+	private val holderIsInitialized: Boolean
+		get() = this::holder.isInitialized
+
+	//--------------------------------------------------------------------------
+	// MARK: Methods
+	//--------------------------------------------------------------------------
+
+	/**
+	 * Called when the value gets protected.
+	 * @method onProtectValue
+	 * @since 0.6.0
+	 */
+	override fun onProtectValue() {
+
+		/*
+		 * When protecting an object from being collected, we also want to
+		 * make sure its holder does not get collected.
+		 */
+
+		if (this.holderIsInitialized) {
+			this.holder.protect()
+		}
+	}
+
+	/**
+	 * Called when the value gets unprotected.
+	 * @method onUnprotectValue
+	 * @since 0.6.0
+	 */
+	override fun onUnprotectValue() {
+
+		/*
+		 * When protecting an object from being collected, we also want to
+		 * make sure its holder does not get collected.
+		 */
+
+		if (this.holderIsInitialized) {
+			this.holder.unprotect()
+		}
+	}
+
 	//--------------------------------------------------------------------------
 	// JS Properties
 	//--------------------------------------------------------------------------

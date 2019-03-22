@@ -28,9 +28,7 @@ void Java_ca_logaritm_dezel_layout_LayoutNodeExternal_delete(JNIEnv *env, jclass
 		return;
 	}
 
-	LayoutNodeWrapperRef wrapper = reinterpret_cast<LayoutNodeWrapperRef>(DLLayoutNodeGetData(node));
-	wrapper->env->DeleteGlobalRef(wrapper->object);
-	delete wrapper;
+	LayoutNodeWrapperDelete(env, reinterpret_cast<LayoutNodeWrapperRef>(DLLayoutNodeGetData(node)));
 
 	DLLayoutNodeDelete(node);
 }

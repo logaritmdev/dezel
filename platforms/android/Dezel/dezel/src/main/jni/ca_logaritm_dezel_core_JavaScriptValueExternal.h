@@ -236,40 +236,80 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setAt
  * Method:    getAttribute
  * Signature: (JJI)Ljava/lang/Object;
  */
-JNIEXPORT jobject JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_getAttribute
+JNIEXPORT jobject JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_getAttribute__JJI
   (JNIEnv *, jclass, jlong, jlong, jint);
+
+/*
+ * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
+ * Method:    getAttribute
+ * Signature: (JI)Ljava/lang/Object;
+ */
+JNIEXPORT jobject JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_getAttribute__JI
+  (JNIEnv *, jclass, jlong, jint);
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
  * Method:    deleteAttribute
  * Signature: (JJI)V
  */
-JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_deleteAttribute
+JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_deleteAttribute__JJI
   (JNIEnv *, jclass, jlong, jlong, jint);
+
+/*
+ * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
+ * Method:    deleteAttribute
+ * Signature: (JI)V
+ */
+JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_deleteAttribute__JI
+  (JNIEnv *, jclass, jlong, jint);
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
  * Method:    setAssociatedObject
  * Signature: (JJLjava/lang/Object;)V
  */
-JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setAssociatedObject
+JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setAssociatedObject__JJLjava_lang_Object_2
   (JNIEnv *, jclass, jlong, jlong, jobject);
+
+/*
+ * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
+ * Method:    setAssociatedObject
+ * Signature: (JLjava/lang/Object;)V
+ */
+JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setAssociatedObject__JLjava_lang_Object_2
+  (JNIEnv *, jclass, jlong, jobject);
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
  * Method:    getAssociatedObject
  * Signature: (JJ)Ljava/lang/Object;
  */
-JNIEXPORT jobject JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_getAssociatedObject
+JNIEXPORT jobject JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_getAssociatedObject__JJ
   (JNIEnv *, jclass, jlong, jlong);
+
+/*
+ * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
+ * Method:    getAssociatedObject
+ * Signature: (J)Ljava/lang/Object;
+ */
+JNIEXPORT jobject JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_getAssociatedObject__J
+  (JNIEnv *, jclass, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
  * Method:    deleteAssociatedObject
  * Signature: (JJ)V
  */
-JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_deleteAssociatedObject
+JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_deleteAssociatedObject__JJ
   (JNIEnv *, jclass, jlong, jlong);
+
+/*
+ * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
+ * Method:    deleteAssociatedObject
+ * Signature: (J)V
+ */
+JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_deleteAssociatedObject__J
+  (JNIEnv *, jclass, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
@@ -406,62 +446,6 @@ JNIEXPORT jdouble JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_to
  */
 JNIEXPORT jboolean JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_toBoolean
   (JNIEnv *, jclass, jlong, jlong);
-
-/*
- * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
- * Method:    getGhostHash
- * Signature: (J)J
- */
-JNIEXPORT jlong JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_getGhostHash
-  (JNIEnv *, jclass, jlong);
-
-/*
- * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
- * Method:    setGhostAttribute
- * Signature: (JILjava/lang/Object;)V
- */
-JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setGhostAttribute
-  (JNIEnv *, jclass, jlong, jint, jobject);
-
-/*
- * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
- * Method:    getGhostAttribute
- * Signature: (JI)Ljava/lang/Object;
- */
-JNIEXPORT jobject JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_getGhostAttribute
-  (JNIEnv *, jclass, jlong, jint);
-
-/*
- * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
- * Method:    deleteGhostAttribute
- * Signature: (JI)V
- */
-JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_deleteGhostAttribute
-  (JNIEnv *, jclass, jlong, jint);
-
-/*
- * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
- * Method:    setGhostAssociatedObject
- * Signature: (JLjava/lang/Object;)V
- */
-JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setGhostAssociatedObject
-  (JNIEnv *, jclass, jlong, jobject);
-
-/*
- * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
- * Method:    getGhostAssociatedObject
- * Signature: (J)Ljava/lang/Object;
- */
-JNIEXPORT jobject JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_getGhostAssociatedObject
-  (JNIEnv *, jclass, jlong);
-
-/*
- * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
- * Method:    deleteGhostAssociatedObject
- * Signature: (J)V
- */
-JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_deleteGhostAssociatedObject
-  (JNIEnv *, jclass, jlong);
 
 #ifdef __cplusplus
 }
