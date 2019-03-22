@@ -160,7 +160,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	 * @property isUndefined
 	 * @since 0.4.0
 	 */
-	public var isUndefined: Boolean = false
+	public val isUndefined: Boolean
 		get() = JavaScriptValueExternal.getType(this.context.handle, this.handle) == 1
 
 	/**
@@ -168,7 +168,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	 * @property isNull
 	 * @since 0.4.0
 	 */
-	public var isNull: Boolean = false
+	public val isNull: Boolean
 		get() = JavaScriptValueExternal.getType(this.context.handle, this.handle) == 2
 
 	/**
@@ -176,7 +176,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	 * @property isBoolean
 	 * @since 0.4.0
 	 */
-	public var isBoolean: Boolean = false
+	public val isBoolean: Boolean
 		get() = JavaScriptValueExternal.getType(this.context.handle, this.handle) == 3
 
 	/**
@@ -184,7 +184,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	 * @property isNumber
 	 * @since 0.4.0
 	 */
-	public var isNumber: Boolean = false
+	public val isNumber: Boolean
 		get() = JavaScriptValueExternal.getType(this.context.handle, this.handle) == 4
 
 	/**
@@ -192,7 +192,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	 * @property isString
 	 * @since 0.4.0
 	 */
-	public var isString: Boolean = false
+	public val isString: Boolean
 		get() = JavaScriptValueExternal.getType(this.context.handle, this.handle) == 5
 
 	/**
@@ -200,7 +200,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	 * @property isObject
 	 * @since 0.4.0
 	 */
-	public var isObject: Boolean = false
+	public val isObject: Boolean
 		get() = JavaScriptValueExternal.getType(this.context.handle, this.handle) == 6
 
 	/**
@@ -208,7 +208,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	 * @property isObject
 	 * @since 0.4.0
 	 */
-	public var isArray: Boolean = false
+	public val isArray: Boolean
 		get() = JavaScriptValueExternal.getType(this.context.handle, this.handle) == 7
 
 	/**
@@ -216,7 +216,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	 * @property isFunction
 	 * @since 0.4.0
 	 */
-	public var isFunction: Boolean = false
+	public val isFunction: Boolean
 		get() = JavaScriptValueExternal.getType(this.context.handle, this.handle) == 8
 
 	//--------------------------------------------------------------------------
