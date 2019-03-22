@@ -15,9 +15,9 @@ open class JavaScriptContext {
 		init {
 			System.loadLibrary("dezel")
 			System.loadLibrary("jsc")
-			System.loadLibrary("icuuc_jsc")
-			System.loadLibrary("icui18n_jsc")
-			System.loadLibrary("icudata_jsc")
+//			System.loadLibrary("icuuc_jsc")
+//			System.loadLibrary("icui18n_jsc")
+//			System.loadLibrary("icudata_jsc")
 		}
 	}
 
@@ -485,12 +485,7 @@ open class JavaScriptContext {
 		}
 
 		if (protect) {
-
 			if (native is JavaScriptValue) {
-				native.protect()
-			}
-
-			if (native is JavaScriptObject) {
 				native.protect()
 			}
 		}
@@ -522,12 +517,7 @@ open class JavaScriptContext {
 		}
 
 		if (protect) {
-
 			if (native is JavaScriptValue) {
-				native.protect()
-			}
-
-			if (native is JavaScriptObject) {
 				native.protect()
 			}
 		}
