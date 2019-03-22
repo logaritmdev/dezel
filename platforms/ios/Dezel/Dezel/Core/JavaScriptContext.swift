@@ -494,12 +494,7 @@ open class JavaScriptContext: NSObject {
 		}
 
 		if (protect) {
-
 			if let target = native as? JavaScriptValue {
-				target.protect()
-			}
-
-			if let target = native as? JavaScriptObject {
 				target.protect()
 			}
 		}
@@ -529,12 +524,7 @@ open class JavaScriptContext: NSObject {
 		}
 
 		if (protect) {
-
 			if let target = native as? JavaScriptValue {
-				target.protect()
-			}
-
-			if let target = native as? JavaScriptObject {
 				target.protect()
 			}
 		}
