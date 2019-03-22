@@ -2127,6 +2127,13 @@ open class View: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelegate, Scroll
 	 */
 	private var invalidContent: Bool = false
 
+	/**
+	 * @property destroyed
+	 * @since 0.6.0
+	 * @hidden
+	 */
+	private var destroyed: Bool = false
+
 	//--------------------------------------------------------------------------
 	// MARK: Methods
 	//--------------------------------------------------------------------------
@@ -2186,7 +2193,11 @@ open class View: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelegate, Scroll
 	 */
 	open func destroy() {
 
-		self.application.updateDisplayManager.cancel(self)
+		if (self.destroyed) {
+			return
+		}
+
+		self.destroyed = true
 
 		self.canvas?.unprotect()
 		self.canvas?.dispose()
@@ -2196,6 +2207,8 @@ open class View: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelegate, Scroll
 		self.content.removeFromSuperview()
 
 		NotificationCenter.default.removeObserver(self, name: Notification.Name("applicationreload"), object: nil)
+
+		self.dispose()
 	}
 
 	/**

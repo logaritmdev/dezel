@@ -20,7 +20,7 @@ public class UpdateDisplayManager: CALayer {
 	 * @since 0.2.0
 	 * @hidden
 	 */
-	private var callbacks: [UpdateDisplayCallback] = []
+	private var callbacks: [WeakCallback] = []
 
 	//--------------------------------------------------------------------------
 	// MARK: Methods
@@ -67,7 +67,7 @@ public class UpdateDisplayManager: CALayer {
 			self.setNeedsDisplay()
 		}
 
-		self.callbacks.append(callback)
+		self.callbacks.append(WeakCallback(ref: callback))
 	}
 
 	/**
@@ -90,21 +90,16 @@ public class UpdateDisplayManager: CALayer {
 		 */
 
 		while (index < self.callbacks.count) {
-			self.callbacks[index].performUpdate()
+
+			if let callback = self.callbacks[index].ref {
+				callback.performUpdate()
+			}
+
 			index += 1
 		}
 
 		self.callbacks = []
 		self.scheduled = false
-	}
-
-	/**
-	 * Cancels a scheduled callback.
-	 * @method cancel
-	 * @since 0.5.0
-	 */
-	public func cancel(_ callback: UpdateDisplayCallback) {
-		self.callbacks.remove(callback)
 	}
 
 	/**
@@ -135,5 +130,33 @@ public class UpdateDisplayManager: CALayer {
 			let tt = (t2 - t1) * 1000
 			NSLog("UpdateDisplayManager - Update took \(tt) ms ")
 		#endif
+	}
+
+	//--------------------------------------------------------------------------
+	// MARK: Classes
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @class WeakReference
+	 * @since 0.6.0
+	 * @hidden
+	 */
+	private class WeakCallback {
+
+		/**
+		 * @property ref
+		 * @since 0.6.0
+		 * @hidden
+		 */
+		private(set) public weak var ref: UpdateDisplayCallback?
+
+		/**
+		 * @constructor
+		 * @since 0.6.0
+		 * @hidden
+		 */
+		public init(ref: UpdateDisplayCallback?) {
+			self.ref = ref
+		}
 	}
 }
