@@ -73,7 +73,7 @@ public object FontManager {
 	 * @since 0.1.0
 	 */
 	public fun load(context: Context) {
-		context.assets.list("fonts").forEach { file ->
+		context.assets.list("fonts")?.forEach { file ->
 			this.fonts.add(FontFile(context, "fonts", file))
 		}
 	}

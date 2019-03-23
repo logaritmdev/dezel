@@ -185,6 +185,6 @@ open class ContentSpinnerView(context: Context) : FrameLayout(context) {
 	 * @since 0.1.0
 	 */
 	private fun getCircleDrawable(): Drawable {
-		return this.context.getDrawable(R.drawable.spinner_view)
+		return this.context.getDrawable(R.drawable.spinner_view)!!
 	}
 }

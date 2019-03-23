@@ -182,7 +182,7 @@ open class ContentWebView(context: Context, listener: ContentWebViewListener) : 
 	 * @property paged
 	 * @since 0.2.0
 	 */
-	override var paged: Boolean by Delegates.OnSet(false) { value ->
+	override var paged: Boolean by Delegates.OnSet(false) {
 		Log.i("DEZEL", "WebView paged is not supported")
 	}
 
@@ -218,7 +218,7 @@ open class ContentWebView(context: Context, listener: ContentWebViewListener) : 
 	 * @property zoomedView
 	 * @since 0.3.0
 	 */
-	override var zoomedView: View? by Delegates.OnChangeOptional<View>(null) { newValue, oldValue ->
+	override var zoomedView: View? by Delegates.OnChangeOptional(null) { _, _ ->
 
 	}
 

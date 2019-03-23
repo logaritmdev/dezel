@@ -268,6 +268,7 @@ open class TextLayout {
 
 			TextPlacement.MIDDLE -> offset += extent.alignMiddle(bounds).y
 			TextPlacement.BOTTOM -> offset += extent.alignBottom(bounds).y
+			TextPlacement.TOP    -> {}
 
 		}
 

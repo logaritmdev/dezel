@@ -527,6 +527,7 @@ open class ContentTextView(context: Context, listener: ContentTextViewListener?)
 			TextTransform.LOWERCASE  -> string = TextTransform.lowercase(string)
 			TextTransform.UPPERCASE  -> string = TextTransform.uppercase(string)
 			TextTransform.CAPITALIZE -> string = TextTransform.capitalize(string)
+			TextTransform.NONE       -> {}
 		}
 
 		if (string.isHTML) {

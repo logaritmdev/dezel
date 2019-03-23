@@ -18,6 +18,7 @@ open class LinkSpan(url: String, color: Int, decoration: TextDecoration): URLSpa
 		when (this.decoration) {
 			TextDecoration.UNDERLINE   -> ds.isUnderlineText = true
 			TextDecoration.LINETHROUGH -> ds.isStrikeThruText = true
+			TextDecoration.NONE        -> {}
 		}
 	}
 

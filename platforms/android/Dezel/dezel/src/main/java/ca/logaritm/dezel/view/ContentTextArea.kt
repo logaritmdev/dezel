@@ -141,6 +141,7 @@ open class ContentTextArea(context: Context, listener: ContentTextAreaListener?)
 		when (value) {
 			TextDecoration.UNDERLINE   -> this.paintFlags = this.paintFlags or Paint.UNDERLINE_TEXT_FLAG
 			TextDecoration.LINETHROUGH -> this.paintFlags = this.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+			TextDecoration.NONE        -> {}
 		}
 
 		this.invalidate()

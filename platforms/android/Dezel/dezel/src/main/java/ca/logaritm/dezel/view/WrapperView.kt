@@ -349,7 +349,7 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 	 * @property drawable
 	 * @since 0.4.0
 	 */
-	open var drawable: Boolean by Delegates.OnSet(false) { value ->
+	open var drawable: Boolean by Delegates.OnSet(false) {
 		this.shouldRedraw()
 	}
 

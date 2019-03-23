@@ -191,6 +191,7 @@ open class ContentTextInput(context: Context, listener: ContentTextInputListener
 		when (value) {
 			TextDecoration.UNDERLINE   -> this.paintFlags = this.paintFlags or Paint.UNDERLINE_TEXT_FLAG
 			TextDecoration.LINETHROUGH -> this.paintFlags = this.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+			TextDecoration.NONE        -> {}
 		}
 
 		this.invalidate()
