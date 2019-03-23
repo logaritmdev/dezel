@@ -431,6 +431,8 @@ void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_deleteAssociatedObject_
 	}
 
 	env->DeleteGlobalRef(value);
+
+	DLValueSetAssociatedObject(reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSObjectRef>(valuePtr), NULL);
 }
 
 /*
@@ -447,6 +449,8 @@ void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_deleteAssociatedObject_
 	}
 
 	env->DeleteGlobalRef(value);
+
+	DLValueDataSetAssociatedObject(reinterpret_cast<DLValueDataRef>(valuePtr), NULL);
 }
 
 /*
