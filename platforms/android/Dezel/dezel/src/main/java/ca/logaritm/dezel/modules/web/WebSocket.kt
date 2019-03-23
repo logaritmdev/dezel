@@ -7,11 +7,9 @@ import android.content.IntentFilter
 import android.os.AsyncTask
 import android.os.Handler
 import android.support.v4.content.LocalBroadcastManager
+import android.util.Log
 import ca.logaritm.dezel.core.*
-import com.neovisionaries.ws.client.WebSocketAdapter
-import com.neovisionaries.ws.client.WebSocketException
-import com.neovisionaries.ws.client.WebSocketFactory
-import com.neovisionaries.ws.client.WebSocketFrame
+import com.neovisionaries.ws.client.*
 import com.neovisionaries.ws.client.WebSocket as AndroidWebSocket
 
 /**
@@ -84,6 +82,53 @@ open class WebSocket(context: JavaScriptContext) : EventTarget(context) {
 	 * @hidden
 	 */
 	open lateinit var socket: AndroidWebSocket
+
+	/**
+	 * @property socketIsInitialized
+	 * @since 0.6.0
+	 * @hidden
+	 */
+	open val socketIsInitialized: Boolean
+		get() = this::socket.isInitialized
+
+	/**
+	 * @property handler
+	 * @since 0.6.0
+	 * @hidden
+	 */
+	private var handler: Handler = Handler()
+
+	/**
+	 * @property adapter
+	 * @since 0.6.0
+	 * @hidden
+	 */
+	private val adapter: WebSocketAdapter = object : WebSocketAdapter() {
+
+		override fun onConnected(websocket: AndroidWebSocket, headers: MutableMap<String, MutableList<String>>?) {
+			handler.post {
+				onOpen()
+			}
+		}
+
+		override fun onError(websocket: AndroidWebSocket, cause: WebSocketException) {
+			handler.post {
+				onClose(false)
+			}
+		}
+
+		override fun onDisconnected(websocket: AndroidWebSocket, serverCloseFrame: WebSocketFrame, clientCloseFrame: WebSocketFrame, closedByServer: Boolean) {
+			handler.post {
+				onClose(closedByServer)
+			}
+		}
+
+		override fun onTextMessage(websocket: AndroidWebSocket, text: String) {
+			handler.post {
+				onMessage(text)
+			}
+		}
+	}
 
 	/**
 	 * @property applicationReloadReceiver
@@ -215,7 +260,20 @@ open class WebSocket(context: JavaScriptContext) : EventTarget(context) {
 
 		this.url = Property(callback.argument(0))
 
-		WebSocketCreator().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, this.url.string)
+		this.socket = WebSocketFactory().createSocket(this.url.string)
+		this.socket.addListener(this.adapter)
+
+		try {
+
+			this.socket.connectAsynchronously()
+
+		} catch (e: OpeningHandshakeException) {
+			Log.e("DEZEL", "WebSocket Error", e)
+		} catch (e: HostnameUnverifiedException) {
+			Log.e("DEZEL", "WebSocket Error", e)
+		} catch (e: WebSocketException) {
+			Log.e("DEZEL", "WebSocket Error", e)
+		}
 	}
 
 	/**
@@ -232,7 +290,9 @@ open class WebSocket(context: JavaScriptContext) : EventTarget(context) {
 			this.context.throwError("INVALID_STATE")
 		}
 
-		this.socket.sendText(callback.argument(0).string)
+		if (this.socketIsInitialized) {
+			this.socket.sendText(callback.argument(0).string)
+		}
 	}
 
 	/**
@@ -253,7 +313,7 @@ open class WebSocket(context: JavaScriptContext) : EventTarget(context) {
 
 		this.readyState = Property(WebSocket.Closing.toDouble())
 
-		if (this::socket.isInitialized) {
+		if (this.socketIsInitialized) {
 			this.socket.disconnect()
 		}
 	}
@@ -287,89 +347,5 @@ open class WebSocket(context: JavaScriptContext) : EventTarget(context) {
 	 */
 	private fun onMessage(text: String) {
 		this.dispatchEvent("MessageEvent", "message", mutableMapOf("data" to text))
-	}
-
-	//--------------------------------------------------------------------------
-	// Classes
-	//--------------------------------------------------------------------------
-
-	private val handlerr: Handler = Handler()
-
-	/**
-	 * @class WebSocketCreator
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	private inner class WebSocketCreator : AsyncTask<String, Void, com.neovisionaries.ws.client.WebSocket>() {
-
-		/**
-		 * @method doInBackground
-		 * @since 0.1.0
-		 * @hidden
-		 */
-		override fun doInBackground(vararg params: String?): com.neovisionaries.ws.client.WebSocket {
-
-			val socket = WebSocketFactory().createSocket(params[0])
-
-			socket.addListener(object : WebSocketAdapter() {
-
-				/**
-				 * @method onConnected
-				 * @since 0.1.0
-				 * @hidden
-				 */
-				override fun onConnected(websocket: com.neovisionaries.ws.client.WebSocket?, headers: MutableMap<String, MutableList<String>>?) {
-					handlerr.post {
-						onOpen()
-					}
-				}
-
-				/**
-				 * @method onError
-				 * @since 0.1.0
-				 * @hidden
-				 */
-				override fun onError(websocket: com.neovisionaries.ws.client.WebSocket?, cause: WebSocketException?) {
-					handlerr.post {
-						onClose(false)
-					}
-				}
-
-				/**
-				 * @method onDisconnected
-				 * @since 0.1.0
-				 * @hidden
-				 */
-				override fun onDisconnected(websocket: com.neovisionaries.ws.client.WebSocket?, serverCloseFrame: WebSocketFrame?, clientCloseFrame: WebSocketFrame?, closedByServer: Boolean) {
-					handlerr.post {
-						onClose(closedByServer)
-					}
-				}
-
-				/**
-				 * @method onTextMessage
-				 * @since 0.1.0
-				 * @hidden
-				 */
-				override fun onTextMessage(websocket: com.neovisionaries.ws.client.WebSocket, text: String) {
-					handlerr.post {
-						onMessage(text)
-					}
-				}
-			})
-
-			socket.connect()
-
-			return socket
-		}
-
-		/**
-		 * @method onPostExecute
-		 * @since 0.1.0
-		 * @hidden
-		 */
-		override fun onPostExecute(result: com.neovisionaries.ws.client.WebSocket) {
-			socket = result
-		}
 	}
 }
