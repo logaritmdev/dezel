@@ -429,7 +429,7 @@ void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_deleteAssociatedObject_
 	if (value == NULL) {
 		return;
 	}
-	LOGE("DELETE ASSOCIATED OBJECT ON %lu for instance %lu", valuePtr, (jlong) value);
+
 	env->DeleteGlobalRef(value);
 }
 
