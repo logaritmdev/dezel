@@ -136,7 +136,7 @@ open class WebView(context: JavaScriptContext) : View(context), ContentWebViewLi
 	 */
 	@Suppress("unused")
 	open fun jsFunction_loadHTML(callback: JavaScriptFunctionCallback) {
-		this.view.loadData(callback.argument(0).string, "text/html; charset=utf-8", "UTF-8")
+		this.view.loadDataWithBaseURL("file:///android_asset/app", callback.argument(0).string, "text/html; charset=utf-8", "UTF-8", "")
 	}
 
 	/**

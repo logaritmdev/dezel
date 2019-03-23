@@ -6,9 +6,7 @@ import android.util.Size
 import android.util.SizeF
 import android.view.MotionEvent
 import android.view.View
-import android.webkit.WebResourceRequest
-import android.webkit.WebView
-import android.webkit.WebViewClient
+import android.webkit.*
 import ca.logaritm.dezel.extension.Delegates
 import ca.logaritm.dezel.view.type.Overscroll
 import ca.logaritm.dezel.view.type.Scrollbars
