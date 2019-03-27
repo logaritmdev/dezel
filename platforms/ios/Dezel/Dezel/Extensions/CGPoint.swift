@@ -10,7 +10,7 @@ internal extension CGPoint {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	internal func setTop(_ value: CGFloat) -> CGPoint {
+	func setTop(_ value: CGFloat) -> CGPoint {
 		return CGPoint(x: self.x, y: value)
 	}
 
@@ -19,7 +19,7 @@ internal extension CGPoint {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	internal func setLeft(_ value: CGFloat) -> CGPoint {
+	func setLeft(_ value: CGFloat) -> CGPoint {
 		return CGPoint(x: value, y: self.y)
 	}
 }

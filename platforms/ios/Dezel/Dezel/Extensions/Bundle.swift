@@ -10,7 +10,7 @@ internal extension Bundle {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	static internal func resource(_ string: String, bundle: String = "ca.logaritm.Dezel") -> String? {
+	static func resource(_ string: String, bundle: String = "ca.logaritm.Dezel") -> String? {
 		return Bundle(identifier: bundle)?.path(forResource: string, ofType: "")
 	}
 
@@ -19,7 +19,7 @@ internal extension Bundle {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	internal func path(in directory: String) -> String? {
+	func path(in directory: String) -> String? {
 
 		guard let root = Bundle.main.resourcePath else {
 			return nil
@@ -38,7 +38,7 @@ internal extension Bundle {
 	 * @since 0.5.0
 	 * @hidden
 	 */
-	internal func getFile(in directory: String, named file: String) -> String? {
+	func getFile(in directory: String, named file: String) -> String? {
 
 		guard let root = self.path(in: directory) else {
 			return nil
@@ -54,7 +54,7 @@ internal extension Bundle {
 	 * @since 0.5.0
 	 * @hidden
 	 */
-	internal func getFile(in directory: String, match regex: String) -> String? {
+	func getFile(in directory: String, match regex: String) -> String? {
 
 		guard let root = self.path(in: directory) else {
 			return nil
@@ -72,7 +72,7 @@ internal extension Bundle {
 	 * @since 0.5.0
 	 * @hidden
 	 */
-	internal func getFiles(in directory: String) -> [String] {
+	func getFiles(in directory: String) -> [String] {
 
 		guard let path = self.path(in: directory) else {
 			return []

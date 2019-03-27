@@ -173,7 +173,7 @@ open class DezelApplicationController: UIViewController {
 		self.context.global.property("_SIM_", boolean: self.isSim())
 		self.context.attribute("dezel.application.DezelApplicationController", value: self)
 
-		self.context.exception { error in
+		self.context.handleError { error in
 
 			var file = "<no file>"
 			var line = "<no line>"

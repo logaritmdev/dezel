@@ -72,8 +72,8 @@ open class TranslationFile {
 
 			var data = try Data(contentsOf: URL(fileURLWithPath: path))
 
-			data.withUnsafeMutableBytes {
-				DLTranslationManagerLoad($0)
+			data.withUnsafeMutableBytes { (buffer: UnsafeMutableRawBufferPointer) -> Void in
+				DLTranslationManagerLoad(buffer.baseAddress!)
 			}
 
 			self.loaded = true

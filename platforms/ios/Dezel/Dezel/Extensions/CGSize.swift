@@ -10,7 +10,7 @@ internal extension CGSize {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	internal func alignBottom(of: CGSize) -> CGPoint {
+	func alignBottom(of: CGSize) -> CGPoint {
 		return CGPoint(x: 0, y: of.height - self.height)
 	}
 
@@ -19,7 +19,7 @@ internal extension CGSize {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	internal func alignMiddle(of: CGSize) -> CGPoint {
+	func alignMiddle(of: CGSize) -> CGPoint {
 		return CGPoint(x: 0, y: of.height / 2 - self.height / 2)
 	}
 
@@ -28,7 +28,7 @@ internal extension CGSize {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	internal func setLeft(_ value: CGFloat) -> CGSize {
+	func setLeft(_ value: CGFloat) -> CGSize {
 		return CGSize(width: value, height: self.height)
 	}
 
@@ -37,7 +37,7 @@ internal extension CGSize {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	internal func setTop(_ value: CGFloat) -> CGSize {
+	func setTop(_ value: CGFloat) -> CGSize {
 		return CGSize(width: self.width, height: value)
 	}
 
@@ -46,7 +46,7 @@ internal extension CGSize {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	internal func setWidth(_ value: CGFloat) -> CGSize {
+	func setWidth(_ value: CGFloat) -> CGSize {
 		return CGSize(width: value, height: self.height)
 	}
 
@@ -55,7 +55,7 @@ internal extension CGSize {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	internal func setHeight(_ value: CGFloat) -> CGSize {
+	func setHeight(_ value: CGFloat) -> CGSize {
 		return CGSize(width: self.width, height: value)
 	}
 
@@ -82,7 +82,7 @@ internal extension CGSize {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	internal mutating func ceil() {
+	mutating func ceil() {
 		self = CGSize(width: Foundation.ceil(self.width), height: Foundation.ceil(self.height))
 	}
 
@@ -91,7 +91,7 @@ internal extension CGSize {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	internal func clamped(min: CGSize, max: CGSize) -> CGSize {
+	func clamped(min: CGSize, max: CGSize) -> CGSize {
 		// TODO make mutated
 		var size = self
 		if (size.width < min.width) { size.width = min.width }

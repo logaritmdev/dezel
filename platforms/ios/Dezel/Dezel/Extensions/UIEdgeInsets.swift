@@ -10,7 +10,7 @@ internal extension UIEdgeInsets {
 	 * @since 0.2.0
 	 * @hidden
 	 */
-	internal func setTop(_ value: CGFloat) -> UIEdgeInsets {
+	func setTop(_ value: CGFloat) -> UIEdgeInsets {
 		return UIEdgeInsets(top: value, left: self.left, bottom: self.bottom, right: self.right)
 	}
 
@@ -19,7 +19,7 @@ internal extension UIEdgeInsets {
 	 * @since 0.2.0
 	 * @hidden
 	 */
-	internal func setLeft(_ value: CGFloat) -> UIEdgeInsets {
+	func setLeft(_ value: CGFloat) -> UIEdgeInsets {
 		return UIEdgeInsets(top: self.top, left: value, bottom: self.bottom, right: self.right)
 	}
 
@@ -28,7 +28,7 @@ internal extension UIEdgeInsets {
 	 * @since 0.2.0
 	 * @hidden
 	 */
-	internal func setRight(_ value: CGFloat) -> UIEdgeInsets {
+	func setRight(_ value: CGFloat) -> UIEdgeInsets {
 		return UIEdgeInsets(top: self.top, left: self.left, bottom: self.bottom, right: value)
 	}
 
@@ -37,7 +37,7 @@ internal extension UIEdgeInsets {
 	 * @since 0.2.0
 	 * @hidden
 	 */
-	internal func setBottom(_ value: CGFloat) -> UIEdgeInsets {
+	func setBottom(_ value: CGFloat) -> UIEdgeInsets {
 		return UIEdgeInsets(top: self.top, left: self.left, bottom: value, right: self.right)
 	}
 }

@@ -1138,7 +1138,7 @@ open class WrapperView: UIView, TransitionListener {
 			}
 
 			if (layer == self.borderLayer && layers[0] == self.canvasLayer) {
-				if let index = layers.index(of: layer) {
+				if let index = layers.firstIndex(of: layer) {
 					parent.removeLayer(self.canvasLayer)
 					parent.insertLayer(self.canvasLayer, at: index)
 				}

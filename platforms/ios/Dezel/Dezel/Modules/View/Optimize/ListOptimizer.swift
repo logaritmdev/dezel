@@ -987,7 +987,7 @@ open class ListOptimizer : ContentOptimizer {
 			return 0
 		}
 
-		return self.list.index(of: item!)!
+		return self.list.firstIndex(of: item!)!
 	}
 
 	/**

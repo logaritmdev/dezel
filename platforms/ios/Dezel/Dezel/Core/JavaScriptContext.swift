@@ -420,10 +420,10 @@ open class JavaScriptContext: NSObject {
 
 	/**
 	 * Assigns the context's exception handler.
-	 * @method exception
-	 * @since 0.1.0
+	 * @method handleError
+	 * @since 0.6.0
 	 */
-	open func exception(handler: @escaping JavaScriptExceptionHandler) {
+	open func handleError(handler: @escaping JavaScriptExceptionHandler) {
 		DLContextSetExceptionHandler(self.handle, contextExceptionCallback)
 		DLContextSetAttribute(self.handle, kExceptionWrapperKey, Unmanaged.passRetained(JavaScriptExceptionWrapper(context: self, handler: handler)).toOpaque())
 	}

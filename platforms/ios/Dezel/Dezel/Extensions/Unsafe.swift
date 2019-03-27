@@ -4,7 +4,7 @@
  * @hidden
  */
 public extension UnsafePointer where Pointee == Int8 {
-	public var string: String {
+	var string: String {
 		return String(cString: self)
 	}
 }
@@ -16,19 +16,19 @@ public extension UnsafePointer where Pointee == Int8 {
  */
 public extension UnsafeMutableRawPointer {
 
-	public var value: AnyObject {
+	var value: AnyObject {
 		return Unmanaged<AnyObject>.fromOpaque(self).takeUnretainedValue()
 	}
 
-	public init(value: AnyObject) {
+	init(value: AnyObject) {
     	self.init(Unmanaged.passRetained(value).toOpaque())
 	}
 
-	public init (unretained: AnyObject) {
+	init (unretained: AnyObject) {
 		self.init(Unmanaged.passUnretained(unretained).toOpaque())
 	}
 
-	public func release() {
+	func release() {
 		Unmanaged<AnyObject>.fromOpaque(self).release()
 	}
 }

@@ -190,6 +190,8 @@ open class Application: JavaScriptClass {
 				callback.returns(string: "foreground")
 			case .background:
 				callback.returns(string: "background")
+			default:
+				break
 		}
 	}
 

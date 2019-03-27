@@ -10,7 +10,7 @@ internal extension TimeZone {
 	 * @since 0.6.0
 	 * @hidden
 	 */
-	internal static var utc: TimeZone {
+	static var utc: TimeZone {
 		return TimeZone(secondsFromGMT: 0)!
 	}
 }

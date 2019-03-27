@@ -10,7 +10,7 @@ internal extension Date {
 	 * @since 0.5.0
 	 * @hidden
 	 */
-	internal var iso: String {
+	var iso: String {
 		return DateFormater.iso(self)
 	}
 
@@ -19,7 +19,7 @@ internal extension Date {
 	 * @since 0.5.0
 	 * @hidden
 	 */
-	internal func format(_ format: String, _ locale: String) -> String {
+	func format(_ format: String, _ locale: String) -> String {
 		return DateFormater.format(self, format: format, locale: locale)
 	}
 }

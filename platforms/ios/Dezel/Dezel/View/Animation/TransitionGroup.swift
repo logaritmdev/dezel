@@ -106,7 +106,7 @@ public final class TransitionGroup {
 	 * @hidden
 	 */
 	public func register(_ listener: TransitionListener, animation: CABasicAnimation, for property: String) {
-		let index = self.listeners.index { $0 === listener }
+		let index = self.listeners.firstIndex { $0 === listener }
 		if (index == nil) {
 			self.listeners.append(listener)
 		}

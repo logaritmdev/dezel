@@ -10,7 +10,7 @@ internal extension Locale {
 	 * @since 0.5.0
 	 * @hidden
 	 */
-	internal var language: String {
+	var language: String {
 		return self.languageCode ?? ""
 	}
 
@@ -19,7 +19,7 @@ internal extension Locale {
 	 * @since 0.5.0
 	 * @hidden
 	 */
-	internal var region: String {
+	var region: String {
 		return self.regionCode ?? ""
 	}
 }

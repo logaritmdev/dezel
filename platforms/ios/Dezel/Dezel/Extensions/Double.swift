@@ -28,7 +28,7 @@ internal extension Double {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	internal func int() -> Int {
+	func int() -> Int {
 		return Int(self)
 	}
 
@@ -37,7 +37,7 @@ internal extension Double {
 	 * @since 0.5.0
 	 * @hidden
 	 */
-	internal func int32() -> Int32 {
+	func int32() -> Int32 {
 		return Int32(self)
 	}
 }

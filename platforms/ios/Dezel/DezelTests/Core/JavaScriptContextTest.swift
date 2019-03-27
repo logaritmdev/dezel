@@ -113,7 +113,7 @@ class JavaScriptContextTest: XCTestCase {
 
 		var didCallExceptionHandler = false
 
-		self.context.exception { error in
+		self.context.handleError { error in
 			didCallExceptionHandler = true
 		}
 

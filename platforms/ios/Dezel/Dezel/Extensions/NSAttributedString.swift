@@ -7,7 +7,7 @@ import CoreText
  */
 internal extension NSAttributedString {
 
-	internal var link: String? {
+	var link: String? {
 		return self.attribute(.link, at: 0, effectiveRange: nil) as? String
 	}
 
@@ -16,7 +16,7 @@ internal extension NSAttributedString {
 	 * @since 0.5.0
 	 * @hidden
 	 */
-	internal func substring(offset: Int, length: Int) -> NSAttributedString {
+	func substring(offset: Int, length: Int) -> NSAttributedString {
 		return self.attributedSubstring(from: NSRange(location: offset, length: length))
 	}
 
@@ -25,7 +25,7 @@ internal extension NSAttributedString {
 	 * @since 0.5.0
 	 * @hidden
 	 */
-	internal func truncate(range: NSRange, bounds: CGSize, character: NSAttributedString) -> CTLine? {
+	func truncate(range: NSRange, bounds: CGSize, character: NSAttributedString) -> CTLine? {
 		return CTLineCreateTruncatedLine(CTLineCreateWithAttributedString(self.substring(offset: range.location, length: self.length - range.location)), Double(bounds.width), .end, CTLineCreateWithAttributedString(character))
 	}
 
@@ -34,7 +34,7 @@ internal extension NSAttributedString {
 	 * @since 0.5.0
 	 * @hidden
 	 */
-	internal func truncate(range: CFRange, bounds: CGSize, character: NSAttributedString) -> CTLine? {
+	func truncate(range: CFRange, bounds: CGSize, character: NSAttributedString) -> CTLine? {
 		return CTLineCreateTruncatedLine(CTLineCreateWithAttributedString(self.substring(offset: range.location, length: self.length - range.location)), Double(bounds.width), .end,  CTLineCreateWithAttributedString(character))
 	}
 }
@@ -46,7 +46,7 @@ internal extension NSMutableAttributedString {
 	 * @since 0.5.0
 	 * @hidden
 	 */
-	internal func addFont(_ value: UIFont, range: NSRange) {
+	func addFont(_ value: UIFont, range: NSRange) {
 		self.addAttribute(.font, value: value, range: range)
 	}
 
@@ -55,7 +55,7 @@ internal extension NSMutableAttributedString {
 	 * @since 0.5.0
 	 * @hidden
 	 */
-	internal func addBackgroundColor(_ value: CGColor, range: NSRange) {
+	func addBackgroundColor(_ value: CGColor, range: NSRange) {
 		self.addAttribute(.backgroundColor, value: UIColor(cgColor: value), range: range)
 	}
 
@@ -64,7 +64,7 @@ internal extension NSMutableAttributedString {
 	 * @since 0.5.0
 	 * @hidden
 	 */
-	internal func addBackgroundColor(_ value: UIColor, range: NSRange) {
+	func addBackgroundColor(_ value: UIColor, range: NSRange) {
 		self.addAttribute(.backgroundColor, value: value, range: range)
 	}
 
@@ -73,7 +73,7 @@ internal extension NSMutableAttributedString {
 	 * @since 0.5.0
 	 * @hidden
 	 */
-	internal func addTextColor(_ value: CGColor, range: NSRange) {
+	func addTextColor(_ value: CGColor, range: NSRange) {
 		self.addAttribute(.foregroundColor, value: UIColor(cgColor: value), range: range)
 	}
 
@@ -82,7 +82,7 @@ internal extension NSMutableAttributedString {
 	 * @since 0.5.0
 	 * @hidden
 	 */
-	internal func addTextColor(_ value: UIColor, range: NSRange) {
+	func addTextColor(_ value: UIColor, range: NSRange) {
 		self.addAttribute(.foregroundColor, value: value, range: range)
 	}
 
@@ -91,7 +91,7 @@ internal extension NSMutableAttributedString {
 	 * @since 0.5.0
 	 * @hidden
 	 */
-	internal func addTextKerning(_ value: CGFloat, range: NSRange) {
+	func addTextKerning(_ value: CGFloat, range: NSRange) {
 		self.addAttribute(.kern, value: value, range: range)
 	}
 
@@ -100,7 +100,7 @@ internal extension NSMutableAttributedString {
 	 * @since 0.5.0
 	 * @hidden
 	 */
-	internal func addBaselineOffset(_ value: CGFloat, range: NSRange) {
+	func addBaselineOffset(_ value: CGFloat, range: NSRange) {
 		self.addAttribute(.baselineOffset, value: value, range: range)
 	}
 
@@ -109,7 +109,7 @@ internal extension NSMutableAttributedString {
 	 * @since 0.5.0
 	 * @hidden
 	 */
-	internal func addTextDecoration(_ value: TextDecoration, range: NSRange) {
+	func addTextDecoration(_ value: TextDecoration, range: NSRange) {
 
 		switch (value) {
 
@@ -128,7 +128,7 @@ internal extension NSMutableAttributedString {
 	 * @since 0.5.0
 	 * @hidden
 	 */
-	internal func addLink(_ value: String, range: NSRange) {
+	func addLink(_ value: String, range: NSRange) {
 		self.addAttribute(.link, value: string, range: range)
 	}
 }
@@ -166,7 +166,7 @@ extension Dictionary where Key == NSAttributedString.Key, Value == Any {
 	 * @since 0.5.0
 	 * @hidden
 	 */
-	mutating internal func setFont(_ value: UIFont?) {
+	mutating func setFont(_ value: UIFont?) {
 		self[.font] = value
 	}
 
@@ -175,7 +175,7 @@ extension Dictionary where Key == NSAttributedString.Key, Value == Any {
 	 * @since 0.5.0
 	 * @hidden
 	 */
-	mutating internal func setBackgroundColor(_ value: CGColor) {
+	mutating func setBackgroundColor(_ value: CGColor) {
 		self[.backgroundColor] = UIColor(cgColor: value)
 	}
 

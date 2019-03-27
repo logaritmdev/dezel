@@ -2258,7 +2258,7 @@ open class View: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelegate, Scroll
 	 */
 	open func remove(_ view: View, notify: Bool = true) {
 
-		guard let _ = self.children.index(of: view) else {
+		guard let _ = self.children.firstIndex(of: view) else {
 			return
 		}
 

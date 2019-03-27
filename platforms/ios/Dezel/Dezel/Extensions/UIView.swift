@@ -10,7 +10,7 @@ internal extension UIView {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	internal func removeSubview(_ view: UIView) {
+	func removeSubview(_ view: UIView) {
 		if (view.superview == self) {
 			view.removeFromSuperview()
 		}

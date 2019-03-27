@@ -10,7 +10,7 @@ internal extension NSRegularExpression {
 	 * @since 0.5.0
 	 * @hidden
 	 */
-	internal static func isHTML(_ string: String) -> Bool {
+	static func isHTML(_ string: String) -> Bool {
 
 		do {
 
@@ -30,7 +30,7 @@ internal extension NSRegularExpression {
 	 * @since 0.5.0
 	 * @hidden
 	 */
-	internal func matches(_ string: String) -> Bool {
+	func matches(_ string: String) -> Bool {
 		return self.firstMatch(in: string, options: [], range: NSRange(location: 0, length: string.length)) != nil
 	}
 }

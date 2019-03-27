@@ -10,7 +10,7 @@ internal extension UITextField {
 	 * @since 0.5.0
 	 * @hidden
 	 */
-	internal func range(start: Int, end: Int) -> UITextRange? {
+	func range(start: Int, end: Int) -> UITextRange? {
 
 		let sp = self.position(from: self.beginningOfDocument, offset: start)
 		let ep = self.position(from: self.beginningOfDocument, offset: end)

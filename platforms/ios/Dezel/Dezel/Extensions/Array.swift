@@ -9,8 +9,8 @@ internal extension Array where Element: Equatable {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	mutating internal func remove(_ object: Element) {
-		if let index = self.index(of: object) {
+	mutating func remove(_ object: Element) {
+		if let index = self.firstIndex(of: object) {
 			self.remove(at: index)
 		}
 	}
@@ -20,7 +20,7 @@ internal extension Array where Element: Equatable {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	mutating internal func shift() -> Element? {
+	mutating func shift() -> Element? {
 		return self.count > 0 ? self.remove(at: 0) : nil
 	}
 
@@ -29,7 +29,7 @@ internal extension Array where Element: Equatable {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	mutating internal func pop() -> Element?  {
+	mutating func pop() -> Element?  {
 		return self.popLast()
 	}
 }
@@ -44,8 +44,8 @@ internal extension Array where Element == UpdateDisplayCallback {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	mutating internal func remove(_ callback: UpdateDisplayCallback) {
-		if let index = self.index(where: { $0 === callback }) {
+	mutating func remove(_ callback: UpdateDisplayCallback) {
+		if let index = self.firstIndex(where: { $0 === callback }) {
 			self.remove(at: index)
 		}
 	}

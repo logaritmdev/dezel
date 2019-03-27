@@ -17,7 +17,7 @@ internal extension UIFont {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	static internal func from(family:String, weight:String, style:String, size:CGFloat) -> UIFont {
+	static func from(family:String, weight:String, style:String, size:CGFloat) -> UIFont {
 
 		let fw = weight.lowercased().trim()
 		let fs = style.lowercased().trim()
@@ -133,7 +133,7 @@ internal extension UIFont {
 	 * @since 0.5.0
 	 * @hidden
 	 */
-	internal static func defaultSystemFontWith(trait: UIFontDescriptor.SymbolicTraits) -> UIFont {
+	static func defaultSystemFontWith(trait: UIFontDescriptor.SymbolicTraits) -> UIFont {
 		return UIFont(descriptor: UIFont.systemFont(ofSize: UIFont.systemFontSize).with(trait: trait)!.fontDescriptor, size: UIFont.systemFontSize)
 	}
 
@@ -142,7 +142,7 @@ internal extension UIFont {
 	 * @since 0.5.0
 	 * @hidden
 	 */
-	internal func with(trait: UIFontDescriptor.SymbolicTraits) -> UIFont? {
+	func with(trait: UIFontDescriptor.SymbolicTraits) -> UIFont? {
 
 		if let descriptor = self.fontDescriptor.withSymbolicTraits(trait) {
 			return UIFont(descriptor: descriptor, size: self.pointSize)
@@ -156,7 +156,7 @@ internal extension UIFont {
 	 * @since 0.5.0
 	 * @hidden
 	 */
-	internal func with(size: CGFloat) -> UIFont? {
+	func with(size: CGFloat) -> UIFont? {
 		return UIFont(descriptor: self.fontDescriptor, size: size)
 	}
 
@@ -165,7 +165,7 @@ internal extension UIFont {
 	 * @since 0.5.0
 	 * @hidden
 	 */
-	internal func with(size: Double) -> UIFont? {
+	func with(size: Double) -> UIFont? {
 		return UIFont(descriptor: self.fontDescriptor, size: CGFloat(size))
 	}
 
@@ -174,7 +174,7 @@ internal extension UIFont {
 	 * @since 0.5.0
 	 * @hidden
 	 */
-	internal func with(face: String) -> UIFont? {
+	func with(face: String) -> UIFont? {
 		return UIFont(name: face, size: self.pointSize)
 	}
 }

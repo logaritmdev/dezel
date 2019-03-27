@@ -12,7 +12,7 @@ internal extension CALayer {
 	 * @property listener
 	 * @since 0.2.0
 	 */
-	internal var listener: AnyObject? {
+	var listener: AnyObject? {
 
 		get {
 			return objc_getAssociatedObject(self, &kTransitionListener) as AnyObject
@@ -28,7 +28,7 @@ internal extension CALayer {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	static internal func createOuterMask(_ path: CGPath) -> CAShapeLayer {
+	static func createOuterMask(_ path: CGPath) -> CAShapeLayer {
 		let layer = CAShapeLayer()
 		layer.actions = nil
 		layer.contentsScale = UIScreen.main.scale
@@ -42,7 +42,7 @@ internal extension CALayer {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	static internal func createInnerMask(_ path: CGPath) -> CAShapeLayer {
+	static func createInnerMask(_ path: CGPath) -> CAShapeLayer {
 		let layer = CAShapeLayer()
 		layer.actions = nil
 		layer.contentsScale = UIScreen.main.scale
@@ -57,7 +57,7 @@ internal extension CALayer {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	internal func setContent(_ image: UIImage, center: CGPoint) {
+	func setContent(_ image: UIImage, center: CGPoint) {
 
 		let w = image.size.width
 		let h = image.size.height
@@ -76,7 +76,7 @@ internal extension CALayer {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	internal func insertLayer(_ layer: CALayer, at: Int) {
+	func insertLayer(_ layer: CALayer, at: Int) {
 		self.insertSublayer(layer, at: UInt32(at))
 	}
 
@@ -85,7 +85,7 @@ internal extension CALayer {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	internal func removeLayer(_ layer: CALayer) {
+	func removeLayer(_ layer: CALayer) {
 		layer.removeFromSuperlayer()
 	}
 }

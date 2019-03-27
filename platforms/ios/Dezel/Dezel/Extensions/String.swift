@@ -10,7 +10,7 @@ internal extension String {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	internal var length: Int {
+	var length: Int {
 		return self.count
 	}
 
@@ -19,7 +19,7 @@ internal extension String {
 	 * @since 0.5.0
 	 * @hidden
 	 */
-	internal var isHTML: Bool {
+	var isHTML: Bool {
 		return NSRegularExpression.isHTML(self)
 	}
 
@@ -28,7 +28,7 @@ internal extension String {
 	 * @since 0.5.0
 	 * @hidden
 	 */
-	internal func substring(start: Int, end: Int) -> String {
+	func substring(start: Int, end: Int) -> String {
 		let s = self.index(self.startIndex, offsetBy: start)
 		let e = self.index(self.startIndex, offsetBy: end + 1)
 		return String(self[s..<e])
@@ -39,7 +39,7 @@ internal extension String {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	internal func trim(set: CharacterSet = CharacterSet.whitespacesAndNewlines) -> String {
+	func trim(set: CharacterSet = CharacterSet.whitespacesAndNewlines) -> String {
 		return self.trimmingCharacters(in: set)
 	}
 
@@ -48,7 +48,7 @@ internal extension String {
 	 * @since 0.5.0
 	 * @hidden
 	 */
-	internal func ltrim(set: CharacterSet = CharacterSet.whitespacesAndNewlines) -> String {
+	func ltrim(set: CharacterSet = CharacterSet.whitespacesAndNewlines) -> String {
 
         for character in self.enumerated() {
             let matched = character.element.unicodeScalars.contains { set.contains($0) }
@@ -65,7 +65,7 @@ internal extension String {
 	 * @since 0.5.0
 	 * @hidden
 	 */
-	internal func rtrim(set: CharacterSet = CharacterSet.whitespacesAndNewlines) -> String {
+	func rtrim(set: CharacterSet = CharacterSet.whitespacesAndNewlines) -> String {
 	// TODO
 	// THis is not OK
             for character in self.reversed().enumerated() {
@@ -85,9 +85,9 @@ internal extension String {
 	 * @since 0.2.0
 	 * @hidden
 	 */
-	internal func until(_ char: Character) -> String {
+	func until(_ char: Character) -> String {
 
-		if let index = self.index(of: char) {
+		if let index = self.firstIndex(of: char) {
 			return String(self[..<index])
 		}
 
@@ -99,7 +99,7 @@ internal extension String {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	internal func match(_ regex: String) -> Bool {
+	func match(_ regex: String) -> Bool {
 		return range(of: regex, options: .regularExpression, range: nil, locale: nil) != nil
 	}
 
@@ -108,7 +108,7 @@ internal extension String {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	internal mutating func unitize(_ unit: PropertyUnit) -> String {
+	mutating func unitize(_ unit: PropertyUnit) -> String {
 
 		switch (unit) {
 			case .px: self.append("px")
@@ -132,7 +132,7 @@ internal extension String {
 	 * @since 0.5.0
 	 * @hidden
 	 */
-	internal func normalize() -> String {
+	func normalize() -> String {
 		return (
 			self.trim()
 				.replacingOccurrences(of: "\\n", with: "\n")
@@ -146,7 +146,7 @@ internal extension String {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	internal func toColor() -> CGColor {
+	func toColor() -> CGColor {
 		return CGColorParse(self)
 	}
 
@@ -155,7 +155,7 @@ internal extension String {
 	 * @since 0.5.0
 	 * @hidden
 	 */
-	internal func toLocale() -> Locale {
+	func toLocale() -> Locale {
 
 		if (self == "") {
 			return Locale.current

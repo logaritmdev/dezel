@@ -10,7 +10,7 @@ internal extension CGMutablePath {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	internal func addRoundedRect(_ rect: CGRect, _ radiuses: [CGFloat]) {
+	func addRoundedRect(_ rect: CGRect, _ radiuses: [CGFloat]) {
 
 		let radiusTRX = radiuses[0]
 		let radiusTRY = radiuses[1]
@@ -43,7 +43,7 @@ internal extension CGMutablePath {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	internal func addRoundedCorner( _ x1: CGFloat, _ y1: CGFloat, _ x2: CGFloat, _ y2: CGFloat, _ r1: CGFloat, _ r2: CGFloat) {
+	func addRoundedCorner( _ x1: CGFloat, _ y1: CGFloat, _ x2: CGFloat, _ y2: CGFloat, _ r1: CGFloat, _ r2: CGFloat) {
 
 		if (r1 == r2) {
 			self.addArc(tangent1End: CGPoint(x: x1, y: y1), tangent2End: CGPoint(x: x2, y: y2), radius: r1)
