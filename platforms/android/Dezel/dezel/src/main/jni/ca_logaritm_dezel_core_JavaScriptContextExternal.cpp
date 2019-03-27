@@ -13,8 +13,16 @@ ContextExceptionCallback(JSContextRef context, JSValueRef error) {
 	jobject exception = wrapper->env->NewObject(
 		JavaScriptValueClass,
 		JavaScriptValueConstructor,
-		wrapper->ctx,
-		(jlong) error,
+		wrapper->ctx
+	);
+
+	JNI_CHECK_EXCEPTION(wrapper->env);
+
+	JNI_CALL_VOID_METHOD(
+		wrapper->env,
+		exception,
+		JavaScriptValueReset,
+		reinterpret_cast<jlong>(error),
 		true
 	);
 
@@ -57,7 +65,7 @@ void Java_ca_logaritm_dezel_core_JavaScriptContextExternal_delete(JNIEnv *env, j
  * Signature: (J)J
  */
 jlong Java_ca_logaritm_dezel_core_JavaScriptContextExternal_getGlobalObject(JNIEnv *env, jclass, jlong contextPtr) {
-	return (jlong) DLContextGetGlobalObject(reinterpret_cast<JSContextRef>(contextPtr));
+	return reinterpret_cast<jlong>(DLContextGetGlobalObject(reinterpret_cast<JSContextRef>(contextPtr)));
 }
 
 /*
