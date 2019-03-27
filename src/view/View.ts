@@ -129,7 +129,7 @@ export class View extends Emitter {
 		let equation = DEFAULT_EQUATION
 		let delay = options.delay || 0
 
-		if (typeof options.duration === 'string') {
+		if (typeof options.duration == 'string') {
 
 			let value = AnimationDurationRegistry.get(options.duration)
 			if (value) {
@@ -142,7 +142,7 @@ export class View extends Emitter {
 			duration = options.duration || DEFAULT_DURATION
 		}
 
-		if (typeof options.equation === 'string') {
+		if (typeof options.equation == 'string') {
 
 			let value = AnimationEquationRegistry.get(options.equation)
 			if (value) {
@@ -1949,7 +1949,7 @@ export class View extends Emitter {
 			if (event.type == 'touchcancel' ||
 				event.type == 'touchend') {
 
-				if (event.activeTouches.length === 0) {
+				if (event.activeTouches.length == 0) {
 					if (this.cancelScroll) {
 						this.cancelScroll = false
 						this.scrollable = true
@@ -2589,7 +2589,7 @@ export class Fragment {
 	public remove(view: View) {
 
 		let index = this.children.indexOf(view)
-		if (index === -1) {
+		if (index == -1) {
 			return this
 		}
 

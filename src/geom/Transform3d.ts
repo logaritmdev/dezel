@@ -144,7 +144,7 @@ export class Transform3D {
 			return
 		}
 
-		if (args.length === 16) {
+		if (args.length == 16) {
 			this.a1 = parseFloat(args[0])
 			this.a2 = parseFloat(args[1])
 			this.a3 = parseFloat(args[2])
@@ -362,7 +362,7 @@ export class Transform3D {
 			d2 = transform.d2
 			d3 = transform.d3
 			d4 = transform.d4
-		} else if (args.length === 16) {
+		} else if (args.length == 16) {
 			a1 = parseFloat(args[0])
 			a2 = parseFloat(args[1])
 			a3 = parseFloat(args[2])

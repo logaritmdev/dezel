@@ -73,7 +73,7 @@ export class Transform2D {
 			return
 		}
 
-		if (args.length === 6) {
+		if (args.length == 6) {
 			this.a = parseFloat(args[0])
 			this.b = parseFloat(args[1])
 			this.c = parseFloat(args[2])
@@ -158,12 +158,12 @@ export class Transform2D {
 			e = transform.e
 			f = transform.f
 		} else {
-			if (typeof args[0] === 'number') this.a = args[0]
-			if (typeof args[1] === 'number') this.b = args[1]
-			if (typeof args[2] === 'number') this.c = args[2]
-			if (typeof args[3] === 'number') this.d = args[3]
-			if (typeof args[4] === 'number') this.e = args[4]
-			if (typeof args[5] === 'number') this.f = args[5]
+			if (typeof args[0] == 'number') this.a = args[0]
+			if (typeof args[1] == 'number') this.b = args[1]
+			if (typeof args[2] == 'number') this.c = args[2]
+			if (typeof args[3] == 'number') this.d = args[3]
+			if (typeof args[4] == 'number') this.e = args[4]
+			if (typeof args[5] == 'number') this.f = args[5]
 		}
 
 		// WRONG
@@ -218,6 +218,6 @@ export class Transform2D {
 	 * @since 0.1.0
 	 */
 	public isIdentity() {
-		return this.a === 1 && this.c === 0 && this.b === 0 && this.d === 1 && this.e === 0 && this.f === 0
+		return this.a == 1 && this.c == 0 && this.b == 0 && this.d == 1 && this.e == 0 && this.f == 0
 	}
 }

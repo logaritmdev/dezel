@@ -335,7 +335,7 @@ export class List extends Component {
 	 */
 	@bound private onListItemTouchCancel(event: TouchEvent) {
 
-		if (this.selectable === false || this.pressedItem == null || this.touch == null) {
+		if (this.selectable == false || this.pressedItem == null || this.touch == null) {
 			return
 		}
 
@@ -353,7 +353,7 @@ export class List extends Component {
 	 */
 	@bound private onListItemTouchStart(event: TouchEvent) {
 
-		if (this.selectable === false || this.pressedItem) {
+		if (this.selectable == false || this.pressedItem) {
 			return
 		}
 
@@ -374,7 +374,7 @@ export class List extends Component {
 	 */
 	@bound private onListItemTouchEnd(event: TouchEvent) {
 
-		if (this.selectable === false || this.pressedItem == null || this.touch == null) {
+		if (this.selectable == false || this.pressedItem == null || this.touch == null) {
 			return
 		}
 

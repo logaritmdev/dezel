@@ -898,7 +898,7 @@ export class Screen<T = any> extends Component {
 
 		this.emit(event)
 
-		let destroy = event.canceled === false
+		let destroy = event.canceled == false
 
 		if (this.presenter) {
 			this.presenter.setPresentee(null)

@@ -120,7 +120,7 @@ export class TabBarButton extends Component {
 
 		super.onTouchStart(event)
 
-		if (this.pressed === false && this.disabled == false) {
+		if (this.pressed == false && this.disabled == false) {
 			this.pressed = true
 		}
 	}
@@ -134,7 +134,7 @@ export class TabBarButton extends Component {
 
 		super.onTouchEnd(event)
 
-		if (this.pressed && event.targetTouches.length === 0) {
+		if (this.pressed && event.targetTouches.length == 0) {
 			this.pressed = false
 			this.emitPress(event)
 		}

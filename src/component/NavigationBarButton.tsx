@@ -108,7 +108,7 @@ export class NavigationBarButton extends Component {
 
 		super.onTouchCancel(event)
 
-		if (this.pressed && event.targetTouches.length === 0) {
+		if (this.pressed && event.targetTouches.length == 0) {
 			this.pressed = false
 		}
 	}
@@ -122,7 +122,7 @@ export class NavigationBarButton extends Component {
 
 		super.onTouchStart(event)
 
-		if (this.pressed === false) {
+		if (this.pressed == false) {
 			this.pressed = true
 		}
 	}
@@ -136,7 +136,7 @@ export class NavigationBarButton extends Component {
 
 		super.onTouchEnd(event)
 
-		if (this.pressed && event.targetTouches.length === 0) {
+		if (this.pressed && event.targetTouches.length == 0) {
 			this.pressed = false
 			this.emitPress(event)
 		}

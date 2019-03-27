@@ -109,7 +109,7 @@ export class Button extends Component {
 
 		super.onTouchCancel(event)
 
-		if (this.pressed && event.targetTouches.length === 0) {
+		if (this.pressed && event.targetTouches.length == 0) {
 			this.pressed = false
 		}
 	}
@@ -122,8 +122,8 @@ export class Button extends Component {
 	public onTouchStart(event: TouchEvent) {
 
 		super.onTouchStart(event)
-		console.log('Touch start', event.activeTouches.length)
-		if (this.pressed === false && this.disabled == false) {
+
+		if (this.pressed == false && this.disabled == false) {
 			this.pressed = true
 		}
 	}

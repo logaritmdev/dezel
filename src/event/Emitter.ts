@@ -104,7 +104,7 @@ export class Emitter {
 	 */
 	public emit<T extends any = any>(event: Event | string, options: EventOptions<T> = {}) {
 
-		if (typeof event === 'string') {
+		if (typeof event == 'string') {
 
 			event = new Event<T>(event, {
 				propagable: options.propagable,
@@ -190,7 +190,7 @@ export class Emitter {
 
 		this.onEmit(event)
 
-		if (event.canceled === false) {
+		if (event.canceled == false) {
 			let listeners = this[LISTENERS][event.type]
 			if (listeners) {
 				listeners.forEach(listener => {
@@ -202,7 +202,7 @@ export class Emitter {
 		this.onDispatch(event)
 
 		if (event.canceled ||
-			event.propagable === false) {
+			event.propagable == false) {
 			return
 		}
 

@@ -1,18 +1,18 @@
-import { ref } from '../decorator/ref'
 import { bound } from '../decorator/bound'
-import { watch } from '../decorator/watch'
+import { ref } from '../decorator/ref'
 import { state } from '../decorator/state'
+import { watch } from '../decorator/watch'
 import { Event } from '../event/Event'
 import { Touch } from '../touch/Touch'
 import { TouchEvent } from '../touch/TouchEvent'
 import { Fragment } from '../view/Fragment'
-import { View } from '../view/View'
 import { SpinnerView } from '../view/SpinnerView'
+import { View } from '../view/View'
 import { Component } from './Component'
-
-import './Refresher.ds'
-import './Refresher.ds.ios'
 import './Refresher.ds.android'
+import './Refresher.ds.ios'
+import './Refresher.ds'
+
 
 /**
  * Displays a refresh indicator within a scrollable element.
@@ -113,12 +113,12 @@ export class Refresher extends Component {
 
 			if (oldView) {
 
-				if (platform.name === 'ios') {
+				if (platform.name == 'ios') {
 					oldView.off('drag', this.onViewDrag)
 					oldView.off('dragend', this.onViewDragEnd)
 				}
 
-				if (platform.name === 'android') {
+				if (platform.name == 'android') {
 					oldView.off('touchstart', this.onViewTouchStart)
 					oldView.off('touchmove', this.onViewTouchMove)
 					oldView.off('touchend', this.onViewTouchEnd)
@@ -127,12 +127,12 @@ export class Refresher extends Component {
 
 			if (newView) {
 
-				if (platform.name === 'ios') {
+				if (platform.name == 'ios') {
 					newView.on('drag', this.onViewDrag)
 					newView.on('dragend', this.onViewDragEnd)
 				}
 
-				if (platform.name === 'android') {
+				if (platform.name == 'android') {
 					newView.on('touchstart', this.onViewTouchStart)
 					newView.on('touchmove', this.onViewTouchMove)
 					newView.on('touchend', this.onViewTouchEnd)
@@ -266,7 +266,7 @@ export class Refresher extends Component {
 
 			let touch = event.touches.item(i)
 
-			if (touch.identifier === tracked.identifier) {
+			if (touch.identifier == tracked.identifier) {
 
 				let diff = touch.y - (startY - scrollT)
 				if (diff > this.measuredHeight) {
@@ -308,7 +308,7 @@ export class Refresher extends Component {
 
 			let touch = event.touches.item(i)
 
-			if (touch.identifier === tracked.identifier) {
+			if (touch.identifier == tracked.identifier) {
 
 				this.trackedTouch = null
 				this.trackedTouchStartX = 0
