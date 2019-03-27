@@ -667,6 +667,9 @@ DLValueGetType(JSContextRef context, JSValueRef value)
 			if (JSObjectIsFunction(context, (JSObjectRef)value)) return DL_TYPE_FUNCTION;
 			if (JSObjectIsConstructor(context, (JSObjectRef)value)) return DL_TYPE_FUNCTION;
 			return DL_TYPE_OBJECT;
+
+		default:
+			return DL_TYPE_NULL;
 	}
 
 	return 0;
