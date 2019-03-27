@@ -11,8 +11,8 @@ JavaScriptSetterExecute(JNIEnv *env, jobject context, jobject instance, jmethodI
 		JavaScriptSetterCallbackClass,
 		JavaScriptSetterCallbackConstructor,
 		context,
-		(jlong) object,
-		(jlong) callee,
+		reinterpret_cast<jlong>(object),
+		reinterpret_cast<jlong>(callee),
 		argc,
 		args
 	);

@@ -11,8 +11,8 @@ JavaScriptGetterExecute(JNIEnv *env, jobject context, jobject instance, jmethodI
 		JavaScriptGetterCallbackClass,
 		JavaScriptGetterCallbackConstructor,
 		context,
-		(jlong) object,
-		(jlong) callee,
+		reinterpret_cast<jlong>(object),
+		reinterpret_cast<jlong>(callee),
 		argc,
 		args
 	);

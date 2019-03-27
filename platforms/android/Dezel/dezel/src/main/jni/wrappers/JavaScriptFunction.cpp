@@ -11,8 +11,8 @@ JavaScriptFunctionExecute(JNIEnv *env, jobject context, jobject instance, jmetho
 		JavaScriptFunctionCallbackClass,
 		JavaScriptFunctionCallbackConstructor,
 		context,
-		(jlong) object,
-		(jlong) callee,
+		reinterpret_cast<jlong>(object),
+		reinterpret_cast<jlong>(callee),
 		argc,
 		args
 	);

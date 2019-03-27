@@ -15,7 +15,7 @@ JavaScriptFinalizeWrapperCallback(JSContextRef context, DLValueDataRef handle)
 		JavaScriptFinalizeCallbackClass,
 		JavaScriptFinalizeCallbackConstructor,
 		wrapper->ctx,
-		(jlong) handle
+		reinterpret_cast<jlong>(handle)
 	);
 
 	JNI_CALL_VOID_METHOD(
