@@ -4,13 +4,13 @@ import { state } from '../decorator/state'
 import { Event } from '../event/Event'
 import { TouchEvent } from '../touch/TouchEvent'
 import { Fragment } from '../view/Fragment'
-import { TextView } from '../view/TextView'
 import { ImageView } from '../view/ImageView'
-import { Component } from './Component'
-
-import './Button.ds'
-import './Button.ds.ios'
+import { TextView } from '../view/TextView'
 import './Button.ds.android'
+import './Button.ds.ios'
+import { Component } from './Component'
+import './Button.ds'
+
 
 /**
  * Displays a pressable element that performs an action.
@@ -109,7 +109,7 @@ export class Button extends Component {
 
 		super.onTouchCancel(event)
 
-		if (this.pressed && event.activeTouches.length === 0) {
+		if (this.pressed && event.targetTouches.length === 0) {
 			this.pressed = false
 		}
 	}
@@ -122,7 +122,7 @@ export class Button extends Component {
 	public onTouchStart(event: TouchEvent) {
 
 		super.onTouchStart(event)
-
+		console.log('Touch start', event.activeTouches.length)
 		if (this.pressed === false && this.disabled == false) {
 			this.pressed = true
 		}
@@ -137,8 +137,7 @@ export class Button extends Component {
 
 		super.onTouchEnd(event)
 
-		// TODO Should this be a little better, like a hit test ?
-		if (this.pressed && event.activeTouches.length === 0) {
+		if (this.pressed && event.targetTouches.length == 0) {
 			this.pressed = false
 			this.emitPress(event)
 		}

@@ -3,13 +3,13 @@ import { state } from '../decorator/state'
 import { Event } from '../event/Event'
 import { TouchEvent } from '../touch/TouchEvent'
 import { Fragment } from '../view/Fragment'
-import { TextView } from '../view/TextView'
 import { ImageView } from '../view/ImageView'
+import { TextView } from '../view/TextView'
 import { Component } from './Component'
-
-import './NavigationBarButton.ds'
-import './NavigationBarButton.ds.ios'
 import './NavigationBarButton.ds.android'
+import './NavigationBarButton.ds.ios'
+import './NavigationBarButton.ds'
+
 
 /**
  * Displays a pressable element that performs an action in a navigation bar.
@@ -108,7 +108,7 @@ export class NavigationBarButton extends Component {
 
 		super.onTouchCancel(event)
 
-		if (this.pressed && event.activeTouches.length === 0) {
+		if (this.pressed && event.targetTouches.length === 0) {
 			this.pressed = false
 		}
 	}
@@ -136,7 +136,7 @@ export class NavigationBarButton extends Component {
 
 		super.onTouchEnd(event)
 
-		if (this.pressed && event.activeTouches.length === 0) {
+		if (this.pressed && event.targetTouches.length === 0) {
 			this.pressed = false
 			this.emitPress(event)
 		}

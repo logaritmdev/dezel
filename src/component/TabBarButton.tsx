@@ -3,13 +3,13 @@ import { ref } from '../decorator/ref'
 import { state } from '../decorator/state'
 import { TouchEvent } from '../touch/TouchEvent'
 import { Fragment } from '../view/Fragment'
-import { TextView } from '../view/TextView'
 import { ImageView } from '../view/ImageView'
+import { TextView } from '../view/TextView'
 import { Component } from './Component'
-
-import './TabBarButton.ds'
-import './TabBarButton.ds.ios'
 import './TabBarButton.ds.android'
+import './TabBarButton.ds.ios'
+import './TabBarButton.ds'
+
 
 /**
  * Displays a pressable element that performs an action in a tab bar.
@@ -106,7 +106,7 @@ export class TabBarButton extends Component {
 
 		super.onTouchCancel(event)
 
-		if (this.pressed && event.activeTouches.length == 0) {
+		if (this.pressed && event.targetTouches.length == 0) {
 			this.pressed = false
 		}
 	}
@@ -134,7 +134,7 @@ export class TabBarButton extends Component {
 
 		super.onTouchEnd(event)
 
-		if (this.pressed && event.activeTouches.length === 0) {
+		if (this.pressed && event.targetTouches.length === 0) {
 			this.pressed = false
 			this.emitPress(event)
 		}
