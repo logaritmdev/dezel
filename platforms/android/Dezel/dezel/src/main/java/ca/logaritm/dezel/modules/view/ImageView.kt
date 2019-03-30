@@ -447,7 +447,7 @@ open class ImageView(context: JavaScriptContext) : View(context) {
 			"grayscale" -> return ImageFilter.GRAYSCALE
 
 			else -> {
-				Log.d("Dezel", "Unrecognized value for imageFilter: (value)")
+				Log.d("Dezel", "Unrecognized value for imageFilter: $value")
 			}
 		}
 

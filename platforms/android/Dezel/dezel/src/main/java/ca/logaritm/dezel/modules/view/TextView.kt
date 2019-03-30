@@ -442,7 +442,7 @@ open class TextView(context: JavaScriptContext) : View(context), ContentTextView
 			"underline" -> return TextDecoration.UNDERLINE
 		}
 
-		Log.d("DEZEL", "Unrecognized handle for textDecoration: $value")
+		Log.d("Dezel", "Unrecognized handle for textDecoration: $value")
 
 		return TextDecoration.NONE
 	}
