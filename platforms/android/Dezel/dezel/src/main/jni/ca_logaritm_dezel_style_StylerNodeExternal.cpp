@@ -30,7 +30,7 @@ void Java_ca_logaritm_dezel_style_StylerNodeExternal_delete(JNIEnv *env, jclass,
 
 	StylerNodeWrapperDelete(env, reinterpret_cast<StylerNodeWrapperRef>(DLStylerNodeGetData(node)));
 
-	delete node;
+	DLStylerNodeDelete(node);
 }
 
 /*
