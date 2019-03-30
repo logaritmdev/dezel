@@ -1,12 +1,16 @@
 package ca.logaritm.dezel.view
 
 import android.content.Context
+import android.graphics.Bitmap
+import android.net.http.SslError
+import android.os.Build
 import android.util.Log
 import android.util.Size
 import android.util.SizeF
 import android.view.MotionEvent
 import android.view.View
 import android.webkit.*
+import android.widget.RelativeLayout
 import ca.logaritm.dezel.extension.Delegates
 import ca.logaritm.dezel.view.type.Overscroll
 import ca.logaritm.dezel.view.type.Scrollbars
@@ -220,6 +224,67 @@ open class ContentWebView(context: Context, listener: ContentWebViewListener) : 
 
 	}
 
+	/**
+	 * @property webViewWebClient
+	 * @since 0.6.0
+	 * @hidden
+	 */
+	private var webViewWebClient: WebViewClient = object: WebViewClient() {
+
+		/**
+		 * @method onPageFinished
+		 * @since 0.6.0
+		 * @hidden
+		 */
+		override fun onPageFinished(view: WebView, url: String) {
+			val w = this@ContentWebView.computeHorizontalScrollRange()
+			val h = this@ContentWebView.computeVerticalScrollRange()
+			contentViewListener?.onUpdateContentSize(this@ContentWebView, Size(w, h))
+			contentViewListener?.onLoad(this@ContentWebView)
+		}
+
+		/**
+		 * @method onReceivedSslError
+		 * @since 0.6.0
+		 * @hidden
+		 */
+		override fun onReceivedSslError(view: WebView, handler: SslErrorHandler, error: SslError) {
+			handler.proceed()
+		}
+
+		/**
+		 * @method shouldOverrideUrlLoading
+		 * @since 0.6.0
+		 * @hidden
+		 */
+		override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
+
+			val allow = contentViewListener?.onBeforeLoad(this@ContentWebView, request.url.toString())
+			if (allow == false) {
+				return true
+			}
+
+			return super.shouldOverrideUrlLoading(view, request)
+		}
+	}
+
+	/**
+	 * @property webViewChromeClient
+	 * @since 0.6.0
+	 * @hidden
+	 */
+	private val webViewChromeClient: WebChromeClient = object: WebChromeClient() {
+
+		/**
+		 * @method onGeolocationPermissionsShowPrompt
+		 * @since 0.6.0
+		 * @hidden
+		 */
+		override fun onGeolocationPermissionsShowPrompt(origin: String?, callback: GeolocationPermissions.Callback) {
+			callback(origin, true, false)
+		}
+	}
+
 	//--------------------------------------------------------------------------
 	// Methods
 	//--------------------------------------------------------------------------
@@ -236,26 +301,25 @@ open class ContentWebView(context: Context, listener: ContentWebViewListener) : 
 		this.settings.allowFileAccessFromFileURLs = true
 		this.settings.allowContentAccess = true
 		this.settings.javaScriptEnabled = true
+		this.settings.javaScriptCanOpenWindowsAutomatically = true
+		this.settings.databaseEnabled = true
+		this.settings.domStorageEnabled = true
+		this.settings.setGeolocationEnabled(true)
 
-		this.webViewClient = object : WebViewClient() {
+		/*
+		 * Setting this is very important because it will have an effect
+		 * on the height of the html element inside the web page.
+		 */
 
-			override fun onPageFinished(view: WebView, url: String) {
-				val w = this@ContentWebView.computeHorizontalScrollRange()
-				val h = this@ContentWebView.computeVerticalScrollRange()
-				this@ContentWebView.contentViewListener?.onUpdateContentSize(this@ContentWebView, Size(w, h))
-				this@ContentWebView.contentViewListener?.onLoad(this@ContentWebView)
-			}
+		this.layoutParams = RelativeLayout.LayoutParams(
+			RelativeLayout.LayoutParams.MATCH_PARENT,
+			RelativeLayout.LayoutParams.MATCH_PARENT
+		)
 
-			override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
+		this.webViewClient = this.webViewWebClient
+		this.webChromeClient = this.webViewChromeClient
 
-				val allow = this@ContentWebView.contentViewListener?.onBeforeLoad(this@ContentWebView, request.url.toString())
-				if (allow == false) {
-					return true
-				}
-
-				return super.shouldOverrideUrlLoading(view, request)
-			}
-		}
+		WebView.setWebContentsDebuggingEnabled(true);
 	}
 
 	/**
