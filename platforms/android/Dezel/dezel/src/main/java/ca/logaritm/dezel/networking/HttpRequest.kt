@@ -223,7 +223,6 @@ open class HttpRequest(url: String, method: String) {
 	 * @since 0.1.0
 	 */
 	private fun onSend(data: String) {
-		Log.d("DEZEL", "onSend")
 		this.listener?.onSend(this, data)
 	}
 
@@ -240,7 +239,6 @@ open class HttpRequest(url: String, method: String) {
 	 * @since 0.1.0
 	 */
 	private fun onTimeout() {
-		Log.d("DEZEL", "onTimeout")
 		this.listener?.onTimeout(this)
 	}
 
@@ -249,7 +247,6 @@ open class HttpRequest(url: String, method: String) {
 	 * @since 0.1.0
 	 */
 	private fun onFail(code: Int) {
-		Log.d("DEZEL", "onFail")
 		this.listener?.onFail(this, code)
 	}
 
@@ -258,7 +255,6 @@ open class HttpRequest(url: String, method: String) {
 	 * @since 0.1.0
 	 */
 	private fun onAbort() {
-		Log.d("DEZEL", "onAbort")
 		this.listener?.onAbort(this)
 	}
 
@@ -267,7 +263,6 @@ open class HttpRequest(url: String, method: String) {
 	 * @since 0.1.0
 	 */
 	private fun onComplete() {
-		Log.d("DEZEL", "onComplete")
 		this.listener?.onComplete(this)
 	}
 
@@ -321,7 +316,7 @@ open class HttpRequest(url: String, method: String) {
 				if (url == null) {
 					return REQUEST_FAIL
 				}
-				Log.d("DEZEL", "BEGIN TASK to " + url.toString())
+
 				this.connection = url.openConnection() as HttpURLConnection
 
 				val locale = Locale.getDefault()
