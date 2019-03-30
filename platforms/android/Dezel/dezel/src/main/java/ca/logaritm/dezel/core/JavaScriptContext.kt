@@ -13,11 +13,8 @@ open class JavaScriptContext {
 
 	companion object {
 		init {
-			System.loadLibrary("dezel")
 			System.loadLibrary("jsc")
-//			System.loadLibrary("icuuc_jsc")
-//			System.loadLibrary("icui18n_jsc")
-//			System.loadLibrary("icudata_jsc")
+			System.loadLibrary("dezel")
 		}
 	}
 
@@ -410,11 +407,11 @@ open class JavaScriptContext {
 	}
 
 	/**
-	 * Assigns a holder to execute when an exception is thrown within this context.
-	 * @method exception
-	 * @since 0.1.0
+	 * Assigns a holder to execute when an error is thrown within this context.
+	 * @method handleError
+	 * @since 0.6.0
 	 */
-	open fun exception(callback: JavaScriptExceptionHandler) {
+	open fun handleError(callback: JavaScriptExceptionHandler) {
 		JavaScriptContextExternal.setExceptionCallback(this.handle, JavaScriptExceptionWrapper(callback), this)
 	}
 

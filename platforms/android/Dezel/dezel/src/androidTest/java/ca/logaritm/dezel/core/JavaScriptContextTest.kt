@@ -135,7 +135,7 @@ class JavaScriptContextTest  {
 
         var didCallExceptionHandler = false
 
-        this.context.exception { error ->
+        this.context.handleError { error ->
             didCallExceptionHandler = true
         }
 

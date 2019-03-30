@@ -185,15 +185,12 @@ open class DezelApplicationController: UIViewController {
 				stack = error.property("stack").string
 			}
 
-			let message = error.string
-
-			print(
-				"JavaScript Error : \(message) \n " +
+			let message =
+				"\(error.string) \n " +
 				"File: \(file) \n " +
 				"Line: \(line) \n " +
 				"Stack Trace:  \n " +
 				"\(stack)"
-			)
 
 			let crash = self.applicationDidTriggerError(error: error)
 			if (crash) {

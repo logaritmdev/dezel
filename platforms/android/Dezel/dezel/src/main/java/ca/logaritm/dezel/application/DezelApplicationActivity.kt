@@ -282,7 +282,7 @@ open class DezelApplicationActivity : Activity(), KeyboardObserverListener {
 		this.context.global.property("_SIM_", this.isSim())
 		this.context.attribute("dezel.application.DezelApplicationActivity", this)
 
-		this.context.exception { error ->
+		this.context.handleError { error ->
 
 			var file = "<no file>"
 			var line = "<no line>"
@@ -294,9 +294,9 @@ open class DezelApplicationActivity : Activity(), KeyboardObserverListener {
 				stack = error.property("stack").string
 			}
 
-			val message = error.string
+			val message = "${error.string} \n File: $file \n Line: $line \n Stack Trace: \n $stack"
 
-			Log.e("DEZEL", "JavaScript Error : $message \n File: $file \n Line: $line$ \n Stack Trace:  \n $stack")
+			Log.e("DEZEL", message)
 
 			val crash = this.onApplicationTriggerError(error)
 			if (crash) {
@@ -662,7 +662,7 @@ open class DezelApplicationActivity : Activity(), KeyboardObserverListener {
 	}
 
 	/**
-	 * Called when an exception is triggered from the JavaScript context.
+	 * Called when an error is triggered from the JavaScript context.
 	 * @method onApplicationTriggerError
 	 * @since 0.5.0
 	 */
@@ -860,11 +860,13 @@ open class DezelApplicationActivity : Activity(), KeyboardObserverListener {
 		// TODO
 		// Filter touches to make sure they are within this window
 
-		when (e.action) {
-			MotionEvent.ACTION_CANCEL -> this.dispatchTouchCancel(e)
-			MotionEvent.ACTION_DOWN   -> this.dispatchTouchStart(e)
-			MotionEvent.ACTION_MOVE   -> this.dispatchTouchMove(e)
-			MotionEvent.ACTION_UP     -> this.dispatchTouchEnd(e)
+		when (e.actionMasked) {
+			MotionEvent.ACTION_CANCEL       -> this.dispatchTouchCancel(e)
+			MotionEvent.ACTION_DOWN         -> this.dispatchTouchStart(e)
+			MotionEvent.ACTION_POINTER_DOWN -> this.dispatchTouchStart(e)
+			MotionEvent.ACTION_MOVE         -> this.dispatchTouchMove(e)
+			MotionEvent.ACTION_UP           -> this.dispatchTouchEnd(e)
+			MotionEvent.ACTION_POINTER_UP   -> this.dispatchTouchEnd(e)
 		}
 
 		return dispatch
@@ -915,21 +917,18 @@ open class DezelApplicationActivity : Activity(), KeyboardObserverListener {
 
 		val array = context.createEmptyArray()
 
-		for (i in 0 until e.pointerCount) {
+		val identifier = e.getPointerId(e.actionIndex)
 
-			val identifier = e.getPointerId(i)
+		val k = e.findPointerIndex(identifier)
+		val x = e.getX(k)
+		val y = e.getY(k)
 
-			val k = e.findPointerIndex(identifier)
-			val x = e.getX(k)
-			val y = e.getY(k)
+		val touch = this.context.createEmptyObject()
+		touch.property("identifier", identifier.toDouble())
+		touch.property("x", Convert.toDp(x).toDouble())
+		touch.property("y", Convert.toDp(y).toDouble())
 
-			val touch = this.context.createEmptyObject()
-			touch.property("identifier", identifier.toDouble())
-			touch.property("x", Convert.toDp(x).toDouble())
-			touch.property("y", Convert.toDp(y).toDouble())
-
-			array.property(i, touch)
-		}
+		array.property(0, touch)
 
 		return array
 	}
