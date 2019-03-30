@@ -1,5 +1,6 @@
 package ca.logaritm.dezel.modules.application
 
+import android.bluetooth.BluetoothAdapter
 import android.content.Intent
 import android.net.Uri
 import android.provider.Settings
@@ -76,6 +77,45 @@ open class Application(context: JavaScriptContext) : JavaScriptClass(context) {
 	 */
 	open fun destroy() {
 		this.holder.callMethod("nativeDestroy")
+	}
+
+	//--------------------------------------------------------------------------
+	// Private API
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method startApplicationSettingsActivity
+	 * @since 0.6.0
+	 * @hidden
+	 */
+	private fun startApplicationSettingsActivity() {
+		this.context.application.startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.fromParts("package", this.context.application.packageName, null)))
+	}
+
+	/**
+	 * @method getLocationIntentSettings
+	 * @since 0.6.0
+	 * @hidden
+	 */
+	private fun startApplicationLocationSettingsActivity() {
+		this.context.application.startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
+	}
+
+	/**
+	 * @method getBluetoothIntentSettings
+	 * @since 0.6.0
+	 * @hidden
+	 */
+	private fun startApplicationBluetoothSettingsActivity() {
+
+		val adapter = BluetoothAdapter.getDefaultAdapter()
+		if (adapter == null ||
+			adapter.isEnabled == false) {
+			this.startApplicationSettingsActivity()
+			return
+		}
+
+		this.context.application.startActivity(Intent(Settings.ACTION_BLUETOOTH_SETTINGS))
 	}
 
 	//--------------------------------------------------------------------------
@@ -240,20 +280,17 @@ open class Application(context: JavaScriptContext) : JavaScriptClass(context) {
 		}
 
 		if (url == "app:settings") {
-			val intent = Intent()
-			intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
-			intent.data = Uri.fromParts("package", this.context.application.packageName, null)
-			this.context.application.startActivity(intent)
+			this.startApplicationSettingsActivity()
 			return
 		}
 
 		if (url == "settings:location") {
-			this.context.application.startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
+			this.startApplicationLocationSettingsActivity()
 			return
 		}
 
 		if (url == "settings:bluetooth") {
-			this.context.application.startActivity(Intent(Settings.ACTION_BLUETOOTH_SETTINGS))
+			this.startApplicationBluetoothSettingsActivity()
 			return
 		}
 	}
