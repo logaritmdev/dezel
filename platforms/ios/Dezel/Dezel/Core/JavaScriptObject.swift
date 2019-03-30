@@ -19,6 +19,20 @@ open class JavaScriptObject: JavaScriptValue {
 	}
 
 	/**
+	 * @overridden
+	 * @method dispose
+	 * @since 0.6.0
+	 */
+	override open func dispose() {
+
+		if (self.handle != nil) {
+			DLValueGetAssociatedObject(self.context.handle, self.handle).release()
+		}
+
+		super.dispose()
+	}
+
+	/**
 	 * Returns an attribute from this object.
 	 * @method attribute
 	 * @since 0.1.0
@@ -65,8 +79,20 @@ open class JavaScriptObject: JavaScriptValue {
 	 * @since 0.4.0
 	 */
 	override open func didResetValue() {
+
 		self.finalize { callback in
+
+			/*
+			 * When an object is finalized on the JavaScript side we must
+			 * dispose it from the native side because its technically no
+			 * longer usable.
+			 */
+
+
 			DLValueDataGetAssociatedObject(callback.handle).release()
+
+			self.recycle()
+			self.dispose()
 		}
 	}
 }

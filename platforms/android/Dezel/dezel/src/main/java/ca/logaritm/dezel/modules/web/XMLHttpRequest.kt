@@ -179,12 +179,13 @@ open class XMLHttpRequest(context: JavaScriptContext) : EventTarget(context), Ht
 	}
 
 	/**
-	 * @destructor
-	 * @since 0.2.0
+	 * @inherited
+	 * @method dispose
+	 * @since 0.6.0
 	 */
-	@Throws(Throwable::class)
-	protected fun finalize() {
+	override fun dispose() {
 		LocalBroadcastManager.getInstance(this.context.application).unregisterReceiver(this.applicationReloadReceiver)
+		super.dispose()
 	}
 
 	//--------------------------------------------------------------------------

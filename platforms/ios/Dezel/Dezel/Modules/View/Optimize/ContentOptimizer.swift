@@ -57,7 +57,7 @@ open class ContentOptimizer : JavaScriptClass, View.Delegate {
 		self.cache.values.forEach {
 			$0.forEach {
 				$0.unprotect()
-				$0.destroy()
+				$0.dispose()
 			}
 		}
 

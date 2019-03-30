@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.os.AsyncTask
 import android.os.Handler
 import android.support.v4.content.LocalBroadcastManager
 import android.util.Log
@@ -154,11 +153,13 @@ open class WebSocket(context: JavaScriptContext) : EventTarget(context) {
 	}
 
 	/**
-	 * @destructor
-	 * @since 0.2.0
+	 * @inherited
+	 * @method dispose
+	 * @since 0.6.0
 	 */
-	protected fun finalize() {
+	override fun dispose() {
 		LocalBroadcastManager.getInstance(this.context.application).unregisterReceiver(this.applicationReloadReceiver)
+		super.dispose()
 	}
 
 	//--------------------------------------------------------------------------

@@ -266,15 +266,6 @@ open class JavaScriptValue : NSObject {
 	}
 
 	/**
-	 * Disposes of the value upon destruction.
-	 * @destructor
-	 * @since 0.1.0
-	 */
-	deinit {
-		self.dispose()
-	}
-
-	/**
 	 * Protect the value making it not garbage collectable.
 	 * @method protect
 	 * @since 0.1.0
@@ -735,6 +726,16 @@ open class JavaScriptValue : NSObject {
 		}
 
 		self.didResetValue()
+	}
+
+	/**
+	 * @method recycle
+	 * @since 0.6.0
+	 * @hidden
+	 */
+	public func recycle() {
+		self.unprotect()
+		self.handle = nil
 	}
 }
 

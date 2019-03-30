@@ -46,10 +46,10 @@ open class WebView(context: JavaScriptContext) : View(context), ContentWebViewLi
 	 * @method destroy
 	 * @since 0.5.0
 	 */
-	override fun destroy() {
+	override fun dispose() {
 		this.view.contentViewListener = null
 		this.view.stopLoading()
-		super.destroy()
+		super.dispose()
 	}
 
 	/**

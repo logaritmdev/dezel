@@ -136,16 +136,16 @@ open class NotificationManager(context: JavaScriptContext) : JavaScriptClass(con
 	}
 
 	/**
-	 * @destructor
-	 * @since 0.1.0
-	 * @hidden
+	 * @inherited
+	 * @method dispose
+	 * @since 0.6.0
 	 */
-	@Throws(Throwable::class)
-	protected fun finalize() {
+	override fun dispose() {
 		LocalBroadcastManager.getInstance(this.context.application).unregisterReceiver(this.applicationEnterBackgroundReceiver)
 		LocalBroadcastManager.getInstance(this.context.application).unregisterReceiver(this.applicationEnterForegroundReceiver)
 		LocalBroadcastManager.getInstance(this.context.application).unregisterReceiver(this.messagingServiceMessageReceiver)
 		LocalBroadcastManager.getInstance(this.context.application).unregisterReceiver(this.messagingServiceTokenReceiver)
+		super.dispose()
 	}
 
 	/**

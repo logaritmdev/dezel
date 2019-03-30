@@ -289,16 +289,6 @@ open class TextArea: View, ContentTextAreaDelegate {
 
 	/**
 	 * @inherited
-	 * @method destroy
-	 * @since 0.5.0
-	 */
-	override open func destroy() {
-		self.view.contentViewDelegate = nil
-		super.destroy()
-	}
-
-	/**
-	 * @inherited
 	 * @method update
 	 * @since 0.1.0
 	 */

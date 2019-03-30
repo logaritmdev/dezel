@@ -48,13 +48,13 @@ open class WebView: View, ContentWebViewDelegate {
 
 	/**
 	 * @inherited
-	 * @method destroy
-	 * @since 0.5.0
+	 * @method dispose
+	 * @since 0.6.0
 	 */
-	override open func destroy() {
+	override open func dispose() {
 		self.view.contentViewDelegate = nil
 		self.view.stopLoading()
-		super.destroy()
+		super.dispose()
 	}
 
 	/**

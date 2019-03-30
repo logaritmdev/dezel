@@ -67,7 +67,7 @@ open class ContentOptimizer(context: JavaScriptContext) : JavaScriptClass(contex
 		this.cache.values.forEach {
 			it.forEach {
 				it.unprotect()
-				it.destroy()
+				it.dispose()
 			}
 		}
 

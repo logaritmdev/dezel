@@ -17,7 +17,11 @@ open class JavaScriptObject(context: JavaScriptContext): JavaScriptValue(context
 	 * @since 0.6.0
 	 */
 	override fun dispose() {
-		JavaScriptValueExternal.deleteAssociatedObject(this.context.handle, this.handle)
+
+		if (this.handle != 0L) {
+			JavaScriptValueExternal.deleteAssociatedObject(this.context.handle, this.handle)
+		}
+
 		super.dispose()
 	}
 
@@ -67,8 +71,19 @@ open class JavaScriptObject(context: JavaScriptContext): JavaScriptValue(context
 	 * @since 0.4.0
 	 */
 	override fun onResetValue() {
+
 		this.finalize { callback ->
+
+			/*
+			 * When an object is finalized on the JavaScript side we must
+			 * dispose it from the native side because its technically no
+			 * longer usable.
+			 */
+
 			JavaScriptValueExternal.deleteAssociatedObject(callback.handle)
+
+			this.recycle()
+			this.dispose()
 		}
 	}
 }

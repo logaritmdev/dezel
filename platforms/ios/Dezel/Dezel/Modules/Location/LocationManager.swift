@@ -63,12 +63,13 @@ open class LocationManager: JavaScriptClass, CLLocationManagerDelegate {
 	}
 
 	/**
-	 * Removes listeners upon destruction.
-	 * @destructor
-	 * @since 0.1.0
+	 * @inherited
+	 * @method dispose
+	 * @since 0.6.0
 	 */
-	deinit {
+	override open func dispose() {
 		NotificationCenter.default.removeObserver(self)
+		super.dispose()
 	}
 
 	/**

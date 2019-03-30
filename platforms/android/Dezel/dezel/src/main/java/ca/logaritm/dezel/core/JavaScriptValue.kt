@@ -692,4 +692,14 @@ open class JavaScriptValue(context: JavaScriptContext) {
 
 		this.onResetValue()
 	}
+
+	/**
+	 * @method recycle
+	 * @since 0.6.0
+	 * @hidden
+	 */
+	public fun recycle() {
+		this.unprotect()
+		this.handle = 0L
+	}
 }

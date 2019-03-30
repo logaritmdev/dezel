@@ -33,7 +33,7 @@ public typealias JavaScriptGetterHandler = (JavaScriptGetterCallback) -> Unit
 public typealias JavaScriptSetterHandler = (JavaScriptSetterCallback) -> Unit
 
 /**
- * The type alias for exception holder holder.
+ * The type alias for the exception handler.
  * @alias JavaScriptExceptionHandler
  * @since 0.1.0
  */

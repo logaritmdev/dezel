@@ -2128,11 +2128,11 @@ open class View: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelegate, Scroll
 	private var invalidContent: Bool = false
 
 	/**
-	 * @property destroyed
+	 * @property disposed
 	 * @since 0.6.0
 	 * @hidden
 	 */
-	private var destroyed: Bool = false
+	private var disposed: Bool = false
 
 	//--------------------------------------------------------------------------
 	// MARK: Methods
@@ -2179,36 +2179,25 @@ open class View: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelegate, Scroll
 	}
 
 	/**
-	 * @destructor
-	 * @since 0.1.0
+	 * @inherited
+	 * @method dispose
+	 * @since 0.6.0
 	 */
-	deinit {
-		self.destroy()
-	}
+	override open func dispose() {
 
-	/**
-	 * Frees memory from this view.
-	 * @method destroy
-	 * @since 0.1.0
-	 */
-	open func destroy() {
-
-		if (self.destroyed) {
+		if (self.disposed) {
 			return
 		}
 
-		self.destroyed = true
+		self.disposed = true
 
-		self.canvas?.unprotect()
-		self.canvas?.dispose()
 		self.canvas = nil
-
 		self.wrapper.removeFromSuperview()
 		self.content.removeFromSuperview()
 
 		NotificationCenter.default.removeObserver(self, name: Notification.Name("applicationreload"), object: nil)
 
-		self.dispose()
+		super.dispose()
 	}
 
 	/**
@@ -3400,7 +3389,7 @@ open class View: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelegate, Scroll
 	 * @hidden
 	 */
 	@objc open func applicationReloadHandler(notification: Notification) {
-		self.destroy()
+		self.dispose()
 	}
 
 	//--------------------------------------------------------------------------
@@ -6709,7 +6698,7 @@ open class View: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelegate, Scroll
 	 * @hidden
 	 */
 	@objc open func jsFunction_destroy(callback: JavaScriptFunctionCallback) {
-		self.destroy()
+		self.dispose()
 	}
 
 	/**

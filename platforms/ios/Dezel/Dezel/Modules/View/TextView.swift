@@ -359,16 +359,6 @@ open class TextView: View, ContentTextViewDelegate {
 
 	/**
 	 * @inherited
-	 * @method destroy
-	 * @since 0.5.0
-	 */
-	override open func destroy() {
-		self.view.contentViewDelegate = nil
-		super.destroy()
-	}
-
-	/**
-	 * @inherited
 	 * @method measure
 	 * @since 0.5.0
 	 */

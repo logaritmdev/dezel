@@ -59,11 +59,13 @@ open class WebGlobal: JavaScriptClass {
 	}
 
 	/**
-	 * @destructor
-	 * @since 0.2.0
+	 * @inherited
+	 * @method dispose
+	 * @since 0.6.0
 	 */
-	deinit {
+	override open func dispose() {
 		NotificationCenter.default.removeObserver(self, name: Notification.Name("applicationreload"), object: nil)
+		super.dispose()
 	}
 
 	/**

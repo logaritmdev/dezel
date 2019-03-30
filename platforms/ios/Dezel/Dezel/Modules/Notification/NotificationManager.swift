@@ -61,14 +61,15 @@ public class NotificationManager: JavaScriptClass, UNUserNotificationCenterDeleg
 	}
 
 	/**
-	 * Removes listeners upon destruction.
-	 * @since 0.1.0
-	 * @hidden
+	 * @inherited
+	 * @method dispose
+	 * @since 0.6.0
 	 */
-	deinit {
+	override open func dispose() {
 		NotificationCenter.default.removeObserver(self, name: UIApplication.willEnterForegroundNotification, object: nil)
 		NotificationCenter.default.removeObserver(self, name: UIApplication.didEnterBackgroundNotification, object: nil)
 		NotificationCenter.default.removeObserver(self, name:Notification.Name("receiveremotenotificationstoken"), object: nil)
+		super.dispose()
 	}
 
 	/**
