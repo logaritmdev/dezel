@@ -36,7 +36,6 @@ static void
 JavaScriptClassFunctionWrapperFinalize(JSContextRef context, DLValueDataRef handle)
 {
 	JavaScriptClassFunctionWrapperRef wrapper = (JavaScriptClassFunctionWrapperRef) DLValueDataGetAssociatedObject(handle);
-
 	if (wrapper == NULL) {
 		return;
 	}

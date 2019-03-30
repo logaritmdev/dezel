@@ -52,7 +52,6 @@ static void
 JavaScriptClassConstructorWrapperFinalize(JSContextRef context, DLValueDataRef handle)
 {
 	JavaScriptClassConstructorWrapperRef wrapper = (JavaScriptClassConstructorWrapperRef) DLValueDataGetAssociatedObject(handle);
-
 	if (wrapper == NULL) {
 		return;
 	}

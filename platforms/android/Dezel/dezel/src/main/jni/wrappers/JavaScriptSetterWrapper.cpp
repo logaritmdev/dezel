@@ -27,7 +27,6 @@ static void
 JavaScriptSetterWrapperFinalize(JSContextRef context, DLValueDataRef handle)
 {
 	JavaScriptSetterWrapperRef wrapper = (JavaScriptSetterWrapperRef) DLValueDataGetAssociatedObject(handle);
-
 	if (wrapper == NULL) {
 		return;
 	}
