@@ -3,6 +3,7 @@ package ca.logaritm.dezel.modules.graphic
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.AsyncTask
 import android.util.Log
 import ca.logaritm.dezel.core.Property
@@ -156,7 +157,27 @@ open class ImageLoader(val context: Context) {
 			path = path.substring(2)
 		}
 
-		val stream = this.getImageStream(this.context, path)
+		var stream: ImageLoader.ImageStream? = null
+
+		if (path.startsWith("content://")) {
+
+			try {
+
+				val input = this.context.contentResolver.openInputStream(Uri.parse(path))
+				if (input == null) {
+					throw Error("Invalid content stream.")
+				}
+
+				stream = ImageLoader.ImageStream(input, 1)
+
+			} catch (e: Exception) {
+
+			}
+
+		} else {
+			stream = this.getImageStream(this.context, path)
+		}
+
 		if (stream == null) {
 			this.failed(path, Exception("Unable to load image stream for $path"))
 			return

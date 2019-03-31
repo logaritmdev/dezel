@@ -3,9 +3,11 @@ package ca.logaritm.dezel.application
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
+import android.os.Parcelable
 import android.support.v4.content.LocalBroadcastManager
 import android.util.Log
 import android.view.MotionEvent
@@ -376,6 +378,25 @@ open class DezelApplicationActivity : Activity(), KeyboardObserverListener {
 		if (this.state == State.BACKGROUND) {
 			this.state = State.FOREGROUND
 			this.application?.holder?.callMethod("nativeEnterForeground")
+		}
+
+		val intent = this.intent
+		if (intent == null) {
+			return
+		}
+
+		if (intent.action == Intent.ACTION_VIEW) {
+			val uri = intent.data
+			if (uri is Uri) {
+				this.application?.holder?.callMethod("nativeHandleLink", arrayOf(this.context.createString(uri.toString())))
+			}
+		}
+
+		if (intent.action == Intent.ACTION_SEND) {
+			val uri = intent.getParcelableExtra<Parcelable>(Intent.EXTRA_STREAM)
+			if (uri is Uri) {
+				this.application?.holder?.callMethod("nativeHandleResource", arrayOf(this.context.createString(uri.toString())))
+			}
 		}
 	}
 
