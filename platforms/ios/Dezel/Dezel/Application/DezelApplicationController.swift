@@ -164,6 +164,7 @@ open class DezelApplicationController: UIViewController {
 		NotificationCenter.default.addObserver(self, selector: #selector(handleTouchEnded), name: Notification.Name("touchesended"), object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(handleTouchCancelled), name: Notification.Name("touchescancelled"), object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(applicationDidHandleLink), name: Notification.Name("handlelink"), object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(applicationDidHandleResource), name: Notification.Name("handleresource"), object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(applicationDidEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(applicationDidEnterBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChangeFrame), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
@@ -854,8 +855,19 @@ open class DezelApplicationController: UIViewController {
  	 * @hidden
 	 */
 	@objc open func applicationDidHandleLink(notification: Notification) {
-		if let link = notification.userInfo?["url"] as? URL {
-			self.application?.holder.callMethod("nativeHandleLink", arguments: [self.context.createString(link.absoluteString)])
+		if let url = notification.userInfo?["url"] as? URL {
+			self.application?.holder.callMethod("nativeHandleLink", arguments: [self.context.createString(url.absoluteString)])
+		}
+	}
+
+	/**
+	 * @method applicationDidHandleResource
+	 * @since 0.5.0
+ 	 * @hidden
+	 */
+	@objc open func applicationDidHandleResource(notification: Notification) {
+		if let url = notification.userInfo?["url"] as? URL {
+			self.application?.holder.callMethod("nativeHandleResource", arguments: [self.context.createString(url.absoluteString)])
 		}
 	}
 }

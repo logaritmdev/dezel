@@ -33,8 +33,18 @@ open class DezelApplicationDelegate: UIResponder, UIApplicationDelegate {
 
 	/**
 	 * @inherited
+	 * @method applicationopenurl
+	 * @since 0.5.0
+	 */
+	open func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+		NotificationCenter.default.post(name: Notification.Name("handleresource"), object: self, userInfo: ["url": url])
+		return true
+	}
+
+	/**
+	 * @inherited
 	 * @method applicationContinueUserActivity
-	 * @hidden
+	 * @since 0.6.0
 	 */
 	open func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
 
@@ -48,7 +58,7 @@ open class DezelApplicationDelegate: UIResponder, UIApplicationDelegate {
 	/**
 	 * @inherited
 	 * @method applicationDidRegisterForRemoteNotificationsWithDeviceToken
-	 * @hidden
+	 * @since 0.5.0
 	 */
     open func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
 
