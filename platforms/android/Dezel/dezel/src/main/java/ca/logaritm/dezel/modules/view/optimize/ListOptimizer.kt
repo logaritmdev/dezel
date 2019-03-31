@@ -40,7 +40,6 @@ open class ListOptimizer(context: JavaScriptContext) : ContentOptimizer(context)
 	open val maximum: Int
 		get() = this.length - 1
 
-
 	/**
 	 * The estimated item size.
 	 * @property estimatedItemSize
@@ -97,18 +96,14 @@ open class ListOptimizer(context: JavaScriptContext) : ContentOptimizer(context)
 	 * @since 0.2.0
 	 * @hidden
 	 */
-	private var contentOffset: Double by Delegates.OnSet(0.0) {
-		this.contentOffsetInvalid = true
-	}
+	private var contentOffset: Double = 0.0
 
 	/**
 	 * @property contentLength
 	 * @since 0.2.0
 	 * @hidden
 	 */
-	private var contentLength: Double by Delegates.OnSet(0.0) {
-		this.contentOffsetInvalid = true
-	}
+	private var contentLength: Double = 0.0
 
 	/**
 	 * @property contentOffsetInvalid
@@ -221,6 +216,7 @@ open class ListOptimizer(context: JavaScriptContext) : ContentOptimizer(context)
 			}
 
 			this.contentOffset = offset
+			this.contentOffsetInvalid = true
 
 			this.insertTailItems()
 			return
@@ -1456,7 +1452,7 @@ open class ListOptimizer(context: JavaScriptContext) : ContentOptimizer(context)
 		val animate = callback.argument(2).boolean
 
 		val min = index
-			val max = index + count - 1
+		val max = index + count - 1
 
 		for (i in min .. max) {
 

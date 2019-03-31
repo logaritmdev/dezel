@@ -89,22 +89,14 @@ open class ListOptimizer : ContentOptimizer {
 	 * @since 0.2.0
 	 * @hidden
 	 */
-	private var contentOffset: Double = 0 {
-		willSet {
-			self.contentOffsetInvalid = true
-		}
-	}
+	private var contentOffset: Double = 0
 
 	/**
 	 * @property contentLength
 	 * @since 0.2.0
 	 * @hidden
 	 */
-	private var contentLength: Double = 0 {
-		willSet {
-			self.contentOffsetInvalid = true
-		}
-	}
+	private var contentLength: Double = 0
 
 	/**
 	 * @property contentOffsetInvalid
@@ -218,6 +210,7 @@ open class ListOptimizer : ContentOptimizer {
 			}
 
 			self.contentOffset = offset
+			self.contentOffsetInvalid = true
 
 			self.insertTailItems()
 			return
