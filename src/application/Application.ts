@@ -1,4 +1,5 @@
 import { Dictionary } from 'lodash'
+import { ScreenTransition } from '../screen/transition/ScreenTransition'
 import { bridge } from '../decorator/bridge'
 import { native } from '../decorator/native'
 import { watch } from '../decorator/watch'
@@ -134,6 +135,7 @@ export class Application extends Emitter {
 
 		this.window.destroy()
 	}
+
 	/**
 	 * @method openURL
 	 * @since 0.1.0
@@ -141,6 +143,68 @@ export class Application extends Emitter {
 	public openURL(url: string) {
 		this.native.openURL(url)
 		return this
+	}
+
+	/**
+	 * Convenience method to present a screen from the application.
+	 * @method presentModally
+	 * @since 0.6.0
+	 */
+	public presentModally(screen: Screen, transition?: ScreenTransition | string) {
+
+		if (this.screen == null) {
+			this.screen = screen
+			return this
+		}
+
+		let node = this.screen
+
+		while (true) {
+
+			let presentee = node.presentee
+			if (presentee == null) {
+				break
+			}
+
+			node = presentee
+		}
+
+		if (node) {
+			node.present(screen, transition, { modal: true })
+		}
+
+		return this
+	}
+
+	/**
+	 * Convenience method to prompt a screen from the application.
+	 * @method promptModally
+	 * @since 0.6.0
+	 */
+	public promptModally<T>(screen: Screen<T>, transition?: ScreenTransition | string): Promise<T | undefined | null> {
+
+		if (this.screen == null) {
+			this.screen = screen
+			return Promise.resolve(null)
+		}
+
+		let node = this.screen
+
+		while (true) {
+
+			let presentee = node.presentee
+			if (presentee == null) {
+				break
+			}
+
+			node = presentee
+		}
+
+		if (node) {
+			return node.prompt(screen, transition, { modal: true })
+		}
+
+		return Promise.resolve(null)
 	}
 
 	//--------------------------------------------------------------------------
@@ -194,6 +258,10 @@ export class Application extends Emitter {
 
 			case 'handlelink':
 				this.onHandleLink(event)
+				break
+
+			case 'handleresource':
+				this.onHandleResource(event)
 				break
 		}
 
@@ -275,10 +343,18 @@ export class Application extends Emitter {
 	}
 
 	/**
-	 * @method ApplicationHandleLinkEvent
-	 * @since 0.1.0
+	 * @method onHandleLink
+	 * @since 0.5.0
 	 */
 	public onHandleLink(event: Event<ApplicationHandleLinkEvent>) {
+
+	}
+
+	/**
+	 * @method onHandleResource
+	 * @since 0.6.0
+	 */
+	public onHandleResource(event: Event<ApplicationHandleResourceEvent>) {
 
 	}
 
@@ -669,6 +745,15 @@ export class Application extends Emitter {
 	}
 
 	/**
+	 * @method nativeHandleResource
+	 * @since 0.5.0
+	 * @hidden
+	 */
+	private nativeHandleResource(url: string) {
+		this.emit<ApplicationHandleResourceEvent>('handleresource', { data: { url } })
+	}
+
+	/**
 	 * @method nativeEnterBackground
 	 * @since 0.1.0
 	 * @hidden
@@ -729,6 +814,14 @@ export type ApplicationKeyboardEvent = {
  * @since 0.5.0
  */
 export type ApplicationHandleLinkEvent = {
+	url: string
+}
+
+/**
+ * @type ApplicationHandleResourceEvent
+ * @since 0.5.0
+ */
+export type ApplicationHandleResourceEvent = {
 	url: string
 }
 
