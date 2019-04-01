@@ -341,25 +341,6 @@ open class TextArea(context: JavaScriptContext) : View(context), ContentTextArea
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method getType
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	open fun getType(value: String): InputType {
-
-		when (value) {
-			"text"     -> return InputType.TEXT
-			"number"   -> return InputType.NUMBER
-			"email"    -> return InputType.EMAIL
-			"phone"    -> return InputType.PHONE
-			"password" -> return InputType.PASSWORD
-			else       -> Log.d("DEZEL", "Unrecognized handle for type: $value")
-		}
-
-		return InputType.TEXT
-	}
-
-	/**
 	 * @method getTextDecoration
 	 * @since 0.1.0
 	 * @hidden
