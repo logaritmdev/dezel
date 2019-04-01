@@ -2,21 +2,21 @@ package ca.logaritm.dezel.view
 
 import android.content.Context
 import android.graphics.Paint
+import android.text.method.ScrollingMovementMethod
+import android.util.Log
 import android.view.Gravity
 import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
+import android.widget.RelativeLayout
 import ca.logaritm.dezel.application.DezelApplicationActivity
 import ca.logaritm.dezel.extension.Delegates
 import ca.logaritm.dezel.font.FontManager
 import ca.logaritm.dezel.view.graphic.Color
 import ca.logaritm.dezel.view.graphic.Convert
-import ca.logaritm.dezel.view.type.TextAlignment
-import ca.logaritm.dezel.view.type.TextDecoration
-import ca.logaritm.dezel.view.type.TextPlacement
-import ca.logaritm.dezel.view.type.TextTransform
 import android.text.InputType as AndroidInputType
+import ca.logaritm.dezel.view.type.*
 
 /**
  * @class ContentTextArea
@@ -89,7 +89,7 @@ open class ContentTextArea(context: Context, listener: ContentTextAreaListener?)
 	 * @since 0.1.0
 	 */
 	open var fontSize: Float by Delegates.OnSet(0.0f) { value ->
-		this.textSize = Convert.toDp(value)
+		//this.textSize = Convert.toDp(value)
 	}
 
 	/**
@@ -260,6 +260,11 @@ open class ContentTextArea(context: Context, listener: ContentTextAreaListener?)
 	 */
 	private var invalidFont: Boolean = true
 
+	override fun setInputType(type: Int) {
+		super.setInputType(type)
+		Log.e("TEST", "Set input type to $type")
+	}
+
 	/**
 	 * @property focusChangeListener
 	 * @since 0.1.0
@@ -305,10 +310,9 @@ open class ContentTextArea(context: Context, listener: ContentTextAreaListener?)
 	 */
 	init {
 
-		this.imeOptions = EditorInfo.IME_FLAG_NO_EXTRACT_UI
+		this.inputType = AndroidInputType.TYPE_CLASS_TEXT or AndroidInputType.TYPE_TEXT_FLAG_MULTI_LINE
 
 		this.background = null
-
 		this.isFocusable = true
 		this.isFocusableInTouchMode = true
 		this.onFocusChangeListener = this.focusChangeListener
@@ -316,9 +320,12 @@ open class ContentTextArea(context: Context, listener: ContentTextAreaListener?)
 		this.textSize = 17f
 
 		this.setTextColor(Color.BLACK)
+		this.setSingleLine(false)
 		this.setPlaceholderText("")
 		this.setPlaceholderTextColor(Color.parse("gray"))
 		this.setPadding(0, 0, 0, 0)
+
+		this.imeOptions = EditorInfo.IME_FLAG_NO_ENTER_ACTION
 
 		this.updateGravity()
 
@@ -466,7 +473,7 @@ open class ContentTextArea(context: Context, listener: ContentTextAreaListener?)
 	 */
 	private fun updateType() {
 
-		var type = 0
+		var type = AndroidInputType.TYPE_CLASS_TEXT or AndroidInputType.TYPE_TEXT_FLAG_MULTI_LINE
 
 		if (this.autocorrect == false) {
 			type = type or AndroidInputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS
