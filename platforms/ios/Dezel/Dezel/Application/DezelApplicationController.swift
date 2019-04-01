@@ -696,16 +696,16 @@ open class DezelApplicationController: UIViewController {
 			let equation: String
 
 			switch (curve) {
-			case UIView.AnimationCurve.easeInOut.rawValue:
-				equation = "easeinout"
-			case UIView.AnimationCurve.easeIn.rawValue:
-				equation = "easein"
-			case UIView.AnimationCurve.easeOut.rawValue:
-				equation = "easeout"
-			case UIView.AnimationCurve.linear.rawValue:
-				equation = "linear"
-			default:
-				equation = "cubic-bezier(0.380, 0.700, 0.125, 1.000)"
+				case UIView.AnimationCurve.easeInOut.rawValue:
+					equation = "easeinout"
+				case UIView.AnimationCurve.easeIn.rawValue:
+					equation = "easein"
+				case UIView.AnimationCurve.easeOut.rawValue:
+					equation = "easeout"
+				case UIView.AnimationCurve.linear.rawValue:
+					equation = "linear"
+				default:
+					equation = "cubic-bezier(0.380, 0.700, 0.125, 1.000)"
 			}
 
 			let height = Double((frame?.size.height)!)
