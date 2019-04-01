@@ -9,6 +9,7 @@ import { PanGesture } from '../gesture/PanGesture'
 import { TapGesture } from '../gesture/TapGesture'
 import { Enclosure } from '../screen/Enclosure'
 import { Screen } from '../screen/Screen'
+import { ScreenPresentationOptions } from '../screen/Screen'
 import { Touch } from '../touch/Touch'
 import { TouchEvent } from '../touch/TouchEvent'
 import { TouchList } from '../touch/TouchList'
@@ -150,7 +151,7 @@ export class Application extends Emitter {
 	 * @method presentModally
 	 * @since 0.6.0
 	 */
-	public presentModally(screen: Screen, transition?: ScreenTransition | string) {
+	public present(screen: Screen, transition?: ScreenTransition | string, options: ScreenPresentationOptions = {}) {
 
 		if (this.screen == null) {
 			this.screen = screen
@@ -170,7 +171,7 @@ export class Application extends Emitter {
 		}
 
 		if (node) {
-			node.present(screen, transition, { modal: true })
+			node.present(screen, transition, options)
 		}
 
 		return this
@@ -178,10 +179,10 @@ export class Application extends Emitter {
 
 	/**
 	 * Convenience method to prompt a screen from the application.
-	 * @method promptModally
+	 * @method prompt
 	 * @since 0.6.0
 	 */
-	public promptModally<T>(screen: Screen<T>, transition?: ScreenTransition | string): Promise<T | undefined | null> {
+	public prompt<T>(screen: Screen<T>, transition?: ScreenTransition | string, options: ScreenPresentationOptions = {}): Promise<T | undefined | null> {
 
 		if (this.screen == null) {
 			this.screen = screen
@@ -201,7 +202,7 @@ export class Application extends Emitter {
 		}
 
 		if (node) {
-			return node.prompt(screen, transition, { modal: true })
+			return node.prompt(screen, transition, options)
 		}
 
 		return Promise.resolve(null)
