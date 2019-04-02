@@ -4,11 +4,13 @@ import android.bluetooth.BluetoothAdapter
 import android.content.Intent
 import android.net.Uri
 import android.provider.Settings
+import android.util.Log
 import ca.logaritm.dezel.application.DezelApplicationActivity
 import ca.logaritm.dezel.core.*
 import ca.logaritm.dezel.extension.Delegates
 import ca.logaritm.dezel.modules.view.Window
 import ca.logaritm.dezel.view.graphic.Color
+
 
 /**
  * @class Application
@@ -84,34 +86,34 @@ open class Application(context: JavaScriptContext) : JavaScriptClass(context) {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method startApplicationSettingsActivity
+	 * @method openApplicationSettings
 	 * @since 0.6.0
 	 * @hidden
 	 */
-	private fun startApplicationSettingsActivity() {
+	private fun openApplicationSettings() {
 		this.context.application.startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.fromParts("package", this.context.application.packageName, null)))
 	}
 
 	/**
-	 * @method getLocationIntentSettings
+	 * @method openLocationSettings
 	 * @since 0.6.0
 	 * @hidden
 	 */
-	private fun startApplicationLocationSettingsActivity() {
+	private fun openLocationSettings() {
 		this.context.application.startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
 	}
 
 	/**
-	 * @method getBluetoothIntentSettings
+	 * @method openBluetoothSettings
 	 * @since 0.6.0
 	 * @hidden
 	 */
-	private fun startApplicationBluetoothSettingsActivity() {
+	private fun openBluetoothSettings() {
 
 		val adapter = BluetoothAdapter.getDefaultAdapter()
 		if (adapter == null ||
 			adapter.isEnabled == false) {
-			this.startApplicationSettingsActivity()
+			this.openApplicationSettings()
 			return
 		}
 
@@ -271,7 +273,7 @@ open class Application(context: JavaScriptContext) : JavaScriptClass(context) {
 			return
 		}
 
-		val url = callback.argument(0).string
+		var url = callback.argument(0).string
 
 		if (url.startsWith("http://") ||
 			url.startsWith("https://")) {
@@ -279,18 +281,28 @@ open class Application(context: JavaScriptContext) : JavaScriptClass(context) {
 			return
 		}
 
+		if (url.startsWith("tel:")) {
+			this.context.application.startActivity(Intent(Intent.ACTION_DIAL, Uri.parse(url)))
+			return
+		}
+
+		if (url.startsWith("mailto:")) {
+			this.context.application.startActivity(Intent(Intent.ACTION_SENDTO, Uri.parse(url)))
+			return
+		}
+
 		if (url == "app:settings") {
-			this.startApplicationSettingsActivity()
+			this.openApplicationSettings()
 			return
 		}
 
 		if (url == "settings:location") {
-			this.startApplicationLocationSettingsActivity()
+			this.openLocationSettings()
 			return
 		}
 
 		if (url == "settings:bluetooth") {
-			this.startApplicationBluetoothSettingsActivity()
+			this.openBluetoothSettings()
 			return
 		}
 	}

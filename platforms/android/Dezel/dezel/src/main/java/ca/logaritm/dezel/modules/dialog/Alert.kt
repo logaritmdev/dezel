@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Handler
 import android.support.design.widget.BottomSheetDialog
+import android.util.Log
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -91,7 +92,8 @@ open class Alert(context: JavaScriptContext) : JavaScriptClass(context) {
 	 */
 	@Suppress("unused")
 	open fun jsFunction_dismiss(callback: JavaScriptFunctionCallback) {
-		this.alertDialog?.hide()
+		this.alertDialog?.dismiss()
+		this.sheetDialog?.dismiss()
 	}
 
 	//--------------------------------------------------------------------------
@@ -147,6 +149,8 @@ open class Alert(context: JavaScriptContext) : JavaScriptClass(context) {
 		}
 
 		this.alertDialog = builder.create()
+		this.alertDialog?.setCancelable(false)
+		this.alertDialog?.setCanceledOnTouchOutside(false)
 		this.alertDialog?.show()
 	}
 
@@ -327,7 +331,7 @@ open class Alert(context: JavaScriptContext) : JavaScriptClass(context) {
 
 		button.setOnClickListener {
 			source.holder.callMethod("nativePress")
-			sheet.hide()
+			sheet.dismiss()
 		}
 
 		return button

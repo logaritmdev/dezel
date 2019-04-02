@@ -255,12 +255,15 @@ open class LocationManager(context: JavaScriptContext) : JavaScriptClass(context
 			}
 		}
 
-		AlertDialog.Builder(this.context.application)
+		val dialog = AlertDialog.Builder(this.context.application)
 			.setTitle(this.getAlertTitle())
 			.setMessage(this.getAlertMessage())
 			.setPositiveButton("OK") { _, _ -> request() }
 			.create()
-			.show()
+
+		dialog.setCancelable(false)
+		dialog.setCanceledOnTouchOutside(false)
+		dialog.show()
 	}
 
 	//--------------------------------------------------------------------------

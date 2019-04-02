@@ -4,6 +4,7 @@
 
     <!--
     <application>
+
         <service android:name="ca.logaritm.dezel.modules.notification.fcm.NotificationMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
