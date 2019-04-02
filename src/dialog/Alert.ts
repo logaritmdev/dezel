@@ -233,7 +233,7 @@ export class Alert extends Emitter {
 	 * @since 0.4.0
 	 * @hidden
 	 */
-	private [SELECTION]: string = 'ok'
+	private [SELECTION]: string = ''
 
 	/**
 	 * @method onButtonPress
