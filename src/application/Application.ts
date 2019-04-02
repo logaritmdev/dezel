@@ -147,8 +147,8 @@ export class Application extends Emitter {
 	}
 
 	/**
-	 * Convenience method to present a screen from the application.
-	 * @method presentModally
+	 * Convenience method to present a screen from the latest presented screen.
+	 * @method present
 	 * @since 0.6.0
 	 */
 	public present(screen: Screen, transition?: ScreenTransition | string, options: ScreenPresentationOptions = {}) {
@@ -178,7 +178,7 @@ export class Application extends Emitter {
 	}
 
 	/**
-	 * Convenience method to prompt a screen from the application.
+	 * Convenience method to prompt a screen from the latest presented screen.
 	 * @method prompt
 	 * @since 0.6.0
 	 */
