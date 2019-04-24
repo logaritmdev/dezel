@@ -28,6 +28,24 @@ export const STATUS = Symbol('status')
 export class ConnectivityManager extends Emitter {
 
 	//--------------------------------------------------------------------------
+	// Static
+	//--------------------------------------------------------------------------
+
+	/**
+	 * The default notification manager.
+	 * @property main
+	 * @since 0.5.0
+	 */
+	public static get main(): ConnectivityManager {
+
+		if (main == null) {
+			main = new ConnectivityManager()
+		}
+
+		return main
+	}
+
+	//--------------------------------------------------------------------------
 	// Properties
 	//--------------------------------------------------------------------------
 
@@ -99,3 +117,10 @@ export class ConnectivityManager extends Emitter {
 export type ConnectivityManagerStatusEvent = {
 	status: 'none' | 'wifi' | 'wwan'
 }
+
+/**
+ * The main connectivity manager.
+ * @var main
+ * @since 0.5.0
+ */
+let main: ConnectivityManager | null = null
