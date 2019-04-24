@@ -321,14 +321,14 @@ open class LocationManager(context: JavaScriptContext) : JavaScriptClass(context
 		try {
 
 			return this.context.application.getString(
-				this.context.application.resources.getIdentifier("dezel_location_usage_title", "string", this.context.application.packageName)
+				this.context.application.resources.getIdentifier("location_usage_title", "string", this.context.application.packageName)
 			)
 
 		} catch (e: Exception) {
 
 		}
 
-		return this.context.application.getString(R.string.app_name)
+		return ""
 	}
 
 	/**
@@ -341,13 +341,13 @@ open class LocationManager(context: JavaScriptContext) : JavaScriptClass(context
 		try {
 
 			return this.context.application.getString(
-				this.context.application.resources.getIdentifier("dezel_location_usage_description", "string", this.context.application.packageName)
+				this.context.application.resources.getIdentifier("location_usage_description", "string", this.context.application.packageName)
 			)
 
 		} catch (e: Exception) {
 
 		}
 
-		return "This application requires location services"
+		return "This application requires location services."
 	}
 }
