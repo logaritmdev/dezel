@@ -10,13 +10,20 @@
 #define LOGW(...) __android_log_print(ANDROID_LOG_WARN   , "DEZEL", __VA_ARGS__)
 #define LOGE(...) __android_log_print(ANDROID_LOG_ERROR  , "DEZEL", __VA_ARGS__)
 
+extern jclass Throwable;
+extern jclass StackTraceElement;
+extern jmethodID ThrowableGetCause;
+extern jmethodID ThrowableGetStackTrace;
+extern jmethodID ThrowableToString;
+extern jmethodID StackTraceElementToString;
+
 /**
  * Checks and trigger an exception if needed.
  * @macro JNI_CHECK_EXCEPTION
  * @since 0.1.0
  */
 #define JNI_CHECK_EXCEPTION(ENV) \
-	if (ENV->ExceptionCheck()) ENV->ExceptionDescribe();
+	JNIHandleException(ENV);
 
 /**
  * Calls a JNI method.
@@ -110,5 +117,12 @@ jfieldID JNIGetField(JNIEnv *env, jclass klass, const char *name, const char *si
  * @hidden
  */
 jmethodID JNIGetMethod(JNIEnv *env, jclass klass, const char *name, const char *sign);
+
+/**
+* @function JNIHandleException
+* @since 0.6.0
+* @hidden
+*/
+void JNIHandleException(JNIEnv *env);
 
 #endif
