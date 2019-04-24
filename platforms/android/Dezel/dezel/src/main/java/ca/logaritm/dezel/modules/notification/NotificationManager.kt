@@ -13,6 +13,7 @@ import android.media.RingtoneManager
 import android.os.Build
 import android.support.v4.app.NotificationManagerCompat
 import android.support.v4.content.LocalBroadcastManager
+import android.util.Log
 import ca.logaritm.dezel.core.JavaScriptClass
 import ca.logaritm.dezel.core.JavaScriptContext
 import ca.logaritm.dezel.core.JavaScriptFunctionCallback
@@ -41,6 +42,13 @@ open class NotificationManager(context: JavaScriptContext) : JavaScriptClass(con
 		 * @since 0.6.0
 		 */
 		public var enableRemoteNotifications: Boolean = false
+
+		/**
+		 * The notification channel name.
+		 * @property channel
+		 * @since 0.6.0
+		 */
+		public var channel: String = "main_notification_channel"
 
 	}
 
@@ -161,13 +169,14 @@ open class NotificationManager(context: JavaScriptContext) : JavaScriptClass(con
 
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
-			builder = Notification.Builder(this.context.application, "application_fcm_channel")
+			builder = Notification.Builder(this.context.application, NotificationManager.channel)
 			builder.setTitle(notification.title)
 			builder.setMessage(notification.message)
 			builder.setVisibility(Notification.VISIBILITY_PUBLIC)
+			builder.style = Notification.BigTextStyle().bigText(notification.message)
 
 			val channel = NotificationChannel(
-				"application_fcm_channel",
+				NotificationManager.channel,
 				this.context.application.applicationName,
 				AndroidNotificationManager.IMPORTANCE_HIGH
 			)
@@ -175,6 +184,7 @@ open class NotificationManager(context: JavaScriptContext) : JavaScriptClass(con
 			channel.setSound(sound, null)
 			channel.enableLights(true)
 			channel.enableVibration(true)
+			channel.setShowBadge(false)
 			channel.lockscreenVisibility = Notification.VISIBILITY_PUBLIC
 
 			this.notificationManager.createNotificationChannel(channel)
@@ -187,6 +197,7 @@ open class NotificationManager(context: JavaScriptContext) : JavaScriptClass(con
 			builder.setVisibility(Notification.VISIBILITY_PUBLIC)
 			builder.setPriority(Notification.PRIORITY_MAX)
 			builder.setSound(sound)
+			builder.style = Notification.BigTextStyle().bigText(notification.message)
 
 		}
 
