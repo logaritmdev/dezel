@@ -291,7 +291,7 @@ open class Application(context: JavaScriptContext) : JavaScriptClass(context) {
 			return
 		}
 
-		if (url == "app:settings") {
+		if (url == "settings:app") {
 			this.openApplicationSettings()
 			return
 		}
