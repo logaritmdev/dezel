@@ -87,6 +87,8 @@ open class ImageDiskCache(size: Int, context: Context) {
 
 		} catch (e: IOException) {
 			e.printStackTrace()
+		} catch (e: OutOfMemoryError) {
+			e.printStackTrace()
 		}
 
 		return bitmap
