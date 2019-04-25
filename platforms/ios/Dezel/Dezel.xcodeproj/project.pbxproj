@@ -6,6 +6,20 @@
 	objectVersion = 48;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		C7FDE42222538F9700FD3856 /* Universal */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = C7FDE42522538F9700FD3856 /* Build configuration list for PBXAggregateTarget "Universal" */;
+			buildPhases = (
+				C7FDE42622538FAF00FD3856 /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = Universal;
+			productName = Universal;
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		C700121621551A9A00CB26D4 /* DeviceModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C700121521551A9A00CB26D4 /* DeviceModule.swift */; };
 		C700121821551B5700CB26D4 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = C700121721551B5700CB26D4 /* Device.swift */; };
@@ -26,6 +40,7 @@
 		C7004C9521442A5200138ECC /* DLStylerStyleSelectorTree.h in Headers */ = {isa = PBXBuildFile; fileRef = C7004C9321442A5200138ECC /* DLStylerStyleSelectorTree.h */; };
 		C7004C9821442AAC00138ECC /* DLStylerStyleSelectorTreePrivate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7004C9621442AAB00138ECC /* DLStylerStyleSelectorTreePrivate.cpp */; };
 		C7004C9921442AAC00138ECC /* DLStylerStyleSelectorTreePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = C7004C9721442AAC00138ECC /* DLStylerStyleSelectorTreePrivate.h */; };
+		C7027CD32270DFDA001DD0F7 /* ScrollViewTouchCancelGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7027CD22270DFDA001DD0F7 /* ScrollViewTouchCancelGesture.swift */; };
 		C703BD1820839F5A00132E16 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C703BD1720839F5A00132E16 /* Storage.swift */; };
 		C703BD1A20839FD700132E16 /* StorageModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C703BD1920839FD700132E16 /* StorageModule.swift */; };
 		C70617A420F7C03100499FDB /* TransitionListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = C70617A320F7C03100499FDB /* TransitionListener.swift */; };
@@ -342,6 +357,7 @@
 		C7004C9321442A5200138ECC /* DLStylerStyleSelectorTree.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DLStylerStyleSelectorTree.h; path = ../../../../shared/style/DLStylerStyleSelectorTree.h; sourceTree = "<group>"; };
 		C7004C9621442AAB00138ECC /* DLStylerStyleSelectorTreePrivate.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DLStylerStyleSelectorTreePrivate.cpp; path = ../../../../shared/style/DLStylerStyleSelectorTreePrivate.cpp; sourceTree = "<group>"; };
 		C7004C9721442AAC00138ECC /* DLStylerStyleSelectorTreePrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DLStylerStyleSelectorTreePrivate.h; path = ../../../../shared/style/DLStylerStyleSelectorTreePrivate.h; sourceTree = "<group>"; };
+		C7027CD22270DFDA001DD0F7 /* ScrollViewTouchCancelGesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollViewTouchCancelGesture.swift; sourceTree = "<group>"; };
 		C703BD1720839F5A00132E16 /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		C703BD1920839FD700132E16 /* StorageModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageModule.swift; sourceTree = "<group>"; };
 		C70617A320F7C03100499FDB /* TransitionListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionListener.swift; sourceTree = "<group>"; };
@@ -662,6 +678,14 @@
 				C700121721551B5700CB26D4 /* Device.swift */,
 			);
 			path = Device;
+			sourceTree = "<group>";
+		};
+		C7027CD12270DF7F001DD0F7 /* Gesture */ = {
+			isa = PBXGroup;
+			children = (
+				C7027CD22270DFDA001DD0F7 /* ScrollViewTouchCancelGesture.swift */,
+			);
+			path = Gesture;
 			sourceTree = "<group>";
 		};
 		C703BD1420839F1C00132E16 /* Storage */ = {
@@ -1339,6 +1363,7 @@
 		C7E8A4DE2015AF5E005139F6 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				C7027CD12270DF7F001DD0F7 /* Gesture */,
 				C73700C52219A8CA0095A54B /* Image */,
 				C7BB7D432029061A004006C2 /* Animation */,
 				C7686476203A2C8F00D1903B /* Layer */,
@@ -1607,6 +1632,10 @@
 						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 					};
+					C7FDE42222538F9700FD3856 = {
+						CreatedOnToolsVersion = 10.2;
+						ProvisioningStyle = Automatic;
+					};
 				};
 			};
 			buildConfigurationList = C7E8A45520159C80005139F6 /* Build configuration list for PBXProject "Dezel" */;
@@ -1624,6 +1653,7 @@
 			targets = (
 				C7E8A45A20159C80005139F6 /* Dezel */,
 				C7E8A46320159C80005139F6 /* DezelTests */,
+				C7FDE42222538F9700FD3856 /* Universal */,
 			);
 		};
 /* End PBXProject section */
@@ -1646,6 +1676,26 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		C7FDE42622538FAF00FD3856 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "######################\n# Options\n######################\n\nREVEAL_ARCHIVE_IN_FINDER=true\nFRAMEWORK_NAME=\"${PROJECT_NAME}\"\nSIMULATOR_LIBRARY_PATH=\"${BUILD_DIR}/${CONFIGURATION}-iphonesimulator/${FRAMEWORK_NAME}.framework\"\nDEVICE_LIBRARY_PATH=\"${BUILD_DIR}/${CONFIGURATION}-iphoneos/${FRAMEWORK_NAME}.framework\"\nUNIVERSAL_LIBRARY_DIR=\"${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal\"\nFRAMEWORK=\"${UNIVERSAL_LIBRARY_DIR}/${FRAMEWORK_NAME}.framework\"\n\n######################\n# Build Frameworks\n######################\n\nxcodebuild -scheme ${PROJECT_NAME} -sdk iphonesimulator -configuration ${CONFIGURATION} -UseModernBuildSystem=NO clean build CONFIGURATION_BUILD_DIR=${BUILD_DIR}/${CONFIGURATION}-iphonesimulator 2>&1\nxcodebuild -scheme ${PROJECT_NAME} -sdk iphoneos -configuration ${CONFIGURATION} -UseModernBuildSystem=NO clean build CONFIGURATION_BUILD_DIR=${BUILD_DIR}/${CONFIGURATION}-iphoneos 2>&1\n\n######################\n# Create directory for universal\n######################\n\nrm -rf \"${UNIVERSAL_LIBRARY_DIR}\"\nmkdir \"${UNIVERSAL_LIBRARY_DIR}\"\nmkdir \"${FRAMEWORK}\"\n\n######################\n# Copy files Framework\n######################\n\ncp -r \"${DEVICE_LIBRARY_PATH}/.\" \"${FRAMEWORK}\"\n\n######################\n# Make an universal binary\n######################\n\nlipo \"${SIMULATOR_LIBRARY_PATH}/${FRAMEWORK_NAME}\" \"${DEVICE_LIBRARY_PATH}/${FRAMEWORK_NAME}\" -create -output \"${FRAMEWORK}/${FRAMEWORK_NAME}\" | echo\n\n# For Swift framework, Swiftmodule needs to be copied in the universal framework\n\nif [ -d \"${SIMULATOR_LIBRARY_PATH}/Modules/${FRAMEWORK_NAME}.swiftmodule/\" ]; then\ncp -f ${SIMULATOR_LIBRARY_PATH}/Modules/${FRAMEWORK_NAME}.swiftmodule/* \"${FRAMEWORK}/Modules/${FRAMEWORK_NAME}.swiftmodule/\" | echo\nfi\n\nif [ -d \"${DEVICE_LIBRARY_PATH}/Modules/${FRAMEWORK_NAME}.swiftmodule/\" ]; then\ncp -f ${DEVICE_LIBRARY_PATH}/Modules/${FRAMEWORK_NAME}.swiftmodule/* \"${FRAMEWORK}/Modules/${FRAMEWORK_NAME}.swiftmodule/\" | echo\nfi\n\n######################\n# On Release, copy the result to release directory\n######################\n\nOUTPUT_DIR=\"${PROJECT_DIR}/Output/${FRAMEWORK_NAME}-${CONFIGURATION}-iphoneuniversal/\"\n\nrm -rf \"$OUTPUT_DIR\"\nmkdir -p \"$OUTPUT_DIR\"\ncp -r \"${FRAMEWORK}\" \"$OUTPUT_DIR\"\n\nif [ ${REVEAL_ARCHIVE_IN_FINDER} = true ]; then\nopen \"${OUTPUT_DIR}/\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		C7E8A45620159C80005139F6 /* Sources */ = {
@@ -1821,6 +1871,7 @@
 				C7E8A52D201624A2005139F6 /* JavaScriptValue.swift in Sources */,
 				C78115AD2052E9CD0096AE47 /* StylerNode.swift in Sources */,
 				C7004C7C21440DB600138ECC /* DLStylerStyleRule.cpp in Sources */,
+				C7027CD32270DFDA001DD0F7 /* ScrollViewTouchCancelGesture.swift in Sources */,
 				C767544D2028DB7B003C4D85 /* View.swift in Sources */,
 				C718A0BE206748DC00EFEC15 /* ImageLiveCache.swift in Sources */,
 				C7E8A520201624A2005139F6 /* JavaScriptSetterCallback.swift in Sources */,
@@ -2091,6 +2142,24 @@
 			};
 			name = Release;
 		};
+		C7FDE42322538F9700FD3856 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 2QFKX2YRS9;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		C7FDE42422538F9700FD3856 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 2QFKX2YRS9;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -2117,6 +2186,15 @@
 			buildConfigurations = (
 				C7E8A47320159C80005139F6 /* Debug */,
 				C7E8A47420159C80005139F6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C7FDE42522538F9700FD3856 /* Build configuration list for PBXAggregateTarget "Universal" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C7FDE42322538F9700FD3856 /* Debug */,
+				C7FDE42422538F9700FD3856 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

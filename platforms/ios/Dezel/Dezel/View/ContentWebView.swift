@@ -274,39 +274,11 @@ public class ContentWebView: WKWebView, WKNavigationDelegate, UIScrollViewDelega
 	private var contentLoading: Bool = false
 
 	/**
-	 * @property scrolling
-	 * @since 0.2.0
-	 * @hidden
-	 */
-	private var scrolling: Bool = false
-
-	/**
-	 * @property timeout
-	 * @since 0.2.0
-	 * @hidden
-	 */
-	private var timeout: Timer?
-
-	/**
-	 * @property timerScrollLeft
-	 * @since 0.2.0
-	 * @hidden
-	 */
-	private var timerScrollLeft: CGFloat = 0
-
-	/**
-	 * @property timerScrollTop
-	 * @since 0.2.0
-	 * @hidden
-	 */
-	private var timerScrollTop: CGFloat = 0
-
-	/**
-	 * @property touchCancelDetector
+	 * @property scrollViewDelegate
 	 * @since 0.6.0
 	 * @hidden
 	 */
-	private var touchCancelDetector: TouchCancelDetector!
+	private var scrollViewDelegate: ScrollViewDelegate!
 
 	/**
 	 * @property application
@@ -333,7 +305,7 @@ public class ContentWebView: WKWebView, WKNavigationDelegate, UIScrollViewDelega
 	 * @since 0.6.0
 	 * @hidden
 	 */
-	public required init(application: DezelApplicationController,frame: CGRect, delegate: ContentWebViewDelegate?) {
+	public required init(application: DezelApplicationController, frame: CGRect, delegate: ContentWebViewDelegate?) {
 
 		self.application = application
 
@@ -341,19 +313,22 @@ public class ContentWebView: WKWebView, WKNavigationDelegate, UIScrollViewDelega
 
 		self.navigationDelegate = self
 		self.contentViewDelegate = delegate
-		self.translatesAutoresizingMaskIntoConstraints = false
+		self.translatesAutoresizingMaskIntoConstraints = true
+
+		self.scrollViewDelegate = ScrollViewDelegate(content: self)
 
 		self.scrollView.isScrollEnabled = false
-		self.scrollView.delaysContentTouches = false
 		self.scrollView.showsVerticalScrollIndicator = false
 		self.scrollView.showsHorizontalScrollIndicator = false
-		self.scrollView.delegate = self
+		self.scrollView.delegate = self.scrollViewDelegate
 
 		self.addObserver(self, forKeyPath: "loading", options: .new, context: nil)
 		self.scrollView.addObserver(self, forKeyPath: "contentSize", options: .new, context: nil)
 		self.scrollView.addObserver(self, forKeyPath: "contentOffset", options: .new, context: nil)
 
-		self.touchCancelDetector = TouchCancelDetector(application: application, scrollView: self.scrollView)
+//		self.scrollView.addGestureRecognizer(
+//			ScrollViewTouchCancelGesture(scrollView: self.scrollView, target: self, action: #selector(scrollViewDidCancelTouch))
+//		)
 	}
 
 	/**
@@ -362,6 +337,7 @@ public class ContentWebView: WKWebView, WKNavigationDelegate, UIScrollViewDelega
 	 * @hidden
 	 */
 	deinit {
+		print("DEINIT!!!!!")
 		self.removeObserver(self, forKeyPath: "loading")
 		self.scrollView.removeObserver(self, forKeyPath: "contentSize")
 		self.scrollView.removeObserver(self, forKeyPath: "contentOffset")
@@ -478,7 +454,7 @@ public class ContentWebView: WKWebView, WKNavigationDelegate, UIScrollViewDelega
 	}
 
 	//--------------------------------------------------------------------------
-	// MARK: Methods - Scrollable View
+	// MARK: Methods - Scrollable
 	//--------------------------------------------------------------------------
 
 	/**
@@ -521,7 +497,7 @@ public class ContentWebView: WKWebView, WKNavigationDelegate, UIScrollViewDelega
 			return
 		}
 
-		let allow = delegate.willLoad(webView:self, url: navigationAction.request.url!)
+		let allow = delegate.willLoad(webView: self, url: navigationAction.request.url!)
 		if (allow) {
 			decisionHandler(.allow)
 		} else {
@@ -530,200 +506,16 @@ public class ContentWebView: WKWebView, WKNavigationDelegate, UIScrollViewDelega
 	}
 
 	//--------------------------------------------------------------------------
-	// MARK: Methods - Scroll View Delegate
+	// MARK: ScrollView Touch Cancel Gesture
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method scrollViewDidScroll
+	 * @method scrollViewDidCancelTouch
 	 * @since 0.2.0
 	 * @hidden
 	 */
-	open func scrollViewDidScroll(_ scrollView: UIScrollView) {
-
-		if (self.scrolling == false) {
-			self.scrolling = true
-			self.didBeginScrolling()
-		}
-
-		let t = scrollView.contentOffset.y
-		let l = scrollView.contentOffset.x
-
-		if (self.scrolling) {
-			self.didScroll(top: t, left: l)
-		}
-
-		if (self.scrollView.isDragging) {
-			self.didDrag()
-		} else {
-			self.watch()
-		}
-	}
-
-	/**
-	 * @method scrollViewDidEndScrollingAnimation
-	 * @since 0.2.0
-	 * @hidden
-	 */
-	open func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
-		if (self.scrolling) {
-			self.scrolling = false
-			self.unwatch()
-			self.didFinishScrolling()
-		}
-	}
-
-	/**
-	 * @method scrollViewDidEndDecelerating
-	 * @since 0.2.0
-	 * @hidden
-	 */
-	open func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-		if (self.scrolling) {
-			self.scrolling = false
-			self.unwatch()
-			self.didFinishScrolling()
-		}
-	}
-
-	/**
-	 * @method scrollViewWillBeginDragging
-	 * @since 0.2.0
-	 * @hidden
-	 */
-	open func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-		self.didBeginDragging()
-	}
-
-	/**
-	 * @method scrollViewWillEndDragging
-	 * @since 0.2.0
-	 * @hidden
-	 */
-	open func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        if (self.momentum == false) {
-			targetContentOffset.pointee = scrollView.contentOffset
-			self.didFinishDragging()
-		}
-	}
-
-	/**
-	 * @method scrollViewDidEndDragging
-	 * @since 0.2.0
-	 * @hidden
-	 */
-	open func scrollViewDidEndDragging(_ scrollView:UIScrollView, willDecelerate decelerate: Bool) {
-
-		if (decelerate == false) {
-			if (self.scrolling) {
-				self.scrolling = false
-				self.unwatch()
-				self.didFinishScrolling()
-			}
-		}
-
-		self.didFinishDragging()
-	}
-
-	//--------------------------------------------------------------------------
-	// MARK: Private API
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method watch
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	private func watch() {
-		if (self.timeout == nil) {
-			self.timeout = Timer.scheduledTimer(timeInterval:(32 / 1000), target: self, selector: #selector(didStopScrolling), userInfo: nil, repeats: true)
-			self.timerScrollTop = self.scrollView.contentOffset.y
-			self.timerScrollLeft = self.scrollView.contentOffset.y
-		}
-	}
-
-	/**
-	 * @method unwatch
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	private func unwatch() {
-		self.timeout?.invalidate()
-		self.timeout = nil
-	}
-
-	/**
-	 * @method didBeginDragging
-	 * @since 0.2.0
-	 * @hidden
-	 */
-	private func didBeginDragging() {
-		self.scrollableDelegate?.didBeginDragging(scrollable: self)
-	}
-
-	/**
-	 * @method didFinishDragging
-	 * @since 0.2.0
-	 * @hidden
-	 */
-	private func didFinishDragging() {
-		self.scrollableDelegate?.didFinishDragging(scrollable: self)
-	}
-
-	/**
-	 * @method didDrag
-	 * @since 0.2.0
-	 * @hidden
-	 */
-	private func didDrag() {
-		self.scrollableDelegate?.didDrag(scrollable: self)
-	}
-
-	/**
-	 * @method didBeginScrolling
-	 * @since 0.2.0
-	 * @hidden
-	 */
-	private func didBeginScrolling() {
-		self.scrollableDelegate?.didBeginScrolling(scrollable: self)
-	}
-
-	/**
-	 * @method didFinishScrolling
-	 * @since 0.2.0
-	 * @hidden
-	 */
-	private func didFinishScrolling() {
-		self.scrollableDelegate?.didFinishScrolling(scrollable: self)
-	}
-
-	/**
-	 * @method didScroll
-	 * @since 0.2.0
-	 * @hidden
-	 */
-	private func didScroll(top: CGFloat, left: CGFloat) {
-		self.scrollableDelegate?.didScroll(scrollable: self, top: top, left: left)
-	}
-
-	/**
-	 * @method didStopScrolling
-	 * @since 0.21.0
-	 * @hidden
-	 */
-	@objc open func didStopScrolling() {
-
-		let t = self.scrollView.contentOffset.y
-		let l = self.scrollView.contentOffset.x
-
-		if (self.timerScrollTop == t &&
-			self.timerScrollLeft == l) {
-			self.unwatch()
-			self.didFinishScrolling()
-			return
-		}
-
-		self.timerScrollTop = t
-		self.timerScrollLeft = l
+	@objc open func scrollViewDidCancelTouch(gesture: ScrollViewTouchCancelGesture) {
+		self.application.dispatchTouchCancel(gesture.touches)
 	}
 
 	//--------------------------------------------------------------------------
@@ -731,129 +523,285 @@ public class ContentWebView: WKWebView, WKNavigationDelegate, UIScrollViewDelega
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @class TouchCancelDetector
+	 * @class ScrollViewDelegate
 	 * @since 0.6.0
 	 * @hidden
 	 */
-	private class TouchCancelDetector: UIGestureRecognizer, UIGestureRecognizerDelegate {
+	private class ScrollViewDelegate: NSObject, UIScrollViewDelegate {
+
+		//--------------------------------------------------------------------------
+		// MARK: Properties
+		//--------------------------------------------------------------------------
 
 		/**
-		 * @property application
+		 * @property content
 		 * @since 0.6.0
 		 * @hidden
 		 */
-		public weak var application: DezelApplicationController?
+		private weak var content: ContentWebView?
 
 		/**
-		 * @property touches
+		 * @property scrolling
 		 * @since 0.6.0
 		 * @hidden
 		 */
-		private var touches: Set<UITouch> = Set()
+		private var scrolling: Bool = false
 
 		/**
-		 * @property started
+		 * @property timeout
 		 * @since 0.6.0
 		 * @hidden
 		 */
-		private var started: Bool = false
+		private var timeout: Timer?
 
 		/**
-		 * @property canceled
+		 * @property timerStartScrollLeft
 		 * @since 0.6.0
 		 * @hidden
 		 */
-		private var canceled: Bool = false
+		private var timerStartScrollLeft: CGFloat = 0
+
+		/**
+		 * @property timerStartScrollTop
+		 * @since 0.6.0
+		 * @hidden
+		 */
+		private var timerStartScrollTop: CGFloat = 0
+
+		//--------------------------------------------------------------------------
+		// MARK: Methods
+		//--------------------------------------------------------------------------
 
 		/**
 		 * @constructor
 		 * @since 0.6.0
 		 */
-		public required init(application: DezelApplicationController, scrollView: UIScrollView) {
-
-			super.init(target: nil, action: nil)
-
-			self.delegate = self
-			self.application = application
-
-			scrollView.panGestureRecognizer.addTarget(self, action: #selector(scrollViewDidPan))
-			scrollView.addGestureRecognizer(self)
+		public init(content: ContentWebView) {
+			self.content = content
+			super.init()
 		}
 
 		/**
-		 * @inherited
-		 * @method gestureRecognizerShouldRecognizeSimultaneouslyWith
-		 * @since 0.6.0
-		 */
-		public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-			return true
-		}
-
-		/**
-		 * @inherited
-		 * @method touchesBegan
-		 * @since 0.6.0
-		 */
-		override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent) {
-			for touch in touches {
-				self.touches.insert(touch)
-			}
-		}
-
-		/**
-		 * @inherited
-		 * @method touchesEnded
-		 * @since 0.6.0
-		 */
-		override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent) {
-
-			for touch in touches {
-				self.touches.remove(touch)
-			}
-
-			if (self.touches.count == 0) {
-				self.restart()
-			}
-		}
-
-		/**
-		 * @inherited
-		 * @method touchesCancelled
-		 * @since 0.6.0
-		 */
-		override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent) {
-
-			for touch in touches {
-				self.touches.remove(touch)
-			}
-
-			if (self.touches.count == 0) {
-				self.restart()
-			}
-		}
-
-		/**
-		 * @method scrollViewDidPan
+		 * @method scrollViewDidScroll
 		 * @since 0.6.0
 		 * @hidden
 		 */
-		@objc private func scrollViewDidPan(gesture: UIGestureRecognizer) {
-			if (self.canceled == false) {
-				self.canceled = true
-				self.application?.dispatchTouchCancel(self.touches)
+		open func scrollViewDidScroll(_ scrollView: UIScrollView) {
+
+			guard let content = self.content else {
+				return
+			}
+
+			if (self.scrolling == false) {
+				self.scrolling = true
+				self.didBeginScrolling()
+			}
+
+			let t = scrollView.contentOffset.y
+			let l = scrollView.contentOffset.x
+
+			if (self.scrolling) {
+				self.didScroll(top: t, left: l)
+			}
+
+			if (content.scrollView.isDragging) {
+				self.didDrag()
+			} else {
+				self.watch()
 			}
 		}
 
 		/**
-		 * @method restart
+		 * @method scrollViewDidEndScrollingAnimation
 		 * @since 0.6.0
 		 * @hidden
 		 */
-		private func restart() {
-			DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
-				self.canceled = false
+		open func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+			if (self.scrolling) {
+				self.scrolling = false
+				self.unwatch()
+				self.didFinishScrolling()
 			}
+		}
+
+		/**
+		 * @method scrollViewDidEndDecelerating
+		 * @since 0.6.0
+		 * @hidden
+		 */
+		open func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+			if (self.scrolling) {
+				self.scrolling = false
+				self.unwatch()
+				self.didFinishScrolling()
+			}
+		}
+
+		/**
+		 * @method scrollViewWillBeginDragging
+		 * @since 0.6.0
+		 * @hidden
+		 */
+		open func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+			self.didBeginDragging()
+		}
+
+		/**
+		 * @method scrollViewWillEndDragging
+		 * @since 0.6.0
+		 * @hidden
+		 */
+		open func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+
+			guard let content = self.content else {
+				return
+			}
+
+			if (content.momentum == false) {
+				targetContentOffset.pointee = scrollView.contentOffset
+				self.didFinishDragging()
+			}
+		}
+
+		/**
+		 * @method scrollViewDidEndDragging
+		 * @since 0.6.0
+		 * @hidden
+		 */
+		open func scrollViewDidEndDragging(_ scrollView:UIScrollView, willDecelerate decelerate: Bool) {
+
+			if (decelerate == false) {
+				if (self.scrolling) {
+					self.scrolling = false
+					self.unwatch()
+					self.didFinishScrolling()
+				}
+			}
+
+			self.didFinishDragging()
+		}
+
+		//--------------------------------------------------------------------------
+		// MARK: Private API
+		//--------------------------------------------------------------------------
+
+		/**
+		 * @method watch
+		 * @since 0.1.0
+		 * @hidden
+		 */
+		private func watch() {
+
+			guard let content = self.content else {
+				return
+			}
+
+			if (self.timeout == nil) {
+				self.timeout = Timer.scheduledTimer(timeInterval:(32 / 1000), target: self, selector: #selector(didStopScrolling), userInfo: nil, repeats: true)
+				self.timerStartScrollTop = content.scrollView.contentOffset.y
+				self.timerStartScrollLeft = content.scrollView.contentOffset.y
+			}
+		}
+
+		/**
+		 * @method unwatch
+		 * @since 0.1.0
+		 * @hidden
+		 */
+		private func unwatch() {
+			self.timeout?.invalidate()
+			self.timeout = nil
+		}
+
+		/**
+		 * @method didBeginDragging
+		 * @since 0.6.0
+		 * @hidden
+		 */
+		private func didBeginDragging() {
+			if let content = self.content {
+				content.scrollableDelegate?.didBeginDragging(scrollable: content)
+			}
+		}
+
+		/**
+		 * @method didFinishDragging
+		 * @since 0.6.0
+		 * @hidden
+		 */
+		private func didFinishDragging() {
+			if let content = self.content {
+				content.scrollableDelegate?.didFinishDragging(scrollable: content)
+			}
+		}
+
+		/**
+		 * @method didDrag
+		 * @since 0.6.0
+		 * @hidden
+		 */
+		private func didDrag() {
+			if let content = self.content {
+				content.scrollableDelegate?.didDrag(scrollable: content)
+			}
+		}
+
+		/**
+		 * @method didBeginScrolling
+		 * @since 0.6.0
+		 * @hidden
+		 */
+		private func didBeginScrolling() {
+			if let content = self.content {
+				content.scrollableDelegate?.didBeginScrolling(scrollable: content)
+			}
+		}
+
+		/**
+		 * @method didFinishScrolling
+		 * @since 0.6.0
+		 * @hidden
+		 */
+		private func didFinishScrolling() {
+			if let content = self.content {
+				content.scrollableDelegate?.didFinishScrolling(scrollable: content)
+			}
+		}
+
+		/**
+		 * @method didScroll
+		 * @since 0.6.0
+		 * @hidden
+		 */
+		private func didScroll(top: CGFloat, left: CGFloat) {
+			if let content = self.content {
+				content.scrollableDelegate?.didScroll(scrollable: content, top: top, left: left)
+			}
+		}
+
+		/**
+		 * @method didStopScrolling
+		 * @since 0.6.0
+		 * @hidden
+		 */
+		@objc open func didStopScrolling() {
+
+			guard let content = self.content else {
+				return
+			}
+
+			let t = content.scrollView.contentOffset.y
+			let l = content.scrollView.contentOffset.x
+
+			if (self.timerStartScrollTop == t &&
+				self.timerStartScrollLeft == l) {
+				self.unwatch()
+				self.didFinishScrolling()
+				return
+			}
+
+			self.timerStartScrollTop = t
+			self.timerStartScrollLeft = l
 		}
 	}
 }
-

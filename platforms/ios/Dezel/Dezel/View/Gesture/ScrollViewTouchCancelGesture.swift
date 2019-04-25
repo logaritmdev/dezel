@@ -1,135 +1,146 @@
-//
-//  CancelGesture.swift
-//  Dezel
-//
-//  Created by Jean-Philippe Déry on 2019-04-24.
-//  Copyright © 2019 Jean-Philippe Déry. All rights reserved.
-//
-
 import Foundation
+
 /**
-	 * @class TouchCancelDetector
+ * Detect scroll view touch cancel event.
+ * @class ScrollViewTouchCancelGesture
+ * @since 0.6.0
+ * @hidden
+ */
+public class ScrollViewTouchCancelGesture: UIGestureRecognizer, UIGestureRecognizerDelegate {
+
+	//--------------------------------------------------------------------------
+	// MARK: Properties
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @property touches
 	 * @since 0.6.0
 	 * @hidden
 	 */
-	private class TouchCancelDetector: UIGestureRecognizer, UIGestureRecognizerDelegate {
+	private(set) public var touches: Set<UITouch> = Set()
 
-		/**
-		 * @property application
-		 * @since 0.6.0
-		 * @hidden
-		 */
-		public weak var application: DezelApplicationController?
+	/**
+	 * @property started
+	 * @since 0.6.0
+	 * @hidden
+	 */
+	private(set) public var started: Bool = false
 
-		/**
-		 * @property touches
-		 * @since 0.6.0
-		 * @hidden
-		 */
-		private var touches: Set<UITouch> = Set()
+	/**
+	 * @property canceled
+	 * @since 0.6.0
+	 * @hidden
+	 */
+	private(set) public var canceled: Bool = false
 
-		/**
-		 * @property started
-		 * @since 0.6.0
-		 * @hidden
-		 */
-		private var started: Bool = false
+	/**
+	 * @property target
+	 * @since 0.6.0
+	 * @hidden
+	 */
+	private weak var target: AnyObject?
 
-		/**
-		 * @property canceled
-		 * @since 0.6.0
-		 * @hidden
-		 */
-		private var canceled: Bool = false
+	/**
+	 * @property action
+	 * @since 0.6.0
+	 * @hidden
+	 */
+	private var action: Selector?
 
-		/**
-		 * @constructor
-		 * @since 0.6.0
-		 */
-		public required init(application: DezelApplicationController, scrollView: UIScrollView) {
+	//--------------------------------------------------------------------------
+	// MARK: Methods
+	//--------------------------------------------------------------------------
 
-			super.init(target: nil, action: nil)
+	/**
+	 * @constructor
+	 * @since 0.6.0
+	 */
+	public required init(scrollView: UIScrollView, target: AnyObject, action: Selector) {
 
-			self.delegate = self
-			self.application = application
+		super.init(
+			target: nil,
+			action: nil
+		)
 
-			scrollView.panGestureRecognizer.addTarget(self, action: #selector(scrollViewDidPan))
+		self.target = target
+		self.action = action
+		self.delegate = self
 
-			// probably memory leak here
-		}
+		scrollView.panGestureRecognizer.addTarget(self, action: #selector(scrollViewDidPan))
+	}
 
-		/**
-		 * @inherited
-		 * @method gestureRecognizerShouldRecognizeSimultaneouslyWith
-		 * @since 0.6.0
-		 */
-		public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-			return true
-		}
-
-		/**
-		 * @inherited
-		 * @method touchesBegan
-		 * @since 0.6.0
-		 */
-		override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent) {
-			for touch in touches {
-				self.touches.insert(touch)
-			}
-		}
-
-		/**
-		 * @inherited
-		 * @method touchesEnded
-		 * @since 0.6.0
-		 */
-		override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent) {
-
-			for touch in touches {
-				self.touches.remove(touch)
-			}
-
-			if (self.touches.count == 0) {
-				self.restart()
-			}
-		}
-
-		/**
-		 * @inherited
-		 * @method touchesCancelled
-		 * @since 0.6.0
-		 */
-		override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent) {
-
-			for touch in touches {
-				self.touches.remove(touch)
-			}
-
-			if (self.touches.count == 0) {
-				self.restart()
-			}
-		}
-
-		/**
-		 * @method scrollViewDidPan
-		 * @since 0.6.0
-		 * @hidden
-		 */
-		@objc private func scrollViewDidPan(gesture: UIGestureRecognizer) {
-			if (self.canceled == false) {
-				self.canceled = true
-				self.application?.dispatchTouchCancel(self.touches)
-			}
-		}
-
-		/**
-		 * @method restart
-		 * @since 0.6.0
-		 * @hidden
-		 */
-		private func restart() {
-			DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
-				self.canceled = false
-			}
+	/**
+	 * @inherited
+	 * @method touchesBegan
+	 * @since 0.6.0
+	 */
+	override open func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent) {
+		for touch in touches {
+			self.touches.insert(touch)
 		}
 	}
+
+	/**
+	 * @inherited
+	 * @method touchesEnded
+	 * @since 0.6.0
+	 */
+	override open func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent) {
+
+		for touch in touches {
+			self.touches.remove(touch)
+		}
+
+		if (self.touches.count == 0) {
+			self.restart()
+		}
+	}
+
+	/**
+	 * @inherited
+	 * @method touchesCancelled
+	 * @since 0.6.0
+	 */
+	override open func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent) {
+
+		for touch in touches {
+			self.touches.remove(touch)
+		}
+
+		if (self.touches.count == 0) {
+			self.restart()
+		}
+	}
+
+	/**
+	 * @method scrollViewDidPan
+	 * @since 0.6.0
+	 * @hidden
+	 */
+	@objc private func scrollViewDidPan(gesture: UIGestureRecognizer) {
+		if (self.canceled == false) {
+			self.canceled = true
+			_ = self.target?.perform(self.action, with: self)
+		}
+	}
+
+	/**
+	 * @method restart
+	 * @since 0.6.0
+	 * @hidden
+	 */
+	private func restart() {
+		DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+			self.canceled = false
+		}
+	}
+
+	/**
+	 * @inherited
+	 * @method gestureRecognizerShouldRecognizeSimultaneouslyWith
+	 * @since 0.6.0
+	 */
+	public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+		return true
+	}
+}
