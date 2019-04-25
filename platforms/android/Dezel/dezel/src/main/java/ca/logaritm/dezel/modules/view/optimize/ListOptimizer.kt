@@ -1,7 +1,6 @@
 package ca.logaritm.dezel.modules.view.optimize
 
 import ca.logaritm.dezel.core.*
-import ca.logaritm.dezel.extension.Delegates
 import ca.logaritm.dezel.extension.insert
 import ca.logaritm.dezel.modules.view.View
 

@@ -2,21 +2,20 @@ package ca.logaritm.dezel.view
 
 import android.content.Context
 import android.graphics.Paint
-import android.text.method.ScrollingMovementMethod
-import android.util.Log
 import android.view.Gravity
 import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
-import android.widget.RelativeLayout
 import ca.logaritm.dezel.application.DezelApplicationActivity
 import ca.logaritm.dezel.extension.Delegates
 import ca.logaritm.dezel.font.FontManager
 import ca.logaritm.dezel.view.graphic.Color
-import ca.logaritm.dezel.view.graphic.Convert
+import ca.logaritm.dezel.view.type.TextAlignment
+import ca.logaritm.dezel.view.type.TextDecoration
+import ca.logaritm.dezel.view.type.TextPlacement
+import ca.logaritm.dezel.view.type.TextTransform
 import android.text.InputType as AndroidInputType
-import ca.logaritm.dezel.view.type.*
 
 /**
  * @class ContentTextArea
@@ -259,11 +258,6 @@ open class ContentTextArea(context: Context, listener: ContentTextAreaListener?)
 	 * @hidden
 	 */
 	private var invalidFont: Boolean = true
-
-	override fun setInputType(type: Int) {
-		super.setInputType(type)
-		Log.e("TEST", "Set input type to $type")
-	}
 
 	/**
 	 * @property focusChangeListener

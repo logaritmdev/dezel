@@ -6,7 +6,6 @@ import android.content.*
 import android.content.pm.PackageManager
 import android.os.Build
 import android.support.v4.content.LocalBroadcastManager
-import ca.logaritm.dezel.R
 import ca.logaritm.dezel.core.JavaScriptClass
 import ca.logaritm.dezel.core.JavaScriptContext
 import ca.logaritm.dezel.core.JavaScriptFunctionCallback

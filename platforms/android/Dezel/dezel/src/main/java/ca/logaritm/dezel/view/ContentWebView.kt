@@ -1,9 +1,7 @@
 package ca.logaritm.dezel.view
 
 import android.content.Context
-import android.graphics.Bitmap
 import android.net.http.SslError
-import android.os.Build
 import android.util.Log
 import android.util.Size
 import android.util.SizeF

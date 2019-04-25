@@ -12,7 +12,10 @@ import ca.logaritm.dezel.view.ContentTextArea
 import ca.logaritm.dezel.view.ContentTextAreaListener
 import ca.logaritm.dezel.view.graphic.Color
 import ca.logaritm.dezel.view.graphic.Convert
-import ca.logaritm.dezel.view.type.*
+import ca.logaritm.dezel.view.type.TextAlignment
+import ca.logaritm.dezel.view.type.TextDecoration
+import ca.logaritm.dezel.view.type.TextPlacement
+import ca.logaritm.dezel.view.type.TextTransform
 
 /**
  * An editable text area.
