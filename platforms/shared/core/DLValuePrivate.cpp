@@ -1,5 +1,6 @@
 #include "DLValuePrivate.h"
 #include <iostream>
+
 DLValueDataRef
 DLValueDataCreate(JSContextRef context)
 {
@@ -72,9 +73,13 @@ DLValueFinalizeHandler(JSObjectRef object)
 {
 	DLValueDataRef data = DLValueDataGet(object);
 
+	if (data == NULL) {
+		return;
+	}
+
 	if (data->finalizeCallback) {
 		data->finalizeCallback(data->context, data);
 	}
 
-	delete data;
+	DLValueDataDelete(data);
 }

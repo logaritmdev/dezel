@@ -29,7 +29,7 @@ JavaScriptFinalizeWrapperCallback(JSContextRef context, DLValueDataRef handle)
 	wrapper->env->DeleteGlobalRef(wrapper->ctx);
 	wrapper->env->DeleteGlobalRef(wrapper->handler);
 
-	DLValueDataDeleteAttribute(handle, kJavaScriptFinalizeWrapperKey);
+	DLValueDataSetAttribute(handle, kJavaScriptFinalizeWrapperKey, NULL);
 
 	delete wrapper;
 }

@@ -56,5 +56,5 @@ private let JavaScriptFinalizeWrapperCallback : @convention(c) (JSContextRef?, D
 
 	wrapper.handler(JavaScriptFinalizeCallback(context: wrapper.context, handle: handle!))
 
-	DLValueDataDeleteAttribute(handle, kFinalizeWrapperKey)
+	DLValueDataSetAttribute(handle, kFinalizeWrapperKey, nil)
 }

@@ -347,7 +347,7 @@ open class JavaScriptValue : NSObject {
 		let argc = toArgc(arguments)
 		let argv = toArgv(arguments)
 
-		if let value = DLValueCall(self.context.handle, self.handle, toHandleO(target), UInt32(argc), argv) {
+		if let value = DLValueCall(self.context.handle, self.handle, toHandle(target), UInt32(argc), argv) {
 			result?.reset(value)
 		}
 
@@ -414,7 +414,7 @@ open class JavaScriptValue : NSObject {
 	public func defineProperty(_ property: String, value: JavaScriptValue?, getter: JavaScriptGetterHandler?, setter: JavaScriptSetterHandler?, writable: Bool, enumerable: Bool, configurable: Bool) {
 
 		if let value = value {
-			DLValueDefineProperty(self.context.handle, self.handle, property, nil, nil, toHandleO(value), writable, enumerable, configurable)
+			DLValueDefineProperty(self.context.handle, self.handle, property, nil, nil, toHandle(value), writable, enumerable, configurable)
 			return
 		}
 
@@ -432,7 +432,7 @@ open class JavaScriptValue : NSObject {
 	 * @method property
 	 * @since 0.1.0
 	 */
-	public func property(_ name: String, value: JavaScriptValue) {
+	public func property(_ name: String, value: JavaScriptValue?) {
 		DLValueSetProperty(self.context.handle, self.handle, name, toHandle(value))
 	}
 
@@ -514,7 +514,7 @@ open class JavaScriptValue : NSObject {
 	 * @since 0.1.0
 	 */
 	public func property(_ index: Int, value: JavaScriptValue) {
-		DLValueSetPropertyAtIndex(self.context.handle, self.handle, UInt32(index), value.handle)
+		DLValueSetPropertyAtIndex(self.context.handle, self.handle, UInt32(index), toHandle(value))
 	}
 
 	/**
@@ -578,24 +578,6 @@ open class JavaScriptValue : NSObject {
 	 */
 	public func property(_ index: Int) -> JavaScriptValue {
 		return JavaScriptValue.create(self.context, handle: DLValueGetPropertyAtIndex(self.context.handle, self.handle, UInt32(index)))
-	}
-
-	/**
-	 * Deletes the property of an object.
-	 * @method deleteProperty
-	 * @since 0.1.0
-	 */
-	public func deleteProperty(_ name: String) {
-		DLValueDeleteProperty(self.context.handle, self.handle, name)
-	}
-
-	/**
-	 * Deletes the property of an object.
-	 * @method deleteProperty
-	 * @since 0.1.0
-	 */
-	public func deleteProperty(_ index: Int) {
-		DLValueDeleteProperty(self.context.handle, self.handle, String(describing: index))
 	}
 
 	/**
@@ -727,16 +709,6 @@ open class JavaScriptValue : NSObject {
 
 		self.didResetValue()
 	}
-
-	/**
-	 * @method recycle
-	 * @since 0.6.0
-	 * @hidden
-	 */
-	public func recycle() {
-		self.unprotect()
-		self.handle = nil
-	}
 }
 
 /**
@@ -786,16 +758,7 @@ public typealias JavaScriptForEachHandler = (Int, JavaScriptValue) -> (Void)
  * @since 0.1.0
  * @hidden
  */
-internal func toHandle(_ value: JavaScriptValue) -> JSValueRef {
-	return value.handle
-}
-
-/**
- * @function toHandleO
- * @since 0.1.0
- * @hidden
- */
-internal func toHandleO(_ value: JavaScriptValue?) -> JSValueRef? {
+internal func toHandle(_ value: JavaScriptValue?) -> JSValueRef? {
 	return value?.handle ?? nil
 }
 
@@ -820,7 +783,7 @@ internal func toArgv(_ values: JavaScriptArguments?) -> UnsafeMutablePointer<JSV
 		let result = UnsafeMutablePointer<JSValueRef?>.allocate(capacity: values.count)
 
 		for i in 0 ..< values.count {
-			result[i] = toHandleO(values[i])
+			result[i] = toHandle(values[i])
 		}
 
 		return result
@@ -859,6 +822,48 @@ internal func toHash(_ klass: AnyClass) -> Int64 {
 */
 internal func toHash(_ string: String) -> Int64 {
 	return Int64(string.hashValue)
+}
+
+/**
+* @function toOpaque
+* @since 0.6.0
+* @hidden
+*/
+internal func toOpaque(_ value: AnyObject?) -> UnsafeMutableRawPointer? {
+
+	if let value = value {
+		return UnsafeMutableRawPointer(Unmanaged.passRetained(value).toOpaque())
+	}
+
+	return nil
+}
+
+/**
+* @function toRetainedObject
+* @since 0.6.0
+* @hidden
+*/
+internal func toRetainedObject(_ value: UnsafeMutableRawPointer?) -> AnyObject? {
+
+	if let value = value {
+		return Unmanaged<AnyObject>.fromOpaque(value).takeRetainedValue()
+	}
+
+	return nil
+}
+
+/**
+* @function toUnretainedObject
+* @since 0.6.0
+* @hidden
+*/
+internal func toUnretainedObject(_ value: UnsafeMutableRawPointer?) -> AnyObject? {
+
+	if let value = value {
+		return Unmanaged<AnyObject>.fromOpaque(value).takeUnretainedValue()
+	}
+
+	return nil
 }
 
 internal let kFinalizeWrapperKey = Int64(CChar(exactly:0)!.hashValue)

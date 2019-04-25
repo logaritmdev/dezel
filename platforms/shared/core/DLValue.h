@@ -185,13 +185,6 @@ JSValueRef DLValueGetProperty(JSContextRef context, JSObjectRef object, DLString
 DLString* DLValueGetProperties(JSContextRef context, JSObjectRef object, int *count);
 
 /**
- * Deletes a property from the specified value.
- * @function DLValueGetProperty
- * @since 0.1.0
- */
-void DLValueDeleteProperty(JSContextRef context, JSObjectRef object, DLString property);
-
-/**
  * Sets a property at a numeric index on the specified value.
  * @function DLValueSetPropertyAtIndex
  * @since 0.1.0
@@ -288,13 +281,6 @@ void DLValueSetAttribute(JSContextRef context, JSObjectRef object, long long key
  * @since 0.1.0
  */
 void * DLValueGetAttribute(JSContextRef context, JSObjectRef object, long long key);
-
-/**
- * Deletes a property from the specified value.
- * @function DLValueGetProperty
- * @since 0.1.0
- */
-void DLValueDeleteAttribute(JSContextRef context, JSObjectRef object, long long key);
 
 /**
  * Sets an associated object on the specified value.
@@ -449,13 +435,6 @@ void DLValueDataSetAttribute(DLValueDataRef data, long long key, void *value);
  * @since 0.1.0
  */
 void * DLValueDataGetAttribute(DLValueDataRef data, long long key);
-
-/**
- * Deletes a property from the specified value.
- * @function DLValueDataDeleteAttribute
- * @since 0.1.0
- */
-void DLValueDataDeleteAttribute(DLValueDataRef data, long long key);
 
 /**
  * Standalone function to assign an associated object on the specified value image structure.

@@ -72,7 +72,7 @@ class JavaScriptContextTest: XCTestCase {
 		XCTAssertTrue(self.context.attribute("key1") as! NSObject == val)
 		XCTAssertTrue(self.context.attribute("key2") == nil)
 
-		self.context.deleteAttribute("key1")
+		self.context.attribute("key1", value: nil)
 
 		XCTAssertTrue(self.context.attribute("key1") == nil)
 	}
@@ -99,7 +99,7 @@ class JavaScriptContextTest: XCTestCase {
 		self.context.global.property("value", boolean: true)
 		XCTAssertEqual(self.context.global.property("value").boolean, true)
 
-		self.context.global.deleteProperty("value")
+		self.context.global.property("value", value: nil)
 		XCTAssertEqual(self.context.global.property("value").string, "undefined")
 	}
 

@@ -382,8 +382,10 @@ open class JavaScriptContext: NSObject {
 	 * @method attribute
 	 * @since 0.1.0
 	 */
-	open func attribute(_ key: String, value: AnyObject) {
-		DLContextSetAttribute(self.handle, toHash(key), UnsafeMutableRawPointer(Unmanaged.passRetained(value).toOpaque()))
+	open func attribute(_ key: String, value: AnyObject?) {
+		let hash = toHash(key)
+		DLContextGetAttribute(self.handle, hash)?.release()
+		DLContextSetAttribute(self.handle, hash, toOpaque(value))
 	}
 
 	/**
@@ -392,30 +394,7 @@ open class JavaScriptContext: NSObject {
 	 * @since 0.1.0
 	 */
 	open func attribute(_ key: String) -> AnyObject? {
-
-		let value = DLContextGetAttribute(self.handle, toHash(key))
-		if (value == nil) {
-			return nil
-		}
-
-		return Unmanaged<AnyObject>.fromOpaque(value!).takeUnretainedValue()
-	}
-
-	/**
-	 * Deletes an attribute from this context.
-	 * @method deleteAttribute
-	 * @since 0.1.0
-	 */
-	open func deleteAttribute(_ key: String) {
-
-		let value = DLContextGetAttribute(self.handle, toHash(key))
-		if (value == nil) {
-			return
-		}
-
-		Unmanaged<AnyObject>.fromOpaque(value!).release()
-
-		DLContextDeleteAttribute(self.handle, toHash(key))
+		return toUnretainedObject(DLContextGetAttribute(self.handle, toHash(key)))
 	}
 
 	/**

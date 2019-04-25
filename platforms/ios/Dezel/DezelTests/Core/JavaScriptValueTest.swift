@@ -108,7 +108,7 @@ class JavaScriptValueTest: XCTestCase {
 
 		src.property("key1", value: obj)
 		src.property("key2", value: obj)
-		src.deleteProperty("key2")
+		src.property("key2", value: nil)
 
 		let res1 = src.property("key1")
 		let res2 = src.property("key2")

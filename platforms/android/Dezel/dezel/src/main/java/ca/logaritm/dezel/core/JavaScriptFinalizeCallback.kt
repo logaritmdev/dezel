@@ -51,11 +51,13 @@ public class JavaScriptFinalizeCallback {
 	}
 
 	/**
-	 * Deletes an attribute from this finalized value.
-	 * @method deleteAttribute
+	 * Assigns an attribute on this finalized value.
+	 * @method attribute
 	 * @since 0.4.0
 	 */
-	public fun deleteAttribute(key: Any) {
-		JavaScriptValueExternal.deleteAttribute(this.handle, key.hashCode())
+	public fun attribute(key: Any, value: Any?) {
+		val hash = key.hashCode()
+		JavaScriptValueExternal.delAttribute(this.handle, hash)
+		JavaScriptValueExternal.setAttribute(this.handle, hash, value)
 	}
 }

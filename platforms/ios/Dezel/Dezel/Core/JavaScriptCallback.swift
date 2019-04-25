@@ -103,7 +103,7 @@ open class JavaScriptCallback: NSObject {
 	 * @since 0.1.0
 	 */
 	final public func returns(_ value: JavaScriptValue?) {
-		self.result = toHandleO(value)
+		self.result = toHandle(value)
 	}
 
 	/**

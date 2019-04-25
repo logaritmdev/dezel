@@ -57,11 +57,11 @@ public class JavaScriptContextExternal {
 	static native public Object getAttribute(long context, int key);
 
 	/**
-	 * @method deleteAttribute
+	 * @method setAttribute
 	 * @hidden
-	 * @since 0.1.0
+	 * @since 0.6.0
 	 */
-	static native public void deleteAttribute(long context, int key);
+	static native public void delAttribute(long context, int key);
 
 	/**
 	 * @method setExceptionCallback

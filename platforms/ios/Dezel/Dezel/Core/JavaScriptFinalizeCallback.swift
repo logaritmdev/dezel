@@ -43,27 +43,17 @@ public final class JavaScriptFinalizeCallback {
 	 * @since 0.4.0
 	 */
 	public func attribute(_ key: AnyObject) -> AnyObject? {
-
-		guard let value = DLValueDataGetAttribute(self.handle, toHash(key)) else {
-			return nil
-		}
-
-		return Unmanaged<AnyObject>.fromOpaque(value).takeUnretainedValue()
+		return toUnretainedObject(DLValueDataGetAttribute(self.handle, toHash(key)))
 	}
 
 	/**
-	 * Deletes an attribute from this finalized value.
-	 * @method deleteAttribute
+	 * Assigns an attribute on this finalized value.
+	 * @method attribute
 	 * @since 0.4.0
 	 */
-	public func deleteAttribute(_ key: AnyObject) {
-
-		guard let value = DLValueDataGetAttribute(self.handle, toHash(key)) else {
-			return
-		}
-
-		Unmanaged<AnyObject>.fromOpaque(value).release()
-
-		DLValueDataDeleteAttribute(self.handle, toHash(key))
+	public func attribute(_ key: AnyObject, value: AnyObject?) {
+		let hash = toHash(key)
+		DLValueDataGetAttribute(self.handle, hash)?.release()
+		DLValueDataSetAttribute(self.handle, hash, toOpaque(value))
 	}
 }

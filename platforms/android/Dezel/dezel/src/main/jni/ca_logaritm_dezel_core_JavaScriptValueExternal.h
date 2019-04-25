@@ -161,14 +161,6 @@ JNIEXPORT jlong JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_getP
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
- * Method:    deleteProperty
- * Signature: (JJLjava/lang/String;)V
- */
-JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_deleteProperty
-  (JNIEnv *, jclass, jlong, jlong, jstring);
-
-/*
- * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
  * Method:    setPropertyAtIndex
  * Signature: (JJIJ)V
  */
@@ -228,8 +220,16 @@ JNIEXPORT jlong JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_getP
  * Method:    setAttribute
  * Signature: (JJILjava/lang/Object;)V
  */
-JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setAttribute
+JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setAttribute__JJILjava_lang_Object_2
   (JNIEnv *, jclass, jlong, jlong, jint, jobject);
+
+/*
+ * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
+ * Method:    setAttribute
+ * Signature: (JILjava/lang/Object;)V
+ */
+JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setAttribute__JILjava_lang_Object_2
+  (JNIEnv *, jclass, jlong, jint, jobject);
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
@@ -249,18 +249,18 @@ JNIEXPORT jobject JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_ge
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
- * Method:    deleteAttribute
+ * Method:    delAttribute
  * Signature: (JJI)V
  */
-JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_deleteAttribute__JJI
+JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_delAttribute__JJI
   (JNIEnv *, jclass, jlong, jlong, jint);
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
- * Method:    deleteAttribute
+ * Method:    delAttribute
  * Signature: (JI)V
  */
-JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_deleteAttribute__JI
+JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_delAttribute__JI
   (JNIEnv *, jclass, jlong, jint);
 
 /*
@@ -268,16 +268,8 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_delet
  * Method:    setAssociatedObject
  * Signature: (JJLjava/lang/Object;)V
  */
-JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setAssociatedObject__JJLjava_lang_Object_2
+JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setAssociatedObject
   (JNIEnv *, jclass, jlong, jlong, jobject);
-
-/*
- * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
- * Method:    setAssociatedObject
- * Signature: (JLjava/lang/Object;)V
- */
-JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setAssociatedObject__JLjava_lang_Object_2
-  (JNIEnv *, jclass, jlong, jobject);
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
@@ -297,19 +289,11 @@ JNIEXPORT jobject JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_ge
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
- * Method:    deleteAssociatedObject
+ * Method:    delAssociatedObject
  * Signature: (JJ)V
  */
-JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_deleteAssociatedObject__JJ
+JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_delAssociatedObject
   (JNIEnv *, jclass, jlong, jlong);
-
-/*
- * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
- * Method:    deleteAssociatedObject
- * Signature: (J)V
- */
-JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_deleteAssociatedObject__J
-  (JNIEnv *, jclass, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal

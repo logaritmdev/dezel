@@ -29,7 +29,7 @@ DLContextCreate(DLString name)
 void
 DLContextDelete(JSContextRef context)
 {
-	DLContextDeleteAttribute(context, kDLContextExceptionHandlerKey);
+	DLContextSetAttribute(context, kDLContextExceptionHandlerKey, NULL);
 	JSGlobalContextRelease(JSContextGetGlobalContext(context));
 }
 
@@ -70,6 +70,17 @@ DLContextSetAttribute(JSContextRef context, long long key, void *value)
 		attributes[context] = unordered_map<long long, void*>();
 	}
 
+	if (value == NULL) {
+
+		attributes[context].erase(key);
+
+		if (attributes[context].size() == 0) {
+			attributes.erase(context);
+		}
+
+		return;
+	}
+
 	attributes[context][key] = value;
 }
 
@@ -81,20 +92,6 @@ DLContextGetAttribute(JSContextRef context, long long key)
 	}
 
 	return attributes[context][key];
-}
-
-void
-DLContextDeleteAttribute(JSContextRef context, long long key)
-{
-	if (attributes.count(context) == 0) {
-		return;
-	}
-
-	attributes[context].erase(key);
-
-	if (attributes[context].size() == 0) {
-		attributes.erase(context);
-	}
 }
 
 void

@@ -115,7 +115,7 @@ public class JavaScriptValueTest {
 
         src.property("key1", obj)
         src.property("key2", obj)
-        src.deleteProperty("key2")
+        src.property("key2", null)
 
         val res1 = src.property("key1")
         val res2 = src.property("key2")

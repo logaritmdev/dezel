@@ -1,7 +1,5 @@
 package ca.logaritm.dezel.core
 
-import android.util.Log
-
 /**
  * @class JavaScriptExceptionWrapper
  * @since 0.1.0

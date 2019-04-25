@@ -97,8 +97,8 @@ void Java_ca_logaritm_dezel_core_JavaScriptContextExternal_evaluate__JLjava_lang
  * Method:    setAttribute
  * Signature: (JILjava/lang/Object;)V
  */
-void Java_ca_logaritm_dezel_core_JavaScriptContextExternal_setAttribute(JNIEnv *env, jclass, jlong contextPtr, jint key, jobject val) {
-	DLContextSetAttribute(reinterpret_cast<JSContextRef>(contextPtr), key, env->NewGlobalRef(val));
+void Java_ca_logaritm_dezel_core_JavaScriptContextExternal_setAttribute(JNIEnv *env, jclass, jlong contextPtr, jint key, jobject value) {
+	DLContextSetAttribute(reinterpret_cast<JSContextRef>(contextPtr), key, value ? env->NewGlobalRef(value) : NULL);
 }
 
 /*
@@ -107,24 +107,16 @@ void Java_ca_logaritm_dezel_core_JavaScriptContextExternal_setAttribute(JNIEnv *
  * Signature: (JI)Ljava/lang/Object;
  */
 jobject Java_ca_logaritm_dezel_core_JavaScriptContextExternal_getAttribute(JNIEnv *env, jclass, jlong contextPtr, jint key) {
-	return (jobject) DLContextGetAttribute(reinterpret_cast<JSContextRef>(contextPtr), key);
+	return reinterpret_cast<jobject>(DLContextGetAttribute(reinterpret_cast<JSContextRef>(contextPtr), key));
 }
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptContextExternal
- * Method:    deleteAttribute
+ * Method:    delAttribute
  * Signature: (JI)V
  */
-void Java_ca_logaritm_dezel_core_JavaScriptContextExternal_deleteAttribute(JNIEnv *env, jclass, jlong contextPtr, jint key) {
-
-	jobject value = (jobject) DLContextGetAttribute(reinterpret_cast<JSContextRef>(contextPtr), key);
-	if (value == NULL) {
-		return;
-	}
-
-	env->DeleteGlobalRef(value);
-
-	DLContextDeleteAttribute(reinterpret_cast<JSContextRef>(contextPtr), key);
+void Java_ca_logaritm_dezel_core_JavaScriptContextExternal_delAttribute(JNIEnv *env, jclass, jlong contextPtr, jint key) {
+	env->DeleteGlobalRef(reinterpret_cast<jobject>(DLContextGetAttribute(reinterpret_cast<JSContextRef>(contextPtr), key)));
 }
 
 /*

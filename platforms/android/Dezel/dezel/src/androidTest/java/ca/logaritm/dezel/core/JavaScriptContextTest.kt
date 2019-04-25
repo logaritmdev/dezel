@@ -99,7 +99,7 @@ class JavaScriptContextTest  {
         this.context.global.property("value", true)
         Assert.assertEquals(this.context.global.property("value").boolean, true)
 
-        this.context.global.deleteProperty("value")
+        this.context.global.property("value", null)
         Assert.assertEquals(this.context.global.property("value").string, "undefined")
     }
 
@@ -125,7 +125,7 @@ class JavaScriptContextTest  {
 		Assert.assertEquals(this.context.attribute("key1"), value)
 		Assert.assertEquals(this.context.attribute("key2"), null)
 
-		this.context.deleteAttribute("key1")
+		this.context.attribute("key1", null)
 
 		Assert.assertEquals(this.context.attribute("key1"), null)
 	}

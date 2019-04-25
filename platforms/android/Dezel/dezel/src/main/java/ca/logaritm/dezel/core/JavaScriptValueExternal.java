@@ -12,384 +12,370 @@ public class JavaScriptValueExternal {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	static native public long createNull(long context);
+	static native public long createNull(long contextPtr);
 
 	/**
 	 * @method createUndefined
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	static native public long createUndefined(long context);
+	static native public long createUndefined(long contextPtr);
 
 	/**
 	 * @method createString
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	static native public long createString(long context, String value);
+	static native public long createString(long contextPtr, String value);
 
 	/**
 	 * @method createNumber
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	static native public long createNumber(long context, double value);
+	static native public long createNumber(long contextPtr, double value);
 
 	/**
 	 * @method createBoolean
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	static native public long createBoolean(long context, boolean value);
+	static native public long createBoolean(long contextPtr, boolean value);
 
 	/**
 	 * @method createEmtpyObject
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	static native public long createEmtpyObject(long context);
+	static native public long createEmtpyObject(long contextPtr);
 
 	/**
 	 * @method createEmptyArray
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	static native public long createEmptyArray(long context);
+	static native public long createEmptyArray(long contextPtr);
 
 	/**
 	 * @method createFunction
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	static native public long createFunction(long context, Object value, String name, Object ctx);
+	static native public long createFunction(long contextPtr, Object value, String name, Object ctx);
 
 	/**
 	 * @method protect
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	static native public void protect(long context, long value);
+	static native public void protect(long contextPtr, long valuePtr);
 
 	/**
 	 * @method unprotect
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	static native public void unprotect(long context, long value);
+	static native public void unprotect(long contextPtr, long valuePtr);
 
 	/**
 	 * @method call
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	static native public void call(long context, long value, long object, long[] argv, int argc, Object result);
+	static native public void call(long contextPtr, long valuePtr, long object, long[] argv, int argc, Object result);
 
 	/**
 	 * @method callMethod
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	static native public void callMethod(long context, long value, String method, long[] argv, int argc, Object result);
+	static native public void callMethod(long contextPtr, long valuePtr, String method, long[] argv, int argc, Object result);
 
 	/**
 	 * @method construct
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	static native public void construct(long context, long value, long[] argv, int argc, Object result);
+	static native public void construct(long contextPtr, long valuePtr, long[] argv, int argc, Object result);
 
 	/**
 	 * @method defineProperty
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	static native public void defineProperty(long context, long value, String property, long propertyValue, Object getter, Object setter, boolean writable, boolean enumerable, boolean configurable, Object ctx);
+	static native public void defineProperty(long contextPtr, long valuePtr, String property, long propertyValue, Object getter, Object setter, boolean writable, boolean enumerable, boolean configurable, Object ctx);
 
 	/**
 	 * @method setProperty
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	static native public void setProperty(long context, long value, String property, long propertyValue);
+	static native public void setProperty(long contextPtr, long valuePtr, String property, long propertyValue);
 
 	/**
 	 * @method setProperty
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	static native public void setProperty(long context, long value, String property, String propertyValue);
+	static native public void setProperty(long contextPtr, long valuePtr, String property, String propertyValue);
 
 	/**
 	 * @method setProperty
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	static native public void setProperty(long context, long value, String property, double propertyValue);
+	static native public void setProperty(long contextPtr, long valuePtr, String property, double propertyValue);
 
 	/**
 	 * @method setProperty
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	static native public void setProperty(long context, long value, String property, boolean propertyValue);
+	static native public void setProperty(long contextPtr, long valuePtr, String property, boolean propertyValue);
 
 	/**
 	 * @method getProperty
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	static native public long getProperty(long context, long value, String property);
-
-	/**
-	 * @method deleteProperty
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	static native public void deleteProperty(long context, long value, String property);
+	static native public long getProperty(long contextPtr, long valuePtr, String property);
 
 	/**
 	 * @method setPropertyAtIndex
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	static native public void setPropertyAtIndex(long context, long value, int index, long propertyValue);
+	static native public void setPropertyAtIndex(long contextPtr, long valuePtr, int index, long propertyValue);
 
 	/**
 	 * @method setPropertyAtIndex
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	static native public void setPropertyAtIndex(long context, long value, int index, String propertyValue);
+	static native public void setPropertyAtIndex(long contextPtr, long valuePtr, int index, String propertyValue);
 
 	/**
 	 * @method setPropertyAtIndex
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	static native public void setPropertyAtIndex(long context, long value, int index, double propertyValue);
+	static native public void setPropertyAtIndex(long contextPtr, long valuePtr, int index, double propertyValue);
 
 	/**
 	 * @method setPropertyAtIndex
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	static native public void setPropertyAtIndex(long context, long value, int index, boolean propertyValue);
+	static native public void setPropertyAtIndex(long contextPtr, long valuePtr, int index, boolean propertyValue);
 
 	/**
 	 * @method getPropertyAtIndex
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	static native public long getPropertyAtIndex(long context, long value, int index);
+	static native public long getPropertyAtIndex(long contextPtr, long valuePtr, int index);
 
 	/**
 	 * @method setPrototype
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	static native public void setPrototype(long context, long value, long prototype);
+	static native public void setPrototype(long contextPtr, long valuePtr, long prototype);
 
 	/**
 	 * @method getPrototype
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	static native public long getPrototype(long context, long value);
+	static native public long getPrototype(long contextPtr, long valuePtr);
 
 	/**
 	 * @method setAttribute
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	static native public void setAttribute(long context, long value, int key, Object val);
+	static native public void setAttribute(long contextPtr, long valuePtr, int key, Object value);
 
 	/**
 	 * @method getAttribute
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	static native public Object getAttribute(long context, long value, int key);
+	static native public void setAttribute(long valuePtr, int key, Object value);
+	
+	/**
+	 * @method getAttribute
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	static native public Object getAttribute(long contextPtr, long valuePtr, int key);
 
 	/**
 	 * @method getAttribute
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	static native public Object getAttribute(long handle, int key);
+	static native public Object getAttribute(long valuePtr, int key);
 
 	/**
-	 * @method deleteAttribute
-	 * @since 0.1.0
+	 * @method delAttribute
+	 * @since 0.6.0
 	 * @hidden
 	 */
-	static native public void deleteAttribute(long context, long value, int key);
+	static native public void delAttribute(long contextPtr, long valuePtr, int key);
 
 	/**
-	 * @method deleteAttribute
-	 * @since 0.1.0
+	 * @method delAttribute
+	 * @since 0.6.0
 	 * @hidden
 	 */
-	static native public void deleteAttribute(long handle, int key);
-
-	/**
-	 * @method setAssociatedObject
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	static native public void setAssociatedObject(long context, long value, Object object);
+	static native public void delAttribute(long valuePtr, int key);
 
 	/**
 	 * @method setAssociatedObject
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	static native public void setAssociatedObject(long handle, Object object);
+	static native public void setAssociatedObject(long contextPtr, long valuePtr, Object object);
+	
+	/**
+	 * @method getAssociatedObject
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	static native public Object getAssociatedObject(long contextPtr, long valuePtr);
 
 	/**
 	 * @method getAssociatedObject
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	static native public Object getAssociatedObject(long context, long value);
+	static native public Object getAssociatedObject(long valuePtr);
 
 	/**
-	 * @method getAssociatedObject
-	 * @since 0.1.0
+	 * @method delAssociatedObject
+	 * @since 0.6.0
 	 * @hidden
 	 */
-	static native public Object getAssociatedObject(long handle);
-
-	/**
-	 * @method deleteAssociatedObject
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	static native public void deleteAssociatedObject(long context, long value);
-
-	/**
-	 * @method deleteAssociatedObject
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	static native public void deleteAssociatedObject(long handle);
+	static native public void delAssociatedObject(long contextPtr, long valuePtr);
 
 	/**
 	 * @method setFinalizeHandler
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	static native public void setFinalizeHandler(long context, long value, Object wrapper, Object ctx);
+	static native public void setFinalizeHandler(long contextPtr, long valuePtr, Object wrapper, Object context);
 
 	/**
 	 * @method equals
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	static native public boolean equals(long context, long v1, long v2);
+	static native public boolean equals(long contextPtr, long v1, long v2);
 
 	/**
 	 * @method equals
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	static native public boolean equals(long context, long v1, String v2);
+	static native public boolean equals(long contextPtr, long v1, String v2);
 
 	/**
 	 * @method equals
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	static native public boolean equals(long context, long v1, double v2);
+	static native public boolean equals(long contextPtr, long v1, double v2);
 
 	/**
 	 * @method equals
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	static native public boolean equals(long context, long v1, boolean v2);
+	static native public boolean equals(long contextPtr, long v1, boolean v2);
 
 	/**
 	 * @method isString
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	static native public boolean isString(long context, long value);
+	static native public boolean isString(long contextPtr, long valuePtr);
 
 	/**
 	 * @method isNumber
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	static native public boolean isNumber(long context, long value);
+	static native public boolean isNumber(long contextPtr, long valuePtr);
 
 	/**
 	 * @method isBoolean
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	static native public boolean isBoolean(long context, long value);
+	static native public boolean isBoolean(long contextPtr, long valuePtr);
 
 	/**
 	 * @method isFunction
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	static native public boolean isFunction(long context, long value);
+	static native public boolean isFunction(long contextPtr, long valuePtr);
 
 	/**
 	 * @method isObject
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	static native public boolean isObject(long context, long value);
+	static native public boolean isObject(long contextPtr, long valuePtr);
 
 	/**
 	 * @method isArray
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	static native public boolean isArray(long context, long value);
+	static native public boolean isArray(long contextPtr, long valuePtr);
 
 	/**
 	 * @method isUndefined
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	static native public boolean isUndefined(long context, long value);
+	static native public boolean isUndefined(long contextPtr, long valuePtr);
 
 	/**
 	 * @method isNull
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	static native public boolean isNull(long context, long value);
+	static native public boolean isNull(long contextPtr, long valuePtr);
 
 	/**
 	 * @method getTypeOf
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	static native public int getType(long context, long value);
+	static native public int getType(long contextPtr, long valuePtr);
 
 	/**
 	 * @method toString
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	static native public String toString(long context, long value);
+	static native public String toString(long contextPtr, long valuePtr);
 
 	/**
 	 * @method toNumber
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	static native public double toNumber(long context, long value);
+	static native public double toNumber(long contextPtr, long valuePtr);
 
 	/**
 	 * @method toBoolean
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	static native public boolean toBoolean(long context, long value);
+	static native public boolean toBoolean(long contextPtr, long valuePtr);
 
 }

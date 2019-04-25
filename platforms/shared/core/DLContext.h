@@ -72,13 +72,6 @@ void DLContextSetAttribute(JSContextRef context, long long key, void *value);
 void * DLContextGetAttribute(JSContextRef context, long long key);
 
 /**
- * Deletes a property from the specified context.
- * @function DLContextGetProperty
- * @since 0.1.0
- */
-void DLContextDeleteAttribute(JSContextRef context, long long key);
-
-/**
  * Adds an error execute for the current context.
  * @function DLContextSetExceptionHandler
  * @since 0.1.0

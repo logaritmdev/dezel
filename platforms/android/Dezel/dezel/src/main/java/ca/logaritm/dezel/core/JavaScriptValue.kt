@@ -355,7 +355,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	 * @since 0.1.0
 	 */
 	public fun call(arguments: JavaScriptArguments?, target: JavaScriptValue?, result: JavaScriptValue? = null) {
-		JavaScriptValueExternal.call(this.context.handle, this.handle, toHandleO(target), toArgv(arguments), toArgc(arguments), result)
+		JavaScriptValueExternal.call(this.context.handle, this.handle, toHandle(target), toArgv(arguments), toArgc(arguments), result)
 	}
 
 	/**
@@ -407,7 +407,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 		if (getter != null) get = JavaScriptGetterWrapper(getter)
 		if (setter != null) set = JavaScriptSetterWrapper(setter)
 
-		JavaScriptValueExternal.defineProperty(this.context.handle, this.handle, property, toHandleO(value), get, set, writable, enumerable, configurable, context)
+		JavaScriptValueExternal.defineProperty(this.context.handle, this.handle, property, toHandle(value), get, set, writable, enumerable, configurable, context)
 	}
 
 	/**
@@ -415,7 +415,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	 * @method property
 	 * @since 0.1.0
 	 */
-	public fun property(name: String, value: JavaScriptValue) {
+	public fun property(name: String, value: JavaScriptValue?) {
 		JavaScriptValueExternal.setProperty(this.context.handle, this.handle, name, toHandle(value))
 	}
 
@@ -546,24 +546,6 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	}
 
 	/**
-	 * Deletes a property from this value.
-	 * @method deleteProperty
-	 * @since 0.1.0
-	 */
-	public fun deleteProperty(name: String) {
-		JavaScriptValueExternal.deleteProperty(this.context.handle, this.handle, name)
-	}
-
-	/**
-	 * Deletes a property from this value.
-	 * @method deleteProperty
-	 * @since 0.1.0
-	 */
-	public fun deleteProperty(index: Int) {
-		JavaScriptValueExternal.deleteProperty(this.context.handle, this.handle, index.toString())
-	}
-
-	/**
 	 * Convenience holder to loop through this value's array values.
 	 * @method forEach
 	 * @since 0.1.0
@@ -691,15 +673,5 @@ open class JavaScriptValue(context: JavaScriptContext) {
 		}
 
 		this.onResetValue()
-	}
-
-	/**
-	 * @method recycle
-	 * @since 0.6.0
-	 * @hidden
-	 */
-	public fun recycle() {
-		this.unprotect()
-		this.handle = 0L
 	}
 }

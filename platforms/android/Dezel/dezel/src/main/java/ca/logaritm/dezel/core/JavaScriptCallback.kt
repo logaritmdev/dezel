@@ -110,7 +110,7 @@ open class JavaScriptCallback(context: JavaScriptContext, target: Long, callee: 
 	 * @since 0.1.0
 	 */
 	public fun returns(value: JavaScriptValue?) {
-		this.result = toHandleO(value)
+		this.result = toHandle(value)
 	}
 
 	/**

@@ -65,10 +65,10 @@ JNIEXPORT jobject JNICALL Java_ca_logaritm_dezel_core_JavaScriptContextExternal_
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptContextExternal
- * Method:    deleteAttribute
+ * Method:    delAttribute
  * Signature: (JI)V
  */
-JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptContextExternal_deleteAttribute
+JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptContextExternal_delAttribute
   (JNIEnv *, jclass, jlong, jint);
 
 /*

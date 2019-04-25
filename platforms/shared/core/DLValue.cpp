@@ -223,9 +223,19 @@ DLValueSetProperty(JSContextRef context, JSObjectRef target, DLString property, 
 
 	JSValueRef error = NULL;
 
-	JSStringRef string = JSStringCreateWithUTF8CString(property);
-	JSObjectSetProperty(context, object, string, value, kJSPropertyAttributeNone, &error);
-	JSStringRelease(string);
+	if (value == NULL) {
+
+		JSStringRef string = JSStringCreateWithUTF8CString(property);
+		JSObjectDeleteProperty(context, object, string, &error);
+		JSStringRelease(string);
+
+	} else {
+
+		JSStringRef string = JSStringCreateWithUTF8CString(property);
+		JSObjectSetProperty(context, object, string, value, kJSPropertyAttributeNone, &error);
+		JSStringRelease(string);
+
+	}
 
 	if (error) {
 		DLContextHandleError(context, error);
@@ -291,11 +301,11 @@ DLValueGetProperties(JSContextRef context, JSObjectRef target, int* count)
 
 	for (int i = 0; i < length; i++) {
 
-		//JSValueRef error = NULL;
+		JSValueRef error = NULL;
 		JSStringRef string = JSPropertyNameArrayGetNameAtIndex(names, i);
-		//if (error) {
-		//	DLContextHandleError(context, error);
-		//}
+		if (error) {
+			DLContextHandleError(context, error);
+		}
 
 		size_t len = JSStringGetMaximumUTF8CStringSize(string);
 		char * str = (char *) malloc(sizeof(char) * len);
@@ -309,25 +319,6 @@ DLValueGetProperties(JSContextRef context, JSObjectRef target, int* count)
 	*count = length;
 
 	return properties;
-}
-
-void
-DLValueDeleteProperty(JSContextRef context, JSObjectRef target, DLString property)
-{
-	JSObjectRef object = DLValueToObject(context, target);
-	if (object == NULL) {
-		return;
-	}
-
-	JSValueRef error = NULL;
-
-	JSStringRef string = JSStringCreateWithUTF8CString(property);
-	JSObjectDeleteProperty(context, object, string, &error);
-	JSStringRelease(string);
-
-	if (error) {
-		DLContextHandleError(context, error);
-	}
 }
 
 void
@@ -516,19 +507,6 @@ DLValueGetAttribute(JSContextRef context, JSObjectRef object, long long key)
 	}
 
 	return DLValueDataGetAttribute(data, key);
-}
-
-void
-DLValueDeleteAttribute(JSContextRef context, JSObjectRef object, long long key)
-{
-	DLValueDataRef data = DLValueDataGet(object);
-
-	if (data == NULL) {
-		cerr << "Attributes is only supported by natively created objects.";
-		return;
-	}
-
-	DLValueDataDeleteAttribute(data, key);
 }
 
 void
@@ -730,6 +708,11 @@ DLValueToBoolean(JSContextRef context, JSValueRef value)
 void
 DLValueDataSetAttribute(DLValueDataRef data, long long key, void *value)
 {
+	if (value == NULL) {
+		data->attributes.erase(key);
+		return;
+	}
+
 	data->attributes[key] = value;
 }
 
@@ -737,12 +720,6 @@ void *
 DLValueDataGetAttribute(DLValueDataRef data, long long key)
 {
 	return data->attributes[key];
-}
-
-void
-DLValueDataDeleteAttribute(DLValueDataRef data, long long key)
-{
-	data->attributes.erase(key);
 }
 
 void

@@ -191,7 +191,7 @@ void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_defineProperty(JNIEnv *
  */
 void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setProperty__JJLjava_lang_String_2J(JNIEnv *env, jclass, jlong contextPtr, jlong valuePtr, jstring propertyStr, jlong value) {
 	JNI_STRING_CREATE(propertyStr, property);
-	DLValueSetProperty(reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSObjectRef>(valuePtr), property, reinterpret_cast<JSValueRef>(value));
+	DLValueSetProperty(reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSObjectRef>(valuePtr), property, value ? reinterpret_cast<JSValueRef>(value) : NULL);
 	JNI_STRING_DELETE(propertyStr, property);
 }
 
@@ -240,17 +240,6 @@ jlong Java_ca_logaritm_dezel_core_JavaScriptValueExternal_getProperty(JNIEnv *en
 	JSValueRef result = DLValueGetProperty(reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSObjectRef>(valuePtr), property);
 	JNI_STRING_DELETE(propertyStr, property);
 	return reinterpret_cast<jlong>(result);
-}
-
-/*
- * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
- * Method:    deleteProperty
- * Signature: (JJLjava/lang/String;)V
- */
-void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_deleteProperty(JNIEnv *env, jclass, jlong contextPtr, jlong valuePtr, jstring propertyStr) {
-	JNI_STRING_CREATE(propertyStr, property);
-	DLValueDeleteProperty(reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSObjectRef>(valuePtr), property);
-	JNI_STRING_DELETE(propertyStr, property);
 }
 
 /*
@@ -323,8 +312,17 @@ jlong Java_ca_logaritm_dezel_core_JavaScriptValueExternal_getPrototype(JNIEnv *e
  * Method:    setAttribute
  * Signature: (JJILjava/lang/Object;)V
  */
-void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setAttribute(JNIEnv *env, jclass, jlong contextPtr, jlong valuePtr, jint key, jobject value) {
-	DLValueSetAttribute(reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSObjectRef>(valuePtr), static_cast<long long>(key), env->NewGlobalRef(value));
+void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setAttribute__JJILjava_lang_Object_2(JNIEnv *env, jclass, jlong contextPtr, jlong valuePtr, jint key, jobject value) {
+	DLValueSetAttribute(reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSObjectRef>(valuePtr), static_cast<long long>(key), value ? env->NewGlobalRef(value) : NULL);
+}
+
+/*
+ * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
+ * Method:    setAttribute
+ * Signature: (JILjava/lang/Object;)V
+ */
+void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setAttribute__JILjava_lang_Object_2(JNIEnv *env, jclass, jlong valuePtr, jint key, jobject value) {
+	DLValueDataSetAttribute(reinterpret_cast<DLValueDataRef>(valuePtr), static_cast<long long>(key), value ? env->NewGlobalRef(value) : NULL);
 }
 
 /*
@@ -347,38 +345,20 @@ jobject Java_ca_logaritm_dezel_core_JavaScriptValueExternal_getAttribute(JNIEnv 
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
- * Method:    deleteAttribute
+ * Method:    delAttribute
  * Signature: (JJI)V
  */
-JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_deleteAttribute__JJI(JNIEnv *env, jclass, jlong contextPtr, jlong valuePtr, jint key) {
-
-	jobject value = (jobject) DLValueGetAttribute(reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSObjectRef>(valuePtr), key);
-
-	if (value == NULL) {
-		return;
-	}
-
-	env->DeleteGlobalRef(value);
-
-	DLValueDeleteAttribute(reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSObjectRef>(valuePtr), key);
+void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_delAttribute__JJI(JNIEnv *env, jclass, jlong contextPtr, jlong valuePtr, jint key) {
+	env->DeleteGlobalRef(reinterpret_cast<jobject>(DLValueGetAttribute(reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSObjectRef>(valuePtr), static_cast<long long>(key))));
 }
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
- * Method:    deleteAttribute
+ * Method:    delAttribute
  * Signature: (JI)V
  */
-void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_deleteAttribute__JI(JNIEnv *env, jclass, jlong valuePtr, jint key) {
-
-	jobject value = (jobject) DLValueDataGetAttribute(reinterpret_cast<DLValueDataRef>(valuePtr), key);
-
-	if (value == NULL) {
-		return;
-	}
-
-	env->DeleteGlobalRef(value);
-
-	DLValueDataDeleteAttribute(reinterpret_cast<DLValueDataRef>(valuePtr), key);
+void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_delAttribute__JI(JNIEnv *env, jclass, jlong valuePtr, jint key) {
+	env->DeleteGlobalRef(reinterpret_cast<jobject>(DLValueDataGetAttribute(reinterpret_cast<DLValueDataRef>(valuePtr), static_cast<long long>(key))));
 }
 
 /*
@@ -386,17 +366,8 @@ void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_deleteAttribute__JI(JNI
  * Method:    setAssociatedObject
  * Signature: (JJLjava/lang/Object;)V
  */
-void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setAssociatedObject__JJLjava_lang_Object_2(JNIEnv *env, jclass, jlong contextPtr, jlong valuePtr, jobject object) {
-	DLValueSetAssociatedObject(reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSObjectRef>(valuePtr), env->NewGlobalRef(object));
-}
-
-/*
- * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
- * Method:    setAssociatedObject
- * Signature: (JLjava/lang/Object;)V
- */
-void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setAssociatedObject__JLjava_lang_Object_2(JNIEnv *env, jclass, jlong valuePtr, jobject object) {
-	DLValueDataSetAssociatedObject(reinterpret_cast<DLValueDataRef>(valuePtr), env->NewGlobalRef(object));
+void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setAssociatedObject(JNIEnv *env, jclass, jlong contextPtr, jlong valuePtr, jobject object) {
+	DLValueSetAssociatedObject(reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSObjectRef>(valuePtr), object ? env->NewGlobalRef(object) : NULL);
 }
 
 /*
@@ -405,7 +376,7 @@ void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setAssociatedObject__JL
  * Signature: (JJ)Ljava/lang/Object;
  */
 jobject Java_ca_logaritm_dezel_core_JavaScriptValueExternal_getAssociatedObject__JJ(JNIEnv *env, jclass, jlong contextPtr, jlong valuePtr) {
-	return (jobject) DLValueGetAssociatedObject(reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSObjectRef>(valuePtr));
+	return reinterpret_cast<jobject>(DLValueGetAssociatedObject(reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSObjectRef>(valuePtr)));
 }
 
 /*
@@ -414,43 +385,17 @@ jobject Java_ca_logaritm_dezel_core_JavaScriptValueExternal_getAssociatedObject_
  * Signature: (J)Ljava/lang/Object;
  */
 jobject Java_ca_logaritm_dezel_core_JavaScriptValueExternal_getAssociatedObject__J(JNIEnv *env, jclass, jlong valuePtr) {
-	return (jobject) DLValueDataGetAssociatedObject(reinterpret_cast<DLValueDataRef>(valuePtr));
+	return reinterpret_cast<jobject>(DLValueDataGetAssociatedObject(reinterpret_cast<DLValueDataRef>(valuePtr)));
 }
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
- * Method:    deleteAssociatedObject
+ * Method:    delAssociatedObject
  * Signature: (JJ)V
  */
-void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_deleteAssociatedObject__JJ(JNIEnv *env, jclass, jlong contextPtr, jlong valuePtr) {
-
-	jobject value = (jobject) DLValueGetAssociatedObject(reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSObjectRef>(valuePtr));
-
-	if (value == NULL) {
-		return;
-	}
-
-	env->DeleteGlobalRef(value);
-
-	DLValueSetAssociatedObject(reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSObjectRef>(valuePtr), NULL);
-}
-
-/*
- * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
- * Method:    deleteAssociatedObject
- * Signature: (J)V
- */
-void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_deleteAssociatedObject__J(JNIEnv *env, jclass, jlong valuePtr) {
-
-	jobject value = (jobject) DLValueDataGetAssociatedObject(reinterpret_cast<DLValueDataRef>(valuePtr));
-
-	if (value == NULL) {
-		return;
-	}
-
-	env->DeleteGlobalRef(value);
-
-	DLValueDataSetAssociatedObject(reinterpret_cast<DLValueDataRef>(valuePtr), NULL);
+JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_delAssociatedObject(JNIEnv *env, jclass, jlong contextPtr, jlong valuePtr) {
+	env->DeleteGlobalRef(NULL);
+	env->DeleteGlobalRef(reinterpret_cast<jobject>(DLValueGetAssociatedObject(reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSObjectRef>(valuePtr))));
 }
 
 /*

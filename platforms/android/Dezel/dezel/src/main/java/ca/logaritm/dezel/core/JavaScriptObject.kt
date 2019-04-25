@@ -19,7 +19,8 @@ open class JavaScriptObject(context: JavaScriptContext): JavaScriptValue(context
 	override fun dispose() {
 
 		if (this.handle != 0L) {
-			JavaScriptValueExternal.deleteAssociatedObject(this.context.handle, this.handle)
+			JavaScriptValueExternal.delAssociatedObject(this.context.handle, this.handle)
+			JavaScriptValueExternal.setAssociatedObject(this.context.handle, this.handle, null)
 		}
 
 		super.dispose()
@@ -40,16 +41,9 @@ open class JavaScriptObject(context: JavaScriptContext): JavaScriptValue(context
 	 * @since 0.1.0
 	 */
 	public fun attribute(key: Any, value: Any) {
-		JavaScriptValueExternal.setAttribute(this.context.handle, this.handle, key.hashCode(), value)
-	}
-
-	/**
-	 * Removes an internal attribute from this object.
-	 * @method deleteAttribute
-	 * @since 0.1.0
-	 */
-	public fun deleteAttribute(key: Any) {
-		JavaScriptValueExternal.deleteAttribute(this.context.handle, this.handle, key.hashCode())
+		val hash = key.hashCode()
+		JavaScriptValueExternal.delAttribute(this.context.handle, this.handle, hash)
+		JavaScriptValueExternal.setAttribute(this.context.handle, this.handle, hash, value)
 	}
 
 	/**
@@ -80,10 +74,11 @@ open class JavaScriptObject(context: JavaScriptContext): JavaScriptValue(context
 			 * longer usable.
 			 */
 
-			JavaScriptValueExternal.deleteAssociatedObject(callback.handle)
-
-			this.recycle()
-			this.dispose()
+			val handler = JavaScriptValueExternal.getAssociatedObject(callback.handle)
+			if (handler is JavaScriptValue) {
+				handler.dispose()
+			}
 		}
 	}
 }
+

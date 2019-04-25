@@ -27,6 +27,7 @@ open class JavaScriptObject: JavaScriptValue {
 
 		if (self.handle != nil) {
 			DLValueGetAssociatedObject(self.context.handle, self.handle).release()
+			DLValueSetAssociatedObject(self.context.handle, self.handle, nil)
 		}
 
 		super.dispose()
@@ -46,18 +47,10 @@ open class JavaScriptObject: JavaScriptValue {
 	 * @method attribute
 	 * @since 0.1.0
 	 */
-	public func attribute(_ key: AnyObject, value: AnyObject) {
-		DLValueSetAttribute(self.context.handle, self.handle, toHash(key), UnsafeMutableRawPointer(Unmanaged.passRetained(value).toOpaque()))
-	}
-
-	/**
-	 * Deletes an attribute from this object.
-	 * @method deleteAttribute
-	 * @since 0.1.0
-	 */
-	public func deleteAttribute(_ key: AnyObject) {
-		DLValueGetAttribute(self.context.handle, self.handle, toHash(key))?.release()
-		DLValueDeleteAttribute(self.context.handle, self.handle, toHash(key))
+	public func attribute(_ key: AnyObject, value: AnyObject?) {
+		let hash = toHash(key)
+		DLValueGetAttribute(self.context.handle, self.handle, hash)?.release()
+		DLValueSetAttribute(self.context.handle, self.handle, hash, toOpaque(value))
 	}
 
 	/**
@@ -88,11 +81,9 @@ open class JavaScriptObject: JavaScriptValue {
 			 * longer usable.
 			 */
 
-
-			DLValueDataGetAssociatedObject(callback.handle).release()
-
-			self.recycle()
-			self.dispose()
+			if let handler = DLValueDataGetAssociatedObject(callback.handle) {
+				 Unmanaged<JavaScriptValue>.fromOpaque(handler).takeUnretainedValue().dispose()
+			}
 		}
 	}
 }

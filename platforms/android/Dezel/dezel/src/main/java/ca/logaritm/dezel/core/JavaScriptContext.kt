@@ -384,8 +384,10 @@ open class JavaScriptContext {
 	 * @method attribute
 	 * @since 0.1.0
 	 */
-	open fun attribute(key: String, value: Any) {
-		JavaScriptContextExternal.setAttribute(this.handle, key.hashCode(), value)
+	open fun attribute(key: String, value: Any?) {
+		val hash = key.hashCode()
+		JavaScriptContextExternal.delAttribute(this.handle, hash)
+		JavaScriptContextExternal.setAttribute(this.handle, hash, value)
 	}
 
 	/**
@@ -395,15 +397,6 @@ open class JavaScriptContext {
 	 */
 	open fun attribute(key: String): Any? {
 		return JavaScriptContextExternal.getAttribute(this.handle, key.hashCode())
-	}
-
-	/**
-	 * Removes a custom attribute from this context.
-	 * @method deleteAttribute
-	 * @since 0.1.0
-	 */
-	open fun deleteAttribute(key: String) {
-		return JavaScriptContextExternal.deleteAttribute(this.handle, key.hashCode())
 	}
 
 	/**
