@@ -326,9 +326,9 @@ public class ContentWebView: WKWebView, WKNavigationDelegate, UIScrollViewDelega
 		self.scrollView.addObserver(self, forKeyPath: "contentSize", options: .new, context: nil)
 		self.scrollView.addObserver(self, forKeyPath: "contentOffset", options: .new, context: nil)
 
-//		self.scrollView.addGestureRecognizer(
-//			ScrollViewTouchCancelGesture(scrollView: self.scrollView, target: self, action: #selector(scrollViewDidCancelTouch))
-//		)
+		self.scrollView.addGestureRecognizer(
+			ScrollViewTouchCancelGesture(scrollView: self.scrollView, target: self, action: #selector(scrollViewDidCancelTouch))
+		)
 	}
 
 	/**
@@ -337,11 +337,9 @@ public class ContentWebView: WKWebView, WKNavigationDelegate, UIScrollViewDelega
 	 * @hidden
 	 */
 	deinit {
-		print("DEINIT!!!!!")
 		self.removeObserver(self, forKeyPath: "loading")
 		self.scrollView.removeObserver(self, forKeyPath: "contentSize")
 		self.scrollView.removeObserver(self, forKeyPath: "contentOffset")
-		self.scrollView.delegate = nil
 	}
 
 	/**
