@@ -394,7 +394,6 @@ jobject Java_ca_logaritm_dezel_core_JavaScriptValueExternal_getAssociatedObject_
  * Signature: (JJ)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_delAssociatedObject(JNIEnv *env, jclass, jlong contextPtr, jlong valuePtr) {
-	env->DeleteGlobalRef(NULL);
 	env->DeleteGlobalRef(reinterpret_cast<jobject>(DLValueGetAssociatedObject(reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSObjectRef>(valuePtr))));
 }
 
