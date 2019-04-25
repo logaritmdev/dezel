@@ -2160,16 +2160,20 @@ open class View: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelegate, Scroll
 			scrollable.scrollableDelegate = self
 		}
 
-		self.wrapper.draw = { [unowned self] ctx in
+		self.wrapper.draw = { [weak self] ctx in
 
-			if (self.canvas == nil) {
-				self.canvas = self.createCanvas()
+			guard let view = self else {
+				return
 			}
 
-			let canvas = self.canvas!
+			if (view.canvas == nil) {
+				view.canvas = view.createCanvas()
+			}
+
+			let canvas = view.canvas!
 
 			canvas.use(ctx)
-			self.holder.callMethod("nativeRedraw", arguments: [canvas.holder])
+			view.holder.callMethod("nativeRedraw", arguments: [canvas.holder])
 			canvas.use(nil)
 		}
 
