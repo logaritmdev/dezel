@@ -4,4 +4,4 @@ import ca.logaritm.dezel.core.JavaScriptClass
 import ca.logaritm.dezel.core.JavaScriptContext
 import ca.logaritm.dezel.core.JavaScriptValue
 
-public class ValueClass(context:JavaScriptContext, value:JavaScriptValue) : JavaScriptClass(context)
+public class ValueClass(context: JavaScriptContext) : JavaScriptClass(context)
