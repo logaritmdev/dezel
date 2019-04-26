@@ -32,7 +32,7 @@ DLStylerStyleApplyOrder(DLStylerStyleItemRef a, DLStylerStyleItemRef b)
 }
 
 void
-DLStyleParseTypes(DLStylerNodeRef node, const char *type)
+DLStyleParseTypes(DLStylerNodeRef node, const char* type)
 {
 	static unordered_map<string, vector<string>> cache;
 

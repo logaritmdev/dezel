@@ -27,7 +27,6 @@ JSValueRef
 DLFunctionCallAsFunctionHandler(JSContextRef context, JSObjectRef callee, JSObjectRef object, size_t argc, const JSValueRef argv[], JSValueRef *error)
 {
 	JSValueRef result = DLValueDataGet(callee)->functionCallback(context, object, callee, argc, argv);
-
 	if (result == NULL) {
 		result = DLValueCreateUndefined(context);
 	}
@@ -59,7 +58,7 @@ DLFunctionFinalizeHandler(JSObjectRef object)
 JSValueRef
 DLFunctionConvertToStringHandler(JSContextRef context, JSObjectRef callee, JSObjectRef object, size_t argc, const JSValueRef argv[], JSValueRef *error)
 {
-	DLString name = DLValueToString(context, DLValueGetProperty(context, object, "name"));
+	const char* name = DLValueToString(context, DLValueGetProperty(context, object, "name"));
 
 	size_t len = strlen(name);
 	char str[len + 31];

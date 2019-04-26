@@ -402,7 +402,7 @@ void DLLayoutNodeSetLayout(DLLayoutNodeRef node, DLLayoutRef layout);
  * @function DLLayoutNodeSetId
  * @since 0.1.0
  */
-void DLLayoutNodeSetId(DLLayoutNodeRef node, const char *id);
+void DLLayoutNodeSetId(DLLayoutNodeRef node, const char* id);
 
 /**
  * Indicates whether this layout node is the root node.

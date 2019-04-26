@@ -48,13 +48,13 @@ DLStylerNodeDelete(DLStylerNodeRef node)
 }
 
 void
-DLStylerNodeSetId(DLStylerNodeRef node, const char *id)
+DLStylerNodeSetId(DLStylerNodeRef node, const char* id)
 {
 	node->id = string(id);
 }
 
 void
-DLStylerNodeSetType(DLStylerNodeRef node, const char *type)
+DLStylerNodeSetType(DLStylerNodeRef node, const char* type)
 {
 	DLStyleParseTypes(node, type);
 
@@ -179,7 +179,7 @@ DLStylerNodeRemoveShadowedNode(DLStylerNodeRef node, DLStylerNodeRef child)
 }
 
 void
-DLStylerNodeAppendStyle(DLStylerNodeRef node, const char *style)
+DLStylerNodeAppendStyle(DLStylerNodeRef node, const char* style)
 {
 	string value(style);
 
@@ -199,7 +199,7 @@ DLStylerNodeAppendStyle(DLStylerNodeRef node, const char *style)
 }
 
 void
-DLStylerNodeRemoveStyle(DLStylerNodeRef node, const char *style)
+DLStylerNodeRemoveStyle(DLStylerNodeRef node, const char* style)
 {
 	string value(style);
 
@@ -219,7 +219,7 @@ DLStylerNodeRemoveStyle(DLStylerNodeRef node, const char *style)
 }
 
 void
-DLStylerNodeAppendState(DLStylerNodeRef node, const char *state)
+DLStylerNodeAppendState(DLStylerNodeRef node, const char* state)
 {
 	string value(state);
 
@@ -239,7 +239,7 @@ DLStylerNodeAppendState(DLStylerNodeRef node, const char *state)
 }
 
 void
-DLStylerNodeRemoveState(DLStylerNodeRef node, const char *state)
+DLStylerNodeRemoveState(DLStylerNodeRef node, const char* state)
 {
 	string value(state);
 

@@ -53,7 +53,7 @@ DLStylerLoadStyles(DLStylerRef styler, const char* code, const char* file)
 	source.append(code);
 
 	Stylesheet stylesheet;
-	list<const char *> files = {file};
+	list<const char*> files = {file};
 	istringstream stylerSource(source);
 
 	StylerStylesheet stylerStylesheet;

@@ -19,7 +19,7 @@ DLValueCreateUndefined(JSContextRef context)
 }
 
 JSValueRef
-DLValueCreateString(JSContextRef context, DLString value)
+DLValueCreateString(JSContextRef context, const char* value)
 {
 	JSStringRef string = JSStringCreateWithUTF8CString(value);
 	JSValueRef result = JSValueMakeString(context, string);
@@ -28,13 +28,13 @@ DLValueCreateString(JSContextRef context, DLString value)
 }
 
 JSValueRef
-DLValueCreateNumber(JSContextRef context, DLNumber value)
+DLValueCreateNumber(JSContextRef context, double value)
 {
 	return JSValueMakeNumber(context, value);
 }
 
 JSValueRef
-DLValueCreateBoolean(JSContextRef context, DLBoolean value)
+DLValueCreateBoolean(JSContextRef context, bool value)
 {
 	return JSValueMakeBoolean(context, value);
 }
@@ -77,7 +77,7 @@ DLValueCreateEmptyArray(JSContextRef context)
 }
 
 JSObjectRef
-DLValueCreateFunction(JSContextRef context, DLFunctionCallback callback, DLString name)
+DLValueCreateFunction(JSContextRef context, DLFunctionCallback callback, const char* name)
 {
 	JSClassDefinition def = kJSClassDefinitionEmpty;
 
@@ -130,7 +130,7 @@ DLValueUnprotect(JSContextRef context, JSValueRef value)
 }
 
 void
-DLValueDefineProperty(JSContextRef context, JSObjectRef target, DLString property, JSValueRef getter, JSValueRef setter, JSValueRef value, DLBoolean writable, DLBoolean enumerable, DLBoolean configurable)
+DLValueDefineProperty(JSContextRef context, JSObjectRef target, const char* property, JSValueRef getter, JSValueRef setter, JSValueRef value, bool writable, bool enumerable, bool configurable)
 {
 	JSObjectRef object = DLValueToObject(context, target);
 	if (object == NULL) {
@@ -168,13 +168,13 @@ DLValueDefineConstructor(JSContextRef context, JSObjectRef prototype, JSObjectRe
 }
 
 void
-DLValueDefineFunction(JSContextRef context, JSObjectRef prototype, DLString name, JSObjectRef function)
+DLValueDefineFunction(JSContextRef context, JSObjectRef prototype, const char* name, JSObjectRef function)
 {
 	DLValueDefineProperty(context, prototype, name, NULL, NULL, function, true, true, true);
 }
 
 void
-DLValueDefinePropertySetter(JSContextRef context, JSObjectRef prototype, DLString name, JSObjectRef function)
+DLValueDefinePropertySetter(JSContextRef context, JSObjectRef prototype, const char* name, JSObjectRef function)
 {
 	JSObjectRef descriptor = DLValueCreateEmptyObject(context, NULL);
 
@@ -194,7 +194,7 @@ DLValueDefinePropertySetter(JSContextRef context, JSObjectRef prototype, DLStrin
 }
 
 void
-DLValueDefinePropertyGetter(JSContextRef context, JSObjectRef prototype, DLString name, JSObjectRef function)
+DLValueDefinePropertyGetter(JSContextRef context, JSObjectRef prototype, const char* name, JSObjectRef function)
 {
 	JSObjectRef descriptor = DLValueCreateEmptyObject(context, NULL);
 
@@ -214,7 +214,7 @@ DLValueDefinePropertyGetter(JSContextRef context, JSObjectRef prototype, DLStrin
 }
 
 void
-DLValueSetProperty(JSContextRef context, JSObjectRef target, DLString property, JSValueRef value)
+DLValueSetProperty(JSContextRef context, JSObjectRef target, const char* property, JSValueRef value)
 {
 	JSObjectRef object = DLValueToObject(context, target);
 	if (object == NULL) {
@@ -243,25 +243,25 @@ DLValueSetProperty(JSContextRef context, JSObjectRef target, DLString property, 
 }
 
 void
-DLValueSetPropertyWithString(JSContextRef context, JSObjectRef object, DLString property, DLString value)
+DLValueSetPropertyWithString(JSContextRef context, JSObjectRef object, const char* property, const char* value)
 {
 	DLValueSetProperty(context, object, property, DLValueCreateString(context, value));
 }
 
 void
-DLValueSetPropertyWithNumber(JSContextRef context, JSObjectRef object, DLString property, DLNumber value)
+DLValueSetPropertyWithNumber(JSContextRef context, JSObjectRef object, const char* property, double value)
 {
 	DLValueSetProperty(context, object, property, DLValueCreateNumber(context, value));
 }
 
 void
-DLValueSetPropertyWithBoolean(JSContextRef context, JSObjectRef object, DLString property, DLBoolean value)
+DLValueSetPropertyWithBoolean(JSContextRef context, JSObjectRef object, const char* property, bool value)
 {
 	DLValueSetProperty(context, object, property, DLValueCreateBoolean(context, value));
 }
 
 JSValueRef
-DLValueGetProperty(JSContextRef context, JSObjectRef target, DLString property)
+DLValueGetProperty(JSContextRef context, JSObjectRef target, const char* property)
 {
 	JSObjectRef object = DLValueToObject(context, target);
 	if (object == NULL) {
@@ -269,10 +269,8 @@ DLValueGetProperty(JSContextRef context, JSObjectRef target, DLString property)
 	}
 
 	JSStringRef string = JSStringCreateWithUTF8CString(property);
-
 	JSValueRef error = NULL;
 	JSValueRef value = JSObjectGetProperty(context, object, string, &error);
-
 	JSStringRelease(string);
 
 	if (error) {
@@ -280,45 +278,6 @@ DLValueGetProperty(JSContextRef context, JSObjectRef target, DLString property)
 	}
 
 	return value;
-}
-
-DLString*
-DLValueGetProperties(JSContextRef context, JSObjectRef target, int* count)
-{
-	JSObjectRef object = DLValueToObject(context, target);
-	if (object == NULL) {
-		return NULL;
-	}
-
-	JSPropertyNameArrayRef names = JSObjectCopyPropertyNames(context, object);
-
-	int length = (int) JSPropertyNameArrayGetCount(names);
-	if (length == 0) {
-		return NULL;
-	}
-
-	DLString* properties = new DLString[length];
-
-	for (int i = 0; i < length; i++) {
-
-		JSValueRef error = NULL;
-		JSStringRef string = JSPropertyNameArrayGetNameAtIndex(names, i);
-		if (error) {
-			DLContextHandleError(context, error);
-		}
-
-		size_t len = JSStringGetMaximumUTF8CStringSize(string);
-		char * str = (char *) malloc(sizeof(char) * len);
-		JSStringGetUTF8CString(string, str, len);
-
-		properties[i] = str;
-	}
-
-	JSPropertyNameArrayRelease(names);
-
-	*count = length;
-
-	return properties;
 }
 
 void
@@ -339,19 +298,19 @@ DLValueSetPropertyAtIndex(JSContextRef context, JSObjectRef target, unsigned int
 }
 
 void
-DLValueSetPropertyAtIndexWithString(JSContextRef context, JSObjectRef object, unsigned int index, DLString value)
+DLValueSetPropertyAtIndexWithString(JSContextRef context, JSObjectRef object, unsigned int index, const char* value)
 {
 	DLValueSetPropertyAtIndex(context, object, index, DLValueCreateString(context, value));
 }
 
 void
-DLValueSetPropertyAtIndexWithNumber(JSContextRef context, JSObjectRef object, unsigned int index, DLNumber value)
+DLValueSetPropertyAtIndexWithNumber(JSContextRef context, JSObjectRef object, unsigned int index, double value)
 {
 	DLValueSetPropertyAtIndex(context, object, index, DLValueCreateNumber(context, value));
 }
 
 void
-DLValueSetPropertyAtIndexWithBoolean(JSContextRef context, JSObjectRef object, unsigned int index, DLBoolean value)
+DLValueSetPropertyAtIndexWithBoolean(JSContextRef context, JSObjectRef object, unsigned int index, bool value)
 {
 	DLValueSetPropertyAtIndex(context, object, index, DLValueCreateBoolean(context, value));
 }
@@ -393,7 +352,7 @@ DLValueCall(JSContextRef context, JSObjectRef target, JSObjectRef object, unsign
 }
 
 JSValueRef
-DLValueCallMethod(JSContextRef context, JSObjectRef target, DLString method, unsigned int argc, const JSValueRef argv[])
+DLValueCallMethod(JSContextRef context, JSObjectRef target, const char* method, unsigned int argc, const JSValueRef argv[])
 {
 	JSObjectRef object = DLValueToObject(context, target);
 	if (object == NULL) {
@@ -471,7 +430,7 @@ DLValueGetPrototypeOfConstructor(JSContextRef context, JSObjectRef constructor)
 }
 
 JSObjectRef
-DLValueGetPrototypeOfNativeConstructor(JSContextRef context, DLString constructor)
+DLValueGetPrototypeOfNativeConstructor(JSContextRef context, const char* constructor)
 {
 	JSStringRef objstr = JSStringCreateWithUTF8CString(constructor);
 	JSStringRef keystr = JSStringCreateWithUTF8CString("prototype");
@@ -555,19 +514,19 @@ DLValueEquals(JSContextRef context, JSValueRef value1, JSValueRef value2)
 }
 
 bool
-DLValueEqualsString(JSContextRef context, JSValueRef value1, DLString value2)
+DLValueEqualsString(JSContextRef context, JSValueRef value1, const char* value2)
 {
 	return DLValueEquals(context, value1, DLValueCreateString(context, value2));
 }
 
 bool
-DLValueEqualsNumber(JSContextRef context, JSValueRef value1, DLNumber value2)
+DLValueEqualsNumber(JSContextRef context, JSValueRef value1, double value2)
 {
 	return DLValueEquals(context, value1, DLValueCreateNumber(context, value2));
 }
 
 bool
-DLValueEqualsBoolean(JSContextRef context, JSValueRef value1, DLBoolean value2)
+DLValueEqualsBoolean(JSContextRef context, JSValueRef value1, bool value2)
 {
 	return DLValueEquals(context, value1, DLValueCreateBoolean(context, value2));
 }
@@ -667,7 +626,7 @@ DLValueToObject(JSContextRef context, JSValueRef value)
 	return object;
 }
 
-DLString
+const char*
 DLValueToString(JSContextRef context, JSValueRef value)
 {
 	JSValueRef error = NULL;
@@ -678,19 +637,20 @@ DLValueToString(JSContextRef context, JSValueRef value)
 		DLContextHandleError(context, error);
 	}
 
-	size_t len = JSStringGetMaximumUTF8CStringSize(string);
-	char *buf = new char[len];
-	JSStringGetUTF8CString(string, buf, len);
+	size_t length = JSStringGetMaximumUTF8CStringSize(string);
+
+	char* buffer = new char[length];
+	JSStringGetUTF8CString(string, buffer, length);
 	JSStringRelease(string);
-	return buf;
+	return buffer;
 }
 
-DLNumber
+double
 DLValueToNumber(JSContextRef context, JSValueRef value)
 {
 	JSValueRef error = NULL;
 
-	DLNumber result = JSValueToNumber(context, value, &error);
+	double result = JSValueToNumber(context, value, &error);
 
 	if (error) {
 		DLContextHandleError(context, error);
@@ -699,7 +659,7 @@ DLValueToNumber(JSContextRef context, JSValueRef value)
 	return result;
 }
 
-DLBoolean
+bool
 DLValueToBoolean(JSContextRef context, JSValueRef value)
 {
 	return JSValueToBoolean(context, value);

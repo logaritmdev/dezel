@@ -16,7 +16,7 @@ static unordered_map<JSContextRef, unordered_map<long long, void *>> attributes;
 static const long long kDLContextExceptionHandlerKey = reinterpret_cast<long long>(new int(0));
 
 JSContextRef
-DLContextCreate(DLString name)
+DLContextCreate(const char* name)
 {
 	JSContextRef context = JSGlobalContextCreate(NULL);
 	DLContextSetName(context, name);
@@ -34,7 +34,7 @@ DLContextDelete(JSContextRef context)
 }
 
 void
-DLContextSetName(JSContextRef context, DLString name)
+DLContextSetName(JSContextRef context, const char* name)
 {
 	JSStringRef namestr = JSStringCreateWithUTF8CString(name);
 	JSGlobalContextSetName(JSContextGetGlobalContext(context), namestr);
@@ -48,7 +48,7 @@ DLContextGetGlobalObject(JSContextRef context)
 }
 
 void
-DLContextEvaluate(JSContextRef context, DLString code, DLString file)
+DLContextEvaluate(JSContextRef context, const char* code, const char* file)
 {
 	JSValueRef error = NULL;
 

@@ -56,21 +56,21 @@ JSValueRef DLValueCreateUndefined(JSContextRef context);
  * @function DLValueCreateBool
  * @since 0.1.0
  */
-JSValueRef DLValueCreateBoolean(JSContextRef context, DLBoolean value);
+JSValueRef DLValueCreateBoolean(JSContextRef context, bool value);
 
 /**
  * Creates a JavaScript value of the number type using a native double value.
  * @function DLValueCreateNumber
  * @since 0.1.0
  */
-JSValueRef DLValueCreateNumber(JSContextRef context, DLNumber value);
+JSValueRef DLValueCreateNumber(JSContextRef context, double value);
 
 /**
  * Creates a JavaScript value of the string type using a native string value.
  * @function DLValueCreateString
  * @since 0.1.0
  */
-JSValueRef DLValueCreateString(JSContextRef context, DLString value);
+JSValueRef DLValueCreateString(JSContextRef context, const char* value);
 
 /**
  * Creates an empty JavaScript object.
@@ -91,7 +91,7 @@ JSObjectRef DLValueCreateEmptyArray(JSContextRef context);
  * @function DLValueCreateFunction
  * @since 0.1.0
  */
-JSObjectRef DLValueCreateFunction(JSContextRef context, DLFunctionCallback callback, DLString name);
+JSObjectRef DLValueCreateFunction(JSContextRef context, DLFunctionCallback callback, const char* name);
 
 /**
  * Protect the value from garbage collection.
@@ -112,7 +112,7 @@ void DLValueUnprotect(JSContextRef context, JSValueRef value);
 * @function DLValueDefineProperty
 * @since 0.1.0
 */
-void DLValueDefineProperty(JSContextRef context, JSObjectRef object, DLString property, JSValueRef getter, JSValueRef setter, JSValueRef value, DLBoolean writable, DLBoolean enumerable, DLBoolean configurable);
+void DLValueDefineProperty(JSContextRef context, JSObjectRef object, const char* property, JSValueRef getter, JSValueRef setter, JSValueRef value, bool writable, bool enumerable, bool configurable);
 
 /**
 * Defines a constructor on the specified prototype;
@@ -126,63 +126,56 @@ void DLValueDefineConstructor(JSContextRef context, JSObjectRef prototype, JSObj
 * @function DLValueDefineFunction
 * @since 0.1.0
 */
-void DLValueDefineFunction(JSContextRef context, JSObjectRef prototype, DLString name, JSObjectRef function);
+void DLValueDefineFunction(JSContextRef context, JSObjectRef prototype, const char* name, JSObjectRef function);
 
 /**
 * Defines a property setter on the specified prototype.
 * @function DLValueDefinePropertySetter
 * @since 0.1.0
 */
-void DLValueDefinePropertySetter(JSContextRef context, JSObjectRef prototype, DLString name, JSObjectRef function);
+void DLValueDefinePropertySetter(JSContextRef context, JSObjectRef prototype, const char* name, JSObjectRef function);
 
 /**
 * Defines a property getter on the specified prototype.
 * @function DLValueDefinePropertyGetter
 * @since 0.1.0
 */
-void DLValueDefinePropertyGetter(JSContextRef context, JSObjectRef prototype, DLString name, JSObjectRef function);
+void DLValueDefinePropertyGetter(JSContextRef context, JSObjectRef prototype, const char* name, JSObjectRef function);
 
 /**
  * Sets a property on the specified value.
  * @function DLValueSetProperty
  * @since 0.1.0
  */
-void DLValueSetProperty(JSContextRef context, JSObjectRef prototype, DLString property, JSValueRef value);
+void DLValueSetProperty(JSContextRef context, JSObjectRef prototype, const char* property, JSValueRef value);
 
 /**
  * Sets a property on the specified value using a native string value.
  * @function DLValueSetPropertyWithString
  * @since 0.1.0
  */
-void DLValueSetPropertyWithString(JSContextRef context, JSObjectRef object, DLString property, DLString value);
+void DLValueSetPropertyWithString(JSContextRef context, JSObjectRef object, const char* property, const char* value);
 
 /**
  * Sets a property on the specified value using a native double value.
  * @function DLValueSetPropertyWithNumber
  * @since 0.1.0
  */
-void DLValueSetPropertyWithNumber(JSContextRef context, JSObjectRef object, DLString property, DLNumber value);
+void DLValueSetPropertyWithNumber(JSContextRef context, JSObjectRef object, const char* property, double value);
 
 /**
  * Sets a property on the specified value using a native boolean value.
  * @function DLValueSetPropertyWithBoolean
  * @since 0.1.0
  */
-void DLValueSetPropertyWithBoolean(JSContextRef context, JSObjectRef object, DLString property, DLBoolean value);
+void DLValueSetPropertyWithBoolean(JSContextRef context, JSObjectRef object, const char* property, bool value);
 
 /**
  * Returns a property from the specified value.
  * @function DLValueGetProperty
  * @since 0.1.0
  */
-JSValueRef DLValueGetProperty(JSContextRef context, JSObjectRef object, DLString property);
-
-/**
- * Returns the name of all properties from the specified object.
- * @function DLValueGetProperties
- * @since 0.1.0
- */
-DLString* DLValueGetProperties(JSContextRef context, JSObjectRef object, int *count);
+JSValueRef DLValueGetProperty(JSContextRef context, JSObjectRef object, const char* property);
 
 /**
  * Sets a property at a numeric index on the specified value.
@@ -196,21 +189,21 @@ void DLValueSetPropertyAtIndex(JSContextRef context, JSObjectRef object, unsigne
  * @function DLValueSetPropertyAtIndexWithString
  * @since 0.1.0
  */
-void DLValueSetPropertyAtIndexWithString(JSContextRef context, JSObjectRef object, unsigned int index, DLString value);
+void DLValueSetPropertyAtIndexWithString(JSContextRef context, JSObjectRef object, unsigned int index, const char* value);
 
 /**
  * Sets a property at a numeric index on the specified value using a native double value.
  * @function DLValueSetPropertyAtIndexWithNumber
  * @since 0.1.0
  */
-void DLValueSetPropertyAtIndexWithNumber(JSContextRef context, JSObjectRef object, unsigned int index, DLNumber value);
+void DLValueSetPropertyAtIndexWithNumber(JSContextRef context, JSObjectRef object, unsigned int index, double value);
 
 /**
  * Sets a property at a numeric index on the specified value using a native boolean value.
  * @function DLValueSetPropertyAtIndexWithBoolean
  * @since 0.1.0
  */
-void DLValueSetPropertyAtIndexWithBoolean(JSContextRef context, JSObjectRef object, unsigned int index, DLBoolean value);
+void DLValueSetPropertyAtIndexWithBoolean(JSContextRef context, JSObjectRef object, unsigned int index, bool value);
 
 /**
  * Returns a property at a numeric index from the specified value.
@@ -231,7 +224,7 @@ JSValueRef DLValueCall(JSContextRef context, JSObjectRef function, JSObjectRef o
  * @function DLValueCallMethod
  * @since 0.1.0
  */
-JSValueRef DLValueCallMethod(JSContextRef context, JSObjectRef object, DLString method, unsigned int argc, const JSValueRef argv[]);
+JSValueRef DLValueCallMethod(JSContextRef context, JSObjectRef object, const char* method, unsigned int argc, const JSValueRef argv[]);
 
 /**
  * Executes the specified value as a constructor.
@@ -266,7 +259,7 @@ JSObjectRef DLValueGetPrototypeOfConstructor(JSContextRef context, JSObjectRef c
  * @function DLValueGetPrototypeOfNativeConstructor
  * @since 0.1.0
  */
-JSObjectRef DLValueGetPrototypeOfNativeConstructor(JSContextRef context, DLString constructor);
+JSObjectRef DLValueGetPrototypeOfNativeConstructor(JSContextRef context, const char* constructor);
 
 /**
  * Sets an attribute on the specified value.
@@ -315,21 +308,21 @@ bool DLValueEquals(JSContextRef context, JSValueRef value1, JSValueRef value2);
  * @function DLValueEqualsString
  * @since 0.1.0
  */
-bool DLValueEqualsString(JSContextRef context, JSValueRef value1, DLString value2);
+bool DLValueEqualsString(JSContextRef context, JSValueRef value1, const char* value2);
 
 /**
  * Test whether a specified value equals a native double value.
  * @function DLValueEqualsNumber
  * @since 0.1.0
  */
-bool DLValueEqualsNumber(JSContextRef context, JSValueRef value1, DLNumber value2);
+bool DLValueEqualsNumber(JSContextRef context, JSValueRef value1, double value2);
 
 /**
  * Test whether a specified value equals a native boolean value.
  * @function DLValueEqualsBoolean
  * @since 0.1.0
  */
-bool DLValueEqualsBoolean(JSContextRef context, JSValueRef value1, DLBoolean value2);
+bool DLValueEqualsBoolean(JSContextRef context, JSValueRef value1, bool value2);
 
 /**
  * Indicates whether the specified value is a boolean.
@@ -406,21 +399,21 @@ JSObjectRef DLValueToObject(JSContextRef context, JSValueRef object);
  * @function DLValueToString
  * @since 0.1.0
  */
-DLString DLValueToString(JSContextRef context, JSValueRef value);
+const char* DLValueToString(JSContextRef context, JSValueRef value);
 
 /**
  * Casts the specified value into a native double value.
  * @function DLValueToNumber
  * @since 0.1.0
  */
-DLNumber DLValueToNumber(JSContextRef context, JSValueRef value);
+double DLValueToNumber(JSContextRef context, JSValueRef value);
 
 /**
  * Casts the specified value into a native boolean value.
  * @function DLValueToBoolean
  * @since 0.1.0
  */
-DLBoolean DLValueToBoolean(JSContextRef context, JSValueRef value);
+bool DLValueToBoolean(JSContextRef context, JSValueRef value);
 
 /**
  * Standalone function to set an attribute on the specified value image structure.

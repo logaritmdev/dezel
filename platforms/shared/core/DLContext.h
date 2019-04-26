@@ -7,10 +7,6 @@
 #import <JavaScriptCore/JavaScriptCore.h>
 #endif
 
-#define DLString const char *
-#define DLNumber double
-#define DLBoolean bool
-
 /**
  * The error holder holder.
  * @typedef DLExceptionHandler
@@ -27,7 +23,7 @@ extern "C" {
  * @function DLContextCreate
  * @since 0.1.0
  */
-JSContextRef DLContextCreate(DLString name);
+JSContextRef DLContextCreate(const char* name);
 
 /**
  * Releases the context.
@@ -41,7 +37,7 @@ void DLContextDelete(JSContextRef context);
  * @function DLContextSetName
  * @since 0.1.0
  */
-void DLContextSetName(JSContextRef context, DLString name);
+void DLContextSetName(JSContextRef context, const char* name);
 
 /**
  * Returns the global object.
@@ -55,7 +51,7 @@ JSObjectRef DLContextGetGlobalObject(JSContextRef context);
  * @function DLContextEvaluate
  * @since 0.1.0
  */
-void DLContextEvaluate(JSContextRef context, DLString code, DLString file);
+void DLContextEvaluate(JSContextRef context, const char* code, const char* file);
 
 /**
  * Sets an attribute on the specified context.

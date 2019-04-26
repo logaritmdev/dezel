@@ -72,7 +72,7 @@ struct OpaqueDLStylerMatchedRule {
  * @since 0.1.0
  * @hidden
  */
-void DLStyleParseTypes(DLStylerNodeRef node, const char *type);
+void DLStyleParseTypes(DLStylerNodeRef node, const char* type);
 
 /**
  * @function DLStylerNodeSaveDefaultProperty

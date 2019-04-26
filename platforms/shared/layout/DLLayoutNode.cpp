@@ -44,7 +44,7 @@ DLLayoutNodeSetLayout(DLLayoutNodeRef node, DLLayoutRef layout)
 }
 
 void
-DLLayoutNodeSetId(DLLayoutNodeRef node, const char *id)
+DLLayoutNodeSetId(DLLayoutNodeRef node, const char* id)
 {
 	node->id = string(id);
 }

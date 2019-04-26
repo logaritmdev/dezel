@@ -55,14 +55,14 @@ void DLStylerNodeDelete(DLStylerNodeRef node);
  * @function DLStylerNodeSetId
  * @since 0.1.0
  */
-void DLStylerNodeSetId(DLStylerNodeRef node, const char *id);
+void DLStylerNodeSetId(DLStylerNodeRef node, const char* id);
 
 /**
  * Assigns styling observer type name.
  * @function DLStylerNodeSetType
  * @since 0.1.0
  */
-void DLStylerNodeSetType(DLStylerNodeRef node, const char *type);
+void DLStylerNodeSetType(DLStylerNodeRef node, const char* type);
 
 /**
  * Assigns the styling observer's context.
@@ -125,28 +125,28 @@ void DLStylerNodeRemoveShadowedNode(DLStylerNodeRef node, DLStylerNodeRef child)
  * @function DLStylerNodeAppendStyle
  * @since 0.1.0
  */
-void DLStylerNodeAppendStyle(DLStylerNodeRef node, const char *style);
+void DLStylerNodeAppendStyle(DLStylerNodeRef node, const char* style);
 
 /**
  * Adds a trait to this styling observer.
  * @function DLStylerNodeRemoveStyle
  * @since 0.1.0
  */
-void DLStylerNodeRemoveStyle(DLStylerNodeRef node, const char *style);
+void DLStylerNodeRemoveStyle(DLStylerNodeRef node, const char* style);
 
 /**
  * Removes a trait from this styling observer.
  * @function DLStylerNodeAppendState
  * @since 0.1.0
  */
-void DLStylerNodeAppendState(DLStylerNodeRef node, const char *state);
+void DLStylerNodeAppendState(DLStylerNodeRef node, const char* state);
 
 /**
  * Adds a state to this styling observer.
  * @function DLStylerNodeRemoveState
  * @since 0.1.0
  */
-void DLStylerNodeRemoveState(DLStylerNodeRef node, const char *state);
+void DLStylerNodeRemoveState(DLStylerNodeRef node, const char* state);
 
 /**
  * Assigns user image to this styling observer.
