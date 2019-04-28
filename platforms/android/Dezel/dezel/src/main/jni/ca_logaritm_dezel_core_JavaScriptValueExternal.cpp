@@ -532,7 +532,10 @@ jint Java_ca_logaritm_dezel_core_JavaScriptValueExternal_getType(JNIEnv *env, jc
  * Signature: (JJ)Ljava/lang/String;
  */
 jstring Java_ca_logaritm_dezel_core_JavaScriptValueExternal_toString(JNIEnv *env, jclass, jlong contextPtr, jlong valuePtr) {
-	return env->NewStringUTF(DLValueToString(reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSValueRef>(valuePtr)));
+	auto ptr = DLValueToString(reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSValueRef>(valuePtr));
+	auto str = env->NewStringUTF(ptr);
+	delete ptr;
+	return str;
 }
 
 /*
