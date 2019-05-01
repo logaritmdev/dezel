@@ -43,8 +43,6 @@ export class ScreenCoverTransition extends ScreenTransition {
 
 		if (leave) {
 			leave.opacity = 0.75
-			leave.scaleX = 0.90
-			leave.scaleY = 0.90
 		}
 	}
 
@@ -61,8 +59,6 @@ export class ScreenCoverTransition extends ScreenTransition {
 
 		if (leave) {
 			leave.opacity = 1
-			leave.scaleX = 1
-			leave.scaleY = 1
 		}
 	}
 
@@ -75,8 +71,6 @@ export class ScreenCoverTransition extends ScreenTransition {
 
 		if (enter) {
 			enter.opacity = 0.75
-			enter.scaleX = 0.9
-			enter.scaleY = 0.9
 		}
 
 		if (leave) {
@@ -93,8 +87,6 @@ export class ScreenCoverTransition extends ScreenTransition {
 
 		if (enter) {
 			enter.opacity = 1
-			enter.scaleX = 1
-			enter.scaleY = 1
 		}
 
 		if (leave) {
