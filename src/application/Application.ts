@@ -400,6 +400,10 @@ export class Application extends Emitter {
 
 				this.window.append(enclosure)
 
+				this.statusBarVisible = newScreen.statusBarVisible
+				this.statusBarForegroundColor = newScreen.statusBarForegroundColor
+				this.statusBarBackgroundColor = newScreen.statusBarBackgroundColor
+
 				newScreen.emit('beforepresent')
 				newScreen.emit('beforeenter')
 				newScreen.emit('present')
