@@ -1,7 +1,5 @@
 package ca.logaritm.dezel.view.animation
 
-import android.animation.ValueAnimator
-
 /**
  * The interface for transitionable elements.
  * @interface TransitionListener

@@ -4,7 +4,6 @@ import android.bluetooth.BluetoothAdapter
 import android.content.Intent
 import android.net.Uri
 import android.provider.Settings
-import android.util.Log
 import ca.logaritm.dezel.application.DezelApplicationActivity
 import ca.logaritm.dezel.core.*
 import ca.logaritm.dezel.extension.Delegates

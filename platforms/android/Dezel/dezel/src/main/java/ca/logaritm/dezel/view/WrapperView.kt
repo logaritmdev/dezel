@@ -1,6 +1,5 @@
 package ca.logaritm.dezel.view
 
-import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.*
 import android.view.MotionEvent
