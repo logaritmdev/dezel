@@ -1878,7 +1878,7 @@ open class View(context: JavaScriptContext) : JavaScriptClass(context), LayoutNo
 	 * @since 0.2.0
 	 * @hidden
 	 */
-	private var ordered: Boolean = false
+	private val ordered: Boolean
 		get() = this.zIndex.number != 0.0
 
 	/**
