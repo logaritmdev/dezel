@@ -4,6 +4,7 @@ import android.bluetooth.BluetoothAdapter
 import android.content.Intent
 import android.net.Uri
 import android.provider.Settings
+import android.util.Log
 import ca.logaritm.dezel.application.DezelApplicationActivity
 import ca.logaritm.dezel.core.*
 import ca.logaritm.dezel.extension.Delegates
@@ -110,8 +111,7 @@ open class Application(context: JavaScriptContext) : JavaScriptClass(context) {
 	private fun openBluetoothSettings() {
 
 		val adapter = BluetoothAdapter.getDefaultAdapter()
-		if (adapter == null ||
-			adapter.isEnabled == false) {
+		if (adapter == null) {
 			this.openApplicationSettings()
 			return
 		}
