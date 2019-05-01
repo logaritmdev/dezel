@@ -52,7 +52,17 @@ DLFunctionCallAsConstructorHandler(JSContextRef context, JSObjectRef callee, siz
 void
 DLFunctionFinalizeHandler(JSObjectRef object)
 {
-	delete DLValueDataGet(object);
+	DLValueDataRef data = DLValueDataGet(object);
+
+	if (data == NULL) {
+		return;
+	}
+
+	if (data->finalizeCallback) {
+		data->finalizeCallback(data->context, data);
+	}
+
+	DLValueDataDelete(data);
 }
 
 JSValueRef
