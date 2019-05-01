@@ -421,9 +421,11 @@ class RelativeLayoutTest: XCTestCase {
 	func testPositionInHorizontalLayout() {
 
 		let node1 = LayoutNode(layout: self.layout)
+		node1.height(type: kDLLayoutSizeTypeFill, unit: kDLLayoutSizeUnitNone, length: 0)
 		node1.width(type: kDLLayoutSizeTypeLength, unit: kDLLayoutSizeUnitPX, length: 100)
 
 		let node2 = LayoutNode(layout: self.layout)
+		node2.height(type: kDLLayoutSizeTypeFill, unit: kDLLayoutSizeUnitNone, length: 0)
 		node2.width(type: kDLLayoutSizeTypeLength, unit: kDLLayoutSizeUnitPX, length: 200)
 
 		self.window.contentOrientation(kDLLayoutContentOrientationHorizontal)
