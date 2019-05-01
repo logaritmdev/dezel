@@ -1048,6 +1048,8 @@ export class Screen<T = any> extends Component {
 			presentedScreen.visible = true
 			presentedScreen.resolve()
 
+			presentedScreen.updateStatusBar()
+
 			transition.onBeforePresent(
 				presentedScreen,
 				dismissedScreen
@@ -1056,8 +1058,6 @@ export class Screen<T = any> extends Component {
 			await dismissedScreen.emitBeforeLeave(transition)
 			await presentedScreen.emitBeforePresent(transition)
 			await presentedScreen.emitBeforeEnter(transition)
-
-			presentedScreen.updateStatusBar()
 
 			await transition.present(
 				presentedScreen,
