@@ -379,25 +379,6 @@ open class DezelApplicationActivity : Activity(), KeyboardObserverListener {
 			this.state = State.FOREGROUND
 			this.application?.holder?.callMethod("nativeEnterForeground")
 		}
-
-		val intent = this.intent
-		if (intent == null) {
-			return
-		}
-
-		if (intent.action == Intent.ACTION_VIEW) {
-			val uri = intent.data
-			if (uri is Uri) {
-				this.application?.holder?.callMethod("nativeHandleLink", arrayOf(this.context.createString(uri.toString())))
-			}
-		}
-
-		if (intent.action == Intent.ACTION_SEND) {
-			val uri = intent.getParcelableExtra<Parcelable>(Intent.EXTRA_STREAM)
-			if (uri is Uri) {
-				this.application?.holder?.callMethod("nativeHandleResource", arrayOf(this.context.createString(uri.toString())))
-			}
-		}
 	}
 
 	/**
@@ -409,6 +390,35 @@ open class DezelApplicationActivity : Activity(), KeyboardObserverListener {
 		super.onDestroy()
 		this.state = State.BACKGROUND
 		this.keyboardObserver.close()
+	}
+
+	/**
+	 * @inherited
+	 * @method onNewIntent
+	 * @since 0.6.0
+	 */
+	override fun onNewIntent(intent: Intent?) {
+
+		when (intent?.action) {
+
+			Intent.ACTION_VIEW -> {
+				val uri = intent.data
+				if (uri is Uri) {
+					this.application?.holder?.callMethod("nativeHandleLink", arrayOf(this.context.createString(uri.toString())))
+				}
+			}
+
+			Intent.ACTION_SEND -> {
+				val uri = intent.getParcelableExtra<Parcelable>(Intent.EXTRA_STREAM)
+				if (uri is Uri) {
+					this.application?.holder?.callMethod("nativeHandleResource", arrayOf(this.context.createString(uri.toString())))
+				}
+			}
+
+			else -> {
+				// Nothing
+			}
+		}
 	}
 
 	/**
