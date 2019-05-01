@@ -230,7 +230,7 @@ open class JavaScriptValue : NSObject {
 	 * @since 0.2.0
 	 */
 	public lazy var string: String = {
-		return DLValueToString(self.context.handle, self.handle).string
+		return DLValueToString(self.context.handle, self.handle).strdup
 	}()
 
 	/**
