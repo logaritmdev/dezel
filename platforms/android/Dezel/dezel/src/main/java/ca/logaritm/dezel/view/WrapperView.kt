@@ -1106,10 +1106,10 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 
 	/**
 	 * @inherited
-	 * @method onBeforeTransitionBegin
-	 * @since 0.2.0
+	 * @method onTransitionProperty
+	 * @since 0.6.0
 	 */
-	override fun onBeforeTransitionBegin(animator: ValueAnimator, property: String) {
+	override fun onTransitionProperty(property: String) {
 
 		if (property == "backgroundKolor" ||
 			property == "backgroundColor") {

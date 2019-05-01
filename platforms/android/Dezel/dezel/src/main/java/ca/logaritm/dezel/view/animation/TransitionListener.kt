@@ -11,10 +11,10 @@ public interface TransitionListener {
 
 	/**
 	 * Called when a transition animation is created for the specified property.
-	 * @method onBeforeTransitionBegin
-	 * @since 0.2.0
+	 * @method onTransitionProperty
+	 * @since 0.6.0
 	 */
-	fun onBeforeTransitionBegin(animator: ValueAnimator, property: String)
+	fun onTransitionProperty(property: String)
 
 	/**
 	 * Called when the transition animation begins.

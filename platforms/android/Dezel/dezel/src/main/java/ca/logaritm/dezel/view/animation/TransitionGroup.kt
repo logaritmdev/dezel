@@ -410,7 +410,7 @@ public class TransitionGroup(val activity: DezelApplicationActivity): Animator.A
 			val animator = ObjectAnimator.ofInt(view, property, f, t)
 
 			if (view is TransitionListener) {
-				view.onBeforeTransitionBegin(animator, property)
+				view.onTransitionProperty(property)
 				this.listeners.add(view)
 			}
 
@@ -437,7 +437,7 @@ public class TransitionGroup(val activity: DezelApplicationActivity): Animator.A
 			val animator = ObjectAnimator.ofFloat(view, property, f, t)
 
 			if (view is TransitionListener) {
-				view.onBeforeTransitionBegin(animator, property)
+				view.onTransitionProperty(property)
 				this.listeners.add(view)
 			}
 
@@ -464,7 +464,7 @@ public class TransitionGroup(val activity: DezelApplicationActivity): Animator.A
 			val animator = ObjectAnimator.ofArgb(view, property, f, t)
 
 			if (view is TransitionListener) {
-				view.onBeforeTransitionBegin(animator, property)
+				view.onTransitionProperty(property)
 				this.listeners.add(view)
 			}
 
@@ -491,7 +491,7 @@ public class TransitionGroup(val activity: DezelApplicationActivity): Animator.A
 			val animator = OpacityAnimator(view, f, t)
 
 			if (view is TransitionListener) {
-				view.onBeforeTransitionBegin(animator, "opacity")
+				view.onTransitionProperty("opacity")
 				this.listeners.add(view)
 			}
 
@@ -515,7 +515,7 @@ public class TransitionGroup(val activity: DezelApplicationActivity): Animator.A
 
 		if (f is Transform && t is Transform) {
 			val animator = TransformAnimator(view, f, t)
-			view.onBeforeTransitionBegin(animator, "transform")
+			view.onTransitionProperty("transform")
 			this.listeners.add(view)
 			animators.add(animator)
 		}

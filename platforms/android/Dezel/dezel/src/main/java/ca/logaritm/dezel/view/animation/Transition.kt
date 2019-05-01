@@ -20,8 +20,8 @@ public object Transition {
 	 * @property current
 	 * @since 0.1.0
 	 */
-	public var current: TransitionGroup? = null
-		get() = stack.last
+	public val current: TransitionGroup?
+		get() = Transition.stack.last
 
 	//--------------------------------------------------------------------------
 	// Methods
