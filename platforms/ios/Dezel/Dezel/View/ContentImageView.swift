@@ -257,10 +257,10 @@ open class ContentImageView: UIView, Updatable, Clippable, TransitionListener {
 
 	/**
 	 * @inherited
-	 * @method didBeginTransition
-	 * @since 0.2.0
+	 * @method didCommitTransition
+	 * @since 0.6.0
 	 */
-	open func didBeginTransition() {
+	open func didCommitTransition() {
 
 	}
 

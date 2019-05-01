@@ -4,7 +4,17 @@
  * @hidden
  */
 public extension UnsafePointer where Pointee == Int8 {
+
 	var string: String {
+		return String(cString: self)
+	}
+
+	var strdup: String {
+
+		defer {
+			self.deallocate()
+		}
+
 		return String(cString: self)
 	}
 }

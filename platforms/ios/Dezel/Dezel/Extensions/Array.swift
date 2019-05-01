@@ -39,6 +39,7 @@ internal extension Array where Element: Equatable {
  * @since 0.1.0
  */
 internal extension Array where Element == UpdateDisplayCallback {
+
 	/**
 	 * @method remove
 	 * @since 0.1.0
@@ -47,6 +48,46 @@ internal extension Array where Element == UpdateDisplayCallback {
 	mutating func remove(_ callback: UpdateDisplayCallback) {
 		if let index = self.firstIndex(where: { $0 === callback }) {
 			self.remove(at: index)
+		}
+	}
+}
+
+/**
+ * @extension Array
+ * @since 0.6.0
+ */
+internal extension Array where Element == TransitionListener {
+
+	/**
+	 * @method register
+	 * @since 0.6.0
+	 * @hidden
+	 */
+	mutating func register(_ listener: TransitionListener) {
+		if (self.firstIndex(where: { $0 === listener }) == nil) {
+			self.append(listener)
+		}
+	}
+
+	/**
+	 * @method dispatchCommitEvent
+	 * @since 0.6.0
+	 * @hidden
+	 */
+	func dispatchCommitEvent() {
+		self.forEach { listener in
+			listener.didCommitTransition()
+		}
+	}
+
+	/**
+	 * @method dispatchFinishEvent
+	 * @since 0.6.0
+	 * @hidden
+	 */
+	func dispatchFinishEvent() {
+		self.forEach { listener in
+			listener.didFinishTransition()
 		}
 	}
 }

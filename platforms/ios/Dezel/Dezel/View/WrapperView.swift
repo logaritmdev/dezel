@@ -915,10 +915,10 @@ open class WrapperView: UIView, TransitionListener {
 
 	/**
 	 * @inherited
-	 * @method didBeginTransition
-	 * @since 0.2.0
+	 * @method didCommitTransition
+	 * @since 0.6.0
 	 */
-	open func didBeginTransition() {
+	open func didCommitTransition() {
 
 	}
 
@@ -946,9 +946,9 @@ open class WrapperView: UIView, TransitionListener {
 		}
 
 		/*
-		 * Rasterization suring animation was turned off for performanceß
-		 * reasons so it can be turned on now. Also, a mask was applied even
-		 * if the radius was zero (to animate to 0) so it can be removed.
+		 * Rasterization during animation was turned off for performance
+		 * reasons and can be turned on now. Also, a mask was applied even
+		 * if the radius was zero (to animate to 0) and it can be removed.
 		 */
 
 		self.content.layer.mask = nil

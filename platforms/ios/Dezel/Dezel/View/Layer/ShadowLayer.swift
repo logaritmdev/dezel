@@ -358,7 +358,7 @@ open class ShadowLayer: Layer {
 				if let listener = self.listener as? TransitionListener {
 					if (listener.shouldBeginTransitionAnimation(animation: animation, for: key, of: self)) {
 						listener.willBeginTransitionAnimation(animation: animation, for: key, of: self)
-						transition.register(listener, animation: animation, for: key)
+						transition.register(listener)
 					} else {
 						return NSNull()
 					}

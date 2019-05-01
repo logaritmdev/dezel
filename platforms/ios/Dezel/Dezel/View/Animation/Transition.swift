@@ -34,17 +34,12 @@ public final class Transition {
 		transition.duration = duration
 		transition.equation = equation
 		transition.callback = {
-
-			for target in transition.listeners {
-				target.didFinishTransition()
-			}
-
-			transition.unregister()
-
+			transition.finish()
+			transition.callback = nil
 			callback()
 		}
 
-		stack.append(transition)
+		Transition.stack.append(transition)
 	}
 
 	/**
@@ -60,11 +55,7 @@ public final class Transition {
 
 		transition.commit()
 
-		for target in transition.listeners {
-			target.didBeginTransition()
-		}
-
-		stack.removeLast()
+		Transition.stack.removeLast()
 	}
 
 	/**
@@ -108,7 +99,7 @@ public final class Transition {
 				if let listener = layer.listener as? TransitionListener {
 					if (listener.shouldBeginTransitionAnimation(animation: animation, for: key, of: layer)) {
 						listener.willBeginTransitionAnimation(animation: animation, for: key, of: layer)
-						transition.register(listener, animation: animation, for: key)
+						transition.register(listener)
 					} else {
 						return NSNull()
 					}

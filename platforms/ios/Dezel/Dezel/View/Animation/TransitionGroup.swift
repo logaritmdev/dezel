@@ -98,6 +98,7 @@ public final class TransitionGroup {
 	public func commit() {
 		self.application.updateDisplayManager.dispatch()
 		CATransaction.commit()
+		self.listeners.dispatchCommitEvent()
 	}
 
 	/**
@@ -105,19 +106,17 @@ public final class TransitionGroup {
 	 * @since 0.2.0
 	 * @hidden
 	 */
-	public func register(_ listener: TransitionListener, animation: CABasicAnimation, for property: String) {
-		let index = self.listeners.firstIndex { $0 === listener }
-		if (index == nil) {
-			self.listeners.append(listener)
-		}
+	public func register(_ listener: TransitionListener) {
+		self.listeners.register(listener)
 	}
 
 	/**
-	 * @method unregister
+	 * @method finish
 	 * @since 0.2.0
 	 * @hidden
 	 */
-	public func unregister() {
+	public func finish() {
+		self.listeners.dispatchFinishEvent()
 		self.listeners.removeAll()
 	}
 }

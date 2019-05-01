@@ -21,10 +21,10 @@ public protocol TransitionListener: AnyObject {
 
 	/**
 	 * Called when the transition animation begins.
-	 * @method didBeginTransition
-	 * @since 0.2.0
+	 * @method didCommitTransition
+	 * @since 0.6.0
 	 */
-	func didBeginTransition()
+	func didCommitTransition()
 
 	/**
 	 * Called when the transition animation finishes.

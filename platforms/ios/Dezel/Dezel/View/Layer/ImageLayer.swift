@@ -200,7 +200,7 @@ open class ImageLayer: Layer, TransitionListener {
 				if let listener = self.listener as? TransitionListener {
 					if (listener.shouldBeginTransitionAnimation(animation: animation, for: key, of: self)) {
 						listener.willBeginTransitionAnimation(animation: animation, for: key, of: self)
-						transition.register(listener, animation: animation, for: key)
+						transition.register(listener)
 					} else {
 						return NSNull()
 					}
@@ -243,10 +243,10 @@ open class ImageLayer: Layer, TransitionListener {
 
 	/**
 	 * @inherited
-	 * @method didBeginTransition
-	 * @since 0.2.0
+	 * @method didCommitTransition
+	 * @since 0.6.0
 	 */
-	open func didBeginTransition() {
+	open func didCommitTransition() {
 
 	}
 
