@@ -68,7 +68,7 @@ open class LocationManager(context: JavaScriptContext) : JavaScriptClass(context
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	private var preferences: SharedPreferences = this.context.application.getSharedPreferences("dezel.location", android.content.Context.MODE_PRIVATE)
+	private var preferences: SharedPreferences = this.context.application.getSharedPreferences("dezel.location", Context.MODE_PRIVATE)
 
 	/**
 	 * @property providerChangedReceiver
@@ -76,7 +76,7 @@ open class LocationManager(context: JavaScriptContext) : JavaScriptClass(context
 	 * @hidden
 	 */
 	private val providerChangedReceiver: BroadcastReceiver = object : BroadcastReceiver() {
-		override fun onReceive(context: android.content.Context, intent: Intent) {
+		override fun onReceive(context: Context, intent: Intent) {
 			if (intent.action == "android.location.PROVIDERS_CHANGED") {
 				updateServiceStatus()
 			}
