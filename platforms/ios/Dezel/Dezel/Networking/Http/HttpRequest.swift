@@ -66,7 +66,7 @@ open class HttpRequest: NSObject, URLSessionDelegate, URLSessionTaskDelegate, UR
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	private var urlSession: Foundation.URLSession?
+	private var urlSession: URLSession?
 
 	/**
 	 * @property requestUrl
@@ -266,6 +266,9 @@ open class HttpRequest: NSObject, URLSessionDelegate, URLSessionTaskDelegate, UR
 	 * @hidden
 	 */
 	open func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
+
+		self.urlSession?.invalidateAndCancel()
+		self.urlSession = nil
 
 		if let error = error as NSError? {
 
