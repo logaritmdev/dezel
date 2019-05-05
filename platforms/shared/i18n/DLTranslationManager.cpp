@@ -11,21 +11,33 @@ DLTranslationManagerLoad(unsigned char *bytes)
 	I18nUtils::getInstance()->addMO(bytes);
 }
 
+void
+DLTranslationManagerClear()
+{
+	I18nUtils::getInstance()->removeAllMO();
+}
+
 const char*
 DLTranslationManagerTranslate(const char* message, const char* context)
 {
+	auto instance = I18nUtils::getInstance();
+
+	if (instance->hasMO() == false) {
+		return message;
+	}
+
 	std::string string;
 
 	if (context) {
 
-		string = I18nUtils::getInstance()->xgettext(
+		string = instance->xgettext(
 			std::string(message),
 			std::string(context)
 		);
 
 	} else {
 
-		string = I18nUtils::getInstance()->gettext(
+		string = instance->gettext(
 			std::string(message)
 		);
 

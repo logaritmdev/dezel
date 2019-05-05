@@ -44,15 +44,6 @@ extern jmethodID StackTraceElementToString;
 	JNI_CHECK_EXCEPTION(ENV);
 
 /**
- * Calls a JNI method.
- * @macro JNI_CALL_LONG_METHOD
- * @since 0.1.0
- */
-#define JNI_CALL_LONG_METHOD(RES, ENV, OBJECT, METHOD, ...) \
-	jlong RES = ENV->CallLongMethod(OBJECT, METHOD, ##__VA_ARGS__); \
-	JNI_CHECK_EXCEPTION(ENV);
-
-/**
  * Creates a long array filled with values
  * @macro JNI_LONG_ARRAY_CREATE
  * @since 0.1.0
@@ -80,6 +71,24 @@ extern jmethodID StackTraceElementToString;
 		for (int i = 0; i < LEN; i++) DST[i] = (TYPE) ARR[i]; \
 		env->ReleaseLongArrayElements(SRC, ARR, 0); \
 	}
+
+/**
+ * Converts a buffer to a given type variable.
+ * @macro JNI_CONVERT_BUFFER
+ * @since 0.6.0
+ */
+#define JNI_CONVERT_BUFFER(NAME, BYTES, TYPE) \
+	jsize __len__ = env->GetArrayLength(BYTES); \
+	TYPE* NAME = new TYPE[__len__]; \
+	env->GetByteArrayRegion(BYTES, static_cast<jsize>(0), __len__, reinterpret_cast<jbyte *>(NAME));
+
+/**
+ * Deletes a converted buffer.
+ * @macro JNI_DELETE_BUFFER
+ * @since 0.6.0
+ */
+#define JNI_DELETE_BUFFER(NAME) \
+	delete[] NAME
 
 /**
  * Creates a C string from a JNI string.

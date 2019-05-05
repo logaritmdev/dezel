@@ -9,11 +9,18 @@
  * Signature: ([B)V
  */
 void Java_ca_logaritm_dezel_modules_i18n_TranslationManagerExternal_load(JNIEnv *env, jclass, jbyteArray bytes)  {
-	jsize len = env->GetArrayLength(bytes);
-	unsigned char* buf = new unsigned char[len];
-	env->GetByteArrayRegion(bytes, static_cast<jsize>(0), len, reinterpret_cast<jbyte *>(buf));
+	JNI_CONVERT_BUFFER(buf, bytes, unsigned char);
 	DLTranslationManagerLoad(buf);
-	delete[] buf;
+	JNI_DELETE_BUFFER(buf);
+}
+
+/*
+ * Class:     ca_logaritm_dezel_modules_i18n_TranslationManagerExternal
+ * Method:    clear
+ * Signature: ()V
+ */
+void Java_ca_logaritm_dezel_modules_i18n_TranslationManagerExternal_clear(JNIEnv *env, jclass) {
+	DLTranslationManagerClear();
 }
 
 /*

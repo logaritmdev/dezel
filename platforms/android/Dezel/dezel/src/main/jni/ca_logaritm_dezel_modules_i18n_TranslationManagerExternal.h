@@ -17,6 +17,14 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_modules_i18n_TranslationManagerExt
 
 /*
  * Class:     ca_logaritm_dezel_modules_i18n_TranslationManagerExternal
+ * Method:    clear
+ * Signature: ()V
+ */
+JNIEXPORT void JNICALL Java_ca_logaritm_dezel_modules_i18n_TranslationManagerExternal_clear
+  (JNIEnv *, jclass);
+
+/*
+ * Class:     ca_logaritm_dezel_modules_i18n_TranslationManagerExternal
  * Method:    translate
  * Signature: (Ljava/lang/String;)Ljava/lang/String;
  */

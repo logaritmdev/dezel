@@ -27,6 +27,8 @@ public class TranslationManager: JavaScriptClass {
      */
 	@objc open func jsFunction_load(callback: JavaScriptFunctionCallback) {
 
+		DLTranslationManagerClear()
+
 		switch (callback.arguments) {
 
 			case 0: self.file = TranslationFile()

@@ -13,6 +13,13 @@ extern "C" {
 void DLTranslationManagerLoad(unsigned char* bytes);
 
 /**
+ * Clears all loaded translation.
+ * @function DLTranslationManagerClear
+ * @since 0.6.0
+ */
+void DLTranslationManagerClear();
+
+/**
  * Retrieves translated text.
  * @function DLTranslationManagerTranslate
  * @since 0.5.0

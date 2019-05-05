@@ -35,6 +35,8 @@ open class TranslationManager(context: JavaScriptContext) : JavaScriptClass(cont
 	@Suppress("unused")
 	open fun jsFunction_load(callback: JavaScriptFunctionCallback) {
 
+		TranslationManagerExternal.clear()
+
 		when (callback.arguments) {
 
 			0 -> this.file = TranslationFile(this.context.application)
