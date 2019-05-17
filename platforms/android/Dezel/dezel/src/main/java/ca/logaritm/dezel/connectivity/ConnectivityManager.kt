@@ -150,6 +150,7 @@ open class ConnectivityManager(context: JavaScriptContext) : JavaScriptClass(con
 	 * @since 0.1.0
 	 * @hidden
 	 */
+	@Suppress("unused")
 	open fun jsGet_status(callback: JavaScriptGetterCallback) {
 
 		val value: String

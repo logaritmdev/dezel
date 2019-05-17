@@ -46,6 +46,7 @@ import ca.logaritm.dezel.view.UpdateDisplayManager
 import ca.logaritm.dezel.view.graphic.Convert
 import java.io.IOException
 
+
 /**
  * The root activity of a Dezel application.
  * @class DezelApplicationActivity
@@ -387,9 +388,9 @@ open class DezelApplicationActivity : Activity(), KeyboardObserverListener {
 	 * @since 0.1.0
 	 */
 	override fun onDestroy() {
-		super.onDestroy()
 		this.state = State.BACKGROUND
 		this.keyboardObserver.close()
+		super.onDestroy()
 	}
 
 	/**

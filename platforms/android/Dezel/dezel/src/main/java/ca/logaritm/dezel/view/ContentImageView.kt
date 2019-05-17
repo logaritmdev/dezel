@@ -18,10 +18,6 @@ import ca.logaritm.dezel.view.type.ImageFilter
  */
 open class ContentImageView(context: Context) : View(context), Clippable {
 
-	override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-		super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-	}
-
 	//--------------------------------------------------------------------------
 	// Properties
 	//--------------------------------------------------------------------------
@@ -134,14 +130,12 @@ open class ContentImageView(context: Context) : View(context), Clippable {
 	 */
 	init {
 
-		this.setLayerType(android.view.View.LAYER_TYPE_HARDWARE, null)
+		this.setLayerType(LAYER_TYPE_HARDWARE, null)
 
 		this.grayscaleColorMatrix = ColorMatrix()
 		this.grayscaleColorMatrix.setSaturation(0f)
 		this.grayscaleColorMatrixFilter = ColorMatrixColorFilter(this.grayscaleColorMatrix)
 	}
-
-
 
 	/**
 	 * Measures the natural size of this view.
