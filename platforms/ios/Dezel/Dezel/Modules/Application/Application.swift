@@ -220,7 +220,7 @@ open class Application: JavaScriptClass {
 		}
 
 		var url = callback.argument(0).string
-		if (url == "app:settings") {
+		if (url == "settings:app") {
 			url = UIApplication.openSettingsURLString
 		}
 
