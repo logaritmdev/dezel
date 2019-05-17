@@ -56,8 +56,26 @@ open class ImageLoader(val context: Context) {
 		 * @hidden
 		 */
 		public fun setup(context: Context) {
-			ImageLoader.liveCache = ImageLiveCache(16 * 1024 * 1024)
-			ImageLoader.diskCache = ImageDiskCache(32 * 1024 * 1024, context)
+			ImageLoader.liveCache = ImageLiveCache(ImageLoader.liveCacheMaxBytes())
+			ImageLoader.diskCache = ImageDiskCache(ImageLoader.diskCacheMaxBytes(), context)
+		}
+
+		/**
+		 * @method liveCacheMaxBytes
+		 * @since 0.6.0
+		 * @hidden
+		 */
+		protected fun liveCacheMaxBytes(): Int {
+			return Runtime.getRuntime().maxMemory().toInt() / 8
+		}
+
+		/**
+		 * @method diskCacheMaxBytes
+		 * @since 0.1.0
+		 * @hidden
+		 */
+		protected fun diskCacheMaxBytes(): Int {
+			return 32 * 1024 * 1024 // 32 MB
 		}
 	}
 

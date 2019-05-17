@@ -168,6 +168,18 @@ open class ImageView(context: JavaScriptContext) : View(context) {
 
 	/**
 	 * @inherited
+	 * @method dispose
+	 * @since 0.6.0
+	 */
+	override fun dispose() {
+
+		this.imageData = null
+
+		super.dispose()
+	}
+
+	/**
+	 * @inherited
 	 * @method update
 	 * @since 0.1.0
 	 */
