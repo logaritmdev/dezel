@@ -183,7 +183,6 @@ open class NotificationManager(context: JavaScriptContext) : JavaScriptClass(con
 			channel.setSound(sound, null)
 			channel.enableLights(true)
 			channel.enableVibration(true)
-			channel.setShowBadge(false)
 			channel.lockscreenVisibility = Notification.VISIBILITY_PUBLIC
 
 			this.notificationManager.createNotificationChannel(channel)
