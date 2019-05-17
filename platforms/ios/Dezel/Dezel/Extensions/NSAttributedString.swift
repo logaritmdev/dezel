@@ -129,7 +129,7 @@ internal extension NSMutableAttributedString {
 	 * @hidden
 	 */
 	func addLink(_ value: String, range: NSRange) {
-		self.addAttribute(.link, value: string, range: range)
+		self.addAttribute(.link, value: value, range: range)
 	}
 }
 
