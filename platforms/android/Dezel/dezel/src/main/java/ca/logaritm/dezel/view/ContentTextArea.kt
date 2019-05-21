@@ -345,9 +345,13 @@ open class ContentTextArea(context: Context, listener: ContentTextAreaListener?)
 	 * @hidden
 	 */
 	open fun blur() {
-		if (this.hasFocus()) {
-			this.clearFocus()
+
+		val focused = this.hasFocus()
+		if (focused == false) {
+			return
 		}
+
+		this.clearFocus()
 	}
 
 	/**

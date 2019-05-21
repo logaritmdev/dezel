@@ -344,13 +344,6 @@ export class TextInput extends View {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @property trackedOutsideTouch
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	private trackedOutsideTouch?: Touch | null
-
-	/**
 	 * @method onBlurDefault
 	 * @since 0.1.0
 	 * @hidden

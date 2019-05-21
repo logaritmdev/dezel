@@ -828,6 +828,28 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 	}
 
 	//----------------------------------------------------------------------
+	// Focus
+	//----------------------------------------------------------------------
+
+	/**
+	 * @inherited
+	 * @method clearFocus
+	 * @since 0.6.0
+	 */
+	override fun clearFocus() {
+
+		/*
+		 * This is empty voluntarily. Clear focus will be called when this
+		 * view's frame changes and it will clear the content view's
+		 * focus. Conside the following case, upon pressing on a text input
+		 * we change the form size using an animation. This will automaticaly
+		 * clear the focus from the text input. Hopefully there will be no
+		 * side effect of this.
+		 */
+
+	}
+
+	//----------------------------------------------------------------------
 	// Touch
 	//----------------------------------------------------------------------
 
