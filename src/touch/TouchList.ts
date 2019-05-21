@@ -1,4 +1,5 @@
 import { View } from '../view/View'
+import { iterator } from '../iterator'
 import { Touch } from './Touch'
 
 /**
@@ -12,7 +13,7 @@ export const TOUCHES = Symbol('touches')
  * @class TouchList
  * @since 0.3.0
  */
-export class TouchList {
+export class TouchList implements Iterable<Touch> {
 
 	//--------------------------------------------------------------------------
 	// Properties
@@ -54,7 +55,7 @@ export class TouchList {
 	 * @since 0.4.0
 	 */
 	public find(touch: Touch) {
-		return this[TOUCHES].find(item => item.identifier == touch.identifier)
+		return this[TOUCHES].find(t => t.identifier == touch.identifier)
 	}
 
 	/**
@@ -63,7 +64,7 @@ export class TouchList {
 	 * @since 0.4.0
 	 */
 	public hits(view: View) {
-		return this[TOUCHES].find(item => item.hits(view))
+		return this[TOUCHES].find(t => t.hits(view)) != null
 	}
 
 	//--------------------------------------------------------------------------
@@ -75,8 +76,8 @@ export class TouchList {
 	 * @property [Symbol.iterator]
 	 * @since 0.4.0
 	 */
-	[Symbol.iterator]() {
-		return this[TOUCHES]
+	public [Symbol.iterator]() {
+		return iterator(this[TOUCHES])
 	}
 
 	//--------------------------------------------------------------------------

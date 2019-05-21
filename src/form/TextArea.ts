@@ -312,10 +312,14 @@ export class TextArea extends View {
 	 * @hidden
 	 */
 	@bound private onWindowTap(event: GestureEvent) {
-		let touched = event.touches.hits(this)
-		if (touched == null) {
-			this.blur()
+
+		for (let touch of event.touches) {
+			if (touch.target == this) {
+				return
+			}
 		}
+
+		this.blur()
 	}
 
 	//--------------------------------------------------------------------------

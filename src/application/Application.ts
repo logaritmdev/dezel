@@ -13,6 +13,7 @@ import { ScreenPresentationOptions } from '../screen/Screen'
 import { Touch } from '../touch/Touch'
 import { TouchEvent } from '../touch/TouchEvent'
 import { TouchList } from '../touch/TouchList'
+import { View } from '../view/View'
 import { Window } from '../view/Window'
 import '../index'
 
@@ -644,7 +645,7 @@ export class Application extends Emitter {
 				continue
 			}
 
-			touch.setTarget(receiver)
+			touch.setTarget(receiver as View)
 		}
 	}
 

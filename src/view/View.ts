@@ -8,8 +8,8 @@ import { GestureRegistry } from '../gesture/Gesture'
 import { Canvas } from '../graphic/Canvas'
 import { Image } from '../graphic/Image'
 import { TouchEvent } from '../touch/TouchEvent'
-import './Window.ds'
 import './View.ds'
+import './Window.ds'
 
 /**
  * @symbol BUILT
@@ -1530,6 +1530,30 @@ export class View extends Emitter {
 		this.removeFromParent()
 
 		return this
+	}
+
+	/**
+	 * Indicates whether this view is a parent of the specified view.
+	 * @method contains
+	 * @since 0.1.0
+	 */
+	public contains(view: View) {
+
+		let parent = view.parent
+		if (parent == this) {
+			return true
+		}
+
+		while (parent) {
+
+			if (parent == this) {
+				return true
+			}
+
+			parent = parent.parent
+		}
+
+		return false
 	}
 
 	//--------------------------------------------------------------------------

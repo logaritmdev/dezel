@@ -49,7 +49,7 @@ export class Touch {
 	 * @property target
 	 * @since 0.1.0
 	 */
-	public get target(): object {
+	public get target(): View {
 		return this[TARGET]
 	}
 
@@ -79,7 +79,7 @@ export class Touch {
 	 * @constructor
 	 * @since 0.1.0
 	 */
-	constructor(identifier: string, target: object, x: number, y: number) {
+	constructor(identifier: string, target: View, x: number, y: number) {
 		this.setIdentifier(identifier)
 		this.setTarget(target)
 		this.setX(x)
@@ -100,9 +100,7 @@ export class Touch {
 
 		let view = window.viewFromPoint(
 			this.x,
-			this.y,
-			true,
-			false
+			this.y
 		)
 
 		if (view == target) {
@@ -139,7 +137,7 @@ export class Touch {
 	 * @since 0.5.0
 	 * @hidden
 	 */
-	public setTarget(target: object) {
+	public setTarget(target: View) {
 		this[TARGET] = target
 	}
 
@@ -177,7 +175,7 @@ export class Touch {
 	 * @since 0.5.0
 	 * @hidden
 	 */
-	private [TARGET]: object
+	private [TARGET]: View
 
 	/**
 	 * @property [X]
