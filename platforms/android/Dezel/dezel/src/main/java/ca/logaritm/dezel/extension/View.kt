@@ -25,7 +25,7 @@ internal fun View.addView(view: View, index: Int) {
 }
 
 /**
- * @method View.removeFromPArent
+ * @method View.removeFromParent
  * @since 0.1.0
  * @hidden
  */
