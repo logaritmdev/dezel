@@ -20,7 +20,7 @@ JNIExceptionGetStackTrace(JNIEnv *env, jthrowable exception) {
 
 jsize
 JNIExceptionGetStackTraceLength(JNIEnv *env, jobjectArray frames) {
-	return env->GetArrayLength(frames);
+	return frames ? env->GetArrayLength(frames) : 0;
 }
 
 jstring
