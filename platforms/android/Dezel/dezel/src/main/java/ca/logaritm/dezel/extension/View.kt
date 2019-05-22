@@ -9,7 +9,17 @@ import android.view.ViewGroup
  * @hidden
  */
 internal fun View.addView(view: View, index: Int) {
+
 	if (this is ViewGroup) {
+
+		/*
+		 * Android does not automatically removes the view from its parent
+		 * when adding it to another view. This has to be done manually
+		 * otherwise it will throw an exception.
+		 */
+
+		view.removeFromParent()
+
 		this.addView(view, index)
 	}
 }
