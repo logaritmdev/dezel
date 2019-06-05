@@ -88,7 +88,7 @@ open class ContentTextArea(context: Context, listener: ContentTextAreaListener?)
 	 * @since 0.1.0
 	 */
 	open var fontSize: Float by Delegates.OnSet(0.0f) { value ->
-		//this.textSize = Convert.toDp(value)
+		this.textSize = value
 	}
 
 	/**
