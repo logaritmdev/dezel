@@ -1,6 +1,8 @@
 package ca.logaritm.dezel.view
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.net.http.SslError
 import android.util.Log
 import android.util.Size
@@ -255,14 +257,42 @@ open class ContentWebView(context: Context, listener: ContentWebViewListener) : 
 		 * @since 0.6.0
 		 * @hidden
 		 */
-		override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
+		override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
+			return this.shouldOverrideUrlLoading(url)
+		}
 
-			val allow = contentViewListener?.onBeforeLoad(this@ContentWebView, request.url.toString())
+		/**
+		 * @method shouldOverrideUrlLoading
+		 * @since 0.6.0
+		 * @hidden
+		 */
+		override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
+			return this.shouldOverrideUrlLoading(request.url.toString())
+		}
+
+		/**
+		 * @method shouldOverrideUrlLoading
+		 * @since 0.6.0
+		 * @hidden
+		 */
+		private fun shouldOverrideUrlLoading(url: String): Boolean {
+
+			if (url.startsWith("tel:")) {
+				context.startActivity(Intent(Intent.ACTION_DIAL, Uri.parse(url)))
+				return true
+			}
+
+			if (url.startsWith("mailto:")) {
+				context.startActivity(Intent(Intent.ACTION_SENDTO, Uri.parse(url)))
+				return true
+			}
+
+			val allow = contentViewListener?.onBeforeLoad(this@ContentWebView, url)
 			if (allow == false) {
 				return true
 			}
 
-			return super.shouldOverrideUrlLoading(view, request)
+			return false
 		}
 	}
 

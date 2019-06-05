@@ -495,6 +495,23 @@ public class ContentWebView: WKWebView, WKNavigationDelegate, UIScrollViewDelega
 			return
 		}
 
+		guard let url = navigationAction.request.url else {
+			decisionHandler(.cancel)
+			return
+		}
+
+		if (url.scheme == "tel") {
+			UIApplication.shared.open(url, options: [:], completionHandler: nil)
+			decisionHandler(.cancel)
+			return
+		}
+
+		if (url.scheme == "mailto") {
+			UIApplication.shared.open(url, options: [:], completionHandler: nil)
+			decisionHandler(.cancel)
+			return
+		}
+
 		let allow = delegate.willLoad(webView: self, url: navigationAction.request.url!)
 		if (allow) {
 			decisionHandler(.allow)
