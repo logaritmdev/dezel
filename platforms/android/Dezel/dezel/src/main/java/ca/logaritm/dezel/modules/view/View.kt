@@ -138,14 +138,6 @@ open class View(context: JavaScriptContext) : JavaScriptClass(context), LayoutNo
 		private set
 
 	/**
-	 * The view's refs.
-	 * @property refs
-	 * @since 0.4.0
-	 */
-	public var refs: MutableMap<String, Ref> = mutableMapOf()
-		private set
-
-	/**
 	 * The view's identifier among its siblings.
 	 * @property id
 	 * @since 0.1.0
@@ -3302,8 +3294,6 @@ open class View(context: JavaScriptContext) : JavaScriptClass(context), LayoutNo
 			view.updateShadowRoot(this.shadowRoot)
 		}
 
-		this.insertRef(view)
-
 		this.invalidateOrderIfNeeded(view)
 	}
 
@@ -3313,8 +3303,6 @@ open class View(context: JavaScriptContext) : JavaScriptClass(context), LayoutNo
 	 * @hidden
 	 */
 	private fun removeChild(view: View) {
-
-		this.removeRef(view)
 
 		this.children.remove(view)
 		this.stylerNode.removeChild(view.stylerNode)
@@ -3535,82 +3523,6 @@ open class View(context: JavaScriptContext) : JavaScriptClass(context), LayoutNo
 	}
 
 	/**
-	 * @method insertRef
-	 * @since 0.4.0
-	 * @hidden
-	 */
-	private fun insertRef(view: View) {
-
-		val forwarded = view.forwardedRefs
-
-		val name = view.id.string
-		if (name != "") {
-
-			if (forwarded[name] == null) {
-				forwarded[name] = view
-			} else {
-
-				if (BuildConfig.DEBUG) {
-					this.context.console.warn("A ref named $name is shared by both a view a one of its children.")
-				}
-
-			}
-
-		} else {
-
-			if (forwarded.size == 0) {
-				return
-			}
-
-		}
-
-		for ((name, view) in forwarded) {
-
-			var node = this
-
-			while (true) {
-
-				val ref = node.refs[name]
-				if (ref != null) {
-
-					ref.view = view
-					ref.node = node
-
-					node.holder.property(name, view.holder)
-
-					break
-				}
-
-				val next = node.parent
-				if (next != null) {
-					node = next
-					continue
-				}
-
-				if (BuildConfig.DEBUG) {
-					if (node is Window) {
-						this.context.console.warn("Cannot find property for ref $name")
-					}
-				}
-
-				node.forwardedRefs[name] = view
-				break
-			}
-		}
-
-		view.forwardedRefs = mutableMapOf()
-	}
-
-	/**
-	 * @method removeRef
-	 * @since 0.4.0
-	 * @hidden
-	 */
-	private fun removeRef(view: View) {
-		// TODO
-	}
-	
-	/**
 	 * @method isTransformed
 	 * @since 0.2.0
 	 * @hidden
@@ -3705,30 +3617,6 @@ open class View(context: JavaScriptContext) : JavaScriptClass(context), LayoutNo
 		val classList = callback.value.string
 		this.className = classList.until('.')
 		this.classList = classList
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method jsGet_classRefs
-	 * @since 0.4.0
-	 * @hidden
-	 */
-	@Suppress("unused")
-	open fun jsGet_classRefs(callback: JavaScriptGetterCallback) {
-		// do not return anything yet
-	}
-
-	/**
-	 * @method jsSet_refs
-	 * @since 0.4.0
-	 * @hidden
-	 */
-	@Suppress("unused")
-	open fun jsSet_classRefs(callback: JavaScriptSetterCallback) {
-		for (key in callback.value.string.split(",")) {
-			this.refs[key] = Ref()
-		}
 	}
 
 	//--------------------------------------------------------------------------

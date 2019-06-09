@@ -1315,9 +1315,7 @@ export class View extends Emitter {
 	constructor() {
 		super()
 		let classList = getClassList(this)
-		let classRefs = getClassRefs(this)
 		if (classList) this.native.classList = classList
-		if (classRefs) this.native.classRefs = classRefs
 	}
 
 	/**
@@ -2853,92 +2851,11 @@ export abstract class Component extends View {
 //------------------------------------------------------------------------------
 
 /**
- * @const classRefs
- * @since 0.4.0
- * @hidden
- */
-const classRefs: any = {}
-
-/**
  * @const classListCache
  * @since 0.4.0
  * @hidden
  */
 const classListCache = new Map<any, any>()
-
-/**
- * @const classRefsCache
- * @since 0.2.0
- * @hidden
- */
-const classRefsCache = new Map<any, any>()
-
-/**
- * @function addRef
- * @since 0.4.0
- * @hidden
- */
-export const addRef = function (prototype: object, name: string, prop: string) {
-
-	let refs = classRefs[prototype.constructor.name]
-	if (refs == null) {
-		refs = classRefs[prototype.constructor.name] = createRefs(prototype)
-	}
-
-	refs[name] = prop
-}
-
-/**
- * @function getRef
- * @since 0.4.0
- * @hidden
- */
-export const getRef = function (prototype: object, name: string) {
-
-	let refs = classRefs[prototype.constructor.name]
-	if (refs == null) {
-		refs = classRefs[prototype.constructor.name] = createRefs(prototype)
-	}
-
-	return refs[name]
-}
-
-/**
- * @function getRefs
- * @since 0.4.0
- * @hidden
- */
-export const getRefs = function (prototype: object) {
-
-	let refs = classRefs[prototype.constructor.name]
-	if (refs == null) {
-		refs = classRefs[prototype.constructor.name] = createRefs(prototype)
-	}
-
-	return refs
-}
-
-/**
- * @function createRefs
- * @since 0.4.0
- * @hidden
- */
-export const createRefs = function (prototype: object) {
-
-	let parent = Object.getPrototypeOf(prototype)
-
-	while (parent) {
-
-		let parentRefs = classRefs[parent.constructor.name]
-		if (parentRefs) {
-			return Object.assign({}, parentRefs)
-		}
-
-		parent = Object.getPrototypeOf(parent)
-	}
-
-	return {}
-}
 
 /**
  * @function getClassList
@@ -2960,21 +2877,6 @@ export const getClassList = (view: View) => {
 	}
 
 	return classList
-}
-
-/**
- * @function getClassRefs
- * @since 0.4.0
- * @hidden
- */
-export const getClassRefs = (view: View) => {
-
-	let classRefsValue = classRefsCache.get(view.constructor)
-	if (classRefsValue == null) {
-		classRefsCache.set(view.constructor, classRefsValue = getClassRefsValue(view))
-	}
-
-	return classRefsValue
 }
 
 /**

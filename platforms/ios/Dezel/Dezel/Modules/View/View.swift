@@ -104,13 +104,6 @@ open class View: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelegate, Scroll
 	private(set) public var isShadowRoot: Bool = false
 
 	/**
-	 * The view's refs.
-	 * @property refs
-	 * @since 0.4.0
-	 */
-	private(set) public var refs: [String: Ref] = [:]
-
-	/**
 	 * The view's identifier.
 	 * @property id
 	 * @since 0.1.0
@@ -2040,13 +2033,6 @@ open class View: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelegate, Scroll
 	private(set) public var layoutNode: LayoutNode!
 
 	/**
-	 * @property forwardedRefs
-	 * @since 0.4.0
-	 * @hidden
-	 */
-	private var forwardedRefs: [String: View] = [:]
-
-	/**
 	 * @property backgroundImageData
 	 * @since 0.4.0
 	 * @hidden
@@ -3418,8 +3404,6 @@ open class View: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelegate, Scroll
 		} else {
 			view.updateShadowRoot(self.shadowRoot)
 		}
-
-		self.insertRef(view)
 	}
 
 	/**
@@ -3428,8 +3412,6 @@ open class View: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelegate, Scroll
 	 * @hidden
 	 */
 	open func removeChild(_ view: View) {
-
-		self.removeRef(view)
 
 		self.children.remove(view)
 		self.stylerNode.removeChild(view.stylerNode)
@@ -3608,80 +3590,6 @@ open class View: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelegate, Scroll
 	}
 
 	/**
-	 * @method insertRef
-	 * @since 0.4.0
-	 * @hidden
-	 */
-	private func insertRef(_ view: View) {
-
-		var forwarded = view.forwardedRefs
-
-		let name = view.id.string
-		if (name != "") {
-
-			if (forwarded[name] == nil) {
-				forwarded[name] = view
-			} else {
-
-				#if DEBUG
-					self.context.console.warn("A ref named \(name) is shared by both a view a one of its children.")
-				#endif
-
-			}
-
-		} else {
-
-			if (forwarded.count == 0) {
-				return
-			}
-
-		}
-
-		for (name, view) in forwarded {
-
-			var node = self
-
-			while (true) {
-
-				if let ref = node.refs[name] {
-
-					ref.view = view
-					ref.node = node
-
-					node.holder.property(name, value: view.holder)
-
-					break
-				}
-
-				if let next = node.parent {
-					node = next
-					continue
-				}
-
-				#if DEBUG
-					if (node is Window) {
-						self.context.console.warn("Cannot find property for ref \(name)")
-					}
-				#endif
-
-				node.forwardedRefs[name] = view
-				break
-			}
-		}
-
-		view.forwardedRefs = [:]
-	}
-
-	/**
-	 * @method removeRef
-	 * @since 0.4.0
-	 * @hidden
-	 */
-	private func removeRef(_ view: View) {
-		// TODO
-	}
-
-	/**
 	 * @method isTransformed
 	 * @since 0.2.0
 	 * @hidden
@@ -3772,28 +3680,6 @@ open class View: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelegate, Scroll
 		let classList = callback.value.string
 		self.className = classList.until(".")
 		self.classList = classList
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method jsGet_classRefs
-	 * @since 0.4.0
-	 * @hidden
-	 */
-	@objc open func jsGet_classRefs(callback: JavaScriptGetterCallback) {
-		// do not return anything yet
-	}
-
-	/**
-	 * @method jsSet_refs
-	 * @since 0.4.0
-	 * @hidden
-	 */
-	@objc open func jsSet_classRefs(callback: JavaScriptSetterCallback) {
-		for key in callback.value.string.components(separatedBy: ",") {
-			self.refs[key] = Ref()
-		}
 	}
 
 	//--------------------------------------------------------------------------
