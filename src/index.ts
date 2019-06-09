@@ -3,6 +3,8 @@
 export { Device } from './device/Device'
 export { Platform } from './platform/Platform'
 
+export { Reference } from './util/Reference'
+
 export { Application } from './application/Application'
 export { ApplicationKeyboardEvent } from './application/Application'
 export { ApplicationHandleLinkEvent } from './application/Application'

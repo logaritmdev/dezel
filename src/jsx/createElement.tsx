@@ -21,6 +21,13 @@ export function createElement(Type: any, properties: any, ...children: Array<Nod
 		delete properties.style
 		delete properties.state
 
+		let ref = properties.ref
+		if (ref) {
+			ref.set(view)
+		}
+
+		delete properties.ref
+
 		for (let key in properties) {
 
 			if (key == 'children') {
@@ -152,7 +159,7 @@ function set(view: any, key: string, value: any) {
 			return
 		}
 	}
-
+	console.log('Setting', key, value)
 	view[key] = value
 }
 

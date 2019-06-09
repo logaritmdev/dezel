@@ -6,13 +6,12 @@ import { TouchEvent } from '../touch/TouchEvent'
 import { ViewInsertEvent } from '../view/View'
 import { ViewRemoveEvent } from '../view/View'
 import { Component } from './Component'
-import './List.ds.android'
-import './List.ds.ios'
 import { ListItem } from './ListItem'
 import { ListManager } from './ListManager'
 import { Refresher } from './Refresher'
 import './List.ds'
-
+import './List.ds.android'
+import './List.ds.ios'
 
 /**
  * Displays a scrollable array of elements.

@@ -1,10 +1,9 @@
 import { watch } from '../decorator/watch'
 import { View } from '../view/View'
 import { Component } from './Component'
-
 import './Dots.ds'
-import './Dots.ds.ios'
 import './Dots.ds.android'
+import './Dots.ds.ios'
 
 /**
  * Displays dots indicator.

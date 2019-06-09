@@ -1,16 +1,14 @@
-import { Dictionary } from 'lodash'
 import { watch } from '../decorator/watch'
 import { Event } from '../event/Event'
-import { View } from '../view/View'
 import { ScreenQuickTransition } from './transition/ScreenQuickTransition'
 import { ScreenTransition } from './transition/ScreenTransition'
 import { ScreenTransitionRegistry } from './transition/ScreenTransition'
 import { Enclosure } from './Enclosure'
 import { PRESENTING } from './Screen'
 import { Screen } from './Screen'
+import './Switch.ds'
 import './Switch.ds.android'
 import './Switch.ds.ios'
-import './Switch.ds'
 
 /**
  * Manages the display of several screens only showing one.
@@ -304,7 +302,8 @@ export class Switch extends Screen {
 
 		try {
 
-			let content = this.content || this
+			//let content = this.content || this
+			let content = this // TODO Fix this
 
 			let window = this.window
 			let parent = this.parent

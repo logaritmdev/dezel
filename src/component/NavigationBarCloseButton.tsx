@@ -1,8 +1,7 @@
 import { NavigationBarButton } from './NavigationBarButton'
-
 import './NavigationBarCloseButton.ds'
-import './NavigationBarCloseButton.ds.ios'
 import './NavigationBarCloseButton.ds.android'
+import './NavigationBarCloseButton.ds.ios'
 
 /**
  * Displays a close button in a navigation bar.

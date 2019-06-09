@@ -6,10 +6,9 @@ import { ViewRemoveEvent } from '../view/View'
 import { Component } from './Component'
 import { PagerItem } from './PagerItem'
 import { PagerManager } from './PagerManager'
-
 import './Pager.ds'
-import './Pager.ds.ios'
 import './Pager.ds.android'
+import './Pager.ds.ios'
 
 /**
  * @symbol RESETTING

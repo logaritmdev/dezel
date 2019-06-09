@@ -1,18 +1,18 @@
 import { bound } from '../decorator/bound'
-import { ref } from '../decorator/ref'
 import { state } from '../decorator/state'
 import { watch } from '../decorator/watch'
 import { Event } from '../event/Event'
 import { Platform } from '../platform/Platform'
 import { Touch } from '../touch/Touch'
 import { TouchEvent } from '../touch/TouchEvent'
+import { Reference } from '../util/Reference'
 import { Fragment } from '../view/Fragment'
 import { SpinnerView } from '../view/SpinnerView'
 import { View } from '../view/View'
 import { Component } from './Component'
+import './Refresher.ds'
 import './Refresher.ds.android'
 import './Refresher.ds.ios'
-import './Refresher.ds'
 
 /**
  * Displays a refresh indicator within a scrollable element.
@@ -31,7 +31,15 @@ export class Refresher extends Component {
 	 * @property spinner
 	 * @since 0.2.0
 	 */
-	@ref public spinner!: SpinnerView
+	public get spinner(): SpinnerView {
+
+		let value = this.spinnerRef.value
+		if (value == null) {
+			throw new Error('Missing reference for key: spinner')
+		}
+
+		return value
+	}
 
 	/**
 	 * The view that contains the refresh indicator.
@@ -66,7 +74,7 @@ export class Refresher extends Component {
 	public render() {
 		return (
 			<Fragment>
-				<SpinnerView id="spinner" style="spinner" />
+				<SpinnerView ref={this.spinnerRef} style="spinner" />
 			</Fragment>
 		)
 	}
@@ -148,6 +156,13 @@ export class Refresher extends Component {
 	//--------------------------------------------------------------------------
 	// Private API
 	//--------------------------------------------------------------------------
+
+	/**
+	 * @property spinnerRef
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private spinnerRef = new Reference<SpinnerView>(this)
 
 	/**
 	 * @property trackedTouch

@@ -1,15 +1,13 @@
-import { isObject } from 'lodash'
-import { ref } from '../decorator/ref'
 import { state } from '../decorator/state'
 import { TouchEvent } from '../touch/TouchEvent'
+import { Reference } from '../util/Reference'
 import { Fragment } from '../view/Fragment'
 import { ImageView } from '../view/ImageView'
 import { TextView } from '../view/TextView'
 import { Component } from './Component'
+import './TabBarButton.ds'
 import './TabBarButton.ds.android'
 import './TabBarButton.ds.ios'
-import './TabBarButton.ds'
-
 
 /**
  * Displays a pressable element that performs an action in a tab bar.
@@ -28,21 +26,27 @@ export class TabBarButton extends Component {
 	 * @property image
 	 * @since 0.1.0
 	 */
-	@ref public image!: ImageView
+	public get image(): ImageView {
+		return this.imageRef.value!
+	}
 
 	/**
 	 * The tab bar button label.
 	 * @property label
 	 * @since 0.1.0
 	 */
-	@ref public label!: TextView
+	public get label(): TextView {
+		return this.labelRef.value!
+	}
 
 	/**
 	 * The tab bar badge.
 	 * @property badge
 	 * @since 0.1.0
 	 */
-	@ref public badge!: TextView
+	public get badge(): TextView {
+		return this.badgeRef.value!
+	}
 
 	/**
 	 * Whether the state of this button is pressed.
@@ -77,9 +81,9 @@ export class TabBarButton extends Component {
 	public render() {
 		return (
 			<Fragment>
-				<ImageView id="image" style="image" />
-				<TextView id="label" style="label" />
-				<TextView id="badge" style="badge" />
+				<ImageView ref={this.imageRef} style="image" />
+				<TextView ref={this.labelRef} style="label" />
+				<TextView ref={this.badgeRef} style="badge" />
 			</Fragment>
 		)
 	}
@@ -143,6 +147,27 @@ export class TabBarButton extends Component {
 	//--------------------------------------------------------------------------
 	// Private API
 	//--------------------------------------------------------------------------
+
+	/**
+	 * @property imageRef
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private imageRef = new Reference<ImageView>(this)
+
+	/**
+	 * @property labelRef
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private labelRef = new Reference<TextView>(this)
+
+	/**
+	 * @property badgeRef
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private badgeRef = new Reference<TextView>(this)
 
 	/**
 	 * @method emitPress

@@ -1,16 +1,14 @@
-import { isObject } from 'lodash'
-import { ref } from '../decorator/ref'
 import { state } from '../decorator/state'
 import { Event } from '../event/Event'
 import { TouchEvent } from '../touch/TouchEvent'
+import { Reference } from '../util/Reference'
 import { Fragment } from '../view/Fragment'
 import { ImageView } from '../view/ImageView'
 import { TextView } from '../view/TextView'
-import './Button.ds.android'
-import './Button.ds.ios'
 import { Component } from './Component'
 import './Button.ds'
-
+import './Button.ds.android'
+import './Button.ds.ios'
 
 /**
  * Displays a pressable element that performs an action.
@@ -29,14 +27,30 @@ export class Button extends Component {
 	 * @property label
 	 * @since 0.1.0
 	 */
-	@ref public label!: TextView
+	public get label(): TextView {
+
+		let value = this.labelRef.value
+		if (value == null) {
+			throw new Error('Missing reference for key: label')
+		}
+
+		return value
+	}
 
 	/**
 	 * The button's image.
 	 * @property image
 	 * @since 0.1.0
 	 */
-	@ref public image!: ImageView
+	public get image(): ImageView {
+
+		let value = this.imageRef.value
+		if (value == null) {
+			throw new Error('Missing reference for key: image')
+		}
+
+		return value
+	}
 
 	/**
 	 * Whether the state of this button is pressed.
@@ -71,8 +85,8 @@ export class Button extends Component {
 	public render() {
 		return (
 			<Fragment>
-				<ImageView id="image" style="image" />
-				<TextView id="label" style="label" />
+				<ImageView ref={this.imageRef} style="image" />
+				<TextView ref={this.labelRef} style="label" />
 			</Fragment>
 		)
 	}
@@ -146,6 +160,20 @@ export class Button extends Component {
 	//--------------------------------------------------------------------------
 	// Private API
 	//--------------------------------------------------------------------------
+
+	/**
+	 * @property labelRef
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private labelRef = new Reference<TextView>(this)
+
+	/**
+	 * @property imageRef
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private imageRef = new Reference<ImageView>(this)
 
 	/**
 	 * @method emitPress

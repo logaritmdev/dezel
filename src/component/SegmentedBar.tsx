@@ -4,10 +4,9 @@ import { Event } from '../event/Event'
 import { ViewInsertEvent } from '../view/View'
 import { Component } from './Component'
 import { SegmentedBarButton } from './SegmentedBarButton'
-
 import './SegmentedBar.ds'
-import './SegmentedBar.ds.ios'
 import './SegmentedBar.ds.android'
+import './SegmentedBar.ds.ios'
 
 /**
  * Displays an horizontal element made of multiple segmented bar button.

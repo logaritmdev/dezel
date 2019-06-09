@@ -1,15 +1,14 @@
-import { ref } from '../decorator/ref'
 import { state } from '../decorator/state'
 import { Event } from '../event/Event'
 import { TouchEvent } from '../touch/TouchEvent'
+import { Reference } from '../util/Reference'
 import { Fragment } from '../view/Fragment'
 import { ImageView } from '../view/ImageView'
 import { TextView } from '../view/TextView'
 import { Component } from './Component'
+import './NavigationBarButton.ds'
 import './NavigationBarButton.ds.android'
 import './NavigationBarButton.ds.ios'
-import './NavigationBarButton.ds'
-
 
 /**
  * Displays a pressable element that performs an action in a navigation bar.
@@ -28,14 +27,18 @@ export class NavigationBarButton extends Component {
 	 * @property label
 	 * @since 0.1.0
 	 */
-	@ref public label!: TextView
+	public get label(): TextView {
+		return this.labelRef.value!
+	}
 
 	/**
 	 * The navigation bar button's image.
 	 * @property image
 	 * @since 0.5.0
 	 */
-	@ref public image!: ImageView
+	public get image(): ImageView {
+		return this.imageRef.value!
+	}
 
 	/**
 	 * Whether the state of this navigation bar button is pressed.
@@ -70,8 +73,8 @@ export class NavigationBarButton extends Component {
 	public render() {
 		return (
 			<Fragment>
-				<ImageView id="image" style="image" />
-				<TextView id="label" style="label" />
+				<ImageView ref={this.imageRef} style="image" />
+				<TextView ref={this.labelRef} style="label" />
 			</Fragment>
 		)
 	}
@@ -145,6 +148,20 @@ export class NavigationBarButton extends Component {
 	//--------------------------------------------------------------------------
 	// Private API
 	//--------------------------------------------------------------------------
+
+	/**
+	 * @property labelRef
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private labelRef = new Reference<TextView>(this)
+
+	/**
+	 * @property imageRef
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private imageRef = new Reference<ImageView>(this)
 
 	/**
 	 * @method emitPress

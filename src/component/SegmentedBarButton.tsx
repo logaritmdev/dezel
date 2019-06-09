@@ -1,15 +1,13 @@
-import { isObject } from 'lodash'
-import { ref } from '../decorator/ref'
 import { state } from '../decorator/state'
 import { Event } from '../event/Event'
 import { TouchEvent } from '../touch/TouchEvent'
+import { Reference } from '../util/Reference'
 import { Fragment } from '../view/Fragment'
 import { TextView } from '../view/TextView'
 import { Component } from './Component'
+import './SegmentedBarButton.ds'
 import './SegmentedBarButton.ds.android'
 import './SegmentedBarButton.ds.ios'
-import './SegmentedBarButton.ds'
-
 
 /**
  * Displays a pressable element that performs an action in a segmented bar.
@@ -28,7 +26,9 @@ export class SegmentedBarButton extends Component {
 	 * @property label
 	 * @since 0.1.0
 	 */
-	@ref public label!: TextView
+	public get label(): TextView {
+		return this.labelRef.value!
+	}
 
 	/**
 	 * Whether the state of this button is pressed.
@@ -63,7 +63,7 @@ export class SegmentedBarButton extends Component {
 	public render() {
 		return (
 			<Fragment>
-				<TextView id="label" style="label" />
+				<TextView ref={this.labelRef} style="label" />
 			</Fragment>
 		)
 	}
@@ -137,6 +137,13 @@ export class SegmentedBarButton extends Component {
 	//--------------------------------------------------------------------------
 	// Private API
 	//--------------------------------------------------------------------------
+
+	/**
+	 * @property labelRef
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private labelRef = new Reference<TextView>(this)
 
 	/**
 	 * @method emitPress

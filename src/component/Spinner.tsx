@@ -1,13 +1,11 @@
-import { ref } from '../decorator/ref'
 import { watch } from '../decorator/watch'
-import { Event } from '../event/Event'
+import { Reference } from '../util/Reference'
 import { Fragment } from '../view/Fragment'
 import { SpinnerView } from '../view/SpinnerView'
 import { Component } from './Component'
-
 import './Spinner.ds'
-import './Spinner.ds.ios'
 import './Spinner.ds.android'
+import './Spinner.ds.ios'
 
 /**
  * Displays a spinner.
@@ -47,7 +45,7 @@ export class Spinner extends Component {
 	public render() {
 		return (
 			<Fragment>
-				<SpinnerView id="spinner" />
+				<SpinnerView ref={this.spinnerRef} />
 			</Fragment>
 		)
 	}
@@ -60,12 +58,20 @@ export class Spinner extends Component {
 	public onPropertyChange(property: string, newValue: any, oldValue: any) {
 
 		if (property == 'active') {
-			this.spinner.active = newValue
+
+			if (this.spinnerRef.value) {
+				this.spinnerRef.value.active = newValue
+			}
+
 			return
 		}
 
 		if (property == 'color') {
-			this.spinner.color = newValue
+
+			if (this.spinnerRef.value) {
+				this.spinnerRef.value.color = newValue
+			}
+
 			return
 		}
 
@@ -77,9 +83,9 @@ export class Spinner extends Component {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @property spinner
-	 * @since 0.4.0
+	 * @property spinnerRef
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	@ref private spinner!: SpinnerView
+	private spinnerRef = new Reference<SpinnerView>(this)
 }

@@ -1,19 +1,18 @@
 import { clamp } from 'lodash'
 import { bound } from '../decorator/bound'
-import { ref } from '../decorator/ref'
 import { watch } from '../decorator/watch'
 import { Event } from '../event/Event'
 import { Locale } from '../locale/Locale'
+import { Reference } from '../util/Reference'
 import { Fragment } from '../view/Fragment'
 import { TextView } from '../view/TextView'
 import { View } from '../view/View'
 import { Component } from './Component'
-import './NavigationBar.ds.android'
-import './NavigationBar.ds.ios'
 import { NavigationBarBackButton } from './NavigationBarBackButton'
 import { NavigationBarButton } from './NavigationBarButton'
 import './NavigationBar.ds'
-
+import './NavigationBar.ds.android'
+import './NavigationBar.ds.ios'
 
 /**
  * Displays a bar with a title and navigations components.
@@ -32,7 +31,15 @@ export class NavigationBar extends Component {
 	 * @property title
 	 * @since 0.1.0
 	 */
-	@ref public title!: TextView
+	public get title(): TextView {
+
+		let value = this.titleRef.value
+		if (value == null) {
+			throw new Error('Missing reference for key: title')
+		}
+
+		return value
+	}
 
 	/**
 	 * The navigation bar's primary button.
@@ -120,8 +127,8 @@ export class NavigationBar extends Component {
 	public render() {
 		return (
 			<Fragment>
-				<View id="titleContainer" style="title-container" onBeforeLayout={this.onTitleContainerBeforeLayout}>
-					<TextView id="title" style="title" />
+				<View ref={this.titleContainerRef} style="title-container" onBeforeLayout={this.onTitleContainerBeforeLayout}>
+					<TextView ref={this.titleRef} style="title" />
 				</View>
 			</Fragment>
 		)
@@ -136,8 +143,8 @@ export class NavigationBar extends Component {
 
 		super.onCreate()
 
-		let sideButtonContainer = <View id="sideButtonsContainer" style="buttons-container" />
-		let mainButtonContainer = <View id="mainButtonsContainer" style="buttons-container" />
+		let sideButtonContainer = <View ref={this.sideButtonsContainerRef} style="buttons-container" />
+		let mainButtonContainer = <View ref={this.mainButtonsContainerRef} style="buttons-container" />
 
 		if (Locale.current.ltr) {
 			this.insert(sideButtonContainer, 0)
@@ -187,25 +194,32 @@ export class NavigationBar extends Component {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @property titleContainer
-	 * @since 0.4.0
+	 * @property titleRef
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	@ref private titleContainer!: View
+	private titleRef = new Reference<TextView>(this)
 
 	/**
-	 * @property mainButtonsContainer
-	 * @since 0.4.0
+	 * @property titleContainerRef
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	@ref private mainButtonsContainer!: View
+	private titleContainerRef = new Reference<View>(this)
 
 	/**
-	 * @property sideButtonsContainer
-	 * @since 0.4.0
+	 * @property mainButtonsContainerRef
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	@ref private sideButtonsContainer!: View
+	private mainButtonsContainerRef = new Reference<View>(this)
+
+	/**
+	 * @property sideButtonsContainerRef
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private sideButtonsContainerRef = new Reference<View>(this)
 
 	/**
 	 * @method onTitleContainerBeforeLayout
@@ -218,8 +232,13 @@ export class NavigationBar extends Component {
 			return
 		}
 
-		let disposition = this.titleContainer.contentDisposition
-		let orientation = this.titleContainer.contentOrientation
+		let titleContainer = this.titleContainerRef.value
+		if (titleContainer == null) {
+			return
+		}
+
+		let disposition = titleContainer.contentDisposition
+		let orientation = titleContainer.contentOrientation
 
 		if (disposition !== 'center' ||
 			orientation !== 'horizontal') {
@@ -238,9 +257,9 @@ export class NavigationBar extends Component {
 
 		this.title.measure()
 
-		let frameL = this.titleContainer.measuredLeft
-		let frameW = this.titleContainer.measuredInnerWidth
-		let frameH = this.titleContainer.measuredInnerHeight
+		let frameL = titleContainer.measuredLeft
+		let frameW = titleContainer.measuredInnerWidth
+		let frameH = titleContainer.measuredInnerHeight
 		let titleW = this.title.measuredWidth
 
 		let titleCenter = this.title.measuredLeft + frameW / 2 - titleW / 2
@@ -335,7 +354,11 @@ export class NavigationBar extends Component {
 	 * @hidden
 	 */
 	private appendMainButton(button: NavigationBarButton) {
-		this.mainButtonsContainer.append(button)
+
+		if (this.mainButtonsContainerRef.value) {
+			this.mainButtonsContainerRef.value.append(button)
+		}
+
 		return this
 	}
 
@@ -345,7 +368,11 @@ export class NavigationBar extends Component {
 	 * @hidden
 	 */
 	private removeMainButton(button: NavigationBarButton) {
-		this.mainButtonsContainer.remove(button)
+
+		if (this.mainButtonsContainerRef.value) {
+			this.mainButtonsContainerRef.value.remove(button)
+		}
+
 		return this
 	}
 
@@ -355,7 +382,11 @@ export class NavigationBar extends Component {
 	 * @hidden
 	 */
 	private appendSideButton(button: NavigationBarButton) {
-		this.sideButtonsContainer.append(button)
+
+		if (this.sideButtonsContainerRef.value) {
+			this.sideButtonsContainerRef.value.append(button)
+		}
+
 		return this
 	}
 
@@ -365,7 +396,11 @@ export class NavigationBar extends Component {
 	 * @hidden
 	 */
 	private removeSideButton(button: NavigationBarButton) {
-		this.sideButtonsContainer.remove(button)
+
+		if (this.sideButtonsContainerRef.value) {
+			this.sideButtonsContainerRef.value.remove(button)
+		}
+
 		return this
 	}
 }

@@ -1,4 +1,3 @@
-
 import { bound } from '../decorator/bound'
 import { watch } from '../decorator/watch'
 import { Event } from '../event/Event'
@@ -6,10 +5,9 @@ import { ViewInsertEvent } from '../view/View'
 import { ViewRemoveEvent } from '../view/View'
 import { Component } from './Component'
 import { TabBarButton } from './TabBarButton'
-
 import './TabBar.ds'
-import './TabBar.ds.ios'
 import './TabBar.ds.android'
+import './TabBar.ds.ios'
 
 /**
  * Displays an horizontal element made of multiple tab bar button.

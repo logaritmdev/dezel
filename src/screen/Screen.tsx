@@ -2,7 +2,6 @@ import { Application } from '../application/Application'
 import { ApplicationKeyboardEvent } from '../application/Application'
 import { Component } from '../component/Component'
 import { bound } from '../decorator/bound'
-import { ref } from '../decorator/ref'
 import { watch } from '../decorator/watch'
 import { Event } from '../event/Event'
 import { Fragment } from '../view/Fragment'
@@ -97,27 +96,6 @@ export class Screen<T = any> extends Component {
 	 * @since 0.1.0
 	 */
 	public statusBarBackgroundColor: string = 'transparent'
-
-	/**
-	 * The screen's header.
-	 * @property header
-	 * @since 0.1.0
-	 */
-	@ref public header!: Header
-
-	/**
-	 * The screen's footer.
-	 * @property footer
-	 * @since 0.1.0
-	 */
-	@ref public footer!: Footer
-
-	/**
-	 * The screen's content
-	 * @property content
-	 * @since 0.1.0
-	 */
-	@ref public content!: Content
 
 	/**
 	 * The gesture used to dismiss this screen.

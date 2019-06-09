@@ -1,8 +1,7 @@
 import { NavigationBarButton } from './NavigationBarButton'
-
 import './NavigationBarBackButton.ds'
-import './NavigationBarBackButton.ds.ios'
 import './NavigationBarBackButton.ds.android'
+import './NavigationBarBackButton.ds.ios'
 
 /**
  * Displays a back button in a navigation bar.

@@ -8,6 +8,7 @@ import { GestureRegistry } from '../gesture/Gesture'
 import { Canvas } from '../graphic/Canvas'
 import { Image } from '../graphic/Image'
 import { TouchEvent } from '../touch/TouchEvent'
+import { Reference } from '../util/Reference'
 import './View.ds'
 import './Window.ds'
 
@@ -181,6 +182,10 @@ export class View extends Emitter {
 			)
 		})
 	}
+
+	//--------------------------------------------------------------------------
+	// Properties
+	//--------------------------------------------------------------------------
 
 	/**
 	 * The view's window.

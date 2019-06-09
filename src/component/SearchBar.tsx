@@ -1,15 +1,13 @@
-import { ref } from '../decorator/ref'
 import { bound } from '../decorator/bound'
-import { watch } from '../decorator/watch'
 import { Event } from '../event/Event'
-import { Fragment } from '../view/Fragment'
 import { TextInput } from '../form/TextInput'
-import { Component } from './Component'
+import { Reference } from '../util/Reference'
+import { Fragment } from '../view/Fragment'
 import { Button } from './Button'
-
+import { Component } from './Component'
 import './SearchBar.ds'
-import './SearchBar.ds.ios'
 import './SearchBar.ds.android'
+import './SearchBar.ds.ios'
 
 /**
  * Displays an bar with a search input element.
@@ -44,19 +42,25 @@ export class SearchBar extends Component {
 	 * @property input
 	 * @since 0.1.0
 	 */
-	@ref public input!: TextInput
+	public get input(): TextInput {
+		return this.inputRef.value!
+	}
 
 	/**
 	 * @property clearButton
 	 * @since 0.1.0
 	 */
-	@ref public clearButton!: Button
+	public get clearButton(): Button {
+		return this.clearButtonRef.value!
+	}
 
 	/**
 	 * @property cancelButton
 	 * @since 0.1.0
 	 */
-	@ref public cancelButton!: Button
+	public get cancelButton(): Button {
+		return this.cancelButton.value!
+	}
 
 	/**
 	 * @property cancelable
@@ -77,13 +81,13 @@ export class SearchBar extends Component {
 		return (
 			<Fragment>
 				<TextInput
-					id="input"
+					ref={this.inputRef}
 					style="input"
 					onChange={this.onSearchInputChange}
 					onFocus={this.onSearchInputFocus}
 					onBlur={this.onSearchInputBlur}
 				/>
-				<Button id="cancelButton" style="cancel-button" label="Cancel" onTap={this.onCancelButtonTap} />
+				<Button ref={this.cancelButtonRef} style="cancel-button" label="Cancel" onTap={this.onCancelButtonTap} />
 			</Fragment>
 		)
 	}
@@ -91,6 +95,27 @@ export class SearchBar extends Component {
 	//--------------------------------------------------------------------------
 	// Private API
 	//--------------------------------------------------------------------------
+
+	/**
+	 * @property inputRef
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private inputRef = new Reference<TextInput>(this)
+
+	/**
+	 * @property clearButtonRef
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private clearButtonRef = new Reference<Button>(this)
+
+	/**
+	 * @property cancelButtonRef
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private cancelButtonRef = new Reference<Button>(this)
 
 	/**
 	 * @method onSearchInputChange
