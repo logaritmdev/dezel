@@ -3,6 +3,7 @@ import { bound } from '../decorator/bound'
 import { ref } from '../decorator/ref'
 import { watch } from '../decorator/watch'
 import { Event } from '../event/Event'
+import { Locale } from '../locale/Locale'
 import { Fragment } from '../view/Fragment'
 import { TextView } from '../view/TextView'
 import { View } from '../view/View'
@@ -138,13 +139,13 @@ export class NavigationBar extends Component {
 		let sideButtonContainer = <View id="sideButtonsContainer" style="buttons-container" />
 		let mainButtonContainer = <View id="mainButtonsContainer" style="buttons-container" />
 
-		if (locale.ltr) {
+		if (Locale.current.ltr) {
 			this.insert(sideButtonContainer, 0)
 			this.append(mainButtonContainer)
 			return
 		}
 
-		if (locale.rtl) {
+		if (Locale.current.rtl) {
 			this.insert(mainButtonContainer, 0)
 			this.append(sideButtonContainer)
 			return

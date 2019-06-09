@@ -10,6 +10,24 @@ import { bridge } from '../decorator/bridge'
 export class Device {
 
 	//--------------------------------------------------------------------------
+	// Static
+	//--------------------------------------------------------------------------
+
+	/**
+	 * The current device.
+	 * @property current
+	 * @since 0.7.0
+	 */
+	public static get current(): Device {
+
+		if (current == null) {
+			current = new Device()
+		}
+
+		return current
+	}
+
+	//--------------------------------------------------------------------------
 	// Property
 	//--------------------------------------------------------------------------
 
@@ -57,3 +75,10 @@ export class Device {
 	 */
 	public native: any
 }
+
+/**
+ * The current device.
+ * @var current
+ * @since 0.7.0
+ */
+let current: Device | null = null

@@ -3,6 +3,7 @@ import { ref } from '../decorator/ref'
 import { state } from '../decorator/state'
 import { watch } from '../decorator/watch'
 import { Event } from '../event/Event'
+import { Platform } from '../platform/Platform'
 import { Touch } from '../touch/Touch'
 import { TouchEvent } from '../touch/TouchEvent'
 import { Fragment } from '../view/Fragment'
@@ -12,7 +13,6 @@ import { Component } from './Component'
 import './Refresher.ds.android'
 import './Refresher.ds.ios'
 import './Refresher.ds'
-
 
 /**
  * Displays a refresh indicator within a scrollable element.
@@ -113,12 +113,12 @@ export class Refresher extends Component {
 
 			if (oldView) {
 
-				if (platform.name == 'ios') {
+				if (Platform.current.name == 'ios') {
 					oldView.off('drag', this.onViewDrag)
 					oldView.off('dragend', this.onViewDragEnd)
 				}
 
-				if (platform.name == 'android') {
+				if (Platform.current.name == 'android') {
 					oldView.off('touchstart', this.onViewTouchStart)
 					oldView.off('touchmove', this.onViewTouchMove)
 					oldView.off('touchend', this.onViewTouchEnd)
@@ -127,12 +127,12 @@ export class Refresher extends Component {
 
 			if (newView) {
 
-				if (platform.name == 'ios') {
+				if (Platform.current.name == 'ios') {
 					newView.on('drag', this.onViewDrag)
 					newView.on('dragend', this.onViewDragEnd)
 				}
 
-				if (platform.name == 'android') {
+				if (Platform.current.name == 'android') {
 					newView.on('touchstart', this.onViewTouchStart)
 					newView.on('touchmove', this.onViewTouchMove)
 					newView.on('touchend', this.onViewTouchEnd)

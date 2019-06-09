@@ -1,5 +1,4 @@
 import { bridge } from '../decorator/bridge'
-import { native } from '../decorator/native'
 
 @bridge('dezel.platform.Platform')
 
@@ -9,6 +8,24 @@ import { native } from '../decorator/native'
  * @since 0.1.0
  */
 export class Platform {
+
+	//--------------------------------------------------------------------------
+	// Static
+	//--------------------------------------------------------------------------
+
+	/**
+	 * The current device.
+	 * @property current
+	 * @since 0.7.0
+	 */
+	public static get current(): Platform {
+
+		if (current == null) {
+			current = new Platform()
+		}
+
+		return current
+	}
 
 	//--------------------------------------------------------------------------
 	// Property
@@ -42,4 +59,12 @@ export class Platform {
 	 * @hidden
 	 */
 	public native: any
+
 }
+
+/**
+ * The current platform.
+ * @var current
+ * @since 0.7.0
+ */
+let current: Platform | null = null

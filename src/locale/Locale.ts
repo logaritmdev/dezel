@@ -11,6 +11,24 @@ import { native } from '../decorator/native'
 export class Locale {
 
 	//--------------------------------------------------------------------------
+	// Static
+	//--------------------------------------------------------------------------
+
+	/**
+	 * The current locale.
+	 * @property current
+	 * @since 0.7.0
+	 */
+	public static get current(): Locale {
+
+		if (current == null) {
+			current = new Locale()
+		}
+
+		return current
+	}
+
+	//--------------------------------------------------------------------------
 	// Methods
 	//--------------------------------------------------------------------------
 
@@ -29,11 +47,18 @@ export class Locale {
 	@native public region!: string
 
 	/**
-	 * The current locale direction.
-	 * @property direction
-	 * @since 0.4.0
+	 * Whether the local is left to right.
+	 * @property ltr
+	 * @since 0.7.0
 	 */
-	@native public direction!: 'ltr' | 'rtl'
+	@native public ltr!: boolean
+
+	/**
+	 * Whether the local is right to left.
+	 * @property rtl
+	 * @since 0.7.0
+	 */
+	@native public rtl!: boolean
 
 	//--------------------------------------------------------------------------
 	// Native API
@@ -46,3 +71,10 @@ export class Locale {
 	 */
 	public native: any
 }
+
+/**
+ * The current locale.
+ * @var current
+ * @since 0.7.0
+ */
+let current: Locale | null = null
