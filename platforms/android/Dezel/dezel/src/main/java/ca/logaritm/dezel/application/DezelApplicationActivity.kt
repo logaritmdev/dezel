@@ -18,26 +18,20 @@ import android.widget.RelativeLayout
 import ca.logaritm.dezel.BuildConfig
 import ca.logaritm.dezel.application.keyboard.KeyboardObserver
 import ca.logaritm.dezel.application.keyboard.KeyboardObserverListener
-import ca.logaritm.dezel.connectivity.ConnectivityModule
 import ca.logaritm.dezel.core.*
 import ca.logaritm.dezel.extension.Delegates
 import ca.logaritm.dezel.extension.viewport
 import ca.logaritm.dezel.layout.Layout
 import ca.logaritm.dezel.modules.application.Application
 import ca.logaritm.dezel.modules.application.ApplicationModule
-import ca.logaritm.dezel.modules.bluetooth.BluetoothModule
 import ca.logaritm.dezel.modules.device.DeviceModule
 import ca.logaritm.dezel.modules.dezel.Dezel
 import ca.logaritm.dezel.modules.dialog.DialogModule
 import ca.logaritm.dezel.modules.form.FormModule
 import ca.logaritm.dezel.modules.graphic.GraphicModule
 import ca.logaritm.dezel.modules.graphic.ImageLoader
-import ca.logaritm.dezel.modules.i18n.TranslationModule
 import ca.logaritm.dezel.modules.locale.LocaleModule
-import ca.logaritm.dezel.modules.location.LocationModule
-import ca.logaritm.dezel.modules.notification.NotificationModule
 import ca.logaritm.dezel.modules.platform.PlatformModule
-import ca.logaritm.dezel.modules.storage.StorageModule
 import ca.logaritm.dezel.modules.view.ViewModule
 import ca.logaritm.dezel.modules.web.WebModule
 import ca.logaritm.dezel.networking.RemoteFileLoader
@@ -318,18 +312,12 @@ open class DezelApplicationActivity : Activity(), KeyboardObserverListener {
 		this.context.global.defineProperty("dezel", this.context.createObject(Dezel::class.java), null, null, false, true, false)
 
 		this.registerModule("dezel.ApplicationModule", ApplicationModule::class.java)
-		this.registerModule("dezel.BluetoothModule", BluetoothModule::class.java)
-		this.registerModule("dezel.ConnectivityModule", ConnectivityModule::class.java)
 		this.registerModule("dezel.DeviceModule", DeviceModule::class.java)
 		this.registerModule("dezel.DialogModule", DialogModule::class.java)
 		this.registerModule("dezel.FormModule", FormModule::class.java)
 		this.registerModule("dezel.GraphicModule", GraphicModule::class.java)
 		this.registerModule("dezel.LocaleModule", LocaleModule::class.java)
-		this.registerModule("dezel.LocationModule", LocationModule::class.java)
-		this.registerModule("dezel.NotificationModule", NotificationModule::class.java)
-		this.registerModule("dezel.StorageModule", StorageModule::class.java)
 		this.registerModule("dezel.PlatformModule", PlatformModule::class.java)
-		this.registerModule("dezel.TranslationModule", TranslationModule::class.java)
 		this.registerModule("dezel.ViewModule", ViewModule::class.java)
 		this.registerModule("dezel.WebModule", WebModule::class.java)
 

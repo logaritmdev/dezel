@@ -11,7 +11,6 @@ FOUNDATION_EXPORT const unsigned char DezelVersionString[];
 #import "DLStyler.h"
 #import "DLStylerNode.h"
 #import "DLStylerStyleItem.h"
-#import "DLTranslationManager.h"
 #import "WebSocketSecurity.h"
 #import "WebSocketConnection.h"
 #import "LRUDiskCache.h"

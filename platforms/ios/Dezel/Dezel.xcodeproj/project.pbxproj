@@ -41,14 +41,10 @@
 		C7004C9821442AAC00138ECC /* DLStylerStyleSelectorTreePrivate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7004C9621442AAB00138ECC /* DLStylerStyleSelectorTreePrivate.cpp */; };
 		C7004C9921442AAC00138ECC /* DLStylerStyleSelectorTreePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = C7004C9721442AAC00138ECC /* DLStylerStyleSelectorTreePrivate.h */; };
 		C7027CD32270DFDA001DD0F7 /* ScrollViewTouchCancelGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7027CD22270DFDA001DD0F7 /* ScrollViewTouchCancelGesture.swift */; };
-		C703BD1820839F5A00132E16 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C703BD1720839F5A00132E16 /* Storage.swift */; };
-		C703BD1A20839FD700132E16 /* StorageModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C703BD1920839FD700132E16 /* StorageModule.swift */; };
 		C70617A420F7C03100499FDB /* TransitionListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = C70617A320F7C03100499FDB /* TransitionListener.swift */; };
 		C70B58E12087C2BD008B2137 /* LocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C70B58E02087C2BD008B2137 /* LocalStorage.swift */; };
 		C70B58E32087DC5D008B2137 /* WebRuntime.js in Resources */ = {isa = PBXBuildFile; fileRef = C70B58E22087DC5D008B2137 /* WebRuntime.js */; };
 		C70B58E520880943008B2137 /* Conversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = C70B58E420880943008B2137 /* Conversion.swift */; };
-		C70BB25921ED664B00CDA70E /* BluetoothManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C70BB25821ED664B00CDA70E /* BluetoothManager.swift */; };
-		C70BB25B21ED665500CDA70E /* BluetoothModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C70BB25A21ED665500CDA70E /* BluetoothModule.swift */; };
 		C718A0A92066E24400EFEC15 /* ImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C718A0A82066E24400EFEC15 /* ImageView.swift */; };
 		C718A0B32066E63300EFEC15 /* ImageLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C718A0B22066E63300EFEC15 /* ImageLayer.swift */; };
 		C718A0B52066ED6100EFEC15 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = C718A0B42066ED6100EFEC15 /* Image.swift */; };
@@ -71,9 +67,6 @@
 		C71E6CDF20E65FB6009B86F6 /* Updatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71E6CDE20E65FB6009B86F6 /* Updatable.swift */; };
 		C71E6CE120E6617D009B86F6 /* Scrollbars.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71E6CE020E6617D009B86F6 /* Scrollbars.swift */; };
 		C71E6CE320E66188009B86F6 /* Overscroll.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71E6CE220E66188009B86F6 /* Overscroll.swift */; };
-		C7254E5B20A721D60064F1E7 /* ConnectivityModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7254E5A20A721D60064F1E7 /* ConnectivityModule.swift */; };
-		C7254E5D20A721FC0064F1E7 /* ConnectivityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7254E5C20A721FC0064F1E7 /* ConnectivityManager.swift */; };
-		C728E05B222B064900BE5F7F /* TranslationFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = C728E05A222B064900BE5F7F /* TranslationFile.swift */; };
 		C728E05D222B1B9100BE5F7F /* Locale.swift in Sources */ = {isa = PBXBuildFile; fileRef = C728E05C222B1B9100BE5F7F /* Locale.swift */; };
 		C72E0E9020668EE1003BCEF1 /* TextLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72E0E8F20668EE1003BCEF1 /* TextLayer.swift */; };
 		C72E0E9320669C97003BCEF1 /* TextAlignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72E0E9220669C97003BCEF1 /* TextAlignment.swift */; };
@@ -87,8 +80,6 @@
 		C732E7B720879ED7006014A0 /* EventTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = C732E7B620879ED7006014A0 /* EventTarget.swift */; };
 		C73700C42218C00D0095A54B /* ImageFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C73700C32218C00D0095A54B /* ImageFilter.swift */; };
 		C73700C72219A9370095A54B /* ImageEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = C73700C62219A9370095A54B /* ImageEffect.swift */; };
-		C742F05B221AF50A00047F7A /* TranslationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C742F05A221AF50A00047F7A /* TranslationManager.swift */; };
-		C742F05D221AF51500047F7A /* TranslationModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C742F05C221AF51500047F7A /* TranslationModule.swift */; };
 		C74487E3205230BB00D74D30 /* DLStylerNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C74487E1205230BB00D74D30 /* DLStylerNode.cpp */; };
 		C74487E4205230BB00D74D30 /* DLStylerNode.h in Headers */ = {isa = PBXBuildFile; fileRef = C74487E2205230BB00D74D30 /* DLStylerNode.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C76016E22019832800622840 /* JavaScriptFinalizeCallback.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76016E12019832800622840 /* JavaScriptFinalizeCallback.swift */; };
@@ -167,13 +158,6 @@
 		C77B0BDF22262EF800917D82 /* VariableMap.h in Headers */ = {isa = PBXBuildFile; fileRef = C77B0BA822262EF800917D82 /* VariableMap.h */; };
 		C77B0BE022262EF800917D82 /* ProcessingContext.h in Headers */ = {isa = PBXBuildFile; fileRef = C77B0BA922262EF800917D82 /* ProcessingContext.h */; };
 		C77B0BE122262EF800917D82 /* libStyle.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C77B0BAB22262EF800917D82 /* libStyle.a */; };
-		C77B0CF42226CFF600917D82 /* Entry.h in Headers */ = {isa = PBXBuildFile; fileRef = C77B0CEE2226CFF600917D82 /* Entry.h */; };
-		C77B0CF52226CFF600917D82 /* I18nDefine.h in Headers */ = {isa = PBXBuildFile; fileRef = C77B0CEF2226CFF600917D82 /* I18nDefine.h */; };
-		C77B0CF62226CFF600917D82 /* MO.h in Headers */ = {isa = PBXBuildFile; fileRef = C77B0CF02226CFF600917D82 /* MO.h */; };
-		C77B0CF72226CFF600917D82 /* I18nUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = C77B0CF12226CFF600917D82 /* I18nUtils.h */; };
-		C77B0CF82226CFF600917D82 /* DLTranslationManager.h in Headers */ = {isa = PBXBuildFile; fileRef = C77B0CF22226CFF600917D82 /* DLTranslationManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C77B0CF92226CFF600917D82 /* DLTranslationManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C77B0CF32226CFF600917D82 /* DLTranslationManager.cpp */; };
-		C77B0D072226D01A00917D82 /* libI18n.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C77B0CFD2226D01A00917D82 /* libI18n.a */; };
 		C77B0D4A2226D7CC00917D82 /* libLRUCache.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C77B0D492226D7CC00917D82 /* libLRUCache.a */; };
 		C77B0D4C2226D7DC00917D82 /* LRUDiskCache.h in Headers */ = {isa = PBXBuildFile; fileRef = C77B0D4B2226D7DC00917D82 /* LRUDiskCache.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C77B0D6E2226DB2400917D82 /* libWebsocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C77B0D6D2226DB2400917D82 /* libWebsocket.a */; };
@@ -237,10 +221,6 @@
 		C7DECDFC206B351B006EE2A6 /* Clippable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DECDFB206B351B006EE2A6 /* Clippable.swift */; };
 		C7E30977203123DD00436FA4 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E30976203123DD00436FA4 /* UIView.swift */; };
 		C7E309792031312700436FA4 /* CGPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E309782031312700436FA4 /* CGPoint.swift */; };
-		C7E3F21320A27CAE0062876C /* LocationModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E3F21220A27CAE0062876C /* LocationModule.swift */; };
-		C7E3F21520A27CCA0062876C /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E3F21420A27CCA0062876C /* LocationManager.swift */; };
-		C7E3F21820A289700062876C /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E3F21720A289700062876C /* NotificationManager.swift */; };
-		C7E3F21A20A297490062876C /* NotificationModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E3F21920A297490062876C /* NotificationModule.swift */; };
 		C7E45AEE21DD462C00247465 /* ContentTextViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E45AED21DD462C00247465 /* ContentTextViewDelegate.swift */; };
 		C7E5D07C209CBAE80098C5FD /* Resizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E5D07B209CBAE80098C5FD /* Resizable.swift */; };
 		C7E5D081209DDF730098C5FD /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E5D080209DDF730098C5FD /* Alert.swift */; };
@@ -358,14 +338,10 @@
 		C7004C9621442AAB00138ECC /* DLStylerStyleSelectorTreePrivate.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DLStylerStyleSelectorTreePrivate.cpp; path = ../../../../shared/style/DLStylerStyleSelectorTreePrivate.cpp; sourceTree = "<group>"; };
 		C7004C9721442AAC00138ECC /* DLStylerStyleSelectorTreePrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DLStylerStyleSelectorTreePrivate.h; path = ../../../../shared/style/DLStylerStyleSelectorTreePrivate.h; sourceTree = "<group>"; };
 		C7027CD22270DFDA001DD0F7 /* ScrollViewTouchCancelGesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollViewTouchCancelGesture.swift; sourceTree = "<group>"; };
-		C703BD1720839F5A00132E16 /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
-		C703BD1920839FD700132E16 /* StorageModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageModule.swift; sourceTree = "<group>"; };
 		C70617A320F7C03100499FDB /* TransitionListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionListener.swift; sourceTree = "<group>"; };
 		C70B58E02087C2BD008B2137 /* LocalStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorage.swift; sourceTree = "<group>"; };
 		C70B58E22087DC5D008B2137 /* WebRuntime.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = WebRuntime.js; sourceTree = "<group>"; };
 		C70B58E420880943008B2137 /* Conversion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conversion.swift; sourceTree = "<group>"; };
-		C70BB25821ED664B00CDA70E /* BluetoothManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothManager.swift; sourceTree = "<group>"; };
-		C70BB25A21ED665500CDA70E /* BluetoothModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothModule.swift; sourceTree = "<group>"; };
 		C718A0A82066E24400EFEC15 /* ImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageView.swift; sourceTree = "<group>"; };
 		C718A0B22066E63300EFEC15 /* ImageLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLayer.swift; sourceTree = "<group>"; };
 		C718A0B42066ED6100EFEC15 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
@@ -388,9 +364,6 @@
 		C71E6CDE20E65FB6009B86F6 /* Updatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Updatable.swift; sourceTree = "<group>"; };
 		C71E6CE020E6617D009B86F6 /* Scrollbars.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scrollbars.swift; sourceTree = "<group>"; };
 		C71E6CE220E66188009B86F6 /* Overscroll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Overscroll.swift; sourceTree = "<group>"; };
-		C7254E5A20A721D60064F1E7 /* ConnectivityModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectivityModule.swift; sourceTree = "<group>"; };
-		C7254E5C20A721FC0064F1E7 /* ConnectivityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectivityManager.swift; sourceTree = "<group>"; };
-		C728E05A222B064900BE5F7F /* TranslationFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationFile.swift; sourceTree = "<group>"; };
 		C728E05C222B1B9100BE5F7F /* Locale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Locale.swift; sourceTree = "<group>"; };
 		C72E0E8F20668EE1003BCEF1 /* TextLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLayer.swift; sourceTree = "<group>"; };
 		C72E0E9220669C97003BCEF1 /* TextAlignment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextAlignment.swift; sourceTree = "<group>"; };
@@ -404,8 +377,6 @@
 		C732E7B620879ED7006014A0 /* EventTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTarget.swift; sourceTree = "<group>"; };
 		C73700C32218C00D0095A54B /* ImageFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFilter.swift; sourceTree = "<group>"; };
 		C73700C62219A9370095A54B /* ImageEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageEffect.swift; sourceTree = "<group>"; };
-		C742F05A221AF50A00047F7A /* TranslationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationManager.swift; sourceTree = "<group>"; };
-		C742F05C221AF51500047F7A /* TranslationModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationModule.swift; sourceTree = "<group>"; };
 		C74487E1205230BB00D74D30 /* DLStylerNode.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DLStylerNode.cpp; path = ../../../../shared/style/DLStylerNode.cpp; sourceTree = "<group>"; };
 		C74487E2205230BB00D74D30 /* DLStylerNode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DLStylerNode.h; path = ../../../../shared/style/DLStylerNode.h; sourceTree = "<group>"; };
 		C76016E12019832800622840 /* JavaScriptFinalizeCallback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptFinalizeCallback.swift; sourceTree = "<group>"; };
@@ -484,13 +455,6 @@
 		C77B0BA822262EF800917D82 /* VariableMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VariableMap.h; sourceTree = "<group>"; };
 		C77B0BA922262EF800917D82 /* ProcessingContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProcessingContext.h; sourceTree = "<group>"; };
 		C77B0BAB22262EF800917D82 /* libStyle.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libStyle.a; sourceTree = "<group>"; };
-		C77B0CEE2226CFF600917D82 /* Entry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Entry.h; sourceTree = "<group>"; };
-		C77B0CEF2226CFF600917D82 /* I18nDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = I18nDefine.h; sourceTree = "<group>"; };
-		C77B0CF02226CFF600917D82 /* MO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MO.h; sourceTree = "<group>"; };
-		C77B0CF12226CFF600917D82 /* I18nUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = I18nUtils.h; sourceTree = "<group>"; };
-		C77B0CF22226CFF600917D82 /* DLTranslationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DLTranslationManager.h; path = ../../../../../shared/i18n/DLTranslationManager.h; sourceTree = "<group>"; };
-		C77B0CF32226CFF600917D82 /* DLTranslationManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DLTranslationManager.cpp; path = ../../../../../shared/i18n/DLTranslationManager.cpp; sourceTree = "<group>"; };
-		C77B0CFD2226D01A00917D82 /* libI18n.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libI18n.a; sourceTree = "<group>"; };
 		C77B0D492226D7CC00917D82 /* libLRUCache.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libLRUCache.a; sourceTree = "<group>"; };
 		C77B0D4B2226D7DC00917D82 /* LRUDiskCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRUDiskCache.h; sourceTree = "<group>"; };
 		C77B0D6D2226DB2400917D82 /* libWebsocket.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWebsocket.a; sourceTree = "<group>"; };
@@ -554,10 +518,6 @@
 		C7DECDFB206B351B006EE2A6 /* Clippable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clippable.swift; sourceTree = "<group>"; };
 		C7E30976203123DD00436FA4 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		C7E309782031312700436FA4 /* CGPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGPoint.swift; sourceTree = "<group>"; };
-		C7E3F21220A27CAE0062876C /* LocationModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationModule.swift; sourceTree = "<group>"; };
-		C7E3F21420A27CCA0062876C /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
-		C7E3F21720A289700062876C /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
-		C7E3F21920A297490062876C /* NotificationModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationModule.swift; sourceTree = "<group>"; };
 		C7E45AED21DD462C00247465 /* ContentTextViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentTextViewDelegate.swift; sourceTree = "<group>"; };
 		C7E5D07B209CBAE80098C5FD /* Resizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resizable.swift; sourceTree = "<group>"; };
 		C7E5D080209DDF730098C5FD /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
@@ -655,7 +615,6 @@
 				C7E8A54D2016262A005139F6 /* JavaScriptCore.framework in Frameworks */,
 				C77B0D4A2226D7CC00917D82 /* libLRUCache.a in Frameworks */,
 				C77B0BE122262EF800917D82 /* libStyle.a in Frameworks */,
-				C77B0D072226D01A00917D82 /* libI18n.a in Frameworks */,
 				C77B0D6E2226DB2400917D82 /* libWebsocket.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -686,24 +645,6 @@
 				C7027CD22270DFDA001DD0F7 /* ScrollViewTouchCancelGesture.swift */,
 			);
 			path = Gesture;
-			sourceTree = "<group>";
-		};
-		C703BD1420839F1C00132E16 /* Storage */ = {
-			isa = PBXGroup;
-			children = (
-				C703BD1720839F5A00132E16 /* Storage.swift */,
-				C703BD1920839FD700132E16 /* StorageModule.swift */,
-			);
-			path = Storage;
-			sourceTree = "<group>";
-		};
-		C70BB25721ED663500CDA70E /* Bluetooth */ = {
-			isa = PBXGroup;
-			children = (
-				C70BB25821ED664B00CDA70E /* BluetoothManager.swift */,
-				C70BB25A21ED665500CDA70E /* BluetoothModule.swift */,
-			);
-			path = Bluetooth;
 			sourceTree = "<group>";
 		};
 		C718A0C32067F61D00EFEC15 /* Graphic */ = {
@@ -787,26 +728,6 @@
 				C73700C62219A9370095A54B /* ImageEffect.swift */,
 			);
 			path = Image;
-			sourceTree = "<group>";
-		};
-		C742F070221AF67B00047F7A /* CAPI */ = {
-			isa = PBXGroup;
-			children = (
-				C77B0CFC2226D01A00917D82 /* lib */,
-				C77B0CED2226CFF600917D82 /* include */,
-				C77B0CF32226CFF600917D82 /* DLTranslationManager.cpp */,
-				C77B0CF22226CFF600917D82 /* DLTranslationManager.h */,
-			);
-			name = CAPI;
-			sourceTree = "<group>";
-		};
-		C743332320A70ABD00FE9F6C /* Connectivity */ = {
-			isa = PBXGroup;
-			children = (
-				C7254E5A20A721D60064F1E7 /* ConnectivityModule.swift */,
-				C7254E5C20A721FC0064F1E7 /* ConnectivityManager.swift */,
-			);
-			path = Connectivity;
 			sourceTree = "<group>";
 		};
 		C767544B2028DB60003C4D85 /* View */ = {
@@ -967,27 +888,6 @@
 			path = ../../../../shared/style/lib;
 			sourceTree = "<group>";
 		};
-		C77B0CED2226CFF600917D82 /* include */ = {
-			isa = PBXGroup;
-			children = (
-				C77B0CEE2226CFF600917D82 /* Entry.h */,
-				C77B0CEF2226CFF600917D82 /* I18nDefine.h */,
-				C77B0CF02226CFF600917D82 /* MO.h */,
-				C77B0CF12226CFF600917D82 /* I18nUtils.h */,
-			);
-			name = include;
-			path = ../../../../../shared/i18n/include;
-			sourceTree = "<group>";
-		};
-		C77B0CFC2226D01A00917D82 /* lib */ = {
-			isa = PBXGroup;
-			children = (
-				C77B0CFD2226D01A00917D82 /* libI18n.a */,
-			);
-			name = lib;
-			path = ../../../../../shared/i18n/lib;
-			sourceTree = "<group>";
-		};
 		C77B0D472226D79200917D82 /* lib */ = {
 			isa = PBXGroup;
 			children = (
@@ -1054,17 +954,6 @@
 				C77B0D6B2226DB0800917D82 /* lib */,
 			);
 			path = Websocket;
-			sourceTree = "<group>";
-		};
-		C77D6E2D22124916005FAAF8 /* I18n */ = {
-			isa = PBXGroup;
-			children = (
-				C742F070221AF67B00047F7A /* CAPI */,
-				C742F05A221AF50A00047F7A /* TranslationManager.swift */,
-				C742F05C221AF51500047F7A /* TranslationModule.swift */,
-				C728E05A222B064900BE5F7F /* TranslationFile.swift */,
-			);
-			path = I18n;
 			sourceTree = "<group>";
 		};
 		C77DFEDF208D062600CEC1D9 /* Locale */ = {
@@ -1161,24 +1050,6 @@
 				C7CE4B042208AC4D005D5235 /* DateFormater.swift */,
 			);
 			path = Date;
-			sourceTree = "<group>";
-		};
-		C7E3F20D20A27C890062876C /* Location */ = {
-			isa = PBXGroup;
-			children = (
-				C7E3F21220A27CAE0062876C /* LocationModule.swift */,
-				C7E3F21420A27CCA0062876C /* LocationManager.swift */,
-			);
-			path = Location;
-			sourceTree = "<group>";
-		};
-		C7E3F21620A289270062876C /* Notification */ = {
-			isa = PBXGroup;
-			children = (
-				C7E3F21720A289700062876C /* NotificationManager.swift */,
-				C7E3F21920A297490062876C /* NotificationModule.swift */,
-			);
-			path = Notification;
 			sourceTree = "<group>";
 		};
 		C7E5D07F209DDF5B0098C5FD /* Dialog */ = {
@@ -1341,19 +1212,13 @@
 			isa = PBXGroup;
 			children = (
 				C7B9CE9E202CDB23002409D5 /* Application */,
-				C70BB25721ED663500CDA70E /* Bluetooth */,
-				C743332320A70ABD00FE9F6C /* Connectivity */,
 				C700121421551A7D00CB26D4 /* Device */,
 				C7B9CF0C202DF4C6002409D5 /* Dezel */,
 				C7E5D07F209DDF5B0098C5FD /* Dialog */,
 				C7BFD15A207D508B00AAD31C /* Form */,
 				C718A0C32067F61D00EFEC15 /* Graphic */,
 				C77DFEDF208D062600CEC1D9 /* Locale */,
-				C7E3F20D20A27C890062876C /* Location */,
-				C7E3F21620A289270062876C /* Notification */,
 				C7A19E2C20AB720E00367E91 /* Platform */,
-				C703BD1420839F1C00132E16 /* Storage */,
-				C77D6E2D22124916005FAAF8 /* I18n */,
 				C767544B2028DB60003C4D85 /* View */,
 				C7BFD155207CECF000AAD31C /* Web */,
 			);
@@ -1513,7 +1378,6 @@
 				C7F8C9F920C17874007E8ECA /* DLStylerMatch.h in Headers */,
 				C77B0BD322262EF800917D82 /* StringFunctions.h in Headers */,
 				C77B0BD922262EF800917D82 /* FunctionLibrary.h in Headers */,
-				C77B0CF52226CFF600917D82 /* I18nDefine.h in Headers */,
 				C77B0BCF22262EF800917D82 /* StylerException.h in Headers */,
 				C77B0BD622262EF800917D82 /* ValueProcessor.h in Headers */,
 				C7E8A4C220159E08005139F6 /* DLLayoutNodePrivate.h in Headers */,
@@ -1533,7 +1397,6 @@
 				C77B0BD422262EF800917D82 /* BooleanValue.h in Headers */,
 				C77B0D4C2226D7DC00917D82 /* LRUDiskCache.h in Headers */,
 				C77B0BD122262EF800917D82 /* UnitValue.h in Headers */,
-				C77B0CF72226CFF600917D82 /* I18nUtils.h in Headers */,
 				C7004C852144118D00138ECC /* DLStylerStyleSelector.h in Headers */,
 				C77B0BB822262EF800917D82 /* Token.h in Headers */,
 				C7E8A546201624FA005139F6 /* DLContextPrivate.h in Headers */,
@@ -1545,12 +1408,10 @@
 				C77B0BDE22262EF800917D82 /* ColorFunctions.h in Headers */,
 				C77B0BB422262EF800917D82 /* Comment.h in Headers */,
 				C77B0BBE22262EF800917D82 /* StylerExtension.h in Headers */,
-				C77B0CF82226CFF600917D82 /* DLTranslationManager.h in Headers */,
 				C77B0BBA22262EF800917D82 /* ParseException.h in Headers */,
 				C77B0BC222262EF800917D82 /* StylerMediaQuery.h in Headers */,
 				C77B0BCA22262EF800917D82 /* StylerMixinCall.h in Headers */,
 				C77B0BAE22262EF800917D82 /* Selector.h in Headers */,
-				C77B0CF42226CFF600917D82 /* Entry.h in Headers */,
 				C77B0BC522262EF800917D82 /* StylerMixin.h in Headers */,
 				C7E8A54A201624FA005139F6 /* DLValuePrivate.h in Headers */,
 				C77B0BC322262EF800917D82 /* StylerMixinException.h in Headers */,
@@ -1568,7 +1429,6 @@
 				C77B0D7C2226DC4D00917D82 /* WebSocketConnection.h in Headers */,
 				C77B0BC622262EF800917D82 /* StylerMediaQueryRuleset.h in Headers */,
 				C77B0BC022262EF800917D82 /* StylerClosure.h in Headers */,
-				C77B0CF62226CFF600917D82 /* MO.h in Headers */,
 				C7E8A4CB20159E08005139F6 /* DLLayoutNode.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1717,9 +1577,7 @@
 				C7B9CEA9202CDB8D002409D5 /* DezelApplicationDelegate.swift in Sources */,
 				C7E5D07C209CBAE80098C5FD /* Resizable.swift in Sources */,
 				C7BFD15E207D50F000AAD31C /* SpinnerView.swift in Sources */,
-				C70BB25921ED664B00CDA70E /* BluetoothManager.swift in Sources */,
 				C7E8A542201624FA005139F6 /* DLContext.cpp in Sources */,
-				C7E3F21820A289700062876C /* NotificationManager.swift in Sources */,
 				C77189B02106ADFD00337263 /* Point3D.swift in Sources */,
 				C728E05D222B1B9100BE5F7F /* Locale.swift in Sources */,
 				C767544720269DBD003C4D85 /* ContentImageView.swift in Sources */,
@@ -1737,12 +1595,10 @@
 				C7BB7D472029062D004006C2 /* Transition.swift in Sources */,
 				C73700C72219A9370095A54B /* ImageEffect.swift in Sources */,
 				C72E0E9520669CA0003BCEF1 /* TextPlacement.swift in Sources */,
-				C7254E5B20A721D60064F1E7 /* ConnectivityModule.swift in Sources */,
 				C7E8A544201624FA005139F6 /* DLValuePrivate.cpp in Sources */,
 				C7B9CF0E202DF4D3002409D5 /* Dezel.swift in Sources */,
 				C77189B42106AE1300337263 /* Transform3D.swift in Sources */,
 				C7A19E2E20AB721F00367E91 /* PlatformModule.swift in Sources */,
-				C77B0CF92226CFF600917D82 /* DLTranslationManager.cpp in Sources */,
 				C7004C8C2144240000138ECC /* DLStylerStyleItem.cpp in Sources */,
 				C7E8A4C720159E08005139F6 /* DLLayout.cpp in Sources */,
 				C7E8A4CA20159E08005139F6 /* DLLayoutPrivate.cpp in Sources */,
@@ -1789,7 +1645,6 @@
 				C7CE4B052208AC4D005D5235 /* DateFormater.swift in Sources */,
 				C7E8A5002016244F005139F6 /* Bundle.swift in Sources */,
 				C77189A721014A9E00337263 /* ListOptimizer.swift in Sources */,
-				C703BD1820839F5A00132E16 /* Storage.swift in Sources */,
 				C7E8A534201624A2005139F6 /* JavaScriptFunctionCallback.swift in Sources */,
 				C718A0A92066E24400EFEC15 /* ImageView.swift in Sources */,
 				C7E8A529201624A2005139F6 /* JavaScriptClassBuilder.swift in Sources */,
@@ -1810,7 +1665,6 @@
 				C7E8A521201624A2005139F6 /* JavaScriptFinalizeWrapper.swift in Sources */,
 				C71E6CE320E66188009B86F6 /* Overscroll.swift in Sources */,
 				C7BB7D402028F4C5004006C2 /* CGPath.swift in Sources */,
-				C7254E5D20A721FC0064F1E7 /* ConnectivityManager.swift in Sources */,
 				C77D6E272210C162005FAAF8 /* CTFrame.swift in Sources */,
 				C7E87E7D2053953500F09B22 /* DLStyler.cpp in Sources */,
 				C7BB7D4B20293955004006C2 /* Array.swift in Sources */,
@@ -1822,21 +1676,16 @@
 				C7A19E3220AB725D00367E91 /* Platform.swift in Sources */,
 				C7004C9821442AAC00138ECC /* DLStylerStyleSelectorTreePrivate.cpp in Sources */,
 				C71A119F2080EB300004D523 /* HttpRequestDelegate.swift in Sources */,
-				C728E05B222B064900BE5F7F /* TranslationFile.swift in Sources */,
 				C7E8A5022016244F005139F6 /* String.swift in Sources */,
 				C70617A420F7C03100499FDB /* TransitionListener.swift in Sources */,
-				C70BB25B21ED665500CDA70E /* BluetoothModule.swift in Sources */,
 				C7BFD168207D541800AAD31C /* TextInput.swift in Sources */,
-				C7E3F21320A27CAE0062876C /* LocationModule.swift in Sources */,
 				C7E8A4D22015A699005139F6 /* LayoutNodeDelegate.swift in Sources */,
 				C7B40F6320B7170E00892C92 /* ContentTextAreaDelegate.swift in Sources */,
 				C7D89263206575CB00E85115 /* TextView.swift in Sources */,
 				C7E87E812053956700F09B22 /* DLStylerPrivate.cpp in Sources */,
-				C742F05D221AF51500047F7A /* TranslationModule.swift in Sources */,
 				C7E8A528201624A2005139F6 /* JavaScriptClassSetterWrapper.swift in Sources */,
 				C7A3AB79214ECBA500D8B15C /* CanvasLayer.swift in Sources */,
 				C718B5B4207C3D0D00610F8D /* LinearGradient.swift in Sources */,
-				C742F05B221AF50A00047F7A /* TranslationManager.swift in Sources */,
 				C700121821551B5700CB26D4 /* Device.swift in Sources */,
 				C71A119D2080EB1E0004D523 /* HttpRequest.swift in Sources */,
 				C7E8A523201624A2005139F6 /* JavaScriptFunctionWrapper.swift in Sources */,
@@ -1845,7 +1694,6 @@
 				C7B9CEAD202CDBB7002409D5 /* ApplicationModule.swift in Sources */,
 				C7E5D085209DE2290098C5FD /* AlertController.swift in Sources */,
 				C7CE4B09220A7824005D5235 /* TimeZone.swift in Sources */,
-				C7E3F21A20A297490062876C /* NotificationModule.swift in Sources */,
 				C7E8A51D201624A2005139F6 /* JavaScriptObjectBuilder.swift in Sources */,
 				C7B9CEA6202CDB8D002409D5 /* DezelApplicationController.swift in Sources */,
 				C77A28A221BFFBF1004366AF /* JavaScriptConsole.swift in Sources */,
@@ -1865,7 +1713,6 @@
 				C72E0E9320669C97003BCEF1 /* TextAlignment.swift in Sources */,
 				C767543F20269971003C4D85 /* RenderLayer.swift in Sources */,
 				C7E8A52A201624A2005139F6 /* JavaScriptContext.swift in Sources */,
-				C7E3F21520A27CCA0062876C /* LocationManager.swift in Sources */,
 				C7E8A524201624A2005139F6 /* JavaScriptClass.swift in Sources */,
 				C7E8A4D32015A699005139F6 /* Layout.swift in Sources */,
 				C7E8A52D201624A2005139F6 /* JavaScriptValue.swift in Sources */,
@@ -1878,7 +1725,6 @@
 				C7BFD164207D52F100AAD31C /* ContentTextInput.swift in Sources */,
 				C7E8A525201624A2005139F6 /* JavaScriptClassFunctionWrapper.swift in Sources */,
 				C71A11A32080EBB10004D523 /* XMLHttpRequest.swift in Sources */,
-				C703BD1A20839FD700132E16 /* StorageModule.swift in Sources */,
 				C7F8C9F820C17874007E8ECA /* DLStylerMatch.cpp in Sources */,
 				C71E6CC220DD50A0009B86F6 /* ContentWebViewDelegate.swift in Sources */,
 				C7E8A4D52015A792005139F6 /* Double.swift in Sources */,

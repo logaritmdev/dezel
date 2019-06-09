@@ -46,7 +46,6 @@ LOCAL_SRC_FILES := wrappers/JavaScriptFunction.cpp \
                    ca_logaritm_dezel_layout_LayoutNodeExternal.cpp \
                    ca_logaritm_dezel_style_StylerExternal.cpp \
                    ca_logaritm_dezel_style_StylerNodeExternal.cpp \
-                   ca_logaritm_dezel_modules_i18n_TranslationManagerExternal.cpp \
                    $(wildcard $(SHARED_PATH)/core/*.cpp) \
                    $(wildcard $(SHARED_PATH)/style/*.cpp) \
                    $(wildcard $(SHARED_PATH)/layout/*.cpp) \

@@ -217,18 +217,12 @@ open class DezelApplicationController: UIViewController {
 		)
 
 		self.registerModule("dezel.ApplicationModule", module: ApplicationModule.self)
-		self.registerModule("dezel.BluetoothModule", module: BluetoothModule.self)
-		self.registerModule("dezel.ConnectivityModule", module: ConnectivityModule.self)
 		self.registerModule("dezel.DeviceModule", module: DeviceModule.self)
 		self.registerModule("dezel.DialogModule", module: DialogModule.self)
 		self.registerModule("dezel.FormModule", module: FormModule.self)
 		self.registerModule("dezel.GraphicModule", module: GraphicModule.self)
 		self.registerModule("dezel.LocaleModule", module: LocaleModule.self)
-		self.registerModule("dezel.LocationModule", module: LocationModule.self)
-		self.registerModule("dezel.NotificationModule", module: NotificationModule.self)
-		self.registerModule("dezel.StorageModule", module: StorageModule.self)
 		self.registerModule("dezel.PlatformModule", module: PlatformModule.self)
-		self.registerModule("dezel.TranslationModule", module: TranslationModule.self)
 		self.registerModule("dezel.ViewModule", module: ViewModule.self)
 		self.registerModule("dezel.WebModule", module: WebModule.self)
 

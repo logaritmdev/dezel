@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="0ec525a1-cfe7-4756-973a-0ab479f0f54e" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/Dezel/dezel/src/main/java/ca/logaritm/dezel/modules/bluetooth/BluetoothManager.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/Dezel/dezel/src/main/java/ca/logaritm/dezel/modules/bluetooth/BluetoothModule.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/Dezel/dezel/src/main/java/ca/logaritm/dezel/modules/i18n/TranslationFile.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/Dezel/dezel/src/main/java/ca/logaritm/dezel/modules/i18n/TranslationManager.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/Dezel/dezel/src/main/java/ca/logaritm/dezel/modules/i18n/TranslationManagerExternal.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/Dezel/dezel/src/main/java/ca/logaritm/dezel/modules/i18n/TranslationModule.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/Dezel/dezel/src/main/java/ca/logaritm/dezel/modules/location/LocationManager.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/Dezel/dezel/src/main/java/ca/logaritm/dezel/modules/location/LocationModule.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/Dezel/dezel/src/main/java/ca/logaritm/dezel/modules/notification/NotificationManager.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/Dezel/dezel/src/main/java/ca/logaritm/dezel/modules/notification/NotificationModule.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/Dezel/dezel/src/main/java/ca/logaritm/dezel/modules/notification/fcm/NotificationMessagingService.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/Dezel/dezel/src/main/java/ca/logaritm/dezel/modules/notification/fcm/NotificationMessagingToken.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/ios/Dezel/Dezel.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/ios/Dezel/Dezel.xcodeproj/project.pbxproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/ios/Dezel/Dezel/Application/DezelApplicationController.swift" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/ios/Dezel/Dezel/Application/DezelApplicationController.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/ios/Dezel/Dezel/Modules/Notification/NotificationManager.swift" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/ios/Dezel/Dezel/Modules/Notification/NotificationModule.swift" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bluetooth/BluetoothManager.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/connectivity/ConnectivityManager.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/global.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/global.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/notification/NotificationManager.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/storage/Storage.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/translation/TranslationManager.ts" beforeDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="47" />
+    <option name="y" value="23" />
+    <option name="width" value="2560" />
+    <option name="height" value="1355" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="dezel-dev" type="b2602c69:ProjectViewProjectNode" />
+              <item name="dezel-dev" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="PackagesPane" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="android.sdk.path" value="$USER_HOME$/Library/Android/sdk" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="experimental" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration name="&lt;template&gt;" type="Applet" default="true" selected="false">
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+    </configuration>
+    <configuration default="true" type="JUnit" factoryName="JUnit">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <patterns />
+      <method />
+    </configuration>
+    <configuration name="&lt;template&gt;" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" default="true" selected="false">
+      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application">
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="TestNG">
+      <option name="TEST_OBJECT" value="CLASS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="0ec525a1-cfe7-4756-973a-0ab479f0f54e" name="Default Changelist" comment="" />
+      <created>1560082363157</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1560082363157</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="0" y="23" width="2560" height="1355" extended-state="6" />
+    <layout>
+      <window_info active="true" content_ui="combo" id="Project" visible="true" weight="0.32965735" />
+      <window_info id="Structure" side_tool="true" />
+      <window_info id="Image Layers" />
+      <window_info id="Designer" />
+      <window_info id="Resources Explorer" />
+      <window_info id="Capture Tool" />
+      <window_info id="Favorites" side_tool="true" />
+      <window_info id="Captures" order="0" weight="0.25" />
+      <window_info anchor="bottom" id="Version Control" />
+      <window_info anchor="bottom" id="TODO" />
+      <window_info anchor="bottom" id="Terminal" />
+      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info anchor="right" id="Capture Analysis" />
+      <window_info anchor="right" id="Theme Preview" />
+      <window_info anchor="right" id="Palette&#9;" />
+    </layout>
+  </component>
+</project>
