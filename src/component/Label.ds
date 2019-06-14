@@ -1,0 +1,4 @@
+Label {
+	text-placement: middle;
+	lines: 1;
+}
