@@ -1,4 +1,0 @@
-PagerItem {
-	height: fill;
-	width: 100pw;
-}
