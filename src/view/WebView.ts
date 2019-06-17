@@ -1,8 +1,6 @@
 import { bridge } from '../decorator/bridge'
 import { Event } from '../event/Event'
 import { View } from './View'
-import './WebView.ds'
-
 
 @bridge('dezel.view.WebView')
 
