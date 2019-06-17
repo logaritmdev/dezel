@@ -6619,39 +6619,39 @@ open class View: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelegate, Scroll
 	}
 
 	/**
-	 * @method jsFunction_addStyle
-	 * @since 0.1.0
+	 * @method jsFunction_hasStyle
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsFunction_addStyle(callback: JavaScriptFunctionCallback) {
-		self.stylerNode.appendStyle(callback.argument(0).string)
+	@objc open func jsFunction_hasStyle(callback: JavaScriptFunctionCallback) {
+		callback.returns(boolean: self.stylerNode.hasStyle(callback.argument(0).string))
 	}
 
 	/**
-	 * @method jsFunction_removeStyle
-	 * @since 0.1.0
+	 * @method jsFunction_setStyle
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsFunction_removeStyle(callback: JavaScriptFunctionCallback) {
-		self.stylerNode.removeStyle(callback.argument(0).string)
+	@objc open func jsFunction_setStyle(callback: JavaScriptFunctionCallback) {
+		self.stylerNode.setStyle(callback.argument(0).string, enable: callback.argument(1).boolean)
 	}
 
 	/**
-	 * @method jsFunction_addState
-	 * @since 0.1.0
+	 * @method jsFunction_hasState
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsFunction_addState(callback: JavaScriptFunctionCallback) {
-		self.stylerNode.appendState(callback.argument(0).string)
+	@objc open func jsFunction_hasState(callback: JavaScriptFunctionCallback) {
+		callback.returns(boolean: self.stylerNode.hasState(callback.argument(0).string))
 	}
 
 	/**
-	 * @method jsFunction_removeState
-	 * @since 0.1.0
+	 * @method jsFunction_setState
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsFunction_removeState(callback: JavaScriptFunctionCallback) {
-		self.stylerNode.removeState(callback.argument(0).string)
+	@objc open func jsFunction_setState(callback: JavaScriptFunctionCallback) {
+		self.stylerNode.setState(callback.argument(0).string, enable: callback.argument(1).boolean)
 	}
 
 	/**
@@ -6705,20 +6705,6 @@ open class View: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelegate, Scroll
 		let x = CGFloat(callback.argument(1).number)
 
 		scrollable.scrollTo(x: x, y: y)
-	}
-
-	//--------------------------------------------------------------------------
-	// MARK: Classes
-	//--------------------------------------------------------------------------
-
-	/**
-	 * A mounted reference to another view.
-	 * @class Ref
-	 * @since 0.4.0
-	 */
-	public class Ref {
-		public weak var view: View?
-		public weak var node: View?
 	}
 
 	//--------------------------------------------------------------------------

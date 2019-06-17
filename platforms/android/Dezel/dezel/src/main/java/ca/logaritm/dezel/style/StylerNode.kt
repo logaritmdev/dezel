@@ -115,39 +115,39 @@ open class StylerNode(styler: Styler) {
 	}
 
 	/**
-	 * @method appendStyle
-	 * @since 0.1.0
+	 * @method hasStyle
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	open fun appendStyle(trait: String) {
-		StylerNodeExternal.appendStyle(this.handle, trait)
+	open fun hasStyle(style: String): Boolean {
+		return StylerNodeExternal.hasStyle(this.handle, style)
 	}
 
 	/**
-	 * @method removeStyle
-	 * @since 0.1.0
+	 * @method setStyle
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	open fun removeStyle(trait: String) {
-		StylerNodeExternal.removeStyle(this.handle, trait)
+	open fun setStyle(style: String, enable: Boolean = true) {
+		StylerNodeExternal.setStyle(this.handle, style, enable)
 	}
 
 	/**
-	 * @method appendState
-	 * @since 0.1.0
+	 * @method hasState
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	open fun appendState(state: String) {
-		StylerNodeExternal.appendState(this.handle, state)
+	open fun hasState(state: String): Boolean {
+		return StylerNodeExternal.hasState(this.handle, state)
 	}
 
 	/**
-	 * @method removeState
-	 * @since 0.1.0
+	 * @method setState
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	open fun removeState(state: String) {
-		StylerNodeExternal.removeState(this.handle, state)
+	open fun setState(state: String, enable: Boolean = true) {
+		StylerNodeExternal.setState(this.handle, state, enable)
 	}
 
 	/**

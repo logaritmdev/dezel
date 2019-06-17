@@ -2,57 +2,24 @@ import { bridge } from '../decorator/bridge'
 import { native } from '../decorator/native'
 import { Emitter } from '../event/Emitter'
 import { Event } from '../event/Event'
-import { EventListener } from '../event/Event'
-import { Gesture } from '../gesture/Gesture'
-import { GestureRegistry } from '../gesture/Gesture'
+import { GestureManager } from '../gesture/GestureManager'
 import { Canvas } from '../graphic/Canvas'
 import { Image } from '../graphic/Image'
 import { TouchEvent } from '../touch/TouchEvent'
-import { Reference } from '../util/Reference'
-import './View.ds'
-import './Window.ds'
+import { Placeholder } from './Placeholder'
+import { Window } from './Window'
 
 /**
- * @symbol BUILT
- * @since 0.5.0
+ * @symbol ID
+ * @since 0.7.0
  */
-export const BUILT = Symbol('built')
-
-/**
- * @symbol READY
- * @since 0.5.0
- */
-export const READY = Symbol('ready')
-
-/**
- * @symbol WINDOW
- * @since 0.1.0
- */
-export const WINDOW = Symbol('window')
-
-/**
- * @symbol PARENT
- * @since 0.1.0
- */
-export const PARENT = Symbol('parent')
+export const ID = Symbol('id')
 
 /**
  * @symbol CHILDREN
  * @since 0.1.0
  */
 export const CHILDREN = Symbol('children')
-
-/**
- * @symbol STYLES
- * @since 0.3.0
- */
-export const STYLES = Symbol('styles')
-
-/**
- * @symbol STATES
- * @since 0.3.0
- */
-export const STATES = Symbol('states')
 
 /**
  * @symbol GESTURES
@@ -71,6 +38,27 @@ export const DEFAULT_DURATION = 350
  * @since 0.4.0
  */
 export const DEFAULT_EQUATION = [0.25, 0.1, 0.25, 1.0]
+
+/**
+ * The view's parent type.
+ * @type Parent
+ * @since 0.7.0
+ */
+export type Parent = View
+
+/**
+ * The view's children type.
+ * @type Children
+ * @since 0.7.0
+ */
+export type Children = Array<View>
+
+/**
+ * The view's child type.
+ * @type Child
+ * @since 0.7.0
+ */
+export type Child = View | Placeholder | Array<View | Placeholder>
 
 /**
  * View animations options.
@@ -188,11 +176,32 @@ export class View extends Emitter {
 	//--------------------------------------------------------------------------
 
 	/**
+	 * Returns the view's identifier.
+	 * @property id
+	 * @since 0.1.0
+	 */
+	public get id(): string {
+		return this[ID]
+	}
+
+	/**
+	 * Assigns the view's indentifier.
+	 * @property id
+	 * @since 0.1.0
+	 */
+	public set id(value: string) {
+		if (this[ID] != value) {
+			this[ID] = value
+			this.native.id = value
+		}
+	}
+
+	/**
 	 * The view's window.
 	 * @property window
 	 * @since 0.1.0
 	 */
-	public get window(): Window | undefined {
+	public get window(): Window | null | undefined {
 		return this.native.window
 	}
 
@@ -201,7 +210,7 @@ export class View extends Emitter {
 	 * @property parent
 	 * @since 0.1.0
 	 */
-	public get parent(): View | undefined {
+	public get parent(): Parent | null | undefined {
 		return this.native.parent
 	}
 
@@ -210,16 +219,305 @@ export class View extends Emitter {
 	 * @property children
 	 * @since 0.1.0
 	 */
-	public get children(): Array<View> {
+	public get children(): Children {
 		return this[CHILDREN]
 	}
 
 	/**
-	 * The view's identifier.
-	 * @property id
+	 * The view's gestures.
+	 * @property gestures
+	 * @since 0.7.0
+	 */
+	public get gestures(): GestureManager {
+		return this[GESTURES]
+	}
+
+	/**
+	 * The view's background color.
+	 * @property backgroundColor
 	 * @since 0.1.0
 	 */
-	@native public id!: string
+	@native public backgroundColor!: string
+
+	/**
+	 * The view's background image.
+	 * @property backgroundImage
+	 * @since 0.1.0
+	 */
+	@native public backgroundImage?: Image | string | null
+
+	/**
+	 * The view's background image container fitting.
+	 * @property backgroundImageFit
+	 * @since 0.4.0
+	 */
+	@native public backgroundImageFit!: 'fit' | 'fill' | 'none'
+
+	/**
+	 * The view's background image vertical point from which it will be positioned.
+	 * @property backgroundImageAnchorTop
+	 * @since 0.1.0
+	 */
+	@native public backgroundImageAnchorTop!: 'top' | 'center' | 'bottom' | number | string
+
+	/**
+	 * The view's background image horizontal point from which it will be positioned.
+	 * @property backgroundImageAnchorLeft
+	 * @since 0.1.0
+	 */
+	@native public backgroundImageAnchorLeft!: 'left' | 'center' | 'right' | number | string
+
+	/**
+	 * The view's background image top position.
+	 * @property backgroundImageTop
+	 * @since 0.1.0
+	 */
+	@native public backgroundImageTop!: number
+
+	/**
+	 * The view's background image left position.
+	 * @property backgroundImageLeft
+	 * @since 0.1.0
+	 */
+	@native public backgroundImageLeft!: number
+
+	/**
+	 * The view's background image width;
+	 * @property backgroundImageWidth
+	 * @since 0.1.0
+	 */
+	@native public backgroundImageWidth!: 'auto' | number
+
+	/**
+	 * The view's background image height.
+	 * @property backgroundImageHeight
+	 * @since 0.1.0
+	 */
+	@native public backgroundImageHeight!: 'auto' | number
+
+	/**
+	 * The view's border.
+	 * @property border
+	 * @since 0.2.0
+	 */
+	@native public border!: any
+
+	/**
+	 * The view's top border.
+	 * @property borderTop
+	 * @since 0.4.0
+	 */
+	@native public borderTop!: any
+
+	/**
+	 * The view's left border.
+	 * @property borderLeft
+	 * @since 0.4.0
+	 */
+	@native public borderLeft!: any
+
+	/**
+	 * The view's right border.
+	 * @property borderRight
+	 * @since 0.4.0
+	 */
+	@native public borderRight!: any
+
+	/**
+	 * The view's bottom border.
+	 * @property borderBottom
+	 * @since 0.4.0
+	 */
+	@native public borderBottom!: any
+
+	/**
+	 * The view's border width.
+	 * @property borderWidth
+	 * @since 0.2.0
+	 */
+	@native public borderWidth!: any
+
+	/**
+	 * The view's border color.
+	 * @property borderColor
+	 * @since 0.2.0
+	 */
+	@native public borderColor!: any
+
+	/**
+	 * The view's top border color.
+	 * @property borderTopColor
+	 * @since 0.1.0
+	 */
+	@native public borderTopColor!: string
+
+	/**
+	 * The view's left border color.
+	 * @property borderLeftColor
+	 * @since 0.1.0
+	 */
+	@native public borderLeftColor!: string
+
+	/**
+	 * The view's right border color.
+	 * @property borderRightColor
+	 * @since 0.1.0
+	 */
+	@native public borderRightColor!: string
+
+	/**
+	 * The view's bottom border color.
+	 * @property borderBottomColor
+	 * @since 0.1.0
+	 */
+	@native public borderBottomColor!: string
+
+	/**
+	 * The view's top border width.
+	 * @property borderTopWidth
+	 * @since 0.1.0
+	 */
+	@native public borderTopWidth!: number | string
+
+	/**
+	 * The view's left border width.
+	 * @property borderLeftWidth
+	 * @since 0.1.0
+	 */
+	@native public borderLeftWidth!: number | string
+
+	/**
+	 * The view's right border width.
+	 * @property borderRightWidth
+	 * @since 0.1.0
+	 */
+	@native public borderRightWidth!: number | string
+
+	/**
+	 * The view's bottom border width.
+	 * @property borderBottomWidth
+	 * @since 0.1.0
+	 */
+	@native public borderBottomWidth!: number | string
+
+	/**
+	 * The view's minimum top border width.
+	 * @property minBorderTopWidth
+	 * @since 0.1.0
+	 */
+	@native public minBorderTopWidth!: number
+
+	/**
+	 * The view's maximum top border width.
+	 * @property maxBorderTopWidth
+	 * @since 0.1.0
+	 */
+	@native public maxBorderTopWidth!: number
+
+	/**
+	 * The view's minimum left border width.
+	 * @property minBorderLeftWidth
+	 * @since 0.1.0
+	 */
+	@native public minBorderLeftWidth!: number
+
+	/**
+	 * The view's maximum left border width.
+	 * @property maxBorderLeftWidth
+	 * @since 0.1.0
+	 */
+	@native public maxBorderLeftWidth!: number
+
+	/**
+	 * The view's minimum right border width.
+	 * @property minBorderRightWidth
+	 * @since 0.1.0
+	 */
+	@native public minBorderRightWidth!: number
+
+	/**
+	 * The view's maximum right border width.
+	 * @property maxBorderRightWidth
+	 * @since 0.1.0
+	 */
+	@native public maxBorderRightWidth!: number
+
+	/**
+	 * The view's minimum bottom border width.
+	 * @property minBorderBottomWidth
+	 * @since 0.1.0
+	 */
+	@native public minBorderBottomWidth!: number
+
+	/**
+	 * The view's maximum bottom border width.
+	 * @property maxBorderBottomWidth
+	 * @since 0.1.0
+	 */
+	@native public maxBorderBottomWidth!: number
+
+	/**
+	 * The view's border radius.
+	 * @property borderRadius
+	 * @since 0.2.0
+	 */
+	@native public borderRadius!: any
+
+	/**
+	 * The view's top left border radius.
+	 * @property borderTopLeftRadius
+	 * @since 0.1.0
+	 */
+	@native public borderTopLeftRadius!: number
+
+	/**
+	 * The view's top right border radius.
+	 * @property borderTopRightRadius
+	 * @since 0.1.0
+	 */
+	@native public borderTopRightRadius!: number
+
+	/**
+	 * The view's bottom left border radius.
+	 * @property borderBottomLeftRadius
+	 * @since 0.1.0
+	 */
+	@native public borderBottomLeftRadius!: number
+
+	/**
+	 * The view's bottom right border radius.
+	 * @property borderBottomRightRadius
+	 * @since 0.1.0
+	 */
+	@native public borderBottomRightRadius!: number
+
+	/**
+	 * The view's shadow blur distance.
+	 * @property shadowBlur
+	 * @since 0.1.0
+	 */
+	@native public shadowBlur!: number
+
+	/**
+	 * The view's shadow color.
+	 * @property shadowColor
+	 * @since 0.1.0
+	 */
+	@native public shadowColor!: string
+
+	/**
+	 * The view's shadow vertical offset.
+	 * @property shadowOffsetTop
+	 * @since 0.1.0
+	 */
+	@native public shadowOffsetTop!: number
+
+	/**
+	 * The view's shadow vertical offset.
+	 * @property shadowOffsetLeft
+	 * @since 0.1.0
+	 */
+	@native public shadowOffsetLeft!: number
 
 	/**
 	 * The view's top position relative to its parent.
@@ -439,6 +737,48 @@ export class View extends Emitter {
 	@native public contentArrangement!: 'start' | 'center' | 'end'
 
 	/**
+	 * Determines whether the view can scroll.
+	 * @property scrollable
+	 * @since 0.1.0
+	 */
+	@native public scrollable!: boolean
+
+	/**
+	 * The view's scrollbars mode.
+	 * @property scrollbars
+	 * @since 0.1.0
+	 */
+	@native public scrollbars!: boolean | 'none' | 'both' | 'vertical' | 'horizontal'
+
+	/**
+	 * Determines whether the view can overscroll.
+	 * @property overscroll
+	 * @since 0.1.0
+	 */
+	@native public overscroll!: boolean | 'never' | 'always' | 'always-x' | 'always-y'
+
+	/**
+	 * Determines whether the view content has momentum when scrolling.
+	 * @property momentum
+	 * @since 0.1.0
+	 */
+	@native public momentum!: boolean
+
+	/**
+	 * The view's scroll on the vertical axis.
+	 * @property scrollTop
+	 * @since 0.1.0
+	 */
+	@native public scrollTop!: number
+
+	/**
+	 * The view's scroll on the horizontal axis.
+	 * @property scrollLeft
+	 * @since 0.1.0
+	 */
+	@native public scrollLeft!: number
+
+	/**
 	 * The view's margin.
 	 * @property margin
 	 * @since 0.2.0
@@ -528,202 +868,6 @@ export class View extends Emitter {
 	 * @since 0.1.0
 	 */
 	@native public maxMarginBottom!: number
-
-	/**
-	 * The view's border.
-	 * @property border
-	 * @since 0.2.0
-	 */
-	@native public border!: any
-
-	/**
-	 * The view's top border.
-	 * @property borderTop
-	 * @since 0.4.0
-	 */
-	@native public borderTop!: any
-
-	/**
-	 * The view's left border.
-	 * @property borderLeft
-	 * @since 0.4.0
-	 */
-	@native public borderLeft!: any
-
-	/**
-	 * The view's right border.
-	 * @property borderRight
-	 * @since 0.4.0
-	 */
-	@native public borderRight!: any
-
-	/**
-	 * The view's bottom border.
-	 * @property borderBottom
-	 * @since 0.4.0
-	 */
-	@native public borderBottom!: any
-
-	/**
-	 * The view's border width.
-	 * @property borderWidth
-	 * @since 0.2.0
-	 */
-	@native public borderWidth!: any
-
-	/**
-	 * The view's border color.
-	 * @property borderColor
-	 * @since 0.2.0
-	 */
-	@native public borderColor!: any
-
-	/**
-	 * The view's top border color.
-	 * @property borderTopColor
-	 * @since 0.1.0
-	 */
-	@native public borderTopColor!: string
-
-	/**
-	 * The view's left border color.
-	 * @property borderLeftColor
-	 * @since 0.1.0
-	 */
-	@native public borderLeftColor!: string
-
-	/**
-	 * The view's right border color.
-	 * @property borderRightColor
-	 * @since 0.1.0
-	 */
-	@native public borderRightColor!: string
-
-	/**
-	 * The view's bottom border color.
-	 * @property borderBottomColor
-	 * @since 0.1.0
-	 */
-	@native public borderBottomColor!: string
-
-	/**
-	 * The view's top border width.
-	 * @property borderTopWidth
-	 * @since 0.1.0
-	 */
-	@native public borderTopWidth!: number | string
-
-	/**
-	 * The view's left border width.
-	 * @property borderLeftWidth
-	 * @since 0.1.0
-	 */
-	@native public borderLeftWidth!: number | string
-
-	/**
-	 * The view's right border width.
-	 * @property borderRightWidth
-	 * @since 0.1.0
-	 */
-	@native public borderRightWidth!: number | string
-
-	/**
-	 * The view's bottom border width.
-	 * @property borderBottomWidth
-	 * @since 0.1.0
-	 */
-	@native public borderBottomWidth!: number | string
-
-	/**
-	 * The view's minimum top border width.
-	 * @property minBorderTopWidth
-	 * @since 0.1.0
-	 */
-	@native public minBorderTopWidth!: number
-
-	/**
-	 * The view's maximum top border width.
-	 * @property maxBorderTopWidth
-	 * @since 0.1.0
-	 */
-	@native public maxBorderTopWidth!: number
-
-	/**
-	 * The view's minimum left border width.
-	 * @property minBorderLeftWidth
-	 * @since 0.1.0
-	 */
-	@native public minBorderLeftWidth!: number
-
-	/**
-	 * The view's maximum left border width.
-	 * @property maxBorderLeftWidth
-	 * @since 0.1.0
-	 */
-	@native public maxBorderLeftWidth!: number
-
-	/**
-	 * The view's minimum right border width.
-	 * @property minBorderRightWidth
-	 * @since 0.1.0
-	 */
-	@native public minBorderRightWidth!: number
-
-	/**
-	 * The view's maximum right border width.
-	 * @property maxBorderRightWidth
-	 * @since 0.1.0
-	 */
-	@native public maxBorderRightWidth!: number
-
-	/**
-	 * The view's minimum bottom border width.
-	 * @property minBorderBottomWidth
-	 * @since 0.1.0
-	 */
-	@native public minBorderBottomWidth!: number
-
-	/**
-	 * The view's maximum bottom border width.
-	 * @property maxBorderBottomWidth
-	 * @since 0.1.0
-	 */
-	@native public maxBorderBottomWidth!: number
-
-	/**
-	 * The view's border radius.
-	 * @property borderRadius
-	 * @since 0.2.0
-	 */
-	@native public borderRadius!: any
-
-	/**
-	 * The view's top left border radius.
-	 * @property borderTopLeftRadius
-	 * @since 0.1.0
-	 */
-	@native public borderTopLeftRadius!: number
-
-	/**
-	 * The view's top right border radius.
-	 * @property borderTopRightRadius
-	 * @since 0.1.0
-	 */
-	@native public borderTopRightRadius!: number
-
-	/**
-	 * The view's bottom left border radius.
-	 * @property borderBottomLeftRadius
-	 * @since 0.1.0
-	 */
-	@native public borderBottomLeftRadius!: number
-
-	/**
-	 * The view's bottom right border radius.
-	 * @property borderBottomRightRadius
-	 * @since 0.1.0
-	 */
-	@native public borderBottomRightRadius!: number
 
 	/**
 	 * The view's padding.
@@ -831,153 +975,6 @@ export class View extends Emitter {
 	@native public shrink!: number
 
 	/**
-	 * The view's background color.
-	 * @property backgroundColor
-	 * @since 0.1.0
-	 */
-	@native public backgroundColor!: string
-
-	/**
-	 * The view's background image.
-	 * @property backgroundImage
-	 * @since 0.1.0
-	 */
-	@native public backgroundImage?: Image | string | null
-
-	/**
-	 * The view's background image container fitting.
-	 * @property backgroundImageFit
-	 * @since 0.4.0
-	 */
-	@native public backgroundImageFit!: 'fit' | 'fill' | 'none'
-
-	/**
-	 * The view's background image vertical point from which it will be positioned.
-	 * @property backgroundImageAnchorTop
-	 * @since 0.1.0
-	 */
-	@native public backgroundImageAnchorTop!: 'top' | 'center' | 'bottom' | number | string
-
-	/**
-	 * The view's background image horizontal point from which it will be positioned.
-	 * @property backgroundImageAnchorLeft
-	 * @since 0.1.0
-	 */
-	@native public backgroundImageAnchorLeft!: 'left' | 'center' | 'right' | number | string
-
-	/**
-	 * The view's background image top position.
-	 * @property backgroundImageTop
-	 * @since 0.1.0
-	 */
-	@native public backgroundImageTop!: number
-
-	/**
-	 * The view's background image left position.
-	 * @property backgroundImageLeft
-	 * @since 0.1.0
-	 */
-	@native public backgroundImageLeft!: number
-
-	/**
-	 * The view's background image width;
-	 * @property backgroundImageWidth
-	 * @since 0.1.0
-	 */
-	@native public backgroundImageWidth!: 'auto' | number
-
-	/**
-	 * The view's background image height.
-	 * @property backgroundImageHeight
-	 * @since 0.1.0
-	 */
-	@native public backgroundImageHeight!: 'auto' | number
-
-	/**
-	 * The view's shadow blur distance.
-	 * @property shadowBlur
-	 * @since 0.1.0
-	 */
-	@native public shadowBlur!: number
-
-	/**
-	 * The view's shadow color.
-	 * @property shadowColor
-	 * @since 0.1.0
-	 */
-	@native public shadowColor!: string
-
-	/**
-	 * The view's shadow vertical offset.
-	 * @property shadowOffsetTop
-	 * @since 0.1.0
-	 */
-	@native public shadowOffsetTop!: number
-
-	/**
-	 * The view's shadow vertical offset.
-	 * @property shadowOffsetLeft
-	 * @since 0.1.0
-	 */
-	@native public shadowOffsetLeft!: number
-
-	/**
-	 * Determines whether the view can scroll.
-	 * @property scrollable
-	 * @since 0.1.0
-	 */
-	@native public scrollable!: boolean
-
-	/**
-	 * The view's scrollbars mode.
-	 * @property scrollbars
-	 * @since 0.1.0
-	 */
-	@native public scrollbars!: boolean | 'none' | 'both' | 'vertical' | 'horizontal'
-
-	/**
-	 * Determines whether the view can overscroll.
-	 * @property overscroll
-	 * @since 0.1.0
-	 */
-	@native public overscroll!: boolean | 'never' | 'always' | 'always-x' | 'always-y'
-
-	/**
-	 * Determines whether the view content has momentum when scrolling.
-	 * @property momentum
-	 * @since 0.1.0
-	 */
-	@native public momentum!: boolean
-
-	/**
-	 * The view's scroll on the vertical axis.
-	 * @property scrollTop
-	 * @since 0.1.0
-	 */
-	@native public scrollTop!: number
-
-	/**
-	 * The view's scroll on the horizontal axis.
-	 * @property scrollLeft
-	 * @since 0.1.0
-	 */
-	@native public scrollLeft!: number
-
-	/**
-	 * Whether the view snaps to pages.
-	 * @property paged
-	 * @since 0.4.0
-	 */
-	@native public paged!: boolean
-
-	/**
-	 * The view's content clipping status.
-	 * @property clipped
-	 * @since 0.1.0
-	 */
-	@native public clipped!: boolean
-
-	/**
 	 * Determines whether the view is visible.
 	 * @property visible
 	 * @since 0.1.0
@@ -1083,6 +1080,41 @@ export class View extends Emitter {
 	@native public zIndex!: number
 
 	/**
+	 * The view's content clipping status.
+	 * @property clipped
+	 * @since 0.1.0
+	 */
+	@native public clipped!: boolean
+
+	/**
+	 * Whether the view is zoomable.
+	 * @property zoomable
+	 * @since 0.3.0
+	 */
+	@native public zoomable!: boolean
+
+	/**
+	 * The view's minimum zoom.
+	 * @property minZoom
+	 * @since 0.3.0
+	 */
+	@native public minZoom!: number
+
+	/**
+	 * The view's maximum zoom.
+	 * @property maxZoom
+	 * @since 0.3.0
+	 */
+	@native public maxZoom!: number
+
+	/**
+	 * The view that is being zoomed.
+	 * @property zoomedView
+	 * @since 0.3.0
+	 */
+	@native public zoomedView?: View | null
+
+	/**
 	 * Whether touch interactions are enabled for this view.
 	 * @property touchable
 	 * @since 0.1.0
@@ -1118,32 +1150,11 @@ export class View extends Emitter {
 	@native public touchOffsetBottom!: number
 
 	/**
-	 * Whether the view is zoomable.
-	 * @property zoomable
-	 * @since 0.3.0
+	 * Whether the view snaps to pages.
+	 * @property paged
+	 * @since 0.4.0
 	 */
-	@native public zoomable!: boolean
-
-	/**
-	 * The view's minimum zoom.
-	 * @property minZoom
-	 * @since 0.3.0
-	 */
-	@native public minZoom!: number
-
-	/**
-	 * The view's maximum zoom.
-	 * @property maxZoom
-	 * @since 0.3.0
-	 */
-	@native public maxZoom!: number
-
-	/**
-	 * The view that is being zoomed.
-	 * @property zoomedView
-	 * @since 0.3.0
-	 */
-	@native public zoomedView?: View | null
+	@native public paged!: boolean
 
 	/**
 	 * Wether the view is scrolling.
@@ -1314,6 +1325,7 @@ export class View extends Emitter {
 	 */
 	constructor() {
 		super()
+		console.log('CREATE VIEW ', this)
 		let classList = getClassList(this)
 		if (classList) this.native.classList = classList
 	}
@@ -1327,21 +1339,21 @@ export class View extends Emitter {
 
 		this.onDestroy()
 
-		// TODO
-		// This could be done on native?
-		let children = this.children
-		if (children.length) {
-			children.slice(0).forEach(view => view.destroy())
+		while (this.children.length) {
+
+			/*
+			 * TODO
+			 * Could this be done better on native.
+			 */
+
+			this.children[this.children.length - 1].destroy()
 		}
 
 		this.removeFromParent()
 
-		this.native.destroy()
+		this[GESTURES].destroy()
 
-		this[STYLES] = []
-		this[STATES] = []
-		this[CHILDREN] = []
-		this[GESTURES].clear()
+		this.native.destroy()
 
 		super.destroy()
 	}
@@ -1356,62 +1368,53 @@ export class View extends Emitter {
 		return this
 	}
 
-	//--------------------------------------------------------------------------
-	// Methods: Lifecycle
-	//--------------------------------------------------------------------------
-
 	/**
-	 * Called when the view is in valid hierarchy.
-	 * @method onReady
-	 * @since 0.5.0
-	 */
-	public onReady() {
-
-	}
-
-	/**
-	 * Called when the view is destroyed.
-	 * @method onDestroy
-	 * @since 0.4.0
-	 */
-	public onDestroy() {
-
-	}
-
-	//--------------------------------------------------------------------------
-	// Methods: View hierarchy
-	//--------------------------------------------------------------------------
-
-	/**
-	 * Adds a child view at the end of this view's child list.
+	 * Appends a child at the end of this view's child list.
 	 * @method append
 	 * @since 0.1.0
 	 */
-	public append(view: Node) {
-		return this.insert(view, this.children.length)
+	public append(child: Child) {
+		return this.insert(child, this.children.length)
 	}
 
 	/**
-	 * Adds a child view at an index of this view's child list.
+	 * Appends this view at this end of the parent's child list.
+	 * @method appendTo
+	 * @since 0.7.0
+	 */
+	public appendTo(child: View | Placeholder) {
+
+		if (child instanceof Placeholder) {
+			child.append(this)
+		} else {
+			child.append(this)
+		}
+
+		return this
+	}
+
+	/**
+	 * Inserts a child at an index of this view's child list.
 	 * @method insert
 	 * @since 0.1.0
 	 */
-	public insert(view: Node, index: number) {
+	public insert(child: Child, index: number) {
 
-		if (view instanceof Component) {
-			view.build()
-		}
-
-		if (view instanceof Fragment) {
-			view.inject(this, index)
+		if (child instanceof Array) {
+			merge(this, child, index)
 			return this
 		}
 
-		if (view.parent) {
-			view.removeFromParent()
+		if (child instanceof Placeholder) {
+			child.appendTo(this)
+			return this
 		}
 
-		view.setResponder(this)
+		if (child.parent) {
+			child.parent.remove(child)
+		}
+
+		child.setResponder(this)
 
 		if (index > this.children.length) {
 			index = this.children.length
@@ -1419,48 +1422,45 @@ export class View extends Emitter {
 			index = 0
 		}
 
-		this.insertChild(view, index)
+		insertNode(this, child, index)
+		insertView(this, child, index)
+
+		this.emit<ViewInsertEvent>('insert', { data: { child, index } })
 
 		return this
 	}
 
 	/**
-	 * Adds a child view before a view from this view's child list.
-	 * @method insertBefore
-	 * @since 0.1.0
-	 */
-	public insertBefore(view: View, before: View) {
-
-		let index = this.children.indexOf(before)
-		if (index > -1) {
-			this.insert(view, index)
-		}
-
-		return this
-	}
-
-	/**
-	 * Adds a child view after a view from this view's child list.
+	 * Inserts a child after another child from this view's child list.
 	 * @method insertAfter
 	 * @since 0.1.0
 	 */
 	public insertAfter(view: View, after: View) {
 
 		let index = this.children.indexOf(after)
-		if (index > -1) {
-			this.insert(view, index + 1)
+		if (index == -1) {
+			return this
 		}
+
+		this.insert(view, index + 1)
 
 		return this
 	}
 
 	/**
-	 * Convenience method to add this view to a specified view.
-	 * @method inject
-	 * @since 0.4.0
+	 * Inserts a child before another child from this view's child list.
+	 * @method insertBefore
+	 * @since 0.1.0
 	 */
-	public inject(into: View) {
-		into.append(this)
+	public insertBefore(view: View, after: View) {
+
+		let index = this.children.indexOf(after)
+		if (index == -1) {
+			return this
+		}
+
+		this.insert(view, index)
+
 		return this
 	}
 
@@ -1469,32 +1469,19 @@ export class View extends Emitter {
 	 * @method remove
 	 * @since 0.1.0
 	 */
-	public remove(view: View) {
+	public remove(child: View) {
 
-		let index = this.children.indexOf(view)
+		let index = this.children.indexOf(child)
 		if (index == -1) {
 			return this
 		}
 
-		view.setResponder(null)
+		child.setResponder(null)
 
-		this.removeChild(index)
+		removeNode(this, child, index)
+		removeView(this, child, index)
 
-		return this
-	}
-
-	/**
-	 * Remove all views this this view.
-	 * @method removeAll
-	 * @since 0.4.0
-	 */
-	public removeAll() {
-
-		let children = this.children.slice(0)
-
-		for (let view of children) {
-			view.removeFromParent()
-		}
+		this.emit<ViewRemoveEvent>('remove', { data: { child, index } })
 
 		return this
 	}
@@ -1526,11 +1513,11 @@ export class View extends Emitter {
 			return this
 		}
 
-		if (view) {
-			parent.insertAfter(view, this)
+		let index = parent.children.indexOf(this)
+		if (index > -1) {
+			parent.insert(view, index)
+			parent.remove(this)
 		}
-
-		this.removeFromParent()
 
 		return this
 	}
@@ -1559,8 +1546,53 @@ export class View extends Emitter {
 		return false
 	}
 
+	/**
+	 * Remove all views this this view.
+	 * @method empty
+	 * @since 0.7.0
+	 */
+	public empty() {
+
+		while (this.children.length) {
+			this.remove(last(this.children))
+		}
+
+		return this
+	}
+
 	//--------------------------------------------------------------------------
-	// Methods: Styles
+	// Lifecycle
+	//--------------------------------------------------------------------------
+
+	/**
+	 * Called when the view is added to the tree.
+	 * @method onMount
+	 * @since 0.7.0
+	 */
+	public onMount() {
+
+	}
+
+	/**
+	 * Called when the view is removed from the tree.
+	 * @method onUnmount
+	 * @since 0.7.0
+	 */
+	public onUnmount() {
+
+	}
+
+	/**
+	 * Called when the view is destroyed.
+	 * @method onDestroy
+	 * @since 0.4.0
+	 */
+	public onDestroy() {
+
+	}
+
+	//--------------------------------------------------------------------------
+	// Style
 	//--------------------------------------------------------------------------
 
 	/**
@@ -1569,79 +1601,21 @@ export class View extends Emitter {
 	 * @hidden
 	 */
 	public hasStyle(style: string) {
-		return this[STYLES].includes(style)
-	}
-
-	/**
-	 * Appends a visual style to this view.
-	 * @method addStyle
-	 * @since 0.1.0
-	 */
-	public addStyle(style: string) {
-
-		style = style.trim()
-
-		if (style == '') {
-			return this
-		}
-
-		let index = this[STYLES].indexOf(style)
-		if (index > -1) {
-			return this
-		}
-
-		this[STYLES].push(style);
-
-		this.native.addStyle(style)
-
-		return this
-	}
-
-	/**
-	 * Appends an array of visual style to this view.
-	 * @method addStyles
-	 * @since 0.4.0
-	 */
-	public addStyles(...styles: Array<string>) {
-		for (let style of styles) this.addStyle(style)
-		return this
-	}
-
-	/**
-	 * Removes a visual style from this view.
-	 * @method removeStyle
-	 * @since 0.1.0
-	 */
-	public removeStyle(style: string) {
-
-		let index = this[STYLES].indexOf(style)
-		if (index < 0) {
-			return this
-		}
-
-		this[STYLES].splice(index, 1)
-
-		this.native.removeStyle(style)
-
-		return this
+		return this.native.hasStyle(style)
 	}
 
 	/**
 	 * Toggles a visual style from this view.
-	 * @method toggleStyle
-	 * @since 0.1.0
+	 * @method setStyle
+	 * @since 0.7.0
 	 */
-	public toggleStyle(style: string, toggle?: boolean) {
-
-		if (toggle == null) {
-			toggle = this.hasStyle(style) == false
-		}
-
-		return toggle ? this.addStyle(style) : this.removeStyle(style)
+	public setStyle(style: string, enable: boolean = true) {
+		this.native.setStyle(style, enable)
+		return this
 	}
 
 	//--------------------------------------------------------------------------
-	// Methods: States
+	// State
 	//--------------------------------------------------------------------------
 
 	/**
@@ -1650,58 +1624,20 @@ export class View extends Emitter {
 	 * @since 0.1.0
 	 */
 	public hasState(state: string) {
-		return this[STATES].includes(state)
+		return this.native.hasState(state)
 	}
 
 	/**
 	 * @method setState
 	 * @since 0.1.0
 	 */
-	public setState(state: string, enabled: boolean = true) {
-
-		state = state.trim()
-
-		if (state == '') {
-			return this
-		}
-
-		if (enabled) {
-
-			let index = this[STATES].indexOf(state)
-			if (index > -1) {
-				return this
-			}
-
-			this[STATES].push(state)
-
-			this.native.addState(state)
-
-		} else {
-
-			let index = this[STATES].indexOf(state)
-			if (index < 0) {
-				return this
-			}
-
-			this[STATES].splice(index, 1)
-
-			this.native.removeState(state)
-		}
-
-		return this
-	}
-
-	/**
-	 * @method setStates
-	 * @since 0.4.0
-	 */
-	public setStates(...states: Array<string>) {
-		for (let state of states) this.setState(state)
+	public setState(state: string, enable: boolean = true) {
+		this.native.setState(state, enable)
 		return this
 	}
 
 	//--------------------------------------------------------------------------
-	// Methods: Scheduling
+	// Methods: Measuring and Drawing
 	//--------------------------------------------------------------------------
 
 	/**
@@ -1725,7 +1661,7 @@ export class View extends Emitter {
 	}
 
 	/**
-	 * Manually measures this view only.
+	 * Resolves this view's size and position.
 	 * @method measure
 	 * @since 0.1.0
 	 */
@@ -1735,59 +1671,13 @@ export class View extends Emitter {
 	}
 
 	/**
-	 * Manually resolve the the measures of this view and its ancestor.
+	 * Resolves this view's size and position and its entire tree.
 	 * @method resolve
 	 * @since 0.1.0
 	 */
 	public resolve() {
 		this.native.resolve()
 		return this
-	}
-
-	//--------------------------------------------------------------------------
-	// Events Management
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method on
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	public on(type: string | Gesture, listener: EventListener) {
-
-		if (typeof type == 'string') {
-			let constructor = GestureRegistry.get(type)
-			if (constructor) {
-				type = new constructor()
-			}
-		}
-
-		if (type instanceof Gesture) {
-			this.appendGestureListener(listener, type)
-			return this
-		}
-
-		return super.on(type, listener)
-	}
-
-	/**
-	 * @method off
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	public off(type: string | Gesture, listener: EventListener) {
-
-		if (type instanceof Gesture) {
-			this.removeGestureListener(listener)
-			return this
-		}
-
-		if (GestureRegistry.has(type)) {
-			this.removeGestureListener(listener)
-			return this
-		}
-
-		return super.off(type, listener)
 	}
 
 	//--------------------------------------------------------------------------
@@ -1825,7 +1715,7 @@ export class View extends Emitter {
 	}
 
 	//--------------------------------------------------------------------------
-	// Methods: Scrolling Management
+	// Scrolling
 	//--------------------------------------------------------------------------
 
 	/**
@@ -1844,7 +1734,7 @@ export class View extends Emitter {
 
 	/**
 	 * @inherited
-	 * @method onEmit
+	 * @method onEvent
 	 * @since 0.1.0
 	 */
 	public onEmit(event: Event) {
@@ -1852,10 +1742,6 @@ export class View extends Emitter {
 		super.onEmit(event)
 
 		if (event instanceof TouchEvent) {
-
-			if (event.canceled) {
-				return
-			}
 
 			switch (event.type) {
 
@@ -1875,78 +1761,90 @@ export class View extends Emitter {
 					this.onTouchEnd(event)
 					break
 			}
+
+			if (event.canceled) {
+				return
+			}
+
+			this.gestures.dispatchTouchEvent(event)
+		}
+		// TODO MAKE BETTER
+		if (event.type == 'movetowindow') {
+			if (event.data.window) {
+				this.onMount()
+			} else {
+				this.onUnmount()
+			}
 		}
 
 		switch (event.type) {
 
 			case 'beforelayout':
-				this.onBeforeLayout(event)
+				this.onBeforeLayout()
 				break
 
 			case 'layout':
-				this.onLayout(event)
-				break
-
-			case 'insert':
-				this.onInsert(event)
-				break
-
-			case 'remove':
-				this.onRemove(event)
-				break
-
-			case 'movetoparent':
-				this.onMoveToParentDefault(event)
-				this.onMoveToParent(event)
-				break
-
-			case 'movetowindow':
-				this.onMoveToWindowDefault(event)
-				this.onMoveToWindow(event)
-				break
-
-			case 'scrollstart':
-				this.onScrollStart(event)
-				break
-
-			case 'scrollend':
-				this.onScrollEnd(event)
-				break
-
-			case 'scroll':
-				this.onScroll(event)
-				break
-
-			case 'overscroll':
-				this.onOverscroll(event)
-				break
-
-			case 'dragstart':
-				this.onDragStart(event)
-				break
-
-			case 'dragend':
-				this.onDragEnd(event)
-				break
-
-			case 'drag':
-				this.onDrag(event)
-				break
-
-			case 'zoomstart':
-				this.onZoomStart(event)
-				break
-
-			case 'zoomend':
-				this.onZoomEnd(event)
-				break
-
-			case 'zoom':
-				this.onZoom(event)
+				this.onLayout()
 				break
 
 			case 'redraw':
-				this.onRedraw(event)
+				this.onRedraw(event.data.canvas)
+				break
+
+			case 'insert':
+				this.onInsert(event.data.child, event.data.index)
+				break
+
+			case 'remove':
+				this.onRemove(event.data.child, event.data.index)
+				break
+
+			case 'movetoparent':
+				this.onMoveToParent(event.data.parent)
+				break
+
+			case 'movetowindow':
+				this.onMoveToWindow(event.data.window)
+				break
+
+			case 'scrollstart':
+				this.onScrollStart()
+				break
+
+			case 'scrollend':
+				this.onScrollEnd()
+				break
+
+			case 'scroll':
+				this.onScroll()
+				break
+
+			case 'overscroll':
+				this.onOverscroll()
+				break
+
+			case 'dragstart':
+				this.onDragStart()
+				break
+
+			case 'dragend':
+				this.onDragEnd()
+				break
+
+			case 'drag':
+				this.onDrag()
+				break
+
+			case 'zoomstart':
+				this.onZoomStart()
+				break
+
+			case 'zoomend':
+				this.onZoomEnd()
+				break
+
+			case 'zoom':
+				this.onZoom()
 				break
 		}
 	}
@@ -1993,7 +1891,7 @@ export class View extends Emitter {
 	 * @method onBeforeLayout
 	 * @since 0.1.0
 	 */
-	public onBeforeLayout(event: Event) {
+	public onBeforeLayout() {
 
 	}
 
@@ -2002,7 +1900,7 @@ export class View extends Emitter {
 	 * @method onLayout
 	 * @since 0.1.0
 	 */
-	public onLayout(event: Event) {
+	public onLayout() {
 
 	}
 
@@ -2011,7 +1909,7 @@ export class View extends Emitter {
 	 * @method onInsert
 	 * @since 0.1.0
 	 */
-	public onInsert(event: Event) {
+	public onInsert(child: View, index: number) {
 
 	}
 
@@ -2020,16 +1918,7 @@ export class View extends Emitter {
 	 * @method onRemove
 	 * @since 0.1.0
 	 */
-	public onRemove(event: Event) {
-
-	}
-
-	/**
-	 * Called when this view is moved to a parent view.
-	 * @method onMoveToParent
-	 * @since 0.2.0
-	 */
-	public onMoveToParent(event: Event) {
+	public onRemove(child: View, index: number) {
 
 	}
 
@@ -2038,7 +1927,16 @@ export class View extends Emitter {
 	 * @method onMoveToWindow
 	 * @since 0.2.0
 	 */
-	public onMoveToWindow(event: Event) {
+	public onMoveToWindow(window: Window | null | undefined) {
+
+	}
+
+	/**
+	 * Called when this view is moved to a parent view.
+	 * @method onMoveToParent
+	 * @since 0.2.0
+	 */
+	public onMoveToParent(parent: View | null | undefined) {
 
 	}
 
@@ -2046,7 +1944,7 @@ export class View extends Emitter {
 	 * @method onScrollStart
 	 * @since 0.1.0
 	 */
-	public onScrollStart(event: Event) {
+	public onScrollStart() {
 
 	}
 
@@ -2054,7 +1952,7 @@ export class View extends Emitter {
 	 * @method onScrollEnd
 	 * @since 0.1.0
 	 */
-	public onScrollEnd(event: Event) {
+	public onScrollEnd() {
 
 	}
 
@@ -2062,7 +1960,7 @@ export class View extends Emitter {
 	 * @method onScroll
 	 * @since 0.1.0
 	 */
-	public onScroll(event: Event) {
+	public onScroll() {
 
 	}
 
@@ -2070,7 +1968,7 @@ export class View extends Emitter {
 	 * @method onOverscroll
 	 * @since 0.1.0
 	 */
-	public onOverscroll(event: Event) {
+	public onOverscroll() {
 
 	}
 
@@ -2078,7 +1976,7 @@ export class View extends Emitter {
 	 * @method onDragStart
 	 * @since 0.1.0
 	 */
-	public onDragStart(event: Event) {
+	public onDragStart() {
 
 	}
 
@@ -2086,7 +1984,7 @@ export class View extends Emitter {
 	 * @method onDragEnd
 	 * @since 0.1.0
 	 */
-	public onDragEnd(event: Event) {
+	public onDragEnd() {
 
 	}
 
@@ -2094,7 +1992,7 @@ export class View extends Emitter {
 	 * @method onDrag
 	 * @since 0.1.0
 	 */
-	public onDrag(event: Event) {
+	public onDrag() {
 
 	}
 
@@ -2102,7 +2000,7 @@ export class View extends Emitter {
 	 * @method onZoomStart
 	 * @since 0.3.0
 	 */
-	public onZoomStart(event: Event) {
+	public onZoomStart() {
 
 	}
 
@@ -2110,7 +2008,7 @@ export class View extends Emitter {
 	 * @method onZoomEnd
 	 * @since 0.3.0
 	 */
-	public onZoomEnd(event: Event) {
+	public onZoomEnd() {
 
 	}
 
@@ -2118,7 +2016,7 @@ export class View extends Emitter {
 	 * @method onZoom
 	 * @since 0.3.0
 	 */
-	public onZoom(event: Event) {
+	public onZoom() {
 
 	}
 
@@ -2126,7 +2024,7 @@ export class View extends Emitter {
 	 * @method onRedraw
 	 * @since 0.4.0
 	 */
-	public onRedraw(event: Event<ViewRedrawEvent>) {
+	public onRedraw(canvas: Canvas) {
 
 	}
 
@@ -2182,31 +2080,6 @@ export class View extends Emitter {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method onMoveToParentDefault
-	 * @since 0.3.0
-	 * @hidden
-	 */
-	public onMoveToParentDefault(event: Event<ViewMoveToWindowEvent>) {
-
-	}
-
-	/**
-	 * @method onMoveToWindowDefault
-	 * @since 0.3.0
-	 * @hidden
-	 */
-	public onMoveToWindowDefault(event: Event<ViewMoveToWindowEvent>) {
-		if (this[READY] == false) {
-			this[READY] = true
-			this.onReady()
-		}
-	}
-
-	//--------------------------------------------------------------------------
-	// Internal API
-	//--------------------------------------------------------------------------
-
-	/**
 	 * TODO
 	 * @method setDefaultValue
 	 * @since 0.4.0
@@ -2220,39 +2093,25 @@ export class View extends Emitter {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @property [READY]
-	 * @since 0.5.0
+	 * @property ID
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private [READY]: boolean = false
+	private [ID]: string = ''
 
 	/**
-	 * @property [CHILDREN]
+	 * @property CHILDREN
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	private [CHILDREN]: Array<View> = []
+	private [CHILDREN]: Children = []
 
 	/**
-	 * @property [STYLES]
-	 * @since 0.3.0
-	 * @hidden
-	 */
-	private [STYLES]: Array<string> = []
-
-	/**
-	 * @property [STATES]
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	private [STATES]: Array<string> = []
-
-	/**
-	 * @property [GESTURES]
+	 * @property GESTURES
 	 * @since 0.4.0
 	 * @hidden
 	 */
-	private [GESTURES]: Map<Function, Gesture> = new Map()
+	private [GESTURES]: GestureManager = new GestureManager(this)
 
 	/**
 	 * @property cancelScroll
@@ -2260,69 +2119,6 @@ export class View extends Emitter {
 	 * @hidden
 	 */
 	private cancelScroll: boolean = false
-
-	/**
-	 * @method insertChild
-	 * @since 0.4.0
-	 * @hidden
-	 */
-	private insertChild(view: View, index: number) {
-		this.native.insert(view.native, index)
-		this.children.splice(index, 0, view)
-		this.emit<ViewInsertEvent>('insert', { data: { view, index } })
-		return this
-	}
-
-	/**
-	 * @method removeChild
-	 * @since 0.4.0
-	 * @hidden
-	 */
-	private removeChild(index: number) {
-
-		let view = this[CHILDREN][index]
-		if (view == null) {
-			return this
-		}
-
-		this.native.remove(view.native)
-		this.children.splice(index, 1)
-		this.emit<ViewRemoveEvent>('remove', { data: { view, index } })
-
-		return this
-	}
-
-	/**
-	 * @method appendGestureListener
-	 * @since 0.5.0
-	 * @hidden
-	 */
-	private appendGestureListener(listener: EventListener, gesture: Gesture) {
-
-		if (this[GESTURES].has(listener) == false) {
-			this[GESTURES].set(listener, gesture)
-			gesture.attach(this, listener)
-		}
-
-		return this
-	}
-
-	/**
-	 * @method removeGestureListener
-	 * @since 0.5.0
-	 * @hidden
-	 */
-	private removeGestureListener(listener: EventListener) {
-
-		let gesture = this[GESTURES].get(listener)
-		if (gesture == null) {
-			return this
-		}
-
-		gesture.detach()
-
-		this[GESTURES].delete(listener)
-	}
 
 	//--------------------------------------------------------------------------
 	// Native API
@@ -2463,6 +2259,66 @@ export class View extends Emitter {
 }
 
 /**
+ * @function insertNode
+ * @since 0.7.0
+ * @hidden
+ */
+function insertNode(view: View, child: View, index: number) {
+	view[CHILDREN].splice(index, 0, child)
+}
+
+/**
+ * @function removeNode
+ * @since 0.7.0
+ * @hidden
+ */
+function removeNode(view: View, child: View, index: number) {
+	view[CHILDREN].splice(index, 1)
+}
+
+/**
+ * @function insertView
+ * @since 0.7.0
+ * @hidden
+ */
+function insertView(view: View, child: View, index: number) {
+	view.native.insert(child.native, index)
+}
+
+/**
+ * @function removeView
+ * @since 0.7.0
+ * @hidden
+ */
+function removeView(view: View, child: View, index: number) {
+	view.native.remove(child.native)
+}
+
+/**
+ * @function merge
+ * @since 0.7.0
+ * @hidden
+ */
+function merge(view: View, children: Array<View | Placeholder>, index: number) {
+	for (let i = 0; i < children.length; i++) {
+		view.insert(children[i], index + i)
+	}
+}
+
+/**
+ * @function last
+ * @since 0.7.0
+ * @hidden
+ */
+function last(list: Array<View>) {
+	return list[list.length - 1]
+}
+
+//------------------------------------------------------------------------------
+// Constants
+//------------------------------------------------------------------------------
+
+/**
  * Animation duration registry.
  * @const AnimationDurationRegistry
  * @since 0.1.0
@@ -2484,216 +2340,15 @@ AnimationEquationRegistry.set('ease-out', [0.0, 0.0, 0.58, 1.0])
 AnimationEquationRegistry.set('ease-in-out', [0.42, 0, 0.58, 1.0])
 
 //------------------------------------------------------------------------------
-// Window Class
+// Types
 //------------------------------------------------------------------------------
-
-@bridge('dezel.view.Window')
-
-/**
- * Displays the top most view at the root of the hierarchy.
- * @class Window
- * @super View
- * @since 0.1.0
- */
-export class Window extends View {
-
-	/**
-	 * Initializes the window.
-	 * @constructor
-	 * @since 0.1.0
-	 */
-	constructor() {
-		super()
-		this.id = 'window'
-	}
-
-	/**
-	 * Finds a view from this window's hierarchy at the specified point.
-	 * @method viewFromPoint
-	 * @since 0.2.0
-	 */
-	public viewFromPoint(x: number, y: number, visible: boolean = true, touchable: boolean = true): View | undefined {
-		return this.native.viewFromPoint(x, y, visible, touchable)
-	}
-}
-
-//------------------------------------------------------------------------------
-// Fragment
-//------------------------------------------------------------------------------
-
-/**
- * Manages a series of view.
- * @class Fragment
- * @since 0.1.0
- */
-export class Fragment {
-
-	//--------------------------------------------------------------------------
-	// ViewProperties
-	//--------------------------------------------------------------------------
-
-	/**
-	 * The fragment's children.
-	 * @property children
-	 * @since 0.1.0
-	 */
-	public get children(): Array<Node> {
-		return this[CHILDREN]
-	}
-
-	//--------------------------------------------------------------------------
-	// Methods
-	//--------------------------------------------------------------------------
-
-	/**
-	 * Adds a child view at the end of this fragment's child list.
-	 * @method append
-	 * @since 0.1.0
-	 */
-	public append(view: View) {
-		return this.insert(view, this.children.length)
-	}
-
-	/**
-	 * Adds a child view at an index of this fragment's child list.
-	 * @method insert
-	 * @since 0.1.0
-	 */
-	public insert(view: View, index: number) {
-
-		if (view.parent) {
-			view.removeFromParent()
-		}
-
-		if (index > this.children.length) {
-			index = this.children.length
-		} else if (index < 0) {
-			index = 0
-		}
-
-		this.children.splice(index, 0, view)
-
-		this.onInsert(view)
-
-		return this
-	}
-
-	/**
-	 * Adds a child view before a view from this fragment's child list.
-	 * @method insertBefore
-	 * @since 0.1.0
-	 */
-	public insertBefore(view: View, before: View) {
-
-		let index = this.children.indexOf(before)
-		if (index > -1) {
-			this.insert(view, index)
-		}
-
-		return this
-	}
-
-	/**
-	 * Adds a child view after a view from this fragment's child list.
-	 * @method insertAfter
-	 * @since 0.1.0
-	 */
-	public insertAfter(view: View, after: View) {
-
-		let index = this.children.indexOf(after)
-		if (index > -1) {
-			this.insert(view, index + 1)
-		}
-
-		return this
-	}
-
-	/**
-	 * Removes a view from this fragment's child list.
-	 * @method remove
-	 * @since 0.1.0
-	 */
-	public remove(view: View) {
-
-		let index = this.children.indexOf(view)
-		if (index == -1) {
-			return this
-		}
-
-		this.children.splice(index, 1)
-
-		this.onRemove(view)
-
-		return this
-	}
-
-	/**
-	 * Remove all views this this view.
-	 * @method removeAllViews
-	 * @since 0.1.0
-	 */
-	public removeAllViews() {
-		this[CHILDREN] = []
-		return this
-	}
-
-	/**
-	 * Inserts this fragment to the specified view.
-	 * @method inject
-	 * @since 0.4.0
-	 */
-	public inject(view: View, index: number = 0) {
-		this[CHILDREN].forEach(child => view.insert(child, index++))
-		return this
-	}
-
-	/**
-	 * Called when a child view is added.
-	 * @method onInsert
-	 * @since 0.1.0
-	 */
-	public onInsert(view: View) {
-
-	}
-
-	/**
-	 * Called when a child view is removed.
-	 * @method onRemove
-	 * @since 0.1.0
-	 */
-	public onRemove(view: View) {
-
-	}
-
-	//--------------------------------------------------------------------------
-	// JSX API
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @property __jsxProps
-	 * @since 0.4.0
-	 * @hidden
-	 */
-	public __jsxProps: any
-
-	//--------------------------------------------------------------------------
-	// Private API
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @property [CHILDREN]
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	private [CHILDREN]: Array<Node> = []
-}
 
 /**
  * @type ViewInsertEvent
  * @since 0.1.0
  */
 export type ViewInsertEvent = {
-	view: View
+	child: View
 	index: number
 }
 
@@ -2702,7 +2357,7 @@ export type ViewInsertEvent = {
  * @since 0.1.0
  */
 export type ViewRemoveEvent = {
-	view: View
+	child: View
 	index: number
 }
 
@@ -2737,113 +2392,6 @@ export type ViewRedrawEvent = {
  */
 export type ViewProperties<T> = {
 	[P in keyof T]?: T[P]
-}
-
-/**
- * A node that can be added to a view.
- * @type Node
- * @since 0.4.0
- */
-export type Node = View | Fragment
-
-//------------------------------------------------------------------------------
-// Component Class
-//------------------------------------------------------------------------------
-
-/**
- * The base class for components.
- * @class Component
- * @super View
- * @since 0.1.0
- */
-export abstract class Component extends View {
-
-	//--------------------------------------------------------------------------
-	// Methods
-	//--------------------------------------------------------------------------
-
-	/**
-	 * The view's children.
-	 * @property children
-	 * @since 0.1.0
-	 */
-	public get children(): Array<View> {
-		return this.build() && this[CHILDREN]
-	}
-
-	//--------------------------------------------------------------------------
-	// Methods
-	//--------------------------------------------------------------------------
-
-	/**
-	 * Initializes the component.
-	 * @constructor
-	 * @since 0.1.0
-	 */
-	constructor() {
-		super()
-		this.createShadowRoot()
-	}
-
-	/**
-	 * Renders the component.
-	 * @method render
-	 * @since 0.3.0
-	 */
-	public render() {
-		return undefined
-	}
-
-	//--------------------------------------------------------------------------
-	// Events
-	//--------------------------------------------------------------------------
-
-	/**
-	 * Called when the component and its hierarchy is created.
-	 * @method onCreate
-	 * @since 0.4.0
-	 */
-	public onCreate() {
-
-	}
-
-	//--------------------------------------------------------------------------
-	// Internal API
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method build
-	 * @since 0.4.0
-	 * @hidden
-	 */
-	public build() {
-
-		if (this[BUILT]) {
-			return this
-		}
-
-		this[BUILT] = true
-
-		let content = this.render()
-		if (content) {
-			this.append(content)
-		}
-
-		this.onCreate()
-
-		return this
-	}
-
-	//--------------------------------------------------------------------------
-	// Private API
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @property [BUILT]
-	 * @since 0.4.0
-	 * @hidden
-	 */
-	private [BUILT]: boolean = false
 }
 
 //------------------------------------------------------------------------------
@@ -2902,13 +2450,4 @@ export const getClassListValue = (view: View) => {
 	}
 
 	return klass
-}
-
-/**
- * @function getClassRefsValue
- * @since 0.4.0
- * @hidden
- */
-export const getClassRefsValue = (view: View) => {
-	return Object.keys(getRefs(view)).join(',')
 }

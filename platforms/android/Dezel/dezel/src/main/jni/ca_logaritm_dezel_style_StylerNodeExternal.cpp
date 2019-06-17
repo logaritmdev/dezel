@@ -119,46 +119,48 @@ void Java_ca_logaritm_dezel_style_StylerNodeExternal_removeShadowedNode(JNIEnv *
 }
 
 /*
- * Class:     ca_logaritm_dezel_style_StyleExternal
- * Method:    appendStyle
- * Signature: (JLjava/lang/String;)V
+ * Class:     ca_logaritm_dezel_style_StylerNodeExternal
+ * Method:    hasStyle
+ * Signature: (JLjava/lang/String;)Z
  */
-void Java_ca_logaritm_dezel_style_StylerNodeExternal_appendStyle(JNIEnv *env, jclass, jlong stylerNodePtr, jstring styleStr) {
+jboolean Java_ca_logaritm_dezel_style_StylerNodeExternal_hasStyle(JNIEnv *env, jclass, jlong stylerNodePtr, jstring styleStr) {
 	JNI_STRING_CREATE(styleStr, style);
-	DLStylerNodeAppendStyle(reinterpret_cast<DLStylerNodeRef>(stylerNodePtr), style);
+	auto res = DLStylerNodeHasStyle(reinterpret_cast<DLStylerNodeRef>(stylerNodePtr), style);
+	JNI_STRING_DELETE(styleStr, style);
+	return static_cast<jboolean>(res);
+}
+
+/*
+ * Class:     ca_logaritm_dezel_style_StylerNodeExternal
+ * Method:    setStyle
+ * Signature: (JLjava/lang/String;Z)V
+ */
+void Java_ca_logaritm_dezel_style_StylerNodeExternal_setStyle(JNIEnv *env, jclass, jlong stylerNodePtr, jstring styleStr, jboolean enable) {
+	JNI_STRING_CREATE(styleStr, style);
+	DLStylerNodeSetStyle(reinterpret_cast<DLStylerNodeRef>(stylerNodePtr), style, enable);
 	JNI_STRING_DELETE(styleStr, style);
 }
 
 /*
- * Class:     ca_logaritm_dezel_style_StyleExternal
- * Method:    removeStyle
- * Signature: (JLjava/lang/String;)V
+ * Class:     ca_logaritm_dezel_style_StylerNodeExternal
+ * Method:    hasState
+ * Signature: (JLjava/lang/String;)Z
  */
-void Java_ca_logaritm_dezel_style_StylerNodeExternal_removeStyle(JNIEnv *env, jclass, jlong stylerNodePtr, jstring styleStr) {
-	JNI_STRING_CREATE(styleStr, style);
-	DLStylerNodeRemoveStyle(reinterpret_cast<DLStylerNodeRef>(stylerNodePtr), style);
-	JNI_STRING_DELETE(styleStr, style);
-}
-
-/*
- * Class:     ca_logaritm_dezel_style_StyleExternal
- * Method:    appendState
- * Signature: (JLjava/lang/String;)V
- */
-void Java_ca_logaritm_dezel_style_StylerNodeExternal_appendState(JNIEnv *env, jclass, jlong stylerNodePtr, jstring stateStr) {
+jboolean Java_ca_logaritm_dezel_style_StylerNodeExternal_hasState(JNIEnv *env, jclass, jlong stylerNodePtr, jstring stateStr) {
 	JNI_STRING_CREATE(stateStr, state);
-	DLStylerNodeAppendState(reinterpret_cast<DLStylerNodeRef>(stylerNodePtr), state);
+	auto res = DLStylerNodeHasState(reinterpret_cast<DLStylerNodeRef>(stylerNodePtr), state);
 	JNI_STRING_DELETE(stateStr, state);
+	return static_cast<jboolean>(res);
 }
 
 /*
- * Class:     ca_logaritm_dezel_style_StyleExternal
- * Method:    removeState
- * Signature: (JLjava/lang/String;)V
+ * Class:     ca_logaritm_dezel_style_StylerNodeExternal
+ * Method:    setState
+ * Signature: (JLjava/lang/String;Z)V
  */
-void Java_ca_logaritm_dezel_style_StylerNodeExternal_removeState(JNIEnv *env, jclass, jlong stylerNodePtr, jstring stateStr) {
+void Java_ca_logaritm_dezel_style_StylerNodeExternal_setState(JNIEnv *env, jclass, jlong stylerNodePtr, jstring stateStr, jboolean enable) {
 	JNI_STRING_CREATE(stateStr, state);
-	DLStylerNodeRemoveState(reinterpret_cast<DLStylerNodeRef>(stylerNodePtr), state);
+	DLStylerNodeSetState(reinterpret_cast<DLStylerNodeRef>(stylerNodePtr), state, enable);
 	JNI_STRING_DELETE(stateStr, state);
 }
 

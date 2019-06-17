@@ -178,8 +178,8 @@ DLStylerNodeRemoveShadowedNode(DLStylerNodeRef node, DLStylerNodeRef child)
 	node->shadowed.erase(it);
 }
 
-void
-DLStylerNodeAppendStyle(DLStylerNodeRef node, const char* style)
+bool
+DLStylerNodeHasStyle(DLStylerNodeRef node, const char* style)
 {
 	string value(style);
 
@@ -189,17 +189,11 @@ DLStylerNodeAppendStyle(DLStylerNodeRef node, const char* style)
 		value
 	);
 
-	if (res != node->styles.end()) {
-		return;
-	}
-
-	node->styles.push_back(value);
-
-	DLStylerNodeInvalidate(node);
+	return res != node->styles.end();
 }
 
 void
-DLStylerNodeRemoveStyle(DLStylerNodeRef node, const char* style)
+DLStylerNodeSetStyle(DLStylerNodeRef node, const char* style, bool enable)
 {
 	string value(style);
 
@@ -209,17 +203,29 @@ DLStylerNodeRemoveStyle(DLStylerNodeRef node, const char* style)
 		value
 	);
 
-	if (res == node->styles.end()) {
-		return;
-	}
+	if (enable) {
 
-	node->styles.erase(res);
+		if (res != node->styles.end()) {
+			return;
+		}
+
+		node->styles.push_back(value);
+
+	} else {
+
+		if (res == node->styles.end()) {
+			return;
+		}
+
+		node->styles.erase(res);
+
+	}
 
 	DLStylerNodeInvalidate(node);
 }
 
-void
-DLStylerNodeAppendState(DLStylerNodeRef node, const char* state)
+bool
+DLStylerNodeHasState(DLStylerNodeRef node, const char* state)
 {
 	string value(state);
 
@@ -229,17 +235,11 @@ DLStylerNodeAppendState(DLStylerNodeRef node, const char* state)
 		value
 	);
 
-	if (res != node->states.end()) {
-		return;
-	}
-
-	node->states.push_back(value);
-
-	DLStylerNodeInvalidate(node);
+	return res != node->states.end();
 }
 
 void
-DLStylerNodeRemoveState(DLStylerNodeRef node, const char* state)
+DLStylerNodeSetState(DLStylerNodeRef node, const char* state, bool enable)
 {
 	string value(state);
 
@@ -249,11 +249,23 @@ DLStylerNodeRemoveState(DLStylerNodeRef node, const char* state)
 		value
 	);
 
-	if (res == node->states.end()) {
-		return;
-	}
+	if (enable) {
 
-	node->states.erase(res);
+		if (res != node->states.end()) {
+			return;
+		}
+
+		node->states.push_back(value);
+
+	} else {
+
+		if (res == node->states.end()) {
+			return;
+		}
+
+		node->states.erase(res);
+
+	}
 
 	DLStylerNodeInvalidate(node);
 }

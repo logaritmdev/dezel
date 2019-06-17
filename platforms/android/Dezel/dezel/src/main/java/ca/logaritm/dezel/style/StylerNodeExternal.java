@@ -102,32 +102,32 @@ public class StylerNodeExternal {
 	static native void removeShadowedNode(long handle, long node);
 
 	/**
-	 * @method appendStyle
-	 * @since 0.1.0
+	 * @method hasStyle
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	static native void appendStyle(long handle, String trait);
+	static native boolean hasStyle(long handle, String style);
 
 	/**
-	 * @method removeStyle
-	 * @since 0.1.0
+	 * @method setStyle
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	static native void removeStyle(long handle, String trait);
+	static native void setStyle(long handle, String style, boolean enable);
 
 	/**
-	 * @method appendState
-	 * @since 0.1.0
+	 * @method hasState
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	static native void appendState(long handle, String state);
+	static native boolean hasState(long handle, String state);
 
 	/**
-	 * @method removeState
-	 * @since 0.1.0
+	 * @method setState
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	static native void removeState(long handle, String state);
+	static native void setState(long handle, String state, boolean enable);
 
 	/**
 	 * @method resolve

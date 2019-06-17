@@ -121,32 +121,32 @@ void DLStylerNodeInsertShadowedElement(DLStylerNodeRef node, DLStylerNodeRef chi
 void DLStylerNodeRemoveShadowedNode(DLStylerNodeRef node, DLStylerNodeRef child);
 
 /**
- * Marks the styles from this styles as invalid.
- * @function DLStylerNodeAppendStyle
- * @since 0.1.0
+ * Indicates whether the node has a specified style.
+ * @function DLStylerNodeHasStyle
+ * @since 0.7.0
  */
-void DLStylerNodeAppendStyle(DLStylerNodeRef node, const char* style);
+bool DLStylerNodeHasStyle(DLStylerNodeRef node, const char* style);
 
 /**
- * Adds a trait to this styling observer.
- * @function DLStylerNodeRemoveStyle
- * @since 0.1.0
+ * Sets or unsets a style from this node.
+ * @function DLStylerNodeSetStyle
+ * @since 0.7.0
  */
-void DLStylerNodeRemoveStyle(DLStylerNodeRef node, const char* style);
+void DLStylerNodeSetStyle(DLStylerNodeRef node, const char* style, bool enable);
 
 /**
- * Removes a trait from this styling observer.
- * @function DLStylerNodeAppendState
- * @since 0.1.0
+ * Indicates whether the node has a specified state.
+ * @function DLStylerNodeHasState
+ * @since 0.7.0
  */
-void DLStylerNodeAppendState(DLStylerNodeRef node, const char* state);
+bool DLStylerNodeHasState(DLStylerNodeRef node, const char* state);
 
 /**
- * Adds a state to this styling observer.
- * @function DLStylerNodeRemoveState
- * @since 0.1.0
+ * Sets or unsets a state from this node.
+ * @function DLStylerNodeSetState
+ * @since 0.7.0
  */
-void DLStylerNodeRemoveState(DLStylerNodeRef node, const char* state);
+void DLStylerNodeSetState(DLStylerNodeRef node, const char* state, bool enable);
 
 /**
  * Assigns user image to this styling observer.

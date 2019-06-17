@@ -134,39 +134,39 @@ open class StylerNode {
 	}
 
 	/**
-	 * @method appendStyle
-	 * @since 0.1.0
+	 * @method hasStyle
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	open func appendStyle(_ trait: String) {
-		DLStylerNodeAppendStyle(self.handle, trait)
+	open func hasStyle(_ style: String) -> Bool {
+		return DLStylerNodeHasStyle(self.handle, style)
 	}
 
 	/**
-	 * @method removeStyle
-	 * @since 0.1.0
+	 * @method setStyle
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	open func removeStyle(_ trait: String) {
-		DLStylerNodeRemoveStyle(self.handle, trait)
+	open func setStyle(_ style: String, enable: Bool = true) {
+		DLStylerNodeSetStyle(self.handle, style, enable)
 	}
 
 	/**
-	 * @method appendState
-	 * @since 0.1.0
+	 * @method hasState
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	open func appendState(_ state: String) {
-		DLStylerNodeAppendState(self.handle, state)
+	open func hasState(_ state: String) -> Bool {
+		return DLStylerNodeHasState(self.handle, state)
 	}
 
 	/**
-	 * @method removeState
-	 * @since 0.1.0
+	 * @method setState
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	open func removeState(_ state: String) {
-		DLStylerNodeRemoveState(self.handle, state)
+	open func setState(_ state: String, enable: Bool = true) {
+		DLStylerNodeSetState(self.handle, state, enable)
 	}
 
 	/**

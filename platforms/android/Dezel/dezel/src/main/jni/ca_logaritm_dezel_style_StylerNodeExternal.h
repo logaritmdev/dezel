@@ -97,35 +97,35 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_style_StylerNodeExternal_removeSha
 
 /*
  * Class:     ca_logaritm_dezel_style_StylerNodeExternal
- * Method:    appendStyle
- * Signature: (JLjava/lang/String;)V
+ * Method:    hasStyle
+ * Signature: (JLjava/lang/String;)Z
  */
-JNIEXPORT void JNICALL Java_ca_logaritm_dezel_style_StylerNodeExternal_appendStyle
+JNIEXPORT jboolean JNICALL Java_ca_logaritm_dezel_style_StylerNodeExternal_hasStyle
   (JNIEnv *, jclass, jlong, jstring);
 
 /*
  * Class:     ca_logaritm_dezel_style_StylerNodeExternal
- * Method:    removeStyle
- * Signature: (JLjava/lang/String;)V
+ * Method:    setStyle
+ * Signature: (JLjava/lang/String;Z)V
  */
-JNIEXPORT void JNICALL Java_ca_logaritm_dezel_style_StylerNodeExternal_removeStyle
+JNIEXPORT void JNICALL Java_ca_logaritm_dezel_style_StylerNodeExternal_setStyle
+  (JNIEnv *, jclass, jlong, jstring, jboolean);
+
+/*
+ * Class:     ca_logaritm_dezel_style_StylerNodeExternal
+ * Method:    hasState
+ * Signature: (JLjava/lang/String;)Z
+ */
+JNIEXPORT jboolean JNICALL Java_ca_logaritm_dezel_style_StylerNodeExternal_hasState
   (JNIEnv *, jclass, jlong, jstring);
 
 /*
  * Class:     ca_logaritm_dezel_style_StylerNodeExternal
- * Method:    appendState
- * Signature: (JLjava/lang/String;)V
+ * Method:    setState
+ * Signature: (JLjava/lang/String;Z)V
  */
-JNIEXPORT void JNICALL Java_ca_logaritm_dezel_style_StylerNodeExternal_appendState
-  (JNIEnv *, jclass, jlong, jstring);
-
-/*
- * Class:     ca_logaritm_dezel_style_StylerNodeExternal
- * Method:    removeState
- * Signature: (JLjava/lang/String;)V
- */
-JNIEXPORT void JNICALL Java_ca_logaritm_dezel_style_StylerNodeExternal_removeState
-  (JNIEnv *, jclass, jlong, jstring);
+JNIEXPORT void JNICALL Java_ca_logaritm_dezel_style_StylerNodeExternal_setState
+  (JNIEnv *, jclass, jlong, jstring, jboolean);
 
 /*
  * Class:     ca_logaritm_dezel_style_StylerNodeExternal

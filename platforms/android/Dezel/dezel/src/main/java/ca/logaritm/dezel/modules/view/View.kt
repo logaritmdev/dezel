@@ -1859,13 +1859,6 @@ open class View(context: JavaScriptContext) : JavaScriptClass(context), LayoutNo
 		private set
 
 	/**
-	 * @property forwardedRefs
-	 * @since 0.4.0
-	 * @hidden
-	 */
-	private var forwardedRefs: MutableMap<String, View> = mutableMapOf()
-
-	/**
 	 * @property ordered
 	 * @since 0.2.0
 	 * @hidden
@@ -6824,43 +6817,43 @@ open class View(context: JavaScriptContext) : JavaScriptClass(context), LayoutNo
 	}
 
 	/**
-	 * @method jsFunction_addStyle
-	 * @since 0.1.0
+	 * @method jsFunction_hasStyle
+	 * @since 0.7.0
 	 * @hidden
 	 */
 	@Suppress("unused")
-	open fun jsFunction_addStyle(callback: JavaScriptFunctionCallback) {
-		this.stylerNode.appendStyle(callback.argument(0).string)
+	open fun jsFunction_hasStyle(callback: JavaScriptFunctionCallback) {
+		callback.returns(this.stylerNode.hasStyle(callback.argument(0).string))
 	}
 
 	/**
-	 * @method jsFunction_removeStyle
-	 * @since 0.1.0
+	 * @method jsFunction_setStyle
+	 * @since 0.7.0
 	 * @hidden
 	 */
 	@Suppress("unused")
-	open fun jsFunction_removeStyle(callback: JavaScriptFunctionCallback) {
-		this.stylerNode.removeStyle(callback.argument(0).string)
+	open fun jsFunction_setStyle(callback: JavaScriptFunctionCallback) {
+		this.stylerNode.setStyle(callback.argument(0).string, callback.argument(1).boolean)
 	}
 
 	/**
-	 * @method jsFunction_addState
-	 * @since 0.1.0
+	 * @method jsFunction_hasState
+	 * @since 0.7.0
 	 * @hidden
 	 */
 	@Suppress("unused")
-	open fun jsFunction_addState(callback: JavaScriptFunctionCallback) {
-		this.stylerNode.appendState(callback.argument(0).string)
+	open fun jsFunction_hasState(callback: JavaScriptFunctionCallback) {
+		callback.returns(this.stylerNode.hasState(callback.argument(0).string))
 	}
 
 	/**
-	 * @method jsFunction_removeState
-	 * @since 0.1.0
+	 * @method jsFunction_setState
+	 * @since 0.7.0
 	 * @hidden
 	 */
 	@Suppress("unused")
-	open fun jsFunction_removeState(callback: JavaScriptFunctionCallback) {
-		this.stylerNode.removeState(callback.argument(0).string)
+	open fun jsFunction_setState(callback: JavaScriptFunctionCallback) {
+		this.stylerNode.setState(callback.argument(0).string, callback.argument(1).boolean)
 	}
 
 	/**
@@ -6918,20 +6911,6 @@ open class View(context: JavaScriptContext) : JavaScriptClass(context), LayoutNo
 				Convert.toPx(callback.argument(0).number).toInt()
 			)
 		}
-	}
-
-	//--------------------------------------------------------------------------
-	// Classes
-	//--------------------------------------------------------------------------
-
-	/**
-	 * A mounted reference to another view.
-	 * @class Ref
-	 * @since 0.4.0
-	 */
-	public class Ref {
-		public var view: View? = null
-		public var node: View? = null
 	}
 
 	//--------------------------------------------------------------------------
