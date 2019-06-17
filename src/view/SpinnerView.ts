@@ -2,8 +2,6 @@ import { bridge } from '../decorator/bridge'
 import { native } from '../decorator/native'
 import { View } from './View'
 
-import './SpinnerView.ds'
-
 @bridge('dezel.view.SpinnerView')
 
 /**
