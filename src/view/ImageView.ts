@@ -1,18 +1,7 @@
-import { bound } from '../decorator/bound'
-import { watch } from '../decorator/watch'
 import { bridge } from '../decorator/bridge'
 import { native } from '../decorator/native'
-import { Event } from '../event/Event'
 import { Image } from '../graphic/Image'
 import { View } from './View'
-
-import './ImageView.ds'
-
-/**
- * @symbol IMAGE
- * @since 0.1.0
- */
-export const IMAGE = Symbol('image')
 
 @bridge('dezel.view.ImageView')
 
