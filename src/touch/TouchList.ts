@@ -77,7 +77,7 @@ export class TouchList implements Iterable<Touch> {
 	 * @since 0.4.0
 	 */
 	public [Symbol.iterator]() {
-		return iterator(this[TOUCHES])
+		return iterator<Touch>(this[TOUCHES])
 	}
 
 	//--------------------------------------------------------------------------

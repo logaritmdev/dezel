@@ -1,7 +1,6 @@
 import { bridge } from '../decorator/bridge'
 import { native } from '../decorator/native'
 import { View } from './View'
-import './TextView.ds'
 
 @bridge('dezel.view.TextView')
 
