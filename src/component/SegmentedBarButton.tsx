@@ -1,13 +1,21 @@
 import { state } from '../decorator/state'
 import { Event } from '../event/Event'
 import { TouchEvent } from '../touch/TouchEvent'
-import { Reference } from '../util/Reference'
-import { Fragment } from '../view/Fragment'
-import { TextView } from '../view/TextView'
+import { View } from '../view/View'
 import { Component } from './Component'
+import { Label } from './Label'
 import './SegmentedBarButton.ds'
 import './SegmentedBarButton.ds.android'
 import './SegmentedBarButton.ds.ios'
+
+/**
+ * The internal references.
+ * @interface Refs
+ * @since 0.7.0
+ */
+interface Refs {
+	label: Label
+}
 
 /**
  * Displays a pressable element that performs an action in a segmented bar.
@@ -15,7 +23,7 @@ import './SegmentedBarButton.ds.ios'
  * @super Component
  * @since 0.1.0
  */
-export class SegmentedBarButton extends Component {
+export class SegmentedBarButton extends Component<Refs> {
 
 	//--------------------------------------------------------------------------
 	// Properties
@@ -26,8 +34,8 @@ export class SegmentedBarButton extends Component {
 	 * @property label
 	 * @since 0.1.0
 	 */
-	public get label(): TextView {
-		return this.labelRef.value!
+	public get label(): Label {
+		return this.refs.label
 	}
 
 	/**
@@ -62,9 +70,9 @@ export class SegmentedBarButton extends Component {
 	 */
 	public render() {
 		return (
-			<Fragment>
-				<TextView ref={this.labelRef} style="label" />
-			</Fragment>
+			<View>
+				<Label for={this} id="label" style="label" />
+			</View>
 		)
 	}
 
@@ -137,13 +145,6 @@ export class SegmentedBarButton extends Component {
 	//--------------------------------------------------------------------------
 	// Private API
 	//--------------------------------------------------------------------------
-
-	/**
-	 * @property labelRef
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private labelRef = new Reference<TextView>(this)
 
 	/**
 	 * @method emitPress

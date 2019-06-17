@@ -16,7 +16,7 @@ Button {
 	.label {
 		font-size: 17px;
 		lines: 1;
-		text-color: #2e84e2;
+		text-color: blue;
 		text-alignment: center;
 		text-overflow: ellipsis;
 	}

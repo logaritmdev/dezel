@@ -3,7 +3,7 @@
  * @function iterator
  * @since 0.6.0
  */
-export function iterator<T>(array: Array<T>) {
+export function iterator<T>(array: Array<T> | any) {
 
 	let index = 0
 

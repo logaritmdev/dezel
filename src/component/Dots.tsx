@@ -38,6 +38,17 @@ export class Dots extends Component {
 	//--------------------------------------------------------------------------
 
 	/**
+	 * @inherited
+	 * @method render
+	 * @since 0.7.0
+	 */
+	public render() {
+		return (
+			<View />
+		)
+	}
+
+	/**
 	 * Selects a dot using the specified index.
 	 * @method select
 	 * @since 0.5.0
@@ -68,12 +79,12 @@ export class Dots extends Component {
 
 		if (property == 'amount') {
 
-			this.removeAll()
+			this.empty()
 
 			let amount = newValue as number
 			if (amount) {
 				for (let i = 0; i < amount; i++) {
-					this.append(<View style="dot" />)
+					this.append(<Dot />)
 				}
 			}
 
@@ -134,5 +145,22 @@ export class Dots extends Component {
 		}
 
 		return this
+	}
+}
+
+/**
+ * @class Dot
+ * @since 1.0.0
+ * @hidden
+ */
+export class Dot extends Component {
+
+	/**
+	 * @inherited
+	 * @method render
+	 * @since 0.7.0
+	 */
+	public render() {
+		return null
 	}
 }

@@ -1,32 +1,62 @@
-import { Fragment } from '../view/Fragment'
-import { TextView } from '../view/TextView'
+import { setRef } from '../component/Component'
+import { Component } from '../component/Component'
+import { setChildren } from '../component/Host'
+import { setProperties } from '../component/Host'
+import { Host } from '../component/Host'
+import { Slot } from '../component/Slot'
+import { Placeholder } from '../view/Placeholder'
+import { View } from '../view/View'
 
 /**
  * @const createElement
  * @since 0.4.0
  * @hidden
  */
-export function createElement(Type: any, properties: any, ...children: Array<Node>) {
+export function createElement(Type: any, properties: any, ...children: Array<View>) {
 
 	let view = create(Type, properties)
+
+	if (view instanceof Host) {
+		setChildren(view, children)
+		setProperties(view, properties)
+		return view
+	}
+
+	if (view instanceof Component) {
+		view.build()
+	}
 
 	if (properties) {
 
 		let style = properties.style as string
 		let state = properties.state as string
 
-		if (style) view.addStyles(...style.split(' '))
-		if (state) view.setStates(...state.split(' '))
+		if (style) setStyles(view, ...style.split(' '))
+		if (state) setStates(view, ...state.split(' '))
 
 		delete properties.style
 		delete properties.state
 
-		let ref = properties.ref
-		if (ref) {
-			ref.set(view)
+		let container = properties.for as Component
+		if (container) {
+
+			if (view instanceof Slot) {
+
+				if (view.component == null) {
+					container.useSlot(view)
+				}
+
+			} else {
+
+				let identifier = properties.id
+				if (identifier) {
+					setRef(container, identifier, view)
+				}
+
+			}
 		}
 
-		delete properties.ref
+		delete properties.for
 
 		for (let key in properties) {
 
@@ -94,14 +124,7 @@ function append(view: any, children: Array<any>) {
 		if (type == 'string' ||
 			type == 'number' ||
 			type == 'boolean') {
-
-			if (view instanceof TextView) {
-				view.text = node
-				continue
-			}
-
-			view.append(<TextView text={node} />)
-
+			view.text = String(node)
 			continue
 		}
 
@@ -112,6 +135,24 @@ function append(view: any, children: Array<any>) {
 
 		view.append(node)
 	}
+}
+
+/**
+ * @function setStyles
+ * @since 0.7.0
+ * @hidden
+ */
+function setStyles(view: View, ...styles: Array<string>) {
+	for (let style of styles) view.setStyle(style)
+}
+
+/**
+ * @function setStates
+ * @since 0.7.0
+ * @hidden
+ */
+function setStates(view: View, ...states: Array<string>) {
+	for (let state of states) view.setState(state)
 }
 
 /**
@@ -159,7 +200,7 @@ function set(view: any, key: string, value: any) {
 			return
 		}
 	}
-	console.log('Setting', key, value)
+
 	view[key] = value
 }
 
@@ -171,7 +212,6 @@ function set(view: any, key: string, value: any) {
 Object.defineProperty(self, 'React', {
 
 	value: {
-		Fragment,
 		createElement
 	},
 

@@ -15,6 +15,7 @@ SegmentedBarButton {
 		text-color: #2e84e2;
 		text-alignment: center;
 		width: wrap;
+
 	}
 
 	&:pressed {

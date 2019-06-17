@@ -31,7 +31,7 @@ export class Emitter {
 	 * @property responder
 	 * @since 0.1.0
 	 */
-	public get responder(): Emitter | null {
+	public get responder(): Emitter | null | undefined {
 		return this[RESPONDER]
 	}
 
@@ -55,26 +55,17 @@ export class Emitter {
 	 * @since 0.1.0
 	 */
 	public on(type: string, listener: EventListener) {
-
-		type = type.toLowerCase()
-
-		let listeners = this[LISTENERS][type]
-		if (listeners == null) {
-			listeners = this[LISTENERS][type] = []
-		}
-
-		insert(listeners, listener)
-
+		insertListener(this, type.toLowerCase(), listener)
 		return this
 	}
 
 	/**
 	 * Add an event handler for a specified event that will be run only once.
-	 * @method once
-	 * @since 0.4.0
+	 * @method one
+	 * @since 0.7.0
 	 */
-	public once(type: string, listener: EventListener) {
-		this.on(type, once(this, type, listener))
+	public one(type: string, listener: EventListener) {
+		insertListener(this, type.toLowerCase(), listener, true)
 		return this
 	}
 
@@ -84,16 +75,7 @@ export class Emitter {
 	 * @since 0.1.0
 	 */
 	public off(type: string, listener: EventListener) {
-
-		type = type.toLowerCase()
-
-		let listeners = this[LISTENERS][type]
-		if (listeners == null) {
-			return this
-		}
-
-		remove(listeners, listener)
-
+		removeListener(this, type.toLowerCase(), listener)
 		return this
 	}
 
@@ -115,6 +97,7 @@ export class Emitter {
 		}
 
 		event.setTarget(this)
+		event.setSender(this)
 
 		this.dispatch(event)
 
@@ -157,7 +140,7 @@ export class Emitter {
 	 * @since 0.4.0
 	 * @hidden
 	 */
-	public setResponder(responder: Emitter | null) {
+	public setResponder(responder: Emitter | null | undefined) {
 		this[RESPONDER] = responder
 	}
 
@@ -170,7 +153,7 @@ export class Emitter {
 	 * @since 0.4.0
 	 * @hidden
 	 */
-	private [RESPONDER]: Emitter | null = null
+	private [RESPONDER]: Emitter | null | undefined
 
 	/**
 	 * @property [LISTENERS]
@@ -191,12 +174,7 @@ export class Emitter {
 		this.onEmit(event)
 
 		if (event.canceled == false) {
-			let listeners = this[LISTENERS][event.type]
-			if (listeners) {
-				listeners.forEach(listener => {
-					listener.call(this, event)
-				})
-			}
+			issue(this, event)
 		}
 
 		this.onDispatch(event)
@@ -213,44 +191,71 @@ export class Emitter {
 }
 
 /**
- * @function insert
- * @since 0.4.0
+ * @function insertListener
+ * @since 0.7.0
  * @hidden
  */
-const insert = (array: Array<any>, value: any) => {
-	let index = array.indexOf(value)
-	if (index == -1) {
-		array.push(value)
+function insertListener(emitter: Emitter, type: string, listener: EventListener, one: boolean = false) {
+
+	let listeners = emitter[LISTENERS][type]
+	if (listeners == null) {
+		listeners = emitter[LISTENERS][type] = []
 	}
-}
 
-/**
- * @function remove
- * @since 0.4.0
- * @hidden
- */
-const remove = (array: Array<any>, value: any) => {
-	let index = array.indexOf(value)
-	if (index > -1) {
-		array.splice(index, 1)
-	}
-}
+	if (one) {
 
-/**
- * @function once
- * @since 0.4.0
- * @hidden
- */
-const once = (emitter: Emitter, type: string, listener: EventListener) => {
+		function callback(event: Event) {
 
-	const callback = (event: Event) => {
+			if (emitter) {
+				emitter.off(type, callback)
+			}
 
-		if (emitter) {
-			emitter.off(type, callback)
+			listener(event)
 		}
 
-		listener(event)
+		listeners.push(callback)
+
+	} else {
+
+		listeners.push(listener)
+
+	}
+}
+
+/**
+ * @function removeListener
+ * @since 0.7.0
+ * @hidden
+ */
+function removeListener(emitter: Emitter, type: string, listener: EventListener) {
+
+	let listeners = emitter[LISTENERS][type]
+	if (listeners == null) {
+		return
 	}
 
-	return callback
+	let index = listeners.indexOf(listener)
+	if (index > -1) {
+		listeners.splice(index, 1)
+	}
+}
+
+/**
+ * @function issue
+ * @since 0.7.0
+ * @hidden
+ */
+function issue(emitter: Emitter, event: Event) {
+
+	let listeners = emitter[LISTENERS][event.type]
+	if (listeners == null) {
+		return
+	}
+
+	for (let listener of listeners) {
+		listener.call(
+			emitter,
+			event
+		)
+	}
 }

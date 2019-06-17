@@ -4,7 +4,6 @@ import { Component } from '../component/Component'
 import { bound } from '../decorator/bound'
 import { watch } from '../decorator/watch'
 import { Event } from '../event/Event'
-import { Fragment } from '../view/Fragment'
 import { ViewMoveToWindowEvent } from '../view/View'
 import { ScreenDismissGesture } from './gesture/ScreenDismissGesture'
 import { ScreenTransition } from './transition/ScreenTransition'
@@ -13,9 +12,9 @@ import { Content } from './Content'
 import { Enclosure } from './Enclosure'
 import { Footer } from './Footer'
 import { Header } from './Header'
+import './Screen.ds'
 import './Screen.ds.android'
 import './Screen.ds.ios'
-import './Screen.ds'
 
 /**
  * @symbol PRESENTER
@@ -70,7 +69,7 @@ export const ACTIVE = Symbol('active')
  * @super View
  * @since 0.1.0
  */
-export class Screen<T = any> extends Component {
+export abstract class Screen<TRefs = any, TResult = any> extends Component<TRefs> {
 
 	//--------------------------------------------------------------------------
 	// Propertis
@@ -190,26 +189,11 @@ export class Screen<T = any> extends Component {
 	 * @property result
 	 * @since 0.1.0
 	 */
-	public result?: T | null
+	public result?: TResult | null
 
 	//--------------------------------------------------------------------------
 	// Methods
 	//--------------------------------------------------------------------------
-
-	/**
-	 * @inherited
-	 * @method render
-	 * @since 0.3.0
-	 */
-	public render() {
-		return (
-			<Fragment>
-				<Header></Header>
-				<Content></Content>
-				<Footer></Footer>
-			</Fragment>
-		)
-	}
 
 	/**
 	 * @inherited
@@ -256,7 +240,7 @@ export class Screen<T = any> extends Component {
 
 				return new Promise(success => {
 					if (this.presentee) {
-						this.presentee.once('dispose', () => this.present(screen, transition, options).then(success))
+						this.presentee.one('dispose', () => this.present(screen, transition, options).then(success))
 					}
 				})
 
@@ -346,7 +330,7 @@ export class Screen<T = any> extends Component {
 
 				return new Promise(success => {
 					if (this.presentee) {
-						this.presentee.once('dispose', () => this.prompt(screen, transition, options).then(success))
+						this.presentee.one('dispose', () => this.prompt(screen, transition, options).then(success))
 					}
 				})
 
@@ -372,7 +356,7 @@ export class Screen<T = any> extends Component {
 		}
 
 		return new Promise(success => {
-			this.present(screen.once('dispose', () => success(screen.result)), transition, options)
+			this.present(screen.one('dispose', () => success(screen.result)), transition, options)
 		})
 	}
 
@@ -703,8 +687,9 @@ export class Screen<T = any> extends Component {
 	 * @since 0.4.0
 	 */
 	public onMoveToWindowDefault(event: Event<ViewMoveToWindowEvent>) {
-
-		super.onMoveToWindowDefault(event)
+		// TODO
+		// Use pubsub ?
+		//super.onMoveToWindowDefault(event)
 
 		if (event.data.window) {
 			this.application.on('beforekeyboardshow', this.onBeforeApplicationKeyboardShow)

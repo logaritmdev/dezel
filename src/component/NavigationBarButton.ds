@@ -20,7 +20,6 @@ NavigationBarButton {
 	.label {
 		font-size: 17px;
 		lines: 1;
-		text-color: #000;
 	}
 
 	&:pressed {

@@ -1,14 +1,23 @@
 import { state } from '../decorator/state'
 import { Event } from '../event/Event'
 import { TouchEvent } from '../touch/TouchEvent'
-import { Reference } from '../util/Reference'
-import { Fragment } from '../view/Fragment'
-import { ImageView } from '../view/ImageView'
-import { TextView } from '../view/TextView'
+import { View } from '../view/View'
 import { Component } from './Component'
+import { Image } from './Image'
+import { Label } from './Label'
 import './NavigationBarButton.ds'
 import './NavigationBarButton.ds.android'
 import './NavigationBarButton.ds.ios'
+
+/**
+ * The internal references.
+ * @interface Refs
+ * @since 0.7.0
+ */
+interface Refs {
+	label: Label
+	image: Image
+}
 
 /**
  * Displays a pressable element that performs an action in a navigation bar.
@@ -16,7 +25,7 @@ import './NavigationBarButton.ds.ios'
  * @super Component
  * @since 0.1.0
  */
-export class NavigationBarButton extends Component {
+export class NavigationBarButton extends Component<Refs> {
 
 	//--------------------------------------------------------------------------
 	// Properties
@@ -27,8 +36,8 @@ export class NavigationBarButton extends Component {
 	 * @property label
 	 * @since 0.1.0
 	 */
-	public get label(): TextView {
-		return this.labelRef.value!
+	public get label(): Label {
+		return this.refs.label
 	}
 
 	/**
@@ -36,8 +45,8 @@ export class NavigationBarButton extends Component {
 	 * @property image
 	 * @since 0.5.0
 	 */
-	public get image(): ImageView {
-		return this.imageRef.value!
+	public get image(): Image {
+		return this.refs.image
 	}
 
 	/**
@@ -72,10 +81,10 @@ export class NavigationBarButton extends Component {
 	 */
 	public render() {
 		return (
-			<Fragment>
-				<ImageView ref={this.imageRef} style="image" />
-				<TextView ref={this.labelRef} style="label" />
-			</Fragment>
+			<View>
+				<Image for={this} id="image" style="image" />
+				<Label for={this} id="label" style="label" />
+			</View>
 		)
 	}
 
@@ -148,20 +157,6 @@ export class NavigationBarButton extends Component {
 	//--------------------------------------------------------------------------
 	// Private API
 	//--------------------------------------------------------------------------
-
-	/**
-	 * @property labelRef
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private labelRef = new Reference<TextView>(this)
-
-	/**
-	 * @property imageRef
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private imageRef = new Reference<ImageView>(this)
 
 	/**
 	 * @method emitPress

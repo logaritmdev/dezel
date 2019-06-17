@@ -1,6 +1,7 @@
 import { bound } from '../decorator/bound'
 import { watch } from '../decorator/watch'
 import { Event } from '../event/Event'
+import { View } from '../view/View'
 import { ViewInsertEvent } from '../view/View'
 import { Component } from './Component'
 import { SegmentedBarButton } from './SegmentedBarButton'
@@ -14,7 +15,7 @@ import './SegmentedBar.ds.ios'
  * @super Component
  * @since 0.1.0
  */
-export class SegmentedBar extends Component {
+export class SegmentedBar extends Component<Component> {
 
 	//--------------------------------------------------------------------------
 	// Properties
@@ -39,6 +40,15 @@ export class SegmentedBar extends Component {
 	//--------------------------------------------------------------------------
 	// Methods
 	//--------------------------------------------------------------------------
+
+	/**
+	 * @inherited
+	 * @method render
+	 * @since 0.7.0
+	 */
+	public render() {
+		return null
+	}
 
 	/**
 	 * Selects a button button using the specified index.
@@ -90,15 +100,15 @@ export class SegmentedBar extends Component {
 		switch (event.type) {
 
 			case 'beforeselect':
-				this.onBeforeSelect(event)
+				this.onBeforeSelect(event.data.index)
 				break
 
 			case 'select':
-				this.onSelect(event)
+				this.onSelect(event.data.index)
 				break
 
 			case 'deselect':
-				this.onDeselect(event)
+				this.onDeselect(event.data.index)
 				break
 		}
 
@@ -110,7 +120,7 @@ export class SegmentedBar extends Component {
 	 * @method onBeforeSelect
 	 * @since 0.1.0
 	 */
-	public onBeforeSelect(event: Event<SegmentedBarSelectEvent>) {
+	public onBeforeSelect(index: number) {
 
 	}
 
@@ -119,7 +129,7 @@ export class SegmentedBar extends Component {
 	 * @method onSelect
 	 * @since 0.1.0
 	 */
-	public onSelect(event: Event<SegmentedBarSelectEvent>) {
+	public onSelect(index: number) {
 
 	}
 
@@ -128,7 +138,7 @@ export class SegmentedBar extends Component {
 	 * @method onDeselect
 	 * @since 0.1.0
 	 */
-	public onDeselect(event: Event<SegmentedBarDeselectEvent>) {
+	public onDeselect(index: number) {
 
 	}
 
@@ -137,18 +147,13 @@ export class SegmentedBar extends Component {
 	 * @method onInsert
 	 * @since 0.1.0
 	 */
-	public onInsert(event: Event<ViewInsertEvent>) {
+	public onInsert(child: View, index: number) {
 
-		super.onInsert(event)
+		super.onInsert(child, index)
 
-		if (event.data.view instanceof SegmentedBarButton) {
-
-			event.data.view.on('tap', this.onSegmentedBarItemTap)
-
-			this.insertSegmentedBarButton(
-				event.data.view,
-				event.data.index
-			)
+		if (child instanceof SegmentedBarButton) {
+			child.on('press', this.onSegmentedBarButtonPress)
+			this.insertSegmentedBarButton(child, index)
 		}
 	}
 
@@ -157,18 +162,13 @@ export class SegmentedBar extends Component {
 	 * @method onRemove
 	 * @since 0.1.0
 	 */
-	public onRemove(event: Event<ViewInsertEvent>) {
+	public onRemove(child: View, index: number) {
 
-		super.onRemove(event)
+		super.onRemove(child, index)
 
-		if (event.data.view instanceof SegmentedBarButton) {
-
-			event.data.view.off('tap', this.onSegmentedBarItemTap)
-
-			this.removeSegmentedBarButton(
-				event.data.view,
-				event.data.index
-			)
+		if (child instanceof SegmentedBarButton) {
+			child.off('press', this.onSegmentedBarButtonPress)
+			this.removeSegmentedBarButton(child, index)
 		}
 	}
 
@@ -280,11 +280,11 @@ export class SegmentedBar extends Component {
 	}
 
 	/**
-	 * @inherited
-	 * @method onSegmentedBarItemTap
-	 * @since 0.1.0
+	 * @method onSegmentedBarButtonPress
+	 * @since 0.7.0
+	 * @hidden
 	 */
-	@bound private onSegmentedBarItemTap(event: Event) {
+	@bound private onSegmentedBarButtonPress(event: Event) {
 		this.select(this.buttons.indexOf(event.sender as SegmentedBarButton))
 	}
 }

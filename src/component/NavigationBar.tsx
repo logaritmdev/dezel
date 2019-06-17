@@ -3,11 +3,10 @@ import { bound } from '../decorator/bound'
 import { watch } from '../decorator/watch'
 import { Event } from '../event/Event'
 import { Locale } from '../locale/Locale'
-import { Reference } from '../util/Reference'
-import { Fragment } from '../view/Fragment'
-import { TextView } from '../view/TextView'
 import { View } from '../view/View'
 import { Component } from './Component'
+import { Host } from './Host'
+import { Label } from './Label'
 import { NavigationBarBackButton } from './NavigationBarBackButton'
 import { NavigationBarButton } from './NavigationBarButton'
 import './NavigationBar.ds'
@@ -15,12 +14,24 @@ import './NavigationBar.ds.android'
 import './NavigationBar.ds.ios'
 
 /**
+ * The internal references.
+ * @interface Refs
+ * @since 0.7.0
+ */
+interface Refs {
+	title: Label
+	titleContainer: View
+	mainButtonsContainer: View
+	sideButtonsContainer: View
+}
+
+/**
  * Displays a bar with a title and navigations components.
  * @class NavigationBar
  * @super Component
  * @since 0.1.0
  */
-export class NavigationBar extends Component {
+export class NavigationBar extends Component<Refs> {
 
 	//--------------------------------------------------------------------------
 	// Properties
@@ -31,14 +42,8 @@ export class NavigationBar extends Component {
 	 * @property title
 	 * @since 0.1.0
 	 */
-	public get title(): TextView {
-
-		let value = this.titleRef.value
-		if (value == null) {
-			throw new Error('Missing reference for key: title')
-		}
-
-		return value
+	public get title(): Label {
+		return this.refs.title
 	}
 
 	/**
@@ -126,25 +131,25 @@ export class NavigationBar extends Component {
 	 */
 	public render() {
 		return (
-			<Fragment>
-				<View ref={this.titleContainerRef} style="title-container" onBeforeLayout={this.onTitleContainerBeforeLayout}>
-					<TextView ref={this.titleRef} style="title" />
+			<Host>
+				<View for={this} style="title-container" onBeforeLayout={this.onTitleContainerBeforeLayout}>
+					<Label for={this} style="title" />
 				</View>
-			</Fragment>
+			</Host>
 		)
 	}
 
 	/**
 	 * @inherited
-	 * @method onCreate
+	 * @method onRender
 	 * @since 0.4.0
 	 */
-	public onCreate() {
+	public onRender() {
 
-		super.onCreate()
+		super.onRender()
 
-		let sideButtonContainer = <View ref={this.sideButtonsContainerRef} style="buttons-container" />
-		let mainButtonContainer = <View ref={this.mainButtonsContainerRef} style="buttons-container" />
+		let sideButtonContainer = <View for={this.refs.sideButtonsContainer} style="buttons-container" />
+		let mainButtonContainer = <View for={this.refs.mainButtonsContainer} style="buttons-container" />
 
 		if (Locale.current.ltr) {
 			this.insert(sideButtonContainer, 0)
@@ -194,34 +199,6 @@ export class NavigationBar extends Component {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @property titleRef
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private titleRef = new Reference<TextView>(this)
-
-	/**
-	 * @property titleContainerRef
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private titleContainerRef = new Reference<View>(this)
-
-	/**
-	 * @property mainButtonsContainerRef
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private mainButtonsContainerRef = new Reference<View>(this)
-
-	/**
-	 * @property sideButtonsContainerRef
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private sideButtonsContainerRef = new Reference<View>(this)
-
-	/**
 	 * @method onTitleContainerBeforeLayout
 	 * @since 0.1.0
 	 * @hidden
@@ -232,7 +209,7 @@ export class NavigationBar extends Component {
 			return
 		}
 
-		let titleContainer = this.titleContainerRef.value
+		let titleContainer = this.refs.titleContainer
 		if (titleContainer == null) {
 			return
 		}
@@ -354,11 +331,7 @@ export class NavigationBar extends Component {
 	 * @hidden
 	 */
 	private appendMainButton(button: NavigationBarButton) {
-
-		if (this.mainButtonsContainerRef.value) {
-			this.mainButtonsContainerRef.value.append(button)
-		}
-
+		this.refs.mainButtonsContainer.append(button)
 		return this
 	}
 
@@ -368,11 +341,7 @@ export class NavigationBar extends Component {
 	 * @hidden
 	 */
 	private removeMainButton(button: NavigationBarButton) {
-
-		if (this.mainButtonsContainerRef.value) {
-			this.mainButtonsContainerRef.value.remove(button)
-		}
-
+		this.refs.mainButtonsContainer.remove(button)
 		return this
 	}
 
@@ -382,11 +351,7 @@ export class NavigationBar extends Component {
 	 * @hidden
 	 */
 	private appendSideButton(button: NavigationBarButton) {
-
-		if (this.sideButtonsContainerRef.value) {
-			this.sideButtonsContainerRef.value.append(button)
-		}
-
+		this.refs.sideButtonsContainer.append(button)
 		return this
 	}
 
@@ -396,11 +361,7 @@ export class NavigationBar extends Component {
 	 * @hidden
 	 */
 	private removeSideButton(button: NavigationBarButton) {
-
-		if (this.sideButtonsContainerRef.value) {
-			this.sideButtonsContainerRef.value.remove(button)
-		}
-
+		this.refs.sideButtonsContainer.remove(button)
 		return this
 	}
 }

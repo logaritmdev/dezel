@@ -358,23 +358,23 @@ export class ListOptimizer<T = any> extends ContentOptimizer<T> {
 	 * @since 0.4.0
 	 * @hidden
 	 */
-	private nativeInsertItem(index: number, item: View) {
+	private nativeInsertItem(index: number, child: View) {
 
 		let view = this.view
 		if (view == null) {
 			return
 		}
 
-		item.setResponder(view)
+		child.setResponder(view)
 
-		view.emit<ViewInsertEvent>('insert', { data: { view: item, index } })
+		view.emit<ViewInsertEvent>('insert', { data: { child, index } })
 
 		let data = this.data.get(index)
 		if (data == null) {
 			return
 		}
 
-		this.onInsertItem(index, data, item)
+		this.onInsertItem(index, data, child)
 	}
 
 	/**
@@ -382,23 +382,23 @@ export class ListOptimizer<T = any> extends ContentOptimizer<T> {
 	 * @since 0.4.0
 	 * @hidden
 	 */
-	private nativeRemoveItem(index: number, item: View) {
+	private nativeRemoveItem(index: number, child: View) {
 
 		let view = this.view
 		if (view == null) {
 			return
 		}
 
-		item.setResponder(null)
+		child.setResponder(null)
 
-		view.emit<ViewRemoveEvent>('remove', { data: { view: item, index } })
+		view.emit<ViewRemoveEvent>('remove', { data: { child, index } })
 
 		let data = this.data.get(index)
 		if (data == null) {
 			return
 		}
 
-		this.onRemoveItem(index, data, item)
+		this.onRemoveItem(index, data, child)
 	}
 }
 

@@ -3,6 +3,7 @@ import { watch } from '../decorator/watch'
 import { Event } from '../event/Event'
 import { Touch } from '../touch/Touch'
 import { TouchEvent } from '../touch/TouchEvent'
+import { View } from '../view/View'
 import { ViewInsertEvent } from '../view/View'
 import { ViewRemoveEvent } from '../view/View'
 import { Component } from './Component'
@@ -68,6 +69,15 @@ export class List extends Component {
 
 	/**
 	 * @inherited
+	 * @method render
+	 * @since 0.7.0
+	 */
+	public render() {
+		return null
+	}
+
+	/**
+	 * @inherited
 	 * @method destroy
 	 * @since 0.2.0
 	 */
@@ -82,6 +92,8 @@ export class List extends Component {
 		}
 
 		super.destroy()
+
+		return this
 	}
 
 	/**
@@ -124,20 +136,17 @@ export class List extends Component {
 	 * @method onInsert
 	 * @since 0.1.0
 	 */
-	public onInsert(event: Event<ViewInsertEvent>) {
+	public onInsert(child: View, index: number) {
 
-		super.onInsert(event)
+		super.onInsert(child, index)
 
-		if (event.data.view instanceof ListItem) {
+		if (child instanceof ListItem) {
 
-			event.data.view.on('touchcancel', this.onListItemTouchCancel)
-			event.data.view.on('touchstart', this.onListItemTouchStart)
-			event.data.view.on('touchend', this.onListItemTouchEnd)
+			child.on('touchcancel', this.onListItemTouchCancel)
+			child.on('touchstart', this.onListItemTouchStart)
+			child.on('touchend', this.onListItemTouchEnd)
 
-			this.insertListItem(
-				event.data.view as ListItem,
-				event.data.index
-			)
+			this.insertListItem(child, index)
 		}
 	}
 
@@ -146,20 +155,17 @@ export class List extends Component {
 	 * @method onRemove
 	 * @since 0.1.0
 	 */
-	public onRemove(event: Event<ViewRemoveEvent>) {
+	public onRemove(child: View, index: number) {
 
-		super.onRemove(event)
+		super.onRemove(child, index)
 
-		if (event.data.view instanceof ListItem) {
+		if (child instanceof ListItem) {
 
-			event.data.view.off('touchcancel', this.onListItemTouchCancel)
-			event.data.view.off('touchstart', this.onListItemTouchStart)
-			event.data.view.off('touchend', this.onListItemTouchEnd)
+			child.off('touchcancel', this.onListItemTouchCancel)
+			child.off('touchstart', this.onListItemTouchStart)
+			child.off('touchend', this.onListItemTouchEnd)
 
-			this.removeListItem(
-				event.data.view as ListItem,
-				event.data.index
-			)
+			this.removeListItem(child, index)
 		}
 	}
 

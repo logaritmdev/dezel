@@ -26,7 +26,18 @@ interface Dezel {
 
 declare global {
 
+	/**
+	 * Whether the application is in development mode.
+	 * @const _DEV_
+	 * @since 0.1.0
+	 */
 	const _DEV_: boolean
+
+	/**
+	 * Whether the application is running on the simulator.
+	 * @const _DEV_
+	 * @since 0.1.0
+	 */
 	const _SIM_: boolean
 
 	/**
@@ -35,9 +46,6 @@ declare global {
 	 * @since 0.1.0
 	 */
 	const dezel: Dezel
-
-
-	function t(message: string, context?: string): string
 
 	/**
 	 * It would be nice if this could work better with elements.

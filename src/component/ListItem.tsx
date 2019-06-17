@@ -1,4 +1,5 @@
 import { state } from '../decorator/state'
+import { View } from '../view/View'
 import { Component } from './Component'
 import './ListItem.ds'
 import './ListItem.ds.android'
@@ -10,7 +11,7 @@ import './ListItem.ds.ios'
  * @super Component
  * @since 0.1.0
  */
-export class ListItem extends Component {
+export abstract class ListItem extends Component {
 
 	//--------------------------------------------------------------------------
 	// Properties
@@ -44,4 +45,16 @@ export class ListItem extends Component {
 	 */
 	public selectable: boolean = true
 
+	//--------------------------------------------------------------------------
+	// Methods
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @inherited
+	 * @method render
+	 * @since 0.7.0
+	 */
+	public render() {
+		return null
+	}
 }

@@ -1,13 +1,24 @@
+import { Image } from '../component/Image'
+import { Label } from '../component/Label'
 import { state } from '../decorator/state'
 import { TouchEvent } from '../touch/TouchEvent'
-import { Reference } from '../util/Reference'
-import { Fragment } from '../view/Fragment'
-import { ImageView } from '../view/ImageView'
-import { TextView } from '../view/TextView'
+import { View } from '../view/View'
 import { Component } from './Component'
+import { Host } from './Host'
 import './TabBarButton.ds'
 import './TabBarButton.ds.android'
 import './TabBarButton.ds.ios'
+
+/**
+ * The internal references.
+ * @interface Refs
+ * @since 0.7.0
+ */
+interface Refs {
+	label: Label
+	image: Image
+	badge: Label
+}
 
 /**
  * Displays a pressable element that performs an action in a tab bar.
@@ -15,28 +26,28 @@ import './TabBarButton.ds.ios'
  * @super Component
  * @since 0.1.0
  */
-export class TabBarButton extends Component {
+export class TabBarButton extends Component<Refs> {
 
 	//--------------------------------------------------------------------------
 	// Properties
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The tab bar button image.
-	 * @property image
-	 * @since 0.1.0
-	 */
-	public get image(): ImageView {
-		return this.imageRef.value!
-	}
-
-	/**
 	 * The tab bar button label.
 	 * @property label
 	 * @since 0.1.0
 	 */
-	public get label(): TextView {
-		return this.labelRef.value!
+	public get label(): Label {
+		return this.refs.label
+	}
+
+	/**
+	 * The tab bar button image.
+	 * @property image
+	 * @since 0.1.0
+	 */
+	public get image(): Image {
+		return this.refs.image
 	}
 
 	/**
@@ -44,8 +55,8 @@ export class TabBarButton extends Component {
 	 * @property badge
 	 * @since 0.1.0
 	 */
-	public get badge(): TextView {
-		return this.badgeRef.value!
+	public get badge(): Label {
+		return this.refs.badge
 	}
 
 	/**
@@ -80,25 +91,25 @@ export class TabBarButton extends Component {
 	 */
 	public render() {
 		return (
-			<Fragment>
-				<ImageView ref={this.imageRef} style="image" />
-				<TextView ref={this.labelRef} style="label" />
-				<TextView ref={this.badgeRef} style="badge" />
-			</Fragment>
+			<Host>
+				<Image for={this} id="image" style="image" />
+				<Label for={this} id="label" style="label" />
+				<Label for={this} id="badge" style="badge" />
+			</Host>
 		)
 	}
 
 	/**
 	 * @inherited
-	 * @method onCreate
+	 * @method onRender
 	 * @since 0.3.0
 	 */
-	public onCreate() {
+	public onRender() {
 		this.badge.visible = false
 	}
 
 	//--------------------------------------------------------------------------
-	// Private API
+	// Events
 	//--------------------------------------------------------------------------
 
 	/**
@@ -147,27 +158,6 @@ export class TabBarButton extends Component {
 	//--------------------------------------------------------------------------
 	// Private API
 	//--------------------------------------------------------------------------
-
-	/**
-	 * @property imageRef
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private imageRef = new Reference<ImageView>(this)
-
-	/**
-	 * @property labelRef
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private labelRef = new Reference<TextView>(this)
-
-	/**
-	 * @property badgeRef
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private badgeRef = new Reference<TextView>(this)
 
 	/**
 	 * @method emitPress
