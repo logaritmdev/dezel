@@ -1,8 +1,6 @@
 import * as diff from 'fast-array-diff'
-import { Dictionary } from 'lodash'
-import { bound } from '../decorator/bound'
-import { watch } from '../decorator/watch'
 import { Emitter } from '../event/Emitter'
+import { iterator } from '../iterator'
 
 /**
  * @symbol DATA
@@ -314,7 +312,7 @@ export class DataSource<T> extends Emitter {
 	}
 
 	//--------------------------------------------------------------------------
-	// Data API
+	// Iterator
 	//--------------------------------------------------------------------------
 
 	/**
@@ -323,8 +321,12 @@ export class DataSource<T> extends Emitter {
 	 * @since 0.1.0
 	 */
 	[Symbol.iterator]() {
-		return this[ROWS]
+		return iterator(this[ROWS])
 	}
+
+	//--------------------------------------------------------------------------
+	// Data API
+	//--------------------------------------------------------------------------
 
 	/**
 	 * @property [DATA]
