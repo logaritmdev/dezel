@@ -1,11 +1,7 @@
-import { bound } from '../decorator/bound'
-import { watch } from '../decorator/watch'
-import { Event } from '../event/Event'
 import { Touch } from '../touch/Touch'
 import { TouchEvent } from '../touch/TouchEvent'
 import { Gesture } from './Gesture'
 import { GestureRegistry } from './Gesture'
-import { PanGestureEvent } from './PanGestureEvent'
 
 /**
  * Detects a pan gesture.
@@ -18,6 +14,15 @@ export class PanGesture extends Gesture {
 	//--------------------------------------------------------------------------
 	// Properties
 	//--------------------------------------------------------------------------
+
+	/**
+	 * @inherited
+	 * @property name
+	 * @since 0.7.0
+	 */
+	public get name(): string {
+		return 'pan'
+	}
 
 	/**
 	 * @property threshold
@@ -52,7 +57,7 @@ export class PanGesture extends Gesture {
 		let touch = event.touches.find(tracked)
 		if (touch) {
 
-			this.finish()
+			this.cancel()
 
 			this.trackedTouch = null
 			this.touchStartX = -1
@@ -121,7 +126,7 @@ export class PanGesture extends Gesture {
 			if (my) this.touchDetectedY = touch.y
 
 			if (mx || my) {
-				this.begin()
+				this.start()
 			}
 		}
 
@@ -135,7 +140,7 @@ export class PanGesture extends Gesture {
 				viewY: this.touchStartViewY + y
 			}
 
-			this.detect(new PanGestureEvent('pan', options), event)
+			this.detect(options)
 		}
 	}
 
@@ -157,7 +162,7 @@ export class PanGesture extends Gesture {
 		if (touch) {
 
 			if (this.detected) {
-				this.finish()
+				this.end()
 			}
 
 			this.trackedTouch = null

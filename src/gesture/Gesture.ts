@@ -4,6 +4,7 @@ import { Event } from '../event/Event'
 import { EventListener } from '../event/Event'
 import { TouchEvent } from '../touch/TouchEvent'
 import { View } from '../view/View'
+import { GestureEvent } from './GestureEvent'
 
 /**
  * @symbol VIEW
@@ -12,10 +13,10 @@ import { View } from '../view/View'
 export const VIEW = Symbol('view')
 
 /**
- * @symbol LISTENER
- * @since 0.1.0
+ * @symbol EVENT
+ * @since 0.7.0
  */
-export const LISTENER = Symbol('listener')
+export const EVENT = Symbol('event')
 
 /**
  * @symbol DETECTED
@@ -30,11 +31,18 @@ export const DETECTED = Symbol('detected')
 export const CAPTURED = Symbol('captured')
 
 /**
+ * @symbol CAPTURED_EVENT
+ * @since 0.7.0
+ */
+export const CAPTURED_EVENT = Symbol('capturedEvent')
+
+/**
  * The gesture options.
  * @interface GestureOptions
  * @since 0.1.0
  */
 export interface GestureOptions {
+	enabled?: boolean
 	capture?: boolean
 }
 
@@ -44,7 +52,7 @@ export interface GestureOptions {
  * @super Emitter
  * @since 0.1.0
  */
-export class Gesture extends Emitter {
+export abstract class Gesture extends Emitter {
 
 	//--------------------------------------------------------------------------
 	// Properties
@@ -65,6 +73,24 @@ export class Gesture extends Emitter {
 	public capture: boolean = false
 
 	/**
+	 * The gesture's view.
+	 * @property view
+	 * @since 0.1.0
+	 */
+	public get view(): View | null | undefined {
+		return this[VIEW]
+	}
+
+	/**
+	 * The event being processed by the gesture.
+	 * @property event
+	 * @since 0.7.0
+	 */
+	public get event(): TouchEvent | null | undefined {
+		return this[EVENT]
+	}
+
+	/**
 	 * Whether the gesture has been detected.
 	 * @property detected
 	 * @since 0.1.0
@@ -78,18 +104,25 @@ export class Gesture extends Emitter {
 	 * @property captured
 	 * @since 0.1.0
 	 */
-	private get captured(): boolean {
+	public get captured(): boolean {
 		return this[CAPTURED]
 	}
 
 	/**
-	 * The view that gesture will be detected upon.
+	 * The event that has been captured.
+	 * @property capturedEvent
+	 * @since 0.7.0
+	 */
+	public get capturedEvent(): TouchEvent | null | undefined {
+		return this[CAPTURED_EVENT]
+	}
+
+	/**
+	 * The gesture's name.
 	 * @property view
 	 * @since 0.1.0
 	 */
-	public get view(): View {
-		return this[VIEW]
-	}
+	public abstract get name(): string
 
 	//--------------------------------------------------------------------------
 	// Methods
@@ -101,24 +134,32 @@ export class Gesture extends Emitter {
 	 */
 	constructor(options: GestureOptions = {}) {
 		super()
-		this.capture = options.capture || false
+		this.enabled = 'enabled' in options ? !!options.enabled : true
+		this.capture = 'capture' in options ? !!options.capture : false
 	}
 
 	/**
-	 * Indicates to the detector that the gesture has begun.
-	 * @method begin
-	 * @since 0.5.0
+	 * Indicates that the gestion has started.
+	 * @method start
+	 * @since 0.7.0
 	 */
-	public begin() {
+	protected start(data: any = undefined) {
 
 		if (this.detected) {
-			throw new Error(`
-				Gesture error:
-				Gesture has already begun. Did you forget to call finish() ?
-			`)
+			throw new Error(
+				'Gesture error: ' +
+				'Gesture has already begun. Did you forget to call finish() ?'
+			)
 		}
 
-		this.emit('begin')
+		if (this.view == null) {
+			throw new Error(
+				'Gesture error: ' +
+				'The gestures has no view.'
+			)
+		}
+
+		this.view.emit(new GestureEvent('gesturestart', this, this.event!.touches, { data }))
 
 		this[DETECTED] = true
 		this[CAPTURED] = false
@@ -129,11 +170,11 @@ export class Gesture extends Emitter {
 	}
 
 	/**
-	 * Emits a gesture event to the receiver.
+	 * Indicates that the gesture has been detected.
 	 * @method detect
 	 * @since 0.5.0
 	 */
-	public detect(event: Event, source: TouchEvent) {
+	protected detect(data: any = undefined) {
 
 		if (this.detected == false) {
 			throw new Error(`
@@ -142,25 +183,26 @@ export class Gesture extends Emitter {
 			`)
 		}
 
+		if (this.view == null) {
+			throw new Error(
+				'Gesture error: \n' +
+				'The gestures has no view.'
+			)
+		}
+
 		this.captureEvent()
 
-		event.setSender(this.view)
-		event.setTarget(this.view)
-
-		let listener = this[LISTENER]
-		if (listener) {
-			listener(event)
-		}
+		this.view.emit(new GestureEvent('gesturedetect', this, this.event!.touches, { data }))
 
 		return this
 	}
 
 	/**
-	 * Indicates to the detector that the gesture has begun.
-	 * @method finish
-	 * @since 0.5.0
+	 * Indicates that the gesture has ended.
+	 * @method end
+	 * @since 0.7.0
 	 */
-	public finish() {
+	protected end(data: any = undefined) {
 
 		if (this.detected == false) {
 			throw new Error(`
@@ -169,7 +211,14 @@ export class Gesture extends Emitter {
 			`)
 		}
 
-		this.emit('finish')
+		if (this.view == null) {
+			throw new Error(
+				'Gesture error: \n' +
+				'The gestures has no view.'
+			)
+		}
+
+		this.view.emit(new GestureEvent('gestureend', this, this.event!.touches, { data }))
 
 		this[DETECTED] = false
 		this[CAPTURED] = false
@@ -178,21 +227,32 @@ export class Gesture extends Emitter {
 	}
 
 	/**
-	 * Called when the gestured is attached to a view.
-	 * @method onAttach
+	 * Indicates that the gesture has been canceled.
+	 * @method cancel
 	 * @since 0.5.0
 	 */
-	public onAttach() {
+	protected cancel(data: any = undefined) {
 
-	}
+		if (this.detected == false) {
+			throw new Error(`
+				Gesture error:
+				Gesture has not begun. Did you forget to call begin() ?
+			`)
+		}
 
-	/**
-	 * Called when the gestured is detached from a view.
-	 * @method onDetach
-	 * @since 0.5.0
-	 */
-	public onDetach() {
+		if (this.view == null) {
+			throw new Error(
+				'Gesture error: \n' +
+				'The gestures has no view.'
+			)
+		}
 
+		this.view.emit(new GestureEvent('gesturecancel', this, this.event!.touches, { data }))
+
+		this[DETECTED] = false
+		this[CAPTURED] = false
+
+		return this
 	}
 
 	/**
@@ -236,40 +296,43 @@ export class Gesture extends Emitter {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Attach the gesture to the specified view.
-	 * @method attach
-	 * @since 0.5.0
+	 * @method setView
+	 * @since 0.7.0
+	 * @hidden
 	 */
-	public attach(view: View, listener: EventListener) {
-
-		this[LISTENER] = listener
-
+	public setView(view: View | null | undefined) {
 		this[VIEW] = view
-		this[VIEW].on('touchcancel', this.onTouchCancelDefault)
-		this[VIEW].on('touchstart', this.onTouchStartDefault)
-		this[VIEW].on('touchmove', this.onTouchMoveDefault)
-		this[VIEW].on('touchend', this.onTouchEndDefault)
-
-		this.onAttach()
-
-		return this
 	}
 
 	/**
-	 * Detach the gesture from the specified view.
-	 * @method attach
-	 * @since 0.5.0
+	 * @method dispatchTouchEvent
+	 * @since 0.7.0
+	 * @hidden
 	 */
-	public detach() {
+	public dispatchTouchEvent(event: TouchEvent) {
 
-		this[VIEW].off('touchcancel', this.onTouchCancelDefault)
-		this[VIEW].off('touchstart', this.onTouchStartDefault)
-		this[VIEW].off('touchmove', this.onTouchMoveDefault)
-		this[VIEW].off('touchend', this.onTouchEndDefault)
+		this[EVENT] = event
 
-		this.onDetach()
+		switch (event.type) {
 
-		return this
+			case 'touchcancel':
+				this.dispatchTouchCancel(event)
+				break
+
+			case 'touchstart':
+				this.dispatchTouchStart(event)
+				break
+
+			case 'touchmove':
+				this.dispatchTouchMove(event)
+				break
+
+			case 'touchend':
+				this.dispatchTouchEnd(event)
+				break
+		}
+
+		this[EVENT] = null
 	}
 
 	//--------------------------------------------------------------------------
@@ -277,46 +340,39 @@ export class Gesture extends Emitter {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @property [VIEW]
+	 * @property VIEW
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	private [VIEW]: View
+	private [VIEW]: View | null | undefined
 
 	/**
-	 * @property [LISTENER]
-	 * @since 0.1.0
+	 * @property EVENT
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private [LISTENER]: Function
+	private [EVENT]: TouchEvent | null | undefined
 
 	/**
-	 * @property [DETECTED]
+	 * @property DETECTED
 	 * @since 0.1.0
 	 * @hidden
 	 */
 	private [DETECTED]: boolean = false
 
 	/**
-	 * @property [CAPTURED]
+	 * @property CAPTURED
 	 * @since 0.1.0
 	 * @hidden
 	 */
 	private [CAPTURED]: boolean = false
 
 	/**
-	 * @property currentEvent
-	 * @since 0.5.0
+	 * @property CAPTURED_EVENT
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private currentEvent?: TouchEvent | null
-
-	/**
-	 * @property capturedEvent
-	 * @since 0.5.0
-	 * @hidden
-	 */
-	private capturedEvent?: TouchEvent | null
+	private [CAPTURED_EVENT]: TouchEvent | null | undefined
 
 	/**
 	 * @method captureEvent
@@ -329,14 +385,14 @@ export class Gesture extends Emitter {
 			return this
 		}
 
-		let event = this.currentEvent
+		let event = this[EVENT]
 		if (event == null) {
 			return this
 		}
 
 		if (this[CAPTURED] == false) {
 			this[CAPTURED] = true
-			this.capturedEvent = event
+			this[CAPTURED_EVENT] = event
 			event.capture()
 		}
 
@@ -344,44 +400,13 @@ export class Gesture extends Emitter {
 	}
 
 	/**
-	 * @method onTouchEvent
-	 * @since 0.5.0
+	 * @method dispatchTouchCancel
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private onTouchEvent(event: TouchEvent) {
+	private dispatchTouchCancel(event: TouchEvent) {
 
-		this.currentEvent = event
-
-		switch (event.type) {
-
-			case 'touchcancel':
-				this.onTouchCancel(event)
-				break
-
-			case 'touchstart':
-				this.onTouchStart(event)
-				break
-
-			case 'touchmove':
-				this.onTouchMove(event)
-				break
-
-			case 'touchend':
-				this.onTouchEnd(event)
-				break
-		}
-
-		this.currentEvent = null
-	}
-
-	/**
-	 * @method onTouchCancelDefault
-	 * @since 0.5.0
-	 * @hidden
-	 */
-	@bound private onTouchCancelDefault(event: TouchEvent) {
-
-		if (event.dispatcher == this.capturedEvent) {
+		if (event.dispatcher == this[CAPTURED_EVENT]) {
 
 			/*
 			 * When an event is captured, it assigns the touchcancel event's
@@ -393,34 +418,34 @@ export class Gesture extends Emitter {
 			return
 		}
 
-		this.onTouchEvent(event)
+		this.onTouchCancel(event)
 	}
 
 	/**
-	 * @method onTouchStartDefault
-	 * @since 0.5.0
+	 * @method dispatchTouchStart
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	@bound private onTouchStartDefault(event: TouchEvent) {
-		this.onTouchEvent(event)
+	private dispatchTouchStart(event: TouchEvent) {
+		this.onTouchStart(event)
 	}
 
 	/**
-	 * @method onTouchMoveDefault
-	 * @since 0.5.0
+	 * @method dispatchTouchMove
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	@bound private onTouchMoveDefault(event: TouchEvent) {
-		this.onTouchEvent(event)
+	private dispatchTouchMove(event: TouchEvent) {
+		this.onTouchMove(event)
 	}
 
 	/**
-	 * @method onTouchEndDefault
+	 * @method dispatchTouchEnd
 	 * @since 0.5.0
 	 * @hidden
 	 */
-	@bound private onTouchEndDefault(event: TouchEvent) {
-		this.onTouchEvent(event)
+	private dispatchTouchEnd(event: TouchEvent) {
+		this.onTouchEnd(event)
 	}
 }
 

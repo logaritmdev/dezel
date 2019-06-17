@@ -3,7 +3,6 @@ import { TouchEvent } from '../touch/TouchEvent'
 import { Window } from '../view/Window'
 import { Gesture } from './Gesture'
 import { GestureRegistry } from './Gesture'
-import { TapGestureEvent } from './TapGestureEvent'
 
 /**
  * Detects a tap gesture.
@@ -12,6 +11,19 @@ import { TapGestureEvent } from './TapGestureEvent'
  * @since 0.1.0
  */
 export class TapGesture extends Gesture {
+
+	//--------------------------------------------------------------------------
+	// Methods
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @inherited
+	 * @property name
+	 * @since 0.7.0
+	 */
+	public get name(): string {
+		return 'tap'
+	}
 
 	//--------------------------------------------------------------------------
 	// Methods
@@ -74,9 +86,9 @@ export class TapGesture extends Gesture {
 
 		let valid = this.validate(touch)
 		if (valid) {
-			this.begin()
-			this.detect(new TapGestureEvent('tap', { touches: event.touches }), event)
-			this.finish()
+			this.start()
+			this.detect()
+			this.end()
 		}
 	}
 
