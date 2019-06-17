@@ -10,9 +10,9 @@ import { TouchEvent } from '../touch/TouchEvent'
 import { View } from '../view/View'
 import { ViewMoveToWindowEvent } from '../view/View'
 import { Window } from '../view/Window'
+import './TextInput.ds'
 import './TextInput.ds.android'
 import './TextInput.ds.ios'
-import './TextInput.ds'
 
 
 @bridge('dezel.form.TextInput')
@@ -327,13 +327,14 @@ export class TextInput extends View {
 	 * @method onMoveToWindow
 	 * @since 0.2.0
 	 */
-	public onMoveToWindow(event: Event<ViewMoveToWindowEvent>) {
+	public onMoveToWindow(window?: Window | null) {
+
+		super.onMoveToWindow(window)
 
 		if (this.window) {
 			this.window.off('tap', this.onWindowTap)
 		}
 
-		let window = event.data.window
 		if (window) {
 			window.on('tap', this.onWindowTap)
 		}

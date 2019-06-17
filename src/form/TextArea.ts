@@ -10,9 +10,9 @@ import { TouchEvent } from '../touch/TouchEvent'
 import { View } from '../view/View'
 import { ViewMoveToWindowEvent } from '../view/View'
 import { Window } from '../view/Window'
+import './TextArea.ds'
 import './TextArea.ds.android'
 import './TextArea.ds.ios'
-import './TextArea.ds'
 
 
 @bridge('dezel.form.TextArea')
@@ -263,15 +263,14 @@ export class TextArea extends View {
 	 * @method onMoveToWindow
 	 * @since 0.2.0
 	 */
-	public onMoveToWindow(event: Event<ViewMoveToWindowEvent>) {
+	public onMoveToWindow(window?: Window | null) {
 
-		super.onMoveToWindow(event)
+		super.onMoveToWindow(window)
 
 		if (this.window) {
 			this.window.off('tap', this.onWindowTap)
 		}
 
-		let window = event.data.window
 		if (window) {
 			window.on('tap', this.onWindowTap)
 		}
