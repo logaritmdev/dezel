@@ -1,4 +1,10 @@
-import { Component } from '../Component'
+import { Component } from '../component/Component'
+
+/**
+ * @symbol ID
+ * @since 0.7.0
+ */
+export const ARRAY = Symbol('id')
 
 /**
  * @function decorate
@@ -26,6 +32,10 @@ const decorate = function (prototype: object, property: string, descriptor: Prop
 		if (this.built == false) {
 			this.build()
 		}
+
+		// if (this[VALUE] == null) {
+		// 	this[VALUE] =
+		// }
 
 		return getter.call(this)
 
