@@ -4,8 +4,13 @@ import { setChildren } from '../component/Host'
 import { setProperties } from '../component/Host'
 import { Host } from '../component/Host'
 import { Slot } from '../component/Slot'
-import { Placeholder } from '../view/Placeholder'
 import { View } from '../view/View'
+
+/**
+ * @symbol CONTAINER
+ * @since 0.7.0
+ */
+export const CONTAINER = Symbol('container')
 
 /**
  * @const createElement
@@ -40,19 +45,11 @@ export function createElement(Type: any, properties: any, ...children: Array<Vie
 		let container = properties.for as Component
 		if (container) {
 
-			if (view instanceof Slot) {
+			setContainer(view, container)
 
-				if (view.component == null) {
-					container.useSlot(view)
-				}
-
-			} else {
-
-				let identifier = properties.id
-				if (identifier) {
-					setRef(container, identifier, view)
-				}
-
+			let identifier = properties.id
+			if (identifier) {
+				setRef(container, identifier, view)
 			}
 		}
 
@@ -133,8 +130,42 @@ function append(view: any, children: Array<any>) {
 			continue
 		}
 
+		if (node instanceof Slot) {
+
+			/*
+			 * When appending a slot to a view we must check first if its
+			 * bound to a containing component. In that case we can safely
+			 * treat this slot as a definition and execute the define
+			 * method from its container.
+			 */
+
+			let container = getContainer(node)
+			if (container) {
+				container.defineSlot(node, view)
+				continue
+			}
+		}
+
 		view.append(node)
 	}
+}
+
+/**
+ * @function setContainer
+ * @since 0.7.0
+ * @hidden
+ */
+function setContainer(view: any, container: Component) {
+	view[CONTAINER] = container
+}
+
+/**
+ * @function getContainer
+ * @since 0.7.0
+ * @hidden
+ */
+function getContainer(view: any): Component | null | undefined {
+	return view[CONTAINER]
 }
 
 /**

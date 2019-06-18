@@ -2,10 +2,10 @@ import { Placeholder } from '../view/Placeholder'
 import { Component } from './Component'
 
 /**
- * @symbol COMPONENT
+ * @symbol CONTAINER
  * @since 0.7.0
  */
-export const COMPONENT = Symbol('component')
+export const CONTAINER = Symbol('component')
 
 /**
  * TODO
@@ -27,12 +27,12 @@ export abstract class Slot extends Placeholder {
 	public abstract get name(): string
 
 	/**
-	 * The component that owns this slot.
-	 * @property component
+	 * The container that defines this slot.
+	 * @property container
 	 * @since 0.7.0
 	 */
-	public get component(): Component | null | undefined {
-		return this[COMPONENT]
+	public get container(): Component | null | undefined {
+		return this[CONTAINER]
 	}
 
 	//--------------------------------------------------------------------------
@@ -44,7 +44,7 @@ export abstract class Slot extends Placeholder {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private [COMPONENT]: Component | null | undefined
+	private [CONTAINER]: Component | null | undefined
 
 	//--------------------------------------------------------------------------
 	// JSX
@@ -60,10 +60,10 @@ export abstract class Slot extends Placeholder {
 }
 
 /**
- * @function setComponent
+ * @function setContainer
  * @since 0.7.0
  * @hidden
  */
-export function setComponent(slot: Slot, component: Component | null | undefined) {
-	slot[COMPONENT] = component
+export function setContainer(slot: Slot, component: Component | null | undefined) {
+	slot[CONTAINER] = component
 }

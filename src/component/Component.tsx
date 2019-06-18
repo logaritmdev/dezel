@@ -1,4 +1,5 @@
 import { bound } from '../decorator/bound'
+import { render } from '../decorator/render'
 import { Event } from '../event/Event'
 import { Children } from '../view/View'
 import { Parent } from '../view/View'
@@ -6,9 +7,8 @@ import { View } from '../view/View'
 import { ViewInsertEvent } from '../view/View'
 import { ViewRemoveEvent } from '../view/View'
 import { Window } from '../view/Window'
-import { render } from './decorator/render'
 import { Host } from './Host'
-import { setComponent } from './Slot'
+import { setContainer } from './Slot'
 import { Slot } from './Slot'
 
 /**
@@ -127,43 +127,6 @@ export abstract class Component<TRefs = any, TSlots = any> extends View {
 	 * @since 0.7.0
 	 */
 	public append(child: Child, slot: string | null = null) {
-
-		if (child instanceof Slot && child.component == null) {
-
-			/*
-			 * Adding a slot that is not associated to a component mean that
-			 * this is an implementation slot and not a definition slot. In
-			 * this case we can append the contents to the defined slot.
-			 */
-
-			let container = this[SLOTS][child.name] as Slot
-			if (container == null) {
-				throw new Error(
-					`Component error: ` +
-					`The component ${this.constructor.name} does not define a slot named ${child.name}.`
-				)
-			}
-
-			container.append(child)
-
-			return this
-		}
-
-		if (slot) {
-
-			let container = this[SLOTS][slot] as Slot
-			if (container == null) {
-				throw new Error(
-					`Component error: ` +
-					`The component ${this.constructor.name} does not have a slot named ${slot}.`
-				)
-			}
-
-			container.append(child)
-
-			return this
-		}
-
 		return this.insert(child, this.children.length, slot)
 	}
 
@@ -174,19 +137,20 @@ export abstract class Component<TRefs = any, TSlots = any> extends View {
 	 */
 	public insert(child: Child, index: number, slot: string | null = null) {
 
-		if (child instanceof Slot && child.component == null) {
+		if (child instanceof Slot) {
 
 			/*
-			 * Adding a slot that is not associated to a component mean that
-			 * this is an implementation slot and not a definition slot. In
-			 * this case we can append the contents to the defined slot.
+			 * The behavior of inserting a slot using this method is mostly
+			 * similar to the behavior of a fragment. The slot must have been
+			 * define prior to this and it will receive the specified child
+			 * contents.
 			 */
 
 			let container = this[SLOTS][child.name] as Slot
 			if (container == null) {
 				throw new Error(
 					`Component error: ` +
-					`The component ${this.constructor.name} does not define a slot named ${child.name}.`
+					`The component ${this.constructor.name} does not define a slot named ${child.name}. Did you call defineSlot ?`
 				)
 			}
 
@@ -239,34 +203,39 @@ export abstract class Component<TRefs = any, TSlots = any> extends View {
 	}
 
 	/**
-	 * @inherited
-	 * @method useSlot
+	 * TODO
+	 * @method defineSlot
 	 * @since 0.7.0
 	 */
-	public useSlot(slot: Slot) {
+	public defineSlot(slot: Slot, inside: View, offset: number | null = null) {
 
-		if (slot.component) {
+		if (slot.container) {
 			throw new Error(
 				`Component error: ` +
-				`This slot is already used by ${slot.component.constructor.name}.`
+				`This slot is already used by ${slot.container.constructor.name}.`
 			)
 		}
 
 		let name = slot.name
 
-		if (this[SLOTS][name] == null) {
-			this[SLOTS][name] = slot
-
-			setComponent(slot, this)
-
-		} else {
+		if (this[SLOTS][name]) {
 
 			throw new Error(
 				`Component error: ` +
-				`Component ${this.constructor.name} already have a slot named ${name}.`
+				`Component ${this.constructor.name} already defines a slot named ${name}.`
 			)
 
 		}
+
+		setContainer(slot, this)
+
+		this[SLOTS][name] = slot
+
+		if (offset == null) {
+			offset = inside.children.length
+		}
+
+		inside.insert(slot, offset)
 
 		return this
 	}
