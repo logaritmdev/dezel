@@ -1401,7 +1401,7 @@ export class View extends Emitter {
 	public insert(child: Child, index: number) {
 
 		if (child instanceof Array) {
-			merge(this, child, index)
+			insertAll(this, child, index)
 			return this
 		}
 
@@ -2299,7 +2299,7 @@ function removeView(view: View, child: View, index: number) {
  * @since 0.7.0
  * @hidden
  */
-function merge(view: View, children: Array<View | Placeholder>, index: number) {
+function insertAll(view: View, children: Array<View | Placeholder>, index: number) {
 	for (let i = 0; i < children.length; i++) {
 		view.insert(children[i], index + i)
 	}
