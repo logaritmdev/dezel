@@ -40,27 +40,6 @@ export const DEFAULT_DURATION = 350
 export const DEFAULT_EQUATION = [0.25, 0.1, 0.25, 1.0]
 
 /**
- * The view's parent type.
- * @type Parent
- * @since 0.7.0
- */
-export type Parent = View
-
-/**
- * The view's children type.
- * @type Children
- * @since 0.7.0
- */
-export type Children = Array<View>
-
-/**
- * The view's child type.
- * @type Child
- * @since 0.7.0
- */
-export type Child = View | Placeholder | Array<View | Placeholder>
-
-/**
  * View animations options.
  * @interface ViewTransitionOptions
  * @since 0.1.0
@@ -210,7 +189,7 @@ export class View extends Emitter {
 	 * @property parent
 	 * @since 0.1.0
 	 */
-	public get parent(): Parent | null | undefined {
+	public get parent(): View | null | undefined {
 		return this.native.parent
 	}
 
@@ -219,7 +198,7 @@ export class View extends Emitter {
 	 * @property children
 	 * @since 0.1.0
 	 */
-	public get children(): Children {
+	public get children(): ReadonlyArray<View> {
 		return this[CHILDREN]
 	}
 
@@ -1325,7 +1304,6 @@ export class View extends Emitter {
 	 */
 	constructor() {
 		super()
-		console.log('CREATE VIEW ', this)
 		let classList = getClassList(this)
 		if (classList) this.native.classList = classList
 	}
@@ -1337,7 +1315,7 @@ export class View extends Emitter {
 	 */
 	public destroy() {
 
-		this.onDestroy()
+		this.emit('destroy')
 
 		while (this.children.length) {
 
@@ -1373,23 +1351,17 @@ export class View extends Emitter {
 	 * @method append
 	 * @since 0.1.0
 	 */
-	public append(child: Child) {
+	public append(child: View) {
 		return this.insert(child, this.children.length)
 	}
 
 	/**
-	 * Appends this view at this end of the parent's child list.
+	 * Appends a child at this end of the parent's child list.
 	 * @method appendTo
 	 * @since 0.7.0
 	 */
-	public appendTo(child: View | Placeholder) {
-
-		if (child instanceof Placeholder) {
-			child.append(this)
-		} else {
-			child.append(this)
-		}
-
+	public appendTo(parent: View) {
+		parent.append(this)
 		return this
 	}
 
@@ -1398,23 +1370,11 @@ export class View extends Emitter {
 	 * @method insert
 	 * @since 0.1.0
 	 */
-	public insert(child: Child, index: number) {
-
-		if (child instanceof Array) {
-			insertAll(this, child, index)
-			return this
-		}
-
-		if (child instanceof Placeholder) {
-			child.appendTo(this)
-			return this
-		}
+	public insert(child: View, index: number) {
 
 		if (child.parent) {
 			child.parent.remove(child)
 		}
-
-		child.setResponder(this)
 
 		if (index > this.children.length) {
 			index = this.children.length
@@ -1422,8 +1382,10 @@ export class View extends Emitter {
 			index = 0
 		}
 
-		insertNode(this, child, index)
-		insertView(this, child, index)
+		child.setResponder(this)
+
+		insertChild(this, child, index)
+		insertNative(this, child, index)
 
 		this.emit<ViewInsertEvent>('insert', { data: { child, index } })
 
@@ -1435,14 +1397,17 @@ export class View extends Emitter {
 	 * @method insertAfter
 	 * @since 0.1.0
 	 */
-	public insertAfter(view: View, after: View) {
+	public insertAfter(child: View, after: View) {
 
 		let index = this.children.indexOf(after)
 		if (index == -1) {
-			return this
+			throw new Error(
+				`View error: ` +
+				`The after view cannot be found.`
+			)
 		}
 
-		this.insert(view, index + 1)
+		this.insert(child, index + 1)
 
 		return this
 	}
@@ -1452,14 +1417,17 @@ export class View extends Emitter {
 	 * @method insertBefore
 	 * @since 0.1.0
 	 */
-	public insertBefore(view: View, after: View) {
+	public insertBefore(child: View, before: View) {
 
-		let index = this.children.indexOf(after)
+		let index = this.children.indexOf(before)
 		if (index == -1) {
-			return this
+			throw new Error(
+				`View error: ` +
+				`The before view cannot be found.`
+			)
 		}
 
-		this.insert(view, index)
+		this.insert(child, index)
 
 		return this
 	}
@@ -1478,8 +1446,8 @@ export class View extends Emitter {
 
 		child.setResponder(null)
 
-		removeNode(this, child, index)
-		removeView(this, child, index)
+		removeChild(this, child, index)
+		removeNative(this, child, index)
 
 		this.emit<ViewRemoveEvent>('remove', { data: { child, index } })
 
@@ -1515,8 +1483,22 @@ export class View extends Emitter {
 
 		let index = parent.children.indexOf(this)
 		if (index > -1) {
-			parent.insert(view, index)
 			parent.remove(this)
+			parent.insert(view, index)
+		}
+
+		return this
+	}
+
+	/**
+	 * Remove all views this view.
+	 * @method empty
+	 * @since 0.7.0
+	 */
+	public empty() {
+
+		while (this.children.length) {
+			this.remove(last(this.children))
 		}
 
 		return this
@@ -1544,20 +1526,6 @@ export class View extends Emitter {
 		}
 
 		return false
-	}
-
-	/**
-	 * Remove all views this this view.
-	 * @method empty
-	 * @since 0.7.0
-	 */
-	public empty() {
-
-		while (this.children.length) {
-			this.remove(last(this.children))
-		}
-
-		return this
 	}
 
 	//--------------------------------------------------------------------------
@@ -1768,7 +1736,7 @@ export class View extends Emitter {
 
 			this.gestures.dispatchTouchEvent(event)
 		}
-		// TODO MAKE BETTER
+		// TODO MAKE BETTER, call from native ?
 		if (event.type == 'movetowindow') {
 			if (event.data.window) {
 				this.onMount()
@@ -1778,6 +1746,10 @@ export class View extends Emitter {
 		}
 
 		switch (event.type) {
+
+			case 'destroy':
+				this.onDestroy()
+				break
 
 			case 'beforelayout':
 				this.onBeforeLayout()
@@ -2085,7 +2057,8 @@ export class View extends Emitter {
 	 * @since 0.4.0
 	 */
 	public setDefaultValue(value: string | number | boolean) {
-
+		// TODO
+		// Rename coherce something
 	}
 
 	//--------------------------------------------------------------------------
@@ -2104,7 +2077,7 @@ export class View extends Emitter {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	private [CHILDREN]: Children = []
+	private [CHILDREN]: Array<View> = []
 
 	/**
 	 * @property GESTURES
@@ -2259,50 +2232,39 @@ export class View extends Emitter {
 }
 
 /**
- * @function insertNode
+ * @function insertChild
  * @since 0.7.0
  * @hidden
  */
-function insertNode(view: View, child: View, index: number) {
+function insertChild(view: View, child: View, index: number) {
 	view[CHILDREN].splice(index, 0, child)
 }
 
 /**
- * @function removeNode
+ * @function removeChild
  * @since 0.7.0
  * @hidden
  */
-function removeNode(view: View, child: View, index: number) {
+function removeChild(view: View, child: View, index: number) {
 	view[CHILDREN].splice(index, 1)
 }
 
 /**
- * @function insertView
+ * @function insertNative
  * @since 0.7.0
  * @hidden
  */
-function insertView(view: View, child: View, index: number) {
+function insertNative(view: View, child: View, index: number) {
 	view.native.insert(child.native, index)
 }
 
 /**
- * @function removeView
+ * @function removeNative
  * @since 0.7.0
  * @hidden
  */
-function removeView(view: View, child: View, index: number) {
-	view.native.remove(child.native)
-}
-
-/**
- * @function merge
- * @since 0.7.0
- * @hidden
- */
-function insertAll(view: View, children: Array<View | Placeholder>, index: number) {
-	for (let i = 0; i < children.length; i++) {
-		view.insert(children[i], index + i)
-	}
+function removeNative(view: View, child: View, index: number) {
+	view.native.remove(child.native, index)
 }
 
 /**
@@ -2310,7 +2272,7 @@ function insertAll(view: View, children: Array<View | Placeholder>, index: numbe
  * @since 0.7.0
  * @hidden
  */
-function last(list: Array<View>) {
+function last(list: ReadonlyArray<View>) {
 	return list[list.length - 1]
 }
 
