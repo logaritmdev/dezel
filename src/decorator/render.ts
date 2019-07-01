@@ -8,10 +8,10 @@ export const ARRAY = Symbol('id')
 
 /**
  * @function decorate
- * @since 1.0.0
+ * @since 0.7.0
  * @hidden
  */
-const decorate = function (prototype: object, property: string, descriptor: PropertyDescriptor | undefined) {
+function decorate(prototype: object, property: string, descriptor: PropertyDescriptor | undefined) {
 
 	let define = descriptor == null
 
@@ -32,10 +32,6 @@ const decorate = function (prototype: object, property: string, descriptor: Prop
 		if (this.built == false) {
 			this.build()
 		}
-
-		// if (this[VALUE] == null) {
-		// 	this[VALUE] =
-		// }
 
 		return getter.call(this)
 

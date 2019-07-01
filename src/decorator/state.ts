@@ -1,4 +1,9 @@
-const decorate = function (prototype: object, property: string) {
+/**
+ * @function decorate
+ * @since 0.1.0
+ * @hidden
+ */
+function decorate(prototype: object, property: string) {
 	// TODO
 	// Inherit existing property descriptor
 	const descriptor = Object.getOwnPropertyDescriptor(prototype, property)

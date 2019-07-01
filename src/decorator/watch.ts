@@ -2,17 +2,18 @@
 /**
  * @function decorate
  * @since 0.4.0
+ * @hidden
  */
-const decorate = function (prototype: object, property: string) {
+function decorate(prototype: object, property: string) {
 
 	const key = Symbol()
 	const has = Symbol()
 
-	const get = function (this: any) {
+	function get(this: any) {
 		return this[key]
 	}
 
-	const set = function (this: any, value: any) {
+	function set(this: any, value: any) {
 
 		if (this[has] == null) {
 			this[has] = true

@@ -1,8 +1,13 @@
-const decorate = function (prototype: object, property: string, descriptor: PropertyDescriptor) {
+/**
+ * @function decorate
+ * @since 0.1.0
+ * @hidden
+ */
+function decorate(prototype: object, property: string, descriptor: PropertyDescriptor) {
 
 	let callback = descriptor.value
 
-	let get = function (this: any) {
+	function get(this: any) {
 
 		let self = this
 

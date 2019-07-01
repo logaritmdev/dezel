@@ -7,7 +7,12 @@ import { Dictionary } from 'lodash'
  */
 const imports: Dictionary<any> = {}
 
-const decorate = function (constructor: Function, classname: string) {
+/**
+ * @function decorate
+ * @since 0.1.0
+ * @hidden
+ */
+function decorate(constructor: Function, classname: string) {
 
 	const key = Symbol('native')
 

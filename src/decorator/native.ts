@@ -1,10 +1,15 @@
-const decorate = function (prototype: object, property: string) {
+/**
+ * @function decorate
+ * @since 0.1.0
+ * @hidden
+ */
+function decorate(prototype: object, property: string) {
 
-	let get = function (this: any) {
+	function get(this: any) {
 		return this.native[property]
 	}
 
-	let set = function (this: any, value: any) {
+	function set(this: any, value: any) {
 		this.native[property] = value == null ? value : (value.native || value)
 	}
 
