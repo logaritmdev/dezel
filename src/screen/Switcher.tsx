@@ -6,17 +6,17 @@ import { ScreenTransitionRegistry } from './transition/ScreenTransition'
 import { Enclosure } from './Enclosure'
 import { PRESENTING } from './Screen'
 import { Screen } from './Screen'
-import './Switch.ds'
-import './Switch.ds.android'
-import './Switch.ds.ios'
+import './Switcher.ds'
+import './Switcher.ds.android'
+import './Switcher.ds.ios'
 
 /**
  * Manages the display of several screens only showing one.
- * @class Switch
- * @super Emitter
- * @since 0.3.0
+ * @class Switcher
+ * @super Screen
+ * @since 0.7.0
  */
-export class Switch extends Screen {
+export class Switcher extends Screen {
 
 	//--------------------------------------------------------------------------
 	// Properties
@@ -25,14 +25,14 @@ export class Switch extends Screen {
 	/**
 	 * The screen switch's managed screens
 	 * @property screens
-	 * @since 0.3.0
+	 * @since 0.7.0
 	 */
 	@watch public screens: Array<Screen> = []
 
 	/**
 	 * The screen switch's selected index.
 	 * @property selectedIndex
-	 * @since 0.3.0
+	 * @since 0.7.0
 	 */
 	public get selectedIndex(): number {
 		return this.selectedScreen ? this.screens.indexOf(this.selectedScreen) : -1
@@ -43,9 +43,18 @@ export class Switch extends Screen {
 	//--------------------------------------------------------------------------
 
 	/**
+	 * @inherited
+	 * @method render
+	 * @since 0.7.0
+	 */
+	public render() {
+		return null
+	}
+
+	/**
 	 * Selects the specified screen.
 	 * @method select
-	 * @since 0.3.0
+	 * @since 0.7.0
 	 */
 	public select(index: number, transition?: ScreenTransition | string) {
 
@@ -64,7 +73,7 @@ export class Switch extends Screen {
 			return Promise.resolve()
 		}
 
-		let event = new Event<SwitchBeforeSelectEvent>('beforeselect', {
+		let event = new Event<SwitcherBeforeSelectEvent>('beforeselect', {
 			cancelable: true,
 			propagable: false,
 			data: {
@@ -81,7 +90,7 @@ export class Switch extends Screen {
 		let screen = this.screens[index]
 		if (screen == null) {
 			throw new Error(`
-				Switch error:
+				Switcher error:
 				The index ${index} does not match any screens.
 			`)
 		}
@@ -137,7 +146,7 @@ export class Switch extends Screen {
 	/**
 	 * @inherited
 	 * @method onEmit
-	 * @since 0.3.0
+	 * @since 0.7.0
 	 */
 	public onEmit(event: Event) {
 
@@ -179,25 +188,25 @@ export class Switch extends Screen {
 	/**
 	 * Called when a screen is selected.
 	 * @method onSelect
-	 * @since 0.3.0
+	 * @since 0.7.0
 	 */
-	public onSelect(event: Event<SwitchSelectEvent>) {
+	public onSelect(event: Event<SwitcherSelectEvent>) {
 
 	}
 
 	/**
 	 * Called when a screen is deselected.
 	 * @method onDeselect
-	 * @since 0.3.0
+	 * @since 0.7.0
 	 */
-	public onDeselect(event: Event<SwitchDeselectEvent>) {
+	public onDeselect(event: Event<SwitcherDeselectEvent>) {
 
 	}
 
 	/**
 	 * @inherited
 	 * @method onBack
-	 * @since 0.3.0
+	 * @since 0.7.0
 	 */
 	public onBack(event: Event) {
 
@@ -230,7 +239,7 @@ export class Switch extends Screen {
 	/**
 	 * @inherited
 	 * @method onPropertyChange
-	 * @since 0.3.0
+	 * @since 0.7.0
 	 */
 	public onPropertyChange(property: string, newValue: any, oldValue: any) {
 
@@ -288,7 +297,7 @@ export class Switch extends Screen {
 
 	/**
 	 * @property selectedScreen
-	 * @since 0.3.0
+	 * @since 0.7.0
 	 * @hidden
 	 */
 	private selectedScreen?: Screen | null
@@ -330,7 +339,7 @@ export class Switch extends Screen {
 			if (presentedScreen) {
 				if (presentedScreen.enclosure == null) {
 					presentedScreen.enclosure = new Enclosure(presentedScreen)
-					presentedScreen.enclosure.inject(content)
+					presentedScreen.enclosure.appendTo(content)
 					present = true
 				}
 			}
@@ -368,13 +377,13 @@ export class Switch extends Screen {
 			)
 
 			if (dismissedScreen) {
-				this.emit<SwitchDeselectEvent>('deselect', { data: { index: this.screens.indexOf(dismissedScreen) } })
+				this.emit<SwitcherDeselectEvent>('deselect', { data: { index: this.screens.indexOf(dismissedScreen) } })
 			}
 
 			this.selectedScreen = presentedScreen
 
 			if (presentedScreen) {
-				this.emit<SwitchSelectEvent>('select', { data: { index: this.screens.indexOf(presentedScreen) } })
+				this.emit<SwitcherSelectEvent>('select', { data: { index: this.screens.indexOf(presentedScreen) } })
 			}
 			if (dismissedScreen) await dismissedScreen.emitBeforeLeave(transition)
 			if (presentedScreen && present) await presentedScreen.emitBeforePresent(transition)
@@ -420,33 +429,33 @@ export class Switch extends Screen {
 }
 
 /**
- * @interface SwitchSelectionEvent
- * @since 0.3.0
+ * @interface SwitcherSelectionEvent
+ * @since 0.7.0
  */
 export type ScreenConstructor = {
 	new(): Screen
 }
 
 /**
- * @type SwitchBeforeSelectEvent
+ * @type SwitcherBeforeSelectEvent
  * @since 0.5.0
  */
-export type SwitchBeforeSelectEvent = {
+export type SwitcherBeforeSelectEvent = {
 	index?: number | null
 }
 
 /**
- * @type SwitchSelectEvent
+ * @type SwitcherSelectEvent
  * @since 0.5.0
  */
-export type SwitchSelectEvent = {
+export type SwitcherSelectEvent = {
 	index: number
 }
 
 /**
- * @type SwitchSelectEvent
+ * @type SwitcherSelectEvent
  * @since 0.5.0
  */
-export type SwitchDeselectEvent = {
+export type SwitcherDeselectEvent = {
 	index: number
 }
