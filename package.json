@@ -15,6 +15,7 @@
   "engines": {
     "node": "*"
   },
+  "test": "jest",
   "scripts": {
     "copy-ds": "copyfiles --up 1 \"src/**/*.ds\" \"src/**/*.ds.android\" \"src/**/*.ds.ios\" lib"
   },
@@ -24,9 +25,12 @@
     "npm": "^6.2.0"
   },
   "devDependencies": {
+    "@types/jest": "^24.0.15",
     "@types/lodash": "^4.14.98",
     "copy-webpack-plugin": "^4.5.1",
     "copyfiles": "^2.0.0",
+    "jest": "^24.8.0",
+    "ts-jest": "^24.0.2",
     "ts-loader": "^4.2.0",
     "typescript": "^2.8.1"
   }
