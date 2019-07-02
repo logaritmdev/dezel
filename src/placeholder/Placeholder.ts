@@ -1,8 +1,6 @@
 import { bound } from '../decorator/bound'
 import { Emitter } from '../event/Emitter'
 import { Event } from '../event/Event'
-import { Child } from '../view/View'
-import { Children } from '../view/View'
 import { View } from '../view/View'
 import { ViewInsertEvent } from '../view/View'
 import { ViewRemoveEvent } from '../view/View'
@@ -13,6 +11,7 @@ import { ViewRemoveEvent } from '../view/View'
  */
 export enum Location {
 	Start,
+	Fixed,
 	Float,
 	End
 }
@@ -62,7 +61,7 @@ export class Placeholder extends Emitter {
 
 	/**
 	 * The placeholder's location.
-	 * @property location
+	 * @property position
 	 * @since 0.7.0
 	 */
 	public get location(): Location {
@@ -83,7 +82,7 @@ export class Placeholder extends Emitter {
 	 * @property children
 	 * @since 0.7.0
 	 */
-	public get children(): Children {
+	public get children(): ReadonlyArray<View> {
 		return this[CHILDREN]
 	}
 
@@ -92,58 +91,82 @@ export class Placeholder extends Emitter {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @constructor
-	 * @since 0.7.0
-	 */
-	public constructor(location: Location = Location.Float, position: number = 0) {
-		super()
-		this[LOCATION] = location
-		this[POSITION] = position
-	}
-
-	/**
 	 * Destroys the placeholder
 	 * @method destroy
 	 * @since 0.7.0
 	 */
 	public destroy() {
 
+		this.leave()
+
+		this[VIEW] = null
+		this[POSITION] = 0
+		this[LOCATION] = 0
+		this[CHILDREN] = []
+
+		super.destroy()
+	}
+
+	/**
+	 * TODO
+	 * @method enter
+	 * @since 0.7.0
+	 */
+	public enter(view: View, position: number, location: Location = Location.Float) {
+
+		this.leave()
+
+		this[VIEW] = view
+		this[LOCATION] = location
+		this[POSITION] = position
+
+		this.children.forEach((c, i) => {
+			this.insert(c, i + position)
+		})
+
+		view.on('insert', this.onViewInsert)
+		view.on('remove', this.onViewRemove)
+		view.on('destroy', this.onViewDestroy)
+
+		return this
+	}
+
+	/**
+	 * TODO
+	 * @method leave
+	 * @since 0.7.0
+	 */
+	public leave() {
+
 		if (this.view) {
 			this.view.off('insert', this.onViewInsert)
 			this.view.off('remove', this.onViewRemove)
+			this.view.off('destroy', this.onViewDestroy)
 		}
 
 		this[VIEW] = null
 		this[LOCATION] = 0
 		this[POSITION] = 0
 		this[CHILDREN] = []
+
+		return this
 	}
 
 	/**
-	 * Appends a child at the end of this view's child list.
+	 * Appends a child at the end of this placeholder's child list.
 	 * @method append
 	 * @since 0.7.0
 	 */
-	public append(child: Child) {
+	public append(child: View) {
 		return this.insert(child, this.children.length)
 	}
 
 	/**
-	 * Inserts a child at an index of this view's child list.
+	 * Inserts a child at an index of this placeholder's child list.
 	 * @method insert
 	 * @since 0.7.0
 	 */
-	public insert(child: Child, index: number) {
-
-		if (child instanceof Array) {
-			merge(this, child, index)
-			return this
-		}
-
-		if (child instanceof Placeholder) {
-			merge(this, child.children, index);
-			return this
-		}
+	public insert(child: View, index: number) {
 
 		if (index > this.children.length) {
 			index = this.children.length
@@ -151,14 +174,55 @@ export class Placeholder extends Emitter {
 			index = 0
 		}
 
-		insertNode(this, child, index)
+		insertItem(this, child, index)
 		insertView(this, child, index)
+
+		this.emit<ViewInsertEvent>('insert', {
+			data: {
+				child,
+				index
+			}
+		})
 
 		return this
 	}
 
 	/**
-	 * Removes a view from this view's child list.
+	 * Inserts a child after another child from this placeholder's child list.
+	 * @method insertAfter
+	 * @since 0.1.0
+	 */
+	public insertAfter(child: View, after: View) {
+
+		let index = this.children.indexOf(after)
+		if (index == -1) {
+			throw new Error('The specified view cannot be found.')
+		}
+
+		this.insert(child, index + 1)
+
+		return this
+	}
+
+	/**
+	 * Inserts a child before another child from this placeholder's child list.
+	 * @method insertBefore
+	 * @since 0.1.0
+	 */
+	public insertBefore(child: View, before: View) {
+
+		let index = this.children.indexOf(before)
+		if (index == -1) {
+			throw new Error('The specified view cannot be found.')
+		}
+
+		this.insert(child, index)
+
+		return this
+	}
+
+	/**
+	 * Removes a child from this placeholder's child list.
 	 * @method remove
 	 * @since 0.7.0
 	 */
@@ -169,14 +233,21 @@ export class Placeholder extends Emitter {
 			return this
 		}
 
-		removeNode(this, child, index)
+		removeItem(this, child, index)
 		removeView(this, child, index)
+
+		this.emit<ViewRemoveEvent>('remove', {
+			data: {
+				child,
+				index
+			}
+		})
 
 		return this
 	}
 
 	/**
-	 * Remove all views this this view.
+	 * Removes all views from this placeholder.
 	 * @method empty
 	 * @since 0.7.0
 	 */
@@ -190,31 +261,68 @@ export class Placeholder extends Emitter {
 	}
 
 	//--------------------------------------------------------------------------
-	// Internal API
+	// Events
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method appendTo
+	 * @inherited
+	 * @method onEvent
 	 * @since 0.7.0
-	 * @hidden
 	 */
-	public appendTo(view: View) {
+	public onEmit(event: Event) {
 
-		if (this.view) {
-			this.view.off('insert', this.onViewInsert)
-			this.view.off('remove', this.onViewRemove)
+		super.onEmit(event)
+
+		switch (event.type) {
+
+			case 'insert':
+				this.onInsert(event.data.child, event.data.index)
+				break
+
+			case 'remove':
+				this.onRemove(event.data.child, event.data.index)
+				break
+
+			case 'enter':
+				this.onEnter(event.data.view)
+				break
+
+			case 'leave':
+				this.onLeave(event.data.view)
+				break
 		}
+	}
 
-		this[VIEW] = view
+	/**
+	 * @method onInsert
+	 * @since 0.7.0
+	 */
+	protected onInsert(child: View, index: number) {
 
-		view.on('insert', this.onViewInsert)
-		view.on('remove', this.onViewRemove)
+	}
 
-		this[POSITION] = view.children.length
+	/**
+	 * @method onRemove
+	 * @since 0.7.0
+	 */
+	protected onRemove(child: View, index: number) {
 
-		for (let i = 0; i < this.children.length; i++) {
-			view.insert(this.children[i], this.position + i)
-		}
+	}
+
+	/**
+	 * @method onEnter
+	 * @since 0.7.0
+	 */
+	protected onEnter(view: View) {
+
+	}
+
+	/**
+	 * @method onLeave
+	 * @since 0.7.0
+	 */
+	protected onLeave(view: View) {
+
 	}
 
 	//--------------------------------------------------------------------------
@@ -236,7 +344,7 @@ export class Placeholder extends Emitter {
 	private [LOCATION]: number = 0
 
 	/**
-	 * @property LOCATION
+	 * @property POSITION
 	 * @since 0.7.0
 	 * @hidden
 	 */
@@ -247,7 +355,7 @@ export class Placeholder extends Emitter {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private [CHILDREN]: Children = []
+	private [CHILDREN]: Array<View> = []
 
 	/**
 	 * @method onViewInsert
@@ -265,8 +373,10 @@ export class Placeholder extends Emitter {
 		 * of the placeholder.
 		 */
 
-		if (this[LOCATION] >= index) {
-			this[LOCATION] += 1
+		if (this.location == Location.Float) {
+			if (this[POSITION] >= index) {
+				this[POSITION] += 1
+			}
 		}
 	}
 
@@ -286,27 +396,38 @@ export class Placeholder extends Emitter {
 		 * of the placeholder.
 		 */
 
-		if (this[LOCATION] >= index) {
-			this[LOCATION] -= 1
+		if (this.location == Location.Float) {
+			if (this[POSITION] >= index) {
+				this[POSITION] -= 1
+			}
 		}
+	}
+
+	/**
+	 * @method onViewDestroy
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@bound private onViewDestroy(event: Event) {
+		this.destroy()
 	}
 }
 
 /**
- * @function insertNode
+ * @function insertItem
  * @since 0.7.0
  * @hidden
  */
-function insertNode(placeholder: Placeholder, child: View, index: number) {
+function insertItem(placeholder: Placeholder, child: View, index: number) {
 	placeholder[CHILDREN].splice(index, 0, child)
 }
 
 /**
- * @function removeNode
+ * @function removeItem
  * @since 0.7.0
  * @hidden
  */
-function removeNode(placeholder: Placeholder, child: View, index: number) {
+function removeItem(placeholder: Placeholder, child: View, index: number) {
 	placeholder[CHILDREN].splice(index, 1)
 }
 
@@ -325,17 +446,23 @@ function insertView(placeholder: Placeholder, child: View, index: number) {
 	switch (placeholder.location) {
 
 		case Location.Start:
-			view.insert(child, 0)
+			index = 0
+			break
+
+		case Location.Fixed:
+			index = placeholder.position
 			break
 
 		case Location.Float:
-			view.insert(child, placeholder.position + index)
+			index = placeholder.position + index
 			break
 
 		case Location.End:
-			view.insert(child, view.children.length)
+			index = view.children.length
 			break
 	}
+
+	view.insert(child, index)
 }
 
 /**
@@ -350,21 +477,28 @@ function removeView(placeholder: Placeholder, child: View, index: number) {
 }
 
 /**
- * @function merge
- * @since 0.7.0
- * @hidden
- */
-function merge(placeholder: Placeholder, children: Array<View | Placeholder>, index: number) {
-	for (let i = 0; i < children.length; i++) {
-		placeholder.insert(children[i], index + i)
-	}
-}
-
-/**
  * @function last
  * @since 0.7.0
  * @hidden
  */
-function last(list: Array<View>) {
+function last(list: ReadonlyArray<View>) {
 	return list[list.length - 1]
+}
+
+/**
+ * @type PlaceholderInsertEvent
+ * @since 0.7.0
+ */
+export type PlaceholderInsertEvent = {
+	child: View
+	index: number
+}
+
+/**
+ * @type PlaceholderRemoveEvent
+ * @since 0.7.0
+ */
+export type PlaceholderRemoveEvent = {
+	child: View
+	index: number
 }
