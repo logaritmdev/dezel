@@ -131,10 +131,10 @@ export class Event<T extends any = any> {
 	public cancel() {
 
 		if (this.cancelable == false) {
-			throw new Error(`
-				Event error:
-				This event cannot be stopped because it is not cancelable.
-			`)
+			throw new Error(
+				'Event error: ' +
+				'This event cannot be stopped because it is not cancelable.'
+			)
 		}
 
 		this[CANCELED] = true
