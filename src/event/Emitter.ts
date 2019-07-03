@@ -31,7 +31,7 @@ export class Emitter {
 	 * @property responder
 	 * @since 0.1.0
 	 */
-	public get responder(): Emitter | null | undefined {
+	public get responder(): Emitter | null {
 		return this[RESPONDER]
 	}
 
@@ -140,7 +140,7 @@ export class Emitter {
 	 * @since 0.4.0
 	 * @hidden
 	 */
-	public setResponder(responder: Emitter | null | undefined) {
+	public setResponder(responder: Emitter | null) {
 		this[RESPONDER] = responder
 	}
 
@@ -153,7 +153,7 @@ export class Emitter {
 	 * @since 0.4.0
 	 * @hidden
 	 */
-	private [RESPONDER]: Emitter | null | undefined
+	private [RESPONDER]: Emitter | null = null
 
 	/**
 	 * @property [LISTENERS]
