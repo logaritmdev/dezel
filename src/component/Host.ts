@@ -55,7 +55,11 @@ export class Host {
 
 		let children = this.children
 		if (children) {
-			component.append(children)
+
+			for (let child of children) {
+				component.append(child)
+			}
+
 		}
 
 		// TODO
