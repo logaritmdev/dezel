@@ -1,39 +1,24 @@
-import { Dictionary } from 'lodash'
-
-/**
- * Caches native imports.
- * @const imports
- * @since 0.2.0
- */
-const imports: Dictionary<any> = {}
+import { Dezel } from '../core/Dezel'
 
 /**
  * @function decorate
  * @since 0.1.0
  * @hidden
  */
-function decorate(constructor: Function, classname: string) {
+function decorate(constructor: Function, className: string) {
 
 	const key = Symbol('native')
 
-	const get = function (this: any) {
+	function get(this: any) {
 
 		let native = this[key]
 		if (native == null) {
-
-			let Native = imports[classname]
-			if (Native == null) {
-				Native = imports[classname] = dezel.imports(classname)
-			}
-
-			native = this[key] = new Native()
+			native = this[key] = Dezel.import(className, true)
 			native.holder = this
 		}
 
 		return native
 	}
-
-	dezel.exports(classname, constructor)
 
 	Object.defineProperty(constructor.prototype, 'native', { get })
 }
