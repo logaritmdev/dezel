@@ -4,14 +4,14 @@ import { Event } from '../Event'
 
 describe('Emitter', () => {
 
-	let e: Emitter
+	let emitter: Emitter
 
 	beforeEach(() => {
-		e = new Emitter()
+		emitter = new Emitter()
 	})
 
 	it('should initialize the responder property', () => {
-		expect(e.responder).toBe(null)
+		expect(emitter.responder).toBe(null)
 	})
 
 	it('should register an event listener', () => {
@@ -19,10 +19,10 @@ describe('Emitter', () => {
 		let l1 = jest.fn()
 		let l2 = jest.fn()
 
-		e.on('event', l1)
-		e.on('EVENT', l2)
+		emitter.on('event', l1)
+		emitter.on('EVENT', l2)
 
-		let listeners = getListeners(e, 'event')
+		let listeners = getListeners(emitter, 'event')
 		expect(listeners[0]).toBe(l1)
 		expect(listeners[1]).toBe(l2)
 
@@ -33,10 +33,10 @@ describe('Emitter', () => {
 		let l1 = jest.fn()
 		let l2 = jest.fn()
 
-		e.one('event', l1)
-		e.one('EVENT', l2)
+		emitter.one('event', l1)
+		emitter.one('EVENT', l2)
 
-		let listeners = getListeners(e, 'event')
+		let listeners = getListeners(emitter, 'event')
 		expect(listeners[0]).not.toBeUndefined()
 		expect(listeners[1]).not.toBeUndefined()
 
@@ -47,13 +47,13 @@ describe('Emitter', () => {
 		let l1 = jest.fn()
 		let l2 = jest.fn()
 
-		e.on('event', l1)
-		e.on('EVENT', l2)
+		emitter.on('event', l1)
+		emitter.on('EVENT', l2)
 
-		e.off('event', l1)
-		e.off('EVENT', l2)
+		emitter.off('event', l1)
+		emitter.off('EVENT', l2)
 
-		let listeners = getListeners(e, 'event')
+		let listeners = getListeners(emitter, 'event')
 		expect(listeners[0]).toBe(undefined)
 		expect(listeners[1]).toBe(undefined)
 
@@ -64,10 +64,10 @@ describe('Emitter', () => {
 		let l1 = jest.fn()
 		let l2 = jest.fn()
 
-		e.on('event', l1)
-		e.on('EVENT', l2)
+		emitter.on('event', l1)
+		emitter.on('EVENT', l2)
 
-		e.emit('event')
+		emitter.emit('event')
 
 		expect(l1).toHaveBeenCalledWith(expect.any(Event))
 		expect(l1).toHaveBeenCalledTimes(1)
@@ -81,10 +81,10 @@ describe('Emitter', () => {
 		let l1 = jest.fn()
 		let l2 = jest.fn()
 
-		e.on('event', l1)
-		e.on('EVENT', l2)
+		emitter.on('event', l1)
+		emitter.on('EVENT', l2)
 
-		e.emit(new Event('event'))
+		emitter.emit(new Event('event'))
 
 		expect(l1).toHaveBeenCalledWith(expect.any(Event))
 		expect(l1).toHaveBeenCalledTimes(1)
@@ -100,15 +100,15 @@ describe('Emitter', () => {
 		let l3 = jest.fn()
 		let l4 = jest.fn()
 
-		e.on('event', l1)
-		e.on('EVENT', l2)
+		emitter.on('event', l1)
+		emitter.on('EVENT', l2)
 
-		e.one('event', l3)
-		e.one('EVENT', l4)
+		emitter.one('event', l3)
+		emitter.one('EVENT', l4)
 
-		e.emit('event')
-		e.emit('event')
-		e.emit('event')
+		emitter.emit('event')
+		emitter.emit('event')
+		emitter.emit('event')
 
 		expect(l1).toHaveBeenCalledWith(expect.any(Event))
 		expect(l1).toHaveBeenCalledTimes(3)
@@ -122,14 +122,14 @@ describe('Emitter', () => {
 
 	it('should execute the internal onEmit listener', () => {
 
-		e.onEmit = jest.fn()
+		emitter.onEmit = jest.fn()
 
-		e.emit('event')
-		e.emit('event')
-		e.emit('event')
+		emitter.emit('event')
+		emitter.emit('event')
+		emitter.emit('event')
 
-		expect(e.onEmit).toHaveBeenCalledWith(expect.any(Event))
-		expect(e.onEmit).toHaveBeenCalledTimes(3)
+		expect(emitter.onEmit).toHaveBeenCalledWith(expect.any(Event))
+		expect(emitter.onEmit).toHaveBeenCalledTimes(3)
 	})
 
 	it('should property set the target and sender', () => {
@@ -137,28 +137,28 @@ describe('Emitter', () => {
 		let r1 = new Emitter()
 		let r2 = new Emitter()
 
-		setResponders(e, [r1, r2])
+		setResponders(emitter, [r1, r2])
 
 		let l1 = jest.fn(event => {
-			expect(event.target).toBe(e)
-			expect(event.sender).toBe(e)
+			expect(event.target).toBe(emitter)
+			expect(event.sender).toBe(emitter)
 		})
 
 		let l2 = jest.fn(event => {
-			expect(event.target).toBe(e)
+			expect(event.target).toBe(emitter)
 			expect(event.sender).toBe(r1)
 		})
 
 		let l3 = jest.fn(event => {
-			expect(event.target).toBe(e)
+			expect(event.target).toBe(emitter)
 			expect(event.sender).toBe(r2)
 		})
 
-		e.on('event', l1)
+		emitter.on('event', l1)
 		r1.on('event', l2)
 		r2.on('event', l3)
 
-		e.emit(new Event('event', { propagable: true }))
+		emitter.emit(new Event('event', { propagable: true }))
 
 	})
 
@@ -167,17 +167,17 @@ describe('Emitter', () => {
 		let r1 = new Emitter()
 		let r2 = new Emitter()
 
-		setResponders(e, [r1, r2])
+		setResponders(emitter, [r1, r2])
 
 		let l1 = jest.fn()
 		let l2 = jest.fn()
 		let l3 = jest.fn()
 
-		e.on('event', l1)
+		emitter.on('event', l1)
 		r1.on('event', l2)
 		r2.on('event', l3)
 
-		e.emit(new Event('event', { propagable: true }))
+		emitter.emit(new Event('event', { propagable: true }))
 
 		expect(l1).toHaveBeenCalledWith(expect.any(Event))
 		expect(l1).toHaveBeenCalledTimes(1)
@@ -193,23 +193,52 @@ describe('Emitter', () => {
 		let r1 = new Emitter()
 		let r2 = new Emitter()
 
-		setResponders(e, [r1, r2])
+		setResponders(emitter, [r1, r2])
 
 		let l1 = jest.fn()
 		let l2 = jest.fn()
 		let l3 = jest.fn()
 
-		e.on('event', l1)
+		emitter.on('event', l1)
 		r1.on('event', l2)
 		r2.on('event', l3)
 
-		e.emit(new Event('event', { propagable: false }))
+		emitter.emit(new Event('event', { propagable: false }))
 
 		expect(l1).toHaveBeenCalledWith(expect.any(Event))
 		expect(l1).toHaveBeenCalledTimes(1)
 		expect(l2).not.toHaveBeenCalled()
 		expect(l3).not.toHaveBeenCalled()
 
+	})
+
+	it('should stop event propagation when the event is canceled', () => {
+
+		let r1 = new Emitter()
+		let r2 = new Emitter()
+
+		setResponders(emitter, [r1, r2])
+
+		let l1 = jest.fn(e => {
+			e.cancel()
+		})
+
+		let l2 = jest.fn()
+		let l3 = jest.fn()
+
+		emitter.on('event', l1)
+		r1.on('event', l2)
+		r2.on('event', l3)
+
+		emitter.emit(new Event('event', {
+			propagable: true,
+			cancelable: true
+		}))
+
+		expect(l1).toHaveBeenCalledWith(expect.any(Event))
+		expect(l1).toHaveBeenCalledTimes(1)
+		expect(l2).not.toHaveBeenCalled()
+		expect(l3).not.toHaveBeenCalled()
 	})
 
 })
