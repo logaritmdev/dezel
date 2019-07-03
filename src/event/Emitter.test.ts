@@ -1,6 +1,6 @@
-import { Emitter } from '../Emitter'
-import { LISTENERS } from '../Emitter'
-import { Event } from '../Event'
+import { Emitter } from './Emitter'
+import { LISTENERS } from './Emitter'
+import { Event } from './Event'
 
 describe('Emitter', () => {
 

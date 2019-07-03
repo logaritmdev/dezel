@@ -1,6 +1,6 @@
-import { Emitter } from '../Emitter'
-import { Event } from '../Event'
-import { EventOptions } from '../Event'
+import { Emitter } from './Emitter'
+import { Event } from './Event'
+import { EventOptions } from './Event'
 
 function create<T extends any = any>(type: string, options: EventOptions<T> = {}) {
 	return new Event(type, options)
