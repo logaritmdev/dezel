@@ -1,8 +1,6 @@
 import { bound } from '../decorator/bound'
 import { render } from '../decorator/render'
 import { Event } from '../event/Event'
-import { Children } from '../view/View'
-import { Parent } from '../view/View'
 import { View } from '../view/View'
 import { ViewInsertEvent } from '../view/View'
 import { ViewRemoveEvent } from '../view/View'
@@ -30,10 +28,22 @@ export const SLOTS = Symbol('slots')
 export const BUILT = Symbol('built')
 
 /**
- * @type Child
+ * @symbol LOCKED
  * @since 0.7.0
  */
-export type Child = View | Slot | Array<View | Slot>
+export const LOCKED = Symbol('locked')
+
+/**
+ * @symbol SEALED
+ * @since 0.7.0
+ */
+export const SEALED = Symbol('sealed')
+
+/**
+ * @symbol CONTENT
+ * @since 0.7.0
+ */
+export const MAIN = Symbol('main')
 
 /**
  * @class Component
@@ -43,8 +53,57 @@ export type Child = View | Slot | Array<View | Slot>
 export abstract class Component<TRefs = any, TSlots = any> extends View {
 
 	//--------------------------------------------------------------------------
+	// Static
+	//--------------------------------------------------------------------------
+
+	/**
+	 * TODO
+	 * @property lock
+	 * @since 0.7.0
+	 */
+	public static lock(component: Component) {
+		component[LOCKED] = true
+	}
+
+	/**
+	 * TODO
+	 * @property seal
+	 * @since 0.7.0
+	 */
+	public static seal(component: Component) {
+		component[SEALED] = true
+	}
+
+	//--------------------------------------------------------------------------
 	// Properties
 	//--------------------------------------------------------------------------
+
+	/**
+	 * Whether the component is built.
+	 * @property built
+	 * @since 0.7.0
+	 */
+	public get built(): boolean {
+		return this[BUILT]
+	}
+
+	/**
+	 * Whether the component is sealed.
+	 * @property sealed
+	 * @since 0.7.0
+	 */
+	public get sealed(): boolean {
+		return this[SEALED]
+	}
+
+	/**
+	 * Whether the component is locked.
+	 * @property locked
+	 * @since 0.7.0
+	 */
+	public get locked(): boolean {
+		return this[LOCKED]
+	}
 
 	/**
 	 * The component's window.
@@ -60,7 +119,7 @@ export abstract class Component<TRefs = any, TSlots = any> extends View {
 	 * @property parent
 	 * @since 0.7.0
 	 */
-	@render public get parent(): Parent | null | undefined {
+	@render public get parent(): View | null | undefined {
 		return super.parent
 	}
 
@@ -69,7 +128,7 @@ export abstract class Component<TRefs = any, TSlots = any> extends View {
 	 * @property children
 	 * @since 0.7.0
 	 */
-	@render public get children(): Children {
+	@render public get children(): ReadonlyArray<View> {
 		return super.children
 	}
 
@@ -89,15 +148,6 @@ export abstract class Component<TRefs = any, TSlots = any> extends View {
 	 */
 	@render protected get slots(): TSlots {
 		return this[SLOTS]
-	}
-
-	/**
-	 * The component built status.
-	 * @property built
-	 * @since 0.7.0
-	 */
-	public get built(): boolean {
-		return this[BUILT]
 	}
 
 	//--------------------------------------------------------------------------
@@ -126,7 +176,7 @@ export abstract class Component<TRefs = any, TSlots = any> extends View {
 	 * @method append
 	 * @since 0.7.0
 	 */
-	public append(child: Child, slot: string | null = null) {
+	public append(child: View, slot: string | null = null) {
 		return this.insert(child, this.children.length, slot)
 	}
 
@@ -135,28 +185,13 @@ export abstract class Component<TRefs = any, TSlots = any> extends View {
 	 * @method insert
 	 * @since 0.7.0
 	 */
-	public insert(child: Child, index: number, slot: string | null = null) {
+	public insert(child: View, index: number, slot: string | null = null) {
 
-		if (child instanceof Slot) {
-
-			/*
-			 * The behavior of inserting a slot using this method is mostly
-			 * similar to the behavior of a fragment. The slot must have been
-			 * define prior to this and it will receive the specified child
-			 * contents.
-			 */
-
-			let container = this[SLOTS][child.name] as Slot
-			if (container == null) {
-				throw new Error(
-					`Component error: ` +
-					`The component ${this.constructor.name} does not define a slot named ${child.name}. Did you call defineSlot ?`
-				)
-			}
-
-			container.insert(child, index)
-
-			return this
+		if (this.locked) {
+			throw new Error(
+				`Component error: ` +
+				`This component is locked and cannot be mutated.`
+			)
 		}
 
 		if (slot) {
@@ -165,11 +200,28 @@ export abstract class Component<TRefs = any, TSlots = any> extends View {
 			if (container == null) {
 				throw new Error(
 					`Component error: ` +
-					`The component ${this.constructor.name} does not have a slot named ${slot}.`
+					`The component ${this.constructor.name} does not have a slot named ${slot}. ` +
+					`Did you forget to call defineSlot() ?`
 				)
 			}
 
 			container.insert(child, index)
+
+			return this
+		}
+
+		if (this.sealed) {
+
+			let content = this[MAIN]
+			if (content == null) {
+				throw new Error(
+					`Component error: ` +
+					`The component ${this.constructor.name} is sealed therefore ` +
+					`you must use one if its slot to manage its content.`
+				)
+			}
+
+			this.insert(child, index, content.name)
 
 			return this
 		}
@@ -184,13 +236,21 @@ export abstract class Component<TRefs = any, TSlots = any> extends View {
 	 */
 	public remove(child: View, slot: string | null = null) {
 
+		if (this.locked) {
+			throw new Error(
+				`Component error: ` +
+				`This component is locked and cannot be mutated.`
+			)
+		}
+
 		if (slot) {
 
 			let container = this[SLOTS][slot] as Slot
 			if (container == null) {
 				throw new Error(
 					`Component error: ` +
-					`The component ${this.constructor.name} does not define a slot named ${slot}.`
+					`The component ${this.constructor.name} does not have a slot named ${slot}. ` +
+					`Did you forget to call defineSlot() ?`
 				)
 			}
 
@@ -199,43 +259,76 @@ export abstract class Component<TRefs = any, TSlots = any> extends View {
 			return this
 		}
 
+		if (this.sealed) {
+
+			let content = this[MAIN]
+			if (content == null) {
+				throw new Error(
+					`Component error: ` +
+					`The component ${this.constructor.name} is sealed therefore ` +
+					`you must use one if its slot to manage its content.`
+				)
+			}
+
+			this.remove(child, content.name)
+
+			return this
+		}
+
 		return super.remove(child)
 	}
 
 	/**
-	 * TODO
+	 * Defines a slot.
 	 * @method defineSlot
 	 * @since 0.7.0
 	 */
-	public defineSlot(slot: Slot, inside: View, offset: number | null = null) {
+	public defineSlot(slot: Slot, parent: View, offset: number | null = null, main: boolean = false) {
 
 		if (slot.container) {
 			throw new Error(
 				`Component error: ` +
-				`This slot is already used by ${slot.container.constructor.name}.`
+				`This slot is already defined by ${slot.container.constructor.name}.`
 			)
 		}
 
 		let name = slot.name
 
 		if (this[SLOTS][name]) {
-
 			throw new Error(
 				`Component error: ` +
 				`Component ${this.constructor.name} already defines a slot named ${name}.`
 			)
-
 		}
 
 		setContainer(slot, this)
 
+		slot.on('insert', this.onSlotInsert)
+		slot.on('remove', this.onSlotRemove)
+
 		this[SLOTS][name] = slot
 
 		if (offset == null) {
-			offset = inside.children.length
+			offset = parent.children.length
 		}
 
-		inside.insert(slot, offset)
+		slot.enter(
+			parent,
+			offset
+		)
+
+		if (main) {
+
+			let current = this[MAIN]
+			if (current) {
+				throw new Error(
+					`Component error: ` +
+					`This component already have a default slots of type ${current.constructor.name}.`
+				)
+			}
+
+			this[MAIN] = slot
+		}
 
 		return this
 	}
@@ -252,9 +345,7 @@ export abstract class Component<TRefs = any, TSlots = any> extends View {
 	public onEmit(event: Event) {
 
 		if (event.type == 'movetoparent') {
-			if (this.built == false) {
-				this.build()
-			}
+			this.build()
 		}
 
 		super.onEmit(event)
@@ -293,6 +384,8 @@ export abstract class Component<TRefs = any, TSlots = any> extends View {
 
 		this.onRender()
 
+		Component.seal(this)
+
 		return this
 	}
 
@@ -322,21 +415,42 @@ export abstract class Component<TRefs = any, TSlots = any> extends View {
 	private [BUILT]: boolean = false
 
 	/**
-	 * @method onInsertInto
+	 * @property SEALED
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@bound private onInsertInto(event: Event<ViewInsertEvent>) {
-		// TODO
+	private [SEALED]: boolean = false
+
+	/**
+	 * @property LOCKED
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private [LOCKED]: boolean = false
+
+	/**
+	 * @property CONTENT
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private [MAIN]: Slot | null | undefined
+
+	/**
+	 * @method onSlotInsert
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@bound private onSlotInsert(event: Event<ViewInsertEvent>) {
+		this.emit<ViewInsertEvent>('insert', { data: event.data })
 	}
 
 	/**
-	 * @method onRemoveFrom
+	 * @method onSlotRemove
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@bound private onRemoveFrom(event: Event<ViewRemoveEvent>) {
-		// TODO
+	@bound private onSlotRemove(event: Event<ViewRemoveEvent>) {
+		this.emit<ViewRemoveEvent>('remove', { data: event.data })
 	}
 }
 
