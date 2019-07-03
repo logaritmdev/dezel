@@ -1,11 +1,12 @@
-import { Placeholder } from '../view/Placeholder'
+import { Placeholder } from '../placeholder/Placeholder'
+import { View } from '../view/View'
 import { Component } from './Component'
 
 /**
  * @symbol CONTAINER
  * @since 0.7.0
  */
-export const CONTAINER = Symbol('component')
+export const CONTAINER = Symbol('container')
 
 /**
  * TODO
@@ -20,14 +21,14 @@ export abstract class Slot extends Placeholder {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The slot name.
+	 * The slot's name.
 	 * @property name
 	 * @since 0.7.0
 	 */
 	public abstract get name(): string
 
 	/**
-	 * The container that defines this slot.
+	 * The slot's container.
 	 * @property container
 	 * @since 0.7.0
 	 */
@@ -40,7 +41,7 @@ export abstract class Slot extends Placeholder {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @property REFS
+	 * @property CONTAINER
 	 * @since 0.7.0
 	 * @hidden
 	 */
