@@ -5,8 +5,8 @@ import { Event } from '../event/Event'
 import { GestureManager } from '../gesture/GestureManager'
 import { Canvas } from '../graphic/Canvas'
 import { Image } from '../graphic/Image'
+import { Placeholder } from '../placeholder/Placeholder'
 import { TouchEvent } from '../touch/TouchEvent'
-import { Placeholder } from './Placeholder'
 import { Window } from './Window'
 
 /**
@@ -14,6 +14,12 @@ import { Window } from './Window'
  * @since 0.7.0
  */
 export const ID = Symbol('id')
+
+/**
+ * @symbol MOUNTED
+ * @since 0.7.0
+ */
+export const MOUNTED = Symbol('mounted')
 
 /**
  * @symbol CHILDREN
@@ -1384,10 +1390,15 @@ export class View extends Emitter {
 
 		child.setResponder(this)
 
-		insertChild(this, child, index)
-		insertNative(this, child, index)
+		insertItem(this, child, index)
+		insertView(this, child, index)
 
-		this.emit<ViewInsertEvent>('insert', { data: { child, index } })
+		this.emit<ViewInsertEvent>('insert', {
+			data: {
+				child,
+				index
+			}
+		})
 
 		return this
 	}
@@ -1401,10 +1412,7 @@ export class View extends Emitter {
 
 		let index = this.children.indexOf(after)
 		if (index == -1) {
-			throw new Error(
-				`View error: ` +
-				`The after view cannot be found.`
-			)
+			throw new Error('The specified view cannot be found.')
 		}
 
 		this.insert(child, index + 1)
@@ -1421,10 +1429,7 @@ export class View extends Emitter {
 
 		let index = this.children.indexOf(before)
 		if (index == -1) {
-			throw new Error(
-				`View error: ` +
-				`The before view cannot be found.`
-			)
+			throw new Error('The specified view cannot be found.')
 		}
 
 		this.insert(child, index)
@@ -1433,7 +1438,7 @@ export class View extends Emitter {
 	}
 
 	/**
-	 * Removes a view from this view's child list.
+	 * Removes a child from this view's child list.
 	 * @method remove
 	 * @since 0.1.0
 	 */
@@ -1444,12 +1449,17 @@ export class View extends Emitter {
 			return this
 		}
 
+		removeItem(this, child, index)
+		removeView(this, child, index)
+
 		child.setResponder(null)
 
-		removeChild(this, child, index)
-		removeNative(this, child, index)
-
-		this.emit<ViewRemoveEvent>('remove', { data: { child, index } })
+		this.emit<ViewRemoveEvent>('remove', {
+			data: {
+				child,
+				index
+			}
+		})
 
 		return this
 	}
@@ -1464,6 +1474,20 @@ export class View extends Emitter {
 		let parent = this.parent
 		if (parent) {
 			parent.remove(this)
+		}
+
+		return this
+	}
+
+	/**
+	 * Remove all views this view.
+	 * @method empty
+	 * @since 0.7.0
+	 */
+	public empty() {
+
+		while (this.children.length) {
+			this.remove(last(this.children))
 		}
 
 		return this
@@ -1485,20 +1509,6 @@ export class View extends Emitter {
 		if (index > -1) {
 			parent.remove(this)
 			parent.insert(view, index)
-		}
-
-		return this
-	}
-
-	/**
-	 * Remove all views this view.
-	 * @method empty
-	 * @since 0.7.0
-	 */
-	public empty() {
-
-		while (this.children.length) {
-			this.remove(last(this.children))
 		}
 
 		return this
@@ -1736,14 +1746,6 @@ export class View extends Emitter {
 
 			this.gestures.dispatchTouchEvent(event)
 		}
-		// TODO MAKE BETTER, call from native ?
-		if (event.type == 'movetowindow') {
-			if (event.data.window) {
-				this.onMount()
-			} else {
-				this.onUnmount()
-			}
-		}
 
 		switch (event.type) {
 
@@ -1777,6 +1779,14 @@ export class View extends Emitter {
 
 			case 'movetowindow':
 				this.onMoveToWindow(event.data.window)
+				break
+
+			case 'mount':
+				this.onMount()
+				break
+
+			case 'unmount':
+				this.onUnmount()
 				break
 
 			case 'scrollstart':
@@ -2073,6 +2083,13 @@ export class View extends Emitter {
 	private [ID]: string = ''
 
 	/**
+	 * @property MOUNTED
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private [MOUNTED]: boolean = false
+
+	/**
 	 * @property CHILDREN
 	 * @since 0.1.0
 	 * @hidden
@@ -2119,7 +2136,28 @@ export class View extends Emitter {
 	 * @hidden
 	 */
 	private nativeMoveToWindow(window: Window) {
+
 		this.emit<ViewMoveToWindowEvent>('movetowindow', { data: { window } })
+
+		/*
+		 * This is a convenience event to make cleaner and
+		 * more verbose code.
+		 */
+
+		if (window) {
+
+			if (this[MOUNTED] == false) {
+				this[MOUNTED] = true
+				this.emit('mount')
+			}
+
+		} else {
+
+			if (this[MOUNTED]) {
+				this[MOUNTED] = false
+				this.emit('unmount')
+			}
+		}
 	}
 
 	/**
@@ -2232,44 +2270,44 @@ export class View extends Emitter {
 }
 
 /**
- * @function insertChild
+ * @function insertItem
  * @since 0.7.0
  * @hidden
  */
-function insertChild(view: View, child: View, index: number) {
+function insertItem(view: View, child: View, index: number) {
 	view[CHILDREN].splice(index, 0, child)
 }
 
 /**
- * @function removeChild
+ * @function removeItem
  * @since 0.7.0
  * @hidden
  */
-function removeChild(view: View, child: View, index: number) {
+function removeItem(view: View, child: View, index: number) {
 	view[CHILDREN].splice(index, 1)
 }
 
 /**
- * @function insertNative
+ * @function insertView
  * @since 0.7.0
  * @hidden
  */
-function insertNative(view: View, child: View, index: number) {
+function insertView(view: View, child: View, index: number) {
 	view.native.insert(child.native, index)
 }
 
 /**
- * @function removeNative
+ * @function removeView
  * @since 0.7.0
  * @hidden
  */
-function removeNative(view: View, child: View, index: number) {
+function removeView(view: View, child: View, index: number) {
 	view.native.remove(child.native, index)
 }
 
 /**
  * @function last
- * @since 0.7.0
+ * @sinceremoveView
  * @hidden
  */
 function last(list: ReadonlyArray<View>) {
