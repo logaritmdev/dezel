@@ -4,7 +4,14 @@ import { setChildren } from '../component/Host'
 import { setProperties } from '../component/Host'
 import { Host } from '../component/Host'
 import { Slot } from '../component/Slot'
+import { Placeholder } from '../placeholder/Placeholder'
 import { View } from '../view/View'
+
+/**
+ * @symbol MAIN
+ * @since 0.7.0
+ */
+export const MAIN = Symbol('main')
 
 /**
  * @symbol CONTAINER
@@ -13,7 +20,7 @@ import { View } from '../view/View'
 export const CONTAINER = Symbol('container')
 
 /**
- * @const createElement
+ * @function createElement
  * @since 0.4.0
  * @hidden
  */
@@ -45,15 +52,20 @@ export function createElement(Type: any, properties: any, ...children: Array<Vie
 		let container = properties.for as Component
 		if (container) {
 
-			setContainer(view, container)
-
 			let identifier = properties.id
 			if (identifier) {
 				setRef(container, identifier, view)
 			}
+
+			setContainer(view, container)
 		}
 
 		delete properties.for
+
+		let main = properties.main
+		if (main) {
+			setMain(view, main)
+		}
 
 		for (let key in properties) {
 
@@ -141,13 +153,36 @@ function append(view: any, children: Array<any>) {
 
 			let container = getContainer(node)
 			if (container) {
-				container.defineSlot(node, view)
+				container.defineSlot(node, view, getMain(view))
 				continue
 			}
 		}
 
+		if (node instanceof Placeholder) {
+			node.enter(view, view.children.length)
+			continue
+		}
+
 		view.append(node)
 	}
+}
+
+/**
+ * @function setMain
+ * @since 0.7.0
+ * @hidden
+ */
+function setMain(slot: any, main: boolean) {
+	slot[MAIN] = main
+}
+
+/**
+ * @function getMain
+ * @since 0.7.0
+ * @hidden
+ */
+function getMain(slot: any) {
+	return slot[MAIN]
 }
 
 /**
@@ -223,12 +258,17 @@ function set(view: any, key: string, value: any) {
 			break
 	}
 
-	if (primitive) {
+	let coherse = primitive || value instanceof Array
+	// TODO
+	// Finish this
+	if (coherse) {
 		let receiver = view[key]
 		if (receiver &&
 			receiver.setDefaultValue) {
-			receiver.setDefaultValue(value)
-			return
+			let handled = receiver.setDefaultValue(value)
+			if (handled) {
+				return
+			}
 		}
 	}
 
