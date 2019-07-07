@@ -8,8 +8,7 @@ import android.graphics.RectF
 import android.support.v4.content.LocalBroadcastManager
 import android.util.Log
 import android.util.SizeF
-import ca.logaritm.dezel.BuildConfig
-import ca.logaritm.dezel.application.DezelApplicationActivity
+import ca.logaritm.dezel.application.ApplicationActivity
 import ca.logaritm.dezel.core.*
 import ca.logaritm.dezel.extension.*
 import ca.logaritm.dezel.layout.LayoutNode
@@ -69,7 +68,7 @@ open class View(context: JavaScriptContext) : JavaScriptClass(context), LayoutNo
 	 * @property application
 	 * @since 0.2.0
 	 */
-	public var application: DezelApplicationActivity
+	public var application: ApplicationActivity
 		private set
 
 	/**

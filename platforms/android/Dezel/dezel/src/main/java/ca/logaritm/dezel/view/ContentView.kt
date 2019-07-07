@@ -6,7 +6,7 @@ import android.view.*
 import android.view.animation.Transformation
 import android.widget.HorizontalScrollView
 import android.widget.ScrollView
-import ca.logaritm.dezel.application.DezelApplicationActivity
+import ca.logaritm.dezel.application.ApplicationActivity
 import ca.logaritm.dezel.extension.Delegates
 import ca.logaritm.dezel.extension.removeFromParent
 import ca.logaritm.dezel.extension.setMeasuredFrame
@@ -813,7 +813,7 @@ open class ContentView(context: Context) : ViewGroup(context), Scrollable, Resiz
 	 */
 	open fun dispatchTouchCancel(event: MotionEvent) {
 		val application = this.context
-		if (application is DezelApplicationActivity) {
+		if (application is ApplicationActivity) {
 			application.dispatchTouchCancel(event)
 		}
 	}
@@ -1399,7 +1399,7 @@ open class ContentView(context: Context) : ViewGroup(context), Scrollable, Resiz
 			 */
 
 			val context = this.context
-			if (context is DezelApplicationActivity) {
+			if (context is ApplicationActivity) {
 				context.updateDisplayManager.dispatch()
 			}
 		}
@@ -1791,7 +1791,7 @@ open class ContentView(context: Context) : ViewGroup(context), Scrollable, Resiz
 			 */
 
 			val context = this.context
-			if (context is DezelApplicationActivity) {
+			if (context is ApplicationActivity) {
 				context.updateDisplayManager.dispatch()
 			}
 		}

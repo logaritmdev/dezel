@@ -12,7 +12,7 @@ import android.view.inputmethod.EditorInfo
 import android.widget.DatePicker
 import android.widget.EditText
 import android.widget.TimePicker
-import ca.logaritm.dezel.application.DezelApplicationActivity
+import ca.logaritm.dezel.application.ApplicationActivity
 import ca.logaritm.dezel.date.DateParser
 import ca.logaritm.dezel.extension.Delegates
 import ca.logaritm.dezel.extension.format
@@ -341,7 +341,7 @@ open class ContentTextInput(context: Context, listener: ContentTextInputListener
 		if (hasFocus) {
 
 			val application = this.context
-			if (application is DezelApplicationActivity) {
+			if (application is ApplicationActivity) {
 				application.presentSoftKeyboard(v)
 			}
 
@@ -350,7 +350,7 @@ open class ContentTextInput(context: Context, listener: ContentTextInputListener
 		} else {
 
 			val application = this.context
-			if (application is DezelApplicationActivity) {
+			if (application is ApplicationActivity) {
 				application.dismissSoftKeyboard(v)
 			}
 

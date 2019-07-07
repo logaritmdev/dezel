@@ -7,7 +7,7 @@ import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
-import ca.logaritm.dezel.application.DezelApplicationActivity
+import ca.logaritm.dezel.application.ApplicationActivity
 import ca.logaritm.dezel.extension.Delegates
 import ca.logaritm.dezel.font.FontManager
 import ca.logaritm.dezel.view.graphic.Color
@@ -269,7 +269,7 @@ open class ContentTextArea(context: Context, listener: ContentTextAreaListener?)
 		if (hasFocus) {
 
 			val application = this.context
-			if (application is DezelApplicationActivity) {
+			if (application is ApplicationActivity) {
 				application.presentSoftKeyboard(v)
 			}
 
@@ -278,7 +278,7 @@ open class ContentTextArea(context: Context, listener: ContentTextAreaListener?)
 		} else {
 
 			val application = this.context
-			if (application is DezelApplicationActivity) {
+			if (application is ApplicationActivity) {
 				application.dismissSoftKeyboard(v)
 			}
 

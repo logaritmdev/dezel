@@ -5,7 +5,7 @@ import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.view.animation.Interpolator
 import android.view.animation.PathInterpolator
-import ca.logaritm.dezel.application.DezelApplicationActivity
+import ca.logaritm.dezel.application.ApplicationActivity
 import ca.logaritm.dezel.modules.view.ImageView
 import ca.logaritm.dezel.modules.view.TextView
 import ca.logaritm.dezel.modules.view.View
@@ -19,7 +19,7 @@ import android.view.Window as AndroidWindow
  * @since 0.1.0
  * @hidden
  */
-public class TransitionGroup(val activity: DezelApplicationActivity): Animator.AnimatorListener {
+public class TransitionGroup(val activity: ApplicationActivity): Animator.AnimatorListener {
 
 	//--------------------------------------------------------------------------
 	// Static

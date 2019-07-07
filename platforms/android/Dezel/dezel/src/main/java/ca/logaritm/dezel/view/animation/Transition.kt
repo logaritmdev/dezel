@@ -1,7 +1,7 @@
 package ca.logaritm.dezel.view.animation
 
 import android.view.animation.Interpolator
-import ca.logaritm.dezel.application.DezelApplicationActivity
+import ca.logaritm.dezel.application.ApplicationActivity
 import ca.logaritm.dezel.extension.last
 
 /**
@@ -32,7 +32,7 @@ public object Transition {
 	 * @method create
 	 * @since 0.1.0
 	 */
-	public fun create(activity: DezelApplicationActivity, duration: Double, equation: Interpolator, delay: Double) {
+	public fun create(activity: ApplicationActivity, duration: Double, equation: Interpolator, delay: Double) {
 
 		val transition = TransitionGroup(activity)
 		transition.duration = duration

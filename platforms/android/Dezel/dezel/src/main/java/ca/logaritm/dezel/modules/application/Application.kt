@@ -4,7 +4,7 @@ import android.bluetooth.BluetoothAdapter
 import android.content.Intent
 import android.net.Uri
 import android.provider.Settings
-import ca.logaritm.dezel.application.DezelApplicationActivity
+import ca.logaritm.dezel.application.ApplicationActivity
 import ca.logaritm.dezel.core.*
 import ca.logaritm.dezel.extension.Delegates
 import ca.logaritm.dezel.modules.view.Window
@@ -240,8 +240,8 @@ open class Application(context: JavaScriptContext) : JavaScriptClass(context) {
 	@Suppress("unused")
 	open fun jsGet_state(callback: JavaScriptGetterCallback) {
 		when (this.context.application.state) {
-			DezelApplicationActivity.State.FOREGROUND -> callback.returns("foreground")
-			DezelApplicationActivity.State.BACKGROUND -> callback.returns("background")
+			ApplicationActivity.State.FOREGROUND -> callback.returns("foreground")
+			ApplicationActivity.State.BACKGROUND -> callback.returns("background")
 		}
 	}
 

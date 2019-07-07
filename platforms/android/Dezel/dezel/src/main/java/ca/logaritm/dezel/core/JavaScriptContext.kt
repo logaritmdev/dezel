@@ -2,7 +2,7 @@ package ca.logaritm.dezel.core
 
 import android.util.Log
 import ca.logaritm.dezel.BuildConfig
-import ca.logaritm.dezel.application.DezelApplicationActivity
+import ca.logaritm.dezel.application.ApplicationActivity
 
 /**
  * A JavaScript execution environment.
@@ -444,8 +444,8 @@ open class JavaScriptContext {
 	 * @property application
 	 * @since 0.1.0
 	 */
-	public val application: DezelApplicationActivity by lazy {
-		DezelApplicationActivity.from(this)
+	public val application: ApplicationActivity by lazy {
+		ApplicationActivity.from(this)
 	}
 
 	//--------------------------------------------------------------------------
