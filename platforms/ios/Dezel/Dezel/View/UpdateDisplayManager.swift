@@ -38,7 +38,7 @@ public class UpdateDisplayManager: CALayer {
 	 * @constructor
 	 * @since 0.2.0
 	 */
-	init(application: DezelApplicationController) {
+	init(application: ApplicationController) {
 
 		super.init()
 

@@ -49,7 +49,7 @@ open class JavaScriptContext: NSObject {
      * @property exports
      * @since 0.1.0
      */
-	internal(set) public var exports: [String: JavaScriptValue] = [:]
+	internal(set) public var exports: [String: JavaScriptValue] = [:] // TODO REMOVE
 
 	/**
 	 * The context's console.
@@ -443,8 +443,8 @@ open class JavaScriptContext: NSObject {
      * @property application
      * @since 0.1.0
      */
-	public lazy var application: DezelApplicationController = {
-		return DezelApplicationController.from(self)
+	public lazy var application: ApplicationController = {
+		return ApplicationController.from(self)
 	}()
 
 	//--------------------------------------------------------------------------

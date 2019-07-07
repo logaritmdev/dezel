@@ -2,10 +2,10 @@ import Foundation
 
 /**
  * The application delegate that must extend the application delegate.
- * @class DezelApplicationDelegate
- * @since 0.1.0
+ * @class ApplicationDelegate
+ * @since 0.7.0
  */
-open class DezelApplicationDelegate: UIResponder, UIApplicationDelegate {
+open class ApplicationDelegate: UIResponder, UIApplicationDelegate {
 
 	//--------------------------------------------------------------------------
 	// MARK: Properties
@@ -13,7 +13,7 @@ open class DezelApplicationDelegate: UIResponder, UIApplicationDelegate {
 
     /**
      * The application window.
-	 * @since 0.1.0
+	 * @since 0.7.0
 	 * @hidden
      */
     open var window: UIWindow? {
@@ -33,8 +33,8 @@ open class DezelApplicationDelegate: UIResponder, UIApplicationDelegate {
 
 	/**
 	 * @inherited
-	 * @method applicationopenurl
-	 * @since 0.5.0
+	 * @method applicationOpenUrl
+	 * @since 0.7.0
 	 */
 	open func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
 		NotificationCenter.default.post(name: Notification.Name("handleresource"), object: self, userInfo: ["url": url])
@@ -44,7 +44,7 @@ open class DezelApplicationDelegate: UIResponder, UIApplicationDelegate {
 	/**
 	 * @inherited
 	 * @method applicationContinueUserActivity
-	 * @since 0.6.0
+	 * @since 0.7.0
 	 */
 	open func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
 
@@ -58,7 +58,7 @@ open class DezelApplicationDelegate: UIResponder, UIApplicationDelegate {
 	/**
 	 * @inherited
 	 * @method applicationDidRegisterForRemoteNotificationsWithDeviceToken
-	 * @since 0.5.0
+	 * @since 0.7.0
 	 */
     open func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
 
@@ -75,8 +75,8 @@ open class DezelApplicationDelegate: UIResponder, UIApplicationDelegate {
 
 	/**
 	 * @property applicationWindow
-	 * @since 0.1.0
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private var applicationWindow: DezelApplicationWindow = DezelApplicationWindow(frame: UIScreen.main.bounds)
+	private var applicationWindow: ApplicationWindow = ApplicationWindow(frame: UIScreen.main.bounds)
 }

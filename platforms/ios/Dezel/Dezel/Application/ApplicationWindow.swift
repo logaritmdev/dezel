@@ -2,10 +2,10 @@ import Foundation
 
 /**
  * The application window needed to handle touch events.
- * @class DezelApplicationWindow
- * @since 0.1.0
+ * @class ApplicationWindow
+ * @since 0.7.0
  */
-open class DezelApplicationWindow: UIWindow {
+open class ApplicationWindow: UIWindow {
 
 	//--------------------------------------------------------------------------
 	// MARK: Methods
@@ -14,7 +14,7 @@ open class DezelApplicationWindow: UIWindow {
 	/**
 	 * @inherited
      * @method sendEvent
-     * @since 0.1.0
+     * @since 0.7.0
      */
 	override open func sendEvent(_ event: UIEvent) {
 
@@ -95,7 +95,7 @@ open class DezelApplicationWindow: UIWindow {
 
 	/**
      * @method handleTouchBegan
-     * @since 0.1.0
+     * @since 0.7.0
      * @hidden
      */
 	private func handleTouchBegan(_ touches: Set<UITouch>, event: UIEvent) {
@@ -104,7 +104,7 @@ open class DezelApplicationWindow: UIWindow {
 
 	/**
      * @method handleTouchMoved
-     * @since 0.1.0
+     * @since 0.7.0
      * @hidden
      */
 	private func handleTouchMoved(_ touches: Set<UITouch>, event: UIEvent) {
@@ -113,7 +113,7 @@ open class DezelApplicationWindow: UIWindow {
 
 	/**
      * @method handleTouchEnded
-     * @since 0.1.0
+     * @since 0.7.0
      * @hidden
      */
 	private func handleTouchEnded(_ touches: Set<UITouch>, event: UIEvent) {
@@ -122,7 +122,7 @@ open class DezelApplicationWindow: UIWindow {
 
 	/**
      * @method handleTouchCancelled
-     * @since 0.1.0
+     * @since 0.7.0
      * @hidden
      */
 	private func handleTouchCancelled(_ touches: Set<UITouch>, event: UIEvent) {

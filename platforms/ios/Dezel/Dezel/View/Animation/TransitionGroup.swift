@@ -14,7 +14,7 @@ public final class TransitionGroup {
 	 * @property application
 	 * @since 0.2.0
 	 */
-	private(set) public var application: DezelApplicationController
+	private(set) public var application: ApplicationController
 
 	/**
 	 * The transition's listeners.
@@ -76,7 +76,7 @@ public final class TransitionGroup {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	public init(application: DezelApplicationController) {
+	public init(application: ApplicationController) {
 		self.application = application
 	}
 

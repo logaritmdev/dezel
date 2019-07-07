@@ -42,7 +42,7 @@ open class View: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelegate, Scroll
 	 * @property application
 	 * @since 0.2.0
 	 */
-	private(set) public var application: DezelApplicationController
+	private(set) public var application: ApplicationController
 
 	/**
 	 * The view's content wrapper view.

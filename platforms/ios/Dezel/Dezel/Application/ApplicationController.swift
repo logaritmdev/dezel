@@ -1,11 +1,11 @@
 import UIKit
 
 /**
- * The root controller of a Dezel application.
- * @class DezelApplicationController
- * @since 0.1.0
+ * An application view controller.
+ * @class ApplicationController
+ * @since 0.7.0
  */
-open class DezelApplicationController: UIViewController {
+open class ApplicationController: UIViewController {
 
 	//--------------------------------------------------------------------------
 	// MARK: Static
@@ -14,10 +14,10 @@ open class DezelApplicationController: UIViewController {
 	/**
 	 * Returns the application controller of the specified context.
 	 * @method from
-	 * @since 0.1.0
+	 * @since 0.7.0
 	 */
-	public static func from(_ context: JavaScriptContext) -> DezelApplicationController {
-		return context.attribute("dezel.application.DezelApplicationController") as! DezelApplicationController
+	public static func from(_ context: JavaScriptContext) -> ApplicationController {
+		return context.attribute("dezel.application.DezelApplicationController") as! ApplicationController
 	}
 
 	//--------------------------------------------------------------------------
@@ -27,7 +27,7 @@ open class DezelApplicationController: UIViewController {
 	/**
 	 * The status bar visibility status.
 	 * @property statusBarVisible
-	 * @since 0.1.0
+	 * @since 0.7.0
 	 */
 	open var statusBarVisible: Bool = true {
 		didSet {
@@ -40,7 +40,7 @@ open class DezelApplicationController: UIViewController {
 	/**
 	 * The status bar foreground color (white or black)
 	 * @property statusBarForegroundColor
-	 * @since 0.1.0
+	 * @since 0.7.0
 	 */
 	open var statusBarForegroundColor: UIColor = UIColor.black {
 		didSet {
@@ -53,7 +53,7 @@ open class DezelApplicationController: UIViewController {
 	/**
 	 * The status bar background color.
 	 * @property statusBarBackgroundColor
-	 * @since 0.1.0
+	 * @since 0.7.0
 	 */
 	open var statusBarBackgroundColor: UIColor = UIColor.clear {
 		didSet {
@@ -66,69 +66,69 @@ open class DezelApplicationController: UIViewController {
 	/**
 	 * The application's JavaScript context.
 	 * @property context
-	 * @since 0.1.0
+	 * @since 0.7.0
 	 */
 	private(set) public var context: JavaScriptContext = JavaScriptContext()
 
 	/**
 	 * The application's JavaScript application object.
 	 * @property application
-	 * @since 0.1.0
+	 * @since 0.7.0
 	 */
 	private(set) public var application: Application?
 
 	/**
 	 * The application's stylesheets.
 	 * @property styles
-	 * @since 0.1.0
+	 * @since 0.7.0
 	 */
 	private(set) public var styles: [String] = []
 
 	/**
 	 * The application's scripts.
 	 * @property scripts
-	 * @since 0.1.0
+	 * @since 0.7.0
 	 */
 	private(set) public var scripts: [String] = []
 
 	/**
 	 * The application's modules.
 	 * @property modules
-	 * @since 0.1.0
+	 * @since 0.7.0
 	 */
 	private(set) public var modules: [String: AnyClass] = [:]
 
 	/**
 	 * The application's classes.
 	 * @property classes
-	 * @since 0.1.0
+	 * @since 0.7.0
 	 */
 	private(set) public var classes: [String: AnyClass] = [:]
 
 	/**
 	 * The application's styles manager.
 	 * @property styler
-	 * @since 0.4.0
+	 * @since 0.7.0
 	 */
 	private(set) public var styler: Styler!
 
 	/**
 	 * The application's layout manager.
 	 * @property layout
-	 * @since 0.4.0
+	 * @since 0.7.0
 	 */
 	private(set) public var layout: Layout!
 
 	/**
 	 * The application's update display manager.
 	 * @property updateDisplayManager
-	 * @since 0.2.0
+	 * @since 0.7.0
 	 */
 	private(set) public var updateDisplayManager: UpdateDisplayManager!
 
 	/**
 	 * @property statusBar
-	 * @since 0.1.0
+	 * @since 0.7.0
 	 * @hidden
 	 */
 	private var statusBar: UIView = UIView(frame: .zero)
@@ -140,7 +140,7 @@ open class DezelApplicationController: UIViewController {
 	/**
 	 * @inherited
 	 * @method loadView
-	 * @since 0.1.0
+	 * @since 0.7.0
 	 */
 	override open func loadView() {
 		self.view = UIView(frame: UIScreen.main.bounds)
@@ -149,7 +149,7 @@ open class DezelApplicationController: UIViewController {
 	/**
 	 * @inherited
 	 * @method viewDidLoad
-	 * @since 0.1.0
+	 * @since 0.7.0
 	 */
 	override open func viewDidLoad() {
 
@@ -217,6 +217,7 @@ open class DezelApplicationController: UIViewController {
 		)
 
 		self.registerModule("dezel.ApplicationModule", module: ApplicationModule.self)
+		self.registerModule("dezel.CoreModule", module: CoreModule.self)
 		self.registerModule("dezel.DeviceModule", module: DeviceModule.self)
 		self.registerModule("dezel.DialogModule", module: DialogModule.self)
 		self.registerModule("dezel.FormModule", module: FormModule.self)
@@ -240,7 +241,7 @@ open class DezelApplicationController: UIViewController {
 	/**
 	 * @inherited
 	 * @method viewWillLayoutSubviews
-	 * @since 0.1.0
+	 * @since 0.7.0
 	 */
 	override open func viewWillLayoutSubviews() {
 		self.view.frame = UIScreen.main.bounds
@@ -250,7 +251,7 @@ open class DezelApplicationController: UIViewController {
 	/**
 	 * Launches the specified application.
 	 * @method launch
-	 * @since 0.1.0
+	 * @since 0.7.0
 	 */
 	open func launch(application: Application) {
 
@@ -263,7 +264,7 @@ open class DezelApplicationController: UIViewController {
 
 		self.application = application
 
-		self.view.addSubview(application.window.wrapper)
+		self.view.addSubview(application.window)
 
 		self.applicationDidLoad()
 
@@ -273,7 +274,7 @@ open class DezelApplicationController: UIViewController {
 	/**
 	 * Reloads the current application.
 	 * @method reload
-	 * @since 0.1.0
+	 * @since 0.7.0
 	 */
 	open func reload() {
 
@@ -302,7 +303,7 @@ open class DezelApplicationController: UIViewController {
 	/**
 	 * Registers a style file.
 	 * @method registerStyle
-	 * @since 0.1.0
+	 * @since 0.7.0
 	 */
 	open func registerStyle(_ style: String) {
 		self.styles.append(style)
@@ -311,7 +312,7 @@ open class DezelApplicationController: UIViewController {
 	/**
 	 * Registers a script file.
 	 * @method registerScript
-	 * @since 0.1.0
+	 * @since 0.7.0
 	 */
 	open func registerScript(_ script: String) {
 		self.scripts.append(script)
@@ -320,7 +321,7 @@ open class DezelApplicationController: UIViewController {
 	/**
 	 * Registers a module.
 	 * @method registerModule
-	 * @since 0.1.0
+	 * @since 0.7.0
 	 */
 	open func registerModule(_ uid: String, module: AnyClass) {
 		self.modules[uid] = module
@@ -329,7 +330,7 @@ open class DezelApplicationController: UIViewController {
 	/**
 	 * Registers a class.
 	 * @method registerClass
-	 * @since 0.1.0
+	 * @since 0.7.0
 	 */
 	open func registerClass(_ uid: String, template: AnyClass) {
 		self.classes[uid] = template
@@ -337,7 +338,7 @@ open class DezelApplicationController: UIViewController {
 
 	/**
 	 * @method loadClasses
-	 * @since 0.1.0
+	 * @since 0.7.0
 	 * @hidden
 	 */
 	private func loadClasses() {
@@ -348,7 +349,7 @@ open class DezelApplicationController: UIViewController {
 
 	/**
 	 * @method loadModules
-	 * @since 0.1.0
+	 * @since 0.7.0
 	 * @hidden
 	 */
 	private func loadModules() {
@@ -359,7 +360,7 @@ open class DezelApplicationController: UIViewController {
 
 	/**
 	 * @method loadStyles
-	 * @since 0.1.0
+	 * @since 0.7.0
 	 * @hidden
 	 */
 	private func loadStyles() {
@@ -397,7 +398,7 @@ open class DezelApplicationController: UIViewController {
 
 	/**
 	 * @method loadScripts
-	 * @since 0.1.0
+	 * @since 0.7.0
 	 * @hidden
 	 */
 	private func loadScripts() {
@@ -422,7 +423,7 @@ open class DezelApplicationController: UIViewController {
 
 	/**
 	 * @method isDev
-	 * @since 0.1.0
+	 * @since 0.7.0
 	 * @hidden
 	 */
 	private func isDev() -> Bool {
@@ -435,7 +436,7 @@ open class DezelApplicationController: UIViewController {
 
 	/**
 	 * @method isSim
-	 * @since 0.1.0
+	 * @since 0.7.0
 	 * @hidden
 	 */
 	private func isSim() -> Bool {
@@ -453,7 +454,7 @@ open class DezelApplicationController: UIViewController {
 	/**
 	 * Called when the application is about to be loaded.
 	 * @method applicationWillLoad
-	 * @since 0.1.0
+	 * @since 0.7.0
 	 */
 	open func applicationWillLoad() {
 
@@ -462,7 +463,7 @@ open class DezelApplicationController: UIViewController {
 	/**
 	 * Called when the application has been loaded.
 	 * @method applicationDidLoad
-	 * @since 0.1.0
+	 * @since 0.7.0
 	 */
 	open func applicationDidLoad() {
 		self.application?.holder.callMethod("nativeLoad")
@@ -471,7 +472,7 @@ open class DezelApplicationController: UIViewController {
 	/**
 	 * Called when the application has been unloaded.
 	 * @method applicationDidUnload
-	 * @since 0.1.0
+	 * @since 0.7.0
 	 */
 	open func applicationDidUnload() {
 		self.application?.holder.callMethod("nativeUnload")
@@ -480,7 +481,7 @@ open class DezelApplicationController: UIViewController {
 	/**
 	 * Called when an exception is triggered from the JavaScript context.
 	 * @method applicationDidTriggerError
-	 * @since 0.5.0
+	 * @since 0.7.0
 	 */
 	open func applicationDidTriggerError(error: JavaScriptValue) -> Bool {
 		return true
@@ -493,7 +494,7 @@ open class DezelApplicationController: UIViewController {
 	/**
 	 * @inherited
 	 * @method viewWillTransition
-	 * @since 0.6.0
+	 * @since 0.7.0
 	 */
 	open override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
 
@@ -524,7 +525,7 @@ open class DezelApplicationController: UIViewController {
 
 	/**
 	 * @method getRotationAnimationDuration
-	 * @since 0.6.0
+	 * @since 0.7.0
  	 * @hidden
 	 */
 	open func getRotationAnimationDuration(context: UIViewControllerTransitionCoordinatorContext) -> TimeInterval {
@@ -533,7 +534,7 @@ open class DezelApplicationController: UIViewController {
 
 	/**
 	 * @method getRotationAnimationEquation
-	 * @since 0.6.0
+	 * @since 0.7.0
  	 * @hidden
 	 */
 	open func getRotationAnimationEquation(context: UIViewControllerTransitionCoordinatorContext) -> CAMediaTimingFunction {
@@ -553,7 +554,7 @@ open class DezelApplicationController: UIViewController {
 	/**
 	 * @inherited
 	 * @property prefersStatusBarHidden
-	 * @since 0.1.0
+	 * @since 0.7.0
 	 */
 	override open var prefersStatusBarHidden: Bool {
 
@@ -567,7 +568,7 @@ open class DezelApplicationController: UIViewController {
 	/**
 	 * @inherited
 	 * @property preferredStatusBarStyle
-	 * @since 0.1.0
+	 * @since 0.7.0
 	 */
 	override open var preferredStatusBarStyle: UIStatusBarStyle {
 
@@ -604,21 +605,21 @@ open class DezelApplicationController: UIViewController {
 
 	/**
 	 * @property keyboardVisible
-	 * @since 0.1.0
+	 * @since 0.7.0
 	 * @hidden
 	 */
 	private var keyboardVisible: Bool = false
 
 	/**
 	 * @property keyboardResizing
-	 * @since 0.1.0
+	 * @since 0.7.0
 	 * @hidden
 	 */
 	private var keyboardResizing: Bool = false
 
 	/**
 	 * @method keyboardWillChangeFrame
-	 * @since 0.1.0
+	 * @since 0.7.0
 	 * @hidden
 	 */
 	@objc open func keyboardWillChangeFrame(_ notification: Notification) {
@@ -652,7 +653,7 @@ open class DezelApplicationController: UIViewController {
 
 	/**
 	 * @method keyboardDidChangeFrame
-	 * @since 0.1.0
+	 * @since 0.7.0
 	 * @hidden
 	 */
 	@objc open func keyboardDidChangeFrame(_ notification: Notification) {
@@ -672,7 +673,7 @@ open class DezelApplicationController: UIViewController {
 
 	/**
 	 * @method callKeyboardEventMethod
-	 * @since 0.1.0
+	 * @since 0.7.0
 	 * @hidden
 	 */
 	private func callKeyboardEventMethod(_ name: String, notification: Notification) {
@@ -721,7 +722,7 @@ open class DezelApplicationController: UIViewController {
 	/**
 	 * Dispatches a touchcancel event.
 	 * @method dispatchTouchCancel
-	 * @since 0.1.0
+	 * @since 0.7.0
 	 */
 	open func dispatchTouchCancel(_ touches: Set<UITouch>) {
 		self.application?.holder.callMethod("dispatchTouchCancel", arguments: [self.toTouchArray(touches, from: self.view)], result: nil)
@@ -730,7 +731,7 @@ open class DezelApplicationController: UIViewController {
 	/**
 	 * Dispatches a touchstart event.
 	 * @method dispatchTouchStart
-	 * @since 0.1.0
+	 * @since 0.7.0
 	 */
 	open func dispatchTouchStart(_ touches: Set<UITouch>) {
 		self.application?.holder.callMethod("dispatchTouchStart", arguments: [self.toTouchArray(touches, from: self.view)], result: nil)
@@ -739,7 +740,7 @@ open class DezelApplicationController: UIViewController {
 	/**
 	 * Dispatches a touchmove event.
 	 * @method dispatchTouchMove
-	 * @since 0.1.0
+	 * @since 0.7.0
 	 */
 	open func dispatchTouchMove(_ touches: Set<UITouch>) {
 		self.application?.holder.callMethod("dispatchTouchMove", arguments: [self.toTouchArray(touches, from: self.view)], result: nil)
@@ -748,7 +749,7 @@ open class DezelApplicationController: UIViewController {
 	/**
 	 * Dispatches a touchend event.
 	 * @method dispatchTouchEnd
-	 * @since 0.1.0
+	 * @since 0.7.0
 	 */
 	open func dispatchTouchEnd(_ touches: Set<UITouch>) {
 		self.application?.holder.callMethod("dispatchTouchEnd", arguments: [self.toTouchArray(touches, from: self.view)], result: nil)
@@ -756,7 +757,7 @@ open class DezelApplicationController: UIViewController {
 
 	/**
      * @method handleTouchBegan
-     * @since 0.1.0
+     * @since 0.7.0
      * @hidden
      */
 	@objc internal func handleTouchBegan(notification: NSNotification) {
@@ -767,7 +768,7 @@ open class DezelApplicationController: UIViewController {
 
 	/**
      * @method handleTouchMoved
-     * @since 0.1.0
+     * @since 0.7.0
      * @hidden
      */
 	@objc internal func handleTouchMoved(notification: NSNotification) {
@@ -778,7 +779,7 @@ open class DezelApplicationController: UIViewController {
 
 	/**
      * @method handleTouchEnded
-     * @since 0.1.0
+     * @since 0.7.0
      * @hidden
      */
 	@objc internal func handleTouchEnded(notification: NSNotification) {
@@ -789,7 +790,7 @@ open class DezelApplicationController: UIViewController {
 
 	/**
      * @method handleTouchCancelled
-     * @since 0.1.0
+     * @since 0.7.0
      * @hidden
      */
 	@objc internal func handleTouchCancelled(notification: NSNotification) {
@@ -800,7 +801,7 @@ open class DezelApplicationController: UIViewController {
 
 	/**
 	 * @method toTouchArray
-	 * @since 0.1.0
+	 * @since 0.7.0
 	 * @hidden
 	 */
 	private func toTouchArray(_ changed: Set<UITouch>, from: UIView) -> JavaScriptValue {
@@ -827,7 +828,7 @@ open class DezelApplicationController: UIViewController {
 
 	/**
 	 * @method applicationDidEnterBackground
-	 * @since 0.1.0
+	 * @since 0.7.0
  	 * @hidden
 	 */
 	@objc open func applicationDidEnterBackground() {
@@ -836,7 +837,7 @@ open class DezelApplicationController: UIViewController {
 
 	/**
 	 * @method applicationDidEnterForeground
-	 * @since 0.1.0
+	 * @since 0.7.0
  	 * @hidden
 	 */
 	@objc open func applicationDidEnterForeground() {
@@ -845,7 +846,7 @@ open class DezelApplicationController: UIViewController {
 
 	/**
 	 * @method applicationDidHandleLink
-	 * @since 0.5.0
+	 * @since 0.7.0
  	 * @hidden
 	 */
 	@objc open func applicationDidHandleLink(notification: Notification) {
@@ -856,7 +857,7 @@ open class DezelApplicationController: UIViewController {
 
 	/**
 	 * @method applicationDidHandleResource
-	 * @since 0.5.0
+	 * @since 0.7.0
  	 * @hidden
 	 */
 	@objc open func applicationDidHandleResource(notification: Notification) {

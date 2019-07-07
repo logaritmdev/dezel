@@ -280,7 +280,7 @@ open class ContentView : UIScrollView, UIScrollViewDelegate, Scrollable {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	private var application: DezelApplicationController
+	private var application: ApplicationController
 
 	//--------------------------------------------------------------------------
 	// MARK: Methods
@@ -300,7 +300,7 @@ open class ContentView : UIScrollView, UIScrollViewDelegate, Scrollable {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	public required init(application: DezelApplicationController, frame: CGRect) {
+	public required init(application: ApplicationController, frame: CGRect) {
 
 		self.application = application
 

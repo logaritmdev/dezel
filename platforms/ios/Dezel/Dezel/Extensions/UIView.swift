@@ -6,6 +6,15 @@
 internal extension UIView {
 
 	/**
+	 * @method addSubview
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	func addSubview(_ view: View) {
+		self.addSubview(view.wrapper)
+	}
+
+	/**
 	 * @method removeSubview
 	 * @since 0.1.0
 	 * @hidden

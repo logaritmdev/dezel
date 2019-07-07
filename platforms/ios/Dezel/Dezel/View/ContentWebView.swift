@@ -285,7 +285,7 @@ public class ContentWebView: WKWebView, WKNavigationDelegate, UIScrollViewDelega
 	 * @since 0.6.0
 	 * @hidden
 	 */
-	private var application: DezelApplicationController
+	private var application: ApplicationController
 
 	//----------------------------------------------------------------------
 	// MARK: Methods
@@ -305,7 +305,7 @@ public class ContentWebView: WKWebView, WKNavigationDelegate, UIScrollViewDelega
 	 * @since 0.6.0
 	 * @hidden
 	 */
-	public required init(application: DezelApplicationController, frame: CGRect, delegate: ContentWebViewDelegate?) {
+	public required init(application: ApplicationController, frame: CGRect, delegate: ContentWebViewDelegate?) {
 
 		self.application = application
 

@@ -25,7 +25,7 @@ public final class Transition {
 	 * @method create
 	 * @since 0.1.0
 	 */
-	public static func create(application: DezelApplicationController, duration: CFTimeInterval, equation: CAMediaTimingFunction, delay: CFTimeInterval, callback: @escaping TransitionCallback) {
+	public static func create(application: ApplicationController, duration: CFTimeInterval, equation: CAMediaTimingFunction, delay: CFTimeInterval, callback: @escaping TransitionCallback) {
 
 		let transition = TransitionGroup(application: application)
 
