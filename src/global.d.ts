@@ -48,6 +48,27 @@ declare global {
 	const dezel: Dezel
 
 	/**
+	 * Imports a native class.
+	 * @function importClass
+	 * @since 0.7.0
+	 */
+	function importClass(className: string): any
+
+	/**
+	 * Evaluates a JavaScript file.
+	 * @function evaluateFile
+	 * @since 0.7.0
+	 */
+	function evaluateFile(file: string): void
+
+	/**
+	 * Evaluates a JavaScript script.
+	 * @function evaluateScript
+	 * @since 0.7.0
+	 */
+	function evaluateScript(file: string): void
+
+	/**
 	 * It would be nice if this could work better with elements.
 	 * @since 0.1.0
 	 */
