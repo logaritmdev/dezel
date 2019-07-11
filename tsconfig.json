@@ -12,6 +12,7 @@
       "esnext.asynciterable"
     ],
     "jsx": "react",
+    "sourceMap": true,
     "strict": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
