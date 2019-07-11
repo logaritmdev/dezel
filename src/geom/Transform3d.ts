@@ -1,4 +1,4 @@
-import { Point3D } from './point3d'
+import { Point3D } from './Point3d'
 
 /**
  * Provides the transformations methods for a 3d matrix.

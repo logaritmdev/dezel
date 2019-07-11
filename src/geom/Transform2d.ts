@@ -1,4 +1,4 @@
-import { Point2D } from './point2d'
+import { Point2D } from './Point2d'
 
 /**
  * Provides the transformations methods for a 2d matrix.
