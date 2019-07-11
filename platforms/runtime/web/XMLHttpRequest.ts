@@ -156,8 +156,8 @@ class XMLHttpRequest extends EventTarget {
 	 * @method getResponseHeader
 	 * @since 0.1.0
 	 */
-	public getResponseHeader(): string | null {
-		return this.native.getResponseHeader()
+	public getResponseHeader(name: string): string | null {
+		return this.native.getResponseHeader(name)
 	}
 
 	//--------------------------------------------------------------------------

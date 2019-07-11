@@ -71,10 +71,10 @@
 /************************************************************************/
 /******/ ({
 
-/***/ "../../src/decorator/bridge.ts":
-/*!************************************************************!*\
-  !*** /Users/jpdery/Projects/dezel/src/decorator/bridge.ts ***!
-  \************************************************************/
+/***/ "../../src/core/Dezel.ts":
+/*!**********************************************************!*\
+  !*** /Users/jpdery/Projects/dezel-dev/src/core/Dezel.ts ***!
+  \**********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -82,28 +82,70 @@
 
 Object.defineProperty(exports, "__esModule", { value: true });
 /**
- * Caches native imports.
- * @const imports
- * @since 0.2.0
+ * TODO
+ * @class Dezel
+ * @since 0.7.0
  */
-var imports = {};
-var decorate = function (constructor, classname) {
+var Dezel = /** @class */ (function () {
+    function Dezel() {
+    }
+    /**
+     * Imports a native class.
+     * @method import
+     * @since 0.7.0
+     */
+    Dezel.import = function (className, init) {
+        if (init === void 0) { init = false; }
+        var Class = this.cache[className];
+        if (Class == null) {
+            Class = this.cache[className] = importClass(className);
+        }
+        return init ? new Class : Class;
+    };
+    //--------------------------------------------------------------------------
+    // Private API
+    //--------------------------------------------------------------------------
+    /**
+     * @property cache
+     * @since 0.7.0
+     * @hidden
+     */
+    Dezel.cache = {};
+    return Dezel;
+}());
+exports.Dezel = Dezel;
+
+
+/***/ }),
+
+/***/ "../../src/decorator/bridge.ts":
+/*!****************************************************************!*\
+  !*** /Users/jpdery/Projects/dezel-dev/src/decorator/bridge.ts ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var Dezel_1 = __webpack_require__(/*! ../core/Dezel */ "../../src/core/Dezel.ts");
+/**
+ * @function decorate
+ * @since 0.1.0
+ * @hidden
+ */
+function decorate(constructor, className) {
     var key = Symbol('native');
-    var get = function () {
+    function get() {
         var native = this[key];
         if (native == null) {
-            var Native = imports[classname];
-            if (Native == null) {
-                Native = imports[classname] = dezel.imports(classname);
-            }
-            native = this[key] = new Native();
+            native = this[key] = Dezel_1.Dezel.import(className, true);
             native.holder = this;
         }
         return native;
-    };
-    dezel.exports(classname, constructor);
+    }
     Object.defineProperty(constructor.prototype, 'native', { get: get });
-};
+}
 /**
  * TODO: Decorator description
  * @function bridge
@@ -120,31 +162,29 @@ exports.bridge = bridge;
 /***/ }),
 
 /***/ "../../src/decorator/native.ts":
-/*!************************************************************!*\
-  !*** /Users/jpdery/Projects/dezel/src/decorator/native.ts ***!
-  \************************************************************/
+/*!****************************************************************!*\
+  !*** /Users/jpdery/Projects/dezel-dev/src/decorator/native.ts ***!
+  \****************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var decorate = function (prototype, property) {
-    var get = function () {
-        return this.native[property];
-    };
-    var set = function (value) {
-        this.native[property] = isNative(value) ? value.native : value;
-    };
-    Object.defineProperty(prototype, property, { get: get, set: set });
-};
 /**
- * @function isNative
+ * @function decorate
  * @since 0.1.0
+ * @hidden
  */
-var isNative = function (value) {
-    return value && typeof value == 'object' && 'native' in value;
-};
+function decorate(prototype, property) {
+    function get() {
+        return this.native[property];
+    }
+    function set(value) {
+        this.native[property] = value == null ? value : (value.native || value);
+    }
+    Object.defineProperty(prototype, property, { get: get, set: set });
+}
 /**
  * TODO: Decorator description
  * @function native
@@ -170,9 +210,9 @@ exports.native = native;
 Object.defineProperty(exports, "__esModule", { value: true });
 __webpack_require__(/*! ./web/Event */ "./web/Event.ts");
 __webpack_require__(/*! ./web/EventTarget */ "./web/EventTarget.ts");
-__webpack_require__(/*! ./web/CloseEvent */ "./web/CloseEvent.ts");
 __webpack_require__(/*! ./web/MessageEvent */ "./web/MessageEvent.ts");
 __webpack_require__(/*! ./web/ProgressEvent */ "./web/ProgressEvent.ts");
+__webpack_require__(/*! ./web/CloseEvent */ "./web/CloseEvent.ts");
 __webpack_require__(/*! ./web/WebSocket */ "./web/WebSocket.ts");
 __webpack_require__(/*! ./web/XMLHttpRequest */ "./web/XMLHttpRequest.ts");
 __webpack_require__(/*! ./web/XMLHttpRequestUpload */ "./web/XMLHttpRequestUpload.ts");
@@ -190,8 +230,8 @@ var globalize = function (object) {
         if (typeof method == 'function') {
             Object.defineProperty(self, key, {
                 value: method.bind(object),
-                writable: false,
-                enumerable: false,
+                writable: true,
+                enumerable: true,
                 configurable: true
             });
         }
@@ -274,6 +314,7 @@ Object.defineProperty(self, "CloseEvent", {
     enumerable: false,
     configurable: true
 });
+console.log('DEFINED CLOSE EVENT', typeof CloseEvent);
 
 
 /***/ }),
@@ -613,6 +654,7 @@ var WebSocket = /** @class */ (function (_super) {
         if (protocols) {
             protocols = Array.isArray(protocols) ? protocols : [protocols];
         }
+        console.log('Opened');
         _this.native.open(url, protocols);
         return _this;
     }
@@ -684,6 +726,7 @@ var WebSocket = /** @class */ (function (_super) {
      * @since 0.1.0
      */
     WebSocket.prototype.send = function (data) {
+        console.log('Send', data, this.native, this.native.send);
         this.native.send(data);
     };
     /**
@@ -818,8 +861,8 @@ var XMLHttpRequest = /** @class */ (function (_super) {
      * @method getResponseHeader
      * @since 0.1.0
      */
-    XMLHttpRequest.prototype.getResponseHeader = function () {
-        return this.native.getResponseHeader();
+    XMLHttpRequest.prototype.getResponseHeader = function (name) {
+        return this.native.getResponseHeader(name);
     };
     __decorate([
         native_1.native

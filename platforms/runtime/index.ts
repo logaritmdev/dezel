@@ -1,9 +1,8 @@
-
 import './web/Event'
 import './web/EventTarget'
-import './web/CloseEvent'
 import './web/MessageEvent'
 import './web/ProgressEvent'
+import './web/CloseEvent'
 import './web/WebSocket'
 import './web/XMLHttpRequest'
 import './web/XMLHttpRequestUpload'
@@ -28,8 +27,8 @@ const globalize = function (object: any) {
 
 			Object.defineProperty(self, key, {
 				value: method.bind(object),
-				writable: false,
-				enumerable: false,
+				writable: true,
+				enumerable: true,
 				configurable: true
 			})
 
