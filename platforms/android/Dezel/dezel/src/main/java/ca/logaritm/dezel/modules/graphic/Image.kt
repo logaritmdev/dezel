@@ -24,15 +24,7 @@ open class Image(context: JavaScriptContext) : JavaScriptClass(context) {
 		 * @since 0.4.0
 		 */
 		public fun with(input: Bitmap, context: JavaScriptContext): Image {
-
-			val image = context.createObject("dezel.graphic.Image", null, Image::class.java)
-			if (image == null) {
-				throw Exception("Unable to create Image.")
-			}
-
-			image.set(input)
-
-			return image
+			throw Error("TODO FIXME") // TODO FIXME
 		}
 	}
 

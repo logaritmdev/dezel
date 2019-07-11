@@ -74,7 +74,7 @@ open class JavaScriptObject: JavaScriptValue {
 	override open func didResetValue() {
 
 		self.finalize { callback in
-
+	
 			/*
 			 * When an object is finalized on the JavaScript side we must
 			 * dispose it from the native side because its technically no

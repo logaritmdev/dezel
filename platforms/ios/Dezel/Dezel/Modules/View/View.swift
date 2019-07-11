@@ -2996,7 +2996,7 @@ open class View: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelegate, Scroll
 	 * @since 0.4.0
 	 */
 	open func createCanvas() -> Canvas? {
-		return self.context.createObject("dezel.graphic.Canvas", values: nil, as: Canvas.self, protect: true)
+		return nil // TODO FIX THIS
 	}
 
 	//--------------------------------------------------------------------------

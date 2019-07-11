@@ -60,23 +60,6 @@ open class Dezel : JavaScriptObject {
 	}
 
 	/**
-	 * @method jsFunction_exports
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsFunction_exports(callback: JavaScriptFunctionCallback) {
-
-		if (callback.arguments < 2) {
-			fatalError("Function exports needs 2 argument.")
-		}
-
-		let ident = callback.argument(0).string
-		let klass = callback.argument(1)
-
-		self.context.exports[ident] = klass
-	}
-
-	/**
 	 * @method jsFunction_throwError
 	 * @since 0.1.0
 	 * @hidden

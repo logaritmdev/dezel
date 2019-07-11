@@ -2848,7 +2848,7 @@ open class View(context: JavaScriptContext) : JavaScriptClass(context), LayoutNo
 	 * @since 0.4.0
 	 */
 	open fun createCanvas(): Canvas? {
-		return context.createObject("dezel.graphic.Canvas", null, Canvas::class.java, protect = true)
+		return null // TODO FIXME
 	}
 
 	//--------------------------------------------------------------------------

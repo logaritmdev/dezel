@@ -63,16 +63,8 @@ open class JavaScriptContext {
 		internal set
 
 	/**
-	 * The context's imported values.
-	 * @property exports
-	 * @since 0.1.0
-	 */
-	public var exports: MutableMap<String, JavaScriptValue> = mutableMapOf()
-		internal set
-
-	/**
 	 * The context's console.
-	 * @property exports
+	 * @property console
 	 * @since 0.4.0
 	 */
 	public val console: JavaScriptConsole by lazy {
@@ -332,18 +324,6 @@ open class JavaScriptContext {
 	}
 
 	/**
-	 * Creates an object using a registered identifier.
-	 * @method createObject
-	 * @since 0.1.0
-	 */
-	open fun <T> createObject(identifier: String, values: JavaScriptArguments?, type: Class<T>, protect: Boolean = false): T? {
-		return (
-			this.createObjectFromExports(identifier, values, type, protect) ?:
-			this.createObjectFromClasses(identifier, values, type, protect)
-		)
-	}
-
-	/**
 	 * Creates a value bound to a class template.
 	 * @method createClass
 	 * @since 0.1.0
@@ -449,73 +429,6 @@ open class JavaScriptContext {
 	}
 
 	//--------------------------------------------------------------------------
-	// Private API
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method createObjectFromExports
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	open fun <T> createObjectFromExports(ident: String, values: JavaScriptArguments?, type: Class<T>, protect: Boolean = false): T? {
-
-		val constructor = this.exports[ident]
-		if (constructor == null) {
-			return null
-		}
-
-		val result = this.createReturnValue()
-
-		constructor.construct(values, result)
-
-		val native = result.property("native").cast(type)
-		if (native == null) {
-			Log.i("DEZEL", "Unable to cast object to type  $type, is it the right type ?")
-			return null
-		}
-
-		if (protect) {
-			if (native is JavaScriptValue) {
-				native.protect()
-			}
-		}
-
-
-		return native
-	}
-
-	/**
-	 * @method createObjectFromClasses
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	open fun <T> createObjectFromClasses(ident: String, values: JavaScriptArguments?, type: Class<T>, protect: Boolean = false): T? {
-
-		val constructor = this.classes[ident]
-		if (constructor == null) {
-			return null
-		}
-
-		val result = this.createReturnValue()
-
-		constructor.construct(values, result)
-
-		val native = result.property("native").cast(type)
-		if (native == null) {
-			Log.i("DEZEL", "Unable to cast object to type $type, is it the right type ?")
-			return null
-		}
-
-		if (protect) {
-			if (native is JavaScriptValue) {
-				native.protect()
-			}
-		}
-
-		return native
-	}
-
-	//--------------------------------------------------------------------------
 	// Classes
 	//--------------------------------------------------------------------------
 
@@ -556,7 +469,8 @@ open class JavaScriptContext {
 		 */
 		@Suppress("unused")
 		public fun jsFunction_import(callback: JavaScriptFunctionCallback) {
-
+// TODO
+			// REMOVE THIS CHECK CoreModule on iOS
 			if (callback.arguments < 1) {
 				return
 			}
@@ -574,24 +488,6 @@ open class JavaScriptContext {
 				callback.returns(klass)
 				return
 			}
-		}
-
-		/**
-		 * @method jsFunction_export
-		 * @since 0.1.0
-		 * @hidden
-		 */
-		@Suppress("unused")
-		public fun jsFunction_export(callback: JavaScriptFunctionCallback) {
-
-			if (callback.arguments < 2) {
-				throw Error("dezel.export requires 2 arguments.")
-			}
-
-			val ident = callback.argument(0).string
-			val klass = callback.argument(1)
-
-			this.context.exports[ident] = klass
 		}
 
 		/**

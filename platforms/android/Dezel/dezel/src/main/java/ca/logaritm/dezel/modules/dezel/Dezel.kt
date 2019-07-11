@@ -94,24 +94,6 @@ open class Dezel(context: JavaScriptContext) : JavaScriptObject(context) {
 	}
 
 	/**
-	 * @method jsFunction_exports
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@Suppress("unused")
-	open fun jsFunction_exports(callback: JavaScriptFunctionCallback) {
-
-		if (callback.arguments < 2) {
-			throw Exception("Function dezel.imports needs 2 argument.")
-		}
-
-		val ident = callback.argument(0).string
-		val klass = callback.argument(1)
-
-		this.context.exports[ident] = klass
-	}
-
-	/**
 	 * @method jsFunction_throwError
 	 * @since 0.1.0
 	 * @hidden

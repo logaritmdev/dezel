@@ -45,13 +45,6 @@ open class JavaScriptContext: NSObject {
 	internal(set) public var classes: [String: JavaScriptValue] = [:]
 
 	/**
-     * The context's imported values.
-     * @property exports
-     * @since 0.1.0
-     */
-	internal(set) public var exports: [String: JavaScriptValue] = [:] // TODO REMOVE
-
-	/**
 	 * The context's console.
 	 * @property exports
 	 * @since 0.4.0
@@ -330,18 +323,6 @@ open class JavaScriptContext: NSObject {
 	}
 
 	/**
-	 * Creates an object using a registered identifier.
-	 * @method createObject
-	 * @since 0.1.0
-	 */
-	open func createObject<T>(_ identifier: String, values: JavaScriptArguments?, as type: T.Type, protect: Bool = false) -> T? {
-		return (
-			self.createObjectFromExports(identifier, values: values, as: type, protect: protect) ??
-			self.createObjectFromClasses(identifier, values: values, as: type, protect: protect)
- 		)
-	}
-
-	/**
 	 * Creates a value bound to a class template.
 	 * @method createClass
 	 * @since 0.1.0
@@ -446,70 +427,6 @@ open class JavaScriptContext: NSObject {
 	public lazy var application: ApplicationController = {
 		return ApplicationController.from(self)
 	}()
-
-	//--------------------------------------------------------------------------
-	// MARK: Private API
-	//--------------------------------------------------------------------------
-
-	/**
-     * @method createObjectFromExports
-     * @since 0.1.0
-     * @hidden
-     */
-	private func createObjectFromExports<T>(_ ident: String, values: JavaScriptArguments?, as type: T.Type, protect: Bool = false) -> T? {
-
-		guard let constructor = self.exports[ident] else {
-			return nil
-		}
-
-		let result = self.createReturnValue()
-
-		constructor.construct(values, result: result)
-
-		let native = result.property("native").cast(type)
-		if (native == nil) {
-			print("Unable to cast object to type \(type), is it the right type ?")
-			return nil
-		}
-
-		if (protect) {
-			if let target = native as? JavaScriptValue {
-				target.protect()
-			}
-		}
-
-		return native
-	}
-
-	/**
-     * @method createObjectFromClasses
-     * @since 0.1.0
-     * @hidden
-     */
-	private func createObjectFromClasses<T>(_ ident: String, values: JavaScriptArguments?, as type: T.Type, protect: Bool = false) -> T? {
-
-		guard let constructor = self.classes[ident] else {
-			return nil
-		}
-
-		let result = self.createReturnValue()
-
-		constructor.construct(values, result: result)
-
-		let native = result.property("native").cast(type)
-		if (native == nil) {
-			print("Unable to cast object to type \(type), is it the right type ?")
-			return nil
-		}
-
-		if (protect) {
-			if let target = native as? JavaScriptValue {
-				target.protect()
-			}
-		}
-
-		return native
-	}
 }
 
 /**

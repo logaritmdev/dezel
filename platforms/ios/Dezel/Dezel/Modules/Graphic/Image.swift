@@ -11,14 +11,7 @@ open class Image: JavaScriptClass {
 	 * @since 0.4.0
 	 */
 	public static func with(_ input: UIImage, in context: JavaScriptContext) -> Image {
-
-		guard let image = context.createObject("dezel.graphic.Image", values: nil, as: Image.self) else {
-			fatalError("Image class not loaded")
-		}
-
-		image.set(input)
-
-		return image
+		fatalError("TODO FIXME")
 	}
 
 	//--------------------------------------------------------------------------

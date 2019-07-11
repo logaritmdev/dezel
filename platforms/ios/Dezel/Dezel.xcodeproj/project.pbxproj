@@ -104,6 +104,9 @@
 		C77189B42106AE1300337263 /* Transform3D.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77189B32106AE1300337263 /* Transform3D.swift */; };
 		C773DA9021DD0E2800685BDB /* TextParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C773DA8F21DD0E2800685BDB /* TextParser.swift */; };
 		C777B5DC22D1429A00E75E55 /* CoreModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C777B5DB22D1429A00E75E55 /* CoreModule.swift */; };
+		C777B62A22D77B2D00E75E55 /* TestRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = C777B62922D77B2D00E75E55 /* TestRunner.swift */; };
+		C777B62C22D782DB00E75E55 /* TestRunner.js in Resources */ = {isa = PBXBuildFile; fileRef = C777B62B22D782DB00E75E55 /* TestRunner.js */; };
+		C777B62E22D7838E00E75E55 /* DezelAPITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C777B62D22D7838E00E75E55 /* DezelAPITest.swift */; };
 		C77A28A221BFFBF1004366AF /* JavaScriptConsole.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77A28A121BFFBF1004366AF /* JavaScriptConsole.swift */; };
 		C77B0BAC22262EF800917D82 /* Ruleset.h in Headers */ = {isa = PBXBuildFile; fileRef = C77B0B7322262EF800917D82 /* Ruleset.h */; };
 		C77B0BAD22262EF800917D82 /* SelectorParser.h in Headers */ = {isa = PBXBuildFile; fileRef = C77B0B7422262EF800917D82 /* SelectorParser.h */; };
@@ -402,6 +405,9 @@
 		C77189B32106AE1300337263 /* Transform3D.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transform3D.swift; sourceTree = "<group>"; };
 		C773DA8F21DD0E2800685BDB /* TextParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextParser.swift; sourceTree = "<group>"; };
 		C777B5DB22D1429A00E75E55 /* CoreModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreModule.swift; sourceTree = "<group>"; };
+		C777B62922D77B2D00E75E55 /* TestRunner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestRunner.swift; sourceTree = "<group>"; };
+		C777B62B22D782DB00E75E55 /* TestRunner.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = TestRunner.js; sourceTree = "<group>"; };
+		C777B62D22D7838E00E75E55 /* DezelAPITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DezelAPITest.swift; sourceTree = "<group>"; };
 		C77A28A121BFFBF1004366AF /* JavaScriptConsole.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptConsole.swift; sourceTree = "<group>"; };
 		C77B0B7322262EF800917D82 /* Ruleset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ruleset.h; sourceTree = "<group>"; };
 		C77B0B7422262EF800917D82 /* SelectorParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectorParser.h; sourceTree = "<group>"; };
@@ -796,6 +802,15 @@
 			path = Text;
 			sourceTree = "<group>";
 		};
+		C777B62822D77B1A00E75E55 /* Test */ = {
+			isa = PBXGroup;
+			children = (
+				C777B62B22D782DB00E75E55 /* TestRunner.js */,
+				C777B62922D77B2D00E75E55 /* TestRunner.swift */,
+			);
+			path = Test;
+			sourceTree = "<group>";
+		};
 		C77B0B7122262EF800917D82 /* include */ = {
 			isa = PBXGroup;
 			children = (
@@ -1078,6 +1093,8 @@
 			isa = PBXGroup;
 			children = (
 				C7E8A45D20159C80005139F6 /* Dezel */,
+				C7E8A45E20159C80005139F6 /* Dezel.h */,
+				C7E8A45F20159C80005139F6 /* Info.plist */,
 				C7E8A46820159C80005139F6 /* DezelTests */,
 				C7E8A45C20159C80005139F6 /* Products */,
 				C7E8A54B2016262A005139F6 /* Frameworks */,
@@ -1096,8 +1113,7 @@
 		C7E8A45D20159C80005139F6 /* Dezel */ = {
 			isa = PBXGroup;
 			children = (
-				C7E8A45F20159C80005139F6 /* Info.plist */,
-				C7E8A45E20159C80005139F6 /* Dezel.h */,
+				C777B62822D77B1A00E75E55 /* Test */,
 				C7B9CEA1202CDB4E002409D5 /* Application */,
 				C77B0D7D2226E3CC00917D82 /* Cache */,
 				C7E8A4DF2015AFF4005139F6 /* Core */,
@@ -1121,6 +1137,7 @@
 				C7E8A4E0201623A3005139F6 /* Core */,
 				C7E8A47520159C92005139F6 /* Layout */,
 				C7E8A46B20159C80005139F6 /* Info.plist */,
+				C777B62D22D7838E00E75E55 /* DezelAPITest.swift */,
 			);
 			path = DezelTests;
 			sourceTree = "<group>";
@@ -1528,6 +1545,7 @@
 			files = (
 				C7A19E3820ADCB3800367E91 /* TextInputClearButtonIcon@3x.png in Resources */,
 				C70B58E32087DC5D008B2137 /* WebRuntime.js in Resources */,
+				C777B62C22D782DB00E75E55 /* TestRunner.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1730,6 +1748,7 @@
 				C7E8A525201624A2005139F6 /* JavaScriptClassFunctionWrapper.swift in Sources */,
 				C71A11A32080EBB10004D523 /* XMLHttpRequest.swift in Sources */,
 				C7F8C9F820C17874007E8ECA /* DLStylerMatch.cpp in Sources */,
+				C777B62A22D77B2D00E75E55 /* TestRunner.swift in Sources */,
 				C71E6CC220DD50A0009B86F6 /* ContentWebViewDelegate.swift in Sources */,
 				C7E8A4D52015A792005139F6 /* Double.swift in Sources */,
 				C7DECDFC206B351B006EE2A6 /* Clippable.swift in Sources */,
@@ -1767,6 +1786,7 @@
 				C7E8A4F420162429005139F6 /* JavaScriptFunctionCallbackTest.swift in Sources */,
 				C7E8A4F620162429005139F6 /* JavaScriptEmptyClass.swift in Sources */,
 				C7E8A4DA2015ADD5005139F6 /* RelativeLayoutTest.swift in Sources */,
+				C777B62E22D7838E00E75E55 /* DezelAPITest.swift in Sources */,
 				C7E8A4FA20162429005139F6 /* JavaScriptTestClass.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1912,7 +1932,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_OPTIMIZATION_LEVEL = 0;
 				HEADER_SEARCH_PATHS = "${SRCROOT}/../../shared/less/include";
-				INFOPLIST_FILE = Dezel/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -1944,7 +1964,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_OPTIMIZATION_LEVEL = 3;
 				HEADER_SEARCH_PATHS = "${SRCROOT}/../../shared/less/include";
-				INFOPLIST_FILE = Dezel/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
