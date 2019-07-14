@@ -10,14 +10,14 @@ internal extension UIFont {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	private static var cache: [String:UIFont] = [:]
+	private static var cache: [String: UIFont] = [:]
 
 	/**
 	 * @method from
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	static func from(family:String, weight:String, style:String, size:CGFloat) -> UIFont {
+	static func from(family: String, weight: String, style: String, size: CGFloat) -> UIFont {
 
 		let fw = weight.lowercased().trim()
 		let fs = style.lowercased().trim()
