@@ -9,7 +9,7 @@ class JavaScriptValueTest: XCTestCase {
 		super.setUp()
 		self.context.dispose()
 		self.context = JavaScriptContext()
-		self.context.initialize()
+		self.context.setup()
 	}
 
 	func testEquality() {

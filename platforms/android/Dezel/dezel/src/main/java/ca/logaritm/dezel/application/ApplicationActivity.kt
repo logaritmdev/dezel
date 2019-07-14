@@ -326,7 +326,7 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 		this.loadClasses()
 		this.loadModules()
 
-		this.context.initialize()
+		this.context.setup()
 
 		this.loadStyles()
 		this.loadScripts()
@@ -393,14 +393,14 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 			Intent.ACTION_VIEW -> {
 				val uri = intent.data
 				if (uri is Uri) {
-					this.application?.holder?.callMethod("nativeHandleLink", arrayOf(this.context.createString(uri.toString())))
+					this.application?.holder?.callMethod("nativeOpenUniversalURL", arrayOf(this.context.createString(uri.toString())))
 				}
 			}
 
 			Intent.ACTION_SEND -> {
 				val uri = intent.getParcelableExtra<Parcelable>(Intent.EXTRA_STREAM)
 				if (uri is Uri) {
-					this.application?.holder?.callMethod("nativeHandleResource", arrayOf(this.context.createString(uri.toString())))
+					this.application?.holder?.callMethod("nativeOpenResourceURL", arrayOf(this.context.createString(uri.toString())))
 				}
 			}
 

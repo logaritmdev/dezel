@@ -88,7 +88,7 @@ open class JavaScriptContext: NSObject {
 
 				console.log = function() {
 					log.apply(this, arguments)
-					dezel.log.apply(dezel, arguments)
+					//dezel.log.apply(dezel, arguments)
 				};
 
 			})();
@@ -112,12 +112,45 @@ open class JavaScriptContext: NSObject {
 	}
 
 	/**
+	 * Register multiple modules.
+	 * @method registerModules
+	 * @since 0.7.0
+	 */
+	open func registerModules(_ modules: [String: AnyClass]) {
+		modules.forEach {
+			self.registerModule($0.key, type: $0.value)
+		}
+	}
+
+	/**
+	 * Register multiple objects.
+	 * @method registerObjects
+	 * @since 0.7.0
+	 */
+	open func registerObjects(_ objects: [String: AnyClass]) {
+		objects.forEach {
+			self.registerObject($0.key, type: $0.value)
+		}
+	}
+
+	/**
+	 * Register multiple classes.
+	 * @method registerClasses
+	 * @since 0.7.0
+	 */
+	open func registerClasses(_ classes: [String: AnyClass]) {
+		classes.forEach {
+			self.registerClass($0.key, type: $0.value)
+		}
+	}
+
+	/**
      * Registers a context module.
      * @method registerModule
      * @since 0.1.0
      */
-	open func registerModule(_ ident: String, type: AnyClass) {
-		self.modules[ident] = Module.create(type, context: self)
+	open func registerModule(_ uid: String, type: AnyClass) {
+		self.modules[uid] = Module.create(type, context: self)
 	}
 
 	/**
@@ -125,8 +158,8 @@ open class JavaScriptContext: NSObject {
 	 * @method registerObject
 	 * @since 0.1.0
 	 */
-	open func registerObject(_ ident: String, type: AnyClass) {
-		self.objects[ident] = self.createObject(type)
+	open func registerObject(_ uid: String, type: AnyClass) {
+		self.objects[uid] = self.createObject(type)
 	}
 
 	/**
@@ -134,26 +167,26 @@ open class JavaScriptContext: NSObject {
 	 * @method registerClass
 	 * @since 0.1.0
 	 */
-	open func registerClass(_ ident: String, type: AnyClass) {
-		self.classes[ident] = self.createClass(type)
+	open func registerClass(_ uid: String, type: AnyClass) {
+		self.classes[uid] = self.createClass(type)
 	}
 
 	/**
-     * Initializes the context after modules and classes have been regsitered.
-     * @method initialize
-     * @since 0.1.0
+     * Loads the context dependencies.
+     * @method setup
+     * @since 0.7.0
      */
-	open func initialize() {
+	open func setup() {
 
 		if (self.running) {
 			return
 		}
 
-		for (_, module) in self.modules {
-			module.initialize()
-		}
-
 		self.running = true
+
+		self.modules.forEach {
+			$0.value.initialize()
+		}
 	}
 
 	/**
@@ -363,7 +396,7 @@ open class JavaScriptContext: NSObject {
 	 * @method attribute
 	 * @since 0.1.0
 	 */
-	open func attribute(_ key: String, value: AnyObject?) {
+	open func attribute(_ key: AnyObject, value: AnyObject?) {
 		let hash = toHash(key)
 		DLContextGetAttribute(self.handle, hash)?.release()
 		DLContextSetAttribute(self.handle, hash, toOpaque(value))
@@ -374,7 +407,7 @@ open class JavaScriptContext: NSObject {
 	 * @method attribute
 	 * @since 0.1.0
 	 */
-	open func attribute(_ key: String) -> AnyObject? {
+	open func attribute(_ key: AnyObject) -> AnyObject? {
 		return toUnretainedObject(DLContextGetAttribute(self.handle, toHash(key)))
 	}
 
@@ -414,19 +447,6 @@ open class JavaScriptContext: NSObject {
 	open func garbageCollect() {
 		JSGarbageCollect(self.handle)
 	}
-
-	//--------------------------------------------------------------------------
-	// MARK: Extension
-	//--------------------------------------------------------------------------
-
-	/**
-	 * Convenience property to return the application associated with a context.
-     * @property application
-     * @since 0.1.0
-     */
-	public lazy var application: ApplicationController = {
-		return ApplicationController.from(self)
-	}()
 }
 
 /**

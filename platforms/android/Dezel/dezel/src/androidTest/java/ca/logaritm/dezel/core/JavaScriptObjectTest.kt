@@ -14,7 +14,7 @@ class JavaScriptObjectTest {
     fun beforeTest() {
         this.context.dispose()
         this.context = JavaScriptContext()
-        this.context.initialize()
+        this.context.setup()
     }
     
     @Test

@@ -122,12 +122,45 @@ open class JavaScriptContext {
 	}
 
 	/**
+	 * Register multiple modules.
+	 * @method registerModules
+	 * @since 0.7.0
+	 */
+	open fun registerModules(modules: Map<String, Class<*>>) {
+		modules.forEach {
+			this.registerModule(it.key, it.value)
+		}
+	}
+
+	/**
+	 * Register multiple objects.
+	 * @method registerObjects
+	 * @since 0.7.0
+	 */
+	open fun registerObjects(objects: Map<String, Class<*>>) {
+		objects.forEach {
+			this.registerObject(it.key, it.value)
+		}
+	}
+
+	/**
+	 * Register multiple classes.
+	 * @method registerClasses
+	 * @since 0.7.0
+	 */
+	open fun registerClasses(classes: Map<String, Class<*>>) {
+		classes.forEach {
+			this.registerClass(it.key, it.value)
+		}
+	}
+
+	/**
 	 * Registers a context module.
 	 * @method registerModule
 	 * @since 0.1.0
 	 */
-	open fun registerModule(ident: String, type: Class<*>) {
-		this.modules[ident] = Module.create(type, this)
+	open fun registerModule(uid: String, type: Class<*>) {
+		this.modules[uid] = Module.create(type, this)
 	}
 
 	/**
@@ -135,8 +168,8 @@ open class JavaScriptContext {
 	 * @method registerObject
 	 * @since 0.1.0
 	 */
-	open fun registerObject(ident: String, type: Class<*>) {
-		this.objects[ident] = this.createObject(type)
+	open fun registerObject(uid: String, type: Class<*>) {
+		this.objects[uid] = this.createObject(type)
 	}
 
 	/**
@@ -144,26 +177,26 @@ open class JavaScriptContext {
 	 * @method registerClass
 	 * @since 0.1.0
 	 */
-	open fun registerClass(ident: String, type: Class<*>) {
-		this.classes[ident] = this.createClass(type)
+	open fun registerClass(uid: String, type: Class<*>) {
+		this.classes[uid] = this.createClass(type)
 	}
 
 	/**
-	 * Initializes the context after modules and classes have been regsitered.
-	 * @method initialize
-	 * @since 0.1.0
+	 * Loads the context dependencies.
+	 * @method setup
+	 * @since 0.7.0
 	 */
-	open fun initialize() {
+	open fun setup() {
 
 		if (this.running) {
 			return
 		}
 
+		this.running = true
+
 		this.modules.forEach {
 			it.value.initialize()
 		}
-
-		this.running = true
 	}
 
 	/**
