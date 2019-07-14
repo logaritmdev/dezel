@@ -1,9 +1,16 @@
-//
-//  UIApplication.swift
-//  Dezel
-//
-//  Created by Jean-Philippe Déry on 2019-07-12.
-//  Copyright © 2019 Jean-Philippe Déry. All rights reserved.
-//
+/**
+ * @extension UIApplication
+ * @since 0.7.0
+ * @hidden
+ */
+internal extension UIApplication {
 
-import Foundation
+	/**
+	 * @property window
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	var window: ApplicationWindow? {
+		return UIApplication.shared.keyWindow as? ApplicationWindow
+	}
+}
