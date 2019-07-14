@@ -1,9 +1,23 @@
-//
-//  WeakReference.swift
-//  Dezel
-//
-//  Created by Jean-Philippe Déry on 2019-07-13.
-//  Copyright © 2019 Jean-Philippe Déry. All rights reserved.
-//
+/**
+ * @class WeakReference
+ * @since 0.6.0
+ * @hidden
+ */
+public class WeakReference<T: NSObject> {
 
-import Foundation
+	/**
+	 * @property value
+	 * @since 0.6.0
+	 * @hidden
+	 */
+	private(set) public weak var value: T?
+
+	/**
+	 * @constructor
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	public init(value: T?) {
+		self.value = value
+	}
+}
