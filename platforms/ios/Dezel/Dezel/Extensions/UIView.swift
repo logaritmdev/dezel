@@ -24,4 +24,13 @@ internal extension UIView {
 			view.removeFromSuperview()
 		}
 	}
+
+	/**
+	 * @method removeSubview
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	func removeSubview(_ view: View) {
+		self.removeSubview(view.wrapper)
+	}
 }
