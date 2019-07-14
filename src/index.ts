@@ -5,8 +5,8 @@ export { Platform } from './platform/Platform'
 
 export { Application } from './application/Application'
 export { ApplicationKeyboardEvent } from './application/Application'
-export { ApplicationHandleLinkEvent } from './application/Application'
-export { ApplicationLauncher } from './application/ApplicationLauncher'
+export { ApplicationOpenResourceURLEvent } from './application/Application'
+export { ApplicationOpenUniversalURLEvent } from './application/Application'
 
 export { Screen } from './screen/Screen'
 export { Switcher } from './screen/Switcher'
@@ -110,7 +110,6 @@ export { ListOptimizer } from './optimize/ListOptimizer'
 export { Touch } from './touch/Touch'
 export { TouchEvent } from './touch/TouchEvent'
 export { TouchEventOptions } from './touch/TouchEvent'
-
 
 export { View } from './view/View'
 export { ViewInsertEvent } from './view/View'
