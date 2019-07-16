@@ -345,9 +345,9 @@ open class JavaScriptValue : NSObject {
 	public func call(_ arguments: JavaScriptArguments?, target: JavaScriptValue?, result: JavaScriptValue? = nil) {
 
 		let argc = toArgc(arguments)
-		let argv = toArgv(arguments)
+		let argv = toArgv(arguments, context: self.context)
 
-		if let value = DLValueCall(self.context.handle, self.handle, toHandle(target), UInt32(argc), argv) {
+		if let value = DLValueCall(self.context.handle, self.handle, toHandle(target, in: self.context), UInt32(argc), argv) {
 			result?.reset(value)
 		}
 
@@ -371,7 +371,7 @@ open class JavaScriptValue : NSObject {
 	public func callMethod(_ method: String, arguments: JavaScriptArguments?, result: JavaScriptValue? = nil) {
 
 		let argc = toArgc(arguments)
-		let argv = toArgv(arguments)
+		let argv = toArgv(arguments, context: self.context)
 
 		if let value = DLValueCallMethod(self.context.handle, self.handle, method, UInt32(argc), argv), let result = result {
 			result.reset(value)
@@ -397,7 +397,7 @@ open class JavaScriptValue : NSObject {
 	public func construct(_ arguments: JavaScriptArguments?, result: JavaScriptValue? = nil) {
 
 		let argc = toArgc(arguments)
-		let argv = toArgv(arguments)
+		let argv = toArgv(arguments, context: self.context)
 
 		if let value = DLValueConstruct(self.context.handle, self.handle, UInt32(argc), argv), let result = result {
 			result.reset(value)
@@ -414,7 +414,7 @@ open class JavaScriptValue : NSObject {
 	public func defineProperty(_ property: String, value: JavaScriptValue?, getter: JavaScriptGetterHandler?, setter: JavaScriptSetterHandler?, writable: Bool, enumerable: Bool, configurable: Bool) {
 
 		if let value = value {
-			DLValueDefineProperty(self.context.handle, self.handle, property, nil, nil, toHandle(value), writable, enumerable, configurable)
+			DLValueDefineProperty(self.context.handle, self.handle, property, nil, nil, toHandle(value, in: self.context), writable, enumerable, configurable)
 			return
 		}
 
@@ -433,7 +433,7 @@ open class JavaScriptValue : NSObject {
 	 * @since 0.1.0
 	 */
 	public func property(_ name: String, value: JavaScriptValue?) {
-		DLValueSetProperty(self.context.handle, self.handle, name, toHandle(value))
+		DLValueSetProperty(self.context.handle, self.handle, name, toHandle(value, in: self.context))
 	}
 
 	/**
@@ -513,8 +513,8 @@ open class JavaScriptValue : NSObject {
 	 * @method property
 	 * @since 0.1.0
 	 */
-	public func property(_ index: Int, value: JavaScriptValue) {
-		DLValueSetPropertyAtIndex(self.context.handle, self.handle, UInt32(index), toHandle(value))
+	public func property(_ index: Int, value: JavaScriptValue?) {
+		DLValueSetPropertyAtIndex(self.context.handle, self.handle, UInt32(index), toHandle(value, in: self.context))
 	}
 
 	/**
@@ -600,7 +600,7 @@ open class JavaScriptValue : NSObject {
 	 * @since 0.1.0
 	 */
 	public func prototype(_ prototype: JavaScriptValue) {
-		DLValueSetPrototype(self.context.handle, self.handle, toHandle(prototype))
+		DLValueSetPrototype(self.context.handle, self.handle, toHandle(prototype, in: self.context))
 	}
 
 	/**
@@ -618,7 +618,7 @@ open class JavaScriptValue : NSObject {
 	 * @since 0.1.0
 	 */
 	public func equals(_ value: JavaScriptValue) -> Bool {
-		return DLValueEquals(self.context.handle, self.handle, toHandle(value))
+		return DLValueEquals(self.context.handle, self.handle, toHandle(value, in: self.context))
 	}
 
 	/**
@@ -758,8 +758,8 @@ public typealias JavaScriptForEachHandler = (Int, JavaScriptValue) -> (Void)
  * @since 0.1.0
  * @hidden
  */
-internal func toHandle(_ value: JavaScriptValue?) -> JSValueRef? {
-	return value?.handle ?? nil
+internal func toHandle(_ value: JavaScriptValue?, in context: JavaScriptContext) -> JSValueRef? {
+	return value?.handle ?? context.jsnull.handle
 }
 
 /**
@@ -776,14 +776,14 @@ internal func toArgc(_ values: JavaScriptArguments?) -> Int {
  * @since 0.1.0
  * @hidden
  */
-internal func toArgv(_ values: JavaScriptArguments?) -> UnsafeMutablePointer<JSValueRef?> {
+internal func toArgv(_ values: JavaScriptArguments?, context: JavaScriptContext) -> UnsafeMutablePointer<JSValueRef?> {
 
 	if let values = values {
 
 		let result = UnsafeMutablePointer<JSValueRef?>.allocate(capacity: values.count)
 
 		for i in 0 ..< values.count {
-			result[i] = toHandle(values[i])
+			result[i] = toHandle(values[i], in: context)
 		}
 
 		return result

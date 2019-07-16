@@ -65,8 +65,8 @@ public typealias JavaScriptBuilderForEachHandler = (String, JavaScriptBuilder.Ty
  * @since 0.1.0
  * @hidden
  */
-internal fun toHandle(value: JavaScriptValue?): Long {
-    return value?.handle ?: 0
+internal fun toHandle(value: JavaScriptValue?, context: JavaScriptContext): Long {
+    return value?.handle ?: context.jsnull.handle
 }
 
 /**
@@ -74,14 +74,14 @@ internal fun toHandle(value: JavaScriptValue?): Long {
  * @since 0.1.0
  * @hidden
  */
-internal fun toArgv(values: JavaScriptArguments?) : LongArray? {
+internal fun toArgv(values: JavaScriptArguments?, context: JavaScriptContext) : LongArray? {
 
     if (values == null) {
         return null
     }
 
     val args = LongArray(values.size)
-    for (i in values.indices) args[i] = toHandle(values[i])
+    for (i in values.indices) args[i] = toHandle(values[i], context)
     return args
 }
 

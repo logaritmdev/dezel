@@ -355,7 +355,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	 * @since 0.1.0
 	 */
 	public fun call(arguments: JavaScriptArguments?, target: JavaScriptValue?, result: JavaScriptValue? = null) {
-		JavaScriptValueExternal.call(this.context.handle, this.handle, toHandle(target), toArgv(arguments), toArgc(arguments), result)
+		JavaScriptValueExternal.call(this.context.handle, this.handle, toHandle(target, this.context), toArgv(arguments, this.context), toArgc(arguments), result)
 	}
 
 	/**
@@ -373,7 +373,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	 * @since 0.1.0
 	 */
 	public fun callMethod(method: String, arguments: JavaScriptArguments?, result: JavaScriptValue? = null) {
-		JavaScriptValueExternal.callMethod(this.context.handle, this.handle, method, toArgv(arguments), toArgc(arguments), result)
+		JavaScriptValueExternal.callMethod(this.context.handle, this.handle, method, toArgv(arguments, context), toArgc(arguments), result)
 	}
 
 	/**
@@ -391,7 +391,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	 * @since 0.1.0
 	 */
 	public fun construct(arguments: JavaScriptArguments?, result: JavaScriptValue? = null) {
-		JavaScriptValueExternal.construct(this.context.handle, this.handle, toArgv(arguments), toArgc(arguments), result)
+		JavaScriptValueExternal.construct(this.context.handle, this.handle, toArgv(arguments, context), toArgc(arguments), result)
 	}
 
 	/**
@@ -407,7 +407,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 		if (getter != null) get = JavaScriptGetterWrapper(getter)
 		if (setter != null) set = JavaScriptSetterWrapper(setter)
 
-		JavaScriptValueExternal.defineProperty(this.context.handle, this.handle, property, toHandle(value), get, set, writable, enumerable, configurable, context)
+		JavaScriptValueExternal.defineProperty(this.context.handle, this.handle, property, toHandle(value, this.context), get, set, writable, enumerable, configurable, context)
 	}
 
 	/**
@@ -416,7 +416,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	 * @since 0.1.0
 	 */
 	public fun property(name: String, value: JavaScriptValue?) {
-		JavaScriptValueExternal.setProperty(this.context.handle, this.handle, name, toHandle(value))
+		JavaScriptValueExternal.setProperty(this.context.handle, this.handle, name, toHandle(value, this.context))
 	}
 
 	/**
@@ -565,7 +565,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	 * @since 0.1.0
 	 */
 	public fun prototype(prototype: JavaScriptValue) {
-		JavaScriptValueExternal.setPrototype(this.context.handle, this.handle, toHandle(prototype))
+		JavaScriptValueExternal.setPrototype(this.context.handle, this.handle, toHandle(prototype, this.context))
 	}
 
 	/**
@@ -583,7 +583,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	 * @since 0.1.0
 	 */
 	public fun equals(value: JavaScriptValue): Boolean {
-		return JavaScriptValueExternal.equals(this.context.handle, this.handle, toHandle(value))
+		return JavaScriptValueExternal.equals(this.context.handle, this.handle, toHandle(value, this.context))
 	}
 
 	/**

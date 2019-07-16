@@ -6,6 +6,28 @@
 open class JavaScriptContext: NSObject {
 
 	//--------------------------------------------------------------------------
+	// MARK: Constants
+	//--------------------------------------------------------------------------
+
+	/**
+	 * The null JavaScript value.
+	 * @const jsnull
+	 * @since 0.7.0
+	 */
+	private(set) public lazy var jsnull: JavaScriptValue = {
+		return self.createNull()
+	}()
+
+	/**
+	 * The undefined JavaScript value.
+	 * @const jsundefined
+	 * @since 0.7.0
+	 */
+	private(set) public lazy var jsundefined: JavaScriptValue = {
+		return self.createUndefined()
+	}()
+
+	//--------------------------------------------------------------------------
 	// MARK: Properties
 	//--------------------------------------------------------------------------
 
@@ -118,7 +140,7 @@ open class JavaScriptContext: NSObject {
 	 */
 	open func registerModules(_ modules: [String: AnyClass]) {
 		modules.forEach {
-			self.registerModule($0.key, type: $0.value)
+			self.registerModule($0.key, value: $0.value)
 		}
 	}
 
@@ -129,7 +151,7 @@ open class JavaScriptContext: NSObject {
 	 */
 	open func registerObjects(_ objects: [String: AnyClass]) {
 		objects.forEach {
-			self.registerObject($0.key, type: $0.value)
+			self.registerObject($0.key, value: $0.value)
 		}
 	}
 
@@ -140,7 +162,7 @@ open class JavaScriptContext: NSObject {
 	 */
 	open func registerClasses(_ classes: [String: AnyClass]) {
 		classes.forEach {
-			self.registerClass($0.key, type: $0.value)
+			self.registerClass($0.key, value: $0.value)
 		}
 	}
 
@@ -149,8 +171,8 @@ open class JavaScriptContext: NSObject {
      * @method registerModule
      * @since 0.1.0
      */
-	open func registerModule(_ uid: String, type: AnyClass) {
-		self.modules[uid] = Module.create(type, context: self)
+	open func registerModule(_ uid: String, value: AnyClass) {
+		self.modules[uid] = Module.create(value, context: self)
 	}
 
 	/**
@@ -158,8 +180,8 @@ open class JavaScriptContext: NSObject {
 	 * @method registerObject
 	 * @since 0.1.0
 	 */
-	open func registerObject(_ uid: String, type: AnyClass) {
-		self.objects[uid] = self.createObject(type)
+	open func registerObject(_ uid: String, value: AnyClass) {
+		self.objects[uid] = self.createObject(value)
 	}
 
 	/**
@@ -167,8 +189,8 @@ open class JavaScriptContext: NSObject {
 	 * @method registerClass
 	 * @since 0.1.0
 	 */
-	open func registerClass(_ uid: String, type: AnyClass) {
-		self.classes[uid] = self.createClass(type)
+	open func registerClass(_ uid: String, value: AnyClass) {
+		self.classes[uid] = self.createClass(value)
 	}
 
 	/**

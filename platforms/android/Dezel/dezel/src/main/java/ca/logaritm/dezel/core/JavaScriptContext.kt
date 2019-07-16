@@ -11,11 +11,37 @@ import ca.logaritm.dezel.application.ApplicationActivity
  */
 open class JavaScriptContext {
 
+	//--------------------------------------------------------------------------
+	// Static
+	//--------------------------------------------------------------------------
+
 	companion object {
 		init {
 			System.loadLibrary("jsc")
 			System.loadLibrary("dezel")
 		}
+	}
+
+	//--------------------------------------------------------------------------
+	// Constants
+	//--------------------------------------------------------------------------
+
+	/**
+	 * The null JavaScript value.
+	 * @const jsnull
+	 * @since 0.7.0
+	 */
+	public val jsnull: JavaScriptValue by lazy {
+		this.createNull()
+	}
+
+	/**
+	 * The undefined JavaScript value.
+	 * @const jsundefined
+	 * @since 0.7.0
+	 */
+	public val jsundefined: JavaScriptValue by lazy {
+		this.createUndefined()
 	}
 
 	//--------------------------------------------------------------------------
@@ -159,8 +185,8 @@ open class JavaScriptContext {
 	 * @method registerModule
 	 * @since 0.1.0
 	 */
-	open fun registerModule(uid: String, type: Class<*>) {
-		this.modules[uid] = Module.create(type, this)
+	open fun registerModule(uid: String, value: Class<*>) {
+		this.modules[uid] = Module.create(value, this)
 	}
 
 	/**
