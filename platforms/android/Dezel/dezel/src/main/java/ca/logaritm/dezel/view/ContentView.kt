@@ -1398,10 +1398,7 @@ open class ContentView(context: Context) : ViewGroup(context), Scrollable, Resiz
 			 * refresh the effect is minified.
 			 */
 
-			val context = this.context
-			if (context is ApplicationActivity) {
-				context.updateDisplayManager.dispatch()
-			}
+			UpdateDisplayManager.main.dispatch()
 		}
 
 		/**
@@ -1790,10 +1787,7 @@ open class ContentView(context: Context) : ViewGroup(context), Scrollable, Resiz
 			 * refresh the effect is minified.
 			 */
 
-			val context = this.context
-			if (context is ApplicationActivity) {
-				context.updateDisplayManager.dispatch()
-			}
+			UpdateDisplayManager.main.dispatch()
 		}
 
 		/**

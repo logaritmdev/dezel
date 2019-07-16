@@ -44,13 +44,6 @@ open class WrapperView: UIView, TransitionListener {
 	open var content: UIView
 
 	/**
-	 * The wrapper's application.
-	 * @property application
-	 * @since 0.1.0
-	 */
-	private(set) public var application: ApplicationController
-
-	/**
 	 * The wrapper's border top color.
 	 * @property borderTopColor
 	 * @since 0.1.0
@@ -512,9 +505,8 @@ open class WrapperView: UIView, TransitionListener {
 	 * @constructor
 	 * @since 0.1.0
 	 */
-	public required init(application: ApplicationController, content: UIView) {
+	public required init(content: UIView) {
 
-		self.application = application
 		self.content = content
 
 		super.init(frame: .zero)

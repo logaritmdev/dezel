@@ -64,14 +64,6 @@ open class View(context: JavaScriptContext) : JavaScriptClass(context), LayoutNo
 	}
 
 	/**
-	 * The view's application.
-	 * @property application
-	 * @since 0.2.0
-	 */
-	public var application: ApplicationActivity
-		private set
-
-	/**
 	 * The view's content wrapper view.
 	 * @property wrapper
 	 * @since 0.1.0
@@ -1834,8 +1826,6 @@ open class View(context: JavaScriptContext) : JavaScriptClass(context), LayoutNo
 	 */
 	init {
 
-		this.application = context.application
-
 		this.stylerNode = StylerNode(this.context.application.styler)
 		this.layoutNode = LayoutNode(this.context.application.layout)
 		this.stylerNode.listener = this
@@ -2040,7 +2030,7 @@ open class View(context: JavaScriptContext) : JavaScriptClass(context), LayoutNo
 	open fun scheduleUpdate() {
 		if (this.updateScheduled == false) {
 			this.updateScheduled = true
-			this.application.updateDisplayManager.schedule(this)
+			UpdateDisplayManager.main.schedule(this)
 		}
 	}
 

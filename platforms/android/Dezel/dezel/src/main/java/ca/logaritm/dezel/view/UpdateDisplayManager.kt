@@ -10,6 +10,20 @@ import java.lang.ref.WeakReference
 public class UpdateDisplayManager {
 
 	//--------------------------------------------------------------------------
+	// MARK: Static
+	//--------------------------------------------------------------------------
+
+	companion object {
+
+		/**
+		 * The main update display manager instance.
+		 * @property main
+		 * @sine 0.7.0
+		 */
+		public val main: UpdateDisplayManager = UpdateDisplayManager()
+	}
+
+	//--------------------------------------------------------------------------
 	// Properties
 	//--------------------------------------------------------------------------
 

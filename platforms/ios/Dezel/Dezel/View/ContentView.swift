@@ -275,13 +275,6 @@ open class ContentView : UIScrollView, UIScrollViewDelegate, Scrollable {
 	 */
 	private var timerScrollTop: CGFloat = 0
 
-	/**
-	 * @property application
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	private var application: ApplicationController
-
 	//--------------------------------------------------------------------------
 	// MARK: Methods
 	//--------------------------------------------------------------------------
@@ -300,11 +293,9 @@ open class ContentView : UIScrollView, UIScrollViewDelegate, Scrollable {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	public required init(application: ApplicationController, frame: CGRect) {
+	public override init(frame: CGRect) {
 
-		self.application = application
-
-		super.init(frame:frame)
+		super.init(frame: frame)
 
 		self.clipsToBounds = true
 		self.isScrollEnabled = false
@@ -328,9 +319,9 @@ open class ContentView : UIScrollView, UIScrollViewDelegate, Scrollable {
 	 * @method touchesCancelled
 	 * @since 0.1.0
 	 */
-	override open func touchesCancelled(_ touches:Set<UITouch>, with event:UIEvent?) {
-		super.touchesCancelled(touches, with:event)
-		self.application.dispatchTouchCancel(touches)
+	override open func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+		//super.touchesCancelled(touches, with: event) TEST
+		UIApplication.shared.window?.dispatchTouchCancelled(touches)
 	}
 
 	//--------------------------------------------------------------------------

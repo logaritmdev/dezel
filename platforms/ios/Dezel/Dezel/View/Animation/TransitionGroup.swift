@@ -10,13 +10,6 @@ public final class TransitionGroup {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The application.
-	 * @property application
-	 * @since 0.2.0
-	 */
-	private(set) public var application: ApplicationController
-
-	/**
 	 * The transition's listeners.
 	 * @property listeners
 	 * @since 0.2.0
@@ -72,21 +65,12 @@ public final class TransitionGroup {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @constructor
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	public init(application: ApplicationController) {
-		self.application = application
-	}
-
-	/**
 	 * @method create
 	 * @since 0.1.0
 	 * @hidden
 	 */
 	public func create() {
-		self.application.updateDisplayManager.dispatch()
+		UpdateDisplayManager.main.dispatch()
 		CATransaction.begin()
 	}
 
@@ -96,7 +80,7 @@ public final class TransitionGroup {
 	 * @hidden
 	 */
 	public func commit() {
-		self.application.updateDisplayManager.dispatch()
+		UpdateDisplayManager.main.dispatch()
 		CATransaction.commit()
 		self.listeners.dispatchCommitEvent()
 	}

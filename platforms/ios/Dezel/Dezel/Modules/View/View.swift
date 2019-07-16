@@ -38,13 +38,6 @@ open class View: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelegate, Scroll
 	}
 
 	/**
-	 * The view's application.
-	 * @property application
-	 * @since 0.2.0
-	 */
-	private(set) public var application: ApplicationController
-
-	/**
 	 * The view's content wrapper view.
 	 * @property wrapper
 	 * @since 0.1.0
@@ -117,497 +110,114 @@ open class View: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelegate, Scroll
 	}
 
 	/**
-	 * The view's top position.
-	 * @property top
+	 * The view's background color.
+	 * @property backgroundColor
 	 * @since 0.1.0
 	 */
-	@objc open var top: Property = Property(string: "auto") {
+	@objc open var backgroundColor: Property = Property(string: "transparent") {
 		willSet {
-			self.layoutNode.top(newValue)
+			self.invalidateBitmapColor()
 		}
 	}
 
 	/**
-	 * The view's left position.
-	 * @property left
+	 * The view's background image.
+	 * @property backgroundImage
 	 * @since 0.1.0
 	 */
-	@objc open var left: Property = Property(string: "auto") {
+	@objc open var backgroundImage: Property = Property() {
 		willSet {
-			self.layoutNode.left(newValue)
-		}
-	}
-
-	/**
-	 * The view's right position.
-	 * @property right
-	 * @since 0.1.0
-	 */
-	@objc open var right: Property = Property(string: "auto") {
-		willSet {
-			self.layoutNode.right(newValue)
-		}
-	}
-
-	/**
-	 * The view's bottom position.
-	 * @property bottom
-	 * @since 0.1.0
-	 */
-	@objc open var bottom: Property = Property(string: "auto") {
-		willSet {
-			self.layoutNode.bottom(newValue)
-		}
-	}
-
-	/**
-	 * The view's absolute minimum top position.
-	 * @property minTop
-	 * @since 0.1.0
-	 */
-	@objc open var minTop: Property = Property(number: Double.min) {
-		willSet {
-			self.layoutNode.minTop(newValue.number)
-		}
-	}
-
-	/**
-	 * The view's absolute maximum top position.
-	 * @property maxTop
-	 * @since 0.1.0
-	 */
-	@objc open var maxTop: Property = Property(number: Double.max) {
-		willSet {
-			self.layoutNode.maxTop(newValue.number)
-		}
-	}
-
-	/**
-	 * The view's absolute minimum left position.
-	 * @property minLeft
-	 * @since 0.1.0
-	 */
-	@objc open var minLeft: Property = Property(number: Double.min) {
-		willSet {
-			self.layoutNode.minLeft(newValue.number)
-		}
-	}
-
-	/**
-	 * The view's absolute maximum left position.
-	 * @property maxLeft
-	 * @since 0.1.0
-	 */
-	@objc open var maxLeft: Property = Property(number: Double.max) {
-		willSet {
-			self.layoutNode.maxLeft(newValue.number)
-		}
-	}
-
-	/**
-	 * The view's absolute minimum right position.
-	 * @property minRight
-	 * @since 0.1.0
-	 */
-	@objc open var minRight: Property = Property(number: Double.min) {
-		willSet {
-			self.layoutNode.minRight(newValue.number)
-		}
-	}
-
-	/**
-	 * The view's absolute maximum right position.
-	 * @property maxRight
-	 * @since 0.1.0
-	 */
-	@objc open var maxRight: Property = Property(number: Double.max) {
-		willSet {
-			self.layoutNode.maxRight(newValue.number)
-		}
-	}
-
-	/**
-	 * The view's absolute minimum bottom position.
-	 * @property minBottom
-	 * @since 0.1.0
-	 */
-	@objc open var minBottom: Property = Property(number: Double.min) {
-		willSet {
-			self.layoutNode.minBottom(newValue.number)
-		}
-	}
-
-	/**
-	 * The view's absolute maximum bottom position.
-	 * @property maxBottom
-	 * @since 0.1.0
-	 */
-	@objc open var maxBottom: Property = Property(number: Double.max) {
-		willSet {
-			self.layoutNode.maxBottom(newValue.number)
-		}
-	}
-
-	/**
-	 * The view's vertical point from with it will be positioned.
-	 * @property anchorTop
-	 * @since 0.1.0
-	 */
-	@objc open var anchorTop: Property = Property(number: 0) {
-		willSet {
-			self.layoutNode.anchorTop(newValue)
-		}
-	}
-
-	/**
-	 * The view's horizontal point from with it will be positioned.
-	 * @property anchorLeft
-	 * @since 0.1.0
-	 */
-	@objc open var anchorLeft: Property = Property(number: 0) {
-		willSet {
-			self.layoutNode.anchorLeft(newValue)
-		}
-	}
-
-	/**
-	 * The view's width.
-	 * @property width
-	 * @since 0.1.0
-	 */
-	@objc open var width: Property = Property(string: "fill") {
-		willSet {
-			self.layoutNode.width(newValue)
-		}
-	}
-
-	/**
-	 * The view's height.
-	 * @property height
-	 * @since 0.1.0
-	 */
-	@objc open var height: Property = Property(string: "wrap") {
-		willSet {
-			self.layoutNode.height(newValue)
-		}
-	}
-
-	/**
-	 * The view's absolute minimum width.
-	 * @property minWidth
-	 * @since 0.1.0
-	 */
-	@objc open var minWidth: Property = Property(number: 0) {
-		willSet {
-			self.layoutNode.minWidth(newValue.number)
-		}
-	}
-
-	/**
-	 * The view's absolute maximum width.
-	 * @property maxWidth
-	 * @since 0.1.0
-	 */
-	@objc open var maxWidth: Property = Property(number: Double.max) {
-		willSet {
-			self.layoutNode.maxWidth(newValue.number)
-		}
-	}
-
-	/**
-	 * The view's absolute minimum height.
-	 * @property minHeight
-	 * @since 0.1.0
-	 */
-	@objc open var minHeight: Property = Property(number: 0) {
-		willSet {
-			self.layoutNode.minHeight(newValue.number)
-		}
-	}
-
-	/**
-	 * The view's absolute maximum height.
-	 * @property maxHeight
-	 * @since 0.1.0
-	 */
-	@objc open var maxHeight: Property = Property(number: Double.max) {
-		willSet {
-			self.layoutNode.maxHeight(newValue.number)
-		}
-	}
-
-	/**
-	 * The view's content top.
-	 * @property contentTop
-	 * @since 0.1.0
-	 */
-	@objc open var contentTop: Property = Property(number: 0) {
-		willSet {
-			self.layoutNode.contentTop(newValue)
-		}
-	}
-
-	/**
-	 * The view's content left.
-	 * @property contentLeft
-	 * @since 0.1.0
-	 */
-	@objc open var contentLeft: Property = Property(number: 0) {
-		willSet {
-			self.layoutNode.contentLeft(newValue)
-		}
-	}
-
-	/**
-	 * The view's content width.
-	 * @property contentWidth
-	 * @since 0.1.0
-	 */
-	@objc open var contentWidth: Property = Property(string: "auto") {
-		willSet {
-			self.layoutNode.contentWidth(newValue)
-		}
-	}
-
-	/**
-	 * The view's content height.
-	 * @property contentHeight
-	 * @since 0.1.0
-	 */
-	@objc open var contentHeight: Property = Property(string: "auto") {
-		willSet {
-			self.layoutNode.contentHeight(newValue)
-		}
-	}
-
-	/**
-	 * The view's content top inset.
-	 * @property contentInsetTop
-	 * @since 0.1.0
-	 */
-	@objc open var contentInsetTop: Property = Property(number: 0) {
-		willSet {
-			if let scrollable = self.content as? Scrollable {
-				scrollable.contentInsetTop = CGFloat(newValue.number)
+			self.backgroundImageLoader.load(newValue) { image in
+				self.backgroundImageData = image
 			}
 		}
 	}
 
 	/**
-	 * The view's content left inset.
-	 * @property contentInsetLeft
-	 * @since 0.1.0
+	 * The view's background image container fit.
+	 * @property backgroundImageFit
+	 * @since 0.4.0
 	 */
-	@objc open var contentInsetLeft: Property = Property(number: 0) {
+	@objc open var backgroundImageFit: Property = Property(string: "cover") {
 		willSet {
-			if let scrollable = self.content as? Scrollable {
-				scrollable.contentInsetLeft = CGFloat(newValue.number)
-			}
+			self.invalidateBitmapImage()
 		}
 	}
 
 	/**
-	 * The view's content right inset.
-	 * @property contentInsetRight
+	 * The view's background image top anchor.
+	 * @property backgroundImageAnchorTop
 	 * @since 0.1.0
 	 */
-	@objc open var contentInsetRight: Property = Property(number: 0) {
+	@objc open var backgroundImageAnchorTop: Property = Property(number: 0.5) {
 		willSet {
-			if let scrollable = self.content as? Scrollable {
-				scrollable.contentInsetRight = CGFloat(newValue.number)
-			}
+			self.invalidateBitmapImage()
 		}
 	}
 
 	/**
-	 * The view's content bottom inset.
-	 * @property contentInsetBottom
+	 * The view's background image left anchor.
+	 * @property backgroundImageAnchorLeft
 	 * @since 0.1.0
 	 */
-	@objc open var contentInsetBottom: Property = Property(number: 0) {
+	@objc open var backgroundImageAnchorLeft: Property = Property(number: 0.5) {
 		willSet {
-			if let scrollable = self.content as? Scrollable {
-				scrollable.contentInsetBottom = CGFloat(newValue.number)
-			}
+			self.invalidateBitmapImage()
 		}
 	}
 
 	/**
-	 * The view's content orientation.
-	 * @property contentOrientation
+	 * The view's background image top position.
+	 * @property backgroundImageTop
 	 * @since 0.1.0
 	 */
-	@objc open var contentOrientation: Property = Property(string: "vertical") {
+	@objc open var backgroundImageTop: Property = Property(number: 50, unit: .pc) {
 		willSet {
-			self.layoutNode.contentOrientation(newValue)
+			self.invalidateBitmapImage()
 		}
 	}
 
 	/**
-	 * The view's content organization on the main axis.
-	 * @property contentDisposition
+	 * The view's background image left position.
+	 * @property backgroundImageLeft
 	 * @since 0.1.0
 	 */
-	@objc open var contentDisposition: Property = Property(string: "start") {
+	@objc open var backgroundImageLeft: Property = Property(number: 50, unit: .pc) {
 		willSet {
-			self.layoutNode.contentDisposition(newValue)
+			self.invalidateBitmapImage()
 		}
 	}
 
 	/**
-	 * The view's content organzation on the cross axis.
-	 * @property contentArrangement
+	 * The view's background image width.
+	 * @property backgroundImageWidth
 	 * @since 0.1.0
 	 */
-	@objc open var contentArrangement: Property = Property(string: "start") {
+	@objc open var backgroundImageWidth: Property = Property(string: "auto") {
 		willSet {
-			self.layoutNode.contentArrangement(newValue)
+			self.invalidateBitmapImage()
 		}
 	}
 
 	/**
-	 * The view's margin.
-	 * @property margin
-	 * @since 0.2.0
+	 * The view's background image height.
+	 * @property backgroundImageHeight
+	 * @since 0.1.0
 	 */
-	@objc open var margin: Property = Property(number: 0) {
+	@objc open var backgroundImageHeight: Property = Property(string: "auto") {
 		willSet {
-			self.marginTop = Property(number: newValue.number, unit: newValue.unit)
-			self.marginLeft = Property(number: newValue.number, unit: newValue.unit)
-			self.marginRight = Property(number: newValue.number, unit: newValue.unit)
-			self.marginBottom = Property(number: newValue.number, unit: newValue.unit)
+			self.invalidateBitmapImage()
 		}
 	}
 
 	/**
-	 * The view's top margin.
-	 * @property marginTop
+	 * The background image tint color.
+	 * @property backgroundImageTint
 	 * @since 0.1.0
 	 */
-	@objc open var marginTop: Property = Property(number: 0) {
+	@objc open var backgroundImageTint: Property = Property(string: "none") {
 		willSet {
-			self.layoutNode.marginTop(newValue)
-		}
-	}
-
-	/**
-	 * The view's left margin.
-	 * @property marginLeft
-	 * @since 0.1.0
-	 */
-	@objc open var marginLeft: Property = Property(number: 0) {
-		willSet {
-			self.layoutNode.marginLeft(newValue)
-		}
-	}
-
-	/**
-	 * The view's right margin.
-	 * @property marginRight
-	 * @since 0.1.0
-	 */
-	@objc open var marginRight: Property = Property(number: 0) {
-		willSet {
-			self.layoutNode.marginRight(newValue)
-		}
-	}
-
-	/**
-	 * The view's bottom margin.
-	 * @property marginBottom
-	 * @since 0.1.0
-	 */
-	@objc open var marginBottom: Property = Property(number: 0) {
-		willSet {
-			self.layoutNode.marginBottom(newValue)
-		}
-	}
-
-	/**
-	 * The view's absolute minimum top margin.
-	 * @property minMarginTop
-	 * @since 0.1.0
-	 */
-	@objc open var minMarginTop: Property = Property(number: Double.min) {
-		willSet {
-			self.layoutNode.minMarginTop(newValue.number)
-		}
-	}
-
-	/**
-	 * The view's absolute maximum top margin.
-	 * @property maxMarginTop
-	 * @since 0.1.0
-	 */
-	@objc open var maxMarginTop: Property = Property(number: Double.max) {
-		willSet {
-			self.layoutNode.maxMarginTop(newValue.number)
-		}
-	}
-
-	/**
-	 * The view's absolute minimum left margin.
-	 * @property minMarginLeft
-	 * @since 0.1.0
-	 */
-	@objc open var minMarginLeft: Property = Property(number: Double.min) {
-		willSet {
-			self.layoutNode.minMarginLeft(newValue.number)
-		}
-	}
-
-	/**
-	 * The view's absolute maximum left margin.
-	 * @property maxMarginLeft
-	 * @since 0.1.0
-	 */
-	@objc open var maxMarginLeft: Property = Property(number: Double.max) {
-		willSet {
-			self.layoutNode.maxMarginLeft(newValue.number)
-		}
-	}
-
-	/**
-	 * The view's absolute minimum right margin.
-	 * @property minMarginRight
-	 * @since 0.1.0
-	 */
-	@objc open var minMarginRight: Property = Property(number: Double.min) {
-		willSet {
-			self.layoutNode.minMarginRight(newValue.number)
-		}
-	}
-
-	/**
-	 * The view's absolute maximum right margin.
-	 * @property maxMarginRight
-	 * @since 0.1.0
-	 */
-	@objc open var maxMarginRight: Property = Property(number: Double.max) {
-		willSet {
-			self.layoutNode.maxMarginRight(newValue.number)
-		}
-	}
-
-	/**
-	 * The view's absolute minimum bottom margin.
-	 * @property minMarginBottom
-	 * @since 0.1.0
-	 */
-	@objc open var minMarginBottom: Property = Property(number: Double.min) {
-		willSet {
-			self.layoutNode.minMarginBottom(newValue.number)
-		}
-	}
-
-	/**
-	 * The view's absolute maximum bottom margin.
-	 * @property maxMarginBottom
-	 * @since 0.1.0
-	 */
-	@objc open var maxMarginBottom: Property = Property(number: Double.max) {
-		willSet {
-			self.layoutNode.maxMarginBottom(newValue.number)
+			self.wrapper.backgroundImageTint = CGColorParse(newValue.string)
 		}
 	}
 
@@ -913,7 +523,7 @@ open class View: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelegate, Scroll
 	 * @property maxBorderBottomWidth
 	 * @since 0.1.0
 	 */
-	@objc open var maxBorderBottomWidth: Property = Property(number: 0) {
+	@objc open var maxBorderBottomWidth: Property = Property(number: Double.max) {
 		willSet {
 			self.invalidateBorder()
 		}
@@ -974,6 +584,639 @@ open class View: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelegate, Scroll
 	@objc open var borderBottomRightRadius: Property = Property(number: 0) {
 		willSet {
 			self.invalidateBorder()
+		}
+	}
+
+	/**
+	 * The view's shadow blur distance.
+	 * @property shadowBlur
+	 * @since 0.1.0
+	 */
+	@objc open var shadowBlur: Property = Property(number: 0) {
+		willSet {
+			self.invalidateShadow()
+		}
+	}
+
+	/**
+	 * The view's shadow color.
+	 * @property shadowColor
+	 * @since 0.1.0
+	 */
+	@objc open var shadowColor: Property = Property(string: "#000") {
+		willSet {
+			self.invalidateShadow()
+		}
+	}
+
+	/**
+	 * The view's shadow's top offset.
+	 * @property shadowOffsetTop
+	 * @since 0.1.0
+	 */
+	@objc open var shadowOffsetTop: Property = Property(number: 0) {
+		willSet {
+			self.invalidateShadow()
+		}
+	}
+
+	/**
+	 * The view's shadow's left offset.
+	 * @property shadowOffsetLeft
+	 * @since 0.1.0
+	 */
+	@objc open var shadowOffsetLeft: Property = Property(number: 0) {
+		willSet {
+			self.invalidateShadow()
+		}
+	}
+
+	/**
+	 * The view's top position.
+	 * @property top
+	 * @since 0.1.0
+	 */
+	@objc open var top: Property = Property(string: "auto") {
+		willSet {
+			self.layoutNode.top(newValue)
+		}
+	}
+
+	/**
+	 * The view's left position.
+	 * @property left
+	 * @since 0.1.0
+	 */
+	@objc open var left: Property = Property(string: "auto") {
+		willSet {
+			self.layoutNode.left(newValue)
+		}
+	}
+
+	/**
+	 * The view's right position.
+	 * @property right
+	 * @since 0.1.0
+	 */
+	@objc open var right: Property = Property(string: "auto") {
+		willSet {
+			self.layoutNode.right(newValue)
+		}
+	}
+
+	/**
+	 * The view's bottom position.
+	 * @property bottom
+	 * @since 0.1.0
+	 */
+	@objc open var bottom: Property = Property(string: "auto") {
+		willSet {
+			self.layoutNode.bottom(newValue)
+		}
+	}
+
+	/**
+	 * The view's absolute minimum top position.
+	 * @property minTop
+	 * @since 0.1.0
+	 */
+	@objc open var minTop: Property = Property(number: Double.min) {
+		willSet {
+			self.layoutNode.minTop(newValue.number)
+		}
+	}
+
+	/**
+	 * The view's absolute maximum top position.
+	 * @property maxTop
+	 * @since 0.1.0
+	 */
+	@objc open var maxTop: Property = Property(number: Double.max) {
+		willSet {
+			self.layoutNode.maxTop(newValue.number)
+		}
+	}
+
+	/**
+	 * The view's absolute minimum left position.
+	 * @property minLeft
+	 * @since 0.1.0
+	 */
+	@objc open var minLeft: Property = Property(number: Double.min) {
+		willSet {
+			self.layoutNode.minLeft(newValue.number)
+		}
+	}
+
+	/**
+	 * The view's absolute maximum left position.
+	 * @property maxLeft
+	 * @since 0.1.0
+	 */
+	@objc open var maxLeft: Property = Property(number: Double.max) {
+		willSet {
+			self.layoutNode.maxLeft(newValue.number)
+		}
+	}
+
+	/**
+	 * The view's absolute minimum right position.
+	 * @property minRight
+	 * @since 0.1.0
+	 */
+	@objc open var minRight: Property = Property(number: Double.min) {
+		willSet {
+			self.layoutNode.minRight(newValue.number)
+		}
+	}
+
+	/**
+	 * The view's absolute maximum right position.
+	 * @property maxRight
+	 * @since 0.1.0
+	 */
+	@objc open var maxRight: Property = Property(number: Double.max) {
+		willSet {
+			self.layoutNode.maxRight(newValue.number)
+		}
+	}
+
+	/**
+	 * The view's absolute minimum bottom position.
+	 * @property minBottom
+	 * @since 0.1.0
+	 */
+	@objc open var minBottom: Property = Property(number: Double.min) {
+		willSet {
+			self.layoutNode.minBottom(newValue.number)
+		}
+	}
+
+	/**
+	 * The view's absolute maximum bottom position.
+	 * @property maxBottom
+	 * @since 0.1.0
+	 */
+	@objc open var maxBottom: Property = Property(number: Double.max) {
+		willSet {
+			self.layoutNode.maxBottom(newValue.number)
+		}
+	}
+
+	/**
+	 * The view's vertical point from with it will be positioned.
+	 * @property anchorTop
+	 * @since 0.1.0
+	 */
+	@objc open var anchorTop: Property = Property(number: 0) {
+		willSet {
+			self.layoutNode.anchorTop(newValue)
+		}
+	}
+
+	/**
+	 * The view's horizontal point from with it will be positioned.
+	 * @property anchorLeft
+	 * @since 0.1.0
+	 */
+	@objc open var anchorLeft: Property = Property(number: 0) {
+		willSet {
+			self.layoutNode.anchorLeft(newValue)
+		}
+	}
+
+	/**
+	 * The view's width.
+	 * @property width
+	 * @since 0.1.0
+	 */
+	@objc open var width: Property = Property(string: "fill") {
+		willSet {
+			self.layoutNode.width(newValue)
+		}
+	}
+
+	/**
+	 * The view's height.
+	 * @property height
+	 * @since 0.1.0
+	 */
+	@objc open var height: Property = Property(string: "fill") {
+		willSet {
+			self.layoutNode.height(newValue)
+		}
+	}
+
+	/**
+	 * The view's absolute minimum width.
+	 * @property minWidth
+	 * @since 0.1.0
+	 */
+	@objc open var minWidth: Property = Property(number: 0) {
+		willSet {
+			self.layoutNode.minWidth(newValue.number)
+		}
+	}
+
+	/**
+	 * The view's absolute maximum width.
+	 * @property maxWidth
+	 * @since 0.1.0
+	 */
+	@objc open var maxWidth: Property = Property(number: Double.max) {
+		willSet {
+			self.layoutNode.maxWidth(newValue.number)
+		}
+	}
+
+	/**
+	 * The view's absolute minimum height.
+	 * @property minHeight
+	 * @since 0.1.0
+	 */
+	@objc open var minHeight: Property = Property(number: 0) {
+		willSet {
+			self.layoutNode.minHeight(newValue.number)
+		}
+	}
+
+	/**
+	 * The view's absolute maximum height.
+	 * @property maxHeight
+	 * @since 0.1.0
+	 */
+	@objc open var maxHeight: Property = Property(number: Double.max) {
+		willSet {
+			self.layoutNode.maxHeight(newValue.number)
+		}
+	}
+
+	/**
+	 * The view's expandable ratio.
+	 * @property expand
+	 * @since 0.1.0
+	 */
+	@objc open var expand: Property = Property(number: 0) {
+		willSet {
+			self.layoutNode.expand(newValue.number)
+		}
+	}
+
+	/**
+	 * The view's shrink ratio.
+	 * @property shrink
+	 * @since 0.1.0
+	 */
+	@objc open var shrink: Property = Property(number: 0) {
+		willSet {
+			self.layoutNode.shrink(newValue.number)
+		}
+	}
+
+	/**
+	 * The view's content top.
+	 * @property contentTop
+	 * @since 0.1.0
+	 */
+	@objc open var contentTop: Property = Property(number: 0) {
+		willSet {
+			self.layoutNode.contentTop(newValue)
+		}
+	}
+
+	/**
+	 * The view's content left.
+	 * @property contentLeft
+	 * @since 0.1.0
+	 */
+	@objc open var contentLeft: Property = Property(number: 0) {
+		willSet {
+			self.layoutNode.contentLeft(newValue)
+		}
+	}
+
+	/**
+	 * The view's content width.
+	 * @property contentWidth
+	 * @since 0.1.0
+	 */
+	@objc open var contentWidth: Property = Property(string: "auto") {
+		willSet {
+			self.layoutNode.contentWidth(newValue)
+		}
+	}
+
+	/**
+	 * The view's content height.
+	 * @property contentHeight
+	 * @since 0.1.0
+	 */
+	@objc open var contentHeight: Property = Property(string: "auto") {
+		willSet {
+			self.layoutNode.contentHeight(newValue)
+		}
+	}
+
+	/**
+	 * The view's content top inset.
+	 * @property contentInsetTop
+	 * @since 0.1.0
+	 */
+	@objc open var contentInsetTop: Property = Property(number: 0) {
+		willSet {
+			self.scrollableView?.contentInsetTop = CGFloat(newValue.number)
+		}
+	}
+
+	/**
+	 * The view's content left inset.
+	 * @property contentInsetLeft
+	 * @since 0.1.0
+	 */
+	@objc open var contentInsetLeft: Property = Property(number: 0) {
+		willSet {
+			self.scrollableView?.contentInsetLeft = CGFloat(newValue.number)
+		}
+	}
+
+	/**
+	 * The view's content right inset.
+	 * @property contentInsetRight
+	 * @since 0.1.0
+	 */
+	@objc open var contentInsetRight: Property = Property(number: 0) {
+		willSet {
+			self.scrollableView?.contentInsetRight = CGFloat(newValue.number)
+		}
+	}
+
+	/**
+	 * The view's content bottom inset.
+	 * @property contentInsetBottom
+	 * @since 0.1.0
+	 */
+	@objc open var contentInsetBottom: Property = Property(number: 0) {
+		willSet {
+			self.scrollableView?.contentInsetBottom = CGFloat(newValue.number)
+		}
+	}
+
+	/**
+	 * The view's content orientation.
+	 * @property contentOrientation
+	 * @since 0.1.0
+	 */
+	@objc open var contentOrientation: Property = Property(string: "vertical") {
+		willSet {
+			self.layoutNode.contentOrientation(newValue)
+		}
+	}
+
+	/**
+	 * The view's content organization on the main axis.
+	 * @property contentDisposition
+	 * @since 0.1.0
+	 */
+	@objc open var contentDisposition: Property = Property(string: "start") {
+		willSet {
+			self.layoutNode.contentDisposition(newValue)
+		}
+	}
+
+	/**
+	 * The view's content organzation on the cross axis.
+	 * @property contentArrangement
+	 * @since 0.1.0
+	 */
+	@objc open var contentArrangement: Property = Property(string: "start") {
+		willSet {
+			self.layoutNode.contentArrangement(newValue)
+		}
+	}
+
+	/**
+	 * Whether this view's content can scroll.
+	 * @property scrollable
+	 * @since 0.1.0
+	 */
+	@objc open var scrollable: Property = Property(boolean: false) {
+		willSet {
+			self.scrollableView?.scrollable = newValue.boolean
+		}
+	}
+
+	/**
+	 * Whether this view's content displays scrollbars.
+	 * @property scrollbars
+	 * @since 0.1.0
+	 */
+	@objc open var scrollbars: Property = Property(boolean: false) {
+		willSet {
+			self.scrollableView?.scrollbars = Scrollbars.get(newValue)
+		}
+	}
+
+	/**
+	 * Whether this view's content can overscroll.
+	 * @property overscroll
+	 * @since 0.1.0
+	 */
+	@objc open var overscroll: Property = Property(string: "auto") {
+		willSet {
+			self.scrollableView?.overscroll = Overscroll.get(newValue)
+		}
+	}
+
+	/**
+	 * Whether this view's content scrolls with momentum.
+	 * @property momentum
+	 * @since 0.1.0
+	 */
+	@objc open var momentum: Property = Property(boolean: true) {
+		willSet {
+			self.scrollableView?.momentum = newValue.boolean
+		}
+	}
+
+	/**
+	 * The view's top scroll offset.
+	 * @property scrollTop
+	 * @since 0.1.0
+	 */
+	@objc open var scrollTop: Property = Property(number: 0) {
+		willSet {
+			self.scrollableView?.scrollTop = CGFloat(newValue.number)
+		}
+	}
+
+	/**
+	 * The view's left scroll offset.
+	 * @property scrollLeft
+	 * @since 0.1.0
+	 */
+	@objc open var scrollLeft: Property = Property(number: 0) {
+		willSet {
+			self.scrollableView?.scrollLeft = CGFloat(newValue.number)
+		}
+	}
+
+	/**
+	 * Whether this view is scrolling.
+	 * @property scrolling
+	 * @since 0.1.0
+	 */
+	@objc private(set) open var scrolling: Property = Property(boolean: false)
+
+	/**
+	 * Whether this view is dragging.
+	 * @property dragging
+	 * @since 0.1.0
+	 */
+	@objc private(set) open var dragging: Property = Property(boolean: false)
+
+	/**
+	 * The view's margin.
+	 * @property margin
+	 * @since 0.2.0
+	 */
+	@objc open var margin: Property = Property(number: 0) {
+		willSet {
+			self.marginTop = Property(number: newValue.number, unit: newValue.unit)
+			self.marginLeft = Property(number: newValue.number, unit: newValue.unit)
+			self.marginRight = Property(number: newValue.number, unit: newValue.unit)
+			self.marginBottom = Property(number: newValue.number, unit: newValue.unit)
+		}
+	}
+
+	/**
+	 * The view's top margin.
+	 * @property marginTop
+	 * @since 0.1.0
+	 */
+	@objc open var marginTop: Property = Property(number: 0) {
+		willSet {
+			self.layoutNode.marginTop(newValue)
+		}
+	}
+
+	/**
+	 * The view's left margin.
+	 * @property marginLeft
+	 * @since 0.1.0
+	 */
+	@objc open var marginLeft: Property = Property(number: 0) {
+		willSet {
+			self.layoutNode.marginLeft(newValue)
+		}
+	}
+
+	/**
+	 * The view's right margin.
+	 * @property marginRight
+	 * @since 0.1.0
+	 */
+	@objc open var marginRight: Property = Property(number: 0) {
+		willSet {
+			self.layoutNode.marginRight(newValue)
+		}
+	}
+
+	/**
+	 * The view's bottom margin.
+	 * @property marginBottom
+	 * @since 0.1.0
+	 */
+	@objc open var marginBottom: Property = Property(number: 0) {
+		willSet {
+			self.layoutNode.marginBottom(newValue)
+		}
+	}
+
+	/**
+	 * The view's absolute minimum top margin.
+	 * @property minMarginTop
+	 * @since 0.1.0
+	 */
+	@objc open var minMarginTop: Property = Property(number: Double.min) {
+		willSet {
+			self.layoutNode.minMarginTop(newValue.number)
+		}
+	}
+
+	/**
+	 * The view's absolute maximum top margin.
+	 * @property maxMarginTop
+	 * @since 0.1.0
+	 */
+	@objc open var maxMarginTop: Property = Property(number: Double.max) {
+		willSet {
+			self.layoutNode.maxMarginTop(newValue.number)
+		}
+	}
+
+	/**
+	 * The view's absolute minimum left margin.
+	 * @property minMarginLeft
+	 * @since 0.1.0
+	 */
+	@objc open var minMarginLeft: Property = Property(number: Double.min) {
+		willSet {
+			self.layoutNode.minMarginLeft(newValue.number)
+		}
+	}
+
+	/**
+	 * The view's absolute maximum left margin.
+	 * @property maxMarginLeft
+	 * @since 0.1.0
+	 */
+	@objc open var maxMarginLeft: Property = Property(number: Double.max) {
+		willSet {
+			self.layoutNode.maxMarginLeft(newValue.number)
+		}
+	}
+
+	/**
+	 * The view's absolute minimum right margin.
+	 * @property minMarginRight
+	 * @since 0.1.0
+	 */
+	@objc open var minMarginRight: Property = Property(number: Double.min) {
+		willSet {
+			self.layoutNode.minMarginRight(newValue.number)
+		}
+	}
+
+	/**
+	 * The view's absolute maximum right margin.
+	 * @property maxMarginRight
+	 * @since 0.1.0
+	 */
+	@objc open var maxMarginRight: Property = Property(number: Double.max) {
+		willSet {
+			self.layoutNode.maxMarginRight(newValue.number)
+		}
+	}
+
+	/**
+	 * The view's absolute minimum bottom margin.
+	 * @property minMarginBottom
+	 * @since 0.1.0
+	 */
+	@objc open var minMarginBottom: Property = Property(number: Double.min) {
+		willSet {
+			self.layoutNode.minMarginBottom(newValue.number)
+		}
+	}
+
+	/**
+	 * The view's absolute maximum bottom margin.
+	 * @property maxMarginBottom
+	 * @since 0.1.0
+	 */
+	@objc open var maxMarginBottom: Property = Property(number: Double.max) {
+		willSet {
+			self.layoutNode.maxMarginBottom(newValue.number)
 		}
 	}
 
@@ -1125,311 +1368,6 @@ open class View: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelegate, Scroll
 	}
 
 	/**
-	 * The view's expandable ratio.
-	 * @property expand
-	 * @since 0.1.0
-	 */
-	@objc open var expand: Property = Property(number: 0) {
-		willSet {
-			self.layoutNode.expand(newValue.number)
-		}
-	}
-
-	/**
-	 * The view's shrink ratio.
-	 * @property shrink
-	 * @since 0.1.0
-	 */
-	@objc open var shrink: Property = Property(number: 0) {
-		willSet {
-			self.layoutNode.shrink(newValue.number)
-		}
-	}
-
-	/**
-	 * The view's background color.
-	 * @property backgroundColor
-	 * @since 0.1.0
-	 */
-	@objc open var backgroundColor: Property = Property(string: "transparent") {
-		willSet {
-			self.invalidateBitmapColor()
-		}
-	}
-
-	/**
-	 * The view's background image.
-	 * @property backgroundImage
-	 * @since 0.1.0
-	 */
-	@objc open var backgroundImage: Property = Property() {
-		willSet {
-			self.backgroundImageLoader.load(newValue) { image in
-				self.backgroundImageData = image
-			}
-		}
-	}
-
-	/**
-	 * The view's background image container fit.
-	 * @property backgroundImageFit
-	 * @since 0.4.0
-	 */
-	@objc open var backgroundImageFit: Property = Property(string: "cover") {
-		willSet {
-			self.invalidateBitmapImage()
-		}
-	}
-
-	/**
-	 * The view's background image top anchor.
-	 * @property backgroundImageAnchorTop
-	 * @since 0.1.0
-	 */
-	@objc open var backgroundImageAnchorTop: Property = Property(number: 0.5) {
-		willSet {
-			self.invalidateBitmapImage()
-		}
-	}
-
-	/**
-	 * The view's background image left anchor.
-	 * @property backgroundImageAnchorLeft
-	 * @since 0.1.0
-	 */
-	@objc open var backgroundImageAnchorLeft: Property = Property(number: 0.5) {
-		willSet {
-			self.invalidateBitmapImage()
-		}
-	}
-
-	/**
-	 * The view's background image top position.
-	 * @property backgroundImageTop
-	 * @since 0.1.0
-	 */
-	@objc open var backgroundImageTop: Property = Property(number: 50, unit: .pc) {
-		willSet {
-			self.invalidateBitmapImage()
-		}
-	}
-
-	/**
-	 * The view's background image left position.
-	 * @property backgroundImageLeft
-	 * @since 0.1.0
-	 */
-	@objc open var backgroundImageLeft: Property = Property(number: 50, unit: .pc) {
-		willSet {
-			self.invalidateBitmapImage()
-		}
-	}
-
-	/**
-	 * The view's background image width.
-	 * @property backgroundImageWidth
-	 * @since 0.1.0
-	 */
-	@objc open var backgroundImageWidth: Property = Property(string: "auto") {
-		willSet {
-			self.invalidateBitmapImage()
-		}
-	}
-
-	/**
-	 * The view's background image height.
-	 * @property backgroundImageHeight
-	 * @since 0.1.0
-	 */
-	@objc open var backgroundImageHeight: Property = Property(string: "auto") {
-		willSet {
-			self.invalidateBitmapImage()
-		}
-	}
-
-	/**
-	 * The background image tint color.
-	 * @property backgroundImageTint
-	 * @since 0.1.0
-	 */
-	@objc open var backgroundImageTint: Property = Property(string: "none") {
-		willSet {
-			self.wrapper.backgroundImageTint = CGColorParse(newValue.string)
-		}
-	}
-
-	/**
-	 * The view's shadow blur distance.
-	 * @property shadowBlur
-	 * @since 0.1.0
-	 */
-	@objc open var shadowBlur: Property = Property(number: 0) {
-		willSet {
-			self.invalidateShadow()
-		}
-	}
-
-	/**
-	 * The view's shadow color.
-	 * @property shadowColor
-	 * @since 0.1.0
-	 */
-	@objc open var shadowColor: Property = Property(string: "#000") {
-		willSet {
-			self.invalidateShadow()
-		}
-	}
-
-	/**
-	 * The view's shadow's top offset.
-	 * @property shadowOffsetTop
-	 * @since 0.1.0
-	 */
-	@objc open var shadowOffsetTop: Property = Property(number: 0) {
-		willSet {
-			self.invalidateShadow()
-		}
-	}
-
-	/**
-	 * The view's shadow's left offset.
-	 * @property shadowOffsetLeft
-	 * @since 0.1.0
-	 */
-	@objc open var shadowOffsetLeft: Property = Property(number: 0) {
-		willSet {
-			self.invalidateShadow()
-		}
-	}
-
-	/**
-	 * Whether this view's content can scroll.
-	 * @property scrollable
-	 * @since 0.1.0
-	 */
-	@objc open var scrollable: Property = Property(boolean: false) {
-		willSet {
-			if let scrollable = self.content as? Scrollable {
-				scrollable.scrollable = newValue.boolean
-			}
-		}
-	}
-
-	/**
-	 * Whether this view's content displays scrollbars.
-	 * @property scrollbars
-	 * @since 0.1.0
-	 */
-	@objc open var scrollbars: Property = Property(boolean: false) {
-		willSet {
-			if let scrollable = self.content as? Scrollable {
-				scrollable.scrollbars = Scrollbars.get(newValue)
-			}
-		}
-	}
-
-	/**
-	 * Whether this view's content can overscroll.
-	 * @property overscroll
-	 * @since 0.1.0
-	 */
-	@objc open var overscroll: Property = Property(string: "auto") {
-		willSet {
-			if let content = self.content as? Scrollable {
-				content.overscroll = Overscroll.get(newValue)
-			}
-		}
-	}
-
-	/**
-	 * Whether this view's content scrolls with momentum.
-	 * @property momentum
-	 * @since 0.1.0
-	 */
-	@objc open var momentum: Property = Property(boolean: true) {
-		willSet {
-			if let scrollable = self.content as? Scrollable {
-				scrollable.momentum = newValue.boolean
-			}
-		}
-	}
-
-	/**
-	 * The view's top scroll offset.
-	 * @property scrollTop
-	 * @since 0.1.0
-	 */
-	@objc open var scrollTop: Property = Property(number: 0) {
-		willSet {
-			if let scrollable = self.content as? Scrollable {
-				scrollable.scrollTop = CGFloat(newValue.number)
-			}
-		}
-	}
-
-	/**
-	 * The view's left scroll offset.
-	 * @property scrollLeft
-	 * @since 0.1.0
-	 */
-	@objc open var scrollLeft: Property = Property(number: 0) {
-		willSet {
-			if let scrollable = self.content as? Scrollable {
-				scrollable.scrollLeft = CGFloat(newValue.number)
-			}
-		}
-	}
-
-	/**
-	 * Whether this view's content is paged.
-	 * @property paged
-	 * @since 0.1.0
-	 */
-	@objc open var paged: Property = Property(boolean: true) {
-		willSet {
-			if let scrollable = self.content as? Scrollable {
-				scrollable.paged = newValue.boolean
-			}
-		}
-	}
-
-	/**
-	 * Whether this view's content is clipped to its bounds.
-	 * @property clipped
-	 * @since 0.1.0
-	 */
-	@objc open var clipped: Property = Property(boolean: true) {
-		willSet {
-			self.content.clipsToBounds = newValue.boolean
-		}
-	}
-
-	/**
-	 * The view's visibility status.
-	 * @property visible
-	 * @since 0.1.0
-	 */
-	@objc open var visible: Property = Property(boolean: true) {
-		willSet {
-			self.wrapper.visible = newValue.boolean
-			self.stylerNode.visible = newValue.boolean
-			self.layoutNode.visible = newValue.boolean
-		}
-	}
-
-	/**
-	 * The view's opacity.
-	 * @property opacity
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open var opacity: Property = Property(number: 1) {
-		willSet {
-			self.wrapper.alpha = CGFloat(newValue.number)
-		}
-	}
-
-	/**
 	 * The view's transformation origin on the x axis.
 	 * @property originX
 	 * @since 0.1.0
@@ -1574,13 +1512,46 @@ open class View: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelegate, Scroll
 	}
 
 	/**
-	 * Whether this view can be drawn by user.
-	 * @property drawable
-	 * @since 0.4.0
+	 * Whether the view is zoomable.
+	 * @property zoomable
+	 * @since 0.3.0
 	 */
-	@objc open var drawable: Property = Property(boolean: false) {
+	@objc open var zoomable: Property = Property(boolean: false) {
 		willSet {
-			self.wrapper.drawable = newValue.boolean
+			self.scrollableView?.zoomable = newValue.boolean
+		}
+	}
+
+	/**
+	 * The view's minimum zoom.
+	 * @property minZoom
+	 * @since 0.3.0
+	 */
+	@objc open var minZoom: Property = Property(number: 1.0) {
+		willSet {
+			self.scrollableView?.minZoom = CGFloat(newValue.number)
+		}
+	}
+
+	/**
+	 * The view's maximum zoom.
+	 * @property maxZoom
+	 * @since 0.3.0
+	 */
+	@objc open var maxZoom: Property = Property(number: 1.0) {
+		willSet {
+			self.scrollableView?.maxZoom = CGFloat(newValue.number)
+		}
+	}
+
+	/**
+	 * The view that is zoomed.
+	 * @property zoomedView
+	 * @since 0.3.0
+	 */
+	@objc open var zoomedView: View? {
+		willSet {
+			self.scrollableView?.zoomedView = newValue?.wrapper
 		}
 	}
 
@@ -1624,70 +1595,62 @@ open class View: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelegate, Scroll
 	@objc open var touchOffsetBottom: Property = Property(number: 0.0)
 
 	/**
-	 * Whether the view is zoomable.
-	 * @property zoomable
-	 * @since 0.3.0
-	 */
-	@objc open var zoomable: Property = Property(boolean: false) {
-		willSet {
-			if let scrollable = self.content as? Scrollable {
-				scrollable.zoomable = newValue.boolean
-			}
-		}
-	}
-
-	/**
-	 * The view's minimum zoom.
-	 * @property minZoom
-	 * @since 0.3.0
-	 */
-	@objc open var minZoom: Property = Property(number: 1.0) {
-		willSet {
-			if let scrollable = self.content as? Scrollable {
-				scrollable.minZoom = CGFloat(newValue.number)
-			}
-		}
-	}
-
-	/**
-	 * The view's maximum zoom.
-	 * @property maxZoom
-	 * @since 0.3.0
-	 */
-	@objc open var maxZoom: Property = Property(number: 1.0) {
-		willSet {
-			if let scrollable = self.content as? Scrollable {
-				scrollable.maxZoom = CGFloat(newValue.number)
-			}
-		}
-	}
-
-	/**
-	 * The view that is zoomed.
-	 * @property zoomedView
-	 * @since 0.3.0
-	 */
-	@objc open var zoomedView: View? {
-		willSet {
-			if let scrollable = self.content as? Scrollable {
-				scrollable.zoomedView = newValue?.wrapper
-			}
-		}
-	}
-
-	/**
-	 * Whether this view is scrolling.
-	 * @property scrolling
+	 * The view's visibility status.
+	 * @property visible
 	 * @since 0.1.0
 	 */
-	private var scrolling: Property = Property(boolean: false)
+	@objc open var visible: Property = Property(boolean: true) {
+		willSet {
+			self.wrapper.visible = newValue.boolean
+			self.stylerNode.visible = newValue.boolean
+			self.layoutNode.visible = newValue.boolean
+		}
+	}
 
 	/**
-	 * Whether this view is dragging.
-	 * @property dragging
+	 * The view's opacity.
+	 * @property opacity
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open var opacity: Property = Property(number: 1) {
+		willSet {
+			self.wrapper.alpha = CGFloat(newValue.number)
+		}
+	}
+
+	/**
+	 * Whether this view can be drawn by user.
+	 * @property drawable
+	 * @since 0.4.0
+	 */
+	@objc open var drawable: Property = Property(boolean: false) {
+		willSet {
+			self.wrapper.drawable = newValue.boolean
+		}
+	}
+
+	/**
+	 * Whether this view's content is clipped to its bounds.
+	 * @property clipped
 	 * @since 0.1.0
 	 */
-	private var dragging: Property = Property(boolean: false)
+	@objc open var clipped: Property = Property(boolean: true) {
+		willSet {
+			self.content.clipsToBounds = newValue.boolean
+		}
+	}
+
+	/**
+	 * Whether this view's content is paged.
+	 * @property paged
+	 * @since 0.1.0
+	 */
+	@objc open var paged: Property = Property(boolean: false) {
+		willSet {
+			self.scrollableView?.paged = newValue.boolean
+		}
+	}
 
 	/**
 	 * The view's measured top.
@@ -2032,94 +1995,6 @@ open class View: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelegate, Scroll
 	 */
 	private(set) public var layoutNode: LayoutNode!
 
-	/**
-	 * @property backgroundImageData
-	 * @since 0.4.0
-	 * @hidden
-	 */
-	private var backgroundImageData: UIImage? {
-		willSet {
-			self.invalidateBitmapImage()
-		}
-	}
-
-	/**
-	 * @property backgroundImageLoader
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	private var backgroundImageLoader: ImageLoader = ImageLoader()
-
-	/**
-	 * @property canvas
-	 * @since 0.4.0
-	 * @hidden
-	 */
-	private var canvas: Canvas?
-
-	/**
-	 * @property updateScheduled
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	private var updateScheduled: Bool = false
-
-	/**
-	 * @property invalidFrame
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	private var invalidFrame: Bool = false
-
-	/**
-	 * @property invalidShadow
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	private var invalidShadow: Bool = false
-
-	/**
-	 * @property invalidBorder
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	private var invalidBorder: Bool = false
-
-	/**
-	 * @property invalidBitmapColor
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	private var invalidBitmapColor: Bool = false
-
-	/**
-	 * @property invalidBitmapImage
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	private var invalidBitmapImage: Bool = false
-
-	/**
-	 * @property invalidTransform
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	private var invalidTransform: Bool = false
-
-	/**
-	 * @property invalidContent
-	 * @since 0.2.0
-	 * @hidden
-	 */
-	private var invalidContent: Bool = false
-
-	/**
-	 * @property disposed
-	 * @since 0.6.0
-	 * @hidden
-	 */
-	private var disposed: Bool = false
-
 	//--------------------------------------------------------------------------
 	// MARK: Methods
 	//--------------------------------------------------------------------------
@@ -2130,12 +2005,14 @@ open class View: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelegate, Scroll
 	 */
 	public required init(context: JavaScriptContext) {
 
-		self.application = context.application
-
 		super.init(context: context)
 
-		self.stylerNode = StylerNode(styler: self.context.application.styler)
-		self.layoutNode = LayoutNode(layout: self.context.application.layout)
+		guard let application = context.application else {
+			fatalError("An application controller must exist to create a view.")
+		}
+
+		self.stylerNode = StylerNode(styler: application.styler)
+		self.layoutNode = LayoutNode(layout: application.layout)
 		self.stylerNode.delegate = self
 		self.layoutNode.delegate = self
 
@@ -2147,7 +2024,8 @@ open class View: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelegate, Scroll
 		}
 
 		self.wrapper.draw = { [weak self] ctx in
-
+			// TODO
+			// Pass the instance
 			guard let view = self else {
 				return
 			}
@@ -2196,7 +2074,7 @@ open class View: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelegate, Scroll
 	 * @since 0.2.0
 	 */
 	open func createWrapperView() -> WrapperView {
-		return WrapperView(application: self.context.application, content: self.content)
+		return WrapperView(content: self.content)
 	}
 
 	/**
@@ -2205,7 +2083,7 @@ open class View: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelegate, Scroll
 	 * @since 0.5.0
 	 */
 	open func createContentView() -> UIView {
-		return ContentView(application: self.context.application, frame: .zero)
+		return ContentView(frame: .zero)
 	}
 
 	/**
@@ -2336,7 +2214,7 @@ open class View: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelegate, Scroll
 	open func scheduleUpdate() {
 		if (self.updateScheduled == false) {
 			self.updateScheduled = true
-			self.application.updateDisplayManager.schedule(self)
+			UpdateDisplayManager.main.schedule(self)
 		}
 	}
 
@@ -2788,10 +2666,8 @@ open class View: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelegate, Scroll
 	 * @since 0.1.0
 	 */
 	open func updateContent() {
-		if let scrollable = self.content as? Scrollable {
-			scrollable.scrollWidth = CGFloat(self.resolvedContentWidth)
-			scrollable.scrollHeight = CGFloat(self.resolvedContentHeight)
-		}
+		self.scrollableView?.scrollWidth = CGFloat(self.resolvedContentWidth)
+		self.scrollableView?.scrollHeight = CGFloat(self.resolvedContentHeight)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3387,6 +3263,103 @@ open class View: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelegate, Scroll
 	//--------------------------------------------------------------------------
 
 	/**
+	 * @property scrollableView
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private var scrollableView: Scrollable? {
+		return self.content as? Scrollable
+	}
+
+	/**
+	 * @property backgroundImageData
+	 * @since 0.4.0
+	 * @hidden
+	 */
+	private var backgroundImageData: UIImage? {
+		willSet {
+			self.invalidateBitmapImage()
+		}
+	}
+
+	/**
+	 * @property backgroundImageLoader
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	private var backgroundImageLoader: ImageLoader = ImageLoader()
+
+	/**
+	 * @property canvas
+	 * @since 0.4.0
+	 * @hidden
+	 */
+	private var canvas: Canvas?
+
+	/**
+	 * @property updateScheduled
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	private var updateScheduled: Bool = false
+
+	/**
+	 * @property invalidFrame
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	private var invalidFrame: Bool = false
+
+	/**
+	 * @property invalidShadow
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	private var invalidShadow: Bool = false
+
+	/**
+	 * @property invalidBorder
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	private var invalidBorder: Bool = false
+
+	/**
+	 * @property invalidBitmapColor
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	private var invalidBitmapColor: Bool = false
+
+	/**
+	 * @property invalidBitmapImage
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	private var invalidBitmapImage: Bool = false
+
+	/**
+	 * @property invalidTransform
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	private var invalidTransform: Bool = false
+
+	/**
+	 * @property invalidContent
+	 * @since 0.2.0
+	 * @hidden
+	 */
+	private var invalidContent: Bool = false
+
+	/**
+	 * @property disposed
+	 * @since 0.6.0
+	 * @hidden
+	 */
+	private var disposed: Bool = false
+
+	/**
 	 * @method insertChild
 	 * @since 0.2.0
 	 * @hidden
@@ -3701,9 +3674,7 @@ open class View: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelegate, Scroll
 	 * @hidden
 	 */
 	@objc open func jsGet_parent(callback: JavaScriptGetterCallback) {
-		if let parent = self.parent {
-			callback.returns(parent.holder)
-		}
+		callback.returns(self.parent?.holder)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3724,6 +3695,884 @@ open class View: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelegate, Scroll
 	 */
 	@objc open func jsSet_id(callback: JavaScriptSetterCallback) {
 		self.id = Property(value: callback.value)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_backgroundColor
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsGet_backgroundColor(callback: JavaScriptGetterCallback) {
+		callback.returns(self.backgroundColor)
+	}
+
+	/**
+	 * @method jsSet_backgroundColor
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsSet_backgroundColor(callback: JavaScriptSetterCallback) {
+		self.backgroundColor = Property(value: callback.value)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_backgroundImage
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsGet_backgroundImage(callback: JavaScriptGetterCallback) {
+		callback.returns(self.backgroundImage)
+	}
+
+	/**
+	 * @method jsSet_backgroundImage
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsSet_backgroundImage(callback: JavaScriptSetterCallback) {
+		self.backgroundImage = Property(value: callback.value)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_backgroundImageFit
+	 * @since 0.4.0
+	 * @hidden
+	 */
+	@objc open func jsGet_backgroundImageFit(callback: JavaScriptGetterCallback) {
+		callback.returns(self.backgroundImageFit)
+	}
+
+	/**
+	 * @method jsSet_backgroundImageFit
+	 * @since 0.4.0
+	 * @hidden
+	 */
+	@objc open func jsSet_backgroundImageFit(callback: JavaScriptSetterCallback) {
+		self.backgroundImageFit = Property(value: callback.value)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_backgroundImageAnchorTop
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsGet_backgroundImageAnchorTop(callback: JavaScriptGetterCallback) {
+		callback.returns(self.backgroundImageAnchorTop)
+	}
+
+	/**
+	 * @method jsSet_backgroundImageAnchorTop
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsSet_backgroundImageAnchorTop(callback: JavaScriptSetterCallback) {
+		self.backgroundImageAnchorTop = Property(value: callback.value)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_backgroundImageAnchorLeft
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsGet_backgroundImageAnchorLeft(callback: JavaScriptGetterCallback) {
+		callback.returns(self.backgroundImageAnchorLeft)
+	}
+
+	/**
+	 * @method jsSet_backgroundImageAnchorLeft
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsSet_backgroundImageAnchorLeft(callback: JavaScriptSetterCallback) {
+		self.backgroundImageAnchorLeft = Property(value: callback.value)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_backgroundImageTop
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsGet_backgroundImageTop(callback: JavaScriptGetterCallback) {
+		callback.returns(self.backgroundImageTop)
+	}
+
+	/**
+	 * @method jsSet_backgroundImageTop
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsSet_backgroundImageTop(callback: JavaScriptSetterCallback) {
+		self.backgroundImageTop = Property(value: callback.value)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_backgroundImageLeft
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsGet_backgroundImageLeft(callback: JavaScriptGetterCallback) {
+		callback.returns(self.backgroundImageLeft)
+	}
+
+	/**
+	 * @method jsSet_backgroundImageLeft
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsSet_backgroundImageLeft(callback: JavaScriptSetterCallback) {
+		self.backgroundImageLeft = Property(value: callback.value)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_backgroundImageWidth
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsGet_backgroundImageWidth(callback: JavaScriptGetterCallback) {
+		callback.returns(self.backgroundImageWidth)
+	}
+
+	/**
+	 * @method jsSet_backgroundImageWidth
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsSet_backgroundImageWidth(callback: JavaScriptSetterCallback) {
+		self.backgroundImageWidth = Property(value: callback.value)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_backgroundImageHeight
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsGet_backgroundImageHeight(callback: JavaScriptGetterCallback) {
+		callback.returns(self.backgroundImageHeight)
+	}
+
+	/**
+	 * @method jsSet_backgroundImageHeight
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsSet_backgroundImageHeight(callback: JavaScriptSetterCallback) {
+		self.backgroundImageHeight = Property(value: callback.value)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_backgroundImageTint
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsGet_backgroundImageTint(callback: JavaScriptGetterCallback) {
+		callback.returns(self.backgroundImageTint)
+	}
+
+	/**
+	 * @method jsSet_backgroundImageTint
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsSet_backgroundImageTint(callback: JavaScriptSetterCallback) {
+		self.backgroundImageTint = Property(value: callback.value)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_border
+	 * @since 0.2.0
+	 * @hidden
+	 */
+	@objc open func jsGet_border(callback: JavaScriptGetterCallback) {
+
+		let width = self.context.createEmptyObject()
+		width.property("top", property: self.borderTopWidth)
+		width.property("left", property: self.borderLeftWidth)
+		width.property("right", property: self.borderRightWidth)
+		width.property("bottom", property: self.borderBottomWidth)
+
+		let color = self.context.createEmptyObject()
+		color.property("top", property: self.borderTopColor)
+		color.property("left", property: self.borderLeftColor)
+		color.property("right", property: self.borderRightColor)
+		color.property("bottom", property: self.borderBottomColor)
+
+		let value = self.context.createEmptyObject()
+		value.property("width", value: width)
+		value.property("color", value: color)
+
+		callback.returns(value)
+	}
+
+	/**
+	 * @method jsSet_border
+	 * @since 0.2.0
+	 * @hidden
+	 */
+	@objc open func jsSet_border(callback: JavaScriptSetterCallback) {
+		self.border = Property(value: callback.value)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_borderWidth
+	 * @since 0.2.0
+	 * @hidden
+	 */
+	@objc open func jsGet_borderWidth(callback: JavaScriptGetterCallback) {
+
+		let value = self.context.createEmptyObject()
+		value.property("top", property: self.borderTopWidth)
+		value.property("left", property: self.borderLeftWidth)
+		value.property("right", property: self.borderRightWidth)
+		value.property("bottom", property: self.borderBottomWidth)
+
+		callback.returns(value)
+	}
+
+	/**
+	 * @method jsSet_borderWidth
+	 * @since 0.2.0
+	 * @hidden
+	 */
+	@objc open func jsSet_borderWidth(callback: JavaScriptSetterCallback) {
+		self.borderWidth = Property(value: callback.value)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_borderColor
+	 * @since 0.2.0
+	 * @hidden
+	 */
+	@objc open func jsGet_borderColor(callback: JavaScriptGetterCallback) {
+
+		let value = self.context.createEmptyObject()
+		value.property("top", property: self.borderTopColor)
+		value.property("left", property: self.borderLeftColor)
+		value.property("right", property: self.borderRightColor)
+		value.property("bottom", property: self.borderBottomColor)
+
+		callback.returns(value)
+	}
+
+	/**
+	 * @method jsSet_borderColor
+	 * @since 0.2.0
+	 * @hidden
+	 */
+	@objc open func jsSet_borderColor(callback: JavaScriptSetterCallback) {
+		self.borderWidth = Property(value: callback.value)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_borderTop
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@objc open func jsGet_borderTop(callback: JavaScriptGetterCallback) {
+		callback.returns(self.borderTop)
+	}
+
+	/**
+	 * @method jsSet_borderTop
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@objc open func jsSet_borderTop(callback: JavaScriptSetterCallback) {
+		self.borderTop = Property(value: callback.value)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_borderLeft
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@objc open func jsGet_borderLeft(callback: JavaScriptGetterCallback) {
+		callback.returns(self.borderLeft)
+	}
+
+	/**
+	 * @method jsSet_borderLeft
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@objc open func jsSet_borderLeft(callback: JavaScriptSetterCallback) {
+		self.borderLeft = Property(value: callback.value)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_borderRight
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@objc open func jsGet_borderRight(callback: JavaScriptGetterCallback) {
+		callback.returns(self.borderRight)
+	}
+
+	/**
+	 * @method jsSet_borderRight
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@objc open func jsSet_borderRight(callback: JavaScriptSetterCallback) {
+		self.borderRight = Property(value: callback.value)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_borderBottom
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@objc open func jsGet_borderBottom(callback: JavaScriptGetterCallback) {
+		callback.returns(self.borderBottom)
+	}
+
+	/**
+	 * @method jsSet_borderBottom
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@objc open func jsSet_borderBottom(callback: JavaScriptSetterCallback) {
+		self.borderBottom = Property(value: callback.value)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_borderTopColor
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsGet_borderTopColor(callback: JavaScriptGetterCallback) {
+		callback.returns(self.borderTopColor)
+	}
+
+	/**
+	 * @method jsSet_borderTopColor
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsSet_borderTopColor(callback: JavaScriptSetterCallback) {
+		self.borderTopColor = Property(value: callback.value)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_borderLeftColor
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsGet_borderLeftColor(callback: JavaScriptGetterCallback) {
+		callback.returns(self.borderLeftColor)
+	}
+
+	/**
+	 * @method jsSet_borderLeftColor
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsSet_borderLeftColor(callback: JavaScriptSetterCallback) {
+		self.borderLeftColor = Property(value: callback.value)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_borderRightColor
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsGet_borderRightColor(callback: JavaScriptGetterCallback) {
+		callback.returns(self.borderRightColor)
+	}
+
+	/**
+	 * @method jsSet_borderRightColor
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsSet_borderRightColor(callback: JavaScriptSetterCallback) {
+		self.borderRightColor = Property(value: callback.value)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_borderBottomColor
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsGet_borderBottomColor(callback: JavaScriptGetterCallback) {
+		callback.returns(self.borderBottomColor)
+	}
+
+	/**
+	 * @method jsSet_borderBottomColor
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsSet_borderBottomColor(callback: JavaScriptSetterCallback) {
+		self.borderBottomColor = Property(value: callback.value)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_borderTopWidth
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsGet_borderTopWidth(callback: JavaScriptGetterCallback) {
+		callback.returns(self.borderTopWidth)
+	}
+
+	/**
+	 * @method jsSet_borderTopWidth
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsSet_borderTopWidth(callback: JavaScriptSetterCallback) {
+		self.borderTopWidth = Property(value: callback.value)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_borderLeftWidth
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsGet_borderLeftWidth(callback: JavaScriptGetterCallback) {
+		callback.returns(self.borderLeftWidth)
+	}
+
+	/**
+	 * @method jsSet_borderLeftWidth
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsSet_borderLeftWidth(callback: JavaScriptSetterCallback) {
+		self.borderLeftWidth = Property(value: callback.value)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_borderRightWidth
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsGet_borderRightWidth(callback: JavaScriptGetterCallback) {
+		callback.returns(self.borderRightWidth)
+	}
+
+	/**
+	 * @method jsSet_borderRightWidth
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsSet_borderRightWidth(callback: JavaScriptSetterCallback) {
+		self.borderRightWidth = Property(value: callback.value)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_borderBottomWidth
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsGet_borderBottomWidth(callback: JavaScriptGetterCallback) {
+		callback.returns(self.borderBottomWidth)
+	}
+
+	/**
+	 * @method jsSet_borderBottomWidth
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsSet_borderBottomWidth(callback: JavaScriptSetterCallback) {
+		self.borderBottomWidth = Property(value: callback.value)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_minBorderTopWidth
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@objc open func jsGet_minBorderTopWidth(callback: JavaScriptGetterCallback) {
+		callback.returns(self.minBorderTopWidth)
+	}
+
+	/**
+	 * @method jsSet_minBorderTopWidth
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@objc open func jsSet_minBorderTopWidth(callback: JavaScriptSetterCallback) {
+		self.minBorderTopWidth = Property(value: callback.value)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_maxBorderTopWidth
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@objc open func jsGet_maxBorderTopWidth(callback: JavaScriptGetterCallback) {
+		callback.returns(self.maxBorderTopWidth)
+	}
+
+	/**
+	 * @method jsSet_maxBorderTopWidth
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@objc open func jsSet_maxBorderTopWidth(callback: JavaScriptSetterCallback) {
+		self.maxBorderTopWidth = Property(value: callback.value)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_minBorderLeftWidth
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@objc open func jsGet_minBorderLeftWidth(callback: JavaScriptGetterCallback) {
+		callback.returns(self.minBorderLeftWidth)
+	}
+
+	/**
+	 * @method jsSet_minBorderLeftWidth
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@objc open func jsSet_minBorderLeftWidth(callback: JavaScriptSetterCallback) {
+		self.minBorderLeftWidth = Property(value: callback.value)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_maxBorderLeftWidth
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@objc open func jsGet_maxBorderLeftWidth(callback: JavaScriptGetterCallback) {
+		callback.returns(self.maxBorderLeftWidth)
+	}
+
+	/**
+	 * @method jsSet_maxBorderLeftWidth
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@objc open func jsSet_maxBorderLeftWidth(callback: JavaScriptSetterCallback) {
+		self.maxBorderLeftWidth = Property(value: callback.value)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_minBorderRightWidth
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@objc open func jsGet_minBorderRightWidth(callback: JavaScriptGetterCallback) {
+		callback.returns(self.minBorderRightWidth)
+	}
+
+	/**
+	 * @method jsSet_minBorderRightWidth
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@objc open func jsSet_minBorderRightWidth(callback: JavaScriptSetterCallback) {
+		self.minBorderRightWidth = Property(value: callback.value)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_maxBorderRightWidth
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@objc open func jsGet_maxBorderRightWidth(callback: JavaScriptGetterCallback) {
+		callback.returns(self.maxBorderRightWidth)
+	}
+
+	/**
+	 * @method jsSet_maxBorderRightWidth
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@objc open func jsSet_maxBorderRightWidth(callback: JavaScriptSetterCallback) {
+		self.maxBorderRightWidth = Property(value: callback.value)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_minBorderBottomWidth
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@objc open func jsGet_minBorderBottomWidth(callback: JavaScriptGetterCallback) {
+		callback.returns(self.minBorderBottomWidth)
+	}
+
+	/**
+	 * @method jsSet_minBorderBottomWidth
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@objc open func jsSet_minBorderBottomWidth(callback: JavaScriptSetterCallback) {
+		self.minBorderBottomWidth = Property(value: callback.value)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_maxBorderBottomWidth
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@objc open func jsGet_maxBorderBottomWidth(callback: JavaScriptGetterCallback) {
+		callback.returns(self.maxBorderBottomWidth)
+	}
+
+	/**
+	 * @method jsSet_maxBorderBottomWidth
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@objc open func jsSet_maxBorderBottomWidth(callback: JavaScriptSetterCallback) {
+		self.maxBorderBottomWidth = Property(value: callback.value)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_borderRadius
+	 * @since 0.2.0
+	 * @hidden
+	 */
+	@objc open func jsGet_borderRadius(callback: JavaScriptGetterCallback) {
+
+		let value = self.context.createEmptyObject()
+		value.property("topLeft", property: self.borderTopLeftRadius)
+		value.property("topRight", property: self.borderTopRightRadius)
+		value.property("bottomLeft", property: self.borderBottomLeftRadius)
+		value.property("bottomRight", property: self.borderBottomRightRadius)
+
+		callback.returns(value)
+	}
+
+	/**
+	 * @method jsSet_borderRadius
+	 * @since 0.2.0
+	 * @hidden
+	 */
+	@objc open func jsSet_borderRadius(callback: JavaScriptSetterCallback) {
+		self.borderRadius = Property(value: callback.value)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_borderTopLeftRadius
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsGet_borderTopLeftRadius(callback: JavaScriptGetterCallback) {
+		callback.returns(self.borderTopLeftRadius)
+	}
+
+	/**
+	 * @method jsSet_borderTopLeftRadius
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsSet_borderTopLeftRadius(callback: JavaScriptSetterCallback) {
+		self.borderTopLeftRadius = Property(value: callback.value)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_borderTopRightRadius
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsGet_borderTopRightRadius(callback: JavaScriptGetterCallback) {
+		callback.returns(self.borderTopRightRadius)
+	}
+
+	/**
+	 * @method jsSet_borderTopRightRadius
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsSet_borderTopRightRadius(callback: JavaScriptSetterCallback) {
+		self.borderTopRightRadius = Property(value: callback.value)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_borderBottomLeftRadius
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsGet_borderBottomLeftRadius(callback: JavaScriptGetterCallback) {
+		callback.returns(self.borderBottomLeftRadius)
+	}
+
+	/**
+	 * @method jsSet_borderBottomLeftRadius
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsSet_borderBottomLeftRadius(callback: JavaScriptSetterCallback) {
+		self.borderBottomLeftRadius = Property(value: callback.value)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_borderBottomRightRadius
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsGet_borderBottomRightRadius(callback: JavaScriptGetterCallback) {
+		callback.returns(self.borderBottomRightRadius)
+	}
+
+	/**
+	 * @method jsSet_borderBottomRightRadius
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsSet_borderBottomRightRadius(callback: JavaScriptSetterCallback) {
+		self.borderBottomRightRadius = Property(value: callback.value)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_shadowBlur
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsGet_shadowBlur(callback: JavaScriptGetterCallback) {
+		callback.returns(self.shadowBlur)
+	}
+
+	/**
+	 * @method jsSet_shadowBlur
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsSet_shadowBlur(callback: JavaScriptSetterCallback) {
+		self.shadowBlur = Property(value: callback.value)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_shadowColor
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsGet_shadowColor(callback: JavaScriptGetterCallback) {
+		callback.returns(self.shadowColor)
+	}
+
+	/**
+	 * @method jsSet_shadowColor
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsSet_shadowColor(callback: JavaScriptSetterCallback) {
+		self.shadowColor = Property(value: callback.value)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_shadowOffsetTop
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsGet_shadowOffsetTop(callback: JavaScriptGetterCallback) {
+		callback.returns(self.shadowOffsetTop)
+	}
+
+	/**
+	 * @method jsSet_shadowOffsetTop
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsSet_shadowOffsetTop(callback: JavaScriptSetterCallback) {
+		self.shadowOffsetTop = Property(value: callback.value)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_shadowOffsetLeft
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsGet_shadowOffsetLeft(callback: JavaScriptGetterCallback) {
+		callback.returns(self.shadowOffsetLeft)
+	}
+
+	/**
+	 * @method jsSet_shadowOffsetLeft
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsSet_shadowOffsetLeft(callback: JavaScriptSetterCallback) {
+		self.shadowOffsetLeft = Property(value: callback.value)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4129,6 +4978,45 @@ open class View: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelegate, Scroll
 	//--------------------------------------------------------------------------
 
 	/**
+	 * @method jsGet_expand
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsGet_expand(callback: JavaScriptGetterCallback) {
+		callback.returns(self.expand)
+	}
+
+	/**
+	 * @method jsSet_expand
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsSet_expand(callback: JavaScriptSetterCallback) {
+		self.expand = Property(value: callback.value)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_shrink
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsGet_shrink(callback: JavaScriptGetterCallback) {
+		callback.returns(self.shrink)
+	}
+
+	/**
+	 * @method jsSet_shrink
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsSet_shrink(callback: JavaScriptSetterCallback) {
+		self.shrink = Property(value: callback.value)
+	}
+	//--------------------------------------------------------------------------
+
+	/**
 	 * @method jsGet_contentTop
 	 * @since 0.1.0
 	 * @hidden
@@ -4344,6 +5232,148 @@ open class View: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelegate, Scroll
 	 */
 	@objc open func jsSet_contentArrangement(callback: JavaScriptSetterCallback) {
 		self.contentArrangement = Property(value: callback.value)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_scrollable
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsGet_scrollable(callback: JavaScriptGetterCallback) {
+		callback.returns(self.scrollable)
+	}
+
+	/**
+	 * @method jsSet_scrollable
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsSet_scrollable(callback: JavaScriptSetterCallback) {
+		self.scrollable = Property(value: callback.value)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_scrollbars
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsGet_scrollbars(callback: JavaScriptGetterCallback) {
+		callback.returns(self.scrollbars)
+	}
+
+	/**
+	 * @method jsSet_scrollbars
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsSet_scrollbars(callback: JavaScriptSetterCallback) {
+		self.scrollbars = Property(value: callback.value)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_overscroll
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsGet_overscroll(callback: JavaScriptGetterCallback) {
+		callback.returns(self.overscroll)
+	}
+
+	/**
+	 * @method jsSet_overscroll
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsSet_overscroll(callback: JavaScriptSetterCallback) {
+		self.overscroll = Property(value: callback.value)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+     * @method jsGet_momentum
+     * @since 0.1.0
+     * @hidden
+     */
+	@objc open func jsGet_momentum(callback: JavaScriptGetterCallback) {
+		callback.returns(self.momentum)
+	}
+
+	/**
+     * @method jsSet_momentum
+     * @since 0.1.0
+     * @hidden
+     */
+	@objc open func jsSet_momentum(callback: JavaScriptSetterCallback) {
+		self.momentum = Property(value: callback.value)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_scrollTop
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsGet_scrollTop(callback: JavaScriptGetterCallback) {
+		callback.returns(self.scrollTop)
+	}
+
+	/**
+	 * @method jsSet_scrollTop
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsSet_scrollTop(callback: JavaScriptSetterCallback) {
+		self.scrollTop = Property(value: callback.value)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_scrollLeft
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsGet_scrollLeft(callback: JavaScriptGetterCallback) {
+		callback.returns(self.scrollLeft)
+	}
+
+	/**
+	 * @method jsSet_scrollLeft
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsSet_scrollLeft(callback: JavaScriptSetterCallback) {
+		self.scrollTop = Property(value: callback.value)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_scrolling
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsGet_scrolling(callback: JavaScriptGetterCallback) {
+		callback.returns(self.scrolling)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_dragging
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsGet_dragging(callback: JavaScriptGetterCallback) {
+		callback.returns(self.dragging)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4616,364 +5646,6 @@ open class View: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelegate, Scroll
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method jsGet_border
-	 * @since 0.2.0
-	 * @hidden
-	 */
-	@objc open func jsGet_border(callback: JavaScriptGetterCallback) {
-
-		let width = self.context.createEmptyObject()
-		width.property("top", property: self.borderTopWidth)
-		width.property("left", property: self.borderLeftWidth)
-		width.property("right", property: self.borderRightWidth)
-		width.property("bottom", property: self.borderBottomWidth)
-
-		let color = self.context.createEmptyObject()
-		color.property("top", property: self.borderTopColor)
-		color.property("left", property: self.borderLeftColor)
-		color.property("right", property: self.borderRightColor)
-		color.property("bottom", property: self.borderBottomColor)
-
-		let value = self.context.createEmptyObject()
-		value.property("width", value: width)
-		value.property("color", value: color)
-
-		callback.returns(value)
-	}
-
-	/**
-	 * @method jsSet_border
-	 * @since 0.2.0
-	 * @hidden
-	 */
-	@objc open func jsSet_border(callback: JavaScriptSetterCallback) {
-		self.border = Property(value: callback.value)
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method jsGet_borderWidth
-	 * @since 0.2.0
-	 * @hidden
-	 */
-	@objc open func jsGet_borderWidth(callback: JavaScriptGetterCallback) {
-
-		let value = self.context.createEmptyObject()
-		value.property("top", property: self.borderTopWidth)
-		value.property("left", property: self.borderLeftWidth)
-		value.property("right", property: self.borderRightWidth)
-		value.property("bottom", property: self.borderBottomWidth)
-
-		callback.returns(value)
-	}
-
-	/**
-	 * @method jsSet_borderWidth
-	 * @since 0.2.0
-	 * @hidden
-	 */
-	@objc open func jsSet_borderWidth(callback: JavaScriptSetterCallback) {
-		self.borderWidth = Property(value: callback.value)
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method jsGet_borderColor
-	 * @since 0.2.0
-	 * @hidden
-	 */
-	@objc open func jsGet_borderColor(callback: JavaScriptGetterCallback) {
-
-		let value = self.context.createEmptyObject()
-		value.property("top", property: self.borderTopColor)
-		value.property("left", property: self.borderLeftColor)
-		value.property("right", property: self.borderRightColor)
-		value.property("bottom", property: self.borderBottomColor)
-
-		callback.returns(value)
-	}
-
-	/**
-	 * @method jsSet_borderColor
-	 * @since 0.2.0
-	 * @hidden
-	 */
-	@objc open func jsSet_borderColor(callback: JavaScriptSetterCallback) {
-		self.borderWidth = Property(value: callback.value)
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method jsGet_borderTopColor
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsGet_borderTopColor(callback: JavaScriptGetterCallback) {
-		callback.returns(self.borderTopColor)
-	}
-
-	/**
-	 * @method jsSet_borderTopColor
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsSet_borderTopColor(callback: JavaScriptSetterCallback) {
-		self.borderTopColor = Property(value: callback.value)
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method jsGet_borderLeftColor
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsGet_borderLeftColor(callback: JavaScriptGetterCallback) {
-		callback.returns(self.borderLeftColor)
-	}
-
-	/**
-	 * @method jsSet_borderLeftColor
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsSet_borderLeftColor(callback: JavaScriptSetterCallback) {
-		self.borderLeftColor = Property(value: callback.value)
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method jsGet_borderRightColor
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsGet_borderRightColor(callback: JavaScriptGetterCallback) {
-		callback.returns(self.borderRightColor)
-	}
-
-	/**
-	 * @method jsSet_borderRightColor
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsSet_borderRightColor(callback: JavaScriptSetterCallback) {
-		self.borderRightColor = Property(value: callback.value)
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method jsGet_borderBottomColor
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsGet_borderBottomColor(callback: JavaScriptGetterCallback) {
-		callback.returns(self.borderBottomColor)
-	}
-
-	/**
-	 * @method jsSet_borderBottomColor
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsSet_borderBottomColor(callback: JavaScriptSetterCallback) {
-		self.borderBottomColor = Property(value: callback.value)
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method jsGet_borderTopWidth
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsGet_borderTopWidth(callback: JavaScriptGetterCallback) {
-		callback.returns(self.borderTopWidth)
-	}
-
-	/**
-	 * @method jsSet_borderTopWidth
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsSet_borderTopWidth(callback: JavaScriptSetterCallback) {
-		self.borderTopWidth = Property(value: callback.value)
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method jsGet_borderLeftWidth
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsGet_borderLeftWidth(callback: JavaScriptGetterCallback) {
-		callback.returns(self.borderLeftWidth)
-	}
-
-	/**
-	 * @method jsSet_borderLeftWidth
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsSet_borderLeftWidth(callback: JavaScriptSetterCallback) {
-		self.borderLeftWidth = Property(value: callback.value)
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method jsGet_borderRightWidth
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsGet_borderRightWidth(callback: JavaScriptGetterCallback) {
-		callback.returns(self.borderRightWidth)
-	}
-
-	/**
-	 * @method jsSet_borderRightWidth
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsSet_borderRightWidth(callback: JavaScriptSetterCallback) {
-		self.borderRightWidth = Property(value: callback.value)
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method jsGet_borderBottomWidth
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsGet_borderBottomWidth(callback: JavaScriptGetterCallback) {
-		callback.returns(self.borderBottomWidth)
-	}
-
-	/**
-	 * @method jsSet_borderBottomWidth
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsSet_borderBottomWidth(callback: JavaScriptSetterCallback) {
-		self.borderBottomWidth = Property(value: callback.value)
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method jsGet_borderRadius
-	 * @since 0.2.0
-	 * @hidden
-	 */
-	@objc open func jsGet_borderRadius(callback: JavaScriptGetterCallback) {
-
-		let value = self.context.createEmptyObject()
-		value.property("topLeft", property: self.borderTopLeftRadius)
-		value.property("topRight", property: self.borderTopRightRadius)
-		value.property("bottomLeft", property: self.borderBottomLeftRadius)
-		value.property("bottomRight", property: self.borderBottomRightRadius)
-
-		callback.returns(value)
-	}
-
-	/**
-	 * @method jsSet_borderRadius
-	 * @since 0.2.0
-	 * @hidden
-	 */
-	@objc open func jsSet_borderRadius(callback: JavaScriptSetterCallback) {
-		self.borderRadius = Property(value: callback.value)
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method jsGet_borderTopLeftRadius
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsGet_borderTopLeftRadius(callback: JavaScriptGetterCallback) {
-		callback.returns(self.borderTopLeftRadius)
-	}
-
-	/**
-	 * @method jsSet_borderTopLeftRadius
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsSet_borderTopLeftRadius(callback: JavaScriptSetterCallback) {
-		self.borderTopLeftRadius = Property(value: callback.value)
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method jsGet_borderTopRightRadius
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsGet_borderTopRightRadius(callback: JavaScriptGetterCallback) {
-		callback.returns(self.borderTopRightRadius)
-	}
-
-	/**
-	 * @method jsSet_borderTopRightRadius
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsSet_borderTopRightRadius(callback: JavaScriptSetterCallback) {
-		self.borderTopRightRadius = Property(value: callback.value)
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method jsGet_borderBottomLeftRadius
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsGet_borderBottomLeftRadius(callback: JavaScriptGetterCallback) {
-		callback.returns(self.borderBottomLeftRadius)
-	}
-
-	/**
-	 * @method jsSet_borderBottomLeftRadius
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsSet_borderBottomLeftRadius(callback: JavaScriptSetterCallback) {
-		self.borderBottomLeftRadius = Property(value: callback.value)
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method jsGet_borderBottomRightRadius
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsGet_borderBottomRightRadius(callback: JavaScriptGetterCallback) {
-		callback.returns(self.borderBottomRightRadius)
-	}
-
-	/**
-	 * @method jsSet_borderBottomRightRadius
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsSet_borderBottomRightRadius(callback: JavaScriptSetterCallback) {
-		self.borderBottomRightRadius = Property(value: callback.value)
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
 	 * @method jsGet_padding
 	 * @since 0.2.0
 	 * @hidden
@@ -5236,486 +5908,6 @@ open class View: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelegate, Scroll
 	 */
 	@objc open func jsSet_maxPaddingBottom(callback: JavaScriptSetterCallback) {
 		self.maxPaddingBottom = Property(value: callback.value)
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method jsGet_expand
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsGet_expand(callback: JavaScriptGetterCallback) {
-		callback.returns(self.expand)
-	}
-
-	/**
-	 * @method jsSet_expand
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsSet_expand(callback: JavaScriptSetterCallback) {
-		self.expand = Property(value: callback.value)
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method jsGet_shrink
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsGet_shrink(callback: JavaScriptGetterCallback) {
-		callback.returns(self.shrink)
-	}
-
-	/**
-	 * @method jsSet_shrink
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsSet_shrink(callback: JavaScriptSetterCallback) {
-		self.shrink = Property(value: callback.value)
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method jsGet_backgroundColor
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsGet_backgroundColor(callback: JavaScriptGetterCallback) {
-		callback.returns(self.backgroundColor)
-	}
-
-	/**
-	 * @method jsSet_backgroundColor
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsSet_backgroundColor(callback: JavaScriptSetterCallback) {
-		self.backgroundColor = Property(value: callback.value)
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method jsGet_backgroundImage
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsGet_backgroundImage(callback: JavaScriptGetterCallback) {
-		callback.returns(self.backgroundImage)
-	}
-
-	/**
-	 * @method jsSet_backgroundImage
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsSet_backgroundImage(callback: JavaScriptSetterCallback) {
-		self.backgroundImage = Property(value: callback.value)
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method jsGet_backgroundImageFit
-	 * @since 0.4.0
-	 * @hidden
-	 */
-	@objc open func jsGet_backgroundImageFit(callback: JavaScriptGetterCallback) {
-		callback.returns(self.backgroundImageFit)
-	}
-
-	/**
-	 * @method jsSet_backgroundImageFit
-	 * @since 0.4.0
-	 * @hidden
-	 */
-	@objc open func jsSet_backgroundImageFit(callback: JavaScriptSetterCallback) {
-		self.backgroundImageFit = Property(value: callback.value)
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method jsGet_backgroundImageAnchorTop
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsGet_backgroundImageAnchorTop(callback: JavaScriptGetterCallback) {
-		callback.returns(self.backgroundImageAnchorTop)
-	}
-
-	/**
-	 * @method jsSet_backgroundImageAnchorTop
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsSet_backgroundImageAnchorTop(callback: JavaScriptSetterCallback) {
-		self.backgroundImageAnchorTop = Property(value: callback.value)
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method jsGet_backgroundImageAnchorLeft
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsGet_backgroundImageAnchorLeft(callback: JavaScriptGetterCallback) {
-		callback.returns(self.backgroundImageAnchorLeft)
-	}
-
-	/**
-	 * @method jsSet_backgroundImageAnchorLeft
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsSet_backgroundImageAnchorLeft(callback: JavaScriptSetterCallback) {
-		self.backgroundImageAnchorLeft = Property(value: callback.value)
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method jsGet_backgroundImageTop
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsGet_backgroundImageTop(callback: JavaScriptGetterCallback) {
-		callback.returns(self.backgroundImageTop)
-	}
-
-	/**
-	 * @method jsSet_backgroundImageTop
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsSet_backgroundImageTop(callback: JavaScriptSetterCallback) {
-		self.backgroundImageTop = Property(value: callback.value)
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method jsGet_backgroundImageLeft
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsGet_backgroundImageLeft(callback: JavaScriptGetterCallback) {
-		callback.returns(self.backgroundImageLeft)
-	}
-
-	/**
-	 * @method jsSet_backgroundImageLeft
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsSet_backgroundImageLeft(callback: JavaScriptSetterCallback) {
-		self.backgroundImageLeft = Property(value: callback.value)
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method jsGet_backgroundImageWidth
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsGet_backgroundImageWidth(callback: JavaScriptGetterCallback) {
-		callback.returns(self.backgroundImageWidth)
-	}
-
-	/**
-	 * @method jsSet_backgroundImageWidth
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsSet_backgroundImageWidth(callback: JavaScriptSetterCallback) {
-		self.backgroundImageWidth = Property(value: callback.value)
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method jsGet_backgroundImageHeight
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsGet_backgroundImageHeight(callback: JavaScriptGetterCallback) {
-		callback.returns(self.backgroundImageHeight)
-	}
-
-	/**
-	 * @method jsSet_backgroundImageHeight
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsSet_backgroundImageHeight(callback: JavaScriptSetterCallback) {
-		self.backgroundImageHeight = Property(value: callback.value)
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method jsGet_backgroundImageTint
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsGet_backgroundImageTint(callback: JavaScriptGetterCallback) {
-		callback.returns(self.backgroundImageTint)
-	}
-
-	/**
-	 * @method jsSet_backgroundImageTint
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsSet_backgroundImageTint(callback: JavaScriptSetterCallback) {
-		self.backgroundImageTint = Property(value: callback.value)
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method jsGet_shadowBlur
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsGet_shadowBlur(callback: JavaScriptGetterCallback) {
-		callback.returns(self.shadowBlur)
-	}
-
-	/**
-	 * @method jsSet_shadowBlur
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsSet_shadowBlur(callback: JavaScriptSetterCallback) {
-		self.shadowBlur = Property(value: callback.value)
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method jsGet_shadowColor
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsGet_shadowColor(callback: JavaScriptGetterCallback) {
-		callback.returns(self.shadowColor)
-	}
-
-	/**
-	 * @method jsSet_shadowColor
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsSet_shadowColor(callback: JavaScriptSetterCallback) {
-		self.shadowColor = Property(value: callback.value)
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method jsGet_shadowOffsetTop
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsGet_shadowOffsetTop(callback: JavaScriptGetterCallback) {
-		callback.returns(self.shadowOffsetTop)
-	}
-
-	/**
-	 * @method jsSet_shadowOffsetTop
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsSet_shadowOffsetTop(callback: JavaScriptSetterCallback) {
-		self.shadowOffsetTop = Property(value: callback.value)
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method jsGet_shadowOffsetLeft
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsGet_shadowOffsetLeft(callback: JavaScriptGetterCallback) {
-		callback.returns(self.shadowOffsetLeft)
-	}
-
-	/**
-	 * @method jsSet_shadowOffsetLeft
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsSet_shadowOffsetLeft(callback: JavaScriptSetterCallback) {
-		self.shadowOffsetLeft = Property(value: callback.value)
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method jsGet_scrollable
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsGet_scrollable(callback: JavaScriptGetterCallback) {
-		callback.returns(self.scrollable)
-	}
-
-	/**
-	 * @method jsSet_scrollable
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsSet_scrollable(callback: JavaScriptSetterCallback) {
-		self.scrollable = Property(value: callback.value)
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method jsGet_scrollbars
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsGet_scrollbars(callback: JavaScriptGetterCallback) {
-		callback.returns(self.scrollbars)
-	}
-
-	/**
-	 * @method jsSet_scrollbars
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsSet_scrollbars(callback: JavaScriptSetterCallback) {
-		self.scrollbars = Property(value: callback.value)
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method jsGet_overscroll
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsGet_overscroll(callback: JavaScriptGetterCallback) {
-		callback.returns(self.overscroll)
-	}
-
-	/**
-	 * @method jsSet_overscroll
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsSet_overscroll(callback: JavaScriptSetterCallback) {
-		self.overscroll = Property(value: callback.value)
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
-     * @method jsGet_momentum
-     * @since 0.1.0
-     * @hidden
-     */
-	@objc open func jsGet_momentum(callback: JavaScriptGetterCallback) {
-		callback.returns(self.momentum)
-	}
-
-	/**
-     * @method jsSet_momentum
-     * @since 0.1.0
-     * @hidden
-     */
-	@objc open func jsSet_momentum(callback: JavaScriptSetterCallback) {
-		self.momentum = Property(value: callback.value)
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method jsGet_paged
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsGet_paged(callback: JavaScriptGetterCallback) {
-		callback.returns(self.paged)
-	}
-
-	/**
-	 * @method jsSet_paged
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsSet_paged(callback: JavaScriptSetterCallback) {
-		self.paged = Property(value: callback.value)
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method jsGet_clipped
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsGet_clipped(callback: JavaScriptGetterCallback) {
-		callback.returns(self.clipped)
-	}
-
-	/**
-	 * @method jsSet_clipped
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsSet_clipped(callback: JavaScriptSetterCallback) {
-		self.clipped = Property(value: callback.value)
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method jsGet_scrollTop
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsGet_scrollTop(callback: JavaScriptGetterCallback) {
-		callback.returns(self.scrollTop)
-	}
-
-	/**
-	 * @method jsSet_scrollTop
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsSet_scrollTop(callback: JavaScriptSetterCallback) {
-		self.scrollTop = Property(value: callback.value)
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method jsGet_scrollLeft
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsGet_scrollLeft(callback: JavaScriptGetterCallback) {
-		callback.returns(self.scrollLeft)
-	}
-
-	/**
-	 * @method jsSet_scrollLeft
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsSet_scrollLeft(callback: JavaScriptSetterCallback) {
-		self.scrollTop = Property(value: callback.value)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6021,6 +6213,106 @@ open class View: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelegate, Scroll
 	//--------------------------------------------------------------------------
 
 	/**
+	 * @method jsGet_clipped
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsGet_clipped(callback: JavaScriptGetterCallback) {
+		callback.returns(self.clipped)
+	}
+
+	/**
+	 * @method jsSet_clipped
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsSet_clipped(callback: JavaScriptSetterCallback) {
+		self.clipped = Property(value: callback.value)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_zoomable
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsGet_zoomable(callback: JavaScriptGetterCallback) {
+		callback.returns(self.zoomable)
+	}
+
+	/**
+	 * @method jsSet_zoomable
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsSet_zoomable(callback: JavaScriptSetterCallback) {
+		self.zoomable = Property(value: callback.value)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_minZoom
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsGet_minZoom(callback: JavaScriptGetterCallback) {
+		callback.returns(self.minZoom)
+	}
+
+	/**
+	 * @method jsSet_minZoom
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsSet_minZoom(callback: JavaScriptSetterCallback) {
+		self.minZoom = Property(value: callback.value)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_maxZoom
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsGet_maxZoom(callback: JavaScriptGetterCallback) {
+		callback.returns(self.maxZoom)
+	}
+
+	/**
+	 * @method jsSet_maxZoom
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsSet_maxZoom(callback: JavaScriptSetterCallback) {
+		self.maxZoom = Property(value: callback.value)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_zoomedView
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsGet_zoomedView(callback: JavaScriptGetterCallback) {
+		callback.returns(self.zoomedView?.holder)
+	}
+
+	/**
+	 * @method jsSet_zoomedView
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	@objc open func jsSet_zoomedView(callback: JavaScriptSetterCallback) {
+		self.zoomedView = callback.value.isNull ? nil : callback.value.cast(View.self)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
 	 * @method jsGet_drawable
 	 * @since 0.4.0
 	 * @hidden
@@ -6141,103 +6433,21 @@ open class View: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelegate, Scroll
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method jsGet_zoomable
+	 * @method jsGet_paged
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	@objc open func jsGet_zoomable(callback: JavaScriptGetterCallback) {
-		callback.returns(self.zoomable)
+	@objc open func jsGet_paged(callback: JavaScriptGetterCallback) {
+		callback.returns(self.paged)
 	}
 
 	/**
-	 * @method jsSet_zoomable
+	 * @method jsSet_paged
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	@objc open func jsSet_zoomable(callback: JavaScriptSetterCallback) {
-		self.zoomable = Property(value: callback.value)
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method jsGet_minZoom
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsGet_minZoom(callback: JavaScriptGetterCallback) {
-		callback.returns(self.minZoom)
-	}
-
-	/**
-	 * @method jsSet_minZoom
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsSet_minZoom(callback: JavaScriptSetterCallback) {
-		self.minZoom = Property(value: callback.value)
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method jsGet_maxZoom
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsGet_maxZoom(callback: JavaScriptGetterCallback) {
-		callback.returns(self.maxZoom)
-	}
-
-	/**
-	 * @method jsSet_maxZoom
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsSet_maxZoom(callback: JavaScriptSetterCallback) {
-		self.maxZoom = Property(value: callback.value)
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method jsGet_zoomedView
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsGet_zoomedView(callback: JavaScriptGetterCallback) {
-		callback.returns(self.zoomedView?.holder)
-	}
-
-	/**
-	 * @method jsSet_zoomedView
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsSet_zoomedView(callback: JavaScriptSetterCallback) {
-		self.zoomedView = callback.value.isNull ? nil : callback.value.cast(View.self)
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method jsGet_scrolling
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsGet_scrolling(callback: JavaScriptGetterCallback) {
-		callback.returns(self.scrolling)
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method jsGet_dragging
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsGet_dragging(callback: JavaScriptGetterCallback) {
-		callback.returns(self.dragging)
+	@objc open func jsSet_paged(callback: JavaScriptSetterCallback) {
+		self.paged = Property(value: callback.value)
 	}
 
 	//--------------------------------------------------------------------------

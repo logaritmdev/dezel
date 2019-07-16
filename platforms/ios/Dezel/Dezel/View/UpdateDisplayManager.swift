@@ -2,7 +2,18 @@
  * @class UpdateDisplayManager
  * @since 0.2.0
  */
-public class UpdateDisplayManager: CALayer {
+public class UpdateDisplayManager: NSObject {
+
+	//--------------------------------------------------------------------------
+	// MARK: Static
+	//--------------------------------------------------------------------------
+
+	/**
+	 * The main update display manager instance.
+	 * @property main
+	 * @sine 0.7.0
+	 */
+	public static let main: UpdateDisplayManager = UpdateDisplayManager()
 
 	//--------------------------------------------------------------------------
 	// MARK: Properties
@@ -22,6 +33,13 @@ public class UpdateDisplayManager: CALayer {
 	 */
 	private var callbacks: [WeakCallback] = []
 
+	/**
+	 * @property link
+	 * @since 0.2.0
+	 * @hidden
+	 */
+	private var link: CADisplayLink!
+
 	//--------------------------------------------------------------------------
 	// MARK: Methods
 	//--------------------------------------------------------------------------
@@ -38,21 +56,13 @@ public class UpdateDisplayManager: CALayer {
 	 * @constructor
 	 * @since 0.2.0
 	 */
-	init(application: ApplicationController) {
+	override public init() {
 
 		super.init()
 
-		application.view.layer.addSublayer(self)
-
-		self.bounds.size.width = 1
-		self.bounds.size.height = 1
-		self.position.x = 0
-		self.position.y = 0
-
-		self.opacity = 0
-		self.actions = nil
-		self.contentsScale = UIScreen.main.scale
-		self.rasterizationScale = UIScreen.main.scale
+		self.link = CADisplayLink(target: self, selector: #selector(update))
+		self.link.add(to: .current, forMode: .common)
+		self.link.isPaused = true
 	}
 
 	/**
@@ -64,7 +74,7 @@ public class UpdateDisplayManager: CALayer {
 
 		if (self.scheduled == false) {
 			self.scheduled = true
-			self.setNeedsDisplay()
+			self.link.isPaused = false
 		}
 
 		self.callbacks.append(WeakCallback(ref: callback))
@@ -112,13 +122,11 @@ public class UpdateDisplayManager: CALayer {
 		self.scheduled = false
 	}
 
-	/**
-	 * @inherited
-	 * @method display
-	 * @since 0.2.0
-	 */
-	public override func display() {
+	//--------------------------------------------------------------------------
+	// MARK: Private API
+	//--------------------------------------------------------------------------
 
+	@objc private func update() {
 		#if DEBUG
 			let t1 = CFAbsoluteTimeGetCurrent()
 		#endif
@@ -130,6 +138,8 @@ public class UpdateDisplayManager: CALayer {
 			let tt = (t2 - t1) * 1000
 			NSLog("UpdateDisplayManager - Update took \(tt) ms ")
 		#endif
+
+		self.link.isPaused = true
 	}
 
 	//--------------------------------------------------------------------------
@@ -137,7 +147,7 @@ public class UpdateDisplayManager: CALayer {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @class WeakReference
+	 * @class WeakCallback
 	 * @since 0.6.0
 	 * @hidden
 	 */

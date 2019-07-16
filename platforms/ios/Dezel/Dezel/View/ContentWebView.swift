@@ -280,13 +280,6 @@ public class ContentWebView: WKWebView, WKNavigationDelegate, UIScrollViewDelega
 	 */
 	private var scrollViewDelegate: ScrollViewDelegate!
 
-	/**
-	 * @property application
-	 * @since 0.6.0
-	 * @hidden
-	 */
-	private var application: ApplicationController
-
 	//----------------------------------------------------------------------
 	// MARK: Methods
 	//----------------------------------------------------------------------
@@ -305,9 +298,7 @@ public class ContentWebView: WKWebView, WKNavigationDelegate, UIScrollViewDelega
 	 * @since 0.6.0
 	 * @hidden
 	 */
-	public required init(application: ApplicationController, frame: CGRect, delegate: ContentWebViewDelegate?) {
-
-		self.application = application
+	public required init(frame: CGRect, delegate: ContentWebViewDelegate?) {
 
 		super.init(frame: frame, configuration: WKWebViewConfiguration())
 
@@ -530,7 +521,7 @@ public class ContentWebView: WKWebView, WKNavigationDelegate, UIScrollViewDelega
 	 * @hidden
 	 */
 	@objc open func scrollViewDidCancelTouch(gesture: ScrollViewTouchCancelGesture) {
-		self.application.dispatchTouchCancel(gesture.touches)
+		UIApplication.shared.window?.dispatchTouchCancelled(gesture.touches)
 	}
 
 	//--------------------------------------------------------------------------

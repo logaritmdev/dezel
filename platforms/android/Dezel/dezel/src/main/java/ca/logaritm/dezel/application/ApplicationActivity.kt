@@ -190,14 +190,6 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 		private set
 
 	/**
-	 * The application's update display manager.
-	 * @property updateDisplayManager
-	 * @since 0.7.0
-	 */
-	public lateinit var updateDisplayManager: UpdateDisplayManager
-		private set
-
-	/**
 	 * @property statusBar
 	 * @since 0.7.0
 	 * @hidden
@@ -216,8 +208,6 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 	override fun onCreate(savedInstanceState: Bundle?) {
 
 		super.onCreate(savedInstanceState)
-
-		this.updateDisplayManager = UpdateDisplayManager()
 
 		ImageLoader.setup(this)
 
@@ -446,7 +436,7 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 		this.application?.window?.remove()
 		this.application = null
 
-		this.updateDisplayManager.reset()
+		UpdateDisplayManager.main.reset()
 
 		LocalBroadcastManager.getInstance(this).sendBroadcastSync(Intent("dezel.application.RELOAD"))
 
@@ -485,8 +475,8 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 	 * @method registerModule
 	 * @since 0.7.0
 	 */
-	open fun registerModule(uid: String, module: Class<*>) {
-		this.modules[uid] = module
+	open fun registerModule(uid: String, value: Class<*>) {
+		this.modules[uid] = value
 	}
 
 	/**
