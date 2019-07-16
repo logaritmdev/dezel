@@ -1,8 +1,9 @@
 /**
- * @class UpdateDisplayManager
- * @since 0.2.0
+ * Synchronizes update with display refresh.
+ * @class Synchronizer
+ * @since 0.7.0
  */
-public class UpdateDisplayManager: NSObject {
+public class Synchronizer: NSObject {
 
 	//--------------------------------------------------------------------------
 	// MARK: Static
@@ -13,7 +14,7 @@ public class UpdateDisplayManager: NSObject {
 	 * @property main
 	 * @sine 0.7.0
 	 */
-	public static let main: UpdateDisplayManager = UpdateDisplayManager()
+	public static let main: Synchronizer = Synchronizer()
 
 	//--------------------------------------------------------------------------
 	// MARK: Properties
@@ -21,24 +22,24 @@ public class UpdateDisplayManager: NSObject {
 
 	/**
 	 * @property scheduled
-	 * @since 0.2.0
+	 * @since 0.7.0
 	 * @hidden
 	 */
 	private var scheduled: Bool = false
 
 	/**
 	 * @property callbacks
-	 * @since 0.2.0
+	 * @since 0.7.0
 	 * @hidden
 	 */
 	private var callbacks: [WeakCallback] = []
 
 	/**
-	 * @property link
-	 * @since 0.2.0
+	 * @property displayLink
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private var link: CADisplayLink!
+	private var displayLink: CADisplayLink!
 
 	//--------------------------------------------------------------------------
 	// MARK: Methods
@@ -46,7 +47,7 @@ public class UpdateDisplayManager: NSObject {
 
 	/**
 	 * @constructor
-	 * @since 0.2.0
+	 * @since 0.7.0
 	 */
 	required public init?(coder aDecoder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
@@ -54,36 +55,36 @@ public class UpdateDisplayManager: NSObject {
 
 	/**
 	 * @constructor
-	 * @since 0.2.0
+	 * @since 0.7.0
 	 */
 	override public init() {
 
 		super.init()
 
-		self.link = CADisplayLink(target: self, selector: #selector(update))
-		self.link.add(to: .current, forMode: .common)
-		self.link.isPaused = true
+		self.displayLink = CADisplayLink(target: self, selector: #selector(update))
+		self.displayLink.add(to: .current, forMode: .common)
+		self.displayLink.isPaused = true
 	}
 
 	/**
 	 * Schedules an update display callback.
 	 * @method schedule
-	 * @since 0.2.0
+	 * @since 0.7.0
 	 */
-	public func schedule(_ callback: UpdateDisplayCallback) {
+	public func schedule(_ callback: SynchronizerCallback) {
 
 		if (self.scheduled == false) {
 			self.scheduled = true
-			self.link.isPaused = false
+			self.displayLink.isPaused = false
 		}
 
 		self.callbacks.append(WeakCallback(ref: callback))
 	}
 
 	/**
-	 * Dispatches update display callbacks.
+	 * Executes scheduled callbacks.
 	 * @method dispatch
-	 * @since 0.2.0
+	 * @since 0.7.0
 	 */
 	public func dispatch() {
 
@@ -115,7 +116,7 @@ public class UpdateDisplayManager: NSObject {
 	/**
 	 * Resets the update display manager.
 	 * @method reset
-	 * @since 0.2.0
+	 * @since 0.7.0
 	 */
 	public func reset() {
 		self.callbacks = []
@@ -126,7 +127,13 @@ public class UpdateDisplayManager: NSObject {
 	// MARK: Private API
 	//--------------------------------------------------------------------------
 
+	/**
+	 * @method update
+	 * @since 0.7.0
+	 * @hidden
+	 */
 	@objc private func update() {
+
 		#if DEBUG
 			let t1 = CFAbsoluteTimeGetCurrent()
 		#endif
@@ -139,7 +146,7 @@ public class UpdateDisplayManager: NSObject {
 			NSLog("UpdateDisplayManager - Update took \(tt) ms ")
 		#endif
 
-		self.link.isPaused = true
+		self.displayLink.isPaused = true
 	}
 
 	//--------------------------------------------------------------------------
@@ -158,14 +165,14 @@ public class UpdateDisplayManager: NSObject {
 		 * @since 0.6.0
 		 * @hidden
 		 */
-		private(set) public weak var ref: UpdateDisplayCallback?
+		private(set) public weak var ref: SynchronizerCallback?
 
 		/**
 		 * @constructor
 		 * @since 0.6.0
 		 * @hidden
 		 */
-		public init(ref: UpdateDisplayCallback?) {
+		public init(ref: SynchronizerCallback?) {
 			self.ref = ref
 		}
 	}

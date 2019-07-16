@@ -154,7 +154,7 @@ public class TransitionGroup(val activity: ApplicationActivity): Animator.Animat
 	 */
 	public fun create() {
 
-		UpdateDisplayManager.main.dispatch()
+		Synchronizer.main.dispatch()
 
 		this.forEachView {
 			this.captureStartValues(it)
@@ -168,7 +168,7 @@ public class TransitionGroup(val activity: ApplicationActivity): Animator.Animat
 	 */
 	public fun commit() {
 
-		UpdateDisplayManager.main.dispatch()
+		Synchronizer.main.dispatch()
 
 		this.forEachView {
 			this.captureEndValues(it)

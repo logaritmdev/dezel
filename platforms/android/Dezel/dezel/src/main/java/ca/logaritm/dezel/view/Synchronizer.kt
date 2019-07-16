@@ -4,10 +4,11 @@ import android.view.Choreographer
 import java.lang.ref.WeakReference
 
 /**
- * @class UpdateDisplayManager
- * @since 0.2.0
+ * Synchronizes update with display refresh.
+ * @class Synchronizer
+ * @since 0.7.0
  */
-public class UpdateDisplayManager {
+public class Synchronizer {
 
 	//--------------------------------------------------------------------------
 	// Static
@@ -20,7 +21,7 @@ public class UpdateDisplayManager {
 		 * @property main
 		 * @sine 0.7.0
 		 */
-		public val main: UpdateDisplayManager = UpdateDisplayManager()
+		public val main: Synchronizer = Synchronizer()
 	}
 
 	//--------------------------------------------------------------------------
@@ -29,17 +30,17 @@ public class UpdateDisplayManager {
 
 	/**
 	 * @property scheduled
-	 * @since 0.2.0
+	 * @since 0.7.0
 	 * @hidden
 	 */
 	private var scheduled: Boolean = false
 
 	/**
 	 * @property callbacks
-	 * @since 0.2.0
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private var callbacks: MutableList<WeakReference<UpdateDisplayCallback>> = mutableListOf()
+	private var callbacks: MutableList<WeakReference<SynchronizerCallback>> = mutableListOf()
 
 	//--------------------------------------------------------------------------
 	// Methods
@@ -47,7 +48,7 @@ public class UpdateDisplayManager {
 
 	/**
 	 * @constructor
-	 * @since 0.2.0
+	 * @since 0.7.0
 	 */
 	init {
 
@@ -56,9 +57,9 @@ public class UpdateDisplayManager {
 	/**
 	 * Schedules an update display callback.
 	 * @method schedule
-	 * @since 0.2.0
+	 * @since 0.7.0
 	 */
-	public fun schedule(callback: UpdateDisplayCallback) {
+	public fun schedule(callback: SynchronizerCallback) {
 
 		if (this.scheduled == false) {
 			this.scheduled = true
@@ -73,7 +74,7 @@ public class UpdateDisplayManager {
 	/**
 	 * Dispatches update display callbacks.
 	 * @method dispatch
-	 * @since 0.2.0
+	 * @since 0.7.0
 	 */
 	public fun dispatch() {
 
@@ -106,7 +107,7 @@ public class UpdateDisplayManager {
 	/**
 	 * Resets the update display manager.
 	 * @method reset
-	 * @since 0.2.0
+	 * @since 0.7.0
 	 */
 	public fun reset() {
 		this.callbacks = mutableListOf()

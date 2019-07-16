@@ -279,7 +279,7 @@ open class ApplicationController: UIViewController {
 		self.application?.destroy()
 		self.application = nil
 
-		UpdateDisplayManager.main.reset()
+		Synchronizer.main.reset()
 
 		let scale = self.layout.scale
 		let viewportWidth = self.layout.viewportWidth
@@ -509,7 +509,7 @@ open class ApplicationController: UIViewController {
 				application.window.height = Property(number: Double(size.height))
 			}
 
-			UpdateDisplayManager.main.dispatch()
+			Synchronizer.main.dispatch()
 
 			Transition.commit()
 

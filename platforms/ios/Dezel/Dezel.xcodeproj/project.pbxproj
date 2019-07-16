@@ -61,8 +61,8 @@
 		C71E6CBC20DD4EE1009B86F6 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71E6CBB20DD4EE1009B86F6 /* WebView.swift */; };
 		C71E6CC020DD4F56009B86F6 /* ContentWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71E6CBF20DD4F56009B86F6 /* ContentWebView.swift */; };
 		C71E6CC220DD50A0009B86F6 /* ContentWebViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71E6CC120DD50A0009B86F6 /* ContentWebViewDelegate.swift */; };
-		C71E6CD720E3DBA8009B86F6 /* UpdateDisplayManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71E6CD620E3DBA8009B86F6 /* UpdateDisplayManager.swift */; };
-		C71E6CD920E3DBC4009B86F6 /* UpdateDisplayCallback.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71E6CD820E3DBC4009B86F6 /* UpdateDisplayCallback.swift */; };
+		C71E6CD720E3DBA8009B86F6 /* Synchronizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71E6CD620E3DBA8009B86F6 /* Synchronizer.swift */; };
+		C71E6CD920E3DBC4009B86F6 /* SynchronizerCallback.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71E6CD820E3DBC4009B86F6 /* SynchronizerCallback.swift */; };
 		C71E6CDD20E65CCF009B86F6 /* UIEdgeInsets.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71E6CDC20E65CCF009B86F6 /* UIEdgeInsets.swift */; };
 		C71E6CDF20E65FB6009B86F6 /* Updatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71E6CDE20E65FB6009B86F6 /* Updatable.swift */; };
 		C71E6CE120E6617D009B86F6 /* Scrollbars.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71E6CE020E6617D009B86F6 /* Scrollbars.swift */; };
@@ -365,8 +365,8 @@
 		C71E6CBB20DD4EE1009B86F6 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		C71E6CBF20DD4F56009B86F6 /* ContentWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentWebView.swift; sourceTree = "<group>"; };
 		C71E6CC120DD50A0009B86F6 /* ContentWebViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentWebViewDelegate.swift; sourceTree = "<group>"; };
-		C71E6CD620E3DBA8009B86F6 /* UpdateDisplayManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateDisplayManager.swift; sourceTree = "<group>"; };
-		C71E6CD820E3DBC4009B86F6 /* UpdateDisplayCallback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateDisplayCallback.swift; sourceTree = "<group>"; };
+		C71E6CD620E3DBA8009B86F6 /* Synchronizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Synchronizer.swift; sourceTree = "<group>"; };
+		C71E6CD820E3DBC4009B86F6 /* SynchronizerCallback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SynchronizerCallback.swift; sourceTree = "<group>"; };
 		C71E6CDC20E65CCF009B86F6 /* UIEdgeInsets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIEdgeInsets.swift; sourceTree = "<group>"; };
 		C71E6CDE20E65FB6009B86F6 /* Updatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Updatable.swift; sourceTree = "<group>"; };
 		C71E6CE020E6617D009B86F6 /* Scrollbars.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scrollbars.swift; sourceTree = "<group>"; };
@@ -1276,8 +1276,8 @@
 				C7A19E3420ACC4DF00367E91 /* ScrollableDelegate.swift */,
 				C7E5D07B209CBAE80098C5FD /* Resizable.swift */,
 				C71E6CDE20E65FB6009B86F6 /* Updatable.swift */,
-				C71E6CD820E3DBC4009B86F6 /* UpdateDisplayCallback.swift */,
-				C71E6CD620E3DBA8009B86F6 /* UpdateDisplayManager.swift */,
+				C71E6CD820E3DBC4009B86F6 /* SynchronizerCallback.swift */,
+				C71E6CD620E3DBA8009B86F6 /* Synchronizer.swift */,
 				C7682A3F203538A9006EA6D5 /* WrapperView.swift */,
 			);
 			path = View;
@@ -1656,7 +1656,7 @@
 				C7D8926520657B0000E85115 /* UIFont.swift in Sources */,
 				C7E8A51E201624A2005139F6 /* JavaScriptExceptionWrapper.swift in Sources */,
 				C7BB7D3F2028F4C5004006C2 /* CGSize.swift in Sources */,
-				C71E6CD720E3DBA8009B86F6 /* UpdateDisplayManager.swift in Sources */,
+				C71E6CD720E3DBA8009B86F6 /* Synchronizer.swift in Sources */,
 				C7BCD7482094C5AD0014CD19 /* Scrollable.swift in Sources */,
 				C7E8A52E201624A2005139F6 /* JavaScriptObject.swift in Sources */,
 				C7004C902144241200138ECC /* DLStylerStyleItemPrivate.cpp in Sources */,
@@ -1702,7 +1702,7 @@
 				C7E87E7D2053953500F09B22 /* DLStyler.cpp in Sources */,
 				C7BB7D4B20293955004006C2 /* Array.swift in Sources */,
 				C7964D642033E67E00F454F1 /* CALayer.swift in Sources */,
-				C71E6CD920E3DBC4009B86F6 /* UpdateDisplayCallback.swift in Sources */,
+				C71E6CD920E3DBC4009B86F6 /* SynchronizerCallback.swift in Sources */,
 				C77189AA2101642B00337263 /* GridOptimizer.swift in Sources */,
 				C7E5D087209DE24F0098C5FD /* AlertControllerDelegate.swift in Sources */,
 				C78A2C5A21DEE6E10018712D /* TextLayout.swift in Sources */,

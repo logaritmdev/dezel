@@ -6,7 +6,7 @@ import QuartzCore
  * @class View
  * @since 0.1.0
  */
-open class View: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelegate, ScrollableDelegate, UpdateDisplayCallback {
+open class View: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelegate, ScrollableDelegate, SynchronizerCallback {
 
 	//--------------------------------------------------------------------------
 	// MARK: Properties
@@ -2303,7 +2303,7 @@ open class View: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelegate, Scroll
 	open func scheduleUpdate() {
 		if (self.updateScheduled == false) {
 			self.updateScheduled = true
-			UpdateDisplayManager.main.schedule(self)
+			Synchronizer.main.schedule(self)
 		}
 	}
 

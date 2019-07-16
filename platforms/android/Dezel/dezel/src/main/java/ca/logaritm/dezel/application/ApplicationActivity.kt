@@ -33,7 +33,6 @@ import ca.logaritm.dezel.modules.platform.PlatformModule
 import ca.logaritm.dezel.modules.view.ViewModule
 import ca.logaritm.dezel.modules.web.WebModule
 import ca.logaritm.dezel.style.Styler
-import ca.logaritm.dezel.view.UpdateDisplayManager
 import ca.logaritm.dezel.view.graphic.Convert
 
 /**

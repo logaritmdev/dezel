@@ -1,14 +1,9 @@
 package ca.logaritm.dezel.modules.view
 
-import android.content.BroadcastReceiver
-import android.content.Intent
-import android.content.IntentFilter
 import android.graphics.Bitmap
 import android.graphics.RectF
-import android.support.v4.content.LocalBroadcastManager
 import android.util.Log
 import android.util.SizeF
-import ca.logaritm.dezel.application.ApplicationActivity
 import ca.logaritm.dezel.application.application
 import ca.logaritm.dezel.core.*
 import ca.logaritm.dezel.extension.*
@@ -35,7 +30,7 @@ import android.view.ViewGroup as AndroidViewGroup
  * @class View
  * @since 0.1.0
  */
-open class View(context: JavaScriptContext) : JavaScriptClass(context), LayoutNodeListener, StylerNodeListener, ScrollableListener, UpdateDisplayCallback {
+open class View(context: JavaScriptContext) : JavaScriptClass(context), LayoutNodeListener, StylerNodeListener, ScrollableListener, SynchronizerCallback {
 
 	//--------------------------------------------------------------------------
 	// Properties
@@ -2023,7 +2018,7 @@ open class View(context: JavaScriptContext) : JavaScriptClass(context), LayoutNo
 	open fun scheduleUpdate() {
 		if (this.updateScheduled == false) {
 			this.updateScheduled = true
-			UpdateDisplayManager.main.schedule(this)
+			Synchronizer.main.schedule(this)
 		}
 	}
 

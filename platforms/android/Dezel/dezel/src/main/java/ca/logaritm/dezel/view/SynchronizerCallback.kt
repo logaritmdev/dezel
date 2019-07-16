@@ -2,9 +2,9 @@ package ca.logaritm.dezel.view
 
 /**
  * The interface that defines the function to execute when an update occurs.
- * @interface UpdateDisplayCallback
- * @since 0.2.0
+ * @interface SynchronizerCallback
+ * @since 0.7.0
  */
-public interface UpdateDisplayCallback {
+public interface SynchronizerCallback {
 	fun performUpdate()
 }

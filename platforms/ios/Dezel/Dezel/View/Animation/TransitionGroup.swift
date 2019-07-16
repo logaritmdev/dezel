@@ -70,7 +70,7 @@ public final class TransitionGroup {
 	 * @hidden
 	 */
 	public func create() {
-		UpdateDisplayManager.main.dispatch()
+		Synchronizer.main.dispatch()
 		CATransaction.begin()
 	}
 
@@ -80,7 +80,7 @@ public final class TransitionGroup {
 	 * @hidden
 	 */
 	public func commit() {
-		UpdateDisplayManager.main.dispatch()
+		Synchronizer.main.dispatch()
 		CATransaction.commit()
 		self.listeners.dispatchCommitEvent()
 	}

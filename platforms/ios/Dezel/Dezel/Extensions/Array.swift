@@ -38,14 +38,14 @@ internal extension Array where Element: Equatable {
  * @extension Array
  * @since 0.1.0
  */
-internal extension Array where Element == UpdateDisplayCallback {
+internal extension Array where Element == SynchronizerCallback {
 
 	/**
 	 * @method remove
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	mutating func remove(_ callback: UpdateDisplayCallback) {
+	mutating func remove(_ callback: SynchronizerCallback) {
 		if let index = self.firstIndex(where: { $0 === callback }) {
 			self.remove(at: index)
 		}

@@ -1,8 +1,8 @@
 /**
  * The protocol that defines the function to execute when an update occurs.
- * @protocol UpdateDisplayCallback
- * @since 0.2.0
+ * @protocol SynchronizerCallback
+ * @since 0.7.0
  */
-public protocol UpdateDisplayCallback : class {
+public protocol SynchronizerCallback : class {
 	func performUpdate()
 }
