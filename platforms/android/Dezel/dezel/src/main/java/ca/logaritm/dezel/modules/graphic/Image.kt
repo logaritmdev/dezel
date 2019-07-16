@@ -1,6 +1,7 @@
 package ca.logaritm.dezel.modules.graphic
 
 import android.graphics.Bitmap
+import ca.logaritm.dezel.application.application
 import ca.logaritm.dezel.core.*
 import ca.logaritm.dezel.extension.Delegates
 import android.content.Context as AndroidContext

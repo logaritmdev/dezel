@@ -2,6 +2,7 @@ package ca.logaritm.dezel.modules.view
 
 import android.util.Log
 import android.util.SizeF
+import ca.logaritm.dezel.application.application
 import ca.logaritm.dezel.core.*
 import ca.logaritm.dezel.extension.Delegates
 import ca.logaritm.dezel.extension.ceiled

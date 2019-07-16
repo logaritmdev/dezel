@@ -91,10 +91,10 @@ var Dezel = /** @class */ (function () {
     }
     /**
      * Imports a native class.
-     * @method import
+     * @method importClass
      * @since 0.7.0
      */
-    Dezel.import = function (className, init) {
+    Dezel.importClass = function (className, init) {
         if (init === void 0) { init = false; }
         var Class = this.cache[className];
         if (Class == null) {
@@ -139,7 +139,7 @@ function decorate(constructor, className) {
     function get() {
         var native = this[key];
         if (native == null) {
-            native = this[key] = Dezel_1.Dezel.import(className, true);
+            native = this[key] = Dezel_1.Dezel.importClass(className, true);
             native.holder = this;
         }
         return native;
@@ -209,13 +209,14 @@ exports.native = native;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 __webpack_require__(/*! ./web/Event */ "./web/Event.ts");
+__webpack_require__(/*! ./web/CloseEvent */ "./web/CloseEvent.ts");
 __webpack_require__(/*! ./web/EventTarget */ "./web/EventTarget.ts");
 __webpack_require__(/*! ./web/MessageEvent */ "./web/MessageEvent.ts");
 __webpack_require__(/*! ./web/ProgressEvent */ "./web/ProgressEvent.ts");
-__webpack_require__(/*! ./web/CloseEvent */ "./web/CloseEvent.ts");
 __webpack_require__(/*! ./web/WebSocket */ "./web/WebSocket.ts");
 __webpack_require__(/*! ./web/XMLHttpRequest */ "./web/XMLHttpRequest.ts");
 __webpack_require__(/*! ./web/XMLHttpRequestUpload */ "./web/XMLHttpRequestUpload.ts");
+var Dezel_1 = __webpack_require__(/*! ../../src/core/Dezel */ "../../src/core/Dezel.ts");
 /**
  * @function globalize
  * @since 0.1.0
@@ -248,7 +249,7 @@ globalize(new EventTarget);
  * @const events
  * @since 0.1.0
  */
-globalize(new (dezel.imports('dezel.web.WebGlobal')));
+globalize(new (Dezel_1.Dezel.importClass('dezel.web.WebGlobal')));
 self.postMessage = function () {
 };
 /**
@@ -264,7 +265,8 @@ Object.defineProperty(self, 'location', {
         href: 'http://localhost',
         search: '',
         reload: function () {
-            dezel.reload();
+            //dezel.reload()
+            // TODO
         }
     }
 });
@@ -314,7 +316,6 @@ Object.defineProperty(self, "CloseEvent", {
     enumerable: false,
     configurable: true
 });
-console.log('DEFINED CLOSE EVENT', typeof CloseEvent);
 
 
 /***/ }),
@@ -654,7 +655,6 @@ var WebSocket = /** @class */ (function (_super) {
         if (protocols) {
             protocols = Array.isArray(protocols) ? protocols : [protocols];
         }
-        console.log('Opened');
         _this.native.open(url, protocols);
         return _this;
     }
@@ -726,7 +726,6 @@ var WebSocket = /** @class */ (function (_super) {
      * @since 0.1.0
      */
     WebSocket.prototype.send = function (data) {
-        console.log('Send', data, this.native, this.native.send);
         this.native.send(data);
     };
     /**

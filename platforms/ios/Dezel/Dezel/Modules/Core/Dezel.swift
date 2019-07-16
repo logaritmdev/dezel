@@ -101,7 +101,6 @@ open class Dezel : JavaScriptObject {
 		let animate = {
 
 			Transition.create(
-				application: self.context.application,
 				duration: duration,
 				equation: equation,
 				delay: delay
@@ -116,9 +115,11 @@ open class Dezel : JavaScriptObject {
 			Transition.commit()
 		}
 
-		if (self.context.application.layout.resolving) {
-			self.context.application.layout.requestLayoutEndedCallback(animate)
-			return
+		if let application = self.context.application {
+			if (application.layout.resolving) {
+				application.layout.requestLayoutEndedCallback(animate)
+				return
+			}
 		}
 
 		animate()
@@ -130,7 +131,6 @@ open class Dezel : JavaScriptObject {
 	 * @hidden
 	 */
 	@objc open func jsFunction_reload(callback: JavaScriptFunctionCallback) {
-		print("RELOADING APPLICATION")
 		self.context.application.reload()
 	}
 }

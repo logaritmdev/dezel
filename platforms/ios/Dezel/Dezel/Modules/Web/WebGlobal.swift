@@ -55,7 +55,6 @@ open class WebGlobal: JavaScriptClass {
 	public required init(context: JavaScriptContext) {
 		super.init(context: context)
 		self.setupDisplayLink()
-		NotificationCenter.default.addObserver(self, selector: #selector(WebGlobal.applicationReloadHandler), name: Notification.Name("applicationreload"), object: nil)
 	}
 
 	/**
@@ -64,7 +63,10 @@ open class WebGlobal: JavaScriptClass {
 	 * @since 0.6.0
 	 */
 	override open func dispose() {
-		NotificationCenter.default.removeObserver(self, name: Notification.Name("applicationreload"), object: nil)
+		self.scheduledTimers.forEach { $0.value.timer.invalidate() }
+		self.scheduledTimers.removeAll()
+		self.scheduledFrames.forEach { $0.value.unprotect() }
+		self.scheduledFrames.removeAll()
 		super.dispose()
 	}
 
@@ -119,22 +121,6 @@ open class WebGlobal: JavaScriptClass {
 		if (self.scheduledFrames.count == 0) {
 			self.pauseDisplayLink()
 		}
-	}
-
-	//--------------------------------------------------------------------------
-	// MARK: Methods - Application Hanlders
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method applicationReloadHandler
-	 * @since 0.2.0
-	 * @hidden
-	 */
-	@objc open func applicationReloadHandler(notification: Notification) {
-		self.scheduledTimers.forEach { $0.value.timer.invalidate() }
-		self.scheduledTimers.removeAll()
-		self.scheduledFrames.forEach { $0.value.unprotect() }
-		self.scheduledFrames.removeAll()
 	}
 
 	//--------------------------------------------------------------------------

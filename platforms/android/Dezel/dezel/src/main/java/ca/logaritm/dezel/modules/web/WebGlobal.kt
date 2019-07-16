@@ -7,6 +7,7 @@ import android.content.IntentFilter
 import android.os.Handler
 import android.support.v4.content.LocalBroadcastManager
 import android.view.Choreographer
+import ca.logaritm.dezel.application.application
 import ca.logaritm.dezel.core.JavaScriptClass
 import ca.logaritm.dezel.core.JavaScriptContext
 import ca.logaritm.dezel.core.JavaScriptFunctionCallback
@@ -76,31 +77,9 @@ open class WebGlobal(context: JavaScriptContext): JavaScriptClass(context) {
 		}
 	}
 
-	/**
-	 * @property applicationReloadReceiver
-	 * @since 0.5.0
-	 * @hidden
-	 */
-	private val applicationReloadReceiver: BroadcastReceiver = object : BroadcastReceiver() {
-		override fun onReceive(context: Context, intent: Intent) {
-			this@WebGlobal.scheduledTimers.forEach { it.value.timer.invalidate() }
-			this@WebGlobal.scheduledTimers.clear()
-			this@WebGlobal.scheduledFrames.forEach { it.value.unprotect() }
-			this@WebGlobal.scheduledFrames.clear()
-		}
-	}
-
 	//--------------------------------------------------------------------------
 	// Methods
 	//--------------------------------------------------------------------------
-
-	/**
-	 * @constructor
-	 * @since 0.5.0
-	 */
-	init {
-		LocalBroadcastManager.getInstance(this.context.application).registerReceiver(this.applicationReloadReceiver, IntentFilter("dezel.application.RELOAD"))
-	}
 
 	/**
 	 * @inherited
@@ -108,7 +87,12 @@ open class WebGlobal(context: JavaScriptContext): JavaScriptClass(context) {
 	 * @since 0.6.0
 	 */
 	override fun dispose() {
-		LocalBroadcastManager.getInstance(this.context.application).unregisterReceiver(this.applicationReloadReceiver)
+
+		this.scheduledTimers.forEach { it.value.timer.invalidate() }
+		this.scheduledTimers.clear()
+		this.scheduledFrames.forEach { it.value.unprotect() }
+		this.scheduledFrames.clear()
+
 		super.dispose()
 	}
 

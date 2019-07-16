@@ -75,57 +75,57 @@ open class ApplicationWindow: UIWindow {
 				ended = ended.filter(filter)
 
 				if (began.count > 0) {
-					self.handleTouchBegan(began, event: event)
+					self.dispatchTouchBegan(began)
 				}
 
 				if (moved.count > 0) {
-					self.handleTouchMoved(moved, event: event)
+					self.dispatchTouchMoved(moved)
 				}
 
 				if (ended.count > 0) {
-					self.handleTouchEnded(ended, event: event)
+					self.dispatchTouchEnded(ended)
 				}
 
 				if (cancelled.count > 0) {
-					self.handleTouchCancelled(cancelled, event: event)
+					self.dispatchTouchCancelled(cancelled)
 				}
 			}
 		}
 	}
 
 	/**
-     * @method handleTouchBegan
+	 * Dispatches a touch began event.
+     * @method dispatchTouchBegan
      * @since 0.7.0
-     * @hidden
      */
-	private func handleTouchBegan(_ touches: Set<UITouch>, event: UIEvent) {
-		NotificationCenter.default.post(name: Notification.Name("touchesbegan"), object: self, userInfo: ["touches": touches, "event": event])
+	open func dispatchTouchBegan(_ touches: Set<UITouch>) {
+		NotificationCenter.default.post(name: ApplicationDelegate.touchesBeganNotification, object: self, userInfo: ["touches": touches])
 	}
 
 	/**
-     * @method handleTouchMoved
+	 * Dispatches a touch moved event.
+     * @method dispatchTouchMoved
      * @since 0.7.0
-     * @hidden
      */
-	private func handleTouchMoved(_ touches: Set<UITouch>, event: UIEvent) {
-		NotificationCenter.default.post(name: Notification.Name("touchesmoved"), object: self, userInfo: ["touches": touches, "event": event])
+	open func dispatchTouchMoved(_ touches: Set<UITouch>) {
+		NotificationCenter.default.post(name: ApplicationDelegate.touchesMovedNotification, object: self, userInfo: ["touches": touches])
 	}
 
 	/**
-     * @method handleTouchEnded
+	 * Dispatches a touch ended event.
+     * @method dispatchTouchEnded
      * @since 0.7.0
-     * @hidden
      */
-	private func handleTouchEnded(_ touches: Set<UITouch>, event: UIEvent) {
-		NotificationCenter.default.post(name: Notification.Name("touchesended"), object: self, userInfo: ["touches": touches, "event": event])
+	open func dispatchTouchEnded(_ touches: Set<UITouch>) {
+		NotificationCenter.default.post(name: ApplicationDelegate.touchesEndedNotification, object: self, userInfo: ["touches": touches])
 	}
 
 	/**
-     * @method handleTouchCancelled
+	 * Dispatches a touch cancelled event.
+     * @method dispatchTouchCancelled
      * @since 0.7.0
-     * @hidden
      */
-	private func handleTouchCancelled(_ touches: Set<UITouch>, event: UIEvent) {
-		NotificationCenter.default.post(name: Notification.Name("touchescancelled"), object: self, userInfo: ["touches": touches, "event": event])
+	open func dispatchTouchCancelled(_ touches: Set<UITouch>) {
+		NotificationCenter.default.post(name: ApplicationDelegate.touchesCancelledNotification, object: self, userInfo: ["touches": touches])
 	}
 }

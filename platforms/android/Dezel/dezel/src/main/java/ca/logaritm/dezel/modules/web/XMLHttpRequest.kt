@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.support.v4.content.LocalBroadcastManager
+import ca.logaritm.dezel.application.application
 import ca.logaritm.dezel.core.*
 import ca.logaritm.dezel.networking.HttpRequest
 import ca.logaritm.dezel.networking.HttpRequestListener
@@ -154,29 +155,9 @@ open class XMLHttpRequest(context: JavaScriptContext) : EventTarget(context), Ht
 	 */
 	private lateinit var request: HttpRequest
 
-	/**
-	 * @property applicationReloadReceiver
-	 * @since 0.2.0
-	 * @hidden
-	 */
-	private val applicationReloadReceiver: BroadcastReceiver = object : BroadcastReceiver() {
-		override fun onReceive(context: Context, intent: Intent) {
-			this@XMLHttpRequest.request.abort()
-			this@XMLHttpRequest.request.listener = null
-		}
-	}
-
 	//--------------------------------------------------------------------------
 	//  Methods
 	//--------------------------------------------------------------------------
-
-	/**
-	 * @constructor
-	 * @since 0.2.0
-	 */
-	init {
-		LocalBroadcastManager.getInstance(this.context.application).registerReceiver(this.applicationReloadReceiver, IntentFilter("dezel.application.RELOAD"))
-	}
 
 	/**
 	 * @inherited
@@ -184,7 +165,8 @@ open class XMLHttpRequest(context: JavaScriptContext) : EventTarget(context), Ht
 	 * @since 0.6.0
 	 */
 	override fun dispose() {
-		LocalBroadcastManager.getInstance(this.context.application).unregisterReceiver(this.applicationReloadReceiver)
+		this.request.abort()
+		this.request.listener = null
 		super.dispose()
 	}
 

@@ -56,7 +56,7 @@ open class Application: JavaScriptClass {
 	 */
 	@objc open var badge: Property = Property(number: 0) {
 		willSet(value) {
-			UIApplication.shared.applicationIconBadgeNumber = value.number.int()
+			self.context.application.badge = value.number.int()
 		}
 	}
 
@@ -70,6 +70,7 @@ open class Application: JavaScriptClass {
 	 * @since 0.2.0
 	 */
 	open func destroy() {
+		self.window.wrapper.removeFromSuperview()
 		self.holder.callMethod("nativeDestroy")
 	}
 
@@ -198,15 +199,6 @@ open class Application: JavaScriptClass {
 	//--------------------------------------------------------------------------
 	// MARK: JS Functions
 	//--------------------------------------------------------------------------
-
-	/**
-	 * @method jsFunction_run
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func jsFunction_run(callback: JavaScriptFunctionCallback) {
-		self.context.application.launch(application: self)
-	}
 
 	/**
 	 * @method jsFunction_openURL

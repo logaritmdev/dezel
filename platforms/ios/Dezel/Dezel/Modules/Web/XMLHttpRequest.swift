@@ -146,37 +146,14 @@ open class XMLHttpRequest: EventTarget, HttpRequestDelegate {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @constructor
-	 * @since 0.2.0
-	 * @hidden
-	 */
-	public required init(context: JavaScriptContext) {
-		super.init(context: context)
-		NotificationCenter.default.addObserver(self, selector: #selector(WebSocket.applicationReloadHandler), name: Notification.Name("applicationreload"), object: nil)
-	}
-
-	/**
 	 * @inherited
 	 * @method dispose
 	 * @since 0.6.0
 	 */
 	override open func dispose() {
-		NotificationCenter.default.removeObserver(self, name: Notification.Name("applicationreload"), object: nil)
-		super.dispose()
-	}
-
-	//--------------------------------------------------------------------------
-	// MARK: Methods - Application Hanlders
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method applicationReloadHandler
-	 * @since 0.2.0
-	 * @hidden
-	 */
-	@objc open func applicationReloadHandler(notification: Notification) {
 		self.request.abort()
 		self.request.delegate = nil
+		super.dispose()
 	}
 
 	//--------------------------------------------------------------------------

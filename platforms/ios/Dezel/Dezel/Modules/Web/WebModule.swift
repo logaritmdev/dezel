@@ -16,10 +16,10 @@ open class WebModule : Module {
      */
 	override open func initialize() {
 
-		self.context.registerClass("dezel.web.XMLHttpRequest", type: XMLHttpRequest.self)
-		self.context.registerClass("dezel.web.XMLHttpRequestUpload", type: XMLHttpRequestUpload.self)
-		self.context.registerClass("dezel.web.WebSocket", type: WebSocket.self)
-		self.context.registerClass("dezel.web.WebGlobal", type: WebGlobal.self)
+		self.context.registerClass("dezel.web.XMLHttpRequest", value: XMLHttpRequest.self)
+		self.context.registerClass("dezel.web.XMLHttpRequestUpload", value: XMLHttpRequestUpload.self)
+		self.context.registerClass("dezel.web.WebSocket", value: WebSocket.self)
+		self.context.registerClass("dezel.web.WebGlobal", value: WebGlobal.self)
 
 		self.context.global.defineProperty(
 			"localStorage",
@@ -31,10 +31,6 @@ open class WebModule : Module {
 			configurable: true
 		)
 
-		do {
-			self.context.evaluate(try String(contentsOfFile: Bundle.resource("WebRuntime.js")!), file: "WebRuntime.js")
-		} catch _ {
-			fatalError("Cannot load the web runtime, the path is invalid.")
-		}
+
 	}
 }

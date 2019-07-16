@@ -9,6 +9,7 @@ import android.support.v4.content.LocalBroadcastManager
 import android.util.Log
 import android.util.SizeF
 import ca.logaritm.dezel.application.ApplicationActivity
+import ca.logaritm.dezel.application.application
 import ca.logaritm.dezel.core.*
 import ca.logaritm.dezel.extension.*
 import ca.logaritm.dezel.layout.LayoutNode
@@ -1804,17 +1805,6 @@ open class View(context: JavaScriptContext) : JavaScriptClass(context), LayoutNo
 	public var layoutNode: LayoutNode
 		private set
 
-	/**
-	 * @property applicationReloadReceiver
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	private val applicationReloadReceiver: BroadcastReceiver = object: BroadcastReceiver() {
-		override fun onReceive(context: AndroidContext, intent: Intent) {
-			dispose()
-		}
-	}
-
 	//--------------------------------------------------------------------------
 	// Methods
 	//--------------------------------------------------------------------------
@@ -1826,8 +1816,13 @@ open class View(context: JavaScriptContext) : JavaScriptClass(context), LayoutNo
 	 */
 	init {
 
-		this.stylerNode = StylerNode(this.context.application.styler)
-		this.layoutNode = LayoutNode(this.context.application.layout)
+		val application = this.context.application
+		if (application == null) {
+			throw Exception("Missing context application controller.")
+		}
+
+		this.stylerNode = StylerNode(application.styler)
+		this.layoutNode = LayoutNode(application.layout)
 		this.stylerNode.listener = this
 		this.layoutNode.listener = this
 
@@ -1835,14 +1830,14 @@ open class View(context: JavaScriptContext) : JavaScriptClass(context), LayoutNo
 		this.wrapper = this.createWrapperView()
 		this.wrapper.container = this
 
-		LocalBroadcastManager.getInstance(this.context.application).registerReceiver(this.applicationReloadReceiver, IntentFilter("dezel.application.RELOAD"))
-
 		val scrollable = this.content
 		if (scrollable is Scrollable) {
 			scrollable.scrollableListener = this
 		}
 
 		this.wrapper.draw = fun (cnv: AndroidCanvas) {
+			// TODO
+			// Pass the instance
 
 			if (this.canvas == null) {
 				this.canvas = createCanvas()
@@ -1878,8 +1873,6 @@ open class View(context: JavaScriptContext) : JavaScriptClass(context), LayoutNo
 		this.wrapper.removeFromParent()
 		this.content.removeFromParent()
 
-		LocalBroadcastManager.getInstance(this.context.application).unregisterReceiver(this.applicationReloadReceiver)
-
 		super.dispose()
 	}
 
@@ -1889,7 +1882,7 @@ open class View(context: JavaScriptContext) : JavaScriptClass(context), LayoutNo
 	 * @since 0.5.0
 	 */
 	open fun createWrapperView(): WrapperView {
-		return WrapperView(this.context.application, this.content, this)
+		return WrapperView(this.context.application!!, this.content, this)
 	}
 
 	/**
@@ -1898,7 +1891,7 @@ open class View(context: JavaScriptContext) : JavaScriptClass(context), LayoutNo
 	 * @since 0.5.0
 	 */
 	open fun createContentView(): AndroidView {
-		return ContentView(this.context.application)
+		return ContentView(this.context.application!!)
 	}
 
 	/**
@@ -3123,7 +3116,7 @@ open class View(context: JavaScriptContext) : JavaScriptClass(context), LayoutNo
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	private var backgroundImageLoader: ImageLoader = ImageLoader(context.application)
+	private var backgroundImageLoader: ImageLoader = ImageLoader(context.application!!) // TODO make image loader using static method
 
 	/**
 	 * @property canvas

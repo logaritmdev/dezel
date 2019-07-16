@@ -1,6 +1,7 @@
 package ca.logaritm.dezel.modules.web
 
 import android.content.SharedPreferences
+import ca.logaritm.dezel.application.application
 import ca.logaritm.dezel.core.JavaScriptClass
 import ca.logaritm.dezel.core.JavaScriptContext
 import ca.logaritm.dezel.core.JavaScriptFunctionCallback

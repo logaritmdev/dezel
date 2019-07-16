@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.provider.Settings
 import ca.logaritm.dezel.application.ApplicationActivity
+import ca.logaritm.dezel.application.application
 import ca.logaritm.dezel.core.*
 import ca.logaritm.dezel.extension.Delegates
 import ca.logaritm.dezel.modules.view.Window
@@ -271,7 +272,7 @@ open class Application(context: JavaScriptContext) : JavaScriptClass(context) {
 			return
 		}
 
-		var url = callback.argument(0).string
+		val url = callback.argument(0).string
 
 		if (url.startsWith("http://") ||
 			url.startsWith("https://")) {

@@ -43,7 +43,7 @@ open class WebView: View, ContentWebViewDelegate {
 	 * @since 0.5.0
 	 */
 	override open func createContentView() -> ContentWebView {
-		return ContentWebView(application: self.context.application, frame: .zero, delegate: self)
+		return ContentWebView(frame: .zero, delegate: self)
 	}
 
 	/**

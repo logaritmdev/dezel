@@ -1995,6 +1995,103 @@ open class View: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelegate, Scroll
 	 */
 	private(set) public var layoutNode: LayoutNode!
 
+	/**
+	 * @property scrollableView
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private var scrollableView: Scrollable? {
+		return self.content as? Scrollable
+	}
+
+	/**
+	 * @property backgroundImageData
+	 * @since 0.4.0
+	 * @hidden
+	 */
+	private var backgroundImageData: UIImage? {
+		willSet {
+			self.invalidateBitmapImage()
+		}
+	}
+
+	/**
+	 * @property backgroundImageLoader
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	private var backgroundImageLoader: ImageLoader = ImageLoader()
+
+	/**
+	 * @property canvas
+	 * @since 0.4.0
+	 * @hidden
+	 */
+	private var canvas: Canvas?
+
+	/**
+	 * @property updateScheduled
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	private var updateScheduled: Bool = false
+
+	/**
+	 * @property invalidFrame
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	private var invalidFrame: Bool = false
+
+	/**
+	 * @property invalidShadow
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	private var invalidShadow: Bool = false
+
+	/**
+	 * @property invalidBorder
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	private var invalidBorder: Bool = false
+
+	/**
+	 * @property invalidBitmapColor
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	private var invalidBitmapColor: Bool = false
+
+	/**
+	 * @property invalidBitmapImage
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	private var invalidBitmapImage: Bool = false
+
+	/**
+	 * @property invalidTransform
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	private var invalidTransform: Bool = false
+
+	/**
+	 * @property invalidContent
+	 * @since 0.2.0
+	 * @hidden
+	 */
+	private var invalidContent: Bool = false
+
+	/**
+	 * @property disposed
+	 * @since 0.6.0
+	 * @hidden
+	 */
+	private var disposed: Bool = false
+
 	//--------------------------------------------------------------------------
 	// MARK: Methods
 	//--------------------------------------------------------------------------
@@ -2007,12 +2104,8 @@ open class View: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelegate, Scroll
 
 		super.init(context: context)
 
-		guard let application = context.application else {
-			fatalError("An application controller must exist to create a view.")
-		}
-
-		self.stylerNode = StylerNode(styler: application.styler)
-		self.layoutNode = LayoutNode(layout: application.layout)
+		self.stylerNode = StylerNode(styler: context.application.styler)
+		self.layoutNode = LayoutNode(layout: context.application.layout)
 		self.stylerNode.delegate = self
 		self.layoutNode.delegate = self
 
@@ -2042,8 +2135,6 @@ open class View: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelegate, Scroll
 		}
 
 		self.scheduleUpdate()
-
-		NotificationCenter.default.addObserver(self, selector: #selector(View.applicationReloadHandler), name: Notification.Name("applicationreload"), object: nil)
 	}
 
 	/**
@@ -2062,8 +2153,6 @@ open class View: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelegate, Scroll
 		self.canvas = nil
 		self.wrapper.removeFromSuperview()
 		self.content.removeFromSuperview()
-
-		NotificationCenter.default.removeObserver(self, name: Notification.Name("applicationreload"), object: nil)
 
 		super.dispose()
 	}
@@ -3246,118 +3335,8 @@ open class View: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelegate, Scroll
 	}
 
 	//--------------------------------------------------------------------------
-	// MARK: Methods - Application Hanlders
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method applicationReloadHandler
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@objc open func applicationReloadHandler(notification: Notification) {
-		self.dispose()
-	}
-
-	//--------------------------------------------------------------------------
 	// MARK: Private API
 	//--------------------------------------------------------------------------
-
-	/**
-	 * @property scrollableView
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private var scrollableView: Scrollable? {
-		return self.content as? Scrollable
-	}
-
-	/**
-	 * @property backgroundImageData
-	 * @since 0.4.0
-	 * @hidden
-	 */
-	private var backgroundImageData: UIImage? {
-		willSet {
-			self.invalidateBitmapImage()
-		}
-	}
-
-	/**
-	 * @property backgroundImageLoader
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	private var backgroundImageLoader: ImageLoader = ImageLoader()
-
-	/**
-	 * @property canvas
-	 * @since 0.4.0
-	 * @hidden
-	 */
-	private var canvas: Canvas?
-
-	/**
-	 * @property updateScheduled
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	private var updateScheduled: Bool = false
-
-	/**
-	 * @property invalidFrame
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	private var invalidFrame: Bool = false
-
-	/**
-	 * @property invalidShadow
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	private var invalidShadow: Bool = false
-
-	/**
-	 * @property invalidBorder
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	private var invalidBorder: Bool = false
-
-	/**
-	 * @property invalidBitmapColor
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	private var invalidBitmapColor: Bool = false
-
-	/**
-	 * @property invalidBitmapImage
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	private var invalidBitmapImage: Bool = false
-
-	/**
-	 * @property invalidTransform
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	private var invalidTransform: Bool = false
-
-	/**
-	 * @property invalidContent
-	 * @since 0.2.0
-	 * @hidden
-	 */
-	private var invalidContent: Bool = false
-
-	/**
-	 * @property disposed
-	 * @since 0.6.0
-	 * @hidden
-	 */
-	private var disposed: Bool = false
 
 	/**
 	 * @method insertChild

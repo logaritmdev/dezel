@@ -1,5 +1,6 @@
 package ca.logaritm.dezel.modules.view
 
+import ca.logaritm.dezel.application.application
 import ca.logaritm.dezel.core.JavaScriptContext
 import ca.logaritm.dezel.core.JavaScriptGetterCallback
 import ca.logaritm.dezel.core.JavaScriptSetterCallback

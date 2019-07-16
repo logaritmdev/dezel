@@ -2,6 +2,7 @@ package ca.logaritm.dezel.modules.dezel
 
 import android.util.Log
 import android.view.animation.PathInterpolator
+import ca.logaritm.dezel.application.application
 import ca.logaritm.dezel.core.JavaScriptContext
 import ca.logaritm.dezel.core.JavaScriptContextExternal
 import ca.logaritm.dezel.core.JavaScriptFunctionCallback

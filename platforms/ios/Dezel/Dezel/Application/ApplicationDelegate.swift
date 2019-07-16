@@ -8,6 +8,59 @@ import Foundation
 open class ApplicationDelegate: UIResponder, UIApplicationDelegate {
 
 	//--------------------------------------------------------------------------
+	// MARK: Static
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @const touchesBeganNotificaiton
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	public static let touchesBeganNotification = Notification.Name("touchesBegan")
+
+	/**
+	 * @const touchesMovedNotification
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	public static let touchesMovedNotification = Notification.Name("touchesMoved")
+
+	/**
+	 * @const touchesEndedNotification
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	public static let touchesEndedNotification = Notification.Name("touchesEnded")
+
+	/**
+	 * @const touchesCancelledNotification
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	public static let touchesCancelledNotification = Notification.Name("touchesCancelled")
+
+	/**
+	 * @const openUniversalURLNotification
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	public static let openUniversalURLNotification = Notification.Name("openUniversalURL")
+
+	/**
+	 * @const openResourceURLNotification
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	public static let openResourceURLNotification = Notification.Name("openResourceURL")
+
+	/**
+	 * @const remoteNotificationsTokenNotification
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	public static let remoteNotificationsTokenNotification = Notification.Name("remoteNotificationsToken")
+
+	//--------------------------------------------------------------------------
 	// MARK: Properties
 	//--------------------------------------------------------------------------
 
@@ -37,7 +90,7 @@ open class ApplicationDelegate: UIResponder, UIApplicationDelegate {
 	 * @since 0.7.0
 	 */
 	open func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-		NotificationCenter.default.post(name: Notification.Name("handleresource"), object: self, userInfo: ["url": url])
+		NotificationCenter.default.post(name: ApplicationDelegate.openUniversalURLNotification, object: self, userInfo: ["url": url])
 		return true
 	}
 
@@ -46,12 +99,8 @@ open class ApplicationDelegate: UIResponder, UIApplicationDelegate {
 	 * @method applicationContinueUserActivity
 	 * @since 0.7.0
 	 */
-	open func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
-
-		if let url = userActivity.webpageURL {
-			NotificationCenter.default.post(name: Notification.Name("handlelink"), object: self, userInfo: ["url": url])
-		}
-
+	open func application(_ application: UIApplication, continue activity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
+		NotificationCenter.default.post(name: ApplicationDelegate.openUniversalURLNotification, object: self, userInfo: ["url": activity.webpageURL as Any])
 		return true
 	}
 
@@ -60,13 +109,8 @@ open class ApplicationDelegate: UIResponder, UIApplicationDelegate {
 	 * @method applicationDidRegisterForRemoteNotificationsWithDeviceToken
 	 * @since 0.7.0
 	 */
-    open func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-
-        let token = deviceToken.map { data -> String in
-            return String(format:"%02.2hhx", data)
-        }.joined()
-		
-        NotificationCenter.default.post(name: Notification.Name("receiveremotenotificationstoken"), object: self, userInfo: ["token": token])
+    open func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken token: Data) {
+        NotificationCenter.default.post(name: ApplicationDelegate.remoteNotificationsTokenNotification, object: self, userInfo: ["token": token])
     }
 
 	//--------------------------------------------------------------------------

@@ -10,7 +10,7 @@ import java.lang.ref.WeakReference
 public class UpdateDisplayManager {
 
 	//--------------------------------------------------------------------------
-	// MARK: Static
+	// Static
 	//--------------------------------------------------------------------------
 
 	companion object {

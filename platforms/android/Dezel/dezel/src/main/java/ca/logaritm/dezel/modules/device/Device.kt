@@ -6,6 +6,7 @@ import android.media.MediaActionSound
 import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
+import ca.logaritm.dezel.application.application
 import ca.logaritm.dezel.core.JavaScriptClass
 import ca.logaritm.dezel.core.JavaScriptContext
 import ca.logaritm.dezel.core.JavaScriptFunctionCallback
@@ -35,6 +36,7 @@ open class Device(context: JavaScriptContext): JavaScriptClass(context) {
 	 * @since 0.4.0
 	 * @hidden
 	 */
+	@Suppress("unused")
 	open fun jsGet_uuid(callback: JavaScriptGetterCallback) {
 
 		var value = this.preferences.getString("dezel.device.uuid", null)

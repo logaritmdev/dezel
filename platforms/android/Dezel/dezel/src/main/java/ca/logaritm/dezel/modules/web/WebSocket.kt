@@ -7,6 +7,7 @@ import android.content.IntentFilter
 import android.os.Handler
 import android.support.v4.content.LocalBroadcastManager
 import android.util.Log
+import ca.logaritm.dezel.application.application
 import ca.logaritm.dezel.core.*
 import com.neovisionaries.ws.client.*
 import com.neovisionaries.ws.client.WebSocket as AndroidWebSocket
@@ -129,28 +130,9 @@ open class WebSocket(context: JavaScriptContext) : EventTarget(context) {
 		}
 	}
 
-	/**
-	 * @property applicationReloadReceiver
-	 * @since 0.2.0
-	 * @hidden
-	 */
-	private val applicationReloadReceiver: BroadcastReceiver = object : BroadcastReceiver() {
-		override fun onReceive(context: Context, intent: Intent) {
-			this@WebSocket.socket.disconnect()
-		}
-	}
-
 	//--------------------------------------------------------------------------
 	//  Methods
 	//--------------------------------------------------------------------------
-
-	/**
-	 * @constructor
-	 * @since 0.2.0
-	 */
-	init {
-		LocalBroadcastManager.getInstance(this.context.application).registerReceiver(this.applicationReloadReceiver, IntentFilter("dezel.application.RELOAD"))
-	}
 
 	/**
 	 * @inherited
@@ -158,7 +140,7 @@ open class WebSocket(context: JavaScriptContext) : EventTarget(context) {
 	 * @since 0.6.0
 	 */
 	override fun dispose() {
-		LocalBroadcastManager.getInstance(this.context.application).unregisterReceiver(this.applicationReloadReceiver)
+		this.socket.disconnect()
 		super.dispose()
 	}
 

@@ -225,6 +225,10 @@ open class JavaScriptContext {
 		}
 	}
 
+	open fun reload() {
+		// TODO
+	}
+
 	/**
 	 * Disposes the context.
 	 * @method dispose
@@ -423,7 +427,7 @@ open class JavaScriptContext {
 	 * @method attribute
 	 * @since 0.1.0
 	 */
-	open fun attribute(key: String, value: Any?) {
+	open fun attribute(key: Any, value: Any?) {
 		val hash = key.hashCode()
 		JavaScriptContextExternal.delAttribute(this.handle, hash)
 		JavaScriptContextExternal.setAttribute(this.handle, hash, value)
@@ -434,7 +438,7 @@ open class JavaScriptContext {
 	 * @method attribute
 	 * @since 0.1.0
 	 */
-	open fun attribute(key: String): Any? {
+	open fun attribute(key: Any): Any? {
 		return JavaScriptContextExternal.getAttribute(this.handle, key.hashCode())
 	}
 
@@ -472,19 +476,6 @@ open class JavaScriptContext {
 	 */
 	open fun garbageCollect() {
 		JavaScriptContextExternal.garbageCollect(this.handle)
-	}
-
-	//--------------------------------------------------------------------------
-	// Extensions
-	//--------------------------------------------------------------------------
-
-	/**
-	 * Convenience property to retrieve the application from the context.
-	 * @property application
-	 * @since 0.1.0
-	 */
-	public val application: ApplicationActivity by lazy {
-		ApplicationActivity.from(this)
 	}
 
 	//--------------------------------------------------------------------------

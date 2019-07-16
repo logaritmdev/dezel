@@ -9,6 +9,7 @@ import android.support.design.widget.BottomSheetDialog
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
+import ca.logaritm.dezel.application.application
 import ca.logaritm.dezel.core.JavaScriptClass
 import ca.logaritm.dezel.core.JavaScriptContext
 import ca.logaritm.dezel.core.JavaScriptFunctionCallback

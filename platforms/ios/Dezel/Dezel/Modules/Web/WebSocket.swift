@@ -68,37 +68,14 @@ public class WebSocket: EventTarget, WebSocketDelegate {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @constructor
-	 * @since 0.2.0
-	 * @hidden
-	 */
-	public required init(context: JavaScriptContext) {
-		super.init(context: context)
-		NotificationCenter.default.addObserver(self, selector: #selector(WebSocket.applicationReloadHandler), name: Notification.Name("applicationreload"), object: nil)
-	}
-
-	/**
 	 * @inherited
 	 * @method dispose
 	 * @since 0.6.0
 	 */
 	override open func dispose() {
-		NotificationCenter.default.removeObserver(self, name: Notification.Name("applicationreload"), object: nil)
-		super.dispose()
-	}
-
-	//--------------------------------------------------------------------------
-	// MARK: Methods - Application Hanlders
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method applicationReloadHandler
-	 * @since 0.2.0
-	 * @hidden
-	 */
-	@objc open func applicationReloadHandler(notification: Notification) {
 		self.socket.disconnect()
 		self.socket.delegate = nil
+		super.dispose()
 	}
 
 	//--------------------------------------------------------------------------
@@ -208,10 +185,12 @@ public class WebSocket: EventTarget, WebSocketDelegate {
 		// ArrayBuffer
 
 		if (self.readyState.number.int() == WebSocket.Connecting) {
-			self.context.throwError(string: "INVALID_STATE")
+			// TODO FIX THIS
+			//self.context.throwError(string: "INVALID_STATE")
 		}
 
 		self.socket.write(callback.argument(0).string)
+
 	}
 
 	/**

@@ -28,7 +28,7 @@ open class JavaScriptClass(context: JavaScriptContext) : JavaScriptObject(contex
 		get() = this::holder.isInitialized
 
 	//--------------------------------------------------------------------------
-	// MARK: Methods
+	// Methods
 	//--------------------------------------------------------------------------
 
 	/**

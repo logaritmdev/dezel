@@ -106,7 +106,9 @@
 		C777B5DC22D1429A00E75E55 /* CoreModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C777B5DB22D1429A00E75E55 /* CoreModule.swift */; };
 		C777B62A22D77B2D00E75E55 /* TestRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = C777B62922D77B2D00E75E55 /* TestRunner.swift */; };
 		C777B62C22D782DB00E75E55 /* TestRunner.js in Resources */ = {isa = PBXBuildFile; fileRef = C777B62B22D782DB00E75E55 /* TestRunner.js */; };
-		C777B62E22D7838E00E75E55 /* DezelAPITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C777B62D22D7838E00E75E55 /* DezelAPITest.swift */; };
+		C777B62E22D7838E00E75E55 /* DezelUnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C777B62D22D7838E00E75E55 /* DezelUnitTests.swift */; };
+		C777B63D22D91DB200E75E55 /* UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = C777B63C22D91DB200E75E55 /* UIApplication.swift */; };
+		C777B63F22DA49B600E75E55 /* WeakReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = C777B63E22DA49B600E75E55 /* WeakReference.swift */; };
 		C77A28A221BFFBF1004366AF /* JavaScriptConsole.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77A28A121BFFBF1004366AF /* JavaScriptConsole.swift */; };
 		C77B0BAC22262EF800917D82 /* Ruleset.h in Headers */ = {isa = PBXBuildFile; fileRef = C77B0B7322262EF800917D82 /* Ruleset.h */; };
 		C77B0BAD22262EF800917D82 /* SelectorParser.h in Headers */ = {isa = PBXBuildFile; fileRef = C77B0B7422262EF800917D82 /* SelectorParser.h */; };
@@ -303,6 +305,7 @@
 		C7E8A54A201624FA005139F6 /* DLValuePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = C7E8A540201624FA005139F6 /* DLValuePrivate.h */; };
 		C7E8A54D2016262A005139F6 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7E8A54C2016262A005139F6 /* JavaScriptCore.framework */; };
 		C7E9126D20EFD6FA0076774A /* LayoutNodeDelegateCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E9126C20EFD6FA0076774A /* LayoutNodeDelegateCounter.swift */; };
+		C7EE2E0222DD6AE200FFF0EE /* Source.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7EE2E0122DD6AE200FFF0EE /* Source.swift */; };
 		C7F2260B2081A10000ABC66D /* Unsafe.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F2260A2081A10000ABC66D /* Unsafe.swift */; };
 		C7F8C9F820C17874007E8ECA /* DLStylerMatch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7F8C9F620C17874007E8ECA /* DLStylerMatch.cpp */; };
 		C7F8C9F920C17874007E8ECA /* DLStylerMatch.h in Headers */ = {isa = PBXBuildFile; fileRef = C7F8C9F720C17874007E8ECA /* DLStylerMatch.h */; };
@@ -407,7 +410,9 @@
 		C777B5DB22D1429A00E75E55 /* CoreModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreModule.swift; sourceTree = "<group>"; };
 		C777B62922D77B2D00E75E55 /* TestRunner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestRunner.swift; sourceTree = "<group>"; };
 		C777B62B22D782DB00E75E55 /* TestRunner.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = TestRunner.js; sourceTree = "<group>"; };
-		C777B62D22D7838E00E75E55 /* DezelAPITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DezelAPITest.swift; sourceTree = "<group>"; };
+		C777B62D22D7838E00E75E55 /* DezelUnitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DezelUnitTests.swift; sourceTree = "<group>"; };
+		C777B63C22D91DB200E75E55 /* UIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplication.swift; sourceTree = "<group>"; };
+		C777B63E22DA49B600E75E55 /* WeakReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeakReference.swift; sourceTree = "<group>"; };
 		C77A28A121BFFBF1004366AF /* JavaScriptConsole.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptConsole.swift; sourceTree = "<group>"; };
 		C77B0B7322262EF800917D82 /* Ruleset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ruleset.h; sourceTree = "<group>"; };
 		C77B0B7422262EF800917D82 /* SelectorParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectorParser.h; sourceTree = "<group>"; };
@@ -607,6 +612,7 @@
 		C7E8A540201624FA005139F6 /* DLValuePrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DLValuePrivate.h; path = ../../../../shared/core/DLValuePrivate.h; sourceTree = "<group>"; };
 		C7E8A54C2016262A005139F6 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		C7E9126C20EFD6FA0076774A /* LayoutNodeDelegateCounter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutNodeDelegateCounter.swift; sourceTree = "<group>"; };
+		C7EE2E0122DD6AE200FFF0EE /* Source.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Source.swift; sourceTree = "<group>"; };
 		C7F2260A2081A10000ABC66D /* Unsafe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Unsafe.swift; sourceTree = "<group>"; };
 		C7F8C9F620C17874007E8ECA /* DLStylerMatch.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DLStylerMatch.cpp; path = ../../../../shared/style/DLStylerMatch.cpp; sourceTree = "<group>"; };
 		C7F8C9F720C17874007E8ECA /* DLStylerMatch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DLStylerMatch.h; path = ../../../../shared/style/DLStylerMatch.h; sourceTree = "<group>"; };
@@ -1113,7 +1119,6 @@
 		C7E8A45D20159C80005139F6 /* Dezel */ = {
 			isa = PBXGroup;
 			children = (
-				C777B62822D77B1A00E75E55 /* Test */,
 				C7B9CEA1202CDB4E002409D5 /* Application */,
 				C77B0D7D2226E3CC00917D82 /* Cache */,
 				C7E8A4DF2015AFF4005139F6 /* Core */,
@@ -1126,6 +1131,7 @@
 				C7A19E3620ADCA0B00367E91 /* Resources */,
 				C7E8A4DC2015AF40005139F6 /* Style */,
 				C773DA8C21DD0B4800685BDB /* Text */,
+				C777B62822D77B1A00E75E55 /* Test */,
 				C7E8A4DE2015AF5E005139F6 /* View */,
 			);
 			path = Dezel;
@@ -1137,7 +1143,7 @@
 				C7E8A4E0201623A3005139F6 /* Core */,
 				C7E8A47520159C92005139F6 /* Layout */,
 				C7E8A46B20159C80005139F6 /* Info.plist */,
-				C777B62D22D7838E00E75E55 /* DezelAPITest.swift */,
+				C777B62D22D7838E00E75E55 /* DezelUnitTests.swift */,
 			);
 			path = DezelTests;
 			sourceTree = "<group>";
@@ -1189,6 +1195,7 @@
 				C7BFD16B207D560E00AAD31C /* UIColor.swift */,
 				C7D8926420657B0000E85115 /* UIFont.swift */,
 				C7E30976203123DD00436FA4 /* UIView.swift */,
+				C777B63C22D91DB200E75E55 /* UIApplication.swift */,
 				C71E6CDC20E65CCF009B86F6 /* UIEdgeInsets.swift */,
 				C7CE4B062208C93C005D5235 /* UITextField.swift */,
 				C7F2260A2081A10000ABC66D /* Unsafe.swift */,
@@ -1307,6 +1314,8 @@
 				C76753FB20269970003C4D85 /* Property.swift */,
 				C76864702039146700D1903B /* PropertyType.swift */,
 				C76864722039147100D1903B /* PropertyUnit.swift */,
+				C7EE2E0122DD6AE200FFF0EE /* Source.swift */,
+				C777B63E22DA49B600E75E55 /* WeakReference.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -1584,7 +1593,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				C71E6CE120E6617D009B86F6 /* Scrollbars.swift in Sources */,
+				C777B63F22DA49B600E75E55 /* WeakReference.swift in Sources */,
 				C773DA9021DD0E2800685BDB /* TextParser.swift in Sources */,
+				C7EE2E0222DD6AE200FFF0EE /* Source.swift in Sources */,
 				C718A0C0206748EB00EFEC15 /* ImageDiskCache.swift in Sources */,
 				C7B9CEAC202CDBB7002409D5 /* Application.swift in Sources */,
 				C77189B22106AE0A00337263 /* Transform2D.swift in Sources */,
@@ -1682,6 +1693,7 @@
 				C72FF045204E190500FBB36B /* ShapeLayer.swift in Sources */,
 				C700121621551A9A00CB26D4 /* DeviceModule.swift in Sources */,
 				C77DFEE1208D063900CEC1D9 /* LocaleModule.swift in Sources */,
+				C777B63D22D91DB200E75E55 /* UIApplication.swift in Sources */,
 				C72E0E9B20669CCD003BCEF1 /* TextTransform.swift in Sources */,
 				C7E8A521201624A2005139F6 /* JavaScriptFinalizeWrapper.swift in Sources */,
 				C71E6CE320E66188009B86F6 /* Overscroll.swift in Sources */,
@@ -1786,7 +1798,7 @@
 				C7E8A4F420162429005139F6 /* JavaScriptFunctionCallbackTest.swift in Sources */,
 				C7E8A4F620162429005139F6 /* JavaScriptEmptyClass.swift in Sources */,
 				C7E8A4DA2015ADD5005139F6 /* RelativeLayoutTest.swift in Sources */,
-				C777B62E22D7838E00E75E55 /* DezelAPITest.swift in Sources */,
+				C777B62E22D7838E00E75E55 /* DezelUnitTests.swift in Sources */,
 				C7E8A4FA20162429005139F6 /* JavaScriptTestClass.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -8,171 +8,124 @@ import UIKit
 open class ApplicationController: UIViewController {
 
 	//--------------------------------------------------------------------------
-	// MARK: Static
-	//--------------------------------------------------------------------------
-
-	/**
-	 * Returns the application controller of the specified context.
-	 * @method from
-	 * @since 0.7.0
-	 */
-	public static func from(_ context: JavaScriptContext) -> ApplicationController {
-		return context.attribute("dezel.application.DezelApplicationController") as! ApplicationController
-	}
-
-	//--------------------------------------------------------------------------
 	// MARK: Properties
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The status bar visibility status.
-	 * @property statusBarVisible
+	 * The application's badge.
+	 * @property badge
 	 * @since 0.7.0
 	 */
-	open var statusBarVisible: Bool = true {
+	open var badge: Int = 0 {
 		didSet {
-			UIView.animate(withDuration: 0.350) {
-				self.setNeedsStatusBarAppearanceUpdate()
-			}
+			UIApplication.shared.applicationIconBadgeNumber = self.badge
 		}
 	}
 
 	/**
-	 * The status bar foreground color (white or black)
-	 * @property statusBarForegroundColor
-	 * @since 0.7.0
-	 */
-	open var statusBarForegroundColor: UIColor = UIColor.black {
-		didSet {
-			UIView.animate(withDuration: 0.350) {
-				self.setNeedsStatusBarAppearanceUpdate()
-			}
-		}
-	}
-
-	/**
-	 * The status bar background color.
-	 * @property statusBarBackgroundColor
-	 * @since 0.7.0
-	 */
-	open var statusBarBackgroundColor: UIColor = UIColor.clear {
-		didSet {
-			UIView.animate(withDuration: 0.350) {
-				self.setNeedsStatusBarAppearanceUpdate()
-			}
-		}
-	}
-
-	/**
-	 * The application's JavaScript context.
+	 * The application controller's context.
 	 * @property context
 	 * @since 0.7.0
 	 */
 	private(set) public var context: JavaScriptContext = JavaScriptContext()
 
 	/**
-	 * The application's JavaScript application object.
+	 * The application controller's styler.
+	 * @property styler
+	 * @since 0.7.0
+	 */
+	private(set) public var styler: Styler = Styler()
+
+	/**
+	 * The application controller's layout.
+	 * @property layout
+	 * @since 0.7.0
+	 */
+	private(set) public var layout: Layout = Layout()
+
+	/**
+	 * The application controller's application.
 	 * @property application
 	 * @since 0.7.0
 	 */
 	private(set) public var application: Application?
 
 	/**
-	 * The application's stylesheets.
-	 * @property styles
-	 * @since 0.7.0
-	 */
-	private(set) public var styles: [String] = []
-
-	/**
-	 * The application's scripts.
-	 * @property scripts
-	 * @since 0.7.0
-	 */
-	private(set) public var scripts: [String] = []
-
-	/**
-	 * The application's modules.
 	 * @property modules
-	 * @since 0.7.0
-	 */
-	private(set) public var modules: [String: AnyClass] = [:]
-
-	/**
-	 * The application's classes.
-	 * @property classes
-	 * @since 0.7.0
-	 */
-	private(set) public var classes: [String: AnyClass] = [:]
-
-	/**
-	 * The application's styles manager.
-	 * @property styler
-	 * @since 0.7.0
-	 */
-	private(set) public var styler: Styler!
-
-	/**
-	 * The application's layout manager.
-	 * @property layout
-	 * @since 0.7.0
-	 */
-	private(set) public var layout: Layout!
-
-	/**
-	 * The application's update display manager.
-	 * @property updateDisplayManager
-	 * @since 0.7.0
-	 */
-	private(set) public var updateDisplayManager: UpdateDisplayManager!
-
-	/**
-	 * @property statusBar
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private var statusBar: UIView = UIView(frame: .zero)
+	private var modules: [String: AnyClass] = [:]
+
+	/**
+	 * @property classes
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private var classes: [String: AnyClass] = [:]
+
+	/**
+	 * @property sources
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private var sources: [Source] = []
+
+	/**
+	 * @property running
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private var running: Bool = false
 
 	//--------------------------------------------------------------------------
 	// MARK: Methods
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
-	 * @method loadView
+	 * Creates the application context and required components.
+	 * @method setup
 	 * @since 0.7.0
 	 */
-	override open func loadView() {
-		self.view = UIView(frame: UIScreen.main.bounds)
+	open func configure() {
+
 	}
 
 	/**
-	 * @inherited
-	 * @method viewDidLoad
+	 * Creates the application context and required components.
+	 * @method setup
 	 * @since 0.7.0
 	 */
-	override open func viewDidLoad() {
+	open func setup() {
 
-		self.view.translatesAutoresizingMaskIntoConstraints = false
-		self.view.backgroundColor = UIColor.black
-		self.view.isOpaque = true
+		if (self.running) {
+			return
+		}
 
-		self.view.addSubview(self.statusBar)
+		self.running = true
 
-		NotificationCenter.default.addObserver(self, selector: #selector(handleTouchBegan), name: Notification.Name("touchesbegan"), object: nil)
-		NotificationCenter.default.addObserver(self, selector: #selector(handleTouchMoved), name: Notification.Name("touchesmoved"), object: nil)
-		NotificationCenter.default.addObserver(self, selector: #selector(handleTouchEnded), name: Notification.Name("touchesended"), object: nil)
-		NotificationCenter.default.addObserver(self, selector: #selector(handleTouchCancelled), name: Notification.Name("touchescancelled"), object: nil)
-		NotificationCenter.default.addObserver(self, selector: #selector(applicationDidHandleLink), name: Notification.Name("handlelink"), object: nil)
-		NotificationCenter.default.addObserver(self, selector: #selector(applicationDidHandleResource), name: Notification.Name("handleresource"), object: nil)
-		NotificationCenter.default.addObserver(self, selector: #selector(applicationDidEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
-		NotificationCenter.default.addObserver(self, selector: #selector(applicationDidEnterBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
-		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChangeFrame), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
-		NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidChangeFrame), name: UIResponder.keyboardDidChangeFrameNotification, object: nil)
+		self.registerObservers()
 
+		self.layout.scale = UIScreen.main.scale
+		self.layout.viewportWidth = UIScreen.main.bounds.width
+		self.layout.viewportHeight = UIScreen.main.bounds.height
+
+		var insetT: CGFloat = 20
+		var insetB: CGFloat = 0
+
+		if #available(iOS 11.0, *) {
+			if let window = UIApplication.shared.windows.first {
+				insetT = max(window.safeAreaInsets.top, insetT)
+				insetB = max(window.safeAreaInsets.bottom, insetB)
+			}
+		}
+
+		self.styler.setVariable("safe-area-top-inset", value: "\(insetT)px")
+		self.styler.setVariable("safe-area-bottom-inset", value: "\(insetB)px")
+
+		self.context.attribute(kApplicationControllerKey, value: self)
 		self.context.global.property("_DEV_", boolean: self.isDev())
 		self.context.global.property("_SIM_", boolean: self.isSim())
-		self.context.attribute("dezel.application.DezelApplicationController", value: self)
 
 		self.context.handleError { error in
 
@@ -193,59 +146,104 @@ open class ApplicationController: UIViewController {
 				"Stack Trace:  \n " +
 				"\(stack)"
 
-			let crash = self.applicationDidTriggerError(error: error)
-			if (crash) {
-				fatalError(message)
+			self.didThrowError(error: error)
+
+			fatalError(message)
+		}
+
+		self.registerModule("dezel.CoreModule", value: CoreModule.self)
+		self.registerModule("dezel.WebModule", value: WebModule.self)
+		self.registerModule("dezel.LocaleModule", value: LocaleModule.self)
+		self.registerModule("dezel.DeviceModule", value: DeviceModule.self)
+		self.registerModule("dezel.PlatformModule", value: PlatformModule.self)
+		self.registerModule("dezel.DialogModule", value: DialogModule.self)
+		self.registerModule("dezel.GraphicModule", value: GraphicModule.self)
+		self.registerModule("dezel.ViewModule", value: ViewModule.self)
+		self.registerModule("dezel.FormModule", value: FormModule.self)
+		self.registerModule("dezel.ApplicationModule", value: ApplicationModule.self)
+
+		self.configure()
+
+		self.context.registerModules(self.modules)
+		self.context.registerClasses(self.classes)
+		self.context.setup()
+
+		// TODO
+		// This has to be removed and this module must not have its own javascript file
+
+		do {
+			self.context.evaluate(try String(contentsOfFile: Bundle.resource("WebRuntime.js")!), file: "WebRuntime.js")
+		} catch _ {
+			fatalError("Cannot load the web runtime, the path is invalid.")
+		}
+
+		self.sources.forEach { source in
+
+			switch (source.category) {
+
+				case .style:
+					self.evaluateStyle(source.data, file: source.location)
+
+				case .script:
+					self.evaluateScript(source.data, file: source.location)
 			}
 		}
 
-		self.styler = Styler()
-		self.layout = Layout()
-		self.layout.scale = UIScreen.main.scale
-		self.layout.viewportWidth = UIScreen.main.bounds.size.width
-		self.layout.viewportHeight = UIScreen.main.bounds.size.height
-
- 		self.updateDisplayManager = UpdateDisplayManager(application: self)
-
-		self.context.global.defineProperty("dezel",
-			value: self.context.createObject(Dezel.self),
-			getter: nil,
-			setter: nil,
-			writable: false,
-			enumerable: true,
-			configurable: false
-		)
-
-		self.registerModule("dezel.ApplicationModule", module: ApplicationModule.self)
-		self.registerModule("dezel.CoreModule", module: CoreModule.self)
-		self.registerModule("dezel.DeviceModule", module: DeviceModule.self)
-		self.registerModule("dezel.DialogModule", module: DialogModule.self)
-		self.registerModule("dezel.FormModule", module: FormModule.self)
-		self.registerModule("dezel.GraphicModule", module: GraphicModule.self)
-		self.registerModule("dezel.LocaleModule", module: LocaleModule.self)
-		self.registerModule("dezel.PlatformModule", module: PlatformModule.self)
-		self.registerModule("dezel.ViewModule", module: ViewModule.self)
-		self.registerModule("dezel.WebModule", module: WebModule.self)
-
-		self.applicationWillLoad()
-
-		self.loadClasses()
-		self.loadModules()
-
-		self.context.initialize()
-
-		self.loadStyles()
-		self.loadScripts()
+		self.didLoad()
 	}
 
 	/**
-	 * @inherited
-	 * @method viewWillLayoutSubviews
+	 * Registers a context module.
+	 * @method registerModule
 	 * @since 0.7.0
 	 */
-	override open func viewWillLayoutSubviews() {
-		self.view.frame = UIScreen.main.bounds
-		self.statusBar.frame = UIApplication.shared.statusBarFrame
+	open func registerModule(_ uid: String, value: AnyClass) {
+		self.modules[uid] = value
+	}
+
+	/**
+	 * Registers a context class.
+	 * @method registerClass
+	 * @since 0.7.0
+	 */
+	open func registerClass(_ uid: String, value: AnyClass) {
+		self.classes[uid] = value
+	}
+
+	/**
+	 * Registers a style file.
+	 * @method registerStyle
+	 * @since 0.7.0
+	 */
+	open func registerStyle(_ location: String) {
+		self.sources.append(Source(location: location, category: .style))
+	}
+
+	/**
+	 * Registers a script file.
+	 * @method registerScript
+	 * @since 0.7.0
+	 */
+	open func registerScript(_ location: String) {
+		self.sources.append(Source(location: location, category: .script))
+	}
+
+	/**
+	 * Evaluates a style file.
+	 * @method evaluateStyle
+	 * @since 0.7.0
+	 */
+	open func evaluateStyle(_ source: String, file: String) {
+		self.styler.load(source, file: file)
+	}
+
+	/**
+	 * Evaluates a script file.
+	 * @method evaluateScript
+	 * @since 0.7.0
+	 */
+	open func evaluateScript(_ source: String, file: String) {
+		self.context.evaluate(source, file: file)
 	}
 
 	/**
@@ -253,22 +251,19 @@ open class ApplicationController: UIViewController {
 	 * @method launch
 	 * @since 0.7.0
 	 */
-	open func launch(application: Application) {
+	open func launch(_ application: Application, identifier: String = "default") {
+
+		self.application?.destroy()
+		self.application = application
 
 		self.styler.root = application.window.stylerNode
 		self.layout.root = application.window.layoutNode
 
-		let bounds = self.view.bounds
-		application.window.width = Property(number: Double(bounds.width), unit: .px)
-		application.window.height = Property(number: Double(bounds.height), unit: .px)
-
-		self.application = application
-
+		application.window.width = Property(number: Double(UIScreen.main.bounds.width), unit: .px)
+		application.window.height = Property(number: Double(UIScreen.main.bounds.width), unit: .px)
 		self.view.addSubview(application.window)
 
-		self.applicationDidLoad()
-
-		self.view.bringSubviewToFront(self.statusBar)
+		self.didLaunchApplication(application: application)
 	}
 
 	/**
@@ -278,218 +273,213 @@ open class ApplicationController: UIViewController {
 	 */
 	open func reload() {
 
-		self.applicationDidUnload()
-
-		self.presentedViewController?.dismiss(animated: false, completion: nil)
+		// TODO
+		// FIX THIS
 
 		self.application?.destroy()
-		self.application?.window.wrapper.removeFromSuperview()
 		self.application = nil
 
-		self.updateDisplayManager.reset()
+		UpdateDisplayManager.main.reset()
 
-		NotificationCenter.default.post(name: Notification.Name("applicationreload"), object: self)
+		let scale = self.layout.scale
+		let viewportWidth = self.layout.viewportWidth
+		let viewportHeight = self.layout.viewportHeight
 
 		self.styler = Styler()
 		self.layout = Layout()
-		self.layout.scale = UIScreen.main.scale
-		self.layout.viewportWidth = UIScreen.main.bounds.size.width
-		self.layout.viewportHeight = UIScreen.main.bounds.size.height
-
-		self.loadStyles()
-		self.loadScripts()
+		self.layout.scale = scale
+		self.layout.viewportWidth = viewportWidth
+		self.layout.viewportHeight = viewportHeight
 	}
 
 	/**
-	 * Registers a style file.
-	 * @method registerStyle
+	 * Opens a resource URL.
+	 * @method openResourceURL
 	 * @since 0.7.0
 	 */
-	open func registerStyle(_ style: String) {
-		self.styles.append(style)
+	open func openResourceURL(_ url: URL) {
+		self.application?.holder.callMethod("nativeOpenResourceURL", arguments: [self.context.createString(url.absoluteString)])
 	}
 
 	/**
-	 * Registers a script file.
-	 * @method registerScript
+	 * Opens a universal URL.
+	 * @method openUniversalURL
 	 * @since 0.7.0
 	 */
-	open func registerScript(_ script: String) {
-		self.scripts.append(script)
-	}
-
-	/**
-	 * Registers a module.
-	 * @method registerModule
-	 * @since 0.7.0
-	 */
-	open func registerModule(_ uid: String, module: AnyClass) {
-		self.modules[uid] = module
-	}
-
-	/**
-	 * Registers a class.
-	 * @method registerClass
-	 * @since 0.7.0
-	 */
-	open func registerClass(_ uid: String, template: AnyClass) {
-		self.classes[uid] = template
-	}
-
-	/**
-	 * @method loadClasses
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private func loadClasses() {
-		self.classes.forEach {
-			self.context.registerClass($0.key, type: $0.value)
-		}
-	}
-
-	/**
-	 * @method loadModules
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private func loadModules() {
-		self.modules.forEach {
-			self.context.registerModule($0.key, type: $0.value)
-		}
-	}
-
-	/**
-	 * @method loadStyles
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private func loadStyles() {
-
-		var insetT: CGFloat = 20
-		var insetB: CGFloat = 0
-
-		if #available(iOS 11.0, *) {
-			if let window = UIApplication.shared.windows.first {
-				insetT = max(window.safeAreaInsets.top, insetT)
-				insetB = max(window.safeAreaInsets.bottom, insetB)
-			}
-		}
-
-		self.styler.setVariable("safe-area-top-inset", value: "\(insetT)px")
-		self.styler.setVariable("safe-area-bottom-inset", value: "\(insetB)px")
-
-		for src in self.styles {
-
-			do {
-
-				if (src.hasPrefix("http://") ||
-					src.hasPrefix("https://")) {
-					self.styler.load(try String(contentsOf: URL(string: src)!), file: src)
-					continue
-				}
-
-				self.styler.load(try String(contentsOfFile: Bundle.main.path(forResource: "app/" + src, ofType: nil)!), file: src)
-
-			} catch _ {
-				fatalError("Cannot load registered stylesheet at \(src), the path is invalid.")
-			}
-		}
-	}
-
-	/**
-	 * @method loadScripts
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private func loadScripts() {
-
-		for src in self.scripts {
-
-			do {
-
-				if (src.hasPrefix("http://") ||
-					src.hasPrefix("https://")) {
-					self.context.evaluate(try String(contentsOf: URL(string: src)!), file: src)
-					continue
-				}
-
-				self.context.evaluate(try String(contentsOfFile: Bundle.main.path(forResource: "app/" + src, ofType: nil)!), file: src)
-
-			} catch _ {
-				fatalError("Cannot load registered script \(src), the path is invalid.")
-			}
-		}
-	}
-
-	/**
-	 * @method isDev
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private func isDev() -> Bool {
-		#if DEBUG
-			return true
-		#else
-			return false
-		#endif
-	}
-
-	/**
-	 * @method isSim
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private func isSim() -> Bool {
-		#if arch(i386) || arch(x86_64)
-			return true
-		#else
-			return false
-		#endif
+	open func openUniversalURL(_ url: URL) {
+		self.application?.holder.callMethod("nativeOpenUniversalURL", arguments: [self.context.createString(url.absoluteString)])
 	}
 
 	//--------------------------------------------------------------------------
-	// MARK: Methods - Application Lifecycle
+	// MARK: Methods - Touch Management
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Called when the application is about to be loaded.
-	 * @method applicationWillLoad
+	 * Dispatches a touchcancel event.
+	 * @method dispatchTouchCancel
 	 * @since 0.7.0
 	 */
-	open func applicationWillLoad() {
-
+	open func dispatchTouchCancel(_ touches: Set<UITouch>) {
+		self.dispatchTouchEvent("nativeOnTouchCancel", touches: touches)
 	}
 
 	/**
-	 * Called when the application has been loaded.
-	 * @method applicationDidLoad
+	 * Dispatches a touchstart event.
+	 * @method dispatchTouchStart
 	 * @since 0.7.0
 	 */
-	open func applicationDidLoad() {
-		self.application?.holder.callMethod("nativeLoad")
+	open func dispatchTouchStart(_ touches: Set<UITouch>) {
+		self.dispatchTouchEvent("nativeOnTouchStart", touches: touches)
 	}
 
 	/**
-	 * Called when the application has been unloaded.
-	 * @method applicationDidUnload
+	 * Dispatches a touchmove event.
+	 * @method dispatchTouchMove
 	 * @since 0.7.0
 	 */
-	open func applicationDidUnload() {
-		self.application?.holder.callMethod("nativeUnload")
+	open func dispatchTouchMove(_ touches: Set<UITouch>) {
+		self.dispatchTouchEvent("nativeOnTouchMove", touches: touches)
 	}
 
 	/**
-	 * Called when an exception is triggered from the JavaScript context.
-	 * @method applicationDidTriggerError
+	 * Dispatches a touchend event.
+	 * @method dispatchTouchEnd
 	 * @since 0.7.0
 	 */
-	open func applicationDidTriggerError(error: JavaScriptValue) -> Bool {
-		return true
+	open func dispatchTouchEnd(_ touches: Set<UITouch>) {
+		self.dispatchTouchEvent("nativeOnTouchEnd", touches: touches)
 	}
 
 	//--------------------------------------------------------------------------
-	// MARK: Orientation Transition
+	// MARK: Methods - State Management
 	//--------------------------------------------------------------------------
+
+	/**
+	 * Notifies the application it has moved to the background.
+	 * @method enterBackground
+	 * @since 0.7.0
+	 */
+	open func didEnterBackground() {
+		self.application?.holder.callMethod("nativeEnterBackground")
+	}
+
+	/**
+	 * Notifies the application it has moved to the foreground.
+	 * @method enterForeground
+	 * @since 0.7.0
+	 */
+	open func didEnterForeground() {
+		self.application?.holder.callMethod("nativeEnterForeground")
+	}
+
+	//--------------------------------------------------------------------------
+	// MARK: Methods - Keyboard Management
+	//--------------------------------------------------------------------------
+
+	/**
+	 * Notifies the application it has moved to the foreground.
+	 * @method keyboardWillShow
+	 * @since 0.7.0
+	 */
+	open func keyboardWillShow(_ notification: Notification) {
+		self.dispatchKeyboardEvent("nativeBeforeKeyboardShow", notification: notification)
+	}
+
+	/**
+	 * Notifies the application it has moved to the foreground.
+	 * @method keyboardDidShow
+	 * @since 0.7.0
+	 */
+	open func keyboardDidShow(_ notification: Notification) {
+		self.dispatchKeyboardEvent("nativeKeyboardShow", notification: notification)
+	}
+
+	/**
+	 * Notifies the application it has moved to the foreground.
+	 * @method keyboardWillHide
+	 * @since 0.7.0
+	 */
+	open func keyboardWillHide(_ notification: Notification) {
+		self.dispatchKeyboardEvent("nativeBeforeKeyboardHide", notification: notification)
+	}
+
+	/**
+	 * Notifies the application it has moved to the foreground.
+	 * @method keyboardDidHide
+	 * @since 0.7.0
+	 */
+	open func keyboardDidHide(_ notification: Notification) {
+		self.dispatchKeyboardEvent("nativeKeyboardHide", notification: notification)
+	}
+
+	/**
+	 * Notifies the application it has moved to the foreground.
+	 * @method keyboardWillResize
+	 * @since 0.7.0
+	 */
+	open func keyboardWillResize(_ notification: Notification) {
+		self.dispatchKeyboardEvent("nativeBeforeKeyboardResize", notification: notification)
+	}
+
+	/**
+	 * Notifies the application it has moved to the foreground.
+	 * @method keyboardDidResize
+	 * @since 0.7.0
+	 */
+	open func keyboardDidResize(_ notification: Notification) {
+		self.dispatchKeyboardEvent("nativeboardResize", notification: notification)
+	}
+
+	//--------------------------------------------------------------------------
+	// MARK: Methods - View Management
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @inherited
+	 * @method loadView
+	 * @since 0.7.0
+	 */
+	override open func loadView() {
+		self.view = UIView(frame: UIScreen.main.bounds)
+	}
+
+	/**
+	 * @inherited
+	 * @method viewDidLoad
+	 * @since 0.7.0
+	 */
+	override open func viewDidLoad() {
+
+		self.view.isHidden = false
+		self.view.isOpaque = true
+		self.view.backgroundColor = UIColor.black
+
+		self.view.addSubview(self.statusBar)
+
+		self.setup()
+	}
+
+	/**
+	 * @inherited
+	 * @method viewWillLayoutSubviews
+	 * @since 0.7.0
+	 */
+	override open func viewWillLayoutSubviews() {
+
+		let bounds = UIScreen.main.bounds
+
+		self.view.frame = bounds
+
+		self.layout.viewportWidth = bounds.width
+		self.layout.viewportHeight = bounds.height
+
+		if let application = self.application {
+			application.window.width = Property(number: Double(bounds.width))
+			application.window.height = Property(number: Double(bounds.height))
+		}
+
+		self.statusBar.frame = UIApplication.shared.statusBarFrame
+	}
 
 	/**
 	 * @inherited
@@ -500,21 +490,26 @@ open class ApplicationController: UIViewController {
 
 		super.viewWillTransition(to: size, with: coordinator)
 
-		guard let window = self.application?.window else {
-			return
-		}
-
 		coordinator.animate(alongsideTransition: { context in
 
 			let duration = self.getRotationAnimationDuration(context: context)
 			let equation = self.getRotationAnimationEquation(context: context)
 
-			Transition.create(application: self, duration: duration, equation: equation, delay: 0) { }
+			Transition.create(
+				duration: duration,
+				equation: equation,
+				delay: 0
+			) { }
 
-			window.width = Property(number: Double(size.width))
-			window.height = Property(number: Double(size.height))
+			self.layout.viewportWidth = size.width
+			self.layout.viewportHeight = size.height
 
-			self.updateDisplayManager.dispatch()
+			if let application = self.application {
+				application.window.width = Property(number: Double(size.width))
+				application.window.height = Property(number: Double(size.height))
+			}
+
+			UpdateDisplayManager.main.dispatch()
 
 			Transition.commit()
 
@@ -548,8 +543,54 @@ open class ApplicationController: UIViewController {
 	}
 
 	//--------------------------------------------------------------------------
-	// MARK: Methods - Application Status Bar Management
+	// MARK: Methods - Status Bar Management
 	//--------------------------------------------------------------------------
+
+	/**
+	 * The application's status bar visibility status.
+	 * @property statusBarVisible
+	 * @since 0.7.0
+	 */
+	open var statusBarVisible: Bool = true {
+		didSet {
+			UIView.animate(withDuration: 0.350) {
+				self.setNeedsStatusBarAppearanceUpdate()
+			}
+		}
+	}
+
+	/**
+	 * The application's status bar foreground color (white or black)
+	 * @property statusBarForegroundColor
+	 * @since 0.7.0
+	 */
+	open var statusBarForegroundColor: UIColor = UIColor.black {
+		didSet {
+			UIView.animate(withDuration: 0.350) {
+				self.setNeedsStatusBarAppearanceUpdate()
+			}
+		}
+	}
+
+	/**
+	 * The application's status bar background color.
+	 * @property statusBarBackgroundColor
+	 * @since 0.7.0
+	 */
+	open var statusBarBackgroundColor: UIColor = UIColor.clear {
+		didSet {
+			UIView.animate(withDuration: 0.350) {
+				self.setNeedsStatusBarAppearanceUpdate()
+			}
+		}
+	}
+
+	/**
+	 * @property statusBar
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private var statusBar: UIView = UIView(frame: .zero)
 
 	/**
 	 * @inherited
@@ -600,7 +641,47 @@ open class ApplicationController: UIViewController {
 	}
 
 	//--------------------------------------------------------------------------
-	// MARK: Methods - Application Keyboard Management
+	// MARK: Methods - Lifecycle
+	//--------------------------------------------------------------------------
+
+	/**
+	 * Called when the context has been loaded.
+	 * @method didLoad
+	 * @since 0.7.0
+	 */
+	open func didLoad() {
+
+	}
+
+	/**
+	 * Called when a JavaScript error is thrown.
+	 * @method didThrowError
+	 * @since 0.7.0
+	 */
+	open func didThrowError(error: JavaScriptValue) {
+
+	}
+
+	/**
+	 * Called when a JavaScript application is launched.
+	 * @method didLaunchApplication
+	 * @since 0.7.0
+	 */
+	open func didLaunchApplication(application: Application) {
+
+	}
+
+	/**
+	 * Called when a JavaScript application is reloaded.
+	 * @method didReloadApplication
+	 * @since 0.7.0
+	 */
+	open func didReloadApplication(application: Application) {
+
+	}
+
+	//--------------------------------------------------------------------------
+	// MARK: Methods - Handlers
 	//--------------------------------------------------------------------------
 
 	/**
@@ -618,141 +699,25 @@ open class ApplicationController: UIViewController {
 	private var keyboardResizing: Bool = false
 
 	/**
-	 * @method keyboardWillChangeFrame
+	 * @method handleResourceURL
 	 * @since 0.7.0
-	 * @hidden
+ 	 * @hidden
 	 */
-	@objc open func keyboardWillChangeFrame(_ notification: Notification) {
-
-		if let data = (notification as NSNotification).userInfo {
-
-			if (self.keyboardVisible == false) {
-				self.keyboardVisible = true
-				self.callKeyboardEventMethod("nativeBeforeKeyboardShow", notification: notification)
-				return
-			}
-
-			let bounds = self.view.bounds
-			let fe = (data[UIResponder.keyboardFrameEndUserInfoKey]! as AnyObject).cgRectValue
-			let fb = (data[UIResponder.keyboardFrameBeginUserInfoKey]! as AnyObject).cgRectValue
-
-			if (fe?.origin.y != fb?.origin.y && fe?.origin.y == bounds.size.height) {
-				if (self.keyboardVisible) {
-					self.keyboardVisible = false
-					self.callKeyboardEventMethod("nativeBeforeKeyboardHide", notification: notification)
-					return
-				}
-			}
-
-			if (self.keyboardResizing == false) {
-				self.keyboardResizing = true
-				self.callKeyboardEventMethod("nativeBeforeKeyboardResize", notification: notification)
-			}
+	@objc open func handleResourceURL(notification: Notification) {
+		if let url = notification.userInfo?["url"] as? URL {
+			self.openResourceURL(url)
 		}
 	}
 
 	/**
-	 * @method keyboardDidChangeFrame
+	 * @method handleUniversalURL
 	 * @since 0.7.0
-	 * @hidden
+ 	 * @hidden
 	 */
-	@objc open func keyboardDidChangeFrame(_ notification: Notification) {
-
-		if (self.keyboardResizing) {
-			self.keyboardResizing = false
-			self.callKeyboardEventMethod("nativeKeyboardResize", notification: notification)
-			return
+	@objc open func handleUniversalURL(notification: Notification) {
+		if let url = notification.userInfo?["url"] as? URL {
+			self.openUniversalURL(url)
 		}
-
-		if (self.keyboardVisible) {
-			self.callKeyboardEventMethod("nativeKeyboardShow", notification: notification)
-		} else {
-			self.callKeyboardEventMethod("nativeKeyboardHide", notification: notification)
-		}
-	}
-
-	/**
-	 * @method callKeyboardEventMethod
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private func callKeyboardEventMethod(_ name: String, notification: Notification) {
-
-		guard let application = self.application else {
-			return
-		}
-
-		if let data = (notification as NSNotification).userInfo {
-
-			let frame = (data[UIResponder.keyboardFrameEndUserInfoKey]! as AnyObject).cgRectValue
-			let curve = data[UIResponder.keyboardAnimationCurveUserInfoKey] as! Int
-			let duration = data[UIResponder.keyboardAnimationDurationUserInfoKey] as! Double
-
-			let equation: String
-
-			switch (curve) {
-				case UIView.AnimationCurve.easeInOut.rawValue:
-					equation = "easeinout"
-				case UIView.AnimationCurve.easeIn.rawValue:
-					equation = "easein"
-				case UIView.AnimationCurve.easeOut.rawValue:
-					equation = "easeout"
-				case UIView.AnimationCurve.linear.rawValue:
-					equation = "linear"
-				default:
-					equation = "cubic-bezier(0.380, 0.700, 0.125, 1.000)"
-			}
-
-			let height = Double((frame?.size.height)!)
-
-			let args = [
-				self.context.createNumber(height),
-				self.context.createNumber(duration * 1000),
-				self.context.createString(equation)
-			]
-
-			application.holder.callMethod(name, arguments: args, result: nil)
-		}
-	}
-
-	//--------------------------------------------------------------------------
-	// MARK: Methods - Application Touch Management
-	//--------------------------------------------------------------------------
-
-	/**
-	 * Dispatches a touchcancel event.
-	 * @method dispatchTouchCancel
-	 * @since 0.7.0
-	 */
-	open func dispatchTouchCancel(_ touches: Set<UITouch>) {
-		self.application?.holder.callMethod("dispatchTouchCancel", arguments: [self.toTouchArray(touches, from: self.view)], result: nil)
-	}
-
-	/**
-	 * Dispatches a touchstart event.
-	 * @method dispatchTouchStart
-	 * @since 0.7.0
-	 */
-	open func dispatchTouchStart(_ touches: Set<UITouch>) {
-		self.application?.holder.callMethod("dispatchTouchStart", arguments: [self.toTouchArray(touches, from: self.view)], result: nil)
-	}
-
-	/**
-	 * Dispatches a touchmove event.
-	 * @method dispatchTouchMove
-	 * @since 0.7.0
-	 */
-	open func dispatchTouchMove(_ touches: Set<UITouch>) {
-		self.application?.holder.callMethod("dispatchTouchMove", arguments: [self.toTouchArray(touches, from: self.view)], result: nil)
-	}
-
-	/**
-	 * Dispatches a touchend event.
-	 * @method dispatchTouchEnd
-	 * @since 0.7.0
-	 */
-	open func dispatchTouchEnd(_ touches: Set<UITouch>) {
-		self.application?.holder.callMethod("dispatchTouchEnd", arguments: [self.toTouchArray(touches, from: self.view)], result: nil)
 	}
 
 	/**
@@ -800,17 +765,127 @@ open class ApplicationController: UIViewController {
 	}
 
 	/**
-	 * @method toTouchArray
+	 * @method handleEnterBackground
+	 * @since 0.7.0
+ 	 * @hidden
+	 */
+	@objc open func handleEnterBackground() {
+		self.didEnterBackground()
+	}
+
+	/**
+	 * @method handleEnterForeground
+	 * @since 0.7.0
+ 	 * @hidden
+	 */
+	@objc open func handleEnterForeground() {
+		self.didEnterForeground()
+	}
+
+	/**
+	 * @method handleKeyboardWillChangeFrame
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private func toTouchArray(_ changed: Set<UITouch>, from: UIView) -> JavaScriptValue {
+	@objc open func handleKeyboardWillChangeFrame(_ notification: Notification) {
+
+		if let data = (notification as NSNotification).userInfo {
+
+			if (self.keyboardVisible == false) {
+				self.keyboardVisible = true
+				self.keyboardWillShow(notification)
+				return
+			}
+
+			let bounds = self.view.bounds
+			let fe = (data[UIResponder.keyboardFrameEndUserInfoKey]! as AnyObject).cgRectValue
+			let fb = (data[UIResponder.keyboardFrameBeginUserInfoKey]! as AnyObject).cgRectValue
+
+			if (fe?.origin.y != fb?.origin.y && fe?.origin.y == bounds.size.height) {
+				if (self.keyboardVisible) {
+					self.keyboardVisible = false
+					self.keyboardWillHide(notification)
+					return
+				}
+			}
+
+			if (self.keyboardResizing == false) {
+				self.keyboardResizing = true
+				self.keyboardWillResize(notification)
+			}
+		}
+	}
+
+	/**
+	 * @method handleKeyboardDidChangeFrame
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@objc open func handleKeyboardDidChangeFrame(_ notification: Notification) {
+
+		if (self.keyboardResizing) {
+			self.keyboardResizing = false
+			self.keyboardDidResize(notification)
+			return
+		}
+
+		if (self.keyboardVisible) {
+			self.keyboardDidShow(notification)
+		} else {
+			self.keyboardDidHide(notification)
+		}
+	}
+
+	//--------------------------------------------------------------------------
+	// MARK: Private API
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method registerObservers
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private func registerObservers() {
+		NotificationCenter.default.addObserver(self, selector: #selector(handleTouchBegan), name: ApplicationDelegate.touchesBeganNotification, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(handleTouchMoved), name: ApplicationDelegate.touchesMovedNotification, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(handleTouchEnded), name: ApplicationDelegate.touchesEndedNotification, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(handleTouchCancelled), name: ApplicationDelegate.touchesCancelledNotification, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(handleResourceURL), name: ApplicationDelegate.openResourceURLNotification, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(handleUniversalURL), name: ApplicationDelegate.openUniversalURLNotification, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(handleEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(handleEnterBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardWillChangeFrame), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardDidChangeFrame), name: UIResponder.keyboardDidChangeFrameNotification, object: nil)
+	}
+
+	/**
+	 * @method unregisterObservers
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private func unregisterObservers() {
+
+	}
+
+	/**
+	 * @method dispatchTouchEvent
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private func dispatchTouchEvent(_ name: String, touches: Set<UITouch>) {
+
+		guard let application = self.application else {
+			return
+		}
 
 		let array = self.context.createEmptyArray()
 
-		for (i, t) in changed.enumerated() {
+		for (i, t) in touches.enumerated() {
 
-			let point = t.location(in: from)
+			let point = t.location(
+				in: self.view
+			)
+
 			let touch = self.context.createEmptyObject()
 			touch.property("identifier", number: Double(unsafeBitCast(t, to: Int.self)))
 			touch.property("x", number: Double(point.x))
@@ -819,50 +894,100 @@ open class ApplicationController: UIViewController {
 			array.property(i, value: touch)
 		}
 
-		return array
-	}
-
-	//--------------------------------------------------------------------------
-	// MARK: Methods - Application related
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method applicationDidEnterBackground
-	 * @since 0.7.0
- 	 * @hidden
-	 */
-	@objc open func applicationDidEnterBackground() {
-		self.application?.holder.callMethod("nativeEnterBackground")
+		application.holder.callMethod(name, arguments: [array], result: nil)
 	}
 
 	/**
-	 * @method applicationDidEnterForeground
+	 * @method dispatchKeyboardEvent
 	 * @since 0.7.0
- 	 * @hidden
+	 * @hidden
 	 */
-	@objc open func applicationDidEnterForeground() {
-		self.application?.holder.callMethod("nativeEnterForeground")
-	}
+	private func dispatchKeyboardEvent(_ name: String, notification: Notification) {
 
-	/**
-	 * @method applicationDidHandleLink
-	 * @since 0.7.0
- 	 * @hidden
-	 */
-	@objc open func applicationDidHandleLink(notification: Notification) {
-		if let url = notification.userInfo?["url"] as? URL {
-			self.application?.holder.callMethod("nativeHandleLink", arguments: [self.context.createString(url.absoluteString)])
+		guard let application = self.application else {
+			return
+		}
+
+		if let data = (notification as NSNotification).userInfo {
+
+			let frame = (data[UIResponder.keyboardFrameEndUserInfoKey]! as AnyObject).cgRectValue
+			let curve = data[UIResponder.keyboardAnimationCurveUserInfoKey] as! Int
+			let duration = data[UIResponder.keyboardAnimationDurationUserInfoKey] as! Double
+
+			let equation: String
+
+			switch (curve) {
+				case UIView.AnimationCurve.easeInOut.rawValue:
+					equation = "easeinout"
+				case UIView.AnimationCurve.easeIn.rawValue:
+					equation = "easein"
+				case UIView.AnimationCurve.easeOut.rawValue:
+					equation = "easeout"
+				case UIView.AnimationCurve.linear.rawValue:
+					equation = "linear"
+				default:
+					equation = "cubic-bezier(0.380, 0.700, 0.125, 1.000)"
+			}
+
+			let height = Double((frame?.size.height)!)
+
+			let args = [
+				self.context.createNumber(height),
+				self.context.createNumber(duration * 1000),
+				self.context.createString(equation)
+			]
+
+			application.holder.callMethod(name, arguments: args, result: nil)
 		}
 	}
 
 	/**
-	 * @method applicationDidHandleResource
+	 * @method isDev
 	 * @since 0.7.0
- 	 * @hidden
+	 * @hidden
 	 */
-	@objc open func applicationDidHandleResource(notification: Notification) {
-		if let url = notification.userInfo?["url"] as? URL {
-			self.application?.holder.callMethod("nativeHandleResource", arguments: [self.context.createString(url.absoluteString)])
-		}
+	private func isDev() -> Bool {
+		#if DEBUG
+			return true
+		#else
+			return false
+		#endif
+	}
+
+	/**
+	 * @method isSim
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private func isSim() -> Bool {
+		#if arch(i386) || arch(x86_64)
+			return true
+		#else
+			return false
+		#endif
+	}
+}
+
+/**
+ * @const kApplicationControllerKey
+ * @since 0.7.0
+ * @hidden
+ */
+internal let kApplicationControllerKey = NSObject()
+
+/**
+ * @extension JavaScriptContext
+ * @since 0.7.0
+ * @hidden
+ */
+public extension JavaScriptContext {
+
+	/**
+	 * @property container
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	var application: ApplicationController {
+		return self.attribute(kApplicationControllerKey) as! ApplicationController
 	}
 }

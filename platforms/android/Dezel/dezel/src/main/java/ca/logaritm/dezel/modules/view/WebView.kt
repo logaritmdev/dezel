@@ -2,6 +2,7 @@ package ca.logaritm.dezel.modules.view
 
 import android.util.Size
 import android.util.SizeF
+import ca.logaritm.dezel.application.application
 import ca.logaritm.dezel.core.JavaScriptContext
 import ca.logaritm.dezel.core.JavaScriptFunctionCallback
 import ca.logaritm.dezel.extension.ceiled
@@ -17,7 +18,7 @@ import ca.logaritm.dezel.view.graphic.Convert
 open class WebView(context: JavaScriptContext) : View(context), ContentWebViewListener {
 
 	//--------------------------------------------------------------------------
-	// MARK: Properties
+	// Properties
 	//--------------------------------------------------------------------------
 
 	/**
@@ -29,7 +30,7 @@ open class WebView(context: JavaScriptContext) : View(context), ContentWebViewLi
 		get() = this.content as ContentWebView
 	
 	//--------------------------------------------------------------------------
-	// MARK: Methods
+	// Methods
 	//--------------------------------------------------------------------------
 
 	/**
@@ -69,7 +70,7 @@ open class WebView(context: JavaScriptContext) : View(context), ContentWebViewLi
 	}
 
 	//--------------------------------------------------------------------------
-	// MARK: WebView Listener
+	// WebView Listener
 	//--------------------------------------------------------------------------
 
 	/**
@@ -116,7 +117,7 @@ open class WebView(context: JavaScriptContext) : View(context), ContentWebViewLi
 	}
 
 	//--------------------------------------------------------------------------
-	// MARK: JS Methods
+	// JS Methods
 	//--------------------------------------------------------------------------
 
 	/**
