@@ -1,9 +1,22 @@
-//
-//  Data.swift
-//  Dezel
-//
-//  Created by Jean-Philippe Déry on 2019-07-17.
-//  Copyright © 2019 Jean-Philippe Déry. All rights reserved.
-//
+/**
+ * @extension Date
+ * @since 0.7.0
+ * @hidden
+ */
+internal extension Data {
 
-import Foundation
+	var string: String {
+		return String(data: self as Data, encoding: .utf8)!
+	}
+
+}
+
+internal extension NSMutableData {
+
+	var string: String {
+		return String(data: self as Data, encoding: .utf8)!
+	}
+
+}
+
+

@@ -1,9 +1,16 @@
-//
-//  CADisplayLink.swift
-//  Dezel
-//
-//  Created by Jean-Philippe Déry on 2019-07-16.
-//  Copyright © 2019 Jean-Philippe Déry. All rights reserved.
-//
+/**
+ * @extension CADisplayLink
+ * @since 0.7.0
+ * @hidden
+ */
+internal extension CADisplayLink {
 
-import Foundation
+	/**
+	 * @method setup
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	func setup() {
+		self.add(to: .main, forMode: .common)
+	}
+}
