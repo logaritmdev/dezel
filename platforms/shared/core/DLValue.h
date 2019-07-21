@@ -441,7 +441,21 @@ void DLValueDataSetAssociatedObject(DLValueDataRef data, void *associatedObject)
  * @function DLValueDataGetAssociatedObject
  * @since 0.1.0
  */
-void * DLValueDataGetAssociatedObject(DLValueDataRef data);
+void* DLValueDataGetAssociatedObject(DLValueDataRef data);
+
+/**
+ * Loop through all the values of an array.
+ * @function DLValueForEach
+ * @since 0.7.0
+ */
+void DLValueForEach(JSContextRef context, JSValueRef value, DLValueForEachHandler callback, void* data);
+
+/**
+ * Loop through all the values of an object.
+ * @function DLValueForOwn
+ * @since 0.7.0
+ */
+void DLValueForOwn(JSContextRef context, JSValueRef value, DLValueForOwnHandler callback, void* data);
 
 #if __cplusplus
 }

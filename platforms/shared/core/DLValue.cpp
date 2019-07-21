@@ -693,3 +693,45 @@ DLValueDataGetAssociatedObject(DLValueDataRef data)
 {
 	return data->associatedObject;
 }
+
+void
+DLValueForEach(JSContextRef context, JSValueRef value, DLValueForEachHandler callback, void* data)
+{
+	JSObjectRef object = DLValueToObject(context, value);
+	if (object == NULL) {
+		return;
+	}
+
+	JSValueRef length = DLValueGetProperty(context, object, "length");
+	if (length == NULL) {
+		return;
+	}
+
+	int len = (int) DLValueToNumber(context, length);
+
+	for (int i = 0; i < len; i++) {
+		callback(context, DLValueGetPropertyAtIndex(context, object, i), i, data);
+	}
+}
+
+void
+DLValueForOwn(JSContextRef context, JSValueRef value, DLValueForOwnHandler callback, void* data)
+{
+	JSObjectRef object = DLValueToObject(context, value);
+	if (object == NULL) {
+		return;
+	}
+
+	JSPropertyNameArrayRef properties = JSObjectCopyPropertyNames(context, object);
+
+	size_t len = JSPropertyNameArrayGetCount(properties);
+
+	for (size_t i = 0; i < len; i++) {
+
+		JSStringRef name = JSPropertyNameArrayGetNameAtIndex(properties, i);
+		auto string = DLStringCreate(context, name);
+		JSStringRelease(name);
+
+		callback(context, DLValueGetProperty(context, object, string), string, data);
+	}
+}

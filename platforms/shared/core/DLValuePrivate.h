@@ -76,4 +76,11 @@ JSValueRef DLFunctionConvertToStringHandler(JSContextRef context, JSObjectRef ca
  */
 void DLValueFinalizeHandler(JSObjectRef object);
 
+/**
+ * @function DLStringCreate
+ * @since 0.7.0
+ * @hidden
+ */
+char* DLStringCreate(JSContextRef context, JSStringRef string);
+
 #endif

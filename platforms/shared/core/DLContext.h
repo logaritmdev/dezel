@@ -14,6 +14,20 @@
  */
 typedef void (*DLExceptionHandler)(JSContextRef context, JSValueRef error);
 
+/**
+ * The array for each callback.
+ * @typedef DLValueForEachHandler
+ * @since 0.7.0
+ */
+typedef void (*DLValueForEachHandler)(JSContextRef context, JSValueRef value, int index, void* data);
+
+/**
+ * The object for each callback.
+ * @typedef DLValueForOwnHandler
+ * @since 0.7.0
+ */
+typedef void (*DLValueForOwnHandler)(JSContextRef context, JSValueRef value, const char *name, void* data);
+
 #if __cplusplus
 extern "C" {
 #endif
