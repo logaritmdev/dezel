@@ -67,13 +67,11 @@ open class JavaScriptContext: NSObject {
 	internal(set) public var classes: [String: JavaScriptValue] = [:]
 
 	/**
-	 * The context's console.
-	 * @property exports
-	 * @since 0.4.0
-	 */
-	internal(set) public lazy var console: JavaScriptConsole! = {
-		return JavaScriptConsole(context: self)
-	}()
+     * The context's registered globals.
+     * @property globals
+     * @since 0.7.0
+     */
+	internal(set) public var globals: [String: JavaScriptValue] = [:]
 
 	/**
 	 * @property running
@@ -104,21 +102,6 @@ open class JavaScriptContext: NSObject {
 			global = this;
 			window = this;
 
-			(function() {
-
-				var log = console.log.bind(console);
-
-				console.log = function() {
-					log.apply(this, arguments)
-					//dezel.log.apply(dezel, arguments)
-				};
-
-			})();
-
-			const __throwError = function(error) {
-				throw (typeof error == 'string' ? new Error(error) : error)
-			}
-
 		"""
 
 		self.evaluate(code);
@@ -140,7 +123,7 @@ open class JavaScriptContext: NSObject {
 	 */
 	open func registerModules(_ modules: [String: AnyClass]) {
 		modules.forEach {
-			self.registerModule($0.key, value: $0.value)
+			self.registerModule($0.key, with: $0.value)
 		}
 	}
 
@@ -151,7 +134,7 @@ open class JavaScriptContext: NSObject {
 	 */
 	open func registerObjects(_ objects: [String: AnyClass]) {
 		objects.forEach {
-			self.registerObject($0.key, value: $0.value)
+			self.registerObject($0.key, with: $0.value)
 		}
 	}
 
@@ -162,7 +145,7 @@ open class JavaScriptContext: NSObject {
 	 */
 	open func registerClasses(_ classes: [String: AnyClass]) {
 		classes.forEach {
-			self.registerClass($0.key, value: $0.value)
+			self.registerClass($0.key, with: $0.value)
 		}
 	}
 
@@ -171,7 +154,7 @@ open class JavaScriptContext: NSObject {
      * @method registerModule
      * @since 0.1.0
      */
-	open func registerModule(_ uid: String, value: AnyClass) {
+	open func registerModule(_ uid: String, with value: AnyClass) {
 		self.modules[uid] = Module.create(value, context: self)
 	}
 
@@ -180,7 +163,7 @@ open class JavaScriptContext: NSObject {
 	 * @method registerObject
 	 * @since 0.1.0
 	 */
-	open func registerObject(_ uid: String, value: AnyClass) {
+	open func registerObject(_ uid: String, with value: AnyClass) {
 		self.objects[uid] = self.createObject(value)
 	}
 
@@ -189,7 +172,7 @@ open class JavaScriptContext: NSObject {
 	 * @method registerClass
 	 * @since 0.1.0
 	 */
-	open func registerClass(_ uid: String, value: AnyClass) {
+	open func registerClass(_ uid: String, with value: AnyClass) {
 		self.classes[uid] = self.createClass(value)
 	}
 
@@ -421,7 +404,7 @@ open class JavaScriptContext: NSObject {
 	open func attribute(_ key: AnyObject, value: AnyObject?) {
 		let hash = toHash(key)
 		DLContextGetAttribute(self.handle, hash)?.release()
-		DLContextSetAttribute(self.handle, hash, toOpaque(value))
+		DLContextSetAttribute(self.handle, hash, toRetainedOpaque(value))
 	}
 
 	/**
@@ -439,26 +422,8 @@ open class JavaScriptContext: NSObject {
 	 * @since 0.6.0
 	 */
 	open func handleError(handler: @escaping JavaScriptExceptionHandler) {
-		DLContextSetExceptionHandler(self.handle, contextExceptionCallback)
+		DLContextSetExceptionHandler(self.handle, JavaScriptContextExceptionCallback)
 		DLContextSetAttribute(self.handle, kExceptionWrapperKey, Unmanaged.passRetained(JavaScriptExceptionWrapper(context: self, handler: handler)).toOpaque())
-	}
-
-	/**
-	 * Throws an error.
-     * @method throwError
-     * @since 0.1.0
-     */
-	open func throwError(_ error: JavaScriptValue) {
-		self.global.callMethod("__throwError", arguments: [error])
-	}
-
-	/**
-	 * Throws an error.
-     * @method throwError
-     * @since 0.1.0
-     */
-	open func throwError(string: String) {
-		self.global.callMethod("__throwError", arguments: [self.createString(string)])
 	}
 
 	/**
@@ -468,6 +433,30 @@ open class JavaScriptContext: NSObject {
      */
 	open func garbageCollect() {
 		JSGarbageCollect(self.handle)
+	}
+}
+
+/**
+ * @extension JavaScriptContext
+ * @since 0.7.0
+ * @hidden
+ */
+internal extension JavaScriptContext {
+
+	/**
+	 * @method createObject
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	func createObject(_ dictionary: [String: String]) -> JavaScriptValue {
+
+		let result = self.createEmptyObject()
+
+		for (key, val) in dictionary {
+			result.property(key, value: self.createString(val))
+		}
+
+		return result
 	}
 }
 
@@ -482,7 +471,7 @@ public typealias JavaScriptExceptionHandler = (JavaScriptValue) -> (Void)
  * @since 0.1.0
  * @hidden
  */
-private let contextExceptionCallback: @convention(c) (JSContextRef?, JSValueRef?) -> Void = { context, error in
+private let JavaScriptContextExceptionCallback: @convention(c) (JSContextRef?, JSValueRef?) -> Void = { context, error in
 
 	let error = error!
 	let context = context!

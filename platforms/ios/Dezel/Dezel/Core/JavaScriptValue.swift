@@ -411,7 +411,7 @@ open class JavaScriptValue : NSObject {
 	 * @method defineProperty
 	 * @since 0.1.0
 	 */
-	public func defineProperty(_ property: String, value: JavaScriptValue?, getter: JavaScriptGetterHandler?, setter: JavaScriptSetterHandler?, writable: Bool, enumerable: Bool, configurable: Bool) {
+	public func defineProperty(_ property: String, value: JavaScriptValue?, getter: JavaScriptGetterHandler? = nil, setter: JavaScriptSetterHandler? = nil, writable: Bool = true, enumerable: Bool = true, configurable: Bool = true) {
 
 		if let value = value {
 			DLValueDefineProperty(self.context.handle, self.handle, property, nil, nil, toHandle(value, in: self.context), writable, enumerable, configurable)
@@ -581,17 +581,27 @@ open class JavaScriptValue : NSObject {
 	}
 
 	/**
-	 * Convenience method to loop through this value's array values.
+	 * Loops through the array values.
 	 * @method forEach
-	 * @since 0.1.0
+	 * @since 0.7.0
 	 */
-	public func forEach(_ handler: JavaScriptForEachHandler) {
-		let length = self.length()
-		if (length > 0) {
-			for i in 0 ..< length {
-				handler(i, self.property(i))
-			}
-		}
+	public func forEach(_ handler: @escaping JavaScriptForEachHandler) {
+		let wrapper = JavaScriptValueForEachWrapper(context: self.context, handler: handler)
+		DLValueForEach(self.context.handle, self.handle, JavaScriptValueForEachCallback,
+			toUnretainedOpaque(wrapper)
+		)
+	}
+
+	/**
+	 * Loops through the object properties.
+	 * @method forOwn
+	 * @since 0.7.0
+	 */
+	public func forOwn(_ handler: @escaping JavaScriptForOwnHandler) {
+		let wrapper = JavaScriptValueForOwnWrapper(context: self.context, handler: handler)
+		DLValueForOwn(self.context.handle, self.handle, JavaScriptValueForOwnCallback,
+			toUnretainedOpaque(wrapper)
+		)
 	}
 
 	/**
@@ -712,6 +722,99 @@ open class JavaScriptValue : NSObject {
 }
 
 /**
+ * @extension JavaScriptValue
+ * @since 0.7.0
+ * @hidden
+ */
+internal extension JavaScriptValue {
+
+	/**
+	 * @method toTimeInterval
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	func toURL() -> URL? {
+		return URL(string: self.string)
+	}
+
+	/**
+	 * @method toTimeInterval
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	func toTimeInterval() -> TimeInterval {
+		return TimeInterval(self.number)
+	}
+
+	/**
+	 * @method toArrayOfString
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	func toArrayOfString() -> [String] {
+
+		var array: [String] = []
+
+		self.forEach { index, value in
+			array.append(value.string)
+		}
+
+		return array
+	}
+
+	/**
+	 * @method toArrayOfNumber
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	func toArrayOfNumber() -> [Double] {
+
+		var array: [Double] = []
+
+		self.forEach { index, value in
+			array.append(value.number)
+		}
+
+		return array
+	}
+
+	/**
+	 * @method toDictionaryOfString
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	func toDictionaryOfString() -> [String: String] {
+
+		var dictionary: [String: String] = [:]
+
+		self.forOwn { property, value in
+			dictionary[property] = value.string
+		}
+
+		return dictionary
+	}
+
+	/**
+	 * @method toTimeInterval
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	func toDictionaryOfNumber() -> [String: Double] {
+
+		var dictionary: [String: Double] = [:]
+
+		self.forOwn { property, value in
+			dictionary[property] = value.number
+		}
+
+		return dictionary
+	}
+}
+
+internal let kFinalizeWrapperKey = Int64(CChar(exactly:0)!.hashValue)
+internal let kExceptionWrapperKey = Int64(CChar(exactly: 0)!.hashValue)
+
+/**
  * The type alias for function callback.
  * @alias JavaScriptFinalizeHandler
  * @since 0.2.0
@@ -747,11 +850,18 @@ public typealias JavaScriptSetterHandler = (JavaScriptSetterCallback) -> (Void)
 public typealias JavaScriptArguments = [JavaScriptValue?]
 
 /**
- * The for each callback alias.
- * @alias JavaScriptForEachHandler
- * @since 0.2.0
+ * The object for each handler
+ * @alias JavaScriptForOwnHandler
+ * @since 0.7.0
  */
-public typealias JavaScriptForEachHandler = (Int, JavaScriptValue) -> (Void)
+public typealias JavaScriptForOwnHandler = (String, JavaScriptValue) -> Void
+
+/**
+ * The array for each handler
+ * @alias JavaScriptForEachHandler
+ * @since 0.7.0
+ */
+public typealias JavaScriptForEachHandler = (Int, JavaScriptValue) -> Void
 
 /**
  * @function toHandle
@@ -816,23 +926,37 @@ internal func toHash(_ klass: AnyClass) -> Int64 {
 }
 
 /**
-* @function toHash
-* @since 0.1.0
-* @hidden
-*/
+ * @function toHash
+ * @since 0.1.0
+ * @hidden
+ */
 internal func toHash(_ string: String) -> Int64 {
 	return Int64(string.hashValue)
 }
 
 /**
-* @function toOpaque
-* @since 0.6.0
-* @hidden
-*/
-internal func toOpaque(_ value: AnyObject?) -> UnsafeMutableRawPointer? {
+ * @function toRetainedOpaque
+ * @since 0.7.0
+ * @hidden
+ */
+internal func toRetainedOpaque(_ value: AnyObject?) -> UnsafeMutableRawPointer? {
 
 	if let value = value {
 		return UnsafeMutableRawPointer(Unmanaged.passRetained(value).toOpaque())
+	}
+
+	return nil
+}
+
+/**
+ * @function toUnretainedOpaque
+ * @since 0.6.0
+ * @hidden
+ */
+internal func toUnretainedOpaque(_ value: AnyObject?) -> UnsafeMutableRawPointer? {
+
+	if let value = value {
+		return UnsafeMutableRawPointer(Unmanaged.passUnretained(value).toOpaque())
 	}
 
 	return nil
@@ -865,6 +989,3 @@ internal func toUnretainedObject(_ value: UnsafeMutableRawPointer?) -> AnyObject
 
 	return nil
 }
-
-internal let kFinalizeWrapperKey = Int64(CChar(exactly:0)!.hashValue)
-internal let kExceptionWrapperKey = Int64(CChar(exactly: 0)!.hashValue)

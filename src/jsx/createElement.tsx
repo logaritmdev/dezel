@@ -280,7 +280,7 @@ function set(view: any, key: string, value: any) {
  * @since 0.3.0
  * @hidden
  */
-Object.defineProperty(self, 'React', {
+Object.defineProperty(global, 'React', {
 
 	value: {
 		createElement

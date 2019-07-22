@@ -50,7 +50,7 @@ open class JavaScriptObject: JavaScriptValue {
 	public func attribute(_ key: AnyObject, value: AnyObject?) {
 		let hash = toHash(key)
 		DLValueGetAttribute(self.context.handle, self.handle, hash)?.release()
-		DLValueSetAttribute(self.context.handle, self.handle, hash, toOpaque(value))
+		DLValueSetAttribute(self.context.handle, self.handle, hash, toRetainedOpaque(value))
 	}
 
 	/**

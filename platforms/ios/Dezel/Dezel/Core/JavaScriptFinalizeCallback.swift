@@ -54,6 +54,6 @@ public final class JavaScriptFinalizeCallback {
 	public func attribute(_ key: AnyObject, value: AnyObject?) {
 		let hash = toHash(key)
 		DLValueDataGetAttribute(self.handle, hash)?.release()
-		DLValueDataSetAttribute(self.handle, hash, toOpaque(value))
+		DLValueDataSetAttribute(self.handle, hash, toRetainedOpaque(value))
 	}
 }

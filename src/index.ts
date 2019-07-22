@@ -1,4 +1,7 @@
+/* disable-sort-imports */
 /// <reference path="global.d.ts" />
+
+import './global'
 
 export { Device } from './device/Device'
 export { Platform } from './platform/Platform'
@@ -10,20 +13,25 @@ export { ApplicationOpenUniversalURLEvent } from './application/Application'
 
 export { Screen } from './screen/Screen'
 export { Switcher } from './screen/Switcher'
-export { SwitcherBeforeSelectEvent } from './screen/Switcher'
-export { SwitcherSelectEvent } from './screen/Switcher'
-export { SwitcherDeselectEvent } from './screen/Switcher'
 export { Header } from './screen/Header'
 export { Footer } from './screen/Footer'
 export { Content } from './screen/Content'
-export { ScreenBeforePresentEvent } from './screen/Screen'
-export { ScreenPresentEvent } from './screen/Screen'
-export { ScreenBeforeDismissEvent } from './screen/Screen'
-export { ScreenDismissEvent } from './screen/Screen'
+
+export { ScreenDismissGesture } from './screen/gesture/ScreenDismissGesture'
+export { ScreenSlideDismissGesture } from './screen/gesture/ScreenSlideDismissGesture'
+
 export { ScreenBeforeEnterEvent } from './screen/Screen'
-export { ScreenEnterEvent } from './screen/Screen'
 export { ScreenBeforeLeaveEvent } from './screen/Screen'
+export { ScreenEnterEvent } from './screen/Screen'
 export { ScreenLeaveEvent } from './screen/Screen'
+export { ScreenBeforePresentEvent } from './screen/Screen'
+export { ScreenBeforeDismissEvent } from './screen/Screen'
+export { ScreenPresentEvent } from './screen/Screen'
+export { ScreenDismissEvent } from './screen/Screen'
+export { SwitcherBeforeSelectEvent } from './screen/Switcher'
+export { SwitcherSelectEvent } from './screen/Switcher'
+export { SwitcherDeselectEvent } from './screen/Switcher'
+
 export { ScreenTransition } from './screen/transition/ScreenTransition'
 export { ScreenTransitionRegistry } from './screen/transition/ScreenTransition'
 export { ScreenNoneTransition } from './screen/transition/ScreenNoneTransition'
@@ -31,8 +39,6 @@ export { ScreenFadeTransition } from './screen/transition/ScreenFadeTransition'
 export { ScreenSlideTransition } from './screen/transition/ScreenSlideTransition'
 export { ScreenCoverTransition } from './screen/transition/ScreenCoverTransition'
 export { ScreenDissolveTransition } from './screen/transition/ScreenDissolveTransition'
-export { ScreenDismissGesture } from './screen/gesture/ScreenDismissGesture'
-export { ScreenSlideDismissGesture } from './screen/gesture/ScreenSlideDismissGesture'
 
 export { Host } from './component/Host'
 export { Slot } from './component/Slot'
