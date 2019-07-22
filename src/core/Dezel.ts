@@ -1,3 +1,4 @@
+import { Application } from '../application/Application'
 
 /**
  * TODO
@@ -8,17 +9,46 @@ export class Dezel {
 
 	/**
 	 * Imports a native class.
-	 * @method import
+	 * @method importClass
 	 * @since 0.7.0
 	 */
-	public static import(className: string, init: boolean = false): any {
+	public static importClass(uid: string, init: boolean = false): any {
 
-		let Class = this.cache[className]
+		let Class = this.classes[uid]
 		if (Class == null) {
-			Class = this.cache[className] = importClass(className)
+			Class = this.classes[uid] = importClass(uid)
 		}
 
 		return init ? new Class : Class
+	}
+
+	/**
+	 * Imports a native object.
+	 * @method importObject
+	 * @since 0.7.0
+	 */
+	public static importObject(uid: string) {
+
+		let object = this.objects[uid]
+		if (object == null) {
+			object = this.objects[uid] = importObject(uid)
+		}
+
+		return object
+	}
+
+	/**
+	 * Register the main application.
+	 * @method registerApplication
+	 * @since 0.7.0
+	 */
+	public static registerApplication(application: Application, uid: string = '') {
+
+		if (uid == '') {
+			uid = 'default'
+		}
+
+		registerApplication(toNative(application), uid || 'dezel.application.main')
 	}
 
 	//--------------------------------------------------------------------------
@@ -26,11 +56,18 @@ export class Dezel {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @property cache
+	 * @property classes
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private static cache: any = {}
+	private static classes: any = {}
+
+	/**
+	 * @property objects
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private static objects: any = {}
 
 	/**
 	 * @property native
