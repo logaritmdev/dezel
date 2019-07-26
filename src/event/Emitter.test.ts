@@ -16,8 +16,8 @@ describe('Emitter', () => {
 
 	it('should register an event listener', () => {
 
-		let l1 = jest.fn()
-		let l2 = jest.fn()
+		let l1 = jasmine.createSpy()
+		let l2 = jasmine.createSpy()
 
 		emitter.on('event', l1)
 		emitter.on('EVENT', l2)
@@ -30,8 +30,8 @@ describe('Emitter', () => {
 
 	it('should register an event that will run only once', () => {
 
-		let l1 = jest.fn()
-		let l2 = jest.fn()
+		let l1 = jasmine.createSpy()
+		let l2 = jasmine.createSpy()
 
 		emitter.one('event', l1)
 		emitter.one('EVENT', l2)
@@ -44,8 +44,8 @@ describe('Emitter', () => {
 
 	it('should unregister an event listener', () => {
 
-		let l1 = jest.fn()
-		let l2 = jest.fn()
+		let l1 = jasmine.createSpy()
+		let l2 = jasmine.createSpy()
 
 		emitter.on('event', l1)
 		emitter.on('EVENT', l2)
@@ -54,51 +54,51 @@ describe('Emitter', () => {
 		emitter.off('EVENT', l2)
 
 		let listeners = getListeners(emitter, 'event')
-		expect(listeners[0]).toBe(undefined)
-		expect(listeners[1]).toBe(undefined)
+		expect(listeners[0]).toBeUndefined()
+		expect(listeners[1]).toBeUndefined()
 
 	})
 
 	it('should emit an event', () => {
 
-		let l1 = jest.fn()
-		let l2 = jest.fn()
+		let l1 = jasmine.createSpy()
+		let l2 = jasmine.createSpy()
 
 		emitter.on('event', l1)
 		emitter.on('EVENT', l2)
 
 		emitter.emit('event')
 
-		expect(l1).toHaveBeenCalledWith(expect.any(Event))
+		expect(l1).toHaveBeenCalledWith(jasmine.any(Event))
 		expect(l1).toHaveBeenCalledTimes(1)
-		expect(l2).toHaveBeenCalledWith(expect.any(Event))
+		expect(l2).toHaveBeenCalledWith(jasmine.any(Event))
 		expect(l2).toHaveBeenCalledTimes(1)
 
 	})
 
 	it('should emit an event with a specific event object', () => {
 
-		let l1 = jest.fn()
-		let l2 = jest.fn()
+		let l1 = jasmine.createSpy()
+		let l2 = jasmine.createSpy()
 
 		emitter.on('event', l1)
 		emitter.on('EVENT', l2)
 
 		emitter.emit(new Event('event'))
 
-		expect(l1).toHaveBeenCalledWith(expect.any(Event))
+		expect(l1).toHaveBeenCalledWith(jasmine.any(Event))
 		expect(l1).toHaveBeenCalledTimes(1)
-		expect(l2).toHaveBeenCalledWith(expect.any(Event))
+		expect(l2).toHaveBeenCalledWith(jasmine.any(Event))
 		expect(l2).toHaveBeenCalledTimes(1)
 
 	})
 
 	it('should execute the listener the right amount of time', () => {
 
-		let l1 = jest.fn()
-		let l2 = jest.fn()
-		let l3 = jest.fn()
-		let l4 = jest.fn()
+		let l1 = jasmine.createSpy()
+		let l2 = jasmine.createSpy()
+		let l3 = jasmine.createSpy()
+		let l4 = jasmine.createSpy()
 
 		emitter.on('event', l1)
 		emitter.on('EVENT', l2)
@@ -110,25 +110,25 @@ describe('Emitter', () => {
 		emitter.emit('event')
 		emitter.emit('event')
 
-		expect(l1).toHaveBeenCalledWith(expect.any(Event))
+		expect(l1).toHaveBeenCalledWith(jasmine.any(Event))
 		expect(l1).toHaveBeenCalledTimes(3)
-		expect(l2).toHaveBeenCalledWith(expect.any(Event))
+		expect(l2).toHaveBeenCalledWith(jasmine.any(Event))
 		expect(l2).toHaveBeenCalledTimes(3)
-		expect(l3).toHaveBeenCalledWith(expect.any(Event))
+		expect(l3).toHaveBeenCalledWith(jasmine.any(Event))
 		expect(l3).toHaveBeenCalledTimes(1)
-		expect(l4).toHaveBeenCalledWith(expect.any(Event))
+		expect(l4).toHaveBeenCalledWith(jasmine.any(Event))
 		expect(l4).toHaveBeenCalledTimes(1)
 	})
 
 	it('should execute the internal onEmit listener', () => {
 
-		emitter.onEmit = jest.fn()
+		emitter.onEmit = jasmine.createSpy()
 
 		emitter.emit('event')
 		emitter.emit('event')
 		emitter.emit('event')
 
-		expect(emitter.onEmit).toHaveBeenCalledWith(expect.any(Event))
+		expect(emitter.onEmit).toHaveBeenCalledWith(jasmine.any(Event))
 		expect(emitter.onEmit).toHaveBeenCalledTimes(3)
 	})
 
@@ -139,17 +139,17 @@ describe('Emitter', () => {
 
 		setResponders(emitter, [r1, r2])
 
-		let l1 = jest.fn(event => {
+		let l1 = jasmine.createSpy().and.callFake((event: Event) => {
 			expect(event.target).toBe(emitter)
 			expect(event.sender).toBe(emitter)
 		})
 
-		let l2 = jest.fn(event => {
+		let l2 = jasmine.createSpy().and.callFake((event: Event) => {
 			expect(event.target).toBe(emitter)
 			expect(event.sender).toBe(r1)
 		})
 
-		let l3 = jest.fn(event => {
+		let l3 = jasmine.createSpy().and.callFake((event: Event) => {
 			expect(event.target).toBe(emitter)
 			expect(event.sender).toBe(r2)
 		})
@@ -169,9 +169,9 @@ describe('Emitter', () => {
 
 		setResponders(emitter, [r1, r2])
 
-		let l1 = jest.fn()
-		let l2 = jest.fn()
-		let l3 = jest.fn()
+		let l1 = jasmine.createSpy()
+		let l2 = jasmine.createSpy()
+		let l3 = jasmine.createSpy()
 
 		emitter.on('event', l1)
 		r1.on('event', l2)
@@ -179,11 +179,11 @@ describe('Emitter', () => {
 
 		emitter.emit(new Event('event', { propagable: true }))
 
-		expect(l1).toHaveBeenCalledWith(expect.any(Event))
+		expect(l1).toHaveBeenCalledWith(jasmine.any(Event))
 		expect(l1).toHaveBeenCalledTimes(1)
-		expect(l2).toHaveBeenCalledWith(expect.any(Event))
+		expect(l2).toHaveBeenCalledWith(jasmine.any(Event))
 		expect(l2).toHaveBeenCalledTimes(1)
-		expect(l3).toHaveBeenCalledWith(expect.any(Event))
+		expect(l3).toHaveBeenCalledWith(jasmine.any(Event))
 		expect(l3).toHaveBeenCalledTimes(1)
 
 	})
@@ -195,9 +195,9 @@ describe('Emitter', () => {
 
 		setResponders(emitter, [r1, r2])
 
-		let l1 = jest.fn()
-		let l2 = jest.fn()
-		let l3 = jest.fn()
+		let l1 = jasmine.createSpy()
+		let l2 = jasmine.createSpy()
+		let l3 = jasmine.createSpy()
 
 		emitter.on('event', l1)
 		r1.on('event', l2)
@@ -205,7 +205,7 @@ describe('Emitter', () => {
 
 		emitter.emit(new Event('event', { propagable: false }))
 
-		expect(l1).toHaveBeenCalledWith(expect.any(Event))
+		expect(l1).toHaveBeenCalledWith(jasmine.any(Event))
 		expect(l1).toHaveBeenCalledTimes(1)
 		expect(l2).not.toHaveBeenCalled()
 		expect(l3).not.toHaveBeenCalled()
@@ -219,12 +219,12 @@ describe('Emitter', () => {
 
 		setResponders(emitter, [r1, r2])
 
-		let l1 = jest.fn(e => {
-			e.cancel()
+		let l1 = jasmine.createSpy().and.callFake((event: Event) => {
+			event.cancel()
 		})
 
-		let l2 = jest.fn()
-		let l3 = jest.fn()
+		let l2 = jasmine.createSpy()
+		let l3 = jasmine.createSpy()
 
 		emitter.on('event', l1)
 		r1.on('event', l2)
@@ -235,7 +235,7 @@ describe('Emitter', () => {
 			cancelable: true
 		}))
 
-		expect(l1).toHaveBeenCalledWith(expect.any(Event))
+		expect(l1).toHaveBeenCalledWith(jasmine.any(Event))
 		expect(l1).toHaveBeenCalledTimes(1)
 		expect(l2).not.toHaveBeenCalled()
 		expect(l3).not.toHaveBeenCalled()

@@ -164,7 +164,6 @@ export class WebSocket extends EventTarget {
 
 		super()
 
-		console.log('WS: open ?')
 		if (protocols) {
 			protocols = Array.isArray(protocols) ? protocols : [protocols]
 		}
@@ -174,7 +173,7 @@ export class WebSocket extends EventTarget {
 			this[READY_STATE] = WebSocket.CLOSED
 			throw Exception.create(Exception.Code.SyntaxError)
 		}
-		console.log('WS: open ', url)
+
 		this.native.open(url, protocols)
 	}
 
@@ -184,7 +183,7 @@ export class WebSocket extends EventTarget {
 	 * @since 0.7.0
 	 */
 	public send(data: string) {
-		console.log('WS: Send ?')
+
 		if (this.readyState == WebSocket.CONNECTING) {
 			throw Exception.create(Exception.Code.InvalidStateError)
 		}
@@ -193,7 +192,7 @@ export class WebSocket extends EventTarget {
 			this.readyState == WebSocket.CLOSED) {
 			return
 		}
-		console.log('WS: Send', data)
+
 		this.native.send(data)
 	}
 
@@ -203,7 +202,7 @@ export class WebSocket extends EventTarget {
 	 * @since 0.7.0
 	 */
 	public close(code?: number, reason?: number) {
-		console.log('WS: Close ?')
+
 		if (this.readyState == WebSocket.CLOSING ||
 			this.readyState == WebSocket.CLOSED) {
 			return
@@ -215,7 +214,7 @@ export class WebSocket extends EventTarget {
 		}
 
 		this[READY_STATE] = WebSocket.CLOSING
-		console.log('WS: Close')
+
 		this.native.close(code, reason)
 	}
 
@@ -306,7 +305,7 @@ export class WebSocket extends EventTarget {
 	}
 
 	/**
-	 * @method nativeOnMessage
+	 * @method nativeOnReceiveMessage
 	 * @sine 0.7.0
 	 * @hidden
 	 */

@@ -13,7 +13,7 @@ function decorate(constructor: Function, className: string) {
 
 		let native = this[key]
 		if (native == null) {
-			native = this[key] = Dezel.import(className, true)
+			native = this[key] = Dezel.importClass(className, true)
 			native.holder = this
 		}
 

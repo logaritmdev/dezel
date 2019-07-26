@@ -65,7 +65,7 @@ class JavaScriptContextTest: XCTestCase {
 
 	func testAttributes() {
 		// TODO
-		let val = NSObject()
+		//let val = NSObject()
 
 //		self.context.attribute("key1", value: val)
 //

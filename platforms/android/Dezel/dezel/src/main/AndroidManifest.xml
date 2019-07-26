@@ -1,9 +1,21 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" package="ca.logaritm.dezel">
+
     <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application android:testOnly="true" android:usesCleartextTraffic="true">
+        <activity android:name=".test.TestRunner" android:screenOrientation="portrait" android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
 
     <!--
+
+    <uses-permission android:name="android.permission.BLUETOOTH" />
     <application>
 
         <activity android:name=".MainActivity" android:screenOrientation="portrait" android:launchMode="singleTask">

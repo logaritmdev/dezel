@@ -9,6 +9,7 @@ import { Host } from './Host'
 import { Label } from './Label'
 import { NavigationBarBackButton } from './NavigationBarBackButton'
 import { NavigationBarButton } from './NavigationBarButton'
+import { Slot } from './Slot'
 import './NavigationBar.ds'
 import './NavigationBar.ds.android'
 import './NavigationBar.ds.ios'
@@ -18,11 +19,20 @@ import './NavigationBar.ds.ios'
  * @interface Refs
  * @since 0.7.0
  */
-interface Refs {
+export interface Refs {
 	title: Label
 	titleContainer: View
-	mainButtonsContainer: View
-	sideButtonsContainer: View
+}
+
+/**
+ * The internal slots.
+ * @interface Slots
+ * @since 0.7.0
+ */
+export interface Slots {
+	backButton: NavigationBar.BackButton
+	mainButtons: NavigationBar.MainButtons
+	sideButtons: NavigationBar.SideButtons
 }
 
 /**
@@ -31,7 +41,7 @@ interface Refs {
  * @super Component
  * @since 0.1.0
  */
-export class NavigationBar extends Component<Refs> {
+export class NavigationBar extends Component<Refs, Slots> {
 
 	//--------------------------------------------------------------------------
 	// Properties
@@ -47,78 +57,22 @@ export class NavigationBar extends Component<Refs> {
 	}
 
 	/**
-	 * The navigation bar's primary button.
-	 * @property mainButton
-	 * @since 0.4.0
-	 */
-	public get mainButton(): NavigationBarButton | null {
-		return this.mainButtons[0]
-	}
-
-	/**
-	 * The navigation bar's primary button.
-	 * @property mainButton
-	 * @since 0.4.0
-	 */
-	public set mainButton(value: NavigationBarButton | null) {
-		this.replaceMainButton(value)
-	}
-
-	/**
-	 * The navigation bar's button on the opposite side of the main button.
-	 * @property sideButton
-	 * @since 0.4.0
-	 */
-	public get sideButton(): NavigationBarButton | null {
-		return this.sideButtons[0]
-	}
-
-	/**
-	 * The navigation bar's button on the opposite side of the main button.
-	 * @property sideButton
-	 * @since 0.4.0
-	 */
-	public set sideButton(value: NavigationBarButton | null) {
-		this.replaceSideButton(value)
-	}
-
-	/**
-	 * The navigation bar's back button.
-	 * @property backButton
-	 * @since 0.4.0
-	 */
-	public get backButton(): NavigationBarBackButton | null {
-
-		let backButton = this.sideButtons[0]
-		if (backButton instanceof NavigationBarBackButton) {
-			return backButton
-		}
-
-		return null
-	}
-
-	/**
-	 * The navigation bar's back button.
-	 * @property backButton
-	 * @since 0.4.0
-	 */
-	public set backButton(value: NavigationBarBackButton | null) {
-		this.replaceBackButton(value)
-	}
-
-	/**
 	 * The navigation bar's primary buttons.
 	 * @property primaryButtons
 	 * @since 0.4.0
 	 */
-	@watch public mainButtons: Array<NavigationBarButton> = []
+	public get mainButtons(): NavigationBar.MainButtons {
+		return this.slots.mainButtons
+	}
 
 	/**
 	 * The navigation bar's buttons on the opposite side of the main buttons.
 	 * @property sideButtons
 	 * @since 0.4.0
 	 */
-	@watch public sideButtons: Array<NavigationBarButton> = []
+	public get sideButtons(): NavigationBar.SideButtons {
+		return this.slots.sideButtons
+	}
 
 	//--------------------------------------------------------------------------
 	// Methods
@@ -132,66 +86,18 @@ export class NavigationBar extends Component<Refs> {
 	public render() {
 		return (
 			<Host>
-				<View for={this} style="title-container" onBeforeLayout={this.onTitleContainerBeforeLayout}>
-					<Label for={this} style="title" />
+				<View style="buttons-container">
+					<NavigationBar.BackButton for={this} />
+					<NavigationBar.SideButtons for={this} />
+				</View>
+				<View for={this} id="titleContainer" style="title-container" onBeforeLayout={this.onTitleContainerBeforeLayout}>
+					<Label for={this} id="title" style="title" />
+				</View>
+				<View style="buttons-container">
+					<NavigationBar.MainButtons for={this} main={true} />
 				</View>
 			</Host>
 		)
-	}
-
-	/**
-	 * @inherited
-	 * @method onRender
-	 * @since 0.4.0
-	 */
-	public onRender() {
-
-		super.onRender()
-
-		let sideButtonContainer = <View for={this.refs.sideButtonsContainer} style="buttons-container" />
-		let mainButtonContainer = <View for={this.refs.mainButtonsContainer} style="buttons-container" />
-
-		if (Locale.current.ltr) {
-			this.insert(sideButtonContainer, 0)
-			this.append(mainButtonContainer)
-			return
-		}
-
-		if (Locale.current.rtl) {
-			this.insert(mainButtonContainer, 0)
-			this.append(sideButtonContainer)
-			return
-		}
-	}
-
-	/**
-	 * @inherited
-	 * @method onPropertyChange
-	 * @since 0.4.0
-	 */
-	public onPropertyChange(property: string, newValue: any, oldValue: any) {
-
-		if (property == 'mainButtons') {
-
-			let newButtons = newValue as Array<NavigationBarButton>
-			let oldButtons = oldValue as Array<NavigationBarButton>
-			if (oldButtons) for (let i = 0; i < oldButtons.length; i++) this.removeMainButton(oldButtons[i])
-			if (newButtons) for (let i = 0; i < newButtons.length; i++) this.appendMainButton(newButtons[i])
-
-			return
-		}
-
-		if (property == 'sideButtons') {
-
-			let newButtons = newValue as Array<NavigationBarButton>
-			let oldButtons = oldValue as Array<NavigationBarButton>
-			if (oldButtons) for (let i = 0; i < oldButtons.length; i++) this.removeSideButton(oldButtons[i])
-			if (newButtons) for (let i = 0; i < newButtons.length; i++) this.appendSideButton(newButtons[i])
-
-			return
-		}
-
-		super.onPropertyChange(property, newValue, oldValue)
 	}
 
 	//--------------------------------------------------------------------------
@@ -253,115 +159,62 @@ export class NavigationBar extends Component<Refs> {
 			this.title.width = frameW
 		}
 	}
+}
+
+/**
+ * @module NavigationBar
+ * @since 0.7.0
+ */
+export module NavigationBar {
 
 	/**
-	 * @method onTitleContainerBeforeLayout
-	 * @since 0.4.0
-	 * @hidden
+	 * @class BackButton
+	 * @super Slot
+	 * @since 0.7.0
 	 */
-	private replaceMainButton(button: NavigationBarButton | null) {
+	export class BackButton extends Slot {
 
-		let buttons = this.mainButtons.slice(0)
-
-		if (button == null) {
-			buttons.shift()
-		} else {
-			buttons.unshift(button)
+		/**
+		 * @inherited
+		 * @property name
+		 * @since 0.7.0
+		 */
+		public get name(): string {
+			return 'back-button'
 		}
-
-		this.mainButtons = buttons
-
-		return this
 	}
 
 	/**
-	 * @method onTitleContainerBeforeLayout
-	 * @since 0.4.0
-	 * @hidden
+	 * @class MainButtons
+	 * @super Slot
+	 * @since 0.7.0
 	 */
-	private replaceSideButton(button: NavigationBarButton | null) {
+	export class MainButtons extends Slot {
 
-		let buttons = this.sideButtons.slice(0)
-
-		if (button == null) {
-			buttons.shift()
-		} else {
-			buttons.unshift(button)
+		/**
+		 * @inherited
+		 * @property name
+		 * @since 0.7.0
+		 */
+		public get name(): string {
+			return 'main-buttons'
 		}
-
-		this.sideButtons = buttons
-
-		return this
 	}
 
 	/**
-	 * @method replaceBackButton
-	 * @since 0.4.0
-	 * @hidden
+	 * @class SideButtons
+	 * @super Slot
+	 * @since 0.7.0
 	 */
-	private replaceBackButton(button: NavigationBarBackButton | null) {
+	export class SideButtons extends Slot {
 
-		let buttons = this.sideButtons.slice(0)
-
-		if (button == null) {
-
-			let currentBackButton = this.backButton
-			if (currentBackButton) {
-				buttons.shift()
-			}
-
-		} else {
-
-			let currentBackButton = this.backButton
-			if (currentBackButton) {
-				buttons.pop()
-			}
-
-			buttons.unshift(button)
+		/**
+		 * @inherited
+		 * @property name
+		 * @since 0.7.0
+		 */
+		public get name(): string {
+			return 'side-buttons'
 		}
-
-		this.sideButtons = buttons
-
-		return this
-	}
-
-	/**
-	 * @method appendMainButton
-	 * @since 0.4.0
-	 * @hidden
-	 */
-	private appendMainButton(button: NavigationBarButton) {
-		this.refs.mainButtonsContainer.append(button)
-		return this
-	}
-
-	/**
-	 * @method removeMainButton
-	 * @since 0.4.0
-	 * @hidden
-	 */
-	private removeMainButton(button: NavigationBarButton) {
-		this.refs.mainButtonsContainer.remove(button)
-		return this
-	}
-
-	/**
-	 * @method appendSideButton
-	 * @since 0.4.0
-	 * @hidden
-	 */
-	private appendSideButton(button: NavigationBarButton) {
-		this.refs.sideButtonsContainer.append(button)
-		return this
-	}
-
-	/**
-	 * @method removeSideButton
-	 * @since 0.4.0
-	 * @hidden
-	 */
-	private removeSideButton(button: NavigationBarButton) {
-		this.refs.sideButtonsContainer.remove(button)
-		return this
 	}
 }

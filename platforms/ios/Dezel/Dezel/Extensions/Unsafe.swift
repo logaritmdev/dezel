@@ -9,7 +9,7 @@ public extension UnsafePointer where Pointee == Int8 {
 		return String(cString: self)
 	}
 
-	var strdup: String {
+	var strdup: String { // THIS IS A REALLY BAD NAME
 
 		defer {
 			self.deallocate()

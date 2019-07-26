@@ -1,3 +1,4 @@
+import '../index'
 import { Dictionary } from 'lodash'
 import { ScreenTransition } from '../screen/transition/ScreenTransition'
 import { bridge } from '../decorator/bridge'
@@ -15,7 +16,6 @@ import { TouchEvent } from '../touch/TouchEvent'
 import { TouchList } from '../touch/TouchList'
 import { View } from '../view/View'
 import { Window } from '../view/Window'
-import '../index'
 
 @bridge('dezel.application.Application')
 
@@ -106,12 +106,12 @@ export class Application extends Emitter {
 
 		super()
 
-		if (main) {
-			throw new Error(`
-				Application error:
-				There is already an application instance running.
-			`)
-		}
+		// if (main) {
+		// 	throw new Error(`
+		// 		Application error:
+		// 		There is already an application instance running.
+		// 	`)
+		// }
 
 		main = this
 
@@ -259,11 +259,11 @@ export class Application extends Emitter {
 				break
 
 			case 'handlelink':
-				this.onHandleLink(event)
+				this.onOpenUniversalURL(event)
 				break
 
 			case 'handleresource':
-				this.onHandleResource(event)
+				this.onOpenResourceURL(event)
 				break
 		}
 
@@ -345,18 +345,18 @@ export class Application extends Emitter {
 	}
 
 	/**
-	 * @method onHandleLink
-	 * @since 0.5.0
+	 * @method onOpenUniversalURL
+	 * @since 0.7.0
 	 */
-	public onHandleLink(event: Event<ApplicationHandleLinkEvent>) {
+	public onOpenUniversalURL(event: Event<ApplicationOpenUniversalURLEvent>) {
 
 	}
 
 	/**
-	 * @method onHandleResource
-	 * @since 0.6.0
+	 * @method onOpenResourceURL
+	 * @since 0.7.0
 	 */
-	public onHandleResource(event: Event<ApplicationHandleResourceEvent>) {
+	public onOpenResourceURL(event: Event<ApplicationOpenResourceURLEvent>) {
 
 	}
 
@@ -432,173 +432,6 @@ export class Application extends Emitter {
 	private readonly touches: Dictionary<Touch> = {}
 
 	/**
-	 * @method dispatchTouchCancel
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	private dispatchTouchCancel(raw: Array<Touch>, all: Array<Touch>) {
-
-		let targets = new Map()
-
-		for (let t of raw) {
-
-			let touch = this.touches[t.identifier]
-			if (touch === undefined) {
-				continue
-			}
-
-			delete this.touches[t.identifier]
-
-			mapTargetTouch(targets, touch)
-		}
-
-		for (let [target, touches] of targets) {
-
-			let event = new TouchEvent('touchcancel', {
-				propagable: true,
-				cancelable: false,
-				dispatcher: this,
-				touches: getTouchList(touches),
-				activeTouches: getActiveTouchList(this.touches),
-				targetTouches: getTargetTouchList(this.touches, target)
-			})
-
-			target.emit(event)
-		}
-	}
-
-	/**
-	 * @method dispatchTouchStart
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	private dispatchTouchStart(raw: Array<Touch>, all: Array<Touch>) {
-
-		let targets = new Map()
-
-		for (let t of raw) {
-
-			let k = t.identifier
-			let x = t.x
-			let y = t.y
-
-			let target = this.window.viewFromPoint(x, y)
-			if (target) {
-
-				if (this.touches[t.identifier] == null) {
-					this.touches[t.identifier] = new Touch(k, target, x, y)
-				} else {
-
-					throw new Error(`
-						Application Error:
-						A touch with identifier ${t.identifier} has already been registered.
-					`)
-
-				}
-
-				mapTargetTouch(targets, this.touches[t.identifier])
-			}
-
-			(window as any).$0 = target
-		}
-
-		for (let [target, touches] of targets) {
-
-			let event = new TouchEvent('touchstart', {
-				propagable: true,
-				cancelable: true,
-				dispatcher: this,
-				touches: getTouchList(touches),
-				activeTouches: getActiveTouchList(this.touches),
-				targetTouches: getTargetTouchList(this.touches, target)
-			})
-
-			target.emit(event)
-
-			if (event.captured) {
-				this.captureTouchEvent(event)
-			}
-		}
-	}
-
-	/**
-	 * @method dispatchTouchMove
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	private dispatchTouchMove(raw: Array<Touch>, all: Array<Touch>) {
-
-		let targets = new Map()
-
-		for (let t of raw) {
-
-			let touch = this.touches[t.identifier]
-			if (touch == null) {
-				continue
-			}
-
-			touch.setX(t.x)
-			touch.setY(t.y)
-
-			mapTargetTouch(targets, touch)
-		}
-
-		for (let [target, touches] of targets) {
-
-			let event = new TouchEvent('touchmove', {
-				propagable: true,
-				cancelable: true,
-				dispatcher: this,
-				touches: getTouchList(touches),
-				activeTouches: getActiveTouchList(this.touches),
-				targetTouches: getTargetTouchList(this.touches, target)
-			})
-
-			target.emit(event)
-
-			if (event.captured) {
-				this.captureTouchEvent(event)
-			}
-		}
-	}
-
-	/**
-	 * @method dispatchTouchEnd
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	private dispatchTouchEnd(raw: Array<Touch>, all: Array<Touch>) {
-
-		let targets = new Map()
-
-		for (let t of raw) {
-
-			let touch = this.touches[t.identifier]
-			if (touch == null) {
-				continue
-			}
-
-			delete this.touches[t.identifier]
-
-			mapTargetTouch(targets, touch)
-		}
-
-		for (let [target, touches] of targets) {
-
-			let event = new TouchEvent('touchend', {
-				propagable: true,
-				cancelable: true,
-				dispatcher: this,
-				touches: getTouchList(touches),
-				activeTouches: getActiveTouchList(this.touches),
-				targetTouches: getTargetTouchList(this.touches, target)
-			})
-
-			target.emit(event)
-		}
-	}
-
-	/**
 	 * @method captureTouchEvent
 	 * @since 0.5.0
 	 * @hidden
@@ -666,7 +499,9 @@ export class Application extends Emitter {
 	 * @hidden
 	 */
 	private nativeLoad() {
-		dispatchEvent(new Event('load') as any)
+		//dispatchEvent(new Event('load') as any)
+		// TODO
+		// Make load and unload event not coupled with the application
 	}
 
 	/**
@@ -675,7 +510,7 @@ export class Application extends Emitter {
 	 * @hidden
 	 */
 	private nativeUnload() {
-		dispatchEvent(new Event('unload') as any)
+		//dispatchEvent(new Event('unload') as any)
 	}
 
 	/**
@@ -685,6 +520,173 @@ export class Application extends Emitter {
 	 */
 	private nativeDestroy() {
 		this.destroy()
+	}
+
+	/**
+	 * @method nativeOnTouchCancel
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private nativeOnTouchCancel(raw: Array<Touch>, all: Array<Touch>) {
+
+		let targets = new Map()
+
+		for (let t of raw) {
+
+			let touch = this.touches[t.identifier]
+			if (touch === undefined) {
+				continue
+			}
+
+			delete this.touches[t.identifier]
+
+			mapTargetTouch(targets, touch)
+		}
+
+		for (let [target, touches] of targets) {
+
+			let event = new TouchEvent('touchcancel', {
+				propagable: true,
+				cancelable: false,
+				dispatcher: this,
+				touches: getTouchList(touches),
+				activeTouches: getActiveTouchList(this.touches),
+				targetTouches: getTargetTouchList(this.touches, target)
+			})
+
+			target.emit(event)
+		}
+	}
+
+	/**
+	 * @method nativeOnTouchStart
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	private nativeOnTouchStart(raw: Array<Touch>, all: Array<Touch>) {
+
+		let targets = new Map()
+
+		for (let t of raw) {
+
+			let k = t.identifier
+			let x = t.x
+			let y = t.y
+
+			let target = this.window.viewFromPoint(x, y)
+			if (target) {
+
+				if (this.touches[t.identifier] == null) {
+					this.touches[t.identifier] = new Touch(k, target, x, y)
+				} else {
+
+					throw new Error(`
+						Application Error:
+						A touch with identifier ${t.identifier} has already been registered.
+					`)
+
+				}
+
+				mapTargetTouch(targets, this.touches[t.identifier])
+			}
+
+			global.$0 = target
+		}
+
+		for (let [target, touches] of targets) {
+
+			let event = new TouchEvent('touchstart', {
+				propagable: true,
+				cancelable: true,
+				dispatcher: this,
+				touches: getTouchList(touches),
+				activeTouches: getActiveTouchList(this.touches),
+				targetTouches: getTargetTouchList(this.touches, target)
+			})
+
+			target.emit(event)
+
+			if (event.captured) {
+				this.captureTouchEvent(event)
+			}
+		}
+	}
+
+	/**
+	 * @method nativeOnTouchMove
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private nativeOnTouchMove(raw: Array<Touch>, all: Array<Touch>) {
+
+		let targets = new Map()
+
+		for (let t of raw) {
+
+			let touch = this.touches[t.identifier]
+			if (touch == null) {
+				continue
+			}
+
+			touch.setX(t.x)
+			touch.setY(t.y)
+
+			mapTargetTouch(targets, touch)
+		}
+
+		for (let [target, touches] of targets) {
+
+			let event = new TouchEvent('touchmove', {
+				propagable: true,
+				cancelable: true,
+				dispatcher: this,
+				touches: getTouchList(touches),
+				activeTouches: getActiveTouchList(this.touches),
+				targetTouches: getTargetTouchList(this.touches, target)
+			})
+
+			target.emit(event)
+
+			if (event.captured) {
+				this.captureTouchEvent(event)
+			}
+		}
+	}
+
+	/**
+	 * @method nativeOnTouchEnd
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private nativeOnTouchEnd(raw: Array<Touch>, all: Array<Touch>) {
+
+		let targets = new Map()
+
+		for (let t of raw) {
+
+			let touch = this.touches[t.identifier]
+			if (touch == null) {
+				continue
+			}
+
+			delete this.touches[t.identifier]
+
+			mapTargetTouch(targets, touch)
+		}
+
+		for (let [target, touches] of targets) {
+
+			let event = new TouchEvent('touchend', {
+				propagable: true,
+				cancelable: true,
+				dispatcher: this,
+				touches: getTouchList(touches),
+				activeTouches: getActiveTouchList(this.touches),
+				targetTouches: getTargetTouchList(this.touches, target)
+			})
+
+			target.emit(event)
+		}
 	}
 
 	/**
@@ -742,21 +744,21 @@ export class Application extends Emitter {
 	}
 
 	/**
-	 * @method nativeHandleLink
+	 * @method nativeOpenUniversalURL
 	 * @since 0.5.0
 	 * @hidden
 	 */
-	private nativeHandleLink(url: string) {
-		this.emit<ApplicationHandleLinkEvent>('handlelink', { data: { url } })
+	private nativeOpenUniversalURL(url: string) {
+		this.emit<ApplicationOpenUniversalURLEvent>('handlelink', { data: { url } })
 	}
 
 	/**
-	 * @method nativeHandleResource
+	 * @method nativeOpenResourceURL
 	 * @since 0.5.0
 	 * @hidden
 	 */
-	private nativeHandleResource(url: string) {
-		this.emit<ApplicationHandleResourceEvent>('handleresource', { data: { url } })
+	private nativeOpenResourceURL(url: string) {
+		this.emit<ApplicationOpenResourceURLEvent>('handleresource', { data: { url } })
 	}
 
 	/**
@@ -816,18 +818,18 @@ export type ApplicationKeyboardEvent = {
 }
 
 /**
- * @type ApplicationHandleLinkEvent
+ * @type ApplicationOpenUniversalURLEvent
  * @since 0.5.0
  */
-export type ApplicationHandleLinkEvent = {
+export type ApplicationOpenUniversalURLEvent = {
 	url: string
 }
 
 /**
- * @type ApplicationHandleResourceEvent
+ * @type ApplicationOpenResourceURLEvent
  * @since 0.5.0
  */
-export type ApplicationHandleResourceEvent = {
+export type ApplicationOpenResourceURLEvent = {
 	url: string
 }
 

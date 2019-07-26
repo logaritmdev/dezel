@@ -143,16 +143,17 @@ export class View extends Emitter {
 		}
 
 		return new Promise(success => {
-			dezel.transition(
-				duration,
-				equation[0],
-				equation[1],
-				equation[2],
-				equation[3],
-				delay,
-				success,
-				animate
-			)
+			// TODO
+			// dezel.transition(
+			// 	duration,
+			// 	equation[0],
+			// 	equation[1],
+			// 	equation[2],
+			// 	equation[3],
+			// 	delay,
+			// 	success,
+			// 	animate
+			// )
 		})
 	}
 
@@ -257,14 +258,14 @@ export class View extends Emitter {
 	 * @property backgroundImageTop
 	 * @since 0.1.0
 	 */
-	@native public backgroundImageTop!: number
+	@native public backgroundImageTop!: number | string
 
 	/**
 	 * The view's background image left position.
 	 * @property backgroundImageLeft
 	 * @since 0.1.0
 	 */
-	@native public backgroundImageLeft!: number
+	@native public backgroundImageLeft!: number | string
 
 	/**
 	 * The view's background image width;
@@ -281,11 +282,32 @@ export class View extends Emitter {
 	@native public backgroundImageHeight!: 'auto' | number
 
 	/**
+	 * The view's background image tint.
+	 * @property backgroundImageTint
+	 * @since 0.7.0
+	 */
+	@native public backgroundImageTint!: string | 'none'
+
+	/**
 	 * The view's border.
 	 * @property border
 	 * @since 0.2.0
 	 */
 	@native public border!: any
+
+	/**
+	 * The view's border width.
+	 * @property borderWidth
+	 * @since 0.2.0
+	 */
+	@native public borderWidth!: any
+
+	/**
+	 * The view's border color.
+	 * @property borderColor
+	 * @since 0.2.0
+	 */
+	@native public borderColor!: any
 
 	/**
 	 * The view's top border.
@@ -314,20 +336,6 @@ export class View extends Emitter {
 	 * @since 0.4.0
 	 */
 	@native public borderBottom!: any
-
-	/**
-	 * The view's border width.
-	 * @property borderWidth
-	 * @since 0.2.0
-	 */
-	@native public borderWidth!: any
-
-	/**
-	 * The view's border color.
-	 * @property borderColor
-	 * @since 0.2.0
-	 */
-	@native public borderColor!: any
 
 	/**
 	 * The view's top border color.
@@ -645,6 +653,20 @@ export class View extends Emitter {
 	@native public maxHeight!: number
 
 	/**
+	 * Determine how much this view can expand to fill the remaining space.
+	 * @property expand
+	 * @since 0.1.0
+	 */
+	@native public expand!: number
+
+	/**
+	 * Determine how much this view can shrink to fit the original space.
+	 * @property shrink
+	 * @since 0.1.0
+	 */
+	@native public shrink!: number
+
+	/**
 	 * The view's top offset to layout its children.
 	 * @property contentTop
 	 * @since 0.1.0
@@ -740,7 +762,7 @@ export class View extends Emitter {
 	 * @property overscroll
 	 * @since 0.1.0
 	 */
-	@native public overscroll!: boolean | 'never' | 'always' | 'always-x' | 'always-y'
+	@native public overscroll!: boolean | 'auto' | 'never' | 'always' | 'always-x' | 'always-y'
 
 	/**
 	 * Determines whether the view content has momentum when scrolling.
@@ -762,6 +784,20 @@ export class View extends Emitter {
 	 * @since 0.1.0
 	 */
 	@native public scrollLeft!: number
+
+	/**
+	 * Wether the view is scrolling.
+	 * @property scrolling
+	 * @since 0.1.0
+	 */
+	@native public scrolling!: boolean
+
+	/**
+	 * Wether the view is dragging.
+	 * @property dragging
+	 * @since 0.1.0
+	 */
+	@native public dragging!: boolean
 
 	/**
 	 * The view's margin.
@@ -946,34 +982,6 @@ export class View extends Emitter {
 	@native public maxPaddingBottom!: number
 
 	/**
-	 * Determine how much this view can expand to fill the remaining space.
-	 * @property expand
-	 * @since 0.1.0
-	 */
-	@native public expand!: number
-
-	/**
-	 * Determine how much this view can shrink to fit the original space.
-	 * @property shrink
-	 * @since 0.1.0
-	 */
-	@native public shrink!: number
-
-	/**
-	 * Determines whether the view is visible.
-	 * @property visible
-	 * @since 0.1.0
-	 */
-	@native public visible!: boolean
-
-	/**
-	 * The view's opacity.
-	 * @property opacity
-	 * @since 0.1.0
-	 */
-	@native public opacity!: number
-
-	/**
 	 * The view's horizontal origin for all transformations.
 	 * @property originX
 	 * @since 0.1.0
@@ -1065,13 +1073,6 @@ export class View extends Emitter {
 	@native public zIndex!: number
 
 	/**
-	 * The view's content clipping status.
-	 * @property clipped
-	 * @since 0.1.0
-	 */
-	@native public clipped!: boolean
-
-	/**
 	 * Whether the view is zoomable.
 	 * @property zoomable
 	 * @since 0.3.0
@@ -1135,25 +1136,39 @@ export class View extends Emitter {
 	@native public touchOffsetBottom!: number
 
 	/**
+	 * Determines whether the view is visible.
+	 * @property visible
+	 * @since 0.1.0
+	 */
+	@native public visible!: boolean
+
+	/**
+	 * The view's opacity.
+	 * @property opacity
+	 * @since 0.1.0
+	 */
+	@native public opacity!: number
+
+	/**
+	 * Whether the view is drawable
+	 * @property drawable
+	 * @since 0.4.0
+	 */
+	@native public drawable!: boolean
+
+	/**
+	 * The view's content clipping status.
+	 * @property clipped
+	 * @since 0.1.0
+	 */
+	@native public clipped!: boolean
+
+	/**
 	 * Whether the view snaps to pages.
 	 * @property paged
 	 * @since 0.4.0
 	 */
 	@native public paged!: boolean
-
-	/**
-	 * Wether the view is scrolling.
-	 * @property scrolling
-	 * @since 0.1.0
-	 */
-	@native public scrolling!: boolean
-
-	/**
-	 * Wether the view is dragging.
-	 * @property dragging
-	 * @since 0.1.0
-	 */
-	@native public dragging!: boolean
 
 	/**
 	 * The view's top position once it's been measured.

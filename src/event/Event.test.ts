@@ -33,7 +33,7 @@ it('should be cancelable if required', () => {
 
 it('should allow custom data', () => {
 	let event = new Event('test', { data: { key: 'val' } })
-	expect(event.data).toMatchObject({ key: 'val' })
+	expect(event.data).toEqual(jasmine.objectContaining({ key: 'val' }))
 })
 
 it('should prevent event canceling if cancelable is true', () => {

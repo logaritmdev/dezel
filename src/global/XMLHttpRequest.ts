@@ -73,19 +73,19 @@ export const RESPONSE_TYPE = Symbol('responseType')
 export const RESPONSE_HEADERS = Symbol('responseHeader')
 
 /**
- * @symbol URL
+ * @symbol RESPONSE_URL
  * @since 0.7.0
  */
 export const RESPONSE_URL = Symbol('responseURL')
 
 /**
- * @symbol RESPONSE_TYPE
+ * @symbol STATUS_CODE
  * @since 0.7.0
  */
-export const STATUS = Symbol('status')
+export const STATUS_CODE = Symbol('statusCode')
 
 /**
- * @symbol RESPONSE_TYPE
+ * @symbol STATUS_TEXT
  * @since 0.7.0
  */
 export const STATUS_TEXT = Symbol('statusText')
@@ -247,7 +247,7 @@ export class XMLHttpRequest extends EventTarget {
 			return 0
 		}
 
-		return this[STATUS]
+		return this[STATUS_CODE]
 	}
 
 	/**
@@ -540,7 +540,7 @@ export class XMLHttpRequest extends EventTarget {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private [STATUS]: number = 0
+	private [STATUS_CODE]: number = 0
 
 	/**
 	 * @property STATUS_TEXT
@@ -656,7 +656,7 @@ export class XMLHttpRequest extends EventTarget {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private nativeOnComplete(data: string, status: number, headers: any, url: string) {
+	private nativeOnComplete(data: string, statusCode: number, statusText: string, headers: any, url: string) {
 
 		if (this.error) {
 			return
@@ -673,8 +673,8 @@ export class XMLHttpRequest extends EventTarget {
 		this[RESPONSE_HEADERS] = headers
 		this[RESPONSE_URL] = url
 
-		this[STATUS] = status
-		this[STATUS_TEXT] = statuses[status]
+		this[STATUS_CODE] = statusCode
+		this[STATUS_TEXT] = statusText
 
 		this[SENT] = false
 
@@ -712,52 +712,4 @@ export class XMLHttpRequest extends EventTarget {
 
 		this.dispatchEvent(new Event('error'))
 	}
-}
-
-/**
- * @const statuses
- * @sine 0.7.0
- * @hidden
- */
-const statuses: any = {
-	100: "Continue",
-	101: "Switching Protocols",
-	200: "OK",
-	201: "Created",
-	202: "Accepted",
-	203: "Non - Authoritative Information",
-	204: "No Content",
-	205: "Reset Content",
-	206: "Partial Content",
-	300: "Multiple Choices",
-	301: "Moved Permanently",
-	302: "Found",
-	303: "See Other",
-	304: "Not Modified",
-	305: "Use Proxy",
-	307: "Temporary Redirect",
-	400: "Bad Request",
-	401: "Unauthorized",
-	402: "Payment Required",
-	403: "Forbidden",
-	404: "Not Found",
-	405: "Method Not Allowed",
-	406: "Not Acceptable",
-	407: "Proxy Authentication Required",
-	408: "Request Timeout",
-	409: "Conflict",
-	410: "Gone",
-	411: "Length Required",
-	412: "Precondition Failed",
-	413: "Request Entity Too Large",
-	414: "Request - URI Too Long",
-	415: "Unsupported Media Type",
-	416: "Requested Range Not Satisfiable",
-	417: "Expectation Failed",
-	500: "Internal Server Error",
-	501: "Not Implemented",
-	502: "Bad Gateway",
-	503: "Service Unavailable",
-	504: "Gateway Timeout",
-	505: "HTTP Version Not Supported"
 }

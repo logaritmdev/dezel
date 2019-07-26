@@ -21,11 +21,13 @@
     "build:styles": "copyfiles --up 1 \"src/**/*.ds\" \"src/**/*.ds.android\" \"src/**/*.ds.ios\" lib"
   },
   "dependencies": {
-    "@types/jasmine": "^3.3.13",
+    "@ungap/event-target": "^0.1.0",
+    "events-polyfill": "^2.1.2",
     "fast-array-diff": "^0.2.0",
     "lodash": "^4.17.11"
   },
   "devDependencies": {
+    "@types/jasmine": "^3.3.13",
     "@types/lodash": "^4.14.98",
     "@types/socket.io-client": "^1.4.32",
     "copy-webpack-plugin": "^4.5.1",
