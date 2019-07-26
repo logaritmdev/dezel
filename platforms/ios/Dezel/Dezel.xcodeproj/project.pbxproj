@@ -77,6 +77,10 @@
 		C74487E3205230BB00D74D30 /* DLStylerNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C74487E1205230BB00D74D30 /* DLStylerNode.cpp */; };
 		C74487E4205230BB00D74D30 /* DLStylerNode.h in Headers */ = {isa = PBXBuildFile; fileRef = C74487E2205230BB00D74D30 /* DLStylerNode.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C75153B322EB4BC3007CAA48 /* HTTPURLResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75153B222EB4BC3007CAA48 /* HTTPURLResponse.swift */; };
+		C75153B522EB81F0007CAA48 /* JavaScriptContextInternal.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75153B422EB81F0007CAA48 /* JavaScriptContextInternal.swift */; };
+		C75153B722EB81FC007CAA48 /* JavaScriptValueInternal.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75153B622EB81FC007CAA48 /* JavaScriptValueInternal.swift */; };
+		C75153B922EBA05C007CAA48 /* NSMutableData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75153B822EBA05C007CAA48 /* NSMutableData.swift */; };
+		C75153BB22EBA09B007CAA48 /* NSMutableAttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75153BA22EBA09B007CAA48 /* NSMutableAttributedString.swift */; };
 		C7541A8922E6B09800586FC4 /* HttpResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7541A8822E6B09800586FC4 /* HttpResponse.swift */; };
 		C76016E22019832800622840 /* JavaScriptFinalizeCallback.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76016E12019832800622840 /* JavaScriptFinalizeCallback.swift */; };
 		C767542120269971003C4D85 /* ShadowLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76753E92026996F003C4D85 /* ShadowLayer.swift */; };
@@ -302,7 +306,6 @@
 		C7EE2E0222DD6AE200FFF0EE /* Source.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7EE2E0122DD6AE200FFF0EE /* Source.swift */; };
 		C7EE2E0622DE2D5B00FFF0EE /* CADisplayLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7EE2E0522DE2D5B00FFF0EE /* CADisplayLink.swift */; };
 		C7EE2E1022DFA84900FFF0EE /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7EE2E0F22DFA84900FFF0EE /* Data.swift */; };
-		C7EE2E1B22E1F57300FFF0EE /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7EE2E1A22E1F57300FFF0EE /* Error.swift */; };
 		C7EE2E1D22E24CCC00FFF0EE /* JavaScriptXMLHttpRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7EE2E1C22E24CCC00FFF0EE /* JavaScriptXMLHttpRequest.swift */; };
 		C7EE2E2122E4B21100FFF0EE /* JavaScriptForOwnWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7EE2E2022E4B21100FFF0EE /* JavaScriptForOwnWrapper.swift */; };
 		C7EE2E2522E4B35A00FFF0EE /* JavaScriptForEachWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7EE2E2422E4B35A00FFF0EE /* JavaScriptForEachWrapper.swift */; };
@@ -381,6 +384,10 @@
 		C74487E1205230BB00D74D30 /* DLStylerNode.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DLStylerNode.cpp; path = ../../../../shared/style/DLStylerNode.cpp; sourceTree = "<group>"; };
 		C74487E2205230BB00D74D30 /* DLStylerNode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DLStylerNode.h; path = ../../../../shared/style/DLStylerNode.h; sourceTree = "<group>"; };
 		C75153B222EB4BC3007CAA48 /* HTTPURLResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPURLResponse.swift; sourceTree = "<group>"; };
+		C75153B422EB81F0007CAA48 /* JavaScriptContextInternal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptContextInternal.swift; sourceTree = "<group>"; };
+		C75153B622EB81FC007CAA48 /* JavaScriptValueInternal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptValueInternal.swift; sourceTree = "<group>"; };
+		C75153B822EBA05C007CAA48 /* NSMutableData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSMutableData.swift; sourceTree = "<group>"; };
+		C75153BA22EBA09B007CAA48 /* NSMutableAttributedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSMutableAttributedString.swift; sourceTree = "<group>"; };
 		C7541A8822E6B09800586FC4 /* HttpResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpResponse.swift; sourceTree = "<group>"; };
 		C76016E12019832800622840 /* JavaScriptFinalizeCallback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptFinalizeCallback.swift; sourceTree = "<group>"; };
 		C76753E92026996F003C4D85 /* ShadowLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShadowLayer.swift; sourceTree = "<group>"; };
@@ -609,7 +616,6 @@
 		C7EE2E0122DD6AE200FFF0EE /* Source.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Source.swift; sourceTree = "<group>"; };
 		C7EE2E0522DE2D5B00FFF0EE /* CADisplayLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CADisplayLink.swift; sourceTree = "<group>"; };
 		C7EE2E0F22DFA84900FFF0EE /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
-		C7EE2E1A22E1F57300FFF0EE /* Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
 		C7EE2E1C22E24CCC00FFF0EE /* JavaScriptXMLHttpRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptXMLHttpRequest.swift; sourceTree = "<group>"; };
 		C7EE2E2022E4B21100FFF0EE /* JavaScriptForOwnWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptForOwnWrapper.swift; sourceTree = "<group>"; };
 		C7EE2E2422E4B35A00FFF0EE /* JavaScriptForEachWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptForEachWrapper.swift; sourceTree = "<group>"; };
@@ -1169,34 +1175,37 @@
 			children = (
 				C7BB7D4A20293955004006C2 /* Array.swift */,
 				C7BB7D412028F5A1004006C2 /* Boolean.swift */,
-				C7004C57213C4CF800138ECC /* Dictionary.swift */,
-				C75153B222EB4BC3007CAA48 /* HTTPURLResponse.swift */,
-				C7EE2E1A22E1F57300FFF0EE /* Error.swift */,
-				C79E6EB32207650F0006DED8 /* Date.swift */,
-				C7EE2E0F22DFA84900FFF0EE /* Data.swift */,
 				C7E8A4FC2016244F005139F6 /* Bundle.swift */,
-				C7E8A4D42015A792005139F6 /* Double.swift */,
-				C7E8A4FE2016244F005139F6 /* String.swift */,
-				C7D14EDB21D07058008B51D4 /* Scanner.swift */,
-				C728E05C222B1B9100BE5F7F /* Locale.swift */,
-				C7CE4B08220A7824005D5235 /* TimeZone.swift */,
-				C77D6E262210C162005FAAF8 /* CTFrame.swift */,
-				C7964D632033E67E00F454F1 /* CALayer.swift */,
 				C7EE2E0522DE2D5B00FFF0EE /* CADisplayLink.swift */,
+				C7964D632033E67E00F454F1 /* CALayer.swift */,
 				C7BB7D372028F4C5004006C2 /* CGColor.swift */,
 				C7BB7D382028F4C5004006C2 /* CGFloat.swift */,
 				C7BB7D3B2028F4C5004006C2 /* CGPath.swift */,
 				C7E309782031312700436FA4 /* CGPoint.swift */,
 				C7BB7D392028F4C5004006C2 /* CGRect.swift */,
 				C7BB7D3A2028F4C5004006C2 /* CGSize.swift */,
-				C77D6E22220F730D005FAAF8 /* NSRegularExpression.swift */,
+				C77D6E262210C162005FAAF8 /* CTFrame.swift */,
+				C7EE2E0F22DFA84900FFF0EE /* Data.swift */,
+				C79E6EB32207650F0006DED8 /* Date.swift */,
+				C7004C57213C4CF800138ECC /* Dictionary.swift */,
+				C7E8A4D42015A792005139F6 /* Double.swift */,
+				C75153B222EB4BC3007CAA48 /* HTTPURLResponse.swift */,
+				C75153B422EB81F0007CAA48 /* JavaScriptContextInternal.swift */,
+				C75153B622EB81FC007CAA48 /* JavaScriptValueInternal.swift */,
+				C728E05C222B1B9100BE5F7F /* Locale.swift */,
+				C75153B822EBA05C007CAA48 /* NSMutableData.swift */,
 				C7D8926620657B3400E85115 /* NSAttributedString.swift */,
-				C7BFD16B207D560E00AAD31C /* UIColor.swift */,
-				C7D8926420657B0000E85115 /* UIFont.swift */,
-				C7E30976203123DD00436FA4 /* UIView.swift */,
+				C75153BA22EBA09B007CAA48 /* NSMutableAttributedString.swift */,
+				C77D6E22220F730D005FAAF8 /* NSRegularExpression.swift */,
+				C7D14EDB21D07058008B51D4 /* Scanner.swift */,
+				C7E8A4FE2016244F005139F6 /* String.swift */,
+				C7CE4B08220A7824005D5235 /* TimeZone.swift */,
 				C777B63C22D91DB200E75E55 /* UIApplication.swift */,
+				C7BFD16B207D560E00AAD31C /* UIColor.swift */,
 				C71E6CDC20E65CCF009B86F6 /* UIEdgeInsets.swift */,
+				C7D8926420657B0000E85115 /* UIFont.swift */,
 				C7CE4B062208C93C005D5235 /* UITextField.swift */,
+				C7E30976203123DD00436FA4 /* UIView.swift */,
 				C7F2260A2081A10000ABC66D /* Unsafe.swift */,
 				C7E8A4FF2016244F005139F6 /* Runtime.h */,
 				C7E8A4FD2016244F005139F6 /* Runtime.m */,
@@ -1644,6 +1653,7 @@
 				C7F2260B2081A10000ABC66D /* Unsafe.swift in Sources */,
 				C7E30977203123DD00436FA4 /* UIView.swift in Sources */,
 				C7004C58213C4CF800138ECC /* Dictionary.swift in Sources */,
+				C75153BB22EBA09B007CAA48 /* NSMutableAttributedString.swift in Sources */,
 				C7E8A4C020159E08005139F6 /* DLLayoutNode.cpp in Sources */,
 				C7E8A4C620159E08005139F6 /* DLLayoutNodePrivate.cpp in Sources */,
 				C7B9CEAF202CDBD8002409D5 /* Window.swift in Sources */,
@@ -1666,6 +1676,7 @@
 				C77189AE2106ADF200337263 /* Point2D.swift in Sources */,
 				C767542420269971003C4D85 /* BorderLayer.swift in Sources */,
 				C7FFB4D5204B2313000D888E /* ContentView.swift in Sources */,
+				C75153B922EBA05C007CAA48 /* NSMutableData.swift in Sources */,
 				C71E6CBC20DD4EE1009B86F6 /* WebView.swift in Sources */,
 				C718A0C72067F75900EFEC15 /* GraphicModule.swift in Sources */,
 				C7A19E3520ACC4DF00367E91 /* ScrollableDelegate.swift in Sources */,
@@ -1689,6 +1700,7 @@
 				C700121621551A9A00CB26D4 /* DeviceModule.swift in Sources */,
 				C77DFEE1208D063900CEC1D9 /* LocaleModule.swift in Sources */,
 				C777B63D22D91DB200E75E55 /* UIApplication.swift in Sources */,
+				C75153B722EB81FC007CAA48 /* JavaScriptValueInternal.swift in Sources */,
 				C72E0E9B20669CCD003BCEF1 /* TextTransform.swift in Sources */,
 				C7E8A521201624A2005139F6 /* JavaScriptFinalizeWrapper.swift in Sources */,
 				C71E6CE320E66188009B86F6 /* Overscroll.swift in Sources */,
@@ -1725,7 +1737,6 @@
 				C7E5D085209DE2290098C5FD /* AlertController.swift in Sources */,
 				C7CE4B09220A7824005D5235 /* TimeZone.swift in Sources */,
 				C7541A8922E6B09800586FC4 /* HttpResponse.swift in Sources */,
-				C7EE2E1B22E1F57300FFF0EE /* Error.swift in Sources */,
 				C7E8A51D201624A2005139F6 /* JavaScriptObjectBuilder.swift in Sources */,
 				C7B9CEA6202CDB8D002409D5 /* ApplicationController.swift in Sources */,
 				C7EE2E0622DE2D5B00FFF0EE /* CADisplayLink.swift in Sources */,
@@ -1744,6 +1755,7 @@
 				C7E309792031312700436FA4 /* CGPoint.swift in Sources */,
 				C72E0E9320669C97003BCEF1 /* TextAlignment.swift in Sources */,
 				C767543F20269971003C4D85 /* RenderLayer.swift in Sources */,
+				C75153B522EB81F0007CAA48 /* JavaScriptContextInternal.swift in Sources */,
 				C7E8A52A201624A2005139F6 /* JavaScriptContext.swift in Sources */,
 				C7E8A524201624A2005139F6 /* JavaScriptClass.swift in Sources */,
 				C75153B322EB4BC3007CAA48 /* HTTPURLResponse.swift in Sources */,
