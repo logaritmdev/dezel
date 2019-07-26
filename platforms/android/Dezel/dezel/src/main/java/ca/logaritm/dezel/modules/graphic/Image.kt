@@ -14,22 +14,6 @@ import android.content.Context as AndroidContext
 open class Image(context: JavaScriptContext) : JavaScriptClass(context) {
 
 	//--------------------------------------------------------------------------
-	// Static
-	//--------------------------------------------------------------------------
-
-	companion object {
-
-		/**
-		 * Convenience method to create an Image instance within the specified context.
-		 * @method with
-		 * @since 0.4.0
-		 */
-		public fun with(input: Bitmap, context: JavaScriptContext): Image {
-			throw Error("TODO FIXME") // TODO FIXME
-		}
-	}
-
-	//--------------------------------------------------------------------------
 	// Properties
 	//--------------------------------------------------------------------------
 
