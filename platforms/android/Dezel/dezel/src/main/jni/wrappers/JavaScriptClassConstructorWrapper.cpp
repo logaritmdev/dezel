@@ -28,8 +28,6 @@ JavaScriptClassConstructorWrapperCallback(JSContextRef context, JSObjectRef obje
 		false
 	);
 
-	JNI_CHECK_EXCEPTION(wrapper->env);
-
 	DLValueSetAssociatedObject(context, object, wrapper->env->NewGlobalRef(instance));
 
 	JavaScriptFunctionExecute(

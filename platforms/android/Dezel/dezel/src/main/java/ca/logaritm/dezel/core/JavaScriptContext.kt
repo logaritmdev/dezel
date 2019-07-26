@@ -1,5 +1,6 @@
 package ca.logaritm.dezel.core
 
+import android.os.Looper
 import android.util.Log
 import ca.logaritm.dezel.BuildConfig
 import ca.logaritm.dezel.application.ApplicationActivity
@@ -89,15 +90,6 @@ open class JavaScriptContext {
 		internal set
 
 	/**
-	 * The context's console.
-	 * @property console
-	 * @since 0.4.0
-	 */
-	public val console: JavaScriptConsole by lazy {
-		JavaScriptConsole(this)
-	}
-
-	/**
 	 * @property running
 	 * @since 0.1.0
 	 * @hidden
@@ -120,31 +112,19 @@ open class JavaScriptContext {
 		JavaScriptContextReference.register(this)
 
 		this.global = JavaScriptValue.create(this, JavaScriptContextExternal.getGlobalObject(this.handle))
+		this.global.defineProperty("global", value = this.global, getter = null, setter = null, writable = false, enumerable = false, configurable = false)
+		this.global.defineProperty("window", value = this.global, getter = null, setter = null, writable = false, enumerable = false, configurable = false)
 
-		val code = """
-
-			self = this;
-			global = this;
-			window = this;
-
-			(function() {
-
-				var log = console.log.bind(console);
-
-				console.log = function() {
-					log.apply(this, arguments)
-					dezel.log.apply(dezel, arguments)
-				};
-
-			})();
-
-			const __throwError = function(error) {
-				throw (typeof error == 'string' ? new Error(error) : error)
-			}
-
-		"""
-
-		this.evaluate(code)
+		val console = this.global.property("console")
+		if (console.isObject) {
+			console.property("log", this.createFunction { callback ->
+				val strings = mutableListOf<String>()
+				for (i in 0 until callback.arguments ) {
+					strings.add(callback.argument(i).string)
+				}
+				Log.e("DEZEL", strings.joinToString(" "))
+			})
+		}
 	}
 
 	/**
@@ -185,8 +165,8 @@ open class JavaScriptContext {
 	 * @method registerModule
 	 * @since 0.1.0
 	 */
-	open fun registerModule(uid: String, value: Class<*>) {
-		this.modules[uid] = Module.create(value, this)
+	open fun registerModule(uid: String, type: Class<*>) {
+		this.modules[uid] = Module.create(type, this)
 	}
 
 	/**
@@ -452,107 +432,11 @@ open class JavaScriptContext {
 	}
 
 	/**
-	 * Throws an error.
-	 * @method throwError
-	 * @since 0.1.0
-	 */
-	open fun throwError(error: JavaScriptValue) {
-		this.global.callMethod("__throwError", arrayOf(error))
-	}
-
-	/**
-	 * Throws an error.
-	 * @method throwError
-	 * @since 0.1.0
-	 */
-	open fun throwError(string: String) {
-		this.global.callMethod("__throwError", arrayOf(this.createString(string)))
-	}
-
-	/**
 	 * Requests a garbage collection.
 	 * @method garbageCollect
 	 * @since 0.1.0
 	 */
 	open fun garbageCollect() {
 		JavaScriptContextExternal.garbageCollect(this.handle)
-	}
-
-	//--------------------------------------------------------------------------
-	// Classes
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @class Dezel
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	public class Dezel(context: JavaScriptContext) : JavaScriptObject(context) {
-
-		/**
-		 * @method jsFunction_log
-		 * @since 0.1.0
-		 * @hidden
-		 */
-		@Suppress("unused")
-		public fun jsFunction_log(callback: JavaScriptFunctionCallback) {
-
-			val count = callback.arguments
-			if (count == 0) {
-				return
-			}
-
-			val string = StringBuilder()
-
-			for (i in 0 until count) {
-				string.append(callback.argument(i).string)
-				string.append(" ")
-			}
-
-			Log.d("DEZEL", "Log: " + string.toString())
-		}
-
-		/**
-		 * @method jsFunction_import
-		 * @since 0.1.0
-		 * @hidden
-		 */
-		@Suppress("unused")
-		public fun jsFunction_import(callback: JavaScriptFunctionCallback) {
-// TODO
-			// REMOVE THIS CHECK CoreModule on iOS
-			if (callback.arguments < 1) {
-				return
-			}
-
-			val ident = callback.argument(0).string
-
-			val value = this.context.objects[ident]
-			if (value != null) {
-				callback.returns(value)
-				return
-			}
-
-			val klass = this.context.classes[ident]
-			if (klass != null) {
-				callback.returns(klass)
-				return
-			}
-		}
-
-		/**
-		 * @method jsFunction_throwError
-		 * @since 0.1.0
-		 * @hidden
-		 */
-		@Suppress("unused")
-		public fun jsFunction_throwError(callback: JavaScriptFunctionCallback) {
-
-			if (callback.arguments < 1) {
-				return
-			}
-
-			JavaScriptContextExternal.throwError(this.context.handle, callback.argument(0).handle)
-		}
 	}
 }

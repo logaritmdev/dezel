@@ -4,8 +4,44 @@
 #include "wrappers/JavaScriptGetterWrapper.h"
 #include "wrappers/JavaScriptSetterWrapper.h"
 #include "wrappers/JavaScriptFinalizeWrapper.h"
+#include "wrappers/JavaScriptValueForEachWrapper.h"
+#include "wrappers/JavaScriptValueForOwnWrapper.h"
 #include "ca_logaritm_dezel_core_JavaScriptValueExternal.h"
 #include "jni_module_core.h"
+
+static void
+JavaScriptValueForEachCallback(JSContextRef context, JSValueRef value, int index, void* data)
+{
+	JavaScriptValueForEachWrapperRef wrapper = reinterpret_cast<JavaScriptValueForEachWrapperRef>(data);
+	if (wrapper == NULL) {
+		return;
+	}
+
+	JNI_CALL_VOID_METHOD(
+		wrapper->env,
+		wrapper->handler,
+		JavaScriptValueForEachWrapperExecute,
+		reinterpret_cast<jint>(index),
+		reinterpret_cast<jlong>(DLValueGetPropertyAtIndex(context, (JSObjectRef) value, (unsigned int) index))
+	)
+}
+
+static void
+JavaScriptValueForOwnCallback(JSContextRef context, JSValueRef value, const char* name, void* data)
+{
+	JavaScriptValueForOwnWrapperRef wrapper = reinterpret_cast<JavaScriptValueForOwnWrapperRef>(data);
+	if (wrapper == NULL) {
+		return;
+	}
+
+	JNI_CALL_VOID_METHOD(
+		wrapper->env,
+		wrapper->handler,
+		JavaScriptValueForOwnWrapperExecute,
+		wrapper->env->NewStringUTF(name),
+		reinterpret_cast<jlong>(DLValueGetProperty(context, (JSObjectRef) value, name))
+	)
+}
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
@@ -120,6 +156,8 @@ void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_call(JNIEnv *env, jclas
 
 	JSValueRef value = DLValueCall(reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSObjectRef>(valuePtr), reinterpret_cast<JSObjectRef>(objectPtr), static_cast<unsigned int>(argc), argv);
 
+	JNI_CHECK_EXCEPTION(env)
+
 	if (result) {
 		JNI_CALL_VOID_METHOD(env, result, JavaScriptValueReset, reinterpret_cast<jlong>(value), true);
 	}
@@ -138,6 +176,8 @@ void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_callMethod(JNIEnv *env,
 	JSValueRef value = DLValueCallMethod(reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSObjectRef>(valuePtr), method, static_cast<unsigned int>(argc), argv);
 	JNI_STRING_DELETE(methodStr, method);
 
+	JNI_CHECK_EXCEPTION(env)
+
 	if (result) {
 		JNI_CALL_VOID_METHOD(env, result, JavaScriptValueReset, reinterpret_cast<jlong>(value), true);
 	}
@@ -153,6 +193,8 @@ void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_construct(JNIEnv *env, 
 	JNI_LONG_ARRAY_CONVERT(argv, valuesPtr, argc, JSValueRef);
 
 	JSValueRef value = DLValueConstruct(reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSObjectRef>(valuePtr), static_cast<unsigned int>(argc), argv);
+
+	JNI_CHECK_EXCEPTION(env)
 
 	if (result) {
 		JNI_CALL_VOID_METHOD(env, result, JavaScriptValueReset, reinterpret_cast<jlong>(value), true);
@@ -287,6 +329,28 @@ void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setPropertyAtIndex__JJI
  */
 jlong Java_ca_logaritm_dezel_core_JavaScriptValueExternal_getPropertyAtIndex(JNIEnv *env, jclass, jlong contextPtr, jlong valuePtr, jint index) {
 	return reinterpret_cast<jlong>(DLValueGetPropertyAtIndex(reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSObjectRef>(valuePtr), (unsigned int) index));
+}
+
+/*
+ * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
+ * Method:    forEach
+ * Signature: (JJLjava/lang/Object;)V
+ */
+void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_forEach(JNIEnv *env, jclass, jlong contextPtr, jlong valuePtr, jobject handler) {
+	auto wrapper = JavaScriptValueForEachWrapperCreate(env, handler);
+	DLValueForEach(reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSValueRef>(valuePtr), &JavaScriptValueForEachCallback, wrapper);
+	JavaScriptValueForEachWrapperDelete(env, wrapper);
+}
+
+/*
+ * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
+ * Method:    forOwn
+ * Signature: (JJLjava/lang/Object;)V
+ */
+void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_forOwn(JNIEnv *env, jclass, jlong contextPtr, jlong valuePtr, jobject handler) {
+	auto wrapper = JavaScriptValueForOwnWrapperCreate(env, handler);
+	DLValueForOwn(reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSValueRef>(valuePtr), &JavaScriptValueForOwnCallback, wrapper);
+	JavaScriptValueForOwnWrapperDelete(env, wrapper);
 }
 
 /*

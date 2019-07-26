@@ -17,8 +17,6 @@ JavaScriptSetterExecute(JNIEnv *env, jobject context, jobject instance, jmethodI
 		args
 	);
 
-	JNI_CHECK_EXCEPTION(env);
-
 	JNI_CALL_VOID_METHOD(
 		env,
 		instance,

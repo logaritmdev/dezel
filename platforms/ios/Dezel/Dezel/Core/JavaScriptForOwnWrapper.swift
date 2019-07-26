@@ -52,5 +52,5 @@ internal let JavaScriptValueForOwnCallback: @convention(c) (JSContextRef?, JSVal
 	let name = name!
 	let data = data!
 
-	Unmanaged<JavaScriptValueForOwnWrapper>.fromOpaque(data).takeUnretainedValue().execute(key: name.strdup, value: value)
+	Unmanaged<JavaScriptValueForOwnWrapper>.fromOpaque(data).takeUnretainedValue().execute(key: name.string, value: value)
 }

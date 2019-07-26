@@ -176,6 +176,20 @@ public class JavaScriptValueExternal {
 	static native public long getPropertyAtIndex(long contextPtr, long valuePtr, int index);
 
 	/**
+	 * @method forEach
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	static native public void forEach(long contextPtr, long valuePtr, Object wrapper);
+
+	/**
+	 * @method forOwn
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	static native public void forOwn(long contextPtr, long valuePtr, Object wrapper);
+
+	/**
 	 * @method setPrototype
 	 * @since 0.1.0
 	 * @hidden

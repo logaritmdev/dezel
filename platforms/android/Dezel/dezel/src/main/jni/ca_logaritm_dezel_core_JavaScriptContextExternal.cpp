@@ -16,8 +16,6 @@ ContextExceptionCallback(JSContextRef context, JSValueRef error) {
 		wrapper->ctx
 	);
 
-	JNI_CHECK_EXCEPTION(wrapper->env);
-
 	JNI_CALL_VOID_METHOD(
 		wrapper->env,
 		exception,
@@ -25,8 +23,6 @@ ContextExceptionCallback(JSContextRef context, JSValueRef error) {
 		reinterpret_cast<jlong>(error),
 		true
 	);
-
-	JNI_CHECK_EXCEPTION(wrapper->env);
 
 	JNI_CALL_VOID_METHOD(
 		wrapper->env,

@@ -26,6 +26,8 @@ LOCAL_SRC_FILES := wrappers/JavaScriptFunction.cpp \
                    wrappers/JavaScriptClassFunctionWrapper.cpp \
                    wrappers/JavaScriptClassGetterWrapper.cpp \
                    wrappers/JavaScriptClassSetterWrapper.cpp \
+                   wrappers/JavaScriptValueForEachWrapper.cpp \
+                   wrappers/JavaScriptValueForOwnWrapper.cpp \
                    wrappers/StylerNodeWrapper.cpp \
                    wrappers/LayoutWrapper.cpp \
                    wrappers/LayoutNodeWrapper.cpp \

@@ -581,7 +581,7 @@ open class JavaScriptValue : NSObject {
 	}
 
 	/**
-	 * Loops through the array values.
+	 * Executes a provided function once for each array element.
 	 * @method forEach
 	 * @since 0.7.0
 	 */
@@ -593,7 +593,7 @@ open class JavaScriptValue : NSObject {
 	}
 
 	/**
-	 * Loops through the object properties.
+	 * Executes a provided function once for each object properties.
 	 * @method forOwn
 	 * @since 0.7.0
 	 */
@@ -692,15 +692,6 @@ open class JavaScriptValue : NSObject {
 	//--------------------------------------------------------------------------
 	// Private API
 	//--------------------------------------------------------------------------
-
-	/**
-	 * @method length
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	internal func length() -> Int {
-		return self.property("length").number.int()
-	}
 
 	/**
 	 * @method reset
@@ -850,14 +841,14 @@ public typealias JavaScriptSetterHandler = (JavaScriptSetterCallback) -> (Void)
 public typealias JavaScriptArguments = [JavaScriptValue?]
 
 /**
- * The object for each handler
+ * The object for each handler.
  * @alias JavaScriptForOwnHandler
  * @since 0.7.0
  */
 public typealias JavaScriptForOwnHandler = (String, JavaScriptValue) -> Void
 
 /**
- * The array for each handler
+ * The array for each handler.
  * @alias JavaScriptForEachHandler
  * @since 0.7.0
  */

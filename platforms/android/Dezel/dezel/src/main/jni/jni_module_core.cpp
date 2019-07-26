@@ -15,6 +15,8 @@ jclass JavaScriptFinalizeCallbackClass;
 jclass JavaScriptFunctionCallbackClass;
 jclass JavaScriptGetterCallbackClass;
 jclass JavaScriptSetterCallbackClass;
+jclass JavaScriptValueForEachWrapperClass;
+jclass JavaScriptValueForOwnWrapperClass;
 
 jfieldID JavaScriptFunctionCallbackResult;
 jfieldID JavaScriptGetterCallbackResult;
@@ -33,6 +35,9 @@ jmethodID JavaScriptFunctionWrapperExecute;
 jmethodID JavaScriptGetterWrapperExecute;
 jmethodID JavaScriptSetterWrapperExecute;
 jmethodID JavaScriptExceptionWrapperExecute;
+
+jmethodID JavaScriptValueForEachWrapperExecute;
+jmethodID JavaScriptValueForOwnWrapperExecute;
 
 const long long kJavaScriptFinalizeWrapperKey = reinterpret_cast<long long>(new int(0));
 const long long kJavaScriptExceptionWrapperKey = reinterpret_cast<long long>(new int(0));
@@ -107,6 +112,16 @@ JNI_OnLoad_core(JNIEnv *env)
 	JavaScriptSetterCallbackClass = JNIGetClass(
 		env,
 		"ca/logaritm/dezel/core/JavaScriptSetterCallback"
+	);
+
+	JavaScriptValueForEachWrapperClass = JNIGetClass(
+		env,
+		"ca/logaritm/dezel/core/JavaScriptValueForEachWrapper"
+	);
+
+	JavaScriptValueForOwnWrapperClass = JNIGetClass(
+		env,
+		"ca/logaritm/dezel/core/JavaScriptValueForOwnWrapper"
 	);
 
 	//----------------------------------------------------------------------------------------------
@@ -215,6 +230,20 @@ JNI_OnLoad_core(JNIEnv *env)
 		"(Lca/logaritm/dezel/core/JavaScriptValue;)V"
 	);
 
+	JavaScriptValueForEachWrapperExecute = JNIGetMethod(
+		env,
+		JavaScriptValueForEachWrapperClass,
+		"execute",
+		"(IJ)V"
+	);
+
+	JavaScriptValueForOwnWrapperExecute = JNIGetMethod(
+		env,
+		JavaScriptValueForOwnWrapperClass,
+		"execute",
+		"(Ljava/lang/String;J)V"
+	);
+
 	StringClass                           = (jclass) env->NewGlobalRef(StringClass);
 	JavaScriptValueClass                  = (jclass) env->NewGlobalRef(JavaScriptValueClass);
 	JavaScriptObjectClass                 = (jclass) env->NewGlobalRef(JavaScriptObjectClass);
@@ -228,4 +257,6 @@ JNI_OnLoad_core(JNIEnv *env)
 	JavaScriptFunctionCallbackClass       = (jclass) env->NewGlobalRef(JavaScriptFunctionCallbackClass);
 	JavaScriptGetterCallbackClass         = (jclass) env->NewGlobalRef(JavaScriptGetterCallbackClass);
 	JavaScriptSetterCallbackClass         = (jclass) env->NewGlobalRef(JavaScriptSetterCallbackClass);
+	JavaScriptValueForEachWrapperClass    = (jclass) env->NewGlobalRef(JavaScriptValueForEachWrapperClass);
+	JavaScriptValueForOwnWrapperClass     = (jclass) env->NewGlobalRef(JavaScriptValueForOwnWrapperClass);
 }

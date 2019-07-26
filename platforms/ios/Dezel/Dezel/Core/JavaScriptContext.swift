@@ -95,16 +95,8 @@ open class JavaScriptContext: NSObject {
 		self.handle = DLContextCreate(Bundle.main.bundleIdentifier ?? "Dezel Context")
 
 		self.global = JavaScriptValue.create(self, handle: DLContextGetGlobalObject(self.handle))
-
-		let code = """
-
-			self = this;
-			global = this;
-			window = this;
-
-		"""
-
-		self.evaluate(code);
+		self.global.defineProperty("global", value: self.global, getter: nil, setter: nil, writable: false, enumerable: false, configurable: false)
+		self.global.defineProperty("window", value: self.global, getter: nil, setter: nil, writable: false, enumerable: false, configurable: false)
 	}
 
 	/**

@@ -1,5 +1,7 @@
 package ca.logaritm.dezel.core
 
+import android.util.Log
+
 /**
  * @class JavaScriptFunctionWrapper
  * @since 0.1.0

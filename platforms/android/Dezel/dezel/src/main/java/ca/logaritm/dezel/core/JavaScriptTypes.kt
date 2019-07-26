@@ -47,9 +47,16 @@ public typealias JavaScriptExceptionHandler = (JavaScriptValue) -> Unit
 public typealias JavaScriptArguments = Array<JavaScriptValue?>
 
 /**
- * The for each handler alias.
+ * The object for each handler.
+ * @alias JavaScriptForOwnHandler
+ * @since 0.7.0
+ */
+public typealias JavaScriptForOwnHandler = (String, JavaScriptValue) -> Unit
+
+/**
+ * The array for each handler.
  * @alias JavaScriptForEachHandler
- * @since 0.1.0
+ * @since 0.7.0
  */
 public typealias JavaScriptForEachHandler = (Int, JavaScriptValue) -> Unit
 

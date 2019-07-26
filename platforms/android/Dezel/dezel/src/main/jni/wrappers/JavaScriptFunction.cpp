@@ -17,14 +17,14 @@ JavaScriptFunctionExecute(JNIEnv *env, jobject context, jobject instance, jmetho
 		args
 	);
 
-	JNI_CHECK_EXCEPTION(env);
-
 	JNI_CALL_VOID_METHOD(
 		env,
 		instance,
 		function,
 		callback
 	);
+
+	JNI_CHECK_EXCEPTION(env);
 
 	jlong result = env->GetLongField(callback, JavaScriptFunctionCallbackResult);
 	env->DeleteLocalRef(callback);

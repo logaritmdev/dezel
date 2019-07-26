@@ -399,7 +399,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	 * @method defineProperty
 	 * @since 0.1.0
 	 */
-	public fun defineProperty(property: String, value: JavaScriptValue?, getter: JavaScriptGetterHandler?, setter: JavaScriptSetterHandler?, writable: Boolean, enumerable: Boolean, configurable: Boolean) {
+	public fun defineProperty(property: String, value: JavaScriptValue?, getter: JavaScriptGetterHandler? = null, setter: JavaScriptSetterHandler? = null, writable: Boolean = true, enumerable: Boolean = true, configurable: Boolean = true) {
 
 		var get: JavaScriptGetterWrapper? = null
 		var set: JavaScriptSetterWrapper? = null
@@ -546,17 +546,21 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	}
 
 	/**
-	 * Convenience holder to loop through this value's array values.
+	 * Executes a provided function once for each array element.
 	 * @method forEach
 	 * @since 0.1.0
 	 */
 	public fun forEach(handler: JavaScriptForEachHandler) {
-		val length = this.length()
-		if (length > 0) {
-			for (i in 0 until length) {
-				handler(i, this.property(i))
-			}
-		}
+		JavaScriptValueExternal.forEach(this.context.handle, this.handle, JavaScriptValueForEachWrapper(this.context, handler))
+	}
+
+	/**
+	 * Executes a provided function once for each object properties.
+	 * @method forOwn
+	 * @since 0.7.0
+	 */
+	public fun forOwn(handler: JavaScriptForOwnHandler) {
+		JavaScriptValueExternal.forOwn(this.context.handle, this.handle, JavaScriptValueForOwnWrapper(this.context, handler))
 	}
 
 	/**
@@ -647,15 +651,6 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	//--------------------------------------------------------------------------
 	// Private API
 	//--------------------------------------------------------------------------
-
-	/**
-	 * @method length
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	internal fun length(): Int {
-		return this.property("length").number.toInt()
-	}
 
 	/**
 	 * @method reset

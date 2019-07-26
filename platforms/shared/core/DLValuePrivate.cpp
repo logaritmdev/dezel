@@ -94,10 +94,16 @@ DLValueFinalizeHandler(JSObjectRef object)
 }
 
 char*
-DLStringCreate(JSContextRef context, JSStringRef string)
+DLStringCreate(JSStringRef string)
 {
 	auto length = JSStringGetMaximumUTF8CStringSize(string);
 	auto buffer = new char[length];
 	JSStringGetUTF8CString(string, buffer, length);
 	return buffer;
+}
+
+void
+DLStringDelete(char* string)
+{
+	delete [] string;
 }

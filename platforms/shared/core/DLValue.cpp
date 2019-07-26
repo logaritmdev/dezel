@@ -729,9 +729,11 @@ DLValueForOwn(JSContextRef context, JSValueRef value, DLValueForOwnHandler callb
 	for (size_t i = 0; i < len; i++) {
 
 		JSStringRef name = JSPropertyNameArrayGetNameAtIndex(properties, i);
-		auto string = DLStringCreate(context, name);
+		auto string = DLStringCreate(name);
 		JSStringRelease(name);
 
 		callback(context, DLValueGetProperty(context, object, string), string, data);
+
+		DLStringDelete(string);
 	}
 }

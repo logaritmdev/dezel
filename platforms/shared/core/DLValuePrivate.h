@@ -81,6 +81,13 @@ void DLValueFinalizeHandler(JSObjectRef object);
  * @since 0.7.0
  * @hidden
  */
-char* DLStringCreate(JSContextRef context, JSStringRef string);
+char* DLStringCreate(JSStringRef string);
+
+/**
+ * @function DLStringDelete
+ * @since 0.7.0
+ * @hidden
+ */
+void DLStringDelete(char* string);
 
 #endif

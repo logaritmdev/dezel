@@ -34,6 +34,9 @@ extern jclass JavaScriptPropertyGetterWrapperClass;
 extern jclass JavaScriptPropertySetterWrapperClass;
 extern jclass JavaScriptExceptionWrapperClass;
 
+extern jclass JavaScriptValueForEachWrapperClass;
+extern jclass JavaScriptValueForOwnWrapperClass;
+
 extern jclass JavaScriptFinalizeCallbackClass;
 extern jclass JavaScriptFunctionCallbackClass;
 extern jclass JavaScriptGetterCallbackClass;
@@ -56,6 +59,9 @@ extern jmethodID JavaScriptFunctionWrapperExecute;
 extern jmethodID JavaScriptGetterWrapperExecute;
 extern jmethodID JavaScriptSetterWrapperExecute;
 extern jmethodID JavaScriptExceptionWrapperExecute;
+
+extern jmethodID JavaScriptValueForEachWrapperExecute;
+extern jmethodID JavaScriptValueForOwnWrapperExecute;
 
 extern const long long kJavaScriptFinalizeWrapperKey;
 extern const long long kJavaScriptExceptionWrapperKey;

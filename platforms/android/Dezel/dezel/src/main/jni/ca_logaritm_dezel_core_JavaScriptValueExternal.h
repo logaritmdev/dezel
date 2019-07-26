@@ -201,6 +201,22 @@ JNIEXPORT jlong JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_getP
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
+ * Method:    forEach
+ * Signature: (JJLjava/lang/Object;)V
+ */
+JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_forEach
+  (JNIEnv *, jclass, jlong, jlong, jobject);
+
+/*
+ * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
+ * Method:    forOwn
+ * Signature: (JJLjava/lang/Object;)V
+ */
+JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_forOwn
+  (JNIEnv *, jclass, jlong, jlong, jobject);
+
+/*
+ * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
  * Method:    setPrototype
  * Signature: (JJJ)V
  */
