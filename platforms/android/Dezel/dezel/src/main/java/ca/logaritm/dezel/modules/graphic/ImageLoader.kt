@@ -56,8 +56,8 @@ open class ImageLoader(val context: Context) {
 		 * @hidden
 		 */
 		public fun setup(context: Context) {
-			ImageLoader.liveCache = ImageLiveCache(ImageLoader.liveCacheMaxBytes())
-			ImageLoader.diskCache = ImageDiskCache(ImageLoader.diskCacheMaxBytes(), context)
+			liveCache = ImageLiveCache(liveCacheMaxBytes())
+			diskCache = ImageDiskCache(diskCacheMaxBytes(), context)
 		}
 
 		/**
@@ -75,7 +75,7 @@ open class ImageLoader(val context: Context) {
 		 * @hidden
 		 */
 		protected fun diskCacheMaxBytes(): Int {
-			return 32 * 1024 * 1024 // 32 MB
+			return 64 * 1024 * 1024 // 64 MB
 		}
 	}
 
@@ -95,7 +95,7 @@ open class ImageLoader(val context: Context) {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	private var downloadTask: ImageLoader.DownloadTask? = null
+	private var downloadTask: DownloadTask? = null
 
 	//--------------------------------------------------------------------------
 	// Methods
@@ -175,7 +175,7 @@ open class ImageLoader(val context: Context) {
 			path = path.substring(2)
 		}
 
-		var stream: ImageLoader.ImageStream? = null
+		var stream: ImageStream? = null
 
 		if (path.startsWith("content://")) {
 
@@ -186,7 +186,7 @@ open class ImageLoader(val context: Context) {
 					throw Error("Invalid content stream.")
 				}
 
-				stream = ImageLoader.ImageStream(input, 1)
+				stream = ImageStream(input, 1)
 
 			} catch (e: Exception) {
 
@@ -262,7 +262,7 @@ open class ImageLoader(val context: Context) {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	private fun getImageStream(context: android.content.Context, file: String): ImageLoader.ImageStream? {
+	private fun getImageStream(context: Context, file: String): ImageStream? {
 
 		val dir = file.baseName
 
@@ -314,7 +314,7 @@ open class ImageLoader(val context: Context) {
 			return null
 		}
 
-		return ImageLoader.ImageStream(stream, scale)
+		return ImageStream(stream, scale)
 	}
 
 	/**
@@ -338,7 +338,6 @@ open class ImageLoader(val context: Context) {
 
 		return null
 	}
-
 
 	//-------------------------------------------------------------------------
 	// Classes
