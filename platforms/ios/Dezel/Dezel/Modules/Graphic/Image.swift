@@ -5,15 +5,6 @@
  */
 open class Image: JavaScriptClass {
 
-	/**
-	 * Convenience method to create an Image instance within the specified context.
-	 * @method with
-	 * @since 0.4.0
-	 */
-	public static func with(_ input: UIImage, in context: JavaScriptContext) -> Image {
-		fatalError("TODO FIXME")
-	}
-
 	//--------------------------------------------------------------------------
 	// MARK: Properties
 	//--------------------------------------------------------------------------
