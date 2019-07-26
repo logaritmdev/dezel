@@ -151,16 +151,16 @@ open class ApplicationController: UIViewController {
 			fatalError(message)
 		}
 
-		self.registerModule("dezel.CoreModule", value: CoreModule.self)
-		self.registerModule("dezel.WebModule", value: WebModule.self)
-		self.registerModule("dezel.LocaleModule", value: LocaleModule.self)
-		self.registerModule("dezel.DeviceModule", value: DeviceModule.self)
-		self.registerModule("dezel.PlatformModule", value: PlatformModule.self)
-		self.registerModule("dezel.DialogModule", value: DialogModule.self)
-		self.registerModule("dezel.GraphicModule", value: GraphicModule.self)
-		self.registerModule("dezel.ViewModule", value: ViewModule.self)
-		self.registerModule("dezel.FormModule", value: FormModule.self)
-		self.registerModule("dezel.ApplicationModule", value: ApplicationModule.self)
+		self.registerModule("dezel.CoreModule", with: CoreModule.self)
+		self.registerModule("dezel.GlobalModule", with: GlobalModule.self)
+		self.registerModule("dezel.LocaleModule", with: LocaleModule.self)
+		self.registerModule("dezel.DeviceModule", with: DeviceModule.self)
+		self.registerModule("dezel.PlatformModule", with: PlatformModule.self)
+		self.registerModule("dezel.DialogModule", with: DialogModule.self)
+		self.registerModule("dezel.GraphicModule", with: GraphicModule.self)
+		self.registerModule("dezel.ViewModule", with: ViewModule.self)
+		self.registerModule("dezel.FormModule", with: FormModule.self)
+		self.registerModule("dezel.ApplicationModule", with: ApplicationModule.self)
 
 		self.configure()
 
@@ -168,22 +168,10 @@ open class ApplicationController: UIViewController {
 		self.context.registerClasses(self.classes)
 		self.context.setup()
 
-		// TODO
-		// This has to be removed and this module must not have its own javascript file
-
-		do {
-			self.context.evaluate(try String(contentsOfFile: Bundle.resource("WebRuntime.js")!), file: "WebRuntime.js")
-		} catch _ {
-			fatalError("Cannot load the web runtime, the path is invalid.")
-		}
-
 		self.sources.forEach { source in
-
 			switch (source.category) {
-
 				case .style:
 					self.evaluateStyle(source.data, file: source.location)
-
 				case .script:
 					self.evaluateScript(source.data, file: source.location)
 			}
@@ -197,7 +185,7 @@ open class ApplicationController: UIViewController {
 	 * @method registerModule
 	 * @since 0.7.0
 	 */
-	open func registerModule(_ uid: String, value: AnyClass) {
+	open func registerModule(_ uid: String, with value: AnyClass) {
 		self.modules[uid] = value
 	}
 
@@ -206,7 +194,7 @@ open class ApplicationController: UIViewController {
 	 * @method registerClass
 	 * @since 0.7.0
 	 */
-	open func registerClass(_ uid: String, value: AnyClass) {
+	open func registerClass(_ uid: String, with value: AnyClass) {
 		self.classes[uid] = value
 	}
 

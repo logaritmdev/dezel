@@ -20,7 +20,6 @@ import ca.logaritm.dezel.view.graphic.*
 import ca.logaritm.dezel.view.type.Overscroll
 import ca.logaritm.dezel.view.type.Scrollbars
 import kotlin.math.PI
-import android.content.Context as AndroidContext
 import android.graphics.Canvas as AndroidCanvas
 import android.view.View as AndroidView
 import android.view.ViewGroup as AndroidViewGroup
@@ -149,7 +148,7 @@ open class View(context: JavaScriptContext) : JavaScriptClass(context), LayoutNo
 	 * @property backgroundImage
 	 * @since 0.1.0
 	 */
-	open var backgroundImage: Property by Delegates.OnSet(Property("none")) { value ->
+	open var backgroundImage: Property by Delegates.OnSet(Property()) { value ->
 		this.backgroundImageLoader.load(value) { image ->
 			this.backgroundImageData = image
 		}
@@ -700,7 +699,7 @@ open class View(context: JavaScriptContext) : JavaScriptClass(context), LayoutNo
 	 * @property height
 	 * @since 0.1.0
 	 */
-	open var height: Property by Delegates.OnSet(Property("wrap")) { value ->
+	open var height: Property by Delegates.OnSet(Property("fill")) { value ->
 		this.layoutNode.height(value)
 	}
 
@@ -1903,10 +1902,8 @@ open class View(context: JavaScriptContext) : JavaScriptClass(context), LayoutNo
 			window = this
 		}
 
-		if (notify) {
-			view.moveToParent(parent)
-			view.moveToWindow(window)
-		}
+		view.moveToParent(parent, notify)
+		view.moveToWindow(window, notify)
 
 		this.insertChild(view, index)
 	}
@@ -1916,17 +1913,15 @@ open class View(context: JavaScriptContext) : JavaScriptClass(context), LayoutNo
 	 * @method remove
 	 * @since 0.1.0
 	 */
-	open fun remove(view: View, notify: Boolean = false) {
+	open fun remove(view: View, notify: Boolean = true) {
 
 		val index = this.children.indexOf(view)
 		if (index == -1) {
 			return
 		}
 
-		if (notify) {
-			view.moveToParent(null)
-			view.moveToWindow(null)
-		}
+		view.moveToParent(null, notify)
+		view.moveToWindow(null, notify)
 
 		this.removeChild(view)
 	}
@@ -1945,10 +1940,8 @@ open class View(context: JavaScriptContext) : JavaScriptClass(context), LayoutNo
 			window = this
 		}
 
-		if (notify) {
-			view.moveToParent(parent)
-			view.moveToWindow(window)
-		}
+		view.moveToParent(parent, notify)
+		view.moveToWindow(window, notify)
 
 		this.insertChild(view, index)
 	}
@@ -3253,15 +3246,13 @@ open class View(context: JavaScriptContext) : JavaScriptClass(context), LayoutNo
 	 * @since 0.2.0
 	 * @hidden
 	 */
-	private fun moveToParent(parent: View?) {
-
-		if (this.parent == parent) {
-			return
-		}
-
-		this.holder.callMethod("nativeMoveToParent", arrayOf(parent?.holder))
+	private fun moveToParent(parent: View?, notify: Boolean = true) {
 
 		this.parent = parent
+
+		if (notify) {
+			this.holder.callMethod("nativeMoveToParent", arrayOf(parent?.holder))
+		}
 	}
 
 	/**
@@ -3269,15 +3260,13 @@ open class View(context: JavaScriptContext) : JavaScriptClass(context), LayoutNo
 	 * @since 0.2.0
 	 * @hidden
 	 */
-	private fun moveToWindow(window: Window?) {
-
-		if (this.window == window) {
-			return
-		}
-
-		this.holder.callMethod("nativeMoveToWindow", arrayOf(window?.holder))
+	private fun moveToWindow(window: Window?, notify: Boolean = true) {
 
 		this.window = window
+
+		if (notify) {
+			this.holder.callMethod("nativeMoveToWindow", arrayOf(window?.holder))
+		}
 
 		this.children.forEach {
 			it.moveToWindow(window)
@@ -3857,6 +3846,94 @@ open class View(context: JavaScriptContext) : JavaScriptClass(context), LayoutNo
 	//--------------------------------------------------------------------------
 
 	/**
+	 * @method jsGet_borderTop
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@Suppress("unused")
+	open fun jsGet_borderTop(callback: JavaScriptGetterCallback) {
+		callback.returns(this.borderTop)
+	}
+
+	/**
+	 * @method jsSet_borderTop
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@Suppress("unused")
+	open fun jsSet_borderTop(callback: JavaScriptSetterCallback) {
+		this.borderTop = Property(callback.value)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_borderLeft
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@Suppress("unused")
+	open fun jsGet_borderLeft(callback: JavaScriptGetterCallback) {
+		callback.returns(this.borderLeft)
+	}
+
+	/**
+	 * @method jsSet_borderLeft
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@Suppress("unused")
+	open fun jsSet_borderLeft(callback: JavaScriptSetterCallback) {
+		this.borderLeft = Property(callback.value)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_borderRight
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@Suppress("unused")
+	open fun jsGet_borderRight(callback: JavaScriptGetterCallback) {
+		callback.returns(this.borderRight)
+	}
+
+	/**
+	 * @method jsSet_borderRight
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@Suppress("unused")
+	open fun jsSet_borderRight(callback: JavaScriptSetterCallback) {
+		this.borderRight = Property(callback.value)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_borderBottom
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@Suppress("unused")
+	open fun jsGet_borderBottom(callback: JavaScriptGetterCallback) {
+		callback.returns(this.borderBottom)
+	}
+
+	/**
+	 * @method jsSet_borderBottom
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@Suppress("unused")
+	open fun jsSet_borderBottom(callback: JavaScriptSetterCallback) {
+		this.borderBottom = Property(callback.value)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
 	 * @method jsGet_borderWidth
 	 * @since 0.2.0
 	 * @hidden
@@ -4088,6 +4165,182 @@ open class View(context: JavaScriptContext) : JavaScriptClass(context), LayoutNo
 		this.borderBottomWidth = Property(callback.value)
 	}
 
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_minBorderTopWidth
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@Suppress("unused")
+	open fun jsGet_minBorderTopWidth(callback: JavaScriptGetterCallback) {
+		callback.returns(this.minBorderTopWidth)
+	}
+
+	/**
+	 * @method jsSet_minBorderTopWidth
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@Suppress("unused")
+	open fun jsSet_minBorderTopWidth(callback: JavaScriptSetterCallback) {
+		this.minBorderTopWidth = Property(callback.value)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_maxBorderTopWidth
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@Suppress("unused")
+	open fun jsGet_maxBorderTopWidth(callback: JavaScriptGetterCallback) {
+		callback.returns(this.maxBorderTopWidth)
+	}
+
+	/**
+	 * @method jsSet_maxBorderTopWidth
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@Suppress("unused")
+	open fun jsSet_maxBorderTopWidth(callback: JavaScriptSetterCallback) {
+		this.maxBorderTopWidth = Property(callback.value)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_minBorderLeftWidth
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@Suppress("unused")
+	open fun jsGet_minBorderLeftWidth(callback: JavaScriptGetterCallback) {
+		callback.returns(this.minBorderLeftWidth)
+	}
+
+	/**
+	 * @method jsSet_minBorderLeftWidth
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@Suppress("unused")
+	open fun jsSet_minBorderLeftWidth(callback: JavaScriptSetterCallback) {
+		this.minBorderLeftWidth = Property(callback.value)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_maxBorderLeftWidth
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@Suppress("unused")
+	open fun jsGet_maxBorderLeftWidth(callback: JavaScriptGetterCallback) {
+		callback.returns(this.maxBorderLeftWidth)
+	}
+
+	/**
+	 * @method jsSet_maxBorderLeftWidth
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@Suppress("unused")
+	open fun jsSet_maxBorderLeftWidth(callback: JavaScriptSetterCallback) {
+		this.maxBorderLeftWidth = Property(callback.value)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_minBorderRightWidth
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@Suppress("unused")
+	open fun jsGet_minBorderRightWidth(callback: JavaScriptGetterCallback) {
+		callback.returns(this.minBorderRightWidth)
+	}
+
+	/**
+	 * @method jsSet_minBorderRightWidth
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@Suppress("unused")
+	open fun jsSet_minBorderRightWidth(callback: JavaScriptSetterCallback) {
+		this.minBorderRightWidth = Property(callback.value)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_maxBorderRightWidth
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@Suppress("unused")
+	open fun jsGet_maxBorderRightWidth(callback: JavaScriptGetterCallback) {
+		callback.returns(this.maxBorderRightWidth)
+	}
+
+	/**
+	 * @method jsSet_maxBorderRightWidth
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@Suppress("unused")
+	open fun jsSet_maxBorderRightWidth(callback: JavaScriptSetterCallback) {
+		this.maxBorderRightWidth = Property(callback.value)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_minBorderBottomWidth
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@Suppress("unused")
+	open fun jsGet_minBorderBottomWidth(callback: JavaScriptGetterCallback) {
+		callback.returns(this.minBorderBottomWidth)
+	}
+
+	/**
+	 * @method jsSet_minBorderBottomWidth
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@Suppress("unused")
+	open fun jsSet_minBorderBottomWidth(callback: JavaScriptSetterCallback) {
+		this.minBorderBottomWidth = Property(callback.value)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_maxBorderBottomWidth
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@Suppress("unused")
+	open fun jsGet_maxBorderBottomWidth(callback: JavaScriptGetterCallback) {
+		callback.returns(this.maxBorderBottomWidth)
+	}
+
+	/**
+	 * @method jsSet_maxBorderBottomWidth
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@Suppress("unused")
+	open fun jsSet_maxBorderBottomWidth(callback: JavaScriptSetterCallback) {
+		this.maxBorderBottomWidth = Property(callback.value)
+	}
+	
 	//--------------------------------------------------------------------------
 
 	/**
@@ -6710,7 +6963,7 @@ open class View(context: JavaScriptContext) : JavaScriptClass(context), LayoutNo
 	}
 
 	//--------------------------------------------------------------------------
-	// JavaScript Functions
+	// JavaScript funtions
 	//--------------------------------------------------------------------------
 
 	/**
@@ -6864,5 +7117,4 @@ open class View(context: JavaScriptContext) : JavaScriptClass(context), LayoutNo
 		fun onFinishLayout(view: View)
 		fun onScroll(view: View)
 	}
-
 }

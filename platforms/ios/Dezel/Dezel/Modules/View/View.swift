@@ -2189,10 +2189,8 @@ open class View: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelegate, Scroll
 			window = self as? Window
 		}
 
-		if (notify) {
-			view.moveToParent(parent)
-			view.moveToWindow(window)
-		}
+		view.moveToParent(parent, notify: notify)
+		view.moveToWindow(window, notify: notify)
 
 		self.insertChild(view, at: index)
 	}
@@ -2208,10 +2206,8 @@ open class View: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelegate, Scroll
 			return
 		}
 
-		if (notify) {
-			view.moveToParent(nil)
-			view.moveToWindow(nil)
-		}
+		view.moveToParent(nil, notify: notify)
+		view.moveToWindow(nil, notify: notify)
 
 		self.removeChild(view)
 	}
@@ -2230,10 +2226,8 @@ open class View: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelegate, Scroll
 			window = self as? Window
 		}
 
-		if (notify) {
-			view.moveToParent(parent)
-			view.moveToWindow(window)
-		}
+		view.moveToParent(parent, notify: notify)
+		view.moveToWindow(window, notify: notify)
 
 		self.insertChild(view, at: index)
 	}
@@ -3379,15 +3373,13 @@ open class View: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelegate, Scroll
 	 * @since 0.2.0
 	 * @hidden
 	 */
-	private func moveToParent(_ parent: View?) {
-
-		if (self.parent == parent) {
-			return
-		}
-
-		self.holder.callMethod("nativeMoveToParent", arguments: [parent?.holder])
+	private func moveToParent(_ parent: View?, notify: Bool = true) {
 
 		self.parent = parent
+
+		if (notify) {
+			self.holder.callMethod("nativeMoveToParent", arguments: [parent?.holder])
+		}
 	}
 
 	/**
@@ -3395,15 +3387,13 @@ open class View: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelegate, Scroll
 	 * @since 0.2.0
 	 * @hidden
 	 */
-	private func moveToWindow(_ window: Window?) {
-
-		if (self.window == window) {
-			return
-		}
-
-		self.holder.callMethod("nativeMoveToWindow", arguments: [window?.holder])
+	private func moveToWindow(_ window: Window?, notify: Bool = true) {
 
 		self.window = window
+
+		if (notify) {
+			self.holder.callMethod("nativeMoveToWindow", arguments: [window?.holder])
+		}
 
 		for view in self.children {
 			view.moveToWindow(window)
@@ -3916,60 +3906,6 @@ open class View: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelegate, Scroll
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method jsGet_borderWidth
-	 * @since 0.2.0
-	 * @hidden
-	 */
-	@objc open func jsGet_borderWidth(callback: JavaScriptGetterCallback) {
-
-		let value = self.context.createEmptyObject()
-		value.property("top", property: self.borderTopWidth)
-		value.property("left", property: self.borderLeftWidth)
-		value.property("right", property: self.borderRightWidth)
-		value.property("bottom", property: self.borderBottomWidth)
-
-		callback.returns(value)
-	}
-
-	/**
-	 * @method jsSet_borderWidth
-	 * @since 0.2.0
-	 * @hidden
-	 */
-	@objc open func jsSet_borderWidth(callback: JavaScriptSetterCallback) {
-		self.borderWidth = Property(value: callback.value)
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method jsGet_borderColor
-	 * @since 0.2.0
-	 * @hidden
-	 */
-	@objc open func jsGet_borderColor(callback: JavaScriptGetterCallback) {
-
-		let value = self.context.createEmptyObject()
-		value.property("top", property: self.borderTopColor)
-		value.property("left", property: self.borderLeftColor)
-		value.property("right", property: self.borderRightColor)
-		value.property("bottom", property: self.borderBottomColor)
-
-		callback.returns(value)
-	}
-
-	/**
-	 * @method jsSet_borderColor
-	 * @since 0.2.0
-	 * @hidden
-	 */
-	@objc open func jsSet_borderColor(callback: JavaScriptSetterCallback) {
-		self.borderWidth = Property(value: callback.value)
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
 	 * @method jsGet_borderTop
 	 * @since 0.7.0
 	 * @hidden
@@ -4048,6 +3984,60 @@ open class View: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelegate, Scroll
 	}
 
 	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_borderWidth
+	 * @since 0.2.0
+	 * @hidden
+	 */
+	@objc open func jsGet_borderWidth(callback: JavaScriptGetterCallback) {
+
+		let value = self.context.createEmptyObject()
+		value.property("top", property: self.borderTopWidth)
+		value.property("left", property: self.borderLeftWidth)
+		value.property("right", property: self.borderRightWidth)
+		value.property("bottom", property: self.borderBottomWidth)
+
+		callback.returns(value)
+	}
+
+	/**
+	 * @method jsSet_borderWidth
+	 * @since 0.2.0
+	 * @hidden
+	 */
+	@objc open func jsSet_borderWidth(callback: JavaScriptSetterCallback) {
+		self.borderWidth = Property(value: callback.value)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_borderColor
+	 * @since 0.2.0
+	 * @hidden
+	 */
+	@objc open func jsGet_borderColor(callback: JavaScriptGetterCallback) {
+
+		let value = self.context.createEmptyObject()
+		value.property("top", property: self.borderTopColor)
+		value.property("left", property: self.borderLeftColor)
+		value.property("right", property: self.borderRightColor)
+		value.property("bottom", property: self.borderBottomColor)
+
+		callback.returns(value)
+	}
+
+	/**
+	 * @method jsSet_borderColor
+	 * @since 0.2.0
+	 * @hidden
+	 */
+	@objc open func jsSet_borderColor(callback: JavaScriptSetterCallback) {
+		self.borderWidth = Property(value: callback.value)
+	}
+
+	//-------------------------------------------------------------------------
 
 	/**
 	 * @method jsGet_borderTopColor

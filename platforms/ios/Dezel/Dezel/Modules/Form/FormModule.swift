@@ -14,8 +14,8 @@ open class FormModule: Module {
 	 * @since 0.1.0
 	 */
 	override open func initialize() {
-		self.context.registerClass("dezel.form.TextInput", value: TextInput.self)
-		self.context.registerClass("dezel.form.TextArea", value: TextArea.self)
+		self.context.registerClass("dezel.form.TextInput", with: TextInput.self)
+		self.context.registerClass("dezel.form.TextArea", with: TextArea.self)
 	}
 }
 
