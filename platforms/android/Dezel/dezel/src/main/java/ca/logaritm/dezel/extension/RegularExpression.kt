@@ -21,5 +21,6 @@ internal object RegularExpression {
 
 /**
  * @since 0.5.0
+ * @hidden
  */
 public var isHTMLPattern = Pattern.compile("<[a-z][\\s\\S]*>", Pattern.CASE_INSENSITIVE)

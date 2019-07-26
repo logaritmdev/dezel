@@ -12,14 +12,14 @@ public interface HttpRequestListener {
 	 * @method onError
 	 * @since 0.7.0
 	 */
-	fun onError(request: HttpRequest, error: HttpError)
+	fun onError(request: HttpRequest, response: HttpResponse)
 
 	/**
 	 * Called when a timeout occurs with the request.
 	 * @method onError
 	 * @since 0.7.0
 	 */
-	fun onTimeout(request: HttpRequest, error: HttpError)
+	fun onTimeout(request: HttpRequest, response: HttpResponse)
 
 
 	/**

@@ -7,7 +7,7 @@ import java.net.URL
  * @class HttpResponse
  * @since 0.7.0
  */
-open class HttpResponse {
+open class HttpResponse(url: URL) {
 
 	//--------------------------------------------------------------------------
 	// Properties
@@ -18,7 +18,7 @@ open class HttpResponse {
 	 * @property url
 	 * @since 0.7.0
 	 */
-	public var url: URL? = null
+	public var url: URL
 
 	/**
 	 * The response data.
@@ -48,4 +48,15 @@ open class HttpResponse {
 	 */
 	public var statusText: String = ""
 
+	//--------------------------------------------------------------------------
+	// Method
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @constructor
+	 * @since 0.7.0
+	 */
+	init {
+		this.url = url
+	}
 }

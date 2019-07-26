@@ -232,7 +232,7 @@ open class HttpRequest: NSObject, URLSessionDelegate, URLSessionTaskDelegate, UR
 
 		self.urlSession?.invalidateAndCancel()
 		self.urlSession = nil
-		
+
 		if let error = error as NSError? {
 
 			if (error.code == NSURLErrorTimedOut) {
@@ -243,24 +243,27 @@ open class HttpRequest: NSObject, URLSessionDelegate, URLSessionTaskDelegate, UR
 
 		} else {
 
-			if let response = self.response as? HTTPURLResponse, let data = self.responseData {
+			if let res = self.response as? HTTPURLResponse, let data = self.responseData {
 
-				let res = HttpResponse()
-				res.url = response.url!.absoluteString
-				res.statusCode = response.statusCode
-				res.statusText = response.statusText
+				guard let url = res.url else {
+					fatalError("HTTPUrlResponse is missing URL.")
+				}
 
-				for (key, val) in response.allHeaderFields {
+				let response = HttpResponse(url: url)
+				response.statusCode = res.statusCode
+				response.statusText = res.statusText
+
+				for (key, val) in res.allHeaderFields {
 					if
 						let key = key as? String,
 						let val = val as? String {
-						res.headers[key] = val
+						response.headers[key] = val
 					}
 				}
 
-				res.data = data.string
+				response.data = data.string
 
-				self.delegate?.didComplete(request: self, response: res)
+				self.delegate?.didComplete(request: self, response: response)
 			}
 		}
 

@@ -14,7 +14,7 @@ open class HttpResponse {
 	 * @property url
 	 * @since 0.7.0
 	 */
-	public var url: String = ""
+	public var url: URL
 
 	/**
 	 * The response data.
@@ -44,4 +44,15 @@ open class HttpResponse {
 	 */
 	public var statusText: String = ""
 
+	//--------------------------------------------------------------------------
+	// Method
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @constructor
+	 * @since 0.7.0
+	 */
+	public init(url: URL) {
+		self.url = url
+	}
 }

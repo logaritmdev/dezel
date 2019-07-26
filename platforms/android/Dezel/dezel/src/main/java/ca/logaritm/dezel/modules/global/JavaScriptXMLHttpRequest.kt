@@ -5,9 +5,9 @@ import ca.logaritm.dezel.core.JavaScriptClass
 import ca.logaritm.dezel.core.JavaScriptContext
 import ca.logaritm.dezel.core.JavaScriptFunctionCallback
 import ca.logaritm.dezel.extension.createObject
+import ca.logaritm.dezel.extension.createString
 import ca.logaritm.dezel.extension.toDictionaryOfString
 import ca.logaritm.dezel.extension.toURL
-import ca.logaritm.dezel.networking.HttpError
 import ca.logaritm.dezel.networking.HttpRequest
 import ca.logaritm.dezel.networking.HttpRequestListener
 import ca.logaritm.dezel.networking.HttpResponse
@@ -54,11 +54,11 @@ open class JavaScriptXMLHttpRequest(context: JavaScriptContext) : JavaScriptClas
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	override fun onError(request: HttpRequest, error: HttpError) {
+	override fun onError(request: HttpRequest, response: HttpResponse) {
 
 		this.holder.callMethod("nativeOnError", arrayOf(
-			this.context.createNumber(error.code),
-			this.context.createString(error.message)
+			this.context.createNumber(response.statusCode),
+			this.context.createString(response.statusText)
 		))
 
 		this.unprotect()
@@ -69,11 +69,11 @@ open class JavaScriptXMLHttpRequest(context: JavaScriptContext) : JavaScriptClas
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	override fun onTimeout(request: HttpRequest, error: HttpError) {
+	override fun onTimeout(request: HttpRequest, response: HttpResponse) {
 
 		this.holder.callMethod("nativeOnTimeout", arrayOf(
-			this.context.createNumber(error.code),
-			this.context.createString(error.message)
+			this.context.createNumber(response.statusCode),
+			this.context.createString(response.statusText)
 		))
 
 		this.unprotect()
@@ -103,7 +103,7 @@ open class JavaScriptXMLHttpRequest(context: JavaScriptContext) : JavaScriptClas
 			this.context.createString(response.statusText),
 			this.context.createNumber(response.statusCode),
 			this.context.createObject(response.headers),
-			this.context.createString("WAT") // TODO
+			this.context.createString(response.url)
 		))
 
 		this.unprotect()
@@ -134,7 +134,7 @@ open class JavaScriptXMLHttpRequest(context: JavaScriptContext) : JavaScriptClas
 
 		val url = requestUrl.toURL()
 		if (url == null) {
-			Log.d("DEZEL", "Invalid XMLHttpRequest URL")
+			Log.e("DEZEL", "Invalid XMLHttpRequest URL.")
 			return
 		}
 

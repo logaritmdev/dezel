@@ -2,9 +2,11 @@ package ca.logaritm.dezel.networking
 
 import android.os.AsyncTask
 import android.util.Log
+import java.io.IOException
 import java.io.InputStream
 import java.io.UnsupportedEncodingException
 import java.net.HttpURLConnection
+import java.net.SocketTimeoutException
 import java.net.URL
 import java.nio.charset.Charset
 import java.util.*
@@ -131,16 +133,14 @@ open class HttpRequest(url: URL, method: String) : AsyncTask<URL, HttpRequestPro
 	 */
 	override fun doInBackground(vararg params: URL?): HttpResponse {
 
-		val response = HttpResponse()
+		val url = params[0]
+		if (url == null) {
+			throw Exception("HttpRequest URL missing.")
+		}
+
+		val response = HttpResponse(url)
 
 		try {
-
-			val url = params[0]
-			if (url == null) {
-				return HttpResponse()
-			}
-
-			response.url = url
 
 			this.connection = url.openConnection() as HttpURLConnection
 
@@ -179,14 +179,12 @@ open class HttpRequest(url: URL, method: String) : AsyncTask<URL, HttpRequestPro
 			}
 
 			val stream: InputStream
-			response.statusCode = this.connection.responseCode
-			response.statusText = this.connection.responseMessage
 
-			if (response.statusCode != 200 &&
-				response.statusCode != 201) {
-				stream = this.connection.errorStream
-			} else {
+			if (this.connection.responseCode == 200 ||
+				this.connection.responseCode == 201) {
 				stream = this.connection.inputStream
+			} else {
+				stream = this.connection.errorStream
 			}
 
 			val bytesList = ByteArray(256)
@@ -203,13 +201,13 @@ open class HttpRequest(url: URL, method: String) : AsyncTask<URL, HttpRequestPro
 
 				totalRead += bytesRead
 
-				try {
-
-					string.append(String(bytesList, 0, bytesRead, Charset.forName("UTF-8")))
-
-				} catch (e: UnsupportedEncodingException) {
-					Log.e("DEZEL", "Invalid charset", e)
-				}
+				string.append(
+					String(
+						bytesList, 0,
+						bytesRead,
+						Charset.forName("UTF-8")
+					)
+				)
 
 				this.publishProgress(HttpRequestProgress(totalRead, this.connection.contentLength))
 
@@ -219,12 +217,23 @@ open class HttpRequest(url: URL, method: String) : AsyncTask<URL, HttpRequestPro
 			stream.close()
 
 			response.data = string.toString()
+			response.statusCode = this.connection.responseCode
+			response.statusText = this.connection.responseMessage
+
+		} catch (e: SocketTimeoutException) {
+
+			response.statusCode = 408
+			response.statusText = "Request Timeout"
+
+		} catch (e: IOException)  {
+
+			response.statusCode = 0
+			response.statusText = e.message ?: "IO Error"
 
 		} catch (e: Exception) {
 
-			Log.e("DEZEL", "HttpRequest error", e)
-
-			return HttpError(0, e.message!!)
+			response.statusCode = 0
+			response.statusText = e.message ?: "Error"
 
 		} finally {
 			this.connection.disconnect()
@@ -239,7 +248,19 @@ open class HttpRequest(url: URL, method: String) : AsyncTask<URL, HttpRequestPro
 	 * @hidden
 	 */
 	override fun onPostExecute(response: HttpResponse) {
-		this.listener?.onComplete(this, response)
+
+		if (response.statusCode == 200 ||
+			response.statusCode == 201) {
+			this.listener?.onComplete(this, response)
+			return
+		}
+
+		if (response.statusCode == 408) {
+			this.listener?.onTimeout(this, response)
+			return
+		}
+
+		this.listener?.onError(this, response)
 	}
 
 	/**

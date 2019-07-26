@@ -2,6 +2,7 @@ package ca.logaritm.dezel.extension
 
 import android.net.Uri
 import ca.logaritm.dezel.core.JavaScriptValue
+import java.lang.Exception
 import java.net.URL
 
 /**
@@ -9,8 +10,12 @@ import java.net.URL
  * @since 0.7.0
  * @hidden
  */
-internal fun JavaScriptValue.toURL(): URL {
-	return URL(this.string)
+internal fun JavaScriptValue.toURL(): URL? {
+	try {
+		return URL(this.string)
+	} catch (e: Exception) {
+		return null
+	}
 }
 
 /**

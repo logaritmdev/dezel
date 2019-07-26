@@ -10,15 +10,6 @@ import android.util.SizeF
 import ca.logaritm.dezel.view.graphic.Convert
 
 /**
- * @property Context.applicationName
- * @since 0.6.0
- * @hidden
- */
-public val Context.applicationName: String; get() {
-	return if (this.applicationInfo.labelRes == 0) this.applicationInfo.nonLocalizedLabel.toString() else this.getString(this.applicationInfo.labelRes)
-}
-
-/**
  * @property Activity.viewport
  * @since 0.5.0
  * @hidden

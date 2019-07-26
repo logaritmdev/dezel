@@ -121,7 +121,7 @@ open class JavaScriptXMLHttpRequest: JavaScriptClass, HttpRequestDelegate {
 		let requestData     = callback.argument(6)
 
 		guard let url = requestUrl.toURL() else {
-			NSLog("Invalid XMLHttpRequest URL")
+			NSLog("Invalid XMLHttpRequest URL.")
 			return
 		}
 
