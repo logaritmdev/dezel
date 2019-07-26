@@ -1,5 +1,5 @@
 /**
- * @extension JavaScriptContext
+ * @extension HTTPURLResponse
  * @since 0.7.0
  * @hidden
  */

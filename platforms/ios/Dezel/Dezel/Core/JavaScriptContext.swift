@@ -428,29 +428,6 @@ open class JavaScriptContext: NSObject {
 	}
 }
 
-/**
- * @extension JavaScriptContext
- * @since 0.7.0
- * @hidden
- */
-internal extension JavaScriptContext {
-
-	/**
-	 * @method createObject
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	func createObject(_ dictionary: [String: String]) -> JavaScriptValue {
-
-		let result = self.createEmptyObject()
-
-		for (key, val) in dictionary {
-			result.property(key, value: self.createString(val))
-		}
-
-		return result
-	}
-}
 
 /**
  * The type alias for an exception handler callback.

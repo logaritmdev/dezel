@@ -1,6 +1,7 @@
 /**
  * @extension Array
  * @since 0.1.0
+ * @hidden
  */
 internal extension Array where Element: Equatable {
 
@@ -37,6 +38,7 @@ internal extension Array where Element: Equatable {
 /**
  * @extension Array
  * @since 0.1.0
+ * @hidden
  */
 internal extension Array where Element == SynchronizerCallback {
 
@@ -55,6 +57,7 @@ internal extension Array where Element == SynchronizerCallback {
 /**
  * @extension Array
  * @since 0.6.0
+ * @hidden
  */
 internal extension Array where Element == TransitionListener {
 

@@ -43,11 +43,11 @@ open class JavaScriptXMLHttpRequest: JavaScriptClass, HttpRequestDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	public func didError(request: HttpRequest, error: NSError) {
+	public func didError(request: HttpRequest, response: HttpResponse) {
 
 		self.holder.callMethod("nativeOnError", arguments: [
-			self.context.createNumber(error.code),
-			self.context.createString(error.localizedDescription)
+			self.context.createNumber(response.statusCode),
+			self.context.createString(response.statusText)
 		])
 
 		self.unprotect()
@@ -58,11 +58,11 @@ open class JavaScriptXMLHttpRequest: JavaScriptClass, HttpRequestDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	public func didTimeout(request: HttpRequest, error: NSError) {
+	public func didTimeout(request: HttpRequest, response: HttpResponse) {
 
 		self.holder.callMethod("nativeOnTimeout", arguments: [
-			self.context.createNumber(error.code),
-			self.context.createString(error.localizedDescription)
+			self.context.createNumber(response.statusCode),
+			self.context.createString(response.statusText)
 		])
 
 		self.unprotect()

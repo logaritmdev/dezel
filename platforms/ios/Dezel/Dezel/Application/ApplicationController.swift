@@ -962,20 +962,3 @@ open class ApplicationController: UIViewController {
  * @hidden
  */
 internal let kApplicationControllerKey = NSObject()
-
-/**
- * @extension JavaScriptContext
- * @since 0.7.0
- * @hidden
- */
-public extension JavaScriptContext {
-
-	/**
-	 * @property container
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	var application: ApplicationController {
-		return self.attribute(kApplicationControllerKey) as! ApplicationController
-	}
-}

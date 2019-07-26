@@ -1,9 +1,9 @@
 /**
- * @extension Data
+ * @extension NSMutableData
  * @since 0.7.0
  * @hidden
  */
-internal extension Data {
+internal extension NSMutableData {
 
 	/**
 	 * @property string
@@ -14,7 +14,3 @@ internal extension Data {
 		return String(data: self as Data, encoding: .utf8)!
 	}
 }
-
-
-
-

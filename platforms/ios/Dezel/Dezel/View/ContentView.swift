@@ -320,7 +320,7 @@ open class ContentView : UIScrollView, UIScrollViewDelegate, Scrollable {
 	 * @since 0.1.0
 	 */
 	override open func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-		//super.touchesCancelled(touches, with: event) TEST
+		super.touchesCancelled(touches, with: event) TEST
 		UIApplication.shared.window?.dispatchTouchCancelled(touches)
 	}
 

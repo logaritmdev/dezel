@@ -233,41 +233,46 @@ open class HttpRequest: NSObject, URLSessionDelegate, URLSessionTaskDelegate, UR
 		self.urlSession?.invalidateAndCancel()
 		self.urlSession = nil
 
+		self.sending = false
+
+		guard let res = self.response as? HTTPURLResponse else {
+			return
+		}
+
+		let response = HttpResponse(url: self.url)
+		response.statusCode = res.statusCode
+		response.statusText = res.statusText
+
+		for (key, val) in res.allHeaderFields {
+			let k = key as! String
+			let v = val as! String
+			response.headers[k] = v
+		}
+
+		if let data = self.responseData {
+			response.data = data.string
+		}
+
 		if let error = error as NSError? {
 
 			if (error.code == NSURLErrorTimedOut) {
-				self.delegate?.didTimeout(request: self, error: error)
+
+				response.statusCode = 408
+				response.statusText = "Request Timeout"
+				self.delegate?.didTimeout(request: self, response: response)
+
 			} else {
-				self.delegate?.didError(request: self, error: error)
+
+				response.statusCode = -1
+				response.statusText = error.localizedDescription
+				self.delegate?.didError(request: self, response: response)
+
 			}
 
-		} else {
-
-			if let res = self.response as? HTTPURLResponse, let data = self.responseData {
-
-				guard let url = res.url else {
-					fatalError("HTTPUrlResponse is missing URL.")
-				}
-
-				let response = HttpResponse(url: url)
-				response.statusCode = res.statusCode
-				response.statusText = res.statusText
-
-				for (key, val) in res.allHeaderFields {
-					if
-						let key = key as? String,
-						let val = val as? String {
-						response.headers[key] = val
-					}
-				}
-
-				response.data = data.string
-
-				self.delegate?.didComplete(request: self, response: response)
-			}
+			return
 		}
 
-		self.sending = false
+		self.delegate?.didComplete(request: self, response: response)
 	}
 
 	//--------------------------------------------------------------------------
