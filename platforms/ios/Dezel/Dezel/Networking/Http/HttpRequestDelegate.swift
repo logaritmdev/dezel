@@ -3,10 +3,8 @@
  * @since 0.1.0
  */
 public protocol HttpRequestDelegate: AnyObject {
-	func didSend(request: HttpRequest, data: Data?)
-	func didProgress(request: HttpRequest, value: Int64, total: Int64)
-	func didTimeout(request: HttpRequest, error: Error)
-	func didFail(request: HttpRequest, error: Error)
-	func didAbort(request: HttpRequest)
-	func didComplete(request: HttpRequest, response: URLResponse, data: Data)
+	func didError(request: HttpRequest, error: NSError)
+	func didTimeout(request: HttpRequest, error: NSError)
+	func didProgress(request: HttpRequest, loaded: Int64, length: Int64)
+	func didComplete(request: HttpRequest, response: HttpResponse)
 }

@@ -12,89 +12,67 @@ open class HttpRequest: NSObject, URLSessionDelegate, URLSessionTaskDelegate, UR
 	//--------------------------------------------------------------------------
 
 	/**
+	 * The request's delegate.
 	 * @property delegate
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	open weak var delegate: HttpRequestDelegate?
 
 	/**
+	 * The request's headers.
 	 * @property headers
 	 * @since 0.1.0
-	 * @hidden
 	 */
-	open var headers: [String: String] = [:] {
-		didSet {
-			self.requestHeaders = headers
-		}
-	}
+	open var headers: [String: String] = [:]
 
 	/**
+	 * The request's timeout.
 	 * @property timeout
 	 * @since 0.1.0
-	 * @hidden
 	 */
-	open var timeout: Double = 60 {
-		didSet {
-			self.requestTimeout = TimeInterval(timeout)
-		}
-	}
+	open var timeout: TimeInterval = TimeInterval(60)
 
 	/**
+	 * The request's username.
 	 * @property username
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	open var username: String?
 
 	/**
+	 * The request's password.
 	 * @property password
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	open var password: String?
+
+	/**
+	 * The request's data.
+	 * @property data
+	 * @since 0.1.0
+	 */
+	open var data: Data?
 
 	/**
 	 * @property url
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	private(set) public var url: URL?
+	private var url: URL
 
 	/**
-	 * @property urlSession
+	 * @property method
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	private var urlSession: URLSession?
+	private var method: String
 
 	/**
-	 * @property requestUrl
+	 * @property sending
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	private var requestUrl: String
-
-	/**
-	 * @property requestMethod
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	private var requestMethod: String
-
-	/**
-	 * @property requestHeaders
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	private var requestHeaders: [String: String] = [:]
-
-	/**
-	 * @property requestTimeout
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	private var requestTimeout: TimeInterval = 0
+	private var sending: Bool = false
 
 	/**
 	 * @property response
@@ -102,6 +80,13 @@ open class HttpRequest: NSObject, URLSessionDelegate, URLSessionTaskDelegate, UR
 	 * @hidden
 	 */
 	private var response: URLResponse?
+
+	/**
+	 * @property responseData
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	private var responseData: NSMutableData!
 
 	/**
 	 * @property responseLength
@@ -118,11 +103,11 @@ open class HttpRequest: NSObject, URLSessionDelegate, URLSessionTaskDelegate, UR
 	private var responseLoaded: Int64 = 0
 
 	/**
-	 * @property data
+	 * @property urlSession
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	private var data: NSMutableData?
+	private var urlSession: URLSession?
 
 	//--------------------------------------------------------------------------
 	// MARK: Method
@@ -132,71 +117,48 @@ open class HttpRequest: NSObject, URLSessionDelegate, URLSessionTaskDelegate, UR
 	 * @constructor
 	 * @since 0.1.0
 	 */
-	public init(url: String, method: String) {
-		self.requestUrl = url
-		self.requestMethod = method
+	public init(url: URL, method: String) {
+		self.url = url
+		self.method = method
 	}
 
 	/**
+	 * Sends the request.
 	 * @method send
 	 * @since 0.1.0
 	 */
-	open func send(data: Data?) {
+	open func send() {
 
-		guard let url = URL(string: self.requestUrl) else {
+		if (self.sending) {
 			return
 		}
 
 		self.reset()
 
-		self.url = url
+		self.sending = true
 
-		var request = URLRequest(url: url)
-		request.timeoutInterval = self.requestTimeout
-		request.allHTTPHeaderFields = self.requestHeaders
+		var request = URLRequest(url: self.url)
+		request.httpMethod = self.method
 		request.httpShouldHandleCookies = true
 		request.httpShouldUsePipelining = false
-		request.httpMethod = self.requestMethod
+		request.allHTTPHeaderFields = self.headers
+		request.timeoutInterval = self.timeout
 
-		if let data = data {
+		if let data = self.data {
 			request.httpBody = data
 		}
 
 		self.urlSession = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: OperationQueue.main)
 		self.urlSession?.dataTask(with: request).resume()
-
-		self.delegate?.didSend(request: self, data: data)
 	}
 
 	/**
+	 * Aborts the current request.
 	 * @method abort
 	 * @since 0.1.0
 	 */
 	open func abort() {
-
-		if (self.urlSession == nil) {
-			return
-		}
-
 		self.reset()
-
-		self.delegate?.didAbort(request: self)
-	}
-
-	/**
-	 * @method reset
-	 * @since 0.1.0
-	 */
-	private func reset() {
-
-		self.urlSession?.invalidateAndCancel()
-		self.urlSession = nil
-
-		self.response = nil
-		self.responseLoaded = 0
-		self.responseLength = 0
-
-		self.data = nil
 	}
 
 	//--------------------------------------------------------------------------
@@ -216,7 +178,10 @@ open class HttpRequest: NSObject, URLSessionDelegate, URLSessionTaskDelegate, UR
 	 */
 	open func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping URLSessionCompletionHandler) {
 
-		if let username = self.username, let password = self.password, challenge.previousFailureCount == 0 {
+		if
+			let username = self.username,
+			let password = self.password,
+			challenge.previousFailureCount == 0 {
 			completionHandler(.useCredential, URLCredential(user: username, password: password, persistence: .none))
 			return
 		}
@@ -239,8 +204,6 @@ open class HttpRequest: NSObject, URLSessionDelegate, URLSessionTaskDelegate, UR
 		self.responseLength = response.expectedContentLength
 		self.responseLoaded = 0
 
-		self.data = NSMutableData()
-
 		completionHandler(.allow)
 	}
 
@@ -250,15 +213,15 @@ open class HttpRequest: NSObject, URLSessionDelegate, URLSessionTaskDelegate, UR
 	 */
 	open func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive bytes: Data) {
 
-		guard let data = self.data else {
-			return
-		}
+		self.responseData.append(bytes)
 
-		data.append(bytes)
+		self.responseLoaded = Int64(self.responseData.length)
 
-		self.responseLoaded = Int64(data.length)
-
-		self.delegate?.didProgress(request: self, value: self.responseLoaded, total: self.responseLength)
+		self.delegate?.didProgress(
+			request: self,
+			loaded: self.responseLoaded,
+			length: self.responseLength
+		)
 	}
 
 	/**
@@ -269,20 +232,59 @@ open class HttpRequest: NSObject, URLSessionDelegate, URLSessionTaskDelegate, UR
 
 		self.urlSession?.invalidateAndCancel()
 		self.urlSession = nil
-
+		
 		if let error = error as NSError? {
 
 			if (error.code == NSURLErrorTimedOut) {
 				self.delegate?.didTimeout(request: self, error: error)
-				return
+			} else {
+				self.delegate?.didError(request: self, error: error)
 			}
 
-			self.delegate?.didFail(request: self, error: error)
-			return
+		} else {
+
+			if let response = self.response as? HTTPURLResponse, let data = self.responseData {
+
+				let res = HttpResponse()
+				res.url = response.url!.absoluteString
+				res.statusCode = response.statusCode
+				res.statusText = response.statusText
+
+				for (key, val) in response.allHeaderFields {
+					if
+						let key = key as? String,
+						let val = val as? String {
+						res.headers[key] = val
+					}
+				}
+
+				res.data = data.string
+
+				self.delegate?.didComplete(request: self, response: res)
+			}
 		}
 
-		if let response = self.response, let data = self.data {
-			self.delegate?.didComplete(request: self, response: response, data: data as Data)
-		}
+		self.sending = false
+	}
+
+	//--------------------------------------------------------------------------
+	// MARK: Private API
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method reset
+	 * @since 0.1.0
+	 */
+	private func reset() {
+
+		self.urlSession?.invalidateAndCancel()
+		self.urlSession = nil
+
+		self.response = nil
+		self.responseData = NSMutableData()
+		self.responseLoaded = 0
+		self.responseLength = 0
+
+		self.data = nil
 	}
 }

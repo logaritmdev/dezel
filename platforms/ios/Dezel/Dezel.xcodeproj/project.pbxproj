@@ -42,8 +42,6 @@
 		C7004C9921442AAC00138ECC /* DLStylerStyleSelectorTreePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = C7004C9721442AAC00138ECC /* DLStylerStyleSelectorTreePrivate.h */; };
 		C7027CD32270DFDA001DD0F7 /* ScrollViewTouchCancelGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7027CD22270DFDA001DD0F7 /* ScrollViewTouchCancelGesture.swift */; };
 		C70617A420F7C03100499FDB /* TransitionListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = C70617A320F7C03100499FDB /* TransitionListener.swift */; };
-		C70B58E12087C2BD008B2137 /* LocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C70B58E02087C2BD008B2137 /* LocalStorage.swift */; };
-		C70B58E32087DC5D008B2137 /* WebRuntime.js in Resources */ = {isa = PBXBuildFile; fileRef = C70B58E22087DC5D008B2137 /* WebRuntime.js */; };
 		C70B58E520880943008B2137 /* Conversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = C70B58E420880943008B2137 /* Conversion.swift */; };
 		C718A0A92066E24400EFEC15 /* ImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C718A0A82066E24400EFEC15 /* ImageView.swift */; };
 		C718A0B32066E63300EFEC15 /* ImageLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C718A0B22066E63300EFEC15 /* ImageLayer.swift */; };
@@ -55,9 +53,7 @@
 		C718B5B6207C41F100610F8D /* RadialGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C718B5B5207C41F000610F8D /* RadialGradient.swift */; };
 		C71A119D2080EB1E0004D523 /* HttpRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71A119C2080EB1E0004D523 /* HttpRequest.swift */; };
 		C71A119F2080EB300004D523 /* HttpRequestDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71A119E2080EB300004D523 /* HttpRequestDelegate.swift */; };
-		C71A11A32080EBB10004D523 /* XMLHttpRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71A11A22080EBB10004D523 /* XMLHttpRequest.swift */; };
-		C71A11A52080EBF80004D523 /* XMLHttpRequestUpload.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71A11A42080EBF80004D523 /* XMLHttpRequestUpload.swift */; };
-		C71A11A72080F7F60004D523 /* WebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71A11A62080F7F60004D523 /* WebSocket.swift */; };
+		C71A11A72080F7F60004D523 /* JavaScriptWebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71A11A62080F7F60004D523 /* JavaScriptWebSocket.swift */; };
 		C71E6CBC20DD4EE1009B86F6 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71E6CBB20DD4EE1009B86F6 /* WebView.swift */; };
 		C71E6CC020DD4F56009B86F6 /* ContentWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71E6CBF20DD4F56009B86F6 /* ContentWebView.swift */; };
 		C71E6CC220DD50A0009B86F6 /* ContentWebViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71E6CC120DD50A0009B86F6 /* ContentWebViewDelegate.swift */; };
@@ -75,13 +71,13 @@
 		C72E0E9920669CBF003BCEF1 /* TextOverflow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72E0E9820669CBF003BCEF1 /* TextOverflow.swift */; };
 		C72E0E9B20669CCD003BCEF1 /* TextTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72E0E9A20669CCD003BCEF1 /* TextTransform.swift */; };
 		C72FF045204E190500FBB36B /* ShapeLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72FF044204E190500FBB36B /* ShapeLayer.swift */; };
-		C732E78820865116006014A0 /* WebModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C732E78720865116006014A0 /* WebModule.swift */; };
-		C732E7A62086EA59006014A0 /* WebGlobal.swift in Sources */ = {isa = PBXBuildFile; fileRef = C732E7A52086EA59006014A0 /* WebGlobal.swift */; };
-		C732E7B720879ED7006014A0 /* EventTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = C732E7B620879ED7006014A0 /* EventTarget.swift */; };
+		C732E78820865116006014A0 /* GlobalModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C732E78720865116006014A0 /* GlobalModule.swift */; };
 		C73700C42218C00D0095A54B /* ImageFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C73700C32218C00D0095A54B /* ImageFilter.swift */; };
 		C73700C72219A9370095A54B /* ImageEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = C73700C62219A9370095A54B /* ImageEffect.swift */; };
 		C74487E3205230BB00D74D30 /* DLStylerNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C74487E1205230BB00D74D30 /* DLStylerNode.cpp */; };
 		C74487E4205230BB00D74D30 /* DLStylerNode.h in Headers */ = {isa = PBXBuildFile; fileRef = C74487E2205230BB00D74D30 /* DLStylerNode.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C75153B322EB4BC3007CAA48 /* HTTPURLResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75153B222EB4BC3007CAA48 /* HTTPURLResponse.swift */; };
+		C7541A8922E6B09800586FC4 /* HttpResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7541A8822E6B09800586FC4 /* HttpResponse.swift */; };
 		C76016E22019832800622840 /* JavaScriptFinalizeCallback.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76016E12019832800622840 /* JavaScriptFinalizeCallback.swift */; };
 		C767542120269971003C4D85 /* ShadowLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76753E92026996F003C4D85 /* ShadowLayer.swift */; };
 		C767542420269971003C4D85 /* BorderLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76753EC2026996F003C4D85 /* BorderLayer.swift */; };
@@ -109,7 +105,6 @@
 		C777B62E22D7838E00E75E55 /* DezelUnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C777B62D22D7838E00E75E55 /* DezelUnitTests.swift */; };
 		C777B63D22D91DB200E75E55 /* UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = C777B63C22D91DB200E75E55 /* UIApplication.swift */; };
 		C777B63F22DA49B600E75E55 /* WeakReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = C777B63E22DA49B600E75E55 /* WeakReference.swift */; };
-		C77A28A221BFFBF1004366AF /* JavaScriptConsole.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77A28A121BFFBF1004366AF /* JavaScriptConsole.swift */; };
 		C77B0BAC22262EF800917D82 /* Ruleset.h in Headers */ = {isa = PBXBuildFile; fileRef = C77B0B7322262EF800917D82 /* Ruleset.h */; };
 		C77B0BAD22262EF800917D82 /* SelectorParser.h in Headers */ = {isa = PBXBuildFile; fileRef = C77B0B7422262EF800917D82 /* SelectorParser.h */; };
 		C77B0BAE22262EF800917D82 /* Selector.h in Headers */ = {isa = PBXBuildFile; fileRef = C77B0B7522262EF800917D82 /* Selector.h */; };
@@ -197,7 +192,6 @@
 		C7B9CEAD202CDBB7002409D5 /* ApplicationModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B9CEAB202CDBB7002409D5 /* ApplicationModule.swift */; };
 		C7B9CEAF202CDBD8002409D5 /* Window.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B9CEAE202CDBD8002409D5 /* Window.swift */; };
 		C7B9CEB1202CE225002409D5 /* ViewModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B9CEB0202CE225002409D5 /* ViewModule.swift */; };
-		C7B9CF0E202DF4D3002409D5 /* Dezel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B9CF0D202DF4D3002409D5 /* Dezel.swift */; };
 		C7BB7D3C2028F4C5004006C2 /* CGColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BB7D372028F4C5004006C2 /* CGColor.swift */; };
 		C7BB7D3D2028F4C5004006C2 /* CGFloat.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BB7D382028F4C5004006C2 /* CGFloat.swift */; };
 		C7BB7D3E2028F4C5004006C2 /* CGRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BB7D392028F4C5004006C2 /* CGRect.swift */; };
@@ -306,6 +300,12 @@
 		C7E8A54D2016262A005139F6 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7E8A54C2016262A005139F6 /* JavaScriptCore.framework */; };
 		C7E9126D20EFD6FA0076774A /* LayoutNodeDelegateCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E9126C20EFD6FA0076774A /* LayoutNodeDelegateCounter.swift */; };
 		C7EE2E0222DD6AE200FFF0EE /* Source.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7EE2E0122DD6AE200FFF0EE /* Source.swift */; };
+		C7EE2E0622DE2D5B00FFF0EE /* CADisplayLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7EE2E0522DE2D5B00FFF0EE /* CADisplayLink.swift */; };
+		C7EE2E1022DFA84900FFF0EE /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7EE2E0F22DFA84900FFF0EE /* Data.swift */; };
+		C7EE2E1B22E1F57300FFF0EE /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7EE2E1A22E1F57300FFF0EE /* Error.swift */; };
+		C7EE2E1D22E24CCC00FFF0EE /* JavaScriptXMLHttpRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7EE2E1C22E24CCC00FFF0EE /* JavaScriptXMLHttpRequest.swift */; };
+		C7EE2E2122E4B21100FFF0EE /* JavaScriptForOwnWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7EE2E2022E4B21100FFF0EE /* JavaScriptForOwnWrapper.swift */; };
+		C7EE2E2522E4B35A00FFF0EE /* JavaScriptForEachWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7EE2E2422E4B35A00FFF0EE /* JavaScriptForEachWrapper.swift */; };
 		C7F2260B2081A10000ABC66D /* Unsafe.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F2260A2081A10000ABC66D /* Unsafe.swift */; };
 		C7F8C9F820C17874007E8ECA /* DLStylerMatch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7F8C9F620C17874007E8ECA /* DLStylerMatch.cpp */; };
 		C7F8C9F920C17874007E8ECA /* DLStylerMatch.h in Headers */ = {isa = PBXBuildFile; fileRef = C7F8C9F720C17874007E8ECA /* DLStylerMatch.h */; };
@@ -346,8 +346,6 @@
 		C7004C9721442AAC00138ECC /* DLStylerStyleSelectorTreePrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DLStylerStyleSelectorTreePrivate.h; path = ../../../../shared/style/DLStylerStyleSelectorTreePrivate.h; sourceTree = "<group>"; };
 		C7027CD22270DFDA001DD0F7 /* ScrollViewTouchCancelGesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollViewTouchCancelGesture.swift; sourceTree = "<group>"; };
 		C70617A320F7C03100499FDB /* TransitionListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionListener.swift; sourceTree = "<group>"; };
-		C70B58E02087C2BD008B2137 /* LocalStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorage.swift; sourceTree = "<group>"; };
-		C70B58E22087DC5D008B2137 /* WebRuntime.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = WebRuntime.js; sourceTree = "<group>"; };
 		C70B58E420880943008B2137 /* Conversion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conversion.swift; sourceTree = "<group>"; };
 		C718A0A82066E24400EFEC15 /* ImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageView.swift; sourceTree = "<group>"; };
 		C718A0B22066E63300EFEC15 /* ImageLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLayer.swift; sourceTree = "<group>"; };
@@ -359,9 +357,7 @@
 		C718B5B5207C41F000610F8D /* RadialGradient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadialGradient.swift; sourceTree = "<group>"; };
 		C71A119C2080EB1E0004D523 /* HttpRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpRequest.swift; sourceTree = "<group>"; };
 		C71A119E2080EB300004D523 /* HttpRequestDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpRequestDelegate.swift; sourceTree = "<group>"; };
-		C71A11A22080EBB10004D523 /* XMLHttpRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XMLHttpRequest.swift; sourceTree = "<group>"; };
-		C71A11A42080EBF80004D523 /* XMLHttpRequestUpload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XMLHttpRequestUpload.swift; sourceTree = "<group>"; };
-		C71A11A62080F7F60004D523 /* WebSocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSocket.swift; sourceTree = "<group>"; };
+		C71A11A62080F7F60004D523 /* JavaScriptWebSocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptWebSocket.swift; sourceTree = "<group>"; };
 		C71E6CBB20DD4EE1009B86F6 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		C71E6CBF20DD4F56009B86F6 /* ContentWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentWebView.swift; sourceTree = "<group>"; };
 		C71E6CC120DD50A0009B86F6 /* ContentWebViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentWebViewDelegate.swift; sourceTree = "<group>"; };
@@ -379,13 +375,13 @@
 		C72E0E9820669CBF003BCEF1 /* TextOverflow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextOverflow.swift; sourceTree = "<group>"; };
 		C72E0E9A20669CCD003BCEF1 /* TextTransform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextTransform.swift; sourceTree = "<group>"; };
 		C72FF044204E190500FBB36B /* ShapeLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShapeLayer.swift; sourceTree = "<group>"; };
-		C732E78720865116006014A0 /* WebModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebModule.swift; sourceTree = "<group>"; };
-		C732E7A52086EA59006014A0 /* WebGlobal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebGlobal.swift; sourceTree = "<group>"; };
-		C732E7B620879ED7006014A0 /* EventTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTarget.swift; sourceTree = "<group>"; };
+		C732E78720865116006014A0 /* GlobalModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalModule.swift; sourceTree = "<group>"; };
 		C73700C32218C00D0095A54B /* ImageFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFilter.swift; sourceTree = "<group>"; };
 		C73700C62219A9370095A54B /* ImageEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageEffect.swift; sourceTree = "<group>"; };
 		C74487E1205230BB00D74D30 /* DLStylerNode.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DLStylerNode.cpp; path = ../../../../shared/style/DLStylerNode.cpp; sourceTree = "<group>"; };
 		C74487E2205230BB00D74D30 /* DLStylerNode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DLStylerNode.h; path = ../../../../shared/style/DLStylerNode.h; sourceTree = "<group>"; };
+		C75153B222EB4BC3007CAA48 /* HTTPURLResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPURLResponse.swift; sourceTree = "<group>"; };
+		C7541A8822E6B09800586FC4 /* HttpResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpResponse.swift; sourceTree = "<group>"; };
 		C76016E12019832800622840 /* JavaScriptFinalizeCallback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptFinalizeCallback.swift; sourceTree = "<group>"; };
 		C76753E92026996F003C4D85 /* ShadowLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShadowLayer.swift; sourceTree = "<group>"; };
 		C76753EC2026996F003C4D85 /* BorderLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorderLayer.swift; sourceTree = "<group>"; };
@@ -413,7 +409,6 @@
 		C777B62D22D7838E00E75E55 /* DezelUnitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DezelUnitTests.swift; sourceTree = "<group>"; };
 		C777B63C22D91DB200E75E55 /* UIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplication.swift; sourceTree = "<group>"; };
 		C777B63E22DA49B600E75E55 /* WeakReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeakReference.swift; sourceTree = "<group>"; };
-		C77A28A121BFFBF1004366AF /* JavaScriptConsole.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptConsole.swift; sourceTree = "<group>"; };
 		C77B0B7322262EF800917D82 /* Ruleset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ruleset.h; sourceTree = "<group>"; };
 		C77B0B7422262EF800917D82 /* SelectorParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectorParser.h; sourceTree = "<group>"; };
 		C77B0B7522262EF800917D82 /* Selector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Selector.h; sourceTree = "<group>"; };
@@ -501,7 +496,6 @@
 		C7B9CEAB202CDBB7002409D5 /* ApplicationModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationModule.swift; sourceTree = "<group>"; };
 		C7B9CEAE202CDBD8002409D5 /* Window.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Window.swift; sourceTree = "<group>"; };
 		C7B9CEB0202CE225002409D5 /* ViewModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModule.swift; sourceTree = "<group>"; };
-		C7B9CF0D202DF4D3002409D5 /* Dezel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dezel.swift; sourceTree = "<group>"; };
 		C7BB7D372028F4C5004006C2 /* CGColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGColor.swift; sourceTree = "<group>"; };
 		C7BB7D382028F4C5004006C2 /* CGFloat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGFloat.swift; sourceTree = "<group>"; };
 		C7BB7D392028F4C5004006C2 /* CGRect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGRect.swift; sourceTree = "<group>"; };
@@ -613,6 +607,12 @@
 		C7E8A54C2016262A005139F6 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		C7E9126C20EFD6FA0076774A /* LayoutNodeDelegateCounter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutNodeDelegateCounter.swift; sourceTree = "<group>"; };
 		C7EE2E0122DD6AE200FFF0EE /* Source.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Source.swift; sourceTree = "<group>"; };
+		C7EE2E0522DE2D5B00FFF0EE /* CADisplayLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CADisplayLink.swift; sourceTree = "<group>"; };
+		C7EE2E0F22DFA84900FFF0EE /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
+		C7EE2E1A22E1F57300FFF0EE /* Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
+		C7EE2E1C22E24CCC00FFF0EE /* JavaScriptXMLHttpRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptXMLHttpRequest.swift; sourceTree = "<group>"; };
+		C7EE2E2022E4B21100FFF0EE /* JavaScriptForOwnWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptForOwnWrapper.swift; sourceTree = "<group>"; };
+		C7EE2E2422E4B35A00FFF0EE /* JavaScriptForEachWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptForEachWrapper.swift; sourceTree = "<group>"; };
 		C7F2260A2081A10000ABC66D /* Unsafe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Unsafe.swift; sourceTree = "<group>"; };
 		C7F8C9F620C17874007E8ECA /* DLStylerMatch.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DLStylerMatch.cpp; path = ../../../../shared/style/DLStylerMatch.cpp; sourceTree = "<group>"; };
 		C7F8C9F720C17874007E8ECA /* DLStylerMatch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DLStylerMatch.h; path = ../../../../shared/style/DLStylerMatch.h; sourceTree = "<group>"; };
@@ -965,6 +965,7 @@
 			isa = PBXGroup;
 			children = (
 				C71A119C2080EB1E0004D523 /* HttpRequest.swift */,
+				C7541A8822E6B09800586FC4 /* HttpResponse.swift */,
 				C71A119E2080EB300004D523 /* HttpRequestDelegate.swift */,
 			);
 			path = Http;
@@ -1026,7 +1027,6 @@
 		C7B9CF0C202DF4C6002409D5 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				C7B9CF0D202DF4D3002409D5 /* Dezel.swift */,
 				C777B5DB22D1429A00E75E55 /* CoreModule.swift */,
 			);
 			path = Core;
@@ -1042,19 +1042,14 @@
 			path = Animation;
 			sourceTree = "<group>";
 		};
-		C7BFD155207CECF000AAD31C /* Web */ = {
+		C7BFD155207CECF000AAD31C /* Global */ = {
 			isa = PBXGroup;
 			children = (
-				C732E7B620879ED7006014A0 /* EventTarget.swift */,
-				C70B58E02087C2BD008B2137 /* LocalStorage.swift */,
-				C732E7A52086EA59006014A0 /* WebGlobal.swift */,
-				C732E78720865116006014A0 /* WebModule.swift */,
-				C70B58E22087DC5D008B2137 /* WebRuntime.js */,
-				C71A11A62080F7F60004D523 /* WebSocket.swift */,
-				C71A11A22080EBB10004D523 /* XMLHttpRequest.swift */,
-				C71A11A42080EBF80004D523 /* XMLHttpRequestUpload.swift */,
+				C732E78720865116006014A0 /* GlobalModule.swift */,
+				C71A11A62080F7F60004D523 /* JavaScriptWebSocket.swift */,
+				C7EE2E1C22E24CCC00FFF0EE /* JavaScriptXMLHttpRequest.swift */,
 			);
-			path = Web;
+			path = Global;
 			sourceTree = "<group>";
 		};
 		C7BFD15A207D508B00AAD31C /* Form */ = {
@@ -1174,24 +1169,28 @@
 			children = (
 				C7BB7D4A20293955004006C2 /* Array.swift */,
 				C7BB7D412028F5A1004006C2 /* Boolean.swift */,
-				C77D6E262210C162005FAAF8 /* CTFrame.swift */,
 				C7004C57213C4CF800138ECC /* Dictionary.swift */,
+				C75153B222EB4BC3007CAA48 /* HTTPURLResponse.swift */,
+				C7EE2E1A22E1F57300FFF0EE /* Error.swift */,
 				C79E6EB32207650F0006DED8 /* Date.swift */,
+				C7EE2E0F22DFA84900FFF0EE /* Data.swift */,
 				C7E8A4FC2016244F005139F6 /* Bundle.swift */,
 				C7E8A4D42015A792005139F6 /* Double.swift */,
 				C7E8A4FE2016244F005139F6 /* String.swift */,
 				C7D14EDB21D07058008B51D4 /* Scanner.swift */,
+				C728E05C222B1B9100BE5F7F /* Locale.swift */,
+				C7CE4B08220A7824005D5235 /* TimeZone.swift */,
+				C77D6E262210C162005FAAF8 /* CTFrame.swift */,
 				C7964D632033E67E00F454F1 /* CALayer.swift */,
+				C7EE2E0522DE2D5B00FFF0EE /* CADisplayLink.swift */,
 				C7BB7D372028F4C5004006C2 /* CGColor.swift */,
 				C7BB7D382028F4C5004006C2 /* CGFloat.swift */,
 				C7BB7D3B2028F4C5004006C2 /* CGPath.swift */,
 				C7E309782031312700436FA4 /* CGPoint.swift */,
 				C7BB7D392028F4C5004006C2 /* CGRect.swift */,
 				C7BB7D3A2028F4C5004006C2 /* CGSize.swift */,
-				C728E05C222B1B9100BE5F7F /* Locale.swift */,
 				C77D6E22220F730D005FAAF8 /* NSRegularExpression.swift */,
 				C7D8926620657B3400E85115 /* NSAttributedString.swift */,
-				C7CE4B08220A7824005D5235 /* TimeZone.swift */,
 				C7BFD16B207D560E00AAD31C /* UIColor.swift */,
 				C7D8926420657B0000E85115 /* UIFont.swift */,
 				C7E30976203123DD00436FA4 /* UIView.swift */,
@@ -1243,11 +1242,11 @@
 				C7B9CF0C202DF4C6002409D5 /* Core */,
 				C7E5D07F209DDF5B0098C5FD /* Dialog */,
 				C7BFD15A207D508B00AAD31C /* Form */,
+				C7BFD155207CECF000AAD31C /* Global */,
 				C718A0C32067F61D00EFEC15 /* Graphic */,
 				C77DFEDF208D062600CEC1D9 /* Locale */,
 				C7A19E2C20AB720E00367E91 /* Platform */,
 				C767544B2028DB60003C4D85 /* View */,
-				C7BFD155207CECF000AAD31C /* Web */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -1297,7 +1296,6 @@
 				C7E8A509201624A0005139F6 /* JavaScriptClassGetterWrapper.swift */,
 				C7E8A50F201624A1005139F6 /* JavaScriptClassSetterWrapper.swift */,
 				C7E8A511201624A1005139F6 /* JavaScriptContext.swift */,
-				C77A28A121BFFBF1004366AF /* JavaScriptConsole.swift */,
 				C7E8A505201624A0005139F6 /* JavaScriptExceptionWrapper.swift */,
 				C76016E12019832800622840 /* JavaScriptFinalizeCallback.swift */,
 				C7E8A508201624A0005139F6 /* JavaScriptFinalizeWrapper.swift */,
@@ -1309,6 +1307,8 @@
 				C7E8A50E201624A1005139F6 /* JavaScriptGetterWrapper.swift */,
 				C7E8A507201624A0005139F6 /* JavaScriptSetterCallback.swift */,
 				C7E8A512201624A1005139F6 /* JavaScriptSetterWrapper.swift */,
+				C7EE2E2022E4B21100FFF0EE /* JavaScriptForOwnWrapper.swift */,
+				C7EE2E2422E4B35A00FFF0EE /* JavaScriptForEachWrapper.swift */,
 				C7E8A514201624A1005139F6 /* JavaScriptValue.swift */,
 				C7E8A506201624A0005139F6 /* Module.swift */,
 				C76753FB20269970003C4D85 /* Property.swift */,
@@ -1553,7 +1553,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C7A19E3820ADCB3800367E91 /* TextInputClearButtonIcon@3x.png in Resources */,
-				C70B58E32087DC5D008B2137 /* WebRuntime.js in Resources */,
 				C777B62C22D782DB00E75E55 /* TestRunner.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1604,8 +1603,8 @@
 				C7004C88214411BF00138ECC /* DLStylerStyleSelectorPrivate.cpp in Sources */,
 				C7BB7D3E2028F4C5004006C2 /* CGRect.swift in Sources */,
 				C7682A422035395F006EA6D5 /* Layer.swift in Sources */,
-				C732E7A62086EA59006014A0 /* WebGlobal.swift in Sources */,
 				C7BFD15C207D50A300AAD31C /* FormModule.swift in Sources */,
+				C7EE2E1022DFA84900FFF0EE /* Data.swift in Sources */,
 				C7B9CEA9202CDB8D002409D5 /* ApplicationDelegate.swift in Sources */,
 				C7E5D07C209CBAE80098C5FD /* Resizable.swift in Sources */,
 				C7BFD15E207D50F000AAD31C /* SpinnerView.swift in Sources */,
@@ -1628,7 +1627,6 @@
 				C73700C72219A9370095A54B /* ImageEffect.swift in Sources */,
 				C72E0E9520669CA0003BCEF1 /* TextPlacement.swift in Sources */,
 				C7E8A544201624FA005139F6 /* DLValuePrivate.cpp in Sources */,
-				C7B9CF0E202DF4D3002409D5 /* Dezel.swift in Sources */,
 				C77189B42106AE1300337263 /* Transform3D.swift in Sources */,
 				C7A19E2E20AB721F00367E91 /* PlatformModule.swift in Sources */,
 				C7004C8C2144240000138ECC /* DLStylerStyleItem.cpp in Sources */,
@@ -1639,7 +1637,6 @@
 				C77D6E23220F730D005FAAF8 /* NSRegularExpression.swift in Sources */,
 				C7E8A4CD20159E08005139F6 /* DLRelativeLayout.cpp in Sources */,
 				C7B9CEB1202CE225002409D5 /* ViewModule.swift in Sources */,
-				C71A11A52080EBF80004D523 /* XMLHttpRequestUpload.swift in Sources */,
 				C767543A20269971003C4D85 /* BitmapLayer.swift in Sources */,
 				C7E8A4C420159E08005139F6 /* DLAbsoluteLayout.cpp in Sources */,
 				C7BFD160207D518600AAD31C /* ContentSpinnerView.swift in Sources */,
@@ -1669,11 +1666,9 @@
 				C77189AE2106ADF200337263 /* Point2D.swift in Sources */,
 				C767542420269971003C4D85 /* BorderLayer.swift in Sources */,
 				C7FFB4D5204B2313000D888E /* ContentView.swift in Sources */,
-				C70B58E12087C2BD008B2137 /* LocalStorage.swift in Sources */,
 				C71E6CBC20DD4EE1009B86F6 /* WebView.swift in Sources */,
 				C718A0C72067F75900EFEC15 /* GraphicModule.swift in Sources */,
 				C7A19E3520ACC4DF00367E91 /* ScrollableDelegate.swift in Sources */,
-				C732E7B720879ED7006014A0 /* EventTarget.swift in Sources */,
 				C7CE4B052208AC4D005D5235 /* DateFormater.swift in Sources */,
 				C7E8A5002016244F005139F6 /* Bundle.swift in Sources */,
 				C77189A721014A9E00337263 /* ListOptimizer.swift in Sources */,
@@ -1685,7 +1680,7 @@
 				C71E6CC020DD4F56009B86F6 /* ContentWebView.swift in Sources */,
 				C7BB7D3D2028F4C5004006C2 /* CGFloat.swift in Sources */,
 				C72E0E9920669CBF003BCEF1 /* TextOverflow.swift in Sources */,
-				C732E78820865116006014A0 /* WebModule.swift in Sources */,
+				C732E78820865116006014A0 /* GlobalModule.swift in Sources */,
 				C718A0B52066ED6100EFEC15 /* Image.swift in Sources */,
 				C7BFD16C207D560E00AAD31C /* UIColor.swift in Sources */,
 				C7004C8021440DCB00138ECC /* DLStylerStyleRulePrivate.cpp in Sources */,
@@ -1697,6 +1692,7 @@
 				C72E0E9B20669CCD003BCEF1 /* TextTransform.swift in Sources */,
 				C7E8A521201624A2005139F6 /* JavaScriptFinalizeWrapper.swift in Sources */,
 				C71E6CE320E66188009B86F6 /* Overscroll.swift in Sources */,
+				C7EE2E1D22E24CCC00FFF0EE /* JavaScriptXMLHttpRequest.swift in Sources */,
 				C7BB7D402028F4C5004006C2 /* CGPath.swift in Sources */,
 				C77D6E272210C162005FAAF8 /* CTFrame.swift in Sources */,
 				C7E87E7D2053953500F09B22 /* DLStyler.cpp in Sources */,
@@ -1728,9 +1724,11 @@
 				C7B9CEAD202CDBB7002409D5 /* ApplicationModule.swift in Sources */,
 				C7E5D085209DE2290098C5FD /* AlertController.swift in Sources */,
 				C7CE4B09220A7824005D5235 /* TimeZone.swift in Sources */,
+				C7541A8922E6B09800586FC4 /* HttpResponse.swift in Sources */,
+				C7EE2E1B22E1F57300FFF0EE /* Error.swift in Sources */,
 				C7E8A51D201624A2005139F6 /* JavaScriptObjectBuilder.swift in Sources */,
 				C7B9CEA6202CDB8D002409D5 /* ApplicationController.swift in Sources */,
-				C77A28A221BFFBF1004366AF /* JavaScriptConsole.swift in Sources */,
+				C7EE2E0622DE2D5B00FFF0EE /* CADisplayLink.swift in Sources */,
 				C71E6CDD20E65CCF009B86F6 /* UIEdgeInsets.swift in Sources */,
 				C7004C842144118D00138ECC /* DLStylerStyleSelector.cpp in Sources */,
 				C7E8A527201624A2005139F6 /* JavaScriptGetterWrapper.swift in Sources */,
@@ -1748,7 +1746,9 @@
 				C767543F20269971003C4D85 /* RenderLayer.swift in Sources */,
 				C7E8A52A201624A2005139F6 /* JavaScriptContext.swift in Sources */,
 				C7E8A524201624A2005139F6 /* JavaScriptClass.swift in Sources */,
+				C75153B322EB4BC3007CAA48 /* HTTPURLResponse.swift in Sources */,
 				C7E8A4D32015A699005139F6 /* Layout.swift in Sources */,
+				C7EE2E2522E4B35A00FFF0EE /* JavaScriptForEachWrapper.swift in Sources */,
 				C7E8A52D201624A2005139F6 /* JavaScriptValue.swift in Sources */,
 				C78115AD2052E9CD0096AE47 /* StylerNode.swift in Sources */,
 				C7004C7C21440DB600138ECC /* DLStylerStyleRule.cpp in Sources */,
@@ -1758,17 +1758,17 @@
 				C7E8A520201624A2005139F6 /* JavaScriptSetterCallback.swift in Sources */,
 				C7BFD164207D52F100AAD31C /* ContentTextInput.swift in Sources */,
 				C7E8A525201624A2005139F6 /* JavaScriptClassFunctionWrapper.swift in Sources */,
-				C71A11A32080EBB10004D523 /* XMLHttpRequest.swift in Sources */,
 				C7F8C9F820C17874007E8ECA /* DLStylerMatch.cpp in Sources */,
 				C777B62A22D77B2D00E75E55 /* TestRunner.swift in Sources */,
 				C71E6CC220DD50A0009B86F6 /* ContentWebViewDelegate.swift in Sources */,
 				C7E8A4D52015A792005139F6 /* Double.swift in Sources */,
 				C7DECDFC206B351B006EE2A6 /* Clippable.swift in Sources */,
-				C71A11A72080F7F60004D523 /* WebSocket.swift in Sources */,
+				C71A11A72080F7F60004D523 /* JavaScriptWebSocket.swift in Sources */,
 				C7E8A52B201624A2005139F6 /* JavaScriptSetterWrapper.swift in Sources */,
 				C7E8A526201624A2005139F6 /* JavaScriptGetterCallback.swift in Sources */,
 				C7BB7D422028F5A1004006C2 /* Boolean.swift in Sources */,
 				C77189A521014A9200337263 /* ContentOptimizer.swift in Sources */,
+				C7EE2E2122E4B21100FFF0EE /* JavaScriptForOwnWrapper.swift in Sources */,
 				C7E8A4D12015A699005139F6 /* LayoutNode.swift in Sources */,
 				C71E6CDF20E65FB6009B86F6 /* Updatable.swift in Sources */,
 				C7004C9421442A5200138ECC /* DLStylerStyleSelectorTree.cpp in Sources */,

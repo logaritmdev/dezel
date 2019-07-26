@@ -1,16 +1,40 @@
 package ca.logaritm.dezel.networking
 
 /**
- * @interface HttpRequestListener
- * @since 0.1.0
- * @hidden
+ * The HTTP request listener.
+ * @class HttpRequestListener
+ * @since 0.7.0
  */
-interface HttpRequestListener {
-	fun onSend(request: HttpRequest, data: String)
-	fun onProgress(request: HttpRequest, value: Int, total: Int)
-	fun onTimeout(request: HttpRequest)
-	fun onFail(request: HttpRequest, code: Int)
-	fun onAbort(request: HttpRequest)
-	fun onComplete(request: HttpRequest)
+public interface HttpRequestListener {
+
+	/**
+	 * Called when an error occurs with the request.
+	 * @method onError
+	 * @since 0.7.0
+	 */
+	fun onError(request: HttpRequest, error: HttpError)
+
+	/**
+	 * Called when a timeout occurs with the request.
+	 * @method onError
+	 * @since 0.7.0
+	 */
+	fun onTimeout(request: HttpRequest, error: HttpError)
+
+
+	/**
+	 * Called when the request progresses.
+	 * @method onProgress
+	 * @since 0.7.0
+	 */
+	fun onProgress(request: HttpRequest, loaded: Int, length: Int)
+
+	/**
+	 * Called when the request finishes.
+	 * @method onComplete
+	 * @since 0.7.0
+	 */
+	fun onComplete(request: HttpRequest, response: HttpResponse)
+
 
 }

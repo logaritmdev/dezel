@@ -15,7 +15,7 @@ open class Module : NSObject {
 	 * @hidden
 	 */
 	internal static func create(_ module: AnyClass, context: JavaScriptContext) -> Module {
-		return (module as! Module.Type).init(context:context)
+		return (module as! Module.Type).init(context: context)
 	}
 
 	//--------------------------------------------------------------------------

@@ -1,6 +1,6 @@
 /**
- * @class WebSocket
- * @since 0.1.0
+ * @class JavaScriptWebSocket
+ * @since 0.7.0
  * @hidden
  */
 public class JavaScriptWebSocket: JavaScriptClass, WebSocketDelegate {
@@ -10,9 +10,9 @@ public class JavaScriptWebSocket: JavaScriptClass, WebSocketDelegate {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The web socket connection.
+	 * The WebSocket connection.
 	 * @property socket
-	 * @since 0.1.0
+	 * @since 0.7.0
 	 */
 	private(set) open var socket: WebSocketConnection!
 
@@ -23,7 +23,7 @@ public class JavaScriptWebSocket: JavaScriptClass, WebSocketDelegate {
 	/**
 	 * @inherited
 	 * @method dispose
-	 * @since 0.6.0
+	 * @since 0.7.0
 	 */
 	override open func dispose() {
 		self.socket.disconnect()
@@ -37,27 +37,28 @@ public class JavaScriptWebSocket: JavaScriptClass, WebSocketDelegate {
 
 	/**
 	 * @method jsFunction_open
-	 * @since 0.1.0
+	 * @since 0.7.0
+	 * @hidden
 	 */
 	@objc open func jsFunction_open(callback: JavaScriptFunctionCallback) {
 
-		guard let url = URL(string: callback.argument(0).string) else {
-			fatalError()
+		let websocketUrl = callback.argument(0)
+		let websocketProtocols = callback.argument(1)
+
+		guard let url = websocketUrl.toURL() else {
+			NSLog("Invalid WebSocket URL")
+			return
 		}
 
-		var protocols: [String] = []
-		callback.argument(1).forEach { index, value in
-			protocols.append(value.string)
-		}
-
-		self.socket = WebSocketConnection(url: url, protocols: protocols)
+		self.socket = WebSocketConnection(url: url, protocols: websocketProtocols.toArrayOfString())
 		self.socket.delegate = self
 		self.socket.connect()
 	}
 
 	/**
 	 * @method jsFunction_send
-	 * @since 0.1.0
+	 * @since 0.7.0
+	 * @hidden
 	 */
 	@objc open func jsFunction_send(callback: JavaScriptFunctionCallback) {
 		self.socket.write(callback.argument(0).string)
@@ -65,7 +66,8 @@ public class JavaScriptWebSocket: JavaScriptClass, WebSocketDelegate {
 
 	/**
 	 * @method jsFunction_close
-	 * @since 0.1.0
+	 * @since 0.7.0
+	 * @hidden
 	 */
 	@objc open func jsFunction_close(callback: JavaScriptFunctionCallback) {
 		self.socket.disconnect()
@@ -77,7 +79,7 @@ public class JavaScriptWebSocket: JavaScriptClass, WebSocketDelegate {
 
 	/**
 	 * @method websocketDidConnect
-	 * @since 0.1.0
+	 * @since 0.7.0
 	 * @hidden
 	 */
 	open func websocketDidConnect(_ socket: WebSocketConnection) {
@@ -88,28 +90,28 @@ public class JavaScriptWebSocket: JavaScriptClass, WebSocketDelegate {
 	}
 
 	/**
-	 * @method websocketDidReceiveData
-	 * @since 0.1.0
+	 * @method websocket:didReceiveData
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	open func websocketDidReceiveData(_ socket: WebSocketConnection, data: Data) {
+	public func websocket(_ socket: WebSocketConnection, didReceive data: Data?) {
 		self.holder.callMethod("nativeOnReceiveData")
 	}
 
 	/**
-	 * @method websocketDidReceiveMessage
-	 * @since 0.1.0
+	 * @method websocket:didReceiveMessage
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	open func websocketDidReceiveMessage(_ socket: WebSocketConnection, text: String) {
+	public func websocket(_ socket: WebSocketConnection, didReceiveMessage string: String) {
 		self.holder.callMethod("nativeOnReceiveMessage", arguments: [
-			self.context.createString(text)
+			self.context.createString(string)
 		])
 	}
 
 	/**
 	 * @method websocketDidDisconnect
-	 * @since 0.1.0
+	 * @since 0.7.0
 	 * @hidden
 	 */
 	open func websocketDidDisconnect(_ socket: WebSocketConnection, error: Error?) {

@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Parcelable
 import android.support.v4.content.LocalBroadcastManager
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.WindowManager
@@ -23,15 +24,16 @@ import ca.logaritm.dezel.extension.viewport
 import ca.logaritm.dezel.layout.Layout
 import ca.logaritm.dezel.modules.application.Application
 import ca.logaritm.dezel.modules.application.ApplicationModule
+import ca.logaritm.dezel.modules.core.CoreModule
 import ca.logaritm.dezel.modules.device.DeviceModule
 import ca.logaritm.dezel.modules.dialog.DialogModule
 import ca.logaritm.dezel.modules.form.FormModule
+import ca.logaritm.dezel.modules.global.GlobalModule
 import ca.logaritm.dezel.modules.graphic.GraphicModule
 import ca.logaritm.dezel.modules.graphic.ImageLoader
 import ca.logaritm.dezel.modules.locale.LocaleModule
 import ca.logaritm.dezel.modules.platform.PlatformModule
 import ca.logaritm.dezel.modules.view.ViewModule
-import ca.logaritm.dezel.modules.web.WebModule
 import ca.logaritm.dezel.style.Styler
 import ca.logaritm.dezel.view.graphic.Convert
 
@@ -205,14 +207,15 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 			throw JavaScriptException(message)
 		}
 
-		this.registerModule("dezel.WebModule", WebModule::class.java)
+		this.registerModule("dezel.CoreModule", CoreModule::class.java)
+		this.registerModule("dezel.GlobalModule", GlobalModule::class.java)
 		this.registerModule("dezel.LocaleModule", LocaleModule::class.java)
 		this.registerModule("dezel.DeviceModule", DeviceModule::class.java)
 		this.registerModule("dezel.PlatformModule", PlatformModule::class.java)
 		this.registerModule("dezel.DialogModule", DialogModule::class.java)
 		this.registerModule("dezel.GraphicModule", GraphicModule::class.java)
-		this.registerModule("dezel.FormModule", FormModule::class.java)
 		this.registerModule("dezel.ViewModule", ViewModule::class.java)
+		this.registerModule("dezel.FormModule", FormModule::class.java)
 		this.registerModule("dezel.ApplicationModule", ApplicationModule::class.java)
 
 		this.configure()
@@ -290,7 +293,7 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 	 * @method launch
 	 * @since 0.7.0
 	 */
-	open fun launch(application: Application) {
+	open fun launch(application: Application, identifier: String = "default") {
 
 		this.application?.destroy()
 		this.application = application
@@ -305,7 +308,7 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 
 		this.statusBar.bringToFront()
 
-		this.onLoad()
+		this.onLaunchApplication(application)
 	}
 
 	/**

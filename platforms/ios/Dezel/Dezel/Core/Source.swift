@@ -76,7 +76,7 @@ open class Source {
 				return try String(contentsOf: URL(string: self.location)!)
 			}
 
-			return try String(contentsOfFile: Bundle.main.path(forResource: "app/" + self.location, ofType: nil)!)
+			return try String(contentsOfFile: Bundle.main.path(forResource: self.location, ofType: nil)!)
 
 		} catch _ {
 			fatalError("Cannot load source at location \(self.location).")

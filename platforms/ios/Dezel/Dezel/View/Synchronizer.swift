@@ -61,8 +61,8 @@ public class Synchronizer: NSObject {
 
 		super.init()
 
-		self.displayLink = CADisplayLink(target: self, selector: #selector(update))
-		self.displayLink.add(to: .current, forMode: .common)
+		self.displayLink = CADisplayLink(target: self, selector: #selector(handleDisplayLink))
+		self.displayLink.setup()
 		self.displayLink.isPaused = true
 	}
 
@@ -128,11 +128,11 @@ public class Synchronizer: NSObject {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method update
+	 * @method handleDisplayLink
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc private func update() {
+	@objc private func handleDisplayLink() {
 
 		#if DEBUG
 			let t1 = CFAbsoluteTimeGetCurrent()
@@ -143,7 +143,7 @@ public class Synchronizer: NSObject {
 		#if DEBUG
 			let t2 = CFAbsoluteTimeGetCurrent()
 			let tt = (t2 - t1) * 1000
-			NSLog("UpdateDisplayManager - Update took \(tt) ms ")
+			NSLog("Synchronizer - Update took \(tt) ms ")
 		#endif
 
 		self.displayLink.isPaused = true
