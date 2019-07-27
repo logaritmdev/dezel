@@ -71,7 +71,7 @@ open class Application: JavaScriptClass {
 	 */
 	open func destroy() {
 		self.window.wrapper.removeFromSuperview()
-		self.holder.callMethod("nativeDestroy")
+		self.holder.callMethod("nativeOnDestroy")
 	}
 
 	//--------------------------------------------------------------------------

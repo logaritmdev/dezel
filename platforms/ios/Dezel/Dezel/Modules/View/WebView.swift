@@ -77,7 +77,7 @@ open class WebView: View, ContentWebViewDelegate {
 	 */
 	public func willLoad(webView: ContentWebView, url: URL) -> Bool {
 		let result = self.context.createReturnValue()
-		self.holder.callMethod("nativeBeforeLoad", arguments: [self.context.createString(url.absoluteString)], result: result)
+		self.holder.callMethod("nativeOnBeforeLoad", arguments: [self.context.createString(url.absoluteString)], result: result)
 		return result.boolean
 	}
 
@@ -87,7 +87,7 @@ open class WebView: View, ContentWebViewDelegate {
 	 * @hidden
 	 */
 	public func didLoad(webView: ContentWebView) {
-		self.holder.callMethod("nativeLoad")
+		self.holder.callMethod("nativeOnLoad")
 	}
 
 	/**

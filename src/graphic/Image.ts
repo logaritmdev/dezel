@@ -110,20 +110,20 @@ export class Image extends Emitter {
 	public native: any
 
 	/**
-	 * @method nativeLoad
-	 * @since 0.1.0
+	 * @method nativeOnLoad
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	nativeLoad() {
+	private nativeOnLoad() {
 		this.emit('load')
 	}
 
 	/**
-	 * @method nativeError
-	 * @since 0.1.0
+	 * @method nativeOnError
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	nativeError(error: string) {
+	private nativeOnError(error: string) {
 		this.emit('error', { data: { error } })
 	}
 }

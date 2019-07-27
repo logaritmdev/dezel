@@ -258,11 +258,11 @@ export class Application extends Emitter {
 				this.onKeyboardResize(event)
 				break
 
-			case 'handlelink':
+			case 'openuniversalurl':
 				this.onOpenUniversalURL(event)
 				break
 
-			case 'handleresource':
+			case 'openresourceurl':
 				this.onOpenResourceURL(event)
 				break
 		}
@@ -494,31 +494,11 @@ export class Application extends Emitter {
 	public native: any
 
 	/**
-	 * @method nativeLoad
-	 * @since 0.1.0
+	 * @method nativeOnDestroy
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private nativeLoad() {
-		//dispatchEvent(new Event('load') as any)
-		// TODO
-		// Make load and unload event not coupled with the application
-	}
-
-	/**
-	 * @method nativeUnload
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	private nativeUnload() {
-		//dispatchEvent(new Event('unload') as any)
-	}
-
-	/**
-	 * @method nativeDestroy
-	 * @since 0.2.0
-	 * @hidden
-	 */
-	private nativeDestroy() {
+	private nativeOnDestroy() {
 		this.destroy()
 	}
 
@@ -690,101 +670,101 @@ export class Application extends Emitter {
 	}
 
 	/**
-	 * @method nativeBeforeKeyboardShow
-	 * @since 0.1.0
+	 * @method nativeOnBeforeKeyboardShow
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private nativeBeforeKeyboardShow(height: number, duration: number, equation: string) {
+	private nativeOnBeforeKeyboardShow(height: number, duration: number, equation: string) {
 		this.emit<ApplicationKeyboardEvent>('beforekeyboardshow', { data: { height, duration, equation } })
 	}
 
 	/**
-	 * @method nativeBeforeKeyboardHide
-	 * @since 0.1.0
+	 * @method nativeOnBeforeKeyboardHide
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private nativeBeforeKeyboardHide(height: number, duration: number, equation: string) {
+	private nativeOnBeforeKeyboardHide(height: number, duration: number, equation: string) {
 		this.emit<ApplicationKeyboardEvent>('beforekeyboardhide', { data: { height, duration, equation } })
 	}
 
 	/**
-	 * @method nativeKeyboardShow
-	 * @since 0.1.0
+	 * @method nativeOnKeyboardShow
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private nativeKeyboardShow(height: number, duration: number, equation: string) {
+	private nativeOnKeyboardShow(height: number, duration: number, equation: string) {
 		this.emit<ApplicationKeyboardEvent>('keyboardshow', { data: { height, duration, equation } })
 	}
 
 	/**
-	 * @method nativeKeyboardHide
-	 * @since 0.1.0
+	 * @method nativeOnKeyboardHide
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private nativeKeyboardHide(height: number, duration: number, equation: string) {
+	private nativeOnKeyboardHide(height: number, duration: number, equation: string) {
 		this.emit<ApplicationKeyboardEvent>('keyboardhide', { data: { height, duration, equation } })
 	}
 
 	/**
-	 * @method nativeBeforeKeyboardResize
-	 * @since 0.1.0
+	 * @method nativeOnBeforeKeyboardResize
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private nativeBeforeKeyboardResize(height: number, duration: number, equation: string) {
+	private nativeOnBeforeKeyboardResize(height: number, duration: number, equation: string) {
 		this.emit<ApplicationKeyboardEvent>('beforekeyboardresize', { data: { height, duration, equation } })
 	}
 
 	/**
-	 * @method nativeKeyboardResize
-	 * @since 0.1.0
+	 * @method nativeOnKeyboardResize
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private nativeKeyboardResize(height: number, duration: number, equation: string) {
+	private nativeOnKeyboardResize(height: number, duration: number, equation: string) {
 		this.emit<ApplicationKeyboardEvent>('keyboardresize', { data: { height, duration, equation } })
 	}
 
 	/**
-	 * @method nativeOpenUniversalURL
-	 * @since 0.5.0
+	 * @method nativeOnOpenUniversalURL
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private nativeOpenUniversalURL(url: string) {
-		this.emit<ApplicationOpenUniversalURLEvent>('handlelink', { data: { url } })
+	private nativeOnOpenUniversalURL(url: string) {
+		this.emit<ApplicationOpenUniversalURLEvent>('openuniversalurl', { data: { url } })
 	}
 
 	/**
-	 * @method nativeOpenResourceURL
-	 * @since 0.5.0
+	 * @method nativeOnOpenResourceURL
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private nativeOpenResourceURL(url: string) {
-		this.emit<ApplicationOpenResourceURLEvent>('handleresource', { data: { url } })
+	private nativeOnOpenResourceURL(url: string) {
+		this.emit<ApplicationOpenResourceURLEvent>('openresourceurl', { data: { url } })
 	}
 
 	/**
-	 * @method nativeEnterBackground
-	 * @since 0.1.0
+	 * @method nativeOnEnterBackground
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private nativeEnterBackground() {
+	private nativeOnEnterBackground() {
 		this.emit('enterbackground')
 	}
 
 	/**
-	 * @method nativeEnterForeground
-	 * @since 0.1.0
+	 * @method nativeOnEnterForeground
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private nativeEnterForeground() {
+	private nativeOnEnterForeground() {
 		this.emit('enterforeground')
 	}
 
 	/**
-	 * @method nativeBack
-	 * @since 0.1.0
+	 * @method nativeOnBack
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private nativeBack() {
+	private nativeOnBack() {
 
 		let event = new Event('back', {
 			cancelable: true,

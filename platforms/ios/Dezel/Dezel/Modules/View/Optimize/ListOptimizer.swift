@@ -775,7 +775,7 @@ open class ListOptimizer : ContentOptimizer {
 			 * on the first time the view is inserted.
 			 */
 
-			self.holder.callMethod("nativeInsertItem", arguments: [self.context.createNumber(index), item.holder])
+			self.holder.callMethod("nativeOnInsertItem", arguments: [self.context.createNumber(index), item.holder])
 		}
 
 		/*
@@ -783,7 +783,7 @@ open class ListOptimizer : ContentOptimizer {
 		 * possibly invalidating the bounds and content of the item.
 		 */
 
-		self.holder.callMethod("nativeReuseItem", arguments: [self.context.createNumber(index), item.holder])
+		self.holder.callMethod("nativeOnReuseItem", arguments: [self.context.createNumber(index), item.holder])
 	}
 
 	/**
@@ -808,7 +808,7 @@ open class ListOptimizer : ContentOptimizer {
 		 * the view is cached, it still considered as being in the view.
 		 */
 
-		self.holder.callMethod("nativeCacheItem", arguments: [self.context.createNumber(index), item.holder])
+		self.holder.callMethod("nativeOnCacheItem", arguments: [self.context.createNumber(index), item.holder])
 
 		self.cacheItem(index)
 		self.removeView(index, notify: false)

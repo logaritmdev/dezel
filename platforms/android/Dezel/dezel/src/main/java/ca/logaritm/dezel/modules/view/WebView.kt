@@ -28,7 +28,7 @@ open class WebView(context: JavaScriptContext) : View(context), ContentWebViewLi
 	 */
 	private val view: ContentWebView
 		get() = this.content as ContentWebView
-	
+
 	//--------------------------------------------------------------------------
 	// Methods
 	//--------------------------------------------------------------------------
@@ -80,7 +80,7 @@ open class WebView(context: JavaScriptContext) : View(context), ContentWebViewLi
 	 */
 	override fun onBeforeLoad(webView: ContentWebView, url: String): Boolean {
 		val result = this.context.createReturnValue()
-		this.holder.callMethod("nativeBeforeLoad", arrayOf(this.context.createString(url)), result)
+		this.holder.callMethod("nativeOnBeforeLoad", arrayOf(this.context.createString(url)), result)
 		return result.boolean
 	}
 
@@ -90,7 +90,7 @@ open class WebView(context: JavaScriptContext) : View(context), ContentWebViewLi
 	 * @hidden
 	 */
 	override fun onLoad(webView: ContentWebView) {
-		this.holder.callMethod("nativeLoad")
+		this.holder.callMethod("nativeOnLoad")
 	}
 
 	/**

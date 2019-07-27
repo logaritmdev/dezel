@@ -383,29 +383,29 @@ export class TextInput extends View {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method private nativeChange
-	 * @since 0.1.0
+	 * @method nativeOnChange
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private nativeChange(value: string) {
+	private nativeOnChange(value: string) {
 		this.emit<TextInputChangeEvent>('change', { data: { value } })
 	}
 
 	/**
-	 * @method private nativeFocus
-	 * @since 0.1.0
+	 * @method nativeOnFocus
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private nativeFocus() {
+	private nativeOnFocus() {
 		this.emit('focus')
 	}
 
 	/**
-	 * @method private nativeBlur
-	 * @since 0.1.0
+	 * @method nativeOnBlur
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private nativeBlur() {
+	private nativeOnBlur() {
 		this.emit('blur')
 	}
 }

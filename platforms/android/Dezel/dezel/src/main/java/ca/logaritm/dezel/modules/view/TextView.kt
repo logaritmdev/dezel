@@ -391,7 +391,7 @@ open class TextView(context: JavaScriptContext) : View(context), ContentTextView
 	 * @hidden
 	 */
 	override fun onPressLink(textView: ContentTextView, url: String) {
-		this.holder.callMethod("nativePressLink", arrayOf(this.context.createString(url)))
+		this.holder.callMethod("nativeOnPressLink", arrayOf(this.context.createString(url)))
 	}
 
 	//--------------------------------------------------------------------------
@@ -1008,4 +1008,3 @@ open class TextView(context: JavaScriptContext) : View(context), ContentTextView
 		this.lines = Property(callback.value)
 	}
 }
-

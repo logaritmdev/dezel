@@ -210,11 +210,11 @@ export class TextView extends View {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method nativePressLink
-	 * @since 0.5.0
+	 * @method nativeOnPressLink
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private nativePressLink(url: string) {
+	private nativeOnPressLink(url: string) {
 		this.emit('presslink', { data: { url } })
 	}
 }

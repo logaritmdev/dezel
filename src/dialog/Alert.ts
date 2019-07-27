@@ -256,21 +256,21 @@ export class Alert extends Emitter {
 	public native: any
 
 	/**
-	 * @method nativePresent
-	 * @since 0.1.0
+	 * @method nativeOnPresent
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private nativePresent() {
+	private nativeOnPresent() {
 		this[PRESENTED] = true
 		this.emit('present')
 	}
 
 	/**
-	 * @method nativeDismiss
-	 * @since 0.1.0
+	 * @method nativeOnDismiss
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private nativeDismiss() {
+	private nativeOnDismiss() {
 		this[PRESENTED] = false
 		this.emit<AlertDismissEvent>('dismiss', { data: { button: this[SELECTION] } })
 	}

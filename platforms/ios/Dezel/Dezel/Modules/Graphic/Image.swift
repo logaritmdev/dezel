@@ -82,14 +82,14 @@ open class Image: JavaScriptClass {
 			self.data = image
 			self.loading = Property(boolean: false)
 			self.complete = Property(boolean: true)
-			self.holder.callMethod("nativeLoad")
+			self.holder.callMethod("nativeOnLoad")
 			return
 		}
 
 		self.data = nil
 		self.loading = Property(boolean: false)
 		self.complete = Property(boolean: false)
-		self.holder.callMethod("nativeError")
+		self.holder.callMethod("nativeOnError")
 	}
 
 	//--------------------------------------------------------------------------

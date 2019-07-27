@@ -324,11 +324,11 @@ export class ListOptimizer<T = any> extends ContentOptimizer<T> {
 	}
 
 	/**
-	 * @method nativeCacheItem
-	 * @since 0.5.0
+	 * @method nativeOnCacheItem
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private nativeCacheItem(index: number, item: View) {
+	private nativeOnCacheItem(index: number, item: View) {
 
 		let data = this.data.get(index)
 		if (data == null) {
@@ -339,11 +339,11 @@ export class ListOptimizer<T = any> extends ContentOptimizer<T> {
 	}
 
 	/**
-	 * @method nativeReuseItem
-	 * @since 0.5.0
+	 * @method nativeOnReuseItem
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private nativeReuseItem(index: number, item: View) {
+	private nativeOnReuseItem(index: number, item: View) {
 
 		let data = this.data.get(index)
 		if (data == null) {
@@ -354,11 +354,11 @@ export class ListOptimizer<T = any> extends ContentOptimizer<T> {
 	}
 
 	/**
-	 * @method nativeRemoveItem
-	 * @since 0.4.0
+	 * @method nativeOnRemoveItem
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private nativeInsertItem(index: number, child: View) {
+	private nativeOnInsertItem(index: number, child: View) {
 
 		let view = this.view
 		if (view == null) {
@@ -378,11 +378,11 @@ export class ListOptimizer<T = any> extends ContentOptimizer<T> {
 	}
 
 	/**
-	 * @method nativeRemoveItem
-	 * @since 0.4.0
+	 * @method nativeOnRemoveItem
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private nativeRemoveItem(index: number, child: View) {
+	private nativeOnRemoveItem(index: number, child: View) {
 
 		let view = this.view
 		if (view == null) {

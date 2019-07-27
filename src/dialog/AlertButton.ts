@@ -116,11 +116,11 @@ export class AlertButton extends Emitter {
 	public native: any
 
 	/**
-	 * @method nativePress
-	 * @since 0.1.0
+	 * @method nativeOnPress
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private nativePress() {
+	private nativeOnPress() {
 		this.emit('press')
 	}
 }

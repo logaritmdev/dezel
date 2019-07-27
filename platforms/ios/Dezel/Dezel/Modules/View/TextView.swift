@@ -449,7 +449,7 @@ open class TextView: View, ContentTextViewDelegate {
 	 * @since 0.5.0
 	 */
 	open func didPressLink(textView: ContentTextView, url: String) {
-		self.holder.callMethod("nativePressLink", arguments: [self.context.createString(url)])
+		self.holder.callMethod("nativeOnPressLink", arguments: [self.context.createString(url)])
 	}
 
 	//--------------------------------------------------------------------------

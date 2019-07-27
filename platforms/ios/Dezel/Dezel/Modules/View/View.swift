@@ -2130,7 +2130,7 @@ open class View: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelegate, Scroll
 			let canvas = view.canvas!
 
 			canvas.use(ctx)
-			view.holder.callMethod("nativeRedraw", arguments: [canvas.holder])
+			view.holder.callMethod("nativeOnRedraw", arguments: [canvas.holder])
 			canvas.use(nil)
 		}
 
@@ -2307,7 +2307,7 @@ open class View: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelegate, Scroll
 	 * @since 0.2.0
 	 */
 	open func performUpdate() {
-		
+
 		self.update()
 
 		if let content = self.content as? Updatable {
@@ -3189,7 +3189,7 @@ open class View: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelegate, Scroll
 	 */
 	open func didBeginLayout(node: LayoutNode) {
 		self.delegate?.didBeginLayout(view: self)
-		self.holder.callMethod("nativeLayoutBegan")
+		self.holder.callMethod("nativeOnLayoutBegan")
 	}
 
 	/**
@@ -3199,7 +3199,7 @@ open class View: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelegate, Scroll
 	 */
 	open func didFinishLayout(node: LayoutNode) {
 		self.delegate?.didFinishLayout(view: self)
-		self.holder.callMethod("nativeLayoutFinished")
+		self.holder.callMethod("nativeOnLayoutFinished")
 	}
 
 	//--------------------------------------------------------------------------
@@ -3244,7 +3244,7 @@ open class View: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelegate, Scroll
 	 */
 	open func didBeginDragging(scrollable: Scrollable) {
 		self.dragging.reset(boolean: true)
-		self.holder.callMethod("nativeDragStart")
+		self.holder.callMethod("nativeOnDragStart")
 	}
 
 	/**
@@ -3254,7 +3254,7 @@ open class View: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelegate, Scroll
 	 */
 	open func didFinishDragging(scrollable: Scrollable) {
 		self.dragging.reset(boolean: false)
-		self.holder.callMethod("nativeDragEnd")
+		self.holder.callMethod("nativeOnDragEnd")
 	}
 
 	/**
@@ -3263,7 +3263,7 @@ open class View: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelegate, Scroll
 	 * @since 0.1.0
 	 */
 	open func didDrag(scrollable: Scrollable) {
-		self.holder.callMethod("nativeDrag")
+		self.holder.callMethod("nativeOnDrag")
 	}
 
 	/**
@@ -3273,7 +3273,7 @@ open class View: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelegate, Scroll
 	 */
 	open func didBeginScrolling(scrollable: Scrollable) {
 		self.scrolling.reset(boolean: true)
-		self.holder.callMethod("nativeScrollStart")
+		self.holder.callMethod("nativeOnScrollStart")
 	}
 
 	/**
@@ -3283,7 +3283,7 @@ open class View: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelegate, Scroll
 	 */
 	open func didFinishScrolling(scrollable: Scrollable) {
 		self.scrolling.reset(boolean: false)
-		self.holder.callMethod("nativeScrollEnd")
+		self.holder.callMethod("nativeOnScrollEnd")
 	}
 
 	/**
@@ -3298,7 +3298,7 @@ open class View: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelegate, Scroll
 
 		self.delegate?.didScroll(view: self)
 
-		self.holder.callMethod("nativeScroll")
+		self.holder.callMethod("nativeOnScroll")
 	}
 
 	/**
@@ -3307,7 +3307,7 @@ open class View: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelegate, Scroll
 	 * @since 0.3.0
 	 */
 	open func didBeginZooming(scrollable: Scrollable) {
-		self.holder.callMethod("nativeZoomStart")
+		self.holder.callMethod("nativeOnZoomStart")
 	}
 
 	/**
@@ -3316,7 +3316,7 @@ open class View: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelegate, Scroll
 	 * @since 0.3.0
 	 */
 	open func didFinishZooming(scrollable: Scrollable, scale: CGFloat) {
-		self.holder.callMethod("nativeZoomEnd", arguments: [self.context.createNumber(scale)])
+		self.holder.callMethod("nativeOnZoomEnd", arguments: [self.context.createNumber(scale)])
 	}
 
 	/**
@@ -3325,7 +3325,7 @@ open class View: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelegate, Scroll
 	 * @since 0.3.0
 	 */
 	open func didZoom(scrollable: Scrollable) {
-		self.holder.callMethod("nativeZoom")
+		self.holder.callMethod("nativeOnZoom")
 	}
 
 	//--------------------------------------------------------------------------
@@ -3378,7 +3378,7 @@ open class View: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelegate, Scroll
 		self.parent = parent
 
 		if (notify) {
-			self.holder.callMethod("nativeMoveToParent", arguments: [parent?.holder])
+			self.holder.callMethod("nativeOnMoveToParent", arguments: [parent?.holder])
 		}
 	}
 
@@ -3392,7 +3392,7 @@ open class View: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelegate, Scroll
 		self.window = window
 
 		if (notify) {
-			self.holder.callMethod("nativeMoveToWindow", arguments: [window?.holder])
+			self.holder.callMethod("nativeOnMoveToWindow", arguments: [window?.holder])
 		}
 
 		for view in self.children {

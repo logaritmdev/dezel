@@ -327,7 +327,7 @@ open class TextInput(context: JavaScriptContext) : View(context), ContentTextInp
 	 */
 	override fun onChange(textInput: ContentTextInput, value: String) {
 		this.value.reset(value)
-		this.holder.callMethod("nativeChange", arrayOf(this.context.createString(value)), null)
+		this.holder.callMethod("nativeOnChange", arrayOf(this.context.createString(value)), null)
 	}
 
 	/**
@@ -336,7 +336,7 @@ open class TextInput(context: JavaScriptContext) : View(context), ContentTextInp
 	 * @hidden
 	 */
 	override fun onFocus(textInput: ContentTextInput) {
-		this.holder.callMethod("nativeFocus")
+		this.holder.callMethod("nativeOnFocus")
 	}
 
 	/**
@@ -345,7 +345,7 @@ open class TextInput(context: JavaScriptContext) : View(context), ContentTextInp
 	 * @hidden
 	 */
 	override fun onBlur(textInput: ContentTextInput) {
-		this.holder.callMethod("nativeBlur")
+		this.holder.callMethod("nativeOnBlur")
 	}
 
 	//--------------------------------------------------------------------------

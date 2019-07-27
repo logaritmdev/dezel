@@ -2137,20 +2137,20 @@ export class View extends Emitter {
 	public native: any
 
 	/**
-	 * @method nativeMoveToParent
-	 * @since 0.2.0
+	 * @method nativeOnMoveToParent
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private nativeMoveToParent(parent: View) {
+	private nativeOnMoveToParent(parent: View) {
 		this.emit<ViewMoveToParentEvent>('movetoparent', { data: { parent } })
 	}
 
 	/**
-	 * @method nativeMoveToWindow
-	 * @since 0.2.0
+	 * @method nativeOnMoveToWindow
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private nativeMoveToWindow(window: Window) {
+	private nativeOnMoveToWindow(window: Window) {
 
 		this.emit<ViewMoveToWindowEvent>('movetowindow', { data: { window } })
 
@@ -2176,110 +2176,110 @@ export class View extends Emitter {
 	}
 
 	/**
-	 * @method nativeScrollStart
-	 * @since 0.1.0
+	 * @method nativeOnScrollStart
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private nativeScrollStart() {
+	private nativeOnScrollStart() {
 		this.emit('scrollstart')
 	}
 
 	/**
-	 * @method nativeScrollEnd
-	 * @since 0.1.0
+	 * @method nativeOnScrollEnd
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private nativeScrollEnd() {
+	private nativeOnScrollEnd() {
 		this.emit('scrollend')
 	}
 
 	/**
-	 * @method nativeScroll
-	 * @since 0.1.0
+	 * @method nativeOnScroll
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private nativeScroll() {
+	private nativeOnScroll() {
 		this.emit('scroll')
 	}
 
 	/**
-	 * @method nativeDragStart
+	 * @method nativeOnDragStart
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	private nativeDragStart() {
+	private nativeOnDragStart() {
 		this.emit('dragstart')
 	}
 
 	/**
-	 * @method nativeDragEnd
-	 * @since 0.1.0
+	 * @method nativeOnDragEnd
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private nativeDragEnd() {
+	private nativeOnDragEnd() {
 		this.emit('dragend')
 	}
 
 	/**
-	 * @method nativeDrag
-	 * @since 0.1.0
+	 * @method nativeOnDrag
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private nativeDrag() {
+	private nativeOnDrag() {
 		this.emit('drag')
 	}
 
 	/**
-	 * @method nativeZoomStart
-	 * @since 0.3.0
+	 * @method nativeOnZoomStart
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private nativeZoomStart() {
+	private nativeOnZoomStart() {
 		this.emit('zoomstart')
 	}
 
 	/**
-	 * @method nativeZoomEnd
-	 * @since 0.3.0
+	 * @method nativeOnZoomEnd
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private nativeZoomEnd(scale: number) {
+	private nativeOnZoomEnd(scale: number) {
 		this.emit('zoomend', { data: { scale } })
 	}
 
 	/**
-	 * @method nativeZoom
-	 * @since 0.3.0
+	 * @method nativeOnZoom
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private nativeZoom() {
+	private nativeOnZoom() {
 		this.emit('zoom')
 	}
 
 	/**
-	 * @method nativeLayoutBegan
-	 * @since 0.1.0
+	 * @method nativeOnLayoutBegan
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private nativeLayoutBegan() {
+	private nativeOnLayoutBegan() {
 		this.emit('beforelayout')
 	}
 
 	/**
-	 * @method nativeLayoutFinished
-	 * @since 0.1.0
+	 * @method nativeOnLayoutFinished
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private nativeLayoutFinished() {
+	private nativeOnLayoutFinished() {
 		this.emit('layout')
 	}
 
 	/**
-	 * @method nativeRedraw
-	 * @since 0.4.0
+	 * @method nativeOnRedraw
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private nativeRedraw(canvas: Canvas) {
+	private nativeOnRedraw(canvas: Canvas) {
 		this.emit<ViewRedrawEvent>('redraw', { data: { canvas } })
 	}
 }

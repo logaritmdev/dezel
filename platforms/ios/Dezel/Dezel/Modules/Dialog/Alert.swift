@@ -57,7 +57,7 @@ open class Alert: JavaScriptClass, AlertControllerDelegate {
 				}
 
 				let action = UIAlertAction(title: button.label.string, style: style) { action in
-					button.holder.callMethod("nativePress")
+					button.holder.callMethod("nativeOnPress")
 				}
 
 				if (button.image.type == .string ||
@@ -122,7 +122,7 @@ open class Alert: JavaScriptClass, AlertControllerDelegate {
 	 * @hidden
 	 */
 	open func alertDidPresent(alert: AlertController) {
-		self.holder.callMethod("nativePresent")
+		self.holder.callMethod("nativeOnPresent")
 	}
 
 	/**
@@ -131,7 +131,7 @@ open class Alert: JavaScriptClass, AlertControllerDelegate {
 	 * @hidden
 	 */
 	open func alertDidDismiss(alert: AlertController) {
-		self.holder.callMethod("nativeDismiss")
+		self.holder.callMethod("nativeOnDismiss")
 		self.unprotect()
 	}
 }

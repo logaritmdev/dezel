@@ -1843,7 +1843,7 @@ open class View(context: JavaScriptContext) : JavaScriptClass(context), LayoutNo
 			}
 
 			canvas.use(cnv)
-			this.holder.callMethod("nativeRedraw", arrayOf(canvas.holder))
+			this.holder.callMethod("nativeOnRedraw", arrayOf(canvas.holder))
 			canvas.use(null)
 		}
 
@@ -2897,7 +2897,7 @@ open class View(context: JavaScriptContext) : JavaScriptClass(context), LayoutNo
 	 */
 	override fun onBeginLayout(node: LayoutNode) {
 		this.listener?.onBeginLayout(this)
-		this.holder.callMethod("nativeLayoutBegan")
+		this.holder.callMethod("nativeOnLayoutBegan")
 	}
 
 	/**
@@ -2941,7 +2941,7 @@ open class View(context: JavaScriptContext) : JavaScriptClass(context), LayoutNo
 		}
 
 		this.listener?.onFinishLayout(this)
-		this.holder.callMethod("nativeLayoutFinished")
+		this.holder.callMethod("nativeOnLayoutFinished")
 	}
 
 	//--------------------------------------------------------------------------
@@ -2986,7 +2986,7 @@ open class View(context: JavaScriptContext) : JavaScriptClass(context), LayoutNo
 	 */
 	override fun onDragStart(scrollable: Scrollable) {
 		this.dragging.reset(true)
-		this.holder.callMethod("nativeDragStart")
+		this.holder.callMethod("nativeOnDragStart")
 	}
 
 	/**
@@ -2996,7 +2996,7 @@ open class View(context: JavaScriptContext) : JavaScriptClass(context), LayoutNo
 	 */
 	override fun onDragEnd(scrollable: Scrollable) {
 		this.dragging.reset(false)
-		this.holder.callMethod("nativeDragEnd")
+		this.holder.callMethod("nativeOnDragEnd")
 	}
 
 	/**
@@ -3005,7 +3005,7 @@ open class View(context: JavaScriptContext) : JavaScriptClass(context), LayoutNo
 	 * @hidden
 	 */
 	override fun onDrag(scrollable: Scrollable) {
-		this.holder.callMethod("nativeDrag")
+		this.holder.callMethod("nativeOnDrag")
 	}
 
 	/**
@@ -3015,7 +3015,7 @@ open class View(context: JavaScriptContext) : JavaScriptClass(context), LayoutNo
 	 */
 	override fun onScrollStart(scrollable: Scrollable) {
 		this.scrolling.reset(true)
-		this.holder.callMethod("nativeScrollStart")
+		this.holder.callMethod("nativeOnScrollStart")
 	}
 
 	/**
@@ -3025,7 +3025,7 @@ open class View(context: JavaScriptContext) : JavaScriptClass(context), LayoutNo
 	 */
 	override fun onScrollEnd(scrollable: Scrollable) {
 		this.scrolling.reset(false)
-		this.holder.callMethod("nativeScrollEnd")
+		this.holder.callMethod("nativeOnScrollEnd")
 	}
 
 	/**
@@ -3048,7 +3048,7 @@ open class View(context: JavaScriptContext) : JavaScriptClass(context), LayoutNo
 
 		this.listener?.onScroll(this)
 
-		this.holder.callMethod("nativeScroll")
+		this.holder.callMethod("nativeOnScroll")
 	}
 
 	/**
@@ -3057,7 +3057,7 @@ open class View(context: JavaScriptContext) : JavaScriptClass(context), LayoutNo
 	 * @hidden
 	 */
 	override fun onZoomStart(scrollable: Scrollable) {
-		this.holder.callMethod("nativeZoomStart")
+		this.holder.callMethod("nativeOnZoomStart")
 	}
 
 	/**
@@ -3066,7 +3066,7 @@ open class View(context: JavaScriptContext) : JavaScriptClass(context), LayoutNo
 	 * @hidden
 	 */
 	override fun onZoomEnd(scrollable: Scrollable, scale: Float) {
-		this.holder.callMethod("nativeZoomEnd", arrayOf(this.context.createNumber(scale)))
+		this.holder.callMethod("nativeOnZoomEnd", arrayOf(this.context.createNumber(scale)))
 	}
 
 	/**
@@ -3075,7 +3075,7 @@ open class View(context: JavaScriptContext) : JavaScriptClass(context), LayoutNo
 	 * @hidden
 	 */
 	override fun onZoom(scrollable: Scrollable) {
-		this.holder.callMethod("nativeZoom")
+		this.holder.callMethod("nativeOnZoom")
 	}
 
 	//--------------------------------------------------------------------------
@@ -3251,7 +3251,7 @@ open class View(context: JavaScriptContext) : JavaScriptClass(context), LayoutNo
 		this.parent = parent
 
 		if (notify) {
-			this.holder.callMethod("nativeMoveToParent", arrayOf(parent?.holder))
+			this.holder.callMethod("nativeOnMoveToParent", arrayOf(parent?.holder))
 		}
 	}
 
@@ -3265,14 +3265,14 @@ open class View(context: JavaScriptContext) : JavaScriptClass(context), LayoutNo
 		this.window = window
 
 		if (notify) {
-			this.holder.callMethod("nativeMoveToWindow", arrayOf(window?.holder))
+			this.holder.callMethod("nativeOnMoveToWindow", arrayOf(window?.holder))
 		}
 
 		this.children.forEach {
 			it.moveToWindow(window)
 		}
 	}
-	
+
 	/**
 	 * @method invalidateFrame
 	 * @since 0.1.0
@@ -3521,7 +3521,7 @@ open class View(context: JavaScriptContext) : JavaScriptClass(context), LayoutNo
 	 * @since 0.2.0
 	 * @hidden
 	 */
-	@Suppress("unused")	
+	@Suppress("unused")
 	open fun jsGet_classList(callback: JavaScriptGetterCallback) {
 		callback.returns(this.classList)
 	}
@@ -3531,7 +3531,7 @@ open class View(context: JavaScriptContext) : JavaScriptClass(context), LayoutNo
 	 * @since 0.2.0
 	 * @hidden
 	 */
-	@Suppress("unused")	
+	@Suppress("unused")
 	open fun jsSet_classList(callback: JavaScriptSetterCallback) {
 		val classList = callback.value.string
 		this.className = classList.until('.')
@@ -4340,7 +4340,7 @@ open class View(context: JavaScriptContext) : JavaScriptClass(context), LayoutNo
 	open fun jsSet_maxBorderBottomWidth(callback: JavaScriptSetterCallback) {
 		this.maxBorderBottomWidth = Property(callback.value)
 	}
-	
+
 	//--------------------------------------------------------------------------
 
 	/**
@@ -5435,7 +5435,7 @@ open class View(context: JavaScriptContext) : JavaScriptClass(context), LayoutNo
 	 * @since 0.2.0
 	 * @hidden
 	 */
-	@Suppress("unused")	
+	@Suppress("unused")
 	open fun jsGet_margin(callback: JavaScriptGetterCallback) {
 
 		val value = this.context.createEmptyObject()
@@ -5452,7 +5452,7 @@ open class View(context: JavaScriptContext) : JavaScriptClass(context), LayoutNo
 	 * @since 0.2.0
 	 * @hidden
 	 */
-	@Suppress("unused")	
+	@Suppress("unused")
 	open fun jsSet_margin(callback: JavaScriptSetterCallback) {
 		this.margin = Property(callback.value)
 	}
@@ -5722,7 +5722,7 @@ open class View(context: JavaScriptContext) : JavaScriptClass(context), LayoutNo
 	}
 
 	//--------------------------------------------------------------------------
-	
+
 	/**
 	 * @method jsGet_padding
 	 * @since 0.2.0
@@ -5749,7 +5749,7 @@ open class View(context: JavaScriptContext) : JavaScriptClass(context), LayoutNo
 	open fun jsSet_padding(callback: JavaScriptSetterCallback) {
 		this.padding = Property(callback.value)
 	}
-	
+
 	//--------------------------------------------------------------------------
 
 	/**

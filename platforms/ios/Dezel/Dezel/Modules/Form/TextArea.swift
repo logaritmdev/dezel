@@ -385,7 +385,7 @@ open class TextArea: View, ContentTextAreaDelegate {
 	 */
 	open func didChange(textInput: ContentTextArea, value: String) {
 		self.value = Property(string: value)
-		self.holder.callMethod("nativeChange", arguments: [self.context.createString(value)], result: nil)
+		self.holder.callMethod("nativeOnChange", arguments: [self.context.createString(value)], result: nil)
 	}
 
 	/**
@@ -394,7 +394,7 @@ open class TextArea: View, ContentTextAreaDelegate {
 	 * @since 0.1.0
 	 */
 	open func didFocus(textInput: ContentTextArea) {
-		self.holder.callMethod("nativeFocus")
+		self.holder.callMethod("nativeOnFocus")
 	}
 
 	/**
@@ -403,7 +403,7 @@ open class TextArea: View, ContentTextAreaDelegate {
 	 * @since 0.1.0
 	 */
 	open func didBlur(textInput: ContentTextArea) {
-		self.holder.callMethod("nativeBlur")
+		self.holder.callMethod("nativeOnBlur")
 	}
 
 	//--------------------------------------------------------------------------

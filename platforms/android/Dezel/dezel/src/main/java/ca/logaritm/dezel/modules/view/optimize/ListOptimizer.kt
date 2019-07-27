@@ -779,7 +779,7 @@ open class ListOptimizer(context: JavaScriptContext) : ContentOptimizer(context)
 			 * on the first time the view is inserted.
 			 */
 
-			this.holder.callMethod("nativeInsertItem", arrayOf(this.context.createNumber(index), item.holder))
+			this.holder.callMethod("nativeOnInsertItem", arrayOf(this.context.createNumber(index), item.holder))
 		}
 
 		/*
@@ -787,7 +787,7 @@ open class ListOptimizer(context: JavaScriptContext) : ContentOptimizer(context)
 		 * possibly invalidating the bounds and content of the item.
 		 */
 
-		this.holder.callMethod("nativeReuseItem", arrayOf(this.context.createNumber(index), item.holder))
+		this.holder.callMethod("nativeOnReuseItem", arrayOf(this.context.createNumber(index), item.holder))
 	}
 
 	/**
@@ -813,7 +813,7 @@ open class ListOptimizer(context: JavaScriptContext) : ContentOptimizer(context)
 		 * the view is cached, it still considered as being in the view.
 		 */
 
-		this.holder.callMethod("nativeCacheItem", arrayOf(this.context.createNumber(index), item.holder))
+		this.holder.callMethod("nativeOnCacheItem", arrayOf(this.context.createNumber(index), item.holder))
 
 		this.cacheItem(index)
 		this.removeView(index, notify = false)

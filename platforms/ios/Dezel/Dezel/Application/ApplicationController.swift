@@ -286,7 +286,7 @@ open class ApplicationController: UIViewController {
 	 * @since 0.7.0
 	 */
 	open func openResourceURL(_ url: URL) {
-		self.application?.holder.callMethod("nativeOpenResourceURL", arguments: [self.context.createString(url.absoluteString)])
+		self.application?.holder.callMethod("nativeOnOpenResourceURL", arguments: [self.context.createString(url.absoluteString)])
 	}
 
 	/**
@@ -295,7 +295,7 @@ open class ApplicationController: UIViewController {
 	 * @since 0.7.0
 	 */
 	open func openUniversalURL(_ url: URL) {
-		self.application?.holder.callMethod("nativeOpenUniversalURL", arguments: [self.context.createString(url.absoluteString)])
+		self.application?.holder.callMethod("nativeOnOpenUniversalURL", arguments: [self.context.createString(url.absoluteString)])
 	}
 
 	//--------------------------------------------------------------------------
@@ -348,7 +348,7 @@ open class ApplicationController: UIViewController {
 	 * @since 0.7.0
 	 */
 	open func didEnterBackground() {
-		self.application?.holder.callMethod("nativeEnterBackground")
+		self.application?.holder.callMethod("nativeOnEnterBackground")
 	}
 
 	/**
@@ -357,7 +357,7 @@ open class ApplicationController: UIViewController {
 	 * @since 0.7.0
 	 */
 	open func didEnterForeground() {
-		self.application?.holder.callMethod("nativeEnterForeground")
+		self.application?.holder.callMethod("nativeOnEnterForeground")
 	}
 
 	//--------------------------------------------------------------------------
@@ -370,7 +370,7 @@ open class ApplicationController: UIViewController {
 	 * @since 0.7.0
 	 */
 	open func keyboardWillShow(_ notification: Notification) {
-		self.dispatchKeyboardEvent("nativeBeforeKeyboardShow", notification: notification)
+		self.dispatchKeyboardEvent("nativeOnBeforeKeyboardShow", notification: notification)
 	}
 
 	/**
@@ -379,7 +379,7 @@ open class ApplicationController: UIViewController {
 	 * @since 0.7.0
 	 */
 	open func keyboardDidShow(_ notification: Notification) {
-		self.dispatchKeyboardEvent("nativeKeyboardShow", notification: notification)
+		self.dispatchKeyboardEvent("nativeOnKeyboardShow", notification: notification)
 	}
 
 	/**
@@ -388,7 +388,7 @@ open class ApplicationController: UIViewController {
 	 * @since 0.7.0
 	 */
 	open func keyboardWillHide(_ notification: Notification) {
-		self.dispatchKeyboardEvent("nativeBeforeKeyboardHide", notification: notification)
+		self.dispatchKeyboardEvent("nativeOnBeforeKeyboardHide", notification: notification)
 	}
 
 	/**
@@ -397,7 +397,7 @@ open class ApplicationController: UIViewController {
 	 * @since 0.7.0
 	 */
 	open func keyboardDidHide(_ notification: Notification) {
-		self.dispatchKeyboardEvent("nativeKeyboardHide", notification: notification)
+		self.dispatchKeyboardEvent("nativeOnKeyboardHide", notification: notification)
 	}
 
 	/**
@@ -406,7 +406,7 @@ open class ApplicationController: UIViewController {
 	 * @since 0.7.0
 	 */
 	open func keyboardWillResize(_ notification: Notification) {
-		self.dispatchKeyboardEvent("nativeBeforeKeyboardResize", notification: notification)
+		self.dispatchKeyboardEvent("nativeOnBeforeKeyboardResize", notification: notification)
 	}
 
 	/**

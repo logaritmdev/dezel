@@ -328,7 +328,7 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 	 * @since 0.7.0
 	 */
 	open fun openResourceURL(url: Uri) {
-		this.application?.holder?.callMethod("nativeOpenResourceURL", arrayOf(this.context.createString(url.toString())))
+		this.application?.holder?.callMethod("nativeOnOpenResourceURL", arrayOf(this.context.createString(url.toString())))
 	}
 
 	/**
@@ -337,7 +337,7 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 	 * @since 0.7.0
 	 */
 	open fun openUniversalURL(url: Uri) {
-		this.application?.holder?.callMethod("nativeOpenUniversalURL", arrayOf(this.context.createString(url.toString())))
+		this.application?.holder?.callMethod("nativeOnOpenUniversalURL", arrayOf(this.context.createString(url.toString())))
 	}
 
 	//--------------------------------------------------------------------------
@@ -411,7 +411,7 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 	 * @since 0.7.0
 	 */
 	open fun onEnterBackground() {
-		this.application?.holder?.callMethod("nativeEnterBackground")
+		this.application?.holder?.callMethod("nativeOnEnterBackground")
 	}
 
 	/**
@@ -420,7 +420,7 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 	 * @since 0.7.0
 	 */
 	open fun onEnterForeground() {
-		this.application?.holder?.callMethod("nativeEnterForeground")
+		this.application?.holder?.callMethod("nativeOnEnterForeground")
 	}
 
 	//--------------------------------------------------------------------------
@@ -463,7 +463,7 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 	 * @since 0.7.0
 	 */
 	open fun onBeforeKeyboardShow(height: Int) {
-		this.dispatchKeyboardEvent("nativeBeforeKeyboardShow", height)
+		this.dispatchKeyboardEvent("nativeOnBeforeKeyboardShow", height)
 	}
 
 	/**
@@ -472,7 +472,7 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 	 * @since 0.7.0
 	 */
 	open fun onKeyboardShow(height: Int) {
-		this.dispatchKeyboardEvent("nativeKeyboardShow", height)
+		this.dispatchKeyboardEvent("nativeOnKeyboardShow", height)
 	}
 
 	/**
@@ -481,7 +481,7 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 	 * @since 0.7.0
 	 */
 	open fun onBeforeKeyboardHide(height: Int) {
-		this.dispatchKeyboardEvent("nativeBeforeKeyboardHide", height)
+		this.dispatchKeyboardEvent("nativeOnBeforeKeyboardHide", height)
 	}
 
 	/**
@@ -490,7 +490,7 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 	 * @since 0.7.0
 	 */
 	open fun onKeyboardHide(height: Int) {
-		this.dispatchKeyboardEvent("nativeKeyboardHide", height)
+		this.dispatchKeyboardEvent("nativeOnKeyboardHide", height)
 	}
 
 	/**
@@ -499,7 +499,7 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 	 * @since 0.7.0
 	 */
 	open fun onBeforeKeyboardResize(height: Int) {
-		this.dispatchKeyboardEvent("nativeBeforeKeyboardResize", height)
+		this.dispatchKeyboardEvent("nativeOnBeforeKeyboardResize", height)
 	}
 
 	/**
@@ -709,7 +709,7 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 
 		val handled = this.context.createReturnValue()
 
-		application.holder.callMethod("nativeBack", null, handled)
+		application.holder.callMethod("nativeOnBack", null, handled)
 
 		if (handled.boolean == true) {
 			return

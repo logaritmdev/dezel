@@ -133,11 +133,11 @@ export class WebView extends View {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method private nativeBeforeLoad
-	 * @since 0.2.0
+	 * @method nativeOnBeforeLoad
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private nativeBeforeLoad(url: string) {
+	private nativeOnBeforeLoad(url: string) {
 
 		let event = new Event('beforeload', {
 			propagable: false,
@@ -153,11 +153,11 @@ export class WebView extends View {
 	}
 
 	/**
-	 * @method private nativeLoad
-	 * @since 0.2.0
+	 * @method nativeOnLoad
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private nativeLoad() {
+	private nativeOnLoad() {
 		this.emit('load')
 	}
 }
