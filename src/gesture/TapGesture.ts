@@ -34,7 +34,7 @@ export class TapGesture extends Gesture {
 	 * @method onTouchCancel
 	 * @since 0.1.0
 	 */
-	public onTouchCancel(event: TouchEvent) {
+	protected onTouchCancel(event: TouchEvent) {
 
 		if (this.touch == null) {
 			return
@@ -51,7 +51,7 @@ export class TapGesture extends Gesture {
 	 * @method onTouchStart
 	 * @since 0.1.0
 	 */
-	public onTouchStart(event: TouchEvent) {
+	protected onTouchStart(event: TouchEvent) {
 		if (this.touch == null) {
 			this.touch = event.touches.item(0)
 		}
@@ -62,7 +62,7 @@ export class TapGesture extends Gesture {
 	 * @method onTouchMove
 	 * @since 0.1.0
 	 */
-	public onTouchMove(event: TouchEvent) {
+	protected onTouchMove(event: TouchEvent) {
 
 	}
 
@@ -71,7 +71,7 @@ export class TapGesture extends Gesture {
 	 * @method onTouchEnd
 	 * @since 0.1.0
 	 */
-	public onTouchEnd(event: TouchEvent) {
+	protected onTouchEnd(event: TouchEvent) {
 
 		if (this.touch == null) {
 			return

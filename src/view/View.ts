@@ -1562,7 +1562,7 @@ export class View extends Emitter {
 	 * @method onMount
 	 * @since 0.7.0
 	 */
-	public onMount() {
+	protected onMount() {
 
 	}
 
@@ -1571,7 +1571,7 @@ export class View extends Emitter {
 	 * @method onUnmount
 	 * @since 0.7.0
 	 */
-	public onUnmount() {
+	protected onUnmount() {
 
 	}
 
@@ -1580,7 +1580,7 @@ export class View extends Emitter {
 	 * @method onDestroy
 	 * @since 0.4.0
 	 */
-	public onDestroy() {
+	protected onDestroy() {
 
 	}
 
@@ -1888,7 +1888,7 @@ export class View extends Emitter {
 	 * @method onBeforeLayout
 	 * @since 0.1.0
 	 */
-	public onBeforeLayout() {
+	protected onBeforeLayout() {
 
 	}
 
@@ -1897,7 +1897,7 @@ export class View extends Emitter {
 	 * @method onLayout
 	 * @since 0.1.0
 	 */
-	public onLayout() {
+	protected onLayout() {
 
 	}
 
@@ -1906,7 +1906,7 @@ export class View extends Emitter {
 	 * @method onInsert
 	 * @since 0.1.0
 	 */
-	public onInsert(child: View, index: number) {
+	protected onInsert(child: View, index: number) {
 
 	}
 
@@ -1915,7 +1915,7 @@ export class View extends Emitter {
 	 * @method onRemove
 	 * @since 0.1.0
 	 */
-	public onRemove(child: View, index: number) {
+	protected onRemove(child: View, index: number) {
 
 	}
 
@@ -1924,7 +1924,7 @@ export class View extends Emitter {
 	 * @method onMoveToWindow
 	 * @since 0.2.0
 	 */
-	public onMoveToWindow(window: Window | null | undefined) {
+	protected onMoveToWindow(window: Window | null | undefined) {
 
 	}
 
@@ -1933,7 +1933,7 @@ export class View extends Emitter {
 	 * @method onMoveToParent
 	 * @since 0.2.0
 	 */
-	public onMoveToParent(parent: View | null | undefined) {
+	protected onMoveToParent(parent: View | null | undefined) {
 
 	}
 
@@ -1941,7 +1941,7 @@ export class View extends Emitter {
 	 * @method onScrollStart
 	 * @since 0.1.0
 	 */
-	public onScrollStart() {
+	protected onScrollStart() {
 
 	}
 
@@ -1949,7 +1949,7 @@ export class View extends Emitter {
 	 * @method onScrollEnd
 	 * @since 0.1.0
 	 */
-	public onScrollEnd() {
+	protected onScrollEnd() {
 
 	}
 
@@ -1957,7 +1957,7 @@ export class View extends Emitter {
 	 * @method onScroll
 	 * @since 0.1.0
 	 */
-	public onScroll() {
+	protected onScroll() {
 
 	}
 
@@ -1965,7 +1965,7 @@ export class View extends Emitter {
 	 * @method onOverscroll
 	 * @since 0.1.0
 	 */
-	public onOverscroll() {
+	protected onOverscroll() {
 
 	}
 
@@ -1973,7 +1973,7 @@ export class View extends Emitter {
 	 * @method onDragStart
 	 * @since 0.1.0
 	 */
-	public onDragStart() {
+	protected onDragStart() {
 
 	}
 
@@ -1981,7 +1981,7 @@ export class View extends Emitter {
 	 * @method onDragEnd
 	 * @since 0.1.0
 	 */
-	public onDragEnd() {
+	protected onDragEnd() {
 
 	}
 
@@ -1989,7 +1989,7 @@ export class View extends Emitter {
 	 * @method onDrag
 	 * @since 0.1.0
 	 */
-	public onDrag() {
+	protected onDrag() {
 
 	}
 
@@ -1997,7 +1997,7 @@ export class View extends Emitter {
 	 * @method onZoomStart
 	 * @since 0.3.0
 	 */
-	public onZoomStart() {
+	protected onZoomStart() {
 
 	}
 
@@ -2005,7 +2005,7 @@ export class View extends Emitter {
 	 * @method onZoomEnd
 	 * @since 0.3.0
 	 */
-	public onZoomEnd() {
+	protected onZoomEnd() {
 
 	}
 
@@ -2013,7 +2013,7 @@ export class View extends Emitter {
 	 * @method onZoom
 	 * @since 0.3.0
 	 */
-	public onZoom() {
+	protected onZoom() {
 
 	}
 
@@ -2021,7 +2021,7 @@ export class View extends Emitter {
 	 * @method onRedraw
 	 * @since 0.4.0
 	 */
-	public onRedraw(canvas: Canvas) {
+	protected onRedraw(canvas: Canvas) {
 
 	}
 
@@ -2030,7 +2030,7 @@ export class View extends Emitter {
 	 * @method onTouchCancel
 	 * @since 0.1.0
 	 */
-	public onTouchCancel(event: TouchEvent) {
+	protected onTouchCancel(event: TouchEvent) {
 
 	}
 
@@ -2039,7 +2039,7 @@ export class View extends Emitter {
 	 * @method onTouchStart
 	 * @since 0.1.0
 	 */
-	public onTouchStart(event: TouchEvent) {
+	protected onTouchStart(event: TouchEvent) {
 
 	}
 
@@ -2048,7 +2048,7 @@ export class View extends Emitter {
 	 * @method onTouchMove
 	 * @since 0.1.0
 	 */
-	public onTouchMove(event: TouchEvent) {
+	protected onTouchMove(event: TouchEvent) {
 
 	}
 
@@ -2057,7 +2057,7 @@ export class View extends Emitter {
 	 * @method onTouchEnd
 	 * @since 0.1.0
 	 */
-	public onTouchEnd(event: TouchEvent) {
+	protected onTouchEnd(event: TouchEvent) {
 
 	}
 

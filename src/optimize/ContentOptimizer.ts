@@ -189,7 +189,7 @@ export class ContentOptimizer<T> extends Emitter {
 	 * @method onReloadData
 	 * @since 0.2.0
 	 */
-	public onReloadData(event: Event<DataSourceReloadEvent<T>>) {
+	protected onReloadData(event: Event<DataSourceReloadEvent<T>>) {
 
 	}
 
@@ -198,7 +198,7 @@ export class ContentOptimizer<T> extends Emitter {
 	 * @method onInsertData
 	 * @since 0.2.0
 	 */
-	public onInsertData(event: Event<DataSourceInsertEvent<T>>) {
+	protected onInsertData(event: Event<DataSourceInsertEvent<T>>) {
 
 	}
 
@@ -207,7 +207,7 @@ export class ContentOptimizer<T> extends Emitter {
 	 * @method onRemoveData
 	 * @since 0.2.0
 	 */
-	public onRemoveData(event: Event<DataSourceRemoveEvent<T>>) {
+	protected onRemoveData(event: Event<DataSourceRemoveEvent<T>>) {
 
 	}
 
@@ -216,7 +216,7 @@ export class ContentOptimizer<T> extends Emitter {
 	 * @method onCommitData
 	 * @since 0.5.0
 	 */
-	public onCommitData(event: Event) {
+	protected onCommitData(event: Event) {
 
 	}
 
@@ -225,7 +225,7 @@ export class ContentOptimizer<T> extends Emitter {
 	 * @method onChangeData
 	 * @since 0.5.0
 	 */
-	public onChangeData(event: Event<DataSourceChangeEvent<T>>) {
+	protected onChangeData(event: Event<DataSourceChangeEvent<T>>) {
 
 	}
 
@@ -234,7 +234,7 @@ export class ContentOptimizer<T> extends Emitter {
 	 * @method onUpdateData
 	 * @since 0.5.0
 	 */
-	public onUpdateData(event: Event) {
+	protected onUpdateData(event: Event) {
 
 	}
 

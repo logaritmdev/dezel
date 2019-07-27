@@ -136,7 +136,7 @@ export class List extends Component {
 	 * @method onInsert
 	 * @since 0.1.0
 	 */
-	public onInsert(child: View, index: number) {
+	protected onInsert(child: View, index: number) {
 
 		super.onInsert(child, index)
 
@@ -155,7 +155,7 @@ export class List extends Component {
 	 * @method onRemove
 	 * @since 0.1.0
 	 */
-	public onRemove(child: View, index: number) {
+	protected onRemove(child: View, index: number) {
 
 		super.onRemove(child, index)
 
@@ -174,7 +174,7 @@ export class List extends Component {
 	 * @method onPropertyChange
 	 * @since 0.4.0
 	 */
-	public onPropertyChange(property: string, newValue: any, oldValue: any) {
+	protected onPropertyChange(property: string, newValue: any, oldValue: any) {
 
 		if (property == 'items') {
 

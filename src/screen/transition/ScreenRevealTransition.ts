@@ -18,7 +18,7 @@ export class ScreenRevealTransition extends ScreenTransition {
 	 * @method onBeforePresent
 	 * @since 0.2.0
 	 */
-	public onBeforePresent(enter?: Screen, leave?: Screen) {
+	protected onBeforePresent(enter?: Screen, leave?: Screen) {
 
 	}
 
@@ -27,7 +27,7 @@ export class ScreenRevealTransition extends ScreenTransition {
 	 * @method onPresent
 	 * @since 0.2.0
 	 */
-	public onPresent(enter?: Screen, leave?: Screen) {
+	protected onPresent(enter?: Screen, leave?: Screen) {
 		if (enter) enter.translationY = '0%'
 	}
 
@@ -36,7 +36,7 @@ export class ScreenRevealTransition extends ScreenTransition {
 	 * @method onBeforeDismiss
 	 * @since 0.2.0
 	 */
-	public onBeforeDismiss(enter?: Screen, leave?: Screen) {
+	protected onBeforeDismiss(enter?: Screen, leave?: Screen) {
 		if (leave) leave.translationY = '0%'
 	}
 
@@ -45,7 +45,7 @@ export class ScreenRevealTransition extends ScreenTransition {
 	 * @method onDismiss
 	 * @since 0.2.0
 	 */
-	public onDismiss(enter?: Screen, leave?: Screen) {
+	protected onDismiss(enter?: Screen, leave?: Screen) {
 		if (leave) leave.translationY = '100%'
 	}
 
@@ -54,7 +54,7 @@ export class ScreenRevealTransition extends ScreenTransition {
 	 * @method onAfterPresent
 	 * @since 0.2.0
 	 */
-	public onAfterPresent(enter?: Screen, leave?: Screen) {
+	protected onAfterPresent(enter?: Screen, leave?: Screen) {
 		if (enter) enter.translationY = 0
 		if (leave) leave.translationY = 0
 	}
@@ -64,7 +64,7 @@ export class ScreenRevealTransition extends ScreenTransition {
 	 * @method onAfterDismiss
 	 * @since 0.2.0
 	 */
-	public onAfterDismiss(enter?: Screen, leave?: Screen) {
+	protected onAfterDismiss(enter?: Screen, leave?: Screen) {
 		if (enter) enter.translationY = 0
 		if (leave) leave.translationY = 0
 	}

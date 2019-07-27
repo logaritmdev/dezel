@@ -260,7 +260,7 @@ export abstract class Gesture extends Emitter {
 	 * @method onTouchCancel
 	 * @since 0.1.0
 	 */
-	public onTouchCancel(event: TouchEvent) {
+	protected onTouchCancel(event: TouchEvent) {
 
 	}
 
@@ -269,7 +269,7 @@ export abstract class Gesture extends Emitter {
 	 * @method onTouchStart
 	 * @since 0.1.0
 	 */
-	public onTouchStart(event: TouchEvent) {
+	protected onTouchStart(event: TouchEvent) {
 
 	}
 
@@ -278,7 +278,7 @@ export abstract class Gesture extends Emitter {
 	 * @method onTouchMove
 	 * @since 0.1.0
 	 */
-	public onTouchMove(event: TouchEvent) {
+	protected onTouchMove(event: TouchEvent) {
 
 	}
 
@@ -287,7 +287,7 @@ export abstract class Gesture extends Emitter {
 	 * @method onTouchEnd
 	 * @since 0.1.0
 	 */
-	public onTouchEnd(event: TouchEvent) {
+	protected onTouchEnd(event: TouchEvent) {
 
 	}
 

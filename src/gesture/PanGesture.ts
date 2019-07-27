@@ -45,7 +45,7 @@ export class PanGesture extends Gesture {
 	 * @method onTouchCancel
 	 * @since 0.1.0
 	 */
-	public onTouchCancel(event: TouchEvent) {
+	protected onTouchCancel(event: TouchEvent) {
 
 		super.onTouchCancel(event)
 
@@ -74,7 +74,7 @@ export class PanGesture extends Gesture {
 	 * @method onTouchStart
 	 * @since 0.1.0
 	 */
-	public onTouchStart(event: TouchEvent) {
+	protected onTouchStart(event: TouchEvent) {
 
 		super.onTouchStart(event)
 
@@ -97,7 +97,7 @@ export class PanGesture extends Gesture {
 	 * @method onTouchMove
 	 * @since 0.1.0
 	 */
-	public onTouchMove(event: TouchEvent) {
+	protected onTouchMove(event: TouchEvent) {
 
 		super.onTouchMove(event)
 
@@ -149,7 +149,7 @@ export class PanGesture extends Gesture {
 	 * @method onTouchEnd
 	 * @since 0.1.0
 	 */
-	public onTouchEnd(event: TouchEvent) {
+	protected onTouchEnd(event: TouchEvent) {
 
 		super.onTouchEnd(event)
 

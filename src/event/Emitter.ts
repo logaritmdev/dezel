@@ -127,7 +127,7 @@ export class Emitter {
 	 * @method onPropertyChange
 	 * @since 0.4.0
 	 */
-	public onPropertyChange(property: string, newValue: any, oldValue: any) {
+	protected onPropertyChange(property: string, newValue: any, oldValue: any) {
 
 	}
 

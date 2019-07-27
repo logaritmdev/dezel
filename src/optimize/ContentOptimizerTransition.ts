@@ -1,7 +1,8 @@
-import { Event } from '../event/Event'
 import { Emitter } from '../event/Emitter'
+import { Event } from '../event/Event'
 import { View } from '../view/View'
-import { ContentOptimizer, Orientation } from './ContentOptimizer'
+import { ContentOptimizer } from './ContentOptimizer'
+import { Orientation } from './ContentOptimizer'
 
 /**
  * The base class for content optimizer transitions.
@@ -38,7 +39,7 @@ export class ContentOptimizerTransition extends Emitter {
 	 * @method onBeforeInsert
 	 * @since 0.2.0
 	 */
-	public onBeforeInsert(items: Array<View>) {
+	protected onBeforeInsert(items: Array<View>) {
 
 	}
 
@@ -47,7 +48,7 @@ export class ContentOptimizerTransition extends Emitter {
 	 * @method onBeforeRemove
 	 * @since 0.2.0
 	 */
-	public onBeforeRemove(items: Array<View>) {
+	protected onBeforeRemove(items: Array<View>) {
 
 	}
 
@@ -56,7 +57,7 @@ export class ContentOptimizerTransition extends Emitter {
 	 * @method onInsert
 	 * @since 0.2.0
 	 */
-	public onInsert(items: Array<View>) {
+	protected onInsert(items: Array<View>) {
 
 	}
 
@@ -65,7 +66,7 @@ export class ContentOptimizerTransition extends Emitter {
 	 * @method onRemove
 	 * @since 0.2.0
 	 */
-	public onRemove(items: Array<View>) {
+	protected onRemove(items: Array<View>) {
 
 	}
 
@@ -74,7 +75,7 @@ export class ContentOptimizerTransition extends Emitter {
 	 * @method onAfterInsert
 	 * @since 0.2.0
 	 */
-	public onAfterInsert(items: Array<View>) {
+	protected onAfterInsert(items: Array<View>) {
 
 	}
 
@@ -83,7 +84,7 @@ export class ContentOptimizerTransition extends Emitter {
 	 * @method onAfterRemove
 	 * @since 0.2.0
 	 */
-	public onAfterRemove(items: Array<View>) {
+	protected onAfterRemove(items: Array<View>) {
 
 	}
 
@@ -108,6 +109,65 @@ export class ContentOptimizerTransition extends Emitter {
 		}, () => {
 			animator()
 		})
+	}
+
+	//--------------------------------------------------------------------------
+	// Internal API
+	//--------------------------------------------------------------------------
+
+
+	/**
+	 * @method emitBeforeInsert
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	public emitBeforeInsert(items: Array<View>) {
+		this.onBeforeInsert(items)
+	}
+
+	/**
+	 * @method emitBeforeRemove
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	public emitBeforeRemove(items: Array<View>) {
+		this.onBeforeRemove(items)
+	}
+
+	/**
+	 * @method emitInsert
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	public emitInsert(items: Array<View>) {
+		this.onInsert(items)
+	}
+
+	/**
+	 * @method emitRemove
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	public emitRemove(items: Array<View>) {
+		this.onRemove(items)
+	}
+
+	/**
+	 * @method emitAfterInsert
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	public emitAfterInsert(items: Array<View>) {
+		this.onAfterInsert(items)
+	}
+
+	/**
+	 * @method emitAfterRemove
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	public emitAfterRemove(items: Array<View>) {
+		this.onAfterRemove(items)
 	}
 }
 

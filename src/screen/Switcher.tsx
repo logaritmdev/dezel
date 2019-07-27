@@ -190,7 +190,7 @@ export class Switcher extends Screen {
 	 * @method onSelect
 	 * @since 0.7.0
 	 */
-	public onSelect(event: Event<SwitcherSelectEvent>) {
+	protected onSelect(event: Event<SwitcherSelectEvent>) {
 
 	}
 
@@ -199,7 +199,7 @@ export class Switcher extends Screen {
 	 * @method onDeselect
 	 * @since 0.7.0
 	 */
-	public onDeselect(event: Event<SwitcherDeselectEvent>) {
+	protected onDeselect(event: Event<SwitcherDeselectEvent>) {
 
 	}
 
@@ -208,7 +208,7 @@ export class Switcher extends Screen {
 	 * @method onBack
 	 * @since 0.7.0
 	 */
-	public onBack(event: Event) {
+	protected onBack(event: Event) {
 
 		let presentedScreen = this.presentee
 		if (presentedScreen) {
@@ -241,7 +241,7 @@ export class Switcher extends Screen {
 	 * @method onPropertyChange
 	 * @since 0.7.0
 	 */
-	public onPropertyChange(property: string, newValue: any, oldValue: any) {
+	protected onPropertyChange(property: string, newValue: any, oldValue: any) {
 
 		if (property == 'screens') {
 
@@ -371,7 +371,7 @@ export class Switcher extends Screen {
 				presentedScreenEnclosure.resolve()
 			}
 
-			transition.onBeforePresent(
+			transition.emitBeforePresent(
 				presentedScreen || undefined,
 				dismissedScreen || undefined
 			)
@@ -398,7 +398,7 @@ export class Switcher extends Screen {
 				dismissedScreen || undefined
 			)
 
-			transition.onAfterPresent(
+			transition.emitAfterPresent(
 				presentedScreen || undefined,
 				dismissedScreen || undefined
 			)

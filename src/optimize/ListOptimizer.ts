@@ -85,7 +85,7 @@ export class ListOptimizer<T = any> extends ContentOptimizer<T> {
 	 * @method onCacheItem
 	 * @since 0.5.0
 	 */
-	public onCacheItem(index: number, data: T, item: View) {
+	protected onCacheItem(index: number, data: T, item: View) {
 
 	}
 
@@ -94,7 +94,7 @@ export class ListOptimizer<T = any> extends ContentOptimizer<T> {
 	 * @method onReuseItem
 	 * @since 0.5.0
 	 */
-	public onReuseItem(index: number, data: T, item: View) {
+	protected onReuseItem(index: number, data: T, item: View) {
 
 	}
 
@@ -103,7 +103,7 @@ export class ListOptimizer<T = any> extends ContentOptimizer<T> {
 	 * @method onInsertItem
 	 * @since 0.5.0
 	 */
-	public onInsertItem(index: number, data: T, item: View) {
+	protected onInsertItem(index: number, data: T, item: View) {
 
 	}
 
@@ -112,7 +112,7 @@ export class ListOptimizer<T = any> extends ContentOptimizer<T> {
 	 * @method onRemoveItem
 	 * @since 0.5.0
 	 */
-	public onRemoveItem(index: number, data: T, item: View) {
+	protected onRemoveItem(index: number, data: T, item: View) {
 
 	}
 
@@ -125,7 +125,7 @@ export class ListOptimizer<T = any> extends ContentOptimizer<T> {
 	 * @method onReloadData
 	 * @since 0.4.0
 	 */
-	public onReloadData(event: Event<DataSourceReloadEvent<T>>) {
+	protected onReloadData(event: Event<DataSourceReloadEvent<T>>) {
 		this.native.length = this.data.size
 		this.native.reloadData()
 	}
@@ -135,7 +135,7 @@ export class ListOptimizer<T = any> extends ContentOptimizer<T> {
 	 * @method onInsertData
 	 * @since 0.4.0
 	 */
-	public onInsertData(event: Event<DataSourceInsertEvent<T>>) {
+	protected onInsertData(event: Event<DataSourceInsertEvent<T>>) {
 
 		this.native.length = this.data.size
 		this.native.insertData(event.data.index, event.data.rows.length, this.animate)
@@ -150,7 +150,7 @@ export class ListOptimizer<T = any> extends ContentOptimizer<T> {
 	 * @method onRemoveData
 	 * @since 0.4.0
 	 */
-	public onRemoveData(event: Event<DataSourceRemoveEvent<T>>) {
+	protected onRemoveData(event: Event<DataSourceRemoveEvent<T>>) {
 
 		this.native.length = this.data.size
 		this.native.removeData(event.data.index, event.data.rows.length, this.animate)
@@ -165,7 +165,7 @@ export class ListOptimizer<T = any> extends ContentOptimizer<T> {
 	 * @method onChangeData
 	 * @since 0.5.0
 	 */
-	public onChangeData(event: Event<DataSourceChangeEvent<T>>) {
+	protected onChangeData(event: Event<DataSourceChangeEvent<T>>) {
 
 		let index = event.data.index
 		let value = event.data.value
@@ -181,7 +181,7 @@ export class ListOptimizer<T = any> extends ContentOptimizer<T> {
 	 * @method onCommitData
 	 * @since 0.5.0
 	 */
-	public onCommitData(event: Event) {
+	protected onCommitData(event: Event) {
 		this.batching = true
 	}
 
@@ -190,7 +190,7 @@ export class ListOptimizer<T = any> extends ContentOptimizer<T> {
 	 * @method onUpdateData
 	 * @since 0.5.0
 	 */
-	public onUpdateData(event: Event) {
+	protected onUpdateData(event: Event) {
 
 		this.batching = false
 
@@ -265,14 +265,14 @@ export class ListOptimizer<T = any> extends ContentOptimizer<T> {
 				item.left = item.measuredLeft
 			}
 
-			transition.onBeforeInsert(inserts)
-			transition.onBeforeRemove(removes)
+			transition.emitBeforeInsert(inserts)
+			transition.emitBeforeRemove(removes)
 
 			transition.run(() => {
 
 				if (transition) {
-					transition.onInsert(inserts)
-					transition.onRemove(removes)
+					transition.emitInsert(inserts)
+					transition.emitRemove(removes)
 				}
 
 				for (let item of inserts) {
@@ -293,8 +293,8 @@ export class ListOptimizer<T = any> extends ContentOptimizer<T> {
 				}
 
 				if (transition) {
-					transition.onAfterInsert(inserts)
-					transition.onAfterRemove(removes)
+					transition.emitAfterInsert(inserts)
+					transition.emitAfterRemove(removes)
 				}
 
 				complete()

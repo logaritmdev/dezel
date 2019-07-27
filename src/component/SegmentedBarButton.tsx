@@ -104,7 +104,7 @@ export class SegmentedBarButton extends Component<Refs> {
 	 * @method onTouchCancel
 	 * @since 0.1.0
 	 */
-	public onTouchCancel(event: TouchEvent) {
+	protected onTouchCancel(event: TouchEvent) {
 
 		super.onTouchCancel(event)
 
@@ -118,7 +118,7 @@ export class SegmentedBarButton extends Component<Refs> {
 	 * @method onTouchStart
 	 * @since 0.1.0
 	 */
-	public onTouchStart(event: TouchEvent) {
+	protected onTouchStart(event: TouchEvent) {
 
 		super.onTouchStart(event)
 
@@ -132,7 +132,7 @@ export class SegmentedBarButton extends Component<Refs> {
 	 * @method onTouchEnd
 	 * @since 0.1.0
 	 */
-	public onTouchEnd(event: TouchEvent) {
+	protected onTouchEnd(event: TouchEvent) {
 
 		super.onTouchEnd(event)
 

@@ -275,7 +275,7 @@ export class Application extends Emitter {
 	 * @method onCreate
 	 * @since 0.4.0
 	 */
-	public onCreate(event: Event) {
+	protected onCreate(event: Event) {
 
 	}
 
@@ -284,7 +284,7 @@ export class Application extends Emitter {
 	 * @method onDestroy
 	 * @since 0.4.0
 	 */
-	public onDestroy(event: Event) {
+	protected onDestroy(event: Event) {
 
 	}
 
@@ -292,7 +292,7 @@ export class Application extends Emitter {
 	 * @method onEnterBackground
 	 * @since 0.4.0
 	 */
-	public onEnterBackground(event: Event) {
+	protected onEnterBackground(event: Event) {
 
 	}
 
@@ -300,7 +300,7 @@ export class Application extends Emitter {
 	 * @method onEnterForeground
 	 * @since 0.4.0
 	 */
-	public onEnterForeground(event: Event) {
+	protected onEnterForeground(event: Event) {
 
 	}
 
@@ -308,7 +308,7 @@ export class Application extends Emitter {
 	 * @method onBeforeKeyboardShow
 	 * @since 0.1.0
 	 */
-	public onBeforeKeyboardShow(event: Event<ApplicationKeyboardEvent>) {
+	protected onBeforeKeyboardShow(event: Event<ApplicationKeyboardEvent>) {
 
 	}
 
@@ -316,7 +316,7 @@ export class Application extends Emitter {
 	 * @method onKeyboardShow
 	 * @since 0.1.0
 	 */
-	public onKeyboardShow(event: Event<ApplicationKeyboardEvent>) {
+	protected onKeyboardShow(event: Event<ApplicationKeyboardEvent>) {
 
 	}
 
@@ -324,7 +324,7 @@ export class Application extends Emitter {
 	 * @method onBeforeKeyboardHide
 	 * @since 0.1.0
 	 */
-	public onBeforeKeyboardHide(event: Event<ApplicationKeyboardEvent>) {
+	protected onBeforeKeyboardHide(event: Event<ApplicationKeyboardEvent>) {
 
 	}
 
@@ -332,7 +332,7 @@ export class Application extends Emitter {
 	 * @method onKeyboardHide
 	 * @since 0.1.0
 	 */
-	public onKeyboardHide(event: Event<ApplicationKeyboardEvent>) {
+	protected onKeyboardHide(event: Event<ApplicationKeyboardEvent>) {
 
 	}
 
@@ -340,7 +340,7 @@ export class Application extends Emitter {
 	 * @method onKeyboardResize
 	 * @since 0.1.0
 	 */
-	public onKeyboardResize(event: Event<ApplicationKeyboardEvent>) {
+	protected onKeyboardResize(event: Event<ApplicationKeyboardEvent>) {
 
 	}
 
@@ -348,7 +348,7 @@ export class Application extends Emitter {
 	 * @method onOpenUniversalURL
 	 * @since 0.7.0
 	 */
-	public onOpenUniversalURL(event: Event<ApplicationOpenUniversalURLEvent>) {
+	protected onOpenUniversalURL(event: Event<ApplicationOpenUniversalURLEvent>) {
 
 	}
 
@@ -356,7 +356,7 @@ export class Application extends Emitter {
 	 * @method onOpenResourceURL
 	 * @since 0.7.0
 	 */
-	public onOpenResourceURL(event: Event<ApplicationOpenResourceURLEvent>) {
+	protected onOpenResourceURL(event: Event<ApplicationOpenResourceURLEvent>) {
 
 	}
 
@@ -365,7 +365,7 @@ export class Application extends Emitter {
 	 * @method onPropertyChange
 	 * @since 0.4.0
 	 */
-	public onPropertyChange(property: string, newValue: any, oldValue: any) {
+	protected onPropertyChange(property: string, newValue: any, oldValue: any) {
 
 		if (property == 'screen') {
 

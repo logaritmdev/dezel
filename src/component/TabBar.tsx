@@ -121,7 +121,7 @@ export class TabBar extends Component {
 	 * @method onBeforeSelect
 	 * @since 0.1.0
 	 */
-	public onBeforeSelect(index: number) {
+	protected onBeforeSelect(index: number) {
 
 	}
 
@@ -130,7 +130,7 @@ export class TabBar extends Component {
 	 * @method onSelect
 	 * @since 0.1.0
 	 */
-	public onSelect(index: number) {
+	protected onSelect(index: number) {
 
 	}
 
@@ -139,7 +139,7 @@ export class TabBar extends Component {
 	 * @method onDeselect
 	 * @since 0.1.0
 	 */
-	public onDeselect(index: number) {
+	protected onDeselect(index: number) {
 
 	}
 
@@ -148,7 +148,7 @@ export class TabBar extends Component {
 	 * @method onInsert
 	 * @since 0.1.0
 	 */
-	public onInsert(child: View, index: number) {
+	protected onInsert(child: View, index: number) {
 
 		super.onInsert(child, index)
 
@@ -168,7 +168,7 @@ export class TabBar extends Component {
 	 * @method onRemove
 	 * @since 0.1.0
 	 */
-	public onRemove(child: View, index: number) {
+	protected onRemove(child: View, index: number) {
 
 		super.onRemove(child, index)
 
@@ -188,7 +188,7 @@ export class TabBar extends Component {
 	 * @method onPropertyChange
 	 * @since 0.4.0
 	 */
-	public onPropertyChange(property: string, newValue: any, oldValue: any) {
+	protected onPropertyChange(property: string, newValue: any, oldValue: any) {
 
 		if (property == 'buttons') {
 

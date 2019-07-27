@@ -136,7 +136,7 @@ export class ListManager<T = any> extends ListOptimizer<T> {
 	 * @method onCacheItem
 	 * @since 0.5.0
 	 */
-	public onCacheItem(index: number, data: T, item: ListItem) {
+	protected onCacheItem(index: number, data: T, item: ListItem) {
 		if (this.onCacheItemCallback) {
 			this.onCacheItemCallback(index, data, item)
 		}
@@ -147,7 +147,7 @@ export class ListManager<T = any> extends ListOptimizer<T> {
 	 * @method onReuseItem
 	 * @since 0.5.0
 	 */
-	public onReuseItem(index: number, data: T, item: ListItem) {
+	protected onReuseItem(index: number, data: T, item: ListItem) {
 
 		item.pressed = false
 		item.disabled = false
@@ -167,7 +167,7 @@ export class ListManager<T = any> extends ListOptimizer<T> {
 	 * @method onInsertItem
 	 * @since 0.5.0
 	 */
-	public onInsertItem(index: number, data: T, item: ListItem) {
+	protected onInsertItem(index: number, data: T, item: ListItem) {
 		if (this.onInsertItemCallback) {
 			this.onInsertItemCallback(index, data, item)
 		}
@@ -178,7 +178,7 @@ export class ListManager<T = any> extends ListOptimizer<T> {
 	 * @method onRemoveItem
 	 * @since 0.5.0
 	 */
-	public onRemoveItem(index: number, data: T, item: ListItem) {
+	protected onRemoveItem(index: number, data: T, item: ListItem) {
 		if (this.onRemoveItemCallback) {
 			this.onRemoveItemCallback(index, data, item)
 		}

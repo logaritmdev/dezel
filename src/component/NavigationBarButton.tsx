@@ -116,7 +116,7 @@ export class NavigationBarButton extends Component<Refs> {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	public onTouchCancel(event: TouchEvent) {
+	protected onTouchCancel(event: TouchEvent) {
 
 		super.onTouchCancel(event)
 
@@ -130,7 +130,7 @@ export class NavigationBarButton extends Component<Refs> {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	public onTouchStart(event: TouchEvent) {
+	protected onTouchStart(event: TouchEvent) {
 
 		super.onTouchStart(event)
 
@@ -144,7 +144,7 @@ export class NavigationBarButton extends Component<Refs> {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	public onTouchEnd(event: TouchEvent) {
+	protected onTouchEnd(event: TouchEvent) {
 
 		super.onTouchEnd(event)
 

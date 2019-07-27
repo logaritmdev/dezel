@@ -439,7 +439,7 @@ export abstract class Screen<TRefs = any, TResult = any> extends Component<TRefs
 	 * @method onPropertyChange
 	 * @since 0.5.0
 	 */
-	onPropertyChange(property: string, newValue: any, oldValue: any) {
+	protected onPropertyChange(property: string, newValue: any, oldValue: any) {
 
 		if (property == 'dismissGesture') {
 
@@ -536,7 +536,7 @@ export abstract class Screen<TRefs = any, TResult = any> extends Component<TRefs
 	 * @method onBeforePresent
 	 * @since 0.3.0
 	 */
-	public onBeforePresent(event: Event<ScreenBeforePresentEvent>) {
+	protected onBeforePresent(event: Event<ScreenBeforePresentEvent>) {
 
 	}
 
@@ -545,7 +545,7 @@ export abstract class Screen<TRefs = any, TResult = any> extends Component<TRefs
 	 * @method onPresent
 	 * @since 0.3.0
 	 */
-	public onPresent(event: Event<ScreenPresentEvent>) {
+	protected onPresent(event: Event<ScreenPresentEvent>) {
 
 	}
 
@@ -554,7 +554,7 @@ export abstract class Screen<TRefs = any, TResult = any> extends Component<TRefs
 	 * @method onBeforeDismiss
 	 * @since 0.3.0
 	 */
-	public onBeforeDismiss(event: Event<ScreenBeforeDismissEvent>) {
+	protected onBeforeDismiss(event: Event<ScreenBeforeDismissEvent>) {
 
 	}
 
@@ -563,7 +563,7 @@ export abstract class Screen<TRefs = any, TResult = any> extends Component<TRefs
 	 * @method onDismiss
 	 * @since 0.3.0
 	 */
-	public onDismiss(event: Event<ScreenDismissEvent>) {
+	protected onDismiss(event: Event<ScreenDismissEvent>) {
 
 	}
 
@@ -572,7 +572,7 @@ export abstract class Screen<TRefs = any, TResult = any> extends Component<TRefs
 	 * @method onDismissCancel
 	 * @since 0.4.0
 	 */
-	public onDismissCancel(event: Event) {
+	protected onDismissCancel(event: Event) {
 
 	}
 
@@ -581,7 +581,7 @@ export abstract class Screen<TRefs = any, TResult = any> extends Component<TRefs
 	 * @method onBeforeEnter
 	 * @since 0.3.0
 	 */
-	public onBeforeEnter(event: Event<ScreenBeforeEnterEvent>) {
+	protected onBeforeEnter(event: Event<ScreenBeforeEnterEvent>) {
 
 	}
 
@@ -590,7 +590,7 @@ export abstract class Screen<TRefs = any, TResult = any> extends Component<TRefs
 	 * @method onEnter
 	 * @since 0.3.0
 	 */
-	public onEnter(event: Event<ScreenEnterEvent>) {
+	protected onEnter(event: Event<ScreenEnterEvent>) {
 
 	}
 
@@ -599,7 +599,7 @@ export abstract class Screen<TRefs = any, TResult = any> extends Component<TRefs
 	 * @method onBeforeLeave
 	 * @since 0.3.0
 	 */
-	public onBeforeLeave(event: Event<ScreenBeforeLeaveEvent>) {
+	protected onBeforeLeave(event: Event<ScreenBeforeLeaveEvent>) {
 
 	}
 
@@ -608,7 +608,7 @@ export abstract class Screen<TRefs = any, TResult = any> extends Component<TRefs
 	 * @method onLeave
 	 * @since 0.3.0
 	 */
-	public onLeave(event: Event<ScreenLeaveEvent>) {
+	protected onLeave(event: Event<ScreenLeaveEvent>) {
 
 	}
 
@@ -617,7 +617,7 @@ export abstract class Screen<TRefs = any, TResult = any> extends Component<TRefs
 	 * @method onBack
 	 * @since 0.3.0
 	 */
-	public onBack(event: Event) {
+	protected onBack(event: Event) {
 
 		let presentedScreen = this.presentee
 		if (presentedScreen) {
@@ -641,7 +641,7 @@ export abstract class Screen<TRefs = any, TResult = any> extends Component<TRefs
 	 * @method onBeforeKeyboardShow
 	 * @since 0.3.0
 	 */
-	public onBeforeKeyboardShow(event: Event<ApplicationKeyboardEvent>) {
+	protected onBeforeKeyboardShow(event: Event<ApplicationKeyboardEvent>) {
 
 	}
 
@@ -650,7 +650,7 @@ export abstract class Screen<TRefs = any, TResult = any> extends Component<TRefs
 	 * @method onKeyboardShow
 	 * @since 0.3.0
 	 */
-	public onKeyboardShow(event: Event) {
+	protected onKeyboardShow(event: Event) {
 
 	}
 
@@ -659,7 +659,7 @@ export abstract class Screen<TRefs = any, TResult = any> extends Component<TRefs
 	 * @method onBeforeKeyboardHide
 	 * @since 0.3.0
 	 */
-	public onBeforeKeyboardHide(event: Event) {
+	protected onBeforeKeyboardHide(event: Event) {
 
 	}
 
@@ -668,7 +668,7 @@ export abstract class Screen<TRefs = any, TResult = any> extends Component<TRefs
 	 * @method onKeyboardHide
 	 * @since 0.3.0
 	 */
-	public onKeyboardHide(event: Event) {
+	protected onKeyboardHide(event: Event) {
 
 	}
 
@@ -677,7 +677,7 @@ export abstract class Screen<TRefs = any, TResult = any> extends Component<TRefs
 	 * @method onKeyboardResize
 	 * @since 0.3.0
 	 */
-	public onKeyboardResize(event: Event) {
+	protected onKeyboardResize(event: Event) {
 
 	}
 
@@ -686,7 +686,7 @@ export abstract class Screen<TRefs = any, TResult = any> extends Component<TRefs
 	 * @method onMoveToWindowDefault
 	 * @since 0.4.0
 	 */
-	public onMoveToWindowDefault(event: Event<ViewMoveToWindowEvent>) {
+	protected onMoveToWindowDefault(event: Event<ViewMoveToWindowEvent>) {
 		// TODO
 		// Use pubsub ?
 		//super.onMoveToWindowDefault(event)
@@ -1013,7 +1013,7 @@ export abstract class Screen<TRefs = any, TResult = any> extends Component<TRefs
 
 			presentedScreen.updateStatusBar()
 
-			transition.onBeforePresent(
+			transition.emitBeforePresent(
 				presentedScreen,
 				dismissedScreen
 			)
@@ -1027,7 +1027,7 @@ export abstract class Screen<TRefs = any, TResult = any> extends Component<TRefs
 				dismissedScreen
 			)
 
-			transition.onAfterPresent(
+			transition.emitAfterPresent(
 				presentedScreen,
 				dismissedScreen
 			)
@@ -1121,7 +1121,7 @@ export abstract class Screen<TRefs = any, TResult = any> extends Component<TRefs
 			presentedScreen.visible = true
 			presentedScreen.resolve()
 
-			transition.onBeforeDismiss(
+			transition.emitBeforeDismiss(
 				presentedScreen,
 				dismissedScreen
 			)
@@ -1167,7 +1167,7 @@ export abstract class Screen<TRefs = any, TResult = any> extends Component<TRefs
 				dismissedScreen
 			)
 
-			transition.onAfterDismiss(
+			transition.emitAfterDismiss(
 				presentedScreen,
 				dismissedScreen
 			)

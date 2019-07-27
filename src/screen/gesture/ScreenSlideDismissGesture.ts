@@ -18,7 +18,7 @@ export class ScreenSlideDismissGesture extends ScreenDismissGesture {
 	 * @method onTouchCancel
 	 * @since 0.5.0
 	 */
-	public onTouchCancel(event: TouchEvent) {
+	protected onTouchCancel(event: TouchEvent) {
 
 		if (event.dispatcher == this.capturedEvent) {
 
@@ -40,7 +40,7 @@ export class ScreenSlideDismissGesture extends ScreenDismissGesture {
 	 * @method onTouchCancel
 	 * @since 0.5.0
 	 */
-	public onTouchStart(event: TouchEvent) {
+	protected onTouchStart(event: TouchEvent) {
 
 		if (this.touchStarted) {
 			return
@@ -63,7 +63,7 @@ export class ScreenSlideDismissGesture extends ScreenDismissGesture {
 	 * @method onTouchCancel
 	 * @since 0.5.0
 	 */
-	public onTouchMove(event: TouchEvent) {
+	protected onTouchMove(event: TouchEvent) {
 
 		if (this.touchStarted == false) {
 			return
@@ -98,7 +98,7 @@ export class ScreenSlideDismissGesture extends ScreenDismissGesture {
 	 * @method onTouchCancel
 	 * @since 0.5.0
 	 */
-	public onTouchEnd(event: TouchEvent) {
+	protected onTouchEnd(event: TouchEvent) {
 
 		if (this.touchStarted == false) {
 			return

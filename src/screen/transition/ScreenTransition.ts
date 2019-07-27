@@ -38,7 +38,7 @@ export class ScreenTransition extends Emitter {
 	 * @method onBeforePresent
 	 * @since 0.2.0
 	 */
-	public onBeforePresent(enter?: Screen, leave?: Screen) {
+	protected onBeforePresent(enter?: Screen, leave?: Screen) {
 
 	}
 
@@ -47,7 +47,7 @@ export class ScreenTransition extends Emitter {
 	 * @method onBeforeDismiss
 	 * @since 0.2.0
 	 */
-	public onBeforeDismiss(enter?: Screen, leave?: Screen) {
+	protected onBeforeDismiss(enter?: Screen, leave?: Screen) {
 
 	}
 
@@ -56,7 +56,7 @@ export class ScreenTransition extends Emitter {
 	 * @method onPresent
 	 * @since 0.2.0
 	 */
-	public onPresent(enter?: Screen, leave?: Screen) {
+	protected onPresent(enter?: Screen, leave?: Screen) {
 
 	}
 
@@ -65,7 +65,7 @@ export class ScreenTransition extends Emitter {
 	 * @method onDismiss
 	 * @since 0.2.0
 	 */
-	public onDismiss(enter?: Screen, leave?: Screen) {
+	protected onDismiss(enter?: Screen, leave?: Screen) {
 
 	}
 
@@ -74,7 +74,7 @@ export class ScreenTransition extends Emitter {
 	 * @method onAfterPresent
 	 * @since 0.2.0
 	 */
-	public onAfterPresent(enter?: Screen, leave?: Screen) {
+	protected onAfterPresent(enter?: Screen, leave?: Screen) {
 
 	}
 
@@ -83,7 +83,7 @@ export class ScreenTransition extends Emitter {
 	 * @method onAfterDismiss
 	 * @since 0.2.0
 	 */
-	public onAfterDismiss(enter?: Screen, leave?: Screen) {
+	protected onAfterDismiss(enter?: Screen, leave?: Screen) {
 
 	}
 
@@ -92,7 +92,7 @@ export class ScreenTransition extends Emitter {
 	 * @method onDismissProgress
 	 * @since 0.5.0
 	 */
-	public onDismissProgress(progress: number, enter?: Screen, leave?: Screen) {
+	protected onDismissProgress(progress: number, enter?: Screen, leave?: Screen) {
 
 	}
 
@@ -177,6 +177,73 @@ export class ScreenTransition extends Emitter {
 	 */
 	public standby() {
 		return this.deferred ? this.deferred.promise : Promise.resolve()
+	}
+
+	//--------------------------------------------------------------------------
+	// Internal API
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method emitBeforePresent
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	public emitBeforePresent(enter?: Screen, leave?: Screen) {
+		this.onBeforePresent(enter, leave)
+	}
+
+	/**
+	 * @method emitBeforeDismiss
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	public emitBeforeDismiss(enter?: Screen, leave?: Screen) {
+		this.onBeforeDismiss(enter, leave)
+	}
+
+	/**
+	 * @method emitPresent
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	public emitPresent(enter?: Screen, leave?: Screen) {
+		this.present(enter, leave)
+	}
+
+	/**
+	 * @method emitDismiss
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	public emitDismiss(enter?: Screen, leave?: Screen) {
+		this.onDismiss(enter, leave)
+	}
+
+	/**
+	 * @method emitAfterPresent
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	public emitAfterPresent(enter?: Screen, leave?: Screen) {
+		this.onAfterPresent(enter, leave)
+	}
+
+	/**
+	 * @method emitAfterDismiss
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	public emitAfterDismiss(enter?: Screen, leave?: Screen) {
+		this.onAfterDismiss(enter, leave)
+	}
+
+	/**
+	 * @method emitDismissProgress
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	public emitDismissProgress(progress: number, enter?: Screen, leave?: Screen) {
+		this.onDismissProgress(progress, enter, leave)
 	}
 
 	//--------------------------------------------------------------------------

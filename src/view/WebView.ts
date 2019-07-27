@@ -116,7 +116,7 @@ export class WebView extends View {
 	 * @method onBeforeLoad
 	 * @since 0.2.0
 	 */
-	public onBeforeLoad(event: Event) {
+	protected onBeforeLoad(event: Event) {
 
 	}
 
@@ -124,7 +124,7 @@ export class WebView extends View {
 	 * @method onLoad
 	 * @since 0.2.0
 	 */
-	public onLoad(event: Event) {
+	protected onLoad(event: Event) {
 
 	}
 

@@ -356,7 +356,7 @@ export abstract class Component<TRefs = any, TSlots = any> extends View {
 	 * @method onRender
 	 * @since 0.7.0
 	 */
-	public onRender() {
+	protected onRender() {
 
 	}
 

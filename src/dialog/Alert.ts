@@ -204,7 +204,7 @@ export class Alert extends Emitter {
 	 * @method onPresent
 	 * @since 0.1.0
 	 */
-	public onPresent(event: Event) {
+	protected onPresent(event: Event) {
 
 	}
 
@@ -213,7 +213,7 @@ export class Alert extends Emitter {
 	 * @method onDismiss
 	 * @since 0.1.0
 	 */
-	public onDismiss(event: Event<AlertDismissEvent>) {
+	protected onDismiss(event: Event<AlertDismissEvent>) {
 
 	}
 

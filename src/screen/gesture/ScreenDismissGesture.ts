@@ -80,7 +80,7 @@ export class ScreenDismissGesture {
 
 			this[STARTED] = true
 
-			transition.onBeforeDismiss(
+			transition.emitBeforeDismiss(
 				presentedScreen,
 				dismissedScreen
 			)
@@ -127,7 +127,7 @@ export class ScreenDismissGesture {
 				return
 			}
 
-			transition.onDismissProgress(
+			transition.emitDismissProgress(
 				progress,
 				presentedScreen,
 				dismissedScreen
@@ -249,7 +249,7 @@ export class ScreenDismissGesture {
 				dismissedScreen
 			)
 
-			transition.onAfterDismiss(
+			transition.emitAfterDismiss(
 				presentedScreen,
 				dismissedScreen
 			)
@@ -290,7 +290,7 @@ export class ScreenDismissGesture {
 	 * @method onAttach
 	 * @sine 0.5.0
 	 */
-	public onAttach() {
+	protected onAttach() {
 
 	}
 
@@ -299,7 +299,7 @@ export class ScreenDismissGesture {
 	 * @method onDetach
 	 * @sine 0.5.0
 	 */
-	public onDetach() {
+	protected onDetach() {
 
 	}
 
@@ -308,7 +308,7 @@ export class ScreenDismissGesture {
 	 * @method onTouchCancel
 	 * @since 0.5.0
 	 */
-	public onTouchCancel(event: TouchEvent) {
+	protected onTouchCancel(event: TouchEvent) {
 
 	}
 
@@ -317,7 +317,7 @@ export class ScreenDismissGesture {
 	 * @method onTouchStart
 	 * @since 0.5.0
 	 */
-	public onTouchStart(event: TouchEvent) {
+	protected onTouchStart(event: TouchEvent) {
 
 	}
 
@@ -326,7 +326,7 @@ export class ScreenDismissGesture {
 	 * @method onTouchMove
 	 * @since 0.5.0
 	 */
-	public onTouchMove(event: TouchEvent) {
+	protected onTouchMove(event: TouchEvent) {
 
 	}
 
@@ -335,7 +335,7 @@ export class ScreenDismissGesture {
 	 * @method onTouchEnd
 	 * @since 0.5.0
 	 */
-	public onTouchEnd(event: TouchEvent) {
+	protected onTouchEnd(event: TouchEvent) {
 
 	}
 

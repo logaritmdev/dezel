@@ -104,7 +104,7 @@ export class TabBarButton extends Component<Refs> {
 	 * @method onRender
 	 * @since 0.3.0
 	 */
-	public onRender() {
+	protected onRender() {
 		this.badge.visible = false
 	}
 
@@ -117,7 +117,7 @@ export class TabBarButton extends Component<Refs> {
 	 * @method onTouchCancel
 	 * @since 0.1.0
 	 */
-	public onTouchCancel(event: TouchEvent) {
+	protected onTouchCancel(event: TouchEvent) {
 
 		super.onTouchCancel(event)
 
@@ -131,7 +131,7 @@ export class TabBarButton extends Component<Refs> {
 	 * @method onTouchStart
 	 * @since 0.1.0
 	 */
-	public onTouchStart(event: TouchEvent) {
+	protected onTouchStart(event: TouchEvent) {
 
 		super.onTouchStart(event)
 
@@ -145,7 +145,7 @@ export class TabBarButton extends Component<Refs> {
 	 * @method onTouchEnd
 	 * @since 0.1.0
 	 */
-	public onTouchEnd(event: TouchEvent) {
+	protected onTouchEnd(event: TouchEvent) {
 
 		super.onTouchEnd(event)
 

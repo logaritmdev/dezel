@@ -114,7 +114,7 @@ export class Refresher extends Component {
 	 * @since 0.4.0
 	 * @hidden
 	 */
-	public onPropertyChange(property: string, newValue: any, oldValue: any) {
+	protected onPropertyChange(property: string, newValue: any, oldValue: any) {
 
 		if (property == 'view') {
 

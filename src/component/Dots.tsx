@@ -75,7 +75,7 @@ export class Dots extends Component {
 	 * @method onPropertyChange
 	 * @since 0.4.0
 	 */
-	public onPropertyChange(property: string, newValue: any, oldValue: any) {
+	protected onPropertyChange(property: string, newValue: any, oldValue: any) {
 
 		if (property == 'amount') {
 
