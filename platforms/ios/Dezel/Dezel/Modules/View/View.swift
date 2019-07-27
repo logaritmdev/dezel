@@ -2213,7 +2213,7 @@ open class View: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelegate, Scroll
 	}
 
 	/**
-	 * Inserts a view without notifying this view's holder.
+	 * Inserts this view into a receiving view.
 	 * @method inject
 	 * @since 0.2.0
 	 */
