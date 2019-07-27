@@ -105,11 +105,11 @@ export class Emitter {
 	}
 
 	/**
-	 * Called before the event is emited to its listener.
-	 * @method onEmit
-	 * @since 0.1.0
+	 * Called when an event is received.
+	 * @method onEvent
+	 * @since 0.7.0
 	 */
-	public onEmit(event: Event) {
+	public onEvent(event: Event) {
 
 	}
 
@@ -171,7 +171,7 @@ export class Emitter {
 
 		event.setSender(this)
 
-		this.onEmit(event)
+		this.onEvent(event)
 
 		if (event.canceled == false) {
 			issue(this, event)

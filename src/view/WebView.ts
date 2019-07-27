@@ -93,10 +93,10 @@ export class WebView extends View {
 
 	/**
 	 * @inherited
-	 * @method onEmit
-	 * @since 0.2.0
+	 * @method onEvent
+	 * @since 0.7.0
 	 */
-	public onEmit(event: Event) {
+	public onEvent(event: Event) {
 
 		switch (event.type) {
 
@@ -109,7 +109,7 @@ export class WebView extends View {
 				break
 		}
 
-		super.onEmit(event)
+		super.onEvent(event)
 	}
 
 	/**

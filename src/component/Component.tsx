@@ -340,15 +340,15 @@ export abstract class Component<TRefs = any, TSlots = any> extends View {
 	/**
 	 * @inherited
 	 * @method onEvent
-	 * @since 0.1.0
+	 * @since 0.7.0
 	 */
-	public onEmit(event: Event) {
+	public onEvent(event: Event) {
 
 		if (event.type == 'movetoparent') {
 			this.build()
 		}
 
-		super.onEmit(event)
+		super.onEvent(event)
 	}
 
 	/**

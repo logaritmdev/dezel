@@ -120,16 +120,16 @@ describe('Emitter', () => {
 		expect(l4).toHaveBeenCalledTimes(1)
 	})
 
-	it('should execute the internal onEmit listener', () => {
+	it('should execute the internal onEvent listener', () => {
 
-		emitter.onEmit = jasmine.createSpy()
+		emitter.onEvent = jasmine.createSpy()
 
 		emitter.emit('event')
 		emitter.emit('event')
 		emitter.emit('event')
 
-		expect(emitter.onEmit).toHaveBeenCalledWith(jasmine.any(Event))
-		expect(emitter.onEmit).toHaveBeenCalledTimes(3)
+		expect(emitter.onEvent).toHaveBeenCalledWith(jasmine.any(Event))
+		expect(emitter.onEvent).toHaveBeenCalledTimes(3)
 	})
 
 	it('should property set the target and sender', () => {

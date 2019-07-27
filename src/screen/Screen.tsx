@@ -460,10 +460,10 @@ export abstract class Screen<TRefs = any, TResult = any> extends Component<TRefs
 
 	/**
 	 * @inherited
-	 * @method onEmit
-	 * @since 0.3.0
+	 * @method onEvent
+	 * @since 0.7.0
 	 */
-	public onEmit(event: Event) {
+	public onEvent(event: Event) {
 
 		switch (event.type) {
 
@@ -528,7 +528,7 @@ export abstract class Screen<TRefs = any, TResult = any> extends Component<TRefs
 				break
 		}
 
-		return super.onEmit(event)
+		return super.onEvent(event)
 	}
 
 	/**

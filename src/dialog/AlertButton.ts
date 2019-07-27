@@ -80,10 +80,10 @@ export class AlertButton extends Emitter {
 
 	/**
 	 * @inherited
-	 * @method onEmit
-	 * @since 0.1.0
+	 * @method onEvent
+	 * @since 0.7.0
 	 */
-	onEmit(event: Event) {
+	onEvent(event: Event) {
 
 		switch (event.type) {
 
@@ -92,7 +92,7 @@ export class AlertButton extends Emitter {
 				break
 		}
 
-		super.onEmit(event)
+		super.onEvent(event)
 	}
 
 	/**

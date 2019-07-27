@@ -1728,11 +1728,11 @@ export class View extends Emitter {
 	/**
 	 * @inherited
 	 * @method onEvent
-	 * @since 0.1.0
+	 * @since 0.7.0
 	 */
-	public onEmit(event: Event) {
+	public onEvent(event: Event) {
 
-		super.onEmit(event)
+		super.onEvent(event)
 
 		if (event instanceof TouchEvent) {
 

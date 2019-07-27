@@ -94,10 +94,10 @@ export class Button extends Component<Refs> {
 
 	/**
 	 * @inherited
-	 * @method onEmit
-	 * @since 0.1.0
+	 * @method onEvent
+	 * @since 0.7.0
 	 */
-	public onEmit(event: Event) {
+	public onEvent(event: Event) {
 
 		if (this.disabled) switch (event.type) {
 			case 'touchcancel':
@@ -108,7 +108,7 @@ export class Button extends Component<Refs> {
 				break
 		}
 
-		super.onEmit(event)
+		super.onEvent(event)
 	}
 
 	/**

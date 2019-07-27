@@ -215,10 +215,10 @@ export class Application extends Emitter {
 
 	/**
 	 * @inherited
-	 * @method onEmit
-	 * @since 0.1.0
+	 * @method onEvent
+	 * @since 0.7.0
 	 */
-	public onEmit(event: Event) {
+	public onEvent(event: Event) {
 
 		switch (event.type) {
 
@@ -267,7 +267,7 @@ export class Application extends Emitter {
 				break
 		}
 
-		return super.onEmit(event)
+		return super.onEvent(event)
 	}
 
 	/**

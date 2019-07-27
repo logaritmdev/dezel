@@ -269,9 +269,9 @@ export class Placeholder extends Emitter {
 	 * @method onEvent
 	 * @since 0.7.0
 	 */
-	public onEmit(event: Event) {
+	public onEvent(event: Event) {
 
-		super.onEmit(event)
+		super.onEvent(event)
 
 		switch (event.type) {
 

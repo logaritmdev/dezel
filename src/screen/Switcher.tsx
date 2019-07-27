@@ -145,10 +145,10 @@ export class Switcher extends Screen {
 
 	/**
 	 * @inherited
-	 * @method onEmit
+	 * @method onEvent
 	 * @since 0.7.0
 	 */
-	public onEmit(event: Event) {
+	public onEvent(event: Event) {
 
 		switch (event.type) {
 
@@ -161,7 +161,7 @@ export class Switcher extends Screen {
 				break
 		}
 
-		super.onEmit(event)
+		super.onEvent(event)
 
 		if (this.presented) {
 
@@ -179,7 +179,7 @@ export class Switcher extends Screen {
 				case 'beforeleave':
 				case 'enter':
 				case 'leave':
-					screen.onEmit(event)
+					screen.onEvent(event)
 					break
 			}
 		}
@@ -429,7 +429,7 @@ export class Switcher extends Screen {
 }
 
 /**
- * @interface SwitcherSelectionEvent
+ * @interface ScreenConstructor
  * @since 0.7.0
  */
 export type ScreenConstructor = {
