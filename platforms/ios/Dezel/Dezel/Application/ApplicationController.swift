@@ -497,7 +497,7 @@ open class ApplicationController: UIViewController {
 				application.window.height = Property(number: Double(size.height))
 			}
 
-			Synchronizer.main.dispatch()
+			Synchronizer.main.execute()
 
 			Transition.commit()
 

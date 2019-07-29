@@ -70,7 +70,7 @@ public final class TransitionGroup {
 	 * @hidden
 	 */
 	public func create() {
-		Synchronizer.main.dispatch()
+		Synchronizer.main.execute()
 		CATransaction.begin()
 	}
 
@@ -80,7 +80,7 @@ public final class TransitionGroup {
 	 * @hidden
 	 */
 	public func commit() {
-		Synchronizer.main.dispatch()
+		Synchronizer.main.execute()
 		CATransaction.commit()
 		self.listeners.dispatchCommitEvent()
 	}

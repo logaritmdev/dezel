@@ -64,7 +64,7 @@ public class Synchronizer {
 		if (this.scheduled == false) {
 			this.scheduled = true
 			Choreographer.getInstance().postFrameCallback {
-				this.dispatch()
+				this.execute()
 			}
 		}
 
@@ -72,11 +72,11 @@ public class Synchronizer {
 	}
 
 	/**
-	 * Dispatches update display callbacks.
-	 * @method dispatch
+	 * Executes scheduled callbacks.
+	 * @method execute
 	 * @since 0.7.0
 	 */
-	public fun dispatch() {
+	public fun execute() {
 
 		if (this.scheduled == false) {
 			return
@@ -85,7 +85,7 @@ public class Synchronizer {
 		var index = 0
 
 		/*
-		 * A dispatch call might invalidate another view that needs its display
+		 * A execute call might invalidate another view that needs its display
 		 * updated on this pass therefore we must loop through this way. It might
 		 * be a good idea to look for infinite loop in the future.
 		 */

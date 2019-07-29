@@ -12,7 +12,6 @@ import ca.logaritm.dezel.modules.view.View
 import ca.logaritm.dezel.view.*
 import ca.logaritm.dezel.view.graphic.Transform
 import android.view.View as AndroidView
-import android.view.Window as AndroidWindow
 
 /**
  * @class TransitionGroup
@@ -154,7 +153,7 @@ public class TransitionGroup(val activity: ApplicationActivity): Animator.Animat
 	 */
 	public fun create() {
 
-		Synchronizer.main.dispatch()
+		Synchronizer.main.execute()
 
 		this.forEachView {
 			this.captureStartValues(it)
@@ -168,7 +167,7 @@ public class TransitionGroup(val activity: ApplicationActivity): Animator.Animat
 	 */
 	public fun commit() {
 
-		Synchronizer.main.dispatch()
+		Synchronizer.main.execute()
 
 		this.forEachView {
 			this.captureEndValues(it)

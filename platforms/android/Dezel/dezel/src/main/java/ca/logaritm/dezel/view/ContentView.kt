@@ -1319,7 +1319,7 @@ open class ContentView(context: Context) : ViewGroup(context), Scrollable, Resiz
 
 			/*
 			 For reasons that I do not yet understand, the ACTION_CANCEL is not called under
-			 certain conditions. This is a hack made to dispatch the event when the scroll
+			 certain conditions. This is a hack made to execute the event when the scroll
 			 view starts dragging.
 			 */
 
@@ -1398,7 +1398,7 @@ open class ContentView(context: Context) : ViewGroup(context), Scrollable, Resiz
 			 * refresh the effect is minified.
 			 */
 
-			Synchronizer.main.dispatch()
+			Synchronizer.main.execute()
 		}
 
 		/**
@@ -1712,7 +1712,7 @@ open class ContentView(context: Context) : ViewGroup(context), Scrollable, Resiz
 
 			/*
 			 For reasons that I do not yet understand, the ACTION_CANCEL is not called under
-			 certain conditions. This is a hack made to dispatch the event when the scroll
+			 certain conditions. This is a hack made to execute the event when the scroll
 			 view starts dragging.
 			 */
 
@@ -1787,7 +1787,7 @@ open class ContentView(context: Context) : ViewGroup(context), Scrollable, Resiz
 			 * refresh the effect is minified.
 			 */
 
-			Synchronizer.main.dispatch()
+			Synchronizer.main.execute()
 		}
 
 		/**

@@ -83,10 +83,10 @@ public class Synchronizer: NSObject {
 
 	/**
 	 * Executes scheduled callbacks.
-	 * @method dispatch
+	 * @method execute
 	 * @since 0.7.0
 	 */
-	public func dispatch() {
+	public func execute() {
 
 		if (self.scheduled == false) {
 			return
@@ -138,7 +138,7 @@ public class Synchronizer: NSObject {
 			let t1 = CFAbsoluteTimeGetCurrent()
 		#endif
 
-		self.dispatch()
+		self.execute()
 
 		#if DEBUG
 			let t2 = CFAbsoluteTimeGetCurrent()
