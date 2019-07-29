@@ -55,7 +55,7 @@ export class Placeholder extends Emitter {
 	 * @propety view
 	 * @since 0.7.0
 	 */
-	public get view(): View | null | undefined {
+	public get view(): View | null {
 		return this[VIEW]
 	}
 
@@ -334,7 +334,7 @@ export class Placeholder extends Emitter {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private [VIEW]: View | null | undefined
+	private [VIEW]: View | null = null
 
 	/**
 	 * @property LOCATION

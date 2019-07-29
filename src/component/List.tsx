@@ -38,14 +38,14 @@ export class List extends Component {
 	 * @property manager
 	 * @since 0.4.0
 	 */
-	@watch public manager?: ListManager | null = null
+	@watch public manager: ListManager | null = null
 
 	/**
 	 * The list's refresher.
 	 * @property refresher
 	 * @since 0.2.0
 	 */
-	@watch public refresher?: Refresher | null = null
+	@watch public refresher: Refresher | null = null
 
 	/**
 	 * Whether the list is selectable.
@@ -229,21 +229,21 @@ export class List extends Component {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	private touch?: Touch | null
+	private touch: Touch | null = null
 
 	/**
 	 * @property pressedItem
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	private pressedItem?: ListItem | null
+	private pressedItem: ListItem | null = null
 
 	/**
 	 * @property selectedItem
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	private selectedItem?: ListItem | null
+	private selectedItem: ListItem | null = null
 
 	/**
 	 * @method getSelectedItemIndex

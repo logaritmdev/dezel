@@ -48,7 +48,7 @@ export class Refresher extends Component {
 	 * @property view
 	 * @since 0.2.0
 	 */
-	@watch public view?: View | null = null
+	@watch public view: View | null = null
 
 	/**
 	 * Whether the can be refreshed.
@@ -164,7 +164,7 @@ export class Refresher extends Component {
 	 * @since 0.2.0
 	 * @hidden
 	 */
-	private trackedTouch?: Touch | null
+	private trackedTouch: Touch | null = null
 
 	/**
 	 * @property trackedTouchStartX

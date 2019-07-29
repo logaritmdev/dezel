@@ -203,7 +203,7 @@ export class SegmentedBar extends Component<Component> {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	private selectedButton?: SegmentedBarButton | null
+	private selectedButton: SegmentedBarButton | null = null
 
 	/**
 	 * @method getSelectedButtonIndex

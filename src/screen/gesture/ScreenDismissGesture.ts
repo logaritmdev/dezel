@@ -401,7 +401,7 @@ export class ScreenDismissGesture {
 	 * @since 0.5.0
 	 * @hidden
 	 */
-	private get transition(): ScreenTransition | null | undefined {
+	private get transition(): ScreenTransition | null {
 
 		let screen = this.screen
 		if (screen) {

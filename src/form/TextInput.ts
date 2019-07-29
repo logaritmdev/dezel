@@ -327,7 +327,7 @@ export class TextInput extends View {
 	 * @method onMoveToWindow
 	 * @since 0.2.0
 	 */
-	protected onMoveToWindow(window?: Window | null) {
+	protected onMoveToWindow(window: Window | null) {
 
 		super.onMoveToWindow(window)
 

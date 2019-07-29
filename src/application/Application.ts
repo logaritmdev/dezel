@@ -91,7 +91,7 @@ export class Application extends Emitter {
 	 * @property screen
 	 * @since 0.3.0
 	 */
-	@watch public screen?: Screen | null = null
+	@watch public screen: Screen | null = null
 
 	//--------------------------------------------------------------------------
 	// Methods

@@ -46,7 +46,7 @@ export class ContentOptimizer<T> extends Emitter {
 	 * @property view
 	 * @since 0.2.0
 	 */
-	public get view(): View | null | undefined {
+	public get view(): View | null {
 		return this[VIEW]
 	}
 
@@ -247,7 +247,7 @@ export class ContentOptimizer<T> extends Emitter {
 	 * @since 0.5.0
 	 * @hidden
 	 */
-	private [VIEW]?: View | null
+	private [VIEW]: View | null = null
 
 	/**
 	 * @property attached

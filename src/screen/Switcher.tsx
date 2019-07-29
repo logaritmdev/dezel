@@ -110,7 +110,7 @@ export class Switcher extends Screen {
 
 		let presenterScreen = this
 		let presentedScreen = screen
-		let presentedTransition = transition
+		let presentedTransition = transition || null
 
 		if (presentedScreen) {
 			presentedScreen.setPresenter(presenterScreen)
@@ -300,14 +300,14 @@ export class Switcher extends Screen {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private selectedScreen?: Screen | null
+	private selectedScreen: Screen | null = null
 
 	/**
 	 * @method performSelect
 	 * @since 0.5.0
 	 * @hidden
 	 */
-	private async performSelect(screen: Screen | null | undefined, transition: ScreenTransition | null | undefined, done: () => void) {
+	private async performSelect(screen: Screen | null, transition: ScreenTransition | null, done: () => void) {
 
 		try {
 

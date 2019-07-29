@@ -151,7 +151,7 @@ export class Event<T extends any = any> {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	public setSender(sender?: Emitter) {
+	public setSender(sender: Emitter) {
 		this[SENDER] = sender
 	}
 
@@ -160,7 +160,7 @@ export class Event<T extends any = any> {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	public setTarget(target?: Emitter) {
+	public setTarget(target: Emitter) {
 		this[TARGET] = target
 	}
 
@@ -173,14 +173,14 @@ export class Event<T extends any = any> {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	private [SENDER]?: Emitter | null
+	private [SENDER]: Emitter | null = null
 
 	/**
 	 * @property [TARGET]
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	private [TARGET]?: Emitter | null
+	private [TARGET]: Emitter | null = null
 
 	/**
 	 * @property [CANCELED]

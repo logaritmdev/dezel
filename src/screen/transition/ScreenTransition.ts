@@ -255,7 +255,7 @@ export class ScreenTransition extends Emitter {
 	 * @since 0.2.0
 	 * @hidden
 	 */
-	private deferred?: Deferred | null
+	private deferred: Deferred | null = null
 }
 
 /**

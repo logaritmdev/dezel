@@ -399,7 +399,7 @@ export class DataSource<T> extends Emitter {
 	 * @since 0.5.0
 	 * @hidden
 	 */
-	private filter?: DataSourceFilter<T> | null = null
+	private filter: DataSourceFilter<T> | null = null
 
 	/**
 	 * @method generate

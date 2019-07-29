@@ -101,7 +101,7 @@ export abstract class Screen<TRefs = any, TResult = any> extends Component<TRefs
 	 * @property dismissGesture
 	 * @since 0.5.0
 	 */
-	@watch public dismissGesture?: ScreenDismissGesture | null = null
+	@watch public dismissGesture: ScreenDismissGesture | null = null
 
 	/**
 	 * Convenience property to get the current application.
@@ -189,7 +189,7 @@ export abstract class Screen<TRefs = any, TResult = any> extends Component<TRefs
 	 * @property result
 	 * @since 0.1.0
 	 */
-	public result?: TResult | null
+	public result: TResult | null = null
 
 	//--------------------------------------------------------------------------
 	// Methods
@@ -280,7 +280,7 @@ export abstract class Screen<TRefs = any, TResult = any> extends Component<TRefs
 
 		let presenterScreen = this
 		let presentedScreen = screen
-		let presentedTransition = transition
+		let presentedTransition = transition || null
 
 		presentedScreen[PRESENTING] = true
 
@@ -719,7 +719,7 @@ export abstract class Screen<TRefs = any, TResult = any> extends Component<TRefs
 	 * @since 0.3.0
 	 * @hidden
 	 */
-	public enclosure?: Enclosure | null
+	public enclosure: Enclosure | null = null
 
 	/**
 	 * @method setActive
@@ -735,7 +735,7 @@ export abstract class Screen<TRefs = any, TResult = any> extends Component<TRefs
 	 * @since 0.3.0
 	 * @hidden
 	 */
-	public setPresenter(screen?: Screen | null) {
+	public setPresenter(screen: Screen | null) {
 		this[PRESENTER] = screen
 	}
 
@@ -744,7 +744,7 @@ export abstract class Screen<TRefs = any, TResult = any> extends Component<TRefs
 	 * @since 0.3.0
 	 * @hidden
 	 */
-	public setPresentee(screen?: Screen | null) {
+	public setPresentee(screen: Screen | null) {
 		this[PRESENTEE] = screen
 	}
 
@@ -762,7 +762,7 @@ export abstract class Screen<TRefs = any, TResult = any> extends Component<TRefs
 	 * @since 0.4.0
 	 * @hidden
 	 */
-	public setTransition(transition?: ScreenTransition | null) {
+	public setTransition(transition: ScreenTransition | null) {
 		this[TRANSITION] = transition
 	}
 
@@ -907,14 +907,14 @@ export abstract class Screen<TRefs = any, TResult = any> extends Component<TRefs
 	 * @since 0.3.0
 	 * @hidden
 	 */
-	private [PRESENTER]?: Screen | null
+	private [PRESENTER]: Screen | null = null
 
 	/**
 	 * @property [PRESENTEE]
 	 * @since 0.3.0
 	 * @hidden
 	 */
-	private [PRESENTEE]?: Screen | null
+	private [PRESENTEE]: Screen | null = null
 
 	/**
 	 * @property [PRESENTED]
@@ -928,7 +928,7 @@ export abstract class Screen<TRefs = any, TResult = any> extends Component<TRefs
 	 * @since 0.4.0
 	 * @hidden
 	 */
-	private [TRANSITION]?: ScreenTransition | null
+	private [TRANSITION]: ScreenTransition | null = null
 
 	/**
 	 * @property [PRESENTING]
@@ -949,7 +949,7 @@ export abstract class Screen<TRefs = any, TResult = any> extends Component<TRefs
 	 * @since 0.5.0
 	 * @hidden
 	 */
-	private async performPresent(screen: Screen, transition: ScreenTransition | null | undefined, options: ScreenPresentationOptions, done: () => void) {
+	private async performPresent(screen: Screen, transition: ScreenTransition | null, options: ScreenPresentationOptions, done: () => void) {
 
 		try {
 
@@ -1058,7 +1058,7 @@ export abstract class Screen<TRefs = any, TResult = any> extends Component<TRefs
 	 * @since 0.5.0
 	 * @hidden
 	 */
-	private async performDismiss(screen: Screen, transition: ScreenTransition | null | undefined, done: () => void) {
+	private async performDismiss(screen: Screen, transition: ScreenTransition | null, done: () => void) {
 
 		try {
 

@@ -187,7 +187,7 @@ export class View extends Emitter {
 	 * @property window
 	 * @since 0.1.0
 	 */
-	public get window(): Window | null | undefined {
+	public get window(): Window | null {
 		return this.native.window
 	}
 
@@ -196,7 +196,7 @@ export class View extends Emitter {
 	 * @property parent
 	 * @since 0.1.0
 	 */
-	public get parent(): View | null | undefined {
+	public get parent(): View | null {
 		return this.native.parent
 	}
 
@@ -230,7 +230,7 @@ export class View extends Emitter {
 	 * @property backgroundImage
 	 * @since 0.1.0
 	 */
-	@native public backgroundImage?: Image | string | null
+	@native public backgroundImage!: Image | string | null
 
 	/**
 	 * The view's background image container fitting.
@@ -1098,7 +1098,7 @@ export class View extends Emitter {
 	 * @property zoomedView
 	 * @since 0.3.0
 	 */
-	@native public zoomedView?: View | null
+	@native public zoomedView!: View | null
 
 	/**
 	 * Whether touch interactions are enabled for this view.
@@ -1924,7 +1924,7 @@ export class View extends Emitter {
 	 * @method onMoveToWindow
 	 * @since 0.2.0
 	 */
-	protected onMoveToWindow(window: Window | null | undefined) {
+	protected onMoveToWindow(window: Window | null) {
 
 	}
 
@@ -1933,7 +1933,7 @@ export class View extends Emitter {
 	 * @method onMoveToParent
 	 * @since 0.2.0
 	 */
-	protected onMoveToParent(parent: View | null | undefined) {
+	protected onMoveToParent(parent: View | null) {
 
 	}
 
@@ -2381,7 +2381,7 @@ export type ViewRemoveEvent = {
  * @since 0.2.0
  */
 export type ViewMoveToParentEvent = {
-	parent?: View
+	parent: View | null
 }
 
 /**
@@ -2389,7 +2389,7 @@ export type ViewMoveToParentEvent = {
  * @since 0.1.0
  */
 export type ViewMoveToWindowEvent = {
-	window?: Window
+	window: Window | null
 }
 
 /**

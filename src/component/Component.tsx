@@ -110,7 +110,7 @@ export abstract class Component<TRefs = any, TSlots = any> extends View {
 	 * @property window
 	 * @since 0.7.0
 	 */
-	@render public get window(): Window | null | undefined {
+	@render public get window(): Window | null {
 		return super.window
 	}
 
@@ -119,7 +119,7 @@ export abstract class Component<TRefs = any, TSlots = any> extends View {
 	 * @property parent
 	 * @since 0.7.0
 	 */
-	@render public get parent(): View | null | undefined {
+	@render public get parent(): View | null {
 		return super.parent
 	}
 
@@ -169,7 +169,7 @@ export abstract class Component<TRefs = any, TSlots = any> extends View {
 	 * @method render
 	 * @sinonRender
 	 */
-	public abstract render(): Host | null | undefined
+	public abstract render(): Host | null
 
 	/**
 	 * @inherited
@@ -433,7 +433,7 @@ export abstract class Component<TRefs = any, TSlots = any> extends View {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private [MAIN]: Slot | null | undefined
+	private [MAIN]: Slot | null = null
 
 	/**
 	 * @method onSlotInsert

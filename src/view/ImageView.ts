@@ -22,7 +22,7 @@ export class ImageView extends View {
 	 * @property source
 	 * @since 0.4.0
 	 */
-	@native public source?: Image | string | null
+	@native public source!: Image | string | null
 
 	/**
 	 * The image view's image container fitting.
@@ -78,14 +78,14 @@ export class ImageView extends View {
 	 * @property imageFilter
 	 * @since 0.5.0
 	 */
-	@native public imageFilter?: 'grayscale' | null
+	@native public imageFilter!: 'grayscale' | null
 
 	/**
 	 * The image view's image tint color.
 	 * @property imageTint
 	 * @since 0.1.0
 	 */
-	@native public imageTint?: string | null
+	@native public imageTint!: string | null
 
 	//--------------------------------------------------------------------------
 	// Internal API

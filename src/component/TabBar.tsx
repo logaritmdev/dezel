@@ -214,7 +214,7 @@ export class TabBar extends Component {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	private selectedButton?: TabBarButton | null
+	private selectedButton: TabBarButton | null = null
 
 	/**
 	 * @method getSelectedButtonIndex

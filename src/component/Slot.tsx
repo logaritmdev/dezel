@@ -32,7 +32,7 @@ export abstract class Slot extends Placeholder {
 	 * @property container
 	 * @since 0.7.0
 	 */
-	public get container(): Component | null | undefined {
+	public get container(): Component | null {
 		return this[CONTAINER]
 	}
 
@@ -45,7 +45,7 @@ export abstract class Slot extends Placeholder {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private [CONTAINER]: Component | null | undefined
+	private [CONTAINER]: Component | null = null
 
 	//--------------------------------------------------------------------------
 	// JSX
@@ -65,6 +65,6 @@ export abstract class Slot extends Placeholder {
  * @since 0.7.0
  * @hidden
  */
-export function setContainer(slot: Slot, component: Component | null | undefined) {
+export function setContainer(slot: Slot, component: Component | null) {
 	slot[CONTAINER] = component
 }

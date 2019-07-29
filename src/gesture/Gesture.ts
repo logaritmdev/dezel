@@ -77,7 +77,7 @@ export abstract class Gesture extends Emitter {
 	 * @property view
 	 * @since 0.1.0
 	 */
-	public get view(): View | null | undefined {
+	public get view(): View | null {
 		return this[VIEW]
 	}
 
@@ -86,7 +86,7 @@ export abstract class Gesture extends Emitter {
 	 * @property event
 	 * @since 0.7.0
 	 */
-	public get event(): TouchEvent | null | undefined {
+	public get event(): TouchEvent | null {
 		return this[EVENT]
 	}
 
@@ -113,7 +113,7 @@ export abstract class Gesture extends Emitter {
 	 * @property capturedEvent
 	 * @since 0.7.0
 	 */
-	public get capturedEvent(): TouchEvent | null | undefined {
+	public get capturedEvent(): TouchEvent | null {
 		return this[CAPTURED_EVENT]
 	}
 
@@ -300,7 +300,7 @@ export abstract class Gesture extends Emitter {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	public setView(view: View | null | undefined) {
+	public setView(view: View | null) {
 		this[VIEW] = view
 	}
 
@@ -344,14 +344,14 @@ export abstract class Gesture extends Emitter {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	private [VIEW]: View | null | undefined
+	private [VIEW]: View | null = null
 
 	/**
 	 * @property EVENT
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private [EVENT]: TouchEvent | null | undefined
+	private [EVENT]: TouchEvent | null = null
 
 	/**
 	 * @property DETECTED
@@ -372,7 +372,7 @@ export abstract class Gesture extends Emitter {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private [CAPTURED_EVENT]: TouchEvent | null | undefined
+	private [CAPTURED_EVENT]: TouchEvent | null = null
 
 	/**
 	 * @method captureEvent

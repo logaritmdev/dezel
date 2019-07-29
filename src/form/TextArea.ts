@@ -263,7 +263,7 @@ export class TextArea extends View {
 	 * @method onMoveToWindow
 	 * @since 0.2.0
 	 */
-	protected onMoveToWindow(window?: Window | null) {
+	protected onMoveToWindow(window: Window | null) {
 
 		super.onMoveToWindow(window)
 
@@ -285,7 +285,7 @@ export class TextArea extends View {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	private trackedOutsideTouch?: Touch | null
+	private trackedOutsideTouch: Touch | null = null
 
 	/**
 	 * @method onBlurDefault

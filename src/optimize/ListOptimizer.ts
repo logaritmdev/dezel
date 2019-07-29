@@ -47,7 +47,7 @@ export class ListOptimizer<T = any> extends ContentOptimizer<T> {
 	 * @property transition
 	 * @since 0.4.0
 	 */
-	public transition?: ContentOptimizerTransition | string = 'fade'
+	public transition: ContentOptimizerTransition | string = 'fade'
 
 	//--------------------------------------------------------------------------
 	// Methods

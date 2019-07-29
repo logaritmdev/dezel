@@ -83,7 +83,7 @@ export class TouchEvent extends Event<any> {
 	 * @property receiver
 	 * @since 0.5.0
 	 */
-	public get receiver(): Emitter | null | undefined {
+	public get receiver(): Emitter | null {
 		return this[RECEIVER]
 	}
 

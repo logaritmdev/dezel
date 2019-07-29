@@ -103,7 +103,7 @@ export class Dots extends Component {
 	 * @since 0.5.0
 	 * @hidden
 	 */
-	private selectedDot?: View | null
+	private selectedDot: View | null = null
 
 	/**
 	 * @method getSelectedDotIndex

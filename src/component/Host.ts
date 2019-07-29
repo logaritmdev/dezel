@@ -29,7 +29,7 @@ export class Host {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	public get properties(): Dictionary<any> | null | undefined {
+	public get properties(): Dictionary<any> | null {
 		return this[PROPERTIES]
 	}
 
@@ -38,7 +38,7 @@ export class Host {
 	 * @hidden
 	 * @since 0.7.0
 	 */
-	public get children(): Array<View> | null | undefined {
+	public get children(): Array<View> | null {
 		return this[CHILDREN]
 	}
 
@@ -80,14 +80,14 @@ export class Host {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private [PROPERTIES]: Dictionary<any> | null | undefined = null
+	private [PROPERTIES]: Dictionary<any> | null = null
 
 	/**
 	 * @property CHILDREN
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private [CHILDREN]: Array<View> | null | undefined = null
+	private [CHILDREN]: Array<View> | null = null
 }
 
 export function setProperties(host: Host, properties: any) {

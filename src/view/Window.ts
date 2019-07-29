@@ -26,7 +26,7 @@ export class Window extends View {
 	 * @method viewFromPoint
 	 * @since 0.2.0
 	 */
-	public viewFromPoint(x: number, y: number, visible: boolean = true, touchable: boolean = true): View | null | undefined {
+	public viewFromPoint(x: number, y: number, visible: boolean = true, touchable: boolean = true): View | null {
 		return this.native.viewFromPoint(x, y, visible, touchable)
 	}
 }

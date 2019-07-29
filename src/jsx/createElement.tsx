@@ -199,7 +199,7 @@ function setContainer(view: any, container: Component) {
  * @since 0.7.0
  * @hidden
  */
-function getContainer(view: any): Component | null | undefined {
+function getContainer(view: any): Component | null {
 	return view[CONTAINER]
 }
 

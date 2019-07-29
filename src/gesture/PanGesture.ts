@@ -182,7 +182,7 @@ export class PanGesture extends Gesture {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	private trackedTouch?: Touch | null
+	private trackedTouch: Touch | null = null
 
 	/**
 	 * @property touchStartX

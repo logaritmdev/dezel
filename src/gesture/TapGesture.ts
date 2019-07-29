@@ -101,7 +101,7 @@ export class TapGesture extends Gesture {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	private touch?: Touch | null
+	private touch: Touch | null = null
 
 	/**
 	 * @method validate
