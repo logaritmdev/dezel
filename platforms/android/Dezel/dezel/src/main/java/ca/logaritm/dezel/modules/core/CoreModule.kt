@@ -3,7 +3,7 @@ package ca.logaritm.dezel.modules.core
 import ca.logaritm.dezel.application.application
 import ca.logaritm.dezel.core.JavaScriptContext
 import ca.logaritm.dezel.core.Module
-import ca.logaritm.dezel.modules.application.Application
+import ca.logaritm.dezel.modules.application.JavaScriptApplication
 
 /**
  * @class CoreModule
@@ -50,7 +50,7 @@ open class CoreModule(context: JavaScriptContext) : Module(context) {
 		val app = callback.argument(0)
 		val uid = callback.argument(1).string
 
-		val application = app.cast(Application::class.java)
+		val application = app.cast(JavaScriptApplication::class.java)
 		if (application != null) {
 			this.context.application.launch(application, uid)
 		}

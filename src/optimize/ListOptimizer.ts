@@ -8,9 +8,9 @@ import { Event } from '../event/Event'
 import { View } from '../view/View'
 import { ViewInsertEvent } from '../view/View'
 import { ViewRemoveEvent } from '../view/View'
-import { ContentOptimizer } from './ContentOptimizer'
-import { ContentOptimizerTransition } from './ContentOptimizerTransition'
-import { ContentOptimizerTransitionRegistry } from './ContentOptimizerTransition'
+import { ViewOptimizer } from './ViewOptimizer'
+import { ViewOptimizerTransition } from './ViewOptimizerTransition'
+import { ViewOptimizerTransitionRegistry } from './ViewOptimizerTransition'
 
 /**
  * @interface ListManagerOptions
@@ -26,10 +26,10 @@ export interface ListOptimizerOption {
 /**
  * Optimize item content displayed as a list.
  * @class ListOptimizer
- * @super ContentOptimizer
+ * @super ViewOptimizer
  * @since 0.4.0
  */
-export class ListOptimizer<T = any> extends ContentOptimizer<T> {
+export class ListOptimizer<T = any> extends ViewOptimizer<T> {
 
 	//--------------------------------------------------------------------------
 	// Properties
@@ -47,7 +47,7 @@ export class ListOptimizer<T = any> extends ContentOptimizer<T> {
 	 * @property transition
 	 * @since 0.4.0
 	 */
-	public transition: ContentOptimizerTransition | string = 'fade'
+	public transition: ViewOptimizerTransition | string = 'fade'
 
 	//--------------------------------------------------------------------------
 	// Methods
@@ -230,7 +230,7 @@ export class ListOptimizer<T = any> extends ContentOptimizer<T> {
 
 		if (typeof transition == 'string') {
 
-			let Constructor = ContentOptimizerTransitionRegistry.get(transition)
+			let Constructor = ViewOptimizerTransitionRegistry.get(transition)
 			if (Constructor == null) {
 				throw new Error(`
 					Content Optimizer error:

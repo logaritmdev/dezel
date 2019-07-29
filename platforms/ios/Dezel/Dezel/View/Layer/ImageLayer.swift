@@ -226,7 +226,7 @@ open class ImageLayer: Layer, TransitionListener {
 
 		if (property == "bounds" ||
 			property == "position") {
-			return (self.listener as? ContentImageView)?.hasFrame ?? true
+			return (self.listener as? ImageView)?.hasFrame ?? true
 		}
 
 		return true

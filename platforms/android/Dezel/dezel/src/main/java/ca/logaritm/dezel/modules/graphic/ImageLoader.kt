@@ -119,7 +119,7 @@ open class ImageLoader(val context: Context) {
 		}
 
 		if (source.type == PropertyType.OBJECT) {
-			val image = source.cast(Image::class.java)
+			val image = source.cast(JavaScriptImage::class.java)
 			if (image != null) {
 				callback(image.data)
 			}
@@ -253,7 +253,7 @@ open class ImageLoader(val context: Context) {
 	 * @hidden
 	 */
 	protected fun failed(source: String, error: Exception) {
-		Log.d("Dezel", "Image failed: $source")
+		Log.d("Dezel", "JavaScriptImage failed: $source")
 		this.callback?.invoke(null)
 	}
 

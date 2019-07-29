@@ -65,7 +65,7 @@ open class ImageLoader: NSObject {
 		}
 
 		if (source.type == .object) {
-			if let image = source.cast(Image.self) {
+			if let image = source.cast(JavaScriptImage.self) {
 				callback(image.data)
 			}
 		}

@@ -6,9 +6,9 @@ import android.animation.ObjectAnimator
 import android.view.animation.Interpolator
 import android.view.animation.PathInterpolator
 import ca.logaritm.dezel.application.ApplicationActivity
-import ca.logaritm.dezel.modules.view.ImageView
-import ca.logaritm.dezel.modules.view.TextView
-import ca.logaritm.dezel.modules.view.View
+import ca.logaritm.dezel.modules.view.JavaScriptImageView
+import ca.logaritm.dezel.modules.view.JavaScriptTextView
+import ca.logaritm.dezel.modules.view.JavaScriptView
 import ca.logaritm.dezel.view.*
 import ca.logaritm.dezel.view.graphic.Transform
 import android.view.View as AndroidView
@@ -52,26 +52,26 @@ public class TransitionGroup(val activity: ApplicationActivity): Animator.Animat
 		const val PROP_SCROLL_TOP = "dezel.WrapperView.scrollTop"
 		const val PROP_SCROLL_LEFT = "dezel.WrapperView.scrollLeft"
 
-		const val PROP_CONTENT_TOP = "dezel.ContentView.top"
-		const val PROP_CONTENT_LEFT = "dezel.ContentView.left"
-		const val PROP_CONTENT_RIGHT = "dezel.ContentView.right"
-		const val PROP_CONTENT_BOTTOM = "dezel.ContentView.bottom"
-		const val PROP_CONTENT_TRANSLATION_X = "dezel.ContentView.translationX"
-		const val PROP_CONTENT_TRANSLATION_Y = "dezel.ContentView.translationY"
-		const val PROP_CONTENT_REAL_SCROLL_X = "dezel.ContentView.realScrollX"
-		const val PROP_CONTENT_REAL_SCROLL_Y = "dezel.ContentView.realScrollY"
+		const val PROP_CONTENT_TOP = "dezel.View.top"
+		const val PROP_CONTENT_LEFT = "dezel.View.left"
+		const val PROP_CONTENT_RIGHT = "dezel.View.right"
+		const val PROP_CONTENT_BOTTOM = "dezel.View.bottom"
+		const val PROP_CONTENT_TRANSLATION_X = "dezel.View.translationX"
+		const val PROP_CONTENT_TRANSLATION_Y = "dezel.View.translationY"
+		const val PROP_CONTENT_REAL_SCROLL_X = "dezel.View.realScrollX"
+		const val PROP_CONTENT_REAL_SCROLL_Y = "dezel.View.realScrollY"
 
-		const val PROP_FONT_SIZE = "dezel.TextView.fontSize"
-		const val PROP_TEXT_COLOR = "dezel.TextView.textColor"
-		const val PROP_TEXT_KERNING = "dezel.TextView.textKerning"
-		const val PROP_TEXT_LEADING = "dezel.TextView.textLeading"
-		const val PROP_TEXT_BASELINE = "dezel.TextView.textBaseline"
+		const val PROP_FONT_SIZE = "dezel.JavaScriptTextView.fontSize"
+		const val PROP_TEXT_COLOR = "dezel.JavaScriptTextView.textColor"
+		const val PROP_TEXT_KERNING = "dezel.JavaScriptTextView.textKerning"
+		const val PROP_TEXT_LEADING = "dezel.JavaScriptTextView.textLeading"
+		const val PROP_TEXT_BASELINE = "dezel.JavaScriptTextView.textBaseline"
 
-		const val PROP_IMAGE_TOP = "dezel.ImageView.imageTop"
-		const val PROP_IMAGE_LEFT = "dezel.ImageView.imageLeft"
-		const val PROP_IMAGE_WIDTH = "dezel.ImageView.imageWidth"
-		const val PROP_IMAGE_HEIGHT = "dezel.ImageView.imageHeight"
-		const val PROP_IMAGE_TINT = "dezel.ImageView.imageTint"
+		const val PROP_IMAGE_TOP = "dezel.JavaScriptImageView.imageTop"
+		const val PROP_IMAGE_LEFT = "dezel.JavaScriptImageView.imageLeft"
+		const val PROP_IMAGE_WIDTH = "dezel.JavaScriptImageView.imageWidth"
+		const val PROP_IMAGE_HEIGHT = "dezel.JavaScriptImageView.imageHeight"
+		const val PROP_IMAGE_TINT = "dezel.JavaScriptImageView.imageTint"
 	}
 
 	//--------------------------------------------------------------------------
@@ -118,14 +118,14 @@ public class TransitionGroup(val activity: ApplicationActivity): Animator.Animat
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	private var startValues: MutableMap<View, TransitionValues> = mutableMapOf()
+	private var startValues: MutableMap<JavaScriptView, TransitionValues> = mutableMapOf()
 
 	/**
 	 * @property endValues
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	private var endValues: MutableMap<View, TransitionValues> = mutableMapOf()
+	private var endValues: MutableMap<JavaScriptView, TransitionValues> = mutableMapOf()
 
 	/**
 	 * @property listeners
@@ -176,7 +176,7 @@ public class TransitionGroup(val activity: ApplicationActivity): Animator.Animat
 		val startValueViews = this.startValues.keys
 		val endValueViews = this.endValues.keys
 
-		val keys = mutableSetOf<View>()
+		val keys = mutableSetOf<JavaScriptView>()
 		keys.addAll(startValueViews)
 		keys.addAll(endValueViews)
 
@@ -209,7 +209,7 @@ public class TransitionGroup(val activity: ApplicationActivity): Animator.Animat
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	private fun captureStartValues(view: View) {
+	private fun captureStartValues(view: JavaScriptView) {
 		val values = TransitionValues(view)
 		this.capture(values)
 		this.startValues[view] = values
@@ -220,7 +220,7 @@ public class TransitionGroup(val activity: ApplicationActivity): Animator.Animat
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	private fun captureEndValues(view: View) {
+	private fun captureEndValues(view: JavaScriptView) {
 		val values = TransitionValues(view)
 		this.capture(values)
 		this.endValues[view] = values
@@ -279,12 +279,12 @@ public class TransitionGroup(val activity: ApplicationActivity): Animator.Animat
 //		transitionValues.values[PROP_ORIGIN_Y] = wrapper.originY
 //		transitionValues.values[PROP_ORIGIN_Z] = wrapper.originZ
 
-		if (content is ContentView) {
+		if (content is View) {
 			transitionValues.values[PROP_CONTENT_REAL_SCROLL_X] = content.realScrollX
 			transitionValues.values[PROP_CONTENT_REAL_SCROLL_Y] = content.realScrollY
 		}
 
-		if (content is ContentTextView) {
+		if (content is TextView) {
 			transitionValues.values[PROP_TEXT_COLOR] = content.textColor
 			transitionValues.values[PROP_TEXT_KERNING] = content.textKerning
 			transitionValues.values[PROP_TEXT_LEADING] = content.textLeading
@@ -292,7 +292,7 @@ public class TransitionGroup(val activity: ApplicationActivity): Animator.Animat
 			transitionValues.values[PROP_FONT_SIZE] = content.fontSize
 		}
 
-		if (content is ContentImageView) {
+		if (content is ImageView) {
 			transitionValues.values[PROP_IMAGE_TOP] = content.imageTop
 			transitionValues.values[PROP_IMAGE_LEFT] = content.imageLeft
 			transitionValues.values[PROP_IMAGE_WIDTH] = content.imageWidth
@@ -358,14 +358,14 @@ public class TransitionGroup(val activity: ApplicationActivity): Animator.Animat
 		this.addFloatAnimator(view.content, PROP_CONTENT_TRANSLATION_X, "translationX", startValues, endValues, animators)
 		this.addFloatAnimator(view.content, PROP_CONTENT_TRANSLATION_Y, "translationY", startValues, endValues, animators)
 		
-		if (view is TextView) {
+		if (view is JavaScriptTextView) {
 			this.addColorAnimator(view.content, PROP_TEXT_COLOR, "textColor", startValues, endValues, animators)
 			this.addFloatAnimator(view.content, PROP_TEXT_KERNING, "textKerning", startValues, endValues, animators)
 			this.addFloatAnimator(view.content, PROP_TEXT_LEADING, "textLeading", startValues, endValues, animators)
 			this.addFloatAnimator(view.content, PROP_TEXT_BASELINE, "textBaseline", startValues, endValues, animators)
 		}
 
-		if (view is ImageView) {
+		if (view is JavaScriptImageView) {
 			this.addFloatAnimator(view.content, PROP_IMAGE_TOP, "imageTop", startValues, endValues, animators)
 			this.addFloatAnimator(view.content, PROP_IMAGE_LEFT, "imageLeft", startValues, endValues, animators)
 			this.addFloatAnimator(view.content, PROP_IMAGE_WIDTH, "imageWidth", startValues, endValues, animators)
@@ -373,7 +373,7 @@ public class TransitionGroup(val activity: ApplicationActivity): Animator.Animat
 			this.addColorAnimator(view.content, PROP_IMAGE_TINT, "imageTint", startValues, endValues, animators)
 		}
 
-		if (view.content is ContentView) {
+		if (view.content is View) {
 			this.addIntAnimator(view.content, PROP_CONTENT_REAL_SCROLL_X, "realScrollX", startValues, endValues, animators)
 			this.addIntAnimator(view.content, PROP_CONTENT_REAL_SCROLL_Y, "realScrollY", startValues, endValues, animators)
 		}
@@ -525,7 +525,7 @@ public class TransitionGroup(val activity: ApplicationActivity): Animator.Animat
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	private fun forEachView(each: (View) -> Unit) {
+	private fun forEachView(each: (JavaScriptView) -> Unit) {
 
 		val window = this.activity.application?.window
 		if (window == null) {
@@ -542,7 +542,7 @@ public class TransitionGroup(val activity: ApplicationActivity): Animator.Animat
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	private fun forEachViewOf(root: View, each: (View) -> Unit) {
+	private fun forEachViewOf(root: JavaScriptView, each: (JavaScriptView) -> Unit) {
 		root.children.forEach { view ->
 			if (view.visible.boolean) {
 				each.invoke(view)

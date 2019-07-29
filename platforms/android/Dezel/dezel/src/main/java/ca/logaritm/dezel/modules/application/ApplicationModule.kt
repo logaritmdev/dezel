@@ -19,6 +19,6 @@ open class ApplicationModule(context: JavaScriptContext): Module(context) {
 	 * @since 0.1.0
 	 */
 	override fun initialize() {
-		this.context.registerClass("dezel.application.Application", Application::class.java)
+		this.context.registerClass("dezel.application.JavaScriptApplication", JavaScriptApplication::class.java)
 	}
 }

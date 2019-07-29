@@ -19,8 +19,8 @@ open class DialogModule(context: JavaScriptContext): Module(context) {
 	 * @since 0.1.0
 	 */
 	override fun initialize() {
-		this.context.registerClass("dezel.dialog.Alert", Alert::class.java)
-		this.context.registerClass("dezel.dialog.AlertButton", AlertButton::class.java)
+		this.context.registerClass("dezel.dialog.JavaScriptAlert", JavaScriptAlert::class.java)
+		this.context.registerClass("dezel.dialog.JavaScriptAlertButton", JavaScriptAlertButton::class.java)
 	}
 }
 

@@ -2,7 +2,7 @@ package ca.logaritm.dezel.text.span
 
 import android.text.TextPaint
 import android.text.style.URLSpan
-import ca.logaritm.dezel.view.ContentTextView
+import ca.logaritm.dezel.view.TextView
 import ca.logaritm.dezel.view.type.TextDecoration
 
 open class LinkSpan(url: String, color: Int, decoration: TextDecoration): URLSpan(url) {
@@ -22,7 +22,7 @@ open class LinkSpan(url: String, color: Int, decoration: TextDecoration): URLSpa
 		}
 	}
 
-	open fun onClick(textView: ContentTextView) {
+	open fun onClick(textView: TextView) {
 		textView.contentViewListener?.onPressLink(textView, this.url)
 	}
 }

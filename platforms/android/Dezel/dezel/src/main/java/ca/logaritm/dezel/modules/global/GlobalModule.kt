@@ -1,14 +1,10 @@
 package ca.logaritm.dezel.modules.global
 
 
-import android.content.BroadcastReceiver
-import android.util.Log
 import android.view.Choreographer
-import ca.logaritm.dezel.application.application
 import ca.logaritm.dezel.core.JavaScriptContext
 import ca.logaritm.dezel.core.JavaScriptValue
 import ca.logaritm.dezel.core.Module
-import ca.logaritm.dezel.modules.application.Application
 import ca.logaritm.dezel.timer.Ticker
 import ca.logaritm.dezel.timer.Timer
 

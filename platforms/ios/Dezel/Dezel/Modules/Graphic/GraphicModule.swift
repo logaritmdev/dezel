@@ -15,7 +15,7 @@ open class GraphicModule: Module {
 	 * @since 0.1.0
 	 */
 	override open func initialize() {
-		self.context.registerClass("dezel.graphic.Image", with: Image.self)
-		self.context.registerClass("dezel.graphic.Canvas", with: Canvas.self)
+		self.context.registerClass("dezel.graphic.Image", with: JavaScriptImage.self)
+		self.context.registerClass("dezel.graphic.Canvas", with: JavaScriptCanvas.self)
 	}
 }

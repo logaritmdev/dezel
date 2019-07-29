@@ -11,6 +11,6 @@ public class DeviceModule : Module {
      * @since 0.4.0
      */
 	public override func initialize() {
-		self.context.registerClass("dezel.device.Device", with: Device.self)
+		self.context.registerClass("dezel.device.Device", with: JavaScriptDevice.self)
 	}
 }

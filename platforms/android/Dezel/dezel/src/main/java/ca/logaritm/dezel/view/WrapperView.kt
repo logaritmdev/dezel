@@ -14,7 +14,7 @@ import ca.logaritm.dezel.view.graphic.Color
 import ca.logaritm.dezel.view.graphic.LinearGradient
 import ca.logaritm.dezel.view.graphic.RadialGradient
 import ca.logaritm.dezel.view.graphic.Transform
-import ca.logaritm.dezel.modules.view.View as ContainerView
+import ca.logaritm.dezel.modules.view.JavaScriptView as ContainerView
 
 /**
  * @class WrapperView

@@ -108,9 +108,9 @@ export { PanGesture } from './gesture/PanGesture'
 export { Image } from './graphic/Image'
 export { Canvas } from './graphic/Canvas'
 
-export { ContentOptimizer } from './optimize/ContentOptimizer'
-export { ContentOptimizerTransition } from './optimize/ContentOptimizerTransition'
-export { ContentOptimizerFadeTransition } from './optimize/ContentOptimizerFadeTransition'
+export { ViewOptimizer } from './optimize/ViewOptimizer'
+export { ViewOptimizerTransition } from './optimize/ViewOptimizerTransition'
+export { ViewOptimizerFadeTransition } from './optimize/ViewOptimizerFadeTransition'
 export { ListOptimizer } from './optimize/ListOptimizer'
 
 export { Touch } from './touch/Touch'

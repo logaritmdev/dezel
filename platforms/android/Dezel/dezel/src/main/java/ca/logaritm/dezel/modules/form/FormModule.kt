@@ -15,7 +15,7 @@ open class FormModule(context: JavaScriptContext) : Module(context) {
 	 * @since 0.1.0
 	 */
 	override fun initialize() {
-		this.context.registerClass("dezel.form.TextInput", TextInput::class.java)
-		this.context.registerClass("dezel.form.TextArea", TextArea::class.java)
+		this.context.registerClass("dezel.form.JavaScriptTextInput", JavaScriptTextInput::class.java)
+		this.context.registerClass("dezel.form.JavaScriptTextArea", JavaScriptTextArea::class.java)
 	}
 }

@@ -1,15 +1,13 @@
 package ca.logaritm.dezel.view.animation
 
-import ca.logaritm.dezel.modules.view.View
-
-import android.view.View as AndroidView
+import ca.logaritm.dezel.modules.view.JavaScriptView
 
 /**
  * @class TransitionValues
  * @since 0.1.0
  * @hidden
  */
-internal class TransitionValues(val view: View) {
+internal class TransitionValues(val view: JavaScriptView) {
 
 	//--------------------------------------------------------------------------
 	// Properties

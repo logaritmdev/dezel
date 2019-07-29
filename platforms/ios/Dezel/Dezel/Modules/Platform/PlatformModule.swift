@@ -11,6 +11,6 @@ public class PlatformModule : Module {
      * @since 0.1.0
      */
 	public override func initialize() {
-		self.context.registerClass("dezel.platform.Platform", with: Platform.self)
+		self.context.registerClass("dezel.platform.Platform", with: JavaScriptPlatform.self)
 	}
 }

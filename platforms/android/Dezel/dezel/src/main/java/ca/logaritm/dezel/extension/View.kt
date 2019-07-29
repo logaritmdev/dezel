@@ -4,7 +4,7 @@ import android.view.View
 import android.view.ViewGroup
 
 /**
- * @method View.addView
+ * @method JavaScriptView.addView
  * @since 0.2.0
  * @hidden
  */
@@ -25,7 +25,7 @@ internal fun View.addView(view: View, index: Int) {
 }
 
 /**
- * @method View.removeFromParent
+ * @method JavaScriptView.removeFromParent
  * @since 0.1.0
  * @hidden
  */
@@ -37,7 +37,7 @@ internal fun View.removeFromParent() {
 }
 
 /**
- * @method View.setMeasuredFrame
+ * @method JavaScriptView.setMeasuredFrame
  * @since 0.1.0
  * @hidden
  */

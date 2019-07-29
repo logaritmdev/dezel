@@ -48,7 +48,7 @@ open class ApplicationController: UIViewController {
 	 * @property application
 	 * @since 0.7.0
 	 */
-	private(set) public var application: Application?
+	private(set) public var application: JavaScriptApplication?
 
 	/**
 	 * @property modules
@@ -239,7 +239,7 @@ open class ApplicationController: UIViewController {
 	 * @method launch
 	 * @since 0.7.0
 	 */
-	open func launch(_ application: Application, identifier: String = "default") {
+	open func launch(_ application: JavaScriptApplication, identifier: String = "default") {
 
 		self.application?.destroy()
 		self.application = application
@@ -655,7 +655,7 @@ open class ApplicationController: UIViewController {
 	 * @method didLaunchApplication
 	 * @since 0.7.0
 	 */
-	open func didLaunchApplication(application: Application) {
+	open func didLaunchApplication(application: JavaScriptApplication) {
 
 	}
 
@@ -664,7 +664,7 @@ open class ApplicationController: UIViewController {
 	 * @method didReloadApplication
 	 * @since 0.7.0
 	 */
-	open func didReloadApplication(application: Application) {
+	open func didReloadApplication(application: JavaScriptApplication) {
 
 	}
 

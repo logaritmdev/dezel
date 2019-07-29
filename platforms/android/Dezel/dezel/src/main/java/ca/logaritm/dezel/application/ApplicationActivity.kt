@@ -9,7 +9,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Parcelable
 import android.support.v4.content.LocalBroadcastManager
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.WindowManager
@@ -22,7 +21,7 @@ import ca.logaritm.dezel.core.*
 import ca.logaritm.dezel.extension.Delegates
 import ca.logaritm.dezel.extension.viewport
 import ca.logaritm.dezel.layout.Layout
-import ca.logaritm.dezel.modules.application.Application
+import ca.logaritm.dezel.modules.application.JavaScriptApplication
 import ca.logaritm.dezel.modules.application.ApplicationModule
 import ca.logaritm.dezel.modules.core.CoreModule
 import ca.logaritm.dezel.modules.device.DeviceModule
@@ -113,7 +112,7 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 	 * @property application
 	 * @since 0.7.0
 	 */
-	public var application: Application? = null
+	public var application: JavaScriptApplication? = null
 		private set
 
 	/**
@@ -293,7 +292,7 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 	 * @method launch
 	 * @since 0.7.0
 	 */
-	open fun launch(application: Application, identifier: String = "default") {
+	open fun launch(application: JavaScriptApplication, identifier: String = "default") {
 
 		this.application?.destroy()
 		this.application = application
@@ -939,7 +938,7 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 	 * @method onLaunchApplication
 	 * @since 0.7.0
 	 */
-	open fun onLaunchApplication(application: Application) {
+	open fun onLaunchApplication(application: JavaScriptApplication) {
 
 	}
 
@@ -948,7 +947,7 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 	 * @method onReloadApplication
 	 * @since 0.7.0
 	 */
-	open fun onReloadApplication(application: Application) {
+	open fun onReloadApplication(application: JavaScriptApplication) {
 
 	}
 

@@ -29,7 +29,7 @@ export const SELECTED_INDEX = Symbol('selectedIndex')
 /**
  * Provides data and items to a list.
  * @class ListManager
- * @super ContentOptimizer
+ * @super ViewOptimizer
  * @since 0.1.0
  */
 export class ListManager<T = any> extends ListOptimizer<T> {

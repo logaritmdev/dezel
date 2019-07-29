@@ -41,7 +41,7 @@ open class CoreModule: Module {
 		let app = callback.argument(0)
 		let uid = callback.argument(1).string
 
-		if let application = app.cast(Application.self) {
+		if let application = app.cast(JavaScriptApplication.self) {
 			self.context.application.launch(application, identifier: uid)
 		}
 	}
