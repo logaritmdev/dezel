@@ -23,6 +23,6 @@ open class LinkSpan(url: String, color: Int, decoration: TextDecoration): URLSpa
 	}
 
 	open fun onClick(textView: TextView) {
-		textView.contentViewListener?.onPressLink(textView, this.url)
+		textView.textViewListener?.onPressLink(textView, this.url)
 	}
 }

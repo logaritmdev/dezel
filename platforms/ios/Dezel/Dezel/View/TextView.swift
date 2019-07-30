@@ -317,11 +317,11 @@ open class TextView: UIView, Updatable, Clippable, TransitionListener {
 	open var hasFrame: Bool = false
 
 	/**
-	 * @property contentViewDelegate
+	 * @property textViewDelegate
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	internal weak var contentViewDelegate: TextViewDelegate?
+	internal weak var textViewDelegate: TextViewDelegate?
 
 	/**
 	 * @property textLayer
@@ -372,7 +372,7 @@ open class TextView: UIView, Updatable, Clippable, TransitionListener {
 
 		self.layer.addSublayer(self.textLayer)
 
-		self.contentViewDelegate = delegate
+		self.textViewDelegate = delegate
 	}
 
 	/**
@@ -480,7 +480,7 @@ open class TextView: UIView, Updatable, Clippable, TransitionListener {
 
 		if let character = self.textLayer.find(at: touch.location(in: self)) {
 			if let link = character.link {
-				self.contentViewDelegate?.didPressLink(textView: self, url: link)
+				self.textViewDelegate?.didPressLink(textView: self, url: link)
 			}
 		}
 	}

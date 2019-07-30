@@ -28,12 +28,11 @@ open class WebView(context: Context, listener: WebViewListener) : AndroidWebView
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @property contentViewListener
+	 * @property webViewListener
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	open var contentViewListener: WebViewListener? = null
-
+	open var webViewListener: WebViewListener? = null
 
 	/**
 	 * The scroll view's listener.
@@ -240,8 +239,8 @@ open class WebView(context: Context, listener: WebViewListener) : AndroidWebView
 		override fun onPageFinished(view: AndroidWebView, url: String) {
 			val w = this@WebView.computeHorizontalScrollRange()
 			val h = this@WebView.computeVerticalScrollRange()
-			contentViewListener?.onUpdateContentSize(this@WebView, Size(w, h))
-			contentViewListener?.onLoad(this@WebView)
+			webViewListener?.onUpdateContentSize(this@WebView, Size(w, h))
+			webViewListener?.onLoad(this@WebView)
 		}
 
 		/**
@@ -288,7 +287,7 @@ open class WebView(context: Context, listener: WebViewListener) : AndroidWebView
 				return true
 			}
 
-			val allow = contentViewListener?.onBeforeLoad(this@WebView, url)
+			val allow = webViewListener?.onBeforeLoad(this@WebView, url)
 			if (allow == false) {
 				return true
 			}
@@ -324,7 +323,7 @@ open class WebView(context: Context, listener: WebViewListener) : AndroidWebView
 	 */
 	init {
 
-		this.contentViewListener = listener
+		this.webViewListener = listener
 
 		this.settings.allowFileAccess = true
 		this.settings.allowFileAccessFromFileURLs = true

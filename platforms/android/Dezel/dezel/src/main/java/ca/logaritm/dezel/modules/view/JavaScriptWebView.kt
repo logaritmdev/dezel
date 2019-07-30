@@ -48,7 +48,7 @@ open class JavaScriptWebView(context: JavaScriptContext) : JavaScriptView(contex
 	 * @since 0.7.0
 	 */
 	override fun dispose() {
-		this.view.contentViewListener = null
+		this.view.webViewListener = null
 		this.view.stopLoading()
 		super.dispose()
 	}

@@ -268,11 +268,11 @@ open class TextArea: UITextView, UITextViewDelegate {
 	}
 
 	/**
-	 * @property contentViewDelegate
+	 * @property textAreaDelegate
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	internal weak var contentViewDelegate: TextAreaDelegate?
+	internal weak var textAreaDelegate: TextAreaDelegate?
 
 	/**
 	 * @property placeholderLabel
@@ -333,7 +333,7 @@ open class TextArea: UITextView, UITextViewDelegate {
 		self.placeholderLabel.attributedText = self.getAttributedPlaceholder()
 		self.addSubview(self.placeholderLabel)
 
-		self.contentViewDelegate = delegate
+		self.textAreaDelegate = delegate
 	}
 
 	/**
@@ -426,7 +426,7 @@ open class TextArea: UITextView, UITextViewDelegate {
 			let position = textView.position(from: begin, offset: charactersRange.location)
 			let offset = textView.offset(from: begin, to: position!) + string.count
 
-			self.contentViewDelegate?.didChange(textInput: self, value: text.replacingCharacters(in: range, with: string))
+			self.textAreaDelegate?.didChange(textInput: self, value: text.replacingCharacters(in: range, with: string))
 
 			if let cursor = textView.position(from: begin, offset: offset) {
 				textView.selectedTextRange = textView.textRange(
@@ -453,7 +453,7 @@ open class TextArea: UITextView, UITextViewDelegate {
 	 * @hidden
 	 */
 	open func textViewDidBeginEditing(_ textView: UITextView) {
-		self.contentViewDelegate?.didFocus(textInput: self)
+		self.textAreaDelegate?.didFocus(textInput: self)
 	}
 
 	/**
@@ -461,7 +461,7 @@ open class TextArea: UITextView, UITextViewDelegate {
 	 * @hidden
 	 */
 	open func textViewDidEndEditing(_ textView: UITextView) {
-		self.contentViewDelegate?.didBlur(textInput: self)
+		self.textAreaDelegate?.didBlur(textInput: self)
 	}
 
 	//--------------------------------------------------------------------------

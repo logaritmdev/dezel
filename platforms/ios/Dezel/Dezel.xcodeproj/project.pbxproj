@@ -754,11 +754,11 @@
 			isa = PBXGroup;
 			children = (
 				C77189A821014AA200337263 /* Optimize */,
+				C7B9CEB0202CE225002409D5 /* ViewModule.swift */,
 				C718A0A82066E24400EFEC15 /* JavaScriptImageView.swift */,
 				C7BFD15D207D50F000AAD31C /* JavaScriptSpinnerView.swift */,
 				C7D89262206575CB00E85115 /* JavaScriptTextView.swift */,
 				C767544C2028DB7B003C4D85 /* JavaScriptView.swift */,
-				C7B9CEB0202CE225002409D5 /* ViewModule.swift */,
 				C71E6CBB20DD4EE1009B86F6 /* JavaScriptWebView.swift */,
 				C7B9CEAE202CDBD8002409D5 /* JavaScriptWindow.swift */,
 			);

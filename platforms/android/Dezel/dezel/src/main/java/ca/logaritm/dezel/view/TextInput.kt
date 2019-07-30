@@ -297,11 +297,11 @@ open class TextInput(context: Context, listener: TextInputListener?) : EditText(
 	}
 
 	/**
-	 * @property contentViewListener
+	 * @property textInputListener
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	open var contentViewListener: TextInputListener? = null
+	open var textInputListener: TextInputListener? = null
 
 	/**
 	 * @property date
@@ -345,7 +345,7 @@ open class TextInput(context: Context, listener: TextInputListener?) : EditText(
 				application.presentSoftKeyboard(v)
 			}
 
-			this.contentViewListener?.onFocus(this)
+			this.textInputListener?.onFocus(this)
 
 		} else {
 
@@ -354,7 +354,7 @@ open class TextInput(context: Context, listener: TextInputListener?) : EditText(
 				application.dismissSoftKeyboard(v)
 			}
 
-			this.contentViewListener?.onBlur(this)
+			this.textInputListener?.onBlur(this)
 		}
 	}
 
@@ -372,7 +372,7 @@ open class TextInput(context: Context, listener: TextInputListener?) : EditText(
 	 */
 	init {
 
-		this.contentViewListener = listener
+		this.textInputListener = listener
 
 		this.imeOptions = EditorInfo.IME_FLAG_NO_EXTRACT_UI
 
@@ -554,7 +554,7 @@ open class TextInput(context: Context, listener: TextInputListener?) : EditText(
 
 		this.date = calendar.time
 		this.updateValue(this.date.iso)
-		this.contentViewListener?.onBlur(this)
+		this.textInputListener?.onBlur(this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -574,7 +574,7 @@ open class TextInput(context: Context, listener: TextInputListener?) : EditText(
 
 		this.date = calendar.time
 		this.updateValue(this.date.iso)
-		this.contentViewListener?.onBlur(this)
+		this.textInputListener?.onBlur(this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -606,7 +606,7 @@ open class TextInput(context: Context, listener: TextInputListener?) : EditText(
 		)
 
 		picker.setOnCancelListener {
-			this.contentViewListener?.onBlur(this)
+			this.textInputListener?.onBlur(this)
 		}
 
 		picker.setOnDismissListener {
@@ -617,7 +617,7 @@ open class TextInput(context: Context, listener: TextInputListener?) : EditText(
 
 		this.datePicker = picker
 
-		this.contentViewListener?.onFocus(this)
+		this.textInputListener?.onFocus(this)
 	}
 
 	/**
@@ -645,7 +645,7 @@ open class TextInput(context: Context, listener: TextInputListener?) : EditText(
 		)
 
 		picker.setOnCancelListener {
-			this.contentViewListener?.onBlur(this)
+			this.textInputListener?.onBlur(this)
 		}
 
 		picker.setOnDismissListener {
@@ -656,7 +656,7 @@ open class TextInput(context: Context, listener: TextInputListener?) : EditText(
 
 		this.timePicker = picker
 
-		this.contentViewListener?.onFocus(this)
+		this.textInputListener?.onFocus(this)
 	}
 
 	/**
@@ -744,7 +744,7 @@ open class TextInput(context: Context, listener: TextInputListener?) : EditText(
 
 		this.value = normalized
 
-		this.contentViewListener?.onChange(this, normalized)
+		this.textInputListener?.onChange(this, normalized)
 	}
 
 	/**

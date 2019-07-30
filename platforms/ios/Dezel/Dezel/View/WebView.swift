@@ -253,11 +253,11 @@ public class WebView: WKWebView, WKNavigationDelegate, UIScrollViewDelegate, Scr
 	open var zoomedView: UIView?
 
 	/**
-	 * @property contentViewDelegate
+	 * @property webViewDelegate
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	internal weak var contentViewDelegate: WebViewDelegate?
+	internal weak var webViewDelegate: WebViewDelegate?
 
 	/**
 	 * @property contentLoaded
@@ -303,7 +303,7 @@ public class WebView: WKWebView, WKNavigationDelegate, UIScrollViewDelegate, Scr
 		super.init(frame: frame, configuration: WKWebViewConfiguration())
 
 		self.navigationDelegate = self
-		self.contentViewDelegate = delegate
+		self.webViewDelegate = delegate
 		self.translatesAutoresizingMaskIntoConstraints = true
 
 		self.scrollViewDelegate = ScrollViewDelegate(content: self)
@@ -423,7 +423,7 @@ public class WebView: WKWebView, WKNavigationDelegate, UIScrollViewDelegate, Scr
 						self.contentLoading = false
 						if (self.contentLoaded == false) {
 							self.contentLoaded = true
-							self.contentViewDelegate?.didLoad(webView: self)
+							self.webViewDelegate?.didLoad(webView: self)
 						}
 					}
 				}
@@ -435,7 +435,7 @@ public class WebView: WKWebView, WKNavigationDelegate, UIScrollViewDelegate, Scr
 		if (key == "contentSize") {
 
 			if let value = change?[NSKeyValueChangeKey.newKey] as? CGSize {
-				self.contentViewDelegate?.didUpdateContentSize(webView: self, size: value)
+				self.webViewDelegate?.didUpdateContentSize(webView: self, size: value)
 			}
 
 			return
@@ -481,7 +481,7 @@ public class WebView: WKWebView, WKNavigationDelegate, UIScrollViewDelegate, Scr
 	 */
 	public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
 
-		guard let delegate = self.contentViewDelegate else {
+		guard let delegate = self.webViewDelegate else {
 			decisionHandler(.cancel)
 			return
 		}

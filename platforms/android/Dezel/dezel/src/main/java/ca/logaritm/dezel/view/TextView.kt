@@ -295,11 +295,11 @@ open class TextView(context: Context, listener: TextViewListener?) : View(contex
 	}
 
 	/**
-	 * @property contentViewListener
+	 * @property textViewListener
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	internal var contentViewListener: TextViewListener? = null
+	internal var textViewListener: TextViewListener? = null
 
 	/**
 	 * @property bounds
@@ -383,7 +383,7 @@ open class TextView(context: Context, listener: TextViewListener?) : View(contex
 
 		this.setWillNotDraw(false)
 
-		this.contentViewListener = listener
+		this.textViewListener = listener
 	}
 
 	/**
@@ -561,7 +561,7 @@ open class TextView(context: Context, listener: TextViewListener?) : View(contex
 			}
 
 			string.getSpans(0, string.length, LinkSpan::class.javaObjectType).forEach {
-				this.contentViewListener?.onPressLink(this, it.url)
+				this.textViewListener?.onPressLink(this, it.url)
 			}
 		}
 

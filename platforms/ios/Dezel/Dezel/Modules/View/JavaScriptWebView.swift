@@ -52,7 +52,7 @@ open class JavaScriptWebView: JavaScriptView, WebViewDelegate {
 	 * @since 0.6.0
 	 */
 	override open func dispose() {
-		self.view.contentViewDelegate = nil
+		self.view.webViewDelegate = nil
 		self.view.stopLoading()
 		super.dispose()
 	}

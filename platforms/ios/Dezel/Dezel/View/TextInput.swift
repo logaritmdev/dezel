@@ -367,11 +367,11 @@ open class TextInput: UITextField, UITextFieldDelegate {
 	}
 
 	/**
-	 * @property contentViewDelegate
+	 * @property textInputDelegate
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	internal weak var contentViewDelegate: TextInputDelegate?
+	internal weak var textInputDelegate: TextInputDelegate?
 
 	/**
 	 * @property clearButton
@@ -457,7 +457,7 @@ open class TextInput: UITextField, UITextFieldDelegate {
 		self.clearButton.setImage(image, for: .highlighted)
 		self.clearButton.addTarget(self, action: #selector(clear), for: .touchUpInside)
 
-		self.contentViewDelegate = delegate
+		self.textInputDelegate = delegate
 	}
 
 	/**
@@ -538,7 +538,7 @@ open class TextInput: UITextField, UITextFieldDelegate {
 	 * @since 0.7.0
 	 */
 	@objc open func clear() {
-		self.contentViewDelegate?.didChange(textInput: self, value: "")
+		self.textInputDelegate?.didChange(textInput: self, value: "")
 	}
 
 	//--------------------------------------------------------------------------
@@ -610,7 +610,7 @@ open class TextInput: UITextField, UITextFieldDelegate {
 			self.timePicker!.date = self.date
 		}
 
-		self.contentViewDelegate?.didFocus(textInput: self)
+		self.textInputDelegate?.didFocus(textInput: self)
 	}
 
 	/**
@@ -632,7 +632,7 @@ open class TextInput: UITextField, UITextFieldDelegate {
 			self.updateValue(self.date.iso)
 		}
 
-		self.contentViewDelegate?.didBlur(textInput: self)
+		self.textInputDelegate?.didBlur(textInput: self)
 	}
 
 	//--------------------------------------------------------------------------
@@ -755,7 +755,7 @@ open class TextInput: UITextField, UITextFieldDelegate {
 
 		self.value = normalized
 
-		self.contentViewDelegate?.didChange(textInput: self, value: normalized)
+		self.textInputDelegate?.didChange(textInput: self, value: normalized)
 	}
 
 	/**

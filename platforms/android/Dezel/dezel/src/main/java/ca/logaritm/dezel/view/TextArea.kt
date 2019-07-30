@@ -4,7 +4,6 @@ import android.content.Context
 import android.graphics.Paint
 import android.view.Gravity
 import android.view.KeyEvent
-import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import ca.logaritm.dezel.application.ApplicationActivity
@@ -246,11 +245,11 @@ open class TextArea(context: Context, listener: TextAreaListener?) : EditText(co
 	}
 
 	/**
-	 * @property contentViewListener
+	 * @property textAreaListener
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	internal var contentViewListener: TextAreaListener? = null
+	internal var textAreaListener: TextAreaListener? = null
 
 	/**
 	 * @property invalidFont
@@ -273,7 +272,7 @@ open class TextArea(context: Context, listener: TextAreaListener?) : EditText(co
 				application.presentSoftKeyboard(v)
 			}
 
-			this.contentViewListener?.onFocus(this)
+			this.textAreaListener?.onFocus(this)
 
 		} else {
 
@@ -282,7 +281,7 @@ open class TextArea(context: Context, listener: TextAreaListener?) : EditText(co
 				application.dismissSoftKeyboard(v)
 			}
 
-			this.contentViewListener?.onBlur(this)
+			this.textAreaListener?.onBlur(this)
 		}
 	}
 
@@ -323,7 +322,7 @@ open class TextArea(context: Context, listener: TextAreaListener?) : EditText(co
 
 		this.updateGravity()
 
-		this.contentViewListener = listener
+		this.textAreaListener = listener
 
 		this.initialized = true
 	}
@@ -377,7 +376,7 @@ open class TextArea(context: Context, listener: TextAreaListener?) : EditText(co
 	override fun onTextChanged(text: CharSequence?, start: Int, lengthBefore: Int, lengthAfter: Int) {
 		if (this.initialized) {
 			this.value = text.toString()
-			this.contentViewListener?.onChange(this, text.toString())
+			this.textAreaListener?.onChange(this, text.toString())
 		}
 	}
 
