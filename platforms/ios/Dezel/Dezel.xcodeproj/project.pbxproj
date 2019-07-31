@@ -81,6 +81,7 @@
 		C75153B722EB81FC007CAA48 /* JavaScriptValueInternal.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75153B622EB81FC007CAA48 /* JavaScriptValueInternal.swift */; };
 		C75153B922EBA05C007CAA48 /* NSMutableData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75153B822EBA05C007CAA48 /* NSMutableData.swift */; };
 		C75153BB22EBA09B007CAA48 /* NSMutableAttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75153BA22EBA09B007CAA48 /* NSMutableAttributedString.swift */; };
+		C75153BD22F11CAA007CAA48 /* JavaScriptLocale.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75153BC22F11CAA007CAA48 /* JavaScriptLocale.swift */; };
 		C7541A8922E6B09800586FC4 /* HttpResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7541A8822E6B09800586FC4 /* HttpResponse.swift */; };
 		C76016E22019832800622840 /* JavaScriptFinalizeCallback.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76016E12019832800622840 /* JavaScriptFinalizeCallback.swift */; };
 		C767542120269971003C4D85 /* ShadowLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76753E92026996F003C4D85 /* ShadowLayer.swift */; };
@@ -388,6 +389,7 @@
 		C75153B622EB81FC007CAA48 /* JavaScriptValueInternal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptValueInternal.swift; sourceTree = "<group>"; };
 		C75153B822EBA05C007CAA48 /* NSMutableData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSMutableData.swift; sourceTree = "<group>"; };
 		C75153BA22EBA09B007CAA48 /* NSMutableAttributedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSMutableAttributedString.swift; sourceTree = "<group>"; };
+		C75153BC22F11CAA007CAA48 /* JavaScriptLocale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptLocale.swift; sourceTree = "<group>"; };
 		C7541A8822E6B09800586FC4 /* HttpResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpResponse.swift; sourceTree = "<group>"; };
 		C76016E12019832800622840 /* JavaScriptFinalizeCallback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptFinalizeCallback.swift; sourceTree = "<group>"; };
 		C76753E92026996F003C4D85 /* ShadowLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShadowLayer.swift; sourceTree = "<group>"; };
@@ -989,6 +991,7 @@
 			isa = PBXGroup;
 			children = (
 				C77DFEE0208D063900CEC1D9 /* LocaleModule.swift */,
+				C75153BC22F11CAA007CAA48 /* JavaScriptLocale.swift */,
 			);
 			path = Locale;
 			sourceTree = "<group>";
@@ -1624,6 +1627,7 @@
 				C76864712039146700D1903B /* PropertyType.swift in Sources */,
 				C78115AF2052EA0D0096AE47 /* StylerNodeDelegate.swift in Sources */,
 				C7FAFD93205AAC900031B2E9 /* DLStylerStyleBuilder.cpp in Sources */,
+				C75153BD22F11CAA007CAA48 /* JavaScriptLocale.swift in Sources */,
 				C7BB7D462029062D004006C2 /* TransitionGroup.swift in Sources */,
 				C7A3AB77214EC68100D8B15C /* JavaScriptCanvas.swift in Sources */,
 				C767542120269971003C4D85 /* ShadowLayer.swift in Sources */,

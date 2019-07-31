@@ -15,14 +15,14 @@ import java.util.*
 
 /**
  * @class JavaScriptDevice
- * @since 0.7.0
+ * @since 0.4.0
  * @hidden
  */
 open class JavaScriptDevice(context: JavaScriptContext): JavaScriptClass(context) {
 
 	/**
 	 * @property preferences
-	 * @since 0.7.0
+	 * @since 0.1.0
 	 * @hidden
 	 */
 	private val preferences: SharedPreferences = this.context.application.getSharedPreferences("dezel.device.uuid", android.content.Context.MODE_PRIVATE)
@@ -33,7 +33,7 @@ open class JavaScriptDevice(context: JavaScriptContext): JavaScriptClass(context
 
 	/**
 	 * @method jsGet_name
-	 * @since 0.7.0
+	 * @since 0.4.0
 	 * @hidden
 	 */
 	@Suppress("unused")
@@ -62,7 +62,7 @@ open class JavaScriptDevice(context: JavaScriptContext): JavaScriptClass(context
 
 	/**
 	 * @method jsFunction_sound
-	 * @since 0.7.0
+	 * @since 0.4.0
 	 * @hidden
 	 */
 	@Suppress("unused")
@@ -93,7 +93,7 @@ open class JavaScriptDevice(context: JavaScriptContext): JavaScriptClass(context
 
 	/**
 	 * @method jsFunction_vibrate
-	 * @since 0.7.0
+	 * @since 0.4.0
 	 * @hidden
 	 */
 	@Suppress("unused")
