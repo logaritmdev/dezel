@@ -334,8 +334,8 @@ describe('View', () => {
 		expect(view.contentOrientation).toBe('vertical')
 	})
 
-	it('should have a valid initial contentDisposition property value', () => {
-		expect(view.contentDisposition).toBe('start')
+	it('should have a valid initial contentLocation property value', () => {
+		expect(view.contentLocation).toBe('start')
 	})
 
 	it('should have a valid initial contentArrangement property value', () => {

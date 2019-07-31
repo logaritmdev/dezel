@@ -120,7 +120,7 @@ export class NavigationBar extends Component<Refs, Slots> {
 			return
 		}
 
-		let disposition = titleContainer.contentDisposition
+		let disposition = titleContainer.contentLocation
 		let orientation = titleContainer.contentOrientation
 
 		if (disposition !== 'center' ||

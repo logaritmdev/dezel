@@ -974,12 +974,12 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 
 	/**
 	 * The view's content organization on the main axis.
-	 * @property contentDisposition
+	 * @property contentLocation
 	 * @since 0.7.0
 	 */
-	@objc open var contentDisposition: Property = Property(string: "start") {
+	@objc open var contentLocation: Property = Property(string: "start") {
 		willSet {
-			self.layoutNode.contentDisposition(newValue)
+			self.layoutNode.contentLocation(newValue)
 		}
 	}
 
@@ -5166,21 +5166,21 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method jsGet_contentDisposition
+	 * @method jsGet_contentLocation
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsGet_contentDisposition(callback: JavaScriptGetterCallback) {
-		callback.returns(self.contentDisposition)
+	@objc open func jsGet_contentLocation(callback: JavaScriptGetterCallback) {
+		callback.returns(self.contentLocation)
 	}
 
 	/**
-	 * @method jsSet_contentDisposition
+	 * @method jsSet_contentLocation
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsSet_contentDisposition(callback: JavaScriptSetterCallback) {
-		self.contentDisposition = Property(value: callback.value)
+	@objc open func jsSet_contentLocation(callback: JavaScriptSetterCallback) {
+		self.contentLocation = Property(value: callback.value)
 	}
 
 	//--------------------------------------------------------------------------

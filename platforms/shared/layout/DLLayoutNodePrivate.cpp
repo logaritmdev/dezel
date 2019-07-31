@@ -819,7 +819,7 @@ DLLayoutNodeLayoutWrappedLayout(DLLayoutNodeRef node)
 		return;
 	}
 
-	if (node->contentDisposition == kDLLayoutContentDispositionStart &&
+	if (node->contentLocation == kDLLayoutContentLocationStart &&
 		node->contentArrangement == kDLLayoutContentArrangementStart) {
 		return;
 	}

@@ -773,21 +773,21 @@ open class LayoutNode(layout: Layout) {
 	}
 
 	/**
-	 * @method contentDisposition
+	 * @method contentLocation
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	public fun contentDisposition(value: Property) {
+	public fun contentLocation(value: Property) {
 
 		if (value.type == PropertyType.STRING) {
 
 			when (value.string) {
-				"center"        -> this.contentDisposition(kDLLayoutContentDispositionCenter)
-				"start"         -> this.contentDisposition(kDLLayoutContentDispositionStart)
-				"end"           -> this.contentDisposition(kDLLayoutContentDispositionEnd)
-				"space-around"  -> this.contentDisposition(kDLLayoutContentDispositionSpaceAround)
-				"space-evenly"  -> this.contentDisposition(kDLLayoutContentDispositionSpaceEvenly)
-				"space-between" -> this.contentDisposition(kDLLayoutContentDispositionSpaceBetween)
+				"center"        -> this.contentLocation(kDLLayoutContentLocationCenter)
+				"start"         -> this.contentLocation(kDLLayoutContentLocationStart)
+				"end"           -> this.contentLocation(kDLLayoutContentLocationEnd)
+				"space-around"  -> this.contentLocation(kDLLayoutContentLocationSpaceAround)
+				"space-evenly"  -> this.contentLocation(kDLLayoutContentLocationSpaceEvenly)
+				"space-between" -> this.contentLocation(kDLLayoutContentLocationSpaceBetween)
 			}
 
 			return
@@ -797,12 +797,12 @@ open class LayoutNode(layout: Layout) {
 	}
 
 	/**
-	 * @method contentDisposition
+	 * @method contentLocation
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	public fun contentDisposition(contentDisposition: Int) {
-		LayoutNodeExternal.setContentDisposition(this.handle, contentDisposition)
+	public fun contentLocation(contentLocation: Int) {
+		LayoutNodeExternal.setContentLocation(this.handle, contentLocation)
 	}
 
 	/**

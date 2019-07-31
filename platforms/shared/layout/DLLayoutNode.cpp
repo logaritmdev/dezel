@@ -281,19 +281,19 @@ DLLayoutNodeSetContentOrientation(DLLayoutNodeRef node, DLLayoutContentOrientati
 }
 
 void
-DLLayoutNodeSetContentDisposition(DLLayoutNodeRef node, DLLayoutContentDisposition placement)
+DLLayoutNodeSetContentLocation(DLLayoutNodeRef node, DLLayoutContentLocation location)
 {
-	if (node->contentDisposition != placement) {
-		node->contentDisposition = placement;
+	if (node->contentLocation != location) {
+		node->contentLocation = location;
 		DLLayoutNodeInvalidateLayout(node);
 	}
 }
 
 void
-DLLayoutNodeSetContentArrangement(DLLayoutNodeRef node, DLLayoutContentArrangement alignment)
+DLLayoutNodeSetContentArrangement(DLLayoutNodeRef node, DLLayoutContentArrangement arrangement)
 {
-	if (node->contentArrangement != alignment) {
-		node->contentArrangement = alignment;
+	if (node->contentArrangement != arrangement) {
+		node->contentArrangement = arrangement;
 		DLLayoutNodeInvalidateLayout(node);
 	}
 }

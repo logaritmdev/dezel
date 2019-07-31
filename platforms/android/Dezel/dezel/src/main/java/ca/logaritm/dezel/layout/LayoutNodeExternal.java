@@ -400,11 +400,11 @@ public class LayoutNodeExternal {
 	static native public void setContentOrientation(long handle, int direction);
 
 	/**
-	 * @method setContentDisposition
+	 * @method setContentLocation
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	static native public void setContentDisposition(long handle, int disposition);
+	static native public void setContentLocation(long handle, int location);
 
 	/**
 	 * @method setContentArrangement

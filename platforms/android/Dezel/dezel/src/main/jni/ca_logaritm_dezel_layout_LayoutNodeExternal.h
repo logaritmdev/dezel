@@ -457,10 +457,10 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setConte
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
- * Method:    setContentDisposition
+ * Method:    setContentLocation
  * Signature: (JI)V
  */
-JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setContentDisposition
+JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setContentLocation
   (JNIEnv *, jclass, jlong, jint);
 
 /*

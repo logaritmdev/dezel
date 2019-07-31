@@ -731,10 +731,10 @@ export class View extends Emitter {
 
 	/**
 	 * The view's content horizontal alignment.
-	 * @property contentDisposition
+	 * @property contentLocation
 	 * @since 0.1.0
 	 */
-	@native public contentDisposition!: 'start' | 'center' | 'end' | 'space-around' | 'space-between' | 'space-evenly'
+	@native public contentLocation!: 'start' | 'center' | 'end' | 'space-around' | 'space-between' | 'space-evenly'
 
 	/**
 	 * The view's content vertical alignment.

@@ -523,11 +523,11 @@ void Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setContentOrientation(JNIE
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
- * Method:    setContentDisposition
+ * Method:    setContentLocation
  * Signature: (JI)V
  */
-void Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setContentDisposition(JNIEnv *env, jclass, jlong layoutNodePtr, jint disposition) {
-	DLLayoutNodeSetContentDisposition(reinterpret_cast<DLLayoutNodeRef>(layoutNodePtr), static_cast<DLLayoutContentDisposition>(disposition));
+void Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setContentLocation(JNIEnv *env, jclass, jlong layoutNodePtr, jint location) {
+	DLLayoutNodeSetContentLocation(reinterpret_cast<DLLayoutNodeRef>(layoutNodePtr), static_cast<DLLayoutContentLocation>(location));
 }
 
 /*

@@ -100,12 +100,12 @@ const val kDLLayoutContentOrientationHorizontal = 2
  * The node content gravity values.
  * @since 0.1.0
  */
-const val kDLLayoutContentDispositionStart = 1
-const val kDLLayoutContentDispositionCenter = 2
-const val kDLLayoutContentDispositionEnd = 3
-const val kDLLayoutContentDispositionSpaceAround = 4
-const val kDLLayoutContentDispositionSpaceBetween = 5
-const val kDLLayoutContentDispositionSpaceEvenly = 6
+const val kDLLayoutContentLocationStart = 1
+const val kDLLayoutContentLocationCenter = 2
+const val kDLLayoutContentLocationEnd = 3
+const val kDLLayoutContentLocationSpaceAround = 4
+const val kDLLayoutContentLocationSpaceBetween = 5
+const val kDLLayoutContentLocationSpaceEvenly = 6
 
 /**
  * The node content alignment values.

@@ -795,20 +795,20 @@ open class LayoutNode {
 	}
 
 	/**
-	 * @method contentDisposition
-	 * @since 0.1.0
+	 * @method contentLocation
+	 * @since 0.7.0
 	 */
-	open func contentDisposition(_ value: Property) {
+	open func contentLocation(_ value: Property) {
 
 		if (value.type == .string) {
 
 			switch (value.string) {
-				case "center":        self.contentDisposition(kDLLayoutContentDispositionCenter)
-				case "start":         self.contentDisposition(kDLLayoutContentDispositionStart)
-				case "end":           self.contentDisposition(kDLLayoutContentDispositionEnd)
-				case "space-around":  self.contentDisposition(kDLLayoutContentDispositionSpaceAround)
-				case "space-evenly":  self.contentDisposition(kDLLayoutContentDispositionSpaceEvenly)
-				case "space-between": self.contentDisposition(kDLLayoutContentDispositionSpaceBetween)
+				case "center":        self.contentLocation(kDLLayoutContentLocationCenter)
+				case "start":         self.contentLocation(kDLLayoutContentLocationStart)
+				case "end":           self.contentLocation(kDLLayoutContentLocationEnd)
+				case "space-around":  self.contentLocation(kDLLayoutContentLocationSpaceAround)
+				case "space-evenly":  self.contentLocation(kDLLayoutContentLocationSpaceEvenly)
+				case "space-between": self.contentLocation(kDLLayoutContentLocationSpaceBetween)
 				default: break
 			}
 
@@ -819,11 +819,11 @@ open class LayoutNode {
 	}
 
 	/**
-	 * @method contentDisposition
+	 * @method contentLocation
 	 * @since 0.1.0
 	 */
-	open func contentDisposition(_ contentDisposition: DLLayoutContentDisposition) {
-		DLLayoutNodeSetContentDisposition(self.handle, contentDisposition)
+	open func contentLocation(_ contentLocation: DLLayoutContentLocation) {
+		DLLayoutNodeSetContentLocation(self.handle, contentLocation)
 	}
 
 	/**

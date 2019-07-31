@@ -82,7 +82,7 @@ export class TextView extends View {
 	/**
 	 * The text view's text location.
 	 * @property textLocation
-	 * @since 0.1.0
+	 * @since 0.7.0
 	 */
 	@native public textLocation!: 'top' | 'middle' | 'bottom'
 

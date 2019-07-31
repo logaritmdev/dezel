@@ -542,31 +542,31 @@ DLRelativeLayoutResolve(DLLayoutNodeRef node, const vector<DLLayoutNodeRef> &nod
 	double offset = 0;
 	double spacer = 0;
 
-	switch (node->contentDisposition) {
+	switch (node->contentLocation) {
 
-		case kDLLayoutContentDispositionStart:
+		case kDLLayoutContentLocationStart:
 			offset = 0;
 			break;
 
-		case kDLLayoutContentDispositionEnd:
+		case kDLLayoutContentLocationEnd:
 			offset = dispositionSpace;
 			break;
 
-		case kDLLayoutContentDispositionCenter:
+		case kDLLayoutContentLocationCenter:
 			offset = dispositionSpace / 2;
 			break;
 
-		case kDLLayoutContentDispositionSpaceBetween:
+		case kDLLayoutContentLocationSpaceBetween:
 			spacer = dispositionSpace / (nodes.size() - 1);
 			offset = 0;
 			break;
 
-		case kDLLayoutContentDispositionSpaceEvenly:
+		case kDLLayoutContentLocationSpaceEvenly:
 			spacer = dispositionSpace / (nodes.size() + 1);
 			offset = spacer;
 			break;
 
-		case kDLLayoutContentDispositionSpaceAround:
+		case kDLLayoutContentLocationSpaceAround:
 			spacer = dispositionSpace / (nodes.size() + 1);
 			offset = spacer / 2;
 			break;

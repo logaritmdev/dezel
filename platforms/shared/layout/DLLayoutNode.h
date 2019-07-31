@@ -142,13 +142,13 @@ typedef enum {
  * @since 0.1.0
  */
 typedef enum {
-	kDLLayoutContentDispositionStart = 1,
-	kDLLayoutContentDispositionCenter = 2,
-	kDLLayoutContentDispositionEnd = 3,
-	kDLLayoutContentDispositionSpaceAround = 4,
-	kDLLayoutContentDispositionSpaceBetween = 5,
-	kDLLayoutContentDispositionSpaceEvenly = 6
-} DLLayoutContentDisposition;
+	kDLLayoutContentLocationStart = 1,
+	kDLLayoutContentLocationCenter = 2,
+	kDLLayoutContentLocationEnd = 3,
+	kDLLayoutContentLocationSpaceAround = 4,
+	kDLLayoutContentLocationSpaceBetween = 5,
+	kDLLayoutContentLocationSpaceEvenly = 6
+} DLLayoutContentLocation;
 
 /**
  * The node content alignment values.
@@ -560,10 +560,10 @@ void DLLayoutNodeSetContentOrientation(DLLayoutNodeRef node, DLLayoutContentOrie
 
 /**
  * Assigns the layout node's content gravity specification.
- * @function DLLayoutNodeSetContentDisposition
+ * @function DLLayoutNodeSetContentLocation
  * @since 0.1.0
  */
-void DLLayoutNodeSetContentDisposition(DLLayoutNodeRef node, DLLayoutContentDisposition placement);
+void DLLayoutNodeSetContentLocation(DLLayoutNodeRef node, DLLayoutContentLocation placement);
 
 /**
  * Assigns the layout node's content alignment specification.

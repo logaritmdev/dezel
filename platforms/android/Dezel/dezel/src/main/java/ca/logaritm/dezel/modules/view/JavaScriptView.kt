@@ -840,11 +840,11 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 
 	/**
 	 * The view's content organization on the main axis.
-	 * @property contentDisposition
+	 * @property contentLocation
 	 * @since 0.7.0
 	 */
-	open var contentDisposition: Property by Delegates.OnSet(Property("start")) { value ->
-		this.layoutNode.contentDisposition(value)
+	open var contentLocation: Property by Delegates.OnSet(Property("start")) { value ->
+		this.layoutNode.contentLocation(value)
 	}
 
 	/**
@@ -5231,23 +5231,23 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method jsGet_contentDisposition
+	 * @method jsGet_contentLocation
 	 * @since 0.7.0
 	 * @hidden
 	 */
 	@Suppress("unused")
-	open fun jsGet_contentDisposition(callback: JavaScriptGetterCallback) {
-		callback.returns(this.contentDisposition)
+	open fun jsGet_contentLocation(callback: JavaScriptGetterCallback) {
+		callback.returns(this.contentLocation)
 	}
 
 	/**
-	 * @method jsSet_contentDisposition
+	 * @method jsSet_contentLocation
 	 * @since 0.7.0
 	 * @hidden
 	 */
 	@Suppress("unused")
-	open fun jsSet_contentDisposition(callback: JavaScriptSetterCallback) {
-		this.contentDisposition = Property(callback.value)
+	open fun jsSet_contentLocation(callback: JavaScriptSetterCallback) {
+		this.contentLocation = Property(callback.value)
 	}
 
 	//--------------------------------------------------------------------------
