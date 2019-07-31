@@ -114,11 +114,11 @@ open class TextArea: UITextView, UITextViewDelegate {
 	}
 
 	/**
-	 * The text area's text vertical alignment.
-	 * @property textPlacement
+	 * The text area's text location.
+	 * @property textLocation
 	 * @since 0.7.0
 	 */
-	open var textPlacement: TextPlacement = .middle {
+	open var textLocation: TextLocation = .middle {
 		willSet {
 			print("Text field placement is not yet supported")
 		}

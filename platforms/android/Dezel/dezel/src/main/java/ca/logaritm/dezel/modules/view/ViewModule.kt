@@ -2,8 +2,8 @@ package ca.logaritm.dezel.modules.view
 
 import ca.logaritm.dezel.core.JavaScriptContext
 import ca.logaritm.dezel.core.Module
-import ca.logaritm.dezel.modules.view.optimize.JavaScriptViewOptimizer
 import ca.logaritm.dezel.modules.view.optimize.JavaScriptListOptimizer
+import ca.logaritm.dezel.modules.view.optimize.JavaScriptViewOptimizer
 
 /**
  * @class ViewModule

@@ -2,17 +2,10 @@ package ca.logaritm.dezel.modules.global
 
 import android.os.AsyncTask
 import android.os.Handler
-import android.os.Looper
-import android.util.Log
 import ca.logaritm.dezel.core.JavaScriptClass
 import ca.logaritm.dezel.core.JavaScriptContext
 import ca.logaritm.dezel.core.JavaScriptFunctionCallback
-import ca.logaritm.dezel.extension.toURL
-import com.neovisionaries.ws.client.WebSocketAdapter
-import com.neovisionaries.ws.client.WebSocketException
-import com.neovisionaries.ws.client.WebSocketFactory
-import com.neovisionaries.ws.client.WebSocketFrame
-import com.neovisionaries.ws.client.WebSocket
+import com.neovisionaries.ws.client.*
 
 /**
  * Bridges the native WebSocket class.

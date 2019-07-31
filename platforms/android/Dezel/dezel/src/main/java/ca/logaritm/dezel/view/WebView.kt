@@ -10,11 +10,11 @@ import android.util.SizeF
 import android.view.MotionEvent
 import android.view.View
 import android.webkit.*
-import android.webkit.WebView as AndroidWebView
 import android.widget.RelativeLayout
 import ca.logaritm.dezel.extension.Delegates
 import ca.logaritm.dezel.view.type.Overscroll
 import ca.logaritm.dezel.view.type.Scrollbars
+import android.webkit.WebView as AndroidWebView
 
 /**
  * @class WebView

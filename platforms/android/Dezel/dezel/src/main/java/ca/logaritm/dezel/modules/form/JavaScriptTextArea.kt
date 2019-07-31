@@ -15,7 +15,7 @@ import ca.logaritm.dezel.view.graphic.Color
 import ca.logaritm.dezel.view.graphic.Convert
 import ca.logaritm.dezel.view.type.TextAlignment
 import ca.logaritm.dezel.view.type.TextDecoration
-import ca.logaritm.dezel.view.type.TextPlacement
+import ca.logaritm.dezel.view.type.TextLocation
 import ca.logaritm.dezel.view.type.TextTransform
 
 /**
@@ -147,12 +147,12 @@ open class JavaScriptTextArea(context: JavaScriptContext) : JavaScriptView(conte
 	}
 
 	/**
-	 * The text area's text placement.
-	 * @property textPlacement
+	 * The text area's text location.
+	 * @property textLocation
 	 * @since 0.7.0
 	 */
-	open var textPlacement: Property by Delegates.OnSet(Property("middle")) { value ->
-		this.view.textPlacement = this.getTextPlacement(value.string)
+	open var textLocation: Property by Delegates.OnSet(Property("middle")) { value ->
+		this.view.textLocation = this.getTextLocation(value.string)
 	}
 
 	/**
@@ -398,20 +398,20 @@ open class JavaScriptTextArea(context: JavaScriptContext) : JavaScriptView(conte
 	}
 
 	/**
-	 * @method getTextPlacement
+	 * @method getTextLocation
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	open fun getTextPlacement(value: String): TextPlacement {
+	open fun getTextLocation(value: String): TextLocation {
 
 		when (value) {
-			"top"    -> return TextPlacement.TOP
-			"middle" -> return TextPlacement.MIDDLE
-			"bottom" -> return TextPlacement.BOTTOM
-			else     -> Log.d("DEZEL", "Unrecognized handle for textPlacement: $value")
+			"top"    -> return TextLocation.TOP
+			"middle" -> return TextLocation.MIDDLE
+			"bottom" -> return TextLocation.BOTTOM
+			else     -> Log.d("DEZEL", "Unrecognized handle for textLocation: $value")
 		}
 
-		return TextPlacement.MIDDLE
+		return TextLocation.MIDDLE
 	}
 
 	//--------------------------------------------------------------------------
@@ -737,23 +737,23 @@ open class JavaScriptTextArea(context: JavaScriptContext) : JavaScriptView(conte
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method jsGet_textPlacement
+	 * @method jsGet_textLocation
 	 * @since 0.7.0
 	 * @hidden
 	 */
 	@Suppress("unused")
-	open fun jsGet_textPlacement(callback: JavaScriptGetterCallback) {
-		callback.returns(this.textPlacement)
+	open fun jsGet_textLocation(callback: JavaScriptGetterCallback) {
+		callback.returns(this.textLocation)
 	}
 
 	/**
-	 * @method jsSet_textPlacement
+	 * @method jsSet_textLocation
 	 * @since 0.7.0
 	 * @hidden
 	 */
 	@Suppress("unused")
-	open fun jsSet_textPlacement(callback: JavaScriptSetterCallback) {
-		this.textPlacement = Property(callback.value)
+	open fun jsSet_textLocation(callback: JavaScriptSetterCallback) {
+		this.textLocation = Property(callback.value)
 	}
 
 	//--------------------------------------------------------------------------

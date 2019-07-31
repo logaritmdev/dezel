@@ -1,15 +1,11 @@
-package ca.logaritm.dezel.modules.device
+package ca.logaritm.dezel.modules.locale
 
-import android.content.Context.VIBRATOR_SERVICE
-import android.content.SharedPreferences
-import android.media.MediaActionSound
-import android.os.Build
-import android.os.VibrationEffect
-import android.os.Vibrator
 import android.text.TextUtils
 import android.view.View
-import ca.logaritm.dezel.application.application
-import ca.logaritm.dezel.core.*
+import ca.logaritm.dezel.core.JavaScriptClass
+import ca.logaritm.dezel.core.JavaScriptContext
+import ca.logaritm.dezel.core.JavaScriptGetterCallback
+import ca.logaritm.dezel.core.Property
 import java.util.*
 
 /**

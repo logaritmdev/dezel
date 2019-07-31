@@ -1,7 +1,6 @@
 package ca.logaritm.dezel.timer
 
 import android.os.Handler
-import android.os.Looper
 
 /**
  * Fires a callbac after a time interval.

@@ -1,6 +1,5 @@
 package ca.logaritm.dezel.core
 
-import android.util.Log
 import java.lang.ref.ReferenceQueue
 
 

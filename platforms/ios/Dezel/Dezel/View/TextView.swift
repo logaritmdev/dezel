@@ -112,13 +112,13 @@ open class TextView: UIView, Updatable, Clippable, TransitionListener {
 	}
 
 	/**
-	 * The text view's text placement.
-	 * @property textPlacement
+	 * The text view's text location.
+	 * @property textLocation
 	 * @since 0.7.0
 	 */
-	open var textPlacement: TextPlacement = .middle {
+	open var textLocation: TextLocation = .middle {
 		willSet {
-			self.textLayer.textPlacement = newValue
+			self.textLayer.textLocation = newValue
 		}
 	}
 
@@ -407,7 +407,7 @@ open class TextView: UIView, Updatable, Clippable, TransitionListener {
 		bounds.size.height = bounds.size.height - paddingT - paddingB
 		bounds.origin.x = paddingL
 		bounds.origin.y = paddingT
-		
+
 		self.textLayer.frame = bounds
 	}
 

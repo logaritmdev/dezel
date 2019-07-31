@@ -153,13 +153,13 @@ open class JavaScriptTextArea: JavaScriptView, TextAreaDelegate {
 	}
 
 	/**
-	 * The text input's text placement.
-	 * @property textPlacement
+	 * The text input's text location.
+	 * @property textLocation
 	 * @since 0.7.0
 	 */
-	@objc open var textPlacement: Property = Property(string: "top") {
+	@objc open var textLocation: Property = Property(string: "top") {
 		willSet {
-			self.view.textPlacement = self.getTextPlacement(newValue.string)
+			self.view.textLocation = self.getTextLocation(newValue.string)
 		}
 	}
 
@@ -527,11 +527,11 @@ open class JavaScriptTextArea: JavaScriptView, TextAreaDelegate {
 	}
 
 	/**
-	 * @method getTextPlacement
+	 * @method getTextLocation
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	open func getTextPlacement(_ value: String) -> TextPlacement {
+	open func getTextLocation(_ value: String) -> TextLocation {
 
 		switch (value) {
 
@@ -543,7 +543,7 @@ open class JavaScriptTextArea: JavaScriptView, TextAreaDelegate {
 				return .bottom
 
 			default:
-				NSLog("Unrecognized value for textPlacement: \(value)")
+				NSLog("Unrecognized value for textLocation: \(value)")
 		}
 
 		return .middle
@@ -814,21 +814,21 @@ open class JavaScriptTextArea: JavaScriptView, TextAreaDelegate {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method jsGet_textPlacement
+	 * @method jsGet_textLocation
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsGet_textPlacement(callback: JavaScriptGetterCallback) {
-		callback.returns(self.textPlacement)
+	@objc open func jsGet_textLocation(callback: JavaScriptGetterCallback) {
+		callback.returns(self.textLocation)
 	}
 
 	/**
-	 * @method jsSet_textPlacement
+	 * @method jsSet_textLocation
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsSet_textPlacement(callback: JavaScriptSetterCallback) {
-		self.textPlacement = Property(value: callback.value)
+	@objc open func jsSet_textLocation(callback: JavaScriptSetterCallback) {
+		self.textLocation = Property(value: callback.value)
 	}
 
 	//--------------------------------------------------------------------------

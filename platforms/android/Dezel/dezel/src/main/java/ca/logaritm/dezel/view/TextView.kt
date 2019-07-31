@@ -34,7 +34,7 @@ open class TextView(context: Context, listener: TextViewListener?) : View(contex
 	 * The text view's text layout.
 	 * @property layout
 	 * @since 0.7.0
-	 */	
+	 */
 	open var layout: TextLayout = TextLayout()
 
 	/**
@@ -125,12 +125,12 @@ open class TextView(context: Context, listener: TextViewListener?) : View(contex
 	}
 
 	/**
-	 * @property textPlacement
+	 * @property textLocation
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	open var textPlacement: TextPlacement by Delegates.OnSet(TextPlacement.MIDDLE) { value ->
-		this.layout.textPlacement = value
+	open var textLocation: TextLocation by Delegates.OnSet(TextLocation.MIDDLE) { value ->
+		this.layout.textLocation = value
 		this.invalidate()
 	}
 
@@ -452,7 +452,7 @@ open class TextView(context: Context, listener: TextViewListener?) : View(contex
 	 * @method update
 	 * @since 0.7.0
 	 * @hidden
-	 */	
+	 */
 	open fun update() {
 		this.update(this.bounds.size)
 	}

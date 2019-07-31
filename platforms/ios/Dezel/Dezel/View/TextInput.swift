@@ -182,11 +182,11 @@ open class TextInput: UITextField, UITextFieldDelegate {
 	}
 
 	/**
-	 * The text input's text vertical alignment.
-	 * @property textPlacement
+	 * The text input's text location.
+	 * @property textLocation
 	 * @since 0.7.0
 	 */
-	open var textPlacement: TextPlacement = .middle {
+	open var textLocation: TextLocation = .middle {
 
 		willSet {
 

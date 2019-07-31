@@ -3,7 +3,6 @@ package ca.logaritm.dezel.extension
 import android.net.Uri
 import ca.logaritm.dezel.core.JavaScriptContext
 import ca.logaritm.dezel.core.JavaScriptValue
-import ca.logaritm.dezel.core.JavaScriptValueExternal
 import java.net.URL
 
 /**

@@ -199,13 +199,13 @@ open class TextLayer: Layer {
 	}
 
 	/**
-	 * The text layer's text placement.
-	 * @property textPlacement
-	 * @since 0.1.0
+	 * The text layer's text location.
+	 * @property textLocation
+	 * @since 0.7.0
 	 */
-	open var textPlacement: TextPlacement = .middle {
+	open var textLocation: TextLocation = .middle {
 		willSet {
-			self.layout.textPlacement = newValue
+			self.layout.textLocation = newValue
 			self.setNeedsDisplay()
 		}
 	}
@@ -370,7 +370,7 @@ open class TextLayer: Layer {
 			self.textDecoration = layer.textDecoration
 			self.textTransform = layer.textTransform
 			self.textAlignment = layer.textAlignment
-			self.textPlacement = layer.textPlacement
+			self.textLocation = layer.textLocation
 			self.textBaseline = layer.textBaseline
 			self.lines = layer.lines
 		}
@@ -675,5 +675,3 @@ open class TextLayer: Layer {
 		self.invalidAttributedEllipsis = true
 	}
 }
-
-

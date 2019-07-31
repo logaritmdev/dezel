@@ -1,7 +1,5 @@
 package ca.logaritm.dezel.test
 
-import android.content.Context
-import android.util.Log
 import ca.logaritm.dezel.application.ApplicationActivity
 import ca.logaritm.dezel.core.JavaScriptContext
 import ca.logaritm.dezel.core.getResource

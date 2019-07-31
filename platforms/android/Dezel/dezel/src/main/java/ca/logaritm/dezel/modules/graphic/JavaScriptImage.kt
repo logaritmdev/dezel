@@ -4,7 +4,6 @@ import android.graphics.Bitmap
 import ca.logaritm.dezel.application.application
 import ca.logaritm.dezel.core.*
 import ca.logaritm.dezel.extension.Delegates
-import android.content.Context as AndroidContext
 
 /**
  * An image image manager.

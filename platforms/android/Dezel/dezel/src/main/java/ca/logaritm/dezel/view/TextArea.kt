@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Paint
 import android.view.Gravity
 import android.view.KeyEvent
+import android.view.View.OnFocusChangeListener
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import ca.logaritm.dezel.application.ApplicationActivity
@@ -12,7 +13,7 @@ import ca.logaritm.dezel.font.FontManager
 import ca.logaritm.dezel.view.graphic.Color
 import ca.logaritm.dezel.view.type.TextAlignment
 import ca.logaritm.dezel.view.type.TextDecoration
-import ca.logaritm.dezel.view.type.TextPlacement
+import ca.logaritm.dezel.view.type.TextLocation
 import ca.logaritm.dezel.view.type.TextTransform
 import android.text.InputType as AndroidInputType
 
@@ -100,11 +101,11 @@ open class TextArea(context: Context, listener: TextAreaListener?) : EditText(co
 	}
 
 	/**
-	 * The text area's text vertical alignment.
-	 * @property textPlacement
+	 * The text area's text location.
+	 * @property textLocation
 	 * @since 0.7.0
 	 */
-	open var textPlacement: TextPlacement by Delegates.OnSet(TextPlacement.TOP) {
+	open var textLocation: TextLocation by Delegates.OnSet(TextLocation.TOP) {
 		this.updateGravity()
 	}
 
@@ -498,10 +499,10 @@ open class TextArea(context: Context, listener: TextAreaListener?) : EditText(co
 			TextAlignment.RIGHT   -> Gravity.RIGHT
 		}
 
-		val v = when (this.textPlacement) {
-			TextPlacement.TOP    -> Gravity.TOP
-			TextPlacement.MIDDLE -> Gravity.CENTER_VERTICAL
-			TextPlacement.BOTTOM -> Gravity.BOTTOM
+		val v = when (this.textLocation) {
+			TextLocation.TOP    -> Gravity.TOP
+			TextLocation.MIDDLE -> Gravity.CENTER_VERTICAL
+			TextLocation.BOTTOM -> Gravity.BOTTOM
 		}
 
 		this.gravity = h or v

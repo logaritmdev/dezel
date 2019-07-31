@@ -1,8 +1,6 @@
 package ca.logaritm.dezel.extension
 
-import android.net.Uri
 import ca.logaritm.dezel.core.JavaScriptValue
-import java.lang.Exception
 import java.net.URL
 
 /**

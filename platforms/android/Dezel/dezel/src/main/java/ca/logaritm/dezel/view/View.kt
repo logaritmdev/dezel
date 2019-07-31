@@ -6,7 +6,6 @@ import android.view.MotionEvent
 import android.view.ScaleGestureDetector
 import android.view.ViewConfiguration
 import android.view.ViewGroup
-import android.view.View as AndroidView
 import android.view.animation.Transformation
 import android.widget.HorizontalScrollView
 import android.widget.ScrollView
@@ -17,6 +16,7 @@ import ca.logaritm.dezel.extension.setMeasuredFrame
 import ca.logaritm.dezel.view.graphic.Convert
 import ca.logaritm.dezel.view.type.Overscroll
 import ca.logaritm.dezel.view.type.Scrollbars
+import android.view.View as AndroidView
 
 /**
  * @class View

@@ -132,12 +132,12 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	}
 
 	/**
-	 * The text view's text placement.
-	 * @property textPlacement
+	 * The text view's text location.
+	 * @property textLocation
 	 * @since 0.7.0
 	 */
-	open var textPlacement: Property by Delegates.OnSet(Property("middle")) { value ->
-		this.view.textPlacement = this.getTextPlacement(value.string)
+	open var textLocation: Property by Delegates.OnSet(Property("middle")) { value ->
+		this.view.textLocation = this.getTextLocation(value.string)
 	}
 
 	/**
@@ -488,21 +488,21 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	}
 
 	/**
-	 * @method getTextPlacement
+	 * @method getTextLocation
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	internal fun getTextPlacement(value: String): TextPlacement {
+	internal fun getTextLocation(value: String): TextLocation {
 
 		when (value) {
-			"top"    -> return TextPlacement.TOP
-			"middle" -> return TextPlacement.MIDDLE
-			"bottom" -> return TextPlacement.BOTTOM
+			"top"    -> return TextLocation.TOP
+			"middle" -> return TextLocation.MIDDLE
+			"bottom" -> return TextLocation.BOTTOM
 		}
 
-		Log.d("DEZEL", "Unrecognized handle for textPlacement: $value")
+		Log.d("DEZEL", "Unrecognized handle for textLocation: $value")
 
-		return TextPlacement.MIDDLE
+		return TextLocation.MIDDLE
 	}
 
 	/**
@@ -725,23 +725,23 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method jsGet_textPlacement
+	 * @method jsGet_textLocation
 	 * @since 0.7.0
 	 * @hidden
 	 */
 	@Suppress("unused")
-	open fun jsGet_textPlacement(callback: JavaScriptGetterCallback) {
-		callback.returns(this.textPlacement)
+	open fun jsGet_textLocation(callback: JavaScriptGetterCallback) {
+		callback.returns(this.textLocation)
 	}
 
 	/**
-	 * @method jsSet_textPlacement
+	 * @method jsSet_textLocation
 	 * @since 0.7.0
 	 * @hidden
 	 */
 	@Suppress("unused")
-	open fun jsSet_textPlacement(callback: JavaScriptSetterCallback) {
-		this.textPlacement = Property(callback.value)
+	open fun jsSet_textLocation(callback: JavaScriptSetterCallback) {
+		this.textLocation = Property(callback.value)
 	}
 
 	//--------------------------------------------------------------------------

@@ -67,11 +67,11 @@ open class TextLayout: NSObject {
 	}
 
 	/**
-	 * The text layer's text placement.
-	 * @property textPlacement
-	 * @since 0.1.0
+	 * The text layer's text location.
+	 * @property textLocation
+	 * @since 0.7.0
 	 */
-	open var textPlacement: TextPlacement = .middle {
+	open var textLocation: TextLocation = .middle {
 		willSet {
 			self.invalidate()
 		}
@@ -183,7 +183,7 @@ open class TextLayout: NSObject {
 		offset -= bounds.height
 		offset += extent.height
 
-		switch (self.textPlacement) {
+		switch (self.textLocation) {
 
 			case .middle:
 				offset += self.extent.alignMiddle(of: bounds).y
@@ -339,7 +339,7 @@ open class TextLayout: NSObject {
 		offset -= bounds.height
 		offset += extent.height
 
-		switch (self.textPlacement) {
+		switch (self.textLocation) {
 
 			case .middle:
 				offset += extent.alignMiddle(of: bounds).y
@@ -448,4 +448,3 @@ open class TextLayout: NSObject {
  */
 internal let kTextLayoutFrameWidth = CGFloat(10000)
 internal let kTextLayoutFrameHeight = CGFloat(10000)
-

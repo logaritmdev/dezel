@@ -21,8 +21,8 @@ import ca.logaritm.dezel.core.*
 import ca.logaritm.dezel.extension.Delegates
 import ca.logaritm.dezel.extension.viewport
 import ca.logaritm.dezel.layout.Layout
-import ca.logaritm.dezel.modules.application.JavaScriptApplication
 import ca.logaritm.dezel.modules.application.ApplicationModule
+import ca.logaritm.dezel.modules.application.JavaScriptApplication
 import ca.logaritm.dezel.modules.core.CoreModule
 import ca.logaritm.dezel.modules.device.DeviceModule
 import ca.logaritm.dezel.modules.dialog.DialogModule

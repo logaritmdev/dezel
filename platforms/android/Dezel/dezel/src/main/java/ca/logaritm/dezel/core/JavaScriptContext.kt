@@ -1,9 +1,7 @@
 package ca.logaritm.dezel.core
 
-import android.os.Looper
 import android.util.Log
 import ca.logaritm.dezel.BuildConfig
-import ca.logaritm.dezel.application.ApplicationActivity
 
 /**
  * A JavaScript execution environment.

@@ -8,6 +8,7 @@ import android.text.method.PasswordTransformationMethod
 import android.view.Gravity
 import android.view.KeyEvent
 import android.view.View
+import android.view.View.OnFocusChangeListener
 import android.view.inputmethod.EditorInfo
 import android.widget.DatePicker
 import android.widget.EditText
@@ -152,11 +153,11 @@ open class TextInput(context: Context, listener: TextInputListener?) : EditText(
 	}
 
 	/**
-	 * The text input's text vertical alignment.
-	 * @property textPlacement
+	 * The text input's text location.
+	 * @property textLocation
 	 * @since 0.7.0
 	 */
-	open var textPlacement: TextPlacement by Delegates.OnSet(TextPlacement.MIDDLE) {
+	open var textLocation: TextLocation by Delegates.OnSet(TextLocation.MIDDLE) {
 		this.updateGravity()
 	}
 
@@ -810,10 +811,10 @@ open class TextInput(context: Context, listener: TextInputListener?) : EditText(
 			TextAlignment.RIGHT   -> Gravity.RIGHT
 		}
 
-		val v = when (this.textPlacement) {
-			TextPlacement.TOP    -> Gravity.TOP
-			TextPlacement.MIDDLE -> Gravity.CENTER_VERTICAL
-			TextPlacement.BOTTOM -> Gravity.BOTTOM
+		val v = when (this.textLocation) {
+			TextLocation.TOP    -> Gravity.TOP
+			TextLocation.MIDDLE -> Gravity.CENTER_VERTICAL
+			TextLocation.BOTTOM -> Gravity.BOTTOM
 		}
 
 		this.gravity = v or h

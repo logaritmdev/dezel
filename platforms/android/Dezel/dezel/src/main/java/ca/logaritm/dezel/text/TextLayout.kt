@@ -12,7 +12,7 @@ import ca.logaritm.dezel.extension.max
 import ca.logaritm.dezel.geom.Size
 import ca.logaritm.dezel.text.layout.StaticLayoutBuilder
 import ca.logaritm.dezel.view.type.TextOverflow
-import ca.logaritm.dezel.view.type.TextPlacement
+import ca.logaritm.dezel.view.type.TextLocation
 
 /**
  * Break up text into lines that fits into specified bounds.
@@ -62,11 +62,11 @@ open class TextLayout {
 	}
 
 	/**
-	 * The text layout's text placement.
-	 * @property textPlacement
-	 * @since 0.5.0
+	 * The text layout's text location.
+	 * @property textLocation
+	 * @since 0.7.0
 	 */
-	open var textPlacement: TextPlacement by Delegates.OnSet(TextPlacement.MIDDLE) {
+	open var textLocation: TextLocation by Delegates.OnSet(TextLocation.MIDDLE) {
 		this.invalidate()
 	}
 
@@ -264,11 +264,11 @@ open class TextLayout {
 
 		var offset = 0f
 
-		when (this.textPlacement) {
+		when (this.textLocation) {
 
-			TextPlacement.MIDDLE -> offset += extent.alignMiddle(bounds).y
-			TextPlacement.BOTTOM -> offset += extent.alignBottom(bounds).y
-			TextPlacement.TOP    -> {}
+			TextLocation.MIDDLE -> offset += extent.alignMiddle(bounds).y
+			TextLocation.BOTTOM -> offset += extent.alignBottom(bounds).y
+			TextLocation.TOP    -> {}
 
 		}
 

@@ -80,11 +80,11 @@ export class TextView extends View {
 	@native public textAlignment!: 'start' | 'end' | 'left' | 'right' | 'center'
 
 	/**
-	 * The text view's text placement.
-	 * @property textPlacement
+	 * The text view's text location.
+	 * @property textLocation
 	 * @since 0.1.0
 	 */
-	@native public textPlacement!: 'top' | 'middle' | 'bottom'
+	@native public textLocation!: 'top' | 'middle' | 'bottom'
 
 	/**
 	 * The text view's text baseline offset.

@@ -129,10 +129,10 @@ export class TextInput extends View {
 
 	/**
 	 * The text input's text vertical alignment.
-	 * @property textPlacement
+	 * @property textLocation
 	 * @since 0.1.0
 	 */
-	@native public textPlacement!: 'top' | 'middle' | 'bottom'
+	@native public textLocation!: 'top' | 'middle' | 'bottom'
 
 	/**
 	 * The text input's text kerning.

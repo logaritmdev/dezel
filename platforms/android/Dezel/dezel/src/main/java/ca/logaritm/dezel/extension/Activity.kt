@@ -1,7 +1,6 @@
 package ca.logaritm.dezel.extension
 
 import android.app.Activity
-import android.content.Context
 import android.graphics.Point
 import android.os.Build
 import android.provider.Settings

@@ -66,7 +66,7 @@
 		C728E05D222B1B9100BE5F7F /* Locale.swift in Sources */ = {isa = PBXBuildFile; fileRef = C728E05C222B1B9100BE5F7F /* Locale.swift */; };
 		C72E0E9020668EE1003BCEF1 /* TextLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72E0E8F20668EE1003BCEF1 /* TextLayer.swift */; };
 		C72E0E9320669C97003BCEF1 /* TextAlignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72E0E9220669C97003BCEF1 /* TextAlignment.swift */; };
-		C72E0E9520669CA0003BCEF1 /* TextPlacement.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72E0E9420669CA0003BCEF1 /* TextPlacement.swift */; };
+		C72E0E9520669CA0003BCEF1 /* TextLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72E0E9420669CA0003BCEF1 /* TextLocation.swift */; };
 		C72E0E9720669CB8003BCEF1 /* TextDecoration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72E0E9620669CB8003BCEF1 /* TextDecoration.swift */; };
 		C72E0E9920669CBF003BCEF1 /* TextOverflow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72E0E9820669CBF003BCEF1 /* TextOverflow.swift */; };
 		C72E0E9B20669CCD003BCEF1 /* TextTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72E0E9A20669CCD003BCEF1 /* TextTransform.swift */; };
@@ -374,7 +374,7 @@
 		C728E05C222B1B9100BE5F7F /* Locale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Locale.swift; sourceTree = "<group>"; };
 		C72E0E8F20668EE1003BCEF1 /* TextLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLayer.swift; sourceTree = "<group>"; };
 		C72E0E9220669C97003BCEF1 /* TextAlignment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextAlignment.swift; sourceTree = "<group>"; };
-		C72E0E9420669CA0003BCEF1 /* TextPlacement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextPlacement.swift; sourceTree = "<group>"; };
+		C72E0E9420669CA0003BCEF1 /* TextLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLocation.swift; sourceTree = "<group>"; };
 		C72E0E9620669CB8003BCEF1 /* TextDecoration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextDecoration.swift; sourceTree = "<group>"; };
 		C72E0E9820669CBF003BCEF1 /* TextOverflow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextOverflow.swift; sourceTree = "<group>"; };
 		C72E0E9A20669CCD003BCEF1 /* TextTransform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextTransform.swift; sourceTree = "<group>"; };
@@ -699,7 +699,7 @@
 				C72E0E9220669C97003BCEF1 /* TextAlignment.swift */,
 				C72E0E9620669CB8003BCEF1 /* TextDecoration.swift */,
 				C72E0E9820669CBF003BCEF1 /* TextOverflow.swift */,
-				C72E0E9420669CA0003BCEF1 /* TextPlacement.swift */,
+				C72E0E9420669CA0003BCEF1 /* TextLocation.swift */,
 				C72E0E9A20669CCD003BCEF1 /* TextTransform.swift */,
 				C71E6CE020E6617D009B86F6 /* Scrollbars.swift */,
 				C71E6CE220E66188009B86F6 /* Overscroll.swift */,
@@ -1638,7 +1638,7 @@
 				C7E8A545201624FA005139F6 /* DLValue.cpp in Sources */,
 				C7BB7D472029062D004006C2 /* Transition.swift in Sources */,
 				C73700C72219A9370095A54B /* ImageEffect.swift in Sources */,
-				C72E0E9520669CA0003BCEF1 /* TextPlacement.swift in Sources */,
+				C72E0E9520669CA0003BCEF1 /* TextLocation.swift in Sources */,
 				C7E8A544201624FA005139F6 /* DLValuePrivate.cpp in Sources */,
 				C77189B42106AE1300337263 /* Transform3D.swift in Sources */,
 				C7A19E2E20AB721F00367E91 /* PlatformModule.swift in Sources */,

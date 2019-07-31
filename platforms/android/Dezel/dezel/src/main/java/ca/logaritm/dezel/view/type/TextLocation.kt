@@ -1,11 +1,11 @@
 package ca.logaritm.dezel.view.type
 
 /**
- * @enum TextPlacement
- * @since 0.1.0
+ * @enum TextLocation
+ * @since 0.7.0
  * @hidden
  */
-enum class TextPlacement {
+enum class TextLocation {
 	TOP,
 	MIDDLE,
 	BOTTOM;
