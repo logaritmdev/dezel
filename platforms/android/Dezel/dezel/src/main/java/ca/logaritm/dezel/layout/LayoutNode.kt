@@ -806,18 +806,18 @@ open class LayoutNode(layout: Layout) {
 	}
 
 	/**
-	 * @method contentArrangement
+	 * @method contentAlignment
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	public fun contentArrangement(value: Property) {
+	public fun contentAlignment(value: Property) {
 
 		if (value.type == PropertyType.STRING) {
 
 			when (value.string) {
-				"center" -> this.contentArrangement(kDLLayoutContentArrangementCenter)
-				"start"  -> this.contentArrangement(kDLLayoutContentArrangementStart)
-				"end"    -> this.contentArrangement(kDLLayoutContentArrangementEnd)
+				"center" -> this.contentAlignment(kDLLayoutContentAlignmentCenter)
+				"start"  -> this.contentAlignment(kDLLayoutContentAlignmentStart)
+				"end"    -> this.contentAlignment(kDLLayoutContentAlignmentEnd)
 
 			}
 
@@ -828,12 +828,12 @@ open class LayoutNode(layout: Layout) {
 	}
 
 	/**
-	 * @method contentArrangement
+	 * @method contentAlignment
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	public fun contentArrangement(contentArrangement: Int) {
-		LayoutNodeExternal.setContentArrangement(this.handle, contentArrangement)
+	public fun contentAlignment(contentAlignment: Int) {
+		LayoutNodeExternal.setContentAlignment(this.handle, contentAlignment)
 	}
 
 	/**

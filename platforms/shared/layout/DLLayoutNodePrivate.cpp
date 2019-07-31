@@ -820,7 +820,7 @@ DLLayoutNodeLayoutWrappedLayout(DLLayoutNodeRef node)
 	}
 
 	if (node->contentLocation == kDLLayoutContentLocationStart &&
-		node->contentArrangement == kDLLayoutContentArrangementStart) {
+		node->contentAlignment == kDLLayoutContentAlignmentStart) {
 		return;
 	}
 

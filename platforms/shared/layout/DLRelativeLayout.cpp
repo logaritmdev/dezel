@@ -203,17 +203,17 @@ DLRelativeLayoutNodeResolveArrangement(DLLayoutNodeRef node, double remaining)
 
 	double offset = 0;
 
-	switch (node->parent->contentArrangement) {
+	switch (node->parent->contentAlignment) {
 
-		case kDLLayoutContentArrangementStart:
+		case kDLLayoutContentAlignmentStart:
 			offset = headOffset;
 			break;
 
-		case kDLLayoutContentArrangementCenter:
+		case kDLLayoutContentAlignmentCenter:
 			offset = DL_GET_MID_OFFSET(size, remaining) + headOffset - tailOffset;
 			break;
 
-		case kDLLayoutContentArrangementEnd:
+		case kDLLayoutContentAlignmentEnd:
 			offset = DL_GET_END_OFFSET(size, remaining) - tailOffset;
 			break;
 	}

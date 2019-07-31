@@ -338,8 +338,8 @@ describe('View', () => {
 		expect(view.contentLocation).toBe('start')
 	})
 
-	it('should have a valid initial contentArrangement property value', () => {
-		expect(view.contentArrangement).toBe('start')
+	it('should have a valid initial contentAlignment property value', () => {
+		expect(view.contentAlignment).toBe('start')
 	})
 
 	it('should have a valid initial scrollable property value', () => {

@@ -827,17 +827,17 @@ open class LayoutNode {
 	}
 
 	/**
-	 * @method contentArrangement
-	 * @since 0.1.0
+	 * @method contentAlignment
+	 * @since 0.7.0
 	 */
-	open func contentArrangement(_ value: Property) {
+	open func contentAlignment(_ value: Property) {
 
 		if (value.type == .string) {
 
 			switch (value.string) {
-				case "center": self.contentArrangement(kDLLayoutContentArrangementCenter)
-				case "start":  self.contentArrangement(kDLLayoutContentArrangementStart)
-				case "end":    self.contentArrangement(kDLLayoutContentArrangementEnd)
+				case "center": self.contentAlignment(kDLLayoutContentAlignmentCenter)
+				case "start":  self.contentAlignment(kDLLayoutContentAlignmentStart)
+				case "end":    self.contentAlignment(kDLLayoutContentAlignmentEnd)
 				default: break
 			}
 
@@ -848,11 +848,11 @@ open class LayoutNode {
 	}
 
 	/**
-	 * @method contentArrangement
-	 * @since 0.1.0
+	 * @method contentAlignment
+	 * @since 0.7.0
 	 */
-	open func contentArrangement(_ contentArrangement: DLLayoutContentArrangement) {
-		DLLayoutNodeSetContentArrangement(self.handle, contentArrangement)
+	open func contentAlignment(_ contentAlignment: DLLayoutContentAlignment) {
+		DLLayoutNodeSetContentAlignment(self.handle, contentAlignment)
 	}
 
 	/**

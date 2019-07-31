@@ -290,10 +290,10 @@ DLLayoutNodeSetContentLocation(DLLayoutNodeRef node, DLLayoutContentLocation loc
 }
 
 void
-DLLayoutNodeSetContentArrangement(DLLayoutNodeRef node, DLLayoutContentArrangement arrangement)
+DLLayoutNodeSetContentAlignment(DLLayoutNodeRef node, DLLayoutContentAlignment alignment)
 {
-	if (node->contentArrangement != arrangement) {
-		node->contentArrangement = arrangement;
+	if (node->contentAlignment != alignment) {
+		node->contentAlignment = alignment;
 		DLLayoutNodeInvalidateLayout(node);
 	}
 }

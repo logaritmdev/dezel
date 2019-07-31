@@ -730,18 +730,18 @@ export class View extends Emitter {
 	@native public contentOrientation!: 'vertical' | 'horizontal'
 
 	/**
-	 * The view's content horizontal alignment.
+	 * The view's content alignment on the main axis.
 	 * @property contentLocation
-	 * @since 0.1.0
+	 * @since 0.7.0
 	 */
 	@native public contentLocation!: 'start' | 'center' | 'end' | 'space-around' | 'space-between' | 'space-evenly'
 
 	/**
-	 * The view's content vertical alignment.
-	 * @property contentArrangement
-	 * @since 0.1.0
+	 * The view's content alignment on the cross axis.
+	 * @property contentAlignment
+	 * @since 0.7.0
 	 */
-	@native public contentArrangement!: 'start' | 'center' | 'end'
+	@native public contentAlignment!: 'start' | 'center' | 'end'
 
 	/**
 	 * Determines whether the view can scroll.

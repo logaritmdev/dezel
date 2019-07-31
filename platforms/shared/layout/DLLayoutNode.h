@@ -138,7 +138,7 @@ typedef enum {
 
 /**
  * The node content gravity values.
- * @type DLLayoutContentArrangement
+ * @type DLLayoutContentAlignment
  * @since 0.1.0
  */
 typedef enum {
@@ -152,14 +152,14 @@ typedef enum {
 
 /**
  * The node content alignment values.
- * @type DLLayoutContentArrangement
+ * @type DLLayoutContentAlignment
  * @since 0.1.0
  */
 typedef enum {
-	kDLLayoutContentArrangementStart = 1,
-	kDLLayoutContentArrangementCenter = 2,
-	kDLLayoutContentArrangementEnd = 3,
-} DLLayoutContentArrangement;
+	kDLLayoutContentAlignmentStart = 1,
+	kDLLayoutContentAlignmentCenter = 2,
+	kDLLayoutContentAlignmentEnd = 3,
+} DLLayoutContentAlignment;
 
 /**
  * The node margin types.
@@ -567,10 +567,10 @@ void DLLayoutNodeSetContentLocation(DLLayoutNodeRef node, DLLayoutContentLocatio
 
 /**
  * Assigns the layout node's content alignment specification.
- * @function DLLayoutNodeSetContentArrangement
+ * @function DLLayoutNodeSetContentAlignment
  * @since 0.1.0
  */
-void DLLayoutNodeSetContentArrangement(DLLayoutNodeRef node, DLLayoutContentArrangement alignment);
+void DLLayoutNodeSetContentAlignment(DLLayoutNodeRef node, DLLayoutContentAlignment alignment);
 
 /**
  * Assigns the layout node's content top specification.

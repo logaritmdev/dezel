@@ -973,7 +973,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	}
 
 	/**
-	 * The view's content organization on the main axis.
+	 * The view's content alignment on the main axis.
 	 * @property contentLocation
 	 * @since 0.7.0
 	 */
@@ -984,13 +984,13 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	}
 
 	/**
-	 * The view's content organzation on the cross axis.
-	 * @property contentArrangement
+	 * The view's content alignment on the cross axis.
+	 * @property contentAlignment
 	 * @since 0.7.0
 	 */
-	@objc open var contentArrangement: Property = Property(string: "start") {
+	@objc open var contentAlignment: Property = Property(string: "start") {
 		willSet {
-			self.layoutNode.contentArrangement(newValue)
+			self.layoutNode.contentAlignment(newValue)
 		}
 	}
 
@@ -5186,21 +5186,21 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method jsGet_contentArrangement
+	 * @method jsGet_contentAlignment
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsGet_contentArrangement(callback: JavaScriptGetterCallback) {
-		callback.returns(self.contentArrangement)
+	@objc open func jsGet_contentAlignment(callback: JavaScriptGetterCallback) {
+		callback.returns(self.contentAlignment)
 	}
 
 	/**
-	 * @method jsSet_contentArrangement
+	 * @method jsSet_contentAlignment
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsSet_contentArrangement(callback: JavaScriptSetterCallback) {
-		self.contentArrangement = Property(value: callback.value)
+	@objc open func jsSet_contentAlignment(callback: JavaScriptSetterCallback) {
+		self.contentAlignment = Property(value: callback.value)
 	}
 
 	//--------------------------------------------------------------------------

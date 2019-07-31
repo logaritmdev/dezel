@@ -532,11 +532,11 @@ void Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setContentLocation(JNIEnv 
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
- * Method:    setContentArrangement
+ * Method:    setContentAlignment
  * Signature: (JI)V
  */
-void Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setContentArrangement(JNIEnv *env, jclass, jlong layoutNodePtr, jint arrangement) {
-	DLLayoutNodeSetContentArrangement(reinterpret_cast<DLLayoutNodeRef>(layoutNodePtr), static_cast<DLLayoutContentArrangement>(arrangement));
+void Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setContentAlignment(JNIEnv *env, jclass, jlong layoutNodePtr, jint arrangement) {
+	DLLayoutNodeSetContentAlignment(reinterpret_cast<DLLayoutNodeRef>(layoutNodePtr), static_cast<DLLayoutContentAlignment>(arrangement));
 }
 
 /*

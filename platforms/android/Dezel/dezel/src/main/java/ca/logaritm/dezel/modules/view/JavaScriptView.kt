@@ -839,7 +839,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's content organization on the main axis.
+	 * The view's content alignment on the main axis.
 	 * @property contentLocation
 	 * @since 0.7.0
 	 */
@@ -848,12 +848,12 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's content arrangement on the cross axis.
-	 * @property contentArrangement
+	 * The view's content alignment on the cross axis.
+	 * @property contentAlignment
 	 * @since 0.7.0
 	 */
-	open var contentArrangement: Property by Delegates.OnSet(Property("start")) { value ->
-		this.layoutNode.contentArrangement(value)
+	open var contentAlignment: Property by Delegates.OnSet(Property("start")) { value ->
+		this.layoutNode.contentAlignment(value)
 	}
 
 	/**
@@ -5253,23 +5253,23 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method jsGet_contentArrangement
+	 * @method jsGet_contentAlignment
 	 * @since 0.7.0
 	 * @hidden
 	 */
 	@Suppress("unused")
-	open fun jsGet_contentArrangement(callback: JavaScriptGetterCallback) {
-		callback.returns(this.contentArrangement)
+	open fun jsGet_contentAlignment(callback: JavaScriptGetterCallback) {
+		callback.returns(this.contentAlignment)
 	}
 
 	/**
-	 * @method jsSet_contentArrangement
+	 * @method jsSet_contentAlignment
 	 * @since 0.7.0
 	 * @hidden
 	 */
 	@Suppress("unused")
-	open fun jsSet_contentArrangement(callback: JavaScriptSetterCallback) {
-		this.contentArrangement = Property(callback.value)
+	open fun jsSet_contentAlignment(callback: JavaScriptSetterCallback) {
+		this.contentAlignment = Property(callback.value)
 	}
 
 	//--------------------------------------------------------------------------

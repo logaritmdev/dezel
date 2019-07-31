@@ -111,9 +111,9 @@ const val kDLLayoutContentLocationSpaceEvenly = 6
  * The node content alignment values.
  * @since 0.1.0
  */
-const val kDLLayoutContentArrangementStart = 1
-const val kDLLayoutContentArrangementCenter = 2
-const val kDLLayoutContentArrangementEnd = 3
+const val kDLLayoutContentAlignmentStart = 1
+const val kDLLayoutContentAlignmentCenter = 2
+const val kDLLayoutContentAlignmentEnd = 3
 
 /**
  * The node margin types.

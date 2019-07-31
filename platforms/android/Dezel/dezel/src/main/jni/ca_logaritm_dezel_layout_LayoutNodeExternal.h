@@ -465,10 +465,10 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setConte
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
- * Method:    setContentArrangement
+ * Method:    setContentAlignment
  * Signature: (JI)V
  */
-JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setContentArrangement
+JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setContentAlignment
   (JNIEnv *, jclass, jlong, jint);
 
 /*
