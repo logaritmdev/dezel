@@ -831,11 +831,11 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 
 	/**
 	 * The view's content orientation.
-	 * @property contentOrientation
+	 * @property contentDirection
 	 * @since 0.7.0
 	 */
-	open var contentOrientation: Property by Delegates.OnSet(Property("vertical")) { value ->
-		this.layoutNode.contentOrientation(value)
+	open var contentDirection: Property by Delegates.OnSet(Property("vertical")) { value ->
+		this.layoutNode.contentDirection(value)
 	}
 
 	/**
@@ -5209,23 +5209,23 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method jsGet_contentOrientation
+	 * @method jsGet_contentDirection
 	 * @since 0.7.0
 	 * @hidden
 	 */
 	@Suppress("unused")
-	open fun jsGet_contentOrientation(callback: JavaScriptGetterCallback) {
-		callback.returns(this.contentOrientation)
+	open fun jsGet_contentDirection(callback: JavaScriptGetterCallback) {
+		callback.returns(this.contentDirection)
 	}
 
 	/**
-	 * @method jsSet_contentOrientation
+	 * @method jsSet_contentDirection
 	 * @since 0.7.0
 	 * @hidden
 	 */
 	@Suppress("unused")
-	open fun jsSet_contentOrientation(callback: JavaScriptSetterCallback) {
-		this.contentOrientation = Property(callback.value)
+	open fun jsSet_contentDirection(callback: JavaScriptSetterCallback) {
+		this.contentDirection = Property(callback.value)
 	}
 
 	//--------------------------------------------------------------------------

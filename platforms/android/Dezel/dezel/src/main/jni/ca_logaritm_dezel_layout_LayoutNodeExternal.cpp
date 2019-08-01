@@ -514,11 +514,11 @@ void Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setMaxHeight(JNIEnv *env, 
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
- * Method:    setContentOrientation
+ * Method:    setContentDirection
  * Signature: (JI)V
  */
-void Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setContentOrientation(JNIEnv *env, jclass, jlong layoutNodePtr, jint orientation) {
-	DLLayoutNodeSetContentOrientation(reinterpret_cast<DLLayoutNodeRef>(layoutNodePtr), static_cast<DLLayoutContentOrientation>(orientation));
+void Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setContentDirection(JNIEnv *env, jclass, jlong layoutNodePtr, jint orientation) {
+	DLLayoutNodeSetContentDirection(reinterpret_cast<DLLayoutNodeRef>(layoutNodePtr), static_cast<DLLayoutContentDirection>(orientation));
 }
 
 /*

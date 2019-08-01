@@ -963,12 +963,12 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 
 	/**
 	 * The view's content orientation.
-	 * @property contentOrientation
+	 * @property contentDirection
 	 * @since 0.7.0
 	 */
-	@objc open var contentOrientation: Property = Property(string: "vertical") {
+	@objc open var contentDirection: Property = Property(string: "vertical") {
 		willSet {
-			self.layoutNode.contentOrientation(newValue)
+			self.layoutNode.contentDirection(newValue)
 		}
 	}
 
@@ -5146,21 +5146,21 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method jsGet_contentOrientation
+	 * @method jsGet_contentDirection
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsGet_contentOrientation(callback: JavaScriptGetterCallback) {
-		callback.returns(self.contentOrientation)
+	@objc open func jsGet_contentDirection(callback: JavaScriptGetterCallback) {
+		callback.returns(self.contentDirection)
 	}
 
 	/**
-	 * @method jsSet_contentOrientation
+	 * @method jsSet_contentDirection
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsSet_contentOrientation(callback: JavaScriptSetterCallback) {
-		self.contentOrientation = Property(value: callback.value)
+	@objc open func jsSet_contentDirection(callback: JavaScriptSetterCallback) {
+		self.contentDirection = Property(value: callback.value)
 	}
 
 	//--------------------------------------------------------------------------

@@ -449,10 +449,10 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setMaxHe
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
- * Method:    setContentOrientation
+ * Method:    setContentDirection
  * Signature: (JI)V
  */
-JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setContentOrientation
+JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setContentDirection
   (JNIEnv *, jclass, jlong, jint);
 
 /*

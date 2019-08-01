@@ -767,16 +767,16 @@ open class LayoutNode {
 	}
 
 	/**
-	 * @method contentOrientation
-	 * @since 0.1.0
+	 * @method contentDirection
+	 * @since 0.7.0
 	 */
-	open func contentOrientation(_ value: Property) {
+	open func contentDirection(_ value: Property) {
 
 		if (value.type == .string) {
 
 			switch (value.string) {
-				case "horizontal": self.contentOrientation(kDLLayoutContentOrientationHorizontal)
-				case "vertical":   self.contentOrientation(kDLLayoutContentOrientationVertical)
+				case "horizontal": self.contentDirection(kDLLayoutContentDirectionHorizontal)
+				case "vertical":   self.contentDirection(kDLLayoutContentDirectionVertical)
 				default: break
 			}
 
@@ -787,11 +787,11 @@ open class LayoutNode {
 	}
 
 	/**
-	 * @method contentOrientation
-	 * @since 0.1.0
+	 * @method contentDirection
+	 * @since 0.7.0
 	 */
-	open func contentOrientation(_ direction: DLLayoutContentOrientation) {
-		DLLayoutNodeSetContentOrientation(self.handle, direction)
+	open func contentDirection(_ direction: DLLayoutContentDirection) {
+		DLLayoutNodeSetContentDirection(self.handle, direction)
 	}
 
 	/**

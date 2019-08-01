@@ -128,13 +128,13 @@ typedef enum {
 
 /**
  * The node content direction values.
- * @type DLLayoutContentOrientation
+ * @type DLLayoutContentDirection
  * @since 0.1.0
  */
 typedef enum {
-	kDLLayoutContentOrientationVertical = 1,
-	kDLLayoutContentOrientationHorizontal = 2
-} DLLayoutContentOrientation;
+	kDLLayoutContentDirectionVertical = 1,
+	kDLLayoutContentDirectionHorizontal = 2
+} DLLayoutContentDirection;
 
 /**
  * The node content gravity values.
@@ -553,10 +553,10 @@ void DLLayoutNodeSetMaxHeight(DLLayoutNodeRef node, double max);
 
 /**
  * Assigns the layout node's content direction specification.
- * @function DLLayoutNodeSetContentOrientation
+ * @function DLLayoutNodeSetContentDirection
  * @since 0.1.0
  */
-void DLLayoutNodeSetContentOrientation(DLLayoutNodeRef node, DLLayoutContentOrientation direction);
+void DLLayoutNodeSetContentDirection(DLLayoutNodeRef node, DLLayoutContentDirection direction);
 
 /**
  * Assigns the layout node's content gravity specification.

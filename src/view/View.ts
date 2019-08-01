@@ -724,10 +724,10 @@ export class View extends Emitter {
 
 	/**
 	 * The view's natural layout direction.
-	 * @property contentOrientation
-	 * @since 0.1.0
+	 * @property contentDirection
+	 * @since 0.7.0
 	 */
-	@native public contentOrientation!: 'vertical' | 'horizontal'
+	@native public contentDirection!: 'vertical' | 'horizontal'
 
 	/**
 	 * The view's content alignment on the main axis.

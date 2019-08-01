@@ -428,7 +428,7 @@ class RelativeLayoutTest: XCTestCase {
 		node2.height(type: kDLLayoutSizeTypeFill, unit: kDLLayoutSizeUnitNone, length: 0)
 		node2.width(type: kDLLayoutSizeTypeLength, unit: kDLLayoutSizeUnitPX, length: 200)
 
-		self.window.contentOrientation(kDLLayoutContentOrientationHorizontal)
+		self.window.contentDirection(kDLLayoutContentDirectionHorizontal)
 		self.window.appendChild(node1)
 		self.window.appendChild(node2)
 		self.window.resolve()

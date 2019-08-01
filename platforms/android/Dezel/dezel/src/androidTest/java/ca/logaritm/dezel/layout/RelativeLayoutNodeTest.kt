@@ -457,7 +457,7 @@ class RelativeLayoutNodeTest {
 		val node2 = LayoutNode(this.layout)
 		node2.width(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitPX, 200.0)
 
-		this.window.contentOrientation(kDLLayoutContentOrientationHorizontal)
+		this.window.contentDirection(kDLLayoutContentDirectionHorizontal)
 		this.window.appendChild(node1)
 		this.window.appendChild(node2)
 		this.window.resolve()

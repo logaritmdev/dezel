@@ -93,8 +93,8 @@ const val kDLLayoutContentSizeUnitCH = 9
  * The node content direction values.
  * @since 0.1.0
  */
-const val kDLLayoutContentOrientationVertical = 1
-const val kDLLayoutContentOrientationHorizontal = 2
+const val kDLLayoutContentDirectionVertical = 1
+const val kDLLayoutContentDirectionHorizontal = 2
 
 /**
  * The node content gravity values.

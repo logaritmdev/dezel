@@ -186,15 +186,15 @@ DLRelativeLayoutNodeResolveArrangement(DLLayoutNodeRef node, double remaining)
 	double headOffset = 0;
 	double tailOffset = 0;
 
-	switch (node->parent->contentOrientation) {
+	switch (node->parent->contentDirection) {
 
-		case kDLLayoutContentOrientationVertical:
+		case kDLLayoutContentDirectionVertical:
 			size = node->measuredWidth;
 			headOffset = node->measuredMarginLeft;
 			tailOffset = node->measuredMarginRight;
 			break;
 
-		case kDLLayoutContentOrientationHorizontal:
+		case kDLLayoutContentDirectionHorizontal:
 			size = node->measuredHeight;
 			headOffset = node->measuredMarginTop;
 			tailOffset = node->measuredMarginBottom;
@@ -246,14 +246,14 @@ DLRelativeLayoutNodeMeasure(DLLayoutNodeRef node, double &remainingW, double &re
 		if (wrapW == false) measuredW = DLRelativeLayoutNodeMeasureWidth(node, remainingW);
 		if (wrapH == false) measuredH = DLRelativeLayoutNodeMeasureHeight(node, remainingH);
 
-		switch (node->contentOrientation) {
+		switch (node->contentDirection) {
 
-			case kDLLayoutContentOrientationVertical:
+			case kDLLayoutContentDirectionVertical:
 				if (wrapW == false) measuredW = DL_ROUND(scale, measuredW);
 				if (wrapH == false) DLRelativeLayoutNodeRoundAndCarry(scale, measuredH, remainder);
 				break;
 
-			case kDLLayoutContentOrientationHorizontal:
+			case kDLLayoutContentDirectionHorizontal:
 				if (wrapW == false) DLRelativeLayoutNodeRoundAndCarry(scale, measuredW, remainder);
 				if (wrapH == false) measuredH = DL_ROUND(scale, measuredH);
 				break;
@@ -448,15 +448,15 @@ DLRelativeLayoutResolve(DLLayoutNodeRef node, const vector<DLLayoutNodeRef> &nod
 			DLRelativeLayoutNodeMeasure(child, remainingW, remainingH, remainder);
 		}
 
-		switch (node->contentOrientation) {
+		switch (node->contentDirection) {
 
-			case kDLLayoutContentOrientationVertical:
+			case kDLLayoutContentDirectionVertical:
 				remainingH -= child->measuredHeight;
 				remainingH -= child->measuredMarginTop;
 				remainingH -= child->measuredMarginBottom;
 				break;
 
-			case kDLLayoutContentOrientationHorizontal:
+			case kDLLayoutContentDirectionHorizontal:
 				remainingW -= child->measuredWidth;
 				remainingW -= child->measuredMarginLeft;
 				remainingW -= child->measuredMarginRight;
@@ -483,14 +483,14 @@ DLRelativeLayoutResolve(DLLayoutNodeRef node, const vector<DLLayoutNodeRef> &nod
 	double dispositionSpace = 0;
 	double arrangementSpace = 0;
 
-	switch (node->contentOrientation) {
+	switch (node->contentDirection) {
 
-		case kDLLayoutContentOrientationVertical:
+		case kDLLayoutContentDirectionVertical:
 			dispositionSpace = remainingH;
 			arrangementSpace = remainingW;
 			break;
 
-		case kDLLayoutContentOrientationHorizontal:
+		case kDLLayoutContentDirectionHorizontal:
 			dispositionSpace = remainingW;
 			arrangementSpace = remainingH;
 			break;
@@ -503,13 +503,13 @@ DLRelativeLayoutResolve(DLLayoutNodeRef node, const vector<DLLayoutNodeRef> &nod
 
 		if (expandables.size()) {
 
-			switch (node->contentOrientation) {
+			switch (node->contentDirection) {
 
-				case kDLLayoutContentOrientationVertical:
+				case kDLLayoutContentDirectionVertical:
 					DLRelativeLayoutExpandNodesVertically(expandables, remainingH, expandablesWeight);
 					break;
 
-				case kDLLayoutContentOrientationHorizontal:
+				case kDLLayoutContentDirectionHorizontal:
 					DLRelativeLayoutExpandNodesHorizontally(expandables, remainingW, expandablesWeight);
 					break;
 			}
@@ -524,13 +524,13 @@ DLRelativeLayoutResolve(DLLayoutNodeRef node, const vector<DLLayoutNodeRef> &nod
 
 		if (shrinkables.size()) {
 
-			switch (node->contentOrientation) {
+			switch (node->contentDirection) {
 
-				case kDLLayoutContentOrientationVertical:
+				case kDLLayoutContentDirectionVertical:
 					DLRelativeLayoutShrinkNodesVertically(shrinkables, remainingH, shrinkablesWeight);
 					break;
 
-				case kDLLayoutContentOrientationHorizontal:
+				case kDLLayoutContentDirectionHorizontal:
 					DLRelativeLayoutShrinkNodesHorizontally(shrinkables, remainingW, shrinkablesWeight);
 					break;
 			}
@@ -587,9 +587,9 @@ DLRelativeLayoutResolve(DLLayoutNodeRef node, const vector<DLLayoutNodeRef> &nod
 		double x = contentL;
 		double y = contentT;
 
-		switch (node->contentOrientation) {
+		switch (node->contentDirection) {
 
-			case kDLLayoutContentOrientationVertical:
+			case kDLLayoutContentDirectionVertical:
 
 				x = DL_ROUND(scale, x + DLRelativeLayoutNodeResolveArrangement(child, arrangementSpace));
 				y = DL_ROUND(scale, y + offset + marginT);
@@ -598,7 +598,7 @@ DLRelativeLayoutResolve(DLLayoutNodeRef node, const vector<DLLayoutNodeRef> &nod
 
 				break;
 
-			case kDLLayoutContentOrientationHorizontal:
+			case kDLLayoutContentDirectionHorizontal:
 
 				x = DL_ROUND(scale, x + offset + marginL);
 				y = DL_ROUND(scale, y + DLRelativeLayoutNodeResolveArrangement(child, arrangementSpace));

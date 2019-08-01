@@ -744,17 +744,17 @@ open class LayoutNode(layout: Layout) {
 	}
 
 	/**
-	 * @method contentOrientation
-	 * @since 0.1.0
+	 * @method contentDirection
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	public fun contentOrientation(value: Property) {
+	public fun contentDirection(value: Property) {
 
 		if (value.type == PropertyType.STRING) {
 
 			when (value.string) {
-				"horizontal" -> this.contentOrientation(kDLLayoutContentOrientationHorizontal)
-				"vertical"   -> this.contentOrientation(kDLLayoutContentOrientationVertical)
+				"horizontal" -> this.contentDirection(kDLLayoutContentDirectionHorizontal)
+				"vertical"   -> this.contentDirection(kDLLayoutContentDirectionVertical)
 			}
 
 			return
@@ -764,12 +764,12 @@ open class LayoutNode(layout: Layout) {
 	}
 
 	/**
-	 * @method contentOrientation
-	 * @since 0.1.0
+	 * @method contentDirection
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	public fun contentOrientation(direction: Int) {
-		LayoutNodeExternal.setContentOrientation(this.handle, direction)
+	public fun contentDirection(direction: Int) {
+		LayoutNodeExternal.setContentDirection(this.handle, direction)
 	}
 
 	/**

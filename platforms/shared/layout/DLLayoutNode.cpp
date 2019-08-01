@@ -272,10 +272,10 @@ DLLayoutNodeSetMaxHeight(DLLayoutNodeRef node, double max)
 }
 
 void
-DLLayoutNodeSetContentOrientation(DLLayoutNodeRef node, DLLayoutContentOrientation direction)
+DLLayoutNodeSetContentDirection(DLLayoutNodeRef node, DLLayoutContentDirection direction)
 {
-	if (node->contentOrientation != direction) {
-		node->contentOrientation = direction;
+	if (node->contentDirection != direction) {
+		node->contentDirection = direction;
 		DLLayoutNodeInvalidateLayout(node);
 	}
 }

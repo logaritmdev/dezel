@@ -330,8 +330,8 @@ describe('View', () => {
 		expect(view.contentInsetBottom).toBe(0)
 	})
 
-	it('should have a valid initial contentOrientation property value', () => {
-		expect(view.contentOrientation).toBe('vertical')
+	it('should have a valid initial contentDirection property value', () => {
+		expect(view.contentDirection).toBe('vertical')
 	})
 
 	it('should have a valid initial contentLocation property value', () => {

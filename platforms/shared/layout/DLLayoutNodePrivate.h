@@ -236,7 +236,7 @@ struct OpaqueDLLayoutNode {
 	DLLayoutPosition bottom = kDLLayoutPositionDefault;
 	DLLayoutSize width = kDLLayoutSizeDefault;
 	DLLayoutSize height = kDLLayoutSizeDefault;
-	DLLayoutContentOrientation contentOrientation = kDLLayoutContentOrientationVertical;
+	DLLayoutContentDirection contentDirection = kDLLayoutContentDirectionVertical;
 	DLLayoutContentLocation contentLocation = kDLLayoutContentLocationStart;
 	DLLayoutContentAlignment contentAlignment = kDLLayoutContentAlignmentStart;
 	DLLayoutContentPosition contentTop = kDLLayoutContentPositionDefault;

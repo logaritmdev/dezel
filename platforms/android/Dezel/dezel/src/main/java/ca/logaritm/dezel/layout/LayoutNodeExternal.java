@@ -393,11 +393,11 @@ public class LayoutNodeExternal {
 	static native public void setMaxHeight(long handle, double max);
 
 	/**
-	 * @method setContentOrientation
+	 * @method setContentDirection
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	static native public void setContentOrientation(long handle, int direction);
+	static native public void setContentDirection(long handle, int direction);
 
 	/**
 	 * @method setContentLocation
