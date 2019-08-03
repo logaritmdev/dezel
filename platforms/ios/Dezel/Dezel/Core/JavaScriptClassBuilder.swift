@@ -17,6 +17,7 @@ internal final class JavaScriptClassBuilder: JavaScriptBuilder {
 	internal class func build(_ context: JavaScriptContext, template: AnyClass) -> JavaScriptValue {
 
 		let prototype = context.createEmptyObject()
+		let statics = context.createEmptyObject()
 
 		JavaScriptBuilder.forEach(template, callback: { (name, type, sel, imp) -> Void in
 
@@ -40,10 +41,27 @@ internal final class JavaScriptClassBuilder: JavaScriptBuilder {
 				return
 			}
 
+			if (type == .staticFunction) {
+				DLValueDefineFunction(context.handle, statics.handle, name, JavaScriptClassStaticFunctionWrapper(context: context, cls: template, sel: sel, imp: imp, name: name).function)
+				return
+			}
+
+			if (type == .staticGetter) {
+				DLValueDefinePropertyGetter(context.handle, statics.handle, name, JavaScriptClassStaticGetterWrapper(context: context, cls: template, sel: sel, imp: imp, name: name).function)
+				return
+			}
+
+			if (type == .staticSetter) {
+				DLValueDefinePropertySetter(context.handle, statics.handle, name, JavaScriptClassStaticSetterWrapper(context: context, cls: template, sel: sel, imp: imp, name: name).function)
+				return
+			}
 		})
 
 		let constructor = prototype.property("constructor")
+
 		constructor.property("prototype", value: prototype)
+		constructor.property("statics", value: statics)
+
 		return constructor
 	}
 }

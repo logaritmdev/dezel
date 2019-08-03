@@ -82,6 +82,9 @@
 		C75153B922EBA05C007CAA48 /* NSMutableData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75153B822EBA05C007CAA48 /* NSMutableData.swift */; };
 		C75153BB22EBA09B007CAA48 /* NSMutableAttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75153BA22EBA09B007CAA48 /* NSMutableAttributedString.swift */; };
 		C75153BD22F11CAA007CAA48 /* JavaScriptLocale.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75153BC22F11CAA007CAA48 /* JavaScriptLocale.swift */; };
+		C75153BF22F3791C007CAA48 /* JavaScriptClassStaticFunctionWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75153BE22F3791C007CAA48 /* JavaScriptClassStaticFunctionWrapper.swift */; };
+		C75153C122F37C03007CAA48 /* JavaScriptClassStaticGetterWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75153C022F37C03007CAA48 /* JavaScriptClassStaticGetterWrapper.swift */; };
+		C75153C322F37C11007CAA48 /* JavaScriptClassStaticSetterWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75153C222F37C11007CAA48 /* JavaScriptClassStaticSetterWrapper.swift */; };
 		C7541A8922E6B09800586FC4 /* HttpResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7541A8822E6B09800586FC4 /* HttpResponse.swift */; };
 		C76016E22019832800622840 /* JavaScriptFinalizeCallback.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76016E12019832800622840 /* JavaScriptFinalizeCallback.swift */; };
 		C767542120269971003C4D85 /* ShadowLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76753E92026996F003C4D85 /* ShadowLayer.swift */; };
@@ -390,6 +393,9 @@
 		C75153B822EBA05C007CAA48 /* NSMutableData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSMutableData.swift; sourceTree = "<group>"; };
 		C75153BA22EBA09B007CAA48 /* NSMutableAttributedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSMutableAttributedString.swift; sourceTree = "<group>"; };
 		C75153BC22F11CAA007CAA48 /* JavaScriptLocale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptLocale.swift; sourceTree = "<group>"; };
+		C75153BE22F3791C007CAA48 /* JavaScriptClassStaticFunctionWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptClassStaticFunctionWrapper.swift; sourceTree = "<group>"; };
+		C75153C022F37C03007CAA48 /* JavaScriptClassStaticGetterWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptClassStaticGetterWrapper.swift; sourceTree = "<group>"; };
+		C75153C222F37C11007CAA48 /* JavaScriptClassStaticSetterWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptClassStaticSetterWrapper.swift; sourceTree = "<group>"; };
 		C7541A8822E6B09800586FC4 /* HttpResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpResponse.swift; sourceTree = "<group>"; };
 		C76016E12019832800622840 /* JavaScriptFinalizeCallback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptFinalizeCallback.swift; sourceTree = "<group>"; };
 		C76753E92026996F003C4D85 /* ShadowLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShadowLayer.swift; sourceTree = "<group>"; };
@@ -1307,6 +1313,9 @@
 				C7E8A50C201624A1005139F6 /* JavaScriptClassFunctionWrapper.swift */,
 				C7E8A509201624A0005139F6 /* JavaScriptClassGetterWrapper.swift */,
 				C7E8A50F201624A1005139F6 /* JavaScriptClassSetterWrapper.swift */,
+				C75153BE22F3791C007CAA48 /* JavaScriptClassStaticFunctionWrapper.swift */,
+				C75153C022F37C03007CAA48 /* JavaScriptClassStaticGetterWrapper.swift */,
+				C75153C222F37C11007CAA48 /* JavaScriptClassStaticSetterWrapper.swift */,
 				C7E8A511201624A1005139F6 /* JavaScriptContext.swift */,
 				C7E8A505201624A0005139F6 /* JavaScriptExceptionWrapper.swift */,
 				C76016E12019832800622840 /* JavaScriptFinalizeCallback.swift */,
@@ -1732,6 +1741,7 @@
 				C7E8A528201624A2005139F6 /* JavaScriptClassSetterWrapper.swift in Sources */,
 				C7A3AB79214ECBA500D8B15C /* CanvasLayer.swift in Sources */,
 				C718B5B4207C3D0D00610F8D /* LinearGradient.swift in Sources */,
+				C75153BF22F3791C007CAA48 /* JavaScriptClassStaticFunctionWrapper.swift in Sources */,
 				C700121821551B5700CB26D4 /* JavaScriptDevice.swift in Sources */,
 				C71A119D2080EB1E0004D523 /* HttpRequest.swift in Sources */,
 				C7E8A523201624A2005139F6 /* JavaScriptFunctionWrapper.swift in Sources */,
@@ -1763,9 +1773,11 @@
 				C7E8A52A201624A2005139F6 /* JavaScriptContext.swift in Sources */,
 				C7E8A524201624A2005139F6 /* JavaScriptClass.swift in Sources */,
 				C75153B322EB4BC3007CAA48 /* HTTPURLResponse.swift in Sources */,
+				C75153C322F37C11007CAA48 /* JavaScriptClassStaticSetterWrapper.swift in Sources */,
 				C7E8A4D32015A699005139F6 /* Layout.swift in Sources */,
 				C7EE2E2522E4B35A00FFF0EE /* JavaScriptForEachWrapper.swift in Sources */,
 				C7E8A52D201624A2005139F6 /* JavaScriptValue.swift in Sources */,
+				C75153C122F37C03007CAA48 /* JavaScriptClassStaticGetterWrapper.swift in Sources */,
 				C78115AD2052E9CD0096AE47 /* StylerNode.swift in Sources */,
 				C7004C7C21440DB600138ECC /* DLStylerStyleRule.cpp in Sources */,
 				C7027CD32270DFDA001DD0F7 /* ScrollViewTouchCancelGesture.swift in Sources */,
