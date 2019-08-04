@@ -223,13 +223,13 @@ open class TextLayer: Layer {
 	}
 
 	/**
-	 * The text layer's line limit.
-	 * @property lines
-	 * @since 0.5.0
+	 * The text layer's maximum amount of lines.
+	 * @property maxLines
+	 * @since 0.7.0
 	 */
-	open var lines: Int = 0 {
+	open var maxLines: Int = 0 {
 		willSet {
-			self.layout.lines = newValue
+			self.layout.maxLines = newValue
 			self.setNeedsDisplay()
 		}
 	}
@@ -372,7 +372,7 @@ open class TextLayer: Layer {
 			self.textAlignment = layer.textAlignment
 			self.textLocation = layer.textLocation
 			self.textBaseline = layer.textBaseline
-			self.lines = layer.lines
+			self.maxLines = layer.maxLines
 		}
 	}
 

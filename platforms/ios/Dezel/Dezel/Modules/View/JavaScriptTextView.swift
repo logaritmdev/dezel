@@ -311,15 +311,15 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	}
 
 	/**
-	 * The text view's line limit.
-	 * @property lines
+	 * The text view's maximum amount of lines.
+	 * @property maxLines
 	 * @since 0.7.0
 	 */
-	@objc open var lines: Property = Property(number: 0) {
+	@objc open var maxLines: Property = Property(number: 0) {
 
 		willSet {
 
-			self.view.lines = Int(newValue.number)
+			self.view.maxLines = Int(newValue.number)
 
 			if (self.layoutNode.wrapsContentWidth ||
 				self.layoutNode.wrapsContentHeight) {
@@ -1014,20 +1014,20 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method jsGet_lines
+	 * @method jsGet_maxLines
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsGet_lines(callback: JavaScriptGetterCallback) {
-		callback.returns(self.lines)
+	@objc open func jsGet_maxLines(callback: JavaScriptGetterCallback) {
+		callback.returns(self.maxLines)
 	}
 
 	/**
-	 * @method jsSet_lines
+	 * @method jsSet_maxLines
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsSet_lines(callback: JavaScriptSetterCallback) {
-		self.lines = Property(value: callback.value)
+	@objc open func jsSet_maxLines(callback: JavaScriptSetterCallback) {
+		self.maxLines = Property(value: callback.value)
 	}
 }

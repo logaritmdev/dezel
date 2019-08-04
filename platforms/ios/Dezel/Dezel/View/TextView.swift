@@ -255,13 +255,13 @@ open class TextView: UIView, Updatable, Clippable, TransitionListener {
 	}
 
 	/**
-	 * The text view's line limit.
-	 * @property lines
+	 * The text view's maximum amount of lines.
+	 * @property maxLines
 	 * @since 0.7.0
 	 */
-	open var lines: Int = 0 {
+	open var maxLines: Int = 0 {
 		willSet {
-			self.textLayer.lines = newValue
+			self.textLayer.maxLines = newValue
 		}
 	}
 

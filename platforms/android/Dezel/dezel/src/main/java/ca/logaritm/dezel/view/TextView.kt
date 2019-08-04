@@ -227,12 +227,12 @@ open class TextView(context: Context, listener: TextViewListener?) : View(contex
 	}
 
 	/**
-	 * @property lineLimit
+	 * @property maxLines
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	open var lineLimit: Int by Delegates.OnSet(0) { value ->
-		this.layout.lines = value
+	open var maxLines: Int by Delegates.OnSet(0) { value ->
+		this.layout.maxLines = value
 		this.invalidate()
 	}
 

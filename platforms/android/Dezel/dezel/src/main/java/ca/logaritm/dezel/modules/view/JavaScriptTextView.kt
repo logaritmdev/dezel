@@ -276,13 +276,13 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	}
 
 	/**
-	 * The text view's text lines.
-	 * @property lines
+	 * The text view's maximum amount of maxLines.
+	 * @property maxLines
 	 * @since 0.7.0
 	 */
-	open var lines: Property by Delegates.OnSet(Property(0.0)) { value ->
+	open var maxLines: Property by Delegates.OnSet(Property(0.0)) { value ->
 
-		this.view.lineLimit = value.number.toInt()
+		this.view.maxLines = value.number.toInt()
 
 		if (this.layoutNode.wrapsContentWidth ||
 			this.layoutNode.wrapsContentHeight) {
@@ -989,22 +989,22 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method jsGet_lines
+	 * @method jsGet_maxLines
 	 * @since 0.7.0
 	 * @hidden
 	 */
 	@Suppress("unused")
-	open fun jsGet_lines(callback: JavaScriptGetterCallback) {
-		callback.returns(this.lines)
+	open fun jsGet_maxLines(callback: JavaScriptGetterCallback) {
+		callback.returns(this.maxLines)
 	}
 
 	/**
-	 * @method jsSet_lines
+	 * @method jsSet_maxLines
 	 * @since 0.7.0
 	 * @hidden
 	 */
 	@Suppress("unused")
-	open fun jsSet_lines(callback: JavaScriptSetterCallback) {
-		this.lines = Property(callback.value)
+	open fun jsSet_maxLines(callback: JavaScriptSetterCallback) {
+		this.maxLines = Property(callback.value)
 	}
 }

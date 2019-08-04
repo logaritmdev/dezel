@@ -89,11 +89,11 @@ open class TextLayout: NSObject {
 	}
 
 	/**
-	 * The text layout's line limit.
-	 * @property lines
-	 * @since 0.5.0
+	 * The text layout's maximum amount of lines.
+	 * @property maxLines
+	 * @since 0.7.0
 	 */
-	open var lines: Int = 0 {
+	open var maxLines: Int = 0 {
 		willSet {
 			self.invalidate()
 		}
@@ -437,7 +437,7 @@ open class TextLayout: NSObject {
 	 * @hidden
 	 */
 	private func getLineLimit() -> Int {
-		return self.lines > 0 ? self.lines - 1 : CFArrayGetCount(CTFrameGetLines(self.frame)) - 1
+		return self.maxLines > 0 ? self.maxLines - 1 : CFArrayGetCount(CTFrameGetLines(self.frame)) - 1
 	}
 }
 

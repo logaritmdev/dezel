@@ -80,11 +80,11 @@ open class TextLayout {
 	}
 
 	/**
-	 * The text layout's line limit.
-	 * @property lines
-	 * @since 0.5.0
+	 * The text layout's maximum amount of lines.
+	 * @property maxLines
+	 * @since 0.7.0
 	 */
-	open var lines: Int by Delegates.OnSet(0) {
+	open var maxLines: Int by Delegates.OnSet(0) {
 		this.invalidate()
 	}
 
@@ -214,7 +214,7 @@ open class TextLayout {
 			this.textLeading,
 			this.textKerning,
 			this.textOverflow,
-			this.lines
+			this.maxLines
 		)
 
 		val last = this.getLastLine()
@@ -294,6 +294,6 @@ open class TextLayout {
 	//--------------------------------------------------------------------------
 
 	private fun getLastLine(): Int {
-		return this.lines - 1
+		return this.maxLines - 1
 	}
 }
