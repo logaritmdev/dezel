@@ -1,3 +1,4 @@
+import { native } from '../native/native'
 import { SpinnerView } from './SpinnerView'
 
 describe('SpinnerView', () => {
@@ -9,7 +10,19 @@ describe('SpinnerView', () => {
 	})
 
 	it('should have a native object', () => {
-		expect(view.native).not.toBeUndefined()
-		expect(view.native.holder).toBe(view)
+		expect(native(view)).not.toBeUndefined()
 	})
+
+	it('should have a native object with an holder value', () => {
+		expect(native(view).holder).toBe(view)
+	})
+
+	it('should have a valid initial active property value', () => {
+		expect(view.active).toBe(false)
+	})
+
+	it('should have a valid initial fontWeight property value', () => {
+		expect(view.color).toBe('#000')
+	})
+
 })

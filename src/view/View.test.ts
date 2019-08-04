@@ -2,6 +2,7 @@ import { Application } from '../application/Application'
 import { Dezel } from '../core/Dezel'
 import { Event } from '../event/Event'
 import { Canvas } from '../graphic/Canvas'
+import { native } from '../native/native'
 import { TouchEvent } from '../touch/TouchEvent'
 import { TouchList } from '../touch/TouchList'
 import { View } from './View'
@@ -16,6 +17,18 @@ describe('View', () => {
 
 	beforeEach(() => {
 		view = new View()
+	})
+
+	it('should have a native object', () => {
+		expect(native(view)).not.toBeUndefined()
+	})
+
+	it('should have a native object with an holder value', () => {
+		expect(native(view).holder).toBe(view)
+	})
+
+	it('should have a static native property', () => {
+		expect(native(View)).not.toBeUndefined()
 	})
 
 	it('should have a valid initial id property value', () => {
@@ -662,14 +675,6 @@ describe('View', () => {
 		expect(view.measuredMarginBottom).toBe(0)
 	})
 
-	it('should have a native object', () => {
-		expect(view.native).not.toBeUndefined()
-	})
-
-	it('should have a native object with an holder value', () => {
-		expect(view.native.holder).toBe(view)
-	})
-
 	it('should append a child view', () => {
 
 		let v1 = new View()
@@ -967,46 +972,46 @@ describe('View', () => {
 
 	it('should call the native view scheduleRedraw method', () => {
 
-		view.native.scheduleRedraw = jasmine.createSpy()
+		native(view).scheduleRedraw = jasmine.createSpy()
 		view.scheduleRedraw()
 
-		expect(view.native.scheduleRedraw).toHaveBeenCalled()
+		expect(native(view).scheduleRedraw).toHaveBeenCalled()
 
 	})
 
 	it('should call the native view scheduleLayout method', () => {
 
-		view.native.scheduleLayout = jasmine.createSpy()
+		native(view).scheduleLayout = jasmine.createSpy()
 		view.scheduleLayout()
 
-		expect(view.native.scheduleLayout).toHaveBeenCalled()
+		expect(native(view).scheduleLayout).toHaveBeenCalled()
 
 	})
 
 	it('should call the native view measure method', () => {
 
-		view.native.measure = jasmine.createSpy()
+		native(view).measure = jasmine.createSpy()
 		view.measure()
 
-		expect(view.native.measure).toHaveBeenCalled()
+		expect(native(view).measure).toHaveBeenCalled()
 
 	})
 
 	it('should call the native view resolve method', () => {
 
-		view.native.resolve = jasmine.createSpy()
+		native(view).resolve = jasmine.createSpy()
 		view.resolve()
 
-		expect(view.native.resolve).toHaveBeenCalled()
+		expect(native(view).resolve).toHaveBeenCalled()
 
 	})
 
 	it('should call the native view scrollTo method', () => {
 
-		view.native.scrollTo = jasmine.createSpy()
+		native(view).scrollTo = jasmine.createSpy()
 		view.scrollTo(0, 0)
 
-		expect(view.native.scrollTo).toHaveBeenCalled()
+		expect(native(view).scrollTo).toHaveBeenCalled()
 
 	})
 

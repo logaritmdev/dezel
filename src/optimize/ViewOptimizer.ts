@@ -4,11 +4,11 @@ import { DataSourceInsertEvent } from '../data/DataSource'
 import { DataSourceReloadEvent } from '../data/DataSource'
 import { DataSourceRemoveEvent } from '../data/DataSource'
 import { bound } from '../decorator/bound'
-import { bridge } from '../decorator/bridge'
-import { native } from '../decorator/native'
 import { watch } from '../decorator/watch'
 import { Emitter } from '../event/Emitter'
 import { Event } from '../event/Event'
+import { bridge } from '../native/bridge'
+import { native } from '../native/native'
 import { View } from '../view/View'
 
 /**
@@ -27,7 +27,7 @@ export enum Orientation {
 	HORIZONTAL = 2
 }
 
-@bridge('dezel.item.ViewOptimizer')
+@bridge('dezel.view.ViewOptimizer')
 
 /**
  * Optimize the content of a view to display only the least required amount.
@@ -91,7 +91,7 @@ export class ViewOptimizer<T> extends Emitter {
 
 		this.attached = true
 
-		this.native.attach(view.native)
+		native(this).attach(native(view))
 
 		this.data.on('reload', this.onDataSourceReloadData)
 		this.data.on('insert', this.onDataSourceInsertData)
@@ -118,7 +118,7 @@ export class ViewOptimizer<T> extends Emitter {
 
 		this.attached = false
 
-		this.native.detach()
+		native(this).detach()
 
 		this.data.off('reload', this.onDataSourceReloadData)
 		this.data.off('insert', this.onDataSourceInsertData)
@@ -148,7 +148,7 @@ export class ViewOptimizer<T> extends Emitter {
 	 * @since 0.7.0
 	 */
 	public reset() {
-		this.native.reset()
+		native(this).reset()
 		return this
 	}
 
@@ -158,7 +158,7 @@ export class ViewOptimizer<T> extends Emitter {
 	 * @since 0.7.0
 	 */
 	public getItemIndex(item: View): number {
-		return this.native.getItemIndex(item.native)
+		return native(this).getItemIndex(native(item))
 	}
 
 	/**
@@ -167,7 +167,7 @@ export class ViewOptimizer<T> extends Emitter {
 	 * @since 0.7.0
 	 */
 	public getItem(index: number): View | undefined {
-		return this.native.getItem(index)
+		return native(this).getItem(index)
 	}
 
 	/**
@@ -176,7 +176,7 @@ export class ViewOptimizer<T> extends Emitter {
 	 * @since 0.7.0
 	 */
 	public cacheItem(item: View) {
-		this.native.cacheItem(item.native)
+		native(this).cacheItem(native(item))
 		return this
 	}
 
@@ -314,10 +314,4 @@ export class ViewOptimizer<T> extends Emitter {
 	// Native API
 	//--------------------------------------------------------------------------
 
-	/**
-	 * @property native
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	public native: any
 }

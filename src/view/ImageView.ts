@@ -1,6 +1,6 @@
-import { bridge } from '../decorator/bridge'
-import { native } from '../decorator/native'
 import { Image } from '../graphic/Image'
+import { bridge } from '../native/bridge'
+import { native } from '../native/native'
 import { View } from './View'
 
 @bridge('dezel.view.ImageView')
@@ -50,14 +50,14 @@ export class ImageView extends View {
 	 * @property imageTop
 	 * @since 0.1.0
 	 */
-	@native public imageTop!: number
+	@native public imageTop!: number | string
 
 	/**
 	 * The image view's image left position.
 	 * @property imageLeft
 	 * @since 0.1.0
 	 */
-	@native public imageLeft!: number
+	@native public imageLeft!: number | string
 
 	/**
 	 * The image view's image width.
@@ -78,14 +78,14 @@ export class ImageView extends View {
 	 * @property imageFilter
 	 * @since 0.5.0
 	 */
-	@native public imageFilter!: 'grayscale' | null
+	@native public imageFilter!: 'grayscale' | 'none'
 
 	/**
 	 * The image view's image tint color.
 	 * @property imageTint
 	 * @since 0.1.0
 	 */
-	@native public imageTint!: string | null
+	@native public imageTint!: 'transparent' | string
 
 	//--------------------------------------------------------------------------
 	// Internal API

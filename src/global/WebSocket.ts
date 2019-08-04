@@ -1,5 +1,5 @@
-import { bridge } from '../decorator/bridge'
-import { native } from '../decorator/native'
+import { bridge } from '../native/bridge'
+import { native } from '../native/native'
 import { Event } from './Event'
 import { MessageEvent } from './Event'
 import { ProgressEvent } from './Event'
@@ -174,7 +174,7 @@ export class WebSocket extends EventTarget {
 			throw Exception.create(Exception.Code.SyntaxError)
 		}
 
-		this.native.open(url, protocols)
+		native(this).open(url, protocols)
 	}
 
 	/**
@@ -193,7 +193,7 @@ export class WebSocket extends EventTarget {
 			return
 		}
 
-		this.native.send(data)
+		native(this).send(data)
 	}
 
 	/**
@@ -215,7 +215,7 @@ export class WebSocket extends EventTarget {
 
 		this[READY_STATE] = WebSocket.CLOSING
 
-		this.native.close(code, reason)
+		native(this).close(code, reason)
 	}
 
 	//--------------------------------------------------------------------------
@@ -267,13 +267,6 @@ export class WebSocket extends EventTarget {
 	//--------------------------------------------------------------------------
 	// Native API
 	//--------------------------------------------------------------------------
-
-	/**
-	 * @property native
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	private native: any
 
 	/**
 	 * @method nativeOnConnect

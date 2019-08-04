@@ -1,13 +1,13 @@
 import '../index'
 import { Dictionary } from 'lodash'
 import { ScreenTransition } from '../screen/transition/ScreenTransition'
-import { bridge } from '../decorator/bridge'
-import { native } from '../decorator/native'
 import { watch } from '../decorator/watch'
 import { Emitter } from '../event/Emitter'
 import { Event } from '../event/Event'
 import { PanGesture } from '../gesture/PanGesture'
 import { TapGesture } from '../gesture/TapGesture'
+import { bridge } from '../native/bridge'
+import { native } from '../native/native'
 import { Enclosure } from '../screen/Enclosure'
 import { Screen } from '../screen/Screen'
 import { ScreenPresentationOptions } from '../screen/Screen'
@@ -116,8 +116,7 @@ export class Application extends Emitter {
 		main = this
 
 		this.window = new Window()
-		this.native.window = this.window.native
-
+		native(this).window = native(this.window)
 		return this
 	}
 
@@ -143,8 +142,7 @@ export class Application extends Emitter {
 	 * @since 0.1.0
 	 */
 	public openURL(url: string) {
-		this.native.openURL(url)
-		return this
+		native(this).openURL(url)
 	}
 
 	/**
@@ -485,13 +483,6 @@ export class Application extends Emitter {
 	//--------------------------------------------------------------------------
 	// Native API
 	//--------------------------------------------------------------------------
-
-	/**
-	 * @property native
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	public native: any
 
 	/**
 	 * @method nativeOnDestroy

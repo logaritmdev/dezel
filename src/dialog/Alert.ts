@@ -1,8 +1,8 @@
 import { bound } from '../decorator/bound'
-import { bridge } from '../decorator/bridge'
-import { native } from '../decorator/native'
 import { Emitter } from '../event/Emitter'
 import { Event } from '../event/Event'
+import { bridge } from '../native/bridge'
+import { native } from '../native/native'
 import { AlertButton } from './AlertButton'
 
 /**
@@ -120,11 +120,11 @@ export class Alert extends Emitter {
 
 		this[SELECTION] = 'ok'
 
-		this.native.present(
+		native(this).present(
 			this.style,
 			this.title,
 			this.message,
-			this.buttons.map(button => button.native)
+			this.buttons.map(button => native(button))
 		)
 
 		return this
@@ -147,7 +147,7 @@ export class Alert extends Emitter {
 			return this
 		}
 
-		this.native.dismiss()
+		native(this).dismiss()
 
 		return this
 	}
@@ -247,13 +247,6 @@ export class Alert extends Emitter {
 	//--------------------------------------------------------------------------
 	// Native API
 	//--------------------------------------------------------------------------
-
-	/**
-	 * @property native
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	public native: any
 
 	/**
 	 * @method nativeOnPresent

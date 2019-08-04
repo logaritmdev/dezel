@@ -44,13 +44,6 @@ declare function importObject(uid: string): any
  */
 declare function registerApplication(application: any, id: string): void
 
-/**
- * Returns the native object that backs a JavaScript object.
- * @method toNative
- * @since 0.7.0
- */
-declare function toNative(object: any): any
-
 //------------------------------------------------------------------------------
 // JSX
 //------------------------------------------------------------------------------

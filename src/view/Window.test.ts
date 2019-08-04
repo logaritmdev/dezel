@@ -1,15 +1,25 @@
+import { Application } from '../application/Application'
+import { Dezel } from '../core/Dezel'
+import { native } from '../native/native'
 import { Window } from './Window'
 
 describe('Window', () => {
 
 	let window: Window
 
+	beforeAll(() => {
+		Dezel.registerApplication(new Application)
+	})
+
 	beforeEach(() => {
 		window = new Window()
 	})
 
 	it('should have a native object', () => {
-		expect(window.native).not.toBeUndefined()
-		expect(window.native.holder).toBe(window)
+		expect(native(window)).not.toBeUndefined()
+	})
+
+	it('should have a native object with an holder value', () => {
+		expect(native(window).holder).toBe(window)
 	})
 })

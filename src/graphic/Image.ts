@@ -1,6 +1,6 @@
-import { bridge } from '../decorator/bridge'
-import { native } from '../decorator/native'
 import { Emitter } from '../event/Emitter'
+import { bridge } from '../native/bridge'
+import { native } from '../native/native'
 
 @bridge('dezel.graphic.Image')
 
@@ -51,7 +51,7 @@ export class Image extends Emitter {
 	 * @since 0.1.0
 	 */
 	public get width(): number {
-		return this.native.width
+		return native(this).width
 	}
 
 	/**
@@ -60,7 +60,7 @@ export class Image extends Emitter {
 	 * @since 0.1.0
 	 */
 	public get height(): number {
-		return this.native.height
+		return native(this).height
 	}
 
 	/**
@@ -69,7 +69,7 @@ export class Image extends Emitter {
 	 * @since 0.1.0
 	 */
 	public get loading(): boolean {
-		return this.native.loading
+		return native(this).loading
 	}
 
 	/**
@@ -78,7 +78,7 @@ export class Image extends Emitter {
 	 * @since 0.1.0
 	 */
 	public get complete(): boolean {
-		return this.native.complete
+		return native(this).complete
 	}
 
 	//--------------------------------------------------------------------------
@@ -101,13 +101,6 @@ export class Image extends Emitter {
 	//--------------------------------------------------------------------------
 	// Native API
 	//--------------------------------------------------------------------------
-
-	/**
-	 * @property native
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	public native: any
 
 	/**
 	 * @method nativeOnLoad

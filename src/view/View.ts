@@ -1,10 +1,11 @@
-import { bridge } from '../decorator/bridge'
-import { native } from '../decorator/native'
 import { Emitter } from '../event/Emitter'
 import { Event } from '../event/Event'
 import { GestureManager } from '../gesture/GestureManager'
 import { Canvas } from '../graphic/Canvas'
 import { Image } from '../graphic/Image'
+import { bridge } from '../native/bridge'
+import { native } from '../native/native'
+import { Location } from '../placeholder/Placeholder'
 import { Placeholder } from '../placeholder/Placeholder'
 import { TouchEvent } from '../touch/TouchEvent'
 import { Window } from './Window'
@@ -143,17 +144,18 @@ export class View extends Emitter {
 		}
 
 		return new Promise(success => {
-			// TODO
-			// dezel.transition(
-			// 	duration,
-			// 	equation[0],
-			// 	equation[1],
-			// 	equation[2],
-			// 	equation[3],
-			// 	delay,
-			// 	success,
-			// 	animate
-			// )
+
+			native(View).transition(
+				duration,
+				equation[0],
+				equation[1],
+				equation[2],
+				equation[3],
+				delay,
+				success,
+				animate
+			)
+
 		})
 	}
 
@@ -178,7 +180,7 @@ export class View extends Emitter {
 	public set id(value: string) {
 		if (this[ID] != value) {
 			this[ID] = value
-			this.native.id = value
+			native(this).id = value
 		}
 	}
 
@@ -188,7 +190,7 @@ export class View extends Emitter {
 	 * @since 0.1.0
 	 */
 	public get window(): Window | null {
-		return this.native.window
+		return native(this).window
 	}
 
 	/**
@@ -197,7 +199,7 @@ export class View extends Emitter {
 	 * @since 0.1.0
 	 */
 	public get parent(): View | null {
-		return this.native.parent
+		return native(this).parent
 	}
 
 	/**
@@ -1176,7 +1178,7 @@ export class View extends Emitter {
 	 * @since 0.1.0
 	 */
 	public get measuredTop(): number {
-		return this.native.measuredTop
+		return native(this).measuredTop
 	}
 
 	/**
@@ -1185,7 +1187,7 @@ export class View extends Emitter {
 	 * @since 0.1.0
 	 */
 	public get measuredLeft(): number {
-		return this.native.measuredLeft
+		return native(this).measuredLeft
 	}
 
 	/**
@@ -1194,7 +1196,7 @@ export class View extends Emitter {
 	 * @since 0.1.0
 	 */
 	public get measuredWidth(): number {
-		return this.native.measuredWidth
+		return native(this).measuredWidth
 	}
 
 	/**
@@ -1203,7 +1205,7 @@ export class View extends Emitter {
 	 * @since 0.1.0
 	 */
 	public get measuredHeight(): number {
-		return this.native.measuredHeight
+		return native(this).measuredHeight
 	}
 
 	/**
@@ -1212,7 +1214,7 @@ export class View extends Emitter {
 	 * @since 0.1.0
 	 */
 	public get measuredInnerWidth(): number {
-		return this.native.measuredInnerWidth
+		return native(this).measuredInnerWidth
 	}
 
 	/**
@@ -1221,7 +1223,7 @@ export class View extends Emitter {
 	 * @since 0.1.0
 	 */
 	public get measuredInnerHeight(): number {
-		return this.native.measuredInnerHeight
+		return native(this).measuredInnerHeight
 	}
 
 	/**
@@ -1230,7 +1232,7 @@ export class View extends Emitter {
 	 * @since 0.1.0
 	 */
 	public get measuredContentWidth(): number {
-		return this.native.measuredContentWidth
+		return native(this).measuredContentWidth
 	}
 
 	/**
@@ -1239,7 +1241,7 @@ export class View extends Emitter {
 	 * @since 0.1.0
 	 */
 	public get measuredContentHeight(): number {
-		return this.native.measuredContentHeight
+		return native(this).measuredContentHeight
 	}
 
 	/**
@@ -1248,7 +1250,7 @@ export class View extends Emitter {
 	 * @since 0.1.0
 	 */
 	public get measuredMarginTop(): number {
-		return this.native.measuredMarginTop
+		return native(this).measuredMarginTop
 	}
 
 	/**
@@ -1257,7 +1259,7 @@ export class View extends Emitter {
 	 * @since 0.1.0
 	 */
 	public get measuredMarginLeft(): number {
-		return this.native.measuredMarginLeft
+		return native(this).measuredMarginLeft
 	}
 
 	/**
@@ -1266,7 +1268,7 @@ export class View extends Emitter {
 	 * @since 0.1.0
 	 */
 	public get measuredMarginRight(): number {
-		return this.native.measuredMarginRight
+		return native(this).measuredMarginRight
 	}
 
 	/**
@@ -1275,7 +1277,7 @@ export class View extends Emitter {
 	 * @since 0.1.0
 	 */
 	public get measuredMarginBottom(): number {
-		return this.native.measuredMarginBottom
+		return native(this).measuredMarginBottom
 	}
 
 	/**
@@ -1284,7 +1286,7 @@ export class View extends Emitter {
 	 * @since 0.1.0
 	 */
 	public get measuredPaddingTop(): number {
-		return this.native.measuredPaddingTop
+		return native(this).measuredPaddingTop
 	}
 
 	/**
@@ -1293,7 +1295,7 @@ export class View extends Emitter {
 	 * @since 0.1.0
 	 */
 	public get measuredPaddingLeft(): number {
-		return this.native.measuredPaddingLeft
+		return native(this).measuredPaddingLeft
 	}
 
 	/**
@@ -1302,7 +1304,7 @@ export class View extends Emitter {
 	 * @since 0.1.0
 	 */
 	public get measuredPaddingRight(): number {
-		return this.native.measuredPaddingRight
+		return native(this).measuredPaddingRight
 	}
 
 	/**
@@ -1311,7 +1313,7 @@ export class View extends Emitter {
 	 * @since 0.1.0
 	 */
 	public get measuredPaddingBottom(): number {
-		return this.native.measuredPaddingBottom
+		return native(this).measuredPaddingBottom
 	}
 
 	//--------------------------------------------------------------------------
@@ -1326,7 +1328,7 @@ export class View extends Emitter {
 	constructor() {
 		super()
 		let classList = getClassList(this)
-		if (classList) this.native.classList = classList
+		if (classList) native(this).classList = classList
 	}
 
 	/**
@@ -1352,7 +1354,7 @@ export class View extends Emitter {
 
 		this[GESTURES].destroy()
 
-		this.native.destroy()
+		native(this).destroy()
 
 		super.destroy()
 	}
@@ -1363,8 +1365,7 @@ export class View extends Emitter {
 	 * @since 0.1.0
 	 */
 	public createShadowRoot() {
-		this.native.createShadowRoot()
-		return this
+		native(this).createShadowRoot()
 	}
 
 	/**
@@ -1554,6 +1555,29 @@ export class View extends Emitter {
 	}
 
 	//--------------------------------------------------------------------------
+	// Placeholders
+	//--------------------------------------------------------------------------
+
+	/**
+	 * Insert a placeholder within this view.
+	 * @method insertPlaceholder
+	 * @since 0.7.0
+	 */
+	public insertPlaceholder(placeholder: Placeholder, location: Location = Location.Float, position?: number) {
+		placeholder.enter(this, position == null ? this.children.length : position, location)
+		return this
+	}
+
+	/**
+	 * Removes a placeholder from this view.
+	 * @method removePlaceholder
+	 * @since 0.7.0
+	 */
+	public removePlaceholder(placeholder: Placeholder) {
+		placeholder.leave()
+	}
+
+	//--------------------------------------------------------------------------
 	// Lifecycle
 	//--------------------------------------------------------------------------
 
@@ -1594,7 +1618,7 @@ export class View extends Emitter {
 	 * @hidden
 	 */
 	public hasStyle(style: string) {
-		return this.native.hasStyle(style)
+		return native(this).hasStyle(style)
 	}
 
 	/**
@@ -1603,8 +1627,7 @@ export class View extends Emitter {
 	 * @since 0.7.0
 	 */
 	public setStyle(style: string, enable: boolean = true) {
-		this.native.setStyle(style, enable)
-		return this
+		native(this).setStyle(style, enable)
 	}
 
 	//--------------------------------------------------------------------------
@@ -1617,7 +1640,7 @@ export class View extends Emitter {
 	 * @since 0.1.0
 	 */
 	public hasState(state: string) {
-		return this.native.hasState(state)
+		return native(this).hasState(state)
 	}
 
 	/**
@@ -1625,8 +1648,7 @@ export class View extends Emitter {
 	 * @since 0.1.0
 	 */
 	public setState(state: string, enable: boolean = true) {
-		this.native.setState(state, enable)
-		return this
+		native(this).setState(state, enable)
 	}
 
 	//--------------------------------------------------------------------------
@@ -1639,8 +1661,7 @@ export class View extends Emitter {
 	 * @since 0.1.0
 	 */
 	public scheduleRedraw() {
-		this.native.scheduleRedraw()
-		return this
+		native(this).scheduleRedraw()
 	}
 
 	/**
@@ -1649,8 +1670,7 @@ export class View extends Emitter {
 	 * @since 0.1.0
 	 */
 	public scheduleLayout() {
-		this.native.scheduleLayout()
-		return this
+		native(this).scheduleLayout()
 	}
 
 	/**
@@ -1659,8 +1679,7 @@ export class View extends Emitter {
 	 * @since 0.1.0
 	 */
 	public measure() {
-		this.native.measure()
-		return this
+		native(this).measure()
 	}
 
 	/**
@@ -1669,8 +1688,7 @@ export class View extends Emitter {
 	 * @since 0.1.0
 	 */
 	public resolve() {
-		this.native.resolve()
-		return this
+		native(this).resolve()
 	}
 
 	//--------------------------------------------------------------------------
@@ -1717,8 +1735,7 @@ export class View extends Emitter {
 	 * @since 0.1.0
 	 */
 	public scrollTo(top: number, left: number = 0) {
-		this.native.scrollTo(top, left)
-		return this
+		native(this).scrollTo(top, left)
 	}
 
 	//--------------------------------------------------------------------------
@@ -2130,13 +2147,6 @@ export class View extends Emitter {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @property native
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	public native: any
-
-	/**
 	 * @method nativeOnMoveToParent
 	 * @since 0.7.0
 	 * @hidden
@@ -2308,8 +2318,8 @@ function removeItem(view: View, child: View, index: number) {
  * @hidden
  */
 function insertView(view: View, child: View, index: number) {
-	view.native.insert(child.native, index)
-}
+	native(view).insert(native(child), index)
+} native
 
 /**
  * @function removeView
@@ -2317,8 +2327,8 @@ function insertView(view: View, child: View, index: number) {
  * @hidden
  */
 function removeView(view: View, child: View, index: number) {
-	view.native.remove(child.native, index)
-}
+	native(view).remove(native(child), index)
+} native
 
 /**
  * @function last

@@ -1,8 +1,8 @@
-import { bridge } from '../decorator/bridge'
-import { native } from '../decorator/native'
 import { Emitter } from '../event/Emitter'
 import { Event } from '../event/Event'
 import { Image } from '../graphic/Image'
+import { bridge } from '../native/bridge'
+import { native } from '../native/native'
 
 /**
  * @interface AlertButtonOptions
@@ -107,13 +107,6 @@ export class AlertButton extends Emitter {
 	//--------------------------------------------------------------------------
 	// Native API
 	//--------------------------------------------------------------------------
-
-	/**
-	 * @property native
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	public native: any
 
 	/**
 	 * @method nativeOnPress

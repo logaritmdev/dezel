@@ -1,6 +1,7 @@
 import { Dictionary } from 'lodash'
 import { bound } from '../decorator/bound'
-import { bridge } from '../decorator/bridge'
+import { bridge } from '../native/bridge'
+import { native } from '../native/native'
 import { Event } from './Event'
 import { ProgressEvent } from './Event'
 import { EventTarget } from './EventTarget'
@@ -363,7 +364,7 @@ export class XMLHttpRequest extends EventTarget {
 		this[SENT] = true
 		this[ERROR] = false
 
-		this.native.request(
+		native(this).request(
 			this[URL],
 			this[METHOD],
 			this[HEADERS],
@@ -634,13 +635,6 @@ export class XMLHttpRequest extends EventTarget {
 	//--------------------------------------------------------------------------
 	// Native API
 	//--------------------------------------------------------------------------
-
-	/**
-	 * @property native
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private native: any
 
 	/**
 	 * @method nativeOnProgress

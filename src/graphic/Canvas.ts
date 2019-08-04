@@ -1,5 +1,5 @@
-import { bridge } from '../decorator/bridge'
-import { native } from '../decorator/native'
+import { bridge } from '../native/bridge'
+import { native } from '../native/native'
 
 @bridge('dezel.graphic.Canvas')
 
@@ -88,7 +88,7 @@ export class Canvas {
 	 * @since 0.4.0
 	 */
 	public rect(x: number, y: number, w: number, h: number) {
-		this.native.rect(x, y, w, h)
+		native(this).rect(x, y, w, h)
 		return this
 	}
 
@@ -97,7 +97,7 @@ export class Canvas {
 	 * @since 0.4.0
 	 */
 	public fillRect(x: number, y: number, w: number, h: number) {
-		this.native.fillRect(x, y, w, h)
+		native(this).fillRect(x, y, w, h)
 		return this
 	}
 
@@ -106,7 +106,7 @@ export class Canvas {
 	 * @since 0.4.0
 	 */
 	public strokeRect(x: number, y: number, w: number, h: number) {
-		this.native.strokeRect(x, y, w, h)
+		native(this).strokeRect(x, y, w, h)
 		return this
 	}
 
@@ -115,7 +115,7 @@ export class Canvas {
 	 * @since 0.4.0
 	 */
 	public clearRect(x: number, y: number, w: number, h: number) {
-		this.native.clearRect(x, y, w, h)
+		native(this).clearRect(x, y, w, h)
 		return this
 	}
 
@@ -124,7 +124,7 @@ export class Canvas {
 	 * @since 0.4.0
 	 */
 	public fill() {
-		this.native.fill()
+		native(this).fill()
 		return this
 	}
 
@@ -133,7 +133,7 @@ export class Canvas {
 	 * @since 0.4.0
 	 */
 	public stroke() {
-		this.native.stroke()
+		native(this).stroke()
 		return this
 	}
 
@@ -142,7 +142,7 @@ export class Canvas {
 	 * @since 0.4.0
 	 */
 	public beginPath() {
-		this.native.beginPath()
+		native(this).beginPath()
 		return this
 	}
 
@@ -151,7 +151,7 @@ export class Canvas {
 	 * @since 0.4.0
 	 */
 	public closePath() {
-		this.native.closePath()
+		native(this).closePath()
 		return this
 	}
 
@@ -160,7 +160,7 @@ export class Canvas {
 	 * @since 0.4.0
 	 */
 	public moveTo(x: number, y: number) {
-		this.native.moveTo(x, y)
+		native(this).moveTo(x, y)
 		return this
 	}
 
@@ -169,7 +169,7 @@ export class Canvas {
 	 * @since 0.4.0
 	 */
 	public lineTo(x: number, y: number) {
-		this.native.lineTo(x, y)
+		native(this).lineTo(x, y)
 		return this
 	}
 
@@ -178,7 +178,7 @@ export class Canvas {
 	 * @since 0.4.0
 	 */
 	public clip() {
-		this.native.clip()
+		native(this).clip()
 		return this
 	}
 
@@ -187,7 +187,7 @@ export class Canvas {
 	 * @since 0.4.0
 	 */
 	public quadraticCurveTo(cx: number, cy: number, x: number, y: number) {
-		this.native.quadraticCurveTo(cx, cy, x, y)
+		native(this).quadraticCurveTo(cx, cy, x, y)
 		return this
 	}
 
@@ -196,7 +196,7 @@ export class Canvas {
 	 * @since 0.4.0
 	 */
 	public bezierCurveTo(c1x: number, c1y: number, c2x: number, c2y: number, x: number, y: number) {
-		this.native.bezierCurveTo(c1x, c1y, c2x, c2y, x, y)
+		native(this).bezierCurveTo(c1x, c1y, c2x, c2y, x, y)
 		return this
 	}
 
@@ -205,7 +205,7 @@ export class Canvas {
 	 * @since 0.4.0
 	 */
 	public arc(x: number, y: number, radius: number, sa: number, ea: number, ccw: boolean = false) {
-		this.native.arc(x, y, radius, sa, ea, ccw)
+		native(this).arc(x, y, radius, sa, ea, ccw)
 		return this
 	}
 
@@ -214,7 +214,7 @@ export class Canvas {
 	 * @since 0.4.0
 	 */
 	public arcTo(x1: number, y1: number, x2: number, y2: number, radius: number) {
-		this.native.arcTo(x1, y1, x2, y2, radius)
+		native(this).arcTo(x1, y1, x2, y2, radius)
 		return this
 	}
 
@@ -223,7 +223,7 @@ export class Canvas {
 	 * @since 0.4.0
 	 */
 	public isPointInPath(x: number, y: number) {
-		return this.native.isPointInPath(x, y)
+		return native(this).isPointInPath(x, y)
 	}
 
 	/**
@@ -231,7 +231,7 @@ export class Canvas {
 	 * @since 0.4.0
 	 */
 	public scale(x: number, y: number) {
-		this.native.scale(x, y)
+		native(this).scale(x, y)
 		return this
 	}
 
@@ -240,7 +240,7 @@ export class Canvas {
 	 * @since 0.4.0
 	 */
 	public rotate(angle: number) {
-		this.native.rotate(angle)
+		native(this).rotate(angle)
 		return this
 	}
 
@@ -249,7 +249,7 @@ export class Canvas {
 	 * @since 0.4.0
 	 */
 	public translate(x: number, y: number) {
-		this.native.translate(x, y)
+		native(this).translate(x, y)
 		return this
 	}
 
@@ -258,7 +258,7 @@ export class Canvas {
 	 * @since 0.4.0
 	 */
 	public transform(a: number, b: number, c: number, d: number, e: number, f: number) {
-		this.native.transform(a, b, c, d, e, f)
+		native(this).transform(a, b, c, d, e, f)
 		return this
 	}
 
@@ -267,7 +267,7 @@ export class Canvas {
 	 * @since 0.4.0
 	 */
 	public setTransform(a: number, b: number, c: number, d: number, e: number, f: number) {
-		this.native.setTransform(a, b, c, d, e, f)
+		native(this).setTransform(a, b, c, d, e, f)
 		return this
 	}
 
@@ -324,7 +324,7 @@ export class Canvas {
 	 * @since 0.4.0
 	 */
 	public save() {
-		this.native.save()
+		native(this).save()
 		return this
 	}
 
@@ -333,7 +333,7 @@ export class Canvas {
 	 * @since 0.4.0
 	 */
 	public restore() {
-		this.native.restore()
+		native(this).restore()
 		return this
 	}
 
@@ -360,16 +360,5 @@ export class Canvas {
 	public createPattern() {
 
 	}
-
-	//--------------------------------------------------------------------------
-	// Native API
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @propert native
-	 * @since 0.4.0
-	 * @hidden
-	 */
-	public native: any
 
 }

@@ -1,4 +1,5 @@
-import { bridge } from '../decorator/bridge'
+import { bridge } from '../native/bridge'
+import { native } from '../native/native'
 
 @bridge('dezel.device.Device')
 
@@ -37,7 +38,7 @@ export class Device {
 	 * @since 0.4.0
 	 */
 	public get uuid(): string {
-		return this.native.uuid
+		return native(this).uuid
 	}
 
 	//--------------------------------------------------------------------------
@@ -50,7 +51,7 @@ export class Device {
 	 * @since 0.4.0
 	 */
 	public sound(id: string) {
-		this.native.sound(id)
+		native(this).sound(id)
 		return this
 	}
 
@@ -60,20 +61,9 @@ export class Device {
 	 * @since 0.4.0
 	 */
 	public vibrate(id: string) {
-		this.native.vibrate(id)
+		native(this).vibrate(id)
 		return this
 	}
-
-	//--------------------------------------------------------------------------
-	// Native API
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @property native
-	 * @since 0.4.0
-	 * @hidden
-	 */
-	public native: any
 }
 
 /**

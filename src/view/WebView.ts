@@ -1,5 +1,6 @@
-import { bridge } from '../decorator/bridge'
 import { Event } from '../event/Event'
+import { bridge } from '../native/bridge'
+import { native } from '../native/native'
 import { View } from './View'
 
 @bridge('dezel.view.WebView')
@@ -33,7 +34,7 @@ export class WebView extends View {
 	 * @since 0.2.0
 	 */
 	public load(url: string) {
-		this.native.load(url)
+		native(this).load(url)
 		return this
 	}
 
@@ -43,7 +44,7 @@ export class WebView extends View {
 	 * @since 0.2.0
 	 */
 	public loadHTML(html: string) {
-		this.native.loadHTML(html)
+		native(this).loadHTML(html)
 		return this
 	}
 
@@ -53,7 +54,7 @@ export class WebView extends View {
 	 * @since 0.2.0
 	 */
 	public reload() {
-		this.native.reload()
+		native(this).reload()
 		return this
 	}
 
@@ -63,7 +64,7 @@ export class WebView extends View {
 	 * @since 0.2.0
 	 */
 	public stop() {
-		this.native.stop()
+		native(this).stop()
 		return this
 	}
 
@@ -73,7 +74,7 @@ export class WebView extends View {
 	 * @since 0.2.0
 	 */
 	public back() {
-		this.native.back()
+		native(this).back()
 		return this
 	}
 
@@ -83,7 +84,7 @@ export class WebView extends View {
 	 * @since 0.2.0
 	 */
 	public forward() {
-		this.native.forward()
+		native(this).forward()
 		return this
 	}
 

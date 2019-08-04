@@ -1,5 +1,5 @@
-import { bridge } from '../decorator/bridge'
-import { native } from '../decorator/native'
+import { bridge } from '../native/bridge'
+import { native } from '../native/native'
 import { View } from './View'
 
 @bridge('dezel.view.TextView')
@@ -164,11 +164,11 @@ export class TextView extends View {
 	@native public linkColor!: string
 
 	/**
-	 * The text view's line limit.
-	 * @property lines
-	 * @since 0.1.0
+	 * The text view's maximum amount of lines.
+	 * @property maxLines
+	 * @since 0.7.0
 	 */
-	@native public lines!: number
+	@native public maxLines!: number
 
 	//--------------------------------------------------------------------------
 	// Methods
@@ -189,7 +189,7 @@ export class TextView extends View {
 			height = -1
 		}
 
-		return this.native.measureText(width, height)
+		return native(this).measureText(width, height)
 	}
 
 	//--------------------------------------------------------------------------

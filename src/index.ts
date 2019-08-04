@@ -69,11 +69,12 @@ export { Spinner } from './component/Spinner'
 export { DataSource } from './data/DataSource'
 export { DataSourceOptions } from './data/DataSource'
 
+export { bridge } from './native/bridge'
+export { native } from './native/native'
+
 export { bound } from './decorator/bound'
 export { state } from './decorator/state'
 export { watch } from './decorator/watch'
-export { bridge } from './decorator/bridge'
-export { native } from './decorator/native'
 
 export { Alert } from './dialog/Alert'
 export { AlertOptions } from './dialog/Alert'

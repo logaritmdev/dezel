@@ -121,7 +121,7 @@ export class Placeholder extends Emitter {
 		this[POSITION] = position
 
 		this.children.forEach((c, i) => {
-			this.insert(c, i + position)
+			view.insert(c, i + position)
 		})
 
 		view.on('insert', this.onViewInsert)
@@ -138,11 +138,13 @@ export class Placeholder extends Emitter {
 	 */
 	public leave() {
 
-		if (this.view) {
-			this.view.off('insert', this.onViewInsert)
-			this.view.off('remove', this.onViewRemove)
-			this.view.off('destroy', this.onViewDestroy)
+		if (this.view == null) {
+			return this
 		}
+
+		this.view.off('insert', this.onViewInsert)
+		this.view.off('remove', this.onViewRemove)
+		this.view.off('destroy', this.onViewDestroy)
 
 		this[VIEW] = null
 		this[LOCATION] = 0
@@ -365,8 +367,18 @@ export class Placeholder extends Emitter {
 	@bound private onViewInsert(event: Event<ViewInsertEvent>) {
 
 		let {
-			index
+			index,
+			child
 		} = event.data
+
+		/*
+		 * This method will be called when we insert our own
+		 * view so we need to disrecard these.
+		 */
+
+		if (this.children.indexOf(child) > -1) {
+			return
+		}
 
 		/*
 		 * Only increment when the view has been added before the position
@@ -388,8 +400,18 @@ export class Placeholder extends Emitter {
 	@bound private onViewRemove(event: Event<ViewRemoveEvent>) {
 
 		let {
-			index
+			index,
+			child
 		} = event.data
+
+		/*
+		 * This method will be called when we insert our own
+		 * view so we need to disrecard these.
+		 */
+
+		if (this.children.indexOf(child) > -1) {
+			return
+		}
 
 		/*
 		 * Only increment when the view has been removed before the position

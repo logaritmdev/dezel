@@ -1,14 +1,12 @@
 import { bound } from '../decorator/bound'
-import { bridge } from '../decorator/bridge'
-import { native } from '../decorator/native'
 import { state } from '../decorator/state'
 import { watch } from '../decorator/watch'
 import { Event } from '../event/Event'
 import { GestureEvent } from '../gesture/GestureEvent'
+import { bridge } from '../native/bridge'
+import { native } from '../native/native'
 import { Touch } from '../touch/Touch'
-import { TouchEvent } from '../touch/TouchEvent'
 import { View } from '../view/View'
-import { ViewMoveToWindowEvent } from '../view/View'
 import { Window } from '../view/Window'
 import './TextArea.ds'
 import './TextArea.ds.android'
@@ -186,7 +184,7 @@ export class TextArea extends View {
 	 * @since 0.1.0
 	 */
 	public focus() {
-		this.native.focus()
+		native(this).focus()
 		return this
 	}
 
@@ -196,7 +194,7 @@ export class TextArea extends View {
 	 * @since 0.1.0
 	 */
 	public blur() {
-		this.native.blur()
+		native(this).blur()
 		return this
 	}
 

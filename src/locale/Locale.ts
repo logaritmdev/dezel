@@ -1,5 +1,5 @@
-import { bridge } from '../decorator/bridge'
-import { native } from '../decorator/native'
+import { bridge } from '../native/bridge'
+import { native } from '../native/native'
 
 @bridge('dezel.locale.Locale')
 
@@ -64,12 +64,6 @@ export class Locale {
 	// Native API
 	//--------------------------------------------------------------------------
 
-	/**
-	 * @property native
-	 * @since 0.4.0
-	 * @hidden
-	 */
-	public native: any
 }
 
 /**

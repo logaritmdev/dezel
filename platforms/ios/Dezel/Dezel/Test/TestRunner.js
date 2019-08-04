@@ -2990,7 +2990,7 @@ function Socket (uri, opts) {
     opts = uri;
     uri = null;
   }
-console.log('SOCKET URI', uri )
+
   if (uri) {
     uri = parseuri(uri);
     opts.hostname = uri.host;
@@ -4508,7 +4508,6 @@ Request.prototype.onData = function (data) {
  */
 
 Request.prototype.onError = function (err) {
-  console.log('ERROR', err)
   this.emit('error', err);
   this.cleanup(true);
 };
@@ -5078,11 +5077,9 @@ WS.prototype.write = function (packets) {
         // throw an error
         try {
           if (self.usingBrowserWebSocket) {
-            // TypeError is thrown when passing the second argument on Safarià
-            console.log('hjkhjkhjk 567567', data)
+            // TypeError is thrown when passing the second argument on Safari
             self.ws.send(data);
           } else {
-            console.log('hjkhjkhjk 678678687')
             self.ws.send(data, opts);
           }
         } catch (e) {
@@ -5113,7 +5110,6 @@ WS.prototype.write = function (packets) {
  */
 
 WS.prototype.onClose = function () {
-  console.log('WS OnClose')
   Transport.prototype.onClose.call(this);
 };
 
@@ -5124,7 +5120,6 @@ WS.prototype.onClose = function () {
  */
 
 WS.prototype.doClose = function () {
-  console.log('WS doClose')
   if (typeof this.ws !== 'undefined') {
     this.ws.close();
   }
@@ -5176,7 +5171,6 @@ WS.prototype.uri = function () {
  */
 
 WS.prototype.check = function () {
-  console.log('WS cnecked')
   return !!WebSocketImpl && !('__initialize' in WebSocketImpl && this.name === WS.prototype.name);
 };
 
@@ -9396,29 +9390,52 @@ class Dezel {
      * @method importClass
      * @since 0.7.0
      */
-    static importClass(className, init = false) {
-        let Class = this.cache[className];
+    static importClass(uid, init = false) {
+        let Class = this.classes[uid];
         if (Class == null) {
-            Class = this.cache[className] = importClass(className);
+            Class = this.classes[uid] = importClass(uid);
         }
         return init ? new Class : Class;
     }
+    /**
+     * Imports a native object.
+     * @method importObject
+     * @since 0.7.0
+     */
+    static importObject(uid) {
+        let object = this.objects[uid];
+        if (object == null) {
+            object = this.objects[uid] = importObject(uid);
+        }
+        return object;
+    }
+    /**
+     * Register the main application.
+     * @method registerApplication
+     * @since 0.7.0
+     */
     static registerApplication(application, uid = '') {
         if (uid == '') {
             uid = 'default';
         }
-        registerApplication(uid, application.native);
+        registerApplication(toNative(application), uid || 'dezel.application.main');
     }
 }
 //--------------------------------------------------------------------------
 // Private API
 //--------------------------------------------------------------------------
 /**
- * @property cache
+ * @property classes
  * @since 0.7.0
  * @hidden
  */
-Dezel.cache = {};
+Dezel.classes = {};
+/**
+ * @property objects
+ * @since 0.7.0
+ * @hidden
+ */
+Dezel.objects = {};
 exports.Dezel = Dezel;
 
 
@@ -9756,8 +9773,9 @@ var _a;
  */
 exports.LISTENERS = Symbol('listeners');
 /**
- * @class Event
+ * @class EventTarget
  * @since 0.1.0
+ * @hidden
  */
 class EventTarget {
     constructor() {
@@ -9770,12 +9788,14 @@ class EventTarget {
         /**
          * @property listeners
          * @since 0.1.0
+         * @hidden
          */
         this[_a] = {};
     }
     /**
      * @method addEventListener
      * @since 0.1.0
+     * @hidden
      */
     addEventListener(type, listener, options) {
         let listeners = this[exports.LISTENERS][type];
@@ -9788,8 +9808,28 @@ class EventTarget {
         return this;
     }
     /**
+     * @method removeEventListener
+     * @since 0.1.0
+     * @hidden
+     */
+    removeEventListener(type, listener, options) {
+        let listeners = this[exports.LISTENERS][type];
+        if (listeners == null) {
+            return;
+        }
+        let index = listeners.indexOf(listener);
+        if (index > -1) {
+            listeners.splice(index, 1);
+        }
+        if (listeners.length == 0) {
+            delete this[exports.LISTENERS][type];
+        }
+        return this;
+    }
+    /**
      * @method dispatchEvent
      * @since 0.1.0
+     * @hidden
      */
     dispatchEvent(event) {
         let wat = this; // TODO
@@ -9806,24 +9846,6 @@ class EventTarget {
             listener.call(event);
         }
         return true;
-    }
-    /**
-     * @method removeEventListener
-     * @since 0.1.0
-     */
-    removeEventListener(type, listener, options) {
-        let listeners = this[exports.LISTENERS][type];
-        if (listeners == null) {
-            return;
-        }
-        let index = listeners.indexOf(listener);
-        if (index > -1) {
-            listeners.splice(index, 1);
-        }
-        if (listeners.length == 0) {
-            delete this[exports.LISTENERS][type];
-        }
-        return this;
     }
 }
 _a = exports.LISTENERS;
@@ -10012,7 +10034,6 @@ class WebSocket extends EventTarget_1.EventTarget {
          * @hidden
          */
         this[_f] = 0;
-        console.log('WS: open ?');
         if (protocols) {
             protocols = Array.isArray(protocols) ? protocols : [protocols];
         }
@@ -10021,7 +10042,6 @@ class WebSocket extends EventTarget_1.EventTarget {
             this[exports.READY_STATE] = WebSocket_1.CLOSED;
             throw Exception_1.Exception.create(Exception_1.Exception.Code.SyntaxError);
         }
-        console.log('WS: open ', url);
         this.native.open(url, protocols);
     }
     //--------------------------------------------------------------------------
@@ -10089,7 +10109,6 @@ class WebSocket extends EventTarget_1.EventTarget {
      * @since 0.7.0
      */
     send(data) {
-        console.log('WS: Send ?');
         if (this.readyState == WebSocket_1.CONNECTING) {
             throw Exception_1.Exception.create(Exception_1.Exception.Code.InvalidStateError);
         }
@@ -10097,7 +10116,6 @@ class WebSocket extends EventTarget_1.EventTarget {
             this.readyState == WebSocket_1.CLOSED) {
             return;
         }
-        console.log('WS: Send', data);
         this.native.send(data);
     }
     /**
@@ -10106,7 +10124,6 @@ class WebSocket extends EventTarget_1.EventTarget {
      * @since 0.7.0
      */
     close(code, reason) {
-        console.log('WS: Close ?');
         if (this.readyState == WebSocket_1.CLOSING ||
             this.readyState == WebSocket_1.CLOSED) {
             return;
@@ -10116,7 +10133,6 @@ class WebSocket extends EventTarget_1.EventTarget {
             return;
         }
         this[exports.READY_STATE] = WebSocket_1.CLOSING;
-        console.log('WS: Close');
         this.native.close(code, reason);
     }
     /**
@@ -10142,7 +10158,7 @@ class WebSocket extends EventTarget_1.EventTarget {
     nativeOnReceiveData(data) {
     }
     /**
-     * @method nativeOnMessage
+     * @method nativeOnReceiveMessage
      * @sine 0.7.0
      * @hidden
      */
@@ -10289,17 +10305,17 @@ exports.RESPONSE_TYPE = Symbol('responseType');
  */
 exports.RESPONSE_HEADERS = Symbol('responseHeader');
 /**
- * @symbol URL
+ * @symbol RESPONSE_URL
  * @since 0.7.0
  */
 exports.RESPONSE_URL = Symbol('responseURL');
 /**
- * @symbol RESPONSE_TYPE
+ * @symbol STATUS_CODE
  * @since 0.7.0
  */
-exports.STATUS = Symbol('status');
+exports.STATUS_CODE = Symbol('statusCode');
 /**
- * @symbol RESPONSE_TYPE
+ * @symbol STATUS_TEXT
  * @since 0.7.0
  */
 exports.STATUS_TEXT = Symbol('statusText');
@@ -10324,7 +10340,7 @@ exports.ABORT = Symbol('abort');
  */
 let XMLHttpRequest = XMLHttpRequest_1 = 
 /**
- * TODO
+ * Manages Http requests.
  * @class XMLHttpRequest
  * @super EventTarget
  * @since 0.7.0
@@ -10449,7 +10465,7 @@ class XMLHttpRequest extends EventTarget_1.EventTarget {
     // Properties
     //--------------------------------------------------------------------------
     /**
-     * TODO
+     * The state of the request.
      * @property readyState
      * @since 0.7.0
      */
@@ -10457,7 +10473,7 @@ class XMLHttpRequest extends EventTarget_1.EventTarget {
         return this[exports.READY_STATE];
     }
     /**
-     * TODO
+     * The request's response.
      * @property response
      * @since 0.7.0
      */
@@ -10465,7 +10481,7 @@ class XMLHttpRequest extends EventTarget_1.EventTarget {
         return this[exports.RESPONSE];
     }
     /**
-     * TODO
+     * The request's text response.
      * @property responseText
      * @since 0.7.0
      */
@@ -10477,7 +10493,7 @@ class XMLHttpRequest extends EventTarget_1.EventTarget {
         return this[exports.RESPONSE_TEXT];
     }
     /**
-     * TODO
+     * The request's response type.
      * @property responseType
      * @since 0.7.0
      */
@@ -10485,7 +10501,7 @@ class XMLHttpRequest extends EventTarget_1.EventTarget {
         return this[exports.RESPONSE_TYPE];
     }
     /**
-     * TODO
+     * The request's response type.
      * @property responseType
      * @since 0.7.0
      */
@@ -10496,7 +10512,7 @@ class XMLHttpRequest extends EventTarget_1.EventTarget {
         this[exports.RESPONSE_TYPE] = value;
     }
     /**
-     * TODO
+     * The request's response URL.
      * @property responseURL
      * @since 0.7.0
      */
@@ -10504,7 +10520,7 @@ class XMLHttpRequest extends EventTarget_1.EventTarget {
         return this[exports.RESPONSE_URL];
     }
     /**
-     * TODO
+     * The request's response XML document.
      * @property responseXML
      * @since 0.7.0
      */
@@ -10512,7 +10528,7 @@ class XMLHttpRequest extends EventTarget_1.EventTarget {
         throw new Error('Property "responseXML" is not supported.');
     }
     /**
-     * TODO
+     * The request's status.
      * @property status
      * @since 0.7.0
      */
@@ -10522,10 +10538,10 @@ class XMLHttpRequest extends EventTarget_1.EventTarget {
             this.error) {
             return 0;
         }
-        return this[exports.STATUS];
+        return this[exports.STATUS_CODE];
     }
     /**
-     * TODO
+     * The request's status text.
      * @property statusText
      * @since 0.7.0
      */
@@ -10538,7 +10554,7 @@ class XMLHttpRequest extends EventTarget_1.EventTarget {
         return this[exports.STATUS_TEXT];
     }
     /**
-     * TODO
+     * The requests's timeout.
      * @property timeout
      * @since 0.7.0
      */
@@ -10546,7 +10562,7 @@ class XMLHttpRequest extends EventTarget_1.EventTarget {
         return this[exports.TIMEOUT];
     }
     /**
-     * TODO
+     * The requests's timeout.
      * @property timeout
      * @since 0.7.0
      */
@@ -10554,30 +10570,13 @@ class XMLHttpRequest extends EventTarget_1.EventTarget {
         if (this.readyState != XMLHttpRequest_1.OPENED || this.sent) {
             throw Exception_1.Exception.create(Exception_1.Exception.Code.InvalidStateError);
         }
-        console.log('Setting timeout', value);
         this[exports.TIMEOUT] = value;
-    }
-    /**
-     * TODO
-     * @property sent
-     * @since 0.7.0
-     */
-    get sent() {
-        return this[exports.SENT];
-    }
-    /**
-     * TODO
-     * @property error
-     * @since 0.7.0
-     */
-    get error() {
-        return this[exports.ERROR];
     }
     //--------------------------------------------------------------------------
     // Methods
     //--------------------------------------------------------------------------
     /**
-     * TODO
+     * Initializes a request.
      * @method open
      * @since 0.7.0
      */
@@ -10603,7 +10602,7 @@ class XMLHttpRequest extends EventTarget_1.EventTarget {
         this.changeState(XMLHttpRequest_1.OPENED);
     }
     /**
-     * TODO
+     * Aborts the request if it has already been sent.
      * @method open
      * @since 0.7.0
      */
@@ -10621,12 +10620,11 @@ class XMLHttpRequest extends EventTarget_1.EventTarget {
         }
     }
     /**
-     * TODO
+     * Sends the request.
      * @method open
      * @since 0.7.0
      */
     send(data) {
-        console.log('XML HTTP REQUEST SEDN', data);
         if (this.readyState != XMLHttpRequest_1.OPENED || this.sent) {
             throw Exception_1.Exception.create(Exception_1.Exception.Code.InvalidStateError);
         }
@@ -10636,8 +10634,8 @@ class XMLHttpRequest extends EventTarget_1.EventTarget {
         this.dispatchEvent(new Event_2.ProgressEvent('loadstart'));
     }
     /**
-     * TODO
-     * @method open
+     * Overrides the MIME type returned by the server.
+     * @method overrideMimeType
      * @since 0.7.0
      */
     overrideMimeType(override) {
@@ -10645,11 +10643,11 @@ class XMLHttpRequest extends EventTarget_1.EventTarget {
             this.readyState == XMLHttpRequest_1.DONE) {
             throw Exception_1.Exception.create(Exception_1.Exception.Code.InvalidStateError);
         }
-        // TODO
+        throw new Error('Not supported.');
     }
     /**
-     * TODO
-     * @method open
+     * Returns all the response headers.
+     * @method getAllResponseHeaders
      * @since 0.7.0
      */
     getAllResponseHeaders() {
@@ -10669,8 +10667,8 @@ class XMLHttpRequest extends EventTarget_1.EventTarget {
         return headers;
     }
     /**
-     * TODO
-     * @method open
+     * Returns the string containing the text of the specified header.
+     * @method getResponseHeader
      * @since 0.7.0
      */
     getResponseHeader(name) {
@@ -10680,8 +10678,8 @@ class XMLHttpRequest extends EventTarget_1.EventTarget {
         return this[exports.RESPONSE_HEADERS][name];
     }
     /**
-     * TODO
-     * @method open
+     * Sets the value of an HTTP request header.
+     * @method setRequestHeader
      * @since 0.7.0
      */
     setRequestHeader(name, value) {
@@ -10689,6 +10687,22 @@ class XMLHttpRequest extends EventTarget_1.EventTarget {
             throw Exception_1.Exception.create(Exception_1.Exception.Code.InvalidStateError);
         }
         this[exports.HEADERS][name] = value;
+    }
+    /**
+     * @property sent
+     * @since 0.7.0
+     * @hidden
+     */
+    get sent() {
+        return this[exports.SENT];
+    }
+    /**
+     * @property error
+     * @since 0.7.0
+     * @hidden
+     */
+    get error() {
+        return this[exports.ERROR];
     }
     /**
      * @method changeState
@@ -10739,7 +10753,7 @@ class XMLHttpRequest extends EventTarget_1.EventTarget {
      * @since 0.7.0
      * @hidden
      */
-    nativeOnComplete(data, status, headers, url) {
+    nativeOnComplete(data, statusCode, statusText, headers, url) {
         if (this.error) {
             return;
         }
@@ -10751,8 +10765,8 @@ class XMLHttpRequest extends EventTarget_1.EventTarget {
         this[exports.RESPONSE_TEXT] = data;
         this[exports.RESPONSE_HEADERS] = headers;
         this[exports.RESPONSE_URL] = url;
-        this[exports.STATUS] = status;
-        this[exports.STATUS_TEXT] = statuses[status];
+        this[exports.STATUS_CODE] = statusCode;
+        this[exports.STATUS_TEXT] = statusText;
         this[exports.SENT] = false;
         this.changeState(XMLHttpRequest_1.DONE);
     }
@@ -10781,33 +10795,28 @@ class XMLHttpRequest extends EventTarget_1.EventTarget {
         this.dispatchEvent(new Event_1.Event('error'));
     }
 };
-_a = exports.URL, _b = exports.METHOD, _c = exports.HEADERS, _d = exports.TIMEOUT, _e = exports.USERNAME, _f = exports.PASSWORD, _g = exports.READY_STATE, _h = exports.RESPONSE, _j = exports.RESPONSE_TEXT, _k = exports.RESPONSE_TYPE, _l = exports.RESPONSE_HEADERS, _m = exports.RESPONSE_URL, _o = exports.STATUS, _p = exports.STATUS_TEXT, _q = exports.SENT, _r = exports.ERROR, _s = exports.ABORT;
+_a = exports.URL, _b = exports.METHOD, _c = exports.HEADERS, _d = exports.TIMEOUT, _e = exports.USERNAME, _f = exports.PASSWORD, _g = exports.READY_STATE, _h = exports.RESPONSE, _j = exports.RESPONSE_TEXT, _k = exports.RESPONSE_TYPE, _l = exports.RESPONSE_HEADERS, _m = exports.RESPONSE_URL, _o = exports.STATUS_CODE, _p = exports.STATUS_TEXT, _q = exports.SENT, _r = exports.ERROR, _s = exports.ABORT;
 /**
- * TODO
  * @const UNSENT
  * @since 0.7.0
  */
 XMLHttpRequest.UNSENT = 0;
 /**
- * TODO
  * @const OPENED
  * @since 0.7.0
  */
 XMLHttpRequest.OPENED = 1;
 /**
- * TODO
  * @const HEADERS_RECEIVED
  * @since 0.7.0
  */
 XMLHttpRequest.HEADERS_RECEIVED = 2;
 /**
- * TODO
  * @const LOADING
  * @since 0.7.0
  */
 XMLHttpRequest.LOADING = 3;
 /**
- * TODO
  * @const DONE
  * @since 0.7.0
  */
@@ -10815,60 +10824,13 @@ XMLHttpRequest.DONE = 4;
 XMLHttpRequest = XMLHttpRequest_1 = __decorate([
     bridge_1.bridge('dezel.global.XMLHttpRequest')
     /**
-     * TODO
+     * Manages Http requests.
      * @class XMLHttpRequest
      * @super EventTarget
      * @since 0.7.0
      */
 ], XMLHttpRequest);
 exports.XMLHttpRequest = XMLHttpRequest;
-/**
- * @const statuses
- * @sine 0.7.0
- * @hidden
- */
-const statuses = {
-    100: "Continue",
-    101: "Switching Protocols",
-    200: "OK",
-    201: "Created",
-    202: "Accepted",
-    203: "Non - Authoritative Information",
-    204: "No Content",
-    205: "Reset Content",
-    206: "Partial Content",
-    300: "Multiple Choices",
-    301: "Moved Permanently",
-    302: "Found",
-    303: "See Other",
-    304: "Not Modified",
-    305: "Use Proxy",
-    307: "Temporary Redirect",
-    400: "Bad Request",
-    401: "Unauthorized",
-    402: "Payment Required",
-    403: "Forbidden",
-    404: "Not Found",
-    405: "Method Not Allowed",
-    406: "Not Acceptable",
-    407: "Proxy Authentication Required",
-    408: "Request Timeout",
-    409: "Conflict",
-    410: "Gone",
-    411: "Length Required",
-    412: "Precondition Failed",
-    413: "Request Entity Too Large",
-    414: "Request - URI Too Long",
-    415: "Unsupported Media Type",
-    416: "Requested Range Not Satisfiable",
-    417: "Expectation Failed",
-    500: "Internal Server Error",
-    501: "Not Implemented",
-    502: "Bad Gateway",
-    503: "Service Unavailable",
-    504: "Gateway Timeout",
-    505: "HTTP Version Not Supported"
-};
 
 
 /***/ }),
@@ -11017,7 +10979,7 @@ const runner = new TestRunner_1.TestRunner(KARMA_HOST, KARMA_PORT);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
+/* WEBPACK VAR INJECTION */(function(global) {
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -11090,7 +11052,7 @@ class TestRunner {
         this.socket.on('reconnect_failed', this.onReconnectFailed);
         this.socket.on('reconnecting', this.onReconnecting);
         this.socket.on('execute', this.onExecute);
-        set(window, '__karma__', this);
+        set(global, '__karma__', this);
     }
     /**
      * TODO
@@ -11241,14 +11203,7 @@ class TestRunner {
      * @hidden
      */
     onConnect() {
-        console.log('TEST RUNNER CONNECTING');
-        try {
-            console.log('Emitting');
-            this.socket.emit('register', { id: `Dezel ${Device_1.Device.current.uuid}`, name: `Dezel ${Platform_1.Platform.current.name} ${Platform_1.Platform.current.version}` });
-        }
-        catch (e) {
-            console.error('TEST ERROR ERROR', e);
-        }
+        this.socket.emit('register', { id: `Dezel ${Device_1.Device.current.uuid}`, name: `Dezel ${Platform_1.Platform.current.name} ${Platform_1.Platform.current.version}` });
     }
     /**
      * @method onConnect
@@ -11305,7 +11260,6 @@ class TestRunner {
      */
     onExecute(config) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log('on execute');
             this.run(config);
         });
     }
@@ -11339,6 +11293,7 @@ function set(object, key, val) {
     object[key] = val;
 }
 
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../../../../usr/local/lib/node_modules/webpack/buildin/global.js */ "../../../../../../usr/local/lib/node_modules/webpack/buildin/global.js")))
 
 /***/ }),
 

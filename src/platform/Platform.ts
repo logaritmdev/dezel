@@ -1,4 +1,5 @@
-import { bridge } from '../decorator/bridge'
+import { bridge } from '../native/bridge'
+import { native } from '../native/native'
 
 @bridge('dezel.platform.Platform')
 
@@ -37,7 +38,7 @@ export class Platform {
 	 * @since 0.1.0
 	 */
 	public get name(): string {
-		return this.native.name
+		return native(this).name
 	}
 
 	/**
@@ -46,19 +47,12 @@ export class Platform {
 	 * @since 0.1.0
 	 */
 	public get version(): string {
-		return this.native.version
+		return native(this).version
 	}
 
 	//--------------------------------------------------------------------------
 	// Native API
 	//--------------------------------------------------------------------------
-
-	/**
-	 * @property native
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	public native: any
 
 }
 

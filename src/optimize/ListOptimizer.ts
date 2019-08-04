@@ -3,8 +3,9 @@ import { DataSourceChangeEvent } from '../data/DataSource'
 import { DataSourceInsertEvent } from '../data/DataSource'
 import { DataSourceReloadEvent } from '../data/DataSource'
 import { DataSourceRemoveEvent } from '../data/DataSource'
-import { bridge } from '../decorator/bridge'
 import { Event } from '../event/Event'
+import { bridge } from '../native/bridge'
+import { native } from '../native/native'
 import { View } from '../view/View'
 import { ViewInsertEvent } from '../view/View'
 import { ViewRemoveEvent } from '../view/View'
@@ -61,14 +62,14 @@ export class ListOptimizer<T = any> extends ViewOptimizer<T> {
 
 		super(data)
 
-		this.native.length = this.data.size
+		native(this).length = this.data.size
 
 		if (options.orientation == null) {
 			options.orientation = Orientation.VERTICAL
 		}
 
-		this.native.orientation = options.orientation
-		this.native.estimatedItemSize = options.estimatedItemSize
+		native(this).orientation = options.orientation
+		native(this).estimatedItemSize = options.estimatedItemSize
 	}
 
 	/**
@@ -126,8 +127,8 @@ export class ListOptimizer<T = any> extends ViewOptimizer<T> {
 	 * @since 0.4.0
 	 */
 	protected onReloadData(event: Event<DataSourceReloadEvent<T>>) {
-		this.native.length = this.data.size
-		this.native.reloadData()
+		native(this).length = this.data.size
+		native(this).reloadData()
 	}
 
 	/**
@@ -137,8 +138,8 @@ export class ListOptimizer<T = any> extends ViewOptimizer<T> {
 	 */
 	protected onInsertData(event: Event<DataSourceInsertEvent<T>>) {
 
-		this.native.length = this.data.size
-		this.native.insertData(event.data.index, event.data.rows.length, this.animate)
+		native(this).length = this.data.size
+		native(this).insertData(event.data.index, event.data.rows.length, this.animate)
 
 		if (this.animate) {
 			this.performTransition()
@@ -152,8 +153,8 @@ export class ListOptimizer<T = any> extends ViewOptimizer<T> {
 	 */
 	protected onRemoveData(event: Event<DataSourceRemoveEvent<T>>) {
 
-		this.native.length = this.data.size
-		this.native.removeData(event.data.index, event.data.rows.length, this.animate)
+		native(this).length = this.data.size
+		native(this).removeData(event.data.index, event.data.rows.length, this.animate)
 
 		if (this.animate) {
 			this.performTransition()
@@ -301,7 +302,7 @@ export class ListOptimizer<T = any> extends ViewOptimizer<T> {
 			})
 		}
 
-		this.native.performTransition(callback)
+		native(this).performTransition(callback)
 	}
 
 	//--------------------------------------------------------------------------

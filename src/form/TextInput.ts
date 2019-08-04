@@ -1,10 +1,10 @@
 import { bound } from '../decorator/bound'
-import { bridge } from '../decorator/bridge'
-import { native } from '../decorator/native'
 import { state } from '../decorator/state'
 import { watch } from '../decorator/watch'
 import { Event } from '../event/Event'
 import { GestureEvent } from '../gesture/GestureEvent'
+import { bridge } from '../native/bridge'
+import { native } from '../native/native'
 import { Touch } from '../touch/Touch'
 import { TouchEvent } from '../touch/TouchEvent'
 import { View } from '../view/View'
@@ -221,7 +221,7 @@ export class TextInput extends View {
 	 * @since 0.1.0
 	 */
 	public focus() {
-		this.native.focus()
+		native(this).focus()
 		return this
 	}
 
@@ -231,7 +231,7 @@ export class TextInput extends View {
 	 * @since 0.1.0
 	 */
 	public blur() {
-		this.native.blur()
+		native(this).blur()
 		return this
 	}
 
@@ -249,15 +249,15 @@ export class TextInput extends View {
 		switch (args.length) {
 
 			case 0:
-				this.native.selectRange()
+				native(this).selectRange()
 				break
 
 			case 1:
-				this.native.selectRange(args[0], args[0])
+				native(this).selectRange(args[0], args[0])
 				break
 
 			case 2:
-				this.native.selectRange(args[0], args[1])
+				native(this).selectRange(args[0], args[1])
 				break
 		}
 

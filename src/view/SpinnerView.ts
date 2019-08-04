@@ -1,5 +1,5 @@
-import { bridge } from '../decorator/bridge'
-import { native } from '../decorator/native'
+import { bridge } from '../native/bridge'
+import { native } from '../native/native'
 import { View } from './View'
 
 @bridge('dezel.view.SpinnerView')

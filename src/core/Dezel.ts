@@ -1,4 +1,5 @@
 import { Application } from '../application/Application'
+import { native } from '../native/native'
 
 /**
  * TODO
@@ -48,7 +49,7 @@ export class Dezel {
 			uid = 'default'
 		}
 
-		registerApplication(toNative(application), uid || 'dezel.application.main')
+		registerApplication(native(application), uid || 'dezel.application.main')
 	}
 
 	//--------------------------------------------------------------------------
@@ -68,11 +69,4 @@ export class Dezel {
 	 * @hidden
 	 */
 	private static objects: any = {}
-
-	/**
-	 * @property native
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private static native: any
 }

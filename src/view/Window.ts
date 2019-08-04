@@ -1,4 +1,5 @@
-import { bridge } from '../decorator/bridge'
+import { bridge } from '../native/bridge'
+import { native } from '../native/native'
 import { View } from './View'
 
 @bridge('dezel.view.Window')
@@ -27,6 +28,6 @@ export class Window extends View {
 	 * @since 0.2.0
 	 */
 	public viewFromPoint(x: number, y: number, visible: boolean = true, touchable: boolean = true): View | null {
-		return this.native.viewFromPoint(x, y, visible, touchable)
+		return native(this).viewFromPoint(x, y, visible, touchable)
 	}
 }
