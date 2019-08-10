@@ -45,7 +45,7 @@ open class JavaScriptXMLHttpRequest: JavaScriptClass, HttpRequestDelegate {
 	 */
 	public func didError(request: HttpRequest, response: HttpResponse) {
 
-		self.holder.callMethod("nativeOnError", arguments: [
+		self.callMethod("nativeOnError", arguments: [
 			self.context.createNumber(response.statusCode),
 			self.context.createString(response.statusText)
 		])
@@ -60,7 +60,7 @@ open class JavaScriptXMLHttpRequest: JavaScriptClass, HttpRequestDelegate {
 	 */
 	public func didTimeout(request: HttpRequest, response: HttpResponse) {
 
-		self.holder.callMethod("nativeOnTimeout", arguments: [
+		self.callMethod("nativeOnTimeout", arguments: [
 			self.context.createNumber(response.statusCode),
 			self.context.createString(response.statusText)
 		])
@@ -74,7 +74,7 @@ open class JavaScriptXMLHttpRequest: JavaScriptClass, HttpRequestDelegate {
 	 * @hidden
 	 */
 	public func didProgress(request: HttpRequest, loaded: Int64, length: Int64) {
-		self.holder.callMethod("nativeOnProgress", arguments: [
+		self.callMethod("nativeOnProgress", arguments: [
 			self.context.createNumber(Double(loaded)),
 			self.context.createNumber(Double(length))
 		])
@@ -87,7 +87,7 @@ open class JavaScriptXMLHttpRequest: JavaScriptClass, HttpRequestDelegate {
 	 */
 	public func didComplete(request: HttpRequest, response: HttpResponse) {
 
-		self.holder.callMethod("nativeOnComplete", arguments: [
+		self.callMethod("nativeOnComplete", arguments: [
 			self.context.createString(response.data),
 			self.context.createNumber(response.statusCode),
 			self.context.createString(response.statusText),

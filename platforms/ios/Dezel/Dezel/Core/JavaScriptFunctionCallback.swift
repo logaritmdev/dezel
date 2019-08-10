@@ -15,7 +15,7 @@ public final class JavaScriptFunctionCallback: JavaScriptCallback {
 	 * @since 0.1.0
 	 */
 	final public func argument(_ index: Int) -> JavaScriptValue {
-		return JavaScriptValue.create(self.context, handle: self.argv[index]!)
+		return index < self.argc ? JavaScriptValue.create(self.context, handle: self.argv[index]!) : self.context.jsundefined
 	}
 
 	/**
@@ -24,6 +24,6 @@ public final class JavaScriptFunctionCallback: JavaScriptCallback {
 	 * @since 0.1.0
 	 */
 	final public func argument(_ index: Int, protect: Bool) -> JavaScriptValue {
-		return JavaScriptValue.create(self.context, handle: self.argv[index]!, protect: protect)
+		return index < self.argc ? JavaScriptValue.create(self.context, handle: self.argv[index]!, protect: protect) : self.context.jsundefined
 	}
 }

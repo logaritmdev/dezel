@@ -44,7 +44,7 @@ open class JavaScriptWindow: JavaScriptView {
 		let t = callback.argument(3).boolean
 
 		if let view = self.viewFromPoint(x: x, y: y, visible: v, touchable: t) {
-			callback.returns(view.holder)
+			callback.returns(view)
 		}
 	}
 }

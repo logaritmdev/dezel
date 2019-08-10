@@ -443,7 +443,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputDelegate {
 	 */
 	open func didChange(textInput: TextInput, value: String) {
 		self.value.reset(string: value)
-		self.holder.callMethod("nativeOnChange", arguments: [self.context.createString(value)], result: nil)
+		self.callMethod("nativeOnChange", arguments: [self.context.createString(value)], result: nil)
 	}
 
 	/**
@@ -452,7 +452,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputDelegate {
 	 * @since 0.7.0
 	 */
 	open func didFocus(textInput: TextInput) {
-		self.holder.callMethod("nativeOnFocus")
+		self.callMethod("nativeOnFocus")
 	}
 
 	/**
@@ -461,7 +461,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputDelegate {
 	 * @since 0.7.0
 	 */
 	open func didBlur(textInput: TextInput) {
-		self.holder.callMethod("nativeOnBlur")
+		self.callMethod("nativeOnBlur")
 	}
 
 	//--------------------------------------------------------------------------

@@ -412,7 +412,7 @@ open class JavaScriptListOptimizer : JavaScriptViewOptimizer {
 		let type = self.context.createReturnValue()
 		let view = self.context.createReturnValue()
 
-		self.holder.callMethod("nativeDefineItem", arguments: [self.context.createNumber(index)], result: type)
+		self.callMethod("nativeDefineItem", arguments: [self.context.createNumber(index)], result: type)
 
 		if (type.isNull) {
 			return nil
@@ -775,7 +775,7 @@ open class JavaScriptListOptimizer : JavaScriptViewOptimizer {
 			 * on the first time the view is inserted.
 			 */
 
-			self.holder.callMethod("nativeOnInsertItem", arguments: [self.context.createNumber(index), item.holder])
+			self.callMethod("nativeOnInsertItem", arguments: [self.context.createNumber(index), item])
 		}
 
 		/*
@@ -783,7 +783,7 @@ open class JavaScriptListOptimizer : JavaScriptViewOptimizer {
 		 * possibly invalidating the bounds and content of the item.
 		 */
 
-		self.holder.callMethod("nativeOnReuseItem", arguments: [self.context.createNumber(index), item.holder])
+		self.callMethod("nativeOnReuseItem", arguments: [self.context.createNumber(index), item])
 	}
 
 	/**
@@ -808,7 +808,7 @@ open class JavaScriptListOptimizer : JavaScriptViewOptimizer {
 		 * the view is cached, it still considered as being in the view.
 		 */
 
-		self.holder.callMethod("nativeOnCacheItem", arguments: [self.context.createNumber(index), item.holder])
+		self.callMethod("nativeOnCacheItem", arguments: [self.context.createNumber(index), item])
 
 		self.cacheItem(index)
 		self.removeView(index, notify: false)
@@ -1527,11 +1527,11 @@ open class JavaScriptListOptimizer : JavaScriptViewOptimizer {
 		let removes = self.context.createEmptyArray()
 
 		for (index, data) in insert.enumerated() {
-			inserts.property(index, value: data.view.holder)
+			inserts.property(index, value: data.view)
 		}
 
 		for (index, data) in remove.enumerated() {
-			removes.property(index, value: data.view.holder)
+			removes.property(index, value: data.view)
 		}
 
 		for data in remove {

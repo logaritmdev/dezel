@@ -385,7 +385,7 @@ open class JavaScriptTextArea: JavaScriptView, TextAreaDelegate {
 	 */
 	open func didChange(textInput: TextArea, value: String) {
 		self.value = Property(string: value)
-		self.holder.callMethod("nativeOnChange", arguments: [self.context.createString(value)], result: nil)
+		self.callMethod("nativeOnChange", arguments: [self.context.createString(value)], result: nil)
 	}
 
 	/**
@@ -394,7 +394,7 @@ open class JavaScriptTextArea: JavaScriptView, TextAreaDelegate {
 	 * @since 0.7.0
 	 */
 	open func didFocus(textInput: TextArea) {
-		self.holder.callMethod("nativeOnFocus")
+		self.callMethod("nativeOnFocus")
 	}
 
 	/**
@@ -403,7 +403,7 @@ open class JavaScriptTextArea: JavaScriptView, TextAreaDelegate {
 	 * @since 0.7.0
 	 */
 	open func didBlur(textInput: TextArea) {
-		self.holder.callMethod("nativeOnBlur")
+		self.callMethod("nativeOnBlur")
 	}
 
 	//--------------------------------------------------------------------------

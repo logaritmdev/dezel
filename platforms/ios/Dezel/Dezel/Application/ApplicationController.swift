@@ -286,7 +286,7 @@ open class ApplicationController: UIViewController {
 	 * @since 0.7.0
 	 */
 	open func openResourceURL(_ url: URL) {
-		self.application?.holder.callMethod("nativeOnOpenResourceURL", arguments: [self.context.createString(url.absoluteString)])
+		self.application?.callMethod("nativeOnOpenResourceURL", arguments: [self.context.createString(url.absoluteString)])
 	}
 
 	/**
@@ -295,7 +295,7 @@ open class ApplicationController: UIViewController {
 	 * @since 0.7.0
 	 */
 	open func openUniversalURL(_ url: URL) {
-		self.application?.holder.callMethod("nativeOnOpenUniversalURL", arguments: [self.context.createString(url.absoluteString)])
+		self.application?.callMethod("nativeOnOpenUniversalURL", arguments: [self.context.createString(url.absoluteString)])
 	}
 
 	//--------------------------------------------------------------------------
@@ -348,7 +348,7 @@ open class ApplicationController: UIViewController {
 	 * @since 0.7.0
 	 */
 	open func didEnterBackground() {
-		self.application?.holder.callMethod("nativeOnEnterBackground")
+		self.application?.callMethod("nativeOnEnterBackground")
 	}
 
 	/**
@@ -357,7 +357,7 @@ open class ApplicationController: UIViewController {
 	 * @since 0.7.0
 	 */
 	open func didEnterForeground() {
-		self.application?.holder.callMethod("nativeOnEnterForeground")
+		self.application?.callMethod("nativeOnEnterForeground")
 	}
 
 	//--------------------------------------------------------------------------
@@ -882,7 +882,7 @@ open class ApplicationController: UIViewController {
 			array.property(i, value: touch)
 		}
 
-		application.holder.callMethod(name, arguments: [array], result: nil)
+		application.callMethod(name, arguments: [array], result: nil)
 	}
 
 	/**
@@ -925,7 +925,7 @@ open class ApplicationController: UIViewController {
 				self.context.createString(equation)
 			]
 
-			application.holder.callMethod(name, arguments: args, result: nil)
+			application.callMethod(name, arguments: args, result: nil)
 		}
 	}
 

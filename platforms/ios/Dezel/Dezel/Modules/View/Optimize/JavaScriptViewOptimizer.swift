@@ -192,7 +192,7 @@ open class JavaScriptViewOptimizer : JavaScriptClass, JavaScriptView.Delegate {
 			return
 		}
 
-		callback.returns(view.holder)
+		callback.returns(view)
 	}
 
 	/**

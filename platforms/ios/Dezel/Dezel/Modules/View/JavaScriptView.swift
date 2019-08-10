@@ -2130,7 +2130,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 			let canvas = view.canvas!
 
 			canvas.use(ctx)
-			view.holder.callMethod("nativeOnRedraw", arguments: [canvas.holder])
+			view.callMethod("nativeOnRedraw", arguments: [canvas])
 			canvas.use(nil)
 		}
 
@@ -2970,7 +2970,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	open func setProperty(_ property: String, value: Property) {
 		let assigned = setPropertyForKey(self, property, value)
 		if (assigned == false) {
-			self.holder.property(property, property: value)
+			self.property(property, property: value)
 		}
 	}
 
@@ -2980,7 +2980,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @since 0.7.0
 	 */
 	open func getProperty(_ property: String) -> Property? {
-		return getPropertyForKey(self, property) as? Property ?? Property(value: self.holder.property(property))
+		return getPropertyForKey(self, property) as? Property ?? Property(value: self.property(property))
 	}
 
 	//--------------------------------------------------------------------------
@@ -3189,7 +3189,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 */
 	open func didBeginLayout(node: LayoutNode) {
 		self.delegate?.didBeginLayout(view: self)
-		self.holder.callMethod("nativeOnLayoutBegan")
+		self.callMethod("nativeOnLayoutBegan")
 	}
 
 	/**
@@ -3199,7 +3199,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 */
 	open func didFinishLayout(node: LayoutNode) {
 		self.delegate?.didFinishLayout(view: self)
-		self.holder.callMethod("nativeOnLayoutFinished")
+		self.callMethod("nativeOnLayoutFinished")
 	}
 
 	//--------------------------------------------------------------------------
@@ -3244,7 +3244,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 */
 	open func didBeginDragging(scrollable: Scrollable) {
 		self.dragging.reset(boolean: true)
-		self.holder.callMethod("nativeOnDragStart")
+		self.callMethod("nativeOnDragStart")
 	}
 
 	/**
@@ -3254,7 +3254,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 */
 	open func didFinishDragging(scrollable: Scrollable) {
 		self.dragging.reset(boolean: false)
-		self.holder.callMethod("nativeOnDragEnd")
+		self.callMethod("nativeOnDragEnd")
 	}
 
 	/**
@@ -3263,7 +3263,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @since 0.7.0
 	 */
 	open func didDrag(scrollable: Scrollable) {
-		self.holder.callMethod("nativeOnDrag")
+		self.callMethod("nativeOnDrag")
 	}
 
 	/**
@@ -3273,7 +3273,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 */
 	open func didBeginScrolling(scrollable: Scrollable) {
 		self.scrolling.reset(boolean: true)
-		self.holder.callMethod("nativeOnScrollStart")
+		self.callMethod("nativeOnScrollStart")
 	}
 
 	/**
@@ -3283,7 +3283,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 */
 	open func didFinishScrolling(scrollable: Scrollable) {
 		self.scrolling.reset(boolean: false)
-		self.holder.callMethod("nativeOnScrollEnd")
+		self.callMethod("nativeOnScrollEnd")
 	}
 
 	/**
@@ -3298,7 +3298,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 
 		self.delegate?.didScroll(view: self)
 
-		self.holder.callMethod("nativeOnScroll")
+		self.callMethod("nativeOnScroll")
 	}
 
 	/**
@@ -3307,7 +3307,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @since 0.7.0
 	 */
 	open func didBeginZooming(scrollable: Scrollable) {
-		self.holder.callMethod("nativeOnZoomStart")
+		self.callMethod("nativeOnZoomStart")
 	}
 
 	/**
@@ -3316,7 +3316,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @since 0.7.0
 	 */
 	open func didFinishZooming(scrollable: Scrollable, scale: CGFloat) {
-		self.holder.callMethod("nativeOnZoomEnd", arguments: [self.context.createNumber(scale)])
+		self.callMethod("nativeOnZoomEnd", arguments: [self.context.createNumber(scale)])
 	}
 
 	/**
@@ -3325,7 +3325,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @since 0.7.0
 	 */
 	open func didZoom(scrollable: Scrollable) {
-		self.holder.callMethod("nativeOnZoom")
+		self.callMethod("nativeOnZoom")
 	}
 
 	//--------------------------------------------------------------------------
@@ -3378,7 +3378,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 		self.parent = parent
 
 		if (notify) {
-			self.holder.callMethod("nativeOnMoveToParent", arguments: [parent?.holder])
+			self.callMethod("nativeOnMoveToParent", arguments: [parent])
 		}
 	}
 
@@ -3392,7 +3392,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 		self.window = window
 
 		if (notify) {
-			self.holder.callMethod("nativeOnMoveToWindow", arguments: [window?.holder])
+			self.callMethod("nativeOnMoveToWindow", arguments: [window])
 		}
 
 		for view in self.children {
@@ -3601,6 +3601,59 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	}
 
 	//--------------------------------------------------------------------------
+	// MARK: JS Static Functions
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsStaticFunction_transition
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@objc class func jsStaticFunction_transition(callback: JavaScriptFunctionCallback) {
+
+		if (callback.arguments < 8) {
+			return
+		}
+
+		let duration = callback.argument(0).number / 1000
+		let equation = CAMediaTimingFunction(controlPoints:
+			Float(callback.argument(1).number),
+			Float(callback.argument(2).number),
+			Float(callback.argument(3).number),
+			Float(callback.argument(4).number)
+		)
+
+		let delay = callback.argument(5).number / 1000.0
+
+		let complete = callback.argument(6)
+		let function = callback.argument(7)
+
+		let animate = {
+
+			Transition.create(
+				duration: duration,
+				equation: equation,
+				delay: delay
+			) {
+				complete.call()
+				complete.unprotect()
+			}
+
+			function.call()
+			complete.protect()
+
+			Transition.commit()
+		}
+
+		if (callback.context.application.layout.resolving) {
+			callback.context.application.layout.requestLayoutEndedCallback(animate)
+			return
+		}
+
+		animate()
+	}
+
+	//--------------------------------------------------------------------------
 	// MARK: JS Properties
 	//--------------------------------------------------------------------------
 
@@ -3632,7 +3685,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @hidden
 	 */
 	@objc open func jsGet_window(callback: JavaScriptGetterCallback) {
-		callback.returns(self.window?.holder)
+		callback.returns(self.window)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3643,7 +3696,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @hidden
 	 */
 	@objc open func jsGet_parent(callback: JavaScriptGetterCallback) {
-		callback.returns(self.parent?.holder)
+		callback.returns(self.parent)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6267,7 +6320,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @hidden
 	 */
 	@objc open func jsGet_zoomedView(callback: JavaScriptGetterCallback) {
-		callback.returns(self.zoomedView?.holder)
+		callback.returns(self.zoomedView)
 	}
 
 	/**

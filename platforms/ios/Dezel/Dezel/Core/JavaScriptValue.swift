@@ -270,7 +270,7 @@ open class JavaScriptValue : NSObject {
 	 * @method protect
 	 * @since 0.1.0
 	 */
-	public func protect() {
+	open func protect() {
 
 		if (self.protected == 0) {
 			DLValueProtect(self.context.handle, self.handle)
@@ -286,7 +286,7 @@ open class JavaScriptValue : NSObject {
 	 * @method unprotect
 	 * @since 0.1.0
 	 */
-	public func unprotect() {
+	open func unprotect() {
 
 		if (self.handle == nil) {
 			return
@@ -308,7 +308,7 @@ open class JavaScriptValue : NSObject {
 	 * @method dispose
 	 * @since 0.1.0
 	 */
-	public func dispose() {
+	open func dispose() {
 
 		if (self.handle == nil) {
 			return
@@ -324,7 +324,7 @@ open class JavaScriptValue : NSObject {
 	 * @method cast
 	 * @since 0.1.0
 	 */
-	public func cast<T>(_ type: T.Type) -> T? {
+	open func cast<T>(_ type: T.Type) -> T? {
 		return Unmanaged<AnyObject>.fromOpaque(DLValueGetAssociatedObject(self.context.handle, self.handle)).takeUnretainedValue() as? T
 	}
 
@@ -333,7 +333,7 @@ open class JavaScriptValue : NSObject {
 	 * @method call
 	 * @since 0.1.0
 	 */
-	public func call() {
+	open func call() {
 		DLValueCall(self.context.handle, self.handle, nil, 0, nil)
 	}
 
@@ -342,7 +342,7 @@ open class JavaScriptValue : NSObject {
 	 * @method call
 	 * @since 0.1.0
 	 */
-	public func call(_ arguments: JavaScriptArguments?, target: JavaScriptValue?, result: JavaScriptValue? = nil) {
+	open func call(_ arguments: JavaScriptArguments?, target: JavaScriptValue?, result: JavaScriptValue? = nil) {
 
 		let argc = toArgc(arguments)
 		let argv = toArgv(arguments, context: self.context)
@@ -359,7 +359,7 @@ open class JavaScriptValue : NSObject {
 	 * @method callMethod
 	 * @since 0.1.0
 	 */
-	public func callMethod(_ method: String) {
+	open func callMethod(_ method: String) {
 		DLValueCallMethod(self.context.handle, self.handle, method, 0, nil)
 	}
 
@@ -368,7 +368,7 @@ open class JavaScriptValue : NSObject {
 	 * @method callMethod
 	 * @since 0.1.0
 	 */
-	public func callMethod(_ method: String, arguments: JavaScriptArguments?, result: JavaScriptValue? = nil) {
+	open func callMethod(_ method: String, arguments: JavaScriptArguments?, result: JavaScriptValue? = nil) {
 
 		let argc = toArgc(arguments)
 		let argv = toArgv(arguments, context: self.context)
@@ -385,7 +385,7 @@ open class JavaScriptValue : NSObject {
 	 * @method construct
 	 * @since 0.1.0
 	 */
-	public func construct() {
+	open func construct() {
 		DLValueConstruct(self.context.handle, self.handle, 0, nil)
 	}
 
@@ -394,7 +394,7 @@ open class JavaScriptValue : NSObject {
 	 * @method construct
 	 * @since 0.1.0
 	 */
-	public func construct(_ arguments: JavaScriptArguments?, result: JavaScriptValue? = nil) {
+	open func construct(_ arguments: JavaScriptArguments?, result: JavaScriptValue? = nil) {
 
 		let argc = toArgc(arguments)
 		let argv = toArgv(arguments, context: self.context)
@@ -411,7 +411,7 @@ open class JavaScriptValue : NSObject {
 	 * @method defineProperty
 	 * @since 0.1.0
 	 */
-	public func defineProperty(_ property: String, value: JavaScriptValue?, getter: JavaScriptGetterHandler? = nil, setter: JavaScriptSetterHandler? = nil, writable: Bool = true, enumerable: Bool = true, configurable: Bool = true) {
+	open func defineProperty(_ property: String, value: JavaScriptValue?, getter: JavaScriptGetterHandler? = nil, setter: JavaScriptSetterHandler? = nil, writable: Bool = true, enumerable: Bool = true, configurable: Bool = true) {
 
 		if let value = value {
 			DLValueDefineProperty(self.context.handle, self.handle, property, nil, nil, toHandle(value, in: self.context), writable, enumerable, configurable)
@@ -432,7 +432,7 @@ open class JavaScriptValue : NSObject {
 	 * @method property
 	 * @since 0.1.0
 	 */
-	public func property(_ name: String, value: JavaScriptValue?) {
+	open func property(_ name: String, value: JavaScriptValue?) {
 		DLValueSetProperty(self.context.handle, self.handle, name, toHandle(value, in: self.context))
 	}
 
@@ -441,7 +441,7 @@ open class JavaScriptValue : NSObject {
 	 * @method property
 	 * @since 0.1.0
 	 */
-	public func property(_ name: String, property: Property) {
+	open func property(_ name: String, property: Property) {
 		DLValueSetProperty(self.context.handle, self.handle, name, property.value(in: self.context).handle)
 	}
 
@@ -450,7 +450,7 @@ open class JavaScriptValue : NSObject {
 	 * @method property
 	 * @since 0.1.0
 	 */
-	public func property(_ name: String, string value: String) {
+	open func property(_ name: String, string value: String) {
 		DLValueSetPropertyWithString(self.context.handle, self.handle, name, value)
 	}
 
@@ -459,7 +459,7 @@ open class JavaScriptValue : NSObject {
 	 * @method property
 	 * @since 0.1.0
 	 */
-	public func property(_ name: String, number value: Double) {
+	open func property(_ name: String, number value: Double) {
 		DLValueSetPropertyWithNumber(self.context.handle, self.handle, name, value)
 	}
 
@@ -468,7 +468,7 @@ open class JavaScriptValue : NSObject {
 	 * @method property
 	 * @since 0.4.0
 	 */
-	public func property(_ name: String, number value: Float) {
+	open func property(_ name: String, number value: Float) {
 		DLValueSetPropertyWithNumber(self.context.handle, self.handle, name, Double(value))
 	}
 
@@ -477,7 +477,7 @@ open class JavaScriptValue : NSObject {
 	 * @method property
 	 * @since 0.4.0
 	 */
-	public func property(_ name: String, number value: Int) {
+	open func property(_ name: String, number value: Int) {
 		DLValueSetPropertyWithNumber(self.context.handle, self.handle, name, Double(value))
 	}
 
@@ -486,7 +486,7 @@ open class JavaScriptValue : NSObject {
 	 * @method property
 	 * @since 0.4.0
 	 */
-	public func property(_ name: String, number value: CGFloat) {
+	open func property(_ name: String, number value: CGFloat) {
 		DLValueSetPropertyWithNumber(self.context.handle, self.handle, name, Double(value))
 	}
 
@@ -495,7 +495,7 @@ open class JavaScriptValue : NSObject {
 	 * @method property
 	 * @since 0.1.0
 	 */
-	public func property(_ name: String, boolean value: Bool) {
+	open func property(_ name: String, boolean value: Bool) {
 		DLValueSetPropertyWithBoolean(self.context.handle, self.handle, name, value)
 	}
 
@@ -504,7 +504,7 @@ open class JavaScriptValue : NSObject {
 	 * @method property
 	 * @since 0.1.0
 	 */
-	public func property(_ name: String) -> JavaScriptValue {
+	open func property(_ name: String) -> JavaScriptValue {
 		return JavaScriptValue.create(self.context, handle: DLValueGetProperty(self.context.handle, self.handle, name))
 	}
 
@@ -513,7 +513,7 @@ open class JavaScriptValue : NSObject {
 	 * @method property
 	 * @since 0.1.0
 	 */
-	public func property(_ index: Int, value: JavaScriptValue?) {
+	open func property(_ index: Int, value: JavaScriptValue?) {
 		DLValueSetPropertyAtIndex(self.context.handle, self.handle, UInt32(index), toHandle(value, in: self.context))
 	}
 
@@ -522,7 +522,7 @@ open class JavaScriptValue : NSObject {
 	 * @method property
 	 * @since 0.1.0
 	 */
-	public func property(_ index: Int, string value: String) {
+	open func property(_ index: Int, string value: String) {
 		DLValueSetPropertyAtIndexWithString(self.context.handle, self.handle, UInt32(index), value)
 	}
 
@@ -531,7 +531,7 @@ open class JavaScriptValue : NSObject {
 	 * @method property
 	 * @since 0.1.0
 	 */
-	public func property(_ index: Int, number value: Double) {
+	open func property(_ index: Int, number value: Double) {
 		DLValueSetPropertyAtIndexWithNumber(self.context.handle, self.handle, UInt32(index), value)
 	}
 
@@ -540,7 +540,7 @@ open class JavaScriptValue : NSObject {
 	 * @method property
 	 * @since 0.4.0
 	 */
-	public func property(_ index: Int, number value: Float) {
+	open func property(_ index: Int, number value: Float) {
 		DLValueSetPropertyAtIndexWithNumber(self.context.handle, self.handle, UInt32(index), Double(value))
 	}
 
@@ -549,7 +549,7 @@ open class JavaScriptValue : NSObject {
 	 * @method property
 	 * @since 0.4.0
 	 */
-	public func property(_ index: Int, number value: Int) {
+	open func property(_ index: Int, number value: Int) {
 		DLValueSetPropertyAtIndexWithNumber(self.context.handle, self.handle, UInt32(index), Double(value))
 	}
 
@@ -558,7 +558,7 @@ open class JavaScriptValue : NSObject {
 	 * @method property
 	 * @since 0.4.0
 	 */
-	public func property(_ index: Int, number value: CGFloat) {
+	open func property(_ index: Int, number value: CGFloat) {
 		DLValueSetPropertyAtIndexWithNumber(self.context.handle, self.handle, UInt32(index), Double(value))
 	}
 
@@ -567,7 +567,7 @@ open class JavaScriptValue : NSObject {
 	 * @method property
 	 * @since 0.1.0
 	 */
-	public func property(_ index: Int, boolean value: Bool) {
+	open func property(_ index: Int, boolean value: Bool) {
 		DLValueSetPropertyAtIndexWithBoolean(self.context.handle, self.handle, UInt32(index), value)
 	}
 
@@ -576,7 +576,7 @@ open class JavaScriptValue : NSObject {
 	 * @method property
 	 * @since 0.1.0
 	 */
-	public func property(_ index: Int) -> JavaScriptValue {
+	open func property(_ index: Int) -> JavaScriptValue {
 		return JavaScriptValue.create(self.context, handle: DLValueGetPropertyAtIndex(self.context.handle, self.handle, UInt32(index)))
 	}
 
@@ -585,7 +585,7 @@ open class JavaScriptValue : NSObject {
 	 * @method forEach
 	 * @since 0.7.0
 	 */
-	public func forEach(_ handler: @escaping JavaScriptForEachHandler) {
+	open func forEach(_ handler: @escaping JavaScriptForEachHandler) {
 		let wrapper = JavaScriptValueForEachWrapper(context: self.context, handler: handler)
 		DLValueForEach(self.context.handle, self.handle, JavaScriptValueForEachCallback,
 			toUnretainedOpaque(wrapper)
@@ -597,7 +597,7 @@ open class JavaScriptValue : NSObject {
 	 * @method forOwn
 	 * @since 0.7.0
 	 */
-	public func forOwn(_ handler: @escaping JavaScriptForOwnHandler) {
+	open func forOwn(_ handler: @escaping JavaScriptForOwnHandler) {
 		let wrapper = JavaScriptValueForOwnWrapper(context: self.context, handler: handler)
 		DLValueForOwn(self.context.handle, self.handle, JavaScriptValueForOwnCallback,
 			toUnretainedOpaque(wrapper)
@@ -609,7 +609,7 @@ open class JavaScriptValue : NSObject {
 	 * @method prototype
 	 * @since 0.1.0
 	 */
-	public func prototype(_ prototype: JavaScriptValue) {
+	open func prototype(_ prototype: JavaScriptValue) {
 		DLValueSetPrototype(self.context.handle, self.handle, toHandle(prototype, in: self.context))
 	}
 
@@ -618,7 +618,7 @@ open class JavaScriptValue : NSObject {
 	 * @method prototype
 	 * @since 0.1.0
 	 */
-	public func prototype() -> JavaScriptValue {
+	open func prototype() -> JavaScriptValue {
 		return JavaScriptValue.create(self.context, handle: DLValueGetPrototype(self.context.handle, self.handle))
 	}
 
@@ -627,7 +627,7 @@ open class JavaScriptValue : NSObject {
 	 * @method equals
 	 * @since 0.1.0
 	 */
-	public func equals(_ value: JavaScriptValue) -> Bool {
+	open func equals(_ value: JavaScriptValue) -> Bool {
 		return DLValueEquals(self.context.handle, self.handle, toHandle(value, in: self.context))
 	}
 
@@ -636,7 +636,7 @@ open class JavaScriptValue : NSObject {
 	 * @method equals
 	 * @since 0.1.0
 	 */
-	public func equals(string value: String) -> Bool {
+	open func equals(string value: String) -> Bool {
 		return DLValueEqualsString(self.context.handle, self.handle, value)
 	}
 
@@ -645,7 +645,7 @@ open class JavaScriptValue : NSObject {
 	 * @method equals
 	 * @since 0.1.0
 	 */
-	public func equals(number value: Double) -> Bool {
+	open func equals(number value: Double) -> Bool {
 		return DLValueEqualsNumber(self.context.handle, self.handle, value)
 	}
 
@@ -654,7 +654,7 @@ open class JavaScriptValue : NSObject {
 	 * @method equals
 	 * @since 0.1.0
 	 */
-	public func equals(boolean value: Bool) -> Bool {
+	open func equals(boolean value: Bool) -> Bool {
 		return DLValueEqualsBoolean(self.context.handle, self.handle, value)
 	}
 
@@ -771,7 +771,16 @@ public typealias JavaScriptForEachHandler = (Int, JavaScriptValue) -> Void
  * @hidden
  */
 internal func toHandle(_ value: JavaScriptValue?, in context: JavaScriptContext) -> JSValueRef? {
-	return value?.handle ?? context.jsnull.handle
+
+	guard let value = value else {
+		return context.jsnull.handle
+	}
+
+	if let value = value as? JavaScriptClass {
+		return toHandle(value.instance, in: context)
+	}
+
+	return value.handle
 }
 
 /**

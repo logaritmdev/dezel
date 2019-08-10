@@ -449,7 +449,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @since 0.7.0
 	 */
 	open func didPressLink(textView: TextView, url: String) {
-		self.holder.callMethod("nativeOnPressLink", arguments: [self.context.createString(url)])
+		self.callMethod("nativeOnPressLink", arguments: [self.context.createString(url)])
 	}
 
 	//--------------------------------------------------------------------------

@@ -83,7 +83,7 @@ public class JavaScriptWebSocket: JavaScriptClass, WebSocketDelegate {
 	 * @hidden
 	 */
 	open func websocketDidConnect(_ socket: WebSocketConnection) {
-		self.holder.callMethod("nativeOnConnect", arguments: [
+		self.callMethod("nativeOnConnect", arguments: [
 			self.context.createString(""),
 			self.context.createString("")
 		])
@@ -95,7 +95,7 @@ public class JavaScriptWebSocket: JavaScriptClass, WebSocketDelegate {
 	 * @hidden
 	 */
 	public func websocket(_ socket: WebSocketConnection, didReceive data: Data?) {
-		self.holder.callMethod("nativeOnReceiveData")
+		self.callMethod("nativeOnReceiveData")
 	}
 
 	/**
@@ -104,7 +104,7 @@ public class JavaScriptWebSocket: JavaScriptClass, WebSocketDelegate {
 	 * @hidden
 	 */
 	public func websocket(_ socket: WebSocketConnection, didReceiveMessage string: String) {
-		self.holder.callMethod("nativeOnReceiveMessage", arguments: [
+		self.callMethod("nativeOnReceiveMessage", arguments: [
 			self.context.createString(string)
 		])
 	}
@@ -115,6 +115,6 @@ public class JavaScriptWebSocket: JavaScriptClass, WebSocketDelegate {
 	 * @hidden
 	 */
 	open func websocketDidDisconnect(_ socket: WebSocketConnection, error: Error?) {
-		self.holder.callMethod("nativeOnDisconnect")
+		self.callMethod("nativeOnDisconnect")
 	}
 }
