@@ -19,7 +19,4 @@ describe('Window', () => {
 		expect(native(window)).not.toBeUndefined()
 	})
 
-	it('should have a native object with an holder value', () => {
-		expect(native(window).holder).toBe(window)
-	})
 })

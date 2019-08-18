@@ -13,10 +13,6 @@ describe('SpinnerView', () => {
 		expect(native(view)).not.toBeUndefined()
 	})
 
-	it('should have a native object with an holder value', () => {
-		expect(native(view).holder).toBe(view)
-	})
-
 	it('should have a valid initial active property value', () => {
 		expect(view.active).toBe(false)
 	})

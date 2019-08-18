@@ -23,10 +23,6 @@ describe('View', () => {
 		expect(native(view)).not.toBeUndefined()
 	})
 
-	it('should have a native object with an holder value', () => {
-		expect(native(view).holder).toBe(view)
-	})
-
 	it('should have a static native property', () => {
 		expect(native(View)).not.toBeUndefined()
 	})
