@@ -10868,6 +10868,7 @@ function decorate(prototype, property) {
     Object.defineProperty(prototype, property, { get, set });
 }
 function native(...args) {
+    LOG('NATIVE PROPERTY');
     if (args.length == 1) {
         let object = args[0];
         if (object == null) {
@@ -10884,13 +10885,14 @@ exports.native = native;
  * @hidden
  */
 function connect(object) {
+    LOG('CONNECT 1');
     let Class = object.constructor[symbols_1.NATIVE];
     if (Class == null) {
         throw new Error(`Class ${object.constructor.name} has not been bridged.`);
     }
-    let native = new Class();
-    native.holder = object;
-    return native;
+    LOG('CONNECT 2');
+    console.log('Create new class');
+    return new Class(object);
 }
 /**
  * @function toNative

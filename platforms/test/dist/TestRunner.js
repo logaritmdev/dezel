@@ -10888,9 +10888,7 @@ function connect(object) {
     if (Class == null) {
         throw new Error(`Class ${object.constructor.name} has not been bridged.`);
     }
-    let native = new Class();
-    native.holder = object;
-    return native;
+    return new Class(object);
 }
 /**
  * @function toNative

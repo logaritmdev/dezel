@@ -9379,6 +9379,7 @@ module.exports = yeast;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
+const native_1 = __webpack_require__(/*! ../native/native */ "../../src/native/native.ts");
 /**
  * TODO
  * @class Dezel
@@ -9418,7 +9419,7 @@ class Dezel {
         if (uid == '') {
             uid = 'default';
         }
-        registerApplication(toNative(application), uid || 'dezel.application.main');
+        registerApplication(native_1.native(application), uid || 'dezel.application.main');
     }
 }
 //--------------------------------------------------------------------------
@@ -9492,49 +9493,6 @@ exports.bound = bound;
 
 /***/ }),
 
-/***/ "../../src/decorator/bridge.ts":
-/*!****************************************************************!*\
-  !*** /Users/jpdery/Projects/dezel-dev/src/decorator/bridge.ts ***!
-  \****************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-const Dezel_1 = __webpack_require__(/*! ../core/Dezel */ "../../src/core/Dezel.ts");
-/**
- * @function decorate
- * @since 0.1.0
- * @hidden
- */
-function decorate(constructor, className) {
-    const key = Symbol('native');
-    function get() {
-        let native = this[key];
-        if (native == null) {
-            native = this[key] = Dezel_1.Dezel.importClass(className, true);
-            native.holder = this;
-        }
-        return native;
-    }
-    Object.defineProperty(constructor.prototype, 'native', { get });
-}
-/**
- * TODO: Decorator description
- * @function bridge
- * @since 0.1.0
- */
-function bridge(classname) {
-    return function (constructor) {
-        decorate(constructor, classname);
-    };
-}
-exports.bridge = bridge;
-
-
-/***/ }),
-
 /***/ "../../src/device/Device.ts":
 /*!*************************************************************!*\
   !*** /Users/jpdery/Projects/dezel-dev/src/device/Device.ts ***!
@@ -9553,7 +9511,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 var Device_1;
 "use strict";
-const bridge_1 = __webpack_require__(/*! ../decorator/bridge */ "../../src/decorator/bridge.ts");
+const bridge_1 = __webpack_require__(/*! ../native/bridge */ "../../src/native/bridge.ts");
+const native_1 = __webpack_require__(/*! ../native/native */ "../../src/native/native.ts");
 let Device = Device_1 = 
 /**
  * Contains informations regarding the current device.
@@ -9584,7 +9543,7 @@ class Device {
      * @since 0.4.0
      */
     get uuid() {
-        return this.native.uuid;
+        return native_1.native(this).uuid;
     }
     //--------------------------------------------------------------------------
     // Methods
@@ -9595,7 +9554,7 @@ class Device {
      * @since 0.4.0
      */
     sound(id) {
-        this.native.sound(id);
+        native_1.native(this).sound(id);
         return this;
     }
     /**
@@ -9604,7 +9563,7 @@ class Device {
      * @since 0.4.0
      */
     vibrate(id) {
-        this.native.vibrate(id);
+        native_1.native(this).vibrate(id);
         return this;
     }
 };
@@ -9642,16 +9601,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const EventTarget_1 = __webpack_require__(/*! ./global/EventTarget */ "../../src/global/EventTarget.ts");
 const Event_1 = __webpack_require__(/*! ./global/Event */ "../../src/global/Event.ts");
 const XMLHttpRequest_1 = __webpack_require__(/*! ./global/XMLHttpRequest */ "../../src/global/XMLHttpRequest.ts");
-const XMLHttpRequestUpload_1 = __webpack_require__(/*! ./global/XMLHttpRequestUpload */ "../../src/global/XMLHttpRequestUpload.ts");
+//import { XMLHttpRequestUpload } from './global/XMLHttpRequestUpload'
 const WebSocket_1 = __webpack_require__(/*! ./global/WebSocket */ "../../src/global/WebSocket.ts");
 global.Event = Event_1.Event;
 global.EventTarget = EventTarget_1.EventTarget;
 global.XMLHttpRequest = XMLHttpRequest_1.XMLHttpRequest;
-global.XMLHttpRequestUpload = XMLHttpRequestUpload_1.XMLHttpRequestUpload;
+//global.XMLHttpRequestUpload = XMLHttpRequestUpload
 global.WebSocket = WebSocket_1.WebSocket;
-global.toNative = function (object) {
-    return object.native;
-};
 
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../../usr/local/lib/node_modules/webpack/buildin/global.js */ "../../../../../../usr/local/lib/node_modules/webpack/buildin/global.js")))
 
@@ -9942,7 +9898,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 var WebSocket_1, _a, _b, _c, _d, _e, _f;
 "use strict";
-const bridge_1 = __webpack_require__(/*! ../decorator/bridge */ "../../src/decorator/bridge.ts");
+const bridge_1 = __webpack_require__(/*! ../native/bridge */ "../../src/native/bridge.ts");
+const native_1 = __webpack_require__(/*! ../native/native */ "../../src/native/native.ts");
 const Event_1 = __webpack_require__(/*! ./Event */ "../../src/global/Event.ts");
 const Event_2 = __webpack_require__(/*! ./Event */ "../../src/global/Event.ts");
 const EventTarget_1 = __webpack_require__(/*! ./EventTarget */ "../../src/global/EventTarget.ts");
@@ -10042,7 +9999,7 @@ class WebSocket extends EventTarget_1.EventTarget {
             this[exports.READY_STATE] = WebSocket_1.CLOSED;
             throw Exception_1.Exception.create(Exception_1.Exception.Code.SyntaxError);
         }
-        this.native.open(url, protocols);
+        native_1.native(this).open(url, protocols);
     }
     //--------------------------------------------------------------------------
     // Properties
@@ -10116,8 +10073,7 @@ class WebSocket extends EventTarget_1.EventTarget {
             this.readyState == WebSocket_1.CLOSED) {
             return;
         }
-        console.log('WS EMIT:', data);
-        this.native.send(data);
+        native_1.native(this).send(data);
     }
     /**
      * Todo
@@ -10134,8 +10090,11 @@ class WebSocket extends EventTarget_1.EventTarget {
             return;
         }
         this[exports.READY_STATE] = WebSocket_1.CLOSING;
-        this.native.close(code, reason);
+        native_1.native(this).close(code, reason);
     }
+    //--------------------------------------------------------------------------
+    // Native API
+    //--------------------------------------------------------------------------
     /**
      * @method nativeOnConnect
      * @sine 0.7.0
@@ -10245,7 +10204,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 var XMLHttpRequest_1, _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s;
 "use strict";
-const bridge_1 = __webpack_require__(/*! ../decorator/bridge */ "../../src/decorator/bridge.ts");
+const bridge_1 = __webpack_require__(/*! ../native/bridge */ "../../src/native/bridge.ts");
+const native_1 = __webpack_require__(/*! ../native/native */ "../../src/native/native.ts");
 const Event_1 = __webpack_require__(/*! ./Event */ "../../src/global/Event.ts");
 const Event_2 = __webpack_require__(/*! ./Event */ "../../src/global/Event.ts");
 const EventTarget_1 = __webpack_require__(/*! ./EventTarget */ "../../src/global/EventTarget.ts");
@@ -10631,7 +10591,7 @@ class XMLHttpRequest extends EventTarget_1.EventTarget {
         }
         this[exports.SENT] = true;
         this[exports.ERROR] = false;
-        this.native.request(this[exports.URL], this[exports.METHOD], this[exports.HEADERS], this[exports.TIMEOUT], this[exports.USERNAME], this[exports.PASSWORD], data);
+        native_1.native(this).request(this[exports.URL], this[exports.METHOD], this[exports.HEADERS], this[exports.TIMEOUT], this[exports.USERNAME], this[exports.PASSWORD], data);
         this.dispatchEvent(new Event_2.ProgressEvent('loadstart'));
     }
     /**
@@ -10741,6 +10701,9 @@ class XMLHttpRequest extends EventTarget_1.EventTarget {
         this[exports.RESPONSE] = '';
         this[exports.RESPONSE_TEXT] = '';
     }
+    //--------------------------------------------------------------------------
+    // Native API
+    //--------------------------------------------------------------------------
     /**
      * @method nativeOnProgress
      * @since 0.7.0
@@ -10836,43 +10799,138 @@ exports.XMLHttpRequest = XMLHttpRequest;
 
 /***/ }),
 
-/***/ "../../src/global/XMLHttpRequestUpload.ts":
-/*!***************************************************************************!*\
-  !*** /Users/jpdery/Projects/dezel-dev/src/global/XMLHttpRequestUpload.ts ***!
-  \***************************************************************************/
+/***/ "../../src/native/bridge.ts":
+/*!*************************************************************!*\
+  !*** /Users/jpdery/Projects/dezel-dev/src/native/bridge.ts ***!
+  \*************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const bridge_1 = __webpack_require__(/*! ../decorator/bridge */ "../../src/decorator/bridge.ts");
-const EventTarget_1 = __webpack_require__(/*! ./EventTarget */ "../../src/global/EventTarget.ts");
-let XMLHttpRequestUpload = 
+const Dezel_1 = __webpack_require__(/*! ../core/Dezel */ "../../src/core/Dezel.ts");
+const symbols_1 = __webpack_require__(/*! ../native/symbols */ "../../src/native/symbols.ts");
 /**
- * TODO
- * @class XMLHttpRequestUpload
- * @super EventTarget
+ * @function decorate
+ * @since 0.1.0
+ * @hidden
+ */
+function decorate(constructor, className) {
+    let Class = Dezel_1.Dezel.importClass(className);
+    if (Class == null) {
+        throw new Error(`Bridge error: ` +
+            `The native class ${className} does not exist.`);
+    }
+    for (let key in Class.statics) {
+        Class[key] = Class.statics[key];
+    }
+    constructor[symbols_1.NATIVE] = Class;
+}
+/**
+ * TODO: Decorator description
+ * @function bridge
+ * @since 0.1.0
+ */
+function bridge(classname) {
+    return function (constructor) {
+        decorate(constructor, classname);
+    };
+}
+exports.bridge = bridge;
+
+
+/***/ }),
+
+/***/ "../../src/native/native.ts":
+/*!*************************************************************!*\
+  !*** /Users/jpdery/Projects/dezel-dev/src/native/native.ts ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const symbols_1 = __webpack_require__(/*! ./symbols */ "../../src/native/symbols.ts");
+/**
+ * @function decorate
+ * @since 0.1.0
+ * @hidden
+ */
+function decorate(prototype, property) {
+    function get() {
+        return native(this)[property];
+    }
+    function set(value) {
+        native(this)[property] = isNative(value) ? toNative(value) : value;
+    }
+    Object.defineProperty(prototype, property, { get, set });
+}
+function native(...args) {
+    if (args.length == 1) {
+        let object = args[0];
+        if (object == null) {
+            return null;
+        }
+        return toNative(object);
+    }
+    decorate(args[0], args[1]);
+}
+exports.native = native;
+/**
+ * @function connect
+ * @since 0.7.0
+ * @hidden
+ */
+function connect(object) {
+    let Class = object.constructor[symbols_1.NATIVE];
+    if (Class == null) {
+        throw new Error(`Class ${object.constructor.name} has not been bridged.`);
+    }
+    return new Class(object);
+}
+/**
+ * @function toNative
+ * @since 0.7.0
+ * @hidden
+ */
+function toNative(object) {
+    let native = object[symbols_1.NATIVE];
+    if (native == null) {
+        native = object[symbols_1.NATIVE] = connect(object);
+    }
+    return native;
+}
+/**
+ * @function isNative
+ * @since 0.7.0
+ * @hidden
+ */
+function isNative(object) {
+    return object && typeof object == 'object' && object.constructor[symbols_1.NATIVE];
+}
+
+
+/***/ }),
+
+/***/ "../../src/native/symbols.ts":
+/*!**************************************************************!*\
+  !*** /Users/jpdery/Projects/dezel-dev/src/native/symbols.ts ***!
+  \**************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * The symbol used to store the natie object.
+ * @const NATIVE
  * @since 0.7.0
  */
-class XMLHttpRequestUpload extends EventTarget_1.EventTarget {
-};
-XMLHttpRequestUpload = __decorate([
-    bridge_1.bridge('dezel.global.XMLHttpRequestUpload')
-    /**
-     * TODO
-     * @class XMLHttpRequestUpload
-     * @super EventTarget
-     * @since 0.7.0
-     */
-], XMLHttpRequestUpload);
-exports.XMLHttpRequestUpload = XMLHttpRequestUpload;
+exports.NATIVE = Symbol('native');
+exports.BRIDGE = Symbol('bridge');
 
 
 /***/ }),
@@ -10895,7 +10953,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 var Platform_1;
 "use strict";
-const bridge_1 = __webpack_require__(/*! ../decorator/bridge */ "../../src/decorator/bridge.ts");
+const bridge_1 = __webpack_require__(/*! ../native/bridge */ "../../src/native/bridge.ts");
+const native_1 = __webpack_require__(/*! ../native/native */ "../../src/native/native.ts");
 let Platform = Platform_1 = 
 /**
  * Contains informations regarding the current platform.
@@ -10926,7 +10985,7 @@ class Platform {
      * @since 0.1.0
      */
     get name() {
-        return this.native.name;
+        return native_1.native(this).name;
     }
     /**
      * Returns the platform's version.
@@ -10934,7 +10993,7 @@ class Platform {
      * @since 0.1.0
      */
     get version() {
-        return this.native.version;
+        return native_1.native(this).version;
     }
 };
 Platform = Platform_1 = __decorate([
