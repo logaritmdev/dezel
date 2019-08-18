@@ -54,9 +54,7 @@ function connect(object: any) {
 		)
 	}
 
-	let native = new Class()
-	native.holder = object
-	return native
+	return new Class(object)
 }
 
 /**
