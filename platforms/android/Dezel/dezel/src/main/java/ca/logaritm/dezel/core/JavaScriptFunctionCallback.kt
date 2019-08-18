@@ -17,7 +17,7 @@ public class JavaScriptFunctionCallback(context: JavaScriptContext, target: Long
 	 * @since 0.1.0
 	 */
 	public fun argument(index: Int): JavaScriptValue {
-		return JavaScriptValue.create(this.context, this.argv[index])
+		return if (index < this.argc) JavaScriptValue.create(this.context, this.argv[index]) else this.context.jsundefined
 	}
 
 	/**
@@ -26,6 +26,6 @@ public class JavaScriptFunctionCallback(context: JavaScriptContext, target: Long
 	 * @since 0.1.0
 	 */
 	public fun argument(index: Int, protect: Boolean): JavaScriptValue {
-		return JavaScriptValue.create(this.context, this.argv[index], protect)
+		return if (index < this.argc) JavaScriptValue.create(this.context, this.argv[index], protect) else this.context.jsundefined
 	}
 }

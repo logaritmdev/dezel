@@ -67,6 +67,6 @@ open class JavaScriptWindow(context: JavaScriptContext): JavaScriptView(context)
 			return
 		}
 
-		callback.returns(view.holder)
+		callback.returns(view)
 	}
 }

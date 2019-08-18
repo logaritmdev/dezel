@@ -78,7 +78,7 @@ open class JavaScriptApplication(context: JavaScriptContext) : JavaScriptClass(c
 	 * @since 0.7.0
 	 */
 	open fun destroy() {
-		this.holder.callMethod("nativeOnDestroy")
+		this.callMethod("nativeOnDestroy")
 	}
 
 	//--------------------------------------------------------------------------

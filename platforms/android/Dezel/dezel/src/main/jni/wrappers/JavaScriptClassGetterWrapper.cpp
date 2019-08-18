@@ -5,54 +5,54 @@
 #include "JavaScriptGetter.h"
 #include "JavaScriptClassGetterWrapper.h"
 
+static jmethodID
+JavaScriptClassFunctionWrapperGetCallback(JNIEnv *env, jclass cls, const char *fqmn)
+{
+	return JNIGetMethod(env, cls, fqmn, "(Lca/logaritm/dezel/core/JavaScriptGetterCallback;)V");
+}
+
 static JSValueRef
 JavaScriptClassGetterWrapperCallback(JSContextRef context, JSObjectRef object, JSObjectRef callee, size_t argc, JSValueRef const *argv)
 {
-	JavaScriptClassGetterWrapperRef wrapper = (JavaScriptClassGetterWrapperRef) DLValueGetAssociatedObject(context, callee);
-	if (wrapper == NULL) {
-		return NULL;
-	}
+	auto wrapper = reinterpret_cast<JavaScriptClassGetterWrapperRef>(DLValueGetAssociatedObject(context, callee));
 
-	jobject instance = (jobject) DLValueGetAssociatedObject(context, object);
-	if (instance == NULL) {
-		return NULL;
-	}
-
-	jlong result = JavaScriptGetterExecute(
+	auto result = JavaScriptGetterExecute(
 		wrapper->env,
 		wrapper->ctx,
-		instance,
-		wrapper->handler,
+		wrapper->cls,
+		reinterpret_cast<jobject>(DLValueGetAssociatedObject(context, object)),
+		wrapper->callback,
 		object,
 		callee,
 		argc,
 		argv
 	);
 
-	return result ? (JSValueRef) result : NULL;
+	return result ? reinterpret_cast<JSValueRef>(result) : NULL;
 }
 
 static void
 JavaScriptClassGetterWrapperFinalize(JSContextRef context, DLValueDataRef handle)
 {
-	JavaScriptClassGetterWrapperRef wrapper = (JavaScriptClassGetterWrapperRef) DLValueDataGetAssociatedObject(handle);
-	if (wrapper == NULL) {
-		return;
-	}
+	auto wrapper = reinterpret_cast<JavaScriptClassGetterWrapperRef>(DLValueDataGetAssociatedObject(handle));
 
-	wrapper->env->DeleteGlobalRef(wrapper->ctx);
+	if (wrapper) {
+		wrapper->env->DeleteGlobalRef(wrapper->ctx);
+		wrapper->env->DeleteGlobalRef(wrapper->cls);
+	}
 }
 
 JavaScriptClassGetterWrapperRef
 JavaScriptClassGetterWrapperCreate(JNIEnv *env, JSContextRef context, const char *name, const char *fqmn, jclass cls, jobject ctx)
 {
-	JSObjectRef function = DLValueCreateFunction(context, &JavaScriptClassGetterWrapperCallback, name);
+	auto function = DLValueCreateFunction(context, &JavaScriptClassGetterWrapperCallback, name);
 
-	JavaScriptClassGetterWrapperRef wrapper = new JavaScriptClassGetterWrapper();
+	auto wrapper = new JavaScriptClassGetterWrapper();
 	wrapper->env = env;
-	wrapper->ctx = env->NewGlobalRef(ctx);
+	wrapper->cls = JNIGlobalRef(env, cls);
+	wrapper->ctx = JNIGlobalRef(env, ctx);
+	wrapper->callback = JavaScriptClassFunctionWrapperGetCallback(env, cls, fqmn);
 	wrapper->function = function;
-	wrapper->handler = JNIGetMethod(env, cls, fqmn, "(Lca/logaritm/dezel/core/JavaScriptGetterCallback;)V");
 
 	DLValueSetFinalizeHandler(context, function, &JavaScriptClassGetterWrapperFinalize);
 	DLValueSetAssociatedObject(context, function, wrapper);

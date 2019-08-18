@@ -13,7 +13,7 @@
 struct JavaScriptSetterWrapper {
 	JNIEnv* env;
 	jobject ctx;
-	jobject handler;
+	jobject callback;
 	JSObjectRef function;
 };
 
@@ -27,6 +27,6 @@ typedef struct JavaScriptSetterWrapper* JavaScriptSetterWrapperRef;
  * @function JavaScriptSetterWrapperCreate
  * @since 0.1.0
  */
-JavaScriptSetterWrapperRef JavaScriptSetterWrapperCreate(JNIEnv *env, JSContextRef context, jobject handler, const char *name, jobject ctx);
+JavaScriptSetterWrapperRef JavaScriptSetterWrapperCreate(JNIEnv *env, JSContextRef context, jobject callback, const char *name, jobject ctx);
 
 #endif

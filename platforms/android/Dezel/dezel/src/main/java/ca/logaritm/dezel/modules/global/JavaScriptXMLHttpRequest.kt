@@ -56,7 +56,7 @@ open class JavaScriptXMLHttpRequest(context: JavaScriptContext) : JavaScriptClas
 	 */
 	override fun onError(request: HttpRequest, response: HttpResponse) {
 
-		this.holder.callMethod("nativeOnError", arrayOf(
+		this.callMethod("nativeOnError", arrayOf(
 			this.context.createNumber(response.statusCode),
 			this.context.createString(response.statusText)
 		))
@@ -71,7 +71,7 @@ open class JavaScriptXMLHttpRequest(context: JavaScriptContext) : JavaScriptClas
 	 */
 	override fun onTimeout(request: HttpRequest, response: HttpResponse) {
 
-		this.holder.callMethod("nativeOnTimeout", arrayOf(
+		this.callMethod("nativeOnTimeout", arrayOf(
 			this.context.createNumber(response.statusCode),
 			this.context.createString(response.statusText)
 		))
@@ -85,7 +85,7 @@ open class JavaScriptXMLHttpRequest(context: JavaScriptContext) : JavaScriptClas
 	 * @hidden
 	 */
 	override fun onProgress(request: HttpRequest, loaded: Int, length: Int) {
-		this.holder.callMethod("nativeOnProgress", arrayOf(
+		this.callMethod("nativeOnProgress", arrayOf(
 			this.context.createNumber(loaded),
 			this.context.createNumber(length)
 		))
@@ -98,7 +98,7 @@ open class JavaScriptXMLHttpRequest(context: JavaScriptContext) : JavaScriptClas
 	 */
 	override fun onComplete(request: HttpRequest, response: HttpResponse) {
 
-		this.holder.callMethod("nativeOnComplete", arrayOf(
+		this.callMethod("nativeOnComplete", arrayOf(
 			this.context.createString(response.data),
 			this.context.createString(response.statusText),
 			this.context.createNumber(response.statusCode),

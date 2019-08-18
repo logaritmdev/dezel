@@ -39,6 +39,30 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptClassBuilderExterna
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptClassBuilderExternal_createSetter
   (JNIEnv *, jclass, jlong, jlong, jstring, jstring, jclass, jobject);
 
+/*
+ * Class:     ca_logaritm_dezel_core_JavaScriptClassBuilderExternal
+ * Method:    createStaticFunction
+ * Signature: (JJLjava/lang/String;Ljava/lang/String;Ljava/lang/Class;Ljava/lang/Object;)V
+ */
+JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptClassBuilderExternal_createStaticFunction
+  (JNIEnv *, jclass, jlong, jlong, jstring, jstring, jclass, jobject);
+
+/*
+ * Class:     ca_logaritm_dezel_core_JavaScriptClassBuilderExternal
+ * Method:    createStaticGetter
+ * Signature: (JJLjava/lang/String;Ljava/lang/String;Ljava/lang/Class;Ljava/lang/Object;)V
+ */
+JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptClassBuilderExternal_createStaticGetter
+  (JNIEnv *, jclass, jlong, jlong, jstring, jstring, jclass, jobject);
+
+/*
+ * Class:     ca_logaritm_dezel_core_JavaScriptClassBuilderExternal
+ * Method:    createStaticSetter
+ * Signature: (JJLjava/lang/String;Ljava/lang/String;Ljava/lang/Class;Ljava/lang/Object;)V
+ */
+JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptClassBuilderExternal_createStaticSetter
+  (JNIEnv *, jclass, jlong, jlong, jstring, jstring, jclass, jobject);
+
 #ifdef __cplusplus
 }
 #endif

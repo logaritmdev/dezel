@@ -14,8 +14,8 @@ struct JavaScriptClassConstructorWrapper {
 	JNIEnv *env;
 	jobject ctx;
 	jclass cls;
-	jmethodID init;
-	jmethodID handler;
+	jmethodID constructor;
+	jmethodID callback;
 	JSObjectRef function;
 };
 

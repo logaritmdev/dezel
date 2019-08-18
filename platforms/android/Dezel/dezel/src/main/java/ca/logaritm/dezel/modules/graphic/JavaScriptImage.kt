@@ -87,14 +87,14 @@ open class JavaScriptImage(context: JavaScriptContext) : JavaScriptClass(context
 			this.data = image
 			this.loading = Property(false)
 			this.complete = Property(true)
-			this.holder.callMethod("nativeOnLoad")
+			this.callMethod("nativeOnLoad")
 			return
 		}
 
 		this.data = null
 		this.loading = Property(false)
 		this.complete = Property(false)
-		this.holder.callMethod("nativeOnError")
+		this.callMethod("nativeOnError")
 	}
 
 	//--------------------------------------------------------------------------

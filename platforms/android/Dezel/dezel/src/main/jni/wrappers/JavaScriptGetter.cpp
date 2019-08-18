@@ -3,7 +3,7 @@
 #include "JavaScriptGetter.h"
 
 jlong
-JavaScriptGetterExecute(JNIEnv *env, jobject context, jobject instance, jmethodID function, JSObjectRef object, JSValueRef callee, size_t argc, JSValueRef const *argv)
+JavaScriptGetterExecute(JNIEnv *env, jobject context, jclass cls, jobject instance, jmethodID function, JSObjectRef object, JSValueRef callee, size_t argc, JSValueRef const *argv)
 {
 	JNI_ARGS_CREATE(args);
 
@@ -17,18 +17,27 @@ JavaScriptGetterExecute(JNIEnv *env, jobject context, jobject instance, jmethodI
 		args
 	);
 
-	JNI_CALL_VOID_METHOD(
-		env,
-		instance,
-		function,
-		callback
-	);
+	if (instance) {
 
-	JNI_CHECK_EXCEPTION(env);
+		JNI_CALL_VOID_METHOD(
+			env,
+			instance,
+			function,
+			callback
+		);
 
-	jlong result = env->GetLongField(callback, JavaScriptGetterCallbackResult);
-	env->DeleteLocalRef(callback);
+	} else {
+
+		JNI_CALL_VOID_METHOD(
+			env,
+			cls,
+			function,
+			callback
+		);
+
+	}
+
 	JNI_ARGS_DELETE(args);
 
-	return result;
+	return env->GetLongField(callback, JavaScriptGetterCallbackResult);
 }

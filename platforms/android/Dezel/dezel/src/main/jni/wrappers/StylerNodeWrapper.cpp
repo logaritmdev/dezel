@@ -58,7 +58,7 @@ DLFetchCallback(DLStylerNodeRef node, DLStylerStyleItemRef item)
 StylerNodeWrapperRef
 StylerNodeWrapperCreate(JNIEnv *env, jobject object, DLStylerNodeRef node)
 {
-	StylerNodeWrapperRef wrapper = new StylerNodeWrapper();
+	auto wrapper = new StylerNodeWrapper();
 	wrapper->env = env;
 	wrapper->object = env->NewWeakGlobalRef(object);
 

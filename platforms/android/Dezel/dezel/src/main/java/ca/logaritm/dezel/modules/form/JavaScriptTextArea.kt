@@ -303,7 +303,7 @@ open class JavaScriptTextArea(context: JavaScriptContext) : JavaScriptView(conte
 	 */
 	override fun onChange(textArea: TextArea, value: String) {
 		this.value.reset(value)
-		this.holder.callMethod("nativeOnChange", arrayOf(this.context.createString(value)), null)
+		this.callMethod("nativeOnChange", arrayOf(this.context.createString(value)), null)
 	}
 
 	/**
@@ -312,7 +312,7 @@ open class JavaScriptTextArea(context: JavaScriptContext) : JavaScriptView(conte
 	 * @hidden
 	 */
 	override fun onFocus(textArea: TextArea) {
-		this.holder.callMethod("nativeOnFocus")
+		this.callMethod("nativeOnFocus")
 	}
 
 	/**
@@ -321,7 +321,7 @@ open class JavaScriptTextArea(context: JavaScriptContext) : JavaScriptView(conte
 	 * @hidden
 	 */
 	override fun onBlur(textArea: TextArea) {
-		this.holder.callMethod("nativeOnBlur")
+		this.callMethod("nativeOnBlur")
 	}
 
 	//--------------------------------------------------------------------------

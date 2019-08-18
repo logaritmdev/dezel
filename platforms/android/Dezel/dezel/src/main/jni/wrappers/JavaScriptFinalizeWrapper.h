@@ -13,7 +13,7 @@
 struct JavaScriptFinalizeWrapper {
 	JNIEnv* env;
 	jobject ctx;
-	jobject handler;
+	jobject callback;
 };
 
 /**

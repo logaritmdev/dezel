@@ -1,5 +1,6 @@
 package ca.logaritm.dezel.core
 
+import android.util.Log
 import java.lang.reflect.Method
 
 /**
@@ -19,6 +20,7 @@ internal class JavaScriptClassBuilder : JavaScriptBuilder() {
 		internal fun build(context: JavaScriptContext, template: Class<*>): JavaScriptValue {
 
 			val prototype = context.createEmptyObject()
+			val statics = context.createEmptyObject()
 
 			forEach(template, fun(name: String, type: Type, method: Method) {
 
@@ -42,10 +44,27 @@ internal class JavaScriptClassBuilder : JavaScriptBuilder() {
 					return
 				}
 
+				if (type == Type.STATIC_FUNCTION) {
+					Log.e("TEST", "CREATE STATIC FUNCTION")
+					this.createStaticFunction(context, prototype.handle, name, method.name, template)
+					return
+				}
+
+				if (type == Type.STATIC_GETTER) {
+					this.createStaticGetter(context, prototype.handle, name, method.name, template)
+					return
+				}
+
+				if (type == Type.STATIC_SETTER) {
+					this.createStaticSetter(context, prototype.handle, name, method.name, template)
+					return
+				}
+
 			})
 
 			val constructor = prototype.property("constructor")
 			constructor.property("prototype", prototype)
+			constructor.property("statics", statics)
 			return constructor
 		}
 
@@ -83,6 +102,33 @@ internal class JavaScriptClassBuilder : JavaScriptBuilder() {
 		 */
 		private fun createSetter(context: JavaScriptContext, target: Long, name: String, method: String, cls: Class<*>) {
 			JavaScriptClassBuilderExternal.createSetter(context.handle, target, name, method, cls, context)
+		}
+
+		/**
+		 * @method createStaticFunction
+		 * @since 0.7.0:
+		 * @hidden
+		 */
+		private fun createStaticFunction(context: JavaScriptContext, target: Long, name: String, method: String, cls: Class<*>) {
+			JavaScriptClassBuilderExternal.createStaticFunction(context.handle, target, name, method, cls, context)
+		}
+
+		/**
+		 * @method createStaticGetter
+		 * @since 0.7.0:
+		 * @hidden
+		 */
+		private fun createStaticGetter(context: JavaScriptContext, target: Long, name: String, method: String, cls: Class<*>) {
+			JavaScriptClassBuilderExternal.createStaticGetter(context.handle, target, name, method, cls, context)
+		}
+
+		/**
+		 * @method createStaticSetter
+		 * @since 0.7.0:
+		 * @hidden
+		 */
+		private fun createStaticSetter(context: JavaScriptContext, target: Long, name: String, method: String, cls: Class<*>) {
+			JavaScriptClassBuilderExternal.createStaticSetter(context.handle, target, name, method, cls, context)
 		}
 	}
 }

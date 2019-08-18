@@ -34,7 +34,7 @@ LayoutEndedCallback(DLLayoutRef layout)
 LayoutWrapperRef
 LayoutWrapperCreate(JNIEnv *env, jobject object, DLLayoutRef node)
 {
-	LayoutWrapperRef wrapper = new LayoutWrapper();
+	auto wrapper = new LayoutWrapper();
 	wrapper->env = env;
 	wrapper->object = env->NewWeakGlobalRef(object);
 

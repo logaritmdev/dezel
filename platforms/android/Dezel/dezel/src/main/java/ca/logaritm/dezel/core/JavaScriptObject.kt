@@ -31,7 +31,7 @@ open class JavaScriptObject(context: JavaScriptContext): JavaScriptValue(context
 	 * @method attribute
 	 * @since 0.1.0
 	 */
-	public fun attribute(key: Any): Any? {
+	open fun attribute(key: Any): Any? {
 		return JavaScriptValueExternal.getAttribute(this.context.handle, this.handle, key.hashCode())
 	}
 
@@ -40,18 +40,18 @@ open class JavaScriptObject(context: JavaScriptContext): JavaScriptValue(context
 	 * @method attribute
 	 * @since 0.1.0
 	 */
-	public fun attribute(key: Any, value: Any) {
+	open fun attribute(key: Any, value: Any) {
 		val hash = key.hashCode()
 		JavaScriptValueExternal.delAttribute(this.context.handle, this.handle, hash)
 		JavaScriptValueExternal.setAttribute(this.context.handle, this.handle, hash, value)
 	}
 
 	/**
-	 * Assigns the object's finalize handler.
+	 * Assigns the object's finalize callback.
 	 * @method finalize
 	 * @since 0.4.0
 	 */
-	public fun finalize(handler: JavaScriptFinalizeHandler) {
+	open fun finalize(handler: JavaScriptFinalizeHandler) {
 		JavaScriptValueExternal.setFinalizeHandler(this.context.handle, this.handle, JavaScriptFinalizeWrapper(handler), this.context)
 	}
 
@@ -74,9 +74,9 @@ open class JavaScriptObject(context: JavaScriptContext): JavaScriptValue(context
 			 * longer usable.
 			 */
 
-			val handler = JavaScriptValueExternal.getAssociatedObject(callback.handle)
-			if (handler is JavaScriptValue) {
-				handler.dispose()
+			val self = JavaScriptValueExternal.getAssociatedObject(callback.handle)
+			if (self is JavaScriptValue) {
+				self.dispose()
 			}
 		}
 	}

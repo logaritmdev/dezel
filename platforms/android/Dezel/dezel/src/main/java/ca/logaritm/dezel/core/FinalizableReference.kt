@@ -15,7 +15,7 @@ abstract class FinalizableReference<T: Any>(referent: T, queue: ReferenceQueue<A
 	companion object {
 
 		/**
-		 * Convenience handler to execute stuff on the main thread.
+		 * Convenience callback to execute stuff on the main thread.
 		 * @property handler
 		 * @since 0.4.0
 		 */

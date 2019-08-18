@@ -153,6 +153,39 @@ JNIGetMethod(JNIEnv *env, jclass cls, const char *name, const char *sign)
 	return res;
 }
 
+jmethodID
+JNIGetStaticMethod(JNIEnv *env, jclass cls, const char *name, const char *sign)
+{
+	auto res = env->GetStaticMethodID(
+		cls,
+		name,
+		sign
+	);
+
+	if (res == NULL) {
+		LOGE("Unable to find static method %s with signature %s", name, sign);
+	}
+
+	return res;
+}
+
+jobject
+JNIGlobalRef(JNIEnv *env, jobject value)
+{
+	return env->NewGlobalRef(value);
+}
+
+/**
+* @function JNIGlobalRef
+* @since 0.7.0
+* @hidden
+*/
+jclass
+JNIGlobalRef(JNIEnv *env, jclass value)
+{
+	return reinterpret_cast<jclass>(env->NewGlobalRef(value));
+}
+
 jint
 JNI_OnLoad(JavaVM* vm, void* reserved)
 {

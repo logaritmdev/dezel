@@ -268,7 +268,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	 * @method protect
 	 * @since 0.1.0
 	 */
-	public fun protect() {
+	open fun protect() {
 
 		this.protected += 1
 
@@ -285,7 +285,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	 * @method unprotect
 	 * @since 0.1.0
 	 */
-	public fun unprotect() {
+	open fun unprotect() {
 
 		if (this.handle == 0L) {
 			return
@@ -324,7 +324,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	 * @method cast
 	 * @since 0.1.0
 	 */
-	public fun <T> cast(type: Class<T>): T? {
+	open fun <T> cast(type: Class<T>): T? {
 
 		try {
 
@@ -345,7 +345,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	 * @method call
 	 * @since 0.1.0
 	 */
-	public fun call() {
+	open fun call() {
 		JavaScriptValueExternal.call(this.context.handle, this.handle, 0, null, 0, null)
 	}
 
@@ -354,7 +354,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	 * @method call
 	 * @since 0.1.0
 	 */
-	public fun call(arguments: JavaScriptArguments?, target: JavaScriptValue?, result: JavaScriptValue? = null) {
+	open fun call(arguments: JavaScriptArguments?, target: JavaScriptValue?, result: JavaScriptValue? = null) {
 		JavaScriptValueExternal.call(this.context.handle, this.handle, toHandle(target, this.context), toArgv(arguments, this.context), toArgc(arguments), result)
 	}
 
@@ -363,7 +363,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	 * @method callMethod
 	 * @since 0.1.0
 	 */
-	public fun callMethod(method: String) {
+	open fun callMethod(method: String) {
 		JavaScriptValueExternal.callMethod(this.context.handle, this.handle, method, null, 0, null)
 	}
 
@@ -372,7 +372,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	 * @method callMethod
 	 * @since 0.1.0
 	 */
-	public fun callMethod(method: String, arguments: JavaScriptArguments?, result: JavaScriptValue? = null) {
+	open fun callMethod(method: String, arguments: JavaScriptArguments?, result: JavaScriptValue? = null) {
 		JavaScriptValueExternal.callMethod(this.context.handle, this.handle, method, toArgv(arguments, context), toArgc(arguments), result)
 	}
 
@@ -381,7 +381,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	 * @method construct
 	 * @since 0.1.0
 	 */
-	public fun construct() {
+	open fun construct() {
 		JavaScriptValueExternal.construct(this.context.handle, this.handle, null, 0, null)
 	}
 
@@ -390,7 +390,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	 * @method construct
 	 * @since 0.1.0
 	 */
-	public fun construct(arguments: JavaScriptArguments?, result: JavaScriptValue? = null) {
+	open fun construct(arguments: JavaScriptArguments?, result: JavaScriptValue? = null) {
 		JavaScriptValueExternal.construct(this.context.handle, this.handle, toArgv(arguments, context), toArgc(arguments), result)
 	}
 
@@ -399,7 +399,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	 * @method defineProperty
 	 * @since 0.1.0
 	 */
-	public fun defineProperty(property: String, value: JavaScriptValue?, getter: JavaScriptGetterHandler? = null, setter: JavaScriptSetterHandler? = null, writable: Boolean = true, enumerable: Boolean = true, configurable: Boolean = true) {
+	open fun defineProperty(property: String, value: JavaScriptValue?, getter: JavaScriptGetterHandler? = null, setter: JavaScriptSetterHandler? = null, writable: Boolean = true, enumerable: Boolean = true, configurable: Boolean = true) {
 
 		var get: JavaScriptGetterWrapper? = null
 		var set: JavaScriptSetterWrapper? = null
@@ -415,7 +415,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	 * @method property
 	 * @since 0.1.0
 	 */
-	public fun property(name: String, value: JavaScriptValue?) {
+	open fun property(name: String, value: JavaScriptValue?) {
 		JavaScriptValueExternal.setProperty(this.context.handle, this.handle, name, toHandle(value, this.context))
 	}
 
@@ -424,7 +424,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	 * @method property
 	 * @since 0.1.0
 	 */
-	public fun property(name: String, property: Property) {
+	open fun property(name: String, property: Property) {
 		JavaScriptValueExternal.setProperty(this.context.handle, this.handle, name, property.value(this.context).handle)
 	}
 
@@ -433,7 +433,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	 * @method property
 	 * @since 0.1.0
 	 */
-	public fun property(name: String, string: String) {
+	open fun property(name: String, string: String) {
 		JavaScriptValueExternal.setProperty(this.context.handle, this.handle, name, string)
 	}
 
@@ -442,7 +442,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	 * @method property
 	 * @since 0.1.0
 	 */
-	public fun property(name: String, number: Double) {
+	open fun property(name: String, number: Double) {
 		JavaScriptValueExternal.setProperty(this.context.handle, this.handle, name, number)
 	}
 
@@ -451,7 +451,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	 * @method property
 	 * @since 0.4.0
 	 */
-	public fun property(name: String, number: Float) {
+	open fun property(name: String, number: Float) {
 		JavaScriptValueExternal.setProperty(this.context.handle, this.handle, name, number.toDouble())
 	}
 
@@ -460,7 +460,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	 * @method property
 	 * @since 0.4.0
 	 */
-	public fun property(name: String, number: Int) {
+	open fun property(name: String, number: Int) {
 		JavaScriptValueExternal.setProperty(this.context.handle, this.handle, name, number.toDouble())
 	}
 
@@ -469,7 +469,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	 * @method property
 	 * @since 0.1.0
 	 */
-	public fun property(name: String, boolean: Boolean) {
+	open fun property(name: String, boolean: Boolean) {
 		JavaScriptValueExternal.setProperty(this.context.handle, handle, name, boolean)
 	}
 
@@ -478,7 +478,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	 * @method property
 	 * @since 0.1.0
 	 */
-	public fun property(name: String): JavaScriptValue {
+	open fun property(name: String): JavaScriptValue {
 		return create(this.context, JavaScriptValueExternal.getProperty(this.context.handle, this.handle, name))
 	}
 
@@ -487,7 +487,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	 * @method property
 	 * @since 0.1.0
 	 */
-	public fun property(index: Int, value: JavaScriptValue) {
+	open fun property(index: Int, value: JavaScriptValue) {
 		JavaScriptValueExternal.setPropertyAtIndex(this.context.handle, this.handle, index, value.handle)
 	}
 
@@ -496,7 +496,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	 * @method property
 	 * @since 0.1.0
 	 */
-	public fun property(index: Int, string: String) {
+	open fun property(index: Int, string: String) {
 		JavaScriptValueExternal.setPropertyAtIndex(this.context.handle, this.handle, index, string)
 	}
 
@@ -505,7 +505,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	 * @method property
 	 * @since 0.1.0
 	 */
-	public fun property(index: Int, number: Double) {
+	open fun property(index: Int, number: Double) {
 		JavaScriptValueExternal.setPropertyAtIndex(this.context.handle, this.handle, index, number)
 	}
 
@@ -514,7 +514,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	 * @method property
 	 * @since 0.4.0
 	 */
-	public fun property(index: Int, number: Float) {
+	open fun property(index: Int, number: Float) {
 		JavaScriptValueExternal.setPropertyAtIndex(this.context.handle, this.handle, index, number.toDouble())
 	}
 
@@ -523,7 +523,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	 * @method property
 	 * @since 0.4.0
 	 */
-	public fun property(index: Int, number: Int) {
+	open fun property(index: Int, number: Int) {
 		JavaScriptValueExternal.setPropertyAtIndex(this.context.handle, this.handle, index, number.toDouble())
 	}
 
@@ -532,7 +532,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	 * @method property
 	 * @since 0.1.0
 	 */
-	public fun property(index: Int, boolean: Boolean) {
+	open fun property(index: Int, boolean: Boolean) {
 		JavaScriptValueExternal.setPropertyAtIndex(this.context.handle, this.handle, index, boolean)
 	}
 
@@ -541,7 +541,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	 * @method property
 	 * @since 0.1.0
 	 */
-	public fun property(index: Int): JavaScriptValue {
+	open fun property(index: Int): JavaScriptValue {
 		return create(context, JavaScriptValueExternal.getPropertyAtIndex(this.context.handle, this.handle, index))
 	}
 
@@ -550,7 +550,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	 * @method forEach
 	 * @since 0.1.0
 	 */
-	public fun forEach(handler: JavaScriptForEachHandler) {
+	open fun forEach(handler: JavaScriptForEachHandler) {
 		JavaScriptValueExternal.forEach(this.context.handle, this.handle, JavaScriptValueForEachWrapper(this.context, handler))
 	}
 
@@ -559,7 +559,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	 * @method forOwn
 	 * @since 0.7.0
 	 */
-	public fun forOwn(handler: JavaScriptForOwnHandler) {
+	open fun forOwn(handler: JavaScriptForOwnHandler) {
 		JavaScriptValueExternal.forOwn(this.context.handle, this.handle, JavaScriptValueForOwnWrapper(this.context, handler))
 	}
 
@@ -568,7 +568,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	 * @method prototype
 	 * @since 0.1.0
 	 */
-	public fun prototype(prototype: JavaScriptValue) {
+	open fun prototype(prototype: JavaScriptValue) {
 		JavaScriptValueExternal.setPrototype(this.context.handle, this.handle, toHandle(prototype, this.context))
 	}
 
@@ -577,7 +577,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	 * @method prototype
 	 * @since 0.1.0
 	 */
-	public fun prototype(): JavaScriptValue {
+	open fun prototype(): JavaScriptValue {
 		return create(this.context, JavaScriptValueExternal.getPrototype(this.context.handle, this.handle))
 	}
 
@@ -586,7 +586,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	 * @method equals
 	 * @since 0.1.0
 	 */
-	public fun equals(value: JavaScriptValue): Boolean {
+	open fun equals(value: JavaScriptValue): Boolean {
 		return JavaScriptValueExternal.equals(this.context.handle, this.handle, toHandle(value, this.context))
 	}
 
@@ -595,7 +595,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	 * @method equals
 	 * @since 0.1.0
 	 */
-	public fun equals(string: String): Boolean {
+	open fun equals(string: String): Boolean {
 		return JavaScriptValueExternal.equals(this.context.handle, this.handle, string)
 	}
 
@@ -604,7 +604,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	 * @method equals
 	 * @since 0.1.0
 	 */
-	public fun equals(number: Double): Boolean {
+	open fun equals(number: Double): Boolean {
 		return JavaScriptValueExternal.equals(this.context.handle, this.handle, number)
 	}
 
@@ -613,7 +613,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	 * @method equals
 	 * @since 0.1.0
 	 */
-	public fun equals(boolean: Boolean): Boolean {
+	open fun equals(boolean: Boolean): Boolean {
 		return JavaScriptValueExternal.equals(this.context.handle, this.handle, boolean)
 	}
 

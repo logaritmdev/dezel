@@ -61,17 +61,17 @@ public class TransitionGroup(val activity: ApplicationActivity): Animator.Animat
 		const val PROP_CONTENT_REAL_SCROLL_X = "dezel.View.realScrollX"
 		const val PROP_CONTENT_REAL_SCROLL_Y = "dezel.View.realScrollY"
 
-		const val PROP_FONT_SIZE = "dezel.JavaScriptTextView.fontSize"
-		const val PROP_TEXT_COLOR = "dezel.JavaScriptTextView.textColor"
-		const val PROP_TEXT_KERNING = "dezel.JavaScriptTextView.textKerning"
-		const val PROP_TEXT_LEADING = "dezel.JavaScriptTextView.textLeading"
-		const val PROP_TEXT_BASELINE = "dezel.JavaScriptTextView.textBaseline"
+		const val PROP_FONT_SIZE = "dezel.TextView.fontSize"
+		const val PROP_TEXT_COLOR = "dezel.TextView.textColor"
+		const val PROP_TEXT_KERNING = "dezel.TextView.textKerning"
+		const val PROP_TEXT_LEADING = "dezel.TextView.textLeading"
+		const val PROP_TEXT_BASELINE = "dezel.TextView.textBaseline"
 
-		const val PROP_IMAGE_TOP = "dezel.JavaScriptImageView.imageTop"
-		const val PROP_IMAGE_LEFT = "dezel.JavaScriptImageView.imageLeft"
-		const val PROP_IMAGE_WIDTH = "dezel.JavaScriptImageView.imageWidth"
-		const val PROP_IMAGE_HEIGHT = "dezel.JavaScriptImageView.imageHeight"
-		const val PROP_IMAGE_TINT = "dezel.JavaScriptImageView.imageTint"
+		const val PROP_IMAGE_TOP = "dezel.ImageView.imageTop"
+		const val PROP_IMAGE_LEFT = "dezel.ImageView.imageLeft"
+		const val PROP_IMAGE_WIDTH = "dezel.ImageView.imageWidth"
+		const val PROP_IMAGE_HEIGHT = "dezel.ImageView.imageHeight"
+		const val PROP_IMAGE_TINT = "dezel.ImageView.imageTint"
 	}
 
 	//--------------------------------------------------------------------------

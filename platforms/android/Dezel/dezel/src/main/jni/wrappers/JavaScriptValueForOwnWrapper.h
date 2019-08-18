@@ -12,7 +12,7 @@
  */
 struct JavaScriptValueForOwnWrapper {
 	JNIEnv *env;
-	jobject handler;
+	jobject callback;
 };
 
 /**

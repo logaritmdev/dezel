@@ -4,15 +4,15 @@ package ca.logaritm.dezel.core
  * @class JavaScriptFinalizeWrapper
  * @since 0.1.0
  */
-internal class JavaScriptFinalizeWrapper(handler: JavaScriptFinalizeHandler) {
+internal class JavaScriptFinalizeWrapper(callback: JavaScriptFinalizeHandler) {
 
-	private val handler: JavaScriptFinalizeHandler
+	private val callback: JavaScriptFinalizeHandler
 
 	init {
-		this.handler = handler
+		this.callback = callback
 	}
 
 	public fun execute(handler: JavaScriptFinalizeCallback) {
-		this.handler(handler)
+		this.callback(handler)
 	}
 }

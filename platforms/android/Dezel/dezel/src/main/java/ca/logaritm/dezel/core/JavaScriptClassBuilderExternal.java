@@ -34,4 +34,25 @@ public class JavaScriptClassBuilderExternal {
 	 * @since 0.1.0
 	 */
 	static native public void createSetter(long context, long object, String name, String fqmn, Class cls, Object ctx);
+
+	/**
+	 * @method createStaticFunction
+	 * @hidden
+	 * @since 0.7.0
+	 */
+	static native public void createStaticFunction(long context, long object, String name, String fqmn, Class cls, Object ctx);
+
+	/**
+	 * @method createStaticGetter
+	 * @hidden
+	 * @since 0.7.0
+	 */
+	static native public void createStaticGetter(long context, long object, String name, String fqmn, Class cls, Object ctx);
+
+	/**
+	 * @method createStaticSetter
+	 * @hidden
+	 * @since 0.7.0
+	 */
+	static native public void createStaticSetter(long context, long object, String name, String fqmn, Class cls, Object ctx);
 }

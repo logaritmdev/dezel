@@ -2,8 +2,6 @@ package ca.logaritm.dezel.modules.locale
 
 import ca.logaritm.dezel.core.JavaScriptContext
 import ca.logaritm.dezel.core.Module
-import ca.logaritm.dezel.modules.device.JavaScriptLocale
-
 
 /**
  * @class LocaleModule

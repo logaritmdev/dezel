@@ -1,5 +1,6 @@
 package ca.logaritm.dezel.core
 
+import android.util.Log
 import java.util.*
 
 /**
@@ -15,6 +16,9 @@ open class JavaScriptBuilder {
 	 * @hidden
 	 */
 	enum class Type {
+		STATIC_FUNCTION,
+		STATIC_GETTER,
+		STATIC_SETTER,
 		FUNCTION,
 		GETTER,
 		SETTER
@@ -27,63 +31,70 @@ open class JavaScriptBuilder {
 		 * @since 0.1.0
 		 * @hidden
 		 */
-		public fun forEach(from: Class<*>, callback: JavaScriptBuilderForEachHandler) {
+		public fun forEach(clazz: Class<*>, callback: JavaScriptBuilderForEachHandler) {
 
 			val processed = HashMap<String, Boolean>()
 
-			var clazz: Class<*> = from
+			for (method in clazz.methods) {
 
-			while (true) {
+				val name = method.name
 
-				val methods = clazz.declaredMethods
+				val isFunction = name.startsWith("jsFunction")
+				val isGetter = name.startsWith("jsGet")
+				val isSetter = name.startsWith("jsSet")
 
-				for (method in methods) {
+				val isStaticFunction = name.startsWith("jsStaticFunction")
+				val isStaticGetter = name.startsWith("jsStaticGet")
+				val isStaticSetter = name.startsWith("jsStaticSet")
 
-					val name = method.name
-
-					val isFunction = name.startsWith("jsFunction")
-					val isGetter = name.startsWith("jsGet")
-					val isSetter = name.startsWith("jsSet")
-
-					if (isFunction == false &&
-						isSetter == false &&
-						isGetter == false) {
-						continue
-					}
-
-					if (processed[name] == null) {
-						processed.put(name, true)
-					} else {
-						continue
-					}
-
-					val s = name.indexOf("_")
-					val e = name.length
-					val key = name.substring(s + 1, e)
-
-					if (isFunction) {
-						callback(key, Type.FUNCTION, method)
-						continue
-					}
-
-					if (isGetter) {
-						callback(key, Type.GETTER, method)
-						continue
-					}
-
-					if (isSetter) {
-						callback(key, Type.SETTER, method)
-						continue
-					}
+				if (isFunction == false &&
+					isSetter == false &&
+					isGetter == false &&
+					isStaticFunction == false &&
+					isStaticGetter == false &&
+					isStaticSetter == false) {
+					continue
 				}
 
-				val parent = clazz.superclass
-				if (parent == null ||
-					parent == Any::class.java) {
-					break
+				if (processed[name] == null) {
+					processed.put(name, true)
+				} else {
+					continue
 				}
 
-				clazz = parent
+				val s = name.indexOf("_")
+				val e = name.length
+				val key = name.substring(s + 1, e)
+
+				if (isFunction) {
+					callback(key, Type.FUNCTION, method)
+					continue
+				}
+
+				if (isGetter) {
+					callback(key, Type.GETTER, method)
+					continue
+				}
+
+				if (isSetter) {
+					callback(key, Type.SETTER, method)
+					continue
+				}
+
+				if (isStaticFunction) {
+					callback(key, Type.STATIC_FUNCTION, method)
+					continue
+				}
+
+				if (isStaticGetter) {
+					callback(key, Type.STATIC_GETTER, method)
+					continue
+				}
+
+				if (isStaticSetter) {
+					callback(key, Type.STATIC_SETTER, method)
+					continue
+				}
 			}
 		}
 	}

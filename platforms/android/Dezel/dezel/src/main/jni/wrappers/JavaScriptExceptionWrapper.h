@@ -13,7 +13,7 @@
 struct JavaScriptExceptionWrapper {
 	JNIEnv* env;
 	jobject ctx;
-	jobject handler;
+	jobject callback;
 };
 
 /**

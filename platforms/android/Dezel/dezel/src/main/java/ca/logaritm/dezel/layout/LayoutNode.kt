@@ -20,7 +20,7 @@ open class LayoutNode(layout: Layout) {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The layoutNode node's delegate.
+	 * The layoutNode node's instance.
 	 * @property listener
 	 * @since 0.1.0
 	 */

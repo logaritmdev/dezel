@@ -81,7 +81,7 @@ open class JavaScriptAlert(context: JavaScriptContext) : JavaScriptClass(context
 		}
 
 		Handler().postDelayed({
-			this.holder.callMethod("nativeOnPresent")
+			this.callMethod("nativeOnPresent")
 		}, 50)
 	}
 
@@ -113,7 +113,7 @@ open class JavaScriptAlert(context: JavaScriptContext) : JavaScriptClass(context
 
 		builder.setOnDismissListener {
 			Handler().postDelayed({
-				this.holder.callMethod("nativeOnDismiss")
+				this.callMethod("nativeOnDismiss")
 				this.unprotect()
 			}, 50)
 		}
@@ -123,7 +123,7 @@ open class JavaScriptAlert(context: JavaScriptContext) : JavaScriptClass(context
 		for (button in buttons) {
 
 			val listener = DialogInterface.OnClickListener { _, _ ->
-				button.holder.callMethod("nativeOnPress")
+				button.callMethod("nativeOnPress")
 			}
 
 			when (button.style.string) {
@@ -183,7 +183,7 @@ open class JavaScriptAlert(context: JavaScriptContext) : JavaScriptClass(context
 
 		sheet.setOnDismissListener {
 			Handler().postDelayed({
-				this.holder.callMethod("nativeOnDismiss")
+				this.callMethod("nativeOnDismiss")
 				this.unprotect()
 			}, 50)
 		}
@@ -330,7 +330,7 @@ open class JavaScriptAlert(context: JavaScriptContext) : JavaScriptClass(context
 		}
 
 		button.setOnClickListener {
-			source.holder.callMethod("nativeOnPress")
+			source.callMethod("nativeOnPress")
 			sheet.dismiss()
 		}
 

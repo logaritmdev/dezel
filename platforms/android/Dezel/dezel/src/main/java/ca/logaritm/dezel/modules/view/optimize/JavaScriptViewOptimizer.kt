@@ -211,7 +211,7 @@ open class JavaScriptViewOptimizer(context: JavaScriptContext) : JavaScriptClass
 			return
 		}
 
-		callback.returns(view.holder)
+		callback.returns(view)
 	}
 
 	/**

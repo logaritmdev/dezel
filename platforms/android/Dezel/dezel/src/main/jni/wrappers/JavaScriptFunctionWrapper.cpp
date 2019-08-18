@@ -5,12 +5,13 @@
 static JSValueRef
 JavaScriptFunctionWrapperCallback(JSContextRef context, JSObjectRef object, JSObjectRef callee, size_t argc, JSValueRef const *argv)
 {
-	JavaScriptFunctionWrapperRef wrapper = (JavaScriptFunctionWrapperRef) DLValueGetAssociatedObject(context, callee);
+	auto wrapper = reinterpret_cast<JavaScriptFunctionWrapperRef>(DLValueGetAssociatedObject(context, callee));
 
-	jlong result = JavaScriptFunctionExecute(
+	auto result = JavaScriptFunctionExecute(
 		wrapper->env,
 		wrapper->ctx,
-		wrapper->handler,
+		NULL,
+		wrapper->callback,
 		JavaScriptFunctionWrapperExecute,
 		object,
 		callee,
@@ -18,30 +19,29 @@ JavaScriptFunctionWrapperCallback(JSContextRef context, JSObjectRef object, JSOb
 		argv
 	);
 
-	return result ? (JSValueRef) result : NULL;
+	return result ? reinterpret_cast<JSValueRef>(result) : NULL;
 }
 
 static void
 JavaScriptFunctionWrapperFinalize(JSContextRef context, DLValueDataRef handle)
 {
-	JavaScriptFunctionWrapperRef wrapper = (JavaScriptFunctionWrapperRef) DLValueDataGetAssociatedObject(handle);
-	if (wrapper == NULL) {
-		return;
-	}
+	auto wrapper = reinterpret_cast<JavaScriptFunctionWrapperRef>(DLValueDataGetAssociatedObject(handle));
 
-	wrapper->env->DeleteGlobalRef(wrapper->ctx);
-	wrapper->env->DeleteGlobalRef(wrapper->handler);
+	if (wrapper) {
+		wrapper->env->DeleteGlobalRef(wrapper->ctx);
+		wrapper->env->DeleteGlobalRef(wrapper->callback);
+	}
 }
 
 JavaScriptFunctionWrapperRef
-JavaScriptFunctionWrapperCreate(JNIEnv *env, JSContextRef context, jobject handler, const char *name, jobject ctx)
+JavaScriptFunctionWrapperCreate(JNIEnv *env, JSContextRef context, jobject callback, const char *name, jobject ctx)
 {
-	JSObjectRef function = DLValueCreateFunction(context, &JavaScriptFunctionWrapperCallback, name);
+	auto function = DLValueCreateFunction(context, &JavaScriptFunctionWrapperCallback, name);
 
-	JavaScriptFunctionWrapperRef wrapper = new JavaScriptFunctionWrapper();
+	auto wrapper = new JavaScriptFunctionWrapper();
 	wrapper->env = env;
-	wrapper->ctx = env->NewGlobalRef(ctx);
-	wrapper->handler = env->NewGlobalRef(handler);
+	wrapper->ctx = JNIGlobalRef(env, ctx);
+	wrapper->callback = env->NewGlobalRef(callback);
 	wrapper->function = function;
 
 	DLValueSetFinalizeHandler(context, function, &JavaScriptFunctionWrapperFinalize);

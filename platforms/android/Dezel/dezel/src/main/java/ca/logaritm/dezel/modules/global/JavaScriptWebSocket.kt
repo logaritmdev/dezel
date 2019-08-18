@@ -84,7 +84,7 @@ open class JavaScriptWebSocket(context: JavaScriptContext) : JavaScriptClass(con
 	 * @hidden
 	 */
 	private fun onOpen() {
-		this.holder.callMethod("nativeOnConnect", arrayOf(
+		this.callMethod("nativeOnConnect", arrayOf(
 			this.context.createString(""),
 			this.context.createString("")
 		))
@@ -96,7 +96,7 @@ open class JavaScriptWebSocket(context: JavaScriptContext) : JavaScriptClass(con
 	 * @hidden
 	 */
 	private fun onClose(clean: Boolean) {
-		this.holder.callMethod("nativeOnDisconnect")
+		this.callMethod("nativeOnDisconnect")
 	}
 
 	/**
@@ -105,7 +105,7 @@ open class JavaScriptWebSocket(context: JavaScriptContext) : JavaScriptClass(con
 	 * @hidden
 	 */
 	private fun onMessage(text: String) {
-		this.holder.callMethod("nativeOnReceiveMessage", arrayOf(
+		this.callMethod("nativeOnReceiveMessage", arrayOf(
 			this.context.createString(text)
 		))
 	}

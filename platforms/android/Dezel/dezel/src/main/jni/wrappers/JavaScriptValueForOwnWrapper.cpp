@@ -1,17 +1,17 @@
 #include "JavaScriptValueForOwnWrapper.h"
 
 JavaScriptValueForOwnWrapperRef
-JavaScriptValueForOwnWrapperCreate(JNIEnv *env, jobject handler)
+JavaScriptValueForOwnWrapperCreate(JNIEnv *env, jobject callback)
 {
-	JavaScriptValueForOwnWrapperRef wrapper = new JavaScriptValueForOwnWrapper();
+	auto wrapper = new JavaScriptValueForOwnWrapper();
 	wrapper->env = env;
-	wrapper->handler = env->NewGlobalRef(handler);
+	wrapper->callback = JNIGlobalRef(env, callback);
 	return wrapper;
 }
 
 void
 JavaScriptValueForOwnWrapperDelete(JNIEnv *env, JavaScriptValueForOwnWrapperRef wrapper)
 {
-	env->DeleteGlobalRef(wrapper->handler);
+	env->DeleteGlobalRef(wrapper->callback);
 	delete wrapper;
 }

@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import android.graphics.RectF
 import android.util.Log
 import android.util.SizeF
+import android.view.animation.PathInterpolator
 import ca.logaritm.dezel.application.application
 import ca.logaritm.dezel.core.*
 import ca.logaritm.dezel.extension.*
@@ -14,6 +15,7 @@ import ca.logaritm.dezel.modules.graphic.JavaScriptCanvas
 import ca.logaritm.dezel.style.StylerNode
 import ca.logaritm.dezel.style.StylerNodeListener
 import ca.logaritm.dezel.view.*
+import ca.logaritm.dezel.view.animation.Transition
 import ca.logaritm.dezel.view.geom.Point3D
 import ca.logaritm.dezel.view.geom.Transform3D
 import ca.logaritm.dezel.view.graphic.*
@@ -1843,7 +1845,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 			}
 
 			canvas.use(cnv)
-			this.holder.callMethod("nativeOnRedraw", arrayOf(canvas.holder))
+			this.callMethod("nativeOnRedraw", arrayOf(canvas))
 			canvas.use(null)
 		}
 
@@ -1885,7 +1887,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @since 0.7.0
 	 */
 	open fun createContentView(): AndroidView {
-		return View(this.context.application!!)
+		return View(this.context.application)
 	}
 
 	/**
@@ -2678,7 +2680,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	open fun setProperty(property: String, value: Property) {
 		val assigned = PropertyAccessor.set(this, property, value)
 		if (assigned == false) {
-			this.holder.property(property, value)
+			this.property(property, value)
 		}
 	}
 
@@ -2688,7 +2690,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @hidden
 	 */
 	open fun getProperty(property: String): Property? {
-		return PropertyAccessor.get(this, property) ?: Property(this.holder.property(property))
+		return PropertyAccessor.get(this, property) ?: Property(this.property(property))
 	}
 
 	//--------------------------------------------------------------------------
@@ -2897,7 +2899,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	override fun onBeginLayout(node: LayoutNode) {
 		this.listener?.onBeginLayout(this)
-		this.holder.callMethod("nativeOnLayoutBegan")
+		this.callMethod("nativeOnLayoutBegan")
 	}
 
 	/**
@@ -2941,7 +2943,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 		}
 
 		this.listener?.onFinishLayout(this)
-		this.holder.callMethod("nativeOnLayoutFinished")
+		this.callMethod("nativeOnLayoutFinished")
 	}
 
 	//--------------------------------------------------------------------------
@@ -2986,7 +2988,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	override fun onDragStart(scrollable: Scrollable) {
 		this.dragging.reset(true)
-		this.holder.callMethod("nativeOnDragStart")
+		this.callMethod("nativeOnDragStart")
 	}
 
 	/**
@@ -2996,7 +2998,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	override fun onDragEnd(scrollable: Scrollable) {
 		this.dragging.reset(false)
-		this.holder.callMethod("nativeOnDragEnd")
+		this.callMethod("nativeOnDragEnd")
 	}
 
 	/**
@@ -3005,7 +3007,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @hidden
 	 */
 	override fun onDrag(scrollable: Scrollable) {
-		this.holder.callMethod("nativeOnDrag")
+		this.callMethod("nativeOnDrag")
 	}
 
 	/**
@@ -3015,7 +3017,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	override fun onScrollStart(scrollable: Scrollable) {
 		this.scrolling.reset(true)
-		this.holder.callMethod("nativeOnScrollStart")
+		this.callMethod("nativeOnScrollStart")
 	}
 
 	/**
@@ -3025,7 +3027,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	override fun onScrollEnd(scrollable: Scrollable) {
 		this.scrolling.reset(false)
-		this.holder.callMethod("nativeOnScrollEnd")
+		this.callMethod("nativeOnScrollEnd")
 	}
 
 	/**
@@ -3048,7 +3050,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 
 		this.listener?.onScroll(this)
 
-		this.holder.callMethod("nativeOnScroll")
+		this.callMethod("nativeOnScroll")
 	}
 
 	/**
@@ -3057,7 +3059,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @hidden
 	 */
 	override fun onZoomStart(scrollable: Scrollable) {
-		this.holder.callMethod("nativeOnZoomStart")
+		this.callMethod("nativeOnZoomStart")
 	}
 
 	/**
@@ -3066,7 +3068,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @hidden
 	 */
 	override fun onZoomEnd(scrollable: Scrollable, scale: Float) {
-		this.holder.callMethod("nativeOnZoomEnd", arrayOf(this.context.createNumber(scale)))
+		this.callMethod("nativeOnZoomEnd", arrayOf(this.context.createNumber(scale)))
 	}
 
 	/**
@@ -3075,7 +3077,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @hidden
 	 */
 	override fun onZoom(scrollable: Scrollable) {
-		this.holder.callMethod("nativeOnZoom")
+		this.callMethod("nativeOnZoom")
 	}
 
 	//--------------------------------------------------------------------------
@@ -3251,7 +3253,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 		this.parent = parent
 
 		if (notify) {
-			this.holder.callMethod("nativeOnMoveToParent", arrayOf(parent?.holder))
+			this.callMethod("nativeOnMoveToParent", arrayOf(parent))
 		}
 	}
 
@@ -3265,7 +3267,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 		this.window = window
 
 		if (notify) {
-			this.holder.callMethod("nativeOnMoveToWindow", arrayOf(window?.holder))
+			this.callMethod("nativeOnMoveToWindow", arrayOf(window))
 		}
 
 		this.children.forEach {
@@ -3513,6 +3515,66 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	//--------------------------------------------------------------------------
+	// JS Static Methods
+	//--------------------------------------------------------------------------
+
+	companion object {
+
+		/**
+		 * @method jsStaticFunction_transition
+		 * @since 0.7.0
+		 * @hidden
+		 */
+		@JvmStatic @Suppress("unused")
+		open fun jsStaticFunction_transition(callback: JavaScriptFunctionCallback) {
+
+			if (callback.arguments < 8) {
+				return
+			}
+
+			val activity = callback.context.application
+
+			val duration = callback.argument(0).number
+			val equation = PathInterpolator(
+				callback.argument(1).number.toFloat(),
+				callback.argument(2).number.toFloat(),
+				callback.argument(3).number.toFloat(),
+				callback.argument(4).number.toFloat()
+			)
+
+			val delay = callback.argument(5).number
+
+			val complete = callback.argument(6)
+			val function = callback.argument(7)
+
+			val animate = {
+
+				Transition.create(
+					activity,
+					duration,
+					equation,
+					delay
+				)
+
+				function.call()
+				complete.protect()
+
+				Transition.commit {
+					complete.call()
+					complete.unprotect()
+				}
+			}
+
+			if (callback.context.application.layout.resolving) {
+				callback.context.application.layout.requestLayoutEndedCallback(animate)
+				return
+			}
+
+			animate()
+		}
+	}
+
+	//--------------------------------------------------------------------------
 	// JS Properties
 	//--------------------------------------------------------------------------
 
@@ -3547,7 +3609,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsGet_window(callback: JavaScriptGetterCallback) {
-		callback.returns(this.window?.holder)
+		callback.returns(this.window)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3559,7 +3621,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsGet_parent(callback: JavaScriptGetterCallback) {
-		callback.returns(this.parent?.holder)
+		callback.returns(this.parent)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6375,7 +6437,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsGet_zoomedView(callback: JavaScriptGetterCallback) {
-		callback.returns(this.zoomedView?.holder)
+		callback.returns(this.zoomedView)
 	}
 
 	/**

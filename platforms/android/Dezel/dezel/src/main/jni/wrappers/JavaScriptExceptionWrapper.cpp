@@ -2,11 +2,11 @@
 #include "JavaScriptExceptionWrapper.h"
 
 JavaScriptExceptionWrapperRef
-JavaScriptExceptionWrapperCreate(JNIEnv *env, jobject handler, jobject ctx)
+JavaScriptExceptionWrapperCreate(JNIEnv *env, jobject callback, jobject ctx)
 {
-	JavaScriptExceptionWrapperRef wrapper = new JavaScriptExceptionWrapper();
+	auto wrapper = new JavaScriptExceptionWrapper();
 	wrapper->env = env;
-	wrapper->ctx = env->NewGlobalRef(ctx);
-	wrapper->handler = env->NewGlobalRef(handler);
+	wrapper->ctx = JNIGlobalRef(env, ctx);
+	wrapper->callback = env->NewGlobalRef(callback);
 	return wrapper;
 }

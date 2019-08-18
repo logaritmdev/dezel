@@ -44,6 +44,15 @@ extern jmethodID StackTraceElementToString;
 	JNI_CHECK_EXCEPTION(ENV);
 
 /**
+ * Calls a static void method
+ * @macro JNI_CALL_VOID_METHOD
+ * @since 0.7.0
+ */
+#define JNI_CALL_STATIC_VOID_METHOD(ENV, CLASS, METHOD, ...) \
+	ENV->CallStaticVoidMethod(CLASS, METHOD, ##__VA_ARGS__); \
+	JNI_CHECK_EXCEPTION(ENV);
+
+/**
  * Creates a long array filled with values
  * @macro JNI_LONG_ARRAY_CREATE
  * @since 0.1.0
@@ -128,10 +137,31 @@ jfieldID JNIGetField(JNIEnv *env, jclass klass, const char *name, const char *si
 jmethodID JNIGetMethod(JNIEnv *env, jclass klass, const char *name, const char *sign);
 
 /**
+ * @function JNIGetStaticMethod
+ * @since 0.7.0
+ * @hidden
+ */
+jmethodID JNIGetStaticMethod(JNIEnv *env, jclass cls, const char *name, const char *sign);
+
+/**
 * @function JNIHandleException
 * @since 0.6.0
 * @hidden
 */
 void JNIHandleException(JNIEnv *env);
+
+/**
+* @function JNIGlobalRef
+* @since 0.7.0
+* @hidden
+*/
+jobject JNIGlobalRef(JNIEnv *env, jobject value);
+
+/**
+* @function JNIGlobalRef
+* @since 0.7.0
+* @hidden
+*/
+jclass JNIGlobalRef(JNIEnv *env, jclass value);
 
 #endif

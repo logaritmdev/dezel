@@ -5,7 +5,7 @@ package ca.logaritm.dezel.core
  * @since 0.7.0
  * @hidden
  */
-internal class JavaScriptValueForOwnWrapper(context: JavaScriptContext, handler: JavaScriptForOwnHandler) {
+internal class JavaScriptValueForOwnWrapper(context: JavaScriptContext, callback: JavaScriptForOwnHandler) {
 
 	/**
 	 * @property context
@@ -15,11 +15,11 @@ internal class JavaScriptValueForOwnWrapper(context: JavaScriptContext, handler:
 	public var context: JavaScriptContext
 
 	/**
-	 * @property handler
+	 * @property callback
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	public var handler: JavaScriptForOwnHandler
+	public var callback: JavaScriptForOwnHandler
 
 	/**
 	 * @constructor
@@ -28,7 +28,7 @@ internal class JavaScriptValueForOwnWrapper(context: JavaScriptContext, handler:
 	 */
 	init {
 		this.context = context
-		this.handler = handler
+		this.callback = callback
 	}
 
 	/**
@@ -37,6 +37,6 @@ internal class JavaScriptValueForOwnWrapper(context: JavaScriptContext, handler:
 	 * @hidden
 	 */
 	public fun execute(key: String, value: Long) {
-		this.handler(key, JavaScriptValue.create(this.context, value))
+		this.callback(key, JavaScriptValue.create(this.context, value))
 	}
 }

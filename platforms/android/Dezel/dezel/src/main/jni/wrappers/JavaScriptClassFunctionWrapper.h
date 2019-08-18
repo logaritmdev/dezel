@@ -13,7 +13,8 @@
 struct JavaScriptClassFunctionWrapper {
 	JNIEnv *env;
 	jobject ctx;
-	jmethodID handler;
+	jclass cls;
+	jmethodID callback;
 	JSObjectRef function;
 };
 

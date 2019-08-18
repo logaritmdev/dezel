@@ -3,7 +3,7 @@
 #include "JavaScriptSetter.h"
 
 jlong
-JavaScriptSetterExecute(JNIEnv *env, jobject context, jobject instance, jmethodID function, JSObjectRef object, JSValueRef callee, size_t argc, JSValueRef const *argv)
+JavaScriptSetterExecute(JNIEnv *env, jobject context, jclass cls, jobject instance, jmethodID function, JSObjectRef object, JSValueRef callee, size_t argc, JSValueRef const *argv)
 {
 	JNI_ARGS_CREATE(args);
 
@@ -17,16 +17,27 @@ JavaScriptSetterExecute(JNIEnv *env, jobject context, jobject instance, jmethodI
 		args
 	);
 
-	JNI_CALL_VOID_METHOD(
-		env,
-		instance,
-		function,
-		callback
-	);
+	if (instance) {
 
-	jlong result = env->GetLongField(callback, JavaScriptSetterCallbackResult);
-	env->DeleteLocalRef(callback);
+		JNI_CALL_VOID_METHOD(
+			env,
+			instance,
+			function,
+			callback
+		);
+
+	} else {
+
+		JNI_CALL_STATIC_VOID_METHOD(
+			env,
+			cls,
+			function,
+			callback
+		);
+
+	}
+
 	JNI_ARGS_DELETE(args);
 
-	return result;
+	return env->GetLongField(callback, JavaScriptSetterCallbackResult);
 }

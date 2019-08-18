@@ -327,7 +327,7 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 	 * @since 0.7.0
 	 */
 	open fun openResourceURL(url: Uri) {
-		this.application?.holder?.callMethod("nativeOnOpenResourceURL", arrayOf(this.context.createString(url.toString())))
+		this.application?.callMethod("nativeOnOpenResourceURL", arrayOf(this.context.createString(url.toString())))
 	}
 
 	/**
@@ -336,7 +336,7 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 	 * @since 0.7.0
 	 */
 	open fun openUniversalURL(url: Uri) {
-		this.application?.holder?.callMethod("nativeOnOpenUniversalURL", arrayOf(this.context.createString(url.toString())))
+		this.application?.callMethod("nativeOnOpenUniversalURL", arrayOf(this.context.createString(url.toString())))
 	}
 
 	//--------------------------------------------------------------------------
@@ -410,7 +410,7 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 	 * @since 0.7.0
 	 */
 	open fun onEnterBackground() {
-		this.application?.holder?.callMethod("nativeOnEnterBackground")
+		this.application?.callMethod("nativeOnEnterBackground")
 	}
 
 	/**
@@ -419,7 +419,7 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 	 * @since 0.7.0
 	 */
 	open fun onEnterForeground() {
-		this.application?.holder?.callMethod("nativeOnEnterForeground")
+		this.application?.callMethod("nativeOnEnterForeground")
 	}
 
 	//--------------------------------------------------------------------------
@@ -708,7 +708,7 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 
 		val handled = this.context.createReturnValue()
 
-		application.holder.callMethod("nativeOnBack", null, handled)
+		application.callMethod("nativeOnBack", null, handled)
 
 		if (handled.boolean == true) {
 			return
@@ -1018,7 +1018,7 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 
 		array.property(0, touch)
 
-		application.holder.callMethod(name, arrayOf(array))
+		application.callMethod(name, arrayOf(array))
 	}
 
 	/**
@@ -1041,7 +1041,7 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 				this.context.createString("cubic-bezier(0.25,0.1,0.25,1)")
 			)
 
-			application.holder.callMethod(name, args, null)
+			application.callMethod(name, args, null)
 
 		}, delay)
 	}

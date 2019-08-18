@@ -20,7 +20,7 @@ open class GraphicModule(context: JavaScriptContext): Module(context) {
 	 * @since 0.1.0
 	 */
 	override fun initialize() {
-		this.context.registerClass("dezel.graphic.JavaScriptImage", JavaScriptImage::class.java)
-		this.context.registerClass("dezel.graphic.JavaScriptCanvas", JavaScriptCanvas::class.java)
+		this.context.registerClass("dezel.graphic.Image", JavaScriptImage::class.java)
+		this.context.registerClass("dezel.graphic.Canvas", JavaScriptCanvas::class.java)
 	}
 }

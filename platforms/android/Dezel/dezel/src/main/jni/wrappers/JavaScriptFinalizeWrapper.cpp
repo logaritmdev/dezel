@@ -20,14 +20,14 @@ JavaScriptFinalizeWrapperCallback(JSContextRef context, DLValueDataRef handle)
 
 	JNI_CALL_VOID_METHOD(
 		wrapper->env,
-		wrapper->handler,
+		wrapper->callback,
 		JavaScriptFinalizeWrapperExecute,
 		callback
 	);
 
 	wrapper->env->DeleteLocalRef(callback);
 	wrapper->env->DeleteGlobalRef(wrapper->ctx);
-	wrapper->env->DeleteGlobalRef(wrapper->handler);
+	wrapper->env->DeleteGlobalRef(wrapper->callback);
 
 	DLValueDataSetAttribute(handle, kJavaScriptFinalizeWrapperKey, NULL);
 
@@ -35,12 +35,12 @@ JavaScriptFinalizeWrapperCallback(JSContextRef context, DLValueDataRef handle)
 }
 
 JavaScriptFinalizeWrapperRef
-JavaScriptFinalizeWrapperCreate(JNIEnv *env, JSContextRef context, JSObjectRef handle, jobject handler, jobject ctx)
+JavaScriptFinalizeWrapperCreate(JNIEnv *env, JSContextRef context, JSObjectRef handle, jobject callback, jobject ctx)
 {
-	JavaScriptFinalizeWrapperRef wrapper = new JavaScriptFinalizeWrapper();
+	auto wrapper = new JavaScriptFinalizeWrapper();
 	wrapper->env = env;
-	wrapper->ctx = env->NewGlobalRef(ctx);
-	wrapper->handler = env->NewGlobalRef(handler);
+	wrapper->ctx = JNIGlobalRef(env, ctx);
+	wrapper->callback = env->NewGlobalRef(callback);
 
 	DLValueSetAttribute(context, handle, kJavaScriptFinalizeWrapperKey, wrapper);
 	DLValueSetFinalizeHandler(context, handle, &JavaScriptFinalizeWrapperCallback);

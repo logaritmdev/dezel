@@ -112,17 +112,6 @@ open class JavaScriptContext {
 		this.global = JavaScriptValue.create(this, JavaScriptContextExternal.getGlobalObject(this.handle))
 		this.global.defineProperty("global", value = this.global, getter = null, setter = null, writable = false, enumerable = false, configurable = false)
 		this.global.defineProperty("window", value = this.global, getter = null, setter = null, writable = false, enumerable = false, configurable = false)
-
-		val console = this.global.property("console")
-		if (console.isObject) {
-			console.property("log", this.createFunction { callback ->
-				val strings = mutableListOf<String>()
-				for (i in 0 until callback.arguments ) {
-					strings.add(callback.argument(i).string)
-				}
-				Log.e("DEZEL", strings.joinToString(" "))
-			})
-		}
 	}
 
 	/**

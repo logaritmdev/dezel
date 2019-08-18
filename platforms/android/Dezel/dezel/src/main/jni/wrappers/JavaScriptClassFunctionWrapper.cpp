@@ -5,54 +5,54 @@
 #include "JavaScriptFunction.h"
 #include "JavaScriptClassFunctionWrapper.h"
 
+static jmethodID
+JavaScriptClassFunctionWrapperGetCallback(JNIEnv *env, jclass cls, const char *fqmn)
+{
+	return JNIGetMethod(env, cls, fqmn, "(Lca/logaritm/dezel/core/JavaScriptFunctionCallback;)V");
+}
+
 static JSValueRef
 JavaScriptClassFunctionWrapperCallback(JSContextRef context, JSObjectRef object, JSObjectRef callee, size_t argc, JSValueRef const *argv)
 {
-	JavaScriptClassFunctionWrapperRef wrapper = (JavaScriptClassFunctionWrapperRef) DLValueGetAssociatedObject(context, callee);
-	if (wrapper == NULL) {
-		return NULL;
-	}
+	auto wrapper = reinterpret_cast<JavaScriptClassFunctionWrapperRef>(DLValueGetAssociatedObject(context, callee));
 
-	jobject instance = (jobject) DLValueGetAssociatedObject(context, object);
-	if (instance == NULL) {
-		return NULL;
-	}
-
-	jlong result = JavaScriptFunctionExecute(
+	auto result = JavaScriptFunctionExecute(
 		wrapper->env,
 		wrapper->ctx,
-		instance,
-		wrapper->handler,
+		wrapper->cls,
+		reinterpret_cast<jobject>(DLValueGetAssociatedObject(context, object)),
+		wrapper->callback,
 		object,
 		callee,
 		argc,
 		argv
 	);
 
-	return result ? (JSValueRef) result : NULL;
+	return result ? reinterpret_cast<JSValueRef>(result) : NULL;
 }
 
 static void
 JavaScriptClassFunctionWrapperFinalize(JSContextRef context, DLValueDataRef handle)
 {
-	JavaScriptClassFunctionWrapperRef wrapper = (JavaScriptClassFunctionWrapperRef) DLValueDataGetAssociatedObject(handle);
-	if (wrapper == NULL) {
-		return;
-	}
+	auto wrapper = reinterpret_cast<JavaScriptClassFunctionWrapperRef>(DLValueDataGetAssociatedObject(handle));
 
-	wrapper->env->DeleteGlobalRef(wrapper->ctx);
+	if (wrapper) {
+		wrapper->env->DeleteGlobalRef(wrapper->ctx);
+		wrapper->env->DeleteGlobalRef(wrapper->cls);
+	}
 }
 
 JavaScriptClassFunctionWrapperRef
 JavaScriptClassFunctionWrapperCreate(JNIEnv *env, JSContextRef context, const char *name, const char *fqmn, jclass cls, jobject ctx)
 {
-	JSObjectRef function = DLValueCreateFunction(context, &JavaScriptClassFunctionWrapperCallback, name);
+	auto function = DLValueCreateFunction(context, &JavaScriptClassFunctionWrapperCallback, name);
 
-	JavaScriptClassFunctionWrapperRef wrapper = new JavaScriptClassFunctionWrapper();
+	auto wrapper = new JavaScriptClassFunctionWrapper();
 	wrapper->env = env;
-	wrapper->ctx = env->NewGlobalRef(ctx);
+	wrapper->cls = JNIGlobalRef(env, cls);
+	wrapper->ctx = JNIGlobalRef(env, ctx);
+	wrapper->callback = JavaScriptClassFunctionWrapperGetCallback(env, cls, fqmn);
 	wrapper->function = function;
-	wrapper->handler = JNIGetMethod(env, cls, fqmn, "(Lca/logaritm/dezel/core/JavaScriptFunctionCallback;)V");
 
 	DLValueSetFinalizeHandler(context, function, &JavaScriptClassFunctionWrapperFinalize);
 	DLValueSetAssociatedObject(context, function, wrapper);

@@ -19,7 +19,7 @@ JavaScriptValueForEachCallback(JSContextRef context, JSValueRef value, int index
 
 	JNI_CALL_VOID_METHOD(
 		wrapper->env,
-		wrapper->handler,
+		wrapper->callback,
 		JavaScriptValueForEachWrapperExecute,
 		reinterpret_cast<jint>(index),
 		reinterpret_cast<jlong>(DLValueGetPropertyAtIndex(context, (JSObjectRef) value, (unsigned int) index))
@@ -36,7 +36,7 @@ JavaScriptValueForOwnCallback(JSContextRef context, JSValueRef value, const char
 
 	JNI_CALL_VOID_METHOD(
 		wrapper->env,
-		wrapper->handler,
+		wrapper->callback,
 		JavaScriptValueForOwnWrapperExecute,
 		wrapper->env->NewStringUTF(name),
 		reinterpret_cast<jlong>(DLValueGetProperty(context, (JSObjectRef) value, name))

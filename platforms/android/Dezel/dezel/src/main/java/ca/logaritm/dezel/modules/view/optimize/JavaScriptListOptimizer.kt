@@ -411,7 +411,7 @@ open class JavaScriptListOptimizer(context: JavaScriptContext) : JavaScriptViewO
 		val type = this.context.createReturnValue()
 		val view = this.context.createReturnValue()
 
-		this.holder.callMethod("nativeDefineItem", arrayOf(this.context.createNumber(index)), type)
+		this.callMethod("nativeDefineItem", arrayOf(this.context.createNumber(index)), type)
 
 		if (type.isNull) {
 			return null
@@ -779,7 +779,7 @@ open class JavaScriptListOptimizer(context: JavaScriptContext) : JavaScriptViewO
 			 * on the first time the view is inserted.
 			 */
 
-			this.holder.callMethod("nativeOnInsertItem", arrayOf(this.context.createNumber(index), item.holder))
+			this.callMethod("nativeOnInsertItem", arrayOf(this.context.createNumber(index), item))
 		}
 
 		/*
@@ -787,7 +787,7 @@ open class JavaScriptListOptimizer(context: JavaScriptContext) : JavaScriptViewO
 		 * possibly invalidating the bounds and content of the item.
 		 */
 
-		this.holder.callMethod("nativeOnReuseItem", arrayOf(this.context.createNumber(index), item.holder))
+		this.callMethod("nativeOnReuseItem", arrayOf(this.context.createNumber(index), item))
 	}
 
 	/**
@@ -813,7 +813,7 @@ open class JavaScriptListOptimizer(context: JavaScriptContext) : JavaScriptViewO
 		 * the view is cached, it still considered as being in the view.
 		 */
 
-		this.holder.callMethod("nativeOnCacheItem", arrayOf(this.context.createNumber(index), item.holder))
+		this.callMethod("nativeOnCacheItem", arrayOf(this.context.createNumber(index), item))
 
 		this.cacheItem(index)
 		this.removeView(index, notify = false)
@@ -1542,11 +1542,11 @@ open class JavaScriptListOptimizer(context: JavaScriptContext) : JavaScriptViewO
 		val removes = this.context.createEmptyArray()
 
 		for ((index, data) in insert.withIndex()) {
-			inserts.property(index, data.view.holder)
+			inserts.property(index, data.view)
 		}
 
 		for ((index, data) in remove.withIndex()) {
-			removes.property(index, data.view.holder)
+			removes.property(index, data.view)
 		}
 
 		for (data in remove) {

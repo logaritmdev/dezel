@@ -16,6 +16,6 @@ open class DeviceModule(context: JavaScriptContext) : Module(context) {
 	 * @since 0.4.0
 	 */
 	override fun initialize() {
-		this.context.registerClass("dezel.device.JavaScriptDevice", JavaScriptDevice::class.java)
+		this.context.registerClass("dezel.device.Device", JavaScriptDevice::class.java)
 	}
 }

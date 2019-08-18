@@ -80,7 +80,7 @@ open class JavaScriptWebView(context: JavaScriptContext) : JavaScriptView(contex
 	 */
 	override fun onBeforeLoad(webView: WebView, url: String): Boolean {
 		val result = this.context.createReturnValue()
-		this.holder.callMethod("nativeOnBeforeLoad", arrayOf(this.context.createString(url)), result)
+		this.callMethod("nativeOnBeforeLoad", arrayOf(this.context.createString(url)), result)
 		return result.boolean
 	}
 
@@ -90,7 +90,7 @@ open class JavaScriptWebView(context: JavaScriptContext) : JavaScriptView(contex
 	 * @hidden
 	 */
 	override fun onLoad(webView: WebView) {
-		this.holder.callMethod("nativeOnLoad")
+		this.callMethod("nativeOnLoad")
 	}
 
 	/**

@@ -5,35 +5,35 @@ import java.lang.reflect.Method
 import kotlin.reflect.KClass
 
 /**
- * The type alias for function handler.
+ * The type alias for function callback.
  * @alias JavaScriptFinalizeHandler
  * @since 0.1.0
  */
 public typealias JavaScriptFinalizeHandler = (JavaScriptFinalizeCallback) -> Unit
 
 /**
- * The type alias for function handler.
+ * The type alias for function callback.
  * @alias JavaScriptFunctionCallback
  * @since 0.1.0
  */
 public typealias JavaScriptFunctionHandler = (JavaScriptFunctionCallback) -> Unit
 
 /**
- * The type alias for property getter handler.
+ * The type alias for property getter callback.
  * @alias JavaScriptGetterHandler
  * @since 0.1.0
  */
 public typealias JavaScriptGetterHandler = (JavaScriptGetterCallback) -> Unit
 
 /**
- * The type alias for property setter handler.
+ * The type alias for property setter callback.
  * @alias JavaScriptSetterHandler
  * @since 0.1.0
  */
 public typealias JavaScriptSetterHandler = (JavaScriptSetterCallback) -> Unit
 
 /**
- * The type alias for the exception handler.
+ * The type alias for the exception callback.
  * @alias JavaScriptExceptionHandler
  * @since 0.1.0
  */
@@ -47,21 +47,21 @@ public typealias JavaScriptExceptionHandler = (JavaScriptValue) -> Unit
 public typealias JavaScriptArguments = Array<JavaScriptValue?>
 
 /**
- * The object for each handler.
+ * The object for each callback.
  * @alias JavaScriptForOwnHandler
  * @since 0.7.0
  */
 public typealias JavaScriptForOwnHandler = (String, JavaScriptValue) -> Unit
 
 /**
- * The array for each handler.
+ * The array for each callback.
  * @alias JavaScriptForEachHandler
  * @since 0.7.0
  */
 public typealias JavaScriptForEachHandler = (Int, JavaScriptValue) -> Unit
 
 /**
- * The builder for each handler alias.
+ * The builder for each callback alias.
  * @alias JavaScriptBuilderForEachHandler
  * @since 0.2.0
  */
@@ -73,7 +73,16 @@ public typealias JavaScriptBuilderForEachHandler = (String, JavaScriptBuilder.Ty
  * @hidden
  */
 internal fun toHandle(value: JavaScriptValue?, context: JavaScriptContext): Long {
-    return value?.handle ?: context.jsnull.handle
+
+    if (value == null) {
+        return context.jsnull.handle
+    }
+
+    if (value is JavaScriptClass) {
+        return toHandle(value.instance, context)
+    }
+
+    return value.handle
 }
 
 /**

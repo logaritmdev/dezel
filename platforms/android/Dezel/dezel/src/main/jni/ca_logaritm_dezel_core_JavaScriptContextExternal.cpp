@@ -26,7 +26,7 @@ ContextExceptionCallback(JSContextRef context, JSValueRef error) {
 
 	JNI_CALL_VOID_METHOD(
 		wrapper->env,
-		wrapper->handler,
+		wrapper->callback,
 		JavaScriptExceptionWrapperExecute,
 		exception
 	);

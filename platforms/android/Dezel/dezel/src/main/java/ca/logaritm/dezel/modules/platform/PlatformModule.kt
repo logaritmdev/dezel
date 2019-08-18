@@ -16,6 +16,6 @@ public class PlatformModule(context: JavaScriptContext) : Module(context) {
 	 * @since 0.1.0
 	 */
 	public override fun initialize() {
-		this.context.registerClass("dezel.platform.JavaScriptPlatform", JavaScriptPlatform::class.java)
+		this.context.registerClass("dezel.platform.Platform", JavaScriptPlatform::class.java)
 	}
 }

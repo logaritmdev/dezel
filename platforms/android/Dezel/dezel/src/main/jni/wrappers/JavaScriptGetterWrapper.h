@@ -13,7 +13,7 @@
 struct JavaScriptGetterWrapper {
 	JNIEnv* env;
 	jobject ctx;
-	jobject handler;
+	jobject callback;
 	JSObjectRef function;
 };
 
@@ -27,6 +27,6 @@ typedef struct JavaScriptGetterWrapper* JavaScriptGetterWrapperRef;
  * @function JavaScriptGetterWrapperCreate
  * @since 0.1.0
  */
-JavaScriptGetterWrapperRef JavaScriptGetterWrapperCreate(JNIEnv *env, JSContextRef context, jobject handler, const char *name, jobject ctx);
+JavaScriptGetterWrapperRef JavaScriptGetterWrapperCreate(JNIEnv *env, JSContextRef context, jobject callback, const char *name, jobject ctx);
 
 #endif
