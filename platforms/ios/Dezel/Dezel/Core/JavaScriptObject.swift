@@ -58,8 +58,8 @@ open class JavaScriptObject: JavaScriptValue {
 	 * @method finalize
 	 * @since 0.4.0
 	 */
-	public func finalize(_ handler: @escaping JavaScriptFinalizeHandler) {
-		_ = JavaScriptFinalizeWrapper(context: self.context, handle: self.handle, handler: handler)
+	public func finalize(_ callback: @escaping JavaScriptFinalizeHandler) {
+		_ = JavaScriptFinalizeWrapper(context: self.context, handle: self.handle, callback: callback)
 	}
 
 	//--------------------------------------------------------------------------
@@ -81,8 +81,8 @@ open class JavaScriptObject: JavaScriptValue {
 			 * longer usable.
 			 */
 
-			if let handler = DLValueDataGetAssociatedObject(callback.handle) {
-				 Unmanaged<JavaScriptValue>.fromOpaque(handler).takeUnretainedValue().dispose()
+			if let this = DLValueDataGetAssociatedObject(callback.handle) {
+				 Unmanaged<JavaScriptValue>.fromOpaque(this).takeUnretainedValue().dispose()
 			}
 		}
 	}

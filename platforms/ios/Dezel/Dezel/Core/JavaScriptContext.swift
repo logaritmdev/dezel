@@ -330,8 +330,8 @@ open class JavaScriptContext: NSObject {
 	 * @method createFunction
 	 * @since 0.1.0
 	 */
-	open func createFunction(_ handler: @escaping JavaScriptFunctionHandler) -> JavaScriptValue {
-		return JavaScriptValue.createFunction(self, handler: handler)
+	open func createFunction(_ callback: @escaping JavaScriptFunctionHandler) -> JavaScriptValue {
+		return JavaScriptValue.createFunction(self, callback: callback)
 	}
 
 	/**
@@ -339,8 +339,8 @@ open class JavaScriptContext: NSObject {
 	 * @method createFunction
 	 * @since 0.1.0
 	 */
-	open func createFunction(_ name: String, _ handler: @escaping JavaScriptFunctionHandler) -> JavaScriptValue {
-		return JavaScriptValue.createFunction(self, handler: handler, name: name)
+	open func createFunction(_ name: String, _ callback: @escaping JavaScriptFunctionHandler) -> JavaScriptValue {
+		return JavaScriptValue.createFunction(self, callback: callback, name: name)
 	}
 
 	/**
@@ -413,9 +413,9 @@ open class JavaScriptContext: NSObject {
 	 * @method handleError
 	 * @since 0.6.0
 	 */
-	open func handleError(handler: @escaping JavaScriptExceptionHandler) {
+	open func handleError(callback: @escaping JavaScriptExceptionHandler) {
 		DLContextSetExceptionHandler(self.handle, JavaScriptContextExceptionCallback)
-		DLContextSetAttribute(self.handle, kExceptionWrapperKey, Unmanaged.passRetained(JavaScriptExceptionWrapper(context: self, handler: handler)).toOpaque())
+		DLContextSetAttribute(self.handle, kExceptionWrapperKey, Unmanaged.passRetained(JavaScriptExceptionWrapper(context: self, callback: callback)).toOpaque())
 	}
 
 	/**
@@ -449,5 +449,5 @@ private let JavaScriptContextExceptionCallback: @convention(c) (JSContextRef?, J
 		DLContextGetAttribute(context, kExceptionWrapperKey)
 	).takeUnretainedValue()
 
-	wrapper.handler(JavaScriptValue.create(wrapper.context, handle: error))
+	wrapper.callback(JavaScriptValue.create(wrapper.context, handle: error))
 }

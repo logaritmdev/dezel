@@ -241,8 +241,8 @@ open class JavaScriptClass: JavaScriptObject {
 	 * @method forEach
 	 * @since 0.7.0
 	 */
-	open override func forEach(_ handler: @escaping JavaScriptForEachHandler) {
-		self.instance?.forEach(handler)
+	open override func forEach(_ callback: @escaping JavaScriptForEachHandler) {
+		self.instance?.forEach(callback)
 	}
 
 	/**
@@ -250,8 +250,8 @@ open class JavaScriptClass: JavaScriptObject {
 	 * @method forOwn
 	 * @since 0.7.0
 	 */
-	open override func forOwn(_ handler: @escaping JavaScriptForOwnHandler) {
-		self.instance?.forOwn(handler)
+	open override func forOwn(_ callback: @escaping JavaScriptForOwnHandler) {
+		self.instance?.forOwn(callback)
 	}
 
 	/**

@@ -77,8 +77,8 @@ open class JavaScriptValue : NSObject {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	internal class func createFunction(_ context: JavaScriptContext, handler: @escaping JavaScriptFunctionHandler) -> JavaScriptValue {
-		return JavaScriptValue.create(context, handle: JavaScriptFunctionWrapper(context: context, handler: handler).function)
+	internal class func createFunction(_ context: JavaScriptContext, callback: @escaping JavaScriptFunctionHandler) -> JavaScriptValue {
+		return JavaScriptValue.create(context, handle: JavaScriptFunctionWrapper(context: context, callback: callback).function)
 	}
 
 	/**
@@ -86,8 +86,8 @@ open class JavaScriptValue : NSObject {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	internal class func createFunction(_ context: JavaScriptContext, handler: @escaping JavaScriptFunctionHandler, name: String) -> JavaScriptValue {
-		return JavaScriptValue.create(context, handle: JavaScriptFunctionWrapper(context: context, handler: handler, name: name).function)
+	internal class func createFunction(_ context: JavaScriptContext, callback: @escaping JavaScriptFunctionHandler, name: String) -> JavaScriptValue {
+		return JavaScriptValue.create(context, handle: JavaScriptFunctionWrapper(context: context, callback: callback, name: name).function)
 	}
 
 	/**
@@ -421,8 +421,8 @@ open class JavaScriptValue : NSObject {
 		var get: JSObjectRef? = nil
 		var set: JSObjectRef? = nil
 
-		if let handler = getter { get = JavaScriptGetterWrapper(context: context, handler: handler).function }
-		if let handler = setter { set = JavaScriptSetterWrapper(context: context, handler: handler).function }
+		if let callback = getter { get = JavaScriptGetterWrapper(context: context, callback: callback).function }
+		if let callback = setter { set = JavaScriptSetterWrapper(context: context, callback: callback).function }
 
 		DLValueDefineProperty(self.context.handle, self.handle, property, get, set, nil, writable, enumerable, configurable)
 	}
@@ -585,8 +585,8 @@ open class JavaScriptValue : NSObject {
 	 * @method forEach
 	 * @since 0.7.0
 	 */
-	open func forEach(_ handler: @escaping JavaScriptForEachHandler) {
-		let wrapper = JavaScriptValueForEachWrapper(context: self.context, handler: handler)
+	open func forEach(_ callback: @escaping JavaScriptForEachHandler) {
+		let wrapper = JavaScriptValueForEachWrapper(context: self.context, callback: callback)
 		DLValueForEach(self.context.handle, self.handle, JavaScriptValueForEachCallback,
 			toUnretainedOpaque(wrapper)
 		)
@@ -597,8 +597,8 @@ open class JavaScriptValue : NSObject {
 	 * @method forOwn
 	 * @since 0.7.0
 	 */
-	open func forOwn(_ handler: @escaping JavaScriptForOwnHandler) {
-		let wrapper = JavaScriptValueForOwnWrapper(context: self.context, handler: handler)
+	open func forOwn(_ callback: @escaping JavaScriptForOwnHandler) {
+		let wrapper = JavaScriptValueForOwnWrapper(context: self.context, callback: callback)
 		DLValueForOwn(self.context.handle, self.handle, JavaScriptValueForOwnCallback,
 			toUnretainedOpaque(wrapper)
 		)
