@@ -3,7 +3,6 @@ package ca.logaritm.dezel.modules.graphic
 import android.graphics.Bitmap
 import ca.logaritm.dezel.application.application
 import ca.logaritm.dezel.core.*
-import ca.logaritm.dezel.extension.Delegates
 
 /**
  * An image image manager.
@@ -21,8 +20,10 @@ open class JavaScriptImage(context: JavaScriptContext) : JavaScriptClass(context
 	 * @property source
 	 * @since 0.7.0
 	 */
-	open var source: Property by Delegates.OnSet(Property()) { value ->
-		this.load(value.string)
+	open val source: JavaScriptProperty by lazy {
+		JavaScriptProperty(context) { value ->
+			this.load(value.string)
+		}
 	}
 
 	/**
@@ -30,14 +31,18 @@ open class JavaScriptImage(context: JavaScriptContext) : JavaScriptClass(context
 	 * @property loading
 	 * @since 0.7.0
 	 */
-	open var loading: Property = Property(false)
+	open val loading: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, false)
+	}
 
 	/**
 	 * Whether the image is completely loaded.
 	 * @property complete
 	 * @since 0.7.0
 	 */
-	open var complete: Property = Property(false)
+	open val complete: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, false)
+	}
 
 	/**
 	 * The image's image.
@@ -65,8 +70,8 @@ open class JavaScriptImage(context: JavaScriptContext) : JavaScriptClass(context
 	open fun load(source: String) {
 
 		this.data = null
-		this.loading = Property(false)
-		this.complete = Property(false)
+		this.loading.set(false)
+		this.complete.set(false)
 
 		this.protect()
 
@@ -85,15 +90,15 @@ open class JavaScriptImage(context: JavaScriptContext) : JavaScriptClass(context
 
 		if (image != null) {
 			this.data = image
-			this.loading = Property(false)
-			this.complete = Property(true)
+			this.loading.set(false)
+			this.complete.set(true)
 			this.callMethod("nativeOnLoad")
 			return
 		}
 
 		this.data = null
-		this.loading = Property(false)
-		this.complete = Property(false)
+		this.loading.set(false)
+		this.complete.set(false)
 		this.callMethod("nativeOnError")
 	}
 
@@ -166,6 +171,6 @@ open class JavaScriptImage(context: JavaScriptContext) : JavaScriptClass(context
 	 */
 	@Suppress("unused")
 	open fun jsSet_source(callback: JavaScriptSetterCallback) {
-		this.source = Property(callback.value)
+		this.source.set(callback.value, this)
 	}
 }

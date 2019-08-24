@@ -61,6 +61,13 @@ public typealias JavaScriptForOwnHandler = (String, JavaScriptValue) -> Unit
 public typealias JavaScriptForEachHandler = (Int, JavaScriptValue) -> Unit
 
 /**
+ * The array for each callback.
+ * @alias JavaScriptPropertyChangeHandler
+ * @since 0.7.0
+ */
+public typealias JavaScriptPropertyChangeHandler = (value: JavaScriptProperty) -> Unit
+
+/**
  * The builder for each callback alias.
  * @alias JavaScriptBuilderForEachHandler
  * @since 0.2.0
@@ -83,6 +90,20 @@ internal fun toHandle(value: JavaScriptValue?, context: JavaScriptContext): Long
     }
 
     return value.handle
+}
+
+/**
+ * @function toHandle
+ * @since 0.7.0
+ * @hidden
+ */
+internal fun toHandle(property: JavaScriptProperty?, context: JavaScriptContext): Long {
+
+    if (property == null) {
+        return context.jsnull.handle
+    }
+
+    return toHandle(property.value, context)
 }
 
 /**

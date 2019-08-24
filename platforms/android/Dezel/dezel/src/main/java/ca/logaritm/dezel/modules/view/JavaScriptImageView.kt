@@ -29,15 +29,18 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 	 * @property source
 	 * @since 0.7.0
 	 */
-	open var source: Property by Delegates.OnSet(Property()) { value ->
+	open val source: JavaScriptProperty by lazy {
 
-		this.imageLoader.load(value) { image ->
+		JavaScriptProperty(context) { value ->
 
-			this.imageData = image
+			this.imageLoader.load(value) { image ->
 
-			if (this.layoutNode.wrapsContentWidth ||
-				this.layoutNode.wrapsContentHeight) {
-				this.layoutNode.invalidateSize()
+				this.imageData = image
+
+				if (this.layoutNode.wrapsContentWidth ||
+					this.layoutNode.wrapsContentHeight) {
+					this.layoutNode.invalidateSize()
+				}
 			}
 		}
 	}
@@ -47,8 +50,10 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 	 * @property imageFit
 	 * @since 0.7.0
 	 */
-	open var imageFit: Property by Delegates.OnSet(Property("contain")) {
-		this.invalidateImage()
+	open val imageFit: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, "contain") {
+			this.invalidateImage()
+		}
 	}
 
 	/**
@@ -56,8 +61,10 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 	 * @property imageAnchorTop
 	 * @since 0.7.0
 	 */
-	open var imageAnchorTop: Property by Delegates.OnSet(Property(0.5)) {
-		this.invalidateImage()
+	open val imageAnchorTop: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 0.5) {
+			this.invalidateImage()
+		}
 	}
 
 	/**
@@ -65,8 +72,10 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 	 * @property imageAnchorLeft
 	 * @since 0.7.0
 	 */
-	open var imageAnchorLeft: Property by Delegates.OnSet(Property(0.5)) {
-		this.invalidateImage()
+	open val imageAnchorLeft: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 0.5) {
+			this.invalidateImage()
+		}
 	}
 
 	/**
@@ -74,8 +83,10 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 	 * @property imageTop
 	 * @since 0.7.0
 	 */
-	open var imageTop: Property by Delegates.OnSet(Property(50.0, PropertyUnit.PC)) {
-		this.invalidateImage()
+	open val imageTop: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 50.0, JavaScriptPropertyUnit.PC) {
+			this.invalidateImage()
+		}
 	}
 
 	/**
@@ -83,8 +94,10 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 	 * @property imageLeft
 	 * @since 0.7.0
 	 */
-	open var imageLeft: Property by Delegates.OnSet(Property(50.0, PropertyUnit.PC)) {
-		this.invalidateImage()
+	open val imageLeft: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 50.0, JavaScriptPropertyUnit.PC) {
+			this.invalidateImage()
+		}
 	}
 
 	/**
@@ -92,8 +105,10 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 	 * @property imageWidth
 	 * @since 0.7.0
 	 */
-	open var imageWidth: Property by Delegates.OnSet(Property("auto")) {
-		this.invalidateImage()
+	open val imageWidth: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, "auto") {
+			this.invalidateImage()
+		}
 	}
 
 	/**
@@ -101,8 +116,10 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 	 * @property imageHeight
 	 * @since 0.7.0
 	 */
-	open var imageHeight: Property by Delegates.OnSet(Property("auto")) {
-		this.invalidageImage()
+	open val imageHeight: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, "auto") {
+			this.invalidageImage()
+		}
 	}
 
 	/**
@@ -110,8 +127,10 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 	 * @property imageFilter
 	 * @since 0.7.0
 	 */
-	open var imageFilter: Property by Delegates.OnSet(Property("none")) { value ->
-		this.view.imageFilter = this.getImageFilter(value.string)
+	open val imageFilter: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, "none") { value ->
+			this.view.imageFilter = this.getImageFilter(value.string)
+		}
 	}
 
 	/**
@@ -119,8 +138,10 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 	 * @property imageTint
 	 * @since 0.7.0
 	 */
-	open var imageTint: Property by Delegates.OnSet(Property("transparent")) { value ->
-		this.view.imageTint = Color.parse(value.string)
+	open val imageTint: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, "transparent") { value ->
+			this.view.imageTint = Color.parse(value.string)
+		}
 	}
 
 	/**
@@ -213,7 +234,7 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 		var imageT = 0.0
 		var imageL = 0.0
 
-		if (this.imageWidth.type == PropertyType.STRING &&
+		if (this.imageWidth.type == JavaScriptPropertyType.STRING &&
 			this.imageWidth.string == "auto") {
 
 			autoW = true
@@ -221,18 +242,18 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 		} else {
 
 			when (this.imageWidth.unit) {
-				PropertyUnit.PC -> imageW = this.imageWidth.number / 100 * this.resolvedWidth
-				PropertyUnit.VW -> imageW = this.imageWidth.number / 100 * this.layoutNode.viewportWidth
-				PropertyUnit.VH -> imageW = this.imageWidth.number / 100 * this.layoutNode.viewportHeight
-				PropertyUnit.PW -> imageW = this.imageWidth.number / 100 * this.resolvedInnerWidth
-				PropertyUnit.PH -> imageW = this.imageWidth.number / 100 * this.resolvedInnerHeight
-				PropertyUnit.CW -> imageW = this.imageWidth.number / 100 * this.resolvedContentWidth
-				PropertyUnit.CH -> imageW = this.imageWidth.number / 100 * this.resolvedContentHeight
-				else            -> imageW = this.imageWidth.number
+				JavaScriptPropertyUnit.PC -> imageW = this.imageWidth.number / 100 * this.resolvedWidth
+				JavaScriptPropertyUnit.VW -> imageW = this.imageWidth.number / 100 * this.layoutNode.viewportWidth
+				JavaScriptPropertyUnit.VH -> imageW = this.imageWidth.number / 100 * this.layoutNode.viewportHeight
+				JavaScriptPropertyUnit.PW -> imageW = this.imageWidth.number / 100 * this.resolvedInnerWidth
+				JavaScriptPropertyUnit.PH -> imageW = this.imageWidth.number / 100 * this.resolvedInnerHeight
+				JavaScriptPropertyUnit.CW -> imageW = this.imageWidth.number / 100 * this.resolvedContentWidth
+				JavaScriptPropertyUnit.CH -> imageW = this.imageWidth.number / 100 * this.resolvedContentHeight
+				else                      -> imageW = this.imageWidth.number
 			}
 		}
 
-		if (this.imageHeight.type == PropertyType.STRING &&
+		if (this.imageHeight.type == JavaScriptPropertyType.STRING &&
 			this.imageHeight.string == "auto") {
 
 			autoH = true
@@ -240,37 +261,37 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 		} else {
 
 			when (this.imageHeight.unit) {
-				PropertyUnit.PC -> imageH = this.imageHeight.number / 100 * this.resolvedHeight
-				PropertyUnit.VW -> imageH = this.imageHeight.number / 100 * this.layoutNode.viewportWidth
-				PropertyUnit.VH -> imageH = this.imageHeight.number / 100 * this.layoutNode.viewportHeight
-				PropertyUnit.PW -> imageH = this.imageHeight.number / 100 * this.resolvedInnerWidth
-				PropertyUnit.PH -> imageH = this.imageHeight.number / 100 * this.resolvedInnerHeight
-				PropertyUnit.CW -> imageH = this.imageHeight.number / 100 * this.resolvedContentWidth
-				PropertyUnit.CH -> imageH = this.imageHeight.number / 100 * this.resolvedContentHeight
-				else            -> imageH = this.imageHeight.number
+				JavaScriptPropertyUnit.PC -> imageH = this.imageHeight.number / 100 * this.resolvedHeight
+				JavaScriptPropertyUnit.VW -> imageH = this.imageHeight.number / 100 * this.layoutNode.viewportWidth
+				JavaScriptPropertyUnit.VH -> imageH = this.imageHeight.number / 100 * this.layoutNode.viewportHeight
+				JavaScriptPropertyUnit.PW -> imageH = this.imageHeight.number / 100 * this.resolvedInnerWidth
+				JavaScriptPropertyUnit.PH -> imageH = this.imageHeight.number / 100 * this.resolvedInnerHeight
+				JavaScriptPropertyUnit.CW -> imageH = this.imageHeight.number / 100 * this.resolvedContentWidth
+				JavaScriptPropertyUnit.CH -> imageH = this.imageHeight.number / 100 * this.resolvedContentHeight
+				else                      -> imageH = this.imageHeight.number
 			}
 		}
 
 		when (this.imageTop.unit) {
-			PropertyUnit.PC -> imageT = this.imageTop.number / 100 * this.resolvedInnerHeight
-			PropertyUnit.VW -> imageT = this.imageTop.number / 100 * this.layoutNode.viewportWidth
-			PropertyUnit.VH -> imageT = this.imageTop.number / 100 * this.layoutNode.viewportHeight
-			PropertyUnit.PW -> imageT = this.imageTop.number / 100 * this.resolvedInnerWidth
-			PropertyUnit.PH -> imageT = this.imageTop.number / 100 * this.resolvedInnerHeight
-			PropertyUnit.CW -> imageT = this.imageTop.number / 100 * this.resolvedContentWidth
-			PropertyUnit.CH -> imageT = this.imageTop.number / 100 * this.resolvedContentHeight
-			else            -> imageT = this.imageTop.number
+			JavaScriptPropertyUnit.PC -> imageT = this.imageTop.number / 100 * this.resolvedInnerHeight
+			JavaScriptPropertyUnit.VW -> imageT = this.imageTop.number / 100 * this.layoutNode.viewportWidth
+			JavaScriptPropertyUnit.VH -> imageT = this.imageTop.number / 100 * this.layoutNode.viewportHeight
+			JavaScriptPropertyUnit.PW -> imageT = this.imageTop.number / 100 * this.resolvedInnerWidth
+			JavaScriptPropertyUnit.PH -> imageT = this.imageTop.number / 100 * this.resolvedInnerHeight
+			JavaScriptPropertyUnit.CW -> imageT = this.imageTop.number / 100 * this.resolvedContentWidth
+			JavaScriptPropertyUnit.CH -> imageT = this.imageTop.number / 100 * this.resolvedContentHeight
+			else                      -> imageT = this.imageTop.number
 		}
 
 		when (this.imageLeft.unit) {
-			PropertyUnit.PC -> imageL = this.imageLeft.number / 100 * this.resolvedInnerWidth
-			PropertyUnit.VW -> imageL = this.imageLeft.number / 100 * this.layoutNode.viewportWidth
-			PropertyUnit.VH -> imageL = this.imageLeft.number / 100 * this.layoutNode.viewportHeight
-			PropertyUnit.PW -> imageL = this.imageLeft.number / 100 * this.resolvedInnerWidth
-			PropertyUnit.PH -> imageL = this.imageLeft.number / 100 * this.resolvedInnerHeight
-			PropertyUnit.CW -> imageL = this.imageLeft.number / 100 * this.resolvedContentWidth
-			PropertyUnit.CH -> imageL = this.imageLeft.number / 100 * this.resolvedContentHeight
-			else            -> imageL = this.imageLeft.number
+			JavaScriptPropertyUnit.PC -> imageL = this.imageLeft.number / 100 * this.resolvedInnerWidth
+			JavaScriptPropertyUnit.VW -> imageL = this.imageLeft.number / 100 * this.layoutNode.viewportWidth
+			JavaScriptPropertyUnit.VH -> imageL = this.imageLeft.number / 100 * this.layoutNode.viewportHeight
+			JavaScriptPropertyUnit.PW -> imageL = this.imageLeft.number / 100 * this.resolvedInnerWidth
+			JavaScriptPropertyUnit.PH -> imageL = this.imageLeft.number / 100 * this.resolvedInnerHeight
+			JavaScriptPropertyUnit.CW -> imageL = this.imageLeft.number / 100 * this.resolvedContentWidth
+			JavaScriptPropertyUnit.CH -> imageL = this.imageLeft.number / 100 * this.resolvedContentHeight
+			else                      -> imageL = this.imageLeft.number
 		}
 
 		val naturalImageW = image.width.toDouble()
@@ -285,18 +306,18 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 
 			when (this.imageFit.string) {
 
-				"none" -> {
+				"none"    -> {
 					imageW = naturalImageW
 					imageH = naturalImageH
 				}
 
-				"cover" -> {
+				"cover"   -> {
 					val scale = Math.max(scaleX, scaleY)
 					imageW = naturalImageW * scale
 					imageH = naturalImageH * scale
 				}
 
-				"contain"  -> {
+				"contain" -> {
 					val scale = Math.min(scaleX, scaleY)
 					imageW = naturalImageW * scale
 					imageH = naturalImageH * scale
@@ -373,10 +394,10 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 
 		super.invalidateFrame()
 
-		if (this.imageTop.unit == PropertyUnit.PC ||
-			this.imageLeft.unit == PropertyUnit.PC ||
-			this.imageWidth.unit == PropertyUnit.PC ||
-			this.imageHeight.unit == PropertyUnit.PC) {
+		if (this.imageTop.unit == JavaScriptPropertyUnit.PC ||
+			this.imageLeft.unit == JavaScriptPropertyUnit.PC ||
+			this.imageWidth.unit == JavaScriptPropertyUnit.PC ||
+			this.imageHeight.unit == JavaScriptPropertyUnit.PC) {
 			this.invalidateImage()
 		}
 	}
@@ -402,9 +423,9 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private fun getImageAnchorTop(prop: Property): Double {
+	private fun getImageAnchorTop(prop: JavaScriptProperty): Double {
 
-		if (prop.type == PropertyType.STRING) {
+		if (prop.type == JavaScriptPropertyType.STRING) {
 
 			when (prop.string) {
 
@@ -412,7 +433,7 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 				"center" -> return 0.5
 				"bottom" -> return 1.0
 
-				else -> {
+				else     -> {
 					Log.d("Dezel", "Unrecognized value for imageAnchorTop: ${prop.string}")
 				}
 			}
@@ -426,9 +447,9 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private fun getImageAnchorLeft(prop: Property): Double {
+	private fun getImageAnchorLeft(prop: JavaScriptProperty): Double {
 
-		if (prop.type == PropertyType.STRING) {
+		if (prop.type == JavaScriptPropertyType.STRING) {
 
 			when (prop.string) {
 
@@ -436,7 +457,7 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 				"center" -> return 0.5
 				"right"  -> return 1.0
 
-				else -> {
+				else     -> {
 					Log.d("Dezel", "Unrecognized value for imageAnchorLeft: ${prop.string}")
 				}
 			}
@@ -457,7 +478,7 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 			"none"      -> return ImageFilter.NONE
 			"grayscale" -> return ImageFilter.GRAYSCALE
 
-			else -> {
+			else        -> {
 				Log.d("Dezel", "Unrecognized value for imageFilter: $value")
 			}
 		}
@@ -486,7 +507,7 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 	 */
 	@Suppress("unused")
 	open fun jsSet_source(callback: JavaScriptSetterCallback) {
-		this.source = Property(callback.value)
+		this.source.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -508,7 +529,7 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 	 */
 	@Suppress("unused")
 	open fun jsSet_imageFit(callback: JavaScriptSetterCallback) {
-		this.imageFit = Property(callback.value)
+		this.imageFit.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -530,7 +551,7 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 	 */
 	@Suppress("unused")
 	open fun jsSet_imageAnchorTop(callback: JavaScriptSetterCallback) {
-		this.imageAnchorTop = Property(callback.value)
+		this.imageAnchorTop.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -552,7 +573,7 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 	 */
 	@Suppress("unused")
 	open fun jsSet_imageAnchorLeft(callback: JavaScriptSetterCallback) {
-		this.imageAnchorLeft = Property(callback.value)
+		this.imageAnchorLeft.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -574,7 +595,7 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 	 */
 	@Suppress("unused")
 	open fun jsSet_imageTop(callback: JavaScriptSetterCallback) {
-		this.imageTop = Property(callback.value)
+		this.imageTop.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -596,7 +617,7 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 	 */
 	@Suppress("unused")
 	open fun jsSet_imageLeft(callback: JavaScriptSetterCallback) {
-		this.imageLeft = Property(callback.value)
+		this.imageLeft.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -618,7 +639,7 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 	 */
 	@Suppress("unused")
 	open fun jsSet_imageWidth(callback: JavaScriptSetterCallback) {
-		this.imageWidth = Property(callback.value)
+		this.imageWidth.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -640,7 +661,7 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 	 */
 	@Suppress("unused")
 	open fun jsSet_imageHeight(callback: JavaScriptSetterCallback) {
-		this.imageHeight = Property(callback.value)
+		this.imageHeight.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -662,7 +683,7 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 	 */
 	@Suppress("unused")
 	open fun jsSet_imageFilter(callback: JavaScriptSetterCallback) {
-		this.imageFilter = Property(callback.value)
+		this.imageFilter.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -684,6 +705,6 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 	 */
 	@Suppress("unused")
 	open fun jsSet_imageTint(callback: JavaScriptSetterCallback) {
-		this.imageTint = Property(callback.value)
+		this.imageTint.set(callback.value, this)
 	}
 }

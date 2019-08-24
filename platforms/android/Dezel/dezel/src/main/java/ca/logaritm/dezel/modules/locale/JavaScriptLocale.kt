@@ -5,7 +5,7 @@ import android.view.View
 import ca.logaritm.dezel.core.JavaScriptClass
 import ca.logaritm.dezel.core.JavaScriptContext
 import ca.logaritm.dezel.core.JavaScriptGetterCallback
-import ca.logaritm.dezel.core.Property
+import ca.logaritm.dezel.core.JavaScriptProperty
 import java.util.*
 
 /**
@@ -20,32 +20,40 @@ open class JavaScriptLocale(context: JavaScriptContext): JavaScriptClass(context
 	//--------------------------------------------------------------------------
 
 	/**
+	 * The locale language.
 	 * @property language
 	 * @since 0.7.0
-	 * @hidden
 	 */
-	private var language: Property
+	open val language: JavaScriptProperty by lazy {
+		JavaScriptProperty(context)
+	}
 
 	/**
+	 * The locale region.
 	 * @property region
 	 * @since 0.7.0
-	 * @hidden
 	 */
-	private var region: Property
+	open val region: JavaScriptProperty by lazy {
+		JavaScriptProperty(context)
+	}
 
 	/**
+	 * Whether the locale is left to right.
 	 * @property ltr
 	 * @since 0.7.0
-	 * @hidden
 	 */
-	private var ltr: Property
+	open val ltr: JavaScriptProperty by lazy {
+		JavaScriptProperty(context)
+	}
 
 	/**
-	 * @property rtl
+	 * Whether the locale is right to left.
+	 * @property ltr
 	 * @since 0.7.0
-	 * @hidden
 	 */
-	private var rtl: Property
+	open val rtl: JavaScriptProperty by lazy {
+		JavaScriptProperty(context)
+	}
 
 	//--------------------------------------------------------------------------
 	// MARK: Methods
@@ -58,10 +66,10 @@ open class JavaScriptLocale(context: JavaScriptContext): JavaScriptClass(context
 	 */
 	init {
 		val locale = Locale.getDefault()
-		this.language = Property(locale.language)
-		this.region = Property(locale.country)
-		this.ltr = Property( TextUtils.getLayoutDirectionFromLocale(locale) == View.LAYOUT_DIRECTION_LTR)
-		this.rtl = Property(TextUtils.getLayoutDirectionFromLocale(locale) == View.LAYOUT_DIRECTION_RTL)
+		this.language.set(locale.language)
+		this.region.set(locale.country)
+		this.ltr.set(TextUtils.getLayoutDirectionFromLocale(locale) == View.LAYOUT_DIRECTION_LTR)
+		this.rtl.set(TextUtils.getLayoutDirectionFromLocale(locale) == View.LAYOUT_DIRECTION_RTL)
 	}
 
 	//--------------------------------------------------------------------------

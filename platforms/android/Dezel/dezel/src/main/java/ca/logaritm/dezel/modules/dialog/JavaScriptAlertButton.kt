@@ -18,21 +18,27 @@ open class JavaScriptAlertButton(context: JavaScriptContext) : JavaScriptClass(c
 	 * @property label
 	 * @since 0.7.0
 	 */
-	open var label: Property = Property("")
+	open val label: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, "")
+	}
 
 	/**
 	 * The alert button's image.
 	 * @property image
 	 * @since 0.7.0
 	 */
-	open var image: Property = Property()
+	open val image: JavaScriptProperty by lazy {
+		JavaScriptProperty(context)
+	}
 
 	/**
 	 * The alert button's renderNode.
 	 * @property style
 	 * @since 0.7.0
 	 */
-	open var style: Property = Property("normal")
+	open val style: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, "normal")
+	}
 
 	//--------------------------------------------------------------------------
 	// JS Properties
@@ -55,7 +61,7 @@ open class JavaScriptAlertButton(context: JavaScriptContext) : JavaScriptClass(c
 	 */
 	@Suppress("unused")
 	open fun jsSet_label(callback: JavaScriptSetterCallback) {
-		this.label = Property(callback.value)
+		this.label.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -77,7 +83,7 @@ open class JavaScriptAlertButton(context: JavaScriptContext) : JavaScriptClass(c
 	 */
 	@Suppress("unused")
 	open fun jsSet_image(callback: JavaScriptSetterCallback) {
-		this.image = Property(callback.value)
+		this.image.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -99,6 +105,6 @@ open class JavaScriptAlertButton(context: JavaScriptContext) : JavaScriptClass(c
 	 */
 	@Suppress("unused")
 	open fun jsSet_style(callback: JavaScriptSetterCallback) {
-		this.style = Property(callback.value)
+		this.style.set(callback.value, this)
 	}
 }

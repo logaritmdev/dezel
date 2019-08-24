@@ -1,9 +1,9 @@
 package ca.logaritm.dezel.layout
 
 import android.util.SizeF
-import ca.logaritm.dezel.core.Property
-import ca.logaritm.dezel.core.PropertyType
-import ca.logaritm.dezel.core.PropertyUnit
+import ca.logaritm.dezel.core.JavaScriptProperty
+import ca.logaritm.dezel.core.JavaScriptPropertyType
+import ca.logaritm.dezel.core.JavaScriptPropertyUnit
 import ca.logaritm.dezel.extension.Delegates
 import ca.logaritm.dezel.extension.toValidFloat
 import ca.logaritm.dezel.view.graphic.Convert
@@ -288,9 +288,9 @@ open class LayoutNode(layout: Layout) {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	public fun anchorTop(value: Property) {
+	public fun anchorTop(value: JavaScriptProperty) {
 
-		if (value.type == PropertyType.STRING) {
+		if (value.type == JavaScriptPropertyType.STRING) {
 
 			when (value.string) {
 				"top"    -> this.anchorTop(kDLLayoutAnchorTypeLength, kDLLayoutAnchorUnitPC, 0.0)
@@ -301,11 +301,11 @@ open class LayoutNode(layout: Layout) {
 			return
 		}
 
-		if (value.type == PropertyType.NUMBER) {
+		if (value.type == JavaScriptPropertyType.NUMBER) {
 
 			when (value.unit) {
-				PropertyUnit.PC -> this.anchorTop(kDLLayoutAnchorTypeLength, kDLLayoutAnchorUnitPC, value.number)
-				else            -> this.anchorTop(kDLLayoutAnchorTypeLength, kDLLayoutAnchorUnitPC, value.number * 100)
+				JavaScriptPropertyUnit.PC -> this.anchorTop(kDLLayoutAnchorTypeLength, kDLLayoutAnchorUnitPC, value.number)
+				else                      -> this.anchorTop(kDLLayoutAnchorTypeLength, kDLLayoutAnchorUnitPC, value.number * 100)
 			}
 
 			return
@@ -328,9 +328,9 @@ open class LayoutNode(layout: Layout) {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	public fun anchorLeft(value: Property) {
+	public fun anchorLeft(value: JavaScriptProperty) {
 
-		if (value.type == PropertyType.STRING) {
+		if (value.type == JavaScriptPropertyType.STRING) {
 
 			when (value.string) {
 				"left"   -> this.anchorLeft(kDLLayoutAnchorTypeLength, kDLLayoutAnchorUnitPC, 0.0)
@@ -341,11 +341,11 @@ open class LayoutNode(layout: Layout) {
 			return
 		}
 
-		if (value.type == PropertyType.NUMBER) {
+		if (value.type == JavaScriptPropertyType.NUMBER) {
 
 			when (value.unit) {
-				PropertyUnit.PC -> this.anchorLeft(kDLLayoutAnchorTypeLength, kDLLayoutAnchorUnitPC, value.number)
-				else            -> this.anchorLeft(kDLLayoutAnchorTypeLength, kDLLayoutAnchorUnitPC, value.number * 100)
+				JavaScriptPropertyUnit.PC -> this.anchorLeft(kDLLayoutAnchorTypeLength, kDLLayoutAnchorUnitPC, value.number)
+				else                      -> this.anchorLeft(kDLLayoutAnchorTypeLength, kDLLayoutAnchorUnitPC, value.number * 100)
 			}
 
 			return
@@ -368,9 +368,9 @@ open class LayoutNode(layout: Layout) {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	public fun top(value: Property) {
+	public fun top(value: JavaScriptProperty) {
 
-		if (value.type == PropertyType.STRING) {
+		if (value.type == JavaScriptPropertyType.STRING) {
 
 			when (value.string) {
 				"auto" -> this.top(kDLLayoutPositionTypeAuto, kDLLayoutPositionUnitNone, 0.0)
@@ -379,18 +379,18 @@ open class LayoutNode(layout: Layout) {
 			return
 		}
 
-		if (value.type == PropertyType.NUMBER) {
+		if (value.type == JavaScriptPropertyType.NUMBER) {
 
 			when (value.unit) {
-				PropertyUnit.PX -> this.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, value.number)
-				PropertyUnit.PC -> this.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPC, value.number)
-				PropertyUnit.VW -> this.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitVW, value.number)
-				PropertyUnit.VH -> this.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitVH, value.number)
-				PropertyUnit.PW -> this.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPW, value.number)
-				PropertyUnit.PH -> this.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPH, value.number)
-				PropertyUnit.CW -> this.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitCW, value.number)
-				PropertyUnit.CH -> this.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitCH, value.number)
-				else            -> this.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, value.number)
+				JavaScriptPropertyUnit.PX -> this.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, value.number)
+				JavaScriptPropertyUnit.PC -> this.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPC, value.number)
+				JavaScriptPropertyUnit.VW -> this.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitVW, value.number)
+				JavaScriptPropertyUnit.VH -> this.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitVH, value.number)
+				JavaScriptPropertyUnit.PW -> this.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPW, value.number)
+				JavaScriptPropertyUnit.PH -> this.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPH, value.number)
+				JavaScriptPropertyUnit.CW -> this.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitCW, value.number)
+				JavaScriptPropertyUnit.CH -> this.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitCH, value.number)
+				else                      -> this.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, value.number)
 			}
 
 			return
@@ -431,9 +431,9 @@ open class LayoutNode(layout: Layout) {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	public fun left(value: Property) {
+	public fun left(value: JavaScriptProperty) {
 
-		if (value.type == PropertyType.STRING) {
+		if (value.type == JavaScriptPropertyType.STRING) {
 
 			when (value.string) {
 				"auto" -> this.left(kDLLayoutPositionTypeAuto, kDLLayoutPositionUnitNone, 0.0)
@@ -442,18 +442,18 @@ open class LayoutNode(layout: Layout) {
 			return
 		}
 
-		if (value.type == PropertyType.NUMBER) {
+		if (value.type == JavaScriptPropertyType.NUMBER) {
 
 			when (value.unit) {
-				PropertyUnit.PX -> this.left(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, value.number)
-				PropertyUnit.PC -> this.left(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPC, value.number)
-				PropertyUnit.VW -> this.left(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitVW, value.number)
-				PropertyUnit.VH -> this.left(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitVH, value.number)
-				PropertyUnit.PW -> this.left(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPW, value.number)
-				PropertyUnit.PH -> this.left(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPH, value.number)
-				PropertyUnit.CW -> this.left(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitCW, value.number)
-				PropertyUnit.CH -> this.left(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitCH, value.number)
-				else            -> this.left(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, value.number)
+				JavaScriptPropertyUnit.PX -> this.left(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, value.number)
+				JavaScriptPropertyUnit.PC -> this.left(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPC, value.number)
+				JavaScriptPropertyUnit.VW -> this.left(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitVW, value.number)
+				JavaScriptPropertyUnit.VH -> this.left(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitVH, value.number)
+				JavaScriptPropertyUnit.PW -> this.left(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPW, value.number)
+				JavaScriptPropertyUnit.PH -> this.left(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPH, value.number)
+				JavaScriptPropertyUnit.CW -> this.left(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitCW, value.number)
+				JavaScriptPropertyUnit.CH -> this.left(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitCH, value.number)
+				else                      -> this.left(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, value.number)
 			}
 
 			return
@@ -494,9 +494,9 @@ open class LayoutNode(layout: Layout) {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	public fun right(value: Property) {
+	public fun right(value: JavaScriptProperty) {
 
-		if (value.type == PropertyType.STRING) {
+		if (value.type == JavaScriptPropertyType.STRING) {
 
 			when (value.string) {
 				"auto" -> this.right(kDLLayoutPositionTypeAuto, kDLLayoutPositionUnitNone, 0.0)
@@ -505,18 +505,18 @@ open class LayoutNode(layout: Layout) {
 			return
 		}
 
-		if (value.type == PropertyType.NUMBER) {
+		if (value.type == JavaScriptPropertyType.NUMBER) {
 
 			when (value.unit) {
-				PropertyUnit.PX -> this.right(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, value.number)
-				PropertyUnit.PC -> this.right(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPC, value.number)
-				PropertyUnit.VW -> this.right(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitVW, value.number)
-				PropertyUnit.VH -> this.right(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitVH, value.number)
-				PropertyUnit.PW -> this.right(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPW, value.number)
-				PropertyUnit.PH -> this.right(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPH, value.number)
-				PropertyUnit.CW -> this.right(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitCW, value.number)
-				PropertyUnit.CH -> this.right(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitCH, value.number)
-				else            -> this.right(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, value.number)
+				JavaScriptPropertyUnit.PX -> this.right(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, value.number)
+				JavaScriptPropertyUnit.PC -> this.right(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPC, value.number)
+				JavaScriptPropertyUnit.VW -> this.right(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitVW, value.number)
+				JavaScriptPropertyUnit.VH -> this.right(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitVH, value.number)
+				JavaScriptPropertyUnit.PW -> this.right(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPW, value.number)
+				JavaScriptPropertyUnit.PH -> this.right(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPH, value.number)
+				JavaScriptPropertyUnit.CW -> this.right(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitCW, value.number)
+				JavaScriptPropertyUnit.CH -> this.right(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitCH, value.number)
+				else                      -> this.right(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, value.number)
 			}
 
 			return
@@ -557,9 +557,9 @@ open class LayoutNode(layout: Layout) {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	public fun bottom(value: Property) {
+	public fun bottom(value: JavaScriptProperty) {
 
-		if (value.type == PropertyType.STRING) {
+		if (value.type == JavaScriptPropertyType.STRING) {
 
 			when (value.string) {
 				"auto" -> this.bottom(kDLLayoutPositionTypeAuto, kDLLayoutPositionUnitNone, 0.0)
@@ -568,18 +568,18 @@ open class LayoutNode(layout: Layout) {
 			return
 		}
 
-		if (value.type == PropertyType.NUMBER) {
+		if (value.type == JavaScriptPropertyType.NUMBER) {
 
 			when (value.unit) {
-				PropertyUnit.PX -> this.bottom(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, value.number)
-				PropertyUnit.PC -> this.bottom(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPC, value.number)
-				PropertyUnit.VW -> this.bottom(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitVW, value.number)
-				PropertyUnit.VH -> this.bottom(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitVH, value.number)
-				PropertyUnit.PW -> this.bottom(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPW, value.number)
-				PropertyUnit.PH -> this.bottom(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPH, value.number)
-				PropertyUnit.CW -> this.bottom(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitCW, value.number)
-				PropertyUnit.CH -> this.bottom(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitCH, value.number)
-				else            -> this.bottom(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, value.number)
+				JavaScriptPropertyUnit.PX -> this.bottom(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, value.number)
+				JavaScriptPropertyUnit.PC -> this.bottom(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPC, value.number)
+				JavaScriptPropertyUnit.VW -> this.bottom(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitVW, value.number)
+				JavaScriptPropertyUnit.VH -> this.bottom(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitVH, value.number)
+				JavaScriptPropertyUnit.PW -> this.bottom(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPW, value.number)
+				JavaScriptPropertyUnit.PH -> this.bottom(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPH, value.number)
+				JavaScriptPropertyUnit.CW -> this.bottom(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitCW, value.number)
+				JavaScriptPropertyUnit.CH -> this.bottom(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitCH, value.number)
+				else                      -> this.bottom(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, value.number)
 			}
 
 			return
@@ -620,9 +620,9 @@ open class LayoutNode(layout: Layout) {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	public fun width(value: Property) {
+	public fun width(value: JavaScriptProperty) {
 
-		if (value.type == PropertyType.STRING) {
+		if (value.type == JavaScriptPropertyType.STRING) {
 
 			when (value.string) {
 				"fill" -> this.width(kDLLayoutSizeTypeFill, kDLLayoutSizeUnitNone, 0.0)
@@ -632,18 +632,18 @@ open class LayoutNode(layout: Layout) {
 			return
 		}
 
-		if (value.type == PropertyType.NUMBER) {
+		if (value.type == JavaScriptPropertyType.NUMBER) {
 
 			when (value.unit) {
-				PropertyUnit.PX -> this.width(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitPX, value.number)
-				PropertyUnit.PC -> this.width(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitPC, value.number)
-				PropertyUnit.VW -> this.width(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitVW, value.number)
-				PropertyUnit.VH -> this.width(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitVH, value.number)
-				PropertyUnit.PW -> this.width(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitPW, value.number)
-				PropertyUnit.PH -> this.width(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitPH, value.number)
-				PropertyUnit.CW -> this.width(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitCW, value.number)
-				PropertyUnit.CH -> this.width(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitCH, value.number)
-				else            -> this.width(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitPX, value.number)
+				JavaScriptPropertyUnit.PX -> this.width(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitPX, value.number)
+				JavaScriptPropertyUnit.PC -> this.width(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitPC, value.number)
+				JavaScriptPropertyUnit.VW -> this.width(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitVW, value.number)
+				JavaScriptPropertyUnit.VH -> this.width(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitVH, value.number)
+				JavaScriptPropertyUnit.PW -> this.width(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitPW, value.number)
+				JavaScriptPropertyUnit.PH -> this.width(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitPH, value.number)
+				JavaScriptPropertyUnit.CW -> this.width(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitCW, value.number)
+				JavaScriptPropertyUnit.CH -> this.width(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitCH, value.number)
+				else                      -> this.width(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitPX, value.number)
 			}
 
 			return
@@ -684,9 +684,9 @@ open class LayoutNode(layout: Layout) {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	public fun height(value: Property) {
+	public fun height(value: JavaScriptProperty) {
 
-		if (value.type == PropertyType.STRING) {
+		if (value.type == JavaScriptPropertyType.STRING) {
 
 			when (value.string) {
 				"fill" -> this.height(kDLLayoutSizeTypeFill, kDLLayoutSizeUnitNone, 0.0)
@@ -696,18 +696,18 @@ open class LayoutNode(layout: Layout) {
 			return
 		}
 
-		if (value.type == PropertyType.NUMBER) {
+		if (value.type == JavaScriptPropertyType.NUMBER) {
 
 			when (value.unit) {
-				PropertyUnit.PX -> this.height(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitPX, value.number)
-				PropertyUnit.PC -> this.height(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitPC, value.number)
-				PropertyUnit.VW -> this.height(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitVW, value.number)
-				PropertyUnit.VH -> this.height(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitVH, value.number)
-				PropertyUnit.PW -> this.height(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitPW, value.number)
-				PropertyUnit.PH -> this.height(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitPH, value.number)
-				PropertyUnit.CW -> this.height(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitCW, value.number)
-				PropertyUnit.CH -> this.height(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitCH, value.number)
-				else            -> this.height(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitPX, value.number)
+				JavaScriptPropertyUnit.PX -> this.height(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitPX, value.number)
+				JavaScriptPropertyUnit.PC -> this.height(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitPC, value.number)
+				JavaScriptPropertyUnit.VW -> this.height(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitVW, value.number)
+				JavaScriptPropertyUnit.VH -> this.height(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitVH, value.number)
+				JavaScriptPropertyUnit.PW -> this.height(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitPW, value.number)
+				JavaScriptPropertyUnit.PH -> this.height(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitPH, value.number)
+				JavaScriptPropertyUnit.CW -> this.height(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitCW, value.number)
+				JavaScriptPropertyUnit.CH -> this.height(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitCH, value.number)
+				else                      -> this.height(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitPX, value.number)
 			}
 
 			return
@@ -748,9 +748,9 @@ open class LayoutNode(layout: Layout) {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	public fun contentDirection(value: Property) {
+	public fun contentDirection(value: JavaScriptProperty) {
 
-		if (value.type == PropertyType.STRING) {
+		if (value.type == JavaScriptPropertyType.STRING) {
 
 			when (value.string) {
 				"horizontal" -> this.contentDirection(kDLLayoutContentDirectionHorizontal)
@@ -777,9 +777,9 @@ open class LayoutNode(layout: Layout) {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	public fun contentLocation(value: Property) {
+	public fun contentLocation(value: JavaScriptProperty) {
 
-		if (value.type == PropertyType.STRING) {
+		if (value.type == JavaScriptPropertyType.STRING) {
 
 			when (value.string) {
 				"center"        -> this.contentLocation(kDLLayoutContentLocationCenter)
@@ -810,9 +810,9 @@ open class LayoutNode(layout: Layout) {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	public fun contentAlignment(value: Property) {
+	public fun contentAlignment(value: JavaScriptProperty) {
 
-		if (value.type == PropertyType.STRING) {
+		if (value.type == JavaScriptPropertyType.STRING) {
 
 			when (value.string) {
 				"center" -> this.contentAlignment(kDLLayoutContentAlignmentCenter)
@@ -840,13 +840,13 @@ open class LayoutNode(layout: Layout) {
 	 * @method contentTop
 	 * @since 0.1.0
 	 */
-	open fun contentTop(value: Property) {
+	open fun contentTop(value: JavaScriptProperty) {
 
-		if (value.type == PropertyType.NUMBER) {
+		if (value.type == JavaScriptPropertyType.NUMBER) {
 
 			when (value.unit) {
-				PropertyUnit.PX -> this.contentTop(kDLLayoutContentPositionTypeLength, kDLLayoutContentPositionUnitPX, value.number)
-				else            -> this.contentTop(kDLLayoutContentPositionTypeLength, kDLLayoutContentPositionUnitPX, value.number)
+				JavaScriptPropertyUnit.PX -> this.contentTop(kDLLayoutContentPositionTypeLength, kDLLayoutContentPositionUnitPX, value.number)
+				else                      -> this.contentTop(kDLLayoutContentPositionTypeLength, kDLLayoutContentPositionUnitPX, value.number)
 			}
 
 			return
@@ -867,13 +867,13 @@ open class LayoutNode(layout: Layout) {
 	 * @method contentLeft
 	 * @since 0.1.0
 	 */
-	open fun contentLeft(value: Property) {
+	open fun contentLeft(value: JavaScriptProperty) {
 
-		if (value.type == PropertyType.NUMBER) {
+		if (value.type == JavaScriptPropertyType.NUMBER) {
 
 			when (value.unit) {
-				PropertyUnit.PX -> this.contentLeft(kDLLayoutContentPositionTypeLength, kDLLayoutContentPositionUnitPX, value.number)
-				else            -> this.contentLeft(kDLLayoutContentPositionTypeLength, kDLLayoutContentPositionUnitPX, value.number)
+				JavaScriptPropertyUnit.PX -> this.contentLeft(kDLLayoutContentPositionTypeLength, kDLLayoutContentPositionUnitPX, value.number)
+				else                      -> this.contentLeft(kDLLayoutContentPositionTypeLength, kDLLayoutContentPositionUnitPX, value.number)
 			}
 
 			return
@@ -895,9 +895,9 @@ open class LayoutNode(layout: Layout) {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	public fun contentWidth(value: Property) {
+	public fun contentWidth(value: JavaScriptProperty) {
 
-		if (value.type == PropertyType.STRING) {
+		if (value.type == JavaScriptPropertyType.STRING) {
 
 			when (value.string) {
 				"auto" -> this.contentWidth(kDLLayoutContentSizeTypeAuto, kDLLayoutContentSizeUnitNone, 0.0)
@@ -906,18 +906,18 @@ open class LayoutNode(layout: Layout) {
 			return
 		}
 
-		if (value.type == PropertyType.NUMBER) {
+		if (value.type == JavaScriptPropertyType.NUMBER) {
 
 			when (value.unit) {
-				PropertyUnit.PX -> this.contentWidth(kDLLayoutContentSizeTypeLength, kDLLayoutContentSizeUnitPX, value.number)
-				PropertyUnit.PC -> this.contentWidth(kDLLayoutContentSizeTypeLength, kDLLayoutContentSizeUnitPC, value.number)
-				PropertyUnit.VW -> this.contentWidth(kDLLayoutContentSizeTypeLength, kDLLayoutContentSizeUnitVW, value.number)
-				PropertyUnit.VH -> this.contentWidth(kDLLayoutContentSizeTypeLength, kDLLayoutContentSizeUnitVH, value.number)
-				PropertyUnit.PW -> this.contentWidth(kDLLayoutContentSizeTypeLength, kDLLayoutContentSizeUnitPW, value.number)
-				PropertyUnit.PH -> this.contentWidth(kDLLayoutContentSizeTypeLength, kDLLayoutContentSizeUnitPH, value.number)
-				PropertyUnit.CW -> this.contentWidth(kDLLayoutContentSizeTypeLength, kDLLayoutContentSizeUnitCW, value.number)
-				PropertyUnit.CH -> this.contentWidth(kDLLayoutContentSizeTypeLength, kDLLayoutContentSizeUnitCH, value.number)
-				else            -> this.contentWidth(kDLLayoutContentSizeTypeLength, kDLLayoutContentSizeUnitPX, value.number)
+				JavaScriptPropertyUnit.PX -> this.contentWidth(kDLLayoutContentSizeTypeLength, kDLLayoutContentSizeUnitPX, value.number)
+				JavaScriptPropertyUnit.PC -> this.contentWidth(kDLLayoutContentSizeTypeLength, kDLLayoutContentSizeUnitPC, value.number)
+				JavaScriptPropertyUnit.VW -> this.contentWidth(kDLLayoutContentSizeTypeLength, kDLLayoutContentSizeUnitVW, value.number)
+				JavaScriptPropertyUnit.VH -> this.contentWidth(kDLLayoutContentSizeTypeLength, kDLLayoutContentSizeUnitVH, value.number)
+				JavaScriptPropertyUnit.PW -> this.contentWidth(kDLLayoutContentSizeTypeLength, kDLLayoutContentSizeUnitPW, value.number)
+				JavaScriptPropertyUnit.PH -> this.contentWidth(kDLLayoutContentSizeTypeLength, kDLLayoutContentSizeUnitPH, value.number)
+				JavaScriptPropertyUnit.CW -> this.contentWidth(kDLLayoutContentSizeTypeLength, kDLLayoutContentSizeUnitCW, value.number)
+				JavaScriptPropertyUnit.CH -> this.contentWidth(kDLLayoutContentSizeTypeLength, kDLLayoutContentSizeUnitCH, value.number)
+				else                      -> this.contentWidth(kDLLayoutContentSizeTypeLength, kDLLayoutContentSizeUnitPX, value.number)
 			}
 
 			return
@@ -940,9 +940,9 @@ open class LayoutNode(layout: Layout) {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	public fun contentHeight(value: Property) {
+	public fun contentHeight(value: JavaScriptProperty) {
 
-		if (value.type == PropertyType.STRING) {
+		if (value.type == JavaScriptPropertyType.STRING) {
 
 			when (value.string) {
 				"auto" -> this.contentHeight(kDLLayoutContentSizeTypeAuto, kDLLayoutContentSizeUnitNone, 0.0)
@@ -951,18 +951,18 @@ open class LayoutNode(layout: Layout) {
 			return
 		}
 
-		if (value.type == PropertyType.NUMBER) {
+		if (value.type == JavaScriptPropertyType.NUMBER) {
 
 			when (value.unit) {
-				PropertyUnit.PX -> this.contentHeight(kDLLayoutContentSizeTypeLength, kDLLayoutContentSizeUnitPX, value.number)
-				PropertyUnit.PC -> this.contentHeight(kDLLayoutContentSizeTypeLength, kDLLayoutContentSizeUnitPC, value.number)
-				PropertyUnit.VW -> this.contentHeight(kDLLayoutContentSizeTypeLength, kDLLayoutContentSizeUnitVW, value.number)
-				PropertyUnit.VH -> this.contentHeight(kDLLayoutContentSizeTypeLength, kDLLayoutContentSizeUnitVH, value.number)
-				PropertyUnit.PW -> this.contentHeight(kDLLayoutContentSizeTypeLength, kDLLayoutContentSizeUnitPW, value.number)
-				PropertyUnit.PH -> this.contentHeight(kDLLayoutContentSizeTypeLength, kDLLayoutContentSizeUnitPH, value.number)
-				PropertyUnit.CW -> this.contentHeight(kDLLayoutContentSizeTypeLength, kDLLayoutContentSizeUnitCW, value.number)
-				PropertyUnit.CH -> this.contentHeight(kDLLayoutContentSizeTypeLength, kDLLayoutContentSizeUnitCH, value.number)
-				else            -> this.contentHeight(kDLLayoutContentSizeTypeLength, kDLLayoutContentSizeUnitPX, value.number)
+				JavaScriptPropertyUnit.PX -> this.contentHeight(kDLLayoutContentSizeTypeLength, kDLLayoutContentSizeUnitPX, value.number)
+				JavaScriptPropertyUnit.PC -> this.contentHeight(kDLLayoutContentSizeTypeLength, kDLLayoutContentSizeUnitPC, value.number)
+				JavaScriptPropertyUnit.VW -> this.contentHeight(kDLLayoutContentSizeTypeLength, kDLLayoutContentSizeUnitVW, value.number)
+				JavaScriptPropertyUnit.VH -> this.contentHeight(kDLLayoutContentSizeTypeLength, kDLLayoutContentSizeUnitVH, value.number)
+				JavaScriptPropertyUnit.PW -> this.contentHeight(kDLLayoutContentSizeTypeLength, kDLLayoutContentSizeUnitPW, value.number)
+				JavaScriptPropertyUnit.PH -> this.contentHeight(kDLLayoutContentSizeTypeLength, kDLLayoutContentSizeUnitPH, value.number)
+				JavaScriptPropertyUnit.CW -> this.contentHeight(kDLLayoutContentSizeTypeLength, kDLLayoutContentSizeUnitCW, value.number)
+				JavaScriptPropertyUnit.CH -> this.contentHeight(kDLLayoutContentSizeTypeLength, kDLLayoutContentSizeUnitCH, value.number)
+				else                      -> this.contentHeight(kDLLayoutContentSizeTypeLength, kDLLayoutContentSizeUnitPX, value.number)
 			}
 
 			return
@@ -985,9 +985,9 @@ open class LayoutNode(layout: Layout) {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	public fun borderTop(value: Property) {
+	public fun borderTop(value: JavaScriptProperty) {
 
-		if (value.type == PropertyType.STRING) {
+		if (value.type == JavaScriptPropertyType.STRING) {
 
 			when (value.string) {
 				"thin" -> this.borderTop(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitPX, 1.0 / Convert.density)
@@ -996,18 +996,18 @@ open class LayoutNode(layout: Layout) {
 			return
 		}
 
-		if (value.type == PropertyType.NUMBER) {
+		if (value.type == JavaScriptPropertyType.NUMBER) {
 
 			when (value.unit) {
-				PropertyUnit.PX -> this.borderTop(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitPX, value.number)
-				PropertyUnit.PC -> this.borderTop(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitPC, value.number)
-				PropertyUnit.VW -> this.borderTop(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitVW, value.number)
-				PropertyUnit.VH -> this.borderTop(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitVH, value.number)
-				PropertyUnit.PW -> this.borderTop(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitPW, value.number)
-				PropertyUnit.PH -> this.borderTop(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitPH, value.number)
-				PropertyUnit.CW -> this.borderTop(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitCW, value.number)
-				PropertyUnit.CH -> this.borderTop(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitCH, value.number)
-				else            -> this.borderTop(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitPX, value.number)
+				JavaScriptPropertyUnit.PX -> this.borderTop(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitPX, value.number)
+				JavaScriptPropertyUnit.PC -> this.borderTop(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitPC, value.number)
+				JavaScriptPropertyUnit.VW -> this.borderTop(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitVW, value.number)
+				JavaScriptPropertyUnit.VH -> this.borderTop(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitVH, value.number)
+				JavaScriptPropertyUnit.PW -> this.borderTop(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitPW, value.number)
+				JavaScriptPropertyUnit.PH -> this.borderTop(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitPH, value.number)
+				JavaScriptPropertyUnit.CW -> this.borderTop(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitCW, value.number)
+				JavaScriptPropertyUnit.CH -> this.borderTop(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitCH, value.number)
+				else                      -> this.borderTop(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitPX, value.number)
 			}
 
 			return
@@ -1030,9 +1030,9 @@ open class LayoutNode(layout: Layout) {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	public fun borderLeft(value: Property) {
+	public fun borderLeft(value: JavaScriptProperty) {
 
-		if (value.type == PropertyType.STRING) {
+		if (value.type == JavaScriptPropertyType.STRING) {
 
 			when (value.string) {
 				"thin" -> this.borderLeft(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitPX, 1.0 / Convert.density)
@@ -1041,18 +1041,18 @@ open class LayoutNode(layout: Layout) {
 			return
 		}
 
-		if (value.type == PropertyType.NUMBER) {
+		if (value.type == JavaScriptPropertyType.NUMBER) {
 
 			when (value.unit) {
-				PropertyUnit.PX -> this.borderLeft(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitPX, value.number)
-				PropertyUnit.PC -> this.borderLeft(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitPC, value.number)
-				PropertyUnit.VW -> this.borderLeft(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitVW, value.number)
-				PropertyUnit.VH -> this.borderLeft(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitVH, value.number)
-				PropertyUnit.PW -> this.borderLeft(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitPW, value.number)
-				PropertyUnit.PH -> this.borderLeft(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitPH, value.number)
-				PropertyUnit.CW -> this.borderLeft(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitCW, value.number)
-				PropertyUnit.CH -> this.borderLeft(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitCH, value.number)
-				else            -> this.borderLeft(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitPX, value.number)
+				JavaScriptPropertyUnit.PX -> this.borderLeft(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitPX, value.number)
+				JavaScriptPropertyUnit.PC -> this.borderLeft(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitPC, value.number)
+				JavaScriptPropertyUnit.VW -> this.borderLeft(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitVW, value.number)
+				JavaScriptPropertyUnit.VH -> this.borderLeft(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitVH, value.number)
+				JavaScriptPropertyUnit.PW -> this.borderLeft(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitPW, value.number)
+				JavaScriptPropertyUnit.PH -> this.borderLeft(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitPH, value.number)
+				JavaScriptPropertyUnit.CW -> this.borderLeft(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitCW, value.number)
+				JavaScriptPropertyUnit.CH -> this.borderLeft(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitCH, value.number)
+				else                      -> this.borderLeft(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitPX, value.number)
 			}
 
 			return
@@ -1075,9 +1075,9 @@ open class LayoutNode(layout: Layout) {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	public fun borderRight(value: Property) {
+	public fun borderRight(value: JavaScriptProperty) {
 
-		if (value.type == PropertyType.STRING) {
+		if (value.type == JavaScriptPropertyType.STRING) {
 
 			when (value.string) {
 				"thin" -> this.borderRight(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitPX, 1.0 / Convert.density)
@@ -1086,18 +1086,18 @@ open class LayoutNode(layout: Layout) {
 			return
 		}
 
-		if (value.type == PropertyType.NUMBER) {
+		if (value.type == JavaScriptPropertyType.NUMBER) {
 
 			when (value.unit) {
-				PropertyUnit.PX -> this.borderRight(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitPX, value.number)
-				PropertyUnit.PC -> this.borderRight(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitPC, value.number)
-				PropertyUnit.VW -> this.borderRight(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitVW, value.number)
-				PropertyUnit.VH -> this.borderRight(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitVH, value.number)
-				PropertyUnit.PW -> this.borderRight(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitPW, value.number)
-				PropertyUnit.PH -> this.borderRight(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitPH, value.number)
-				PropertyUnit.CW -> this.borderRight(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitCW, value.number)
-				PropertyUnit.CH -> this.borderRight(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitCH, value.number)
-				else            -> this.borderRight(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitPX, value.number)
+				JavaScriptPropertyUnit.PX -> this.borderRight(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitPX, value.number)
+				JavaScriptPropertyUnit.PC -> this.borderRight(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitPC, value.number)
+				JavaScriptPropertyUnit.VW -> this.borderRight(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitVW, value.number)
+				JavaScriptPropertyUnit.VH -> this.borderRight(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitVH, value.number)
+				JavaScriptPropertyUnit.PW -> this.borderRight(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitPW, value.number)
+				JavaScriptPropertyUnit.PH -> this.borderRight(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitPH, value.number)
+				JavaScriptPropertyUnit.CW -> this.borderRight(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitCW, value.number)
+				JavaScriptPropertyUnit.CH -> this.borderRight(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitCH, value.number)
+				else                      -> this.borderRight(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitPX, value.number)
 			}
 
 			return
@@ -1120,9 +1120,9 @@ open class LayoutNode(layout: Layout) {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	public fun borderBottom(value: Property) {
+	public fun borderBottom(value: JavaScriptProperty) {
 
-		if (value.type == PropertyType.STRING) {
+		if (value.type == JavaScriptPropertyType.STRING) {
 
 			when (value.string) {
 				"thin" -> this.borderBottom(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitPX, 1.0 / Convert.density)
@@ -1131,18 +1131,18 @@ open class LayoutNode(layout: Layout) {
 			return
 		}
 
-		if (value.type == PropertyType.NUMBER) {
+		if (value.type == JavaScriptPropertyType.NUMBER) {
 
 			when (value.unit) {
-				PropertyUnit.PX -> this.borderBottom(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitPX, value.number)
-				PropertyUnit.PC -> this.borderBottom(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitPC, value.number)
-				PropertyUnit.VW -> this.borderBottom(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitVW, value.number)
-				PropertyUnit.VH -> this.borderBottom(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitVH, value.number)
-				PropertyUnit.PW -> this.borderBottom(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitPW, value.number)
-				PropertyUnit.PH -> this.borderBottom(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitPH, value.number)
-				PropertyUnit.CW -> this.borderBottom(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitCW, value.number)
-				PropertyUnit.CH -> this.borderBottom(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitCH, value.number)
-				else            -> this.borderBottom(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitPX, value.number)
+				JavaScriptPropertyUnit.PX -> this.borderBottom(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitPX, value.number)
+				JavaScriptPropertyUnit.PC -> this.borderBottom(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitPC, value.number)
+				JavaScriptPropertyUnit.VW -> this.borderBottom(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitVW, value.number)
+				JavaScriptPropertyUnit.VH -> this.borderBottom(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitVH, value.number)
+				JavaScriptPropertyUnit.PW -> this.borderBottom(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitPW, value.number)
+				JavaScriptPropertyUnit.PH -> this.borderBottom(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitPH, value.number)
+				JavaScriptPropertyUnit.CW -> this.borderBottom(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitCW, value.number)
+				JavaScriptPropertyUnit.CH -> this.borderBottom(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitCH, value.number)
+				else                      -> this.borderBottom(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitPX, value.number)
 			}
 
 			return
@@ -1165,20 +1165,20 @@ open class LayoutNode(layout: Layout) {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	public fun marginTop(value: Property) {
+	public fun marginTop(value: JavaScriptProperty) {
 
-		if (value.type == PropertyType.NUMBER) {
+		if (value.type == JavaScriptPropertyType.NUMBER) {
 
 			when (value.unit) {
-				PropertyUnit.PX -> this.marginTop(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitPX, value.number)
-				PropertyUnit.PC -> this.marginTop(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitPC, value.number)
-				PropertyUnit.VW -> this.marginTop(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitVW, value.number)
-				PropertyUnit.VH -> this.marginTop(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitVH, value.number)
-				PropertyUnit.PW -> this.marginTop(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitPW, value.number)
-				PropertyUnit.PH -> this.marginTop(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitPH, value.number)
-				PropertyUnit.CW -> this.marginTop(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitCW, value.number)
-				PropertyUnit.CH -> this.marginTop(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitCH, value.number)
-				else            -> this.marginTop(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitPX, value.number)
+				JavaScriptPropertyUnit.PX -> this.marginTop(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitPX, value.number)
+				JavaScriptPropertyUnit.PC -> this.marginTop(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitPC, value.number)
+				JavaScriptPropertyUnit.VW -> this.marginTop(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitVW, value.number)
+				JavaScriptPropertyUnit.VH -> this.marginTop(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitVH, value.number)
+				JavaScriptPropertyUnit.PW -> this.marginTop(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitPW, value.number)
+				JavaScriptPropertyUnit.PH -> this.marginTop(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitPH, value.number)
+				JavaScriptPropertyUnit.CW -> this.marginTop(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitCW, value.number)
+				JavaScriptPropertyUnit.CH -> this.marginTop(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitCH, value.number)
+				else                      -> this.marginTop(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitPX, value.number)
 			}
 
 			return
@@ -1201,20 +1201,20 @@ open class LayoutNode(layout: Layout) {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	public fun marginLeft(value: Property) {
+	public fun marginLeft(value: JavaScriptProperty) {
 
-		if (value.type == PropertyType.NUMBER) {
+		if (value.type == JavaScriptPropertyType.NUMBER) {
 
 			when (value.unit) {
-				PropertyUnit.PX -> this.marginLeft(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitPX, value.number)
-				PropertyUnit.PC -> this.marginLeft(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitPC, value.number)
-				PropertyUnit.VW -> this.marginLeft(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitVW, value.number)
-				PropertyUnit.VH -> this.marginLeft(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitVH, value.number)
-				PropertyUnit.PW -> this.marginLeft(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitPW, value.number)
-				PropertyUnit.PH -> this.marginLeft(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitPH, value.number)
-				PropertyUnit.CW -> this.marginLeft(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitCW, value.number)
-				PropertyUnit.CH -> this.marginLeft(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitCH, value.number)
-				else            -> this.marginLeft(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitPX, value.number)
+				JavaScriptPropertyUnit.PX -> this.marginLeft(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitPX, value.number)
+				JavaScriptPropertyUnit.PC -> this.marginLeft(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitPC, value.number)
+				JavaScriptPropertyUnit.VW -> this.marginLeft(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitVW, value.number)
+				JavaScriptPropertyUnit.VH -> this.marginLeft(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitVH, value.number)
+				JavaScriptPropertyUnit.PW -> this.marginLeft(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitPW, value.number)
+				JavaScriptPropertyUnit.PH -> this.marginLeft(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitPH, value.number)
+				JavaScriptPropertyUnit.CW -> this.marginLeft(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitCW, value.number)
+				JavaScriptPropertyUnit.CH -> this.marginLeft(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitCH, value.number)
+				else                      -> this.marginLeft(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitPX, value.number)
 			}
 
 			return
@@ -1237,20 +1237,20 @@ open class LayoutNode(layout: Layout) {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	public fun marginRight(value: Property) {
+	public fun marginRight(value: JavaScriptProperty) {
 
-		if (value.type == PropertyType.NUMBER) {
+		if (value.type == JavaScriptPropertyType.NUMBER) {
 
 			when (value.unit) {
-				PropertyUnit.PX -> this.marginRight(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitPX, value.number)
-				PropertyUnit.PC -> this.marginRight(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitPC, value.number)
-				PropertyUnit.VW -> this.marginRight(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitVW, value.number)
-				PropertyUnit.VH -> this.marginRight(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitVH, value.number)
-				PropertyUnit.PW -> this.marginRight(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitPW, value.number)
-				PropertyUnit.PH -> this.marginRight(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitPH, value.number)
-				PropertyUnit.CW -> this.marginRight(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitCW, value.number)
-				PropertyUnit.CH -> this.marginRight(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitCH, value.number)
-				else            -> this.marginRight(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitPX, value.number)
+				JavaScriptPropertyUnit.PX -> this.marginRight(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitPX, value.number)
+				JavaScriptPropertyUnit.PC -> this.marginRight(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitPC, value.number)
+				JavaScriptPropertyUnit.VW -> this.marginRight(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitVW, value.number)
+				JavaScriptPropertyUnit.VH -> this.marginRight(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitVH, value.number)
+				JavaScriptPropertyUnit.PW -> this.marginRight(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitPW, value.number)
+				JavaScriptPropertyUnit.PH -> this.marginRight(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitPH, value.number)
+				JavaScriptPropertyUnit.CW -> this.marginRight(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitCW, value.number)
+				JavaScriptPropertyUnit.CH -> this.marginRight(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitCH, value.number)
+				else                      -> this.marginRight(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitPX, value.number)
 			}
 
 			return
@@ -1273,20 +1273,20 @@ open class LayoutNode(layout: Layout) {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	public fun marginBottom(value: Property) {
+	public fun marginBottom(value: JavaScriptProperty) {
 
-		if (value.type == PropertyType.NUMBER) {
+		if (value.type == JavaScriptPropertyType.NUMBER) {
 
 			when (value.unit) {
-				PropertyUnit.PX -> this.marginBottom(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitPX, value.number)
-				PropertyUnit.PC -> this.marginBottom(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitPC, value.number)
-				PropertyUnit.VW -> this.marginBottom(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitVW, value.number)
-				PropertyUnit.VH -> this.marginBottom(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitVH, value.number)
-				PropertyUnit.PW -> this.marginBottom(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitPW, value.number)
-				PropertyUnit.PH -> this.marginBottom(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitPH, value.number)
-				PropertyUnit.CW -> this.marginBottom(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitCW, value.number)
-				PropertyUnit.CH -> this.marginBottom(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitCH, value.number)
-				else            -> this.marginBottom(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitPX, value.number)
+				JavaScriptPropertyUnit.PX -> this.marginBottom(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitPX, value.number)
+				JavaScriptPropertyUnit.PC -> this.marginBottom(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitPC, value.number)
+				JavaScriptPropertyUnit.VW -> this.marginBottom(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitVW, value.number)
+				JavaScriptPropertyUnit.VH -> this.marginBottom(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitVH, value.number)
+				JavaScriptPropertyUnit.PW -> this.marginBottom(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitPW, value.number)
+				JavaScriptPropertyUnit.PH -> this.marginBottom(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitPH, value.number)
+				JavaScriptPropertyUnit.CW -> this.marginBottom(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitCW, value.number)
+				JavaScriptPropertyUnit.CH -> this.marginBottom(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitCH, value.number)
+				else                      -> this.marginBottom(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitPX, value.number)
 			}
 
 			return
@@ -1381,20 +1381,20 @@ open class LayoutNode(layout: Layout) {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	public fun paddingTop(value: Property) {
+	public fun paddingTop(value: JavaScriptProperty) {
 
-		if (value.type == PropertyType.NUMBER) {
+		if (value.type == JavaScriptPropertyType.NUMBER) {
 
 			when (value.unit) {
-				PropertyUnit.PX -> this.paddingTop(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitPX, value.number)
-				PropertyUnit.PC -> this.paddingTop(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitPC, value.number)
-				PropertyUnit.VW -> this.paddingTop(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitVW, value.number)
-				PropertyUnit.VH -> this.paddingTop(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitVH, value.number)
-				PropertyUnit.PW -> this.paddingTop(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitPW, value.number)
-				PropertyUnit.PH -> this.paddingTop(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitPH, value.number)
-				PropertyUnit.CW -> this.paddingTop(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitCW, value.number)
-				PropertyUnit.CH -> this.paddingTop(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitCH, value.number)
-				else            -> this.paddingTop(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitPX, value.number)
+				JavaScriptPropertyUnit.PX -> this.paddingTop(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitPX, value.number)
+				JavaScriptPropertyUnit.PC -> this.paddingTop(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitPC, value.number)
+				JavaScriptPropertyUnit.VW -> this.paddingTop(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitVW, value.number)
+				JavaScriptPropertyUnit.VH -> this.paddingTop(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitVH, value.number)
+				JavaScriptPropertyUnit.PW -> this.paddingTop(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitPW, value.number)
+				JavaScriptPropertyUnit.PH -> this.paddingTop(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitPH, value.number)
+				JavaScriptPropertyUnit.CW -> this.paddingTop(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitCW, value.number)
+				JavaScriptPropertyUnit.CH -> this.paddingTop(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitCH, value.number)
+				else                      -> this.paddingTop(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitPX, value.number)
 			}
 
 			return
@@ -1417,20 +1417,20 @@ open class LayoutNode(layout: Layout) {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	public fun paddingLeft(value: Property) {
+	public fun paddingLeft(value: JavaScriptProperty) {
 
-		if (value.type == PropertyType.NUMBER) {
+		if (value.type == JavaScriptPropertyType.NUMBER) {
 
 			when (value.unit) {
-				PropertyUnit.PX -> this.paddingLeft(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitPX, value.number)
-				PropertyUnit.PC -> this.paddingLeft(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitPC, value.number)
-				PropertyUnit.VW -> this.paddingLeft(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitVW, value.number)
-				PropertyUnit.VH -> this.paddingLeft(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitVH, value.number)
-				PropertyUnit.PW -> this.paddingLeft(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitPW, value.number)
-				PropertyUnit.PH -> this.paddingLeft(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitPH, value.number)
-				PropertyUnit.CW -> this.paddingLeft(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitCW, value.number)
-				PropertyUnit.CH -> this.paddingLeft(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitCH, value.number)
-				else            -> this.paddingLeft(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitPX, value.number)
+				JavaScriptPropertyUnit.PX -> this.paddingLeft(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitPX, value.number)
+				JavaScriptPropertyUnit.PC -> this.paddingLeft(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitPC, value.number)
+				JavaScriptPropertyUnit.VW -> this.paddingLeft(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitVW, value.number)
+				JavaScriptPropertyUnit.VH -> this.paddingLeft(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitVH, value.number)
+				JavaScriptPropertyUnit.PW -> this.paddingLeft(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitPW, value.number)
+				JavaScriptPropertyUnit.PH -> this.paddingLeft(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitPH, value.number)
+				JavaScriptPropertyUnit.CW -> this.paddingLeft(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitCW, value.number)
+				JavaScriptPropertyUnit.CH -> this.paddingLeft(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitCH, value.number)
+				else                      -> this.paddingLeft(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitPX, value.number)
 			}
 
 			return
@@ -1453,20 +1453,20 @@ open class LayoutNode(layout: Layout) {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	public fun paddingRight(value: Property) {
+	public fun paddingRight(value: JavaScriptProperty) {
 
-		if (value.type == PropertyType.NUMBER) {
+		if (value.type == JavaScriptPropertyType.NUMBER) {
 
 			when (value.unit) {
-				PropertyUnit.PX -> this.paddingRight(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitPX, value.number)
-				PropertyUnit.PC -> this.paddingRight(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitPC, value.number)
-				PropertyUnit.VW -> this.paddingRight(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitVW, value.number)
-				PropertyUnit.VH -> this.paddingRight(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitVH, value.number)
-				PropertyUnit.PW -> this.paddingRight(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitPW, value.number)
-				PropertyUnit.PH -> this.paddingRight(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitPH, value.number)
-				PropertyUnit.CW -> this.paddingRight(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitCW, value.number)
-				PropertyUnit.CH -> this.paddingRight(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitCH, value.number)
-				else            -> this.paddingRight(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitPX, value.number)
+				JavaScriptPropertyUnit.PX -> this.paddingRight(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitPX, value.number)
+				JavaScriptPropertyUnit.PC -> this.paddingRight(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitPC, value.number)
+				JavaScriptPropertyUnit.VW -> this.paddingRight(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitVW, value.number)
+				JavaScriptPropertyUnit.VH -> this.paddingRight(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitVH, value.number)
+				JavaScriptPropertyUnit.PW -> this.paddingRight(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitPW, value.number)
+				JavaScriptPropertyUnit.PH -> this.paddingRight(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitPH, value.number)
+				JavaScriptPropertyUnit.CW -> this.paddingRight(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitCW, value.number)
+				JavaScriptPropertyUnit.CH -> this.paddingRight(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitCH, value.number)
+				else                      -> this.paddingRight(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitPX, value.number)
 			}
 
 			return
@@ -1489,20 +1489,20 @@ open class LayoutNode(layout: Layout) {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	public fun paddingBottom(value: Property) {
+	public fun paddingBottom(value: JavaScriptProperty) {
 
-		if (value.type == PropertyType.NUMBER) {
+		if (value.type == JavaScriptPropertyType.NUMBER) {
 
 			when (value.unit) {
-				PropertyUnit.PX -> this.paddingBottom(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitPX, value.number)
-				PropertyUnit.PC -> this.paddingBottom(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitPC, value.number)
-				PropertyUnit.VW -> this.paddingBottom(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitVW, value.number)
-				PropertyUnit.VH -> this.paddingBottom(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitVH, value.number)
-				PropertyUnit.PW -> this.paddingBottom(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitPW, value.number)
-				PropertyUnit.PH -> this.paddingBottom(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitPH, value.number)
-				PropertyUnit.CW -> this.paddingBottom(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitCW, value.number)
-				PropertyUnit.CH -> this.paddingBottom(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitCH, value.number)
-				else            -> this.paddingBottom(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitPX, value.number)
+				JavaScriptPropertyUnit.PX -> this.paddingBottom(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitPX, value.number)
+				JavaScriptPropertyUnit.PC -> this.paddingBottom(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitPC, value.number)
+				JavaScriptPropertyUnit.VW -> this.paddingBottom(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitVW, value.number)
+				JavaScriptPropertyUnit.VH -> this.paddingBottom(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitVH, value.number)
+				JavaScriptPropertyUnit.PW -> this.paddingBottom(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitPW, value.number)
+				JavaScriptPropertyUnit.PH -> this.paddingBottom(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitPH, value.number)
+				JavaScriptPropertyUnit.CW -> this.paddingBottom(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitCW, value.number)
+				JavaScriptPropertyUnit.CH -> this.paddingBottom(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitCH, value.number)
+				else                      -> this.paddingBottom(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitPX, value.number)
 			}
 
 			return

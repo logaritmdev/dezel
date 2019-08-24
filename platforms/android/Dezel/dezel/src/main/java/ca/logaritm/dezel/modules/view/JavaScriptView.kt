@@ -126,14 +126,12 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 		private set
 
 	/**
-	 * The view's identifier among its siblings.
+	 * The view's id.
 	 * @property id
 	 * @since 0.7.0
 	 */
-	open var id: Property by Delegates.OnSet(Property("")) { value ->
-		this.wrapper.id = value.string
-		this.stylerNode.id = value.string
-		this.layoutNode.id = value.string
+	open val id: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, "")
 	}
 
 	/**
@@ -141,8 +139,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property backgroundColor
 	 * @since 0.7.0
 	 */
-	open var backgroundColor: Property by Delegates.OnSet(Property("transparent")) {
-		this.invalidateBitmapColor()
+	open val backgroundColor: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, "transparent") {
+			this.invalidateBitmapColor()
+		}
 	}
 
 	/**
@@ -150,9 +150,12 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property backgroundImage
 	 * @since 0.7.0
 	 */
-	open var backgroundImage: Property by Delegates.OnSet(Property()) { value ->
-		this.backgroundImageLoader.load(value) { image ->
-			this.backgroundImageData = image
+	open val backgroundImage: JavaScriptProperty by lazy {
+		JavaScriptProperty(context) { value ->
+			this.backgroundImageLoader.load(value) { image ->
+				this.backgroundImageData = image
+				// TODO FIXME WAT
+			}
 		}
 	}
 
@@ -161,8 +164,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property backgroundImageFit
 	 * @since 0.7.0
 	 */
-	open var backgroundImageFit: Property by Delegates.OnSet(Property("cover")) {
-		this.invalidateBitmapImage()
+	open val backgroundImageFit: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, "cover") {
+			this.invalidateBitmapImage()
+		}
 	}
 
 	/**
@@ -170,8 +175,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property backgroundImageAnchorTop
 	 * @since 0.7.0
 	 */
-	open var backgroundImageAnchorTop: Property by Delegates.OnSet(Property(0.5)) {
-		this.invalidateBitmapImage()
+	open val backgroundImageAnchorTop: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 0.5) {
+			this.invalidateBitmapImage()
+		}
 	}
 
 	/**
@@ -179,8 +186,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property backgroundImageAnchorLeft
 	 * @since 0.7.0
 	 */
-	open var backgroundImageAnchorLeft: Property by Delegates.OnSet(Property(0.5)) {
-		this.invalidateBitmapImage()
+	open val backgroundImageAnchorLeft: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 0.5) {
+			this.invalidateBitmapImage()
+		}
 	}
 
 	/**
@@ -188,8 +197,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property backgroundImageTop
 	 * @since 0.7.0
 	 */
-	open var backgroundImageTop: Property by Delegates.OnSet(Property(50.0, PropertyUnit.PC)) {
-		this.invalidateBitmapImage()
+	open val backgroundImageTop: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 50.0, JavaScriptPropertyUnit.PC) {
+			this.invalidateBitmapImage()
+		}
 	}
 
 	/**
@@ -197,8 +208,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property backgroundImageLeft
 	 * @since 0.7.0
 	 */
-	open var backgroundImageLeft: Property by Delegates.OnSet(Property(50.0, PropertyUnit.PC)) {
-		this.invalidateBitmapImage()
+	open val backgroundImageLeft: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 50.0, JavaScriptPropertyUnit.PC) {
+			this.invalidateBitmapImage()
+		}
 	}
 
 	/**
@@ -206,8 +219,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property backgroundImageWidth
 	 * @since 0.7.0
 	 */
-	open var backgroundImageWidth: Property by Delegates.OnSet(Property("auto")) {
-		this.invalidateBitmapImage()
+	open val backgroundImageWidth: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, "auto") {
+			this.invalidateBitmapImage()
+		}
 	}
 
 	/**
@@ -215,8 +230,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property backgroundImageHeight
 	 * @since 0.7.0
 	 */
-	open var backgroundImageHeight: Property by Delegates.OnSet(Property("auto")) {
-		this.invalidateBitmapImage()
+	open val backgroundImageHeight: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, "auto") {
+			this.invalidateBitmapImage()
+		}
 	}
 
 	/**
@@ -224,8 +241,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property backgroundImageTint
 	 * @since 0.7.0
 	 */
-	open var backgroundImageTint: Property by Delegates.OnSet(Property("auto")) { value ->
-		this.wrapper.backgroundImageTint = value.string.toColor()
+	open val backgroundImageTint: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, "auto") { value ->
+			this.wrapper.backgroundImageTint = value.string.toColor()
+		}
 	}
 
 	/**
@@ -233,24 +252,27 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property border
 	 * @since 0.7.0
 	 */
-	open var border: Property by Delegates.OnSet(Property("0 #000")) { value ->
+	open val border: JavaScriptProperty by lazy {
 
-		val components = value.string.split(spaces)
-		if (components.size < 2) {
-			return@OnSet
+		JavaScriptProperty(context, "0 #000") { value ->
+
+			val components = value.string.split(spaces)
+			if (components.size < 2) {
+				return@JavaScriptProperty
+			}
+
+			val width = components[0].trim()
+			val color = components[1].trim()
+
+			this.borderTopWidth.set(width)
+			this.borderTopColor.set(color)
+			this.borderLeftWidth.set(width)
+			this.borderLeftColor.set(color)
+			this.borderRightWidth.set(width)
+			this.borderRightColor.set(color)
+			this.borderBottomWidth.set(width)
+			this.borderBottomColor.set(color)
 		}
-
-		val width = Property.parse(components[0].trim())
-		val color = Property.parse(components[1].trim())
-
-		this.borderTopWidth = width
-		this.borderTopColor = color
-		this.borderLeftWidth = width
-		this.borderLeftColor = color
-		this.borderRightWidth = width
-		this.borderRightColor = color
-		this.borderBottomWidth = width
-		this.borderBottomColor = color
 	}
 
 	/**
@@ -258,15 +280,18 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property borderTop
 	 * @since 0.7.0
 	 */
-	open var borderTop: Property by Delegates.OnSet(Property("0 #000")) { value ->
+	open val borderTop: JavaScriptProperty by lazy {
 
-		val components = value.string.split(spaces)
-		if (components.size < 2) {
-			return@OnSet
+		JavaScriptProperty(context, "0 #000") { value ->
+
+			val components = value.string.split(spaces)
+			if (components.size < 2) {
+				return@JavaScriptProperty
+			}
+
+			this.borderTopWidth.parse(components[0].trim())
+			this.borderTopColor.parse(components[1].trim())
 		}
-
-		this.borderTopWidth = Property.parse(components[0].trim())
-		this.borderTopColor = Property.parse(components[1].trim())
 	}
 
 	/**
@@ -274,15 +299,18 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property borderLeft
 	 * @since 0.7.0
 	 */
-	open var borderLeft: Property by Delegates.OnSet(Property("0 #000")) { value ->
+	open val borderLeft: JavaScriptProperty by lazy {
 
-		val components = value.string.split(spaces)
-		if (components.size < 2) {
-			return@OnSet
+		JavaScriptProperty(context, "0 #000") { value ->
+
+			val components = value.string.split(spaces)
+			if (components.size < 2) {
+				return@JavaScriptProperty
+			}
+
+			this.borderLeftWidth.parse(components[0].trim())
+			this.borderLeftColor.parse(components[1].trim())
 		}
-
-		this.borderLeftWidth = Property.parse(components[0].trim())
-		this.borderLeftColor = Property.parse(components[1].trim())
 	}
 
 	/**
@@ -290,15 +318,18 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property borderRight
 	 * @since 0.7.0
 	 */
-	open var borderRight: Property by Delegates.OnSet(Property("0 #000")) { value ->
+	open val borderRight: JavaScriptProperty by lazy {
 
-		val components = value.string.split(spaces)
-		if (components.size < 2) {
-			return@OnSet
+		JavaScriptProperty(context, "0 #000") { value ->
+
+			val components = value.string.split(spaces)
+			if (components.size < 2) {
+				return@JavaScriptProperty
+			}
+
+			this.borderRightWidth.parse(components[0].trim())
+			this.borderRightColor.parse(components[1].trim())
 		}
-
-		this.borderRightWidth = Property.parse(components[0].trim())
-		this.borderRightColor = Property.parse(components[1].trim())
 	}
 
 	/**
@@ -306,15 +337,18 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property borderBottom
 	 * @since 0.7.0
 	 */
-	open var borderBottom: Property by Delegates.OnSet(Property("0 #000")) { value ->
+	open val borderBottom: JavaScriptProperty by lazy {
 
-		val components = value.string.split(spaces)
-		if (components.size < 2) {
-			return@OnSet
+		JavaScriptProperty(context, "0 #000") { value ->
+
+			val components = value.string.split(spaces)
+			if (components.size < 2) {
+				return@JavaScriptProperty
+			}
+
+			this.borderBottomWidth.parse(components[0].trim())
+			this.borderBottomColor.parse(components[1].trim())
 		}
-
-		this.borderBottomWidth = Property.parse(components[0].trim())
-		this.borderBottomColor = Property.parse(components[1].trim())
 	}
 
 	/**
@@ -322,11 +356,13 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property borderWidth
 	 * @since 0.7.0
 	 */
-	open var borderWidth: Property by Delegates.OnSet(Property(0.0)) { value ->
-		this.borderTopWidth = Property(value.number, value.unit)
-		this.borderLeftWidth = Property(value.number, value.unit)
-		this.borderRightWidth = Property(value.number, value.unit)
-		this.borderBottomWidth = Property(value.number, value.unit)
+	open val borderWidth: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 0.0) { value ->
+			this.borderTopWidth.set(value.number, value.unit)
+			this.borderLeftWidth.set(value.number, value.unit)
+			this.borderRightWidth.set(value.number, value.unit)
+			this.borderBottomWidth.set(value.number, value.unit)
+		}
 	}
 
 	/**
@@ -334,11 +370,13 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property borderColor
 	 * @since 0.7.0
 	 */
-	open var borderColor: Property by Delegates.OnSet(Property("#000")) { value ->
-		this.borderTopColor = Property(value.string)
-		this.borderLeftColor = Property(value.string)
-		this.borderRightColor = Property(value.string)
-		this.borderBottomColor = Property(value.string)
+	open val borderColor: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, "#000") { value ->
+			this.borderTopColor.set(value.string)
+			this.borderLeftColor.set(value.string)
+			this.borderRightColor.set(value.string)
+			this.borderBottomColor.set(value.string)
+		}
 	}
 
 	/**
@@ -346,8 +384,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property borderTopColor
 	 * @since 0.7.0
 	 */
-	open var borderTopColor: Property by Delegates.OnSet(Property("#000")) { value ->
-		this.wrapper.borderTopColor = Color.parse(value.string)
+	open val borderTopColor: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, "#000") { value ->
+			this.wrapper.borderTopColor = Color.parse(value.string)
+		}
 	}
 
 	/**
@@ -355,8 +395,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property borderLeftColor
 	 * @since 0.7.0
 	 */
-	open var borderLeftColor: Property by Delegates.OnSet(Property("#000")) { value ->
-		this.wrapper.borderLeftColor = Color.parse(value.string)
+	open val borderLeftColor: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, "#000") { value ->
+			this.wrapper.borderLeftColor = Color.parse(value.string)
+		}
 	}
 
 	/**
@@ -364,8 +406,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property borderRightColor
 	 * @since 0.7.0
 	 */
-	open var borderRightColor: Property by Delegates.OnSet(Property("#000")) { value ->
-		this.wrapper.borderRightColor = Color.parse(value.string)
+	open val borderRightColor: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, "#000") { value ->
+			this.wrapper.borderRightColor = Color.parse(value.string)
+		}
 	}
 
 	/**
@@ -373,8 +417,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property borderBottomColor
 	 * @since 0.7.0
 	 */
-	open var borderBottomColor: Property by Delegates.OnSet(Property("#000")) { value ->
-		this.wrapper.borderBottomColor = Color.parse(value.string)
+	open val borderBottomColor: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, "#000") { value ->
+			this.wrapper.borderBottomColor = Color.parse(value.string)
+		}
 	}
 
 	/**
@@ -382,8 +428,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property borderTopWidth
 	 * @since 0.7.0
 	 */
-	open var borderTopWidth: Property by Delegates.OnSet(Property(0.0)) { value ->
-		this.layoutNode.borderTop(value)
+	open val borderTopWidth: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 0.0) { value ->
+			this.layoutNode.borderTop(value)
+		}
 	}
 
 	/**
@@ -391,8 +439,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property borderLeftWidth
 	 * @since 0.7.0
 	 */
-	open var borderLeftWidth: Property by Delegates.OnSet(Property(0.0)) { value ->
-		this.layoutNode.borderLeft(value)
+	open val borderLeftWidth: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 0.0) { value ->
+			this.layoutNode.borderLeft(value)
+		}
 	}
 
 	/**
@@ -400,8 +450,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property borderRightWidth
 	 * @since 0.7.0
 	 */
-	open var borderRightWidth: Property by Delegates.OnSet(Property(0.0)) { value ->
-		this.layoutNode.borderRight(value)
+	open val borderRightWidth: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 0.0) { value ->
+			this.layoutNode.borderRight(value)
+		}
 	}
 
 	/**
@@ -409,8 +461,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property borderBottomWidth
 	 * @since 0.7.0
 	 */
-	open var borderBottomWidth: Property by Delegates.OnSet(Property(0.0)) { value ->
-		this.layoutNode.borderBottom(value)
+	open val borderBottomWidth: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 0.0) { value ->
+			this.layoutNode.borderBottom(value)
+		}
 	}
 
 	/**
@@ -418,7 +472,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property minBorderTopWidth
 	 * @since 0.7.0
 	 */
-	open var minBorderTopWidth: Property by Delegates.OnSet(Property(0.0)) {
+	open val minBorderTopWidth: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 0.0) {
+			// TODO
+		}
 	}
 
 	/**
@@ -426,7 +483,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property maxBorderTopWidth
 	 * @since 0.7.0
 	 */
-	open var maxBorderTopWidth: Property by Delegates.OnSet(Property(Double.max)) {
+	open val maxBorderTopWidth: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, Double.max) {
+			// TODO
+		}
 	}
 
 	/**
@@ -434,7 +494,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property minBorderLeftWidth
 	 * @since 0.7.0
 	 */
-	open var minBorderLeftWidth: Property by Delegates.OnSet(Property(0.0)) {
+	open val minBorderLeftWidth: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 0.0) {
+			// TODO
+		}
 	}
 
 	/**
@@ -442,7 +505,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property maxBorderLeftWidth
 	 * @since 0.7.0
 	 */
-	open var maxBorderLeftWidth: Property by Delegates.OnSet(Property(Double.max)) {
+	open val maxBorderLeftWidth: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, Double.max) {
+			// TODO
+		}
 	}
 
 	/**
@@ -450,7 +516,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property minBorderRightWidth
 	 * @since 0.7.0
 	 */
-	open var minBorderRightWidth: Property by Delegates.OnSet(Property(0.0)) {
+	open val minBorderRightWidth: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 0.0) {
+			// TODO
+		}
 	}
 
 	/**
@@ -458,7 +527,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property maxBorderRightWidth
 	 * @since 0.7.0
 	 */
-	open var maxBorderRightWidth: Property by Delegates.OnSet(Property(Double.max)) {
+	open val maxBorderRightWidth: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, Double.max) {
+			// TODO
+		}
 	}
 
 	/**
@@ -466,7 +538,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property minBorderBottomWidth
 	 * @since 0.7.0
 	 */
-	open var minBorderBottomWidth: Property by Delegates.OnSet(Property(0.0)) {
+	open val minBorderBottomWidth: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 0.0) {
+			// TODO
+		}
 	}
 
 	/**
@@ -474,7 +549,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property maxBorderBottomWidth
 	 * @since 0.7.0
 	 */
-	open var maxBorderBottomWidth: Property by Delegates.OnSet(Property(Double.max)) {
+	open val maxBorderBottomWidth: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, Double.max) {
+			// TODO
+		}
 	}
 
 	/**
@@ -482,11 +560,13 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property borderRadius
 	 * @since 0.7.0
 	 */
-	open var borderRadius: Property by Delegates.OnSet(Property(0.0)) { value ->
-		this.borderTopLeftRadius = Property(value.number, value.unit)
-		this.borderTopRightRadius = Property(value.number, value.unit)
-		this.borderBottomLeftRadius = Property(value.number, value.unit)
-		this.borderBottomRightRadius = Property(value.number, value.unit)
+	open val borderRadius: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 0.0) { value ->
+			this.borderTopLeftRadius.set(value.number)
+			this.borderTopRightRadius.set(value.number)
+			this.borderBottomLeftRadius.set(value.number)
+			this.borderBottomRightRadius.set(value.number)
+		}
 	}
 
 	/**
@@ -494,8 +574,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property borderTopLeftRadius
 	 * @since 0.7.0
 	 */
-	open var borderTopLeftRadius: Property by Delegates.OnSet(Property(0.0)) {
-		this.invalidateBorder()
+	open val borderTopLeftRadius: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 0.0) {
+			this.invalidateBorder()
+		}
 	}
 
 	/**
@@ -503,8 +585,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property borderTopRightRadius
 	 * @since 0.7.0
 	 */
-	open var borderTopRightRadius: Property by Delegates.OnSet(Property(0.0)) {
-		this.invalidateBorder()
+	open val borderTopRightRadius: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 0.0) {
+			this.invalidateBorder()
+		}
 	}
 
 	/**
@@ -512,8 +596,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property borderBottomLeftRadius
 	 * @since 0.7.0
 	 */
-	open var borderBottomLeftRadius: Property by Delegates.OnSet(Property(0.0)) {
-		this.invalidateBorder()
+	open val borderBottomLeftRadius: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 0.0) {
+			this.invalidateBorder()
+		}
 	}
 
 	/**
@@ -521,8 +607,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property borderBottomRightRadius
 	 * @since 0.7.0
 	 */
-	open var borderBottomRightRadius: Property by Delegates.OnSet(Property(0.0)) {
-		this.invalidateBorder()
+	open val borderBottomRightRadius: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 0.0) {
+			this.invalidateBorder()
+		}
 	}
 
 	/**
@@ -530,8 +618,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property shadowBlur
 	 * @since 0.7.0
 	 */
-	open var shadowBlur: Property by Delegates.OnSet(Property(0.0)) {
-		this.invalidateShadow()
+	open val shadowBlur: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 0.0) {
+			this.invalidateShadow()
+		}
 	}
 
 	/**
@@ -539,8 +629,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property shadowColor
 	 * @since 0.7.0
 	 */
-	open var shadowColor: Property by Delegates.OnSet(Property("#000")) {
-		this.invalidateShadow()
+	open val shadowColor: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, "#000") {
+			this.invalidateShadow()
+		}
 	}
 
 	/**
@@ -548,8 +640,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property shadowOffsetTop
 	 * @since 0.7.0
 	 */
-	open var shadowOffsetTop: Property by Delegates.OnSet(Property(0.0)) {
-		this.invalidateShadow()
+	open val shadowOffsetTop: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 0.0) {
+			this.invalidateShadow()
+		}
 	}
 
 	/**
@@ -557,8 +651,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property shadowOffsetLeft
 	 * @since 0.7.0
 	 */
-	open var shadowOffsetLeft: Property by Delegates.OnSet(Property(0.0)) {
-		this.invalidateShadow()
+	open val shadowOffsetLeft: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 0.0) {
+			this.invalidateShadow()
+		}
 	}
 
 	/**
@@ -566,8 +662,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property top
 	 * @since 0.7.0
 	 */
-	open var top: Property by Delegates.OnSet(Property("auto")) { value ->
-		this.layoutNode.top(value)
+	open val top: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, "auto") { value ->
+			this.layoutNode.top(value)
+		}
 	}
 
 	/**
@@ -575,8 +673,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property left
 	 * @since 0.7.0
 	 */
-	open var left: Property by Delegates.OnSet(Property("auto")) { value ->
-		this.layoutNode.left(value)
+	open val left: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, "auto") { value ->
+			this.layoutNode.left(value)
+		}
 	}
 
 	/**
@@ -584,8 +684,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property right
 	 * @since 0.7.0
 	 */
-	open var right: Property by Delegates.OnSet(Property("auto")) { value ->
-		this.layoutNode.right(value)
+	open val right: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, "auto") { value ->
+			this.layoutNode.right(value)
+		}
 	}
 
 	/**
@@ -593,8 +695,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property bottom
 	 * @since 0.7.0
 	 */
-	open var bottom: Property by Delegates.OnSet(Property("auto")) { value ->
-		this.layoutNode.bottom(value)
+	open val bottom: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, "auto") { value ->
+			this.layoutNode.bottom(value)
+		}
 	}
 
 	/**
@@ -602,8 +706,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property minTop
 	 * @since 0.7.0
 	 */
-	open var minTop: Property by Delegates.OnSet(Property(Double.min)) { value ->
-		this.layoutNode.minTop(value.number)
+	open val minTop: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, Double.min) { value ->
+			this.layoutNode.minTop(value.number)
+		}
 	}
 
 	/**
@@ -611,8 +717,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property maxTop
 	 * @since 0.7.0
 	 */
-	open var maxTop: Property by Delegates.OnSet(Property(Double.max)) { value ->
-		this.layoutNode.maxTop(value.number)
+	open val maxTop: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, Double.max) { value ->
+			this.layoutNode.maxTop(value.number)
+		}
 	}
 
 	/**
@@ -620,8 +728,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property minLeft
 	 * @since 0.7.0
 	 */
-	open var minLeft: Property by Delegates.OnSet(Property(Double.min)) { value ->
-		this.layoutNode.minLeft(value.number)
+	open val minLeft: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, Double.min) { value ->
+			this.layoutNode.minLeft(value.number)
+		}
 	}
 
 	/**
@@ -629,8 +739,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property maxLeft
 	 * @since 0.7.0
 	 */
-	open var maxLeft: Property by Delegates.OnSet(Property(Double.max)) { value ->
-		this.layoutNode.maxLeft(value.number)
+	open val maxLeft: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, Double.max) { value ->
+			this.layoutNode.maxLeft(value.number)
+		}
 	}
 
 	/**
@@ -638,8 +750,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property minRight
 	 * @since 0.7.0
 	 */
-	open var minRight: Property by Delegates.OnSet(Property(Double.min)) { value ->
-		this.layoutNode.minRight(value.number)
+	open val minRight: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, Double.min) { value ->
+			this.layoutNode.minRight(value.number)
+		}
 	}
 
 	/**
@@ -647,8 +761,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property maxRight
 	 * @since 0.7.0
 	 */
-	open var maxRight: Property by Delegates.OnSet(Property(Double.max)) { value ->
-		this.layoutNode.maxRight(value.number)
+	open val maxRight: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, Double.max) { value ->
+			this.layoutNode.maxRight(value.number)
+		}
 	}
 
 	/**
@@ -656,8 +772,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property minBottom
 	 * @since 0.7.0
 	 */
-	open var minBottom: Property by Delegates.OnSet(Property(Double.min)) { value ->
-		this.layoutNode.minBottom(value.number)
+	open val minBottom: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, Double.min) { value ->
+			this.layoutNode.minBottom(value.number)
+		}
 	}
 
 	/**
@@ -665,8 +783,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property maxBottom
 	 * @since 0.7.0
 	 */
-	open var maxBottom: Property by Delegates.OnSet(Property(Double.max)) { value ->
-		this.layoutNode.maxBottom(value.number)
+	open val maxBottom: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, Double.max) { value ->
+			this.layoutNode.maxBottom(value.number)
+		}
 	}
 
 	/**
@@ -674,8 +794,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property anchorTop
 	 * @since 0.7.0
 	 */
-	open var anchorTop: Property by Delegates.OnSet(Property(0.0)) { value ->
-		this.layoutNode.anchorTop(value)
+	open val anchorTop: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 0.0) { value ->
+			this.layoutNode.anchorTop(value)
+		}
 	}
 
 	/**
@@ -683,8 +805,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property anchorLeft
 	 * @since 0.7.0
 	 */
-	open var anchorLeft: Property by Delegates.OnSet(Property(0.0)) { value ->
-		this.layoutNode.anchorLeft(value)
+	open val anchorLeft: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 0.0) { value ->
+			this.layoutNode.anchorLeft(value)
+		}
 	}
 
 	/**
@@ -692,8 +816,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property width
 	 * @since 0.7.0
 	 */
-	open var width: Property by Delegates.OnSet(Property("fill")) { value ->
-		this.layoutNode.width(value)
+	open val width: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, "fill") { value ->
+			this.layoutNode.width(value)
+		}
 	}
 
 	/**
@@ -701,8 +827,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property height
 	 * @since 0.7.0
 	 */
-	open var height: Property by Delegates.OnSet(Property("fill")) { value ->
-		this.layoutNode.height(value)
+	open val height: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, "fill") { value ->
+			this.layoutNode.height(value)
+		}
 	}
 
 	/**
@@ -710,8 +838,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property minWidth
 	 * @since 0.7.0
 	 */
-	open var minWidth: Property by Delegates.OnSet(Property(0.0)) { value ->
-		this.layoutNode.minWidth(value.number)
+	open val minWidth: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 0.0) { value ->
+			this.layoutNode.minWidth(value.number)
+		}
 	}
 
 	/**b
@@ -719,8 +849,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property maxWidth
 	 * @since 0.7.0
 	 */
-	open var maxWidth: Property by Delegates.OnSet(Property(Double.max)) { value ->
-		this.layoutNode.maxWidth(value.number)
+	open val maxWidth: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, Double.max) { value ->
+			this.layoutNode.maxWidth(value.number)
+		}
 	}
 
 	/**
@@ -728,8 +860,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property minHeight
 	 * @since 0.7.0
 	 */
-	open var minHeight: Property by Delegates.OnSet(Property(0.0)) { value ->
-		this.layoutNode.minHeight(value.number)
+	open val minHeight: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 0.0) { value ->
+			this.layoutNode.minHeight(value.number)
+		}
 	}
 
 	/**
@@ -737,8 +871,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property maxHeight
 	 * @since 0.7.0
 	 */
-	open var maxHeight: Property by Delegates.OnSet(Property(Double.max)) { value ->
-		this.layoutNode.maxHeight(value.number)
+	open val maxHeight: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, Double.max) { value ->
+			this.layoutNode.maxHeight(value.number)
+		}
 	}
 
 	/**
@@ -746,8 +882,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property expand
 	 * @since 0.7.0
 	 */
-	open var expand: Property by Delegates.OnSet(Property(0.0)) { value ->
-		this.layoutNode.expand(value.number)
+	open val expand: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 0.0) { value ->
+			this.layoutNode.expand(value.number)
+		}
 	}
 
 	/**
@@ -755,8 +893,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property shrink
 	 * @since 0.7.0
 	 */
-	open var shrink: Property by Delegates.OnSet(Property(0.0)) { value ->
-		this.layoutNode.shrink(value.number)
+	open val shrink: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 0.0) { value ->
+			this.layoutNode.shrink(value.number)
+		}
 	}
 
 	/**
@@ -764,8 +904,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property contentTop
 	 * @since 0.7.0
 	 */
-	open var contentTop: Property by Delegates.OnSet(Property(0.0)) { value ->
-		this.layoutNode.contentTop(value)
+	open val contentTop: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 0.0) { value ->
+			this.layoutNode.contentTop(value)
+		}
 	}
 
 	/**
@@ -773,8 +915,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property contentLeft
 	 * @since 0.7.0
 	 */
-	open var contentLeft: Property by Delegates.OnSet(Property(0.0)) { value ->
-		this.layoutNode.contentLeft(value)
+	open val contentLeft: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 0.0) { value ->
+			this.layoutNode.contentLeft(value)
+		}
 	}
 
 	/**
@@ -782,8 +926,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property contentWidth
 	 * @since 0.7.0
 	 */
-	open var contentWidth: Property by Delegates.OnSet(Property("auto")) { value ->
-		this.layoutNode.contentWidth(value)
+	open val contentWidth: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, "auto") { value ->
+			this.layoutNode.contentWidth(value)
+		}
 	}
 
 	/**
@@ -791,8 +937,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property contentHeight
 	 * @since 0.7.0
 	 */
-	open var contentHeight: Property by Delegates.OnSet(Property("auto")) { value ->
-		this.layoutNode.contentHeight(value)
+	open val contentHeight: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, "auto") { value ->
+			this.layoutNode.contentHeight(value)
+		}
 	}
 
 	/**
@@ -800,8 +948,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property contentInsetTop
 	 * @since 0.7.0
 	 */
-	open var contentInsetTop: Property by Delegates.OnSet(Property(0.0)) { value ->
-		this.scrollableView?.contentInsetTop = Convert.toPx(value.number).toInt()
+	open val contentInsetTop: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 0.0) { value ->
+			this.scrollableView?.contentInsetTop = Convert.toPx(value.number).toInt()
+		}
 	}
 
 	/**
@@ -809,8 +959,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property contentInsetLeft
 	 * @since 0.7.0
 	 */
-	open var contentInsetLeft: Property by Delegates.OnSet(Property(0.0)) { value ->
-		this.scrollableView?.contentInsetLeft = Convert.toPx(value.number).toInt()
+	open val contentInsetLeft: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 0.0) { value ->
+			this.scrollableView?.contentInsetLeft = Convert.toPx(value.number).toInt()
+		}
 	}
 
 	/**
@@ -818,8 +970,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property contentInsetRight
 	 * @since 0.7.0
 	 */
-	open var contentInsetRight: Property by Delegates.OnSet(Property(0.0)) { value ->
-		this.scrollableView?.contentInsetRight = Convert.toPx(value.number).toInt()
+	open val contentInsetRight: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 0.0) { value ->
+			this.scrollableView?.contentInsetRight = Convert.toPx(value.number).toInt()
+		}
 	}
 
 	/**
@@ -827,8 +981,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property contentInsetBottom
 	 * @since 0.7.0
 	 */
-	open var contentInsetBottom: Property by Delegates.OnSet(Property(0.0)) { value ->
-		this.scrollableView?.contentInsetBottom = Convert.toPx(value.number).toInt()
+	open val contentInsetBottom: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 0.0) { value ->
+			this.scrollableView?.contentInsetBottom = Convert.toPx(value.number).toInt()
+		}
 	}
 
 	/**
@@ -836,8 +992,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property contentDirection
 	 * @since 0.7.0
 	 */
-	open var contentDirection: Property by Delegates.OnSet(Property("vertical")) { value ->
-		this.layoutNode.contentDirection(value)
+	open val contentDirection: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, "vertical") { value ->
+			this.layoutNode.contentDirection(value)
+		}
 	}
 
 	/**
@@ -845,8 +1003,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property contentLocation
 	 * @since 0.7.0
 	 */
-	open var contentLocation: Property by Delegates.OnSet(Property("start")) { value ->
-		this.layoutNode.contentLocation(value)
+	open val contentLocation: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, "start") { value ->
+			this.layoutNode.contentLocation(value)
+		}
 	}
 
 	/**
@@ -854,8 +1014,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property contentAlignment
 	 * @since 0.7.0
 	 */
-	open var contentAlignment: Property by Delegates.OnSet(Property("start")) { value ->
-		this.layoutNode.contentAlignment(value)
+	open val contentAlignment: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, "start") { value ->
+			this.layoutNode.contentAlignment(value)
+		}
 	}
 
 	/**
@@ -863,8 +1025,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property scrollable
 	 * @since 0.7.0
 	 */
-	open var scrollable: Property by Delegates.OnSet(Property(false)) { value ->
-		this.scrollableView?.scrollable = value.boolean
+	open val scrollable: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, false) { value ->
+			this.scrollableView?.scrollable = value.boolean
+		}
 	}
 
 	/**
@@ -872,8 +1036,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property scrollbars
 	 * @since 0.7.0
 	 */
-	open var scrollbars: Property by Delegates.OnSet(Property(false)) { value ->
-		this.scrollableView?.scrollbars = Scrollbars.get(value)
+	open val scrollbars: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, false) { value ->
+			this.scrollableView?.scrollbars = Scrollbars.get(value)
+		}
 	}
 
 	/**
@@ -881,8 +1047,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property overscroll
 	 * @since 0.7.0
 	 */
-	open var overscroll: Property by Delegates.OnSet(Property("auto")) { value ->
-		this.scrollableView?.overscroll = Overscroll.get(value)
+	open val overscroll: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, "auto") { value ->
+			this.scrollableView?.overscroll = Overscroll.get(value)
+		}
 	}
 
 	/**
@@ -890,8 +1058,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property momentum
 	 * @since 0.7.0
 	 */
-	open var momentum: Property by Delegates.OnSet(Property(true)) { value ->
-		this.scrollableView?.momentum = value.boolean
+	open val momentum: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, true) { value ->
+			this.scrollableView?.momentum = value.boolean
+		}
 	}
 
 	/**
@@ -899,8 +1069,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property scrollTop
 	 * @since 0.7.0
 	 */
-	open var scrollTop: Property by Delegates.OnSet(Property(0.0)) { value ->
-		this.scrollableView?.scrollTop = Convert.toPx(value.number).toInt()
+	open val scrollTop: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 0.0) { value ->
+			this.scrollableView?.scrollTop = Convert.toPx(value.number).toInt()
+		}
 	}
 
 	/**
@@ -908,8 +1080,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property scrollLeft
 	 * @since 0.7.0
 	 */
-	open var scrollLeft: Property by Delegates.OnSet(Property(0.0)) { value ->
-		this.scrollableView?.scrollLeft = Convert.toPx(value.number).toInt()
+	open val scrollLeft: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 0.0) { value ->
+			this.scrollableView?.scrollLeft = Convert.toPx(value.number).toInt()
+		}
 	}
 
 	/**
@@ -917,27 +1091,31 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property scrolling
 	 * @since 0.7.0
 	 */
-	public var scrolling: Property = Property(false)
-		private set
+	public val scrolling: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, false)
+	}
 
 	/**
 	 * Whether this view is dragging.
 	 * @property dragging
 	 * @since 0.7.0
 	 */
-	public var dragging: Property = Property(false)
-		private set
+	public val dragging: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, false)
+	}
 
 	/**
 	 * The view's margin.
 	 * @property margin
 	 * @since 0.7.0
 	 */
-	open var margin: Property by Delegates.OnSet(Property(0.0)) { value ->
-		this.marginTop = Property(value.number, value.unit)
-		this.marginLeft = Property(value.number, value.unit)
-		this.marginRight = Property(value.number, value.unit)
-		this.marginBottom = Property(value.number, value.unit)
+	open val margin: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 0.0) { value ->
+			this.marginTop.set(value.number, value.unit)
+			this.marginLeft.set(value.number, value.unit)
+			this.marginRight.set(value.number, value.unit)
+			this.marginBottom.set(value.number, value.unit)
+		}
 	}
 
 	/**
@@ -945,8 +1123,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property marginTop
 	 * @since 0.7.0
 	 */
-	open var marginTop: Property by Delegates.OnSet(Property(0.0)) { value ->
-		this.layoutNode.marginTop(value)
+	open val marginTop: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 0.0) { value ->
+			this.layoutNode.marginTop(value)
+		}
 	}
 
 	/**
@@ -954,8 +1134,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property marginLeft
 	 * @since 0.7.0
 	 */
-	open var marginLeft: Property by Delegates.OnSet(Property(0.0)) { value ->
-		this.layoutNode.marginLeft(value)
+	open val marginLeft: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 0.0) { value ->
+			this.layoutNode.marginLeft(value)
+		}
 	}
 
 	/**
@@ -963,8 +1145,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property marginRight
 	 * @since 0.7.0
 	 */
-	open var marginRight: Property by Delegates.OnSet(Property(0.0)) { value ->
-		this.layoutNode.marginRight(value)
+	open val marginRight: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 0.0) { value ->
+			this.layoutNode.marginRight(value)
+		}
 	}
 
 	/**
@@ -972,8 +1156,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property marginBottom
 	 * @since 0.7.0
 	 */
-	open var marginBottom: Property by Delegates.OnSet(Property(0.0)) { value ->
-		this.layoutNode.marginBottom(value)
+	open val marginBottom: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 0.0) { value ->
+			this.layoutNode.marginBottom(value)
+		}
 	}
 
 	/**
@@ -981,8 +1167,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property minMarginTop
 	 * @since 0.7.0
 	 */
-	open var minMarginTop: Property by Delegates.OnSet(Property(Double.min)) { value ->
-		this.layoutNode.minMarginTop(value.number)
+	open val minMarginTop: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, Double.min) { value ->
+			this.layoutNode.minMarginTop(value.number)
+		}
 	}
 
 	/**
@@ -990,8 +1178,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property maxMarginTop
 	 * @since 0.7.0
 	 */
-	open var maxMarginTop: Property by Delegates.OnSet(Property(Double.max)) { value ->
-		this.layoutNode.maxMarginTop(value.number)
+	open val maxMarginTop: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, Double.max) { value ->
+			this.layoutNode.maxMarginTop(value.number)
+		}
 	}
 
 	/**
@@ -999,8 +1189,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property minMarginLeft
 	 * @since 0.7.0
 	 */
-	open var minMarginLeft: Property by Delegates.OnSet(Property(Double.min)) { value ->
-		this.layoutNode.minMarginLeft(value.number)
+	open val minMarginLeft: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, Double.min) { value ->
+			this.layoutNode.minMarginLeft(value.number)
+		}
 	}
 
 	/**
@@ -1008,8 +1200,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property maxMarginLeft
 	 * @since 0.7.0
 	 */
-	open var maxMarginLeft: Property by Delegates.OnSet(Property(Double.max)) { value ->
-		this.layoutNode.maxMarginLeft(value.number)
+	open val maxMarginLeft: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, Double.max) { value ->
+			this.layoutNode.maxMarginLeft(value.number)
+		}
 	}
 
 	/**
@@ -1017,8 +1211,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property minMarginRight
 	 * @since 0.7.0
 	 */
-	open var minMarginRight: Property by Delegates.OnSet(Property(Double.min)) { value ->
-		this.layoutNode.minMarginRight(value.number)
+	open val minMarginRight: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, Double.min) { value ->
+			this.layoutNode.minMarginRight(value.number)
+		}
 	}
 
 	/**
@@ -1026,8 +1222,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property maxMarginRight
 	 * @since 0.7.0
 	 */
-	open var maxMarginRight: Property by Delegates.OnSet(Property(Double.max)) { value ->
-		this.layoutNode.maxMarginRight(value.number)
+	open val maxMarginRight: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, Double.max) { value ->
+			this.layoutNode.maxMarginRight(value.number)
+		}
 	}
 
 	/**
@@ -1035,8 +1233,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property minMarginBottom
 	 * @since 0.7.0
 	 */
-	open var minMarginBottom: Property by Delegates.OnSet(Property(Double.min)) { value ->
-		this.layoutNode.minMarginBottom(value.number)
+	open val minMarginBottom: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, Double.min) { value ->
+			this.layoutNode.minMarginBottom(value.number)
+		}
 	}
 
 	/**
@@ -1044,8 +1244,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property maxMarginBottom
 	 * @since 0.7.0
 	 */
-	open var maxMarginBottom: Property by Delegates.OnSet(Property(Double.max)) { value ->
-		this.layoutNode.maxMarginBottom(value.number)
+	open val maxMarginBottom: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, Double.max) { value ->
+			this.layoutNode.maxMarginBottom(value.number)
+		}
 	}
 
 	/**
@@ -1053,11 +1255,13 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property padding
 	 * @since 0.7.0
 	 */
-	open var padding: Property by Delegates.OnSet(Property(0.0)) { value ->
-		this.paddingTop = Property(value.number, value.unit)
-		this.paddingLeft = Property(value.number, value.unit)
-		this.paddingRight = Property(value.number, value.unit)
-		this.paddingBottom = Property(value.number, value.unit)
+	open val padding: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 0.0) { value ->
+			this.paddingTop.set(value.number, value.unit)
+			this.paddingLeft.set(value.number, value.unit)
+			this.paddingRight.set(value.number, value.unit)
+			this.paddingBottom.set(value.number, value.unit)
+		}
 	}
 
 	/**
@@ -1065,8 +1269,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property paddingTop
 	 * @since 0.7.0
 	 */
-	open var paddingTop: Property by Delegates.OnSet(Property(0.0)) { value ->
-		this.layoutNode.paddingTop(value)
+	open val paddingTop: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 0.0) { value ->
+			this.layoutNode.paddingTop(value)
+		}
 	}
 
 	/**
@@ -1074,8 +1280,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property paddingLeft
 	 * @since 0.7.0
 	 */
-	open var paddingLeft: Property by Delegates.OnSet(Property(0.0)) { value ->
-		this.layoutNode.paddingLeft(value)
+	open val paddingLeft: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 0.0) { value ->
+			this.layoutNode.paddingLeft(value)
+		}
 	}
 
 	/**
@@ -1083,8 +1291,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property paddingRight
 	 * @since 0.7.0
 	 */
-	open var paddingRight: Property by Delegates.OnSet(Property(0.0)) { value ->
-		this.layoutNode.paddingRight(value)
+	open val paddingRight: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 0.0) { value ->
+			this.layoutNode.paddingRight(value)
+		}
 	}
 
 	/**
@@ -1092,8 +1302,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property paddingBottom
 	 * @since 0.7.0
 	 */
-	open var paddingBottom: Property by Delegates.OnSet(Property(0.0)) { value ->
-		this.layoutNode.paddingBottom(value)
+	open val paddingBottom: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 0.0) { value ->
+			this.layoutNode.paddingBottom(value)
+		}
 	}
 
 	/**
@@ -1101,8 +1313,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property minPaddingTop
 	 * @since 0.7.0
 	 */
-	open var minPaddingTop: Property by Delegates.OnSet(Property(0.0)) { value ->
-		this.layoutNode.minPaddingTop(value.number)
+	open val minPaddingTop: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 0.0) { value ->
+			this.layoutNode.minPaddingTop(value.number)
+		}
 	}
 
 	/**
@@ -1110,8 +1324,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property maxPaddingTop
 	 * @since 0.7.0
 	 */
-	open var maxPaddingTop: Property by Delegates.OnSet(Property(Double.max)) { value ->
-		this.layoutNode.maxPaddingTop(value.number)
+	open val maxPaddingTop: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, Double.max) { value ->
+			this.layoutNode.maxPaddingTop(value.number)
+		}
 	}
 
 	/**
@@ -1119,8 +1335,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property minPaddingLeft
 	 * @since 0.7.0
 	 */
-	open var minPaddingLeft: Property by Delegates.OnSet(Property(0.0)) { value ->
-		this.layoutNode.minPaddingLeft(value.number)
+	open val minPaddingLeft: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 0.0) { value ->
+			this.layoutNode.minPaddingLeft(value.number)
+		}
 	}
 
 	/**
@@ -1128,8 +1346,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property maxPaddingLeft
 	 * @since 0.7.0
 	 */
-	open var maxPaddingLeft: Property by Delegates.OnSet(Property(Double.max)) { value ->
-		this.layoutNode.maxPaddingLeft(value.number)
+	open val maxPaddingLeft: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, Double.max) { value ->
+			this.layoutNode.maxPaddingLeft(value.number)
+		}
 	}
 
 	/**
@@ -1137,8 +1357,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property minPaddingRight
 	 * @since 0.7.0
 	 */
-	open var minPaddingRight: Property by Delegates.OnSet(Property(0.0)) { value ->
-		this.layoutNode.minPaddingRight(value.number)
+	open val minPaddingRight: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 0.0) { value ->
+			this.layoutNode.minPaddingRight(value.number)
+		}
 	}
 
 	/**
@@ -1146,8 +1368,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property maxPaddingRight
 	 * @since 0.7.0
 	 */
-	open var maxPaddingRight: Property by Delegates.OnSet(Property(Double.max)) { value ->
-		this.layoutNode.maxPaddingRight(value.number)
+	open val maxPaddingRight: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, Double.max) { value ->
+			this.layoutNode.maxPaddingRight(value.number)
+		}
 	}
 
 	/**
@@ -1155,8 +1379,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property minPaddingBottom
 	 * @since 0.7.0
 	 */
-	open var minPaddingBottom: Property by Delegates.OnSet(Property(0.0)) { value ->
-		this.layoutNode.minPaddingBottom(value.number)
+	open val minPaddingBottom: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 0.0) { value ->
+			this.layoutNode.minPaddingBottom(value.number)
+		}
 	}
 
 	/**
@@ -1164,8 +1390,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property maxPaddingBottom
 	 * @since 0.7.0
 	 */
-	open var maxPaddingBottom: Property by Delegates.OnSet(Property(Double.max)) { value ->
-		this.layoutNode.maxPaddingBottom(value.number)
+	open val maxPaddingBottom: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, Double.max) { value ->
+			this.layoutNode.maxPaddingBottom(value.number)
+		}
 	}
 
 	/**
@@ -1173,8 +1401,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property originX
 	 * @since 0.7.0
 	 */
-	open var originX: Property by Delegates.OnSet(Property(0.5)) {
-		this.invalidateTransform()
+	open val originX: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 0.5) {
+			this.invalidateTransform()
+		}
 	}
 
 	/**
@@ -1182,8 +1412,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property originY
 	 * @since 0.7.0
 	 */
-	open var originY: Property by Delegates.OnSet(Property(0.5)) {
-		this.invalidateTransform()
+	open val originY: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 0.5) {
+			this.invalidateTransform()
+		}
 	}
 
 	/**
@@ -1191,8 +1423,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property originZ
 	 * @since 0.7.0
 	 */
-	open var originZ: Property by Delegates.OnSet(Property(0.0)) {
-		this.invalidateTransform()
+	open val originZ: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 0.0) {
+			this.invalidateTransform()
+		}
 	}
 
 	/**
@@ -1200,8 +1434,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property translationX
 	 * @since 0.7.0
 	 */
-	open var translationX: Property by Delegates.OnSet(Property(0.0)) {
-		this.invalidateTransform()
+	open val translationX: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 0.0) {
+			this.invalidateTransform()
+		}
 	}
 
 	/**
@@ -1209,8 +1445,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property translationY
 	 * @since 0.7.0
 	 */
-	open var translationY: Property by Delegates.OnSet(Property(0.0)) {
-		this.invalidateTransform()
+	open val translationY: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 0.0) {
+			this.invalidateTransform()
+		}
 	}
 
 	/**
@@ -1219,8 +1457,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	open var translationZ: Property by Delegates.OnSet(Property(0.0)) {
-		this.invalidateTransform()
+	open val translationZ: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 0.0) {
+			this.invalidateTransform()
+		}
 	}
 
 	/**
@@ -1228,8 +1468,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property rotationX
 	 * @since 0.7.0
 	 */
-	open var rotationX: Property by Delegates.OnSet(Property(0.0)) {
-		this.invalidateTransform()
+	open val rotationX: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 0.0) {
+			this.invalidateTransform()
+		}
 	}
 
 	/**
@@ -1237,8 +1479,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property rotationY
 	 * @since 0.7.0
 	 */
-	open var rotationY: Property by Delegates.OnSet(Property(0.0)) {
-		this.invalidateTransform()
+	open val rotationY: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 0.0) {
+			this.invalidateTransform()
+		}
 	}
 
 	/**
@@ -1246,8 +1490,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property rotationZ
 	 * @since 0.7.0
 	 */
-	open var rotationZ: Property by Delegates.OnSet(Property(0.0)) {
-		this.invalidateTransform()
+	open val rotationZ: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 0.0) {
+			this.invalidateTransform()
+		}
 	}
 
 	/**
@@ -1255,8 +1501,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property scaleX
 	 * @since 0.7.0
 	 */
-	open var scaleX: Property by Delegates.OnSet(Property(1.0)) {
-		this.invalidateTransform()
+	open val scaleX: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 1.0) {
+			this.invalidateTransform()
+		}
 	}
 
 	/**
@@ -1264,8 +1512,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property scaleY
 	 * @since 0.7.0
 	 */
-	open var scaleY: Property by Delegates.OnSet(Property(1.0)) {
-		this.invalidateTransform()
+	open val scaleY: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 1.0) {
+			this.invalidateTransform()
+		}
 	}
 
 	/**
@@ -1273,8 +1523,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property scaleZ
 	 * @since 0.7.0
 	 */
-	open var scaleZ: Property by Delegates.OnSet(Property(1.0)) {
-		this.invalidateTransform()
+	open val scaleZ: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 1.0) {
+			this.invalidateTransform()
+		}
 	}
 
 	/**
@@ -1282,10 +1534,12 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property zIndex
 	 * @since 0.7.0
 	 */
-	open var zIndex: Property by Delegates.OnSet(Property(0.0)) {
-		val parent = this.parent
-		if (parent != null) {
-			parent.invalidateOrder()
+	open val zIndex: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 0.0) {
+			val parent = this.parent
+			if (parent != null) {
+				parent.invalidateOrder()
+			}
 		}
 	}
 
@@ -1294,8 +1548,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property zoomable
 	 * @since 0.7.0
 	 */
-	open var zoomable: Property by Delegates.OnSet(Property(false)) { value ->
-		this.scrollableView?.zoomable = value.boolean
+	open val zoomable: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, false) { value ->
+			this.scrollableView?.zoomable = value.boolean
+		}
 	}
 
 	/**
@@ -1303,8 +1559,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property minZoom
 	 * @since 0.7.0
 	 */
-	open var minZoom: Property by Delegates.OnSet(Property(1.0)) { value ->
-		this.scrollableView?.minZoom = value.number.toFloat()
+	open val minZoom: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 1.0) { value ->
+			this.scrollableView?.minZoom = value.number.toFloat()
+		}
 	}
 
 	/**
@@ -1312,8 +1570,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property maxZoom
 	 * @since 0.7.0
 	 */
-	open var maxZoom: Property by Delegates.OnSet(Property(1.0)) { value ->
-		this.scrollableView?.maxZoom = value.number.toFloat()
+	open val maxZoom: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 1.0) { value ->
+			this.scrollableView?.maxZoom = value.number.toFloat()
+		}
 	}
 
 	/**
@@ -1330,8 +1590,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property touchable
 	 * @since 0.7.0
 	 */
-	open var touchable: Property by Delegates.OnSet(Property(true)) { value ->
-		this.wrapper.touchable = value.boolean
+	open val touchable: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, true) { value ->
+			this.wrapper.touchable = value.boolean
+		}
 	}
 
 	/**
@@ -1339,38 +1601,48 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property touchOffsetTop
 	 * @since 0.7.0
 	 */
-	open var touchOffsetTop: Property = Property(0.0)
+	open val touchOffsetTop: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 0.0)
+	}
 
 	/**
 	 * The left offset for this view touchable area.
 	 * @property touchOffsetLeft
 	 * @since 0.7.0
 	 */
-	open var touchOffsetLeft: Property = Property(0.0)
+	open val touchOffsetLeft: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 0.0)
+	}
 
 	/**
 	 * The right offset for this view touchable area.
 	 * @property touchOffsetRight
 	 * @since 0.7.0
 	 */
-	open var touchOffsetRight: Property = Property(0.0)
+	open val touchOffsetRight: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 0.0)
+	}
 
 	/**
 	 * The bottom offset for this view touchable area.
 	 * @property touchOffsetBottom
 	 * @since 0.7.0
 	 */
-	open var touchOffsetBottom: Property = Property(0.0)
+	open val touchOffsetBottom: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 0.0)
+	}
 
 	/**
 	 * The view's visibility status.
 	 * @property visible
 	 * @since 0.7.0
 	 */
-	open var visible: Property by Delegates.OnSet(Property(true)) { value ->
-		this.stylerNode.visible = value.boolean
-		this.layoutNode.visible = value.boolean
-		this.wrapper.visible = value.boolean
+	open val visible: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, true) { value ->
+			this.stylerNode.visible = value.boolean
+			this.layoutNode.visible = value.boolean
+			this.wrapper.visible = value.boolean
+		}
 	}
 
 	/**
@@ -1378,8 +1650,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property opacity
 	 * @since 0.7.0
 	 */
-	open var opacity: Property by Delegates.OnSet(Property(1.0)) { value ->
-		this.wrapper.alpha = value.number.toFloat()
+	open val opacity: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 1.0) { value ->
+			this.wrapper.alpha = value.number.toFloat()
+		}
 	}
 
 	/**
@@ -1387,8 +1661,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property drawable
 	 * @since 0.7.0
 	 */
-	open var drawable: Property by Delegates.OnSet(Property(false)) { value ->
-		this.wrapper.drawable = value.boolean
+	open val drawable: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, false) { value ->
+			this.wrapper.drawable = value.boolean
+		}
 	}
 
 	/**
@@ -1396,8 +1672,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property clipped
 	 * @since 0.7.0
 	 */
-	open var clipped: Property by Delegates.OnSet(Property(true)) { value ->
-		this.wrapper.clipped = value.boolean
+	open val clipped: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, true) { value ->
+			this.wrapper.clipped = value.boolean
+		}
 	}
 
 	/**
@@ -1405,8 +1683,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property paged
 	 * @since 0.7.0
 	 */
-	open var paged: Property by Delegates.OnSet(Property(false)) { value ->
-		this.scrollableView?.paged = value.boolean
+	open val paged: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, false) { value ->
+			this.scrollableView?.paged = value.boolean
+		}
 	}
 
 	/**
@@ -1414,160 +1694,180 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	public var measuredTop: Property? = null
-		private set
+	public val measuredTop: JavaScriptProperty by lazy {
+		JavaScriptProperty(context)
+	}
 
 	/**
 	 * @property measuredLeft
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	public var measuredLeft: Property? = null
-		private set
+	public val measuredLeft: JavaScriptProperty by lazy {
+		JavaScriptProperty(context)
+	}
 
 	/**
 	 * @property measuredWidth
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	public var measuredWidth: Property? = null
-		private set
+	public val measuredWidth: JavaScriptProperty by lazy {
+		JavaScriptProperty(context)
+	}
 
 	/**
 	 * @property measuredHeight
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	public var measuredHeight: Property? = null
-		private set
+	public val measuredHeight: JavaScriptProperty by lazy {
+		JavaScriptProperty(context)
+	}
 
 	/**
 	 * @property measuredInnerWidth
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	public var measuredInnerWidth: Property? = null
-		private set
+	public val measuredInnerWidth: JavaScriptProperty by lazy {
+		JavaScriptProperty(context)
+	}
 
 	/**
 	 * @property measuredInnerHeight
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	public var measuredInnerHeight: Property? = null
-		private set
+	public val measuredInnerHeight: JavaScriptProperty by lazy {
+		JavaScriptProperty(context)
+	}
 
 	/**
 	 * @property measuredContentWidth
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	public var measuredContentWidth: Property? = null
-		private set
+	public val measuredContentWidth: JavaScriptProperty by lazy {
+		JavaScriptProperty(context)
+	}
 
 	/**
 	 * @property measuredContentHeight
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	public var measuredContentHeight: Property? = null
-		private set
+	public val measuredContentHeight: JavaScriptProperty by lazy {
+		JavaScriptProperty(context)
+	}
 
 	/**
 	 * @property measuredMarginTop
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	public var measuredMarginTop: Property? = null
-		private set
+	public val measuredMarginTop: JavaScriptProperty by lazy {
+		JavaScriptProperty(context)
+	}
 
 	/**
 	 * @property measuredMarginLeft
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	public var measuredMarginLeft: Property? = null
-		private set
+	public val measuredMarginLeft: JavaScriptProperty by lazy {
+		JavaScriptProperty(context)
+	}
 
 	/**
 	 * @property measuredMarginRight
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	public var measuredMarginRight: Property? = null
-		private set
+	public val measuredMarginRight: JavaScriptProperty by lazy {
+		JavaScriptProperty(context)
+	}
 
 	/**
 	 * @property measuredMarginBottom
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	public var measuredMarginBottom: Property? = null
-		private set
+	public val measuredMarginBottom: JavaScriptProperty by lazy {
+		JavaScriptProperty(context)
+	}
 
 	/**
 	 * @property measuredBorderTopWidth
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	public var measuredBorderTopWidth: Property? = null
-		private set
+	public val measuredBorderTopWidth: JavaScriptProperty by lazy {
+		JavaScriptProperty(context)
+	}
 
 	/**
 	 * @property measuredBorderLeftWidth
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	public var measuredBorderLeftWidth: Property? = null
-		private set
+	public val measuredBorderLeftWidth: JavaScriptProperty by lazy {
+		JavaScriptProperty(context)
+	}
 
 	/**
 	 * @property measuredBorderRightWidth
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	public var measuredBorderRightWidth: Property? = null
-		private set
+	public val measuredBorderRightWidth: JavaScriptProperty by lazy {
+		JavaScriptProperty(context)
+	}
 
 	/**
 	 * @property measuredBorderBottomWidth
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	public var measuredBorderBottomWidth: Property? = null
-		private set
+	public val measuredBorderBottomWidth: JavaScriptProperty by lazy {
+		JavaScriptProperty(context)
+	}
 
 	/**
 	 * @property measuredPaddingTop
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	public var measuredPaddingTop: Property? = null
-		private set
+	public val measuredPaddingTop: JavaScriptProperty by lazy {
+		JavaScriptProperty(context)
+	}
 
 	/**
 	 * @property measuredPaddingLeft
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	public var measuredPaddingLeft: Property? = null
-		private set
+	public val measuredPaddingLeft: JavaScriptProperty by lazy {
+		JavaScriptProperty(context)
+	}
 
 	/**
 	 * @property measuredPaddingRight
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	public var measuredPaddingRight: Property? = null
-		private set
+	public val measuredPaddingRight: JavaScriptProperty by lazy {
+		JavaScriptProperty(context)
+	}
 
 	/**
 	 * @property measuredPaddingBottom
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	public var measuredPaddingBottom: Property? = null
-		private set
+	public val measuredPaddingBottom: JavaScriptProperty by lazy {
+		JavaScriptProperty(context)
+	}
 
 	/**
 	 * @property resolvedTop
@@ -1817,7 +2117,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 			throw Exception("Missing context application controller.")
 		}
 
-		this.stylerNode = StylerNode(application.styler)
+		this.stylerNode = StylerNode(application.styler, this)
 		this.layoutNode = LayoutNode(application.layout)
 		this.stylerNode.listener = this
 		this.layoutNode.listener = this
@@ -1831,7 +2131,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 			scrollable.scrollableListener = this
 		}
 
-		this.wrapper.draw = fun (cnv: AndroidCanvas) {
+		this.wrapper.draw = fun(cnv: AndroidCanvas) {
 			// TODO
 			// Pass the instance
 
@@ -1994,7 +2294,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	open fun scheduleRedraw() {
 
 		if (this.drawable.boolean == false) {
-			this.drawable = Property(true)
+			this.drawable.set(true)
 			return
 		}
 
@@ -2185,7 +2485,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 		var backgroundImageT: Double
 		var backgroundImageL: Double
 
-		if (this.backgroundImageWidth.type == PropertyType.STRING &&
+		if (this.backgroundImageWidth.type == JavaScriptPropertyType.STRING &&
 			this.backgroundImageWidth.string == "auto") {
 
 			autoW = true
@@ -2193,18 +2493,18 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 		} else {
 
 			when (this.backgroundImageWidth.unit) {
-				PropertyUnit.PC -> backgroundImageW = this.backgroundImageWidth.number / 100 * this.resolvedWidth
-				PropertyUnit.VW -> backgroundImageW = this.backgroundImageWidth.number / 100 * this.layoutNode.viewportWidth
-				PropertyUnit.VH -> backgroundImageW = this.backgroundImageWidth.number / 100 * this.layoutNode.viewportHeight
-				PropertyUnit.PW -> backgroundImageW = this.backgroundImageWidth.number / 100 * this.resolvedInnerWidth
-				PropertyUnit.PH -> backgroundImageW = this.backgroundImageWidth.number / 100 * this.resolvedInnerHeight
-				PropertyUnit.CW -> backgroundImageW = this.backgroundImageWidth.number / 100 * this.resolvedContentWidth
-				PropertyUnit.CH -> backgroundImageW = this.backgroundImageWidth.number / 100 * this.resolvedContentHeight
-				else            -> backgroundImageW = this.backgroundImageWidth.number
+				JavaScriptPropertyUnit.PC -> backgroundImageW = this.backgroundImageWidth.number / 100 * this.resolvedWidth
+				JavaScriptPropertyUnit.VW -> backgroundImageW = this.backgroundImageWidth.number / 100 * this.layoutNode.viewportWidth
+				JavaScriptPropertyUnit.VH -> backgroundImageW = this.backgroundImageWidth.number / 100 * this.layoutNode.viewportHeight
+				JavaScriptPropertyUnit.PW -> backgroundImageW = this.backgroundImageWidth.number / 100 * this.resolvedInnerWidth
+				JavaScriptPropertyUnit.PH -> backgroundImageW = this.backgroundImageWidth.number / 100 * this.resolvedInnerHeight
+				JavaScriptPropertyUnit.CW -> backgroundImageW = this.backgroundImageWidth.number / 100 * this.resolvedContentWidth
+				JavaScriptPropertyUnit.CH -> backgroundImageW = this.backgroundImageWidth.number / 100 * this.resolvedContentHeight
+				else                      -> backgroundImageW = this.backgroundImageWidth.number
 			}
 		}
 
-		if (this.backgroundImageHeight.type == PropertyType.STRING &&
+		if (this.backgroundImageHeight.type == JavaScriptPropertyType.STRING &&
 			this.backgroundImageHeight.string == "auto") {
 
 			autoH = true
@@ -2212,37 +2512,37 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 		} else {
 
 			when (this.backgroundImageHeight.unit) {
-				PropertyUnit.PC -> backgroundImageH = this.backgroundImageHeight.number / 100 * this.resolvedHeight
-				PropertyUnit.VW -> backgroundImageH = this.backgroundImageHeight.number / 100 * this.layoutNode.viewportWidth
-				PropertyUnit.VH -> backgroundImageH = this.backgroundImageHeight.number / 100 * this.layoutNode.viewportHeight
-				PropertyUnit.PW -> backgroundImageH = this.backgroundImageHeight.number / 100 * this.resolvedInnerWidth
-				PropertyUnit.PH -> backgroundImageH = this.backgroundImageHeight.number / 100 * this.resolvedInnerHeight
-				PropertyUnit.CW -> backgroundImageH = this.backgroundImageHeight.number / 100 * this.resolvedContentWidth
-				PropertyUnit.CH -> backgroundImageH = this.backgroundImageHeight.number / 100 * this.resolvedContentHeight
-				else            -> backgroundImageH = this.backgroundImageHeight.number
+				JavaScriptPropertyUnit.PC -> backgroundImageH = this.backgroundImageHeight.number / 100 * this.resolvedHeight
+				JavaScriptPropertyUnit.VW -> backgroundImageH = this.backgroundImageHeight.number / 100 * this.layoutNode.viewportWidth
+				JavaScriptPropertyUnit.VH -> backgroundImageH = this.backgroundImageHeight.number / 100 * this.layoutNode.viewportHeight
+				JavaScriptPropertyUnit.PW -> backgroundImageH = this.backgroundImageHeight.number / 100 * this.resolvedInnerWidth
+				JavaScriptPropertyUnit.PH -> backgroundImageH = this.backgroundImageHeight.number / 100 * this.resolvedInnerHeight
+				JavaScriptPropertyUnit.CW -> backgroundImageH = this.backgroundImageHeight.number / 100 * this.resolvedContentWidth
+				JavaScriptPropertyUnit.CH -> backgroundImageH = this.backgroundImageHeight.number / 100 * this.resolvedContentHeight
+				else                      -> backgroundImageH = this.backgroundImageHeight.number
 			}
 		}
 
 		when (this.backgroundImageTop.unit) {
-			PropertyUnit.PC -> backgroundImageT = this.backgroundImageTop.number / 100 * this.resolvedHeight
-			PropertyUnit.VW -> backgroundImageT = this.backgroundImageTop.number / 100 * this.layoutNode.viewportWidth
-			PropertyUnit.VH -> backgroundImageT = this.backgroundImageTop.number / 100 * this.layoutNode.viewportHeight
-			PropertyUnit.PW -> backgroundImageT = this.backgroundImageTop.number / 100 * this.resolvedInnerWidth
-			PropertyUnit.PH -> backgroundImageT = this.backgroundImageTop.number / 100 * this.resolvedInnerHeight
-			PropertyUnit.CW -> backgroundImageT = this.backgroundImageTop.number / 100 * this.resolvedContentWidth
-			PropertyUnit.CH -> backgroundImageT = this.backgroundImageTop.number / 100 * this.resolvedContentHeight
-			else            -> backgroundImageT = this.backgroundImageTop.number
+			JavaScriptPropertyUnit.PC -> backgroundImageT = this.backgroundImageTop.number / 100 * this.resolvedHeight
+			JavaScriptPropertyUnit.VW -> backgroundImageT = this.backgroundImageTop.number / 100 * this.layoutNode.viewportWidth
+			JavaScriptPropertyUnit.VH -> backgroundImageT = this.backgroundImageTop.number / 100 * this.layoutNode.viewportHeight
+			JavaScriptPropertyUnit.PW -> backgroundImageT = this.backgroundImageTop.number / 100 * this.resolvedInnerWidth
+			JavaScriptPropertyUnit.PH -> backgroundImageT = this.backgroundImageTop.number / 100 * this.resolvedInnerHeight
+			JavaScriptPropertyUnit.CW -> backgroundImageT = this.backgroundImageTop.number / 100 * this.resolvedContentWidth
+			JavaScriptPropertyUnit.CH -> backgroundImageT = this.backgroundImageTop.number / 100 * this.resolvedContentHeight
+			else                      -> backgroundImageT = this.backgroundImageTop.number
 		}
 
 		when (this.backgroundImageLeft.unit) {
-			PropertyUnit.PC -> backgroundImageL = this.backgroundImageLeft.number / 100 * this.resolvedWidth
-			PropertyUnit.VW -> backgroundImageL = this.backgroundImageLeft.number / 100 * this.layoutNode.viewportWidth
-			PropertyUnit.VH -> backgroundImageL = this.backgroundImageLeft.number / 100 * this.layoutNode.viewportHeight
-			PropertyUnit.PW -> backgroundImageL = this.backgroundImageLeft.number / 100 * this.resolvedInnerWidth
-			PropertyUnit.PH -> backgroundImageL = this.backgroundImageLeft.number / 100 * this.resolvedInnerHeight
-			PropertyUnit.CW -> backgroundImageL = this.backgroundImageLeft.number / 100 * this.resolvedContentWidth
-			PropertyUnit.CH -> backgroundImageL = this.backgroundImageLeft.number / 100 * this.resolvedContentHeight
-			else            -> backgroundImageL = this.backgroundImageLeft.number
+			JavaScriptPropertyUnit.PC -> backgroundImageL = this.backgroundImageLeft.number / 100 * this.resolvedWidth
+			JavaScriptPropertyUnit.VW -> backgroundImageL = this.backgroundImageLeft.number / 100 * this.layoutNode.viewportWidth
+			JavaScriptPropertyUnit.VH -> backgroundImageL = this.backgroundImageLeft.number / 100 * this.layoutNode.viewportHeight
+			JavaScriptPropertyUnit.PW -> backgroundImageL = this.backgroundImageLeft.number / 100 * this.resolvedInnerWidth
+			JavaScriptPropertyUnit.PH -> backgroundImageL = this.backgroundImageLeft.number / 100 * this.resolvedInnerHeight
+			JavaScriptPropertyUnit.CW -> backgroundImageL = this.backgroundImageLeft.number / 100 * this.resolvedContentWidth
+			JavaScriptPropertyUnit.CH -> backgroundImageL = this.backgroundImageLeft.number / 100 * this.resolvedContentHeight
+			else                      -> backgroundImageL = this.backgroundImageLeft.number
 		}
 
 		val naturalImageW = image.width.toDouble()
@@ -2257,12 +2557,12 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 
 			when (this.backgroundImageFit.string) {
 
-				"none" -> {
+				"none"    -> {
 					backgroundImageW = naturalImageW
 					backgroundImageH = naturalImageH
 				}
 
-				"cover" -> {
+				"cover"   -> {
 					val scale = Math.max(scaleX, scaleY)
 					backgroundImageW = naturalImageW * scale
 					backgroundImageH = naturalImageH * scale
@@ -2316,29 +2616,29 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 		var ty = 0.0
 		val tz = this.translationZ.number
 
-		if (this.translationX.type == PropertyType.NUMBER) {
+		if (this.translationX.type == JavaScriptPropertyType.NUMBER) {
 			when (this.translationX.unit) {
-				PropertyUnit.PC -> tx = (this.translationX.number / 100) * viewW
-				PropertyUnit.VW -> tx = (this.translationX.number / 100) * viewportW
-				PropertyUnit.VH -> tx = (this.translationX.number / 100) * viewportH
-				PropertyUnit.PW -> tx = (this.translationX.number / 100) * parentW
-				PropertyUnit.PH -> tx = (this.translationX.number / 100) * parentH
-				PropertyUnit.CW -> tx = (this.translationX.number / 100) * containerW
-				PropertyUnit.CH -> tx = (this.translationX.number / 100) * containerH
-				else            -> tx = this.translationX.number
+				JavaScriptPropertyUnit.PC -> tx = (this.translationX.number / 100) * viewW
+				JavaScriptPropertyUnit.VW -> tx = (this.translationX.number / 100) * viewportW
+				JavaScriptPropertyUnit.VH -> tx = (this.translationX.number / 100) * viewportH
+				JavaScriptPropertyUnit.PW -> tx = (this.translationX.number / 100) * parentW
+				JavaScriptPropertyUnit.PH -> tx = (this.translationX.number / 100) * parentH
+				JavaScriptPropertyUnit.CW -> tx = (this.translationX.number / 100) * containerW
+				JavaScriptPropertyUnit.CH -> tx = (this.translationX.number / 100) * containerH
+				else                      -> tx = this.translationX.number
 			}
 		}
 
-		if (this.translationY.type == PropertyType.NUMBER) {
+		if (this.translationY.type == JavaScriptPropertyType.NUMBER) {
 			when (this.translationY.unit) {
-				PropertyUnit.PC -> ty = (this.translationY.number / 100) * viewH
-				PropertyUnit.VW -> ty = (this.translationY.number / 100) * viewportW
-				PropertyUnit.VH -> ty = (this.translationY.number / 100) * viewportH
-				PropertyUnit.PW -> tx = (this.translationY.number / 100) * parentW
-				PropertyUnit.PH -> tx = (this.translationY.number / 100) * parentH
-				PropertyUnit.CW -> tx = (this.translationY.number / 100) * containerW
-				PropertyUnit.CH -> tx = (this.translationY.number / 100) * containerH
-				else            -> ty = this.translationY.number
+				JavaScriptPropertyUnit.PC -> ty = (this.translationY.number / 100) * viewH
+				JavaScriptPropertyUnit.VW -> ty = (this.translationY.number / 100) * viewportW
+				JavaScriptPropertyUnit.VH -> ty = (this.translationY.number / 100) * viewportH
+				JavaScriptPropertyUnit.PW -> tx = (this.translationY.number / 100) * parentW
+				JavaScriptPropertyUnit.PH -> tx = (this.translationY.number / 100) * parentH
+				JavaScriptPropertyUnit.CW -> tx = (this.translationY.number / 100) * containerW
+				JavaScriptPropertyUnit.CH -> tx = (this.translationY.number / 100) * containerH
+				else                      -> ty = this.translationY.number
 			}
 		}
 
@@ -2356,27 +2656,27 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 		var ry = 0.0
 		var rz = 0.0
 
-		if (this.rotationX.type == PropertyType.NUMBER) {
+		if (this.rotationX.type == JavaScriptPropertyType.NUMBER) {
 			when (this.rotationX.unit) {
-				PropertyUnit.DEG -> rx = this.rotationX.number * PI / 180
-				PropertyUnit.RAD -> rx = this.rotationX.number
-				else             -> rx = this.rotationX.number
+				JavaScriptPropertyUnit.DEG -> rx = this.rotationX.number * PI / 180
+				JavaScriptPropertyUnit.RAD -> rx = this.rotationX.number
+				else                       -> rx = this.rotationX.number
 			}
 		}
 
-		if (this.rotationY.type == PropertyType.NUMBER) {
+		if (this.rotationY.type == JavaScriptPropertyType.NUMBER) {
 			when (this.rotationY.unit) {
-				PropertyUnit.DEG -> ry = this.rotationY.number * PI / 180
-				PropertyUnit.RAD -> ry = this.rotationY.number
-				else             -> ry = this.rotationY.number
+				JavaScriptPropertyUnit.DEG -> ry = this.rotationY.number * PI / 180
+				JavaScriptPropertyUnit.RAD -> ry = this.rotationY.number
+				else                       -> ry = this.rotationY.number
 			}
 		}
 
-		if (this.rotationZ.type == PropertyType.NUMBER) {
+		if (this.rotationZ.type == JavaScriptPropertyType.NUMBER) {
 			when (this.rotationZ.unit) {
-				PropertyUnit.DEG -> rz = this.rotationZ.number * PI / 180
-				PropertyUnit.RAD -> rz = this.rotationZ.number
-				else             -> rz = this.rotationZ.number
+				JavaScriptPropertyUnit.DEG -> rz = this.rotationZ.number * PI / 180
+				JavaScriptPropertyUnit.RAD -> rz = this.rotationZ.number
+				else                       -> rz = this.rotationZ.number
 			}
 		}
 
@@ -2392,9 +2692,9 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 		var sy = 1.0
 		var sz = this.scaleZ.number
 
-		if (this.scaleX.type == PropertyType.NUMBER) sx = this.scaleX.number
-		if (this.scaleY.type == PropertyType.NUMBER) sy = this.scaleY.number
-		if (this.scaleZ.type == PropertyType.NUMBER) sz = this.scaleZ.number
+		if (this.scaleX.type == JavaScriptPropertyType.NUMBER) sx = this.scaleX.number
+		if (this.scaleY.type == JavaScriptPropertyType.NUMBER) sy = this.scaleY.number
+		if (this.scaleZ.type == JavaScriptPropertyType.NUMBER) sz = this.scaleZ.number
 
 		if (sx != 1.0 || sy != 1.0 || sz != 1.0) {
 			transform.scaleX = sx.toFloat()
@@ -2669,31 +2969,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	//--------------------------------------------------------------------------
-	// Methods - JavaScriptView Properties
-	//-------------------------------------------------------------------------
-
-	/**
-	 * @method setProperty
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	open fun setProperty(property: String, value: Property) {
-		val assigned = PropertyAccessor.set(this, property, value)
-		if (assigned == false) {
-			this.property(property, value)
-		}
-	}
-
-	/**
-	 * @method getProperty
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	open fun getProperty(property: String): Property? {
-		return PropertyAccessor.get(this, property) ?: Property(this.property(property))
-	}
-
-	//--------------------------------------------------------------------------
 	// Methods - Layout Node Delegate
 	//--------------------------------------------------------------------------
 
@@ -2724,13 +2999,13 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 
 		if (this.resolvedWidth != this.layoutNode.measuredWidth) {
 			this.resolvedWidth = this.layoutNode.measuredWidth
-			this.measuredWidth = null
+			this.measuredWidth.set(null)
 			this.invalidateFrame()
 		}
 
 		if (this.resolvedHeight != this.layoutNode.measuredHeight) {
 			this.resolvedHeight = this.layoutNode.measuredHeight
-			this.measuredHeight = null
+			this.measuredHeight.set(null)
 			this.invalidateFrame()
 		}
 	}
@@ -2744,13 +3019,13 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 
 		if (this.resolvedTop != this.layoutNode.measuredTop) {
 			this.resolvedTop = this.layoutNode.measuredTop
-			this.measuredTop = null
+			this.measuredTop.set(null)
 			this.invalidateFrame()
 		}
 
 		if (this.resolvedLeft != this.layoutNode.measuredLeft) {
 			this.resolvedLeft = this.layoutNode.measuredLeft
-			this.measuredLeft = null
+			this.measuredLeft.set(null)
 			this.invalidateFrame()
 		}
 	}
@@ -2764,13 +3039,13 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 
 		if (this.resolvedInnerWidth != this.layoutNode.measuredInnerWidth) {
 			this.resolvedInnerWidth = this.layoutNode.measuredInnerWidth
-			this.measuredInnerWidth = null
+			this.measuredInnerWidth.set(null)
 			this.invalidateFrame()
 		}
 
 		if (this.resolvedInnerHeight != this.layoutNode.measuredInnerHeight) {
 			this.resolvedInnerHeight = this.layoutNode.measuredInnerHeight
-			this.measuredInnerHeight = null
+			this.measuredInnerHeight.set(null)
 			this.invalidateFrame()
 		}
 	}
@@ -2784,13 +3059,13 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 
 		if (this.resolvedContentWidth != this.layoutNode.measuredContentWidth) {
 			this.resolvedContentWidth = this.layoutNode.measuredContentWidth
-			this.measuredContentWidth = null
+			this.measuredContentWidth.set(null)
 			this.invalidateContent()
 		}
 
 		if (this.resolvedContentHeight != this.layoutNode.measuredContentHeight) {
 			this.resolvedContentHeight = this.layoutNode.measuredContentHeight
-			this.measuredContentHeight = null
+			this.measuredContentHeight.set(null)
 			this.invalidateContent()
 		}
 	}
@@ -2804,22 +3079,22 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 
 		if (this.resolvedMarginTop != this.layoutNode.measuredMarginTop) {
 			this.resolvedMarginTop = this.layoutNode.measuredMarginTop
-			this.measuredMarginTop = null
+			this.measuredMarginTop.set(null)
 		}
 
 		if (this.resolvedMarginLeft != this.layoutNode.measuredMarginLeft) {
 			this.resolvedMarginLeft = this.layoutNode.measuredMarginLeft
-			this.measuredMarginLeft = null
+			this.measuredMarginLeft.set(null)
 		}
 
 		if (this.resolvedMarginRight != this.layoutNode.measuredMarginRight) {
 			this.resolvedMarginRight = this.layoutNode.measuredMarginRight
-			this.measuredMarginRight = null
+			this.measuredMarginRight.set(null)
 		}
 
 		if (this.resolvedMarginBottom != this.layoutNode.measuredMarginBottom) {
 			this.resolvedMarginBottom = this.layoutNode.measuredMarginBottom
-			this.measuredMarginBottom = null
+			this.measuredMarginBottom.set(null)
 		}
 	}
 
@@ -2832,25 +3107,25 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 
 		if (this.resolvedBorderTopWidth != this.layoutNode.measuredBorderTop) {
 			this.resolvedBorderTopWidth = this.layoutNode.measuredBorderTop
-			this.measuredBorderTopWidth = null
+			this.measuredBorderTopWidth.set(null)
 			this.invalidateBorder()
 		}
 
 		if (this.resolvedBorderLeftWidth != this.layoutNode.measuredBorderLeft) {
 			this.resolvedBorderLeftWidth = this.layoutNode.measuredBorderLeft
-			this.measuredBorderLeftWidth = null
+			this.measuredBorderLeftWidth.set(null)
 			this.invalidateBorder()
 		}
 
 		if (this.resolvedBorderRightWidth != this.layoutNode.measuredBorderRight) {
 			this.resolvedBorderRightWidth = this.layoutNode.measuredBorderRight
-			this.measuredBorderRightWidth = null
+			this.measuredBorderRightWidth.set(null)
 			this.invalidateBorder()
 		}
 
 		if (this.resolvedBorderBottomWidth != this.layoutNode.measuredBorderBottom) {
 			this.resolvedBorderBottomWidth = this.layoutNode.measuredBorderBottom
-			this.measuredBorderBottomWidth = null
+			this.measuredBorderBottomWidth.set(null)
 			this.invalidateBorder()
 		}
 	}
@@ -2864,22 +3139,22 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 
 		if (this.resolvedPaddingTop != this.layoutNode.measuredPaddingTop) {
 			this.resolvedPaddingTop = this.layoutNode.measuredPaddingTop
-			this.measuredPaddingTop = null
+			this.measuredPaddingTop.set(null)
 		}
 
 		if (this.resolvedPaddingLeft != this.layoutNode.measuredPaddingLeft) {
 			this.resolvedPaddingLeft = this.layoutNode.measuredPaddingLeft
-			this.measuredPaddingLeft = null
+			this.measuredPaddingLeft.set(null)
 		}
 
 		if (this.resolvedPaddingRight != this.layoutNode.measuredPaddingRight) {
 			this.resolvedPaddingRight = this.layoutNode.measuredPaddingRight
-			this.measuredPaddingRight = null
+			this.measuredPaddingRight.set(null)
 		}
 
 		if (this.resolvedPaddingBottom != this.layoutNode.measuredPaddingBottom) {
 			this.resolvedPaddingBottom = this.layoutNode.measuredPaddingBottom
-			this.measuredPaddingBottom = null
+			this.measuredPaddingBottom.set(null)
 		}
 	}
 
@@ -2947,26 +3222,8 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	//--------------------------------------------------------------------------
-	// Methods - Render Node Delegate
+	// Methods - Styler Node
 	//--------------------------------------------------------------------------
-
-	/**
-	 * @method applyStyleProperty
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	override fun applyStyleProperty(node: StylerNode, property: String, value: Property) {
-		this.setProperty(property, value)
-	}
-
-	/**
-	 * @method fetchStyleProperty
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	override fun fetchStyleProperty(node: StylerNode, property: String): Property? {
-		return this.getProperty(property)
-	}
 
 	/**
 	 * @method onInvalidateStyleNode
@@ -2987,7 +3244,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @since 0.7.0
 	 */
 	override fun onDragStart(scrollable: Scrollable) {
-		this.dragging.reset(true)
+		this.dragging.set(true)
 		this.callMethod("nativeOnDragStart")
 	}
 
@@ -2997,7 +3254,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @since 0.7.0
 	 */
 	override fun onDragEnd(scrollable: Scrollable) {
-		this.dragging.reset(false)
+		this.dragging.set(false)
 		this.callMethod("nativeOnDragEnd")
 	}
 
@@ -3016,7 +3273,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @hidden
 	 */
 	override fun onScrollStart(scrollable: Scrollable) {
-		this.scrolling.reset(true)
+		this.scrolling.set(true)
 		this.callMethod("nativeOnScrollStart")
 	}
 
@@ -3026,7 +3283,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @hidden
 	 */
 	override fun onScrollEnd(scrollable: Scrollable) {
-		this.scrolling.reset(false)
+		this.scrolling.set(false)
 		this.callMethod("nativeOnScrollEnd")
 	}
 
@@ -3045,8 +3302,8 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 			return
 		}
 
-		this.scrollTop.reset(scrollT)
-		this.scrollLeft.reset(scrollL)
+		this.scrollTop.set(scrollT)
+		this.scrollLeft.set(scrollL)
 
 		this.listener?.onScroll(this)
 
@@ -3106,7 +3363,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private var backgroundImageLoader: ImageLoader = ImageLoader(context.application!!) // TODO make image loader using static method
+	private var backgroundImageLoader: ImageLoader = ImageLoader(context.application) // TODO make image loader using static method
 
 	/**
 	 * @property canvas
@@ -3471,9 +3728,9 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private fun getBackgroundImageAnchorTop(prop: Property): Double {
+	private fun getBackgroundImageAnchorTop(prop: JavaScriptProperty): Double {
 
-		if (prop.type == PropertyType.STRING) {
+		if (prop.type == JavaScriptPropertyType.STRING) {
 
 			when (prop.string) {
 
@@ -3481,7 +3738,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 				"center" -> return 0.5
 				"bottom" -> return 1.0
 
-				else -> {
+				else     -> {
 					Log.d("Dezel", "Unrecognized value for backgroundImageAnchorTop: ${prop.string}")
 				}
 			}
@@ -3495,9 +3752,9 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private fun getBackgroundImageAnchorLeft(prop: Property): Double {
+	private fun getBackgroundImageAnchorLeft(prop: JavaScriptProperty): Double {
 
-		if (prop.type == PropertyType.STRING) {
+		if (prop.type == JavaScriptPropertyType.STRING) {
 
 			when (prop.string) {
 
@@ -3505,7 +3762,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 				"center" -> return 0.5
 				"right"  -> return 1.0
 
-				else -> {
+				else     -> {
 					Log.d("Dezel", "Unrecognized value for getBackgroundImageAnchorLeft: ${prop.string}")
 				}
 			}
@@ -3525,8 +3782,9 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 		 * @since 0.7.0
 		 * @hidden
 		 */
-		@JvmStatic @Suppress("unused")
-		open fun jsStaticFunction_transition(callback: JavaScriptFunctionCallback) {
+		@Suppress("unused")
+		@JvmStatic
+		public fun jsStaticFunction_transition(callback: JavaScriptFunctionCallback) {
 
 			if (callback.arguments < 8) {
 				return
@@ -3643,7 +3901,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_id(callback: JavaScriptSetterCallback) {
-		this.id = Property(callback.value)
+		this.id.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3665,7 +3923,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_backgroundColor(callback: JavaScriptSetterCallback) {
-		this.backgroundColor = Property(callback.value)
+		this.backgroundColor.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3687,7 +3945,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_backgroundImage(callback: JavaScriptSetterCallback) {
-		this.backgroundImage = Property(callback.value)
+		this.backgroundImage.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3709,7 +3967,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_backgroundImageFit(callback: JavaScriptSetterCallback) {
-		this.backgroundImageFit = Property(callback.value)
+		this.backgroundImageFit.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3731,7 +3989,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_backgroundImageAnchorTop(callback: JavaScriptSetterCallback) {
-		this.backgroundImageAnchorTop = Property(callback.value)
+		this.backgroundImageAnchorTop.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3753,7 +4011,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_backgroundImageAnchorLeft(callback: JavaScriptSetterCallback) {
-		this.backgroundImageAnchorLeft = Property(callback.value)
+		this.backgroundImageAnchorLeft.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3775,7 +4033,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_backgroundImageTop(callback: JavaScriptSetterCallback) {
-		this.backgroundImageTop = Property(callback.value)
+		this.backgroundImageTop.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3797,7 +4055,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_backgroundImageLeft(callback: JavaScriptSetterCallback) {
-		this.backgroundImageLeft = Property(callback.value)
+		this.backgroundImageLeft.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3819,7 +4077,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_backgroundImageWidth(callback: JavaScriptSetterCallback) {
-		this.backgroundImageWidth = Property(callback.value)
+		this.backgroundImageWidth.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3841,7 +4099,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_backgroundImageHeight(callback: JavaScriptSetterCallback) {
-		this.backgroundImageHeight = Property(callback.value)
+		this.backgroundImageHeight.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3863,7 +4121,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_backgroundImageTint(callback: JavaScriptSetterCallback) {
-		this.backgroundImageTint = Property(callback.value)
+		this.backgroundImageTint.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3902,7 +4160,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_border(callback: JavaScriptSetterCallback) {
-		this.border = Property(callback.value)
+		this.border.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3924,7 +4182,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_borderTop(callback: JavaScriptSetterCallback) {
-		this.borderTop = Property(callback.value)
+		this.borderTop.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3946,7 +4204,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_borderLeft(callback: JavaScriptSetterCallback) {
-		this.borderLeft = Property(callback.value)
+		this.borderLeft.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3968,7 +4226,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_borderRight(callback: JavaScriptSetterCallback) {
-		this.borderRight = Property(callback.value)
+		this.borderRight.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3990,7 +4248,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_borderBottom(callback: JavaScriptSetterCallback) {
-		this.borderBottom = Property(callback.value)
+		this.borderBottom.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4019,7 +4277,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_borderWidth(callback: JavaScriptSetterCallback) {
-		this.borderWidth = Property(callback.value)
+		this.borderWidth.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4048,7 +4306,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_borderColor(callback: JavaScriptSetterCallback) {
-		this.borderColor = Property(callback.value)
+		this.borderColor.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4070,7 +4328,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_borderTopColor(callback: JavaScriptSetterCallback) {
-		this.borderTopColor = Property(callback.value)
+		this.borderTopColor.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4092,7 +4350,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_borderLeftColor(callback: JavaScriptSetterCallback) {
-		this.borderLeftColor = Property(callback.value)
+		this.borderLeftColor.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4114,7 +4372,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_borderRightColor(callback: JavaScriptSetterCallback) {
-		this.borderRightColor = Property(callback.value)
+		this.borderRightColor.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4136,7 +4394,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_borderBottomColor(callback: JavaScriptSetterCallback) {
-		this.borderBottomColor = Property(callback.value)
+		this.borderBottomColor.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4158,7 +4416,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_borderTopWidth(callback: JavaScriptSetterCallback) {
-		this.borderTopWidth = Property(callback.value)
+		this.borderTopWidth.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4180,7 +4438,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_borderLeftWidth(callback: JavaScriptSetterCallback) {
-		this.borderLeftWidth = Property(callback.value)
+		this.borderLeftWidth.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4202,7 +4460,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_borderRightWidth(callback: JavaScriptSetterCallback) {
-		this.borderRightWidth = Property(callback.value)
+		this.borderRightWidth.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4224,7 +4482,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_borderBottomWidth(callback: JavaScriptSetterCallback) {
-		this.borderBottomWidth = Property(callback.value)
+		this.borderBottomWidth.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4246,7 +4504,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_minBorderTopWidth(callback: JavaScriptSetterCallback) {
-		this.minBorderTopWidth = Property(callback.value)
+		this.minBorderTopWidth.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4268,7 +4526,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_maxBorderTopWidth(callback: JavaScriptSetterCallback) {
-		this.maxBorderTopWidth = Property(callback.value)
+		this.maxBorderTopWidth.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4290,7 +4548,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_minBorderLeftWidth(callback: JavaScriptSetterCallback) {
-		this.minBorderLeftWidth = Property(callback.value)
+		this.minBorderLeftWidth.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4312,7 +4570,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_maxBorderLeftWidth(callback: JavaScriptSetterCallback) {
-		this.maxBorderLeftWidth = Property(callback.value)
+		this.maxBorderLeftWidth.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4334,7 +4592,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_minBorderRightWidth(callback: JavaScriptSetterCallback) {
-		this.minBorderRightWidth = Property(callback.value)
+		this.minBorderRightWidth.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4356,7 +4614,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_maxBorderRightWidth(callback: JavaScriptSetterCallback) {
-		this.maxBorderRightWidth = Property(callback.value)
+		this.maxBorderRightWidth.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4378,7 +4636,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_minBorderBottomWidth(callback: JavaScriptSetterCallback) {
-		this.minBorderBottomWidth = Property(callback.value)
+		this.minBorderBottomWidth.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4400,7 +4658,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_maxBorderBottomWidth(callback: JavaScriptSetterCallback) {
-		this.maxBorderBottomWidth = Property(callback.value)
+		this.maxBorderBottomWidth.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4429,7 +4687,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_borderRadius(callback: JavaScriptSetterCallback) {
-		this.borderRadius = Property(callback.value)
+		this.borderRadius.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4451,7 +4709,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_borderTopLeftRadius(callback: JavaScriptSetterCallback) {
-		this.borderTopLeftRadius = Property(callback.value)
+		this.borderTopLeftRadius.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4473,7 +4731,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_borderTopRightRadius(callback: JavaScriptSetterCallback) {
-		this.borderTopRightRadius = Property(callback.value)
+		this.borderTopRightRadius.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4495,7 +4753,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_borderBottomLeftRadius(callback: JavaScriptSetterCallback) {
-		this.borderBottomLeftRadius = Property(callback.value)
+		this.borderBottomLeftRadius.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4517,7 +4775,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_borderBottomRightRadius(callback: JavaScriptSetterCallback) {
-		this.borderBottomRightRadius = Property(callback.value)
+		this.borderBottomRightRadius.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4539,7 +4797,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_shadowBlur(callback: JavaScriptSetterCallback) {
-		this.shadowBlur = Property(callback.value)
+		this.shadowBlur.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4561,7 +4819,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_shadowColor(callback: JavaScriptSetterCallback) {
-		this.shadowColor = Property(callback.value)
+		this.shadowColor.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4583,7 +4841,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_shadowOffsetTop(callback: JavaScriptSetterCallback) {
-		this.shadowOffsetTop = Property(callback.value)
+		this.shadowOffsetTop.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4605,7 +4863,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_shadowOffsetLeft(callback: JavaScriptSetterCallback) {
-		this.shadowOffsetLeft = Property(callback.value)
+		this.shadowOffsetLeft.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4627,7 +4885,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_top(callback: JavaScriptSetterCallback) {
-		this.top = Property(callback.value)
+		this.top.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4649,7 +4907,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_left(callback: JavaScriptSetterCallback) {
-		this.left = Property(callback.value)
+		this.left.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4671,7 +4929,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_right(callback: JavaScriptSetterCallback) {
-		this.right = Property(callback.value)
+		this.right.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4693,7 +4951,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_bottom(callback: JavaScriptSetterCallback) {
-		this.bottom = Property(callback.value)
+		this.bottom.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4715,7 +4973,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_minTop(callback: JavaScriptSetterCallback) {
-		this.minTop = Property(callback.value)
+		this.minTop.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4737,7 +4995,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_maxTop(callback: JavaScriptSetterCallback) {
-		this.maxTop = Property(callback.value)
+		this.maxTop.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4759,7 +5017,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_minLeft(callback: JavaScriptSetterCallback) {
-		this.minLeft = Property(callback.value)
+		this.minLeft.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4781,7 +5039,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_maxLeft(callback: JavaScriptSetterCallback) {
-		this.maxLeft = Property(callback.value)
+		this.maxLeft.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4803,7 +5061,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_minRight(callback: JavaScriptSetterCallback) {
-		this.minRight = Property(callback.value)
+		this.minRight.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4825,7 +5083,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_maxRight(callback: JavaScriptSetterCallback) {
-		this.maxRight = Property(callback.value)
+		this.maxRight.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4847,7 +5105,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_minBottom(callback: JavaScriptSetterCallback) {
-		this.minBottom = Property(callback.value)
+		this.minBottom.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4869,7 +5127,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_maxBottom(callback: JavaScriptSetterCallback) {
-		this.maxBottom = Property(callback.value)
+		this.maxBottom.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4891,7 +5149,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_anchorTop(callback: JavaScriptSetterCallback) {
-		this.anchorTop = Property(callback.value)
+		this.anchorTop.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4913,7 +5171,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_anchorLeft(callback: JavaScriptSetterCallback) {
-		this.anchorLeft = Property(callback.value)
+		this.anchorLeft.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4935,7 +5193,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_width(callback: JavaScriptSetterCallback) {
-		this.width = Property(callback.value)
+		this.width.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4957,7 +5215,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_height(callback: JavaScriptSetterCallback) {
-		this.height = Property(callback.value)
+		this.height.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4979,7 +5237,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_minWidth(callback: JavaScriptSetterCallback) {
-		this.minWidth = Property(callback.value)
+		this.minWidth.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5001,7 +5259,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_maxWidth(callback: JavaScriptSetterCallback) {
-		this.maxWidth = Property(callback.value)
+		this.maxWidth.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5023,7 +5281,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_minHeight(callback: JavaScriptSetterCallback) {
-		this.minHeight = Property(callback.value)
+		this.minHeight.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5045,7 +5303,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_maxHeight(callback: JavaScriptSetterCallback) {
-		this.maxHeight = Property(callback.value)
+		this.maxHeight.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5067,7 +5325,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_expand(callback: JavaScriptSetterCallback) {
-		this.expand = Property(callback.value)
+		this.expand.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5089,7 +5347,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_shrink(callback: JavaScriptSetterCallback) {
-		this.shrink = Property(callback.value)
+		this.shrink.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5111,7 +5369,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_contentTop(callback: JavaScriptSetterCallback) {
-		this.contentTop = Property(callback.value)
+		this.contentTop.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5133,7 +5391,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_contentLeft(callback: JavaScriptSetterCallback) {
-		this.contentLeft = Property(callback.value)
+		this.contentLeft.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5155,7 +5413,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_contentWidth(callback: JavaScriptSetterCallback) {
-		this.contentWidth = Property(callback.value)
+		this.contentWidth.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5177,7 +5435,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_contentHeight(callback: JavaScriptSetterCallback) {
-		this.contentHeight = Property(callback.value)
+		this.contentHeight.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5199,7 +5457,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_contentInsetTop(callback: JavaScriptSetterCallback) {
-		this.contentInsetTop = Property(callback.value)
+		this.contentInsetTop.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5221,7 +5479,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_contentInsetLeft(callback: JavaScriptSetterCallback) {
-		this.contentInsetLeft = Property(callback.value)
+		this.contentInsetLeft.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5243,7 +5501,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_contentInsetRight(callback: JavaScriptSetterCallback) {
-		this.contentInsetRight = Property(callback.value)
+		this.contentInsetRight.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5265,7 +5523,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_contentInsetBottom(callback: JavaScriptSetterCallback) {
-		this.contentInsetBottom = Property(callback.value)
+		this.contentInsetBottom.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5287,7 +5545,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_contentDirection(callback: JavaScriptSetterCallback) {
-		this.contentDirection = Property(callback.value)
+		this.contentDirection.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5309,7 +5567,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_contentLocation(callback: JavaScriptSetterCallback) {
-		this.contentLocation = Property(callback.value)
+		this.contentLocation.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5331,7 +5589,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_contentAlignment(callback: JavaScriptSetterCallback) {
-		this.contentAlignment = Property(callback.value)
+		this.contentAlignment.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5353,7 +5611,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_scrollable(callback: JavaScriptSetterCallback) {
-		this.scrollable = Property(callback.value)
+		this.scrollable.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5375,7 +5633,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_scrollbars(callback: JavaScriptSetterCallback) {
-		this.scrollbars = Property(callback.value)
+		this.scrollbars.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5397,7 +5655,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_overscroll(callback: JavaScriptSetterCallback) {
-		this.overscroll = Property(callback.value)
+		this.overscroll.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5419,7 +5677,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_momentum(callback: JavaScriptSetterCallback) {
-		this.momentum = Property(callback.value)
+		this.momentum.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5441,7 +5699,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_scrollTop(callback: JavaScriptSetterCallback) {
-		this.scrollTop = Property(callback.value)
+		this.scrollTop.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5463,7 +5721,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_scrollLeft(callback: JavaScriptSetterCallback) {
-		this.scrollTop = Property(callback.value)
+		this.scrollTop.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5516,7 +5774,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_margin(callback: JavaScriptSetterCallback) {
-		this.margin = Property(callback.value)
+		this.margin.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5538,7 +5796,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_marginTop(callback: JavaScriptSetterCallback) {
-		this.marginTop = Property(callback.value)
+		this.marginTop.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5560,7 +5818,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_marginLeft(callback: JavaScriptSetterCallback) {
-		this.marginLeft = Property(callback.value)
+		this.marginLeft.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5582,7 +5840,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_marginRight(callback: JavaScriptSetterCallback) {
-		this.marginRight = Property(callback.value)
+		this.marginRight.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5604,7 +5862,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_marginBottom(callback: JavaScriptSetterCallback) {
-		this.marginBottom = Property(callback.value)
+		this.marginBottom.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5626,7 +5884,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_minMarginTop(callback: JavaScriptSetterCallback) {
-		this.minMarginTop = Property(callback.value)
+		this.minMarginTop.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5648,7 +5906,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_maxMarginTop(callback: JavaScriptSetterCallback) {
-		this.maxMarginTop = Property(callback.value)
+		this.maxMarginTop.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5670,7 +5928,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_minMarginLeft(callback: JavaScriptSetterCallback) {
-		this.minMarginLeft = Property(callback.value)
+		this.minMarginLeft.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5692,7 +5950,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_maxMarginLeft(callback: JavaScriptSetterCallback) {
-		this.maxMarginLeft = Property(callback.value)
+		this.maxMarginLeft.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5714,7 +5972,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_minMarginRight(callback: JavaScriptSetterCallback) {
-		this.minMarginRight = Property(callback.value)
+		this.minMarginRight.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5736,7 +5994,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_maxMarginRight(callback: JavaScriptSetterCallback) {
-		this.maxMarginRight = Property(callback.value)
+		this.maxMarginRight.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5758,7 +6016,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_minMarginBottom(callback: JavaScriptSetterCallback) {
-		this.minMarginBottom = Property(callback.value)
+		this.minMarginBottom.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5780,7 +6038,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_maxMarginBottom(callback: JavaScriptSetterCallback) {
-		this.maxMarginBottom = Property(callback.value)
+		this.maxMarginBottom.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5809,7 +6067,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_padding(callback: JavaScriptSetterCallback) {
-		this.padding = Property(callback.value)
+		this.padding.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5831,7 +6089,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_paddingTop(callback: JavaScriptSetterCallback) {
-		this.paddingTop = Property(callback.value)
+		this.paddingTop.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5853,7 +6111,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_paddingLeft(callback: JavaScriptSetterCallback) {
-		this.paddingLeft = Property(callback.value)
+		this.paddingLeft.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5875,7 +6133,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_paddingRight(callback: JavaScriptSetterCallback) {
-		this.paddingRight = Property(callback.value)
+		this.paddingRight.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5897,7 +6155,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_paddingBottom(callback: JavaScriptSetterCallback) {
-		this.paddingBottom = Property(callback.value)
+		this.paddingBottom.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5919,7 +6177,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_minPaddingTop(callback: JavaScriptSetterCallback) {
-		this.minPaddingTop = Property(callback.value)
+		this.minPaddingTop.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5941,7 +6199,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_maxPaddingTop(callback: JavaScriptSetterCallback) {
-		this.maxPaddingTop = Property(callback.value)
+		this.maxPaddingTop.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5963,7 +6221,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_minPaddingLeft(callback: JavaScriptSetterCallback) {
-		this.minPaddingLeft = Property(callback.value)
+		this.minPaddingLeft.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5985,7 +6243,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_maxPaddingLeft(callback: JavaScriptSetterCallback) {
-		this.maxPaddingLeft = Property(callback.value)
+		this.maxPaddingLeft.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6007,7 +6265,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_minPaddingRight(callback: JavaScriptSetterCallback) {
-		this.minPaddingRight = Property(callback.value)
+		this.minPaddingRight.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6029,7 +6287,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_maxPaddingRight(callback: JavaScriptSetterCallback) {
-		this.maxPaddingRight = Property(callback.value)
+		this.maxPaddingRight.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6051,7 +6309,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_minPaddingBottom(callback: JavaScriptSetterCallback) {
-		this.minPaddingBottom = Property(callback.value)
+		this.minPaddingBottom.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6073,7 +6331,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_maxPaddingBottom(callback: JavaScriptSetterCallback) {
-		this.maxPaddingBottom = Property(callback.value)
+		this.maxPaddingBottom.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6095,7 +6353,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_originX(callback: JavaScriptSetterCallback) {
-		this.originX = Property(callback.value)
+		this.originX.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6117,7 +6375,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_originY(callback: JavaScriptSetterCallback) {
-		this.originY = Property(callback.value)
+		this.originY.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6139,7 +6397,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_originZ(callback: JavaScriptSetterCallback) {
-		this.originZ = Property(callback.value)
+		this.originZ.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6161,7 +6419,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_translationX(callback: JavaScriptSetterCallback) {
-		this.translationX = Property(callback.value)
+		this.translationX.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6183,7 +6441,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_translationY(callback: JavaScriptSetterCallback) {
-		this.translationY = Property(callback.value)
+		this.translationY.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6205,7 +6463,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_translationZ(callback: JavaScriptSetterCallback) {
-		this.translationZ = Property(callback.value)
+		this.translationZ.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6227,7 +6485,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_rotationX(callback: JavaScriptSetterCallback) {
-		this.rotationX = Property(callback.value)
+		this.rotationX.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6249,7 +6507,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_rotationY(callback: JavaScriptSetterCallback) {
-		this.rotationY = Property(callback.value)
+		this.rotationY.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6271,7 +6529,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_rotationZ(callback: JavaScriptSetterCallback) {
-		this.rotationZ = Property(callback.value)
+		this.rotationZ.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6293,7 +6551,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_scaleX(callback: JavaScriptSetterCallback) {
-		this.scaleX = Property(callback.value)
+		this.scaleX.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6315,7 +6573,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_scaleY(callback: JavaScriptSetterCallback) {
-		this.scaleY = Property(callback.value)
+		this.scaleY.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6337,7 +6595,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_scaleZ(callback: JavaScriptSetterCallback) {
-		this.scaleZ = Property(callback.value)
+		this.scaleZ.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6359,7 +6617,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_zIndex(callback: JavaScriptSetterCallback) {
-		this.zIndex = Property(callback.value)
+		this.zIndex.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6381,7 +6639,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_zoomable(callback: JavaScriptSetterCallback) {
-		this.zoomable = Property(callback.value)
+		this.zoomable.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6403,7 +6661,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_minZoom(callback: JavaScriptSetterCallback) {
-		this.minZoom = Property(callback.value)
+		this.minZoom.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6425,7 +6683,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_maxZoom(callback: JavaScriptSetterCallback) {
-		this.maxZoom = Property(callback.value)
+		this.maxZoom.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6469,7 +6727,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_touchable(callback: JavaScriptSetterCallback) {
-		this.touchable = Property(callback.value)
+		this.touchable.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6491,7 +6749,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_touchOffsetTop(callback: JavaScriptSetterCallback) {
-		this.touchOffsetTop = Property(callback.value)
+		this.touchOffsetTop.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6513,7 +6771,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_touchOffsetLeft(callback: JavaScriptSetterCallback) {
-		this.touchOffsetLeft = Property(callback.value)
+		this.touchOffsetLeft.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6535,7 +6793,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_touchOffsetRight(callback: JavaScriptSetterCallback) {
-		this.touchOffsetRight = Property(callback.value)
+		this.touchOffsetRight.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6557,7 +6815,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_touchOffsetBottom(callback: JavaScriptSetterCallback) {
-		this.touchOffsetBottom = Property(callback.value)
+		this.touchOffsetBottom.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6579,7 +6837,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_visible(callback: JavaScriptSetterCallback) {
-		this.visible = Property(callback.value)
+		this.visible.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6601,7 +6859,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_opacity(callback: JavaScriptSetterCallback) {
-		this.opacity = Property(callback.value)
+		this.opacity.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6623,7 +6881,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_drawable(callback: JavaScriptSetterCallback) {
-		this.drawable = Property(callback.value)
+		this.drawable.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6645,7 +6903,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_clipped(callback: JavaScriptSetterCallback) {
-		this.clipped = Property(callback.value)
+		this.clipped.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6667,7 +6925,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_paged(callback: JavaScriptSetterCallback) {
-		this.paged = Property(callback.value)
+		this.paged.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6684,14 +6942,14 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 
 		if (this.resolvedTop != measuredTop) {
 			this.resolvedTop = measuredTop
-			this.measuredTop = null
+			this.measuredTop.set(null)
 		}
 
-		if (this.measuredTop == null) {
-			this.measuredTop = Property(this.resolvedTop)
+		if (this.measuredTop.isNull) {
+			this.measuredTop.set(this.resolvedTop)
 		}
 
-		callback.returns(this.measuredTop!!)
+		callback.returns(this.measuredTop)
 	}
 
 	/**
@@ -6706,14 +6964,14 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 
 		if (this.resolvedLeft != measuredLeft) {
 			this.resolvedLeft = measuredLeft
-			this.measuredLeft = null
+			this.measuredLeft.set(null)
 		}
 
-		if (this.measuredLeft == null) {
-			this.measuredLeft = Property(this.resolvedLeft)
+		if (this.measuredLeft.isNull) {
+			this.measuredLeft.set(this.resolvedLeft)
 		}
 
-		callback.returns(this.measuredLeft!!)
+		callback.returns(this.measuredLeft)
 	}
 
 	/**
@@ -6728,14 +6986,14 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 
 		if (this.resolvedWidth != measuredWidth) {
 			this.resolvedWidth = measuredWidth
-			this.measuredWidth = null
+			this.measuredWidth.set(null)
 		}
 
-		if (this.measuredWidth == null) {
-			this.measuredWidth = Property(this.resolvedWidth)
+		if (this.measuredWidth.isNull) {
+			this.measuredWidth.set(this.resolvedWidth)
 		}
 
-		callback.returns(this.measuredWidth!!)
+		callback.returns(this.measuredWidth)
 	}
 
 	/**
@@ -6750,14 +7008,14 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 
 		if (this.resolvedHeight != measuredHeight) {
 			this.resolvedHeight = measuredHeight
-			this.measuredHeight = null
+			this.measuredHeight.set(null)
 		}
 
-		if (this.measuredHeight == null) {
-			this.measuredHeight = Property(this.resolvedHeight)
+		if (this.measuredHeight.isNull) {
+			this.measuredHeight.set(this.resolvedHeight)
 		}
 
-		callback.returns(this.measuredHeight!!)
+		callback.returns(this.measuredHeight)
 	}
 
 	/**
@@ -6772,14 +7030,14 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 
 		if (this.resolvedInnerWidth != measuredInnerWidth) {
 			this.resolvedInnerWidth = measuredInnerWidth
-			this.measuredInnerWidth = null
+			this.measuredInnerWidth.set(null)
 		}
 
-		if (this.measuredInnerWidth == null) {
-			this.measuredInnerWidth = Property(this.resolvedInnerWidth)
+		if (this.measuredInnerWidth.isNull) {
+			this.measuredInnerWidth.set(this.resolvedInnerWidth)
 		}
 
-		callback.returns(this.measuredInnerWidth!!)
+		callback.returns(this.measuredInnerWidth)
 	}
 
 	/**
@@ -6794,14 +7052,14 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 
 		if (this.resolvedInnerHeight != measuredInnerHeight) {
 			this.resolvedInnerHeight = measuredInnerHeight
-			this.measuredInnerHeight = null
+			this.measuredInnerHeight.set(null)
 		}
 
-		if (this.measuredInnerHeight == null) {
-			this.measuredInnerHeight = Property(this.resolvedInnerHeight)
+		if (this.measuredInnerHeight.isNull) {
+			this.measuredInnerHeight.set(this.resolvedInnerHeight)
 		}
 
-		callback.returns(this.measuredInnerHeight!!)
+		callback.returns(this.measuredInnerHeight)
 	}
 
 	/**
@@ -6816,14 +7074,14 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 
 		if (this.resolvedContentWidth != measuredContentWidth) {
 			this.resolvedContentWidth = measuredContentWidth
-			this.measuredContentWidth = null
+			this.measuredContentWidth.set(null)
 		}
 
-		if (this.measuredContentWidth == null) {
-			this.measuredContentWidth = Property(this.resolvedContentWidth)
+		if (this.measuredContentWidth.isNull) {
+			this.measuredContentWidth.set(this.resolvedContentWidth)
 		}
 
-		callback.returns(this.measuredContentWidth!!)
+		callback.returns(this.measuredContentWidth)
 	}
 
 	/**
@@ -6838,14 +7096,14 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 
 		if (this.resolvedContentHeight != measuredContentHeight) {
 			this.resolvedContentHeight = measuredContentHeight
-			this.measuredContentHeight = null
+			this.measuredContentHeight.set(null)
 		}
 
-		if (this.measuredContentHeight == null) {
-			this.measuredContentHeight = Property(this.resolvedContentHeight)
+		if (this.measuredContentHeight.isNull) {
+			this.measuredContentHeight.set(this.resolvedContentHeight)
 		}
 
-		callback.returns(this.measuredContentHeight!!)
+		callback.returns(this.measuredContentHeight)
 	}
 
 	/**
@@ -6860,14 +7118,14 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 
 		if (this.resolvedMarginTop != measuredMarginTop) {
 			this.resolvedMarginTop = measuredMarginTop
-			this.measuredMarginTop = null
+			this.measuredMarginTop.set(null)
 		}
 
-		if (this.measuredMarginTop == null) {
-			this.measuredMarginTop = Property(this.resolvedMarginTop)
+		if (this.measuredMarginTop.isNull) {
+			this.measuredMarginTop.set(this.resolvedMarginTop)
 		}
 
-		callback.returns(this.measuredMarginTop!!)
+		callback.returns(this.measuredMarginTop)
 	}
 
 	/**
@@ -6882,14 +7140,14 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 
 		if (this.resolvedMarginLeft != measuredMarginLeft) {
 			this.resolvedMarginLeft = measuredMarginLeft
-			this.measuredMarginLeft = null
+			this.measuredMarginLeft.set(null)
 		}
 
-		if (this.measuredMarginLeft == null) {
-			this.measuredMarginLeft = Property(this.resolvedMarginLeft)
+		if (this.measuredMarginLeft.isNull) {
+			this.measuredMarginLeft.set(this.resolvedMarginLeft)
 		}
 
-		callback.returns(this.measuredMarginLeft!!)
+		callback.returns(this.measuredMarginLeft)
 	}
 
 	/**
@@ -6904,14 +7162,14 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 
 		if (this.resolvedMarginRight != measuredMarginRight) {
 			this.resolvedMarginRight = measuredMarginRight
-			this.measuredMarginRight = null
+			this.measuredMarginRight.set(null)
 		}
 
-		if (this.measuredMarginRight == null) {
-			this.measuredMarginRight = Property(this.resolvedMarginRight)
+		if (this.measuredMarginRight.isNull) {
+			this.measuredMarginRight.set(this.resolvedMarginRight)
 		}
 
-		callback.returns(this.measuredMarginRight!!)
+		callback.returns(this.measuredMarginRight)
 	}
 
 	/**
@@ -6926,14 +7184,14 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 
 		if (this.resolvedMarginBottom != measuredMarginBottom) {
 			this.resolvedMarginBottom = measuredMarginBottom
-			this.measuredMarginBottom = null
+			this.measuredMarginBottom.set(null)
 		}
 
-		if (this.measuredMarginBottom == null) {
-			this.measuredMarginBottom = Property(this.resolvedMarginBottom)
+		if (this.measuredMarginBottom.isNull) {
+			this.measuredMarginBottom.set(this.resolvedMarginBottom)
 		}
 
-		callback.returns(this.measuredMarginBottom!!)
+		callback.returns(this.measuredMarginBottom)
 	}
 
 	/**
@@ -6948,14 +7206,14 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 
 		if (this.resolvedPaddingTop != measuredPaddingTop) {
 			this.resolvedPaddingTop = measuredPaddingTop
-			this.measuredPaddingTop = null
+			this.measuredPaddingTop.set(null)
 		}
 
-		if (this.measuredPaddingTop == null) {
-			this.measuredPaddingTop = Property(this.resolvedPaddingTop)
+		if (this.measuredPaddingTop.isNull) {
+			this.measuredPaddingTop.set(this.resolvedPaddingTop)
 		}
 
-		callback.returns(this.measuredPaddingTop!!)
+		callback.returns(this.measuredPaddingTop)
 	}
 
 	/**
@@ -6970,14 +7228,14 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 
 		if (this.resolvedPaddingLeft != measuredPaddingLeft) {
 			this.resolvedPaddingLeft = measuredPaddingLeft
-			this.measuredPaddingLeft = null
+			this.measuredPaddingLeft.set(null)
 		}
 
-		if (this.measuredPaddingLeft == null) {
-			this.measuredPaddingLeft = Property(this.resolvedPaddingLeft)
+		if (this.measuredPaddingLeft.isNull) {
+			this.measuredPaddingLeft.set(this.resolvedPaddingLeft)
 		}
 
-		callback.returns(this.measuredPaddingLeft!!)
+		callback.returns(this.measuredPaddingLeft)
 	}
 
 	/**
@@ -6992,14 +7250,14 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 
 		if (this.resolvedPaddingRight != measuredPaddingRight) {
 			this.resolvedPaddingRight = measuredPaddingRight
-			this.measuredPaddingRight = null
+			this.measuredPaddingRight.set(null)
 		}
 
-		if (this.measuredPaddingRight == null) {
-			this.measuredPaddingRight = Property(this.resolvedPaddingRight)
+		if (this.measuredPaddingRight.isNull) {
+			this.measuredPaddingRight.set(this.resolvedPaddingRight)
 		}
 
-		callback.returns(this.measuredPaddingRight!!)
+		callback.returns(this.measuredPaddingRight)
 	}
 
 	/**
@@ -7014,14 +7272,14 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 
 		if (this.resolvedPaddingBottom != measuredPaddingBottom) {
 			this.resolvedPaddingBottom = measuredPaddingBottom
-			this.measuredPaddingBottom = null
+			this.measuredPaddingBottom.set(null)
 		}
 
-		if (this.measuredPaddingBottom == null) {
-			this.measuredPaddingBottom = Property(this.resolvedPaddingBottom)
+		if (this.measuredPaddingBottom.isNull) {
+			this.measuredPaddingBottom.set(this.resolvedPaddingBottom)
 		}
 
-		callback.returns(this.measuredPaddingBottom!!)
+		callback.returns(this.measuredPaddingBottom)
 	}
 
 	//--------------------------------------------------------------------------

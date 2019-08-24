@@ -117,7 +117,7 @@ open class JavaScriptClass(context: JavaScriptContext) : JavaScriptObject(contex
 	 * @method property
 	 * @since 0.7.0
 	 */
-	override fun property(name: String, property: Property) {
+	override fun property(name: String, property: JavaScriptProperty) {
 		this.instance?.property(name, property)
 	}
 

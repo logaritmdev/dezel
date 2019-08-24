@@ -301,8 +301,8 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 		this.layout.root = application.window.layoutNode
 
 		val viewport = this.viewport
-		application.window.width = Property(viewport.width.toDouble(), PropertyUnit.PX)
-		application.window.height = Property(viewport.height.toDouble(), PropertyUnit.PX)
+		application.window.width.set(viewport.width.toDouble(), JavaScriptPropertyUnit.PX)
+		application.window.height.set(viewport.height.toDouble(), JavaScriptPropertyUnit.PX)
 		this.view.addView(application.window.wrapper)
 
 		this.statusBar.bringToFront()
@@ -565,8 +565,8 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 
 			val application = this.application
 			if (application != null) {
-				application.window.width = Property(viewport.width.toDouble(), PropertyUnit.PX)
-				application.window.height = Property(viewport.height.toDouble(), PropertyUnit.PX)
+				application.window.width.set(viewport.width.toDouble(), JavaScriptPropertyUnit.PX)
+				application.window.height.set(viewport.height.toDouble(), JavaScriptPropertyUnit.PX)
 			}
 		}
 

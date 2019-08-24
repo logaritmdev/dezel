@@ -1,5 +1,7 @@
 package ca.logaritm.dezel.core
 
+import java.lang.reflect.Method
+
 /**
  * The base class for bridged object.
  * @class JavaScriptObject
@@ -53,6 +55,55 @@ open class JavaScriptObject(context: JavaScriptContext): JavaScriptValue(context
 	 */
 	open fun finalize(handler: JavaScriptFinalizeHandler) {
 		JavaScriptValueExternal.setFinalizeHandler(this.context.handle, this.handle, JavaScriptFinalizeWrapper(handler), this.context)
+	}
+
+	//--------------------------------------------------------------------------
+	// Methods - Dynamic
+	//--------------------------------------------------------------------------
+
+	/**
+	 * Assigns a value to a JavaScript property.
+	 * @method setProperty
+	 * @since 0.7.0
+	 */
+	open fun setProperty(name: String, value: JavaScriptValue?) {
+		JavaScriptPropertyAccessor.get(this, name).set(this, value)
+	}
+
+	/**
+	 * Assigns a value to a JavaScript property.
+	 * @method setProperty
+	 * @since 0.7.0
+	 */
+	open fun setProperty(name: String, value: String) {
+		JavaScriptPropertyAccessor.get(this, name).set(this, value)
+	}
+
+	/**
+	 * Assigns a value to a JavaScript property.
+	 * @method setProperty
+	 * @since 0.7.0
+	 */
+	open fun setProperty(name: String, value: Double, unit: JavaScriptPropertyUnit = JavaScriptPropertyUnit.NONE) {
+		JavaScriptPropertyAccessor.get(this, name).set(this, value, unit)
+	}
+
+	/**
+	 * Assigns a value to a JavaScript property.
+	 * @method setProperty
+	 * @since 0.7.0
+	 */
+	open fun setProperty(name: String, value: Boolean) {
+		JavaScriptPropertyAccessor.get(this, name).set(this, value)
+	}
+
+	/**
+	 * Returns a JavaScript property.
+	 * @method getPropert
+	 * @since 0.7.0
+	 */
+	open fun getProperty(name: String): JavaScriptProperty? {
+		return JavaScriptPropertyAccessor.get(this, name).get(this)
 	}
 
 	//--------------------------------------------------------------------------

@@ -7,7 +7,6 @@ import android.provider.Settings
 import ca.logaritm.dezel.application.ApplicationActivity
 import ca.logaritm.dezel.application.application
 import ca.logaritm.dezel.core.*
-import ca.logaritm.dezel.extension.Delegates
 import ca.logaritm.dezel.modules.view.JavaScriptWindow
 import ca.logaritm.dezel.view.graphic.Color
 
@@ -36,8 +35,10 @@ open class JavaScriptApplication(context: JavaScriptContext) : JavaScriptClass(c
 	 * @property statusBarVisible
 	 * @since 0.7.0
 	 */
-	open var statusBarVisible: Property by Delegates.OnSet(Property(true)) { value ->
-		this.context.application.statusBarVisible = value.boolean
+	open val statusBarVisible: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, true) { value ->
+			this.context.application.statusBarVisible = value.boolean
+		}
 	}
 
 	/**
@@ -45,8 +46,10 @@ open class JavaScriptApplication(context: JavaScriptContext) : JavaScriptClass(c
 	 * @property statusBarForegroundColor
 	 * @since 0.7.0
 	 */
-	open var statusBarForegroundColor: Property by Delegates.OnSet(Property("black")) { value ->
-		this.context.application.statusBarForegroundColor = Color.parse(value.string)
+	open val statusBarForegroundColor: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, "black") { value ->
+			this.context.application.statusBarForegroundColor = Color.parse(value.string)
+		}
 	}
 
 	/**
@@ -54,8 +57,10 @@ open class JavaScriptApplication(context: JavaScriptContext) : JavaScriptClass(c
 	 * @property statusBarBackgroundColor
 	 * @since 0.7.0
 	 */
-	open var statusBarBackgroundColor: Property by Delegates.OnSet(Property("transparent")) { value ->
-		this.context.application.statusBarBackgroundColor = Color.parse(value.string)
+	open val statusBarBackgroundColor: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, "transparent") { value ->
+			this.context.application.statusBarBackgroundColor = Color.parse(value.string)
+		}
 	}
 
 	/**
@@ -63,9 +68,8 @@ open class JavaScriptApplication(context: JavaScriptContext) : JavaScriptClass(c
 	 * @property badge
 	 * @since 0.7.0
 	 */
-	open var badge: Property by Delegates.OnSet(Property(0.0)) {
-		// TODO
-		// https://github.com/leolin310148/ShortcutBadger
+	open val badge: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 0.0)
 	}
 
 	//--------------------------------------------------------------------------
@@ -162,7 +166,7 @@ open class JavaScriptApplication(context: JavaScriptContext) : JavaScriptClass(c
 	 */
 	@Suppress("unused")
 	open fun jsSet_statusBarVisible(callback: JavaScriptSetterCallback) {
-		this.statusBarVisible = Property(callback.value)
+		this.statusBarVisible.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -184,7 +188,7 @@ open class JavaScriptApplication(context: JavaScriptContext) : JavaScriptClass(c
 	 */
 	@Suppress("unused")
 	open fun jsSet_statusBarForegroundColor(callback: JavaScriptSetterCallback) {
-		this.statusBarForegroundColor = Property(callback.value)
+		this.statusBarForegroundColor.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -206,7 +210,7 @@ open class JavaScriptApplication(context: JavaScriptContext) : JavaScriptClass(c
 	 */
 	@Suppress("unused")
 	open fun jsSet_statusBarBackgroundColor(callback: JavaScriptSetterCallback) {
-		this.statusBarBackgroundColor = Property(callback.value)
+		this.statusBarBackgroundColor.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -228,7 +232,7 @@ open class JavaScriptApplication(context: JavaScriptContext) : JavaScriptClass(c
 	 */
 	@Suppress("unused")
 	open fun jsSet_badge(callback: JavaScriptSetterCallback) {
-		this.badge = Property(callback.value)
+		this.badge.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------

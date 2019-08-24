@@ -13,7 +13,7 @@ import ca.logaritm.dezel.application.application
 import ca.logaritm.dezel.core.JavaScriptClass
 import ca.logaritm.dezel.core.JavaScriptContext
 import ca.logaritm.dezel.core.JavaScriptFunctionCallback
-import ca.logaritm.dezel.core.PropertyType
+import ca.logaritm.dezel.core.JavaScriptPropertyType
 import ca.logaritm.dezel.extension.BottomSheetButton
 import ca.logaritm.dezel.modules.graphic.ImageLoader
 import ca.logaritm.dezel.view.graphic.Convert
@@ -173,8 +173,8 @@ open class JavaScriptAlert(context: JavaScriptContext) : JavaScriptClass(context
 				normalButtons.add(button)
 			}
 
-			if (button.image.type == PropertyType.STRING ||
-				button.image.type == PropertyType.OBJECT) {
+			if (button.image.type == JavaScriptPropertyType.STRING ||
+				button.image.type == JavaScriptPropertyType.OBJECT) {
 				icons = true
 			}
 		}
@@ -297,8 +297,8 @@ open class JavaScriptAlert(context: JavaScriptContext) : JavaScriptClass(context
 
 		val size = Convert.toPx(12f).toInt()
 
-		if (source.image.type == PropertyType.STRING ||
-			source.image.type == PropertyType.OBJECT) {
+		if (source.image.type == JavaScriptPropertyType.STRING ||
+			source.image.type == JavaScriptPropertyType.OBJECT) {
 
 			this.loader.load(source.image) { image ->
 

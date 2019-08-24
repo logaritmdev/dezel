@@ -232,5 +232,5 @@ public class StylerNodeExternal {
 	 * @since 0.3.0
 	 * @hidden
 	 */
-	static native Object getItemData(long handle);
+	static native Object getItemData(long handle); // TODO REMOVE
 }

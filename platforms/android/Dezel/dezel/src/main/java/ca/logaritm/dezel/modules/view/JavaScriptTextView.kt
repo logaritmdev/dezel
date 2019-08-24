@@ -4,7 +4,6 @@ import android.util.Log
 import android.util.SizeF
 import ca.logaritm.dezel.application.application
 import ca.logaritm.dezel.core.*
-import ca.logaritm.dezel.extension.Delegates
 import ca.logaritm.dezel.extension.ceiled
 import ca.logaritm.dezel.extension.clamp
 import ca.logaritm.dezel.extension.max
@@ -31,13 +30,16 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	 * @property fontFamily
 	 * @since 0.7.0
 	 */
-	open var fontFamily: Property by Delegates.OnSet(Property("default")) { value ->
+	open val fontFamily: JavaScriptProperty by lazy {
 
-		this.view.fontFamily = value.string
+		JavaScriptProperty(context, "default") { value ->
 
-		if (this.layoutNode.wrapsContentWidth ||
-			this.layoutNode.wrapsContentHeight) {
-			this.layoutNode.invalidateSize()
+			this.view.fontFamily = value.string
+
+			if (this.layoutNode.wrapsContentWidth ||
+				this.layoutNode.wrapsContentHeight) {
+				this.layoutNode.invalidateSize()
+			}
 		}
 	}
 
@@ -46,13 +48,16 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	 * @property fontWeight
 	 * @since 0.7.0
 	 */
-	open var fontWeight: Property by Delegates.OnSet(Property("normal")) { value ->
+	open val fontWeight: JavaScriptProperty by lazy {
 
-		this.view.fontWeight = value.string
+		JavaScriptProperty(context, "normal") { value ->
 
-		if (this.layoutNode.wrapsContentWidth ||
-			this.layoutNode.wrapsContentHeight) {
-			this.layoutNode.invalidateSize()
+			this.view.fontWeight = value.string
+
+			if (this.layoutNode.wrapsContentWidth ||
+				this.layoutNode.wrapsContentHeight) {
+				this.layoutNode.invalidateSize()
+			}
 		}
 	}
 
@@ -61,13 +66,16 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	 * @property fontStyle
 	 * @since 0.7.0
 	 */
-	open var fontStyle: Property by Delegates.OnSet(Property("normal")) { value ->
+	open val fontStyle: JavaScriptProperty by lazy {
 
-		this.view.fontStyle = value.string
+		JavaScriptProperty(context, "normal") { value ->
 
-		if (this.layoutNode.wrapsContentWidth ||
-			this.layoutNode.wrapsContentHeight) {
-			this.layoutNode.invalidateSize()
+			this.view.fontStyle = value.string
+
+			if (this.layoutNode.wrapsContentWidth ||
+				this.layoutNode.wrapsContentHeight) {
+				this.layoutNode.invalidateSize()
+			}
 		}
 	}
 
@@ -76,8 +84,10 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	 * @property fontSize
 	 * @since 0.7.0
 	 */
-	open var fontSize: Property by Delegates.OnSet(Property(17.0)) {
-		this.invalidateFontSize()
+	open val fontSize: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 17.0) {
+			this.invalidateFontSize()
+		}
 	}
 
 	/**
@@ -85,8 +95,10 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	 * @property minFontSize
 	 * @since 0.7.0
 	 */
-	open var minFontSize: Property by Delegates.OnSet(Property(0.0)) {
-		this.invalidateFontSize()
+	open val minFontSize: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 0.0) {
+			this.invalidateFontSize()
+		}
 	}
 
 	/**
@@ -94,8 +106,10 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	 * @property maxFontSize
 	 * @since 0.7.0
 	 */
-	open var maxFontSize: Property by Delegates.OnSet(Property(Double.max)) {
-		this.invalidateFontSize()
+	open val maxFontSize: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, Double.max) {
+			this.invalidateFontSize()
+		}
 	}
 
 	/**
@@ -103,13 +117,16 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	 * @property text
 	 * @since 0.7.0
 	 */
-	open var text: Property by Delegates.OnSet(Property("")) { value ->
+	open val text: JavaScriptProperty by lazy {
 
-		this.view.text = value.string
+		JavaScriptProperty(context, "") { value ->
 
-		if (this.layoutNode.wrapsContentWidth ||
-			this.layoutNode.wrapsContentHeight) {
-			this.layoutNode.invalidateSize()
+			this.view.text = value.string
+
+			if (this.layoutNode.wrapsContentWidth ||
+				this.layoutNode.wrapsContentHeight) {
+				this.layoutNode.invalidateSize()
+			}
 		}
 	}
 
@@ -118,8 +135,10 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	 * @property textColor
 	 * @since 0.7.0
 	 */
-	open var textColor: Property by Delegates.OnSet(Property("#000")) { value ->
-		this.view.textColor = Color.parse(value.string)
+	open val textColor: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, "#000") { value ->
+			this.view.textColor = Color.parse(value.string)
+		}
 	}
 
 	/**
@@ -127,8 +146,10 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	 * @property textAlignment
 	 * @since 0.7.0
 	 */
-	open var textAlignment: Property by Delegates.OnSet(Property("start")) { value ->
-		this.view.textAlignment = this.getTextAlignment(value.string)
+	open val textAlignment: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, "start") { value ->
+			this.view.textAlignment = this.getTextAlignment(value.string)
+		}
 	}
 
 	/**
@@ -136,8 +157,10 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	 * @property textLocation
 	 * @since 0.7.0
 	 */
-	open var textLocation: Property by Delegates.OnSet(Property("middle")) { value ->
-		this.view.textLocation = this.getTextLocation(value.string)
+	open val textLocation: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, "middle") { value ->
+			this.view.textLocation = this.getTextLocation(value.string)
+		}
 	}
 
 	/**
@@ -145,13 +168,16 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	 * @property textBaseline
 	 * @since 0.7.0
 	 */
-	open var textBaseline: Property by Delegates.OnSet(Property(0.0)) { value ->
+	open val textBaseline: JavaScriptProperty by lazy {
 
-		this.view.textBaseline = Convert.toPx(value.number)
+		JavaScriptProperty(context, 0.0) { value ->
 
-		if (this.layoutNode.wrapsContentWidth ||
-			this.layoutNode.wrapsContentHeight) {
-			this.layoutNode.invalidateSize()
+			this.view.textBaseline = Convert.toPx(value.number)
+
+			if (this.layoutNode.wrapsContentWidth ||
+				this.layoutNode.wrapsContentHeight) {
+				this.layoutNode.invalidateSize()
+			}
 		}
 	}
 
@@ -160,13 +186,16 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	 * @property textKerning
 	 * @since 0.7.0
 	 */
-	open var textKerning: Property by Delegates.OnSet(Property(0.0)) { value ->
+	open val textKerning: JavaScriptProperty by lazy {
 
-		this.view.textKerning = Convert.toPx(value.number)
+		JavaScriptProperty(context, 0.0) { value ->
 
-		if (this.layoutNode.wrapsContentWidth ||
-			this.layoutNode.wrapsContentHeight) {
-			this.layoutNode.invalidateSize()
+			this.view.textKerning = Convert.toPx(value.number)
+
+			if (this.layoutNode.wrapsContentWidth ||
+				this.layoutNode.wrapsContentHeight) {
+				this.layoutNode.invalidateSize()
+			}
 		}
 	}
 
@@ -175,13 +204,16 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	 * @property textLeading
 	 * @since 0.7.0
 	 */
-	open var textLeading: Property by Delegates.OnSet(Property(0.0)) { value ->
+	open val textLeading: JavaScriptProperty by lazy {
 
-		this.view.textLeading = Convert.toPx(value.number)
+		JavaScriptProperty(context, 0.0) { value ->
 
-		if (this.layoutNode.wrapsContentWidth ||
-			this.layoutNode.wrapsContentHeight) {
-			this.layoutNode.invalidateSize()
+			this.view.textLeading = Convert.toPx(value.number)
+
+			if (this.layoutNode.wrapsContentWidth ||
+				this.layoutNode.wrapsContentHeight) {
+				this.layoutNode.invalidateSize()
+			}
 		}
 	}
 
@@ -190,8 +222,10 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	 * @property textShadowBlur
 	 * @since 0.7.0
 	 */
-	open var textShadowBlur: Property by Delegates.OnSet(Property(0.0)) { value ->
-		this.view.textShadowBlur = Convert.toPx(value.number)
+	open val textShadowBlur: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 0.0) { value ->
+			this.view.textShadowBlur = Convert.toPx(value.number)
+		}
 	}
 
 	/**
@@ -199,8 +233,10 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	 * @property textShadowColor
 	 * @since 0.7.0
 	 */
-	open var textShadowColor: Property by Delegates.OnSet(Property("#000")) { value ->
-		this.view.textShadowColor = Color.parse(value.string)
+	open val textShadowColor: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, "#000") { value ->
+			this.view.textShadowColor = Color.parse(value.string)
+		}
 	}
 
 	/**
@@ -208,8 +244,10 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	 * @property textShadowOffsetTop
 	 * @since 0.7.0
 	 */
-	open var textShadowOffsetTop: Property by Delegates.OnSet(Property(0.0)) { value ->
-		this.view.textShadowOffsetTop = Convert.toPx(value.number)
+	open val textShadowOffsetTop: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 0.0) { value ->
+			this.view.textShadowOffsetTop = Convert.toPx(value.number)
+		}
 	}
 
 	/**
@@ -217,8 +255,10 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	 * @property textShadowOffsetLeft
 	 * @since 0.7.0
 	 */
-	open var textShadowOffsetLeft: Property by Delegates.OnSet(Property(0.0)) { value ->
-		this.view.textShadowOffsetLeft = Convert.toPx(value.number)
+	open val textShadowOffsetLeft: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 0.0) { value ->
+			this.view.textShadowOffsetLeft = Convert.toPx(value.number)
+		}
 	}
 
 	/**
@@ -226,13 +266,16 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	 * @property textDecoration
 	 * @since 0.7.0
 	 */
-	open var textDecoration: Property by Delegates.OnSet(Property("none")) { value ->
+	open val textDecoration: JavaScriptProperty by lazy {
 
-		this.view.textDecoration = this.getTextDecoration(value.string)
+		JavaScriptProperty(context, "none") { value ->
 
-		if (this.layoutNode.wrapsContentWidth ||
-			this.layoutNode.wrapsContentHeight) {
-			this.layoutNode.invalidateSize()
+			this.view.textDecoration = this.getTextDecoration(value.string)
+
+			if (this.layoutNode.wrapsContentWidth ||
+				this.layoutNode.wrapsContentHeight) {
+				this.layoutNode.invalidateSize()
+			}
 		}
 	}
 
@@ -241,13 +284,16 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	 * @property textTransform
 	 * @since 0.7.0
 	 */
-	open var textTransform: Property by Delegates.OnSet(Property("none")) { value ->
+	open val textTransform: JavaScriptProperty by lazy {
 
-		this.view.textTransform = this.getTextTransform(value.string)
+		JavaScriptProperty(context, "none") { value ->
 
-		if (this.layoutNode.wrapsContentWidth ||
-			this.layoutNode.wrapsContentHeight) {
-			this.layoutNode.invalidateSize()
+			this.view.textTransform = this.getTextTransform(value.string)
+
+			if (this.layoutNode.wrapsContentWidth ||
+				this.layoutNode.wrapsContentHeight) {
+				this.layoutNode.invalidateSize()
+			}
 		}
 	}
 
@@ -256,13 +302,16 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	 * @property textOverflow
 	 * @since 0.7.0
 	 */
-	open var textOverflow: Property by Delegates.OnSet(Property("ellipsis")) { value ->
+	open val textOverflow: JavaScriptProperty by lazy {
 
-		this.view.textOverflow = this.getTextOverflow(value.string)
+		JavaScriptProperty(context, "ellipsis") { value ->
 
-		if (this.layoutNode.wrapsContentWidth ||
-			this.layoutNode.wrapsContentHeight) {
-			this.layoutNode.invalidateSize()
+			this.view.textOverflow = this.getTextOverflow(value.string)
+
+			if (this.layoutNode.wrapsContentWidth ||
+				this.layoutNode.wrapsContentHeight) {
+				this.layoutNode.invalidateSize()
+			}
 		}
 	}
 
@@ -271,8 +320,10 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	 * @property linkColor
 	 * @since 0.7.0
 	 */
-	open var linkColor: Property by Delegates.OnSet(Property("blue")) { value ->
-		this.view.linkColor = Color.parse(value.string)
+	open val linkColor: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, "blue") { value ->
+			this.view.linkColor = Color.parse(value.string)
+		}
 	}
 
 	/**
@@ -280,13 +331,16 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	 * @property maxLines
 	 * @since 0.7.0
 	 */
-	open var maxLines: Property by Delegates.OnSet(Property(0.0)) { value ->
+	open val maxLines: JavaScriptProperty by lazy {
 
-		this.view.maxLines = value.number.toInt()
+		JavaScriptProperty(context, 0.0) { value ->
 
-		if (this.layoutNode.wrapsContentWidth ||
-			this.layoutNode.wrapsContentHeight) {
-			this.layoutNode.invalidateSize()
+			this.view.maxLines = value.number.toInt()
+
+			if (this.layoutNode.wrapsContentWidth ||
+				this.layoutNode.wrapsContentHeight) {
+				this.layoutNode.invalidateSize()
+			}
 		}
 	}
 
@@ -364,10 +418,10 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 		val value: Float
 
 		when (this.fontSize.unit) {
-			PropertyUnit.PX -> value = Convert.toPx(this.fontSize.number)
-			PropertyUnit.VW -> value = Convert.toPx(this.fontSize.number / 100 * this.layoutNode.viewportWidth)
-			PropertyUnit.VH -> value = Convert.toPx(this.fontSize.number / 100 * this.layoutNode.viewportHeight)
-			else            -> value = Convert.toPx(this.fontSize.number)
+			JavaScriptPropertyUnit.PX -> value = Convert.toPx(this.fontSize.number)
+			JavaScriptPropertyUnit.VW -> value = Convert.toPx(this.fontSize.number / 100 * this.layoutNode.viewportWidth)
+			JavaScriptPropertyUnit.VH -> value = Convert.toPx(this.fontSize.number / 100 * this.layoutNode.viewportHeight)
+			else                      -> value = Convert.toPx(this.fontSize.number)
 		}
 
 		this.view.fontSize = value.clamp(
@@ -543,7 +597,7 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	 */
 	@Suppress("unused")
 	open fun jsSet_fontFamily(callback: JavaScriptSetterCallback) {
-		this.fontFamily = Property(callback.value)
+		this.fontFamily.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -565,7 +619,7 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	 */
 	@Suppress("unused")
 	open fun jsSet_fontWeight(callback: JavaScriptSetterCallback) {
-		this.fontWeight = Property(callback.value)
+		this.fontWeight.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -587,7 +641,7 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	 */
 	@Suppress("unused")
 	open fun jsSet_fontStyle(callback: JavaScriptSetterCallback) {
-		this.fontStyle = Property(callback.value)
+		this.fontStyle.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -609,7 +663,7 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	 */
 	@Suppress("unused")
 	open fun jsSet_fontSize(callback: JavaScriptSetterCallback) {
-		this.fontSize = Property(callback.value)
+		this.fontSize.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -631,7 +685,7 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	 */
 	@Suppress("unused")
 	open fun jsSet_minFontSize(callback: JavaScriptSetterCallback) {
-		this.minFontSize = Property(callback.value)
+		this.minFontSize.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -653,7 +707,7 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	 */
 	@Suppress("unused")
 	open fun jsSet_maxFontSize(callback: JavaScriptSetterCallback) {
-		this.maxFontSize = Property(callback.value)
+		this.maxFontSize.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -675,7 +729,7 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	 */
 	@Suppress("unused")
 	open fun jsSet_text(callback: JavaScriptSetterCallback) {
-		this.text = Property(callback.value)
+		this.text.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -697,7 +751,7 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	 */
 	@Suppress("unused")
 	open fun jsSet_textColor(callback: JavaScriptSetterCallback) {
-		this.textColor = Property(callback.value)
+		this.textColor.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -719,7 +773,7 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	 */
 	@Suppress("unused")
 	open fun jsSet_textAlignment(callback: JavaScriptSetterCallback) {
-		this.textAlignment = Property(callback.value)
+		this.textAlignment.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -741,7 +795,7 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	 */
 	@Suppress("unused")
 	open fun jsSet_textLocation(callback: JavaScriptSetterCallback) {
-		this.textLocation = Property(callback.value)
+		this.textLocation.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -763,7 +817,7 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	 */
 	@Suppress("unused")
 	open fun jsSet_textBaseline(callback: JavaScriptSetterCallback) {
-		this.textBaseline = Property(callback.value)
+		this.textBaseline.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -785,7 +839,7 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	 */
 	@Suppress("unused")
 	open fun jsSet_textKerning(callback: JavaScriptSetterCallback) {
-		this.textKerning = Property(callback.value)
+		this.textKerning.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -807,7 +861,7 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	 */
 	@Suppress("unused")
 	open fun jsSet_textLeading(callback: JavaScriptSetterCallback) {
-		this.textLeading = Property(callback.value)
+		this.textLeading.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -829,7 +883,7 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	 */
 	@Suppress("unused")
 	open fun jsSet_textDecoration(callback: JavaScriptSetterCallback) {
-		this.textDecoration = Property(callback.value)
+		this.textDecoration.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -851,7 +905,7 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	 */
 	@Suppress("unused")
 	open fun jsSet_textTransform(callback: JavaScriptSetterCallback) {
-		this.textTransform = Property(callback.value)
+		this.textTransform.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -873,7 +927,7 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	 */
 	@Suppress("unused")
 	open fun jsSet_textShadowBlur(callback: JavaScriptSetterCallback) {
-		this.textShadowBlur = Property(callback.value)
+		this.textShadowBlur.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -895,7 +949,7 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	 */
 	@Suppress("unused")
 	open fun jsSet_textShadowColor(callback: JavaScriptSetterCallback) {
-		this.textShadowColor = Property(callback.value)
+		this.textShadowColor.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -917,7 +971,7 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	 */
 	@Suppress("unused")
 	open fun jsSet_textShadowOffsetTop(callback: JavaScriptSetterCallback) {
-		this.textShadowOffsetTop = Property(callback.value)
+		this.textShadowOffsetTop.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -939,7 +993,7 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	 */
 	@Suppress("unused")
 	open fun jsSet_textShadowOffsetLeft(callback: JavaScriptSetterCallback) {
-		this.textShadowOffsetLeft = Property(callback.value)
+		this.textShadowOffsetLeft.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -961,7 +1015,7 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	 */
 	@Suppress("unused")
 	open fun jsSet_textOverflow(callback: JavaScriptSetterCallback) {
-		this.textOverflow = Property(callback.value)
+		this.textOverflow.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -983,7 +1037,7 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	 */
 	@Suppress("unused")
 	open fun jsSet_linkColor(callback: JavaScriptSetterCallback) {
-		this.linkColor = Property(callback.value)
+		this.linkColor.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -1005,6 +1059,6 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	 */
 	@Suppress("unused")
 	open fun jsSet_maxLines(callback: JavaScriptSetterCallback) {
-		this.maxLines = Property(callback.value)
+		this.maxLines.set(callback.value, this)
 	}
 }

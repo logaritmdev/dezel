@@ -118,8 +118,8 @@ open class JavaScriptCallback(context: JavaScriptContext, target: Long, callee: 
 	 * @method returns
 	 * @since 0.1.0
 	 */
-	public fun returns(property: Property) {
-		this.result = property.value(this.context).handle
+	public fun returns(property: JavaScriptProperty) {
+		this.result = toHandle(property, this.context)
 	}
 
 	/**

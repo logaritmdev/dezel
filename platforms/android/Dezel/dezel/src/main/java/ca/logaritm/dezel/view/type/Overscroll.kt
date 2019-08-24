@@ -1,7 +1,7 @@
 package ca.logaritm.dezel.view.type
 
-import ca.logaritm.dezel.core.Property
-import ca.logaritm.dezel.core.PropertyType
+import ca.logaritm.dezel.core.JavaScriptProperty
+import ca.logaritm.dezel.core.JavaScriptPropertyType
 
 
 /**
@@ -24,12 +24,12 @@ public enum class Overscroll {
 		 * @method get
 		 * @since 0.2.0
 		 */
-		public fun get(value: Property): Overscroll {
+		public fun get(value: JavaScriptProperty): Overscroll {
 			return when (value.type) {
-				PropertyType.BOOLEAN -> this.get(value.boolean)
-				PropertyType.NUMBER  -> this.get(value.number)
-				PropertyType.STRING  -> this.get(value.string)
-				else                 -> Overscroll.AUTO
+				JavaScriptPropertyType.BOOLEAN -> this.get(value.boolean)
+				JavaScriptPropertyType.NUMBER  -> this.get(value.number)
+				JavaScriptPropertyType.STRING  -> this.get(value.string)
+				else                           -> Overscroll.AUTO
 			}
 		}
 

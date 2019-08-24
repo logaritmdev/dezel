@@ -2,7 +2,6 @@ package ca.logaritm.dezel.modules.graphic
 
 import android.graphics.*
 import ca.logaritm.dezel.core.*
-import ca.logaritm.dezel.extension.Delegates
 import ca.logaritm.dezel.extension.addArcTo
 import ca.logaritm.dezel.extension.pop
 import ca.logaritm.dezel.view.graphic.Color
@@ -23,9 +22,11 @@ open class JavaScriptCanvas(context: JavaScriptContext) : JavaScriptClass(contex
 	 * The canvas fill style.
 	 * @property fillStyle
 	 * @since 0.7.0
-	 */	
-	open var fillStyle: Property by Delegates.OnSet(Property("black")) { value ->
-		this.fillPaint.color = Color.parse(value.string)
+	 */
+	open val fillStyle: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, "black") { value ->
+			this.fillPaint.color = Color.parse(value.string)
+		}
 	}
 
 	/**
@@ -33,8 +34,10 @@ open class JavaScriptCanvas(context: JavaScriptContext) : JavaScriptClass(contex
 	 * @property strokeStyle
 	 * @since 0.7.0
 	 */
-	open var strokeStyle: Property by Delegates.OnSet(Property("black")) { value ->
-		this.strokePaint.color = Color.parse(value.string)
+	open val strokeStyle: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, "black") { value ->
+			this.strokePaint.color = Color.parse(value.string)
+		}
 	}
 
 	/**
@@ -42,11 +45,13 @@ open class JavaScriptCanvas(context: JavaScriptContext) : JavaScriptClass(contex
 	 * @property lineCap
 	 * @since 0.7.0
 	 */
-	open var lineCap: Property by Delegates.OnSet(Property("butt")) { value ->
-		 when (value.string) {
-			"butt"   -> this.strokePaint.strokeCap = Paint.Cap.BUTT
-			"round"  -> this.strokePaint.strokeCap = Paint.Cap.ROUND
-			"square" -> this.strokePaint.strokeCap = Paint.Cap.SQUARE
+	open val lineCap: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, "butt") { value ->
+			when (value.string) {
+				"butt"   -> this.strokePaint.strokeCap = Paint.Cap.BUTT
+				"round"  -> this.strokePaint.strokeCap = Paint.Cap.ROUND
+				"square" -> this.strokePaint.strokeCap = Paint.Cap.SQUARE
+			}
 		}
 	}
 
@@ -55,11 +60,13 @@ open class JavaScriptCanvas(context: JavaScriptContext) : JavaScriptClass(contex
 	 * @property lineJoin
 	 * @since 0.7.0
 	 */
-	open var lineJoin: Property by Delegates.OnSet(Property("miter")) { value ->
-		when (value.string) {
-			"miter" -> this.strokePaint.strokeJoin = Paint.Join.MITER
-			"round" -> this.strokePaint.strokeJoin = Paint.Join.ROUND
-			"bevel" -> this.strokePaint.strokeJoin = Paint.Join.BEVEL
+	open val lineJoin: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, "miter") { value ->
+			when (value.string) {
+				"miter" -> this.strokePaint.strokeJoin = Paint.Join.MITER
+				"round" -> this.strokePaint.strokeJoin = Paint.Join.ROUND
+				"bevel" -> this.strokePaint.strokeJoin = Paint.Join.BEVEL
+			}
 		}
 	}
 
@@ -68,8 +75,10 @@ open class JavaScriptCanvas(context: JavaScriptContext) : JavaScriptClass(contex
 	 * @property lineWidth
 	 * @since 0.7.0
 	 */
-	open var lineWidth: Property by Delegates.OnSet(Property(1.0)) { value ->
-		this.strokePaint.strokeWidth = Convert.toPx(value.number)
+	open val lineWidth: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 1.0) { value ->
+			this.strokePaint.strokeWidth = Convert.toPx(value.number)
+		}
 	}
 
 	/**
@@ -77,10 +86,12 @@ open class JavaScriptCanvas(context: JavaScriptContext) : JavaScriptClass(contex
 	 * @property shadowOffsetX
 	 * @since 0.7.0
 	 */
-	open var shadowOffsetX: Property by Delegates.OnSet(Property(0.0)) { value ->
-		this.measuredShadowOffsetX = Convert.toPx(value.number)
-		this.fillPaint.setShadowLayer(this.measuredShadowBlur, this.measuredShadowOffsetX, this.measuredShadowOffsetY, this.computedShadowColor)
-		this.strokePaint.setShadowLayer(this.measuredShadowBlur, this.measuredShadowOffsetX, this.measuredShadowOffsetY, this.computedShadowColor)
+	open val shadowOffsetX: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 0.0) { value ->
+			this.measuredShadowOffsetX = Convert.toPx(value.number)
+			this.fillPaint.setShadowLayer(this.measuredShadowBlur, this.measuredShadowOffsetX, this.measuredShadowOffsetY, this.computedShadowColor)
+			this.strokePaint.setShadowLayer(this.measuredShadowBlur, this.measuredShadowOffsetX, this.measuredShadowOffsetY, this.computedShadowColor)
+		}
 	}
 
 	/**
@@ -88,10 +99,12 @@ open class JavaScriptCanvas(context: JavaScriptContext) : JavaScriptClass(contex
 	 * @property shadowOffsetY
 	 * @since 0.7.0
 	 */
-	open var shadowOffsetY: Property by Delegates.OnSet(Property(0.0)) { value ->
-		this.measuredShadowOffsetY = Convert.toPx(value.number)
-		this.fillPaint.setShadowLayer(this.measuredShadowBlur, this.measuredShadowOffsetX, this.measuredShadowOffsetY, this.computedShadowColor)
-		this.strokePaint.setShadowLayer(this.measuredShadowBlur, this.measuredShadowOffsetX, this.measuredShadowOffsetY, this.computedShadowColor)
+	open val shadowOffsetY: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 0.0) { value ->
+			this.measuredShadowOffsetY = Convert.toPx(value.number)
+			this.fillPaint.setShadowLayer(this.measuredShadowBlur, this.measuredShadowOffsetX, this.measuredShadowOffsetY, this.computedShadowColor)
+			this.strokePaint.setShadowLayer(this.measuredShadowBlur, this.measuredShadowOffsetX, this.measuredShadowOffsetY, this.computedShadowColor)
+		}
 	}
 
 	/**
@@ -99,10 +112,12 @@ open class JavaScriptCanvas(context: JavaScriptContext) : JavaScriptClass(contex
 	 * @property shadowBlur
 	 * @since 0.7.0
 	 */
-	open var shadowBlur: Property by Delegates.OnSet(Property(0.0)) { value ->
-		this.measuredShadowBlur = Convert.toPx(value.number)
-		this.fillPaint.setShadowLayer(this.measuredShadowBlur, this.measuredShadowOffsetX, this.measuredShadowOffsetY, this.computedShadowColor)
-		this.strokePaint.setShadowLayer(this.measuredShadowBlur, this.measuredShadowOffsetX, this.measuredShadowOffsetY, this.computedShadowColor)
+	open val shadowBlur: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 0.0) { value ->
+			this.measuredShadowBlur = Convert.toPx(value.number)
+			this.fillPaint.setShadowLayer(this.measuredShadowBlur, this.measuredShadowOffsetX, this.measuredShadowOffsetY, this.computedShadowColor)
+			this.strokePaint.setShadowLayer(this.measuredShadowBlur, this.measuredShadowOffsetX, this.measuredShadowOffsetY, this.computedShadowColor)
+		}
 	}
 
 	/**
@@ -110,10 +125,12 @@ open class JavaScriptCanvas(context: JavaScriptContext) : JavaScriptClass(contex
 	 * @property shadowBlur
 	 * @since 0.7.0
 	 */
-	open var shadowColor: Property by Delegates.OnSet(Property(0.0)) { value ->
-		this.computedShadowColor = Color.parse(value.string)
-		this.fillPaint.setShadowLayer(this.measuredShadowBlur, this.measuredShadowOffsetX, this.measuredShadowOffsetY, this.computedShadowColor)
-		this.strokePaint.setShadowLayer(this.measuredShadowBlur, this.measuredShadowOffsetX, this.measuredShadowOffsetY, this.computedShadowColor)
+	open val shadowColor: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 0.0) { value ->
+			this.computedShadowColor = Color.parse(value.string)
+			this.fillPaint.setShadowLayer(this.measuredShadowBlur, this.measuredShadowOffsetX, this.measuredShadowOffsetY, this.computedShadowColor)
+			this.strokePaint.setShadowLayer(this.measuredShadowBlur, this.measuredShadowOffsetX, this.measuredShadowOffsetY, this.computedShadowColor)
+		}
 	}
 
 	/**
@@ -121,10 +138,12 @@ open class JavaScriptCanvas(context: JavaScriptContext) : JavaScriptClass(contex
 	 * @property globalAlpha
 	 * @since 0.7.0
 	 */
-	open var globalAlpha: Property by Delegates.OnSet(Property(1.0)) { value ->
-		val alpha = value.number.toInt() * 255
-		this.fillPaint.alpha = alpha
-		this.strokePaint.alpha = alpha
+	open val globalAlpha: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, 1.0) { value ->
+			val alpha = value.number.toInt() * 255
+			this.fillPaint.alpha = alpha
+			this.strokePaint.alpha = alpha
+		}
 	}
 
 	/**
@@ -132,8 +151,9 @@ open class JavaScriptCanvas(context: JavaScriptContext) : JavaScriptClass(contex
 	 * @property globalAlpha
 	 * @since 0.7.0
 	 */
-	open var globalCompositeOperation: Property by Delegates.OnSet(Property("source-over")) {
-		// TODO
+	open val globalCompositeOperation: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, "source-over") {
+			// TODO
 //		when (value.string) {
 //			"source-over" ->
 //			"source-in"   ->
@@ -147,6 +167,7 @@ open class JavaScriptCanvas(context: JavaScriptContext) : JavaScriptClass(contex
 //			"darker"  ->
 //			"copy"    ->
 //		}
+		}
 	}
 
 	/**
@@ -285,7 +306,7 @@ open class JavaScriptCanvas(context: JavaScriptContext) : JavaScriptClass(contex
 	}
 
 	//--------------------------------------------------------------------------
-	// JS Property
+	// JS JavaScriptProperty
 	//--------------------------------------------------------------------------
 
 	/**
@@ -297,7 +318,7 @@ open class JavaScriptCanvas(context: JavaScriptContext) : JavaScriptClass(contex
 	open fun jsGet_fillStyle(callback: JavaScriptGetterCallback) {
 		callback.returns(this.fillStyle)
 	}
-	
+
 	/**
 	 * @method jsSet_fillStyle
 	 * @since 0.7.0
@@ -305,9 +326,9 @@ open class JavaScriptCanvas(context: JavaScriptContext) : JavaScriptClass(contex
 	 */
 	@Suppress("unused")
 	open fun jsSet_fillStyle(callback: JavaScriptSetterCallback) {
-		this.fillStyle = Property(callback.value)
+		this.fillStyle.set(callback.value, this)
 	}
-	
+
 	//--------------------------------------------------------------------------
 
 	/**
@@ -319,7 +340,7 @@ open class JavaScriptCanvas(context: JavaScriptContext) : JavaScriptClass(contex
 	open fun jsGet_strokeStyle(callback: JavaScriptGetterCallback) {
 		callback.returns(this.strokeStyle)
 	}
-	
+
 	/**
 	 * @method jsSet_strokeStyle
 	 * @since 0.7.0
@@ -327,7 +348,7 @@ open class JavaScriptCanvas(context: JavaScriptContext) : JavaScriptClass(contex
 	 */
 	@Suppress("unused")
 	open fun jsSet_strokeStyle(callback: JavaScriptSetterCallback) {
-		this.strokeStyle = Property(callback.value)
+		this.strokeStyle.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -341,7 +362,7 @@ open class JavaScriptCanvas(context: JavaScriptContext) : JavaScriptClass(contex
 	open fun jsGet_lineCap(callback: JavaScriptGetterCallback) {
 		callback.returns(this.lineCap)
 	}
-	
+
 	/**
 	 * @method jsSet_lineCap
 	 * @since 0.7.0
@@ -349,7 +370,7 @@ open class JavaScriptCanvas(context: JavaScriptContext) : JavaScriptClass(contex
 	 */
 	@Suppress("unused")
 	open fun jsSet_lineCap(callback: JavaScriptSetterCallback) {
-		this.lineCap = Property(callback.value)		
+		this.lineCap.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -363,7 +384,7 @@ open class JavaScriptCanvas(context: JavaScriptContext) : JavaScriptClass(contex
 	open fun jsGet_lineJoin(callback: JavaScriptGetterCallback) {
 		callback.returns(this.lineJoin)
 	}
-	
+
 	/**
 	 * @method jsSet_lineJoin
 	 * @since 0.7.0
@@ -371,7 +392,7 @@ open class JavaScriptCanvas(context: JavaScriptContext) : JavaScriptClass(contex
 	 */
 	@Suppress("unused")
 	open fun jsSet_lineJoin(callback: JavaScriptSetterCallback) {
-		this.lineJoin = Property(callback.value)
+		this.lineJoin.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -385,7 +406,7 @@ open class JavaScriptCanvas(context: JavaScriptContext) : JavaScriptClass(contex
 	open fun jsGet_lineWidth(callback: JavaScriptGetterCallback) {
 		callback.returns(this.lineWidth)
 	}
-	
+
 	/**
 	 * @method jsSet_lineWidth
 	 * @since 0.7.0
@@ -393,7 +414,7 @@ open class JavaScriptCanvas(context: JavaScriptContext) : JavaScriptClass(contex
 	 */
 	@Suppress("unused")
 	open fun jsSet_lineWidth(callback: JavaScriptSetterCallback) {
-		this.lineWidth = Property(callback.value)
+		this.lineWidth.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -415,7 +436,7 @@ open class JavaScriptCanvas(context: JavaScriptContext) : JavaScriptClass(contex
 	 */
 	@Suppress("unused")
 	open fun jsSet_shadowOffsetX(callback: JavaScriptSetterCallback) {
-		this.shadowOffsetX = Property(callback.value)
+		this.shadowOffsetX.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -437,7 +458,7 @@ open class JavaScriptCanvas(context: JavaScriptContext) : JavaScriptClass(contex
 	 */
 	@Suppress("unused")
 	open fun jsSet_shadowOffsetY(callback: JavaScriptSetterCallback) {
-		this.shadowOffsetY = Property(callback.value)
+		this.shadowOffsetY.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -459,7 +480,7 @@ open class JavaScriptCanvas(context: JavaScriptContext) : JavaScriptClass(contex
 	 */
 	@Suppress("unused")
 	open fun jsSet_shadowBlur(callback: JavaScriptSetterCallback) {
-		this.shadowBlur = Property(callback.value)
+		this.shadowBlur.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -481,7 +502,7 @@ open class JavaScriptCanvas(context: JavaScriptContext) : JavaScriptClass(contex
 	 */
 	@Suppress("unused")
 	open fun jsSet_shadowColor(callback: JavaScriptSetterCallback) {
-		this.shadowColor = Property(callback.value)
+		this.shadowColor.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -503,7 +524,7 @@ open class JavaScriptCanvas(context: JavaScriptContext) : JavaScriptClass(contex
 	 */
 	@Suppress("unused")
 	open fun jsSet_globalAlpha(callback: JavaScriptSetterCallback) {
-		this.globalAlpha = Property(callback.value)
+		this.globalAlpha.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -516,8 +537,8 @@ open class JavaScriptCanvas(context: JavaScriptContext) : JavaScriptClass(contex
 	@Suppress("unused")
 	open fun jsGet_globalCompositeOperation(callback: JavaScriptGetterCallback) {
 		callback.returns(this.globalCompositeOperation)
-	}	
-	
+	}
+
 	/**
 	 * @method jsSet_globalCompositeOperation
 	 * @since 0.7.0
@@ -525,7 +546,7 @@ open class JavaScriptCanvas(context: JavaScriptContext) : JavaScriptClass(contex
 	 */
 	@Suppress("unused")
 	open fun jsSet_globalCompositeOperation(callback: JavaScriptSetterCallback) {
-		this.globalCompositeOperation = Property(callback.value)
+		this.globalCompositeOperation.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------

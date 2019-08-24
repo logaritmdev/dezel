@@ -4,8 +4,7 @@ import ca.logaritm.dezel.application.application
 import ca.logaritm.dezel.core.JavaScriptContext
 import ca.logaritm.dezel.core.JavaScriptGetterCallback
 import ca.logaritm.dezel.core.JavaScriptSetterCallback
-import ca.logaritm.dezel.core.Property
-import ca.logaritm.dezel.extension.Delegates
+import ca.logaritm.dezel.core.JavaScriptProperty
 import ca.logaritm.dezel.extension.toColor
 import ca.logaritm.dezel.view.SpinnerView
 
@@ -21,8 +20,10 @@ open class JavaScriptSpinnerView(context: JavaScriptContext) : JavaScriptView(co
 	 * @property active
 	 * @since 0.7.0
 	 */
-	open var active: Property by Delegates.OnSet(Property(false)) { value ->
-		this.view.active = value.boolean
+	open val active: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, false) { value ->
+			this.view.active = value.boolean
+		}
 	}
 
 	/**
@@ -30,8 +31,10 @@ open class JavaScriptSpinnerView(context: JavaScriptContext) : JavaScriptView(co
 	 * @property color
 	 * @since 0.7.0
 	 */
-	open var color: Property by Delegates.OnSet(Property("#000")) { value ->
-		this.view.color = value.string.toColor()
+	open val color: JavaScriptProperty by lazy {
+		JavaScriptProperty(context, "#000") { value ->
+			this.view.color = value.string.toColor()
+		}
 	}
 
 	/**
@@ -51,7 +54,7 @@ open class JavaScriptSpinnerView(context: JavaScriptContext) : JavaScriptView(co
 	 * @method createContentView
 	 * @since 0.7.0
 	 */
-	override fun createContentView() : SpinnerView {
+	override fun createContentView(): SpinnerView {
 		return SpinnerView(this.context.application)
 	}
 
@@ -76,7 +79,7 @@ open class JavaScriptSpinnerView(context: JavaScriptContext) : JavaScriptView(co
 	 */
 	@Suppress("unused")
 	open fun jsSet_active(callback: JavaScriptSetterCallback) {
-		this.active = Property(callback.value)
+		this.active.set(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -98,6 +101,6 @@ open class JavaScriptSpinnerView(context: JavaScriptContext) : JavaScriptView(co
 	 */
 	@Suppress("unused")
 	open fun jsSet_color(callback: JavaScriptSetterCallback) {
-		this.color = Property(callback.value)
+		this.color.set(callback.value, this)
 	}
 }

@@ -275,7 +275,7 @@ open class HttpRequest(url: URL, method: String) : AsyncTask<URL, HttpRequestPro
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method reset
+	 * @method set
 	 * @since 0.1.0
 	 * @hidden
 	 */
@@ -284,7 +284,7 @@ open class HttpRequest(url: URL, method: String) : AsyncTask<URL, HttpRequestPro
 	}
 
 	/**
-	 * @method reset
+	 * @method set
 	 * @since 0.1.0
 	 * @hidden
 	 */

@@ -6,8 +6,8 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.AsyncTask
 import android.util.Log
-import ca.logaritm.dezel.core.Property
-import ca.logaritm.dezel.core.PropertyType
+import ca.logaritm.dezel.core.JavaScriptProperty
+import ca.logaritm.dezel.core.JavaScriptPropertyType
 import ca.logaritm.dezel.extension.baseName
 import ca.logaritm.dezel.extension.ceil
 import ca.logaritm.dezel.extension.fileExt
@@ -102,24 +102,24 @@ open class ImageLoader(val context: Context) {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Convenience method to load an image from a Property object.
+	 * Convenience method to load an image from a JavaScriptProperty object.
 	 * @method load
 	 * @since 0.1.0
 	 */
-	open fun load(source: Property, callback: (image: Bitmap?) -> Unit) {
+	open fun load(source: JavaScriptProperty, callback: (image: Bitmap?) -> Unit) {
 
-		if (source.type == PropertyType.NULL) {
+		if (source.type == JavaScriptPropertyType.NULL) {
 			callback(null)
 			return
 		}
 
-		if (source.type == PropertyType.STRING) {
+		if (source.type == JavaScriptPropertyType.STRING) {
 			this.load(source.string, callback)
 			return
 		}
 
-		if (source.type == PropertyType.OBJECT) {
-			val image = source.cast(JavaScriptImage::class.java)
+		if (source.type == JavaScriptPropertyType.OBJECT) {
+			val image = source.value.cast(JavaScriptImage::class.java)
 			if (image != null) {
 				callback(image.data)
 			}

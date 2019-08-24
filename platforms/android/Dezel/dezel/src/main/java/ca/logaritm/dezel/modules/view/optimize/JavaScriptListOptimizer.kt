@@ -165,8 +165,8 @@ open class JavaScriptListOptimizer(context: JavaScriptContext) : JavaScriptViewO
 		this.contentOffset = 0.0
 		this.contentLength = 0.0
 
-		this.view.scrollTop = Property(0.0)
-		this.view.scrollLeft = Property(0.0)
+		this.view.scrollTop.set(0.0)
+		this.view.scrollLeft.set(0.0)
 		this.view.scheduleLayout()
 	}
 
@@ -288,10 +288,10 @@ open class JavaScriptListOptimizer(context: JavaScriptContext) : JavaScriptViewO
 			this.clear()
 			this.contentLength = 0.0
 			this.contentOffset = 0.0
-			this.view.contentTop = Property(0.0)
-			this.view.contentLeft = Property(0.0)
-			this.view.contentWidth = Property("auto")
-			this.view.contentHeight = Property("auto")
+			this.view.contentTop.set(0.0)
+			this.view.contentLeft.set(0.0)
+			this.view.contentWidth.set("auto")
+			this.view.contentHeight.set("auto")
 
 			this.updateContentOffset()
 			this.updateContentLength()
@@ -475,8 +475,8 @@ open class JavaScriptListOptimizer(context: JavaScriptContext) : JavaScriptViewO
 	 */
 	private fun updateContentOffset() {
 		when (this.orientation) {
-			Orientation.VERTICAL   -> this.view.contentTop = Property(this.contentOffset)
-			Orientation.HORIZONTAL -> this.view.contentLeft = Property(this.contentOffset)
+			Orientation.VERTICAL   -> this.view.contentTop.set(this.contentOffset)
+			Orientation.HORIZONTAL -> this.view.contentLeft.set(this.contentOffset)
 		}
 	}
 
@@ -487,8 +487,8 @@ open class JavaScriptListOptimizer(context: JavaScriptContext) : JavaScriptViewO
 	 */
 	private fun updateContentLength() {
 		when (this.orientation) {
-			Orientation.VERTICAL   -> this.view.contentHeight = Property(this.contentLength + this.view.resolvedPaddingTop + this.view.resolvedPaddingBottom)
-			Orientation.HORIZONTAL -> this.view.contentWidth = Property(this.contentLength + this.view.resolvedPaddingLeft + this.view.resolvedPaddingRight)
+			Orientation.VERTICAL   -> this.view.contentHeight.set(this.contentLength + this.view.resolvedPaddingTop + this.view.resolvedPaddingBottom)
+			Orientation.HORIZONTAL -> this.view.contentWidth.set(this.contentLength + this.view.resolvedPaddingLeft + this.view.resolvedPaddingRight)
 		}
 	}
 

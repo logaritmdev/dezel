@@ -1,6 +1,5 @@
 package ca.logaritm.dezel.core
 
-import android.util.Log
 import ca.logaritm.dezel.BuildConfig
 
 /**
@@ -265,19 +264,19 @@ open class JavaScriptContext {
 	 * @method createNumber
 	 * @since 0.2.0
 	 */
-	open fun createNumber(value: Double, unit: PropertyUnit): JavaScriptValue {
+	open fun createNumber(value: Double, unit: JavaScriptPropertyUnit): JavaScriptValue {
 		return when (unit) {
-			PropertyUnit.PX -> JavaScriptValue.createNumber(this, value)
-			PropertyUnit.PC -> JavaScriptValue.createString(this, Conversion.ntos(value) + "%")
-			PropertyUnit.VW -> JavaScriptValue.createString(this, Conversion.ntos(value) + "vw")
-			PropertyUnit.VH -> JavaScriptValue.createString(this, Conversion.ntos(value) + "vh")
-			PropertyUnit.PW -> JavaScriptValue.createString(this, Conversion.ntos(value) + "pw")
-			PropertyUnit.PH -> JavaScriptValue.createString(this, Conversion.ntos(value) + "ph")
-			PropertyUnit.CW -> JavaScriptValue.createString(this, Conversion.ntos(value) + "cw")
-			PropertyUnit.CH -> JavaScriptValue.createString(this, Conversion.ntos(value) + "ch")
-			PropertyUnit.DEG -> JavaScriptValue.createString(this, Conversion.ntos(value) + "rad")
-			PropertyUnit.RAD -> JavaScriptValue.createString(this, Conversion.ntos(value) + "deg")
-			else             -> JavaScriptValue.createNumber(this, value)
+			JavaScriptPropertyUnit.PX  -> JavaScriptValue.createNumber(this, value)
+			JavaScriptPropertyUnit.PC  -> JavaScriptValue.createString(this, Conversion.toString(value) + "%")
+			JavaScriptPropertyUnit.VW  -> JavaScriptValue.createString(this, Conversion.toString(value) + "vw")
+			JavaScriptPropertyUnit.VH  -> JavaScriptValue.createString(this, Conversion.toString(value) + "vh")
+			JavaScriptPropertyUnit.PW  -> JavaScriptValue.createString(this, Conversion.toString(value) + "pw")
+			JavaScriptPropertyUnit.PH  -> JavaScriptValue.createString(this, Conversion.toString(value) + "ph")
+			JavaScriptPropertyUnit.CW  -> JavaScriptValue.createString(this, Conversion.toString(value) + "cw")
+			JavaScriptPropertyUnit.CH  -> JavaScriptValue.createString(this, Conversion.toString(value) + "ch")
+			JavaScriptPropertyUnit.DEG -> JavaScriptValue.createString(this, Conversion.toString(value) + "rad")
+			JavaScriptPropertyUnit.RAD -> JavaScriptValue.createString(this, Conversion.toString(value) + "deg")
+			else                       -> JavaScriptValue.createNumber(this, value)
 		}
 	}
 

@@ -411,21 +411,21 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	}
 
 	/**
+	 * Assigns the value of a property using a property.
+	 * @method property
+	 * @since 0.1.0
+	 */
+	open fun property(name: String, property: JavaScriptProperty) {
+		JavaScriptValueExternal.setProperty(this.context.handle, this.handle, name, toHandle(property, this.context))
+	}
+
+	/**
 	 * Assigns the value of a property.
 	 * @method property
 	 * @since 0.1.0
 	 */
 	open fun property(name: String, value: JavaScriptValue?) {
 		JavaScriptValueExternal.setProperty(this.context.handle, this.handle, name, toHandle(value, this.context))
-	}
-
-	/**
-	 * Assigns the value of a property using a property.
-	 * @method property
-	 * @since 0.1.0
-	 */
-	open fun property(name: String, property: Property) {
-		JavaScriptValueExternal.setProperty(this.context.handle, this.handle, name, property.value(this.context).handle)
 	}
 
 	/**
@@ -653,7 +653,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method reset
+	 * @method set
 	 * @since 0.1.0
 	 * @hidden
 	 */

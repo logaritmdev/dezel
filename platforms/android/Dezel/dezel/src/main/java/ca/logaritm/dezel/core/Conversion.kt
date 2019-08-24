@@ -11,10 +11,10 @@ public object Conversion {
 
 	/**
 	 * Converts a string to a number.
-	 * @method ston
-	 * @since 0.1.0
+	 * @method toNumber
+	 * @since 0.7.0
 	 */
-	public fun ston(string: String): Double {
+	public fun toNumber(string: String): Double {
 
 		if (string == "") {
 			return 0.0
@@ -44,47 +44,47 @@ public object Conversion {
 	}
 
 	/**
-	 * Converts a string to a boolean.
-	 * @method stob
+	 * Converts a boolean to a number.
+	 * @method toNumber
 	 * @since 0.1.0
 	 */
-	public fun stob(string: String): Boolean {
-		return string.isNotEmpty()
+	public fun toNumber(boolean: Boolean): Double {
+		return if (boolean) 1.0 else 0.0
 	}
 
 	/**
 	 * Converts a number to a string.
-	 * @method ntos
-	 * @since 0.1.0
+	 * @method toString
+	 * @since 0.7.0
 	 */
-	public fun ntos(number: Double): String {
+	public fun toString(number: Double): String {
 		return if (number % 1 == 0.0) String.format(Locale.getDefault(), "%.0f", number) else number.toString()
 	}
 
 	/**
-	 * Converts a number to a boolean.
-	 * @method ntob
-	 * @since 0.1.0
-	 */
-	public fun ntob(number: Double): Boolean {
-		return number != 0.0
-	}
-
-	/**
 	 * Converts a boolean to a string.
-	 * @method btos
-	 * @since 0.1.0
+	 * @method toString
+	 * @since 0.7.0
 	 */
-	public fun btos(boolean: Boolean): String {
+	public fun toString(boolean: Boolean): String {
 		return boolean.toString()
 	}
 
 	/**
-	 * Converts a boolean to a number.
-	 * @method bton
+	 * Converts a string to a boolean.
+	 * @method toBoolean
 	 * @since 0.1.0
 	 */
-	public fun bton(boolean: Boolean): Double {
-		return if (boolean) 1.0 else 0.0
+	public fun toBoolean(string: String): Boolean {
+		return string.isNotEmpty()
+	}
+
+	/**
+	 * Converts a number to a boolean.
+	 * @method toBoolean
+	 * @since 0.1.0
+	 */
+	public fun toBoolean(number: Double): Boolean {
+		return number != 0.0
 	}
 }

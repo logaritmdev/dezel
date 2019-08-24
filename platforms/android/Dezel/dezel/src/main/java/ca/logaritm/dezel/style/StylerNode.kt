@@ -1,16 +1,17 @@
 package ca.logaritm.dezel.style
 
-import ca.logaritm.dezel.core.Property
-import ca.logaritm.dezel.core.PropertyType
-import ca.logaritm.dezel.core.PropertyUnit
+import ca.logaritm.dezel.core.JavaScriptProperty
+import ca.logaritm.dezel.core.JavaScriptPropertyType
+import ca.logaritm.dezel.core.JavaScriptPropertyUnit
 import ca.logaritm.dezel.extension.Delegates
+import ca.logaritm.dezel.modules.view.JavaScriptView
 
 /**
  * Manages the stylerNode of a single node.
  * @class StylerNode
  * @since 0.1.0
  */
-open class StylerNode(styler: Styler) {
+open class StylerNode(styler: Styler, view: JavaScriptView) {
 
 	//--------------------------------------------------------------------------
 	// Properties
@@ -22,6 +23,8 @@ open class StylerNode(styler: Styler) {
 	 * @since 0.1.0
 	 */
 	public var listener: StylerNodeListener? = null
+
+	public var view: JavaScriptView = view
 
 	/**
 	 * @property id
@@ -181,52 +184,31 @@ open class StylerNode(styler: Styler) {
 			val name = StylerNodeExternal.getItemProperty(item)
 			val type = StylerNodeExternal.getItemValueType(item)
 			val unit = StylerNodeExternal.getItemValueUnit(item)
-			val data = StylerNodeExternal.getItemData(item)
-
-			if (data != null &&
-				data is Property) {
-				stylerNode.listener?.applyStyleProperty(stylerNode, name, data)
-				return
-			}
-
-			val value: Property
 
 			if (type == StylerNodeExternal.kDLStylerStyleItemTypeNumber) {
 
 				when (unit) {
-
-					StylerNodeExternal.kDLStylerStyleItemUnitPX   -> value = Property(StylerNodeExternal.getItemValueAsNumber(item), PropertyUnit.PX)
-					StylerNodeExternal.kDLStylerStyleItemUnitPC   -> value = Property(StylerNodeExternal.getItemValueAsNumber(item), PropertyUnit.PC)
-					StylerNodeExternal.kDLStylerStyleItemUnitVW   -> value = Property(StylerNodeExternal.getItemValueAsNumber(item), PropertyUnit.VW)
-					StylerNodeExternal.kDLStylerStyleItemUnitVH   -> value = Property(StylerNodeExternal.getItemValueAsNumber(item), PropertyUnit.VH)
-					StylerNodeExternal.kDLStylerStyleItemUnitPW   -> value = Property(StylerNodeExternal.getItemValueAsNumber(item), PropertyUnit.PW)
-					StylerNodeExternal.kDLStylerStyleItemUnitPH   -> value = Property(StylerNodeExternal.getItemValueAsNumber(item), PropertyUnit.PH)
-					StylerNodeExternal.kDLStylerStyleItemUnitCW   -> value = Property(StylerNodeExternal.getItemValueAsNumber(item), PropertyUnit.CW)
-					StylerNodeExternal.kDLStylerStyleItemUnitCH   -> value = Property(StylerNodeExternal.getItemValueAsNumber(item), PropertyUnit.CH)
-					StylerNodeExternal.kDLStylerStyleItemUnitDeg  -> value = Property(StylerNodeExternal.getItemValueAsNumber(item), PropertyUnit.DEG)
-					StylerNodeExternal.kDLStylerStyleItemUnitRad  -> value = Property(StylerNodeExternal.getItemValueAsNumber(item), PropertyUnit.RAD)
-					StylerNodeExternal.kDLStylerStyleItemUnitNone -> value = Property(StylerNodeExternal.getItemValueAsNumber(item), PropertyUnit.NONE)
-
-					else                                          -> {
-						value = Property(StylerNodeExternal.getItemValueAsNumber(item), PropertyUnit.NONE)
-					}
+					StylerNodeExternal.kDLStylerStyleItemUnitPX   -> this.view.setProperty(name, StylerNodeExternal.getItemValueAsNumber(item), JavaScriptPropertyUnit.PX)
+					StylerNodeExternal.kDLStylerStyleItemUnitPC   -> this.view.setProperty(name, StylerNodeExternal.getItemValueAsNumber(item), JavaScriptPropertyUnit.PC)
+					StylerNodeExternal.kDLStylerStyleItemUnitVW   -> this.view.setProperty(name, StylerNodeExternal.getItemValueAsNumber(item), JavaScriptPropertyUnit.VW)
+					StylerNodeExternal.kDLStylerStyleItemUnitVH   -> this.view.setProperty(name, StylerNodeExternal.getItemValueAsNumber(item), JavaScriptPropertyUnit.VH)
+					StylerNodeExternal.kDLStylerStyleItemUnitPW   -> this.view.setProperty(name, StylerNodeExternal.getItemValueAsNumber(item), JavaScriptPropertyUnit.PW)
+					StylerNodeExternal.kDLStylerStyleItemUnitPH   -> this.view.setProperty(name, StylerNodeExternal.getItemValueAsNumber(item), JavaScriptPropertyUnit.PH)
+					StylerNodeExternal.kDLStylerStyleItemUnitCW   -> this.view.setProperty(name, StylerNodeExternal.getItemValueAsNumber(item), JavaScriptPropertyUnit.CW)
+					StylerNodeExternal.kDLStylerStyleItemUnitCH   -> this.view.setProperty(name, StylerNodeExternal.getItemValueAsNumber(item), JavaScriptPropertyUnit.CH)
+					StylerNodeExternal.kDLStylerStyleItemUnitDeg  -> this.view.setProperty(name, StylerNodeExternal.getItemValueAsNumber(item), JavaScriptPropertyUnit.DEG)
+					StylerNodeExternal.kDLStylerStyleItemUnitRad  -> this.view.setProperty(name, StylerNodeExternal.getItemValueAsNumber(item), JavaScriptPropertyUnit.RAD)
+					StylerNodeExternal.kDLStylerStyleItemUnitNone -> this.view.setProperty(name, StylerNodeExternal.getItemValueAsNumber(item), JavaScriptPropertyUnit.NONE)
+					else                                          -> this.view.setProperty(name, StylerNodeExternal.getItemValueAsNumber(item), JavaScriptPropertyUnit.NONE)
 				}
 
 			} else if (type == StylerNodeExternal.kDLStylerStyleItemTypeString) {
-
-				value = Property(StylerNodeExternal.getItemValueAsString(item))
-
+				this.view.setProperty(name, StylerNodeExternal.getItemValueAsString(item))
 			} else if (type == StylerNodeExternal.kDLStylerStyleItemTypeBoolean) {
-
-				value = Property(StylerNodeExternal.getItemValueAsBoolean(item))
-
+				this.view.setProperty(name, StylerNodeExternal.getItemValueAsBoolean(item))
 			} else {
-				value = Property()
+				this.view.setProperty(name, null)
 			}
-
-			StylerNodeExternal.setItemData(item, value)
-
-			stylerNode.listener?.applyStyleProperty(stylerNode, name, value)
 		}
 	}
 
@@ -245,49 +227,49 @@ open class StylerNode(styler: Styler) {
 
 		if (stylerNode is StylerNode) {
 
-			val result = stylerNode.listener?.fetchStyleProperty(stylerNode, StylerNodeExternal.getItemProperty(item))
+			val result = this.view.getProperty(StylerNodeExternal.getItemProperty(item))
 			if (result == null) {
 				return false
 			}
 
-			if (result.type == PropertyType.STRING) {
+			if (result.type == JavaScriptPropertyType.STRING) {
 				StylerNodeExternal.setItemValueType(item, StylerNodeExternal.kDLStylerStyleItemTypeString)
 				StylerNodeExternal.setItemValueUnit(item, StylerNodeExternal.kDLStylerStyleItemUnitNone)
 				StylerNodeExternal.setItemValueWithString(item, result.string)
 				return true
 			}
 
-			if (result.type == PropertyType.NUMBER) {
+			if (result.type == JavaScriptPropertyType.NUMBER) {
 
 				StylerNodeExternal.setItemValueType(item, StylerNodeExternal.kDLStylerStyleItemTypeNumber)
 				StylerNodeExternal.setItemValueUnit(item, StylerNodeExternal.kDLStylerStyleItemUnitNone)
 				StylerNodeExternal.setItemValueWithNumber(item, result.number)
 
 				when (result.unit) {
-					PropertyUnit.PX   -> StylerNodeExternal.setItemValueUnit(item, StylerNodeExternal.kDLStylerStyleItemUnitPX)
-					PropertyUnit.PC   -> StylerNodeExternal.setItemValueUnit(item, StylerNodeExternal.kDLStylerStyleItemUnitPC)
-					PropertyUnit.VW   -> StylerNodeExternal.setItemValueUnit(item, StylerNodeExternal.kDLStylerStyleItemUnitVW)
-					PropertyUnit.VH   -> StylerNodeExternal.setItemValueUnit(item, StylerNodeExternal.kDLStylerStyleItemUnitVH)
-					PropertyUnit.PW   -> StylerNodeExternal.setItemValueUnit(item, StylerNodeExternal.kDLStylerStyleItemUnitPW)
-					PropertyUnit.PH   -> StylerNodeExternal.setItemValueUnit(item, StylerNodeExternal.kDLStylerStyleItemUnitPH)
-					PropertyUnit.CW   -> StylerNodeExternal.setItemValueUnit(item, StylerNodeExternal.kDLStylerStyleItemUnitCW)
-					PropertyUnit.CH   -> StylerNodeExternal.setItemValueUnit(item, StylerNodeExternal.kDLStylerStyleItemUnitCH)
-					PropertyUnit.DEG  -> StylerNodeExternal.setItemValueUnit(item, StylerNodeExternal.kDLStylerStyleItemUnitDeg)
-					PropertyUnit.RAD  -> StylerNodeExternal.setItemValueUnit(item, StylerNodeExternal.kDLStylerStyleItemUnitRad)
-					PropertyUnit.NONE -> StylerNodeExternal.setItemValueUnit(item, StylerNodeExternal.kDLStylerStyleItemUnitNone)
+					JavaScriptPropertyUnit.PX   -> StylerNodeExternal.setItemValueUnit(item, StylerNodeExternal.kDLStylerStyleItemUnitPX)
+					JavaScriptPropertyUnit.PC   -> StylerNodeExternal.setItemValueUnit(item, StylerNodeExternal.kDLStylerStyleItemUnitPC)
+					JavaScriptPropertyUnit.VW   -> StylerNodeExternal.setItemValueUnit(item, StylerNodeExternal.kDLStylerStyleItemUnitVW)
+					JavaScriptPropertyUnit.VH   -> StylerNodeExternal.setItemValueUnit(item, StylerNodeExternal.kDLStylerStyleItemUnitVH)
+					JavaScriptPropertyUnit.PW   -> StylerNodeExternal.setItemValueUnit(item, StylerNodeExternal.kDLStylerStyleItemUnitPW)
+					JavaScriptPropertyUnit.PH   -> StylerNodeExternal.setItemValueUnit(item, StylerNodeExternal.kDLStylerStyleItemUnitPH)
+					JavaScriptPropertyUnit.CW   -> StylerNodeExternal.setItemValueUnit(item, StylerNodeExternal.kDLStylerStyleItemUnitCW)
+					JavaScriptPropertyUnit.CH   -> StylerNodeExternal.setItemValueUnit(item, StylerNodeExternal.kDLStylerStyleItemUnitCH)
+					JavaScriptPropertyUnit.DEG  -> StylerNodeExternal.setItemValueUnit(item, StylerNodeExternal.kDLStylerStyleItemUnitDeg)
+					JavaScriptPropertyUnit.RAD  -> StylerNodeExternal.setItemValueUnit(item, StylerNodeExternal.kDLStylerStyleItemUnitRad)
+					JavaScriptPropertyUnit.NONE -> StylerNodeExternal.setItemValueUnit(item, StylerNodeExternal.kDLStylerStyleItemUnitNone)
 				}
 
 				return true
 			}
 
-			if (result.type == PropertyType.BOOLEAN) {
+			if (result.type == JavaScriptPropertyType.BOOLEAN) {
 				StylerNodeExternal.setItemValueType(item, StylerNodeExternal.kDLStylerStyleItemTypeBoolean)
 				StylerNodeExternal.setItemValueUnit(item, StylerNodeExternal.kDLStylerStyleItemUnitNone)
 				StylerNodeExternal.setItemValueWithBoolean(item, result.boolean)
 				return true
 			}
 
-			if (result.type == PropertyType.NULL) {
+			if (result.type == JavaScriptPropertyType.NULL) {
 				StylerNodeExternal.setItemValueType(item, StylerNodeExternal.kDLStylerStyleItemTypeNull)
 				StylerNodeExternal.setItemValueUnit(item, StylerNodeExternal.kDLStylerStyleItemUnitNone)
 				return true
