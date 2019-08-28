@@ -38,6 +38,10 @@ open class JavaScriptWindow: JavaScriptView {
 	 */
 	@objc open func jsFunction_viewFromPoint(callback: JavaScriptFunctionCallback) {
 
+		if (callback.arguments < 4) {
+			fatalError("Method JavaScriptWindow.viewFromPoint() requires 4 arguments.")
+		}
+
 		let x = callback.argument(0).number
 		let y = callback.argument(1).number
 		let v = callback.argument(2).boolean

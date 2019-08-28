@@ -1,9 +1,9 @@
 /**
  * The unit of the property.
- * @enum PropertyUnit
- * @since 0.1.0
+ * @enum JavaScriptPropertyUnit
+ * @since 0.7.0
  */
-public enum PropertyUnit: Int {
+public enum JavaScriptPropertyUnit: Int {
 
 	case none = 0
 	case px = 1
@@ -34,7 +34,7 @@ public enum PropertyUnit: Int {
 		)
 	}
 
-	public static func of(_ value: Int) -> PropertyUnit {
+	public static func of(_ value: Int) -> JavaScriptPropertyUnit {
 
 		switch (value) {
 			case 0: return .none
@@ -54,11 +54,11 @@ public enum PropertyUnit: Int {
 		return .none
 	}
 
-	public static func of(_ value: UInt32) -> PropertyUnit {
+	public static func of(_ value: UInt32) -> JavaScriptPropertyUnit {
 		return self.of(Int(value))
 	}
 
-	public static func of(_ value: UInt64) -> PropertyUnit {
+	public static func of(_ value: UInt64) -> JavaScriptPropertyUnit {
 		return self.of(Int(value))
 	}
 }

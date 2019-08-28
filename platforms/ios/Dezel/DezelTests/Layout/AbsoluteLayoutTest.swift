@@ -2,7 +2,7 @@ import XCTest
 
 @testable import Dezel
 
-class AbsoluteLayoutTest: XCTestCase {
+class LayoutAbsoluteTest: XCTestCase {
 
 	var context: Layout!
 	var window: LayoutNode!

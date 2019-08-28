@@ -58,7 +58,7 @@ class JavaScriptGetterTest: XCTestCase {
 	func testReturnValueWithString() {
 
 		func getter(callback: JavaScriptGetterCallback) {
-			callback.returns(string: "")
+			callback.returns("")
 		}
 
 		let obj = self.defineGetter(getter, target: nil)
@@ -73,7 +73,7 @@ class JavaScriptGetterTest: XCTestCase {
 	func testReturnValueWithNumber() {
 
 		func getter(callback: JavaScriptGetterCallback) {
-			callback.returns(number: 10)
+			callback.returns(10)
 		}
 
 		let obj = self.defineGetter(getter, target: nil)
@@ -88,7 +88,7 @@ class JavaScriptGetterTest: XCTestCase {
 	func testReturnValueWithBoolean() {
 
 		func getter(callback: JavaScriptGetterCallback) {
-			callback.returns(boolean: true)
+			callback.returns(true)
 		}
 
 		let obj = self.defineGetter(getter, target: nil)
@@ -101,7 +101,7 @@ class JavaScriptGetterTest: XCTestCase {
 	}
 
 	//--------------------------------------------------------------------------
-	// Private API
+	// MARK: Private API
 	//--------------------------------------------------------------------------
 
 	internal func defineSetter(_ setter: @escaping JavaScriptSetterHandler, target: JavaScriptValue?) -> JavaScriptValue {

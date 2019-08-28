@@ -11,23 +11,23 @@ internal final class JavaScriptValueForOwnWrapper: NSObject {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	public var context: JavaScriptContext
+	internal var context: JavaScriptContext
 
 	/**
 	 * @property handler
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	public var callback: JavaScriptForOwnHandler
+	internal var handler: JavaScriptForOwnHandler
 
 	/**
 	 * @constructor
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	public init(context: JavaScriptContext, callback: @escaping JavaScriptForOwnHandler) {
+	public init(context: JavaScriptContext, handler: @escaping JavaScriptForOwnHandler) {
 		self.context = context
-		self.callback = callback
+		self.handler = handler
 		super.init()
 	}
 
@@ -37,7 +37,7 @@ internal final class JavaScriptValueForOwnWrapper: NSObject {
 	 * @hidden
 	 */
 	public func execute(key: String, value: JSValueRef) {
-		self.callback(key, JavaScriptValue.create(self.context, handle: value))
+		self.handler(key, JavaScriptValue.create(self.context, handle: value))
 	}
 }
 

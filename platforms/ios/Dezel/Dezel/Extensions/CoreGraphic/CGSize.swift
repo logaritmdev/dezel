@@ -6,6 +6,15 @@
 internal extension CGSize {
 
 	/**
+	 * @method ceil
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	mutating func ceil() {
+		self = CGSize(width: Foundation.ceil(self.width), height: Foundation.ceil(self.height))
+	}
+
+	/**
 	 * @method alignBottom
 	 * @since 0.1.0
 	 * @hidden
@@ -78,21 +87,11 @@ internal extension CGSize {
 	}
 
 	/**
-	 * @method ceil
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	mutating func ceil() {
-		self = CGSize(width: Foundation.ceil(self.width), height: Foundation.ceil(self.height))
-	}
-
-	/**
 	 * @method clamp
 	 * @since 0.1.0
 	 * @hidden
 	 */
 	func clamped(min: CGSize, max: CGSize) -> CGSize {
-		// TODO make mutated
 		var size = self
 		if (size.width < min.width) { size.width = min.width }
 		if (size.width > max.width) { size.width = max.width }

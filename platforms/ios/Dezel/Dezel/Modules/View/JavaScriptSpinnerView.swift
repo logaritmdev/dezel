@@ -10,28 +10,6 @@ open class JavaScriptSpinnerView: JavaScriptView {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The activity view's active status.
-	 * @property active
-	 * @since 0.7.0
-	 */
-	@objc open var active: Property = Property(boolean: false) {
-		willSet {
-			self.view.active = newValue.boolean
-		}
-	}
-
-	/**
-	 * The activity view's color.
-	 * @property color
-	 * @since 0.7.0
-	 */
-	@objc open var color: Property = Property(string: "#000") {
-		willSet {
-			self.view.color = UIColor(cgColor: newValue.string.toColor())
-		}
-	}
-
-	/**
 	 * @property view
 	 * @since 0.7.0
 	 * @hidden
@@ -58,6 +36,26 @@ open class JavaScriptSpinnerView: JavaScriptView {
 	//--------------------------------------------------------------------------
 
 	/**
+	 * The activity view's active status.
+	 * @property active
+	 * @since 0.7.0
+	 */
+	@objc open lazy var active = JavaScriptProperty(boolean: false) { value in
+		self.view.active = value.boolean
+	}
+
+	/**
+	 * The activity view's color.
+	 * @property color
+	 * @since 0.7.0
+	 */
+	@objc open lazy var color = JavaScriptProperty(string: "#000") { value in
+		self.view.color = UIColor(cgColor: value.string.toColor())
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
 	 * @method jsGet_active
 	 * @since 0.7.0
 	 * @hidden
@@ -72,7 +70,7 @@ open class JavaScriptSpinnerView: JavaScriptView {
 	 * @hidden
 	 */
 	@objc open func jsSet_active(callback: JavaScriptSetterCallback) {
-		self.active = Property(value: callback.value)
+		self.active.reset(callback.value, lock: self)
 	}
 
 	//--------------------------------------------------------------------------
@@ -92,6 +90,6 @@ open class JavaScriptSpinnerView: JavaScriptView {
 	 * @hidden
 	 */
 	@objc open func jsSet_color(callback: JavaScriptSetterCallback) {
-		self.color = Property(value: callback.value)
+		self.color.reset(callback.value, lock: self)
 	}
 }

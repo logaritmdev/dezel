@@ -2,7 +2,7 @@ import XCTest
 
 @testable import Dezel
 
-class RelativeLayoutTest: XCTestCase {
+class LayoutRelativeTest: XCTestCase {
 
 	var layout: Layout!
 
@@ -69,6 +69,7 @@ class RelativeLayoutTest: XCTestCase {
 	func testNodeMarginInPC() {
 
 		let node = LayoutNode(layout: self.layout)
+		node.id = "THE_NODE"
 		node.marginTop(type: kDLLayoutMarginTypeLength, unit: kDLLayoutMarginUnitPC, length: 10)
 		node.marginLeft(type: kDLLayoutMarginTypeLength, unit: kDLLayoutMarginUnitPC, length: 20)
 		node.marginRight(type: kDLLayoutMarginTypeLength, unit: kDLLayoutMarginUnitPC, length: 30)
@@ -86,6 +87,9 @@ class RelativeLayoutTest: XCTestCase {
 		XCTAssertEqual(node.measuredLeft, 320 * 0.2)
 		XCTAssertEqual(node.measuredRight, 320 * 0.3)
 		XCTAssertEqual(node.measuredBottom, 480 * 0.4)
+
+		XCTAssertEqual(node.measuredWidth, 320 * (0.2 + 0.3))
+		XCTAssertEqual(node.measuredHeight, 480 * (0.1 + 0.4)) 
 	}
 
 	func testNodeMarginInVW() {

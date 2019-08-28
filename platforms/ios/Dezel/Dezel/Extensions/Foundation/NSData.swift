@@ -1,9 +1,9 @@
 /**
- * @extension NSMutableData
+ * @extension NSData
  * @since 0.7.0
  * @hidden
  */
-internal extension NSMutableData {
+internal extension NSData {
 
 	/**
 	 * @property string

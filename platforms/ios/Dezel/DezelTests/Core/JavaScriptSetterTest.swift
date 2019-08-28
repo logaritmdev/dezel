@@ -87,7 +87,7 @@ class JavaScriptSetterTest: XCTestCase {
 	}
 
 	//--------------------------------------------------------------------------
-	// Private API
+	// MARK: Private API
 	//--------------------------------------------------------------------------
 
 	internal func defineSetter(_ setter: @escaping JavaScriptSetterHandler, target: JavaScriptValue?) -> JavaScriptValue {

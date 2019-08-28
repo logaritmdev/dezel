@@ -120,7 +120,7 @@ open class TextArea: UITextView, UITextViewDelegate {
 	 */
 	open var textLocation: TextLocation = .middle {
 		willSet {
-			print("Text field placement is not yet supported")
+			print("Text location is not yet supported")
 		}
 	}
 

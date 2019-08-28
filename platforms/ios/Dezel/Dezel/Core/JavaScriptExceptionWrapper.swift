@@ -17,11 +17,11 @@ internal final class JavaScriptExceptionWrapper: NSObject {
 	internal var context: JavaScriptContext
 
 	/**
-	 * @property callback
+	 * @property handler
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	internal var callback: JavaScriptExceptionHandler
+	internal var handler: JavaScriptExceptionHandler
 
 	//--------------------------------------------------------------------------
 	// MARK: Methods
@@ -32,8 +32,8 @@ internal final class JavaScriptExceptionWrapper: NSObject {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	internal init(context: JavaScriptContext, callback: @escaping JavaScriptExceptionHandler) {
+	internal init(context: JavaScriptContext, handler: @escaping JavaScriptExceptionHandler) {
 		self.context = context
-		self.callback = callback
+		self.handler = handler
 	}
 }

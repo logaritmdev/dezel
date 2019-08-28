@@ -63,20 +63,6 @@ class JavaScriptContextTest: XCTestCase {
 		value.dispose()
 	}
 
-	func testAttributes() {
-		// TODO
-		//let val = NSObject()
-
-//		self.context.attribute("key1", value: val)
-//
-//		XCTAssertTrue(self.context.attribute("key1") as! NSObject == val)
-//		XCTAssertTrue(self.context.attribute("key2") == nil)
-//
-//		self.context.attribute("key1", value: nil)
-//
-//		XCTAssertTrue(self.context.attribute("key1") == nil)
-	}
-
 	func testEvaluation() {
 		self.context.evaluate("1 + 2")
 	}
@@ -100,7 +86,7 @@ class JavaScriptContextTest: XCTestCase {
 		XCTAssertEqual(self.context.global.property("value").boolean, true)
 
 		self.context.global.property("value", value: nil)
-		XCTAssertEqual(self.context.global.property("value").string, "undefined")
+		XCTAssertEqual(self.context.global.property("value").string, "null")
 	}
 
 	func testJavaScriptClassCreation() {

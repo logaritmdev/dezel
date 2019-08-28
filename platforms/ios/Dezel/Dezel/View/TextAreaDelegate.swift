@@ -1,6 +1,6 @@
 /**
- * TODO
- * @protocol ContentTextAreaObserver
+ * TextArea delegate.
+ * @protocol TextAreaDelegate
  * @since 0.7.0
  */
 public protocol TextAreaDelegate: AnyObject {

@@ -160,8 +160,8 @@ open class JavaScriptListOptimizer : JavaScriptViewOptimizer {
 		self.contentOffset = 0
 		self.contentLength = 0
 
-		self.view.scrollTop = Property(number: 0)
-		self.view.scrollLeft = Property(number: 0)
+		self.view.scrollTop.reset(0)
+		self.view.scrollLeft.reset(0)
 		self.view.scheduleLayout()
 	}
 
@@ -292,10 +292,10 @@ open class JavaScriptListOptimizer : JavaScriptViewOptimizer {
 			self.clear()
 			self.contentLength = 0
 			self.contentOffset = 0
-			self.view.contentTop = Property(number: 0)
-			self.view.contentLeft = Property(number: 0)
-			self.view.contentWidth = Property(string: "auto")
-			self.view.contentHeight = Property(string: "auto")
+			self.view.contentTop.reset(0)
+			self.view.contentLeft.reset(0)
+			self.view.contentWidth.reset("auto")
+			self.view.contentHeight.reset("auto")
 
 			self.updateContentOffset()
 			self.updateContentLength()
@@ -473,9 +473,9 @@ open class JavaScriptListOptimizer : JavaScriptViewOptimizer {
 	private func updateContentOffset() {
 		switch (self.orientation) {
 			case .vertical:
-				self.view.contentTop = Property(number: self.contentOffset)
+				self.view.contentTop.reset(self.contentOffset)
 			case .horizontal:
-				self.view.contentLeft = Property(number: self.contentOffset)
+				self.view.contentLeft.reset(self.contentOffset)
 		}
 	}
 
@@ -487,9 +487,9 @@ open class JavaScriptListOptimizer : JavaScriptViewOptimizer {
 	private func updateContentLength() {
 		switch (self.orientation) {
 			case .vertical:
-				self.view.contentHeight = Property(number: self.contentLength + self.view.resolvedPaddingTop + self.view.resolvedPaddingBottom)
+				self.view.contentHeight.reset(self.contentLength + self.view.resolvedPaddingTop + self.view.resolvedPaddingBottom)
 			case .horizontal:
-				self.view.contentWidth = Property(number: self.contentLength + self.view.resolvedPaddingLeft + self.view.resolvedPaddingRight)
+				self.view.contentWidth.reset(self.contentLength + self.view.resolvedPaddingLeft + self.view.resolvedPaddingRight)
 		}
 	}
 
@@ -1239,7 +1239,7 @@ open class JavaScriptListOptimizer : JavaScriptViewOptimizer {
 	 * @hidden
 	 */
 	@objc open func jsGet_length(callback: JavaScriptGetterCallback) {
-		callback.returns(number: Double(self.length))
+		callback.returns(Double(self.length))
 	}
 
 	/**
@@ -1248,7 +1248,7 @@ open class JavaScriptListOptimizer : JavaScriptViewOptimizer {
 	 * @hidden
 	 */
 	@objc open func jsSet_length(callback: JavaScriptSetterCallback) {
-		self.length = callback.value.number.int()
+		self.length = callback.value.number.toInt()
 	}
 
 	//--------------------------------------------------------------------------
@@ -1259,7 +1259,7 @@ open class JavaScriptListOptimizer : JavaScriptViewOptimizer {
 	 * @hidden
 	 */
 	@objc open func jsGet_orientation(callback: JavaScriptGetterCallback) {
-		callback.returns(number: Double(self.orientation.rawValue))
+		callback.returns(Double(self.orientation.rawValue))
 	}
 
 	/**
@@ -1279,7 +1279,7 @@ open class JavaScriptListOptimizer : JavaScriptViewOptimizer {
 	 * @hidden
 	 */
 	@objc open func jsGet_estimatedItemSize(callback: JavaScriptGetterCallback) {
-		callback.returns(number: self.estimatedItemSize)
+		callback.returns(self.estimatedItemSize)
 	}
 
 	/**
@@ -1311,8 +1311,12 @@ open class JavaScriptListOptimizer : JavaScriptViewOptimizer {
 	 */
 	@objc open func jsFunction_insertData(callback: JavaScriptFunctionCallback) {
 
-		let index = callback.argument(0).number.int()
-		let count = callback.argument(1).number.int()
+		if (callback.arguments < 3) {
+			fatalError("Method JavaScriptListOptimizer.insertData() requires 3 arguments.")
+		}
+
+		let index   = callback.argument(0).number.toInt()
+		let count   = callback.argument(1).number.toInt()
 		let animate = callback.argument(2).boolean
 
 		let min = index
@@ -1432,8 +1436,12 @@ open class JavaScriptListOptimizer : JavaScriptViewOptimizer {
 	 */
 	@objc open func jsFunction_removeData(callback: JavaScriptFunctionCallback) {
 
-		let index = callback.argument(0).number.int()
-		let count = callback.argument(1).number.int()
+		if (callback.arguments < 3) {
+			fatalError("Method JavaScriptListOptimizer.removeData() requires 3 arguments.")
+		}
+
+		let index   = callback.argument(0).number.toInt()
+		let count   = callback.argument(1).number.toInt()
 		let animate = callback.argument(2).boolean
 
 		let min = index

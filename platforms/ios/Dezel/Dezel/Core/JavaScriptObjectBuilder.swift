@@ -42,6 +42,7 @@ internal final class JavaScriptObjectBuilder: JavaScriptBuilder {
 		})
 
 		let instance = klass.init(context: context)
+
 		instance.reset(value.handle)
 
 		DLValueSetAssociatedObject(context.handle, value.handle, UnsafeMutableRawPointer(value: instance))

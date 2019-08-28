@@ -330,7 +330,7 @@ open class LayoutNode {
 	 * @method anchorTop
 	 * @since 0.1.0
 	 */
-	open func anchorTop(_ value: Property) {
+	open func anchorTop(_ value: JavaScriptProperty) {
 
 		if (value.type == .string) {
 
@@ -369,7 +369,7 @@ open class LayoutNode {
 	 * @method anchorLeft
 	 * @since 0.1.0
 	 */
-	open func anchorLeft(_ value: Property) {
+	open func anchorLeft(_ value: JavaScriptProperty) {
 
 		if (value.type == .string) {
 
@@ -408,7 +408,7 @@ open class LayoutNode {
 	 * @method top
 	 * @since 0.1.0
 	 */
-	open func top(_ value: Property) {
+	open func top(_ value: JavaScriptProperty) {
 
 		if (value.type == .string) {
 
@@ -468,7 +468,7 @@ open class LayoutNode {
 	 * @method left
 	 * @since 0.1.0
 	 */
-	open func left(_ value: Property) {
+	open func left(_ value: JavaScriptProperty) {
 
 		if (value.type == .string) {
 
@@ -528,7 +528,7 @@ open class LayoutNode {
 	 * @method right
 	 * @since 0.1.0
 	 */
-	open func right(_ value: Property) {
+	open func right(_ value: JavaScriptProperty) {
 
 		if (value.type == .string) {
 
@@ -588,7 +588,7 @@ open class LayoutNode {
 	 * @method bottom
 	 * @since 0.1.0
 	 */
-	open func bottom(_ value: Property) {
+	open func bottom(_ value: JavaScriptProperty) {
 
 		if (value.type == .string) {
 
@@ -648,7 +648,7 @@ open class LayoutNode {
 	 * @method width
 	 * @since 0.1.0
 	 */
-	open func width(_ value: Property) {
+	open func width(_ value: JavaScriptProperty) {
 
 		if (value.type == .string) {
 
@@ -709,7 +709,7 @@ open class LayoutNode {
 	 * @method height
 	 * @since 0.1.0
 	 */
-	open func height(_ value: Property) {
+	open func height(_ value: JavaScriptProperty) {
 
 		if (value.type == .string) {
 
@@ -770,7 +770,7 @@ open class LayoutNode {
 	 * @method contentDirection
 	 * @since 0.7.0
 	 */
-	open func contentDirection(_ value: Property) {
+	open func contentDirection(_ value: JavaScriptProperty) {
 
 		if (value.type == .string) {
 
@@ -798,7 +798,7 @@ open class LayoutNode {
 	 * @method contentLocation
 	 * @since 0.7.0
 	 */
-	open func contentLocation(_ value: Property) {
+	open func contentLocation(_ value: JavaScriptProperty) {
 
 		if (value.type == .string) {
 
@@ -830,7 +830,7 @@ open class LayoutNode {
 	 * @method contentAlignment
 	 * @since 0.7.0
 	 */
-	open func contentAlignment(_ value: Property) {
+	open func contentAlignment(_ value: JavaScriptProperty) {
 
 		if (value.type == .string) {
 
@@ -859,7 +859,7 @@ open class LayoutNode {
 	 * @method contentTop
 	 * @since 0.1.0
 	 */
-	open func contentTop(_ value: Property) {
+	open func contentTop(_ value: JavaScriptProperty) {
 
 		if (value.type == .number) {
 
@@ -886,7 +886,7 @@ open class LayoutNode {
 	 * @method contentLeft
 	 * @since 0.1.0
 	 */
-	open func contentLeft(_ value: Property) {
+	open func contentLeft(_ value: JavaScriptProperty) {
 
 		if (value.type == .number) {
 
@@ -913,7 +913,7 @@ open class LayoutNode {
 	 * @method contentWidth
 	 * @since 0.1.0
 	 */
-	open func contentWidth(_ value: Property) {
+	open func contentWidth(_ value: JavaScriptProperty) {
 
 		if (value.type == .string) {
 
@@ -957,7 +957,7 @@ open class LayoutNode {
 	 * @method contentHeight
 	 * @since 0.1.0
 	 */
-	open func contentHeight(_ value: Property) {
+	open func contentHeight(_ value: JavaScriptProperty) {
 
 		if (value.type == .string) {
 
@@ -1001,7 +1001,7 @@ open class LayoutNode {
 	 * @method borderTop
 	 * @since 0.1.0
 	 */
-	open func borderTop(_ value: Property) {
+	open func borderTop(_ value: JavaScriptProperty) {
 
 		if (value.type == .string) {
 
@@ -1045,7 +1045,7 @@ open class LayoutNode {
 	 * @method borderLeft
 	 * @since 0.1.0
 	 */
-	open func borderLeft(_ value: Property) {
+	open func borderLeft(_ value: JavaScriptProperty) {
 
 		if (value.type == .string) {
 
@@ -1089,7 +1089,7 @@ open class LayoutNode {
 	 * @method borderRight
 	 * @since 0.1.0
 	 */
-	open func borderRight(_ value: Property) {
+	open func borderRight(_ value: JavaScriptProperty) {
 
 		if (value.type == .string) {
 
@@ -1133,7 +1133,7 @@ open class LayoutNode {
 	 * @method borderBottom
 	 * @since 0.1.0
 	 */
-	open func borderBottom(_ value: Property) {
+	open func borderBottom(_ value: JavaScriptProperty) {
 
 		if (value.type == .string) {
 
@@ -1177,7 +1177,7 @@ open class LayoutNode {
 	 * @method marginTop
 	 * @since 0.1.0
 	 */
-	open func marginTop(_ value: Property) {
+	open func marginTop(_ value: JavaScriptProperty) {
 
 		if (value.type == .number) {
 
@@ -1211,7 +1211,7 @@ open class LayoutNode {
 	 * @method marginLeft
 	 * @since 0.1.0
 	 */
-	open func marginLeft(_ value: Property) {
+	open func marginLeft(_ value: JavaScriptProperty) {
 
 		if (value.type == .number) {
 
@@ -1245,7 +1245,7 @@ open class LayoutNode {
 	 * @method marginRight
 	 * @since 0.1.0
 	 */
-	open func marginRight(_ value: Property) {
+	open func marginRight(_ value: JavaScriptProperty) {
 
 		if (value.type == .number) {
 
@@ -1279,7 +1279,7 @@ open class LayoutNode {
 	 * @method marginBottom
 	 * @since 0.1.0
 	 */
-	open func marginBottom(_ value: Property) {
+	open func marginBottom(_ value: JavaScriptProperty) {
 
 		if (value.type == .number) {
 
@@ -1377,7 +1377,7 @@ open class LayoutNode {
 	 * @method paddingTop
 	 * @since 0.1.0
 	 */
-	open func paddingTop(_ value: Property) {
+	open func paddingTop(_ value: JavaScriptProperty) {
 
 		if (value.type == .number) {
 
@@ -1411,7 +1411,7 @@ open class LayoutNode {
 	 * @method paddingLeft
 	 * @since 0.1.0
 	 */
-	open func paddingLeft(_ value: Property) {
+	open func paddingLeft(_ value: JavaScriptProperty) {
 
 		if (value.type == .number) {
 
@@ -1445,7 +1445,7 @@ open class LayoutNode {
 	 * @method paddingRight
 	 * @since 0.1.0
 	 */
-	open func paddingRight(_ value: Property) {
+	open func paddingRight(_ value: JavaScriptProperty) {
 
 		if (value.type == .number) {
 
@@ -1479,7 +1479,7 @@ open class LayoutNode {
 	 * @method paddingBottom
 	 * @since 0.1.0
 	 */
-	open func paddingBottom(_ value: Property) {
+	open func paddingBottom(_ value: JavaScriptProperty) {
 
 		if (value.type == .number) {
 

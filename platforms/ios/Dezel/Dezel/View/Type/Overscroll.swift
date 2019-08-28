@@ -16,7 +16,7 @@ public enum Overscroll {
 	 * @method get
 	 * @since 0.2.0
 	 */
-	public static func get(_ value: Property) -> Overscroll {
+	public static func get(_ value: JavaScriptProperty) -> Overscroll {
 
 		switch (value.type) {
 

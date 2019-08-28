@@ -123,6 +123,11 @@ open class JavaScriptWebView: JavaScriptView, WebViewDelegate {
 	 * @hidden
 	 */
 	@objc open func jsFunction_load(callback: JavaScriptFunctionCallback) {
+
+		if (callback.arguments < 1) {
+			fatalError("Method JavaScriptWebView.load() requires 1 argument.")
+		}
+
 		self.view.load(url: callback.argument(0).string)
 	}
 
@@ -132,6 +137,11 @@ open class JavaScriptWebView: JavaScriptView, WebViewDelegate {
 	 * @hidden
 	 */
 	@objc open func jsFunction_loadHTML(callback: JavaScriptFunctionCallback) {
+
+		if (callback.arguments < 1) {
+			fatalError("Method JavaScriptWebView.loadHTML() requires 1 argument.")
+		}
+
 		self.view.load(html: callback.argument(0).string)
 	}
 

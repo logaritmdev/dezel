@@ -17,154 +17,6 @@ open class JavaScriptCanvas: JavaScriptClass {
 	private weak var ctx: CGContext?
 
 	/**
-	 * The canvas fill style.
-	 * @property fillStyle
-	 * @since 0.7.0
-	 */
-	open var fillStyle: Property = Property(string: "black") {
-		willSet {
-			self.ctx?.setFillColor(CGColorParse(newValue.string))
-		}
-	}
-
-	/**
-	 * The canvas stroke style.
-	 * @property strokeStyle
-	 * @since 0.7.0
-	 */
-	open var strokeStyle: Property = Property(string: "black") {
-		willSet {
-			self.ctx?.setStrokeColor(CGColorParse(newValue.string))
-		}
-	}
-
-	/**
-	 * The canvas line cap mode.
-	 * @property lineCap
-	 * @since 0.7.0
-	 */
-	open var lineCap: Property = Property(string: "butt") {
-		willSet {
-			switch (newValue.string) {
-				case "butt":   self.ctx?.setLineCap(.butt)
-				case "round":  self.ctx?.setLineCap(.round)
-				case "square": self.ctx?.setLineCap(.square)
-				default: break
-			}
-		}
-	}
-
-	/**
-	 * The canvas line join mode.
-	 * @property lineJoin
-	 * @since 0.7.0
-	 */
-	open var lineJoin: Property = Property(string: "miter") {
-		willSet {
-			switch (newValue.string) {
-				case "miter": self.ctx?.setLineJoin(.miter)
-				case "round": self.ctx?.setLineJoin(.round)
-				case "bevel": self.ctx?.setLineJoin(.bevel)
-				default: break
-			}
-		}
-	}
-
-	/**
-	 * The canvas line width.
-	 * @property lineWidth
-	 * @since 0.7.0
-	 */
-	open var lineWidth: Property = Property(number: 1.0) {
-		willSet {
-			self.ctx?.setLineWidth(CGFloat(newValue.number))
-		}
-	}
-
-	/**
-	 * The canvas horizontal shadow offset.
-	 * @property shadowOffsetX
-	 * @since 0.7.0
-	 */
-	open var shadowOffsetX: Property = Property(number: 0.0) {
-		willSet {
-			self.measuredShadowOffset.width = CGFloat(newValue.number)
-			self.ctx?.setShadow(offset: self.measuredShadowOffset, blur: self.measuredShadowBlur, color: self.computedShadowColor)
-		}
-	}
-
-	/**
-	 * The canvas vertical shadow offset.
-	 * @property shadowOffsetY
-	 * @since 0.7.0
-	 */
-	open var shadowOffsetY: Property = Property(number: 0.0) {
-		willSet {
-			self.measuredShadowOffset.height = CGFloat(newValue.number)
-			self.ctx?.setShadow(offset: self.measuredShadowOffset, blur: self.measuredShadowBlur, color: self.computedShadowColor)
-		}
-	}
-
-	/**
-	 * The canvas shadow blur.
-	 * @property shadowBlur
-	 * @since 0.7.0
-	 */
-	open var shadowBlur: Property = Property(number: 0.0) {
-		willSet {
-			self.measuredShadowBlur = CGFloat(newValue.number)
-			self.ctx?.setShadow(offset: self.measuredShadowOffset, blur: self.measuredShadowBlur, color: self.computedShadowColor)
-		}
-	}
-
-	/**
-	 * The canvas shadow color.
-	 * @property shadowBlur
-	 * @since 0.7.0
-	 */
-	open var shadowColor: Property = Property(number: 0.0) {
-		willSet {
-			self.computedShadowColor = CGColorParse(newValue.string)
-			self.ctx?.setShadow(offset: self.measuredShadowOffset, blur: self.measuredShadowBlur, color: self.computedShadowColor)
-		}
-	}
-
-	/**
-	 * The canvas global alpha.
-	 * @property globalAlpha
-	 * @since 0.7.0
-	 */
-	open var globalAlpha: Property = Property(number: 1.0) {
-		willSet {
-			self.ctx?.setAlpha(CGFloat(newValue.number))
-		}
-	}
-
-	/**
-	 * The canvas global alpha.
-	 * @property globalAlpha
-	 * @since 0.7.0
-	 */
-	open var globalCompositeOperation: Property = Property(string: "source-over") {
-		willSet {
-			switch (newValue.string) {
-				case "source-in": self.ctx?.setBlendMode(.sourceIn)
-				case "source-out":  self.ctx?.setBlendMode(.sourceOut)
-				case "source-over": self.ctx?.setBlendMode(.normal)
-				case "source-atop": self.ctx?.setBlendMode(.sourceAtop)
-				case "destination-in": self.ctx?.setBlendMode(.destinationIn)
-				case "destination-out": self.ctx?.setBlendMode(.destinationOut)
-				case "destination-over": self.ctx?.setBlendMode(.destinationOver)
-				case "destination-atop": self.ctx?.setBlendMode(.destinationAtop)
-				case "lighter": self.ctx?.setBlendMode(.lighten)
-				case "darker": self.ctx?.setBlendMode(.darken)
-				case "copy": self.ctx?.setBlendMode(.copy)
-				default: break
-			}
-		}
-	}
-
-	/**
 	 * @property shadowOffset
 	 * @since 0.7.0
 	 * @hidden
@@ -203,6 +55,134 @@ open class JavaScriptCanvas: JavaScriptClass {
 	//--------------------------------------------------------------------------
 
 	/**
+	 * The canvas fill style.
+	 * @property fillStyle
+	 * @since 0.7.0
+	 */
+	open lazy var fillStyle = JavaScriptProperty(string: "black") { value in
+		self.ctx?.setFillColor(CGColorParse(value.string))
+	}
+
+	/**
+	 * The canvas stroke style.
+	 * @property strokeStyle
+	 * @since 0.7.0
+	 */
+	open lazy var strokeStyle = JavaScriptProperty(string: "black") { value in
+		self.ctx?.setStrokeColor(CGColorParse(value.string))
+	}
+
+	/**
+	 * The canvas line cap mode.
+	 * @property lineCap
+	 * @since 0.7.0
+	 */
+	open lazy var lineCap = JavaScriptProperty(string: "butt") { value in
+		switch (value.string) {
+			case "butt":   self.ctx?.setLineCap(.butt)
+			case "round":  self.ctx?.setLineCap(.round)
+			case "square": self.ctx?.setLineCap(.square)
+			default: break
+		}
+	}
+
+	/**
+	 * The canvas line join mode.
+	 * @property lineJoin
+	 * @since 0.7.0
+	 */
+	open lazy var lineJoin = JavaScriptProperty(string: "miter") { value in
+		switch (value.string) {
+			case "miter": self.ctx?.setLineJoin(.miter)
+			case "round": self.ctx?.setLineJoin(.round)
+			case "bevel": self.ctx?.setLineJoin(.bevel)
+			default: break
+		}
+	}
+
+	/**
+	 * The canvas line width.
+	 * @property lineWidth
+	 * @since 0.7.0
+	 */
+	open lazy var lineWidth = JavaScriptProperty(number: 1.0) { value in
+		self.ctx?.setLineWidth(CGFloat(value.number))
+	}
+
+	/**
+	 * The canvas horizontal shadow offset.
+	 * @property shadowOffsetX
+	 * @since 0.7.0
+	 */
+	open lazy var shadowOffsetX = JavaScriptProperty(number: 0.0) { value in
+		self.measuredShadowOffset.width = CGFloat(value.number)
+		self.ctx?.setShadow(offset: self.measuredShadowOffset, blur: self.measuredShadowBlur, color: self.computedShadowColor)
+	}
+
+	/**
+	 * The canvas vertical shadow offset.
+	 * @property shadowOffsetY
+	 * @since 0.7.0
+	 */
+	open lazy var shadowOffsetY = JavaScriptProperty(number: 0.0) { value in
+		self.measuredShadowOffset.height = CGFloat(value.number)
+		self.ctx?.setShadow(offset: self.measuredShadowOffset, blur: self.measuredShadowBlur, color: self.computedShadowColor)
+	}
+
+	/**
+	 * The canvas shadow blur.
+	 * @property shadowBlur
+	 * @since 0.7.0
+	 */
+	open lazy var shadowBlur = JavaScriptProperty(number: 0.0) { value in
+		self.measuredShadowBlur = CGFloat(value.number)
+		self.ctx?.setShadow(offset: self.measuredShadowOffset, blur: self.measuredShadowBlur, color: self.computedShadowColor)
+	}
+
+	/**
+	 * The canvas shadow color.
+	 * @property shadowBlur
+	 * @since 0.7.0
+	 */
+	open lazy var shadowColor = JavaScriptProperty(number: 0.0) { value in
+		self.computedShadowColor = CGColorParse(value.string)
+		self.ctx?.setShadow(offset: self.measuredShadowOffset, blur: self.measuredShadowBlur, color: self.computedShadowColor)
+	}
+
+	/**
+	 * The canvas global alpha.
+	 * @property globalAlpha
+	 * @since 0.7.0
+	 */
+	open lazy var globalAlpha = JavaScriptProperty(number: 1.0) { value in
+		self.ctx?.setAlpha(CGFloat(value.number))
+	}
+
+	/**
+	 * The canvas global alpha.
+	 * @property globalAlpha
+	 * @since 0.7.0
+	 */
+	open lazy var globalCompositeOperation = JavaScriptProperty(string: "source-over") { value in
+		switch (value.string) {
+			case "source-in": self.ctx?.setBlendMode(.sourceIn)
+			case "source-out":  self.ctx?.setBlendMode(.sourceOut)
+			case "source-over": self.ctx?.setBlendMode(.normal)
+			case "source-atop": self.ctx?.setBlendMode(.sourceAtop)
+			case "destination-in": self.ctx?.setBlendMode(.destinationIn)
+			case "destination-out": self.ctx?.setBlendMode(.destinationOut)
+			case "destination-over": self.ctx?.setBlendMode(.destinationOver)
+			case "destination-atop": self.ctx?.setBlendMode(.destinationAtop)
+			case "lighter": self.ctx?.setBlendMode(.lighten)
+			case "darker": self.ctx?.setBlendMode(.darken)
+			case "copy": self.ctx?.setBlendMode(.copy)
+			default: break
+		}
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
 	 * @method jsGet_fillStyle
 	 * @since 0.7.0
 	 * @hidden
@@ -217,7 +197,7 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @hidden
 	 */
 	@objc open func jsSet_fillStyle(callback: JavaScriptSetterCallback) {
-		self.fillStyle = Property(value: callback.value)
+		self.fillStyle.reset(callback.value, lock: self)
 	}
 
 	//--------------------------------------------------------------------------
@@ -237,7 +217,7 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @hidden
 	 */
 	@objc open func jsSet_strokeStyle(callback: JavaScriptSetterCallback) {
-		self.strokeStyle = Property(value: callback.value)
+		self.strokeStyle.reset(callback.value, lock: self)
 	}
 
 	//--------------------------------------------------------------------------
@@ -257,7 +237,7 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @hidden
 	 */
 	@objc open func jsSet_lineCap(callback: JavaScriptSetterCallback) {
-		self.lineCap = Property(value: callback.value)
+		self.lineCap.reset(callback.value, lock: self)
 	}
 
 	//--------------------------------------------------------------------------
@@ -277,7 +257,7 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @hidden
 	 */
 	@objc open func jsSet_lineJoin(callback: JavaScriptSetterCallback) {
-		self.lineJoin = Property(value: callback.value)
+		self.lineJoin.reset(callback.value, lock: self)
 	}
 
 	//--------------------------------------------------------------------------
@@ -297,7 +277,7 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @hidden
 	 */
 	@objc open func jsSet_lineWidth(callback: JavaScriptSetterCallback) {
-		self.lineWidth = Property(value: callback.value)
+		self.lineWidth.reset(callback.value, lock: self)
 	}
 
 	//--------------------------------------------------------------------------
@@ -317,7 +297,7 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @hidden
 	 */
 	@objc open func jsSet_shadowOffsetX(callback: JavaScriptSetterCallback) {
-		self.shadowOffsetX = Property(value: callback.value)
+		self.shadowOffsetX.reset(callback.value, lock: self)
 	}
 
 	//--------------------------------------------------------------------------
@@ -337,7 +317,7 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @hidden
 	 */
 	@objc open func jsSet_shadowOffsetY(callback: JavaScriptSetterCallback) {
-		self.shadowOffsetY = Property(value: callback.value)
+		self.shadowOffsetY.reset(callback.value, lock: self)
 	}
 
 	//--------------------------------------------------------------------------
@@ -357,7 +337,7 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @hidden
 	 */
 	@objc open func jsSet_shadowBlur(callback: JavaScriptSetterCallback) {
-		self.shadowBlur = Property(value: callback.value)
+		self.shadowBlur.reset(callback.value, lock: self)
 	}
 
 	//--------------------------------------------------------------------------
@@ -377,7 +357,7 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @hidden
 	 */
 	@objc open func jsSet_shadowColor(callback: JavaScriptSetterCallback) {
-		self.shadowColor = Property(value: callback.value)
+		self.shadowColor.reset(callback.value, lock: self)
 	}
 
 	//--------------------------------------------------------------------------
@@ -397,7 +377,7 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @hidden
 	 */
 	@objc open func jsSet_globalAlpha(callback: JavaScriptSetterCallback) {
-		self.globalAlpha = Property(value: callback.value)
+		self.globalAlpha.reset(callback.value, lock: self)
 	}
 
 	//--------------------------------------------------------------------------
@@ -417,7 +397,7 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @hidden
 	 */
 	@objc open func jsSet_globalCompositeOperation(callback: JavaScriptSetterCallback) {
-		self.globalCompositeOperation = Property(value: callback.value)
+		self.globalCompositeOperation.reset(callback.value, lock: self)
 	}
 
 	//--------------------------------------------------------------------------
@@ -430,12 +410,17 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @hidden
 	 */
 	@objc open func jsFunction_rect(callback: JavaScriptFunctionCallback) {
-		let x = CGFloat(callback.argument(0).number)
-		let y = CGFloat(callback.argument(1).number)
-		let w = CGFloat(callback.argument(2).number)
-		let h = CGFloat(callback.argument(3).number)
-		let r = CGRect(x: x, y: y, width: w, height: h)
-		self.ctx?.addRect(r)
+
+		if (callback.arguments < 4) {
+			fatalError("Method JavaScriptCanvas.rect' requires 4 arguments.")
+		}
+
+		let x = callback.argument(0).number
+		let y = callback.argument(1).number
+		let w = callback.argument(2).number
+		let h = callback.argument(3).number
+
+		self.ctx?.addRect(CGRect(x: x, y: y, width: w, height: h))
 	}
 
 	/**
@@ -444,12 +429,17 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @hidden
 	 */
 	@objc open func jsFunction_fillRect(callback: JavaScriptFunctionCallback) {
-		let x = CGFloat(callback.argument(0).number)
-		let y = CGFloat(callback.argument(1).number)
-		let w = CGFloat(callback.argument(2).number)
-		let h = CGFloat(callback.argument(3).number)
-		let r = CGRect(x: x, y: y, width: w, height: h)
-		self.ctx?.fill(r)
+
+		if (callback.arguments < 4) {
+			fatalError("Method JavaScriptCanvas.fillRect() requires 4 arguments.")
+		}
+
+		let x = callback.argument(0).number
+		let y = callback.argument(1).number
+		let w = callback.argument(2).number
+		let h = callback.argument(3).number
+
+		self.ctx?.fill(CGRect(x: x, y: y, width: w, height: h))
 	}
 
 	/**
@@ -458,12 +448,17 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @hidden
 	 */
 	@objc open func jsFunction_strokeRect(callback: JavaScriptFunctionCallback) {
-		let x = CGFloat(callback.argument(0).number)
-		let y = CGFloat(callback.argument(1).number)
-		let w = CGFloat(callback.argument(2).number)
-		let h = CGFloat(callback.argument(3).number)
-		let r = CGRect(x: x, y: y, width: w, height: h)
-		self.ctx?.stroke(r)
+
+		if (callback.arguments < 4) {
+			fatalError("Method JavaScriptCanvas.strokeRect() requires 4 arguments.")
+		}
+
+		let x = callback.argument(0).number
+		let y = callback.argument(1).number
+		let w = callback.argument(2).number
+		let h = callback.argument(3).number
+
+		self.ctx?.stroke(CGRect(x: x, y: y, width: w, height: h))
 	}
 
 	/**
@@ -472,12 +467,17 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @hidden
 	 */
 	@objc open func jsFunction_clearRect(callback: JavaScriptFunctionCallback) {
-		let x = CGFloat(callback.argument(0).number)
-		let y = CGFloat(callback.argument(1).number)
-		let w = CGFloat(callback.argument(2).number)
-		let h = CGFloat(callback.argument(3).number)
-		let r = CGRect(x: x, y: y, width: w, height: h)
-		self.ctx?.clear(r)
+
+		if (callback.arguments < 4) {
+			fatalError("Method JavaScriptCanvas.clearRect() requires 4 arguments.")
+		}
+
+		let x = callback.argument(0).number
+		let y = callback.argument(1).number
+		let w = callback.argument(2).number
+		let h = callback.argument(3).number
+
+		self.ctx?.clear(CGRect(x: x, y: y, width: w, height: h))
 	}
 
 	/**
@@ -522,8 +522,14 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @hidden
 	 */
 	@objc open func jsFunction_moveTo(callback: JavaScriptFunctionCallback) {
-		let x = CGFloat(callback.argument(0).number)
-		let y = CGFloat(callback.argument(1).number)
+
+		if (callback.arguments < 2) {
+			fatalError("Method JavaScriptCanvas.moveTo() requires 2 arguments.")
+		}
+
+		let x = callback.argument(0).number
+		let y = callback.argument(1).number
+
 		self.ctx?.move(to: CGPoint(x: x, y: y))
 	}
 
@@ -533,8 +539,14 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @hidden
 	 */
 	@objc open func jsFunction_lineTo(callback: JavaScriptFunctionCallback) {
-		let x = CGFloat(callback.argument(0).number)
-		let y = CGFloat(callback.argument(1).number)
+
+		if (callback.arguments < 2) {
+			fatalError("Method JavaScriptCanvas.lineTo() requires 2 arguments.")
+		}
+
+		let x = callback.argument(0).number
+		let y = callback.argument(1).number
+
 		self.ctx?.addLine(to: CGPoint(x: x, y: y))
 	}
 
@@ -553,10 +565,16 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @hidden
 	 */
 	@objc open func jsFunction_quadraticCurveTo(callback: JavaScriptFunctionCallback) {
-		let cx = CGFloat(callback.argument(0).number)
-		let cy = CGFloat(callback.argument(1).number)
-		let x = CGFloat(callback.argument(2).number)
-		let y = CGFloat(callback.argument(3).number)
+
+		if (callback.arguments < 4) {
+			fatalError("Method JavaScriptCanvas.quadraticCurveTo() requires 4 arguments.")
+		}
+
+		let cx = callback.argument(0).number
+		let cy = callback.argument(1).number
+		let x  = callback.argument(2).number
+		let y  = callback.argument(3).number
+
 		self.ctx?.addQuadCurve(to: CGPoint(x: x, y: y), control: CGPoint(x: cx, y: cy))
 	}
 
@@ -566,12 +584,18 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @hidden
 	 */
 	@objc open func jsFunction_bezierCurveTo(callback: JavaScriptFunctionCallback) {
-		let c1x = CGFloat(callback.argument(0).number)
-		let c1y = CGFloat(callback.argument(1).number)
-		let c2x = CGFloat(callback.argument(2).number)
-		let c2y = CGFloat(callback.argument(3).number)
-		let x = CGFloat(callback.argument(4).number)
-		let y = CGFloat(callback.argument(5).number)
+
+		if (callback.arguments < 4) {
+			fatalError("Method JavaScriptCanvas.bezierCurveTo() requires 6 arguments.")
+		}
+
+		let c1x = callback.argument(0).number
+		let c1y = callback.argument(1).number
+		let c2x = callback.argument(2).number
+		let c2y = callback.argument(3).number
+		let x   = callback.argument(4).number
+		let y   = callback.argument(5).number
+
 		self.ctx?.addCurve(to: CGPoint(x: x, y: y), control1: CGPoint(x: c1x, y: c1y), control2: CGPoint(x: c2x, y: c2y))
 	}
 
@@ -582,19 +606,18 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 */
 	@objc open func jsFunction_arc(callback: JavaScriptFunctionCallback) {
 
-		let x = CGFloat(callback.argument(0).number)
-		let y = CGFloat(callback.argument(1).number)
-		let r = CGFloat(callback.argument(2).number)
-		let sa = CGFloat(callback.argument(3).number)
-		let ea = CGFloat(callback.argument(4).number)
-
-		var ccw = false
-
-		if (callback.arguments >= 6) {
-			ccw = callback.argument(5).boolean
+		if (callback.arguments < 6) {
+			fatalError("Method JavaScriptCanvas.arc() requires 6 arguments.")
 		}
 
-		self.ctx?.addArc(center: CGPoint(x: x, y: y), radius: r, startAngle: sa, endAngle: ea, clockwise: ccw)
+		let x   = callback.argument(0).number
+		let y   = callback.argument(1).number
+		let r   = callback.argument(2).number
+		let sa  = callback.argument(3).number
+		let ea  = callback.argument(4).number
+		let ccw = callback.argument(5).boolean
+
+		self.ctx?.addArc(center: CGPoint(x: x, y: y), radius: CGFloat(r), startAngle: CGFloat(sa), endAngle: CGFloat(ea), clockwise: ccw)
 	}
 
 	/**
@@ -603,12 +626,18 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @hidden
 	 */
 	@objc open func jsFunction_arcTo(callback: JavaScriptFunctionCallback) {
-		let x1 = CGFloat(callback.argument(0).number)
-		let y1 = CGFloat(callback.argument(1).number)
-		let x2 = CGFloat(callback.argument(2).number)
-		let y2 = CGFloat(callback.argument(3).number)
-		let r = CGFloat(callback.argument(4).number)
-		self.ctx?.addArc(tangent1End: CGPoint(x: x1, y: y1), tangent2End: CGPoint(x: x2, y: y2), radius: r)
+
+		if (callback.arguments < 6) {
+			fatalError("Method JavaScriptCanvas.arcTo() requires 6 arguments.")
+		}
+
+		let x1 = callback.argument(0).number
+		let y1 = callback.argument(1).number
+		let x2 = callback.argument(2).number
+		let y2 = callback.argument(3).number
+		let r  = callback.argument(4).number
+
+		self.ctx?.addArc(tangent1End: CGPoint(x: x1, y: y1), tangent2End: CGPoint(x: x2, y: y2), radius: CGFloat(r))
 	}
 
 	/**
@@ -617,9 +646,15 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @hidden
 	 */
 	@objc open func jsFunction_isPointInPath(callback: JavaScriptFunctionCallback) {
-		let x = CGFloat(callback.argument(0).number)
-		let y = CGFloat(callback.argument(1).number)
-		callback.returns(boolean: self.ctx?.pathContains(CGPoint(x: x, y: y), mode: .eoFill) ?? false)
+
+		if (callback.arguments < 2) {
+			fatalError("Method JavaScriptCanvas.isPointInPath() requires 2 arguments.")
+		}
+
+		let x = callback.argument(0).number
+		let y = callback.argument(1).number
+
+		callback.returns(self.ctx?.pathContains(CGPoint(x: x, y: y), mode: .eoFill) ?? false)
 	}
 
 	/**
@@ -628,9 +663,15 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @hidden
 	 */
 	@objc open func jsFunction_scale(callback: JavaScriptFunctionCallback) {
-		let x = CGFloat(callback.argument(0).number)
-		let y = CGFloat(callback.argument(1).number)
-		self.ctx?.scaleBy(x: x, y: y)
+
+		if (callback.arguments < 2) {
+			fatalError("Method JavaScriptCanvas.scale() requires 2 arguments.")
+		}
+
+		let x = callback.argument(0).number
+		let y = callback.argument(1).number
+
+		self.ctx?.scaleBy(x: CGFloat(x), y: CGFloat(y))
 	}
 
 	/**
@@ -639,6 +680,11 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @hidden
 	 */
 	@objc open func jsFunction_rotate(callback: JavaScriptFunctionCallback) {
+
+		if (callback.arguments < 1) {
+			fatalError("Method JavaScriptCanvas.rotate() requires 1 argument.")
+		}
+
 		self.ctx?.rotate(by: CGFloat(callback.argument(0).number))
 	}
 
@@ -648,9 +694,15 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @hidden
 	 */
 	@objc open func jsFunction_translate(callback: JavaScriptFunctionCallback) {
-		let x = CGFloat(callback.argument(0).number)
-		let y = CGFloat(callback.argument(1).number)
-		self.ctx?.translateBy(x: x, y: y)
+
+		if (callback.arguments < 2) {
+			fatalError("Method JavaScriptCanvas.translate() requires 2 arguments.")
+		}
+
+		let x = callback.argument(0).number
+		let y = callback.argument(1).number
+
+		self.ctx?.translateBy(x: CGFloat(x), y: CGFloat(y))
 	}
 
 	/**
@@ -659,14 +711,19 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @hidden
 	 */
 	@objc open func jsFunction_transform(callback: JavaScriptFunctionCallback) {
-		let a = CGFloat(callback.argument(0).number)
-		let b = CGFloat(callback.argument(1).number)
-		let c = CGFloat(callback.argument(2).number)
-		let d = CGFloat(callback.argument(3).number)
-		let e = CGFloat(callback.argument(4).number)
-		let f = CGFloat(callback.argument(5).number)
-		let t = CGAffineTransform(a: a, b: b, c: c, d: d, tx: e, ty: f)
-		self.ctx?.concatenate(t)
+
+		if (callback.arguments < 6) {
+			fatalError("Method JavaScriptCanvas.translate() requires 6 arguments.")
+		}
+
+		let a = callback.argument(0).number
+		let b = callback.argument(1).number
+		let c = callback.argument(2).number
+		let d = callback.argument(3).number
+		let e = callback.argument(4).number
+		let f = callback.argument(5).number
+
+		self.ctx?.concatenate(CGAffineTransform(a: CGFloat(a), b: CGFloat(b), c: CGFloat(c), d: CGFloat(d), tx: CGFloat(e), ty: CGFloat(f)))
 	}
 
 	/**
@@ -676,13 +733,18 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 */
 	@objc open func jsFunction_setTransform(callback: JavaScriptFunctionCallback) {
 
-		let a = CGFloat(callback.argument(0).number)
-		let b = CGFloat(callback.argument(1).number)
-		let c = CGFloat(callback.argument(2).number)
-		let d = CGFloat(callback.argument(3).number)
-		let e = CGFloat(callback.argument(4).number)
-		let f = CGFloat(callback.argument(5).number)
-		let t = CGAffineTransform(a: a, b: b, c: c, d: d, tx: e, ty: f)
+		if (callback.arguments < 6) {
+			fatalError("Method JavaScriptCanvas.setTransform() requires 6 arguments.")
+		}
+
+		let a = callback.argument(0).number
+		let b = callback.argument(1).number
+		let c = callback.argument(2).number
+		let d = callback.argument(3).number
+		let e = callback.argument(4).number
+		let f = callback.argument(5).number
+
+		let t = CGAffineTransform(a: CGFloat(a), b: CGFloat(b), c: CGFloat(c), d: CGFloat(d), tx: CGFloat(e), ty: CGFloat(f))
 
 		if let reverse = self.ctx?.ctm.inverted() {
 			self.ctx?.concatenate(reverse)

@@ -52,7 +52,7 @@ open class ImageLoader: NSObject {
 	 * @method load
 	 * @since 0.1.0
 	 */
-	open func load(_ source: Property, callback: @escaping ImageLoaderCallback) {
+	open func load(_ source: JavaScriptProperty, callback: @escaping ImageLoaderCallback) {
 
 		if (source.type == .null) {
 			callback(nil)

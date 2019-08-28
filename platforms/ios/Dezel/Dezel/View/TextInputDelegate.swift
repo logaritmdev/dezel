@@ -1,6 +1,6 @@
 /**
- * TODO
- * @protocol ContentTextInputDelegate
+ * TextInput delegate.
+ * @protocol TextInputDelegate
  * @since 0.7.0
  */
 public protocol TextInputDelegate: AnyObject {

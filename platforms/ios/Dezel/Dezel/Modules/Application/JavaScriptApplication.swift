@@ -16,50 +16,6 @@ open class JavaScriptApplication: JavaScriptClass {
 	 */
 	private(set) public var window: JavaScriptWindow!
 
-	/**
-	 * The application's status bar visibility status.
-	 * @property statusBarVisible
-	 * @since 0.7.0
-	 */
-	@objc open var statusBarVisible: Property = Property(boolean: true) {
-		willSet {
-			self.context.application.statusBarVisible = newValue.boolean
-		}
-	}
-
-	/**
-	 * The application's status bar foreground color.
-	 * @property statusBarForegroundColor
-	 * @since 0.7.0
-	 */
-	@objc open var statusBarForegroundColor: Property = Property(string: "black") {
-		willSet {
-			self.context.application.statusBarForegroundColor = UIColor(string: newValue.string)
-		}
-	}
-
-	/**
-	 * The application's status bar foreground color.
-	 * @property statusBarBackgroundColor
-	 * @since 0.7.0
-	 */
-	@objc open var statusBarBackgroundColor: Property = Property(string: "transparent") {
-		willSet {
-			self.context.application.statusBarBackgroundColor = UIColor(string: newValue.string)
-		}
-	}
-
-	/**
-	 * The application's badge.
-	 * @property badge
-	 * @since 0.7.0
-	 */
-	@objc open var badge: Property = Property(number: 0) {
-		willSet(value) {
-			self.context.application.badge = value.number.int()
-		}
-	}
-
 	//--------------------------------------------------------------------------
 	// MARK: Methods
 	//--------------------------------------------------------------------------
@@ -76,6 +32,44 @@ open class JavaScriptApplication: JavaScriptClass {
 
 	//--------------------------------------------------------------------------
 	// MARK: JS Properties
+	//--------------------------------------------------------------------------
+
+	/**
+	 * The application's status bar visibility status.
+	 * @property statusBarVisible
+	 * @since 0.7.0
+	 */
+	@objc open lazy var statusBarVisible = JavaScriptProperty(boolean: true) { value in
+		self.context.application.statusBarVisible = value.boolean
+	}
+
+	/**
+	 * The application's status bar foreground color.
+	 * @property statusBarForegroundColor
+	 * @since 0.7.0
+	 */
+	@objc open lazy var statusBarForegroundColor = JavaScriptProperty(string: "black") { value in
+		self.context.application.statusBarForegroundColor = UIColor(string: value.string)
+	}
+
+	/**
+	 * The application's status bar foreground color.
+	 * @property statusBarBackgroundColor
+	 * @since 0.7.0
+	 */
+	@objc open lazy var statusBarBackgroundColor = JavaScriptProperty(string: "transparent") { value in
+		self.context.application.statusBarBackgroundColor = UIColor(string: value.string)
+	}
+
+	/**
+	 * The application's badge.
+	 * @property badge
+	 * @since 0.7.0
+	 */
+	@objc open lazy var badge = JavaScriptProperty(number: 0) { value in
+		self.context.application.badge = value.number.toInt()
+	}
+
 	//--------------------------------------------------------------------------
 
 	/**
@@ -113,7 +107,7 @@ open class JavaScriptApplication: JavaScriptClass {
 	 * @hidden
 	 */
 	@objc open func jsSet_statusBarVisible(callback: JavaScriptSetterCallback) {
-		self.statusBarVisible = Property(value: callback.value)
+		self.statusBarVisible.reset(callback.value, lock: self)
 	}
 
 	//--------------------------------------------------------------------------
@@ -133,7 +127,7 @@ open class JavaScriptApplication: JavaScriptClass {
 	 * @hidden
 	 */
 	@objc open func jsSet_statusBarForegroundColor(callback: JavaScriptSetterCallback) {
-		self.statusBarForegroundColor = Property(value: callback.value)
+		self.statusBarForegroundColor.reset(callback.value, lock: self)
 	}
 
 	//--------------------------------------------------------------------------
@@ -153,7 +147,7 @@ open class JavaScriptApplication: JavaScriptClass {
 	 * @hidden
 	 */
 	@objc open func jsSet_statusBarBackgroundColor(callback: JavaScriptSetterCallback) {
-		self.statusBarBackgroundColor = Property(value: callback.value)
+		self.statusBarBackgroundColor.reset(callback.value, lock: self)
 	}
 
 	//--------------------------------------------------------------------------
@@ -173,7 +167,7 @@ open class JavaScriptApplication: JavaScriptClass {
 	 * @hidden
 	 */
 	@objc open func jsSet_badge(callback: JavaScriptSetterCallback) {
-		self.badge = Property(value: callback.value)
+		self.badge.reset(callback.value, lock: self)
 	}
 
 	//--------------------------------------------------------------------------
@@ -186,11 +180,11 @@ open class JavaScriptApplication: JavaScriptClass {
 	@objc open func jsGet_state(callback: JavaScriptGetterCallback) {
 		switch (UIApplication.shared.applicationState) {
 			case .active:
-				callback.returns(string: "foreground")
+				callback.returns("foreground")
 			case .inactive:
-				callback.returns(string: "foreground")
+				callback.returns("foreground")
 			case .background:
-				callback.returns(string: "background")
+				callback.returns("background")
 			default:
 				break
 		}
@@ -208,7 +202,7 @@ open class JavaScriptApplication: JavaScriptClass {
 	@objc open func jsFunction_openURL(callback: JavaScriptFunctionCallback) {
 
 		if (callback.arguments < 1) {
-			return
+			fatalError("openURL requires 1 argument")
 		}
 
 		var url = callback.argument(0).string

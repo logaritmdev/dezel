@@ -14,21 +14,21 @@ public final class JavaScriptGetterWrapper: NSObject {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	private(set) internal var context: JavaScriptContext
+	internal var context: JavaScriptContext
 
 	/**
-	 * @property callback
+	 * @property handler
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	private(set) internal var callback: JavaScriptGetterHandler
+	internal var handler: JavaScriptGetterHandler
 
 	/**
 	 * @property function
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	private(set) internal var function: JSObjectRef!
+	internal var function: JSObjectRef!
 
 	//--------------------------------------------------------------------------
 	// MARK: Methods
@@ -39,12 +39,12 @@ public final class JavaScriptGetterWrapper: NSObject {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	public init(context: JavaScriptContext, callback: @escaping JavaScriptGetterHandler) {
+	public init(context: JavaScriptContext, handler: @escaping JavaScriptGetterHandler) {
 
 		let function = DLValueCreateFunction(context.handle, JavaScriptGetterWrapperCallback, nil)
 
 		self.context = context
-		self.callback = callback
+		self.handler = handler
 		self.function = function
 
 		super.init()
@@ -75,7 +75,7 @@ private let JavaScriptGetterWrapperCallback: @convention(c) (JSContextRef?, JSOb
 		argv: argv
 	)
 
-	wrapper.callback(callback)
+	wrapper.handler(callback)
 
 	return callback.result
 }

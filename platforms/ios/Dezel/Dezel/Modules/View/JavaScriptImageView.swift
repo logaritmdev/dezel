@@ -10,126 +10,6 @@ open class JavaScriptImageView: JavaScriptView {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The image view's source.
-	 * @property source
-	 * @since 0.7.0
-	 */
-	@objc open var source: Property = Property() {
-
-		willSet {
-
-			self.imageLoader.load(newValue) { image in
-
-				self.imageData = image
-
-				if (self.layoutNode.wrapsContentWidth ||
-					self.layoutNode.wrapsContentHeight) {
-					self.layoutNode.invalidateSize()
-				}
-			}
-		}
-	}
-
-	/**
-	 * The image view's image container fit.
-	 * @property imageFit
-	 * @since 0.7.0
-	 */
-	@objc open var imageFit: Property = Property(string: "contain") {
-		willSet {
-			self.invalidateImage()
-		}
-	}
-
-	/**
-	 * The image view's image top anchor.
-	 * @property imageAnchorTop
-	 * @since 0.7.0
-	 */
-	@objc open var imageAnchorTop: Property = Property(number: 0.5) {
-		willSet {
-			self.invalidateImage()
-		}
-	}
-
-	/**
-	 * The image view's image left anchor.
-	 * @property imageAnchorLeft
-	 * @since 0.7.0
-	 */
-	@objc open var imageAnchorLeft: Property = Property(number: 0.5) {
-		willSet {
-			self.invalidateImage()
-		}
-	}
-
-	/**
-	 * The image view's image top position.
-	 * @property imageTop
-	 * @since 0.7.0
-	 */
-	@objc open var imageTop: Property = Property(number: 50, unit: .pc) {
-		willSet {
-			self.invalidateImage()
-		}
-	}
-
-	/**
-	 * The image view's image left position.
-	 * @property imageLeft
-	 * @since 0.7.0
-	 */
-	@objc open var imageLeft: Property = Property(number: 50, unit: .pc) {
-		willSet {
-			self.invalidateImage()
-		}
-	}
-
-	/**
-	 * The image view's image width.
-	 * @property imageWidth
-	 * @since 0.7.0
-	 */
-	@objc open var imageWidth: Property = Property(string: "auto") {
-		willSet {
-			self.invalidateImage()
-		}
-	}
-
-	/**
-	 * The image view's image height.
-	 * @property imageHeight
-	 * @since 0.7.0
-	 */
-	@objc open var imageHeight: Property = Property(string: "auto") {
-		willSet {
-			self.invalidateImage()
-		}
-	}
-
-	/**
-	 * The image view's image filter.
-	 * @property imageFilter
-	 * @since 0.7.0
-	 */
-	@objc open var imageFilter: Property = Property(string: "none") {
-		willSet {
-			self.view.imageFilter = self.getImageFilter(newValue.string)
-		}
-	}
-
-	/**
-	 * The image view's image tint color.
-	 * @property imageTint
-	 * @since 0.7.0
-	 */
-	@objc open var imageTint: Property = Property(string: "transparent") {
-		willSet {
-			self.view.imageTint = CGColorParse(newValue.string)
-		}
-	}
-
-	/**
 	 * @property imageData
 	 * @since 0.7.0
 	 * @hidden
@@ -400,7 +280,7 @@ open class JavaScriptImageView: JavaScriptView {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private func getImageAnchorTop(_ prop: Property) -> Double {
+	private func getImageAnchorTop(_ prop: JavaScriptProperty) -> Double {
 
 		if (prop.type == .string) {
 
@@ -423,7 +303,7 @@ open class JavaScriptImageView: JavaScriptView {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private func getImageAnchorLeft(_ prop: Property) -> Double {
+	private func getImageAnchorLeft(_ prop: JavaScriptProperty) -> Double {
 
 		if (prop.type == .string) {
 
@@ -467,6 +347,107 @@ open class JavaScriptImageView: JavaScriptView {
 	//--------------------------------------------------------------------------
 
 	/**
+	 * The image view's source.
+	 * @property source
+	 * @since 0.7.0
+	 */
+	@objc open lazy var source = JavaScriptProperty() { value in
+
+		self.imageLoader.load(value) { image in
+
+			self.imageData = image
+
+			if (self.layoutNode.wrapsContentWidth ||
+				self.layoutNode.wrapsContentHeight) {
+				self.layoutNode.invalidateSize()
+			}
+		}
+	}
+
+	/**
+	 * The image view's image container fit.
+	 * @property imageFit
+	 * @since 0.7.0
+	 */
+	@objc open lazy var imageFit = JavaScriptProperty(string: "contain") { value in
+		self.invalidateImage()
+	}
+
+	/**
+	 * The image view's image top anchor.
+	 * @property imageAnchorTop
+	 * @since 0.7.0
+	 */
+	@objc open lazy var imageAnchorTop = JavaScriptProperty(number: 0.5) { value in
+		self.invalidateImage()
+	}
+
+	/**
+	 * The image view's image left anchor.
+	 * @property imageAnchorLeft
+	 * @since 0.7.0
+	 */
+	@objc open lazy var imageAnchorLeft = JavaScriptProperty(number: 0.5) { value in
+		self.invalidateImage()
+	}
+
+	/**
+	 * The image view's image top position.
+	 * @property imageTop
+	 * @since 0.7.0
+	 */
+	@objc open lazy var imageTop = JavaScriptProperty(number: 50, unit: .pc) { value in
+		self.invalidateImage()
+	}
+
+	/**
+	 * The image view's image left position.
+	 * @property imageLeft
+	 * @since 0.7.0
+	 */
+	@objc open lazy var imageLeft = JavaScriptProperty(number: 50, unit: .pc) { value in
+		self.invalidateImage()
+	}
+
+	/**
+	 * The image view's image width.
+	 * @property imageWidth
+	 * @since 0.7.0
+	 */
+	@objc open lazy var imageWidth = JavaScriptProperty(string: "auto") { value in
+		self.invalidateImage()
+	}
+
+	/**
+	 * The image view's image height.
+	 * @property imageHeight
+	 * @since 0.7.0
+	 */
+	@objc open lazy var imageHeight = JavaScriptProperty(string: "auto") { value in
+		self.invalidateImage()
+	}
+
+	/**
+	 * The image view's image filter.
+	 * @property imageFilter
+	 * @since 0.7.0
+	 */
+	@objc open lazy var imageFilter = JavaScriptProperty(string: "none") { value in
+		self.view.imageFilter = self.getImageFilter(value.string)
+	}
+
+	/**
+	 * The image view's image tint color.
+	 * @property imageTint
+	 * @since 0.7.0
+	 */
+	@objc open lazy var imageTint = JavaScriptProperty(string: "transparent") { value in
+		self.view.imageTint = CGColorParse(value.string)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
 	 * @method jsGet_source
 	 * @since 0.7.0
 	 * @hidden
@@ -481,7 +462,7 @@ open class JavaScriptImageView: JavaScriptView {
 	 * @hidden
 	 */
 	@objc open func jsSet_source(callback: JavaScriptSetterCallback) {
-		self.source = Property(value: callback.value)
+		self.source.reset(callback.value, lock: self)
 	}
 
 	//--------------------------------------------------------------------------
@@ -501,7 +482,7 @@ open class JavaScriptImageView: JavaScriptView {
 	 * @hidden
 	 */
 	@objc open func jsSet_imageFit(callback: JavaScriptSetterCallback) {
-		self.imageFit = Property(value: callback.value)
+		self.imageFit.reset(callback.value, lock: self)
 	}
 
 	//--------------------------------------------------------------------------
@@ -521,7 +502,7 @@ open class JavaScriptImageView: JavaScriptView {
 	 * @hidden
 	 */
 	@objc open func jsSet_imageAnchorTop(callback: JavaScriptSetterCallback) {
-		self.imageAnchorTop = Property(value: callback.value)
+		self.imageAnchorTop.reset(callback.value, lock: self)
 	}
 
 	//--------------------------------------------------------------------------
@@ -541,7 +522,7 @@ open class JavaScriptImageView: JavaScriptView {
 	 * @hidden
 	 */
 	@objc open func jsSet_imageAnchorLeft(callback: JavaScriptSetterCallback) {
-		self.imageAnchorLeft = Property(value: callback.value)
+		self.imageAnchorLeft.reset(callback.value, lock: self)
 	}
 
 	//--------------------------------------------------------------------------
@@ -561,7 +542,7 @@ open class JavaScriptImageView: JavaScriptView {
 	 * @hidden
 	 */
 	@objc open func jsSet_imageTop(callback: JavaScriptSetterCallback) {
-		self.imageTop = Property(value: callback.value)
+		self.imageTop.reset(callback.value, lock: self)
 	}
 
 	//--------------------------------------------------------------------------
@@ -581,7 +562,7 @@ open class JavaScriptImageView: JavaScriptView {
 	 * @hidden
 	 */
 	@objc open func jsSet_imageLeft(callback: JavaScriptSetterCallback) {
-		self.imageLeft = Property(value: callback.value)
+		self.imageLeft.reset(callback.value, lock: self)
 	}
 
 	//--------------------------------------------------------------------------
@@ -601,7 +582,7 @@ open class JavaScriptImageView: JavaScriptView {
 	 * @hidden
 	 */
 	@objc open func jsSet_imageWidth(callback: JavaScriptSetterCallback) {
-		self.imageWidth = Property(value: callback.value)
+		self.imageWidth.reset(callback.value, lock: self)
 	}
 
 	//--------------------------------------------------------------------------
@@ -621,7 +602,7 @@ open class JavaScriptImageView: JavaScriptView {
 	 * @hidden
 	 */
 	@objc open func jsSet_imageHeight(callback: JavaScriptSetterCallback) {
-		self.imageHeight = Property(value: callback.value)
+		self.imageHeight.reset(callback.value, lock: self)
 	}
 
 	//--------------------------------------------------------------------------
@@ -641,7 +622,7 @@ open class JavaScriptImageView: JavaScriptView {
 	 * @hidden
 	 */
 	@objc open func jsSet_imageFilter(callback: JavaScriptSetterCallback) {
-		self.imageFilter = Property(value: callback.value)
+		self.imageFilter.reset(callback.value, lock: self)
 	}
 
 	//--------------------------------------------------------------------------
@@ -661,6 +642,6 @@ open class JavaScriptImageView: JavaScriptView {
 	 * @hidden
 	 */
 	@objc open func jsSet_imageTint(callback: JavaScriptSetterCallback) {
-		self.imageTint = Property(value: callback.value)
+		self.imageTint.reset(callback.value, lock: self)
 	}
 }

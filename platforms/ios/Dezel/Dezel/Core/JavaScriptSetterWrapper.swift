@@ -14,21 +14,21 @@ internal final class JavaScriptSetterWrapper: NSObject {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	private(set) internal var context: JavaScriptContext
+	internal var context: JavaScriptContext
 
 	/**
-	 * @property callback
+	 * @property handler
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	private(set) internal var callback: JavaScriptSetterHandler
+	internal var handler: JavaScriptSetterHandler
 
 	/**
 	 * @property function
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	private(set) internal var function: JSObjectRef!
+	internal var function: JSObjectRef!
 
 	//--------------------------------------------------------------------------
 	// MARK: Methods
@@ -39,12 +39,12 @@ internal final class JavaScriptSetterWrapper: NSObject {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	internal init(context: JavaScriptContext, callback: @escaping JavaScriptSetterHandler) {
+	internal init(context: JavaScriptContext, handler: @escaping JavaScriptSetterHandler) {
 
 		let function = DLValueCreateFunction(context.handle, JavaScriptSetterWrapperCallback, nil)
 
 		self.context = context
-		self.callback = callback
+		self.handler = handler
 		self.function = function
 
 		super.init()
@@ -76,7 +76,7 @@ private let JavaScriptSetterWrapperCallback: @convention(c) (JSContextRef?, JSOb
 		argv: argv
 	)
 
-	wrapper.callback(arguments)
+	wrapper.handler(arguments)
 
 	return nil
 }

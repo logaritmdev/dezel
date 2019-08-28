@@ -5,10 +5,54 @@ import CoreText
  * @since 0.1.0
  * @hidden
  */
+internal extension NSAttributedString {
+
+	/**
+	 * @property link
+	 * @since 0.5.0
+	 * @hidden
+	 */
+	var link: String? {
+		return self.attribute(.link, at: 0, effectiveRange: nil) as? String
+	}
+
+	/**
+	 * @method substring
+	 * @since 0.5.0
+	 * @hidden
+	 */
+	func substring(offset: Int, length: Int) -> NSAttributedString {
+		return self.attributedSubstring(from: NSRange(location: offset, length: length))
+	}
+
+	/**
+	 * @method truncate
+	 * @since 0.5.0
+	 * @hidden
+	 */
+	func truncate(range: NSRange, bounds: CGSize, character: NSAttributedString) -> CTLine? {
+		return CTLineCreateTruncatedLine(CTLineCreateWithAttributedString(self.substring(offset: range.location, length: self.length - range.location)), Double(bounds.width), .end, CTLineCreateWithAttributedString(character))
+	}
+
+	/**
+	 * @method truncate
+	 * @since 0.5.0
+	 * @hidden
+	 */
+	func truncate(range: CFRange, bounds: CGSize, character: NSAttributedString) -> CTLine? {
+		return CTLineCreateTruncatedLine(CTLineCreateWithAttributedString(self.substring(offset: range.location, length: self.length - range.location)), Double(bounds.width), .end,  CTLineCreateWithAttributedString(character))
+	}
+}
+
+/**
+ * @extension NSMutableAttributedString
+ * @since 0.5.0
+ * @hidden
+ */
 internal extension NSMutableAttributedString {
 
 	/**
-	 * @method setFont
+	 * @method addFont
 	 * @since 0.5.0
 	 * @hidden
 	 */
@@ -111,7 +155,7 @@ public typealias TextAttributes = [NSAttributedString.Key: Any]
  * @since 0.5.0
  * @hidden
  */
-extension Dictionary where Key == NSAttributedString.Key, Value == Any {
+internal extension Dictionary where Key == NSAttributedString.Key, Value == Any {
 
 	/**
 	 * @property paragraph
@@ -150,7 +194,7 @@ extension Dictionary where Key == NSAttributedString.Key, Value == Any {
 	 * @since 0.5.0
 	 * @hidden
 	 */
-	mutating internal func setBackgroundColor(_ value: UIColor?) {
+	mutating func setBackgroundColor(_ value: UIColor?) {
 		self[.backgroundColor] = value
 	}
 
@@ -159,7 +203,7 @@ extension Dictionary where Key == NSAttributedString.Key, Value == Any {
 	 * @since 0.5.0
 	 * @hidden
 	 */
-	mutating internal func setTextColor(_ value: CGColor) {
+	mutating func setTextColor(_ value: CGColor) {
 		self[.foregroundColor] = UIColor(cgColor: value)
 	}
 
@@ -168,7 +212,7 @@ extension Dictionary where Key == NSAttributedString.Key, Value == Any {
 	 * @since 0.5.0
 	 * @hidden
 	 */
-	mutating internal func setTextColor(_ value: UIColor?) {
+	mutating func setTextColor(_ value: UIColor?) {
 		self[.foregroundColor] = value
 	}
 
@@ -177,7 +221,7 @@ extension Dictionary where Key == NSAttributedString.Key, Value == Any {
 	 * @since 0.5.0
 	 * @hidden
 	 */
-	mutating internal func setTextKerning(_ value: CGFloat) {
+	mutating func setTextKerning(_ value: CGFloat) {
 		self[.kern] = value
 	}
 
@@ -186,7 +230,7 @@ extension Dictionary where Key == NSAttributedString.Key, Value == Any {
 	 * @since 0.5.0
 	 * @hidden
 	 */
-	mutating internal func setTextLeading(_ value: CGFloat) {
+	mutating func setTextLeading(_ value: CGFloat) {
 		self.paragraph().lineSpacing = value
 	}
 
@@ -195,7 +239,7 @@ extension Dictionary where Key == NSAttributedString.Key, Value == Any {
 	 * @since 0.5.0
 	 * @hidden
 	 */
-	mutating internal func setBaselineOffset(_ value: CGFloat) {
+	mutating func setBaselineOffset(_ value: CGFloat) {
 		self[.baselineOffset] = value
 	}
 
@@ -204,9 +248,10 @@ extension Dictionary where Key == NSAttributedString.Key, Value == Any {
 	 * @since 0.5.0
 	 * @hidden
 	 */
-	mutating internal func setTextAlignment(_ value: TextAlignment) {
+	mutating func setTextAlignment(_ value: TextAlignment) {
 
-		if (value == .start || value == .end) {
+		if (value == .start ||
+			value == .end) {
 
 			let dir = UIApplication.shared.userInterfaceLayoutDirection
 
@@ -241,7 +286,7 @@ extension Dictionary where Key == NSAttributedString.Key, Value == Any {
 	 * @since 0.5.0
 	 * @hidden
 	 */
-	mutating internal func setTextDecoration(_ value: TextDecoration) {
+	mutating func setTextDecoration(_ value: TextDecoration) {
 
 		switch (value) {
 

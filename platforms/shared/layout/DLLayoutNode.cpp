@@ -27,7 +27,7 @@ DLLayoutNodeCreate()
 {
 	DLLayoutNodeRef node = new OpaqueDLLayoutNode;
 	node->width.type = kDLLayoutSizeTypeFill;
-	node->height.type = kDLLayoutSizeTypeWrap;
+	node->height.type = kDLLayoutSizeTypeFill;
 	return node;
 }
 

@@ -117,7 +117,7 @@ class JavaScriptValueTest: XCTestCase {
 		src.dispose()
 
 		XCTAssertTrue(res1.equals(obj))
-		XCTAssertTrue(res2.isUndefined)
+		XCTAssertTrue(res2.isNull)
 		XCTAssertTrue(res3.isUndefined)
 
 		res3.dispose()
@@ -616,24 +616,6 @@ class JavaScriptValueTest: XCTestCase {
 		obj.dispose()
 		res2.dispose()
 		res1.dispose()
-	}
-
-	func testAttributes() {
-		// TODO, test in object
-//		let obj = self.context.createEmptyObject()
-//
-//		let key1 = NSObject()
-//		let key2 = NSObject()
-//		let val = NSObject()
-//
-//		obj.attribute(key1, value: val)
-//
-//		XCTAssertTrue(obj.attribute(key1) as! NSObject == val)
-//		XCTAssertTrue(obj.attribute(key2) == nil)
-//
-//		obj.deleteAttribute(key1)
-//
-//		XCTAssertTrue(obj.attribute(key1) == nil)
 	}
 
 	func testCast() {

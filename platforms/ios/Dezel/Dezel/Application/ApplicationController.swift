@@ -247,8 +247,8 @@ open class ApplicationController: UIViewController {
 		self.styler.root = application.window.stylerNode
 		self.layout.root = application.window.layoutNode
 
-		application.window.width = Property(number: Double(UIScreen.main.bounds.width), unit: .px)
-		application.window.height = Property(number: Double(UIScreen.main.bounds.width), unit: .px)
+		application.window.width.reset(Double(UIScreen.main.bounds.width), unit: .px)
+		application.window.height.reset(Double(UIScreen.main.bounds.width), unit: .px)
 		self.view.addSubview(application.window)
 
 		self.didLaunchApplication(application: application)
@@ -462,8 +462,8 @@ open class ApplicationController: UIViewController {
 		self.layout.viewportHeight = bounds.height
 
 		if let application = self.application {
-			application.window.width = Property(number: Double(bounds.width))
-			application.window.height = Property(number: Double(bounds.height))
+			application.window.width.reset(Double(bounds.width))
+			application.window.height.reset(Double(bounds.height))
 		}
 
 		self.statusBar.frame = UIApplication.shared.statusBarFrame
@@ -474,7 +474,7 @@ open class ApplicationController: UIViewController {
 	 * @method viewWillTransition
 	 * @since 0.7.0
 	 */
-	open override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+	override open func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
 
 		super.viewWillTransition(to: size, with: coordinator)
 
@@ -493,8 +493,8 @@ open class ApplicationController: UIViewController {
 			self.layout.viewportHeight = size.height
 
 			if let application = self.application {
-				application.window.width = Property(number: Double(size.width))
-				application.window.height = Property(number: Double(size.height))
+				application.window.width.reset(Double(size.width))
+				application.window.height.reset(Double(size.height))
 			}
 
 			Synchronizer.main.execute()

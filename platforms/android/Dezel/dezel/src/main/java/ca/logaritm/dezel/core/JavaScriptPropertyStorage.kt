@@ -12,14 +12,14 @@ abstract class JavaScriptPropertyData(context: JavaScriptContext) {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The data's JavaScript context.
+	 * The JavaScript context.
 	 * @property context
 	 * @since 0.7.0
 	 */
 	public val context: JavaScriptContext = context
 
 	/**
-	 * Convenience property to indicate whether the property is null.
+	 * Indicate whether the property is null.
 	 * @property isNull
 	 * @since 0.7.0
 	 */
@@ -27,7 +27,7 @@ abstract class JavaScriptPropertyData(context: JavaScriptContext) {
 		get() = this.type() == JavaScriptPropertyType.NULL
 
 	/**
-	 * Convenience property to indicate whether the property is a string.
+	 * Indicate whether the property is a string.
 	 * @property isString
 	 * @since 0.7.0
 	 */

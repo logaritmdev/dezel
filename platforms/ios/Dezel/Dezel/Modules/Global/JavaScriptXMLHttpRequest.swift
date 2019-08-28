@@ -112,6 +112,10 @@ open class JavaScriptXMLHttpRequest: JavaScriptClass, HttpRequestDelegate {
 		self.request?.abort()
 		self.request = nil
 
+		if (callback.arguments < 7) {
+			fatalError("Method JavaScriptXMLHttpRequest.request() requires 7 arguments.")
+		}
+
 		let requestUrl      = callback.argument(0)
 		let requestMethod   = callback.argument(1).string
 		let requestHeaders  = callback.argument(2)

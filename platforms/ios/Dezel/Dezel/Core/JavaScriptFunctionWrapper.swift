@@ -14,21 +14,21 @@ public final class JavaScriptFunctionWrapper: NSObject {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	private(set) internal var context: JavaScriptContext
+	internal var context: JavaScriptContext
 
 	/**
-	 * @property callback
+	 * @property handler
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	private(set) internal var callback: JavaScriptFunctionHandler
+	internal var handler: JavaScriptFunctionHandler
 
 	/**
 	 * @property function
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	private(set) internal var function: JSObjectRef!
+	internal var function: JSObjectRef!
 
 	//--------------------------------------------------------------------------
 	// MARK: Methods
@@ -39,12 +39,12 @@ public final class JavaScriptFunctionWrapper: NSObject {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	public init(context: JavaScriptContext, callback: @escaping JavaScriptFunctionHandler, name: String? = nil) {
+	public init(context: JavaScriptContext, handler: @escaping JavaScriptFunctionHandler, name: String? = nil) {
 
 		let function = DLValueCreateFunction(context.handle, JavaScriptFunctionWrapperCallback, name)
 
 		self.context = context
-		self.callback = callback
+		self.handler = handler
 		self.function = function
 
 		super.init()
@@ -76,7 +76,7 @@ private let JavaScriptFunctionWrapperCallback: @convention(c) (JSContextRef?, JS
 		argv: argv
 	)
 
-	wrapper.callback(argument)
+	wrapper.handler(argument)
 
 	return argument.result
 }

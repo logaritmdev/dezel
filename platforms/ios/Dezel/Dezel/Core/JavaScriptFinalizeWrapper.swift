@@ -17,11 +17,11 @@ internal final class JavaScriptFinalizeWrapper: NSObject {
 	internal var context: JavaScriptContext
 
 	/**
-	 * @property callback
+	 * @property handler
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	internal var callback: JavaScriptFinalizeHandler
+	internal var handler: JavaScriptFinalizeHandler
 
 	//--------------------------------------------------------------------------
 	// MARK: Methods
@@ -32,10 +32,10 @@ internal final class JavaScriptFinalizeWrapper: NSObject {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	internal init(context: JavaScriptContext, handle: JSValueRef, callback: @escaping JavaScriptFinalizeHandler) {
+	internal init(context: JavaScriptContext, handle: JSValueRef, handler: @escaping JavaScriptFinalizeHandler) {
 
 		self.context = context
-		self.callback = callback
+		self.handler = handler
 
 		super.init()
 
@@ -54,7 +54,7 @@ private let JavaScriptFinalizeWrapperCallback : @convention(c) (JSContextRef?, D
 		DLValueDataGetAttribute(handle, kFinalizeWrapperKey)
 	).takeRetainedValue()
 
-	wrapper.callback(JavaScriptFinalizeCallback(context: wrapper.context, handle: handle!))
+	wrapper.handler(JavaScriptFinalizeCallback(context: wrapper.context, handle: handle!))
 
 	DLValueDataSetAttribute(handle, kFinalizeWrapperKey, nil)
 }

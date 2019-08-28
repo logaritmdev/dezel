@@ -41,38 +41,38 @@ internal extension CGFloat {
 	}
 
 	/**
-	 * @method clamp
-	 * @since 0.1.0
+	 * @method toCenterOf
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	func deg() -> CGFloat {
+	func toCenterOf(_ value: CGFloat) -> CGFloat {
+		return self / 2 - value / 2
+	}
+
+	/**
+	 * @method toRightOf
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	func toRightOf(_ value: CGFloat) -> CGFloat {
+		return self - value
+	}
+
+	/**
+	 * @method toDeg
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	func toDeg() -> CGFloat {
 		return self * CGFloat(Double.pi) / 180
 	}
 
 	/**
 	 * @method rad
-	 * @since 0.1.0
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	func rad() -> CGFloat {
+	func toRad() -> CGFloat {
 		return self / CGFloat(Double.pi) * 180
-	}
-
-	/**
-	 * @method alignCenter
-	 * @since 0.5.0
-	 * @hidden
-	 */
-	func alignCenter(_ value: CGFloat) -> CGFloat {
-		return self / 2 - value / 2
-	}
-
-	/**
-	 * @method alignRight
-	 * @since 0.5.0
-	 * @hidden
-	 */
-	func alignRight(_ value: CGFloat) -> CGFloat {
-		return self - value
 	}
 }

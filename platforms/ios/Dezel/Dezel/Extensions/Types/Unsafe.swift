@@ -3,13 +3,23 @@
  * @since 0.1.0
  * @hidden
  */
-public extension UnsafePointer where Pointee == Int8 {
+internal extension UnsafePointer where Pointee == Int8 {
 
+	/**
+	 * @property string
+	 * @since 0.1.0
+	 * @hidden
+	 */
 	var string: String {
 		return String(cString: self)
 	}
 
-	var strdup: String { // TODO THIS IS A REALLY BAD NAME
+	/**
+	 * @property string
+	 * @since 0.6.0
+	 * @hidden
+	 */
+	var strdup: String { // TODO THIS IS A REALLY BAD NAME because it deallocates the raw point
 
 		defer {
 			self.deallocate()
@@ -24,7 +34,7 @@ public extension UnsafePointer where Pointee == Int8 {
  * @since 0.1.0
  * @hidden
  */
-public extension UnsafeMutableRawPointer {
+internal extension UnsafeMutableRawPointer {
 
 	var value: AnyObject {
 		return Unmanaged<AnyObject>.fromOpaque(self).takeUnretainedValue()

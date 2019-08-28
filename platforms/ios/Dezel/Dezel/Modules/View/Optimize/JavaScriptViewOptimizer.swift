@@ -151,6 +151,11 @@ open class JavaScriptViewOptimizer : JavaScriptClass, JavaScriptView.Delegate {
 	 * @hidden
 	 */
 	@objc open func jsFunction_attach(callback: JavaScriptFunctionCallback) {
+
+		if (callback.arguments < 1) {
+			fatalError("Method JavaScriptViewOptimizer.attach() requires 1 argument.")
+		}
+
 		if let view = callback.argument(0).cast(JavaScriptView.self) {
 			self.attach(view)
 		}
@@ -171,6 +176,11 @@ open class JavaScriptViewOptimizer : JavaScriptClass, JavaScriptView.Delegate {
 	 * @hidden
 	 */
 	@objc open func jsFunction_cacheItem(callback: JavaScriptFunctionCallback) {
+
+		if (callback.arguments < 1) {
+			fatalError("Method JavaScriptViewOptimizer.cacheItem() requires 1 argument.")
+		}
+
 		if let item = callback.argument(0).cast(JavaScriptView.self) {
 			self.cacheItem(item)
 		}
@@ -183,7 +193,11 @@ open class JavaScriptViewOptimizer : JavaScriptClass, JavaScriptView.Delegate {
 	 */
 	@objc open func jsFunction_getItem(callback: JavaScriptFunctionCallback) {
 
-		let index = callback.argument(0).number.int()
+		if (callback.arguments < 1) {
+			fatalError("Method JavaScriptViewOptimizer.getItem() requires 1 argument.")
+		}
+
+		let index = callback.argument(0).number.toInt()
 		if (index < 0) {
 			return
 		}
@@ -202,16 +216,20 @@ open class JavaScriptViewOptimizer : JavaScriptClass, JavaScriptView.Delegate {
 	 */
 	@objc open func jsFunction_getItemIndex(callback: JavaScriptFunctionCallback) {
 
+		if (callback.arguments < 1) {
+			fatalError("Method JavaScriptViewOptimizer.getItemIndex() requires 1 argument.")
+		}
+
 		guard let item = callback.argument(0).cast(JavaScriptView.self) else {
-			callback.returns(number: -1)
+			callback.returns(-1)
 			return
 		}
 
 		guard let key = self.items.keyOf(item) else {
-			callback.returns(number: -1)
+			callback.returns(-1)
 			return
 		}
 
-		callback.returns(number: key)
+		callback.returns(key)
 	}
 }

@@ -356,7 +356,7 @@ open class TextParser: NSObject, XMLParserDelegate {
 				font = with
 			}
 
-			if let with = font.with(size: Conversion.ston(size)) {
+			if let with = font.with(size: size.toNumber()) {
 				font = with
 			}
 

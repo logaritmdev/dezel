@@ -3,7 +3,7 @@
  * @class Property
  * @since 0.1.0
  */
-open class Property: NSObject {
+open class JavaScriptProperty: NSObject {
 
 	//--------------------------------------------------------------------------
 	// MARK: Static
@@ -14,8 +14,8 @@ open class Property: NSObject {
 	 * @method parse
 	 * @since 0.2.0
 	 */
-	public static func parse(_ raw: String) -> Property {
-		let property = Property()
+	public static func parse(_ raw: String) -> JavaScriptProperty {
+		let property = JavaScriptProperty()
 		property.parse(string: raw)
 		return property
 	}

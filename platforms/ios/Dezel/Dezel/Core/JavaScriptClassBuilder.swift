@@ -58,7 +58,6 @@ internal final class JavaScriptClassBuilder: JavaScriptBuilder {
 		})
 
 		let constructor = prototype.property("constructor")
-
 		constructor.property("prototype", value: prototype)
 		constructor.property("statics", value: statics)
 

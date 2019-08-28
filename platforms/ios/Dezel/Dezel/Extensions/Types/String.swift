@@ -24,6 +24,61 @@ internal extension String {
 	}
 
 	/**
+	 * @property isNumeric
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	var isNumeric: Bool {
+
+		guard let char = self.first else {
+			return false
+		}
+
+		return (
+			char.isNumber ||
+			char == "+" ||
+			char == "-" ||
+			char == "."
+		)
+	}
+
+	/**
+	 * @property last2
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	var last2: String {
+		return self.suffix(2).lowercased()
+	}
+
+	/**
+	 * @property last3
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	var last3: String {
+		return self.suffix(3).lowercased()
+	}
+
+	/**
+	 * @method toLocale
+	 * @since 0.5.0
+	 * @hidden
+	 */
+	func toLocale() -> Locale {
+
+		if (self == "") {
+			return Locale.current
+		}
+
+		if (locales[self] == nil) {
+			locales[self] = Locale(identifier: self)
+		}
+
+		return locales[self]!
+	}
+
+	/**
 	 * @method substring
 	 * @since 0.5.0
 	 * @hidden
@@ -66,14 +121,11 @@ internal extension String {
 	 * @hidden
 	 */
 	func rtrim(set: CharacterSet = CharacterSet.whitespacesAndNewlines) -> String {
-	// TODO
-	// THis is not OK
-            for character in self.reversed().enumerated() {
+
+        for character in self.enumerated().reversed() {
             let matched = character.element.unicodeScalars.contains { set.contains($0) }
             if (matched == false) {
-                return String(
-                	self.suffix(from: self.index(self.endIndex, offsetBy: -character.offset))
-				)
+            	return self.substring(start: self.length - character.offset, end: self.length)
             }
         }
 
@@ -104,30 +156,6 @@ internal extension String {
 	}
 
 	/**
-	 * @method unitize
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	mutating func unitize(_ unit: PropertyUnit) -> String {
-
-		switch (unit) {
-			case .px: self.append("px")
-			case .pc: self.append("%")
-			case .vw: self.append("vw")
-			case .vh: self.append("vh")
-			case .pw: self.append("pw")
-			case .ph: self.append("ph")
-			case .cw: self.append("cw")
-			case .ch: self.append("ch")
-			case .deg: self.append("deg")
-			case .rad: self.append("rad")
-			case .none: break
-		}
-
-		return self
-	}
-
-	/**
 	 * @method normalize
 	 * @since 0.5.0
 	 * @hidden
@@ -140,6 +168,53 @@ internal extension String {
 				.replacingOccurrences(of: "\n ", with: "\n")
 			)
 	}
+}
+
+/**
+ * String extensions.
+ * @extension String
+ * @since 0.7.0
+ */
+public extension String {
+
+	/**
+	 * @method toNumber
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	func toNumber() -> Double {
+
+		if (self.length == 0) {
+			return 0.0
+		}
+
+		var limit = 0
+		var chars = [Character]()
+
+		for char in self {
+
+			limit += 1
+
+			if (char.isNumber == false &&
+				char != "+" &&
+				char != "-" &&
+				char != ".") {
+				break
+			}
+
+			chars.append(char)
+		}
+
+		if (limit == 1) {
+			return Double.nan
+		}
+
+		if let number = Double(String(chars)) {
+			return number
+		}
+
+		return Double.nan
+	}
 
 	/**
 	 * @method toColor
@@ -148,24 +223,6 @@ internal extension String {
 	 */
 	func toColor() -> CGColor {
 		return CGColorParse(self)
-	}
-
-	/**
-	 * @method toLocale
-	 * @since 0.5.0
-	 * @hidden
-	 */
-	func toLocale() -> Locale {
-
-		if (self == "") {
-			return Locale.current
-		}
-
-		if (locales[self] == nil) {
-			locales[self] = Locale(identifier: self)
-		}
-
-		return locales[self]!
 	}
 }
 

@@ -15,7 +15,17 @@ open class CoreModule: Module {
 	 * @hidden
 	 */
 	private lazy var importClass = self.context.createFunction { callback in
-		if let result = self.context.classes[callback.argument(0).string] {
+
+		if (callback.arguments < 1) {
+			fatalError("Function importClass() requires 1 argument.")
+		}
+
+		let identifier = callback.argument(0).string
+		if (identifier == "") {
+			return
+		}
+
+		if let result = self.context.classes[identifier] {
 			callback.returns(result)
 		}
 	}
@@ -26,7 +36,17 @@ open class CoreModule: Module {
 	 * @hidden
 	 */
 	private lazy var importObject = self.context.createFunction { callback in
-		if let result = self.context.objects[callback.argument(0).string] {
+
+		if (callback.arguments < 1) {
+			fatalError("Function importObject() requires 1 argument.")
+		}
+
+		let identifier = callback.argument(0).string
+		if (identifier == "") {
+			return
+		}
+
+		if let result = self.context.objects[identifier] {
 			callback.returns(result)
 		}
 	}
@@ -37,6 +57,10 @@ open class CoreModule: Module {
 	 * @hidden
 	 */
 	private lazy var registerApplication = self.context.createFunction { callback in
+
+		if (callback.arguments < 2) {
+			fatalError("Function registerApplication() requires 2 arguments.")
+		}
 
 		let app = callback.argument(0)
 		let uid = callback.argument(1).string

@@ -24,7 +24,7 @@ open class JavaScriptDevice: JavaScriptClass {
 			UserDefaults.standard.set(uuid, forKey: "dezel.device.uuid")
 		}
 
-		callback.returns(string: uuid!)
+		callback.returns(uuid!)
 	}
 
 	//--------------------------------------------------------------------------
@@ -38,7 +38,13 @@ open class JavaScriptDevice: JavaScriptClass {
 	 */
 	@objc open func jsFunction_sound(callback: JavaScriptFunctionCallback) {
 
-		switch (callback.argument(0).string) {
+		if (callback.arguments < 1) {
+			fatalError("sound requires 1 argument")
+		}
+
+		let sound = callback.argument(0)
+
+		switch (sound.string) {
 
 			case "shutter":
 				AudioServicesPlaySystemSound(SystemSoundID(1108))
@@ -48,7 +54,7 @@ open class JavaScriptDevice: JavaScriptClass {
 				break
 		}
 
-		AudioServicesPlaySystemSound(SystemSoundID(callback.argument(0).number.int()))
+		AudioServicesPlaySystemSound(SystemSoundID(sound.number.toInt()))
 	}
 
 	/**
@@ -93,6 +99,6 @@ open class JavaScriptDevice: JavaScriptClass {
 			}
 		}
 
-		AudioServicesPlaySystemSound(SystemSoundID(callback.argument(0).number.int()))
+		AudioServicesPlaySystemSound(SystemSoundID(callback.argument(0).number.toInt()))
 	}
 }

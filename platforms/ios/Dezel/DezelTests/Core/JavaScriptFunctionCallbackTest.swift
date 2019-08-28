@@ -83,7 +83,7 @@ class JavaScriptFunctionCallbackTest: XCTestCase {
 	func testReturnValueWithString() {
 
 		func function (callback: JavaScriptFunctionCallback) {
-			callback.returns(string: "")
+			callback.returns("")
 		}
 
 		let result = self.call(function, target: nil)
@@ -94,7 +94,7 @@ class JavaScriptFunctionCallbackTest: XCTestCase {
 	func testReturnValueWithNumber() {
 
 		func function (callback: JavaScriptFunctionCallback) {
-			callback.returns(number: 10)
+			callback.returns(10)
 		}
 
 		let result = self.call(function, target: nil)
@@ -105,7 +105,7 @@ class JavaScriptFunctionCallbackTest: XCTestCase {
 	func testReturnValueWithBoolean() {
 
 		func function (callback: JavaScriptFunctionCallback) {
-			callback.returns(boolean: true)
+			callback.returns(true)
 		}
 
 		let result = self.call(function, target: nil)
@@ -114,7 +114,7 @@ class JavaScriptFunctionCallbackTest: XCTestCase {
 	}
 
 	//--------------------------------------------------------------------------
-	// Private API
+	// MARK: Private API
 	//--------------------------------------------------------------------------
 
 	internal func call(_ fn: @escaping JavaScriptFunctionHandler, target: JavaScriptValue?) -> JavaScriptValue {

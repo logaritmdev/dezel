@@ -78,7 +78,7 @@ public class LinearGradient: NSObject {
 		if (unit == nil) { unit = scanner.scanString("deg") }
 
 		if (unit == "deg") {
-			self.angle = CGFloat(angle).deg()
+			self.angle = CGFloat(angle).toDeg()
 		} else {
 			self.angle = CGFloat(angle)
 		}

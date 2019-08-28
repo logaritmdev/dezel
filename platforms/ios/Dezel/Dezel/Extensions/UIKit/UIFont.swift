@@ -26,33 +26,33 @@ internal extension UIFont {
 
 			switch (fw) {
 				case "lighter":
-					return UIFont.systemFont(ofSize:size, weight:UIFont.Weight.light)
+					return UIFont.systemFont(ofSize:size, weight: UIFont.Weight.light)
 				case "normal":
-					return UIFont.systemFont(ofSize:size, weight:UIFont.Weight.regular)
+					return UIFont.systemFont(ofSize:size, weight: UIFont.Weight.regular)
 				case "bold":
-					return UIFont.systemFont(ofSize:size, weight:UIFont.Weight.bold)
+					return UIFont.systemFont(ofSize:size, weight: UIFont.Weight.bold)
 				case "bolder":
-					return UIFont.systemFont(ofSize:size, weight:UIFont.Weight.heavy)
+					return UIFont.systemFont(ofSize:size, weight: UIFont.Weight.heavy)
 				case "100":
-					return UIFont.systemFont(ofSize:size, weight:UIFont.Weight.ultraLight)
+					return UIFont.systemFont(ofSize:size, weight: UIFont.Weight.ultraLight)
 				case "200":
-					return UIFont.systemFont(ofSize:size, weight:UIFont.Weight.thin)
+					return UIFont.systemFont(ofSize:size, weight: UIFont.Weight.thin)
 				case "300":
-					return UIFont.systemFont(ofSize:size, weight:UIFont.Weight.light)
+					return UIFont.systemFont(ofSize:size, weight: UIFont.Weight.light)
 				case "400":
-					return UIFont.systemFont(ofSize:size, weight:UIFont.Weight.regular)
+					return UIFont.systemFont(ofSize:size, weight: UIFont.Weight.regular)
 				case "500":
-					return UIFont.systemFont(ofSize:size, weight:UIFont.Weight.medium)
+					return UIFont.systemFont(ofSize:size, weight: UIFont.Weight.medium)
 				case "600":
-					return UIFont.systemFont(ofSize:size, weight:UIFont.Weight.semibold)
+					return UIFont.systemFont(ofSize:size, weight: UIFont.Weight.semibold)
 				case "700":
-					return UIFont.systemFont(ofSize: size, weight:UIFont.Weight.bold)
+					return UIFont.systemFont(ofSize: size, weight: UIFont.Weight.bold)
 				case "800":
-					return UIFont.systemFont(ofSize: size, weight:UIFont.Weight.heavy)
+					return UIFont.systemFont(ofSize: size, weight: UIFont.Weight.heavy)
 				case "900":
-					return UIFont.systemFont(ofSize: size, weight:UIFont.Weight.black)
+					return UIFont.systemFont(ofSize: size, weight: UIFont.Weight.black)
 				default:
-					return UIFont.systemFont(ofSize: size, weight:UIFont.Weight.regular)
+					return UIFont.systemFont(ofSize: size, weight: UIFont.Weight.regular)
 			}
 		}
 

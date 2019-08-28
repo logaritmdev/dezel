@@ -42,6 +42,13 @@ open class JavaScriptCallback: NSObject {
 	private(set) public var arguments: Int
 
 	/**
+	 * @property result
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	private(set) internal var result: JSValueRef?
+
+	/**
 	 * @property argc
 	 * @since 0.1.0
 	 * @hidden
@@ -54,13 +61,6 @@ open class JavaScriptCallback: NSObject {
 	 * @hidden
 	 */
 	private(set) internal var argv: UnsafePointer<JSValueRef?>
-
-	/**
-	 * @property result
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	private(set) internal var result: JSValueRef?
 
 	/**
 	 * @property callbackTarget
@@ -103,7 +103,7 @@ open class JavaScriptCallback: NSObject {
 	 * @since 0.1.0
 	 */
 	final public func returns(_ value: JavaScriptValue?) {
-		self.result = toHandle(value, in: self.context)
+		self.result = toJs(value, in: self.context)
 	}
 
 	/**
@@ -111,8 +111,8 @@ open class JavaScriptCallback: NSObject {
 	 * @method returns
 	 * @since 0.1.0
 	 */
-	final public func returns(_ property: Property) {
-		self.result = property.value(in: self.context).handle
+	final public func returns(_ property: JavaScriptProperty) {
+		self.result = toJs(property, in: self.context)
 	}
 
 	/**
@@ -120,7 +120,7 @@ open class JavaScriptCallback: NSObject {
 	 * @method returns
 	 * @since 0.1.0
 	 */
-	final public func returns(string value: String) {
+	final public func returns(_ value: String) {
 		self.result = DLValueCreateString(self.context.handle, value)
 	}
 
@@ -129,7 +129,7 @@ open class JavaScriptCallback: NSObject {
 	 * @method returns
 	 * @since 0.1.0
 	 */
-	final public func returns(number value: Double) {
+	final public func returns(_ value: Double) {
 		self.result = DLValueCreateNumber(self.context.handle, value)
 	}
 
@@ -138,7 +138,7 @@ open class JavaScriptCallback: NSObject {
 	 * @method returns
 	 * @since 0.3.0
 	 */
-	final public func returns(number value: Float) {
+	final public func returns(_ value: Float) {
 		self.result = DLValueCreateNumber(self.context.handle, Double(value))
 	}
 
@@ -147,7 +147,7 @@ open class JavaScriptCallback: NSObject {
 	 * @method returns
 	 * @since 0.3.0
 	 */
-	final public func returns(number value: Int) {
+	final public func returns(_ value: Int) {
 		self.result = DLValueCreateNumber(self.context.handle, Double(value))
 	}
 
@@ -156,7 +156,7 @@ open class JavaScriptCallback: NSObject {
 	 * @method returns
 	 * @since 0.1.0
 	 */
-	final public func returns(boolean value: Bool) {
+	final public func returns(_ value: Bool) {
 		self.result = DLValueCreateBoolean(self.context.handle, value)
 	}
 }

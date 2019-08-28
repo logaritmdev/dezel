@@ -11,7 +11,7 @@ internal extension CGRect {
 	 * @hidden
 	 */
 	init(top: CGFloat, left: CGFloat, width: CGFloat, height: CGFloat) {
-		self.init(x: CGFloat(left), y: CGFloat(top), width: CGFloat(width), height: CGFloat(height))
+		self.init(x: left, y: top, width: width, height: height)
 	}
 
 	/**

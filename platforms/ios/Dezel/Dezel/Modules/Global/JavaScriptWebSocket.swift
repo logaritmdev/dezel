@@ -42,7 +42,11 @@ public class JavaScriptWebSocket: JavaScriptClass, WebSocketDelegate {
 	 */
 	@objc open func jsFunction_open(callback: JavaScriptFunctionCallback) {
 
-		let websocketUrl = callback.argument(0)
+		if (callback.arguments < 2) {
+			fatalError("Method JavaScriptWebSocket.open() requires 2 arguments.")
+		}
+
+		let websocketUrl       = callback.argument(0)
 		let websocketProtocols = callback.argument(1)
 
 		guard let url = websocketUrl.toURL() else {
@@ -61,6 +65,11 @@ public class JavaScriptWebSocket: JavaScriptClass, WebSocketDelegate {
 	 * @hidden
 	 */
 	@objc open func jsFunction_send(callback: JavaScriptFunctionCallback) {
+
+		if (callback.arguments < 1) {
+			fatalError("Method JavaScriptWebSocket.send() requires 1 argument.")
+		}
+
 		self.socket.write(callback.argument(0).string)
 	}
 

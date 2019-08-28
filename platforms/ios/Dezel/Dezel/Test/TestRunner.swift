@@ -55,7 +55,7 @@ open class TestRunner: ApplicationController {
 	 * @method didLoad
 	 * @since 0.7.0
 	 */
-	open override func didLoad() {
+	override open func didLoad() {
 		do {
 			self.context.evaluate(try String(contentsOfFile: Bundle.resource("TestRunner.js")!), file: "TestRunner.js")
 		} catch {

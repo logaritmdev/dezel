@@ -31,26 +31,3 @@ objc_getMethods(Class cls, unsigned int* length)
 
 	return all;
 }
-
-BOOL
-setPropertyForKey(NSObject *object, NSString *key, id value)
-{
-	@try {
-		[object setValue:value forKey:key];
-	} @catch (NSException *exception) {
-		return NO;
-	}
-
-	return YES;
-}
-
-id
-getPropertyForKey(NSObject *object, NSString *key)
-{
-	@try {
-		return [object valueForKey:key];
-	} @catch (NSException *exception) {
-	}
-
-	return nil;
-}

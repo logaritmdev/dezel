@@ -226,7 +226,7 @@ public class BitmapLayer: Layer {
 	}
 
 	/**
-	 * TODO
+	 * Generates coordinates for linear gradient.
 	 * @method displayLinearGradient
 	 * @since 0.1.0
 	 */
@@ -249,7 +249,7 @@ public class BitmapLayer: Layer {
 	}
 
 	/**
-	 * TODO
+	 * Generates coordinates for radial gradient.
 	 * @method displayRadialGradient
 	 * @since 0.1.0
 	 */

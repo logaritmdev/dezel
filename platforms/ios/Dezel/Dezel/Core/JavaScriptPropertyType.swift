@@ -1,9 +1,9 @@
 /**
  * The type of properties.
- * @enum PropertyType
- * @since 0.1.0
+ * @enum JavaScriptPropertyType
+ * @since 0.7.0
  */
-public enum PropertyType : Int {
+public enum JavaScriptPropertyType : Int {
 	case null = 0
 	case string = 1
 	case number = 2

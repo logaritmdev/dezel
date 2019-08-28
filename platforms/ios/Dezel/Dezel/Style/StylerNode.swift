@@ -54,6 +54,8 @@ open class StylerNode {
 	 */
 	internal var handle: DLStylerNodeRef!
 
+	internal var view: JavaScriptView!
+
 	//--------------------------------------------------------------------------
 	// MARK: Methods
 	//--------------------------------------------------------------------------
@@ -62,13 +64,14 @@ open class StylerNode {
 	 * @constructor
 	 * @since 0.1.0
 	 */
-	internal init(styler: Styler) {
+	internal init(styler: Styler, view: JavaScriptView) {
 		self.handle = DLStylerNodeCreate()
 		DLStylerNodeSetStyler(self.handle, styler.handle)
 		DLStylerNodeSetApplyCallback(self.handle, applyCallback)
 		DLStylerNodeSetFetchCallback(self.handle, fetchCallback)
 		DLStylerNodeSetInvalidateCallback(self.handle, invalidateCallback)
 		DLStylerNodeSetData(self.handle, UnsafeMutableRawPointer(unretained: self))
+		self.view = view
 	}
 
 	/**
@@ -198,48 +201,38 @@ private let applyCallback: @convention(c) (DLStylerNodeRef?, DLStylerStyleItemRe
 	let unit = DLStylerStyleItemGetValueUnit(item)
 	let data = DLStylerStyleItemGetData(item)
 
-	if let value = data?.value as? Property {
-		stylerNode.delegate?.applyStyleProperty(node: stylerNode, property: name, value: value)
-		return
-	}
-
-	let value: Property
 
 	if (type == kDLStylerStyleItemTypeNumber) {
 
 		switch (unit) {
 
-			case kDLStylerStyleItemUnitPX: value = Property(number: DLStylerStyleItemGetValueAsNumber(item), unit: .px)
-			case kDLStylerStyleItemUnitPC: value = Property(number: DLStylerStyleItemGetValueAsNumber(item), unit: .pc)
-			case kDLStylerStyleItemUnitVW: value = Property(number: DLStylerStyleItemGetValueAsNumber(item), unit: .vw)
-			case kDLStylerStyleItemUnitVH: value = Property(number: DLStylerStyleItemGetValueAsNumber(item), unit: .vh)
-			case kDLStylerStyleItemUnitPW: value = Property(number: DLStylerStyleItemGetValueAsNumber(item), unit: .pw)
-			case kDLStylerStyleItemUnitPH: value = Property(number: DLStylerStyleItemGetValueAsNumber(item), unit: .ph)
-			case kDLStylerStyleItemUnitCW: value = Property(number: DLStylerStyleItemGetValueAsNumber(item), unit: .cw)
-			case kDLStylerStyleItemUnitCH: value = Property(number: DLStylerStyleItemGetValueAsNumber(item), unit: .ch)
-			case kDLStylerStyleItemUnitDeg: value = Property(number: DLStylerStyleItemGetValueAsNumber(item), unit: .deg)
-			case kDLStylerStyleItemUnitRad: value = Property(number: DLStylerStyleItemGetValueAsNumber(item), unit: .rad)
-			case kDLStylerStyleItemUnitNone: value = Property(number: DLStylerStyleItemGetValueAsNumber(item), unit: .none)
+			case kDLStylerStyleItemUnitPX: stylerNode.view.setProperty(name, number: DLStylerStyleItemGetValueAsNumber(item), unit: .px)
+			case kDLStylerStyleItemUnitPC: stylerNode.view.setProperty(name, number: DLStylerStyleItemGetValueAsNumber(item), unit: .pc)
+			case kDLStylerStyleItemUnitVW: stylerNode.view.setProperty(name, number: DLStylerStyleItemGetValueAsNumber(item), unit: .vw)
+			case kDLStylerStyleItemUnitVH: stylerNode.view.setProperty(name, number: DLStylerStyleItemGetValueAsNumber(item), unit: .vh)
+			case kDLStylerStyleItemUnitPW: stylerNode.view.setProperty(name, number: DLStylerStyleItemGetValueAsNumber(item), unit: .pw)
+			case kDLStylerStyleItemUnitPH: stylerNode.view.setProperty(name, number: DLStylerStyleItemGetValueAsNumber(item), unit: .ph)
+			case kDLStylerStyleItemUnitCW: stylerNode.view.setProperty(name, number: DLStylerStyleItemGetValueAsNumber(item), unit: .cw)
+			case kDLStylerStyleItemUnitCH: stylerNode.view.setProperty(name, number: DLStylerStyleItemGetValueAsNumber(item), unit: .ch)
+			case kDLStylerStyleItemUnitDeg: stylerNode.view.setProperty(name, number: DLStylerStyleItemGetValueAsNumber(item), unit: .deg)
+			case kDLStylerStyleItemUnitRad: stylerNode.view.setProperty(name, number: DLStylerStyleItemGetValueAsNumber(item), unit: .rad)
+			case kDLStylerStyleItemUnitNone: stylerNode.view.setProperty(name, number: DLStylerStyleItemGetValueAsNumber(item), unit: .none)
 
 			default:
-				value = Property(number: DLStylerStyleItemGetValueAsNumber(item), unit: .none)
+				stylerNode.view.setProperty(name, number: DLStylerStyleItemGetValueAsNumber(item), unit: .none)
 		}
 
 	} else if (type == kDLStylerStyleItemTypeString) {
 
-		value = Property(string: DLStylerStyleItemGetValueAsString(item).string)
+		stylerNode.view.setProperty(name, string: DLStylerStyleItemGetValueAsString(item).string)
 
 	} else if (type == kDLStylerStyleItemTypeBoolean) {
 
-		value = Property(boolean: DLStylerStyleItemGetValueAsBoolean(item))
+		stylerNode.view.setProperty(name, boolean: DLStylerStyleItemGetValueAsBoolean(item))
 
 	} else {
-		value = Property()
+		stylerNode.view.setProperty(name, value: nil)
 	}
-
-	DLStylerStyleItemSetData(item, UnsafeMutableRawPointer(value: value))
-
-	stylerNode.delegate?.applyStyleProperty(node: stylerNode, property: name, value: value)
 }
 
 /**
@@ -256,7 +249,7 @@ private let fetchCallback: @convention(c) (DLStylerNodeRef?, DLStylerStyleItemRe
 		return false
 	}
 
-	if let result = stylerNode.delegate?.fetchStyleProperty(node: stylerNode, property: DLStylerStyleItemGetProperty(item).string) {
+	if let result = stylerNode.view.getProperty(DLStylerStyleItemGetProperty(item).string) {
 
 		if (result.type == .string) {
 			DLStylerStyleItemSetValueType(item, kDLStylerStyleItemTypeString)

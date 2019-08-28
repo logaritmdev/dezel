@@ -51,12 +51,11 @@ open class GlobalModule : Module {
 	 */
 	private lazy var setImmediate = self.context.createFunction { callback in
 
-		let count = callback.arguments
-		if (count < 1) {
-			fatalError("Failed to execute 'setImmediate': 1 argument required but only \(count) present.")
+		if (callback.arguments < 1) {
+			fatalError("Function setImmediate() requires 1 argument.")
 		}
 
-		callback.returns(number: self.scheduleTimeout(callback: callback.argument(0), interval: 0))
+		callback.returns(self.scheduleTimeout(callback: callback.argument(0), interval: 0))
 	}
 
 	/**
@@ -66,17 +65,24 @@ open class GlobalModule : Module {
 	 */
 	private lazy var setInterval = self.context.createFunction { callback in
 
-		let count = callback.arguments
-		if (count < 1) {
-			fatalError("setInterval must have at least 1 argument, \(count) given.")
+		if (callback.arguments < 1) {
+			fatalError("Function setInterval() requires at least 1 argument.")
 		}
 
-		var delay = Double(10)
-		if (count > 1) {
-			delay = max(delay, callback.argument(1).number)
+		if (callback.arguments == 1) {
+			callback.returns(self.scheduleInterval(callback: callback.argument(0), interval: 10.0))
+			return
 		}
 
-		callback.returns(number: self.scheduleInterval(callback: callback.argument(0), interval: delay))
+		if (callback.arguments == 2) {
+
+			let function = callback.argument(0)
+			let interval = callback.argument(1).number
+
+			callback.returns(self.scheduleInterval(callback: function, interval: max(10.0, interval)))
+
+			return
+		}
 	}
 
 	/**
@@ -86,15 +92,18 @@ open class GlobalModule : Module {
 	 */
 	private lazy var setTimeout = self.context.createFunction { callback in
 
-		let count = callback.arguments
-		if (count < 1) {
-			fatalError("setInterval must have at least 2 arguments, \(count) given.")
+		if (callback.arguments < 1) {
+			fatalError("Function setTimeout() requires at least 1 argument.")
 		}
 
-		if (count == 1) {
-			callback.returns(number: self.scheduleTimeout(callback: callback.argument(0), interval: 0))
-		} else {
-			callback.returns(number: self.scheduleTimeout(callback: callback.argument(0), interval: callback.argument(1).number))
+		if (callback.arguments == 1) {
+			callback.returns(self.scheduleTimeout(callback: callback.argument(0), interval: 0))
+			return
+		}
+
+		if (callback.arguments == 2) {
+			callback.returns(self.scheduleTimeout(callback: callback.argument(0), interval: callback.argument(1).number))
+			return
 		}
 	}
 
@@ -105,9 +114,8 @@ open class GlobalModule : Module {
 	 */
 	private lazy var clearImmediate = self.context.createFunction { callback in
 
-		let count = callback.arguments
-		if (count < 1) {
-			fatalError("clearImmediate must have at least 1 argument, \(count) given.")
+		if (callback.arguments < 1) {
+			fatalError("Function clearImmediate() requires 1 argument.")
 		}
 
 		self.removeTimer(callback.argument(0).number)
@@ -120,9 +128,8 @@ open class GlobalModule : Module {
 	 */
 	private lazy var clearTimeout = self.context.createFunction { callback in
 
-		let count = callback.arguments
-		if (count < 1) {
-			fatalError("clearTimeout must have at least 1 argument, \(count) given.")
+		if (callback.arguments < 1) {
+			fatalError("Function clearImmediate() requires 1 argument.")
 		}
 
 		self.removeTimer(callback.argument(0).number)
@@ -135,9 +142,8 @@ open class GlobalModule : Module {
 	 */
 	private lazy var clearInterval = self.context.createFunction { callback in
 
-		let count = callback.arguments
-		if (count < 1) {
-			fatalError("clearTimeout must have at least 1 argument, \(count) given.")
+		if (callback.arguments < 1) {
+			fatalError("Function clearInterval() requires 1 argument.")
 		}
 
 		self.removeTimer(callback.argument(0).number)
@@ -150,14 +156,13 @@ open class GlobalModule : Module {
 	 */
 	private lazy var requestAnimationFrame = self.context.createFunction { callback in
 
-		let count = callback.arguments
-		if (count < 2) {
-			fatalError("clearTimeout must have at least 2 argument2, \(count) given.")
+		if (callback.arguments < 1) {
+			fatalError("Function requestAnimationFrame() requires 1 argument.")
 		}
 
 		self.startDisplayLink()
 
-		callback.returns(number: self.scheduleFrame(callback: callback.argument(0)))
+		callback.returns(self.scheduleFrame(callback: callback.argument(0)))
 	}
 
 	/**
@@ -167,9 +172,8 @@ open class GlobalModule : Module {
 	 */
 	private lazy var cancelAnimationFrame = self.context.createFunction { callback in
 
-		let count = callback.arguments
-		if (count < 1) {
-			fatalError("clearTimeout must have at least 1 argument, \(count) given.")
+		if (callback.arguments < 1) {
+			fatalError("Function cancelAnimationFrame() requires 1 argument.")
 		}
 
 		self.removeFrame(callback.argument(0).number)

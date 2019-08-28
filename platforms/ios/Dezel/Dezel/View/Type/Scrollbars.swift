@@ -15,7 +15,7 @@ public enum Scrollbars {
 	 * @method get
 	 * @since 0.2.0
 	 */
-	public static func get(_ value: Property) -> Scrollbars {
+	public static func get(_ value: JavaScriptProperty) -> Scrollbars {
 
 		switch (value.type) {
 

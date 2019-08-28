@@ -58,8 +58,90 @@ open class JavaScriptObject: JavaScriptValue {
 	 * @method finalize
 	 * @since 0.4.0
 	 */
-	public func finalize(_ callback: @escaping JavaScriptFinalizeHandler) {
-		_ = JavaScriptFinalizeWrapper(context: self.context, handle: self.handle, callback: callback)
+	public func finalize(_ handler: @escaping JavaScriptFinalizeHandler) {
+		_ = JavaScriptFinalizeWrapper(context: self.context, handle: self.handle, handler: handler)
+	}
+
+	//--------------------------------------------------------------------------
+	// MARK: Methods - Dynamic Access
+	//--------------------------------------------------------------------------
+
+	/**
+	 * Assigns a toValue to a JavaScript property.
+	 * @method setProperty
+	 * @since 0.7.0
+	 */
+	open func setProperty(_ name: String, value: JavaScriptValue?) {
+
+		if let property = self.property(for: name) {
+			property.reset(value)
+			return
+		}
+
+		self.property(name, value: value)
+	}
+
+	/**
+	 * Assigns a toValue to a JavaScript property.
+	 * @method setProperty
+	 * @since 0.7.0
+	 */
+	open func setProperty(_ name: String, string value: String) {
+
+		if let property = self.property(for: name) {
+			property.reset(value)
+			return
+		}
+
+		self.property(name, string: value)
+	}
+
+	/**
+	 * Assigns a toValue to a JavaScript property.
+	 * @method setProperty
+	 * @since 0.7.0
+	 */
+	open func setProperty(_ name: String, number value: Double, unit: JavaScriptPropertyUnit = .none) {
+
+		if let property = self.property(for: name) {
+			property.reset(value, unit: unit)
+			return
+		}
+
+		self.property(name, number: value)
+	}
+
+	/**
+	 * Assigns a toValue to a JavaScript property.
+	 * @method setProperty
+	 * @since 0.7.0
+	 */
+	open func setProperty(_ name: String, boolean value: Bool) {
+
+		if let property = self.property(for: name) {
+			property.reset(value)
+			return
+		}
+
+		self.property(name, boolean: value)
+	}
+
+	/**
+	 * Returns a JavaScript property.
+	 * @method getPropert
+	 * @since 0.7.0
+	 */
+	open func getProperty(_ name: String) -> JavaScriptProperty? {
+		return self.property(for: name)
+	}
+
+	/**
+	 * @method property
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private func property(for name: String) -> JavaScriptProperty? {
+		return self.value(forKey: name) as? JavaScriptProperty
 	}
 
 	//--------------------------------------------------------------------------

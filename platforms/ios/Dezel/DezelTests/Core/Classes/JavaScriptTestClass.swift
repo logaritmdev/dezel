@@ -8,6 +8,7 @@ class JavaScriptTestClass: JavaScriptClass {
 	static var testJavaScriptSetterCallback: JavaScriptSetterHandler?
 
 	@objc override func jsFunction_constructor(callback: JavaScriptFunctionCallback) {
+		super.jsFunction_constructor(callback: callback)
 		JavaScriptTestClass.testConstructorCallback?(callback)
 	}
 

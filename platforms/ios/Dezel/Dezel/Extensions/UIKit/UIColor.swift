@@ -3,7 +3,7 @@
  * @since 0.1.0
  * @hidden
  */
-public extension UIColor {
+internal extension UIColor {
 
 	/**
 	 * @property alpha

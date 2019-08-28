@@ -15,7 +15,7 @@ open class JavaScriptContext: NSObject {
 	 * @since 0.7.0
 	 */
 	private(set) public lazy var jsnull: JavaScriptValue = {
-		return self.createNull()
+		return JavaScriptNull(context: self)
 	}()
 
 	/**
@@ -24,7 +24,7 @@ open class JavaScriptContext: NSObject {
 	 * @since 0.7.0
 	 */
 	private(set) public lazy var jsundefined: JavaScriptValue = {
-		return self.createUndefined()
+		return JavaScriptUndefined(context: self)
 	}()
 
 	//--------------------------------------------------------------------------
@@ -251,27 +251,6 @@ open class JavaScriptContext: NSObject {
 	}
 
 	/**
-	 * Creates a handle which contains a numeric JavaScript handle with a specific unit.
-	 * @method createNumber
-	 * @since 0.2.0
-	 */
-	open func createNumber(_ value: Double, unit: PropertyUnit) -> JavaScriptValue {
-		switch (unit) {
-			case .px: return JavaScriptValue.createNumber(self, value: value)
-			case .pc: return JavaScriptValue.createString(self, value: Conversion.ntos(value) + "%")
-			case .vw: return JavaScriptValue.createString(self, value: Conversion.ntos(value) + "vw")
-			case .vh: return JavaScriptValue.createString(self, value: Conversion.ntos(value) + "vh")
-			case .pw: return JavaScriptValue.createString(self, value: Conversion.ntos(value) + "pw")
-			case .ph: return JavaScriptValue.createString(self, value: Conversion.ntos(value) + "ph")
-			case .cw: return JavaScriptValue.createString(self, value: Conversion.ntos(value) + "cw")
-			case .ch: return JavaScriptValue.createString(self, value: Conversion.ntos(value) + "vh")
-			case .deg: return JavaScriptValue.createString(self, value: Conversion.ntos(value) + "deg")
-			case .rad: return JavaScriptValue.createString(self, value: Conversion.ntos(value) + "rad")
-			default:   return JavaScriptValue.createNumber(self, value: value)
-		}
-	}
-
-	/**
 	 * Creates a value which contains a numeric JavaScript value.
 	 * @method createNumber
 	 * @since 0.3.0
@@ -330,8 +309,8 @@ open class JavaScriptContext: NSObject {
 	 * @method createFunction
 	 * @since 0.1.0
 	 */
-	open func createFunction(_ callback: @escaping JavaScriptFunctionHandler) -> JavaScriptValue {
-		return JavaScriptValue.createFunction(self, callback: callback)
+	open func createFunction(_ handler: @escaping JavaScriptFunctionHandler) -> JavaScriptValue {
+		return JavaScriptValue.createFunction(self, handler: handler)
 	}
 
 	/**
@@ -339,8 +318,8 @@ open class JavaScriptContext: NSObject {
 	 * @method createFunction
 	 * @since 0.1.0
 	 */
-	open func createFunction(_ name: String, _ callback: @escaping JavaScriptFunctionHandler) -> JavaScriptValue {
-		return JavaScriptValue.createFunction(self, callback: callback, name: name)
+	open func createFunction(_ name: String, _ handler: @escaping JavaScriptFunctionHandler) -> JavaScriptValue {
+		return JavaScriptValue.createFunction(self, handler: handler, name: name)
 	}
 
 	/**
@@ -413,9 +392,9 @@ open class JavaScriptContext: NSObject {
 	 * @method handleError
 	 * @since 0.6.0
 	 */
-	open func handleError(callback: @escaping JavaScriptExceptionHandler) {
+	open func handleError(handler: @escaping JavaScriptExceptionHandler) {
 		DLContextSetExceptionHandler(self.handle, JavaScriptContextExceptionCallback)
-		DLContextSetAttribute(self.handle, kExceptionWrapperKey, Unmanaged.passRetained(JavaScriptExceptionWrapper(context: self, callback: callback)).toOpaque())
+		DLContextSetAttribute(self.handle, kExceptionWrapperKey, Unmanaged.passRetained(JavaScriptExceptionWrapper(context: self, handler: handler)).toOpaque())
 	}
 
 	/**
@@ -437,6 +416,66 @@ open class JavaScriptContext: NSObject {
 public typealias JavaScriptExceptionHandler = (JavaScriptValue) -> (Void)
 
 /**
+ * @extension JavaScriptContext
+ * @since 0.7.0
+ * @hidden
+ */
+public extension JavaScriptContext {
+
+	/**
+	 * @property application
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	var application: ApplicationController {
+		return self.attribute(kApplicationControllerKey) as! ApplicationController
+	}
+
+	/**
+	 * @method createObject
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	func createObject(_ dictionary: [String: String]) -> JavaScriptValue {
+
+		let result = self.createEmptyObject()
+
+		for (key, val) in dictionary {
+			result.property(key, value: self.createString(val))
+		}
+
+		return result
+	}
+
+	/**
+	 * @method createObject
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	func createObject(_ dictionary: [String: Double]) -> JavaScriptValue {
+
+		let result = self.createEmptyObject()
+
+		for (key, val) in dictionary {
+			result.property(key, value: self.createNumber(val))
+		}
+
+		return result
+	}
+
+	/**
+	 * @method createString
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	func createString(_ url: URL) -> JavaScriptValue {
+		return self.createString(url.absoluteString)
+	}
+}
+
+
+
+/**
  * @since 0.1.0
  * @hidden
  */
@@ -449,5 +488,5 @@ private let JavaScriptContextExceptionCallback: @convention(c) (JSContextRef?, J
 		DLContextGetAttribute(context, kExceptionWrapperKey)
 	).takeUnretainedValue()
 
-	wrapper.callback(JavaScriptValue.create(wrapper.context, handle: error))
+	wrapper.handler(JavaScriptValue.create(wrapper.context, handle: error))
 }

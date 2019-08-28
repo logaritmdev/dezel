@@ -1,5 +1,5 @@
 /**
- * TODO
+ * TextView delegate.
  * @interface TextViewDelegate
  * @since 0.7.0
  */
