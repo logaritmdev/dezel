@@ -398,7 +398,7 @@ open class TextLayer: Layer {
 
 		self.update(in: size)
 
-		return self.layout.extent.clamped(min: min, max: max)
+		return self.layout.extent.clamp(min: min, max: max)
 	}
 
 	/**

@@ -18,7 +18,7 @@ typealias OnInitCallback<T> = () -> T
 public object Delegates {
 
 	/**
-	 * Delegates that executes the callback when the handle changes with the new handle.
+	 * Delegates that executes the handler when the handle changes with the new handle.
 	 * @class OnSet
 	 * @since 0.1.0
 	 */
@@ -52,7 +52,7 @@ public object Delegates {
 	}
 
 	/**
-	 * Delegates that executes the callback when the handle changes with the new handle.
+	 * Delegates that executes the handler when the handle changes with the new handle.
 	 * @class OnSetOptional
 	 * @since 0.1.0
 	 */
@@ -86,7 +86,7 @@ public object Delegates {
 	}
 
 	/**
-	 * Delegates that executes the callback when the handle changes with the new and old handle.
+	 * Delegates that executes the handler when the handle changes with the new and old handle.
 	 * @class OnChange
 	 * @since 0.1.0
 	 */
@@ -127,7 +127,7 @@ public object Delegates {
 	}
 
 	/**
-	 * Delegates that executes the callback when the handle changes with the new and old handle.
+	 * Delegates that executes the handler when the handle changes with the new and old handle.
 	 * @class OnChangeOptional
 	 * @since 0.1.0
 	 */

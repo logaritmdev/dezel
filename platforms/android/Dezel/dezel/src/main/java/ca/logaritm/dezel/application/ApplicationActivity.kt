@@ -19,7 +19,7 @@ import ca.logaritm.dezel.application.keyboard.KeyboardObserver
 import ca.logaritm.dezel.application.keyboard.KeyboardObserverListener
 import ca.logaritm.dezel.core.*
 import ca.logaritm.dezel.extension.Delegates
-import ca.logaritm.dezel.extension.viewport
+import ca.logaritm.dezel.extension.app.viewport
 import ca.logaritm.dezel.layout.Layout
 import ca.logaritm.dezel.modules.application.ApplicationModule
 import ca.logaritm.dezel.modules.application.JavaScriptApplication
@@ -301,8 +301,8 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 		this.layout.root = application.window.layoutNode
 
 		val viewport = this.viewport
-		application.window.width.set(viewport.width.toDouble(), JavaScriptPropertyUnit.PX)
-		application.window.height.set(viewport.height.toDouble(), JavaScriptPropertyUnit.PX)
+		application.window.width.reset(viewport.width.toDouble(), JavaScriptPropertyUnit.PX)
+		application.window.height.reset(viewport.height.toDouble(), JavaScriptPropertyUnit.PX)
 		this.view.addView(application.window.wrapper)
 
 		this.statusBar.bringToFront()
@@ -565,8 +565,8 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 
 			val application = this.application
 			if (application != null) {
-				application.window.width.set(viewport.width.toDouble(), JavaScriptPropertyUnit.PX)
-				application.window.height.set(viewport.height.toDouble(), JavaScriptPropertyUnit.PX)
+				application.window.width.reset(viewport.width.toDouble(), JavaScriptPropertyUnit.PX)
+				application.window.height.reset(viewport.height.toDouble(), JavaScriptPropertyUnit.PX)
 			}
 		}
 

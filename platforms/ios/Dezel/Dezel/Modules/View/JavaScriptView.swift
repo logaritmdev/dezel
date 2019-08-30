@@ -1881,7 +1881,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property id
 	 * @since 0.7.0
 	 */
-	@objc open lazy var id = JavaScriptProperty(string: "") { value in
+	@objc public lazy var id = JavaScriptProperty(string: "") { value in
 		self.wrapper.id = value.string
 		self.stylerNode.id = value.string
 		self.layoutNode.id = value.string
@@ -1892,7 +1892,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property backgroundColor
 	 * @since 0.7.0
 	 */
-	@objc open lazy var backgroundColor = JavaScriptProperty(string: "transparent") { value in
+	@objc public lazy var backgroundColor = JavaScriptProperty(string: "transparent") { value in
 		self.invalidateBitmapColor()
 	}
 
@@ -1901,7 +1901,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property backgroundImage
 	 * @since 0.7.0
 	 */
-	@objc open lazy var backgroundImage = JavaScriptProperty() { value in
+	@objc public lazy var backgroundImage = JavaScriptProperty() { value in
 		self.backgroundImageLoader.load(value) { image in
 			self.backgroundImageData = image
 		}
@@ -1912,7 +1912,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property backgroundImageFit
 	 * @since 0.7.0
 	 */
-	@objc open lazy var backgroundImageFit = JavaScriptProperty(string: "cover") { value in
+	@objc public lazy var backgroundImageFit = JavaScriptProperty(string: "cover") { value in
 		self.invalidateBitmapImage()
 	}
 
@@ -1921,7 +1921,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property backgroundImageAnchorTop
 	 * @since 0.7.0
 	 */
-	@objc open lazy var backgroundImageAnchorTop = JavaScriptProperty(number: 0.5) { value in
+	@objc public lazy var backgroundImageAnchorTop = JavaScriptProperty(number: 0.5) { value in
 		self.invalidateBitmapImage()
 	}
 
@@ -1930,7 +1930,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property backgroundImageAnchorLeft
 	 * @since 0.7.0
 	 */
-	@objc open lazy var backgroundImageAnchorLeft = JavaScriptProperty(number: 0.5) { value in
+	@objc public lazy var backgroundImageAnchorLeft = JavaScriptProperty(number: 0.5) { value in
 		self.invalidateBitmapImage()
 	}
 
@@ -1939,7 +1939,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property backgroundImageTop
 	 * @since 0.7.0
 	 */
-	@objc open lazy var backgroundImageTop = JavaScriptProperty(number: 50, unit: .pc) { value in
+	@objc public lazy var backgroundImageTop = JavaScriptProperty(number: 50, unit: .pc) { value in
 		self.invalidateBitmapImage()
 	}
 
@@ -1948,7 +1948,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property backgroundImageLeft
 	 * @since 0.7.0
 	 */
-	@objc open lazy var backgroundImageLeft = JavaScriptProperty(number: 50, unit: .pc) { value in
+	@objc public lazy var backgroundImageLeft = JavaScriptProperty(number: 50, unit: .pc) { value in
 		self.invalidateBitmapImage()
 	}
 
@@ -1957,7 +1957,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property backgroundImageWidth
 	 * @since 0.7.0
 	 */
-	@objc open lazy var backgroundImageWidth = JavaScriptProperty(string: "auto") { value in
+	@objc public lazy var backgroundImageWidth = JavaScriptProperty(string: "auto") { value in
 		self.invalidateBitmapImage()
 	}
 
@@ -1966,7 +1966,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property backgroundImageHeight
 	 * @since 0.7.0
 	 */
-	@objc open lazy var backgroundImageHeight = JavaScriptProperty(string: "auto") { value in
+	@objc public lazy var backgroundImageHeight = JavaScriptProperty(string: "auto") { value in
 		self.invalidateBitmapImage()
 	}
 
@@ -1975,7 +1975,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property backgroundImageTint
 	 * @since 0.7.0
 	 */
-	@objc open lazy var backgroundImageTint = JavaScriptProperty(string: "none") { value in
+	@objc public lazy var backgroundImageTint = JavaScriptProperty(string: "none") { value in
 		self.wrapper.backgroundImageTint = CGColorParse(value.string)
 	}
 
@@ -1984,7 +1984,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property border
 	 * @since 0.7.0
 	 */
-	@objc open lazy var border = JavaScriptProperty(string: "0 #000") { value in
+	@objc public lazy var border = JavaScriptProperty(string: "0 #000") { value in
 
 		let components = value.string.split(separator: " ")
 		if (components.count < 2) {
@@ -2012,7 +2012,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property borderTop
 	 * @since 0.7.0
 	 */
-	@objc open lazy var borderTop = JavaScriptProperty(string: "0 #000") { value in
+	@objc public lazy var borderTop = JavaScriptProperty(string: "0 #000") { value in
 
 		let components = value.string.split(separator: " ")
 		if (components.count < 2) {
@@ -2028,7 +2028,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property borderTop
 	 * @since 0.7.0
 	 */
-	@objc open lazy var borderLeft = JavaScriptProperty(string: "0 #000") { value in
+	@objc public lazy var borderLeft = JavaScriptProperty(string: "0 #000") { value in
 
 		let components = value.string.split(separator: " ")
 		if (components.count < 2) {
@@ -2044,7 +2044,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property borderRight
 	 * @since 0.7.0
 	 */
-	@objc open lazy var borderRight = JavaScriptProperty(string: "0 #000") { value in
+	@objc public lazy var borderRight = JavaScriptProperty(string: "0 #000") { value in
 
 		let components = value.string.split(separator: " ")
 		if (components.count < 2) {
@@ -2060,7 +2060,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property borderBottom
 	 * @since 0.7.0
 	 */
-	@objc open lazy var borderBottom = JavaScriptProperty(string: "0 #000") { value in
+	@objc public lazy var borderBottom = JavaScriptProperty(string: "0 #000") { value in
 
 		let components = value.string.split(separator: " ")
 		if (components.count < 2) {
@@ -2076,7 +2076,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property borderWidth
 	 * @since 0.7.0
 	 */
-	@objc open lazy var borderWidth = JavaScriptProperty(number: 0) { value in
+	@objc public lazy var borderWidth = JavaScriptProperty(number: 0) { value in
 		self.borderTopWidth.reset(value.number, unit: value.unit)
 		self.borderLeftWidth.reset(value.number, unit: value.unit)
 		self.borderRightWidth.reset(value.number, unit: value.unit)
@@ -2088,7 +2088,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property borderColor
 	 * @since 0.7.0
 	 */
-	@objc open lazy var borderColor = JavaScriptProperty(string: "#000") { value in
+	@objc public lazy var borderColor = JavaScriptProperty(string: "#000") { value in
 		self.borderTopColor.reset(value.string)
 		self.borderLeftColor.reset(value.string)
 		self.borderRightColor.reset(value.string)
@@ -2100,7 +2100,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property borderTopColor
 	 * @since 0.7.0
 	 */
-	@objc open lazy var borderTopColor = JavaScriptProperty(string: "#000") { value in
+	@objc public lazy var borderTopColor = JavaScriptProperty(string: "#000") { value in
 		self.wrapper.borderTopColor = CGColorParse(value.string)
 	}
 
@@ -2109,7 +2109,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property borderLeftColor
 	 * @since 0.7.0
 	 */
-	@objc open lazy var borderLeftColor = JavaScriptProperty(string: "#000") { value in
+	@objc public lazy var borderLeftColor = JavaScriptProperty(string: "#000") { value in
 		self.wrapper.borderLeftColor = CGColorParse(value.string)
 	}
 
@@ -2118,7 +2118,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property borderRightColor
 	 * @since 0.7.0
 	 */
-	@objc open lazy var borderRightColor = JavaScriptProperty(string: "#000") { value in
+	@objc public lazy var borderRightColor = JavaScriptProperty(string: "#000") { value in
 		self.wrapper.borderRightColor = CGColorParse(value.string)
 	}
 
@@ -2127,7 +2127,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property borderBottomColor
 	 * @since 0.7.0
 	 */
-	@objc open lazy var borderBottomColor = JavaScriptProperty(string: "#000") { value in
+	@objc public lazy var borderBottomColor = JavaScriptProperty(string: "#000") { value in
 		self.wrapper.borderBottomColor = CGColorParse(value.string)
 	}
 
@@ -2136,7 +2136,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property borderTopWidth
 	 * @since 0.7.0
 	 */
-	@objc open lazy var borderTopWidth = JavaScriptProperty(number: 0) { value in
+	@objc public lazy var borderTopWidth = JavaScriptProperty(number: 0) { value in
 		self.layoutNode.borderTop(value)
 	}
 
@@ -2145,7 +2145,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property borderLeftWidth
 	 * @since 0.7.0
 	 */
-	@objc open lazy var borderLeftWidth = JavaScriptProperty(number: 0) { value in
+	@objc public lazy var borderLeftWidth = JavaScriptProperty(number: 0) { value in
 		self.layoutNode.borderLeft(value)
 	}
 
@@ -2154,7 +2154,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property borderRightWidth
 	 * @since 0.7.0
 	 */
-	@objc open lazy var borderRightWidth = JavaScriptProperty(number: 0) { value in
+	@objc public lazy var borderRightWidth = JavaScriptProperty(number: 0) { value in
 		self.layoutNode.borderRight(value)
 	}
 
@@ -2163,7 +2163,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property borderBottomWidth
 	 * @since 0.7.0
 	 */
-	@objc open lazy var borderBottomWidth = JavaScriptProperty(number: 0) { value in
+	@objc public lazy var borderBottomWidth = JavaScriptProperty(number: 0) { value in
 		self.layoutNode.borderBottom(value)
 	}
 
@@ -2172,7 +2172,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property minBorderTopWidth
 	 * @since 0.7.0
 	 */
-	@objc open lazy var minBorderTopWidth = JavaScriptProperty(number: 0) { value in
+	@objc public lazy var minBorderTopWidth = JavaScriptProperty(number: 0) { value in
 		self.invalidateBorder()
 	}
 
@@ -2181,7 +2181,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property maxBorderTopWidth
 	 * @since 0.7.0
 	 */
-	@objc open lazy var maxBorderTopWidth = JavaScriptProperty(number: Double.max) { value in
+	@objc public lazy var maxBorderTopWidth = JavaScriptProperty(number: Double.max) { value in
 		self.invalidateBorder()
 	}
 
@@ -2190,7 +2190,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property minBorderLeftWidth
 	 * @since 0.7.0
 	 */
-	@objc open lazy var minBorderLeftWidth = JavaScriptProperty(number: 0) { value in
+	@objc public lazy var minBorderLeftWidth = JavaScriptProperty(number: 0) { value in
 		self.invalidateBorder()
 	}
 
@@ -2199,7 +2199,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property maxBorderLeftWidth
 	 * @since 0.7.0
 	 */
-	@objc open lazy var maxBorderLeftWidth = JavaScriptProperty(number: Double.max) { value in
+	@objc public lazy var maxBorderLeftWidth = JavaScriptProperty(number: Double.max) { value in
 		self.invalidateBorder()
 	}
 
@@ -2208,7 +2208,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property minBorderRightWidth
 	 * @since 0.7.0
 	 */
-	@objc open lazy var minBorderRightWidth = JavaScriptProperty(number: 0) { value in
+	@objc public lazy var minBorderRightWidth = JavaScriptProperty(number: 0) { value in
 		self.invalidateBorder()
 	}
 
@@ -2217,7 +2217,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property maxBorderRightWidth
 	 * @since 0.7.0
 	 */
-	@objc open lazy var maxBorderRightWidth = JavaScriptProperty(number: Double.max) { value in
+	@objc public lazy var maxBorderRightWidth = JavaScriptProperty(number: Double.max) { value in
 		self.invalidateBorder()
 	}
 
@@ -2226,7 +2226,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property minBorderBottomWidth
 	 * @since 0.7.0
 	 */
-	@objc open lazy var minBorderBottomWidth = JavaScriptProperty(number: 0) { value in
+	@objc public lazy var minBorderBottomWidth = JavaScriptProperty(number: 0) { value in
 		self.invalidateBorder()
 	}
 
@@ -2235,7 +2235,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property maxBorderBottomWidth
 	 * @since 0.7.0
 	 */
-	@objc open lazy var maxBorderBottomWidth = JavaScriptProperty(number: Double.max) { value in
+	@objc public lazy var maxBorderBottomWidth = JavaScriptProperty(number: Double.max) { value in
 		self.invalidateBorder()
 	}
 
@@ -2244,7 +2244,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property borderRadius
 	 * @since 0.7.0
 	 */
-	@objc open lazy var borderRadius = JavaScriptProperty(number: 0) { value in
+	@objc public lazy var borderRadius = JavaScriptProperty(number: 0) { value in
 		self.borderTopLeftRadius.reset(value.number, unit: value.unit)
 		self.borderTopRightRadius.reset(value.number, unit: value.unit)
 		self.borderBottomLeftRadius.reset(value.number, unit: value.unit)
@@ -2256,7 +2256,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property borderTopLeftRadius
 	 * @since 0.7.0
 	 */
-	@objc open lazy var borderTopLeftRadius = JavaScriptProperty(number: 0) { value in
+	@objc public lazy var borderTopLeftRadius = JavaScriptProperty(number: 0) { value in
 		self.invalidateBorder()
 	}
 
@@ -2265,7 +2265,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property borderTopRightRadius
 	 * @since 0.7.0
 	 */
-	@objc open lazy var borderTopRightRadius = JavaScriptProperty(number: 0) { value in
+	@objc public lazy var borderTopRightRadius = JavaScriptProperty(number: 0) { value in
 		self.invalidateBorder()
 	}
 
@@ -2274,7 +2274,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property borderBottomLeftRadius
 	 * @since 0.7.0
 	 */
-	@objc open lazy var borderBottomLeftRadius = JavaScriptProperty(number: 0) { value in
+	@objc public lazy var borderBottomLeftRadius = JavaScriptProperty(number: 0) { value in
 		self.invalidateBorder()
 	}
 
@@ -2283,7 +2283,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property borderBottomRightRadius
 	 * @since 0.7.0
 	 */
-	@objc open lazy var borderBottomRightRadius = JavaScriptProperty(number: 0) { value in
+	@objc public lazy var borderBottomRightRadius = JavaScriptProperty(number: 0) { value in
 		self.invalidateBorder()
 	}
 
@@ -2292,7 +2292,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property shadowBlur
 	 * @since 0.7.0
 	 */
-	@objc open lazy var shadowBlur = JavaScriptProperty(number: 0) { value in
+	@objc public lazy var shadowBlur = JavaScriptProperty(number: 0) { value in
 		self.invalidateShadow()
 	}
 
@@ -2301,7 +2301,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property shadowColor
 	 * @since 0.7.0
 	 */
-	@objc open lazy var shadowColor = JavaScriptProperty(string: "#000") { value in
+	@objc public lazy var shadowColor = JavaScriptProperty(string: "#000") { value in
 		self.invalidateShadow()
 	}
 
@@ -2310,7 +2310,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property shadowOffsetTop
 	 * @since 0.7.0
 	 */
-	@objc open lazy var shadowOffsetTop = JavaScriptProperty(number: 0) { value in
+	@objc public lazy var shadowOffsetTop = JavaScriptProperty(number: 0) { value in
 		self.invalidateShadow()
 	}
 
@@ -2319,7 +2319,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property shadowOffsetLeft
 	 * @since 0.7.0
 	 */
-	@objc open lazy var shadowOffsetLeft = JavaScriptProperty(number: 0) { value in
+	@objc public lazy var shadowOffsetLeft = JavaScriptProperty(number: 0) { value in
 		self.invalidateShadow()
 	}
 
@@ -2328,7 +2328,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property top
 	 * @since 0.7.0
 	 */
-	@objc open lazy var top = JavaScriptProperty(string: "auto") { value in
+	@objc public lazy var top = JavaScriptProperty(string: "auto") { value in
 		self.layoutNode.top(value)
 	}
 
@@ -2337,7 +2337,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property left
 	 * @since 0.7.0
 	 */
-	@objc open lazy var left = JavaScriptProperty(string: "auto") { value in
+	@objc public lazy var left = JavaScriptProperty(string: "auto") { value in
 		self.layoutNode.left(value)
 	}
 
@@ -2346,7 +2346,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property right
 	 * @since 0.7.0
 	 */
-	@objc open lazy var right = JavaScriptProperty(string: "auto") { value in
+	@objc public lazy var right = JavaScriptProperty(string: "auto") { value in
 		self.layoutNode.right(value)
 	}
 
@@ -2355,7 +2355,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property bottom
 	 * @since 0.7.0
 	 */
-	@objc open lazy var bottom = JavaScriptProperty(string: "auto") { value in
+	@objc public lazy var bottom = JavaScriptProperty(string: "auto") { value in
 		self.layoutNode.bottom(value)
 	}
 
@@ -2364,7 +2364,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property minTop
 	 * @since 0.7.0
 	 */
-	@objc open lazy var minTop = JavaScriptProperty(number: Double.min) { value in
+	@objc public lazy var minTop = JavaScriptProperty(number: Double.min) { value in
 		self.layoutNode.minTop(value.number)
 	}
 
@@ -2373,7 +2373,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property maxTop
 	 * @since 0.7.0
 	 */
-	@objc open lazy var maxTop = JavaScriptProperty(number: Double.max) { value in
+	@objc public lazy var maxTop = JavaScriptProperty(number: Double.max) { value in
 		self.layoutNode.maxTop(value.number)
 	}
 
@@ -2382,7 +2382,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property minLeft
 	 * @since 0.7.0
 	 */
-	@objc open lazy var minLeft = JavaScriptProperty(number: Double.min) { value in
+	@objc public lazy var minLeft = JavaScriptProperty(number: Double.min) { value in
 		self.layoutNode.minLeft(value.number)
 	}
 
@@ -2391,7 +2391,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property maxLeft
 	 * @since 0.7.0
 	 */
-	@objc open lazy var maxLeft = JavaScriptProperty(number: Double.max) { value in
+	@objc public lazy var maxLeft = JavaScriptProperty(number: Double.max) { value in
 		self.layoutNode.maxLeft(value.number)
 	}
 
@@ -2400,7 +2400,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property minRight
 	 * @since 0.7.0
 	 */
-	@objc open lazy var minRight = JavaScriptProperty(number: Double.min) { value in
+	@objc public lazy var minRight = JavaScriptProperty(number: Double.min) { value in
 		self.layoutNode.minRight(value.number)
 	}
 
@@ -2409,7 +2409,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property maxRight
 	 * @since 0.7.0
 	 */
-	@objc open lazy var maxRight = JavaScriptProperty(number: Double.max) { value in
+	@objc public lazy var maxRight = JavaScriptProperty(number: Double.max) { value in
 		self.layoutNode.maxRight(value.number)
 	}
 
@@ -2418,7 +2418,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property minBottom
 	 * @since 0.7.0
 	 */
-	@objc open lazy var minBottom = JavaScriptProperty(number: Double.min) { value in
+	@objc public lazy var minBottom = JavaScriptProperty(number: Double.min) { value in
 		self.layoutNode.minBottom(value.number)
 	}
 
@@ -2427,7 +2427,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property maxBottom
 	 * @since 0.7.0
 	 */
-	@objc open lazy var maxBottom = JavaScriptProperty(number: Double.max) { value in
+	@objc public lazy var maxBottom = JavaScriptProperty(number: Double.max) { value in
 		self.layoutNode.maxBottom(value.number)
 	}
 
@@ -2436,7 +2436,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property anchorTop
 	 * @since 0.7.0
 	 */
-	@objc open lazy var anchorTop = JavaScriptProperty(number: 0) { value in
+	@objc public lazy var anchorTop = JavaScriptProperty(number: 0) { value in
 		self.layoutNode.anchorTop(value)
 	}
 
@@ -2445,7 +2445,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property anchorLeft
 	 * @since 0.7.0
 	 */
-	@objc open lazy var anchorLeft = JavaScriptProperty(number: 0) { value in
+	@objc public lazy var anchorLeft = JavaScriptProperty(number: 0) { value in
 		self.layoutNode.anchorLeft(value)
 	}
 
@@ -2454,7 +2454,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property width
 	 * @since 0.7.0
 	 */
-	@objc open lazy var width = JavaScriptProperty(string: "fill") { value in
+	@objc public lazy var width = JavaScriptProperty(string: "fill") { value in
 		self.layoutNode.width(value)
 	}
 
@@ -2463,7 +2463,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property height
 	 * @since 0.7.0
 	 */
-	@objc open lazy var height = JavaScriptProperty(string: "fill") { value in
+	@objc public lazy var height = JavaScriptProperty(string: "fill") { value in
 		self.layoutNode.height(value)
 	}
 
@@ -2472,7 +2472,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property minWidth
 	 * @since 0.7.0
 	 */
-	@objc open lazy var minWidth = JavaScriptProperty(number: 0) { value in
+	@objc public lazy var minWidth = JavaScriptProperty(number: 0) { value in
 		self.layoutNode.minWidth(value.number)
 	}
 
@@ -2481,7 +2481,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property maxWidth
 	 * @since 0.7.0
 	 */
-	@objc open lazy var maxWidth = JavaScriptProperty(number: Double.max) { value in
+	@objc public lazy var maxWidth = JavaScriptProperty(number: Double.max) { value in
 		self.layoutNode.maxWidth(value.number)
 	}
 
@@ -2490,7 +2490,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property minHeight
 	 * @since 0.7.0
 	 */
-	@objc open lazy var minHeight = JavaScriptProperty(number: 0) { value in
+	@objc public lazy var minHeight = JavaScriptProperty(number: 0) { value in
 		self.layoutNode.minHeight(value.number)
 	}
 
@@ -2499,7 +2499,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property maxHeight
 	 * @since 0.7.0
 	 */
-	@objc open lazy var maxHeight = JavaScriptProperty(number: Double.max) { value in
+	@objc public lazy var maxHeight = JavaScriptProperty(number: Double.max) { value in
 		self.layoutNode.maxHeight(value.number)
 	}
 
@@ -2508,7 +2508,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property expand
 	 * @since 0.7.0
 	 */
-	@objc open lazy var expand = JavaScriptProperty(number: 0) { value in
+	@objc public lazy var expand = JavaScriptProperty(number: 0) { value in
 		self.layoutNode.expand(value.number)
 	}
 
@@ -2517,7 +2517,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property shrink
 	 * @since 0.7.0
 	 */
-	@objc open lazy var shrink = JavaScriptProperty(number: 0) { value in
+	@objc public lazy var shrink = JavaScriptProperty(number: 0) { value in
 		self.layoutNode.shrink(value.number)
 	}
 
@@ -2526,7 +2526,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property contentTop
 	 * @since 0.7.0
 	 */
-	@objc open lazy var contentTop = JavaScriptProperty(number: 0) { value in
+	@objc public lazy var contentTop = JavaScriptProperty(number: 0) { value in
 		self.layoutNode.contentTop(value)
 	}
 
@@ -2535,7 +2535,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property contentLeft
 	 * @since 0.7.0
 	 */
-	@objc open lazy var contentLeft = JavaScriptProperty(number: 0) { value in
+	@objc public lazy var contentLeft = JavaScriptProperty(number: 0) { value in
 		self.layoutNode.contentLeft(value)
 	}
 
@@ -2544,7 +2544,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property contentWidth
 	 * @since 0.7.0
 	 */
-	@objc open lazy var contentWidth = JavaScriptProperty(string: "auto") { value in
+	@objc public lazy var contentWidth = JavaScriptProperty(string: "auto") { value in
 		self.layoutNode.contentWidth(value)
 	}
 
@@ -2553,7 +2553,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property contentHeight
 	 * @since 0.7.0
 	 */
-	@objc open lazy var contentHeight = JavaScriptProperty(string: "auto") { value in
+	@objc public lazy var contentHeight = JavaScriptProperty(string: "auto") { value in
 		self.layoutNode.contentHeight(value)
 	}
 
@@ -2562,7 +2562,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property contentInsetTop
 	 * @since 0.7.0
 	 */
-	@objc open lazy var contentInsetTop = JavaScriptProperty(number: 0) { value in
+	@objc public lazy var contentInsetTop = JavaScriptProperty(number: 0) { value in
 		self.scrollableView?.contentInsetTop = CGFloat(value.number)
 	}
 
@@ -2571,7 +2571,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property contentInsetLeft
 	 * @since 0.7.0
 	 */
-	@objc open lazy var contentInsetLeft = JavaScriptProperty(number: 0) { value in
+	@objc public lazy var contentInsetLeft = JavaScriptProperty(number: 0) { value in
 		self.scrollableView?.contentInsetLeft = CGFloat(value.number)
 	}
 
@@ -2580,7 +2580,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property contentInsetRight
 	 * @since 0.7.0
 	 */
-	@objc open lazy var contentInsetRight = JavaScriptProperty(number: 0) { value in
+	@objc public lazy var contentInsetRight = JavaScriptProperty(number: 0) { value in
 		self.scrollableView?.contentInsetRight = CGFloat(value.number)
 	}
 
@@ -2589,7 +2589,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property contentInsetBottom
 	 * @since 0.7.0
 	 */
-	@objc open lazy var contentInsetBottom = JavaScriptProperty(number: 0) { value in
+	@objc public lazy var contentInsetBottom = JavaScriptProperty(number: 0) { value in
 		self.scrollableView?.contentInsetBottom = CGFloat(value.number)
 	}
 
@@ -2598,7 +2598,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property contentDirection
 	 * @since 0.7.0
 	 */
-	@objc open lazy var contentDirection = JavaScriptProperty(string: "vertical") { value in
+	@objc public lazy var contentDirection = JavaScriptProperty(string: "vertical") { value in
 		self.layoutNode.contentDirection(value)
 	}
 
@@ -2607,7 +2607,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property contentLocation
 	 * @since 0.7.0
 	 */
-	@objc open lazy var contentLocation = JavaScriptProperty(string: "start") { value in
+	@objc public lazy var contentLocation = JavaScriptProperty(string: "start") { value in
 		self.layoutNode.contentLocation(value)
 	}
 
@@ -2616,7 +2616,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property contentAlignment
 	 * @since 0.7.0
 	 */
-	@objc open lazy var contentAlignment = JavaScriptProperty(string: "start") { value in
+	@objc public lazy var contentAlignment = JavaScriptProperty(string: "start") { value in
 		self.layoutNode.contentAlignment(value)
 	}
 
@@ -2625,7 +2625,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property scrollable
 	 * @since 0.7.0
 	 */
-	@objc open lazy var scrollable = JavaScriptProperty(boolean: false) { value in
+	@objc public lazy var scrollable = JavaScriptProperty(boolean: false) { value in
 		self.scrollableView?.scrollable = value.boolean
 	}
 
@@ -2634,7 +2634,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property scrollbars
 	 * @since 0.7.0
 	 */
-	@objc open lazy var scrollbars = JavaScriptProperty(boolean: false) { value in
+	@objc public lazy var scrollbars = JavaScriptProperty(boolean: false) { value in
 		self.scrollableView?.scrollbars = Scrollbars.get(value)
 	}
 
@@ -2643,7 +2643,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property overscroll
 	 * @since 0.7.0
 	 */
-	@objc open lazy var overscroll = JavaScriptProperty(string: "auto") { value in
+	@objc public lazy var overscroll = JavaScriptProperty(string: "auto") { value in
 		self.scrollableView?.overscroll = Overscroll.get(value)
 	}
 
@@ -2652,7 +2652,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property momentum
 	 * @since 0.7.0
 	 */
-	@objc open lazy var momentum = JavaScriptProperty(boolean: true) { value in
+	@objc public lazy var momentum = JavaScriptProperty(boolean: true) { value in
 		self.scrollableView?.momentum = value.boolean
 	}
 
@@ -2661,7 +2661,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property scrollTop
 	 * @since 0.7.0
 	 */
-	@objc open lazy var scrollTop = JavaScriptProperty(number: 0) { value in
+	@objc public lazy var scrollTop = JavaScriptProperty(number: 0) { value in
 		self.scrollableView?.scrollTop = CGFloat(value.number)
 	}
 
@@ -2670,7 +2670,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property scrollLeft
 	 * @since 0.7.0
 	 */
-	@objc open lazy var scrollLeft = JavaScriptProperty(number: 0) { value in
+	@objc public lazy var scrollLeft = JavaScriptProperty(number: 0) { value in
 		self.scrollableView?.scrollLeft = CGFloat(value.number)
 	}
 
@@ -2679,21 +2679,21 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property scrolling
 	 * @since 0.7.0
 	 */
-	@objc open lazy var scrolling = JavaScriptProperty(boolean: false)
+	@objc public lazy var scrolling = JavaScriptProperty(boolean: false)
 
 	/**
 	 * Whether this view is dragging.
 	 * @property dragging
 	 * @since 0.7.0
 	 */
-	@objc open lazy var dragging = JavaScriptProperty(boolean: false)
+	@objc public lazy var dragging = JavaScriptProperty(boolean: false)
 
 	/**
 	 * The view's margin.
 	 * @property margin
 	 * @since 0.7.0
 	 */
-	@objc open lazy var margin = JavaScriptProperty(number: 0) { value in
+	@objc public lazy var margin = JavaScriptProperty(number: 0) { value in
 		self.marginTop.reset(value.number, unit: value.unit)
 		self.marginLeft.reset(value.number, unit: value.unit)
 		self.marginRight.reset(value.number, unit: value.unit)
@@ -2705,7 +2705,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property marginTop
 	 * @since 0.7.0
 	 */
-	@objc open lazy var marginTop = JavaScriptProperty(number: 0) { value in
+	@objc public lazy var marginTop = JavaScriptProperty(number: 0) { value in
 		self.layoutNode.marginTop(value)
 	}
 
@@ -2714,7 +2714,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property marginLeft
 	 * @since 0.7.0
 	 */
-	@objc open lazy var marginLeft = JavaScriptProperty(number: 0) { value in
+	@objc public lazy var marginLeft = JavaScriptProperty(number: 0) { value in
 		self.layoutNode.marginLeft(value)
 	}
 
@@ -2723,7 +2723,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property marginRight
 	 * @since 0.7.0
 	 */
-	@objc open lazy var marginRight = JavaScriptProperty(number: 0) { value in
+	@objc public lazy var marginRight = JavaScriptProperty(number: 0) { value in
 		self.layoutNode.marginRight(value)
 	}
 
@@ -2732,7 +2732,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property marginBottom
 	 * @since 0.7.0
 	 */
-	@objc open lazy var marginBottom = JavaScriptProperty(number: 0) { value in
+	@objc public lazy var marginBottom = JavaScriptProperty(number: 0) { value in
 		self.layoutNode.marginBottom(value)
 	}
 
@@ -2741,7 +2741,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property minMarginTop
 	 * @since 0.7.0
 	 */
-	@objc open lazy var minMarginTop = JavaScriptProperty(number: Double.min) { value in
+	@objc public lazy var minMarginTop = JavaScriptProperty(number: Double.min) { value in
 		self.layoutNode.minMarginTop(value.number)
 	}
 
@@ -2750,7 +2750,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property maxMarginTop
 	 * @since 0.7.0
 	 */
-	@objc open lazy var maxMarginTop = JavaScriptProperty(number: Double.max) { value in
+	@objc public lazy var maxMarginTop = JavaScriptProperty(number: Double.max) { value in
 		self.layoutNode.maxMarginTop(value.number)
 	}
 
@@ -2759,7 +2759,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property minMarginLeft
 	 * @since 0.7.0
 	 */
-	@objc open lazy var minMarginLeft = JavaScriptProperty(number: Double.min) { value in
+	@objc public lazy var minMarginLeft = JavaScriptProperty(number: Double.min) { value in
 		self.layoutNode.minMarginLeft(value.number)
 	}
 
@@ -2768,7 +2768,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property maxMarginLeft
 	 * @since 0.7.0
 	 */
-	@objc open lazy var maxMarginLeft = JavaScriptProperty(number: Double.max) { value in
+	@objc public lazy var maxMarginLeft = JavaScriptProperty(number: Double.max) { value in
 		self.layoutNode.maxMarginLeft(value.number)
 	}
 
@@ -2777,7 +2777,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property minMarginRight
 	 * @since 0.7.0
 	 */
-	@objc open lazy var minMarginRight = JavaScriptProperty(number: Double.min) { value in
+	@objc public lazy var minMarginRight = JavaScriptProperty(number: Double.min) { value in
 		self.layoutNode.minMarginRight(value.number)
 	}
 
@@ -2786,7 +2786,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property maxMarginRight
 	 * @since 0.7.0
 	 */
-	@objc open lazy var maxMarginRight = JavaScriptProperty(number: Double.max) { value in
+	@objc public lazy var maxMarginRight = JavaScriptProperty(number: Double.max) { value in
 		self.layoutNode.maxMarginRight(value.number)
 	}
 
@@ -2795,7 +2795,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property minMarginBottom
 	 * @since 0.7.0
 	 */
-	@objc open lazy var minMarginBottom = JavaScriptProperty(number: Double.min) { value in
+	@objc public lazy var minMarginBottom = JavaScriptProperty(number: Double.min) { value in
 		self.layoutNode.minMarginBottom(value.number)
 	}
 
@@ -2804,7 +2804,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property maxMarginBottom
 	 * @since 0.7.0
 	 */
-	@objc open lazy var maxMarginBottom = JavaScriptProperty(number: Double.max) { value in
+	@objc public lazy var maxMarginBottom = JavaScriptProperty(number: Double.max) { value in
 		self.layoutNode.maxMarginBottom(value.number)
 	}
 
@@ -2813,7 +2813,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property padding
 	 * @since 0.7.0
 	 */
-	@objc open lazy var padding = JavaScriptProperty(number: 0) { value in
+	@objc public lazy var padding = JavaScriptProperty(number: 0) { value in
 		self.paddingTop.reset(value.number, unit: value.unit)
 		self.paddingLeft.reset(value.number, unit: value.unit)
 		self.paddingRight.reset(value.number, unit: value.unit)
@@ -2825,7 +2825,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property paddingTop
 	 * @since 0.7.0
 	 */
-	@objc open lazy var paddingTop = JavaScriptProperty(number: 0) { value in
+	@objc public lazy var paddingTop = JavaScriptProperty(number: 0) { value in
 		self.layoutNode.paddingTop(value)
 	}
 
@@ -2834,7 +2834,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property paddingLeft
 	 * @since 0.7.0
 	 */
-	@objc open lazy var paddingLeft = JavaScriptProperty(number: 0) { value in
+	@objc public lazy var paddingLeft = JavaScriptProperty(number: 0) { value in
 		self.layoutNode.paddingLeft(value)
 	}
 
@@ -2843,7 +2843,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property paddingRight
 	 * @since 0.7.0
 	 */
-	@objc open lazy var paddingRight = JavaScriptProperty(number: 0) { value in
+	@objc public lazy var paddingRight = JavaScriptProperty(number: 0) { value in
 		self.layoutNode.paddingRight(value)
 	}
 
@@ -2852,7 +2852,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property paddingBottom
 	 * @since 0.7.0
 	 */
-	@objc open lazy var paddingBottom = JavaScriptProperty(number: 0) { value in
+	@objc public lazy var paddingBottom = JavaScriptProperty(number: 0) { value in
 		self.layoutNode.paddingBottom(value)
 	}
 
@@ -2861,7 +2861,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property minPaddingTop
 	 * @since 0.7.0
 	 */
-	@objc open lazy var minPaddingTop = JavaScriptProperty(number: 0) { value in
+	@objc public lazy var minPaddingTop = JavaScriptProperty(number: 0) { value in
 		self.layoutNode.minPaddingTop(value.number)
 	}
 
@@ -2870,7 +2870,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property maxPaddingTop
 	 * @since 0.7.0
 	 */
-	@objc open lazy var maxPaddingTop = JavaScriptProperty(number: Double.max) { value in
+	@objc public lazy var maxPaddingTop = JavaScriptProperty(number: Double.max) { value in
 		self.layoutNode.maxPaddingTop(value.number)
 	}
 
@@ -2879,7 +2879,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property minPaddingLeft
 	 * @since 0.7.0
 	 */
-	@objc open lazy var minPaddingLeft = JavaScriptProperty(number: 0) { value in
+	@objc public lazy var minPaddingLeft = JavaScriptProperty(number: 0) { value in
 		self.layoutNode.minPaddingLeft(value.number)
 	}
 
@@ -2888,7 +2888,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property maxPaddingLeft
 	 * @since 0.7.0
 	 */
-	@objc open lazy var maxPaddingLeft = JavaScriptProperty(number: Double.max) { value in
+	@objc public lazy var maxPaddingLeft = JavaScriptProperty(number: Double.max) { value in
 		self.layoutNode.maxPaddingLeft(value.number)
 	}
 
@@ -2897,7 +2897,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property minPaddingRight
 	 * @since 0.7.0
 	 */
-	@objc open lazy var minPaddingRight = JavaScriptProperty(number: 0) { value in
+	@objc public lazy var minPaddingRight = JavaScriptProperty(number: 0) { value in
 		self.layoutNode.minPaddingRight(value.number)
 	}
 
@@ -2906,7 +2906,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property maxPaddingRight
 	 * @since 0.7.0
 	 */
-	@objc open lazy var maxPaddingRight = JavaScriptProperty(number: Double.max) { value in
+	@objc public lazy var maxPaddingRight = JavaScriptProperty(number: Double.max) { value in
 		self.layoutNode.maxPaddingRight(value.number)
 	}
 
@@ -2915,7 +2915,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property minPaddingBottom
 	 * @since 0.7.0
 	 */
-	@objc open lazy var minPaddingBottom = JavaScriptProperty(number: 0) { value in
+	@objc public lazy var minPaddingBottom = JavaScriptProperty(number: 0) { value in
 		self.layoutNode.minPaddingBottom(value.number)
 	}
 
@@ -2924,7 +2924,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property maxPaddingBottom
 	 * @since 0.7.0
 	 */
-	@objc open lazy var maxPaddingBottom = JavaScriptProperty(number: Double.max) { value in
+	@objc public lazy var maxPaddingBottom = JavaScriptProperty(number: Double.max) { value in
 		self.layoutNode.maxPaddingBottom(value.number)
 	}
 
@@ -2933,7 +2933,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property originX
 	 * @since 0.7.0
 	 */
-	@objc open lazy var originX = JavaScriptProperty(number: 0.5) { value in
+	@objc public lazy var originX = JavaScriptProperty(number: 0.5) { value in
 		self.invalidateTransform()
 	}
 
@@ -2942,7 +2942,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property originY
 	 * @since 0.7.0
 	 */
-	@objc open lazy var originY = JavaScriptProperty(number: 0.5) { value in
+	@objc public lazy var originY = JavaScriptProperty(number: 0.5) { value in
 		self.invalidateTransform()
 	}
 
@@ -2951,7 +2951,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property originZ
 	 * @since 0.7.0
 	 */
-	@objc open lazy var originZ = JavaScriptProperty(number: 0) { value in
+	@objc public lazy var originZ = JavaScriptProperty(number: 0) { value in
 		self.invalidateTransform()
 	}
 
@@ -2960,7 +2960,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property translationX
 	 * @since 0.7.0
 	 */
-	@objc open lazy var translationX = JavaScriptProperty(number: 0) { value in
+	@objc public lazy var translationX = JavaScriptProperty(number: 0) { value in
 		self.invalidateTransform()
 	}
 
@@ -2969,7 +2969,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property translationY
 	 * @since 0.7.0
 	 */
-	@objc open lazy var translationY = JavaScriptProperty(number: 0) { value in
+	@objc public lazy var translationY = JavaScriptProperty(number: 0) { value in
 		self.invalidateTransform()
 	}
 
@@ -2979,7 +2979,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open lazy var translationZ = JavaScriptProperty(number: 0) { value in
+	@objc public lazy var translationZ = JavaScriptProperty(number: 0) { value in
 		self.invalidateTransform()
 	}
 
@@ -2988,7 +2988,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property rotationX
 	 * @since 0.7.0
 	 */
-	@objc open lazy var rotationX = JavaScriptProperty(number: 0) { value in
+	@objc public lazy var rotationX = JavaScriptProperty(number: 0) { value in
 		self.invalidateTransform()
 	}
 
@@ -2997,7 +2997,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property rotationY
 	 * @since 0.7.0
 	 */
-	@objc open lazy var rotationY = JavaScriptProperty(number: 0) { value in
+	@objc public lazy var rotationY = JavaScriptProperty(number: 0) { value in
 		self.invalidateTransform()
 	}
 
@@ -3006,7 +3006,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property rotationZ
 	 * @since 0.7.0
 	 */
-	@objc open lazy var rotationZ = JavaScriptProperty(number: 0) { value in
+	@objc public lazy var rotationZ = JavaScriptProperty(number: 0) { value in
 		self.invalidateTransform()
 	}
 
@@ -3015,7 +3015,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property scaleX
 	 * @since 0.7.0
 	 */
-	@objc open lazy var scaleX = JavaScriptProperty(number: 1) { value in
+	@objc public lazy var scaleX = JavaScriptProperty(number: 1) { value in
 		self.invalidateTransform()
 	}
 
@@ -3024,7 +3024,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property scaleY
 	 * @since 0.7.0
 	 */
-	@objc open lazy var scaleY = JavaScriptProperty(number: 1) { value in
+	@objc public lazy var scaleY = JavaScriptProperty(number: 1) { value in
 		self.invalidateTransform()
 	}
 
@@ -3033,7 +3033,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property scaleZ
 	 * @since 0.7.0
 	 */
-	@objc open lazy var scaleZ = JavaScriptProperty(number: 1) { value in
+	@objc public lazy var scaleZ = JavaScriptProperty(number: 1) { value in
 		self.invalidateTransform()
 	}
 
@@ -3042,7 +3042,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property zIndex
 	 * @since 0.7.0
 	 */
-	@objc open lazy var zIndex = JavaScriptProperty(number: 0) { value in
+	@objc public lazy var zIndex = JavaScriptProperty(number: 0) { value in
 		self.wrapper.layer.zPosition = CGFloat(value.number)
 	}
 
@@ -3051,7 +3051,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property zoomable
 	 * @since 0.7.0
 	 */
-	@objc open lazy var zoomable = JavaScriptProperty(boolean: false) { value in
+	@objc public lazy var zoomable = JavaScriptProperty(boolean: false) { value in
 		self.scrollableView?.zoomable = value.boolean
 	}
 
@@ -3060,7 +3060,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property minZoom
 	 * @since 0.7.0
 	 */
-	@objc open lazy var minZoom = JavaScriptProperty(number: 1.0) { value in
+	@objc public lazy var minZoom = JavaScriptProperty(number: 1.0) { value in
 		self.scrollableView?.minZoom = CGFloat(value.number)
 	}
 
@@ -3069,7 +3069,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property maxZoom
 	 * @since 0.7.0
 	 */
-	@objc open lazy var maxZoom = JavaScriptProperty(number: 1.0) { value in
+	@objc public lazy var maxZoom = JavaScriptProperty(number: 1.0) { value in
 		self.scrollableView?.maxZoom = CGFloat(value.number)
 	}
 
@@ -3078,7 +3078,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property touchable
 	 * @since 0.7.0
 	 */
-	@objc open lazy var touchable = JavaScriptProperty(boolean: true) { value in
+	@objc public lazy var touchable = JavaScriptProperty(boolean: true) { value in
 		self.wrapper.isUserInteractionEnabled = value.boolean
 	}
 
@@ -3087,35 +3087,35 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property touchOffsetTop
 	 * @since 0.7.0
 	 */
-	@objc open lazy var touchOffsetTop = JavaScriptProperty(number: 0.0)
+	@objc public lazy var touchOffsetTop = JavaScriptProperty(number: 0.0)
 
 	/**
 	 * The left offset for this view touchable area.
 	 * @property touchOffsetLeft
 	 * @since 0.7.0
 	 */
-	@objc open lazy var touchOffsetLeft = JavaScriptProperty(number: 0.0)
+	@objc public lazy var touchOffsetLeft = JavaScriptProperty(number: 0.0)
 
 	/**
 	 * The right offset for this view touchable area.
 	 * @property touchOffsetRight
 	 * @since 0.7.0
 	 */
-	@objc open lazy var touchOffsetRight = JavaScriptProperty(number: 0.0)
+	@objc public lazy var touchOffsetRight = JavaScriptProperty(number: 0.0)
 
 	/**
 	 * The bottom offset for this view touchable area.
 	 * @property touchOffsetBottom
 	 * @since 0.7.0
 	 */
-	@objc open lazy var touchOffsetBottom = JavaScriptProperty(number: 0.0)
+	@objc public lazy var touchOffsetBottom = JavaScriptProperty(number: 0.0)
 
 	/**
 	 * The view's visibility status.
 	 * @property visible
 	 * @since 0.7.0
 	 */
-	@objc open lazy var visible = JavaScriptProperty(boolean: true) { value in
+	@objc public lazy var visible = JavaScriptProperty(boolean: true) { value in
 		self.wrapper.visible = value.boolean
 		self.stylerNode.visible = value.boolean
 		self.layoutNode.visible = value.boolean
@@ -3127,7 +3127,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open lazy var opacity = JavaScriptProperty(number: 1) { value in
+	@objc public lazy var opacity = JavaScriptProperty(number: 1) { value in
 		self.wrapper.alpha = CGFloat(value.number)
 	}
 
@@ -3136,7 +3136,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property drawable
 	 * @since 0.7.0
 	 */
-	@objc open lazy var drawable = JavaScriptProperty(boolean: false) { value in
+	@objc public lazy var drawable = JavaScriptProperty(boolean: false) { value in
 		self.wrapper.drawable = value.boolean
 	}
 
@@ -3145,7 +3145,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property clipped
 	 * @since 0.7.0
 	 */
-	@objc open lazy var clipped = JavaScriptProperty(boolean: true) { value in
+	@objc public lazy var clipped = JavaScriptProperty(boolean: true) { value in
 		self.content.clipsToBounds = value.boolean
 	}
 
@@ -3154,7 +3154,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @property paged
 	 * @since 0.7.0
 	 */
-	@objc open lazy var paged = JavaScriptProperty(boolean: false) { value in
+	@objc public lazy var paged = JavaScriptProperty(boolean: false) { value in
 		self.scrollableView?.paged = value.boolean
 	}
 

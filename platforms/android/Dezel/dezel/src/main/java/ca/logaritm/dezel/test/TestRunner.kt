@@ -7,7 +7,7 @@ import ca.logaritm.dezel.core.getResource
 open class TestRunner: ApplicationActivity() {
 
 	//--------------------------------------------------------------------------
-	// MARK: Properties
+	// Properties
 	//--------------------------------------------------------------------------
 
 	/**
@@ -27,7 +27,7 @@ open class TestRunner: ApplicationActivity() {
 		private set
 
 	//--------------------------------------------------------------------------
-	// MARK: Methods
+	// Methods
 	//--------------------------------------------------------------------------
 
 	/**

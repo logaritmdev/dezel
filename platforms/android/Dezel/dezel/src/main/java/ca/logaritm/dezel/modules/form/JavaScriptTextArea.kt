@@ -4,8 +4,8 @@ import android.util.Log
 import android.util.SizeF
 import ca.logaritm.dezel.application.application
 import ca.logaritm.dezel.core.*
-import ca.logaritm.dezel.extension.clamp
-import ca.logaritm.dezel.extension.max
+import ca.logaritm.dezel.extension.type.clamp
+import ca.logaritm.dezel.extension.type.max
 import ca.logaritm.dezel.layout.LayoutNode
 import ca.logaritm.dezel.modules.view.JavaScriptView
 import ca.logaritm.dezel.view.TextArea
@@ -27,248 +27,6 @@ open class JavaScriptTextArea(context: JavaScriptContext) : JavaScriptView(conte
 	//--------------------------------------------------------------------------
 	// Properties
 	//--------------------------------------------------------------------------
-
-	/**
-	 * The text area's value.
-	 * @property value
-	 * @since 0.7.0
-	 */
-	open val value: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, "") { value ->
-			this.view.value = value.string
-		}
-	}
-
-	/**
-	 * The text area's placeholder.
-	 * @property placeholder
-	 * @since 0.7.0
-	 */
-	open val placeholder: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, "") { value ->
-			this.view.placeholder = value.string
-		}
-	}
-
-	/**
-	 * The text area's placeholder color.
-	 * @property placeholderColor
-	 * @since 0.7.0
-	 */
-	open val placeholderColor: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, "gray") { value ->
-			this.view.placeholderColor = Color.parse(value.string)
-		}
-	}
-
-	/**
-	 * The text area's autocorrect status.
-	 * @property autocorrect
-	 * @since 0.7.0
-	 */
-	open val autocorrect: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, true) { value ->
-			this.view.autocorrect = value.boolean
-		}
-	}
-
-	/**
-	 * The text area's autocapitalize status.
-	 * @property autocapitalize
-	 * @since 0.7.0
-	 */
-	open val autocapitalize: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, true) { value ->
-			this.view.autocapitalize = value.boolean
-		}
-	}
-
-	/**
-	 * The text area's font family.
-	 * @property fontFamily
-	 * @since 0.7.0
-	 */
-	open val fontFamily: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, "default") { value ->
-			this.view.fontFamily = value.string
-		}
-	}
-
-	/**
-	 * The text area's font weight.
-	 * @property fontWeight
-	 * @since 0.7.0
-	 */
-	open val fontWeight: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, "normal") { value ->
-			this.view.fontWeight = value.string
-		}
-	}
-
-	/**
-	 * The text area's font stylerNode.
-	 * @property fontStyle
-	 * @since 0.7.0
-	 */
-	open val fontStyle: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, "normal") { value ->
-			this.view.fontStyle = value.string
-		}
-	}
-
-	/**
-	 * The text area's font size.
-	 * @property fontSize
-	 * @since 0.7.0
-	 */
-	open val fontSize: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 17.0) {
-			this.invalidateFontSize()
-		}
-	}
-
-	/**
-	 * The text area's minimum font size.
-	 * @property minFontSize
-	 * @since 0.7.0
-	 */
-	open val minFontSize: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.0) {
-			this.invalidateFontSize()
-		}
-	}
-
-	/**
-	 * The text area's maximum font size.
-	 * @property maxFontSize
-	 * @since 0.7.0
-	 */
-	open val maxFontSize: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, Double.max) {
-			this.invalidateFontSize()
-		}
-	}
-
-	/**
-	 * The text area's text color.
-	 * @property textColor
-	 * @since 0.7.0
-	 */
-	open val textColor: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, "#000") { value ->
-			this.view.setTextColor(Color.parse(value.string))
-		}
-	}
-
-	/**
-	 * The text area's text alignment.
-	 * @property textAlignment
-	 * @since 0.7.0
-	 */
-	open val textAlignment: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, "start") { value ->
-			this.view.textAlignment = this.getTextAlignment(value.string)
-		}
-	}
-
-	/**
-	 * The text area's text location.
-	 * @property textLocation
-	 * @since 0.7.0
-	 */
-	open val textLocation: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, "middle") { value ->
-			this.view.textLocation = this.getTextLocation(value.string)
-		}
-	}
-
-	/**
-	 * The text area's text kerning.
-	 * @property textKerning
-	 * @since 0.7.0
-	 */
-	open val textKerning: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.0) { value ->
-			this.view.textKerning = value.number.toFloat()
-		}
-	}
-
-	/**
-	 * The text area's text leading.
-	 * @property textLeading
-	 * @since 0.7.0
-	 */
-	open val textLeading: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.0) { value ->
-			this.view.textLeading = value.number.toFloat()
-		}
-	}
-
-	/**
-	 * The text area's text shadow blur.
-	 * @property textShadowBlur
-	 * @since 0.7.0
-	 */
-	open val textShadowBlur: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.0) { value ->
-			this.view.textShadowBlur = value.number.toFloat()
-		}
-	}
-
-	/**
-	 * The text area's text shadow color.
-	 * @property textShadowColor
-	 * @since 0.7.0
-	 */
-	open val textShadowColor: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, "#000") { value ->
-			this.view.textShadowColor = Color.parse(value.string)
-		}
-	}
-
-	/**
-	 * The text area's text shadow offset top.
-	 * @property textShadowOffsetTop
-	 * @since 0.7.0
-	 */
-	open val textShadowOffsetTop: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.0) { value ->
-			this.view.textShadowOffsetTop = value.number.toFloat()
-		}
-	}
-
-	/**
-	 * The text area's text shadow offset left.
-	 * @property textShadowOffsetLeft
-	 * @since 0.7.0
-	 */
-	open val textShadowOffsetLeft: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.0) { value ->
-			this.view.textShadowOffsetLeft = value.number.toFloat()
-		}
-	}
-
-	/**
-	 * The text area's text decoration.
-	 * @property textDecoration
-	 * @since 0.7.0
-	 */
-	open val textDecoration: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, "none") { value ->
-			this.view.textDecoration = this.getTextDecoration(value.string)
-		}
-	}
-
-	/**
-	 * The text area's text transform.
-	 * @property textTransform
-	 * @since 0.7.0
-	 */
-	open val textTransform: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, "none") { value ->
-			this.view.textTransform = this.getTextTransform(value.string)
-		}
-	}
 
 	/**
 	 * @property view
@@ -345,7 +103,7 @@ open class JavaScriptTextArea(context: JavaScriptContext) : JavaScriptView(conte
 	 * @hidden
 	 */
 	override fun onChange(textArea: TextArea, value: String) {
-		this.value.set(value)
+		this.value.reset(value)
 		this.callMethod("nativeOnChange", arrayOf(this.context.createString(value)), null)
 	}
 
@@ -493,6 +251,251 @@ open class JavaScriptTextArea(context: JavaScriptContext) : JavaScriptView(conte
 	// JS Properties
 	//--------------------------------------------------------------------------
 
+
+	/**
+	 * The text area's toValue.
+	 * @property value
+	 * @since 0.7.0
+	 */
+	public val value by lazy {
+		JavaScriptProperty("") { value ->
+			this.view.value = value.string
+		}
+	}
+
+	/**
+	 * The text area's placeholder.
+	 * @property placeholder
+	 * @since 0.7.0
+	 */
+	public val placeholder by lazy {
+		JavaScriptProperty("") { value ->
+			this.view.placeholder = value.string
+		}
+	}
+
+	/**
+	 * The text area's placeholder color.
+	 * @property placeholderColor
+	 * @since 0.7.0
+	 */
+	public val placeholderColor by lazy {
+		JavaScriptProperty("gray") { value ->
+			this.view.placeholderColor = Color.parse(value.string)
+		}
+	}
+
+	/**
+	 * The text area's autocorrect status.
+	 * @property autocorrect
+	 * @since 0.7.0
+	 */
+	public val autocorrect by lazy {
+		JavaScriptProperty(true) { value ->
+			this.view.autocorrect = value.boolean
+		}
+	}
+
+	/**
+	 * The text area's autocapitalize status.
+	 * @property autocapitalize
+	 * @since 0.7.0
+	 */
+	public val autocapitalize by lazy {
+		JavaScriptProperty(true) { value ->
+			this.view.autocapitalize = value.boolean
+		}
+	}
+
+	/**
+	 * The text area's font family.
+	 * @property fontFamily
+	 * @since 0.7.0
+	 */
+	public val fontFamily by lazy {
+		JavaScriptProperty("default") { value ->
+			this.view.fontFamily = value.string
+		}
+	}
+
+	/**
+	 * The text area's font weight.
+	 * @property fontWeight
+	 * @since 0.7.0
+	 */
+	public val fontWeight by lazy {
+		JavaScriptProperty("normal") { value ->
+			this.view.fontWeight = value.string
+		}
+	}
+
+	/**
+	 * The text area's font stylerNode.
+	 * @property fontStyle
+	 * @since 0.7.0
+	 */
+	public val fontStyle by lazy {
+		JavaScriptProperty("normal") { value ->
+			this.view.fontStyle = value.string
+		}
+	}
+
+	/**
+	 * The text area's font size.
+	 * @property fontSize
+	 * @since 0.7.0
+	 */
+	public val fontSize by lazy {
+		JavaScriptProperty(17.0) {
+			this.invalidateFontSize()
+		}
+	}
+
+	/**
+	 * The text area's minimum font size.
+	 * @property minFontSize
+	 * @since 0.7.0
+	 */
+	public val minFontSize by lazy {
+		JavaScriptProperty(0.0) {
+			this.invalidateFontSize()
+		}
+	}
+
+	/**
+	 * The text area's maximum font size.
+	 * @property maxFontSize
+	 * @since 0.7.0
+	 */
+	public val maxFontSize by lazy {
+		JavaScriptProperty(Double.max) {
+			this.invalidateFontSize()
+		}
+	}
+
+	/**
+	 * The text area's text color.
+	 * @property textColor
+	 * @since 0.7.0
+	 */
+	public val textColor by lazy {
+		JavaScriptProperty("#000") { value ->
+			this.view.setTextColor(Color.parse(value.string))
+		}
+	}
+
+	/**
+	 * The text area's text alignment.
+	 * @property textAlignment
+	 * @since 0.7.0
+	 */
+	public val textAlignment by lazy {
+		JavaScriptProperty("start") { value ->
+			this.view.textAlignment = this.getTextAlignment(value.string)
+		}
+	}
+
+	/**
+	 * The text area's text location.
+	 * @property textLocation
+	 * @since 0.7.0
+	 */
+	public val textLocation by lazy {
+		JavaScriptProperty("middle") { value ->
+			this.view.textLocation = this.getTextLocation(value.string)
+		}
+	}
+
+	/**
+	 * The text area's text kerning.
+	 * @property textKerning
+	 * @since 0.7.0
+	 */
+	public val textKerning by lazy {
+		JavaScriptProperty(0.0) { value ->
+			this.view.textKerning = value.number.toFloat()
+		}
+	}
+
+	/**
+	 * The text area's text leading.
+	 * @property textLeading
+	 * @since 0.7.0
+	 */
+	public val textLeading by lazy {
+		JavaScriptProperty(0.0) { value ->
+			this.view.textLeading = value.number.toFloat()
+		}
+	}
+
+	/**
+	 * The text area's text shadow blur.
+	 * @property textShadowBlur
+	 * @since 0.7.0
+	 */
+	public val textShadowBlur by lazy {
+		JavaScriptProperty(0.0) { value ->
+			this.view.textShadowBlur = value.number.toFloat()
+		}
+	}
+
+	/**
+	 * The text area's text shadow color.
+	 * @property textShadowColor
+	 * @since 0.7.0
+	 */
+	public val textShadowColor by lazy {
+		JavaScriptProperty("#000") { value ->
+			this.view.textShadowColor = Color.parse(value.string)
+		}
+	}
+
+	/**
+	 * The text area's text shadow offset top.
+	 * @property textShadowOffsetTop
+	 * @since 0.7.0
+	 */
+	public val textShadowOffsetTop by lazy {
+		JavaScriptProperty(0.0) { value ->
+			this.view.textShadowOffsetTop = value.number.toFloat()
+		}
+	}
+
+	/**
+	 * The text area's text shadow offset left.
+	 * @property textShadowOffsetLeft
+	 * @since 0.7.0
+	 */
+	public val textShadowOffsetLeft by lazy {
+		JavaScriptProperty(0.0) { value ->
+			this.view.textShadowOffsetLeft = value.number.toFloat()
+		}
+	}
+
+	/**
+	 * The text area's text decoration.
+	 * @property textDecoration
+	 * @since 0.7.0
+	 */
+	public val textDecoration by lazy {
+		JavaScriptProperty("none") { value ->
+			this.view.textDecoration = this.getTextDecoration(value.string)
+		}
+	}
+
+	/**
+	 * The text area's text transform.
+	 * @property textTransform
+	 * @since 0.7.0
+	 */
+	public val textTransform by lazy {
+		JavaScriptProperty("none") { value ->
+			this.view.textTransform = this.getTextTransform(value.string)
+		}
+	}
+
+	//--------------------------------------------------------------------------
+
 	/**
 	 * @method jsGet_value
 	 * @since 0.7.0
@@ -510,7 +513,7 @@ open class JavaScriptTextArea(context: JavaScriptContext) : JavaScriptView(conte
 	 */
 	@Suppress("unused")
 	open fun jsSet_value(callback: JavaScriptSetterCallback) {
-		this.value.set(callback.value, this)
+		this.value.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -532,7 +535,7 @@ open class JavaScriptTextArea(context: JavaScriptContext) : JavaScriptView(conte
 	 */
 	@Suppress("unused")
 	open fun jsSet_placeholder(callback: JavaScriptSetterCallback) {
-		this.placeholder.set(callback.value, this)
+		this.placeholder.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -554,7 +557,7 @@ open class JavaScriptTextArea(context: JavaScriptContext) : JavaScriptView(conte
 	 */
 	@Suppress("unused")
 	open fun jsSet_placeholderColor(callback: JavaScriptSetterCallback) {
-		this.placeholderColor.set(callback.value, this)
+		this.placeholderColor.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -576,7 +579,7 @@ open class JavaScriptTextArea(context: JavaScriptContext) : JavaScriptView(conte
 	 */
 	@Suppress("unused")
 	open fun jsSet_autocorrect(callback: JavaScriptSetterCallback) {
-		this.autocorrect.set(callback.value, this)
+		this.autocorrect.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -598,7 +601,7 @@ open class JavaScriptTextArea(context: JavaScriptContext) : JavaScriptView(conte
 	 */
 	@Suppress("unused")
 	open fun jsSet_autocapitalize(callback: JavaScriptSetterCallback) {
-		this.autocapitalize.set(callback.value, this)
+		this.autocapitalize.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -620,7 +623,7 @@ open class JavaScriptTextArea(context: JavaScriptContext) : JavaScriptView(conte
 	 */
 	@Suppress("unused")
 	open fun jsSet_fontFamily(callback: JavaScriptSetterCallback) {
-		this.fontFamily.set(callback.value, this)
+		this.fontFamily.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -642,7 +645,7 @@ open class JavaScriptTextArea(context: JavaScriptContext) : JavaScriptView(conte
 	 */
 	@Suppress("unused")
 	open fun jsSet_fontWeight(callback: JavaScriptSetterCallback) {
-		this.fontWeight.set(callback.value, this)
+		this.fontWeight.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -664,7 +667,7 @@ open class JavaScriptTextArea(context: JavaScriptContext) : JavaScriptView(conte
 	 */
 	@Suppress("unused")
 	open fun jsSet_fontStyle(callback: JavaScriptSetterCallback) {
-		this.fontStyle.set(callback.value, this)
+		this.fontStyle.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -686,7 +689,7 @@ open class JavaScriptTextArea(context: JavaScriptContext) : JavaScriptView(conte
 	 */
 	@Suppress("unused")
 	open fun jsSet_fontSize(callback: JavaScriptSetterCallback) {
-		this.fontSize.set(callback.value, this)
+		this.fontSize.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -708,7 +711,7 @@ open class JavaScriptTextArea(context: JavaScriptContext) : JavaScriptView(conte
 	 */
 	@Suppress("unused")
 	open fun jsSet_minFontSize(callback: JavaScriptSetterCallback) {
-		this.minFontSize.set(callback.value, this)
+		this.minFontSize.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -730,7 +733,7 @@ open class JavaScriptTextArea(context: JavaScriptContext) : JavaScriptView(conte
 	 */
 	@Suppress("unused")
 	open fun jsSet_maxFontSize(callback: JavaScriptSetterCallback) {
-		this.maxFontSize.set(callback.value, this)
+		this.maxFontSize.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -752,7 +755,7 @@ open class JavaScriptTextArea(context: JavaScriptContext) : JavaScriptView(conte
 	 */
 	@Suppress("unused")
 	open fun jsSet_textColor(callback: JavaScriptSetterCallback) {
-		this.textColor.set(callback.value, this)
+		this.textColor.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -774,7 +777,7 @@ open class JavaScriptTextArea(context: JavaScriptContext) : JavaScriptView(conte
 	 */
 	@Suppress("unused")
 	open fun jsSet_textAlignment(callback: JavaScriptSetterCallback) {
-		this.textAlignment.set(callback.value, this)
+		this.textAlignment.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -796,7 +799,7 @@ open class JavaScriptTextArea(context: JavaScriptContext) : JavaScriptView(conte
 	 */
 	@Suppress("unused")
 	open fun jsSet_textLocation(callback: JavaScriptSetterCallback) {
-		this.textLocation.set(callback.value, this)
+		this.textLocation.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -818,7 +821,7 @@ open class JavaScriptTextArea(context: JavaScriptContext) : JavaScriptView(conte
 	 */
 	@Suppress("unused")
 	open fun jsSet_textKerning(callback: JavaScriptSetterCallback) {
-		this.textKerning.set(callback.value, this)
+		this.textKerning.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -840,7 +843,7 @@ open class JavaScriptTextArea(context: JavaScriptContext) : JavaScriptView(conte
 	 */
 	@Suppress("unused")
 	open fun jsSet_textLeading(callback: JavaScriptSetterCallback) {
-		this.textLeading.set(callback.value, this)
+		this.textLeading.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -862,7 +865,7 @@ open class JavaScriptTextArea(context: JavaScriptContext) : JavaScriptView(conte
 	 */
 	@Suppress("unused")
 	open fun jsSet_textDecoration(callback: JavaScriptSetterCallback) {
-		this.textDecoration.set(callback.value, this)
+		this.textDecoration.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -884,7 +887,7 @@ open class JavaScriptTextArea(context: JavaScriptContext) : JavaScriptView(conte
 	 */
 	@Suppress("unused")
 	open fun jsSet_textTransform(callback: JavaScriptSetterCallback) {
-		this.textTransform.set(callback.value, this)
+		this.textTransform.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -906,7 +909,7 @@ open class JavaScriptTextArea(context: JavaScriptContext) : JavaScriptView(conte
 	 */
 	@Suppress("unused")
 	open fun jsSet_textShadowBlur(callback: JavaScriptSetterCallback) {
-		this.textShadowBlur.set(callback.value, this)
+		this.textShadowBlur.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -928,7 +931,7 @@ open class JavaScriptTextArea(context: JavaScriptContext) : JavaScriptView(conte
 	 */
 	@Suppress("unused")
 	open fun jsSet_textShadowColor(callback: JavaScriptSetterCallback) {
-		this.textShadowColor.set(callback.value, this)
+		this.textShadowColor.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -950,7 +953,7 @@ open class JavaScriptTextArea(context: JavaScriptContext) : JavaScriptView(conte
 	 */
 	@Suppress("unused")
 	open fun jsSet_textShadowOffsetTop(callback: JavaScriptSetterCallback) {
-		this.fontFamily.set(callback.value, this)
+		this.fontFamily.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -972,7 +975,7 @@ open class JavaScriptTextArea(context: JavaScriptContext) : JavaScriptView(conte
 	 */
 	@Suppress("unused")
 	open fun jsSet_textShadowOffsetLeft(callback: JavaScriptSetterCallback) {
-		this.textShadowOffsetLeft.set(callback.value, this)
+		this.textShadowOffsetLeft.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------

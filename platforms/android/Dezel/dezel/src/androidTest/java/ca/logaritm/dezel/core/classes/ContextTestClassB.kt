@@ -8,14 +8,17 @@ internal class ContextTestClassB(context: JavaScriptContext) : JavaScriptClass(c
 		JavaScriptContextTest.testConstructorBCallback?.invoke(callback)
 	}
 
+	@Suppress("unused")
 	fun jsFunction_testFunction(callback: JavaScriptFunctionCallback) {
 		JavaScriptContextTest.testFunctionCallback?.invoke(callback)
 	}
 
+	@Suppress("unused")
 	fun jsGet_testProperty(callback: JavaScriptGetterCallback) {
 		JavaScriptContextTest.testPropertyGetterCallback?.invoke(callback)
 	}
 
+	@Suppress("unused")
 	fun jsSet_testProperty(callback: JavaScriptSetterCallback) {
 		JavaScriptContextTest.testPropertySetterCallback?.invoke(callback)
 	}

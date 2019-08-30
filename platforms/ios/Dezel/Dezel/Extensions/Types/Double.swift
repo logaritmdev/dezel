@@ -59,9 +59,9 @@ internal extension Double {
 public extension Double {
 
 	/**
+	 * Converts to a string.
 	 * @method toString
 	 * @since 0.7.0
-	 * @hidden
 	 */
 	func toString() -> String {
 		return self.truncatingRemainder(dividingBy: 1) == 0 ? String(format: "%.0f", self) : String(self)

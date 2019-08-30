@@ -10,6 +10,10 @@ import android.util.SizeF
 import android.view.MotionEvent
 import android.view.View
 import ca.logaritm.dezel.extension.*
+import ca.logaritm.dezel.extension.text.SpannableString
+import ca.logaritm.dezel.extension.type.isHTML
+import ca.logaritm.dezel.extension.type.normalize
+import ca.logaritm.dezel.extension.view.setMeasuredFrame
 import ca.logaritm.dezel.font.Font
 import ca.logaritm.dezel.geom.Rect
 import ca.logaritm.dezel.geom.Size
@@ -511,7 +515,7 @@ open class TextView(context: Context, listener: TextViewListener?) : View(contex
 	}
 
 	/**
-	 * Updates the spanned text string.
+	 * Updates the spanned text toString.
 	 * @method updateSpannedText
 	 * @since 0.7.0
 	 */

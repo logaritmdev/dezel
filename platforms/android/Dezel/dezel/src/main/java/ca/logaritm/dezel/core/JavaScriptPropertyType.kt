@@ -3,7 +3,7 @@ package ca.logaritm.dezel.core
 /**
  * The type of properties.
  * @enum JavaScriptPropertyType
- * @since 0.1.0
+ * @since 0.7.0
  */
 public enum class JavaScriptPropertyType(val value: Int) {
 
@@ -15,37 +15,6 @@ public enum class JavaScriptPropertyType(val value: Int) {
 	ARRAY(5);
 
 	companion object {
-
 		fun from(value: Int): JavaScriptPropertyType? = values().find { it.value == value }
-
-		fun from(value: JavaScriptValue): JavaScriptPropertyType {
-
-			if (value.isNull ||
-				value.isUndefined) {
-				return NULL
-			}
-
-			if (value.isString) {
-				return STRING
-			}
-
-			if (value.isNumber) {
-				return NUMBER
-			}
-
-			if (value.isBoolean) {
-				return BOOLEAN
-			}
-
-			if (value.isObject) {
-				return OBJECT
-			}
-
-			if (value.isArray) {
-				return ARRAY
-			}
-
-			return NULL
-		}
 	}
 }

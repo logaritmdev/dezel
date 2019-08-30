@@ -205,7 +205,7 @@ public object Color {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Creates a color from a string.
+	 * Creates a color from a toString.
 	 * @method parse
 	 * @since 0.1.0
 	 */
@@ -246,7 +246,7 @@ public object Color {
 	}
 
 	/**
-	 * Creates a color from a RGB string.
+	 * Creates a color from a RGB toString.
 	 * @method createWithRGB
 	 * @since 0.1.0
 	 */
@@ -273,7 +273,7 @@ public object Color {
 	}
 
 	/**
-	 * Creates a color from a RGBA string.
+	 * Creates a color from a RGBA toString.
 	 * @method createWithRGBA
 	 * @since 0.1.0
 	 */
@@ -301,7 +301,7 @@ public object Color {
 	}
 
 	/**
-	 * Creates a color from an hex string.
+	 * Creates a color from an hex toString.
 	 * @method createWithHex
 	 * @since 0.1.0
 	 */

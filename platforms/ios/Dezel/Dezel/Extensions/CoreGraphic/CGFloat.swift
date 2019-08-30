@@ -41,24 +41,6 @@ internal extension CGFloat {
 	}
 
 	/**
-	 * @method toCenterOf
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	func toCenterOf(_ value: CGFloat) -> CGFloat {
-		return self / 2 - value / 2
-	}
-
-	/**
-	 * @method toRightOf
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	func toRightOf(_ value: CGFloat) -> CGFloat {
-		return self - value
-	}
-
-	/**
 	 * @method toDeg
 	 * @since 0.7.0
 	 * @hidden

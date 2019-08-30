@@ -30,48 +30,6 @@ open class JavaScriptApplication(context: JavaScriptContext) : JavaScriptClass(c
 	public lateinit var window: JavaScriptWindow
 		private set
 
-	/**
-	 * The application's status bar visibility.
-	 * @property statusBarVisible
-	 * @since 0.7.0
-	 */
-	open val statusBarVisible: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, true) { value ->
-			this.context.application.statusBarVisible = value.boolean
-		}
-	}
-
-	/**
-	 * The application's status bar foreground color.
-	 * @property statusBarForegroundColor
-	 * @since 0.7.0
-	 */
-	open val statusBarForegroundColor: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, "black") { value ->
-			this.context.application.statusBarForegroundColor = Color.parse(value.string)
-		}
-	}
-
-	/**
-	 * The application's status bar background color.
-	 * @property statusBarBackgroundColor
-	 * @since 0.7.0
-	 */
-	open val statusBarBackgroundColor: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, "transparent") { value ->
-			this.context.application.statusBarBackgroundColor = Color.parse(value.string)
-		}
-	}
-
-	/**
-	 * The application's badge.
-	 * @property badge
-	 * @since 0.7.0
-	 */
-	open val badge: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.0)
-	}
-
 	//--------------------------------------------------------------------------
 	// Methods
 	//--------------------------------------------------------------------------
@@ -127,6 +85,51 @@ open class JavaScriptApplication(context: JavaScriptContext) : JavaScriptClass(c
 	// JS Properties
 	//--------------------------------------------------------------------------
 
+
+	/**
+	 * The application's status bar visibility.
+	 * @property statusBarVisible
+	 * @since 0.7.0
+	 */
+	public val statusBarVisible by lazy {
+		JavaScriptProperty(true) { value ->
+			this.context.application.statusBarVisible = value.boolean
+		}
+	}
+
+	/**
+	 * The application's status bar foreground color.
+	 * @property statusBarForegroundColor
+	 * @since 0.7.0
+	 */
+	public val statusBarForegroundColor by lazy {
+		JavaScriptProperty("black") { value ->
+			this.context.application.statusBarForegroundColor = Color.parse(value.string)
+		}
+	}
+
+	/**
+	 * The application's status bar background color.
+	 * @property statusBarBackgroundColor
+	 * @since 0.7.0
+	 */
+	public val statusBarBackgroundColor by lazy {
+		JavaScriptProperty("transparent") { value ->
+			this.context.application.statusBarBackgroundColor = Color.parse(value.string)
+		}
+	}
+
+	/**
+	 * The application's badge.
+	 * @property badge
+	 * @since 0.7.0
+	 */
+	public val badge by lazy {
+		JavaScriptProperty(0.0)
+	}
+
+	//--------------------------------------------------------------------------
+
 	/**
 	 * @method jsGet_window
 	 * @since 0.7.0
@@ -166,7 +169,7 @@ open class JavaScriptApplication(context: JavaScriptContext) : JavaScriptClass(c
 	 */
 	@Suppress("unused")
 	open fun jsSet_statusBarVisible(callback: JavaScriptSetterCallback) {
-		this.statusBarVisible.set(callback.value, this)
+		this.statusBarVisible.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -188,7 +191,7 @@ open class JavaScriptApplication(context: JavaScriptContext) : JavaScriptClass(c
 	 */
 	@Suppress("unused")
 	open fun jsSet_statusBarForegroundColor(callback: JavaScriptSetterCallback) {
-		this.statusBarForegroundColor.set(callback.value, this)
+		this.statusBarForegroundColor.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -210,7 +213,7 @@ open class JavaScriptApplication(context: JavaScriptContext) : JavaScriptClass(c
 	 */
 	@Suppress("unused")
 	open fun jsSet_statusBarBackgroundColor(callback: JavaScriptSetterCallback) {
-		this.statusBarBackgroundColor.set(callback.value, this)
+		this.statusBarBackgroundColor.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -232,7 +235,7 @@ open class JavaScriptApplication(context: JavaScriptContext) : JavaScriptClass(c
 	 */
 	@Suppress("unused")
 	open fun jsSet_badge(callback: JavaScriptSetterCallback) {
-		this.badge.set(callback.value, this)
+		this.badge.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------

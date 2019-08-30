@@ -5,35 +5,35 @@ import java.lang.reflect.Method
 import kotlin.reflect.KClass
 
 /**
- * The type alias for function callback.
+ * The type alias for function handler.
  * @alias JavaScriptFinalizeHandler
  * @since 0.1.0
  */
 public typealias JavaScriptFinalizeHandler = (JavaScriptFinalizeCallback) -> Unit
 
 /**
- * The type alias for function callback.
+ * The type alias for function handler.
  * @alias JavaScriptFunctionCallback
  * @since 0.1.0
  */
 public typealias JavaScriptFunctionHandler = (JavaScriptFunctionCallback) -> Unit
 
 /**
- * The type alias for property getter callback.
+ * The type alias for property getter handler.
  * @alias JavaScriptGetterHandler
  * @since 0.1.0
  */
 public typealias JavaScriptGetterHandler = (JavaScriptGetterCallback) -> Unit
 
 /**
- * The type alias for property setter callback.
+ * The type alias for property setter handler.
  * @alias JavaScriptSetterHandler
  * @since 0.1.0
  */
 public typealias JavaScriptSetterHandler = (JavaScriptSetterCallback) -> Unit
 
 /**
- * The type alias for the exception callback.
+ * The type alias for the exception handler.
  * @alias JavaScriptExceptionHandler
  * @since 0.1.0
  */
@@ -47,63 +47,49 @@ public typealias JavaScriptExceptionHandler = (JavaScriptValue) -> Unit
 public typealias JavaScriptArguments = Array<JavaScriptValue?>
 
 /**
- * The object for each callback.
+ * The object for each handler.
  * @alias JavaScriptForOwnHandler
  * @since 0.7.0
  */
 public typealias JavaScriptForOwnHandler = (String, JavaScriptValue) -> Unit
 
 /**
- * The array for each callback.
+ * The array for each handler.
  * @alias JavaScriptForEachHandler
  * @since 0.7.0
  */
 public typealias JavaScriptForEachHandler = (Int, JavaScriptValue) -> Unit
 
 /**
- * The array for each callback.
- * @alias JavaScriptPropertyChangeHandler
+ * The property change handler.
+ * @alias JavaScriptPropertyHandler
  * @since 0.7.0
  */
-public typealias JavaScriptPropertyChangeHandler = (value: JavaScriptProperty) -> Unit
+public typealias JavaScriptPropertyHandler = (JavaScriptProperty) -> Unit
 
 /**
- * The builder for each callback alias.
+ * The builder for each handler alias.
  * @alias JavaScriptBuilderForEachHandler
  * @since 0.2.0
  */
 public typealias JavaScriptBuilderForEachHandler = (String, JavaScriptBuilder.Type, Method) -> Unit
 
 /**
- * @function toHandle
- * @since 0.1.0
- * @hidden
- */
-internal fun toHandle(value: JavaScriptValue?, context: JavaScriptContext): Long {
-
-    if (value == null) {
-        return context.jsnull.handle
-    }
-
-    if (value is JavaScriptClass) {
-        return toHandle(value.instance, context)
-    }
-
-    return value.handle
-}
-
-/**
- * @function toHandle
+ * @function toJs
  * @since 0.7.0
  * @hidden
  */
-internal fun toHandle(property: JavaScriptProperty?, context: JavaScriptContext): Long {
+internal fun toJs(value: JavaScriptValue?, context: JavaScriptContext): Long {
+    return value?.toHandle(context) ?: context.jsnull.handle
+}
 
-    if (property == null) {
-        return context.jsnull.handle
-    }
-
-    return toHandle(property.value, context)
+/**
+ * @function toJs
+ * @since 0.7.0
+ * @hidden
+ */
+internal fun toJs(value: JavaScriptProperty?, context: JavaScriptContext): Long {
+    return value?.toHandle(context) ?: context.jsnull.handle
 }
 
 /**
@@ -118,7 +104,7 @@ internal fun toArgv(values: JavaScriptArguments?, context: JavaScriptContext) : 
     }
 
     val args = LongArray(values.size)
-    for (i in values.indices) args[i] = toHandle(values[i], context)
+    for (i in values.indices) args[i] = toJs(values[i], context)
     return args
 }
 

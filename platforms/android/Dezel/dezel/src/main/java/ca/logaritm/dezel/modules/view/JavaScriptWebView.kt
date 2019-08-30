@@ -5,7 +5,8 @@ import android.util.SizeF
 import ca.logaritm.dezel.application.application
 import ca.logaritm.dezel.core.JavaScriptContext
 import ca.logaritm.dezel.core.JavaScriptFunctionCallback
-import ca.logaritm.dezel.extension.ceiled
+import ca.logaritm.dezel.extension.fatalError
+import ca.logaritm.dezel.extension.util.ceiled
 import ca.logaritm.dezel.view.WebView
 import ca.logaritm.dezel.view.WebViewListener
 import ca.logaritm.dezel.view.graphic.Convert
@@ -127,6 +128,11 @@ open class JavaScriptWebView(context: JavaScriptContext) : JavaScriptView(contex
 	 */
 	@Suppress("unused")
  	open fun jsFunction_load(callback: JavaScriptFunctionCallback) {
+
+		if (callback.arguments < 1) {
+			fatalError("Method JavaScriptWebView.load() requires 1 argument.")
+		}
+
 		this.view.loadUrl(callback.argument(0).string)
 	}
 
@@ -137,6 +143,11 @@ open class JavaScriptWebView(context: JavaScriptContext) : JavaScriptView(contex
 	 */
 	@Suppress("unused")
 	open fun jsFunction_loadHTML(callback: JavaScriptFunctionCallback) {
+
+		if (callback.arguments < 1) {
+			fatalError("Method JavaScriptWebView.loadHTML() requires 1 argument.")
+		}
+
 		this.view.loadDataWithBaseURL("file:///android_asset/app", callback.argument(0).string, "text/html; charset=utf-8", "UTF-8", "")
 	}
 

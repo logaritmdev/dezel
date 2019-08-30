@@ -3,7 +3,8 @@ package ca.logaritm.dezel.modules.view
 
 import ca.logaritm.dezel.core.JavaScriptContext
 import ca.logaritm.dezel.core.JavaScriptFunctionCallback
-import ca.logaritm.dezel.extension.removeFromParent
+import ca.logaritm.dezel.extension.fatalError
+import ca.logaritm.dezel.extension.view.removeFromParent
 import ca.logaritm.dezel.view.geom.Point3D
 import ca.logaritm.dezel.view.geom.Transform3D
 
@@ -18,14 +19,6 @@ open class JavaScriptWindow(context: JavaScriptContext): JavaScriptView(context)
 	//--------------------------------------------------------------------------
 	// Methods
 	//--------------------------------------------------------------------------
-
-	/**
-	 * @constructor
-	 * @since 0.7.0
-	 */
-	init {
-
-	}
 
 	/**
 	 * Removes the root.
@@ -46,7 +39,7 @@ open class JavaScriptWindow(context: JavaScriptContext): JavaScriptView(context)
 	}
 
 	//--------------------------------------------------------------------------
-	// JavaScript Functions
+	// JS Functions
 	//--------------------------------------------------------------------------
 
 	/**
@@ -56,6 +49,10 @@ open class JavaScriptWindow(context: JavaScriptContext): JavaScriptView(context)
 	 */
 	@Suppress("unused")
 	open fun jsFunction_viewFromPoint(callback: JavaScriptFunctionCallback) {
+
+		if (callback.arguments < 4) {
+			fatalError("Method JavaScriptWindow.viewFromPoint() requires 4 arguments.")
+		}
 
 		val x = callback.argument(0).number
 		val y = callback.argument(1).number

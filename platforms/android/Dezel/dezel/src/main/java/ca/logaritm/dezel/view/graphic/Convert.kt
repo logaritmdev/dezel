@@ -1,9 +1,9 @@
 package ca.logaritm.dezel.view.graphic
 
 import android.util.SizeF
-import ca.logaritm.dezel.extension.max
-import ca.logaritm.dezel.extension.min
-import ca.logaritm.dezel.extension.toValidFloat
+import ca.logaritm.dezel.extension.type.max
+import ca.logaritm.dezel.extension.type.min
+import ca.logaritm.dezel.extension.type.toValidFloat
 
 /**
  * Android unit conversion utility.
@@ -20,7 +20,7 @@ public object Convert {
 	public var density: Float = 1f
 
 	/**
-	 * Converts dp value to pixels.
+	 * Converts dp toValue to pixels.
 	 * @method toPx
 	 * @since 0.1.0
 	 */
@@ -31,7 +31,7 @@ public object Convert {
 	}
 
 	/**
-	 * Converts dp value to pixels.
+	 * Converts dp toValue to pixels.
 	 * @method toPx
 	 * @since 0.1.0
 	 */
@@ -43,7 +43,7 @@ public object Convert {
 	}
 
 	/**
-	 * Converts a pixel value to dp.
+	 * Converts a pixel toValue to dp.
 	 * @method toDp
 	 * @since 0.1.0
 	 */
@@ -70,7 +70,7 @@ public object Convert {
 	}
 
 	/**
-	 * Converts dp value to pixels off a viewport object.
+	 * Converts dp toValue to pixels off a viewport object.
 	 * @method toPx
 	 * @since 0.1.0
 	 */

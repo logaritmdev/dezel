@@ -1,4 +1,3 @@
-
 /**
  * Indicate whether an object is locked.
  * @function isLocked
@@ -16,5 +15,3 @@ func isLocked(_ lock: AnyObject?, key: AnyObject?) -> Bool {
 
 	return true
 }
-
-

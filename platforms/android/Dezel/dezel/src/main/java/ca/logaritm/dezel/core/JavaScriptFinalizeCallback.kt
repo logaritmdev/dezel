@@ -1,7 +1,7 @@
 package ca.logaritm.dezel.core
 
 /**
- * A finalizer callback.
+ * A finalizer handler.
  * @class JavaScriptFinalizeCallback
  * @since 0.1.0
  */
@@ -42,7 +42,7 @@ public class JavaScriptFinalizeCallback {
 	}
 
 	/**
-	 * Returns an attribute from this finalized value.
+	 * Returns an attribute from this finalized toValue.
 	 * @method attribute
 	 * @since 0.4.0
 	 */
@@ -51,7 +51,7 @@ public class JavaScriptFinalizeCallback {
 	}
 
 	/**
-	 * Assigns an attribute on this finalized value.
+	 * Assigns an attribute on this finalized toValue.
 	 * @method attribute
 	 * @since 0.4.0
 	 */

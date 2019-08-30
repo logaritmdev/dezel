@@ -29,7 +29,7 @@ open class TextArea(context: Context, listener: TextAreaListener?) : EditText(co
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The text area's value.
+	 * The text area's toValue.
 	 * @property value
 	 * @since 0.7.0
 	 */

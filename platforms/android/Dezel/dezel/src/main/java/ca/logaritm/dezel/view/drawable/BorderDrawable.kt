@@ -3,8 +3,8 @@ package ca.logaritm.dezel.view.drawable
 import android.graphics.*
 import android.graphics.drawable.Drawable
 import ca.logaritm.dezel.extension.Delegates
-import ca.logaritm.dezel.extension.addInnerRoundedRect
-import ca.logaritm.dezel.extension.addOuterRoundedRect
+import ca.logaritm.dezel.extension.graphics.addInnerRoundedRect
+import ca.logaritm.dezel.extension.graphics.addOuterRoundedRect
 
 
 /**

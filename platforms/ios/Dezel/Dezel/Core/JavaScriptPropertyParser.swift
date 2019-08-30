@@ -93,7 +93,7 @@ open class JavaScriptPropertyParser {
 		 * @since 0.7.0
 		 */
 		public init() {
-			self.type = .string
+			self.type = .null
 			self.unit = .none
 		}
 
@@ -159,10 +159,10 @@ open class JavaScriptPropertyParser {
 				return Result()
 			case value.isUndefined:
 				return Result()
-			case value.isNumber:
-				return Result(number: value.number)
 			case value.isString:
 				return self.parse(value.string)
+			case value.isNumber:
+				return Result(number: value.number)
 			case value.isBoolean:
 				return Result(boolean: value.boolean)
 

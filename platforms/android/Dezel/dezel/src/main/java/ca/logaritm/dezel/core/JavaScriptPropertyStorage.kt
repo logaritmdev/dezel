@@ -1,133 +1,211 @@
 package ca.logaritm.dezel.core
 
+import android.util.Log
+
 /**
- * @class JavaScriptPropertyData
+ * @class JavaScriptPropertyStorage
  * @since 0.7.0
  * @hidden
  */
-abstract class JavaScriptPropertyData(context: JavaScriptContext) {
+open class JavaScriptPropertyStorage(type: JavaScriptPropertyType = JavaScriptPropertyType.NULL, unit: JavaScriptPropertyUnit = JavaScriptPropertyUnit.NONE, value: JavaScriptValue? = null) {
 
 	//--------------------------------------------------------------------------
 	// Properties
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The JavaScript context.
-	 * @property context
+	 * The property's type.
+	 * @property type
 	 * @since 0.7.0
 	 */
-	public val context: JavaScriptContext = context
+	public var type: JavaScriptPropertyType = JavaScriptPropertyType.NULL
 
 	/**
-	 * Indicate whether the property is null.
-	 * @property isNull
+	 * The property's unit.
+	 * @property unit
 	 * @since 0.7.0
 	 */
-	public val isNull: Boolean
-		get() = this.type() == JavaScriptPropertyType.NULL
+	public var unit: JavaScriptPropertyUnit = JavaScriptPropertyUnit.NONE
 
 	/**
-	 * Indicate whether the property is a string.
-	 * @property isString
+	 * The property's string value.
+	 * @property string
 	 * @since 0.7.0
 	 */
-	public val isString: Boolean
-		get() = this.type() == JavaScriptPropertyType.STRING
+	public val string: String by lazy {
+		this.toString()
+	}
 
 	/**
-	 * Convenience property to indicate whether the property is a number.
-	 * @property isNumber
+	 * The property's number value.
+	 * @property number
 	 * @since 0.7.0
 	 */
-	public val isNumber: Boolean
-		get() = this.type() == JavaScriptPropertyType.NUMBER
+	public val number: Double by lazy {
+		this.toNumber()
+	}
 
 	/**
-	 * Convenience property to indicate whether the property is a boolean.
-	 * @property isBoolean
+	 * The property's boolean value.
+	 * @property boolean
 	 * @since 0.7.0
 	 */
-	public val isBoolean: Boolean
-		get() = this.type() == JavaScriptPropertyType.BOOLEAN
+	public val boolean: Boolean by lazy {
+		this.toBoolean()
+	}
 
 	/**
-	 * The existing JavaScript value.
 	 * @property value
 	 * @since 0.7.0
+	 * @hidden
 	 */
-	abstract var value: JavaScriptValue?
+	private var value: JavaScriptValue? = null
 
 	//--------------------------------------------------------------------------
 	// Methods
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Returns the data type.
-	 * @method type
+	 * Initializes the property storage.
+	 * @constructor
 	 * @since 0.7.0
 	 */
-	abstract fun type(): JavaScriptPropertyType
+	init {
+
+		this.type = type
+		this.unit = unit
+
+		/*
+		 * The data parameter is the JavaScript value given initialy. It's
+		 * useful to keep a reference instead of recreating a JavaScript value
+		 * from the primitive values.
+		 */
+
+		this.value = value
+	}
 
 	/**
-	 * Returns the data unit.
-	 * @method unit
+	 * Stores the backing JavaScript value.
+	 * @method store
 	 * @since 0.7.0
 	 */
-	abstract fun unit(): JavaScriptPropertyUnit
-
-	/**
-	 * Returns the data as a JavaScript value.
-	 * @method value
-	 * @since 0.7.0
-	 */
-	abstract fun value(): JavaScriptValue
+	open fun store(value: JavaScriptValue?) {
+		this.value = value
+	}
 
 	/**
 	 * Returns the data as a string.
-	 * @method string
+	 * @method toString
 	 * @since 0.7.0
 	 */
-	abstract fun string(): String
+	override fun toString(): String {
+		return ""
+	}
 
 	/**
 	 * Returns the data as a number.
-	 * @method number
+	 * @method toNumber
 	 * @since 0.7.0
 	 */
-	abstract fun number(): Double
+	open fun toNumber(): Double {
+		return 0.0
+	}
 
 	/**
 	 * Returns the data as a boolean.
-	 * @method boolean
+	 * @method toBoolean
 	 * @since 0.7.0
 	 */
-	abstract fun boolean(): Boolean
+	open fun toBoolean(): Boolean {
+		return false
+	}
 
 	/**
-	 * Check data equality.
-	 * @method equal
+	 * Indicate whether this property's value is a specified JavaScript value.
+	 * @method equals
 	 * @since 0.7.0
 	 */
-	abstract fun equal(value: JavaScriptValue): Boolean
+	open fun equals(value: JavaScriptValue): Boolean {
+		return this.value?.equals(value) ?: false
+	}
 
 	/**
-	 * Check data equality.
-	 * @method equal
+	 * Indicate whether this property's value is a specified string.
+	 * @method equals
 	 * @since 0.7.0
 	 */
-	abstract fun equal(string: String): Boolean
+	open fun equals(value: String): Boolean {
+		return this.type == JavaScriptPropertyType.STRING && this.string == value
+	}
 
 	/**
-	 * Check data equality.
-	 * @method equal
+	 * Indicate whether this property's value is a specified number.
+	 * @method equals
 	 * @since 0.7.0
 	 */
-	abstract fun equal(number: Double): Boolean
+	open fun equals(value: Double): Boolean {
+		return this.type == JavaScriptPropertyType.NUMBER && this.number == value
+	}
 
 	/**
-	 * Check data equality.
-	 * @method equal
+	 * Indicate whether this property's value is a specified number.
+	 * @method equals
 	 * @since 0.7.0
 	 */
-	abstract fun equal(boolean: Boolean): Boolean
+	open fun equals(value: Double, unit: JavaScriptPropertyUnit): Boolean {
+		return this.type == JavaScriptPropertyType.NUMBER && this.number == value && this.unit == unit
+	}
+
+	/**
+	 * Indicate whether this property's value is a specified boolean.
+	 * @method equals
+	 * @since 0.7.0
+	 */
+	open fun equals(value: Boolean): Boolean {
+		return this.type == JavaScriptPropertyType.BOOLEAN && this.boolean == value
+	}
+
+	/**
+	 * Casts the property to a specified type
+	 * @method equals
+	 * @since 0.7.0
+	 */
+	open fun <T> cast(type: Class<T>): T? {
+		return this.value?.cast(type)
+	}
+
+	//--------------------------------------------------------------------------
+	// Internal API
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method toJs
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	internal fun toHandle(context: JavaScriptContext): Long? {
+
+		val value = this.value
+		if (value != null) {
+			return value.toHandle(context)
+		}
+
+		if (this.unit == JavaScriptPropertyUnit.NONE) {
+
+			when (this.type) {
+				JavaScriptPropertyType.NULL    -> this.value = context.jsnull
+				JavaScriptPropertyType.STRING  -> this.value = context.createString(this.string)
+				JavaScriptPropertyType.NUMBER  -> this.value = context.createNumber(this.number)
+				JavaScriptPropertyType.BOOLEAN -> this.value = context.createBoolean(this.boolean)
+				else                           -> {}
+			}
+
+		} else {
+
+			this.value = context.createString(this.string)
+
+		}
+
+		return this.value?.toHandle(context)
+	}
 }

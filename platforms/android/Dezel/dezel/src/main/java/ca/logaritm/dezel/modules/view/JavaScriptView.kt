@@ -8,6 +8,12 @@ import android.view.animation.PathInterpolator
 import ca.logaritm.dezel.application.application
 import ca.logaritm.dezel.core.*
 import ca.logaritm.dezel.extension.*
+import ca.logaritm.dezel.extension.type.*
+import ca.logaritm.dezel.extension.type.max
+import ca.logaritm.dezel.extension.type.min
+import ca.logaritm.dezel.extension.type.until
+import ca.logaritm.dezel.extension.view.addView
+import ca.logaritm.dezel.extension.view.removeFromParent
 import ca.logaritm.dezel.layout.LayoutNode
 import ca.logaritm.dezel.layout.LayoutNodeListener
 import ca.logaritm.dezel.modules.graphic.ImageLoader
@@ -124,1750 +130,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	public var isShadowRoot: Boolean = false
 		private set
-
-	/**
-	 * The view's id.
-	 * @property id
-	 * @since 0.7.0
-	 */
-	open val id: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, "")
-	}
-
-	/**
-	 * The view's background color.
-	 * @property backgroundColor
-	 * @since 0.7.0
-	 */
-	open val backgroundColor: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, "transparent") {
-			this.invalidateBitmapColor()
-		}
-	}
-
-	/**
-	 * The view's background image.
-	 * @property backgroundImage
-	 * @since 0.7.0
-	 */
-	open val backgroundImage: JavaScriptProperty by lazy {
-		JavaScriptProperty(context) { value ->
-			this.backgroundImageLoader.load(value) { image ->
-				this.backgroundImageData = image
-				// TODO FIXME WAT
-			}
-		}
-	}
-
-	/**
-	 * The view's background image container fit.
-	 * @property backgroundImageFit
-	 * @since 0.7.0
-	 */
-	open val backgroundImageFit: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, "cover") {
-			this.invalidateBitmapImage()
-		}
-	}
-
-	/**
-	 * The view's background image top anchor.
-	 * @property backgroundImageAnchorTop
-	 * @since 0.7.0
-	 */
-	open val backgroundImageAnchorTop: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.5) {
-			this.invalidateBitmapImage()
-		}
-	}
-
-	/**
-	 * The view's background image left anchor.
-	 * @property backgroundImageAnchorLeft
-	 * @since 0.7.0
-	 */
-	open val backgroundImageAnchorLeft: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.5) {
-			this.invalidateBitmapImage()
-		}
-	}
-
-	/**
-	 * The view's background image top position.
-	 * @property backgroundImageTop
-	 * @since 0.7.0
-	 */
-	open val backgroundImageTop: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 50.0, JavaScriptPropertyUnit.PC) {
-			this.invalidateBitmapImage()
-		}
-	}
-
-	/**
-	 * The view's background image left position.
-	 * @property backgroundImageLeft
-	 * @since 0.7.0
-	 */
-	open val backgroundImageLeft: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 50.0, JavaScriptPropertyUnit.PC) {
-			this.invalidateBitmapImage()
-		}
-	}
-
-	/**
-	 * The view's background image width.
-	 * @property backgroundImageWidth
-	 * @since 0.7.0
-	 */
-	open val backgroundImageWidth: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, "auto") {
-			this.invalidateBitmapImage()
-		}
-	}
-
-	/**
-	 * The view's background image height.
-	 * @property backgroundImageHeight
-	 * @since 0.7.0
-	 */
-	open val backgroundImageHeight: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, "auto") {
-			this.invalidateBitmapImage()
-		}
-	}
-
-	/**
-	 * The view's background image imageTint.
-	 * @property backgroundImageTint
-	 * @since 0.7.0
-	 */
-	open val backgroundImageTint: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, "auto") { value ->
-			this.wrapper.backgroundImageTint = value.string.toColor()
-		}
-	}
-
-	/**
-	 * The view's border.
-	 * @property border
-	 * @since 0.7.0
-	 */
-	open val border: JavaScriptProperty by lazy {
-
-		JavaScriptProperty(context, "0 #000") { value ->
-
-			val components = value.string.split(spaces)
-			if (components.size < 2) {
-				return@JavaScriptProperty
-			}
-
-			val width = components[0].trim()
-			val color = components[1].trim()
-
-			this.borderTopWidth.set(width)
-			this.borderTopColor.set(color)
-			this.borderLeftWidth.set(width)
-			this.borderLeftColor.set(color)
-			this.borderRightWidth.set(width)
-			this.borderRightColor.set(color)
-			this.borderBottomWidth.set(width)
-			this.borderBottomColor.set(color)
-		}
-	}
-
-	/**
-	 * The view's top border.
-	 * @property borderTop
-	 * @since 0.7.0
-	 */
-	open val borderTop: JavaScriptProperty by lazy {
-
-		JavaScriptProperty(context, "0 #000") { value ->
-
-			val components = value.string.split(spaces)
-			if (components.size < 2) {
-				return@JavaScriptProperty
-			}
-
-			this.borderTopWidth.parse(components[0].trim())
-			this.borderTopColor.parse(components[1].trim())
-		}
-	}
-
-	/**
-	 * The view's left border.
-	 * @property borderLeft
-	 * @since 0.7.0
-	 */
-	open val borderLeft: JavaScriptProperty by lazy {
-
-		JavaScriptProperty(context, "0 #000") { value ->
-
-			val components = value.string.split(spaces)
-			if (components.size < 2) {
-				return@JavaScriptProperty
-			}
-
-			this.borderLeftWidth.parse(components[0].trim())
-			this.borderLeftColor.parse(components[1].trim())
-		}
-	}
-
-	/**
-	 * The view's right border.
-	 * @property borderRight
-	 * @since 0.7.0
-	 */
-	open val borderRight: JavaScriptProperty by lazy {
-
-		JavaScriptProperty(context, "0 #000") { value ->
-
-			val components = value.string.split(spaces)
-			if (components.size < 2) {
-				return@JavaScriptProperty
-			}
-
-			this.borderRightWidth.parse(components[0].trim())
-			this.borderRightColor.parse(components[1].trim())
-		}
-	}
-
-	/**
-	 * The view's bottom border.
-	 * @property borderBottom
-	 * @since 0.7.0
-	 */
-	open val borderBottom: JavaScriptProperty by lazy {
-
-		JavaScriptProperty(context, "0 #000") { value ->
-
-			val components = value.string.split(spaces)
-			if (components.size < 2) {
-				return@JavaScriptProperty
-			}
-
-			this.borderBottomWidth.parse(components[0].trim())
-			this.borderBottomColor.parse(components[1].trim())
-		}
-	}
-
-	/**
-	 * The view's border width.
-	 * @property borderWidth
-	 * @since 0.7.0
-	 */
-	open val borderWidth: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.0) { value ->
-			this.borderTopWidth.set(value.number, value.unit)
-			this.borderLeftWidth.set(value.number, value.unit)
-			this.borderRightWidth.set(value.number, value.unit)
-			this.borderBottomWidth.set(value.number, value.unit)
-		}
-	}
-
-	/**
-	 * The view's border color.
-	 * @property borderColor
-	 * @since 0.7.0
-	 */
-	open val borderColor: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, "#000") { value ->
-			this.borderTopColor.set(value.string)
-			this.borderLeftColor.set(value.string)
-			this.borderRightColor.set(value.string)
-			this.borderBottomColor.set(value.string)
-		}
-	}
-
-	/**
-	 * The view's border top color.
-	 * @property borderTopColor
-	 * @since 0.7.0
-	 */
-	open val borderTopColor: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, "#000") { value ->
-			this.wrapper.borderTopColor = Color.parse(value.string)
-		}
-	}
-
-	/**
-	 * The view's border left color.
-	 * @property borderLeftColor
-	 * @since 0.7.0
-	 */
-	open val borderLeftColor: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, "#000") { value ->
-			this.wrapper.borderLeftColor = Color.parse(value.string)
-		}
-	}
-
-	/**
-	 * The view's border right color.
-	 * @property borderRightColor
-	 * @since 0.7.0
-	 */
-	open val borderRightColor: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, "#000") { value ->
-			this.wrapper.borderRightColor = Color.parse(value.string)
-		}
-	}
-
-	/**
-	 * The view's border bottom color.
-	 * @property borderBottomColor
-	 * @since 0.7.0
-	 */
-	open val borderBottomColor: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, "#000") { value ->
-			this.wrapper.borderBottomColor = Color.parse(value.string)
-		}
-	}
-
-	/**
-	 * The view's border top width.
-	 * @property borderTopWidth
-	 * @since 0.7.0
-	 */
-	open val borderTopWidth: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.0) { value ->
-			this.layoutNode.borderTop(value)
-		}
-	}
-
-	/**
-	 * The view's border left width.
-	 * @property borderLeftWidth
-	 * @since 0.7.0
-	 */
-	open val borderLeftWidth: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.0) { value ->
-			this.layoutNode.borderLeft(value)
-		}
-	}
-
-	/**
-	 * The view's border right width.
-	 * @property borderRightWidth
-	 * @since 0.7.0
-	 */
-	open val borderRightWidth: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.0) { value ->
-			this.layoutNode.borderRight(value)
-		}
-	}
-
-	/**
-	 * The view's border bottom width.
-	 * @property borderBottomWidth
-	 * @since 0.7.0
-	 */
-	open val borderBottomWidth: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.0) { value ->
-			this.layoutNode.borderBottom(value)
-		}
-	}
-
-	/**
-	 * The view's absolute minimum border top width.
-	 * @property minBorderTopWidth
-	 * @since 0.7.0
-	 */
-	open val minBorderTopWidth: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.0) {
-			// TODO
-		}
-	}
-
-	/**
-	 * The view's absolute maximum border top width.
-	 * @property maxBorderTopWidth
-	 * @since 0.7.0
-	 */
-	open val maxBorderTopWidth: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, Double.max) {
-			// TODO
-		}
-	}
-
-	/**
-	 * The view's absolute minimum border left width.
-	 * @property minBorderLeftWidth
-	 * @since 0.7.0
-	 */
-	open val minBorderLeftWidth: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.0) {
-			// TODO
-		}
-	}
-
-	/**
-	 * The view's absolute maximum border left width.
-	 * @property maxBorderLeftWidth
-	 * @since 0.7.0
-	 */
-	open val maxBorderLeftWidth: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, Double.max) {
-			// TODO
-		}
-	}
-
-	/**
-	 * The view's absolute minimum border right width.
-	 * @property minBorderRightWidth
-	 * @since 0.7.0
-	 */
-	open val minBorderRightWidth: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.0) {
-			// TODO
-		}
-	}
-
-	/**
-	 * The view's absolute maximum border right width.
-	 * @property maxBorderRightWidth
-	 * @since 0.7.0
-	 */
-	open val maxBorderRightWidth: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, Double.max) {
-			// TODO
-		}
-	}
-
-	/**
-	 * The view's absolute minimum border bottom width.
-	 * @property minBorderBottomWidth
-	 * @since 0.7.0
-	 */
-	open val minBorderBottomWidth: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.0) {
-			// TODO
-		}
-	}
-
-	/**
-	 * The view's absolute maximum border bottom width.
-	 * @property maxBorderBottomWidth
-	 * @since 0.7.0
-	 */
-	open val maxBorderBottomWidth: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, Double.max) {
-			// TODO
-		}
-	}
-
-	/**
-	 * The view's border radius.
-	 * @property borderRadius
-	 * @since 0.7.0
-	 */
-	open val borderRadius: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.0) { value ->
-			this.borderTopLeftRadius.set(value.number)
-			this.borderTopRightRadius.set(value.number)
-			this.borderBottomLeftRadius.set(value.number)
-			this.borderBottomRightRadius.set(value.number)
-		}
-	}
-
-	/**
-	 * The view's border top left corner radius.
-	 * @property borderTopLeftRadius
-	 * @since 0.7.0
-	 */
-	open val borderTopLeftRadius: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.0) {
-			this.invalidateBorder()
-		}
-	}
-
-	/**
-	 * The view's border top right corner radius.
-	 * @property borderTopRightRadius
-	 * @since 0.7.0
-	 */
-	open val borderTopRightRadius: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.0) {
-			this.invalidateBorder()
-		}
-	}
-
-	/**
-	 * The view's border bottom left corner radius.
-	 * @property borderBottomLeftRadius
-	 * @since 0.7.0
-	 */
-	open val borderBottomLeftRadius: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.0) {
-			this.invalidateBorder()
-		}
-	}
-
-	/**
-	 * The view's border bottom right corner radius.
-	 * @property borderBottomRightRadius
-	 * @since 0.7.0
-	 */
-	open val borderBottomRightRadius: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.0) {
-			this.invalidateBorder()
-		}
-	}
-
-	/**
-	 * The view's shadow blur distance.
-	 * @property shadowBlur
-	 * @since 0.7.0
-	 */
-	open val shadowBlur: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.0) {
-			this.invalidateShadow()
-		}
-	}
-
-	/**
-	 * The view's shadow color.
-	 * @property shadowColor
-	 * @since 0.7.0
-	 */
-	open val shadowColor: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, "#000") {
-			this.invalidateShadow()
-		}
-	}
-
-	/**
-	 * The view's shadow's top offset.
-	 * @property shadowOffsetTop
-	 * @since 0.7.0
-	 */
-	open val shadowOffsetTop: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.0) {
-			this.invalidateShadow()
-		}
-	}
-
-	/**
-	 * The view's shadow's left offset.
-	 * @property shadowOffsetLeft
-	 * @since 0.7.0
-	 */
-	open val shadowOffsetLeft: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.0) {
-			this.invalidateShadow()
-		}
-	}
-
-	/**
-	 * The view's top position.
-	 * @property top
-	 * @since 0.7.0
-	 */
-	open val top: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, "auto") { value ->
-			this.layoutNode.top(value)
-		}
-	}
-
-	/**
-	 * The view's left position.
-	 * @property left
-	 * @since 0.7.0
-	 */
-	open val left: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, "auto") { value ->
-			this.layoutNode.left(value)
-		}
-	}
-
-	/**
-	 * The view's right position.
-	 * @property right
-	 * @since 0.7.0
-	 */
-	open val right: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, "auto") { value ->
-			this.layoutNode.right(value)
-		}
-	}
-
-	/**
-	 * The view's bottom position.
-	 * @property bottom
-	 * @since 0.7.0
-	 */
-	open val bottom: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, "auto") { value ->
-			this.layoutNode.bottom(value)
-		}
-	}
-
-	/**
-	 * The view's absolute minimum top position.
-	 * @property minTop
-	 * @since 0.7.0
-	 */
-	open val minTop: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, Double.min) { value ->
-			this.layoutNode.minTop(value.number)
-		}
-	}
-
-	/**
-	 * The view's absolute maximum top position.
-	 * @property maxTop
-	 * @since 0.7.0
-	 */
-	open val maxTop: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, Double.max) { value ->
-			this.layoutNode.maxTop(value.number)
-		}
-	}
-
-	/**
-	 * The view's absolute minimum left position.
-	 * @property minLeft
-	 * @since 0.7.0
-	 */
-	open val minLeft: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, Double.min) { value ->
-			this.layoutNode.minLeft(value.number)
-		}
-	}
-
-	/**
-	 * The view's absolute maximum left position.
-	 * @property maxLeft
-	 * @since 0.7.0
-	 */
-	open val maxLeft: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, Double.max) { value ->
-			this.layoutNode.maxLeft(value.number)
-		}
-	}
-
-	/**
-	 * The view's absolute minimum right position.
-	 * @property minRight
-	 * @since 0.7.0
-	 */
-	open val minRight: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, Double.min) { value ->
-			this.layoutNode.minRight(value.number)
-		}
-	}
-
-	/**
-	 * The view's absolute maximum right position.
-	 * @property maxRight
-	 * @since 0.7.0
-	 */
-	open val maxRight: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, Double.max) { value ->
-			this.layoutNode.maxRight(value.number)
-		}
-	}
-
-	/**
-	 * The view's absolute minimum bottom position.
-	 * @property minBottom
-	 * @since 0.7.0
-	 */
-	open val minBottom: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, Double.min) { value ->
-			this.layoutNode.minBottom(value.number)
-		}
-	}
-
-	/**
-	 * The view's absolute maximum bottom position.
-	 * @property maxBottom
-	 * @since 0.7.0
-	 */
-	open val maxBottom: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, Double.max) { value ->
-			this.layoutNode.maxBottom(value.number)
-		}
-	}
-
-	/**
-	 * The view's vertical point from with it will be positioned.
-	 * @property anchorTop
-	 * @since 0.7.0
-	 */
-	open val anchorTop: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.0) { value ->
-			this.layoutNode.anchorTop(value)
-		}
-	}
-
-	/**
-	 * The view's horizontal point from with it will be positioned.
-	 * @property anchorLeft
-	 * @since 0.7.0
-	 */
-	open val anchorLeft: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.0) { value ->
-			this.layoutNode.anchorLeft(value)
-		}
-	}
-
-	/**
-	 * The view's width.
-	 * @property width
-	 * @since 0.7.0
-	 */
-	open val width: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, "fill") { value ->
-			this.layoutNode.width(value)
-		}
-	}
-
-	/**
-	 * The view's height.
-	 * @property height
-	 * @since 0.7.0
-	 */
-	open val height: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, "fill") { value ->
-			this.layoutNode.height(value)
-		}
-	}
-
-	/**
-	 * The view's absolute minimum width.
-	 * @property minWidth
-	 * @since 0.7.0
-	 */
-	open val minWidth: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.0) { value ->
-			this.layoutNode.minWidth(value.number)
-		}
-	}
-
-	/**b
-	 * The view's absolute maximum width.
-	 * @property maxWidth
-	 * @since 0.7.0
-	 */
-	open val maxWidth: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, Double.max) { value ->
-			this.layoutNode.maxWidth(value.number)
-		}
-	}
-
-	/**
-	 * The view's absolute minimum height.
-	 * @property minHeight
-	 * @since 0.7.0
-	 */
-	open val minHeight: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.0) { value ->
-			this.layoutNode.minHeight(value.number)
-		}
-	}
-
-	/**
-	 * The view's absolute maximum height.
-	 * @property maxHeight
-	 * @since 0.7.0
-	 */
-	open val maxHeight: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, Double.max) { value ->
-			this.layoutNode.maxHeight(value.number)
-		}
-	}
-
-	/**
-	 * The view's expandable ratio.
-	 * @property expand
-	 * @since 0.7.0
-	 */
-	open val expand: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.0) { value ->
-			this.layoutNode.expand(value.number)
-		}
-	}
-
-	/**
-	 * The view's shrink ratio.
-	 * @property shrink
-	 * @since 0.7.0
-	 */
-	open val shrink: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.0) { value ->
-			this.layoutNode.shrink(value.number)
-		}
-	}
-
-	/**
-	 * The view's content top.
-	 * @property contentTop
-	 * @since 0.7.0
-	 */
-	open val contentTop: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.0) { value ->
-			this.layoutNode.contentTop(value)
-		}
-	}
-
-	/**
-	 * The view's content left.
-	 * @property contentLeft
-	 * @since 0.7.0
-	 */
-	open val contentLeft: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.0) { value ->
-			this.layoutNode.contentLeft(value)
-		}
-	}
-
-	/**
-	 * The view's content width.
-	 * @property contentWidth
-	 * @since 0.7.0
-	 */
-	open val contentWidth: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, "auto") { value ->
-			this.layoutNode.contentWidth(value)
-		}
-	}
-
-	/**
-	 * The view's content height.
-	 * @property contentHeight
-	 * @since 0.7.0
-	 */
-	open val contentHeight: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, "auto") { value ->
-			this.layoutNode.contentHeight(value)
-		}
-	}
-
-	/**
-	 * The view's content top inset.
-	 * @property contentInsetTop
-	 * @since 0.7.0
-	 */
-	open val contentInsetTop: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.0) { value ->
-			this.scrollableView?.contentInsetTop = Convert.toPx(value.number).toInt()
-		}
-	}
-
-	/**
-	 * The view's content left inset.
-	 * @property contentInsetLeft
-	 * @since 0.7.0
-	 */
-	open val contentInsetLeft: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.0) { value ->
-			this.scrollableView?.contentInsetLeft = Convert.toPx(value.number).toInt()
-		}
-	}
-
-	/**
-	 * The view's content right inset.
-	 * @property contentInsetRight
-	 * @since 0.7.0
-	 */
-	open val contentInsetRight: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.0) { value ->
-			this.scrollableView?.contentInsetRight = Convert.toPx(value.number).toInt()
-		}
-	}
-
-	/**
-	 * The view's content bottom inset.
-	 * @property contentInsetBottom
-	 * @since 0.7.0
-	 */
-	open val contentInsetBottom: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.0) { value ->
-			this.scrollableView?.contentInsetBottom = Convert.toPx(value.number).toInt()
-		}
-	}
-
-	/**
-	 * The view's content orientation.
-	 * @property contentDirection
-	 * @since 0.7.0
-	 */
-	open val contentDirection: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, "vertical") { value ->
-			this.layoutNode.contentDirection(value)
-		}
-	}
-
-	/**
-	 * The view's content alignment on the main axis.
-	 * @property contentLocation
-	 * @since 0.7.0
-	 */
-	open val contentLocation: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, "start") { value ->
-			this.layoutNode.contentLocation(value)
-		}
-	}
-
-	/**
-	 * The view's content alignment on the cross axis.
-	 * @property contentAlignment
-	 * @since 0.7.0
-	 */
-	open val contentAlignment: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, "start") { value ->
-			this.layoutNode.contentAlignment(value)
-		}
-	}
-
-	/**
-	 * Whether this view's content can scroll.
-	 * @property scrollable
-	 * @since 0.7.0
-	 */
-	open val scrollable: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, false) { value ->
-			this.scrollableView?.scrollable = value.boolean
-		}
-	}
-
-	/**
-	 * Whether this view's content displays scrollbars.
-	 * @property scrollbars
-	 * @since 0.7.0
-	 */
-	open val scrollbars: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, false) { value ->
-			this.scrollableView?.scrollbars = Scrollbars.get(value)
-		}
-	}
-
-	/**
-	 * Whether this view's content can overscroll.
-	 * @property overscroll
-	 * @since 0.7.0
-	 */
-	open val overscroll: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, "auto") { value ->
-			this.scrollableView?.overscroll = Overscroll.get(value)
-		}
-	}
-
-	/**
-	 * Whether this view's content scrolls with momentum.
-	 * @property momentum
-	 * @since 0.7.0
-	 */
-	open val momentum: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, true) { value ->
-			this.scrollableView?.momentum = value.boolean
-		}
-	}
-
-	/**
-	 * The view's top scroll offset.
-	 * @property scrollTop
-	 * @since 0.7.0
-	 */
-	open val scrollTop: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.0) { value ->
-			this.scrollableView?.scrollTop = Convert.toPx(value.number).toInt()
-		}
-	}
-
-	/**
-	 * The view's left scroll offset.
-	 * @property scrollLeft
-	 * @since 0.7.0
-	 */
-	open val scrollLeft: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.0) { value ->
-			this.scrollableView?.scrollLeft = Convert.toPx(value.number).toInt()
-		}
-	}
-
-	/**
-	 * Whether this view is scrolling.
-	 * @property scrolling
-	 * @since 0.7.0
-	 */
-	public val scrolling: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, false)
-	}
-
-	/**
-	 * Whether this view is dragging.
-	 * @property dragging
-	 * @since 0.7.0
-	 */
-	public val dragging: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, false)
-	}
-
-	/**
-	 * The view's margin.
-	 * @property margin
-	 * @since 0.7.0
-	 */
-	open val margin: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.0) { value ->
-			this.marginTop.set(value.number, value.unit)
-			this.marginLeft.set(value.number, value.unit)
-			this.marginRight.set(value.number, value.unit)
-			this.marginBottom.set(value.number, value.unit)
-		}
-	}
-
-	/**
-	 * The view's top margin.
-	 * @property marginTop
-	 * @since 0.7.0
-	 */
-	open val marginTop: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.0) { value ->
-			this.layoutNode.marginTop(value)
-		}
-	}
-
-	/**
-	 * The view's left margin.
-	 * @property marginLeft
-	 * @since 0.7.0
-	 */
-	open val marginLeft: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.0) { value ->
-			this.layoutNode.marginLeft(value)
-		}
-	}
-
-	/**
-	 * The view's right margin.
-	 * @property marginRight
-	 * @since 0.7.0
-	 */
-	open val marginRight: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.0) { value ->
-			this.layoutNode.marginRight(value)
-		}
-	}
-
-	/**
-	 * The view's bottom margin.
-	 * @property marginBottom
-	 * @since 0.7.0
-	 */
-	open val marginBottom: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.0) { value ->
-			this.layoutNode.marginBottom(value)
-		}
-	}
-
-	/**
-	 * The view's absolute minimum top margin.
-	 * @property minMarginTop
-	 * @since 0.7.0
-	 */
-	open val minMarginTop: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, Double.min) { value ->
-			this.layoutNode.minMarginTop(value.number)
-		}
-	}
-
-	/**
-	 * The view's absolute maximum top margin.
-	 * @property maxMarginTop
-	 * @since 0.7.0
-	 */
-	open val maxMarginTop: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, Double.max) { value ->
-			this.layoutNode.maxMarginTop(value.number)
-		}
-	}
-
-	/**
-	 * The view's absolute minimum left margin.
-	 * @property minMarginLeft
-	 * @since 0.7.0
-	 */
-	open val minMarginLeft: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, Double.min) { value ->
-			this.layoutNode.minMarginLeft(value.number)
-		}
-	}
-
-	/**
-	 * The view's absolute maximum left margin.
-	 * @property maxMarginLeft
-	 * @since 0.7.0
-	 */
-	open val maxMarginLeft: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, Double.max) { value ->
-			this.layoutNode.maxMarginLeft(value.number)
-		}
-	}
-
-	/**
-	 * The view's absolute minimum right margin.
-	 * @property minMarginRight
-	 * @since 0.7.0
-	 */
-	open val minMarginRight: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, Double.min) { value ->
-			this.layoutNode.minMarginRight(value.number)
-		}
-	}
-
-	/**
-	 * The view's absolute maximum right margin.
-	 * @property maxMarginRight
-	 * @since 0.7.0
-	 */
-	open val maxMarginRight: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, Double.max) { value ->
-			this.layoutNode.maxMarginRight(value.number)
-		}
-	}
-
-	/**
-	 * The view's absolute minimum bottom margin.
-	 * @property minMarginBottom
-	 * @since 0.7.0
-	 */
-	open val minMarginBottom: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, Double.min) { value ->
-			this.layoutNode.minMarginBottom(value.number)
-		}
-	}
-
-	/**
-	 * The view's absolute maximum bottom margin.
-	 * @property maxMarginBottom
-	 * @since 0.7.0
-	 */
-	open val maxMarginBottom: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, Double.max) { value ->
-			this.layoutNode.maxMarginBottom(value.number)
-		}
-	}
-
-	/**
-	 * The view's padding.
-	 * @property padding
-	 * @since 0.7.0
-	 */
-	open val padding: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.0) { value ->
-			this.paddingTop.set(value.number, value.unit)
-			this.paddingLeft.set(value.number, value.unit)
-			this.paddingRight.set(value.number, value.unit)
-			this.paddingBottom.set(value.number, value.unit)
-		}
-	}
-
-	/**
-	 * The view's top padding.
-	 * @property paddingTop
-	 * @since 0.7.0
-	 */
-	open val paddingTop: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.0) { value ->
-			this.layoutNode.paddingTop(value)
-		}
-	}
-
-	/**
-	 * The view's left padding.
-	 * @property paddingLeft
-	 * @since 0.7.0
-	 */
-	open val paddingLeft: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.0) { value ->
-			this.layoutNode.paddingLeft(value)
-		}
-	}
-
-	/**
-	 * The view's right padding.
-	 * @property paddingRight
-	 * @since 0.7.0
-	 */
-	open val paddingRight: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.0) { value ->
-			this.layoutNode.paddingRight(value)
-		}
-	}
-
-	/**
-	 * The view's bottom padding.
-	 * @property paddingBottom
-	 * @since 0.7.0
-	 */
-	open val paddingBottom: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.0) { value ->
-			this.layoutNode.paddingBottom(value)
-		}
-	}
-
-	/**
-	 * The view's absolute minimum top padding.
-	 * @property minPaddingTop
-	 * @since 0.7.0
-	 */
-	open val minPaddingTop: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.0) { value ->
-			this.layoutNode.minPaddingTop(value.number)
-		}
-	}
-
-	/**
-	 * The view's absolute maximum top padding.
-	 * @property maxPaddingTop
-	 * @since 0.7.0
-	 */
-	open val maxPaddingTop: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, Double.max) { value ->
-			this.layoutNode.maxPaddingTop(value.number)
-		}
-	}
-
-	/**
-	 * The view's absolute minimum left padding.
-	 * @property minPaddingLeft
-	 * @since 0.7.0
-	 */
-	open val minPaddingLeft: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.0) { value ->
-			this.layoutNode.minPaddingLeft(value.number)
-		}
-	}
-
-	/**
-	 * The view's absolute maximum left padding.
-	 * @property maxPaddingLeft
-	 * @since 0.7.0
-	 */
-	open val maxPaddingLeft: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, Double.max) { value ->
-			this.layoutNode.maxPaddingLeft(value.number)
-		}
-	}
-
-	/**
-	 * The view's absolute minimum right padding.
-	 * @property minPaddingRight
-	 * @since 0.7.0
-	 */
-	open val minPaddingRight: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.0) { value ->
-			this.layoutNode.minPaddingRight(value.number)
-		}
-	}
-
-	/**
-	 * The view's absolute maximum right padding.
-	 * @property maxPaddingRight
-	 * @since 0.7.0
-	 */
-	open val maxPaddingRight: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, Double.max) { value ->
-			this.layoutNode.maxPaddingRight(value.number)
-		}
-	}
-
-	/**
-	 * The view's absolute minimum bottom padding.
-	 * @property minPaddingBottom
-	 * @since 0.7.0
-	 */
-	open val minPaddingBottom: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.0) { value ->
-			this.layoutNode.minPaddingBottom(value.number)
-		}
-	}
-
-	/**
-	 * The view's absolute maximum bottom padding.
-	 * @property maxPaddingBottom
-	 * @since 0.7.0
-	 */
-	open val maxPaddingBottom: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, Double.max) { value ->
-			this.layoutNode.maxPaddingBottom(value.number)
-		}
-	}
-
-	/**
-	 * The view's transformation origin on the x axis.
-	 * @property originX
-	 * @since 0.7.0
-	 */
-	open val originX: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.5) {
-			this.invalidateTransform()
-		}
-	}
-
-	/**
-	 * The view's transformation origin on the y axis.
-	 * @property originY
-	 * @since 0.7.0
-	 */
-	open val originY: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.5) {
-			this.invalidateTransform()
-		}
-	}
-
-	/**
-	 * The view's transformation origin on the z axis.
-	 * @property originZ
-	 * @since 0.7.0
-	 */
-	open val originZ: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.0) {
-			this.invalidateTransform()
-		}
-	}
-
-	/**
-	 * The view's translation on the x axis.
-	 * @property translationX
-	 * @since 0.7.0
-	 */
-	open val translationX: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.0) {
-			this.invalidateTransform()
-		}
-	}
-
-	/**
-	 * The view's translation on the y axis.
-	 * @property translationY
-	 * @since 0.7.0
-	 */
-	open val translationY: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.0) {
-			this.invalidateTransform()
-		}
-	}
-
-	/**
-	 * The view's translation on the z axis.
-	 * @property translationZ
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	open val translationZ: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.0) {
-			this.invalidateTransform()
-		}
-	}
-
-	/**
-	 * The view's rotation on the x axis.
-	 * @property rotationX
-	 * @since 0.7.0
-	 */
-	open val rotationX: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.0) {
-			this.invalidateTransform()
-		}
-	}
-
-	/**
-	 * The view's rotation on the y axis.
-	 * @property rotationY
-	 * @since 0.7.0
-	 */
-	open val rotationY: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.0) {
-			this.invalidateTransform()
-		}
-	}
-
-	/**
-	 * The view's rotation on the z axis.
-	 * @property rotationZ
-	 * @since 0.7.0
-	 */
-	open val rotationZ: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.0) {
-			this.invalidateTransform()
-		}
-	}
-
-	/**
-	 * The view's scale on the x axis.
-	 * @property scaleX
-	 * @since 0.7.0
-	 */
-	open val scaleX: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 1.0) {
-			this.invalidateTransform()
-		}
-	}
-
-	/**
-	 * The view's scale on the y axis.
-	 * @property scaleY
-	 * @since 0.7.0
-	 */
-	open val scaleY: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 1.0) {
-			this.invalidateTransform()
-		}
-	}
-
-	/**
-	 * The view's scale on the z axis.
-	 * @property scaleZ
-	 * @since 0.7.0
-	 */
-	open val scaleZ: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 1.0) {
-			this.invalidateTransform()
-		}
-	}
-
-	/**
-	 * The view's index on the z position relative to its siblings.
-	 * @property zIndex
-	 * @since 0.7.0
-	 */
-	open val zIndex: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.0) {
-			val parent = this.parent
-			if (parent != null) {
-				parent.invalidateOrder()
-			}
-		}
-	}
-
-	/**
-	 * Whether the view is zoomable.
-	 * @property zoomable
-	 * @since 0.7.0
-	 */
-	open val zoomable: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, false) { value ->
-			this.scrollableView?.zoomable = value.boolean
-		}
-	}
-
-	/**
-	 * The view's minimum zoom.
-	 * @property minZoom
-	 * @since 0.7.0
-	 */
-	open val minZoom: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 1.0) { value ->
-			this.scrollableView?.minZoom = value.number.toFloat()
-		}
-	}
-
-	/**
-	 * The view's maximum zoom.
-	 * @property maxZoom
-	 * @since 0.7.0
-	 */
-	open val maxZoom: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 1.0) { value ->
-			this.scrollableView?.maxZoom = value.number.toFloat()
-		}
-	}
-
-	/**
-	 * The view that is zoomed.
-	 * @property zoomedView
-	 * @since 0.7.0
-	 */
-	open var zoomedView: JavaScriptView? by Delegates.OnSetOptional<JavaScriptView>(null) { value ->
-		this.scrollableView?.zoomedView = value?.wrapper
-	}
-
-	/**
-	 * Whether this view can interact with touches.
-	 * @property touchable
-	 * @since 0.7.0
-	 */
-	open val touchable: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, true) { value ->
-			this.wrapper.touchable = value.boolean
-		}
-	}
-
-	/**
-	 * The top offset for this view touchable area.
-	 * @property touchOffsetTop
-	 * @since 0.7.0
-	 */
-	open val touchOffsetTop: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.0)
-	}
-
-	/**
-	 * The left offset for this view touchable area.
-	 * @property touchOffsetLeft
-	 * @since 0.7.0
-	 */
-	open val touchOffsetLeft: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.0)
-	}
-
-	/**
-	 * The right offset for this view touchable area.
-	 * @property touchOffsetRight
-	 * @since 0.7.0
-	 */
-	open val touchOffsetRight: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.0)
-	}
-
-	/**
-	 * The bottom offset for this view touchable area.
-	 * @property touchOffsetBottom
-	 * @since 0.7.0
-	 */
-	open val touchOffsetBottom: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.0)
-	}
-
-	/**
-	 * The view's visibility status.
-	 * @property visible
-	 * @since 0.7.0
-	 */
-	open val visible: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, true) { value ->
-			this.stylerNode.visible = value.boolean
-			this.layoutNode.visible = value.boolean
-			this.wrapper.visible = value.boolean
-		}
-	}
-
-	/**
-	 * The view's opacity.
-	 * @property opacity
-	 * @since 0.7.0
-	 */
-	open val opacity: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 1.0) { value ->
-			this.wrapper.alpha = value.number.toFloat()
-		}
-	}
-
-	/**
-	 * Whether this view can be drawn by user.
-	 * @property drawable
-	 * @since 0.7.0
-	 */
-	open val drawable: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, false) { value ->
-			this.wrapper.drawable = value.boolean
-		}
-	}
-
-	/**
-	 * Whether this view's content is clipped to its bounds.
-	 * @property clipped
-	 * @since 0.7.0
-	 */
-	open val clipped: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, true) { value ->
-			this.wrapper.clipped = value.boolean
-		}
-	}
-
-	/**
-	 * Whether this view's content is paged.
-	 * @property paged
-	 * @since 0.7.0
-	 */
-	open val paged: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, false) { value ->
-			this.scrollableView?.paged = value.boolean
-		}
-	}
-
-	/**
-	 * @property measuredTop
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	public val measuredTop: JavaScriptProperty by lazy {
-		JavaScriptProperty(context)
-	}
-
-	/**
-	 * @property measuredLeft
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	public val measuredLeft: JavaScriptProperty by lazy {
-		JavaScriptProperty(context)
-	}
-
-	/**
-	 * @property measuredWidth
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	public val measuredWidth: JavaScriptProperty by lazy {
-		JavaScriptProperty(context)
-	}
-
-	/**
-	 * @property measuredHeight
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	public val measuredHeight: JavaScriptProperty by lazy {
-		JavaScriptProperty(context)
-	}
-
-	/**
-	 * @property measuredInnerWidth
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	public val measuredInnerWidth: JavaScriptProperty by lazy {
-		JavaScriptProperty(context)
-	}
-
-	/**
-	 * @property measuredInnerHeight
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	public val measuredInnerHeight: JavaScriptProperty by lazy {
-		JavaScriptProperty(context)
-	}
-
-	/**
-	 * @property measuredContentWidth
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	public val measuredContentWidth: JavaScriptProperty by lazy {
-		JavaScriptProperty(context)
-	}
-
-	/**
-	 * @property measuredContentHeight
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	public val measuredContentHeight: JavaScriptProperty by lazy {
-		JavaScriptProperty(context)
-	}
-
-	/**
-	 * @property measuredMarginTop
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	public val measuredMarginTop: JavaScriptProperty by lazy {
-		JavaScriptProperty(context)
-	}
-
-	/**
-	 * @property measuredMarginLeft
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	public val measuredMarginLeft: JavaScriptProperty by lazy {
-		JavaScriptProperty(context)
-	}
-
-	/**
-	 * @property measuredMarginRight
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	public val measuredMarginRight: JavaScriptProperty by lazy {
-		JavaScriptProperty(context)
-	}
-
-	/**
-	 * @property measuredMarginBottom
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	public val measuredMarginBottom: JavaScriptProperty by lazy {
-		JavaScriptProperty(context)
-	}
-
-	/**
-	 * @property measuredBorderTopWidth
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	public val measuredBorderTopWidth: JavaScriptProperty by lazy {
-		JavaScriptProperty(context)
-	}
-
-	/**
-	 * @property measuredBorderLeftWidth
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	public val measuredBorderLeftWidth: JavaScriptProperty by lazy {
-		JavaScriptProperty(context)
-	}
-
-	/**
-	 * @property measuredBorderRightWidth
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	public val measuredBorderRightWidth: JavaScriptProperty by lazy {
-		JavaScriptProperty(context)
-	}
-
-	/**
-	 * @property measuredBorderBottomWidth
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	public val measuredBorderBottomWidth: JavaScriptProperty by lazy {
-		JavaScriptProperty(context)
-	}
-
-	/**
-	 * @property measuredPaddingTop
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	public val measuredPaddingTop: JavaScriptProperty by lazy {
-		JavaScriptProperty(context)
-	}
-
-	/**
-	 * @property measuredPaddingLeft
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	public val measuredPaddingLeft: JavaScriptProperty by lazy {
-		JavaScriptProperty(context)
-	}
-
-	/**
-	 * @property measuredPaddingRight
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	public val measuredPaddingRight: JavaScriptProperty by lazy {
-		JavaScriptProperty(context)
-	}
-
-	/**
-	 * @property measuredPaddingBottom
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	public val measuredPaddingBottom: JavaScriptProperty by lazy {
-		JavaScriptProperty(context)
-	}
 
 	/**
 	 * @property resolvedTop
@@ -2294,7 +556,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	open fun scheduleRedraw() {
 
 		if (this.drawable.boolean == false) {
-			this.drawable.set(true)
+			this.drawable.reset(true)
 			return
 		}
 
@@ -2999,13 +1261,13 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 
 		if (this.resolvedWidth != this.layoutNode.measuredWidth) {
 			this.resolvedWidth = this.layoutNode.measuredWidth
-			this.measuredWidth.set(null)
+			this.measuredWidth.reset(null)
 			this.invalidateFrame()
 		}
 
 		if (this.resolvedHeight != this.layoutNode.measuredHeight) {
 			this.resolvedHeight = this.layoutNode.measuredHeight
-			this.measuredHeight.set(null)
+			this.measuredHeight.reset(null)
 			this.invalidateFrame()
 		}
 	}
@@ -3019,13 +1281,13 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 
 		if (this.resolvedTop != this.layoutNode.measuredTop) {
 			this.resolvedTop = this.layoutNode.measuredTop
-			this.measuredTop.set(null)
+			this.measuredTop.reset(null)
 			this.invalidateFrame()
 		}
 
 		if (this.resolvedLeft != this.layoutNode.measuredLeft) {
 			this.resolvedLeft = this.layoutNode.measuredLeft
-			this.measuredLeft.set(null)
+			this.measuredLeft.reset(null)
 			this.invalidateFrame()
 		}
 	}
@@ -3039,13 +1301,13 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 
 		if (this.resolvedInnerWidth != this.layoutNode.measuredInnerWidth) {
 			this.resolvedInnerWidth = this.layoutNode.measuredInnerWidth
-			this.measuredInnerWidth.set(null)
+			this.measuredInnerWidth.reset(null)
 			this.invalidateFrame()
 		}
 
 		if (this.resolvedInnerHeight != this.layoutNode.measuredInnerHeight) {
 			this.resolvedInnerHeight = this.layoutNode.measuredInnerHeight
-			this.measuredInnerHeight.set(null)
+			this.measuredInnerHeight.reset(null)
 			this.invalidateFrame()
 		}
 	}
@@ -3059,13 +1321,13 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 
 		if (this.resolvedContentWidth != this.layoutNode.measuredContentWidth) {
 			this.resolvedContentWidth = this.layoutNode.measuredContentWidth
-			this.measuredContentWidth.set(null)
+			this.measuredContentWidth.reset(null)
 			this.invalidateContent()
 		}
 
 		if (this.resolvedContentHeight != this.layoutNode.measuredContentHeight) {
 			this.resolvedContentHeight = this.layoutNode.measuredContentHeight
-			this.measuredContentHeight.set(null)
+			this.measuredContentHeight.reset(null)
 			this.invalidateContent()
 		}
 	}
@@ -3079,22 +1341,22 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 
 		if (this.resolvedMarginTop != this.layoutNode.measuredMarginTop) {
 			this.resolvedMarginTop = this.layoutNode.measuredMarginTop
-			this.measuredMarginTop.set(null)
+			this.measuredMarginTop.reset(null)
 		}
 
 		if (this.resolvedMarginLeft != this.layoutNode.measuredMarginLeft) {
 			this.resolvedMarginLeft = this.layoutNode.measuredMarginLeft
-			this.measuredMarginLeft.set(null)
+			this.measuredMarginLeft.reset(null)
 		}
 
 		if (this.resolvedMarginRight != this.layoutNode.measuredMarginRight) {
 			this.resolvedMarginRight = this.layoutNode.measuredMarginRight
-			this.measuredMarginRight.set(null)
+			this.measuredMarginRight.reset(null)
 		}
 
 		if (this.resolvedMarginBottom != this.layoutNode.measuredMarginBottom) {
 			this.resolvedMarginBottom = this.layoutNode.measuredMarginBottom
-			this.measuredMarginBottom.set(null)
+			this.measuredMarginBottom.reset(null)
 		}
 	}
 
@@ -3107,25 +1369,25 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 
 		if (this.resolvedBorderTopWidth != this.layoutNode.measuredBorderTop) {
 			this.resolvedBorderTopWidth = this.layoutNode.measuredBorderTop
-			this.measuredBorderTopWidth.set(null)
+			this.measuredBorderTopWidth.reset(null)
 			this.invalidateBorder()
 		}
 
 		if (this.resolvedBorderLeftWidth != this.layoutNode.measuredBorderLeft) {
 			this.resolvedBorderLeftWidth = this.layoutNode.measuredBorderLeft
-			this.measuredBorderLeftWidth.set(null)
+			this.measuredBorderLeftWidth.reset(null)
 			this.invalidateBorder()
 		}
 
 		if (this.resolvedBorderRightWidth != this.layoutNode.measuredBorderRight) {
 			this.resolvedBorderRightWidth = this.layoutNode.measuredBorderRight
-			this.measuredBorderRightWidth.set(null)
+			this.measuredBorderRightWidth.reset(null)
 			this.invalidateBorder()
 		}
 
 		if (this.resolvedBorderBottomWidth != this.layoutNode.measuredBorderBottom) {
 			this.resolvedBorderBottomWidth = this.layoutNode.measuredBorderBottom
-			this.measuredBorderBottomWidth.set(null)
+			this.measuredBorderBottomWidth.reset(null)
 			this.invalidateBorder()
 		}
 	}
@@ -3139,22 +1401,22 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 
 		if (this.resolvedPaddingTop != this.layoutNode.measuredPaddingTop) {
 			this.resolvedPaddingTop = this.layoutNode.measuredPaddingTop
-			this.measuredPaddingTop.set(null)
+			this.measuredPaddingTop.reset(null)
 		}
 
 		if (this.resolvedPaddingLeft != this.layoutNode.measuredPaddingLeft) {
 			this.resolvedPaddingLeft = this.layoutNode.measuredPaddingLeft
-			this.measuredPaddingLeft.set(null)
+			this.measuredPaddingLeft.reset(null)
 		}
 
 		if (this.resolvedPaddingRight != this.layoutNode.measuredPaddingRight) {
 			this.resolvedPaddingRight = this.layoutNode.measuredPaddingRight
-			this.measuredPaddingRight.set(null)
+			this.measuredPaddingRight.reset(null)
 		}
 
 		if (this.resolvedPaddingBottom != this.layoutNode.measuredPaddingBottom) {
 			this.resolvedPaddingBottom = this.layoutNode.measuredPaddingBottom
-			this.measuredPaddingBottom.set(null)
+			this.measuredPaddingBottom.reset(null)
 		}
 	}
 
@@ -3244,7 +1506,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @since 0.7.0
 	 */
 	override fun onDragStart(scrollable: Scrollable) {
-		this.dragging.set(true)
+		this.dragging.reset(true)
 		this.callMethod("nativeOnDragStart")
 	}
 
@@ -3254,7 +1516,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @since 0.7.0
 	 */
 	override fun onDragEnd(scrollable: Scrollable) {
-		this.dragging.set(false)
+		this.dragging.reset(false)
 		this.callMethod("nativeOnDragEnd")
 	}
 
@@ -3273,7 +1535,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @hidden
 	 */
 	override fun onScrollStart(scrollable: Scrollable) {
-		this.scrolling.set(true)
+		this.scrolling.reset(true)
 		this.callMethod("nativeOnScrollStart")
 	}
 
@@ -3283,7 +1545,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @hidden
 	 */
 	override fun onScrollEnd(scrollable: Scrollable) {
-		this.scrolling.set(false)
+		this.scrolling.reset(false)
 		this.callMethod("nativeOnScrollEnd")
 	}
 
@@ -3302,8 +1564,8 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 			return
 		}
 
-		this.scrollTop.set(scrollT)
-		this.scrollLeft.set(scrollL)
+		this.scrollTop.reset(scrollT)
+		this.scrollLeft.reset(scrollL)
 
 		this.listener?.onScroll(this)
 
@@ -3739,7 +2001,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 				"bottom" -> return 1.0
 
 				else     -> {
-					Log.d("Dezel", "Unrecognized value for backgroundImageAnchorTop: ${prop.string}")
+					Log.d("Dezel", "Unrecognized toValue for backgroundImageAnchorTop: ${prop.string}")
 				}
 			}
 		}
@@ -3763,7 +2025,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 				"right"  -> return 1.0
 
 				else     -> {
-					Log.d("Dezel", "Unrecognized value for getBackgroundImageAnchorLeft: ${prop.string}")
+					Log.d("Dezel", "Unrecognized toValue for getBackgroundImageAnchorLeft: ${prop.string}")
 				}
 			}
 		}
@@ -3772,68 +2034,1758 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	//--------------------------------------------------------------------------
-	// JS Static Methods
+	// JS Properties
 	//--------------------------------------------------------------------------
 
-	companion object {
+	/**
+	 * The view's id.
+	 * @property id
+	 * @since 0.7.0
+	 */
+	public val id by lazy {
+		JavaScriptProperty("")
+	}
 
-		/**
-		 * @method jsStaticFunction_transition
-		 * @since 0.7.0
-		 * @hidden
-		 */
-		@Suppress("unused")
-		@JvmStatic
-		public fun jsStaticFunction_transition(callback: JavaScriptFunctionCallback) {
-
-			if (callback.arguments < 8) {
-				return
-			}
-
-			val activity = callback.context.application
-
-			val duration = callback.argument(0).number
-			val equation = PathInterpolator(
-				callback.argument(1).number.toFloat(),
-				callback.argument(2).number.toFloat(),
-				callback.argument(3).number.toFloat(),
-				callback.argument(4).number.toFloat()
-			)
-
-			val delay = callback.argument(5).number
-
-			val complete = callback.argument(6)
-			val function = callback.argument(7)
-
-			val animate = {
-
-				Transition.create(
-					activity,
-					duration,
-					equation,
-					delay
-				)
-
-				function.call()
-				complete.protect()
-
-				Transition.commit {
-					complete.call()
-					complete.unprotect()
-				}
-			}
-
-			if (callback.context.application.layout.resolving) {
-				callback.context.application.layout.requestLayoutEndedCallback(animate)
-				return
-			}
-
-			animate()
+	/**
+	 * The view's background color.
+	 * @property backgroundColor
+	 * @since 0.7.0
+	 */
+	public val backgroundColor by lazy {
+		JavaScriptProperty("transparent") {
+			this.invalidateBitmapColor()
 		}
 	}
 
-	//--------------------------------------------------------------------------
-	// JS Properties
+	/**
+	 * The view's background image.
+	 * @property backgroundImage
+	 * @since 0.7.0
+	 */
+	public val backgroundImage by lazy {
+		JavaScriptProperty() { value ->
+			this.backgroundImageLoader.load(value) { image ->
+				this.backgroundImageData = image
+				// TODO FIXME WAT
+			}
+		}
+	}
+
+	/**
+	 * The view's background image container fit.
+	 * @property backgroundImageFit
+	 * @since 0.7.0
+	 */
+	public val backgroundImageFit by lazy {
+		JavaScriptProperty("cover") {
+			this.invalidateBitmapImage()
+		}
+	}
+
+	/**
+	 * The view's background image top anchor.
+	 * @property backgroundImageAnchorTop
+	 * @since 0.7.0
+	 */
+	public val backgroundImageAnchorTop by lazy {
+		JavaScriptProperty(0.5) {
+			this.invalidateBitmapImage()
+		}
+	}
+
+	/**
+	 * The view's background image left anchor.
+	 * @property backgroundImageAnchorLeft
+	 * @since 0.7.0
+	 */
+	public val backgroundImageAnchorLeft by lazy {
+		JavaScriptProperty(0.5) {
+			this.invalidateBitmapImage()
+		}
+	}
+
+	/**
+	 * The view's background image top position.
+	 * @property backgroundImageTop
+	 * @since 0.7.0
+	 */
+	public val backgroundImageTop by lazy {
+		JavaScriptProperty(50.0, JavaScriptPropertyUnit.PC) {
+			this.invalidateBitmapImage()
+		}
+	}
+
+	/**
+	 * The view's background image left position.
+	 * @property backgroundImageLeft
+	 * @since 0.7.0
+	 */
+	public val backgroundImageLeft by lazy {
+		JavaScriptProperty(50.0, JavaScriptPropertyUnit.PC) {
+			this.invalidateBitmapImage()
+		}
+	}
+
+	/**
+	 * The view's background image width.
+	 * @property backgroundImageWidth
+	 * @since 0.7.0
+	 */
+	public val backgroundImageWidth by lazy {
+		JavaScriptProperty("auto") {
+			this.invalidateBitmapImage()
+		}
+	}
+
+	/**
+	 * The view's background image height.
+	 * @property backgroundImageHeight
+	 * @since 0.7.0
+	 */
+	public val backgroundImageHeight by lazy {
+		JavaScriptProperty("auto") {
+			this.invalidateBitmapImage()
+		}
+	}
+
+	/**
+	 * The view's background image imageTint.
+	 * @property backgroundImageTint
+	 * @since 0.7.0
+	 */
+	public val backgroundImageTint by lazy {
+		JavaScriptProperty("auto") { value ->
+			this.wrapper.backgroundImageTint = value.string.toColor()
+		}
+	}
+
+	/**
+	 * The view's border.
+	 * @property border
+	 * @since 0.7.0
+	 */
+	public val border by lazy {
+
+		JavaScriptProperty("0 #000") { value ->
+
+			val components = value.string.split(spaces)
+			if (components.size < 2) {
+				return@JavaScriptProperty
+			}
+
+			val width = components[0].trim()
+			val color = components[1].trim()
+
+			JavaScriptPropertyParser.parse(width).let {
+				if (it.isNumber) {
+					this.borderTopWidth.reset(it.number, it.unit)
+					this.borderLeftWidth.reset(it.number, it.unit)
+					this.borderRightWidth.reset(it.number, it.unit)
+					this.borderBottomWidth.reset(it.number, it.unit)
+				}
+			}
+
+			this.borderTopColor.reset(color)
+			this.borderLeftColor.reset(color)
+			this.borderRightColor.reset(color)
+			this.borderBottomColor.reset(color)
+		}
+	}
+
+	/**
+	 * The view's top border.
+	 * @property borderTop
+	 * @since 0.7.0
+	 */
+	public val borderTop by lazy {
+
+		JavaScriptProperty("0 #000") { value ->
+
+			val components = value.string.split(spaces)
+			if (components.size < 2) {
+				return@JavaScriptProperty
+			}
+
+			this.borderTopWidth.parse(components[0].trim())
+			this.borderTopColor.reset(components[1].trim())
+		}
+	}
+
+	/**
+	 * The view's left border.
+	 * @property borderLeft
+	 * @since 0.7.0
+	 */
+	public val borderLeft by lazy {
+
+		JavaScriptProperty("0 #000") { value ->
+
+			val components = value.string.split(spaces)
+			if (components.size < 2) {
+				return@JavaScriptProperty
+			}
+
+			this.borderLeftWidth.parse(components[0].trim())
+			this.borderLeftColor.reset(components[1].trim())
+		}
+	}
+
+	/**
+	 * The view's right border.
+	 * @property borderRight
+	 * @since 0.7.0
+	 */
+	public val borderRight by lazy {
+
+		JavaScriptProperty("0 #000") { value ->
+
+			val components = value.string.split(spaces)
+			if (components.size < 2) {
+				return@JavaScriptProperty
+			}
+
+			this.borderRightWidth.parse(components[0].trim())
+			this.borderRightColor.reset(components[1].trim())
+		}
+	}
+
+	/**
+	 * The view's bottom border.
+	 * @property borderBottom
+	 * @since 0.7.0
+	 */
+	public val borderBottom by lazy {
+
+		JavaScriptProperty("0 #000") { value ->
+
+			val components = value.string.split(spaces)
+			if (components.size < 2) {
+				return@JavaScriptProperty
+			}
+
+			this.borderBottomWidth.parse(components[0].trim())
+			this.borderBottomColor.reset(components[1].trim())
+		}
+	}
+
+	/**
+	 * The view's border width.
+	 * @property borderWidth
+	 * @since 0.7.0
+	 */
+	public val borderWidth by lazy {
+		JavaScriptProperty(0.0) { value ->
+			this.borderTopWidth.reset(value.number, value.unit)
+			this.borderLeftWidth.reset(value.number, value.unit)
+			this.borderRightWidth.reset(value.number, value.unit)
+			this.borderBottomWidth.reset(value.number, value.unit)
+		}
+	}
+
+	/**
+	 * The view's border color.
+	 * @property borderColor
+	 * @since 0.7.0
+	 */
+	public val borderColor by lazy {
+		JavaScriptProperty("#000") { value ->
+			this.borderTopColor.reset(value.string)
+			this.borderLeftColor.reset(value.string)
+			this.borderRightColor.reset(value.string)
+			this.borderBottomColor.reset(value.string)
+		}
+	}
+
+	/**
+	 * The view's border top color.
+	 * @property borderTopColor
+	 * @since 0.7.0
+	 */
+	public val borderTopColor by lazy {
+		JavaScriptProperty("#000") { value ->
+			this.wrapper.borderTopColor = Color.parse(value.string)
+		}
+	}
+
+	/**
+	 * The view's border left color.
+	 * @property borderLeftColor
+	 * @since 0.7.0
+	 */
+	public val borderLeftColor by lazy {
+		JavaScriptProperty("#000") { value ->
+			this.wrapper.borderLeftColor = Color.parse(value.string)
+		}
+	}
+
+	/**
+	 * The view's border right color.
+	 * @property borderRightColor
+	 * @since 0.7.0
+	 */
+	public val borderRightColor by lazy {
+		JavaScriptProperty("#000") { value ->
+			this.wrapper.borderRightColor = Color.parse(value.string)
+		}
+	}
+
+	/**
+	 * The view's border bottom color.
+	 * @property borderBottomColor
+	 * @since 0.7.0
+	 */
+	public val borderBottomColor by lazy {
+		JavaScriptProperty("#000") { value ->
+			this.wrapper.borderBottomColor = Color.parse(value.string)
+		}
+	}
+
+	/**
+	 * The view's border top width.
+	 * @property borderTopWidth
+	 * @since 0.7.0
+	 */
+	public val borderTopWidth by lazy {
+		JavaScriptProperty(0.0) { value ->
+			this.layoutNode.borderTop(value)
+		}
+	}
+
+	/**
+	 * The view's border left width.
+	 * @property borderLeftWidth
+	 * @since 0.7.0
+	 */
+	public val borderLeftWidth by lazy {
+		JavaScriptProperty(0.0) { value ->
+			this.layoutNode.borderLeft(value)
+		}
+	}
+
+	/**
+	 * The view's border right width.
+	 * @property borderRightWidth
+	 * @since 0.7.0
+	 */
+	public val borderRightWidth by lazy {
+		JavaScriptProperty(0.0) { value ->
+			this.layoutNode.borderRight(value)
+		}
+	}
+
+	/**
+	 * The view's border bottom width.
+	 * @property borderBottomWidth
+	 * @since 0.7.0
+	 */
+	public val borderBottomWidth by lazy {
+		JavaScriptProperty(0.0) { value ->
+			this.layoutNode.borderBottom(value)
+		}
+	}
+
+	/**
+	 * The view's absolute minimum border top width.
+	 * @property minBorderTopWidth
+	 * @since 0.7.0
+	 */
+	public val minBorderTopWidth by lazy {
+		JavaScriptProperty(0.0) {
+			// TODO
+		}
+	}
+
+	/**
+	 * The view's absolute maximum border top width.
+	 * @property maxBorderTopWidth
+	 * @since 0.7.0
+	 */
+	public val maxBorderTopWidth by lazy {
+		JavaScriptProperty(Double.max) {
+			// TODO
+		}
+	}
+
+	/**
+	 * The view's absolute minimum border left width.
+	 * @property minBorderLeftWidth
+	 * @since 0.7.0
+	 */
+	public val minBorderLeftWidth by lazy {
+		JavaScriptProperty(0.0) {
+			// TODO
+		}
+	}
+
+	/**
+	 * The view's absolute maximum border left width.
+	 * @property maxBorderLeftWidth
+	 * @since 0.7.0
+	 */
+	public val maxBorderLeftWidth by lazy {
+		JavaScriptProperty(Double.max) {
+			// TODO
+		}
+	}
+
+	/**
+	 * The view's absolute minimum border right width.
+	 * @property minBorderRightWidth
+	 * @since 0.7.0
+	 */
+	public val minBorderRightWidth by lazy {
+		JavaScriptProperty(0.0) {
+			// TODO
+		}
+	}
+
+	/**
+	 * The view's absolute maximum border right width.
+	 * @property maxBorderRightWidth
+	 * @since 0.7.0
+	 */
+	public val maxBorderRightWidth by lazy {
+		JavaScriptProperty(Double.max) {
+			// TODO
+		}
+	}
+
+	/**
+	 * The view's absolute minimum border bottom width.
+	 * @property minBorderBottomWidth
+	 * @since 0.7.0
+	 */
+	public val minBorderBottomWidth by lazy {
+		JavaScriptProperty(0.0) {
+			// TODO
+		}
+	}
+
+	/**
+	 * The view's absolute maximum border bottom width.
+	 * @property maxBorderBottomWidth
+	 * @since 0.7.0
+	 */
+	public val maxBorderBottomWidth by lazy {
+		JavaScriptProperty(Double.max) {
+			// TODO
+		}
+	}
+
+	/**
+	 * The view's border radius.
+	 * @property borderRadius
+	 * @since 0.7.0
+	 */
+	public val borderRadius by lazy {
+		JavaScriptProperty(0.0) { value ->
+			this.borderTopLeftRadius.reset(value.number)
+			this.borderTopRightRadius.reset(value.number)
+			this.borderBottomLeftRadius.reset(value.number)
+			this.borderBottomRightRadius.reset(value.number)
+		}
+	}
+
+	/**
+	 * The view's border top left corner radius.
+	 * @property borderTopLeftRadius
+	 * @since 0.7.0
+	 */
+	public val borderTopLeftRadius by lazy {
+		JavaScriptProperty(0.0) {
+			this.invalidateBorder()
+		}
+	}
+
+	/**
+	 * The view's border top right corner radius.
+	 * @property borderTopRightRadius
+	 * @since 0.7.0
+	 */
+	public val borderTopRightRadius by lazy {
+		JavaScriptProperty(0.0) {
+			this.invalidateBorder()
+		}
+	}
+
+	/**
+	 * The view's border bottom left corner radius.
+	 * @property borderBottomLeftRadius
+	 * @since 0.7.0
+	 */
+	public val borderBottomLeftRadius by lazy {
+		JavaScriptProperty(0.0) {
+			this.invalidateBorder()
+		}
+	}
+
+	/**
+	 * The view's border bottom right corner radius.
+	 * @property borderBottomRightRadius
+	 * @since 0.7.0
+	 */
+	public val borderBottomRightRadius by lazy {
+		JavaScriptProperty(0.0) {
+			this.invalidateBorder()
+		}
+	}
+
+	/**
+	 * The view's shadow blur distance.
+	 * @property shadowBlur
+	 * @since 0.7.0
+	 */
+	public val shadowBlur by lazy {
+		JavaScriptProperty(0.0) {
+			this.invalidateShadow()
+		}
+	}
+
+	/**
+	 * The view's shadow color.
+	 * @property shadowColor
+	 * @since 0.7.0
+	 */
+	public val shadowColor by lazy {
+		JavaScriptProperty("#000") {
+			this.invalidateShadow()
+		}
+	}
+
+	/**
+	 * The view's shadow's top offset.
+	 * @property shadowOffsetTop
+	 * @since 0.7.0
+	 */
+	public val shadowOffsetTop by lazy {
+		JavaScriptProperty(0.0) {
+			this.invalidateShadow()
+		}
+	}
+
+	/**
+	 * The view's shadow's left offset.
+	 * @property shadowOffsetLeft
+	 * @since 0.7.0
+	 */
+	public val shadowOffsetLeft by lazy {
+		JavaScriptProperty(0.0) {
+			this.invalidateShadow()
+		}
+	}
+
+	/**
+	 * The view's top position.
+	 * @property top
+	 * @since 0.7.0
+	 */
+	public val top by lazy {
+		JavaScriptProperty("auto") { value ->
+			this.layoutNode.top(value)
+		}
+	}
+
+	/**
+	 * The view's left position.
+	 * @property left
+	 * @since 0.7.0
+	 */
+	public val left by lazy {
+		JavaScriptProperty("auto") { value ->
+			this.layoutNode.left(value)
+		}
+	}
+
+	/**
+	 * The view's right position.
+	 * @property right
+	 * @since 0.7.0
+	 */
+	public val right by lazy {
+		JavaScriptProperty("auto") { value ->
+			this.layoutNode.right(value)
+		}
+	}
+
+	/**
+	 * The view's bottom position.
+	 * @property bottom
+	 * @since 0.7.0
+	 */
+	public val bottom by lazy {
+		JavaScriptProperty("auto") { value ->
+			this.layoutNode.bottom(value)
+		}
+	}
+
+	/**
+	 * The view's absolute minimum top position.
+	 * @property minTop
+	 * @since 0.7.0
+	 */
+	public val minTop by lazy {
+		JavaScriptProperty(Double.min) { value ->
+			this.layoutNode.minTop(value.number)
+		}
+	}
+
+	/**
+	 * The view's absolute maximum top position.
+	 * @property maxTop
+	 * @since 0.7.0
+	 */
+	public val maxTop by lazy {
+		JavaScriptProperty(Double.max) { value ->
+			this.layoutNode.maxTop(value.number)
+		}
+	}
+
+	/**
+	 * The view's absolute minimum left position.
+	 * @property minLeft
+	 * @since 0.7.0
+	 */
+	public val minLeft by lazy {
+		JavaScriptProperty(Double.min) { value ->
+			this.layoutNode.minLeft(value.number)
+		}
+	}
+
+	/**
+	 * The view's absolute maximum left position.
+	 * @property maxLeft
+	 * @since 0.7.0
+	 */
+	public val maxLeft by lazy {
+		JavaScriptProperty(Double.max) { value ->
+			this.layoutNode.maxLeft(value.number)
+		}
+	}
+
+	/**
+	 * The view's absolute minimum right position.
+	 * @property minRight
+	 * @since 0.7.0
+	 */
+	public val minRight by lazy {
+		JavaScriptProperty(Double.min) { value ->
+			this.layoutNode.minRight(value.number)
+		}
+	}
+
+	/**
+	 * The view's absolute maximum right position.
+	 * @property maxRight
+	 * @since 0.7.0
+	 */
+	public val maxRight by lazy {
+		JavaScriptProperty(Double.max) { value ->
+			this.layoutNode.maxRight(value.number)
+		}
+	}
+
+	/**
+	 * The view's absolute minimum bottom position.
+	 * @property minBottom
+	 * @since 0.7.0
+	 */
+	public val minBottom by lazy {
+		JavaScriptProperty(Double.min) { value ->
+			this.layoutNode.minBottom(value.number)
+		}
+	}
+
+	/**
+	 * The view's absolute maximum bottom position.
+	 * @property maxBottom
+	 * @since 0.7.0
+	 */
+	public val maxBottom by lazy {
+		JavaScriptProperty(Double.max) { value ->
+			this.layoutNode.maxBottom(value.number)
+		}
+	}
+
+	/**
+	 * The view's vertical point from with it will be positioned.
+	 * @property anchorTop
+	 * @since 0.7.0
+	 */
+	public val anchorTop by lazy {
+		JavaScriptProperty(0.0) { value ->
+			this.layoutNode.anchorTop(value)
+		}
+	}
+
+	/**
+	 * The view's horizontal point from with it will be positioned.
+	 * @property anchorLeft
+	 * @since 0.7.0
+	 */
+	public val anchorLeft by lazy {
+		JavaScriptProperty(0.0) { value ->
+			this.layoutNode.anchorLeft(value)
+		}
+	}
+
+	/**
+	 * The view's width.
+	 * @property width
+	 * @since 0.7.0
+	 */
+	public val width by lazy {
+		JavaScriptProperty("fill") { value ->
+			this.layoutNode.width(value)
+		}
+	}
+
+	/**
+	 * The view's height.
+	 * @property height
+	 * @since 0.7.0
+	 */
+	public val height by lazy {
+		JavaScriptProperty("fill") { value ->
+			this.layoutNode.height(value)
+		}
+	}
+
+	/**
+	 * The view's absolute minimum width.
+	 * @property minWidth
+	 * @since 0.7.0
+	 */
+	public val minWidth by lazy {
+		JavaScriptProperty(0.0) { value ->
+			this.layoutNode.minWidth(value.number)
+		}
+	}
+
+	/**b
+	 * The view's absolute maximum width.
+	 * @property maxWidth
+	 * @since 0.7.0
+	 */
+	public val maxWidth by lazy {
+		JavaScriptProperty(Double.max) { value ->
+			this.layoutNode.maxWidth(value.number)
+		}
+	}
+
+	/**
+	 * The view's absolute minimum height.
+	 * @property minHeight
+	 * @since 0.7.0
+	 */
+	public val minHeight by lazy {
+		JavaScriptProperty(0.0) { value ->
+			this.layoutNode.minHeight(value.number)
+		}
+	}
+
+	/**
+	 * The view's absolute maximum height.
+	 * @property maxHeight
+	 * @since 0.7.0
+	 */
+	public val maxHeight by lazy {
+		JavaScriptProperty(Double.max) { value ->
+			this.layoutNode.maxHeight(value.number)
+		}
+	}
+
+	/**
+	 * The view's expandable ratio.
+	 * @property expand
+	 * @since 0.7.0
+	 */
+	public val expand by lazy {
+		JavaScriptProperty(0.0) { value ->
+			this.layoutNode.expand(value.number)
+		}
+	}
+
+	/**
+	 * The view's shrink ratio.
+	 * @property shrink
+	 * @since 0.7.0
+	 */
+	public val shrink by lazy {
+		JavaScriptProperty(0.0) { value ->
+			this.layoutNode.shrink(value.number)
+		}
+	}
+
+	/**
+	 * The view's content top.
+	 * @property contentTop
+	 * @since 0.7.0
+	 */
+	public val contentTop by lazy {
+		JavaScriptProperty(0.0) { value ->
+			this.layoutNode.contentTop(value)
+		}
+	}
+
+	/**
+	 * The view's content left.
+	 * @property contentLeft
+	 * @since 0.7.0
+	 */
+	public val contentLeft by lazy {
+		JavaScriptProperty(0.0) { value ->
+			this.layoutNode.contentLeft(value)
+		}
+	}
+
+	/**
+	 * The view's content width.
+	 * @property contentWidth
+	 * @since 0.7.0
+	 */
+	public val contentWidth by lazy {
+		JavaScriptProperty("auto") { value ->
+			this.layoutNode.contentWidth(value)
+		}
+	}
+
+	/**
+	 * The view's content height.
+	 * @property contentHeight
+	 * @since 0.7.0
+	 */
+	public val contentHeight by lazy {
+		JavaScriptProperty("auto") { value ->
+			this.layoutNode.contentHeight(value)
+		}
+	}
+
+	/**
+	 * The view's content top inset.
+	 * @property contentInsetTop
+	 * @since 0.7.0
+	 */
+	public val contentInsetTop by lazy {
+		JavaScriptProperty(0.0) { value ->
+			this.scrollableView?.contentInsetTop = Convert.toPx(value.number).toInt()
+		}
+	}
+
+	/**
+	 * The view's content left inset.
+	 * @property contentInsetLeft
+	 * @since 0.7.0
+	 */
+	public val contentInsetLeft by lazy {
+		JavaScriptProperty(0.0) { value ->
+			this.scrollableView?.contentInsetLeft = Convert.toPx(value.number).toInt()
+		}
+	}
+
+	/**
+	 * The view's content right inset.
+	 * @property contentInsetRight
+	 * @since 0.7.0
+	 */
+	public val contentInsetRight by lazy {
+		JavaScriptProperty(0.0) { value ->
+			this.scrollableView?.contentInsetRight = Convert.toPx(value.number).toInt()
+		}
+	}
+
+	/**
+	 * The view's content bottom inset.
+	 * @property contentInsetBottom
+	 * @since 0.7.0
+	 */
+	public val contentInsetBottom by lazy {
+		JavaScriptProperty(0.0) { value ->
+			this.scrollableView?.contentInsetBottom = Convert.toPx(value.number).toInt()
+		}
+	}
+
+	/**
+	 * The view's content orientation.
+	 * @property contentDirection
+	 * @since 0.7.0
+	 */
+	public val contentDirection by lazy {
+		JavaScriptProperty("vertical") { value ->
+			this.layoutNode.contentDirection(value)
+		}
+	}
+
+	/**
+	 * The view's content alignment on the main axis.
+	 * @property contentLocation
+	 * @since 0.7.0
+	 */
+	public val contentLocation by lazy {
+		JavaScriptProperty("start") { value ->
+			this.layoutNode.contentLocation(value)
+		}
+	}
+
+	/**
+	 * The view's content alignment on the cross axis.
+	 * @property contentAlignment
+	 * @since 0.7.0
+	 */
+	public val contentAlignment by lazy {
+		JavaScriptProperty("start") { value ->
+			this.layoutNode.contentAlignment(value)
+		}
+	}
+
+	/**
+	 * Whether this view's content can scroll.
+	 * @property scrollable
+	 * @since 0.7.0
+	 */
+	public val scrollable by lazy {
+		JavaScriptProperty(false) { value ->
+			this.scrollableView?.scrollable = value.boolean
+		}
+	}
+
+	/**
+	 * Whether this view's content displays scrollbars.
+	 * @property scrollbars
+	 * @since 0.7.0
+	 */
+	public val scrollbars by lazy {
+		JavaScriptProperty(false) { value ->
+			this.scrollableView?.scrollbars = Scrollbars.get(value)
+		}
+	}
+
+	/**
+	 * Whether this view's content can overscroll.
+	 * @property overscroll
+	 * @since 0.7.0
+	 */
+	public val overscroll by lazy {
+		JavaScriptProperty("auto") { value ->
+			this.scrollableView?.overscroll = Overscroll.get(value)
+		}
+	}
+
+	/**
+	 * Whether this view's content scrolls with momentum.
+	 * @property momentum
+	 * @since 0.7.0
+	 */
+	public val momentum by lazy {
+		JavaScriptProperty(true) { value ->
+			this.scrollableView?.momentum = value.boolean
+		}
+	}
+
+	/**
+	 * The view's top scroll offset.
+	 * @property scrollTop
+	 * @since 0.7.0
+	 */
+	public val scrollTop by lazy {
+		JavaScriptProperty(0.0) { value ->
+			this.scrollableView?.scrollTop = Convert.toPx(value.number).toInt()
+		}
+	}
+
+	/**
+	 * The view's left scroll offset.
+	 * @property scrollLeft
+	 * @since 0.7.0
+	 */
+	public val scrollLeft by lazy {
+		JavaScriptProperty(0.0) { value ->
+			this.scrollableView?.scrollLeft = Convert.toPx(value.number).toInt()
+		}
+	}
+
+	/**
+	 * Whether this view is scrolling.
+	 * @property scrolling
+	 * @since 0.7.0
+	 */
+	public val scrolling by lazy {
+		JavaScriptProperty(false)
+	}
+
+	/**
+	 * Whether this view is dragging.
+	 * @property dragging
+	 * @since 0.7.0
+	 */
+	public val dragging by lazy {
+		JavaScriptProperty(false)
+	}
+
+	/**
+	 * The view's margin.
+	 * @property margin
+	 * @since 0.7.0
+	 */
+	public val margin by lazy {
+		JavaScriptProperty(0.0) { value ->
+			this.marginTop.reset(value.number, value.unit)
+			this.marginLeft.reset(value.number, value.unit)
+			this.marginRight.reset(value.number, value.unit)
+			this.marginBottom.reset(value.number, value.unit)
+		}
+	}
+
+	/**
+	 * The view's top margin.
+	 * @property marginTop
+	 * @since 0.7.0
+	 */
+	public val marginTop by lazy {
+		JavaScriptProperty(0.0) { value ->
+			this.layoutNode.marginTop(value)
+		}
+	}
+
+	/**
+	 * The view's left margin.
+	 * @property marginLeft
+	 * @since 0.7.0
+	 */
+	public val marginLeft by lazy {
+		JavaScriptProperty(0.0) { value ->
+			this.layoutNode.marginLeft(value)
+		}
+	}
+
+	/**
+	 * The view's right margin.
+	 * @property marginRight
+	 * @since 0.7.0
+	 */
+	public val marginRight by lazy {
+		JavaScriptProperty(0.0) { value ->
+			this.layoutNode.marginRight(value)
+		}
+	}
+
+	/**
+	 * The view's bottom margin.
+	 * @property marginBottom
+	 * @since 0.7.0
+	 */
+	public val marginBottom by lazy {
+		JavaScriptProperty(0.0) { value ->
+			this.layoutNode.marginBottom(value)
+		}
+	}
+
+	/**
+	 * The view's absolute minimum top margin.
+	 * @property minMarginTop
+	 * @since 0.7.0
+	 */
+	public val minMarginTop by lazy {
+		JavaScriptProperty(Double.min) { value ->
+			this.layoutNode.minMarginTop(value.number)
+		}
+	}
+
+	/**
+	 * The view's absolute maximum top margin.
+	 * @property maxMarginTop
+	 * @since 0.7.0
+	 */
+	public val maxMarginTop by lazy {
+		JavaScriptProperty(Double.max) { value ->
+			this.layoutNode.maxMarginTop(value.number)
+		}
+	}
+
+	/**
+	 * The view's absolute minimum left margin.
+	 * @property minMarginLeft
+	 * @since 0.7.0
+	 */
+	public val minMarginLeft by lazy {
+		JavaScriptProperty(Double.min) { value ->
+			this.layoutNode.minMarginLeft(value.number)
+		}
+	}
+
+	/**
+	 * The view's absolute maximum left margin.
+	 * @property maxMarginLeft
+	 * @since 0.7.0
+	 */
+	public val maxMarginLeft by lazy {
+		JavaScriptProperty(Double.max) { value ->
+			this.layoutNode.maxMarginLeft(value.number)
+		}
+	}
+
+	/**
+	 * The view's absolute minimum right margin.
+	 * @property minMarginRight
+	 * @since 0.7.0
+	 */
+	public val minMarginRight by lazy {
+		JavaScriptProperty(Double.min) { value ->
+			this.layoutNode.minMarginRight(value.number)
+		}
+	}
+
+	/**
+	 * The view's absolute maximum right margin.
+	 * @property maxMarginRight
+	 * @since 0.7.0
+	 */
+	public val maxMarginRight by lazy {
+		JavaScriptProperty(Double.max) { value ->
+			this.layoutNode.maxMarginRight(value.number)
+		}
+	}
+
+	/**
+	 * The view's absolute minimum bottom margin.
+	 * @property minMarginBottom
+	 * @since 0.7.0
+	 */
+	public val minMarginBottom by lazy {
+		JavaScriptProperty(Double.min) { value ->
+			this.layoutNode.minMarginBottom(value.number)
+		}
+	}
+
+	/**
+	 * The view's absolute maximum bottom margin.
+	 * @property maxMarginBottom
+	 * @since 0.7.0
+	 */
+	public val maxMarginBottom by lazy {
+		JavaScriptProperty(Double.max) { value ->
+			this.layoutNode.maxMarginBottom(value.number)
+		}
+	}
+
+	/**
+	 * The view's padding.
+	 * @property padding
+	 * @since 0.7.0
+	 */
+	public val padding by lazy {
+		JavaScriptProperty(0.0) { value ->
+			this.paddingTop.reset(value.number, value.unit)
+			this.paddingLeft.reset(value.number, value.unit)
+			this.paddingRight.reset(value.number, value.unit)
+			this.paddingBottom.reset(value.number, value.unit)
+		}
+	}
+
+	/**
+	 * The view's top padding.
+	 * @property paddingTop
+	 * @since 0.7.0
+	 */
+	public val paddingTop by lazy {
+		JavaScriptProperty(0.0) { value ->
+			this.layoutNode.paddingTop(value)
+		}
+	}
+
+	/**
+	 * The view's left padding.
+	 * @property paddingLeft
+	 * @since 0.7.0
+	 */
+	public val paddingLeft by lazy {
+		JavaScriptProperty(0.0) { value ->
+			this.layoutNode.paddingLeft(value)
+		}
+	}
+
+	/**
+	 * The view's right padding.
+	 * @property paddingRight
+	 * @since 0.7.0
+	 */
+	public val paddingRight by lazy {
+		JavaScriptProperty(0.0) { value ->
+			this.layoutNode.paddingRight(value)
+		}
+	}
+
+	/**
+	 * The view's bottom padding.
+	 * @property paddingBottom
+	 * @since 0.7.0
+	 */
+	public val paddingBottom by lazy {
+		JavaScriptProperty(0.0) { value ->
+			this.layoutNode.paddingBottom(value)
+		}
+	}
+
+	/**
+	 * The view's absolute minimum top padding.
+	 * @property minPaddingTop
+	 * @since 0.7.0
+	 */
+	public val minPaddingTop by lazy {
+		JavaScriptProperty(0.0) { value ->
+			this.layoutNode.minPaddingTop(value.number)
+		}
+	}
+
+	/**
+	 * The view's absolute maximum top padding.
+	 * @property maxPaddingTop
+	 * @since 0.7.0
+	 */
+	public val maxPaddingTop by lazy {
+		JavaScriptProperty(Double.max) { value ->
+			this.layoutNode.maxPaddingTop(value.number)
+		}
+	}
+
+	/**
+	 * The view's absolute minimum left padding.
+	 * @property minPaddingLeft
+	 * @since 0.7.0
+	 */
+	public val minPaddingLeft by lazy {
+		JavaScriptProperty(0.0) { value ->
+			this.layoutNode.minPaddingLeft(value.number)
+		}
+	}
+
+	/**
+	 * The view's absolute maximum left padding.
+	 * @property maxPaddingLeft
+	 * @since 0.7.0
+	 */
+	public val maxPaddingLeft by lazy {
+		JavaScriptProperty(Double.max) { value ->
+			this.layoutNode.maxPaddingLeft(value.number)
+		}
+	}
+
+	/**
+	 * The view's absolute minimum right padding.
+	 * @property minPaddingRight
+	 * @since 0.7.0
+	 */
+	public val minPaddingRight by lazy {
+		JavaScriptProperty(0.0) { value ->
+			this.layoutNode.minPaddingRight(value.number)
+		}
+	}
+
+	/**
+	 * The view's absolute maximum right padding.
+	 * @property maxPaddingRight
+	 * @since 0.7.0
+	 */
+	public val maxPaddingRight by lazy {
+		JavaScriptProperty(Double.max) { value ->
+			this.layoutNode.maxPaddingRight(value.number)
+		}
+	}
+
+	/**
+	 * The view's absolute minimum bottom padding.
+	 * @property minPaddingBottom
+	 * @since 0.7.0
+	 */
+	public val minPaddingBottom by lazy {
+		JavaScriptProperty(0.0) { value ->
+			this.layoutNode.minPaddingBottom(value.number)
+		}
+	}
+
+	/**
+	 * The view's absolute maximum bottom padding.
+	 * @property maxPaddingBottom
+	 * @since 0.7.0
+	 */
+	public val maxPaddingBottom by lazy {
+		JavaScriptProperty(Double.max) { value ->
+			this.layoutNode.maxPaddingBottom(value.number)
+		}
+	}
+
+	/**
+	 * The view's transformation origin on the x axis.
+	 * @property originX
+	 * @since 0.7.0
+	 */
+	public val originX by lazy {
+		JavaScriptProperty(0.5) {
+			this.invalidateTransform()
+		}
+	}
+
+	/**
+	 * The view's transformation origin on the y axis.
+	 * @property originY
+	 * @since 0.7.0
+	 */
+	public val originY by lazy {
+		JavaScriptProperty(0.5) {
+			this.invalidateTransform()
+		}
+	}
+
+	/**
+	 * The view's transformation origin on the z axis.
+	 * @property originZ
+	 * @since 0.7.0
+	 */
+	public val originZ by lazy {
+		JavaScriptProperty(0.0) {
+			this.invalidateTransform()
+		}
+	}
+
+	/**
+	 * The view's translation on the x axis.
+	 * @property translationX
+	 * @since 0.7.0
+	 */
+	public val translationX by lazy {
+		JavaScriptProperty(0.0) {
+			this.invalidateTransform()
+		}
+	}
+
+	/**
+	 * The view's translation on the y axis.
+	 * @property translationY
+	 * @since 0.7.0
+	 */
+	public val translationY by lazy {
+		JavaScriptProperty(0.0) {
+			this.invalidateTransform()
+		}
+	}
+
+	/**
+	 * The view's translation on the z axis.
+	 * @property translationZ
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	public val translationZ by lazy {
+		JavaScriptProperty(0.0) {
+			this.invalidateTransform()
+		}
+	}
+
+	/**
+	 * The view's rotation on the x axis.
+	 * @property rotationX
+	 * @since 0.7.0
+	 */
+	public val rotationX by lazy {
+		JavaScriptProperty(0.0) {
+			this.invalidateTransform()
+		}
+	}
+
+	/**
+	 * The view's rotation on the y axis.
+	 * @property rotationY
+	 * @since 0.7.0
+	 */
+	public val rotationY by lazy {
+		JavaScriptProperty(0.0) {
+			this.invalidateTransform()
+		}
+	}
+
+	/**
+	 * The view's rotation on the z axis.
+	 * @property rotationZ
+	 * @since 0.7.0
+	 */
+	public val rotationZ by lazy {
+		JavaScriptProperty(0.0) {
+			this.invalidateTransform()
+		}
+	}
+
+	/**
+	 * The view's scale on the x axis.
+	 * @property scaleX
+	 * @since 0.7.0
+	 */
+	public val scaleX by lazy {
+		JavaScriptProperty(1.0) {
+			this.invalidateTransform()
+		}
+	}
+
+	/**
+	 * The view's scale on the y axis.
+	 * @property scaleY
+	 * @since 0.7.0
+	 */
+	public val scaleY by lazy {
+		JavaScriptProperty(1.0) {
+			this.invalidateTransform()
+		}
+	}
+
+	/**
+	 * The view's scale on the z axis.
+	 * @property scaleZ
+	 * @since 0.7.0
+	 */
+	public val scaleZ by lazy {
+		JavaScriptProperty(1.0) {
+			this.invalidateTransform()
+		}
+	}
+
+	/**
+	 * The view's index on the z position relative to its siblings.
+	 * @property zIndex
+	 * @since 0.7.0
+	 */
+	public val zIndex by lazy {
+		JavaScriptProperty(0.0) {
+			val parent = this.parent
+			if (parent != null) {
+				parent.invalidateOrder()
+			}
+		}
+	}
+
+	/**
+	 * Whether the view is zoomable.
+	 * @property zoomable
+	 * @since 0.7.0
+	 */
+	public val zoomable by lazy {
+		JavaScriptProperty(false) { value ->
+			this.scrollableView?.zoomable = value.boolean
+		}
+	}
+
+	/**
+	 * The view's minimum zoom.
+	 * @property minZoom
+	 * @since 0.7.0
+	 */
+	public val minZoom by lazy {
+		JavaScriptProperty(1.0) { value ->
+			this.scrollableView?.minZoom = value.number.toFloat()
+		}
+	}
+
+	/**
+	 * The view's maximum zoom.
+	 * @property maxZoom
+	 * @since 0.7.0
+	 */
+	public val maxZoom by lazy {
+		JavaScriptProperty(1.0) { value ->
+			this.scrollableView?.maxZoom = value.number.toFloat()
+		}
+	}
+
+	/**
+	 * The view that is zoomed.
+	 * @property zoomedView
+	 * @since 0.7.0
+	 */
+	open var zoomedView: JavaScriptView? by Delegates.OnSetOptional<JavaScriptView>(null) { value ->
+		this.scrollableView?.zoomedView = value?.wrapper
+	}
+
+	/**
+	 * Whether this view can interact with touches.
+	 * @property touchable
+	 * @since 0.7.0
+	 */
+	public val touchable by lazy {
+		JavaScriptProperty(true) { value ->
+			this.wrapper.touchable = value.boolean
+		}
+	}
+
+	/**
+	 * The top offset for this view touchable area.
+	 * @property touchOffsetTop
+	 * @since 0.7.0
+	 */
+	public val touchOffsetTop by lazy {
+		JavaScriptProperty(0.0)
+	}
+
+	/**
+	 * The left offset for this view touchable area.
+	 * @property touchOffsetLeft
+	 * @since 0.7.0
+	 */
+	public val touchOffsetLeft by lazy {
+		JavaScriptProperty(0.0)
+	}
+
+	/**
+	 * The right offset for this view touchable area.
+	 * @property touchOffsetRight
+	 * @since 0.7.0
+	 */
+	public val touchOffsetRight by lazy {
+		JavaScriptProperty(0.0)
+	}
+
+	/**
+	 * The bottom offset for this view touchable area.
+	 * @property touchOffsetBottom
+	 * @since 0.7.0
+	 */
+	public val touchOffsetBottom by lazy {
+		JavaScriptProperty(0.0)
+	}
+
+	/**
+	 * The view's visibility status.
+	 * @property visible
+	 * @since 0.7.0
+	 */
+	public val visible by lazy {
+		JavaScriptProperty(true) { value ->
+			this.stylerNode.visible = value.boolean
+			this.layoutNode.visible = value.boolean
+			this.wrapper.visible = value.boolean
+		}
+	}
+
+	/**
+	 * The view's opacity.
+	 * @property opacity
+	 * @since 0.7.0
+	 */
+	public val opacity by lazy {
+		JavaScriptProperty(1.0) { value ->
+			this.wrapper.alpha = value.number.toFloat()
+		}
+	}
+
+	/**
+	 * Whether this view can be drawn by user.
+	 * @property drawable
+	 * @since 0.7.0
+	 */
+	public val drawable by lazy {
+		JavaScriptProperty(false) { value ->
+			this.wrapper.drawable = value.boolean
+		}
+	}
+
+	/**
+	 * Whether this view's content is clipped to its bounds.
+	 * @property clipped
+	 * @since 0.7.0
+	 */
+	public val clipped by lazy {
+		JavaScriptProperty(true) { value ->
+			this.wrapper.clipped = value.boolean
+		}
+	}
+
+	/**
+	 * Whether this view's content is paged.
+	 * @property paged
+	 * @since 0.7.0
+	 */
+	public val paged by lazy {
+		JavaScriptProperty(false) { value ->
+			this.scrollableView?.paged = value.boolean
+		}
+	}
+
+	/**
+	 * @property measuredTop
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	public val measuredTop by lazy {
+		JavaScriptProperty()
+	}
+
+	/**
+	 * @property measuredLeft
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	public val measuredLeft by lazy {
+		JavaScriptProperty()
+	}
+
+	/**
+	 * @property measuredWidth
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	public val measuredWidth by lazy {
+		JavaScriptProperty()
+	}
+
+	/**
+	 * @property measuredHeight
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	public val measuredHeight by lazy {
+		JavaScriptProperty()
+	}
+
+	/**
+	 * @property measuredInnerWidth
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	public val measuredInnerWidth by lazy {
+		JavaScriptProperty()
+	}
+
+	/**
+	 * @property measuredInnerHeight
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	public val measuredInnerHeight by lazy {
+		JavaScriptProperty()
+	}
+
+	/**
+	 * @property measuredContentWidth
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	public val measuredContentWidth by lazy {
+		JavaScriptProperty()
+	}
+
+	/**
+	 * @property measuredContentHeight
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	public val measuredContentHeight by lazy {
+		JavaScriptProperty()
+	}
+
+	/**
+	 * @property measuredMarginTop
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	public val measuredMarginTop by lazy {
+		JavaScriptProperty()
+	}
+
+	/**
+	 * @property measuredMarginLeft
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	public val measuredMarginLeft by lazy {
+		JavaScriptProperty()
+	}
+
+	/**
+	 * @property measuredMarginRight
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	public val measuredMarginRight by lazy {
+		JavaScriptProperty()
+	}
+
+	/**
+	 * @property measuredMarginBottom
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	public val measuredMarginBottom by lazy {
+		JavaScriptProperty()
+	}
+
+	/**
+	 * @property measuredBorderTopWidth
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	public val measuredBorderTopWidth by lazy {
+		JavaScriptProperty()
+	}
+
+	/**
+	 * @property measuredBorderLeftWidth
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	public val measuredBorderLeftWidth by lazy {
+		JavaScriptProperty()
+	}
+
+	/**
+	 * @property measuredBorderRightWidth
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	public val measuredBorderRightWidth by lazy {
+		JavaScriptProperty()
+	}
+
+	/**
+	 * @property measuredBorderBottomWidth
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	public val measuredBorderBottomWidth by lazy {
+		JavaScriptProperty()
+	}
+
+	/**
+	 * @property measuredPaddingTop
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	public val measuredPaddingTop by lazy {
+		JavaScriptProperty()
+	}
+
+	/**
+	 * @property measuredPaddingLeft
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	public val measuredPaddingLeft by lazy {
+		JavaScriptProperty()
+	}
+
+	/**
+	 * @property measuredPaddingRight
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	public val measuredPaddingRight by lazy {
+		JavaScriptProperty()
+	}
+
+	/**
+	 * @property measuredPaddingBottom
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	public val measuredPaddingBottom by lazy {
+		JavaScriptProperty()
+	}
+
 	//--------------------------------------------------------------------------
 
 	/**
@@ -3901,7 +3853,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_id(callback: JavaScriptSetterCallback) {
-		this.id.set(callback.value, this)
+		this.id.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3923,7 +3875,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_backgroundColor(callback: JavaScriptSetterCallback) {
-		this.backgroundColor.set(callback.value, this)
+		this.backgroundColor.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3945,7 +3897,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_backgroundImage(callback: JavaScriptSetterCallback) {
-		this.backgroundImage.set(callback.value, this)
+		this.backgroundImage.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3967,7 +3919,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_backgroundImageFit(callback: JavaScriptSetterCallback) {
-		this.backgroundImageFit.set(callback.value, this)
+		this.backgroundImageFit.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3989,7 +3941,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_backgroundImageAnchorTop(callback: JavaScriptSetterCallback) {
-		this.backgroundImageAnchorTop.set(callback.value, this)
+		this.backgroundImageAnchorTop.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4011,7 +3963,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_backgroundImageAnchorLeft(callback: JavaScriptSetterCallback) {
-		this.backgroundImageAnchorLeft.set(callback.value, this)
+		this.backgroundImageAnchorLeft.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4033,7 +3985,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_backgroundImageTop(callback: JavaScriptSetterCallback) {
-		this.backgroundImageTop.set(callback.value, this)
+		this.backgroundImageTop.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4055,7 +4007,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_backgroundImageLeft(callback: JavaScriptSetterCallback) {
-		this.backgroundImageLeft.set(callback.value, this)
+		this.backgroundImageLeft.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4077,7 +4029,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_backgroundImageWidth(callback: JavaScriptSetterCallback) {
-		this.backgroundImageWidth.set(callback.value, this)
+		this.backgroundImageWidth.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4099,7 +4051,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_backgroundImageHeight(callback: JavaScriptSetterCallback) {
-		this.backgroundImageHeight.set(callback.value, this)
+		this.backgroundImageHeight.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4121,7 +4073,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_backgroundImageTint(callback: JavaScriptSetterCallback) {
-		this.backgroundImageTint.set(callback.value, this)
+		this.backgroundImageTint.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4160,7 +4112,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_border(callback: JavaScriptSetterCallback) {
-		this.border.set(callback.value, this)
+		this.border.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4182,7 +4134,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_borderTop(callback: JavaScriptSetterCallback) {
-		this.borderTop.set(callback.value, this)
+		this.borderTop.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4204,7 +4156,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_borderLeft(callback: JavaScriptSetterCallback) {
-		this.borderLeft.set(callback.value, this)
+		this.borderLeft.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4226,7 +4178,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_borderRight(callback: JavaScriptSetterCallback) {
-		this.borderRight.set(callback.value, this)
+		this.borderRight.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4248,7 +4200,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_borderBottom(callback: JavaScriptSetterCallback) {
-		this.borderBottom.set(callback.value, this)
+		this.borderBottom.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4277,7 +4229,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_borderWidth(callback: JavaScriptSetterCallback) {
-		this.borderWidth.set(callback.value, this)
+		this.borderWidth.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4306,7 +4258,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_borderColor(callback: JavaScriptSetterCallback) {
-		this.borderColor.set(callback.value, this)
+		this.borderColor.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4328,7 +4280,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_borderTopColor(callback: JavaScriptSetterCallback) {
-		this.borderTopColor.set(callback.value, this)
+		this.borderTopColor.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4350,7 +4302,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_borderLeftColor(callback: JavaScriptSetterCallback) {
-		this.borderLeftColor.set(callback.value, this)
+		this.borderLeftColor.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4372,7 +4324,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_borderRightColor(callback: JavaScriptSetterCallback) {
-		this.borderRightColor.set(callback.value, this)
+		this.borderRightColor.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4394,7 +4346,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_borderBottomColor(callback: JavaScriptSetterCallback) {
-		this.borderBottomColor.set(callback.value, this)
+		this.borderBottomColor.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4416,7 +4368,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_borderTopWidth(callback: JavaScriptSetterCallback) {
-		this.borderTopWidth.set(callback.value, this)
+		this.borderTopWidth.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4438,7 +4390,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_borderLeftWidth(callback: JavaScriptSetterCallback) {
-		this.borderLeftWidth.set(callback.value, this)
+		this.borderLeftWidth.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4460,7 +4412,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_borderRightWidth(callback: JavaScriptSetterCallback) {
-		this.borderRightWidth.set(callback.value, this)
+		this.borderRightWidth.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4482,7 +4434,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_borderBottomWidth(callback: JavaScriptSetterCallback) {
-		this.borderBottomWidth.set(callback.value, this)
+		this.borderBottomWidth.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4504,7 +4456,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_minBorderTopWidth(callback: JavaScriptSetterCallback) {
-		this.minBorderTopWidth.set(callback.value, this)
+		this.minBorderTopWidth.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4526,7 +4478,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_maxBorderTopWidth(callback: JavaScriptSetterCallback) {
-		this.maxBorderTopWidth.set(callback.value, this)
+		this.maxBorderTopWidth.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4548,7 +4500,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_minBorderLeftWidth(callback: JavaScriptSetterCallback) {
-		this.minBorderLeftWidth.set(callback.value, this)
+		this.minBorderLeftWidth.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4570,7 +4522,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_maxBorderLeftWidth(callback: JavaScriptSetterCallback) {
-		this.maxBorderLeftWidth.set(callback.value, this)
+		this.maxBorderLeftWidth.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4592,7 +4544,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_minBorderRightWidth(callback: JavaScriptSetterCallback) {
-		this.minBorderRightWidth.set(callback.value, this)
+		this.minBorderRightWidth.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4614,7 +4566,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_maxBorderRightWidth(callback: JavaScriptSetterCallback) {
-		this.maxBorderRightWidth.set(callback.value, this)
+		this.maxBorderRightWidth.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4636,7 +4588,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_minBorderBottomWidth(callback: JavaScriptSetterCallback) {
-		this.minBorderBottomWidth.set(callback.value, this)
+		this.minBorderBottomWidth.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4658,7 +4610,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_maxBorderBottomWidth(callback: JavaScriptSetterCallback) {
-		this.maxBorderBottomWidth.set(callback.value, this)
+		this.maxBorderBottomWidth.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4687,7 +4639,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_borderRadius(callback: JavaScriptSetterCallback) {
-		this.borderRadius.set(callback.value, this)
+		this.borderRadius.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4709,7 +4661,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_borderTopLeftRadius(callback: JavaScriptSetterCallback) {
-		this.borderTopLeftRadius.set(callback.value, this)
+		this.borderTopLeftRadius.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4731,7 +4683,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_borderTopRightRadius(callback: JavaScriptSetterCallback) {
-		this.borderTopRightRadius.set(callback.value, this)
+		this.borderTopRightRadius.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4753,7 +4705,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_borderBottomLeftRadius(callback: JavaScriptSetterCallback) {
-		this.borderBottomLeftRadius.set(callback.value, this)
+		this.borderBottomLeftRadius.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4775,7 +4727,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_borderBottomRightRadius(callback: JavaScriptSetterCallback) {
-		this.borderBottomRightRadius.set(callback.value, this)
+		this.borderBottomRightRadius.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4797,7 +4749,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_shadowBlur(callback: JavaScriptSetterCallback) {
-		this.shadowBlur.set(callback.value, this)
+		this.shadowBlur.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4819,7 +4771,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_shadowColor(callback: JavaScriptSetterCallback) {
-		this.shadowColor.set(callback.value, this)
+		this.shadowColor.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4841,7 +4793,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_shadowOffsetTop(callback: JavaScriptSetterCallback) {
-		this.shadowOffsetTop.set(callback.value, this)
+		this.shadowOffsetTop.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4863,7 +4815,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_shadowOffsetLeft(callback: JavaScriptSetterCallback) {
-		this.shadowOffsetLeft.set(callback.value, this)
+		this.shadowOffsetLeft.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4885,7 +4837,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_top(callback: JavaScriptSetterCallback) {
-		this.top.set(callback.value, this)
+		this.top.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4907,7 +4859,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_left(callback: JavaScriptSetterCallback) {
-		this.left.set(callback.value, this)
+		this.left.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4929,7 +4881,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_right(callback: JavaScriptSetterCallback) {
-		this.right.set(callback.value, this)
+		this.right.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4951,7 +4903,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_bottom(callback: JavaScriptSetterCallback) {
-		this.bottom.set(callback.value, this)
+		this.bottom.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4973,7 +4925,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_minTop(callback: JavaScriptSetterCallback) {
-		this.minTop.set(callback.value, this)
+		this.minTop.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4995,7 +4947,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_maxTop(callback: JavaScriptSetterCallback) {
-		this.maxTop.set(callback.value, this)
+		this.maxTop.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5017,7 +4969,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_minLeft(callback: JavaScriptSetterCallback) {
-		this.minLeft.set(callback.value, this)
+		this.minLeft.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5039,7 +4991,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_maxLeft(callback: JavaScriptSetterCallback) {
-		this.maxLeft.set(callback.value, this)
+		this.maxLeft.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5061,7 +5013,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_minRight(callback: JavaScriptSetterCallback) {
-		this.minRight.set(callback.value, this)
+		this.minRight.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5083,7 +5035,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_maxRight(callback: JavaScriptSetterCallback) {
-		this.maxRight.set(callback.value, this)
+		this.maxRight.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5105,7 +5057,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_minBottom(callback: JavaScriptSetterCallback) {
-		this.minBottom.set(callback.value, this)
+		this.minBottom.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5127,7 +5079,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_maxBottom(callback: JavaScriptSetterCallback) {
-		this.maxBottom.set(callback.value, this)
+		this.maxBottom.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5149,7 +5101,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_anchorTop(callback: JavaScriptSetterCallback) {
-		this.anchorTop.set(callback.value, this)
+		this.anchorTop.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5171,7 +5123,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_anchorLeft(callback: JavaScriptSetterCallback) {
-		this.anchorLeft.set(callback.value, this)
+		this.anchorLeft.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5193,7 +5145,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_width(callback: JavaScriptSetterCallback) {
-		this.width.set(callback.value, this)
+		this.width.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5215,7 +5167,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_height(callback: JavaScriptSetterCallback) {
-		this.height.set(callback.value, this)
+		this.height.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5237,7 +5189,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_minWidth(callback: JavaScriptSetterCallback) {
-		this.minWidth.set(callback.value, this)
+		this.minWidth.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5259,7 +5211,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_maxWidth(callback: JavaScriptSetterCallback) {
-		this.maxWidth.set(callback.value, this)
+		this.maxWidth.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5281,7 +5233,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_minHeight(callback: JavaScriptSetterCallback) {
-		this.minHeight.set(callback.value, this)
+		this.minHeight.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5303,7 +5255,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_maxHeight(callback: JavaScriptSetterCallback) {
-		this.maxHeight.set(callback.value, this)
+		this.maxHeight.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5325,7 +5277,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_expand(callback: JavaScriptSetterCallback) {
-		this.expand.set(callback.value, this)
+		this.expand.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5347,7 +5299,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_shrink(callback: JavaScriptSetterCallback) {
-		this.shrink.set(callback.value, this)
+		this.shrink.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5369,7 +5321,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_contentTop(callback: JavaScriptSetterCallback) {
-		this.contentTop.set(callback.value, this)
+		this.contentTop.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5391,7 +5343,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_contentLeft(callback: JavaScriptSetterCallback) {
-		this.contentLeft.set(callback.value, this)
+		this.contentLeft.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5413,7 +5365,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_contentWidth(callback: JavaScriptSetterCallback) {
-		this.contentWidth.set(callback.value, this)
+		this.contentWidth.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5435,7 +5387,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_contentHeight(callback: JavaScriptSetterCallback) {
-		this.contentHeight.set(callback.value, this)
+		this.contentHeight.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5457,7 +5409,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_contentInsetTop(callback: JavaScriptSetterCallback) {
-		this.contentInsetTop.set(callback.value, this)
+		this.contentInsetTop.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5479,7 +5431,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_contentInsetLeft(callback: JavaScriptSetterCallback) {
-		this.contentInsetLeft.set(callback.value, this)
+		this.contentInsetLeft.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5501,7 +5453,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_contentInsetRight(callback: JavaScriptSetterCallback) {
-		this.contentInsetRight.set(callback.value, this)
+		this.contentInsetRight.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5523,7 +5475,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_contentInsetBottom(callback: JavaScriptSetterCallback) {
-		this.contentInsetBottom.set(callback.value, this)
+		this.contentInsetBottom.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5545,7 +5497,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_contentDirection(callback: JavaScriptSetterCallback) {
-		this.contentDirection.set(callback.value, this)
+		this.contentDirection.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5567,7 +5519,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_contentLocation(callback: JavaScriptSetterCallback) {
-		this.contentLocation.set(callback.value, this)
+		this.contentLocation.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5589,7 +5541,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_contentAlignment(callback: JavaScriptSetterCallback) {
-		this.contentAlignment.set(callback.value, this)
+		this.contentAlignment.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5611,7 +5563,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_scrollable(callback: JavaScriptSetterCallback) {
-		this.scrollable.set(callback.value, this)
+		this.scrollable.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5633,7 +5585,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_scrollbars(callback: JavaScriptSetterCallback) {
-		this.scrollbars.set(callback.value, this)
+		this.scrollbars.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5655,7 +5607,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_overscroll(callback: JavaScriptSetterCallback) {
-		this.overscroll.set(callback.value, this)
+		this.overscroll.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5677,7 +5629,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_momentum(callback: JavaScriptSetterCallback) {
-		this.momentum.set(callback.value, this)
+		this.momentum.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5699,7 +5651,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_scrollTop(callback: JavaScriptSetterCallback) {
-		this.scrollTop.set(callback.value, this)
+		this.scrollTop.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5721,7 +5673,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_scrollLeft(callback: JavaScriptSetterCallback) {
-		this.scrollTop.set(callback.value, this)
+		this.scrollTop.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5774,7 +5726,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_margin(callback: JavaScriptSetterCallback) {
-		this.margin.set(callback.value, this)
+		this.margin.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5796,7 +5748,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_marginTop(callback: JavaScriptSetterCallback) {
-		this.marginTop.set(callback.value, this)
+		this.marginTop.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5818,7 +5770,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_marginLeft(callback: JavaScriptSetterCallback) {
-		this.marginLeft.set(callback.value, this)
+		this.marginLeft.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5840,7 +5792,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_marginRight(callback: JavaScriptSetterCallback) {
-		this.marginRight.set(callback.value, this)
+		this.marginRight.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5862,7 +5814,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_marginBottom(callback: JavaScriptSetterCallback) {
-		this.marginBottom.set(callback.value, this)
+		this.marginBottom.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5884,7 +5836,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_minMarginTop(callback: JavaScriptSetterCallback) {
-		this.minMarginTop.set(callback.value, this)
+		this.minMarginTop.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5906,7 +5858,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_maxMarginTop(callback: JavaScriptSetterCallback) {
-		this.maxMarginTop.set(callback.value, this)
+		this.maxMarginTop.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5928,7 +5880,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_minMarginLeft(callback: JavaScriptSetterCallback) {
-		this.minMarginLeft.set(callback.value, this)
+		this.minMarginLeft.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5950,7 +5902,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_maxMarginLeft(callback: JavaScriptSetterCallback) {
-		this.maxMarginLeft.set(callback.value, this)
+		this.maxMarginLeft.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5972,7 +5924,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_minMarginRight(callback: JavaScriptSetterCallback) {
-		this.minMarginRight.set(callback.value, this)
+		this.minMarginRight.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5994,7 +5946,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_maxMarginRight(callback: JavaScriptSetterCallback) {
-		this.maxMarginRight.set(callback.value, this)
+		this.maxMarginRight.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6016,7 +5968,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_minMarginBottom(callback: JavaScriptSetterCallback) {
-		this.minMarginBottom.set(callback.value, this)
+		this.minMarginBottom.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6038,7 +5990,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_maxMarginBottom(callback: JavaScriptSetterCallback) {
-		this.maxMarginBottom.set(callback.value, this)
+		this.maxMarginBottom.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6067,7 +6019,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_padding(callback: JavaScriptSetterCallback) {
-		this.padding.set(callback.value, this)
+		this.padding.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6089,7 +6041,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_paddingTop(callback: JavaScriptSetterCallback) {
-		this.paddingTop.set(callback.value, this)
+		this.paddingTop.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6111,7 +6063,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_paddingLeft(callback: JavaScriptSetterCallback) {
-		this.paddingLeft.set(callback.value, this)
+		this.paddingLeft.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6133,7 +6085,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_paddingRight(callback: JavaScriptSetterCallback) {
-		this.paddingRight.set(callback.value, this)
+		this.paddingRight.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6155,7 +6107,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_paddingBottom(callback: JavaScriptSetterCallback) {
-		this.paddingBottom.set(callback.value, this)
+		this.paddingBottom.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6177,7 +6129,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_minPaddingTop(callback: JavaScriptSetterCallback) {
-		this.minPaddingTop.set(callback.value, this)
+		this.minPaddingTop.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6199,7 +6151,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_maxPaddingTop(callback: JavaScriptSetterCallback) {
-		this.maxPaddingTop.set(callback.value, this)
+		this.maxPaddingTop.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6221,7 +6173,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_minPaddingLeft(callback: JavaScriptSetterCallback) {
-		this.minPaddingLeft.set(callback.value, this)
+		this.minPaddingLeft.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6243,7 +6195,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_maxPaddingLeft(callback: JavaScriptSetterCallback) {
-		this.maxPaddingLeft.set(callback.value, this)
+		this.maxPaddingLeft.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6265,7 +6217,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_minPaddingRight(callback: JavaScriptSetterCallback) {
-		this.minPaddingRight.set(callback.value, this)
+		this.minPaddingRight.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6287,7 +6239,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_maxPaddingRight(callback: JavaScriptSetterCallback) {
-		this.maxPaddingRight.set(callback.value, this)
+		this.maxPaddingRight.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6309,7 +6261,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_minPaddingBottom(callback: JavaScriptSetterCallback) {
-		this.minPaddingBottom.set(callback.value, this)
+		this.minPaddingBottom.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6331,7 +6283,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_maxPaddingBottom(callback: JavaScriptSetterCallback) {
-		this.maxPaddingBottom.set(callback.value, this)
+		this.maxPaddingBottom.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6353,7 +6305,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_originX(callback: JavaScriptSetterCallback) {
-		this.originX.set(callback.value, this)
+		this.originX.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6375,7 +6327,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_originY(callback: JavaScriptSetterCallback) {
-		this.originY.set(callback.value, this)
+		this.originY.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6397,7 +6349,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_originZ(callback: JavaScriptSetterCallback) {
-		this.originZ.set(callback.value, this)
+		this.originZ.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6419,7 +6371,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_translationX(callback: JavaScriptSetterCallback) {
-		this.translationX.set(callback.value, this)
+		this.translationX.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6441,7 +6393,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_translationY(callback: JavaScriptSetterCallback) {
-		this.translationY.set(callback.value, this)
+		this.translationY.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6463,7 +6415,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_translationZ(callback: JavaScriptSetterCallback) {
-		this.translationZ.set(callback.value, this)
+		this.translationZ.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6485,7 +6437,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_rotationX(callback: JavaScriptSetterCallback) {
-		this.rotationX.set(callback.value, this)
+		this.rotationX.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6507,7 +6459,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_rotationY(callback: JavaScriptSetterCallback) {
-		this.rotationY.set(callback.value, this)
+		this.rotationY.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6529,7 +6481,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_rotationZ(callback: JavaScriptSetterCallback) {
-		this.rotationZ.set(callback.value, this)
+		this.rotationZ.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6551,7 +6503,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_scaleX(callback: JavaScriptSetterCallback) {
-		this.scaleX.set(callback.value, this)
+		this.scaleX.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6573,7 +6525,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_scaleY(callback: JavaScriptSetterCallback) {
-		this.scaleY.set(callback.value, this)
+		this.scaleY.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6595,7 +6547,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_scaleZ(callback: JavaScriptSetterCallback) {
-		this.scaleZ.set(callback.value, this)
+		this.scaleZ.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6617,7 +6569,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_zIndex(callback: JavaScriptSetterCallback) {
-		this.zIndex.set(callback.value, this)
+		this.zIndex.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6639,7 +6591,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_zoomable(callback: JavaScriptSetterCallback) {
-		this.zoomable.set(callback.value, this)
+		this.zoomable.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6661,7 +6613,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_minZoom(callback: JavaScriptSetterCallback) {
-		this.minZoom.set(callback.value, this)
+		this.minZoom.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6683,7 +6635,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_maxZoom(callback: JavaScriptSetterCallback) {
-		this.maxZoom.set(callback.value, this)
+		this.maxZoom.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6727,7 +6679,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_touchable(callback: JavaScriptSetterCallback) {
-		this.touchable.set(callback.value, this)
+		this.touchable.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6749,7 +6701,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_touchOffsetTop(callback: JavaScriptSetterCallback) {
-		this.touchOffsetTop.set(callback.value, this)
+		this.touchOffsetTop.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6771,7 +6723,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_touchOffsetLeft(callback: JavaScriptSetterCallback) {
-		this.touchOffsetLeft.set(callback.value, this)
+		this.touchOffsetLeft.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6793,7 +6745,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_touchOffsetRight(callback: JavaScriptSetterCallback) {
-		this.touchOffsetRight.set(callback.value, this)
+		this.touchOffsetRight.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6815,7 +6767,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_touchOffsetBottom(callback: JavaScriptSetterCallback) {
-		this.touchOffsetBottom.set(callback.value, this)
+		this.touchOffsetBottom.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6837,7 +6789,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_visible(callback: JavaScriptSetterCallback) {
-		this.visible.set(callback.value, this)
+		this.visible.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6859,7 +6811,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_opacity(callback: JavaScriptSetterCallback) {
-		this.opacity.set(callback.value, this)
+		this.opacity.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6881,7 +6833,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_drawable(callback: JavaScriptSetterCallback) {
-		this.drawable.set(callback.value, this)
+		this.drawable.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6903,7 +6855,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_clipped(callback: JavaScriptSetterCallback) {
-		this.clipped.set(callback.value, this)
+		this.clipped.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6925,7 +6877,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_paged(callback: JavaScriptSetterCallback) {
-		this.paged.set(callback.value, this)
+		this.paged.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6942,11 +6894,11 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 
 		if (this.resolvedTop != measuredTop) {
 			this.resolvedTop = measuredTop
-			this.measuredTop.set(null)
+			this.measuredTop.reset(null)
 		}
 
 		if (this.measuredTop.isNull) {
-			this.measuredTop.set(this.resolvedTop)
+			this.measuredTop.reset(this.resolvedTop)
 		}
 
 		callback.returns(this.measuredTop)
@@ -6964,11 +6916,11 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 
 		if (this.resolvedLeft != measuredLeft) {
 			this.resolvedLeft = measuredLeft
-			this.measuredLeft.set(null)
+			this.measuredLeft.reset(null)
 		}
 
 		if (this.measuredLeft.isNull) {
-			this.measuredLeft.set(this.resolvedLeft)
+			this.measuredLeft.reset(this.resolvedLeft)
 		}
 
 		callback.returns(this.measuredLeft)
@@ -6986,11 +6938,11 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 
 		if (this.resolvedWidth != measuredWidth) {
 			this.resolvedWidth = measuredWidth
-			this.measuredWidth.set(null)
+			this.measuredWidth.reset(null)
 		}
 
 		if (this.measuredWidth.isNull) {
-			this.measuredWidth.set(this.resolvedWidth)
+			this.measuredWidth.reset(this.resolvedWidth)
 		}
 
 		callback.returns(this.measuredWidth)
@@ -7008,11 +6960,11 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 
 		if (this.resolvedHeight != measuredHeight) {
 			this.resolvedHeight = measuredHeight
-			this.measuredHeight.set(null)
+			this.measuredHeight.reset(null)
 		}
 
 		if (this.measuredHeight.isNull) {
-			this.measuredHeight.set(this.resolvedHeight)
+			this.measuredHeight.reset(this.resolvedHeight)
 		}
 
 		callback.returns(this.measuredHeight)
@@ -7030,11 +6982,11 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 
 		if (this.resolvedInnerWidth != measuredInnerWidth) {
 			this.resolvedInnerWidth = measuredInnerWidth
-			this.measuredInnerWidth.set(null)
+			this.measuredInnerWidth.reset(null)
 		}
 
 		if (this.measuredInnerWidth.isNull) {
-			this.measuredInnerWidth.set(this.resolvedInnerWidth)
+			this.measuredInnerWidth.reset(this.resolvedInnerWidth)
 		}
 
 		callback.returns(this.measuredInnerWidth)
@@ -7052,11 +7004,11 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 
 		if (this.resolvedInnerHeight != measuredInnerHeight) {
 			this.resolvedInnerHeight = measuredInnerHeight
-			this.measuredInnerHeight.set(null)
+			this.measuredInnerHeight.reset(null)
 		}
 
 		if (this.measuredInnerHeight.isNull) {
-			this.measuredInnerHeight.set(this.resolvedInnerHeight)
+			this.measuredInnerHeight.reset(this.resolvedInnerHeight)
 		}
 
 		callback.returns(this.measuredInnerHeight)
@@ -7074,11 +7026,11 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 
 		if (this.resolvedContentWidth != measuredContentWidth) {
 			this.resolvedContentWidth = measuredContentWidth
-			this.measuredContentWidth.set(null)
+			this.measuredContentWidth.reset(null)
 		}
 
 		if (this.measuredContentWidth.isNull) {
-			this.measuredContentWidth.set(this.resolvedContentWidth)
+			this.measuredContentWidth.reset(this.resolvedContentWidth)
 		}
 
 		callback.returns(this.measuredContentWidth)
@@ -7096,11 +7048,11 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 
 		if (this.resolvedContentHeight != measuredContentHeight) {
 			this.resolvedContentHeight = measuredContentHeight
-			this.measuredContentHeight.set(null)
+			this.measuredContentHeight.reset(null)
 		}
 
 		if (this.measuredContentHeight.isNull) {
-			this.measuredContentHeight.set(this.resolvedContentHeight)
+			this.measuredContentHeight.reset(this.resolvedContentHeight)
 		}
 
 		callback.returns(this.measuredContentHeight)
@@ -7118,11 +7070,11 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 
 		if (this.resolvedMarginTop != measuredMarginTop) {
 			this.resolvedMarginTop = measuredMarginTop
-			this.measuredMarginTop.set(null)
+			this.measuredMarginTop.reset(null)
 		}
 
 		if (this.measuredMarginTop.isNull) {
-			this.measuredMarginTop.set(this.resolvedMarginTop)
+			this.measuredMarginTop.reset(this.resolvedMarginTop)
 		}
 
 		callback.returns(this.measuredMarginTop)
@@ -7140,11 +7092,11 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 
 		if (this.resolvedMarginLeft != measuredMarginLeft) {
 			this.resolvedMarginLeft = measuredMarginLeft
-			this.measuredMarginLeft.set(null)
+			this.measuredMarginLeft.reset(null)
 		}
 
 		if (this.measuredMarginLeft.isNull) {
-			this.measuredMarginLeft.set(this.resolvedMarginLeft)
+			this.measuredMarginLeft.reset(this.resolvedMarginLeft)
 		}
 
 		callback.returns(this.measuredMarginLeft)
@@ -7162,11 +7114,11 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 
 		if (this.resolvedMarginRight != measuredMarginRight) {
 			this.resolvedMarginRight = measuredMarginRight
-			this.measuredMarginRight.set(null)
+			this.measuredMarginRight.reset(null)
 		}
 
 		if (this.measuredMarginRight.isNull) {
-			this.measuredMarginRight.set(this.resolvedMarginRight)
+			this.measuredMarginRight.reset(this.resolvedMarginRight)
 		}
 
 		callback.returns(this.measuredMarginRight)
@@ -7184,11 +7136,11 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 
 		if (this.resolvedMarginBottom != measuredMarginBottom) {
 			this.resolvedMarginBottom = measuredMarginBottom
-			this.measuredMarginBottom.set(null)
+			this.measuredMarginBottom.reset(null)
 		}
 
 		if (this.measuredMarginBottom.isNull) {
-			this.measuredMarginBottom.set(this.resolvedMarginBottom)
+			this.measuredMarginBottom.reset(this.resolvedMarginBottom)
 		}
 
 		callback.returns(this.measuredMarginBottom)
@@ -7206,11 +7158,11 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 
 		if (this.resolvedPaddingTop != measuredPaddingTop) {
 			this.resolvedPaddingTop = measuredPaddingTop
-			this.measuredPaddingTop.set(null)
+			this.measuredPaddingTop.reset(null)
 		}
 
 		if (this.measuredPaddingTop.isNull) {
-			this.measuredPaddingTop.set(this.resolvedPaddingTop)
+			this.measuredPaddingTop.reset(this.resolvedPaddingTop)
 		}
 
 		callback.returns(this.measuredPaddingTop)
@@ -7228,11 +7180,11 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 
 		if (this.resolvedPaddingLeft != measuredPaddingLeft) {
 			this.resolvedPaddingLeft = measuredPaddingLeft
-			this.measuredPaddingLeft.set(null)
+			this.measuredPaddingLeft.reset(null)
 		}
 
 		if (this.measuredPaddingLeft.isNull) {
-			this.measuredPaddingLeft.set(this.resolvedPaddingLeft)
+			this.measuredPaddingLeft.reset(this.resolvedPaddingLeft)
 		}
 
 		callback.returns(this.measuredPaddingLeft)
@@ -7250,11 +7202,11 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 
 		if (this.resolvedPaddingRight != measuredPaddingRight) {
 			this.resolvedPaddingRight = measuredPaddingRight
-			this.measuredPaddingRight.set(null)
+			this.measuredPaddingRight.reset(null)
 		}
 
 		if (this.measuredPaddingRight.isNull) {
-			this.measuredPaddingRight.set(this.resolvedPaddingRight)
+			this.measuredPaddingRight.reset(this.resolvedPaddingRight)
 		}
 
 		callback.returns(this.measuredPaddingRight)
@@ -7272,19 +7224,76 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 
 		if (this.resolvedPaddingBottom != measuredPaddingBottom) {
 			this.resolvedPaddingBottom = measuredPaddingBottom
-			this.measuredPaddingBottom.set(null)
+			this.measuredPaddingBottom.reset(null)
 		}
 
 		if (this.measuredPaddingBottom.isNull) {
-			this.measuredPaddingBottom.set(this.resolvedPaddingBottom)
+			this.measuredPaddingBottom.reset(this.resolvedPaddingBottom)
 		}
 
 		callback.returns(this.measuredPaddingBottom)
 	}
 
 	//--------------------------------------------------------------------------
-	// JavaScript funtions
+	// JS Funtions
 	//--------------------------------------------------------------------------
+
+	companion object {
+
+		/**
+		 * @method jsStaticFunction_transition
+		 * @since 0.7.0
+		 * @hidden
+		 */
+		@Suppress("unused")
+		@JvmStatic
+		public fun jsStaticFunction_transition(callback: JavaScriptFunctionCallback) {
+
+			if (callback.arguments < 8) {
+				return
+			}
+
+			val activity = callback.context.application
+
+			val duration = callback.argument(0).number
+			val equation = PathInterpolator(
+				callback.argument(1).number.toFloat(),
+				callback.argument(2).number.toFloat(),
+				callback.argument(3).number.toFloat(),
+				callback.argument(4).number.toFloat()
+			)
+
+			val delay = callback.argument(5).number
+
+			val complete = callback.argument(6)
+			val function = callback.argument(7)
+
+			val animate = {
+
+				Transition.create(
+					activity,
+					duration,
+					equation,
+					delay
+				)
+
+				function.call()
+				complete.protect()
+
+				Transition.commit {
+					complete.call()
+					complete.unprotect()
+				}
+			}
+
+			if (callback.context.application.layout.resolving) {
+				callback.context.application.layout.requestLayoutEndedCallback(animate)
+				return
+			}
+
+			animate()
+		}
+	}
 
 	/**
 	 * @method jsFunction_destroy
@@ -7313,7 +7322,17 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsFunction_insert(callback: JavaScriptFunctionCallback) {
-		this.insert(callback.argument(0).cast(JavaScriptView::class.java)!!, callback.argument(1).number.toInt())
+
+		if (callback.arguments < 2) {
+			fatalError("Method JavaScriptView.insert() requires 2 arguments.")
+		}
+
+		val child = callback.argument(0).cast(JavaScriptView::class.java)
+		val index = callback.argument(1).number
+
+		if (child != null) {
+			this.insert(child, index.toInt())
+		}
 	}
 
 	/**
@@ -7323,7 +7342,16 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsFunction_remove(callback: JavaScriptFunctionCallback) {
-		this.remove(callback.argument(0).cast(JavaScriptView::class.java)!!)
+
+		if (callback.arguments < 1) {
+			fatalError("Method JavaScriptView.remove() requires 1 argument.")
+		}
+
+		val child = callback.argument(0).cast(JavaScriptView::class.java)
+
+		if (child != null) {
+			this.remove(child)
+		}
 	}
 
 	/**
@@ -7333,6 +7361,11 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsFunction_hasStyle(callback: JavaScriptFunctionCallback) {
+
+		if (callback.arguments < 1) {
+			fatalError("Method JavaScriptView.hasStyle() requires 1 argument.")
+		}
+
 		callback.returns(this.stylerNode.hasStyle(callback.argument(0).string))
 	}
 
@@ -7343,7 +7376,15 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsFunction_setStyle(callback: JavaScriptFunctionCallback) {
-		this.stylerNode.setStyle(callback.argument(0).string, callback.argument(1).boolean)
+
+		if (callback.arguments < 2) {
+			fatalError("Method JavaScriptView.setStyle() requires 2 arguments.")
+		}
+
+		val style = callback.argument(0).string
+		val apply = callback.argument(1).boolean
+
+		this.stylerNode.setStyle(style, apply)
 	}
 
 	/**
@@ -7353,6 +7394,11 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsFunction_hasState(callback: JavaScriptFunctionCallback) {
+
+		if (callback.arguments < 1) {
+			fatalError("Method JavaScriptView.hasState() requires 1 argument.")
+		}
+
 		callback.returns(this.stylerNode.hasState(callback.argument(0).string))
 	}
 
@@ -7363,7 +7409,15 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsFunction_setState(callback: JavaScriptFunctionCallback) {
-		this.stylerNode.setState(callback.argument(0).string, callback.argument(1).boolean)
+
+		if (callback.arguments < 2) {
+			fatalError("Method JavaScriptView.setState() requires 2 arguments.")
+		}
+
+		val state = callback.argument(0).string
+		val apply = callback.argument(1).boolean
+
+		this.stylerNode.setState(state, apply)
 	}
 
 	/**
@@ -7414,12 +7468,17 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsFunction_scrollTo(callback: JavaScriptFunctionCallback) {
+
+		if (callback.arguments < 2) {
+			fatalError("Method JavaScriptView.scrollTo() requires 2 arguments.")
+		}
+
+		val y = Convert.toPx(callback.argument(1).number).toInt()
+		val x = Convert.toPx(callback.argument(0).number).toInt()
+
 		val scrollable = this.content
 		if (scrollable is Scrollable) {
-			scrollable.scrollTo(
-				Convert.toPx(callback.argument(1).number).toInt(),
-				Convert.toPx(callback.argument(0).number).toInt()
-			)
+			scrollable.scrollTo(x, y)
 		}
 	}
 

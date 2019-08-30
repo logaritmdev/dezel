@@ -6,6 +6,9 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import ca.logaritm.dezel.extension.*
+import ca.logaritm.dezel.extension.graphics.addInnerRoundedRect
+import ca.logaritm.dezel.extension.graphics.addOuterRoundedRect
+import ca.logaritm.dezel.extension.view.setMeasuredFrame
 import ca.logaritm.dezel.view.animation.TransitionListener
 import ca.logaritm.dezel.view.drawable.BitmapDrawable
 import ca.logaritm.dezel.view.drawable.BorderDrawable
@@ -14,6 +17,7 @@ import ca.logaritm.dezel.view.graphic.Color
 import ca.logaritm.dezel.view.graphic.LinearGradient
 import ca.logaritm.dezel.view.graphic.RadialGradient
 import ca.logaritm.dezel.view.graphic.Transform
+import kotlin.math.ceil
 import ca.logaritm.dezel.modules.view.JavaScriptView as ContainerView
 
 /**
@@ -353,7 +357,7 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 	}
 
 	/**
-	 * The wrapper's drawing callback.
+	 * The wrapper's drawing handler.
 	 * @property draw
 	 * @since 0.4.0
 	 */
@@ -911,7 +915,7 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 			val viewW = this.width
 			val viewH = this.height
 
-			val shadowBlur = Float.ceil(this.shadowBlur)
+			val shadowBlur = ceil(this.shadowBlur)
 			val shadowOffsetL = this.shadowOffsetLeft
 			val shadowOffsetT = this.shadowOffsetTop
 
@@ -1000,7 +1004,7 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 		val viewW = this.width
 		val viewH = this.height
 
-		val shadowBlur = Float.ceil(this.shadowBlur)
+		val shadowBlur = ceil(this.shadowBlur)
 		val shadowOffsetL = this.shadowOffsetLeft
 		val shadowOffsetT = this.shadowOffsetTop
 

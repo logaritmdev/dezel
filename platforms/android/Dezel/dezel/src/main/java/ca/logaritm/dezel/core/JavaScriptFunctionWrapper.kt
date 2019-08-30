@@ -5,15 +5,15 @@ package ca.logaritm.dezel.core
  * @since 0.1.0
  * @hidden
  */
-internal class JavaScriptFunctionWrapper(callback: JavaScriptFunctionHandler) {
+internal class JavaScriptFunctionWrapper(handler: JavaScriptFunctionHandler) {
 
-	private val callback: JavaScriptFunctionHandler
+	private val handler: JavaScriptFunctionHandler
 
 	init {
-		this.callback = callback
+		this.handler = handler
 	}
 
 	public fun execute(callback: JavaScriptFunctionCallback) {
-		this.callback(callback)
+		this.handler(callback)
 	}
 }

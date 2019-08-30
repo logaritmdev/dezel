@@ -7,12 +7,12 @@ import android.text.StaticLayout
 import android.text.TextPaint
 import android.util.SizeF
 import ca.logaritm.dezel.extension.Delegates
-import ca.logaritm.dezel.extension.SpannableString
-import ca.logaritm.dezel.extension.max
+import ca.logaritm.dezel.extension.text.SpannableString
+import ca.logaritm.dezel.extension.type.max
 import ca.logaritm.dezel.geom.Size
 import ca.logaritm.dezel.text.layout.StaticLayoutBuilder
-import ca.logaritm.dezel.view.type.TextOverflow
 import ca.logaritm.dezel.view.type.TextLocation
+import ca.logaritm.dezel.view.type.TextOverflow
 
 /**
  * Break up text into lines that fits into specified bounds.
@@ -266,8 +266,8 @@ open class TextLayout {
 
 		when (this.textLocation) {
 
-			TextLocation.MIDDLE -> offset += extent.alignMiddle(bounds).y
-			TextLocation.BOTTOM -> offset += extent.alignBottom(bounds).y
+			TextLocation.MIDDLE -> offset += extent.toMiddleOf(bounds).y
+			TextLocation.BOTTOM -> offset += extent.toBottomOf(bounds).y
 			TextLocation.TOP    -> {}
 
 		}

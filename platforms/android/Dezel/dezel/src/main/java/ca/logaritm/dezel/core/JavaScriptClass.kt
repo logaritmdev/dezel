@@ -23,259 +23,418 @@ open class JavaScriptClass(context: JavaScriptContext) : JavaScriptObject(contex
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Casts the value to a specified type.
-	 * @method cast
-	 * @since 0.7.0
-	 */
-	override fun <T> cast(type: Class<T>): T? {
-		return this.instance?.cast(type)
-	}
-
-	/**
-	 * Executes the value as a function.
+	 * @inherited
 	 * @method call
 	 * @since 0.7.0
 	 */
 	override fun call() {
-		this.instance?.call()
+		
+		val instance = this.instance
+		if (instance != null) {
+			instance.call()
+			return
+		}
+		
+		super.call()
 	}
 
 	/**
-	 * Executes the value as a function with arguments.
+	 * @inherited
 	 * @method call
 	 * @since 0.7.0
 	 */
 	open fun call(arguments: JavaScriptArguments?, target: JavaScriptValue?) {
-		this.instance?.call(arguments, target)
+
+		val instance = this.instance
+		if (instance != null) {
+			instance.call(arguments, target)
+			return
+		}
+		
+		super.call(arguments, target, null)
 	}
 
 	/**
-	 * Executes the value as a function with arguments.
+	 * @inherited
 	 * @method call
 	 * @since 0.7.0
 	 */
 	override fun call(arguments: JavaScriptArguments?, target: JavaScriptValue?, result: JavaScriptValue?) {
-		this.instance?.call(arguments, target, result)
+
+		val instance = this.instance
+		if (instance != null) {
+			instance.call(arguments, target, result)
+			return
+		}
+
+		super.call(arguments, target, result)
 	}
 
 	/**
-	 * Executes a holder from the value.
+	 * @inherited
 	 * @method callMethod
 	 * @since 0.7.0
 	 */
 	override fun callMethod(method: String) {
-		this.instance?.callMethod(method)
+
+		val instance = this.instance
+		if (instance != null) {
+			instance.callMethod(method)
+			return
+		}
+		
+		super.callMethod(method)
 	}
 
 	/**
-	 * Executes a holder with arguments from the value.
+	 * @inherited
 	 * @method callMethod
 	 * @since 0.7.0
 	 */
 	override fun callMethod(method: String, arguments: JavaScriptArguments?, result: JavaScriptValue?) {
-		this.instance?.callMethod(method, arguments, result)
+
+		val instance = this.instance
+		if (instance != null) {
+			instance.callMethod(method, arguments, result)
+			return
+		}
+		
+		super.callMethod(method, arguments, result)
 	}
 
 	/**
-	 * Executes the value as a constructor.
+	 * @inherited
 	 * @method construct
 	 * @since 0.7.0
 	 */
 	override fun construct() {
-		this.instance?.construct()
+
+		val instance = this.instance
+		if (instance != null) {
+			instance.construct()
+			return
+		}
+		
+		super.construct()
 	}
 
 	/**
-	 * Executes the value as a constructor with arguments.
+	 * @inherited
 	 * @method construct
 	 * @since 0.7.0
 	 */
 	override fun construct(arguments: JavaScriptArguments?, result: JavaScriptValue?) {
-		this.instance?.construct(arguments, result)
+
+		val instance = this.instance
+		if (instance != null) {
+			instance.construct(arguments, result)
+			return
+		}
+		
+		super.construct(arguments, result)
 	}
 
 	/**
-	 * Defines a property on this value.
+	 * @inherited
 	 * @method defineProperty
 	 * @since 0.7.0
 	 */
 	override fun defineProperty(property: String, value: JavaScriptValue?, getter: JavaScriptGetterHandler?, setter: JavaScriptSetterHandler?, writable: Boolean, enumerable: Boolean, configurable: Boolean) {
-		this.instance?.defineProperty(property, value, getter, setter, writable, enumerable, configurable)
+
+		val instance = this.instance
+		if (instance != null) {
+			instance.defineProperty(property, value, getter, setter, writable, enumerable, configurable)
+			return
+		}		
+		
+		super.defineProperty(property, value, getter, setter, writable, enumerable, configurable)
 	}
 
 	/**
-	 * Assigns the value of a property.
+	 * @inherited
 	 * @method property
 	 * @since 0.7.0
 	 */
 	override fun property(name: String, value: JavaScriptValue?) {
-		this.instance?.property(name, value)
+
+		val instance = this.instance
+		if (instance != null) {
+			instance.property(name, value)
+			return
+		}		
+		
+		super.property(name, value)
 	}
 
 	/**
-	 * Assigns the value of a property using a property.
+	 * @inherited
 	 * @method property
 	 * @since 0.7.0
 	 */
 	override fun property(name: String, property: JavaScriptProperty) {
-		this.instance?.property(name, property)
+
+		val instance = this.instance
+		if (instance != null) {
+			instance.property(name, property)
+			return
+		}
+		
+		super.property(name, property)
 	}
 
 	/**
-	 * Assigns the value of a property using a string.
+	 * @inherited
 	 * @method property
 	 * @since 0.7.0
 	 */
 	override fun property(name: String, string: String) {
-		this.instance?.property(name, string)
+
+		val instance = this.instance
+		if (instance != null) {
+			instance.property(name, string)
+			return
+		}		
+		
+		super.property(name, string)
 	}
 
 	/**
-	 * Assigns the value of a property using a number.
+	 * @inherited
 	 * @method property
 	 * @since 0.7.0
 	 */
 	override fun property(name: String, number: Double) {
-		this.instance?.property(name, number)
+
+		val instance = this.instance
+		if (instance != null) {
+			instance.property(name, number)
+			return
+		}		
+		
+		super.property(name, number)
 	}
 
 	/**
-	 * Assigns the value of a property using a number.
+	 * @inherited
 	 * @method property
 	 * @since 0.4.0
 	 */
 	override fun property(name: String, number: Float) {
-		this.instance?.property(name, number)
+
+		val instance = this.instance
+		if (instance != null) {
+			instance.property(name, number)
+			return
+		}		
+		
+		super.property(name, number)
 	}
 
 	/**
-	 * Assigns the value of a property using a number.
+	 * @inherited
 	 * @method property
 	 * @since 0.4.0
 	 */
 	override fun property(name: String, number: Int) {
-		this.instance?.property(name, number)
+
+		val instance = this.instance
+		if (instance != null) {
+			instance.property(name, number)
+			return
+		}		
+		
+		super.property(name, number)
 	}
 
 	/**
-	 * Assigns the value of a property using a boolean.
+	 * @inherited
 	 * @method property
 	 * @since 0.7.0
 	 */
 	override fun property(name: String, boolean: Boolean) {
-		this.instance?.property(name, boolean)
+
+		val instance = this.instance
+		if (instance != null) {
+			instance.property(name, boolean)
+			return
+		}		
+		
+		super.property(name, boolean)
 	}
 
 	/**
-	 * Returns the value of a property.
+	 * @inherited
 	 * @method property
 	 * @since 0.7.0
 	 */
 	override fun property(name: String): JavaScriptValue {
-		return this.instance?.property(name) ?: this.context.jsundefined
+		return this.instance?.property(name) ?: super.property(name)
 	}
 
 	/**
-	 * Assigns the value of a property at a specified index.
+	 * @inherited
 	 * @method property
 	 * @since 0.7.0
 	 */
 	override fun property(index: Int, value: JavaScriptValue) {
-		this.instance?.property(index, value)
+
+		val instance = this.instance
+		if (instance != null) {
+			instance.property(index, value)
+			return
+		}		
+		
+		super.property(index, value)
 	}
 
 	/**
-	 * Assigns the value of a property at a specified index using a string.
+	 * @inherited
 	 * @method property
 	 * @since 0.7.0
 	 */
 	override fun property(index: Int, string: String) {
-		this.instance?.property(index, string)
+
+		val instance = this.instance
+		if (instance != null) {
+			instance.property(index, string)
+			return
+		}		
+		
+		super.property(index, string)
 	}
 
 	/**
-	 * Assigns the value of a property at a specified index using a number.
+	 * @inherited
 	 * @method property
 	 * @since 0.7.0
 	 */
 	override fun property(index: Int, number: Double) {
-		this.instance?.property(index, number)
+
+		val instance = this.instance
+		if (instance != null) {
+			instance.property(index, number)
+			return
+		}		
+		
+		super.property(index, number)
 	}
 
 	/**
-	 * Assigns the value of a property at a specified index using a number.
+	 * @inherited
 	 * @method property
 	 * @since 0.4.0
 	 */
 	override fun property(index: Int, number: Float) {
-		this.instance?.property(index, number)
+
+		val instance = this.instance
+		if (instance != null) {
+			instance.property(index, number)
+			return
+		}		
+		
+		super.property(index, number)
 	}
 
 	/**
-	 * Assigns the value of a property at a specified index using a number.
+	 * @inherited
 	 * @method property
 	 * @since 0.4.0
 	 */
 	override fun property(index: Int, number: Int) {
-		this.instance?.property(index, number)
+
+		val instance = this.instance
+		if (instance != null) {
+			instance.property(index, number)
+			return
+		}		
+		
+		super.property(index, number)
 	}
 
 	/**
-	 * Assigns the value of a property at a specified index using a boolean.
+	 * @inherited
 	 * @method property
 	 * @since 0.7.0
 	 */
 	override fun property(index: Int, boolean: Boolean) {
-		this.instance?.property(index, boolean)
+
+		val instance = this.instance
+		if (instance != null) {
+			instance.property(index, boolean)
+			return
+		}		
+		
+		super.property(index, boolean)
 	}
 
 	/**
-	 * Returns the value of a property at a specified index.
+	 * @inherited
 	 * @method property
 	 * @since 0.7.0
 	 */
 	override fun property(index: Int): JavaScriptValue {
-		return this.instance?.property(index) ?: this.context.jsundefined
+		return this.instance?.property(index) ?: super.property(index)
 	}
 
 	/**
-	 * Executes a provided function once for each array element.
+	 * @inherited
 	 * @method forEach
 	 * @since 0.7.0
 	 */
 	override fun forEach(handler: JavaScriptForEachHandler) {
-		this.instance?.forEach(handler)
+
+		val instance = this.instance
+		if (instance != null) {
+			instance.forEach(handler)
+			return
+		}		
+		
+		super.forEach(handler)
 	}
 
 	/**
-	 * Executes a provided function once for each object properties.
+	 * @inherited
 	 * @method forOwn
 	 * @since 0.7.0
 	 */
 	override fun forOwn(handler: JavaScriptForOwnHandler) {
-		this.instance?.forOwn(handler)
+
+		val instance = this.instance
+		if (instance != null) {
+			instance.forOwn(handler)
+			return
+		}		
+		
+		super.forOwn(handler)
 	}
 
 	/**
-	 * Assigns the internal prototype of this value.
+	 * @inherited
 	 * @method prototype
 	 * @since 0.7.0
 	 */
 	override fun prototype(prototype: JavaScriptValue) {
-		this.instance?.prototype(prototype)
+
+		val instance = this.instance
+		if (instance != null) {
+			instance.prototype(prototype)
+			return
+		}		
+		
+		super.prototype(prototype)
 	}
 
 	/**
-	 * Returns the internal prototype of this value.
+	 * @inherited
 	 * @method prototype
 	 * @since 0.7.0
 	 */
 	override fun prototype(): JavaScriptValue {
-		return this.instance?.prototype() ?: this.context.jsundefined
+		return this.instance?.prototype() ?: super.prototype()
 	}
 
 	/**
-	 * Called when the value gets protected.
+	 * @inherited
 	 * @method onProtectValue
 	 * @since 0.6.0
 	 */
@@ -286,7 +445,7 @@ open class JavaScriptClass(context: JavaScriptContext) : JavaScriptObject(contex
 		 * make sure its holder does not get collected.
 		 */
 
-		this.instance?.protect()
+		super.protect()
 	}
 
 	/**
@@ -301,7 +460,7 @@ open class JavaScriptClass(context: JavaScriptContext) : JavaScriptObject(contex
 		 * make sure its holder does not get collected.
 		 */
 
-		this.instance?.unprotect()
+		super.unprotect()
 	}
 
 	//--------------------------------------------------------------------------
@@ -314,7 +473,32 @@ open class JavaScriptClass(context: JavaScriptContext) : JavaScriptObject(contex
 	 * @since 0.1.0
 	 */
 	open fun jsFunction_constructor(callback: JavaScriptFunctionCallback) {
+
+		if (callback.arguments == 0) {
+
+			/*
+			 * It's possible this class does not have a native JavaScript
+			 * wrapper class. In this case all class related method will
+			 * be called on this very instance instead.
+			 */
+
+			return
+		}
+
 		this.instance = callback.argument(0)
 		this.instance?.unprotect()
+	}
+
+	//--------------------------------------------------------------------------
+	// MARK: Internal API
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method toHandle
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	override fun toHandle(context: JavaScriptContext): Long {
+		return this.instance?.toHandle(context) ?: super.toHandle(context)
 	}
 }

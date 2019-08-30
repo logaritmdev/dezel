@@ -207,25 +207,23 @@ public class JavaScriptProperty: NSObject {
 
 		self.lock = lock
 
- 		if let result = JavaScriptPropertyParser.parse(value) {
-
-			switch (result.type) {
-
-				case .string:
-					self.reset(result.string)
-				case .number:
-					self.reset(result.number, unit: result.unit)
-				case .boolean:
-					self.reset(result.boolean)
-
-				default:
-					break
-			}
-
+ 		guard let result = JavaScriptPropertyParser.parse(value) else {
+			self.reset(value)
 			return
 		}
 
-		self.reset(value)
+		switch (result.type) {
+
+			case .string:
+				self.reset(result.string)
+			case .number:
+				self.reset(result.number, unit: result.unit)
+			case .boolean:
+				self.reset(result.boolean)
+
+			default:
+				break
+		}
 	}
 
 	/**
@@ -282,14 +280,16 @@ public class JavaScriptProperty: NSObject {
 					break
 			}
 
-			self.storage.store(value)
-			return
+		} else {
+
+			if (self.equals(value) == false) {
+				self.update(value)
+				self.change()
+			}
+
 		}
 
-		if (self.equals(value) == false) {
-			self.update(value)
-			self.change()
-		}
+		self.storage.store(value)
 	}
 
 	/**

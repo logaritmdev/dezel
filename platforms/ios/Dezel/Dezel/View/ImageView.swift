@@ -205,11 +205,11 @@ open class ImageView: UIView, Updatable, Clippable, TransitionListener {
 
 		if (frameW == 0 &&
 			frameH == 0) {
-			return CGSize(width: imageW, height: imageH).clamped(min: min, max: max)
+			return CGSize(width: imageW, height: imageH).clamp(min: min, max: max)
 		}
 
-		if (frameW == 0) { return CGSize(width: frameH * scaleW, height: frameH).clamped(min: min, max: max) }
-		if (frameH == 0) { return CGSize(width: frameW, height: frameW * scaleH).clamped(min: min, max: max) }
+		if (frameW == 0) { return CGSize(width: frameH * scaleW, height: frameH).clamp(min: min, max: max) }
+		if (frameH == 0) { return CGSize(width: frameW, height: frameW * scaleH).clamp(min: min, max: max) }
 
 		return bounds
 	}

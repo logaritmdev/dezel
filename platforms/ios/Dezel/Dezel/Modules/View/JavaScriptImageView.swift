@@ -351,7 +351,7 @@ open class JavaScriptImageView: JavaScriptView {
 	 * @property source
 	 * @since 0.7.0
 	 */
-	@objc open lazy var source = JavaScriptProperty() { value in
+	@objc public lazy var source = JavaScriptProperty() { value in
 
 		self.imageLoader.load(value) { image in
 
@@ -369,7 +369,7 @@ open class JavaScriptImageView: JavaScriptView {
 	 * @property imageFit
 	 * @since 0.7.0
 	 */
-	@objc open lazy var imageFit = JavaScriptProperty(string: "contain") { value in
+	@objc public lazy var imageFit = JavaScriptProperty(string: "contain") { value in
 		self.invalidateImage()
 	}
 
@@ -378,7 +378,7 @@ open class JavaScriptImageView: JavaScriptView {
 	 * @property imageAnchorTop
 	 * @since 0.7.0
 	 */
-	@objc open lazy var imageAnchorTop = JavaScriptProperty(number: 0.5) { value in
+	@objc public lazy var imageAnchorTop = JavaScriptProperty(number: 0.5) { value in
 		self.invalidateImage()
 	}
 
@@ -387,7 +387,7 @@ open class JavaScriptImageView: JavaScriptView {
 	 * @property imageAnchorLeft
 	 * @since 0.7.0
 	 */
-	@objc open lazy var imageAnchorLeft = JavaScriptProperty(number: 0.5) { value in
+	@objc public lazy var imageAnchorLeft = JavaScriptProperty(number: 0.5) { value in
 		self.invalidateImage()
 	}
 
@@ -396,7 +396,7 @@ open class JavaScriptImageView: JavaScriptView {
 	 * @property imageTop
 	 * @since 0.7.0
 	 */
-	@objc open lazy var imageTop = JavaScriptProperty(number: 50, unit: .pc) { value in
+	@objc public lazy var imageTop = JavaScriptProperty(number: 50, unit: .pc) { value in
 		self.invalidateImage()
 	}
 
@@ -405,7 +405,7 @@ open class JavaScriptImageView: JavaScriptView {
 	 * @property imageLeft
 	 * @since 0.7.0
 	 */
-	@objc open lazy var imageLeft = JavaScriptProperty(number: 50, unit: .pc) { value in
+	@objc public lazy var imageLeft = JavaScriptProperty(number: 50, unit: .pc) { value in
 		self.invalidateImage()
 	}
 
@@ -414,7 +414,7 @@ open class JavaScriptImageView: JavaScriptView {
 	 * @property imageWidth
 	 * @since 0.7.0
 	 */
-	@objc open lazy var imageWidth = JavaScriptProperty(string: "auto") { value in
+	@objc public lazy var imageWidth = JavaScriptProperty(string: "auto") { value in
 		self.invalidateImage()
 	}
 
@@ -423,7 +423,7 @@ open class JavaScriptImageView: JavaScriptView {
 	 * @property imageHeight
 	 * @since 0.7.0
 	 */
-	@objc open lazy var imageHeight = JavaScriptProperty(string: "auto") { value in
+	@objc public lazy var imageHeight = JavaScriptProperty(string: "auto") { value in
 		self.invalidateImage()
 	}
 
@@ -432,7 +432,7 @@ open class JavaScriptImageView: JavaScriptView {
 	 * @property imageFilter
 	 * @since 0.7.0
 	 */
-	@objc open lazy var imageFilter = JavaScriptProperty(string: "none") { value in
+	@objc public lazy var imageFilter = JavaScriptProperty(string: "none") { value in
 		self.view.imageFilter = self.getImageFilter(value.string)
 	}
 
@@ -441,7 +441,7 @@ open class JavaScriptImageView: JavaScriptView {
 	 * @property imageTint
 	 * @since 0.7.0
 	 */
-	@objc open lazy var imageTint = JavaScriptProperty(string: "transparent") { value in
+	@objc public lazy var imageTint = JavaScriptProperty(string: "transparent") { value in
 		self.view.imageTint = CGColorParse(value.string)
 	}
 

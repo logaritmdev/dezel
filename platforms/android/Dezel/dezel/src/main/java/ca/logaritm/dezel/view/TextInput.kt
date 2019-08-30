@@ -16,8 +16,8 @@ import android.widget.TimePicker
 import ca.logaritm.dezel.application.ApplicationActivity
 import ca.logaritm.dezel.date.DateParser
 import ca.logaritm.dezel.extension.Delegates
-import ca.logaritm.dezel.extension.format
-import ca.logaritm.dezel.extension.iso
+import ca.logaritm.dezel.extension.util.format
+import ca.logaritm.dezel.extension.util.iso
 import ca.logaritm.dezel.font.FontManager
 import ca.logaritm.dezel.view.graphic.Color
 import ca.logaritm.dezel.view.graphic.Convert
@@ -46,7 +46,7 @@ open class TextInput(context: Context, listener: TextInputListener?) : EditText(
 	}
 
 	/**
-	 * The text input's value.
+	 * The text input's toValue.
 	 * @property value
 	 * @since 0.7.0
 	 */
@@ -90,7 +90,7 @@ open class TextInput(context: Context, listener: TextInputListener?) : EditText(
 	}
 
 	/**
-	 * The text input's value format.
+	 * The text input's toValue format.
 	 * @property format
 	 * @since 0.7.0
 	 */
@@ -99,7 +99,7 @@ open class TextInput(context: Context, listener: TextInputListener?) : EditText(
 	}
 
 	/**
-	 * The text input's value format locale.
+	 * The text input's toValue format locale.
 	 * @property locale
 	 * @since 0.7.0
 	 */

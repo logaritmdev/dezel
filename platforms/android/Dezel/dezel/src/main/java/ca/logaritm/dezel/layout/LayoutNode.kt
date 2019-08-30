@@ -5,7 +5,7 @@ import ca.logaritm.dezel.core.JavaScriptProperty
 import ca.logaritm.dezel.core.JavaScriptPropertyType
 import ca.logaritm.dezel.core.JavaScriptPropertyUnit
 import ca.logaritm.dezel.extension.Delegates
-import ca.logaritm.dezel.extension.toValidFloat
+import ca.logaritm.dezel.extension.type.toValidFloat
 import ca.logaritm.dezel.view.graphic.Convert
 
 /**

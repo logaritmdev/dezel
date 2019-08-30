@@ -1,6 +1,6 @@
 package ca.logaritm.dezel.view.graphic
 
-import ca.logaritm.dezel.extension.toDeg
+import ca.logaritm.dezel.extension.type.toDeg
 import ca.logaritm.dezel.string.Scanner
 
 /**
@@ -51,7 +51,7 @@ open class LinearGradient(value: String) {
 	}
 
 	/**
-	 * Parses the linear gradient string.
+	 * Parses the linear gradient toString.
 	 * @method parse
 	 * @since 0.1.0
 	 */

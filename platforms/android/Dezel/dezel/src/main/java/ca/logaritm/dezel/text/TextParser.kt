@@ -2,9 +2,9 @@ package ca.logaritm.dezel.text
 
 import android.text.SpannableString
 import android.text.Spanned
-import ca.logaritm.dezel.extension.SpannableString
-import ca.logaritm.dezel.extension.append
-import ca.logaritm.dezel.extension.last
+import ca.logaritm.dezel.extension.text.SpannableString
+import ca.logaritm.dezel.extension.type.append
+import ca.logaritm.dezel.extension.type.last
 import ca.logaritm.dezel.font.Font
 import ca.logaritm.dezel.text.html.HTMLParser
 import ca.logaritm.dezel.text.span.FontSpan
@@ -17,7 +17,7 @@ import org.xml.sax.Attributes
 import org.xml.sax.helpers.DefaultHandler
 
 /**
- * Parses HTML to create an attributed string.
+ * Parses HTML to create an attributed toString.
  * @class TextParser
  * @since 0.5.0
  */
@@ -28,7 +28,7 @@ open class TextParser(html: String, base: List<Any>, options: Options): DefaultH
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The parsed spanned string.
+	 * The parsed spanned toString.
 	 * @property string
 	 * @since 0.5.0
 	 */
@@ -254,7 +254,7 @@ open class TextParser(html: String, base: List<Any>, options: Options): DefaultH
 		}
 
 		/**
-		 * Applies the attributes to the string.
+		 * Applies the attributes to the toString.
 		 * @method apply
 		 * @since 0.5.0
 		 */

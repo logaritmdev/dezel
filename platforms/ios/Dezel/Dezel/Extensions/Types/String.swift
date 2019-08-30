@@ -178,9 +178,9 @@ internal extension String {
 public extension String {
 
 	/**
+	 * Converts to a number.
 	 * @method toNumber
 	 * @since 0.7.0
-	 * @hidden
 	 */
 	func toNumber() -> Double {
 
@@ -217,9 +217,9 @@ public extension String {
 	}
 
 	/**
-	 * @method toColor
-	 * @since 0.1.0
-	 * @hidden
+	 * Converts to a color.
+	 * @method toNumber
+	 * @since 0.7.0
 	 */
 	func toColor() -> CGColor {
 		return CGColorParse(self)

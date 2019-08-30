@@ -4,8 +4,8 @@ import android.util.Log
 import android.util.SizeF
 import ca.logaritm.dezel.application.application
 import ca.logaritm.dezel.core.*
-import ca.logaritm.dezel.extension.clamp
-import ca.logaritm.dezel.extension.max
+import ca.logaritm.dezel.extension.type.clamp
+import ca.logaritm.dezel.extension.type.max
 import ca.logaritm.dezel.layout.LayoutNode
 import ca.logaritm.dezel.modules.view.JavaScriptView
 import ca.logaritm.dezel.view.TextInput
@@ -24,281 +24,6 @@ open class JavaScriptTextInput(context: JavaScriptContext) : JavaScriptView(cont
 	//--------------------------------------------------------------------------
 	// Properties
 	//--------------------------------------------------------------------------
-
-	/**
-	 * The text input's type.
-	 * @property type
-	 * @since 0.7.0
-	 */
-	open val type: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, "text") { value ->
-			this.view.type = this.getType(value.string)
-		}
-	}
-
-	/**
-	 * The text input's value.
-	 * @property value
-	 * @since 0.7.0
-	 */
-	open val value: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, "") { value ->
-			this.view.value = value.string
-		}
-	}
-
-	/**
-	 * The text input's placeholder.
-	 * @property placeholder
-	 * @since 0.7.0
-	 */
-	open val placeholder: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, "") { value ->
-			this.view.placeholder = value.string
-		}
-	}
-
-	/**
-	 * The text input's placeholder color.
-	 * @property placeholderColor
-	 * @since 0.7.0
-	 */
-	open val placeholderColor: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, "gray") { value ->
-			this.view.placeholderColor = Color.parse(value.string)
-		}
-	}
-
-	/**
-	 * The text input's value format.
-	 * @property format
-	 * @since 0.7.0
-	 */
-	open val format: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, "") { value ->
-			this.view.format = value.string
-		}
-	}
-
-	/**
-	 * The text input's value format locale.
-	 * @property format
-	 * @since 0.7.0
-	 */
-	open val locale: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, "") { value ->
-			this.view.locale = value.string
-		}
-	}
-
-	/**
-	 * The text input's autocorrect status.
-	 * @property autocorrect
-	 * @since 0.7.0
-	 */
-	open val autocorrect: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, true) { value ->
-			this.view.autocorrect = value.boolean
-		}
-	}
-
-	/**
-	 * The text input's autocapitalize status.
-	 * @property autocapitalize
-	 * @since 0.7.0
-	 */
-	open val autocapitalize: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, true) { value ->
-			this.view.autocapitalize = value.boolean
-		}
-	}
-
-	/**
-	 * The text input's font family.
-	 * @property fontFamily
-	 * @since 0.7.0
-	 */
-	open val fontFamily: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, "default") { value ->
-			this.view.fontFamily = value.string
-		}
-	}
-
-	/**
-	 * The text input's font weight.
-	 * @property fontWeight
-	 * @since 0.7.0
-	 */
-	open val fontWeight: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, "normal") { value ->
-			this.view.fontWeight = value.string
-		}
-	}
-
-	/**
-	 * The text input's font stylerNode.
-	 * @property fontStyle
-	 * @since 0.7.0
-	 */
-	open val fontStyle: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, "normal") { value ->
-			this.view.fontStyle = value.string
-		}
-	}
-
-	/**
-	 * The text input's font size.
-	 * @property fontSize
-	 * @since 0.7.0
-	 */
-	open val fontSize: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 17.0) {
-			this.invalidateFontSize()
-		}
-	}
-
-	/**
-	 * The text input's minimum font size.
-	 * @property minFontSize
-	 * @since 0.7.0
-	 */
-	open val minFontSize: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.0) {
-			this.invalidateFontSize()
-		}
-	}
-
-	/**
-	 * The text input's maximum font size.
-	 * @property maxFontSize
-	 * @since 0.7.0
-	 */
-	open val maxFontSize: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, Double.max) {
-			this.invalidateFontSize()
-		}
-	}
-
-	/**
-	 * The text input's text color.
-	 * @property textColor
-	 * @since 0.7.0
-	 */
-	open val textColor: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, "#000") { value ->
-			this.view.setTextColor(Color.parse(value.string))
-		}
-	}
-
-	/**
-	 * The text input's text alignment.
-	 * @property textAlignment
-	 * @since 0.7.0
-	 */
-	open val textAlignment: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, "start") { value ->
-			this.view.textAlignment = this.getTextAlignment(value.string)
-		}
-	}
-
-	/**
-	 * The text input's text location.
-	 * @property textLocation
-	 * @since 0.7.0
-	 */
-	open val textLocation: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, "middle") { value ->
-			this.view.textLocation = this.getTextLocation(value.string)
-		}
-	}
-
-	/**
-	 * The text input's text kerning.
-	 * @property textKerning
-	 * @since 0.7.0
-	 */
-	open val textKerning: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.0) { value ->
-			this.view.textKerning = value.number.toFloat()
-		}
-	}
-
-	/**
-	 * The text input's text leading.
-	 * @property textLeading
-	 * @since 0.7.0
-	 */
-	open val textLeading: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.0) { value ->
-			this.view.textLeading = value.number.toFloat()
-		}
-	}
-
-	/**
-	 * The text input's text shadow blur.
-	 * @property textShadowBlur
-	 * @since 0.7.0
-	 */
-	open val textShadowBlur: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.0) { value ->
-			this.view.textShadowBlur = value.number.toFloat()
-		}
-	}
-
-	/**
-	 * The text input's text shadow color.
-	 * @property textShadowColor
-	 * @since 0.7.0
-	 */
-	open val textShadowColor: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, "#000") { value ->
-			this.view.textShadowColor = Color.parse(value.string)
-		}
-	}
-
-	/**
-	 * The text input's text shadow offset top.
-	 * @property textShadowOffsetTop
-	 * @since 0.7.0
-	 */
-	open val textShadowOffsetTop: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.0) { value ->
-			this.view.textShadowOffsetTop = value.number.toFloat()
-		}
-	}
-
-	/**
-	 * The text input's text shadow offset left.
-	 * @property textShadowOffsetLeft
-	 * @since 0.7.0
-	 */
-	open val textShadowOffsetLeft: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.0) { value ->
-			this.view.textShadowOffsetLeft = value.number.toFloat()
-		}
-	}
-
-	/**
-	 * The text input's text decoration.
-	 * @property textDecoration
-	 * @since 0.7.0
-	 */
-	open val textDecoration: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, "none") { value ->
-			this.view.textDecoration = this.getTextDecoration(value.string)
-		}
-	}
-
-	/**
-	 * The text input's text transform.
-	 * @property textTransform
-	 * @since 0.7.0
-	 */
-	open val textTransform: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, "none") { value ->
-			this.view.textTransform = this.getTextTransform(value.string)
-		}
-	}
 
 	/**
 	 * @property view
@@ -375,7 +100,7 @@ open class JavaScriptTextInput(context: JavaScriptContext) : JavaScriptView(cont
 	 * @hidden
 	 */
 	override fun onChange(textInput: TextInput, value: String) {
-		this.value.set(value)
+		this.value.reset(value)
 		this.callMethod("nativeOnChange", arrayOf(this.context.createString(value)), null)
 	}
 
@@ -428,7 +153,7 @@ open class JavaScriptTextInput(context: JavaScriptContext) : JavaScriptView(cont
 			"date"     -> return InputType.DATE
 			"time"     -> return InputType.TIME
 			"text"     -> return InputType.TEXT
-			"number"   -> return InputType.NUMBER
+			"toNumber"   -> return InputType.NUMBER
 			"email"    -> return InputType.EMAIL
 			"phone"    -> return InputType.PHONE
 			"password" -> return InputType.PASSWORD
@@ -548,6 +273,283 @@ open class JavaScriptTextInput(context: JavaScriptContext) : JavaScriptView(cont
 	//--------------------------------------------------------------------------
 
 	/**
+	 * The text input's type.
+	 * @property type
+	 * @since 0.7.0
+	 */
+	public val type by lazy {
+		JavaScriptProperty("text") { value ->
+			this.view.type = this.getType(value.string)
+		}
+	}
+
+	/**
+	 * The text input's toValue.
+	 * @property value
+	 * @since 0.7.0
+	 */
+	public val value by lazy {
+		JavaScriptProperty("") { value ->
+			this.view.value = value.string
+		}
+	}
+
+	/**
+	 * The text input's placeholder.
+	 * @property placeholder
+	 * @since 0.7.0
+	 */
+	public val placeholder by lazy {
+		JavaScriptProperty("") { value ->
+			this.view.placeholder = value.string
+		}
+	}
+
+	/**
+	 * The text input's placeholder color.
+	 * @property placeholderColor
+	 * @since 0.7.0
+	 */
+	public val placeholderColor by lazy {
+		JavaScriptProperty("gray") { value ->
+			this.view.placeholderColor = Color.parse(value.string)
+		}
+	}
+
+	/**
+	 * The text input's toValue format.
+	 * @property format
+	 * @since 0.7.0
+	 */
+	public val format by lazy {
+		JavaScriptProperty("") { value ->
+			this.view.format = value.string
+		}
+	}
+
+	/**
+	 * The text input's toValue format locale.
+	 * @property format
+	 * @since 0.7.0
+	 */
+	public val locale by lazy {
+		JavaScriptProperty("") { value ->
+			this.view.locale = value.string
+		}
+	}
+
+	/**
+	 * The text input's autocorrect status.
+	 * @property autocorrect
+	 * @since 0.7.0
+	 */
+	public val autocorrect by lazy {
+		JavaScriptProperty(true) { value ->
+			this.view.autocorrect = value.boolean
+		}
+	}
+
+	/**
+	 * The text input's autocapitalize status.
+	 * @property autocapitalize
+	 * @since 0.7.0
+	 */
+	public val autocapitalize by lazy {
+		JavaScriptProperty(true) { value ->
+			this.view.autocapitalize = value.boolean
+		}
+	}
+
+	/**
+	 * The text input's font family.
+	 * @property fontFamily
+	 * @since 0.7.0
+	 */
+	public val fontFamily by lazy {
+		JavaScriptProperty("default") { value ->
+			this.view.fontFamily = value.string
+		}
+	}
+
+	/**
+	 * The text input's font weight.
+	 * @property fontWeight
+	 * @since 0.7.0
+	 */
+	public val fontWeight by lazy {
+		JavaScriptProperty("normal") { value ->
+			this.view.fontWeight = value.string
+		}
+	}
+
+	/**
+	 * The text input's font stylerNode.
+	 * @property fontStyle
+	 * @since 0.7.0
+	 */
+	public val fontStyle by lazy {
+		JavaScriptProperty("normal") { value ->
+			this.view.fontStyle = value.string
+		}
+	}
+
+	/**
+	 * The text input's font size.
+	 * @property fontSize
+	 * @since 0.7.0
+	 */
+	public val fontSize by lazy {
+		JavaScriptProperty(17.0) {
+			this.invalidateFontSize()
+		}
+	}
+
+	/**
+	 * The text input's minimum font size.
+	 * @property minFontSize
+	 * @since 0.7.0
+	 */
+	public val minFontSize by lazy {
+		JavaScriptProperty(0.0) {
+			this.invalidateFontSize()
+		}
+	}
+
+	/**
+	 * The text input's maximum font size.
+	 * @property maxFontSize
+	 * @since 0.7.0
+	 */
+	public val maxFontSize by lazy {
+		JavaScriptProperty(Double.max) {
+			this.invalidateFontSize()
+		}
+	}
+
+	/**
+	 * The text input's text color.
+	 * @property textColor
+	 * @since 0.7.0
+	 */
+	public val textColor by lazy {
+		JavaScriptProperty("#000") { value ->
+			this.view.setTextColor(Color.parse(value.string))
+		}
+	}
+
+	/**
+	 * The text input's text alignment.
+	 * @property textAlignment
+	 * @since 0.7.0
+	 */
+	public val textAlignment by lazy {
+		JavaScriptProperty("start") { value ->
+			this.view.textAlignment = this.getTextAlignment(value.string)
+		}
+	}
+
+	/**
+	 * The text input's text location.
+	 * @property textLocation
+	 * @since 0.7.0
+	 */
+	public val textLocation by lazy {
+		JavaScriptProperty("middle") { value ->
+			this.view.textLocation = this.getTextLocation(value.string)
+		}
+	}
+
+	/**
+	 * The text input's text kerning.
+	 * @property textKerning
+	 * @since 0.7.0
+	 */
+	public val textKerning by lazy {
+		JavaScriptProperty(0.0) { value ->
+			this.view.textKerning = value.number.toFloat()
+		}
+	}
+
+	/**
+	 * The text input's text leading.
+	 * @property textLeading
+	 * @since 0.7.0
+	 */
+	public val textLeading by lazy {
+		JavaScriptProperty(0.0) { value ->
+			this.view.textLeading = value.number.toFloat()
+		}
+	}
+
+	/**
+	 * The text input's text shadow blur.
+	 * @property textShadowBlur
+	 * @since 0.7.0
+	 */
+	public val textShadowBlur by lazy {
+		JavaScriptProperty(0.0) { value ->
+			this.view.textShadowBlur = value.number.toFloat()
+		}
+	}
+
+	/**
+	 * The text input's text shadow color.
+	 * @property textShadowColor
+	 * @since 0.7.0
+	 */
+	public val textShadowColor by lazy {
+		JavaScriptProperty("#000") { value ->
+			this.view.textShadowColor = Color.parse(value.string)
+		}
+	}
+
+	/**
+	 * The text input's text shadow offset top.
+	 * @property textShadowOffsetTop
+	 * @since 0.7.0
+	 */
+	public val textShadowOffsetTop by lazy {
+		JavaScriptProperty(0.0) { value ->
+			this.view.textShadowOffsetTop = value.number.toFloat()
+		}
+	}
+
+	/**
+	 * The text input's text shadow offset left.
+	 * @property textShadowOffsetLeft
+	 * @since 0.7.0
+	 */
+	public val textShadowOffsetLeft by lazy {
+		JavaScriptProperty(0.0) { value ->
+			this.view.textShadowOffsetLeft = value.number.toFloat()
+		}
+	}
+
+	/**
+	 * The text input's text decoration.
+	 * @property textDecoration
+	 * @since 0.7.0
+	 */
+	public val textDecoration by lazy {
+		JavaScriptProperty("none") { value ->
+			this.view.textDecoration = this.getTextDecoration(value.string)
+		}
+	}
+
+	/**
+	 * The text input's text transform.
+	 * @property textTransform
+	 * @since 0.7.0
+	 */
+	public val textTransform by lazy {
+		JavaScriptProperty("none") { value ->
+			this.view.textTransform = this.getTextTransform(value.string)
+		}
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
 	 * @method jsGet_type
 	 * @since 0.7.0
 	 * @hidden
@@ -564,7 +566,7 @@ open class JavaScriptTextInput(context: JavaScriptContext) : JavaScriptView(cont
 	 */
 	@Suppress("unused")
 	open fun jsSet_type(callback: JavaScriptSetterCallback) {
-		this.type.set(callback.value, this)
+		this.type.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -586,7 +588,7 @@ open class JavaScriptTextInput(context: JavaScriptContext) : JavaScriptView(cont
 	 */
 	@Suppress("unused")
 	open fun jsSet_value(callback: JavaScriptSetterCallback) {
-		this.value.set(callback.value, this)
+		this.value.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -608,7 +610,7 @@ open class JavaScriptTextInput(context: JavaScriptContext) : JavaScriptView(cont
 	 */
 	@Suppress("unused")
 	open fun jsSet_placeholder(callback: JavaScriptSetterCallback) {
-		this.placeholder.set(callback.value, this)
+		this.placeholder.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -630,7 +632,7 @@ open class JavaScriptTextInput(context: JavaScriptContext) : JavaScriptView(cont
 	 */
 	@Suppress("unused")
 	open fun jsSet_placeholderColor(callback: JavaScriptSetterCallback) {
-		this.placeholderColor.set(callback.value, this)
+		this.placeholderColor.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -652,7 +654,7 @@ open class JavaScriptTextInput(context: JavaScriptContext) : JavaScriptView(cont
 	 */
 	@Suppress("unused")
 	open fun jsSet_format(callback: JavaScriptSetterCallback) {
-		this.format.set(callback.value, this)
+		this.format.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -674,7 +676,7 @@ open class JavaScriptTextInput(context: JavaScriptContext) : JavaScriptView(cont
 	 */
 	@Suppress("unused")
 	open fun jsSet_locale(callback: JavaScriptSetterCallback) {
-		this.locale.set(callback.value, this)
+		this.locale.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -696,7 +698,7 @@ open class JavaScriptTextInput(context: JavaScriptContext) : JavaScriptView(cont
 	 */
 	@Suppress("unused")
 	open fun jsSet_autocorrect(callback: JavaScriptSetterCallback) {
-		this.autocorrect.set(callback.value, this)
+		this.autocorrect.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -718,7 +720,7 @@ open class JavaScriptTextInput(context: JavaScriptContext) : JavaScriptView(cont
 	 */
 	@Suppress("unused")
 	open fun jsSet_autocapitalize(callback: JavaScriptSetterCallback) {
-		this.autocapitalize.set(callback.value, this)
+		this.autocapitalize.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -740,7 +742,7 @@ open class JavaScriptTextInput(context: JavaScriptContext) : JavaScriptView(cont
 	 */
 	@Suppress("unused")
 	open fun jsSet_fontFamily(callback: JavaScriptSetterCallback) {
-		this.fontFamily.set(callback.value, this)
+		this.fontFamily.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -762,7 +764,7 @@ open class JavaScriptTextInput(context: JavaScriptContext) : JavaScriptView(cont
 	 */
 	@Suppress("unused")
 	open fun jsSet_fontWeight(callback: JavaScriptSetterCallback) {
-		this.fontWeight.set(callback.value, this)
+		this.fontWeight.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -784,7 +786,7 @@ open class JavaScriptTextInput(context: JavaScriptContext) : JavaScriptView(cont
 	 */
 	@Suppress("unused")
 	open fun jsSet_fontStyle(callback: JavaScriptSetterCallback) {
-		this.fontStyle.set(callback.value, this)
+		this.fontStyle.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -806,7 +808,7 @@ open class JavaScriptTextInput(context: JavaScriptContext) : JavaScriptView(cont
 	 */
 	@Suppress("unused")
 	open fun jsSet_fontSize(callback: JavaScriptSetterCallback) {
-		this.fontSize.set(callback.value, this)
+		this.fontSize.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -828,7 +830,7 @@ open class JavaScriptTextInput(context: JavaScriptContext) : JavaScriptView(cont
 	 */
 	@Suppress("unused")
 	open fun jsSet_minFontSize(callback: JavaScriptSetterCallback) {
-		this.minFontSize.set(callback.value, this)
+		this.minFontSize.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -850,7 +852,7 @@ open class JavaScriptTextInput(context: JavaScriptContext) : JavaScriptView(cont
 	 */
 	@Suppress("unused")
 	open fun jsSet_maxFontSize(callback: JavaScriptSetterCallback) {
-		this.maxFontSize.set(callback.value, this)
+		this.maxFontSize.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -872,7 +874,7 @@ open class JavaScriptTextInput(context: JavaScriptContext) : JavaScriptView(cont
 	 */
 	@Suppress("unused")
 	open fun jsSet_textColor(callback: JavaScriptSetterCallback) {
-		this.textColor.set(callback.value, this)
+		this.textColor.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -894,7 +896,7 @@ open class JavaScriptTextInput(context: JavaScriptContext) : JavaScriptView(cont
 	 */
 	@Suppress("unused")
 	open fun jsSet_textAlignment(callback: JavaScriptSetterCallback) {
-		this.textAlignment.set(callback.value, this)
+		this.textAlignment.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -916,7 +918,7 @@ open class JavaScriptTextInput(context: JavaScriptContext) : JavaScriptView(cont
 	 */
 	@Suppress("unused")
 	open fun jsSet_textLocation(callback: JavaScriptSetterCallback) {
-		this.textLocation.set(callback.value, this)
+		this.textLocation.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -938,7 +940,7 @@ open class JavaScriptTextInput(context: JavaScriptContext) : JavaScriptView(cont
 	 */
 	@Suppress("unused")
 	open fun jsSet_textKerning(callback: JavaScriptSetterCallback) {
-		this.textKerning.set(callback.value, this)
+		this.textKerning.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -960,7 +962,7 @@ open class JavaScriptTextInput(context: JavaScriptContext) : JavaScriptView(cont
 	 */
 	@Suppress("unused")
 	open fun jsSet_textLeading(callback: JavaScriptSetterCallback) {
-		this.textLeading.set(callback.value, this)
+		this.textLeading.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -982,7 +984,7 @@ open class JavaScriptTextInput(context: JavaScriptContext) : JavaScriptView(cont
 	 */
 	@Suppress("unused")
 	open fun jsSet_textDecoration(callback: JavaScriptSetterCallback) {
-		this.textDecoration.set(callback.value, this)
+		this.textDecoration.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -1004,7 +1006,7 @@ open class JavaScriptTextInput(context: JavaScriptContext) : JavaScriptView(cont
 	 */
 	@Suppress("unused")
 	open fun jsSet_textTransform(callback: JavaScriptSetterCallback) {
-		this.textTransform.set(callback.value, this)
+		this.textTransform.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -1026,7 +1028,7 @@ open class JavaScriptTextInput(context: JavaScriptContext) : JavaScriptView(cont
 	 */
 	@Suppress("unused")
 	open fun jsSet_textShadowBlur(callback: JavaScriptSetterCallback) {
-		this.textShadowBlur.set(callback.value, this)
+		this.textShadowBlur.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -1048,7 +1050,7 @@ open class JavaScriptTextInput(context: JavaScriptContext) : JavaScriptView(cont
 	 */
 	@Suppress("unused")
 	open fun jsSet_textShadowColor(callback: JavaScriptSetterCallback) {
-		this.textShadowColor.set(callback.value, this)
+		this.textShadowColor.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -1070,7 +1072,7 @@ open class JavaScriptTextInput(context: JavaScriptContext) : JavaScriptView(cont
 	 */
 	@Suppress("unused")
 	open fun jsSet_textShadowOffsetTop(callback: JavaScriptSetterCallback) {
-		this.fontFamily.set(callback.value, this)
+		this.fontFamily.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -1092,7 +1094,7 @@ open class JavaScriptTextInput(context: JavaScriptContext) : JavaScriptView(cont
 	 */
 	@Suppress("unused")
 	open fun jsSet_textShadowOffsetLeft(callback: JavaScriptSetterCallback) {
-		this.textShadowOffsetLeft.set(callback.value, this)
+		this.textShadowOffsetLeft.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------

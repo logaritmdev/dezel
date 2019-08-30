@@ -83,81 +83,71 @@ open class JavaScriptPropertyAccessor(type: Class<*>, name: String) {
 	}
 
 	/**
-	 * Dynamically assigns a JavaScript value.
+	 * Dynamically assigns a JavaScript toValue.
 	 * @method set
 	 * @since 0.7.0
 	 */
-	open fun set(instance: JavaScriptObject, value: JavaScriptValue?) {
+	open fun set(instance: JavaScriptObject, value: JavaScriptValue?): Boolean {
 
 		val property = this.get(instance)
 		if (property == null) {
-			instance.property(this.name, value)
-			return
+			return false
 		}
 
-		property.set(value)
+		property.reset(value)
+
+		return true
 	}
 
 	/**
-	 * Dynamically assigns a string.
+	 * Dynamically assigns a toString.
 	 * @method set
 	 * @since 0.7.0
 	 */
-	open fun set(instance: JavaScriptObject, string: String) {
+	open fun set(instance: JavaScriptObject, string: String): Boolean {
 
 		val property = this.get(instance)
 		if (property == null) {
-			instance.property(this.name, string)
-			return
+			return false
 		}
 
-		property.set(string)
+		property.reset(string)
+
+		return true
 	}
 
 	/**
-	 * Dynamically assigns a number.
+	 * Dynamically assigns a toNumber.
 	 * @method set
 	 * @since 0.7.0
 	 */
-	public fun set(instance: JavaScriptObject, number: Double, unit: JavaScriptPropertyUnit) {
+	public fun set(instance: JavaScriptObject, number: Double, unit: JavaScriptPropertyUnit): Boolean {
 
 		val property = this.get(instance)
 		if (property == null) {
-
-			when (unit) {
-				JavaScriptPropertyUnit.NONE -> instance.property(this.name, number)
-				JavaScriptPropertyUnit.PX   -> instance.property(this.name, Conversion.toString(number) + "px")
-				JavaScriptPropertyUnit.PC   -> instance.property(this.name, Conversion.toString(number) + "%")
-				JavaScriptPropertyUnit.VW   -> instance.property(this.name, Conversion.toString(number) + "vw")
-				JavaScriptPropertyUnit.VH   -> instance.property(this.name, Conversion.toString(number) + "vh")
-				JavaScriptPropertyUnit.PW   -> instance.property(this.name, Conversion.toString(number) + "pw")
-				JavaScriptPropertyUnit.PH   -> instance.property(this.name, Conversion.toString(number) + "ph")
-				JavaScriptPropertyUnit.CW   -> instance.property(this.name, Conversion.toString(number) + "cw")
-				JavaScriptPropertyUnit.CH   -> instance.property(this.name, Conversion.toString(number) + "ch")
-				JavaScriptPropertyUnit.DEG  -> instance.property(this.name, Conversion.toString(number) + "deg")
-				JavaScriptPropertyUnit.RAD  -> instance.property(this.name, Conversion.toString(number) + "rad")
-			}
-
-			return
+			return false
 		}
 
-		property.set(number, unit)
+		property.reset(number, unit)
+
+		return true
 	}
 
 	/**
-	 * Dynamically assigns a boolean.
+	 * Dynamically assigns a toBoolean.
 	 * @method set
 	 * @since 0.7.0
 	 */
-	public fun set(instance: JavaScriptObject, boolean: Boolean) {
+	public fun set(instance: JavaScriptObject, boolean: Boolean): Boolean {
 
 		val property = this.get(instance)
 		if (property == null) {
-			instance.property(this.name, boolean)
-			return
+			return false
 		}
 
-		property.set(boolean)
+		property.reset(boolean)
+
+		return true
 	}
 	
 	/**

@@ -20,15 +20,15 @@ class DezelUnitTest {
 	@Rule @JvmField
 	public var rule: ActivityTestRule<TestRunner> = ActivityTestRule<TestRunner>(TestRunner::class.java, false, true)
 
-	@Test
-	fun testAPI() {
-
-		val signal = CountDownLatch(1)
-
-		this.rule.runOnUiThread {
-			this.rule.activity.start("192.168.11.115", "9876")
-		}
-
-		signal.await()
-	}
+//	@Test
+//	fun testAPI() {
+//
+//		val signal = CountDownLatch(1)
+//
+//		this.rule.runOnUiThread {
+//			this.rule.activity.start("192.168.11.115", "9876")
+//		}
+//
+//		signal.await()
+//	}
 }

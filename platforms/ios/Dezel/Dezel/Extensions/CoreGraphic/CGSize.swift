@@ -91,7 +91,7 @@ internal extension CGSize {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	func clamped(min: CGSize, max: CGSize) -> CGSize {
+	func clamp(min: CGSize, max: CGSize) -> CGSize {
 		var size = self
 		if (size.width < min.width) { size.width = min.width }
 		if (size.width > max.width) { size.width = max.width }

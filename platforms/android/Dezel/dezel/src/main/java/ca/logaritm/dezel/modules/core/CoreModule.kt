@@ -3,6 +3,8 @@ package ca.logaritm.dezel.modules.core
 import ca.logaritm.dezel.application.application
 import ca.logaritm.dezel.core.JavaScriptContext
 import ca.logaritm.dezel.core.Module
+import ca.logaritm.dezel.extension.fatalError
+import ca.logaritm.dezel.extension.type.let
 import ca.logaritm.dezel.modules.application.JavaScriptApplication
 
 /**
@@ -22,7 +24,17 @@ open class CoreModule(context: JavaScriptContext) : Module(context) {
 	 * @hidden
 	 */
 	private val importClass = context.createFunction { callback ->
-		val result = this.context.classes[callback.argument(0).string]
+
+		if (callback.arguments < 1) {
+			fatalError("Function importClass() requires 1 argument.")
+		}
+
+		val identifier = callback.argument(0).string
+		if (identifier == "") {
+			return@createFunction
+		}
+
+		val result = this.context.classes[identifier]
 		if (result != null) {
 			callback.returns(result)
 		}
@@ -34,7 +46,17 @@ open class CoreModule(context: JavaScriptContext) : Module(context) {
 	 * @hidden
 	 */
 	private val importObject = context.createFunction { callback ->
-		val result = this.context.objects[callback.argument(0).string]
+
+		if (callback.arguments < 1) {
+			fatalError("Function importObject() requires 1 argument.")
+		}
+
+		val identifier = callback.argument(0).string
+		if (identifier == "") {
+			return@createFunction
+		}
+
+		val result = this.context.objects[identifier]
 		if (result != null) {
 			callback.returns(result)
 		}
@@ -47,12 +69,15 @@ open class CoreModule(context: JavaScriptContext) : Module(context) {
 	 */
 	private val registerApplication = context.createFunction { callback ->
 
+		if (callback.arguments < 2) {
+			fatalError("Function registerApplication() requires 2 arguments.")
+		}
+
 		val app = callback.argument(0)
 		val uid = callback.argument(1).string
 
-		val application = app.cast(JavaScriptApplication::class.java)
-		if (application != null) {
-			this.context.application.launch(application, uid)
+		app.cast(JavaScriptApplication::class.java).let {
+			this.context.application.launch(it, uid)
 		}
 	}
 	//--------------------------------------------------------------------------

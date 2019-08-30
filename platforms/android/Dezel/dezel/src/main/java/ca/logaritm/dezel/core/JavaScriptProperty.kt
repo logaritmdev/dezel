@@ -1,22 +1,19 @@
 package ca.logaritm.dezel.core
 
+import android.util.Log
+import ca.logaritm.dezel.extension.isLocked
+import ca.logaritm.dezel.extension.type.let
+
 /**
- * A clazz checked handle with optional unit.
+ * A JavaScript property.
  * @class JavaScriptProperty
  * @since 0.7.0
  */
-open class JavaScriptProperty private constructor(context: JavaScriptContext) {
+public class JavaScriptProperty {
 
 	//--------------------------------------------------------------------------
 	// Properties
 	//--------------------------------------------------------------------------
-
-	/**
-	 * The property's JavaScript context.
-	 * @property context
-	 * @since 0.7.0
-	 */
-	public val context: JavaScriptContext = context
 
 	/**
 	 * The property's type.
@@ -24,23 +21,15 @@ open class JavaScriptProperty private constructor(context: JavaScriptContext) {
 	 * @since 0.7.0
 	 */
 	public val type: JavaScriptPropertyType
-		get() = this.property.type()
-
+		get() = this.storage.type
+	
 	/**
 	 * The property's unit.
 	 * @property unit
 	 * @since 0.7.0
 	 */
 	public val unit: JavaScriptPropertyUnit
-		get() = this.property.unit()
-
-	/**
-	 * The property's JavaScript value.
-	 * @property value
-	 * @since 0.7.0
-	 */
-	public val value: JavaScriptValue
-		get() = this.property.value()
+		get() = this.storage.unit
 
 	/**
 	 * The property's string value.
@@ -48,7 +37,7 @@ open class JavaScriptProperty private constructor(context: JavaScriptContext) {
 	 * @since 0.7.0
 	 */
 	public val string: String
-		get() = this.property.string()
+		get() = this.storage.string
 
 	/**
 	 * The property's number value.
@@ -56,7 +45,7 @@ open class JavaScriptProperty private constructor(context: JavaScriptContext) {
 	 * @since 0.7.0
 	 */
 	public val number: Double
-		get() = this.property.number()
+		get() = this.storage.number
 
 	/**
 	 * The property's boolean value.
@@ -64,13 +53,13 @@ open class JavaScriptProperty private constructor(context: JavaScriptContext) {
 	 * @since 0.7.0
 	 */
 	public val boolean: Boolean
-		get() = this.property.boolean()
+		get() = this.storage.boolean
 
 	/**
 	 * Indicate whether the property is null.
 	 * @property isNull
 	 * @since 0.7.0
-	 */	
+	 */
 	public val isNull: Boolean
 		get() = this.type == JavaScriptPropertyType.NULL
 
@@ -107,26 +96,12 @@ open class JavaScriptProperty private constructor(context: JavaScriptContext) {
 		get() = this.type == JavaScriptPropertyType.OBJECT
 
 	/**
-	 * Indicate whether the property is an object.
+	 * Indicate whether the property is an array.
 	 * @property isArray
 	 * @since 0.7.0
 	 */
 	public val isArray: Boolean
 		get() = this.type == JavaScriptPropertyType.ARRAY
-
-	/**
-	 * @property property
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	internal lateinit var property: JavaScriptPropertyData
-
-	/**
-	 * @property listener
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	internal var listener: JavaScriptPropertyChangeHandler? = null
 
 	/**
 	 * @property lock
@@ -135,358 +110,370 @@ open class JavaScriptProperty private constructor(context: JavaScriptContext) {
 	 */
 	private var lock: Any? = null
 
+	/**
+	 * @property storage
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private var storage: JavaScriptPropertyStorage
+
+	/**
+	 * @property handler
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private var handler: JavaScriptPropertyHandler? = null
 
 	//--------------------------------------------------------------------------
 	// Methods
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Initializes the property using a JavaScript handle.
+	 * Initializes the property to null.
 	 * @constructor
 	 * @since 0.7.0
 	 */
-	public constructor(context: JavaScriptContext, callback: JavaScriptPropertyChangeHandler? = null) : this(context) {
-		this.property = JavaScriptPropertyNull(context)
-		this.listener = callback
+	public constructor(handler: JavaScriptPropertyHandler? = null) {
+		this.storage = JavaScriptPropertyStorage()
+		this.handler = handler
 	}
 
 	/**
-	 * Initializes the property using a JavaScript handle.
+	 * Initializes the property with a string.
 	 * @constructor
 	 * @since 0.7.0
 	 */
-	public constructor(context: JavaScriptContext, value: JavaScriptValue, callback: JavaScriptPropertyChangeHandler? = null) : this(context, callback) {
-		this.property = JavaScriptPropertyValue(context, value)
+	public constructor(string: String, handler: JavaScriptPropertyHandler? = null) {
+		this.storage = JavaScriptPropertyStorageString(string)
+		this.handler = handler
 	}
 
 	/**
-	 * Initializes the property to a string.
+	 * Initializes the property with a number.
 	 * @constructor
 	 * @since 0.7.0
 	 */
-	public constructor(context: JavaScriptContext, value: String, callback: JavaScriptPropertyChangeHandler? = null) : this(context, callback) {
-		this.property = JavaScriptPropertyString(context, value)
+	public constructor(number: Double, handler: JavaScriptPropertyHandler? = null) {
+		this.storage = JavaScriptPropertyStorageNumber(number)
+		this.handler = handler
 	}
 
 	/**
-	 * Initializes the property to a number.
+	 * Initializes the property with a number.
 	 * @constructor
 	 * @since 0.7.0
 	 */
-	public constructor(context: JavaScriptContext, value: Double, callback: JavaScriptPropertyChangeHandler? = null) : this(context, callback) {
-		this.property = JavaScriptPropertyNumber(context, value)
+	public constructor(number: Double, unit: JavaScriptPropertyUnit, handler: JavaScriptPropertyHandler? = null) {
+		this.storage = JavaScriptPropertyStorageNumber(number, unit)
+		this.handler = handler
 	}
 
 	/**
-	 * Initializes the property to a number.
+	 * Initializes the property with a boolean.
 	 * @constructor
 	 * @since 0.7.0
 	 */
-	public constructor(context: JavaScriptContext, value: Double, unit: JavaScriptPropertyUnit, callback: JavaScriptPropertyChangeHandler? = null) : this(context, callback) {
-		this.property = JavaScriptPropertyNumber(context, value, unit)
+	public constructor(boolean: Boolean, handler: JavaScriptPropertyHandler? = null) {
+		this.storage = JavaScriptPropertyStorageBoolean(boolean)
+		this.handler = handler
 	}
 
 	/**
-	 * Initializes the property to a boolean.
-	 * @constructor
-	 * @since 0.7.0
-	 */
-	public constructor(context: JavaScriptContext, value: Boolean, callback: JavaScriptPropertyChangeHandler? = null) : this(context, callback) {
-		this.property = JavaScriptPropertyBoolean(context, value)
-	}
-
-	/**
-	 * Sets the property's value using a JavaScript value.
-	 * @method set
-	 * @since 0.7.0
-	 */
-	public fun set(value: JavaScriptValue?, lock: Any? = null) {
-		this.reset(value, lock)
-	}
-
-	/**
-	 * Sets the property's value using a string.
-	 * @method set
-	 * @since 0.7.0
-	 */
-	public fun set(string: String, lock: Any? = null) {
-		this.reset(string, null, lock)
-	}
-
-	/**
-	 * Sets the property's value using a number.
-	 * @method set
-	 * @since 0.7.0
-	 */
-	public fun set(number: Double, unit: JavaScriptPropertyUnit = JavaScriptPropertyUnit.NONE, lock: Any? = null) {
-		this.reset(number, unit, null, lock)
-	}
-
-	/**
-	 * Sets the property's value using a boolean.
-	 * @method set
-	 * @since 0.7.0
-	 */
-	public fun set(boolean: Boolean, lock: Any? = null) {
-		this.reset(boolean, null, lock)
-	}
-
-	/**
-	 * Parses the JavaScriptValue
-	 * @method set
-	 * @since 0.7.0
-	 */
-	public fun parse(value: JavaScriptValue, lock: Any? = null) {
-
-		if (value.isString) {
-
-			val unit = this.parseUnit(value.string)
-			if (unit == null) {
-				this.reset(value.string, value, lock)
-				return
-			}
-
-			val number = Conversion.toNumber(value.string)
-
-			if (this.equal(number, unit) == false) {
-				this.reset(number, unit, value, lock)
-				return
-			}
-		}
-
-		this.reset(value, lock)
-	}
-
-	/**
-	 * Resets the property value by parsing a string.
-	 * @method parse
+	 * Parses the string and
+	 * @method reset
 	 * @since 0.7.0
 	 */
 	public fun parse(value: String, lock: Any? = null) {
 
-		val unit = this.parseUnit(value)
-		if (unit == null) {
-			this.reset(value, null, lock)
-			return
-		}
-
-		val number = Conversion.toNumber(value)
-
-		if (this.equal(number, unit) == false) {
-			this.reset(number, unit, null, lock)
-		}
-	}
-
-	//--------------------------------------------------------------------------
-	// Methods
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method reset
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private fun reset(value: JavaScriptValue?, lock: Any? = null) {
-
-		if (this.lock != null &&
-			this.lock != lock) {
+		if (isLocked(this.lock, lock)) {
 			return
 		}
 
 		this.lock = lock
 
-		if (value == null) {
+		val result = JavaScriptPropertyParser.parse(value)
+		if (result != null) {
 
-			if (this.property.isNull == false) {
-				this.property = JavaScriptPropertyNull.instance(this.context)
-				this.changed()
+			when (result.type) {
+				JavaScriptPropertyType.STRING  -> this.reset(result.string)
+				JavaScriptPropertyType.NUMBER  -> this.reset(result.number, result.unit)
+				JavaScriptPropertyType.BOOLEAN -> this.reset(result.boolean)
+				else                           -> {}
 			}
 
 			return
 		}
 
-		if (this.property.equal(value) == false) {
-			this.property = JavaScriptPropertyString(this.context, string)
-			this.property.value = value
-			this.changed()
-		}
+		this.reset(value)
 	}
 
 	/**
+	 * Resets this property's value to null.
 	 * @method reset
 	 * @since 0.7.0
-	 * @hidden
 	 */
-	private fun reset(string: String, value: JavaScriptValue?, lock: Any? = null) {
+	public fun reset(lock: Any? = null) {
 
-		if (this.lock != null &&
-			this.lock != lock) {
+		if (isLocked(this.lock, lock)) {
 			return
 		}
 
 		this.lock = lock
 
-		if (this.property.equal(string) == false) {
-			this.property = JavaScriptPropertyString(this.context, string)
-			this.property.value = value
-			this.changed()
+		if (this.isNull == false) {
+			this.update()
+			this.change()
 		}
 	}
 
 	/**
+	 * Resets this property's value using a JavaScript value.
 	 * @method reset
 	 * @since 0.7.0
-	 * @hidden
 	 */
-	private fun reset(number: Double, unit: JavaScriptPropertyUnit = JavaScriptPropertyUnit.NONE, value: JavaScriptValue?, lock: Any? = null) {
+	public fun reset(value: JavaScriptValue?, lock: Any? = null) {
 
-		if (this.lock != null &&
-			this.lock != lock) {
+		if (isLocked(this.lock, lock)) {
 			return
 		}
 
 		this.lock = lock
 
-		if (this.property.equal(number) == false) {
-			this.property = JavaScriptPropertyNumber(this.context, number, unit)
-			this.property.value = value
-			this.changed()
-		}
-	}
-
-	/**
-	 * @method reset
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private fun reset(boolean: Boolean, value: JavaScriptValue?, lock: Any? = null) {
-
-		if (this.lock != null &&
-			this.lock != lock) {
-			return
-		}
-
-		this.lock = lock
-
-		if (this.property.equal(boolean) == false) {
-			this.property = JavaScriptPropertyBoolean(this.context, boolean)
-			this.property.value = value
-			this.changed()
-		}
-	}
-
-	/**
-	 * @method equal
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private fun equal(property: JavaScriptPropertyData): Boolean {
-
-		val type = property.type()
-		val unit = property.unit()
-
-		if (this.type != type ||
-			this.unit != unit) {
-			return false
-		}
-
-		val value = this.property.value
 		if (value == null) {
+			this.reset()
+			return
+		}
 
-			when (this.type) {
-				JavaScriptPropertyType.NULL    -> return property.isNull
-				JavaScriptPropertyType.STRING  -> return property.string() == this.string
-				JavaScriptPropertyType.NUMBER  -> return property.number() == this.number
-				JavaScriptPropertyType.BOOLEAN -> return property.boolean() == this.boolean
+		val result = JavaScriptPropertyParser.parse(value)
+		if (result != null) {
+
+			when (result.type) {
+				JavaScriptPropertyType.NULL    -> this.reset()
+				JavaScriptPropertyType.STRING  -> this.reset(result.string)
+				JavaScriptPropertyType.NUMBER  -> this.reset(result.number, result.unit)
+				JavaScriptPropertyType.BOOLEAN -> this.reset(result.boolean)
 				else                           -> {}
 			}
 
 		} else {
 
-			return property.value?.equals(value) ?: false
+			if (this.equals(value) == false) {
+				this.update(value)
+				this.change()
+			}
 
 		}
 
-		return false
+		this.storage.store(value)
 	}
 
 	/**
-	 * @method equal
+	 * Resets this property's value using a string.
+	 * @method reset
 	 * @since 0.7.0
-	 * @hidden
 	 */
-	private fun equal(string: String): Boolean {
-		return this.type == JavaScriptPropertyType.STRING && this.string == string
+	public fun reset(value: String, lock: Any? = null) {
+
+		if (isLocked(this.lock, lock)) {
+			return
+		}
+
+		this.lock = lock
+
+		if (this.equals(value) == false) {
+			this.update(value)
+			this.change()
+		}
 	}
 
 	/**
-	 * @method equal
+	 * Resets this property's value using a number.
+	 * @method reset
 	 * @since 0.7.0
-	 * @hidden
 	 */
-	private fun equal(number: Double, unit: JavaScriptPropertyUnit): Boolean {
-		return this.type == JavaScriptPropertyType.NUMBER && this.unit == unit && this.number == number
+	public fun reset(value: Double, lock: Any? = null) {
+
+		if (isLocked(this.lock, lock)) {
+			return
+		}
+
+		this.lock = lock
+
+		if (this.equals(value) == false) {
+			this.update(value)
+			this.change()
+		}
 	}
 
 	/**
-	 * @method equal
+	 * Resets this property's value using a number.
+	 * @method reset
 	 * @since 0.7.0
-	 * @hidden
 	 */
-	private fun equal(boolean: Boolean): Boolean {
-		return this.type == JavaScriptPropertyType.BOOLEAN && this.boolean == boolean
+	public fun reset(value: Double, unit: JavaScriptPropertyUnit, lock: Any? = null) {
+
+		if (isLocked(this.lock, lock)) {
+			return
+		}
+
+		this.lock = lock
+
+		if (this.equals(value, unit) == false) {
+			this.update(value, unit)
+			this.change()
+		}
 	}
 
 	/**
-	 * @method parseUnit
+	 * Resets this property's value using a boolean.
+	 * @method reset
 	 * @since 0.7.0
-	 * @hidden
 	 */
-	private fun parseUnit(value: String): JavaScriptPropertyUnit? {
+	public fun reset(value: Boolean, lock: Any? = null) {
 
-		if (value.length == 0) {
-			return null
+		if (isLocked(this.lock, lock)) {
+			return
 		}
 
-		val letter = value[0]
-		if (letter != '+' &&
-			letter != '-' &&
-			letter != '.' &&
-			(letter < '0' || letter > '9')) {
-			return null
-		}
+		this.lock = lock
 
-		when (value.takeLast(1).toLowerCase()) {
-			"%"  -> { return JavaScriptPropertyUnit.PC }
-			else -> {}
+		if (this.equals(value) == false) {
+			this.update(value)
+			this.change()
 		}
-
-		when (value.takeLast(2).toLowerCase()) {
-			"px" -> { return JavaScriptPropertyUnit.PX }
-			"vw" -> { return  JavaScriptPropertyUnit.VW }
-			"vh" -> { return  JavaScriptPropertyUnit.VH }
-			"pw" -> { return JavaScriptPropertyUnit.PW }
-			"ph" -> { return  JavaScriptPropertyUnit.PH }
-			"cw" -> { return  JavaScriptPropertyUnit.CW }
-			"ch" -> { return  JavaScriptPropertyUnit.CH }
-			else -> {}
-		}
-
-		when (value.takeLast(3).toLowerCase()) {
-			"deg" -> { return  JavaScriptPropertyUnit.DEG }
-			"rad" -> { return  JavaScriptPropertyUnit.RAD }
-			else  -> { }
-		}
-
-		return null
 	}
 
 	/**
-	 * @method changed
+	 * Indicate whether this property's value is a specified JavaScript value.
+	 * @method equals
+	 * @since 0.7.0
+	 */
+	public fun equals(value: JavaScriptValue): Boolean {
+		return this.storage.equals(value)
+	}
+
+	/**
+	 * Indicate whether this property's value is a specified string.
+	 * @method equals
+	 * @since 0.7.0
+	 */
+	public fun equals(value: String): Boolean {
+		return this.storage.equals(value)
+	}
+
+	/**
+	 * Indicate whether this property's value is a specified number.
+	 * @method equals
+	 * @since 0.7.0
+	 */
+	public fun equals(value: Double): Boolean {
+		return this.storage.equals(value)
+	}
+
+	/**
+	 * Indicate whether this property's value is a specified number.
+	 * @method equals
+	 * @since 0.7.0
+	 */
+	public fun equals(value: Double, unit: JavaScriptPropertyUnit): Boolean {
+		return this.storage.equals(value, unit)
+	}
+
+	/**
+	 * Indicate whether this property's value is a specified boolean.
+	 * @method equals
+	 * @since 0.7.0
+	 */
+	public fun equals(value: Boolean): Boolean {
+		return this.storage.equals(value)
+	}
+
+	/**
+	 * Casts the property to a specified type.
+	 * @method cast
+	 * @since 0.7.0
+	 */
+	public fun <T> cast(type: Class<T>): T? {
+		return this.storage.cast(type)
+	}
+
+	//--------------------------------------------------------------------------
+	// Internal API
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method toJs
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private fun changed() {
-		this.listener?.invoke(this)
+	open fun toHandle(context: JavaScriptContext): Long? {
+		return this.storage.toHandle(context)
+	}
+
+	//--------------------------------------------------------------------------
+	// Private API
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method update
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private fun update() {
+		this.storage = JavaScriptPropertyStorage()
+	}
+
+	/**
+	 * @method update
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private fun update(value: JavaScriptValue) {
+		this.storage = JavaScriptPropertyStorageValue(value)
+	}
+
+	/**
+	 * @method update
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private fun update(value: String) {
+		this.storage = JavaScriptPropertyStorageString(value)
+	}
+
+	/**
+	 * @method update
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private fun update(value: Double) {
+		this.storage = JavaScriptPropertyStorageNumber(value)
+	}
+
+	/**
+	 * @method update
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private fun update(value: Double, unit: JavaScriptPropertyUnit) {
+		this.storage = JavaScriptPropertyStorageNumber(value, unit)
+	}
+
+	/**
+	 * @method update
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private fun update(value: Boolean) {
+		this.storage = JavaScriptPropertyStorageBoolean(value)
+	}
+
+	/**
+	 * @method change
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private fun change() {
+		this.handler?.invoke(this)
 	}
 }

@@ -5,8 +5,8 @@ import android.graphics.*
 import android.util.SizeF
 import android.view.View
 import ca.logaritm.dezel.extension.Delegates
-import ca.logaritm.dezel.extension.ceiled
-import ca.logaritm.dezel.extension.clamp
+import ca.logaritm.dezel.extension.util.ceiled
+import ca.logaritm.dezel.extension.util.clamped
 import ca.logaritm.dezel.view.graphic.Color
 import ca.logaritm.dezel.view.type.ImageFilter
 
@@ -159,11 +159,11 @@ open class ImageView(context: Context) : View(context), Clippable {
 
 		if (frameW == 0f &&
 			frameH == 0f) {
-			return SizeF(imageW, imageH).clamp(min, max)
+			return SizeF(imageW, imageH).clamped(min, max)
 		}
 
-		if (frameW == 0f) return SizeF(frameH * scaleW, frameH).clamp(min, max)
-		if (frameH == 0f) return SizeF(frameW, frameW * scaleH).clamp(min, max)
+		if (frameW == 0f) return SizeF(frameH * scaleW, frameH).clamped(min, max)
+		if (frameH == 0f) return SizeF(frameW, frameW * scaleH).clamped(min, max)
 
 		return bounds.ceiled()
 	}

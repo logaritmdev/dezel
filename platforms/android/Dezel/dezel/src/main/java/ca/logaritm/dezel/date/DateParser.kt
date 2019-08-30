@@ -1,6 +1,6 @@
 package ca.logaritm.dezel.date
 
-import ca.logaritm.dezel.extension.Timezone
+import ca.logaritm.dezel.extension.type.Timezone
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -37,7 +37,7 @@ internal object DateParser {
 	}
 
 	/**
-	 * Parses the specified ISO date string.
+	 * Parses the specified ISO date toString.
 	 * @method parse
 	 * @since 0.5.0
 	 */

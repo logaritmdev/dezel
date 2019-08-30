@@ -33,7 +33,7 @@ public enum class Scrollbars {
 		}
 
 		/**
-		 * Returns the proper scrollbars from a string.
+		 * Returns the proper scrollbars from a toString.
 		 * @method get
 		 * @since 0.2.0
 		 */
@@ -48,7 +48,7 @@ public enum class Scrollbars {
 		}
 
 		/**
-		 * Parses the scrollbars type from a number.
+		 * Parses the scrollbars type from a toNumber.
 		 * @method get
 		 * @since 0.2.0
 		 */
@@ -57,7 +57,7 @@ public enum class Scrollbars {
 		}
 
 		/**
-		 * Parses the scrollbars type from a boolean.
+		 * Parses the scrollbars type from a toBoolean.
 		 * @method get
 		 * @since 0.2.0
 		 */

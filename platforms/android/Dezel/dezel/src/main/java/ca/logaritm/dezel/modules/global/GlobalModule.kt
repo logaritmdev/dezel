@@ -5,8 +5,10 @@ import android.view.Choreographer
 import ca.logaritm.dezel.core.JavaScriptContext
 import ca.logaritm.dezel.core.JavaScriptValue
 import ca.logaritm.dezel.core.Module
+import ca.logaritm.dezel.extension.fatalError
 import ca.logaritm.dezel.timer.Ticker
 import ca.logaritm.dezel.timer.Timer
+import kotlin.math.max
 
 /**
  * @class GlobalModule
@@ -72,15 +74,14 @@ open class GlobalModule(context: JavaScriptContext) : Module(context) {
 	}
 
 	/**
-	 * @property setInterval
+	 * @property setImmediate
 	 * @since 0.7.0
 	 * @hidden
 	 */
 	private val setImmediate = context.createFunction { callback ->
 
-		val count = callback.arguments
-		if (count < 1) {
-			throw Exception("Failed to execute 'setImmediate': 1 argument required but only $count present.")
+		if (callback.arguments < 1) {
+			fatalError("Function setImmediate() requires 1 argument.")
 		}
 
 		callback.returns(this.scheduleTimeout(callback.argument(0), 0.0))
@@ -93,17 +94,24 @@ open class GlobalModule(context: JavaScriptContext) : Module(context) {
 	 */
 	private val setInterval = context.createFunction { callback ->
 
-		val count = callback.arguments
-		if (count < 1) {
-			throw Exception("Failed to execute 'setInterval': 1 argument required but only $count present.")
+		if (callback.arguments < 1) {
+			fatalError("Function setInterval() requires at least 1 argument.")
 		}
 
-		var delay = 10.0
-		if (count > 1) {
-			delay = Math.max(delay, callback.argument(1).number)
+		if (callback.arguments == 1) {
+			callback.returns(this.scheduleInterval(callback.argument(0), 10.0))
+			return@createFunction
 		}
 
-		callback.returns(this.scheduleInterval(callback.argument(0), delay))
+		if (callback.arguments == 2) {
+
+			val function = callback.argument(0)
+			val interval = callback.argument(1).number
+
+			callback.returns(this.scheduleInterval(function, max(10.0, interval)))
+
+			return@createFunction
+		}
 	}
 
 	/**
@@ -113,15 +121,18 @@ open class GlobalModule(context: JavaScriptContext) : Module(context) {
 	 */
 	private val setTimeout = context.createFunction { callback ->
 
-		val count = callback.arguments
-		if (count < 1) {
-			throw Exception("Failed to execute 'setTimeout': 2 arguments required but only $count present.")
+		if (callback.arguments < 1) {
+			fatalError("Function setTimeout() requires at least 1 argument.")
 		}
 
-		if (count == 1) {
+		if (callback.arguments == 1) {
 			callback.returns(this.scheduleTimeout(callback.argument(0), 0.0))
-		} else {
+			return@createFunction
+		}
+
+		if (callback.arguments == 2) {
 			callback.returns(this.scheduleTimeout(callback.argument(0), callback.argument(1).number))
+			return@createFunction
 		}
 	}
 
@@ -132,24 +143,8 @@ open class GlobalModule(context: JavaScriptContext) : Module(context) {
 	 */
 	private val clearImmediate = context.createFunction { callback ->
 
-		val count = callback.arguments
-		if (count < 1) {
-			throw Exception("Failed to execute 'clearImmediate': 1 argument required but only $count present.")
-		}
-
-		this.removeTimer(callback.argument(0).number)
-	}
-
-	/**
-	 * @property clearInterval
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private val clearInterval = context.createFunction { callback ->
-
-		val count = callback.arguments
-		if (count < 1) {
-			throw Exception("Failed to execute 'clearInterval': 1 argument required but only $count present.")
+		if (callback.arguments < 1) {
+			fatalError("Function clearImmediate() requires 1 argument.")
 		}
 
 		this.removeTimer(callback.argument(0).number)
@@ -162,9 +157,22 @@ open class GlobalModule(context: JavaScriptContext) : Module(context) {
 	 */
 	private val clearTimeout = context.createFunction("clearTimeout") { callback ->
 
-		val count = callback.arguments
-		if (count < 1) {
-			throw Exception("Failed to execute 'clearTimeout': 1 argument required but only $count present.")
+		if (callback.arguments < 1) {
+			fatalError("Function clearImmediate() requires 1 argument.")
+		}
+
+		this.removeTimer(callback.argument(0).number)
+	}
+
+	/**
+	 * @property clearInterval
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private val clearInterval = context.createFunction { callback ->
+
+		if (callback.arguments < 1) {
+			fatalError("Function clearInterval() requires 1 argument.")
 		}
 
 		this.removeTimer(callback.argument(0).number)
@@ -177,9 +185,8 @@ open class GlobalModule(context: JavaScriptContext) : Module(context) {
 	 */
 	private val requestAnimationFrame = context.createFunction { callback ->
 
-		val count = callback.arguments
-		if (count < 2) {
-			throw Exception("Failed to execute 'requestAnimationFrame': 2 arguments required but only $count present.")
+		if (callback.arguments < 1) {
+			fatalError("Function requestAnimationFrame() requires 1 argument.")
 		}
 
 		if (this.scheduledFrameRequested == false) {
@@ -197,9 +204,8 @@ open class GlobalModule(context: JavaScriptContext) : Module(context) {
 	 */
 	private val cancelAnimationFrame = context.createFunction { callback ->
 
-		val count = callback.arguments
-		if (count < 1) {
-			throw Exception("Failed to execute 'cancelAnimationFrame': 1 argument required but only $count present.")
+		if (callback.arguments < 1) {
+			fatalError("Function cancelAnimationFrame() requires 1 argument.")
 		}
 
 		this.removeFrame(callback.argument(0).number)

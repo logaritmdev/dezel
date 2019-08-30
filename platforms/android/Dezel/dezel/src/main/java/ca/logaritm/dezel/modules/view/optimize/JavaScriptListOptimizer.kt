@@ -1,7 +1,11 @@
 package ca.logaritm.dezel.modules.view.optimize
 
-import ca.logaritm.dezel.core.*
-import ca.logaritm.dezel.extension.insert
+import ca.logaritm.dezel.core.JavaScriptContext
+import ca.logaritm.dezel.core.JavaScriptFunctionCallback
+import ca.logaritm.dezel.core.JavaScriptGetterCallback
+import ca.logaritm.dezel.core.JavaScriptSetterCallback
+import ca.logaritm.dezel.extension.fatalError
+import ca.logaritm.dezel.extension.type.insert
 import ca.logaritm.dezel.modules.view.JavaScriptView
 
 /**
@@ -165,8 +169,8 @@ open class JavaScriptListOptimizer(context: JavaScriptContext) : JavaScriptViewO
 		this.contentOffset = 0.0
 		this.contentLength = 0.0
 
-		this.view.scrollTop.set(0.0)
-		this.view.scrollLeft.set(0.0)
+		this.view.scrollTop.reset(0.0)
+		this.view.scrollLeft.reset(0.0)
 		this.view.scheduleLayout()
 	}
 
@@ -288,10 +292,10 @@ open class JavaScriptListOptimizer(context: JavaScriptContext) : JavaScriptViewO
 			this.clear()
 			this.contentLength = 0.0
 			this.contentOffset = 0.0
-			this.view.contentTop.set(0.0)
-			this.view.contentLeft.set(0.0)
-			this.view.contentWidth.set("auto")
-			this.view.contentHeight.set("auto")
+			this.view.contentTop.reset(0.0)
+			this.view.contentLeft.reset(0.0)
+			this.view.contentWidth.reset("auto")
+			this.view.contentHeight.reset("auto")
 
 			this.updateContentOffset()
 			this.updateContentLength()
@@ -475,8 +479,8 @@ open class JavaScriptListOptimizer(context: JavaScriptContext) : JavaScriptViewO
 	 */
 	private fun updateContentOffset() {
 		when (this.orientation) {
-			Orientation.VERTICAL   -> this.view.contentTop.set(this.contentOffset)
-			Orientation.HORIZONTAL -> this.view.contentLeft.set(this.contentOffset)
+			Orientation.VERTICAL   -> this.view.contentTop.reset(this.contentOffset)
+			Orientation.HORIZONTAL -> this.view.contentLeft.reset(this.contentOffset)
 		}
 	}
 
@@ -487,8 +491,8 @@ open class JavaScriptListOptimizer(context: JavaScriptContext) : JavaScriptViewO
 	 */
 	private fun updateContentLength() {
 		when (this.orientation) {
-			Orientation.VERTICAL   -> this.view.contentHeight.set(this.contentLength + this.view.resolvedPaddingTop + this.view.resolvedPaddingBottom)
-			Orientation.HORIZONTAL -> this.view.contentWidth.set(this.contentLength + this.view.resolvedPaddingLeft + this.view.resolvedPaddingRight)
+			Orientation.VERTICAL   -> this.view.contentHeight.reset(this.contentLength + this.view.resolvedPaddingTop + this.view.resolvedPaddingBottom)
+			Orientation.HORIZONTAL -> this.view.contentWidth.reset(this.contentLength + this.view.resolvedPaddingLeft + this.view.resolvedPaddingRight)
 		}
 	}
 
@@ -774,7 +778,7 @@ open class JavaScriptListOptimizer(context: JavaScriptContext) : JavaScriptViewO
 		if (call) {
 
 			/*
-			 * This callback is mostly responsible of attaching touch events
+			 * This handler is mostly responsible of attaching touch events
 			 * and such things. In a managed type of view, its only required
 			 * on the first time the view is inserted.
 			 */
@@ -783,7 +787,7 @@ open class JavaScriptListOptimizer(context: JavaScriptContext) : JavaScriptViewO
 		}
 
 		/*
-		 * This callback will force the item to update iself with data thus
+		 * This handler will force the item to update iself with data thus
 		 * possibly invalidating the bounds and content of the item.
 		 */
 
@@ -808,7 +812,7 @@ open class JavaScriptListOptimizer(context: JavaScriptContext) : JavaScriptViewO
 		}
 
 		/*
-		 * This callback is responsible of dispatching the onCache event which
+		 * This handler is responsible of dispatching the onCache event which
 		 * the view might use to clear stuff like timers and events. Even though
 		 * the view is cached, it still considered as being in the view.
 		 */
@@ -1328,8 +1332,12 @@ open class JavaScriptListOptimizer(context: JavaScriptContext) : JavaScriptViewO
 	@Suppress("unused")
 	open fun jsFunction_insertData(callback: JavaScriptFunctionCallback) {
 
-		val index = callback.argument(0).number.toInt()
-		val count = callback.argument(1).number.toInt()
+		if (callback.arguments < 3) {
+			fatalError("Method JavaScriptListOptimizer.insertData() requires 3 arguments.")
+		}
+
+		val index   = callback.argument(0).number.toInt()
+		val count   = callback.argument(1).number.toInt()
 		val animate = callback.argument(2).boolean
 
 		val min = index
@@ -1446,8 +1454,12 @@ open class JavaScriptListOptimizer(context: JavaScriptContext) : JavaScriptViewO
 	@Suppress("unused")
 	open fun jsFunction_removeData(callback: JavaScriptFunctionCallback) {
 
-		val index = callback.argument(0).number.toInt()
-		val count = callback.argument(1).number.toInt()
+		if (callback.arguments < 3) {
+			fatalError("Method JavaScriptListOptimizer.removeData() requires 3 arguments.")
+		}
+
+		val index   = callback.argument(0).number.toInt()
+		val count   = callback.argument(1).number.toInt()
 		val animate = callback.argument(2).boolean
 
 		val min = index
@@ -1573,7 +1585,7 @@ open class JavaScriptListOptimizer(context: JavaScriptContext) : JavaScriptViewO
 		companion object {
 
 			/**
-			 * Returns the proper scrollbars from a string.
+			 * Returns the proper scrollbars from a toString.
 			 * @method get
 			 * @since 0.7.0
 			 */

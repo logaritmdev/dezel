@@ -5,6 +5,7 @@ import android.os.Handler
 import ca.logaritm.dezel.core.JavaScriptClass
 import ca.logaritm.dezel.core.JavaScriptContext
 import ca.logaritm.dezel.core.JavaScriptFunctionCallback
+import ca.logaritm.dezel.extension.fatalError
 import com.neovisionaries.ws.client.*
 
 /**
@@ -26,7 +27,7 @@ open class JavaScriptWebSocket(context: JavaScriptContext) : JavaScriptClass(con
 	open var socket: WebSocket? = null
 
 	//--------------------------------------------------------------------------
-	// MARK: Methods
+	// Methods
 	//--------------------------------------------------------------------------
 
 	/**
@@ -41,7 +42,7 @@ open class JavaScriptWebSocket(context: JavaScriptContext) : JavaScriptClass(con
 	}
 
 	//--------------------------------------------------------------------------
-	// MARK: JS Functions
+	// JS Functions
 	//--------------------------------------------------------------------------
 
 	/**
@@ -51,6 +52,11 @@ open class JavaScriptWebSocket(context: JavaScriptContext) : JavaScriptClass(con
 	 */
 	@Suppress("unused")
 	open fun jsFunction_open(callback: JavaScriptFunctionCallback) {
+
+		if (callback.arguments < 2) {
+			fatalError("Method JavaScriptWebSocket.open() requires 2 arguments.")
+		}
+
 		WebSocketCreator().execute(callback.argument(0).string)
 	}
 
@@ -61,6 +67,11 @@ open class JavaScriptWebSocket(context: JavaScriptContext) : JavaScriptClass(con
 	 */
 	@Suppress("unused")
 	open fun jsFunction_send(callback: JavaScriptFunctionCallback) {
+
+		if (callback.arguments < 1) {
+			fatalError("Method JavaScriptWebSocket.send() requires 1 argument.")
+		}
+
 		this.socket?.sendText(callback.argument(0).string)
 	}
 

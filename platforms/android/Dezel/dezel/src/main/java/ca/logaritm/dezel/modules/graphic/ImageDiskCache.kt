@@ -3,7 +3,7 @@ package ca.logaritm.dezel.modules.graphic
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import ca.logaritm.dezel.extension.md5
+import ca.logaritm.dezel.extension.type.md5
 import com.jakewharton.disklrucache.DiskLruCache
 import java.io.BufferedInputStream
 import java.io.BufferedOutputStream

@@ -2,10 +2,7 @@ package ca.logaritm.dezel.modules.locale
 
 import android.text.TextUtils
 import android.view.View
-import ca.logaritm.dezel.core.JavaScriptClass
-import ca.logaritm.dezel.core.JavaScriptContext
-import ca.logaritm.dezel.core.JavaScriptGetterCallback
-import ca.logaritm.dezel.core.JavaScriptProperty
+import ca.logaritm.dezel.core.*
 import java.util.*
 
 /**
@@ -16,64 +13,37 @@ import java.util.*
 open class JavaScriptLocale(context: JavaScriptContext): JavaScriptClass(context) {
 
 	//--------------------------------------------------------------------------
-	// MARK: Properties
+	// JS Properties
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The locale language.
+	 * The locale's language.
 	 * @property language
 	 * @since 0.7.0
 	 */
-	open val language: JavaScriptProperty by lazy {
-		JavaScriptProperty(context)
-	}
+	public val language = JavaScriptProperty()
 
 	/**
-	 * The locale region.
+	 * The locale's region.
 	 * @property region
 	 * @since 0.7.0
 	 */
-	open val region: JavaScriptProperty by lazy {
-		JavaScriptProperty(context)
-	}
+	public val region = JavaScriptProperty()
 
 	/**
 	 * Whether the locale is left to right.
 	 * @property ltr
 	 * @since 0.7.0
 	 */
-	open val ltr: JavaScriptProperty by lazy {
-		JavaScriptProperty(context)
-	}
+	public val ltr = JavaScriptProperty()
 
 	/**
 	 * Whether the locale is right to left.
 	 * @property ltr
 	 * @since 0.7.0
 	 */
-	open val rtl: JavaScriptProperty by lazy {
-		JavaScriptProperty(context)
-	}
+	public val rtl = JavaScriptProperty()
 
-	//--------------------------------------------------------------------------
-	// MARK: Methods
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @constructor
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	init {
-		val locale = Locale.getDefault()
-		this.language.set(locale.language)
-		this.region.set(locale.country)
-		this.ltr.set(TextUtils.getLayoutDirectionFromLocale(locale) == View.LAYOUT_DIRECTION_LTR)
-		this.rtl.set(TextUtils.getLayoutDirectionFromLocale(locale) == View.LAYOUT_DIRECTION_RTL)
-	}
-
-	//--------------------------------------------------------------------------
-	// MARK: JS Properties
 	//--------------------------------------------------------------------------
 
 	/**
@@ -120,5 +90,25 @@ open class JavaScriptLocale(context: JavaScriptContext): JavaScriptClass(context
 	@Suppress("unused")
 	open fun jsGet_rtl(callback: JavaScriptGetterCallback) {
 		callback.returns(this.rtl)
+	}
+
+	//--------------------------------------------------------------------------
+	// Initializer
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @constructor
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	init {
+
+		val locale = Locale.getDefault()
+
+		this.language.reset(locale.language)
+		this.region.reset(locale.country)
+
+		this.ltr.reset(TextUtils.getLayoutDirectionFromLocale(locale) == View.LAYOUT_DIRECTION_LTR)
+		this.rtl.reset(TextUtils.getLayoutDirectionFromLocale(locale) == View.LAYOUT_DIRECTION_RTL)
 	}
 }

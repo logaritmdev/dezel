@@ -2,7 +2,7 @@ package ca.logaritm.dezel.view.animation
 
 import android.view.animation.Interpolator
 import ca.logaritm.dezel.application.ApplicationActivity
-import ca.logaritm.dezel.extension.last
+import ca.logaritm.dezel.extension.type.last
 
 /**
  * @object Transition

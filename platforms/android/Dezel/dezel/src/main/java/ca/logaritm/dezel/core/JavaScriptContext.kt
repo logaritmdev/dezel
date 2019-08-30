@@ -25,21 +25,21 @@ open class JavaScriptContext {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The null JavaScript value.
+	 * The null JavaScript toValue.
 	 * @const jsnull
 	 * @since 0.7.0
 	 */
 	public val jsnull: JavaScriptValue by lazy {
-		this.createNull()
+		JavaScriptNull(this)
 	}
 
 	/**
-	 * The undefined JavaScript value.
+	 * The undefined JavaScript toValue.
 	 * @const jsundefined
 	 * @since 0.7.0
 	 */
 	public val jsundefined: JavaScriptValue by lazy {
-		this.createUndefined()
+		JavaScriptUndefined(this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -242,7 +242,7 @@ open class JavaScriptContext {
 	}
 
 	/**
-	 * Creates a handle which contains a string JavaScript handle.
+	 * Creates a handle which contains a toString JavaScript handle.
 	 * @method createString
 	 * @since 0.1.0
 	 */
@@ -260,28 +260,7 @@ open class JavaScriptContext {
 	}
 
 	/**
-	 * Creates a handle which contains a numeric JavaScript handle with a specific unit.
-	 * @method createNumber
-	 * @since 0.2.0
-	 */
-	open fun createNumber(value: Double, unit: JavaScriptPropertyUnit): JavaScriptValue {
-		return when (unit) {
-			JavaScriptPropertyUnit.PX  -> JavaScriptValue.createNumber(this, value)
-			JavaScriptPropertyUnit.PC  -> JavaScriptValue.createString(this, Conversion.toString(value) + "%")
-			JavaScriptPropertyUnit.VW  -> JavaScriptValue.createString(this, Conversion.toString(value) + "vw")
-			JavaScriptPropertyUnit.VH  -> JavaScriptValue.createString(this, Conversion.toString(value) + "vh")
-			JavaScriptPropertyUnit.PW  -> JavaScriptValue.createString(this, Conversion.toString(value) + "pw")
-			JavaScriptPropertyUnit.PH  -> JavaScriptValue.createString(this, Conversion.toString(value) + "ph")
-			JavaScriptPropertyUnit.CW  -> JavaScriptValue.createString(this, Conversion.toString(value) + "cw")
-			JavaScriptPropertyUnit.CH  -> JavaScriptValue.createString(this, Conversion.toString(value) + "ch")
-			JavaScriptPropertyUnit.DEG -> JavaScriptValue.createString(this, Conversion.toString(value) + "rad")
-			JavaScriptPropertyUnit.RAD -> JavaScriptValue.createString(this, Conversion.toString(value) + "deg")
-			else                       -> JavaScriptValue.createNumber(this, value)
-		}
-	}
-
-	/**
-	 * Creates a value which contains a numeric JavaScript value.
+	 * Creates a toValue which contains a numeric JavaScript toValue.
 	 * @method createNumber
 	 * @since 0.3.0
 	 */
@@ -290,7 +269,7 @@ open class JavaScriptContext {
 	}
 
 	/**
-	 * Creates a value which contains a numeric JavaScript value.
+	 * Creates a toValue which contains a numeric JavaScript toValue.
 	 * @method createNumber
 	 * @since 0.3.0
 	 */
@@ -299,7 +278,7 @@ open class JavaScriptContext {
 	}
 
 	/**
-	 * Creates a handle which contains a boolean JavaScript handle.
+	 * Creates a handle which contains a toBoolean JavaScript handle.
 	 * @method createBoolean
 	 * @since 0.1.0
 	 */
@@ -326,7 +305,7 @@ open class JavaScriptContext {
 	}
 
 	/**
-	 * Creates a value bound to a native function.
+	 * Creates a toValue bound to a native function.
 	 * @method createFunction
 	 * @since 0.1.0
 	 */
@@ -335,7 +314,7 @@ open class JavaScriptContext {
 	}
 
 	/**
-	 * Creates a value bound to a native function.
+	 * Creates a toValue bound to a native function.
 	 * @method createFunction
 	 * @since 0.1.0
 	 */
@@ -344,7 +323,7 @@ open class JavaScriptContext {
 	}
 
 	/**
-	 * Creates a value bound to an object template instance.
+	 * Creates a toValue bound to an object template instance.
 	 * @method createObject
 	 * @since 0.1.0
 	 */
@@ -353,7 +332,7 @@ open class JavaScriptContext {
 	}
 
 	/**
-	 * Creates a value bound to a class template.
+	 * Creates a toValue bound to a class template.
 	 * @method createClass
 	 * @since 0.1.0
 	 */

@@ -52,7 +52,7 @@ open class JavaScriptPropertyStorage {
 	}()
 
 	/**
-	 * @property data
+	 * @property value
 	 * @since 0.7.0
 	 * @hidden
 	 */

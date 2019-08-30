@@ -3,8 +3,8 @@ package ca.logaritm.dezel.view.drawable
 import android.graphics.*
 import android.graphics.drawable.Drawable
 import ca.logaritm.dezel.extension.Delegates
-import ca.logaritm.dezel.extension.addOuterRoundedRect
-import ca.logaritm.dezel.extension.ceil
+import ca.logaritm.dezel.extension.graphics.addOuterRoundedRect
+import kotlin.math.ceil
 
 /**
  * @class ShadowDrawable
@@ -194,7 +194,7 @@ open class ShadowDrawable : Drawable() {
 			return
 		}
 
-		val shadowBlur = Float.ceil(this.shadowBlur)
+		val shadowBlur = ceil(this.shadowBlur)
 		val shadowOffsetT = this.shadowOffsetTop
 		val shadowOffsetL = this.shadowOffsetLeft
 
@@ -220,7 +220,7 @@ open class ShadowDrawable : Drawable() {
 	 */
 	private fun drawShadowCache() {
 
-		val shadowBlur = Float.ceil(this.shadowBlur)
+		val shadowBlur = ceil(this.shadowBlur)
 
 		if (Color.alpha(this.shadowColor) > 0) {
 

@@ -8,13 +8,13 @@ import android.os.AsyncTask
 import android.util.Log
 import ca.logaritm.dezel.core.JavaScriptProperty
 import ca.logaritm.dezel.core.JavaScriptPropertyType
-import ca.logaritm.dezel.extension.baseName
-import ca.logaritm.dezel.extension.ceil
-import ca.logaritm.dezel.extension.fileExt
-import ca.logaritm.dezel.extension.fileName
+import ca.logaritm.dezel.extension.type.baseName
+import ca.logaritm.dezel.extension.type.fileExt
+import ca.logaritm.dezel.extension.type.fileName
 import java.io.IOException
 import java.io.InputStream
 import java.net.URL
+import kotlin.math.ceil
 
 /**
  * @class ImageLoader
@@ -119,7 +119,7 @@ open class ImageLoader(val context: Context) {
 		}
 
 		if (source.type == JavaScriptPropertyType.OBJECT) {
-			val image = source.value.cast(JavaScriptImage::class.java)
+			val image = source.cast(JavaScriptImage::class.java)
 			if (image != null) {
 				callback(image.data)
 			}
@@ -276,7 +276,7 @@ open class ImageLoader(val context: Context) {
 			return null
 		}
 
-		val density = context.resources.displayMetrics.density.ceil().toInt()
+		val density = ceil(context.resources.displayMetrics.density).toInt()
 
 		var image = this.getImagePath(file, density, files)
 		var scale = density

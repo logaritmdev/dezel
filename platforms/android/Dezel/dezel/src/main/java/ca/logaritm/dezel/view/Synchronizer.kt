@@ -55,7 +55,7 @@ public class Synchronizer {
 	}
 
 	/**
-	 * Schedules an update display callback.
+	 * Schedules an update display handler.
 	 * @method schedule
 	 * @since 0.7.0
 	 */

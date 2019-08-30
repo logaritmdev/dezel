@@ -36,7 +36,7 @@ public object HTMLParser {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Parses the specified string with a callback.
+	 * Parses the specified toString with a handler.
 	 * @method parse
 	 * @since 0.5.0
 	 */

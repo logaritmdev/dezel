@@ -19,8 +19,8 @@ internal class JavaScriptClassBuilder : JavaScriptBuilder() {
 		 */
 		internal fun build(context: JavaScriptContext, template: Class<*>): JavaScriptValue {
 
-			val prototype = context.createEmptyObject()
 			val statics = context.createEmptyObject()
+			val prototype = context.createEmptyObject()
 
 			forEach(template, fun(name: String, type: Type, method: Method) {
 
@@ -45,7 +45,6 @@ internal class JavaScriptClassBuilder : JavaScriptBuilder() {
 				}
 
 				if (type == Type.STATIC_FUNCTION) {
-					Log.e("TEST", "CREATE STATIC FUNCTION")
 					this.createStaticFunction(context, prototype.handle, name, method.name, template)
 					return
 				}

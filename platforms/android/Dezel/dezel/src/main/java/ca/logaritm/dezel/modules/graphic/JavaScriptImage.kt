@@ -16,35 +16,6 @@ open class JavaScriptImage(context: JavaScriptContext) : JavaScriptClass(context
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The image's source.
-	 * @property source
-	 * @since 0.7.0
-	 */
-	open val source: JavaScriptProperty by lazy {
-		JavaScriptProperty(context) { value ->
-			this.load(value.string)
-		}
-	}
-
-	/**
-	 * Whether the image is loading.
-	 * @property loading
-	 * @since 0.7.0
-	 */
-	open val loading: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, false)
-	}
-
-	/**
-	 * Whether the image is completely loaded.
-	 * @property complete
-	 * @since 0.7.0
-	 */
-	open val complete: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, false)
-	}
-
-	/**
 	 * The image's image.
 	 * @property data
 	 * @since 0.7.0
@@ -70,8 +41,8 @@ open class JavaScriptImage(context: JavaScriptContext) : JavaScriptClass(context
 	open fun load(source: String) {
 
 		this.data = null
-		this.loading.set(false)
-		this.complete.set(false)
+		this.loading.reset(false)
+		this.complete.reset(false)
 
 		this.protect()
 
@@ -90,20 +61,51 @@ open class JavaScriptImage(context: JavaScriptContext) : JavaScriptClass(context
 
 		if (image != null) {
 			this.data = image
-			this.loading.set(false)
-			this.complete.set(true)
+			this.loading.reset(false)
+			this.complete.reset(true)
 			this.callMethod("nativeOnLoad")
 			return
 		}
 
 		this.data = null
-		this.loading.set(false)
-		this.complete.set(false)
+		this.loading.reset(false)
+		this.complete.reset(false)
 		this.callMethod("nativeOnError")
 	}
 
 	//--------------------------------------------------------------------------
 	// JS Properties
+	//--------------------------------------------------------------------------
+
+	/**
+	 * The image's source.
+	 * @property source
+	 * @since 0.7.0
+	 */
+	public val source by lazy {
+		JavaScriptProperty() { value ->
+			this.load(value.string)
+		}
+	}
+
+	/**
+	 * Whether the image is loading.
+	 * @property loading
+	 * @since 0.7.0
+	 */
+	public val loading by lazy {
+		JavaScriptProperty(false)
+	}
+
+	/**
+	 * Whether the image is completely loaded.
+	 * @property complete
+	 * @since 0.7.0
+	 */
+	public val complete by lazy {
+		JavaScriptProperty(false)
+	}
+
 	//--------------------------------------------------------------------------
 
 	/**
@@ -171,6 +173,6 @@ open class JavaScriptImage(context: JavaScriptContext) : JavaScriptClass(context
 	 */
 	@Suppress("unused")
 	open fun jsSet_source(callback: JavaScriptSetterCallback) {
-		this.source.set(callback.value, this)
+		this.source.reset(callback.value, this)
 	}
 }

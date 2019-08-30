@@ -1,7 +1,5 @@
 package ca.logaritm.dezel.style
 
-import ca.logaritm.dezel.core.JavaScriptProperty
-
 /**
  * @interface StylerNodeListener
  * @since 0.1.0

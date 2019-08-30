@@ -1,6 +1,5 @@
 package ca.logaritm.dezel.style
 
-import ca.logaritm.dezel.core.JavaScriptProperty
 import ca.logaritm.dezel.core.JavaScriptPropertyType
 import ca.logaritm.dezel.core.JavaScriptPropertyUnit
 import ca.logaritm.dezel.extension.Delegates

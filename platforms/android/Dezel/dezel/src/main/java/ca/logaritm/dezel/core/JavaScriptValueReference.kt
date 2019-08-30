@@ -19,7 +19,7 @@ public class JavaScriptValueReference(referent: JavaScriptValue, queue: Referenc
 		private val refs: MutableMap<Int, JavaScriptValueReference> = mutableMapOf()
 
 		/**
-		 * Registers a JavaScript value reference.
+		 * Registers a JavaScript toValue reference.
 		 * @method register
 		 * @since 0.4.0
 		 */
@@ -40,7 +40,7 @@ public class JavaScriptValueReference(referent: JavaScriptValue, queue: Referenc
 		}
 
 		/**
-		 * Registers a JavaScript value reference.
+		 * Registers a JavaScript toValue reference.
 		 * @method register
 		 * @since 0.4.0
 		 */

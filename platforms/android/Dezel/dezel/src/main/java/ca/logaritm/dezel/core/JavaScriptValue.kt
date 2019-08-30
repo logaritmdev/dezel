@@ -1,5 +1,7 @@
 package ca.logaritm.dezel.core
 
+import android.util.Log
+
 /**
  * Contains a JavaScript handle from the current context.
  * @class JavaScriptValue
@@ -129,7 +131,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The value's context.
+	 * The toValue's context.
 	 * @property context
 	 * @since 0.1.0
 	 */
@@ -137,7 +139,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 		private set
 
 	/**
-	 * The value's handle.
+	 * The toValue's handle.
 	 * @property handle
 	 * @since 0.1.0
 	 */
@@ -172,7 +174,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 		get() = JavaScriptValueExternal.getType(this.context.handle, this.handle) == 2
 
 	/**
-	 * Indicates whether the value is a boolean.
+	 * Indicates whether the value is a toBoolean.
 	 * @property isBoolean
 	 * @since 0.4.0
 	 */
@@ -180,7 +182,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 		get() = JavaScriptValueExternal.getType(this.context.handle, this.handle) == 3
 
 	/**
-	 * Indicates whether the value is a number.
+	 * Indicates whether the value is a toNumber.
 	 * @property isNumber
 	 * @since 0.4.0
 	 */
@@ -188,7 +190,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 		get() = JavaScriptValueExternal.getType(this.context.handle, this.handle) == 4
 
 	/**
-	 * Indicates whether the value is a string.
+	 * Indicates whether the value is a toString.
 	 * @property isString
 	 * @since 0.4.0
 	 */
@@ -224,7 +226,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Converts the value to a string handle.
+	 * Converts the value to a toString handle.
 	 * @property string
 	 * @since 0.2.0
 	 */
@@ -242,7 +244,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	}
 
 	/**
-	 * Converts the value to a boolean handle.
+	 * Converts the value to a toBoolean handle.
 	 * @property boolean
 	 * @since 0.2.0
 	 */
@@ -355,7 +357,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	 * @since 0.1.0
 	 */
 	open fun call(arguments: JavaScriptArguments?, target: JavaScriptValue?, result: JavaScriptValue? = null) {
-		JavaScriptValueExternal.call(this.context.handle, this.handle, toHandle(target, this.context), toArgv(arguments, this.context), toArgc(arguments), result)
+		JavaScriptValueExternal.call(this.context.handle, this.handle, toJs(target, this.context), toArgv(arguments, this.context), toArgc(arguments), result)
 	}
 
 	/**
@@ -395,11 +397,16 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	}
 
 	/**
-	 * Defines a property on this value.
+	 * Defines a property on this toValue.
 	 * @method defineProperty
 	 * @since 0.1.0
 	 */
 	open fun defineProperty(property: String, value: JavaScriptValue?, getter: JavaScriptGetterHandler? = null, setter: JavaScriptSetterHandler? = null, writable: Boolean = true, enumerable: Boolean = true, configurable: Boolean = true) {
+
+		if (value != null) {
+			JavaScriptValueExternal.defineProperty(this.context.handle, this.handle, property, toJs(value, this.context), null, null, writable, enumerable, configurable, this.context)
+			return
+		}
 
 		var get: JavaScriptGetterWrapper? = null
 		var set: JavaScriptSetterWrapper? = null
@@ -407,7 +414,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 		if (getter != null) get = JavaScriptGetterWrapper(getter)
 		if (setter != null) set = JavaScriptSetterWrapper(setter)
 
-		JavaScriptValueExternal.defineProperty(this.context.handle, this.handle, property, toHandle(value, this.context), get, set, writable, enumerable, configurable, context)
+		JavaScriptValueExternal.defineProperty(this.context.handle, this.handle, property, 0, get, set, writable, enumerable, configurable, this.context)
 	}
 
 	/**
@@ -416,7 +423,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	 * @since 0.1.0
 	 */
 	open fun property(name: String, property: JavaScriptProperty) {
-		JavaScriptValueExternal.setProperty(this.context.handle, this.handle, name, toHandle(property, this.context))
+		JavaScriptValueExternal.setProperty(this.context.handle, this.handle, name, toJs(property, this.context))
 	}
 
 	/**
@@ -425,11 +432,11 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	 * @since 0.1.0
 	 */
 	open fun property(name: String, value: JavaScriptValue?) {
-		JavaScriptValueExternal.setProperty(this.context.handle, this.handle, name, toHandle(value, this.context))
+		JavaScriptValueExternal.setProperty(this.context.handle, this.handle, name, toJs(value, this.context))
 	}
 
 	/**
-	 * Assigns the value of a property using a string.
+	 * Assigns the value of a property using a toString.
 	 * @method property
 	 * @since 0.1.0
 	 */
@@ -438,7 +445,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	}
 
 	/**
-	 * Assigns the value of a property using a number.
+	 * Assigns the value of a property using a toNumber.
 	 * @method property
 	 * @since 0.1.0
 	 */
@@ -447,7 +454,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	}
 
 	/**
-	 * Assigns the value of a property using a number.
+	 * Assigns the value of a property using a toNumber.
 	 * @method property
 	 * @since 0.4.0
 	 */
@@ -456,7 +463,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	}
 
 	/**
-	 * Assigns the value of a property using a number.
+	 * Assigns the value of a property using a toNumber.
 	 * @method property
 	 * @since 0.4.0
 	 */
@@ -465,7 +472,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	}
 
 	/**
-	 * Assigns the value of a property using a boolean.
+	 * Assigns the value of a property using a toBoolean.
 	 * @method property
 	 * @since 0.1.0
 	 */
@@ -492,7 +499,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	}
 
 	/**
-	 * Assigns the value of a property at a specified index using a string.
+	 * Assigns the value of a property at a specified index using a toString.
 	 * @method property
 	 * @since 0.1.0
 	 */
@@ -501,7 +508,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	}
 
 	/**
-	 * Assigns the value of a property at a specified index using a number.
+	 * Assigns the value of a property at a specified index using a toNumber.
 	 * @method property
 	 * @since 0.1.0
 	 */
@@ -510,7 +517,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	}
 
 	/**
-	 * Assigns the value of a property at a specified index using a number.
+	 * Assigns the value of a property at a specified index using a toNumber.
 	 * @method property
 	 * @since 0.4.0
 	 */
@@ -519,7 +526,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	}
 
 	/**
-	 * Assigns the value of a property at a specified index using a number.
+	 * Assigns the value of a property at a specified index using a toNumber.
 	 * @method property
 	 * @since 0.4.0
 	 */
@@ -528,7 +535,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	}
 
 	/**
-	 * Assigns the value of a property at a specified index using a boolean.
+	 * Assigns the value of a property at a specified index using a toBoolean.
 	 * @method property
 	 * @since 0.1.0
 	 */
@@ -564,16 +571,16 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	}
 
 	/**
-	 * Assigns the internal prototype of this value.
+	 * Assigns the internal prototype of this toValue.
 	 * @method prototype
 	 * @since 0.1.0
 	 */
 	open fun prototype(prototype: JavaScriptValue) {
-		JavaScriptValueExternal.setPrototype(this.context.handle, this.handle, toHandle(prototype, this.context))
+		JavaScriptValueExternal.setPrototype(this.context.handle, this.handle, toJs(prototype, this.context))
 	}
 
 	/**
-	 * Returns the internal prototype of this value.
+	 * Returns the internal prototype of this toValue.
 	 * @method prototype
 	 * @since 0.1.0
 	 */
@@ -587,11 +594,11 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	 * @since 0.1.0
 	 */
 	open fun equals(value: JavaScriptValue): Boolean {
-		return JavaScriptValueExternal.equals(this.context.handle, this.handle, toHandle(value, this.context))
+		return JavaScriptValueExternal.equals(this.context.handle, this.handle, toJs(value, this.context))
 	}
 
 	/**
-	 * Indicates if the value is the specified string.
+	 * Indicates if the value is the specified toString.
 	 * @method equals
 	 * @since 0.1.0
 	 */
@@ -600,7 +607,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	}
 
 	/**
-	 * Indicates if the value is the specified number.
+	 * Indicates if the value is the specified toNumber.
 	 * @method equals
 	 * @since 0.1.0
 	 */
@@ -609,7 +616,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	}
 
 	/**
-	 * Indicates if the value is the specified boolean.
+	 * Indicates if the value is the specified toBoolean.
 	 * @method equals
 	 * @since 0.1.0
 	 */
@@ -646,6 +653,19 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	 */
 	open fun onResetValue() {
 
+	}
+
+	//--------------------------------------------------------------------------
+	// Internal API
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method toJs
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	open fun toHandle(context: JavaScriptContext): Long {
+		return this.handle
 	}
 
 	//--------------------------------------------------------------------------

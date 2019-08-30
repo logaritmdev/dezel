@@ -2,8 +2,9 @@ package ca.logaritm.dezel.modules.graphic
 
 import android.graphics.*
 import ca.logaritm.dezel.core.*
-import ca.logaritm.dezel.extension.addArcTo
-import ca.logaritm.dezel.extension.pop
+import ca.logaritm.dezel.extension.fatalError
+import ca.logaritm.dezel.extension.graphics.addArcTo
+import ca.logaritm.dezel.extension.type.pop
 import ca.logaritm.dezel.view.graphic.Color
 import ca.logaritm.dezel.view.graphic.Convert
 import android.graphics.Canvas as AndroidCanvas
@@ -17,158 +18,6 @@ open class JavaScriptCanvas(context: JavaScriptContext) : JavaScriptClass(contex
 	//--------------------------------------------------------------------------
 	// Properties
 	//--------------------------------------------------------------------------
-
-	/**
-	 * The canvas fill style.
-	 * @property fillStyle
-	 * @since 0.7.0
-	 */
-	open val fillStyle: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, "black") { value ->
-			this.fillPaint.color = Color.parse(value.string)
-		}
-	}
-
-	/**
-	 * The canvas stroke style.
-	 * @property strokeStyle
-	 * @since 0.7.0
-	 */
-	open val strokeStyle: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, "black") { value ->
-			this.strokePaint.color = Color.parse(value.string)
-		}
-	}
-
-	/**
-	 * The canvas line cap mode.
-	 * @property lineCap
-	 * @since 0.7.0
-	 */
-	open val lineCap: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, "butt") { value ->
-			when (value.string) {
-				"butt"   -> this.strokePaint.strokeCap = Paint.Cap.BUTT
-				"round"  -> this.strokePaint.strokeCap = Paint.Cap.ROUND
-				"square" -> this.strokePaint.strokeCap = Paint.Cap.SQUARE
-			}
-		}
-	}
-
-	/**
-	 * The canvas line join mode.
-	 * @property lineJoin
-	 * @since 0.7.0
-	 */
-	open val lineJoin: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, "miter") { value ->
-			when (value.string) {
-				"miter" -> this.strokePaint.strokeJoin = Paint.Join.MITER
-				"round" -> this.strokePaint.strokeJoin = Paint.Join.ROUND
-				"bevel" -> this.strokePaint.strokeJoin = Paint.Join.BEVEL
-			}
-		}
-	}
-
-	/**
-	 * The canvas line width.
-	 * @property lineWidth
-	 * @since 0.7.0
-	 */
-	open val lineWidth: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 1.0) { value ->
-			this.strokePaint.strokeWidth = Convert.toPx(value.number)
-		}
-	}
-
-	/**
-	 * The canvas horizontal shadow offset.
-	 * @property shadowOffsetX
-	 * @since 0.7.0
-	 */
-	open val shadowOffsetX: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.0) { value ->
-			this.measuredShadowOffsetX = Convert.toPx(value.number)
-			this.fillPaint.setShadowLayer(this.measuredShadowBlur, this.measuredShadowOffsetX, this.measuredShadowOffsetY, this.computedShadowColor)
-			this.strokePaint.setShadowLayer(this.measuredShadowBlur, this.measuredShadowOffsetX, this.measuredShadowOffsetY, this.computedShadowColor)
-		}
-	}
-
-	/**
-	 * The canvas vertical shadow offset.
-	 * @property shadowOffsetY
-	 * @since 0.7.0
-	 */
-	open val shadowOffsetY: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.0) { value ->
-			this.measuredShadowOffsetY = Convert.toPx(value.number)
-			this.fillPaint.setShadowLayer(this.measuredShadowBlur, this.measuredShadowOffsetX, this.measuredShadowOffsetY, this.computedShadowColor)
-			this.strokePaint.setShadowLayer(this.measuredShadowBlur, this.measuredShadowOffsetX, this.measuredShadowOffsetY, this.computedShadowColor)
-		}
-	}
-
-	/**
-	 * The canvas shadow blur.
-	 * @property shadowBlur
-	 * @since 0.7.0
-	 */
-	open val shadowBlur: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.0) { value ->
-			this.measuredShadowBlur = Convert.toPx(value.number)
-			this.fillPaint.setShadowLayer(this.measuredShadowBlur, this.measuredShadowOffsetX, this.measuredShadowOffsetY, this.computedShadowColor)
-			this.strokePaint.setShadowLayer(this.measuredShadowBlur, this.measuredShadowOffsetX, this.measuredShadowOffsetY, this.computedShadowColor)
-		}
-	}
-
-	/**
-	 * The canvas shadow color.
-	 * @property shadowBlur
-	 * @since 0.7.0
-	 */
-	open val shadowColor: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.0) { value ->
-			this.computedShadowColor = Color.parse(value.string)
-			this.fillPaint.setShadowLayer(this.measuredShadowBlur, this.measuredShadowOffsetX, this.measuredShadowOffsetY, this.computedShadowColor)
-			this.strokePaint.setShadowLayer(this.measuredShadowBlur, this.measuredShadowOffsetX, this.measuredShadowOffsetY, this.computedShadowColor)
-		}
-	}
-
-	/**
-	 * The canvas global alpha.
-	 * @property globalAlpha
-	 * @since 0.7.0
-	 */
-	open val globalAlpha: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 1.0) { value ->
-			val alpha = value.number.toInt() * 255
-			this.fillPaint.alpha = alpha
-			this.strokePaint.alpha = alpha
-		}
-	}
-
-	/**
-	 * The canvas global alpha.
-	 * @property globalAlpha
-	 * @since 0.7.0
-	 */
-	open val globalCompositeOperation: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, "source-over") {
-			// TODO
-//		when (value.string) {
-//			"source-over" ->
-//			"source-in"   ->
-//			"source-out"  ->
-//			"source-atop" ->
-//			"destination-over" ->
-//			"destination-in"
-//			"destination-out"
-//			"destination-atop"
-//			"lighter" ->
-//			"darker"  ->
-//			"copy"    ->
-//		}
-		}
-	}
 
 	/**
 	 * @since 0.7.0
@@ -306,7 +155,161 @@ open class JavaScriptCanvas(context: JavaScriptContext) : JavaScriptClass(contex
 	}
 
 	//--------------------------------------------------------------------------
-	// JS JavaScriptProperty
+	// JS Properties
+	//--------------------------------------------------------------------------
+
+	/**
+	 * The canvas fill style.
+	 * @property fillStyle
+	 * @since 0.7.0
+	 */
+	public val fillStyle by lazy {
+		JavaScriptProperty("black") { value ->
+			this.fillPaint.color = Color.parse(value.string)
+		}
+	}
+
+	/**
+	 * The canvas stroke style.
+	 * @property strokeStyle
+	 * @since 0.7.0
+	 */
+	public val strokeStyle by lazy {
+		JavaScriptProperty("black") { value ->
+			this.strokePaint.color = Color.parse(value.string)
+		}
+	}
+
+	/**
+	 * The canvas line cap mode.
+	 * @property lineCap
+	 * @since 0.7.0
+	 */
+	public val lineCap by lazy {
+		JavaScriptProperty("butt") { value ->
+			when (value.string) {
+				"butt"   -> this.strokePaint.strokeCap = Paint.Cap.BUTT
+				"round"  -> this.strokePaint.strokeCap = Paint.Cap.ROUND
+				"square" -> this.strokePaint.strokeCap = Paint.Cap.SQUARE
+			}
+		}
+	}
+
+	/**
+	 * The canvas line join mode.
+	 * @property lineJoin
+	 * @since 0.7.0
+	 */
+	public val lineJoin by lazy {
+		JavaScriptProperty("miter") { value ->
+			when (value.string) {
+				"miter" -> this.strokePaint.strokeJoin = Paint.Join.MITER
+				"round" -> this.strokePaint.strokeJoin = Paint.Join.ROUND
+				"bevel" -> this.strokePaint.strokeJoin = Paint.Join.BEVEL
+			}
+		}
+	}
+
+	/**
+	 * The canvas line width.
+	 * @property lineWidth
+	 * @since 0.7.0
+	 */
+	public val lineWidth by lazy {
+		JavaScriptProperty(1.0) { value ->
+			this.strokePaint.strokeWidth = Convert.toPx(value.number)
+		}
+	}
+
+	/**
+	 * The canvas horizontal shadow offset.
+	 * @property shadowOffsetX
+	 * @since 0.7.0
+	 */
+	public val shadowOffsetX by lazy {
+		JavaScriptProperty(0.0) { value ->
+			this.measuredShadowOffsetX = Convert.toPx(value.number)
+			this.fillPaint.setShadowLayer(this.measuredShadowBlur, this.measuredShadowOffsetX, this.measuredShadowOffsetY, this.computedShadowColor)
+			this.strokePaint.setShadowLayer(this.measuredShadowBlur, this.measuredShadowOffsetX, this.measuredShadowOffsetY, this.computedShadowColor)
+		}
+	}
+
+	/**
+	 * The canvas vertical shadow offset.
+	 * @property shadowOffsetY
+	 * @since 0.7.0
+	 */
+	public val shadowOffsetY by lazy {
+		JavaScriptProperty(0.0) { value ->
+			this.measuredShadowOffsetY = Convert.toPx(value.number)
+			this.fillPaint.setShadowLayer(this.measuredShadowBlur, this.measuredShadowOffsetX, this.measuredShadowOffsetY, this.computedShadowColor)
+			this.strokePaint.setShadowLayer(this.measuredShadowBlur, this.measuredShadowOffsetX, this.measuredShadowOffsetY, this.computedShadowColor)
+		}
+	}
+
+	/**
+	 * The canvas shadow blur.
+	 * @property shadowBlur
+	 * @since 0.7.0
+	 */
+	public val shadowBlur by lazy {
+		JavaScriptProperty(0.0) { value ->
+			this.measuredShadowBlur = Convert.toPx(value.number)
+			this.fillPaint.setShadowLayer(this.measuredShadowBlur, this.measuredShadowOffsetX, this.measuredShadowOffsetY, this.computedShadowColor)
+			this.strokePaint.setShadowLayer(this.measuredShadowBlur, this.measuredShadowOffsetX, this.measuredShadowOffsetY, this.computedShadowColor)
+		}
+	}
+
+	/**
+	 * The canvas shadow color.
+	 * @property shadowBlur
+	 * @since 0.7.0
+	 */
+	public val shadowColor by lazy {
+		JavaScriptProperty(0.0) { value ->
+			this.computedShadowColor = Color.parse(value.string)
+			this.fillPaint.setShadowLayer(this.measuredShadowBlur, this.measuredShadowOffsetX, this.measuredShadowOffsetY, this.computedShadowColor)
+			this.strokePaint.setShadowLayer(this.measuredShadowBlur, this.measuredShadowOffsetX, this.measuredShadowOffsetY, this.computedShadowColor)
+		}
+	}
+
+	/**
+	 * The canvas global alpha.
+	 * @property globalAlpha
+	 * @since 0.7.0
+	 */
+	public val globalAlpha by lazy {
+		JavaScriptProperty(1.0) { value ->
+			val alpha = value.number.toInt() * 255
+			this.fillPaint.alpha = alpha
+			this.strokePaint.alpha = alpha
+		}
+	}
+
+	/**
+	 * The canvas global alpha.
+	 * @property globalAlpha
+	 * @since 0.7.0
+	 */
+	public val globalCompositeOperation by lazy {
+		JavaScriptProperty("source-over") {
+			// TODO
+//		when (toValue.toString) {
+//			"source-over" ->
+//			"source-in"   ->
+//			"source-out"  ->
+//			"source-atop" ->
+//			"destination-over" ->
+//			"destination-in"
+//			"destination-out"
+//			"destination-atop"
+//			"lighter" ->
+//			"darker"  ->
+//			"copy"    ->
+//		}
+		}
+	}
+
 	//--------------------------------------------------------------------------
 
 	/**
@@ -326,7 +329,7 @@ open class JavaScriptCanvas(context: JavaScriptContext) : JavaScriptClass(contex
 	 */
 	@Suppress("unused")
 	open fun jsSet_fillStyle(callback: JavaScriptSetterCallback) {
-		this.fillStyle.set(callback.value, this)
+		this.fillStyle.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -348,7 +351,7 @@ open class JavaScriptCanvas(context: JavaScriptContext) : JavaScriptClass(contex
 	 */
 	@Suppress("unused")
 	open fun jsSet_strokeStyle(callback: JavaScriptSetterCallback) {
-		this.strokeStyle.set(callback.value, this)
+		this.strokeStyle.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -370,7 +373,7 @@ open class JavaScriptCanvas(context: JavaScriptContext) : JavaScriptClass(contex
 	 */
 	@Suppress("unused")
 	open fun jsSet_lineCap(callback: JavaScriptSetterCallback) {
-		this.lineCap.set(callback.value, this)
+		this.lineCap.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -392,7 +395,7 @@ open class JavaScriptCanvas(context: JavaScriptContext) : JavaScriptClass(contex
 	 */
 	@Suppress("unused")
 	open fun jsSet_lineJoin(callback: JavaScriptSetterCallback) {
-		this.lineJoin.set(callback.value, this)
+		this.lineJoin.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -414,7 +417,7 @@ open class JavaScriptCanvas(context: JavaScriptContext) : JavaScriptClass(contex
 	 */
 	@Suppress("unused")
 	open fun jsSet_lineWidth(callback: JavaScriptSetterCallback) {
-		this.lineWidth.set(callback.value, this)
+		this.lineWidth.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -436,7 +439,7 @@ open class JavaScriptCanvas(context: JavaScriptContext) : JavaScriptClass(contex
 	 */
 	@Suppress("unused")
 	open fun jsSet_shadowOffsetX(callback: JavaScriptSetterCallback) {
-		this.shadowOffsetX.set(callback.value, this)
+		this.shadowOffsetX.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -458,7 +461,7 @@ open class JavaScriptCanvas(context: JavaScriptContext) : JavaScriptClass(contex
 	 */
 	@Suppress("unused")
 	open fun jsSet_shadowOffsetY(callback: JavaScriptSetterCallback) {
-		this.shadowOffsetY.set(callback.value, this)
+		this.shadowOffsetY.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -480,7 +483,7 @@ open class JavaScriptCanvas(context: JavaScriptContext) : JavaScriptClass(contex
 	 */
 	@Suppress("unused")
 	open fun jsSet_shadowBlur(callback: JavaScriptSetterCallback) {
-		this.shadowBlur.set(callback.value, this)
+		this.shadowBlur.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -502,7 +505,7 @@ open class JavaScriptCanvas(context: JavaScriptContext) : JavaScriptClass(contex
 	 */
 	@Suppress("unused")
 	open fun jsSet_shadowColor(callback: JavaScriptSetterCallback) {
-		this.shadowColor.set(callback.value, this)
+		this.shadowColor.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -524,7 +527,7 @@ open class JavaScriptCanvas(context: JavaScriptContext) : JavaScriptClass(contex
 	 */
 	@Suppress("unused")
 	open fun jsSet_globalAlpha(callback: JavaScriptSetterCallback) {
-		this.globalAlpha.set(callback.value, this)
+		this.globalAlpha.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -546,7 +549,7 @@ open class JavaScriptCanvas(context: JavaScriptContext) : JavaScriptClass(contex
 	 */
 	@Suppress("unused")
 	open fun jsSet_globalCompositeOperation(callback: JavaScriptSetterCallback) {
-		this.globalCompositeOperation.set(callback.value, this)
+		this.globalCompositeOperation.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -560,6 +563,10 @@ open class JavaScriptCanvas(context: JavaScriptContext) : JavaScriptClass(contex
 	 */
 	@Suppress("unused")
 	open fun jsFunction_rect(callback: JavaScriptFunctionCallback) {
+
+		if (callback.arguments < 4) {
+			fatalError("Method JavaScriptCanvas.rect' requires 4 arguments.")
+		}
 
 		val x = Convert.toPx(callback.argument(0).number)
 		val y = Convert.toPx(callback.argument(1).number)
@@ -583,6 +590,10 @@ open class JavaScriptCanvas(context: JavaScriptContext) : JavaScriptClass(contex
 	@Suppress("unused")
 	open fun jsFunction_fillRect(callback: JavaScriptFunctionCallback) {
 
+		if (callback.arguments < 4) {
+			fatalError("Method JavaScriptCanvas.fillRect() requires 4 arguments.")
+		}
+
 		val x = Convert.toPx(callback.argument(0).number)
 		val y = Convert.toPx(callback.argument(1).number)
 		val w = Convert.toPx(callback.argument(2).number)
@@ -605,6 +616,10 @@ open class JavaScriptCanvas(context: JavaScriptContext) : JavaScriptClass(contex
 	@Suppress("unused")
 	open fun jsFunction_strokeRect(callback: JavaScriptFunctionCallback) {
 
+		if (callback.arguments < 4) {
+			fatalError("Method JavaScriptCanvas.strokeRect() requires 4 arguments.")
+		}
+
 		val x = Convert.toPx(callback.argument(0).number)
 		val y = Convert.toPx(callback.argument(1).number)
 		val w = Convert.toPx(callback.argument(2).number)
@@ -626,6 +641,10 @@ open class JavaScriptCanvas(context: JavaScriptContext) : JavaScriptClass(contex
 	 */
 	@Suppress("unused")
 	open fun jsFunction_clearRect(callback: JavaScriptFunctionCallback) {
+
+		if (callback.arguments < 4) {
+			fatalError("Method JavaScriptCanvas.clearRect() requires 4 arguments.")
+		}
 
 		val x = Convert.toPx(callback.argument(0).number)
 		val y = Convert.toPx(callback.argument(1).number)
@@ -690,8 +709,14 @@ open class JavaScriptCanvas(context: JavaScriptContext) : JavaScriptClass(contex
 	 */
 	@Suppress("unused")
 	open fun jsFunction_moveTo(callback: JavaScriptFunctionCallback) {
+
+		if (callback.arguments < 2) {
+			fatalError("Method JavaScriptCanvas.moveTo() requires 2 arguments.")
+		}
+
 		val x = Convert.toPx(callback.argument(0).number)
 		val y = Convert.toPx(callback.argument(1).number)
+
 		this.path.moveTo(x, y)
 	}
 
@@ -702,8 +727,14 @@ open class JavaScriptCanvas(context: JavaScriptContext) : JavaScriptClass(contex
 	 */
 	@Suppress("unused")
 	open fun jsFunction_lineTo(callback: JavaScriptFunctionCallback) {
+
+		if (callback.arguments < 2) {
+			fatalError("Method JavaScriptCanvas.lineTo() requires 2 arguments.")
+		}
+
 		val x = Convert.toPx(callback.argument(0).number)
 		val y = Convert.toPx(callback.argument(1).number)
+
 		this.path.lineTo(x, y)
 	}
 
@@ -724,10 +755,16 @@ open class JavaScriptCanvas(context: JavaScriptContext) : JavaScriptClass(contex
 	 */
 	@Suppress("unused")
 	open fun jsFunction_quadraticCurveTo(callback: JavaScriptFunctionCallback) {
+
+		if (callback.arguments < 4) {
+			fatalError("Method JavaScriptCanvas.quadraticCurveTo() requires 4 arguments.")
+		}
+
 		val cx = Convert.toPx(callback.argument(0).number)
 		val cy = Convert.toPx(callback.argument(1).number)
 		val x = Convert.toPx(callback.argument(2).number)
 		val y = Convert.toPx(callback.argument(3).number)
+
 		this.path.quadTo(cx, cy, x, y)
 	}
 
@@ -738,12 +775,18 @@ open class JavaScriptCanvas(context: JavaScriptContext) : JavaScriptClass(contex
 	 */
 	@Suppress("unused")
 	open fun jsFunction_bezierCurveTo(callback: JavaScriptFunctionCallback) {
+
+		if (callback.arguments < 4) {
+			fatalError("Method JavaScriptCanvas.bezierCurveTo() requires 6 arguments.")
+		}
+
 		val c1x = Convert.toPx(callback.argument(0).number)
 		val c1y = Convert.toPx(callback.argument(1).number)
 		val c2x = Convert.toPx(callback.argument(2).number)
 		val c2y = Convert.toPx(callback.argument(3).number)
-		val x = Convert.toPx(callback.argument(4).number)
-		val y = Convert.toPx(callback.argument(5).number)
+		val x   = Convert.toPx(callback.argument(4).number)
+		val y   = Convert.toPx(callback.argument(5).number)
+
 		this.path.cubicTo(c1x, c1y, c2x, c2y, x, y)
 	}
 
@@ -755,19 +798,18 @@ open class JavaScriptCanvas(context: JavaScriptContext) : JavaScriptClass(contex
 	@Suppress("unused")
 	open fun jsFunction_arc(callback: JavaScriptFunctionCallback) {
 
-		val x = Convert.toPx(callback.argument(0).number)
-		val y = Convert.toPx(callback.argument(1).number)
-		val r = Convert.toPx(callback.argument(2).number)
-
-		val sa = Math.toDegrees(callback.argument(3).number).toFloat()
-		val ea = Math.toDegrees(callback.argument(4).number).toFloat()
-		var sweep: Float
-
-		var ccw = false
-
-		if (callback.arguments >= 6) {
-			ccw = callback.argument(5).boolean
+		if (callback.arguments < 6) {
+			fatalError("Method JavaScriptCanvas.arc() requires 6 arguments.")
 		}
+
+		val x   = Convert.toPx(callback.argument(0).number)
+		val y   = Convert.toPx(callback.argument(1).number)
+		val r   = Convert.toPx(callback.argument(2).number)
+		val sa  = Math.toDegrees(callback.argument(3).number).toFloat()
+		val ea  = Math.toDegrees(callback.argument(4).number).toFloat()
+		var ccw = callback.argument(5).boolean
+
+		var sweep: Float
 
 		val x1 = x - r
 		val y1 = y - r
@@ -809,11 +851,16 @@ open class JavaScriptCanvas(context: JavaScriptContext) : JavaScriptClass(contex
 	@Suppress("unused")
 	open fun jsFunction_arcTo(callback: JavaScriptFunctionCallback) {
 
+		if (callback.arguments < 6) {
+			fatalError("Method JavaScriptCanvas.arcTo() requires 6 arguments.")
+		}
+
 		val x1 = Convert.toPx(callback.argument(0).number)
 		val y1 = Convert.toPx(callback.argument(1).number)
 		val x2 = Convert.toPx(callback.argument(2).number)
 		val y2 = Convert.toPx(callback.argument(3).number)
 		val r = callback.argument(4).number.toFloat()
+
 		this.path.addArcTo(PointF(x1, y1), PointF(x2, y2), r)
 	}
 
@@ -824,6 +871,11 @@ open class JavaScriptCanvas(context: JavaScriptContext) : JavaScriptClass(contex
 	 */
 	@Suppress("unused")
 	open fun jsFunction_isPointInPath(callback: JavaScriptFunctionCallback) {
+
+		if (callback.arguments < 2) {
+			fatalError("Method JavaScriptCanvas.isPointInPath() requires 2 arguments.")
+		}
+
 		// TODO
 	}
 
@@ -834,8 +886,14 @@ open class JavaScriptCanvas(context: JavaScriptContext) : JavaScriptClass(contex
 	 */
 	@Suppress("unused")
 	open fun jsFunction_scale(callback: JavaScriptFunctionCallback) {
+
+		if (callback.arguments < 2) {
+			fatalError("Method JavaScriptCanvas.scale() requires 2 arguments.")
+		}
+
 		val x = Convert.toPx(callback.argument(0).number)
 		val y = Convert.toPx(callback.argument(1).number)
+
 		this.canvas?.scale(x, y)
 	}
 
@@ -846,6 +904,11 @@ open class JavaScriptCanvas(context: JavaScriptContext) : JavaScriptClass(contex
 	 */
 	@Suppress("unused")
 	open fun jsFunction_rotate(callback: JavaScriptFunctionCallback) {
+
+		if (callback.arguments < 1) {
+			fatalError("Method JavaScriptCanvas.rotate() requires 1 argument.")
+		}
+
 		this.canvas?.rotate(Math.toDegrees(callback.argument(0).number).toFloat())
 	}
 
@@ -856,8 +919,14 @@ open class JavaScriptCanvas(context: JavaScriptContext) : JavaScriptClass(contex
 	 */
 	@Suppress("unused")
 	open fun jsFunction_translate(callback: JavaScriptFunctionCallback) {
+
+		if (callback.arguments < 2) {
+			fatalError("Method JavaScriptCanvas.translate() requires 2 arguments.")
+		}
+
 		val x = Convert.toPx(callback.argument(0).number)
 		val y = Convert.toPx(callback.argument(1).number)
+
 		this.canvas?.translate(x, y)
 	}
 
@@ -868,6 +937,10 @@ open class JavaScriptCanvas(context: JavaScriptContext) : JavaScriptClass(contex
 	 */
 	@Suppress("unused")
 	open fun jsFunction_transform(callback: JavaScriptFunctionCallback) {
+
+		if (callback.arguments < 6) {
+			fatalError("Method JavaScriptCanvas.translate() requires 6 arguments.")
+		}
 
 		val a = callback.argument(0).number.toFloat()
 		val b = callback.argument(1).number.toFloat()
@@ -896,6 +969,10 @@ open class JavaScriptCanvas(context: JavaScriptContext) : JavaScriptClass(contex
 	 */
 	@Suppress("unused")
 	open fun jsFunction_setTransform(callback: JavaScriptFunctionCallback) {
+
+		if (callback.arguments < 6) {
+			fatalError("Method JavaScriptCanvas.setTransform() requires 6 arguments.")
+		}
 
 		val a = callback.argument(0).number.toFloat()
 		val b = callback.argument(1).number.toFloat()

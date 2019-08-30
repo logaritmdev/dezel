@@ -279,7 +279,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @property fontFamily
 	 * @since 0.7.0
 	 */
-	@objc open lazy var fontFamily = JavaScriptProperty(string: "default") { value in
+	@objc public lazy var fontFamily = JavaScriptProperty(string: "default") { value in
 
 		self.view.fontFamily = value.string
 
@@ -294,7 +294,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @property fontWeight
 	 * @since 0.7.0
 	 */
-	@objc open lazy var fontWeight = JavaScriptProperty(string: "normal") { value in
+	@objc public lazy var fontWeight = JavaScriptProperty(string: "normal") { value in
 
 		self.view.fontWeight = value.string
 
@@ -309,7 +309,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @property fontStyle
 	 * @since 0.7.0
 	 */
-	@objc open lazy var fontStyle = JavaScriptProperty(string: "normal") { value in
+	@objc public lazy var fontStyle = JavaScriptProperty(string: "normal") { value in
 
 		self.view.fontStyle = value.string
 
@@ -324,7 +324,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @property fontSize
 	 * @since 0.7.0
 	 */
-	@objc open lazy var fontSize = JavaScriptProperty(number: 17) { value in
+	@objc public lazy var fontSize = JavaScriptProperty(number: 17) { value in
 		self.invalidateFontSize()
 	}
 
@@ -333,7 +333,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @property minFontSize
 	 * @since 0.7.0
 	 */
-	@objc open lazy var minFontSize = JavaScriptProperty(number: 0) { value in
+	@objc public lazy var minFontSize = JavaScriptProperty(number: 0) { value in
 		self.invalidateFontSize()
 	}
 
@@ -342,7 +342,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @property maxFontSize
 	 * @since 0.7.0
 	 */
-	@objc open lazy var maxFontSize = JavaScriptProperty(number: Double.max) { value in
+	@objc public lazy var maxFontSize = JavaScriptProperty(number: Double.max) { value in
 		self.invalidateFontSize()
 	}
 
@@ -351,7 +351,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @property text
 	 * @since 0.7.0
 	 */
-	@objc open lazy var text = JavaScriptProperty(string: "") { value in
+	@objc public lazy var text = JavaScriptProperty(string: "") { value in
 
 		self.view.text = value.string
 
@@ -366,7 +366,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @property textColor
 	 * @since 0.7.0
 	 */
-	@objc open lazy var textColor = JavaScriptProperty(string: "#000") { value in
+	@objc public lazy var textColor = JavaScriptProperty(string: "#000") { value in
 		self.view.textColor = CGColorParse(value.string)
 	}
 
@@ -375,7 +375,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @property textAlignment
 	 * @since 0.7.0
 	 */
-	@objc open lazy var textAlignment = JavaScriptProperty(string: "start") { value in
+	@objc public lazy var textAlignment = JavaScriptProperty(string: "start") { value in
 		self.view.textAlignment = self.getTextAlignment(value.string)
 	}
 
@@ -384,7 +384,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @property textLocation
 	 * @since 0.7.0
 	 */
-	@objc open lazy var textLocation = JavaScriptProperty(string: "middle") { value in
+	@objc public lazy var textLocation = JavaScriptProperty(string: "middle") { value in
 		self.view.textLocation = self.getTextLocation(value.string)
 	}
 
@@ -393,7 +393,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @property textBaseline
 	 * @since 0.7.0
 	 */
-	@objc open lazy var textBaseline = JavaScriptProperty(number: 0) { value in
+	@objc public lazy var textBaseline = JavaScriptProperty(number: 0) { value in
 
 		self.view.textBaseline = CGFloat(value.number)
 
@@ -408,7 +408,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @property textKerning
 	 * @since 0.7.0
 	 */
-	@objc open lazy var textKerning = JavaScriptProperty(number: 0) { value in
+	@objc public lazy var textKerning = JavaScriptProperty(number: 0) { value in
 
 		self.view.textKerning = CGFloat(value.number)
 
@@ -423,7 +423,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @property textLeading
 	 * @since 0.7.0
 	 */
-	@objc open lazy var textLeading = JavaScriptProperty(number: 0) { value in
+	@objc public lazy var textLeading = JavaScriptProperty(number: 0) { value in
 
 		self.view.textLeading = CGFloat(value.number)
 
@@ -438,7 +438,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @property textShadowBlur
 	 * @since 0.7.0
 	 */
-	@objc open lazy var textShadowBlur = JavaScriptProperty(number: 0) { value in
+	@objc public lazy var textShadowBlur = JavaScriptProperty(number: 0) { value in
 		self.view.textShadowBlur = CGFloat(value.number)
 	}
 
@@ -447,7 +447,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @property textShadowColor
 	 * @since 0.7.0
 	 */
-	@objc open lazy var textShadowColor = JavaScriptProperty(string: "#000") { value in
+	@objc public lazy var textShadowColor = JavaScriptProperty(string: "#000") { value in
 		self.view.textShadowColor = CGColorParse(value.string)
 	}
 
@@ -456,7 +456,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @property textShadowOffsetTop
 	 * @since 0.7.0
 	 */
-	@objc open lazy var textShadowOffsetTop = JavaScriptProperty(number: 0) { value in
+	@objc public lazy var textShadowOffsetTop = JavaScriptProperty(number: 0) { value in
 		self.view.textShadowOffsetTop = CGFloat(value.number)
 	}
 
@@ -465,7 +465,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @property textShadowOffsetLeft
 	 * @since 0.7.0
 	 */
-	@objc open lazy var textShadowOffsetLeft = JavaScriptProperty(number: 0) { value in
+	@objc public lazy var textShadowOffsetLeft = JavaScriptProperty(number: 0) { value in
 		self.view.textShadowOffsetLeft = CGFloat(value.number)
 	}
 
@@ -474,7 +474,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @property textDecoration
 	 * @since 0.7.0
 	 */
-	@objc open lazy var textDecoration = JavaScriptProperty(string: "none") { value in
+	@objc public lazy var textDecoration = JavaScriptProperty(string: "none") { value in
 
 		self.view.textDecoration = self.getTextDecoration(value.string)
 
@@ -489,7 +489,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @property textTransform
 	 * @since 0.7.0
 	 */
-	@objc open lazy var textTransform = JavaScriptProperty(string: "none") { value in
+	@objc public lazy var textTransform = JavaScriptProperty(string: "none") { value in
 
 		self.view.textTransform = self.getTextTransform(value.string)
 
@@ -504,7 +504,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @property textOverflow
 	 * @since 0.7.0
 	 */
-	@objc open lazy var textOverflow = JavaScriptProperty(string: "ellipsis") { value in
+	@objc public lazy var textOverflow = JavaScriptProperty(string: "ellipsis") { value in
 
 		self.view.textOverflow = self.getTextOverflow(value.string)
 
@@ -519,7 +519,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @property linkColor
 	 * @since 0.7.0
 	 */
-	@objc open lazy var linkColor = JavaScriptProperty(string: "blue") { value in
+	@objc public lazy var linkColor = JavaScriptProperty(string: "blue") { value in
 		self.view.linkColor = CGColorParse(value.string)
 	}
 
@@ -528,7 +528,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @property maxLines
 	 * @since 0.7.0
 	 */
-	@objc open lazy var maxLines = JavaScriptProperty(number: 0) { value in
+	@objc public lazy var maxLines = JavaScriptProperty(number: 0) { value in
 
 		self.view.maxLines = Int(value.number)
 

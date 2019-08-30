@@ -28,7 +28,7 @@
 
 		/*
 		 * Prevent this value from being protected because there's no need,
-		 * the garbage collected will never collect null.
+		 * the garbage collected will never collect undefined.
 		 */
 
 	}
@@ -42,7 +42,7 @@
 
 		/*
 		 * Prevent this value from being unprotected because there's no need,
-		 * the garbage collected will never collect null.
+		 * the garbage collected will never collect undefined.
 		 */
 
 	}
@@ -56,7 +56,7 @@
 
 		/*
 		 * Prevent this value from being disposed. This can lead to unwanted
-		 * crash if this instnace is disposed.
+		 * crash if this instance is disposed.
 		 */
 
 	}

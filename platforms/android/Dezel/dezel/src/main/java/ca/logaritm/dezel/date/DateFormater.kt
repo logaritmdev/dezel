@@ -1,7 +1,7 @@
 package ca.logaritm.dezel.date
 
-import ca.logaritm.dezel.extension.Timezone
-import ca.logaritm.dezel.extension.toLocale
+import ca.logaritm.dezel.extension.type.Timezone
+import ca.logaritm.dezel.extension.type.toLocale
 import java.text.SimpleDateFormat
 import java.util.*
 

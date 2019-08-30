@@ -76,7 +76,7 @@ open class JavaScriptImage: JavaScriptClass {
 	 * @property source
 	 * @since 0.7.0
 	 */
-	@objc open lazy var source = JavaScriptProperty() { value in
+	@objc public lazy var source = JavaScriptProperty() { value in
 		self.load(value.string)
 	}
 
@@ -85,14 +85,14 @@ open class JavaScriptImage: JavaScriptClass {
 	 * @property loading
 	 * @since 0.7.0
 	 */
-	@objc open lazy var loading = JavaScriptProperty(boolean: false)
+	@objc public lazy var loading = JavaScriptProperty(boolean: false)
 
 	/**
 	 * Whether the image is completely loaded.
 	 * @property complete
 	 * @since 0.7.0
 	 */
-	@objc open lazy var complete = JavaScriptProperty(boolean: false)
+	@objc public lazy var complete = JavaScriptProperty(boolean: false)
 
 	//--------------------------------------------------------------------------
 

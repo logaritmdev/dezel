@@ -10,14 +10,17 @@ class ObjectTemplateTestClass(context: JavaScriptContext) : JavaScriptObject(con
 		var testPropertySetterCallback: JavaScriptSetterHandler? = null
 	}
 
+	@Suppress("unused")
 	fun jsFunction_testFunction(callback: JavaScriptFunctionCallback) {
 		testFunctionCallback?.invoke(callback)
 	}
 
+	@Suppress("unused")
 	fun jsGet_testProperty(callback: JavaScriptGetterCallback) {
 		testPropertyGetterCallback?.invoke(callback)
 	}
 
+	@Suppress("unused")
 	fun jsSet_testProperty(callback: JavaScriptSetterCallback) {
 		testPropertySetterCallback?.invoke(callback)
 	}

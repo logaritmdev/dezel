@@ -96,7 +96,7 @@ open class Layout {
 	}
 
 	/**
-	 * Requests a callback that will be executed when the global layout begins.
+	 * Requests a handler that will be executed when the global layout begins.
 	 * @method requestLayoutBeganCallback
 	 * @since 0.4.0
 	 */
@@ -105,7 +105,7 @@ open class Layout {
 	}
 
 	/**
-	 * Requests a callback that will be executed when the global layout finishes.
+	 * Requests a handler that will be executed when the global layout finishes.
 	 * @method requestLayoutEndedCallback
 	 * @since 0.4.0
 	 */

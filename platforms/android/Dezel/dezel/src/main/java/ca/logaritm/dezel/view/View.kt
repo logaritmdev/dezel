@@ -11,8 +11,8 @@ import android.widget.HorizontalScrollView
 import android.widget.ScrollView
 import ca.logaritm.dezel.application.ApplicationActivity
 import ca.logaritm.dezel.extension.Delegates
-import ca.logaritm.dezel.extension.removeFromParent
-import ca.logaritm.dezel.extension.setMeasuredFrame
+import ca.logaritm.dezel.extension.view.removeFromParent
+import ca.logaritm.dezel.extension.view.setMeasuredFrame
 import ca.logaritm.dezel.view.graphic.Convert
 import ca.logaritm.dezel.view.type.Overscroll
 import ca.logaritm.dezel.view.type.Scrollbars

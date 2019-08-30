@@ -10,16 +10,17 @@ import ca.logaritm.dezel.core.*
 open class JavaScriptAlertButton(context: JavaScriptContext) : JavaScriptClass(context) {
 
 	//--------------------------------------------------------------------------
-	// Properties
+	// JS Properties
 	//--------------------------------------------------------------------------
+
 
 	/**
 	 * The alert button's label.
 	 * @property label
 	 * @since 0.7.0
 	 */
-	open val label: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, "")
+	public val label by lazy {
+		JavaScriptProperty("")
 	}
 
 	/**
@@ -27,8 +28,8 @@ open class JavaScriptAlertButton(context: JavaScriptContext) : JavaScriptClass(c
 	 * @property image
 	 * @since 0.7.0
 	 */
-	open val image: JavaScriptProperty by lazy {
-		JavaScriptProperty(context)
+	public val image by lazy {
+		JavaScriptProperty()
 	}
 
 	/**
@@ -36,12 +37,10 @@ open class JavaScriptAlertButton(context: JavaScriptContext) : JavaScriptClass(c
 	 * @property style
 	 * @since 0.7.0
 	 */
-	open val style: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, "normal")
+	public val style by lazy {
+		JavaScriptProperty("normal")
 	}
 
-	//--------------------------------------------------------------------------
-	// JS Properties
 	//--------------------------------------------------------------------------
 
 	/**
@@ -61,7 +60,7 @@ open class JavaScriptAlertButton(context: JavaScriptContext) : JavaScriptClass(c
 	 */
 	@Suppress("unused")
 	open fun jsSet_label(callback: JavaScriptSetterCallback) {
-		this.label.set(callback.value, this)
+		this.label.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -83,7 +82,7 @@ open class JavaScriptAlertButton(context: JavaScriptContext) : JavaScriptClass(c
 	 */
 	@Suppress("unused")
 	open fun jsSet_image(callback: JavaScriptSetterCallback) {
-		this.image.set(callback.value, this)
+		this.image.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -105,6 +104,6 @@ open class JavaScriptAlertButton(context: JavaScriptContext) : JavaScriptClass(c
 	 */
 	@Suppress("unused")
 	open fun jsSet_style(callback: JavaScriptSetterCallback) {
-		this.style.set(callback.value, this)
+		this.style.reset(callback.value, this)
 	}
 }

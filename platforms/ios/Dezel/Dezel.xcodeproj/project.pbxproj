@@ -42,7 +42,6 @@
 		C7004C9921442AAC00138ECC /* DLStylerStyleSelectorTreePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = C7004C9721442AAC00138ECC /* DLStylerStyleSelectorTreePrivate.h */; };
 		C7027CD32270DFDA001DD0F7 /* ScrollViewTouchCancelGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7027CD22270DFDA001DD0F7 /* ScrollViewTouchCancelGesture.swift */; };
 		C70617A420F7C03100499FDB /* TransitionListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = C70617A320F7C03100499FDB /* TransitionListener.swift */; };
-		C70B58E520880943008B2137 /* Conversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = C70B58E420880943008B2137 /* Conversion.swift */; };
 		C718A0A92066E24400EFEC15 /* JavaScriptImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C718A0A82066E24400EFEC15 /* JavaScriptImageView.swift */; };
 		C718A0B32066E63300EFEC15 /* ImageLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C718A0B22066E63300EFEC15 /* ImageLayer.swift */; };
 		C718A0B52066ED6100EFEC15 /* JavaScriptImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C718A0B42066ED6100EFEC15 /* JavaScriptImage.swift */; };
@@ -63,7 +62,6 @@
 		C71E6CDF20E65FB6009B86F6 /* Updatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71E6CDE20E65FB6009B86F6 /* Updatable.swift */; };
 		C71E6CE120E6617D009B86F6 /* Scrollbars.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71E6CE020E6617D009B86F6 /* Scrollbars.swift */; };
 		C71E6CE320E66188009B86F6 /* Overscroll.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71E6CE220E66188009B86F6 /* Overscroll.swift */; };
-		C728E05D222B1B9100BE5F7F /* Locale.swift in Sources */ = {isa = PBXBuildFile; fileRef = C728E05C222B1B9100BE5F7F /* Locale.swift */; };
 		C72E0E9020668EE1003BCEF1 /* TextLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72E0E8F20668EE1003BCEF1 /* TextLayer.swift */; };
 		C72E0E9320669C97003BCEF1 /* TextAlignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72E0E9220669C97003BCEF1 /* TextAlignment.swift */; };
 		C72E0E9520669CA0003BCEF1 /* TextLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72E0E9420669CA0003BCEF1 /* TextLocation.swift */; };
@@ -77,10 +75,7 @@
 		C74487E3205230BB00D74D30 /* DLStylerNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C74487E1205230BB00D74D30 /* DLStylerNode.cpp */; };
 		C74487E4205230BB00D74D30 /* DLStylerNode.h in Headers */ = {isa = PBXBuildFile; fileRef = C74487E2205230BB00D74D30 /* DLStylerNode.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C75153B322EB4BC3007CAA48 /* HTTPURLResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75153B222EB4BC3007CAA48 /* HTTPURLResponse.swift */; };
-		C75153B522EB81F0007CAA48 /* JavaScriptContextInternal.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75153B422EB81F0007CAA48 /* JavaScriptContextInternal.swift */; };
-		C75153B722EB81FC007CAA48 /* JavaScriptValueInternal.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75153B622EB81FC007CAA48 /* JavaScriptValueInternal.swift */; };
-		C75153B922EBA05C007CAA48 /* NSMutableData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75153B822EBA05C007CAA48 /* NSMutableData.swift */; };
-		C75153BB22EBA09B007CAA48 /* NSMutableAttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75153BA22EBA09B007CAA48 /* NSMutableAttributedString.swift */; };
+		C75153B922EBA05C007CAA48 /* NSData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75153B822EBA05C007CAA48 /* NSData.swift */; };
 		C75153BD22F11CAA007CAA48 /* JavaScriptLocale.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75153BC22F11CAA007CAA48 /* JavaScriptLocale.swift */; };
 		C75153BF22F3791C007CAA48 /* JavaScriptClassStaticFunctionWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75153BE22F3791C007CAA48 /* JavaScriptClassStaticFunctionWrapper.swift */; };
 		C75153C122F37C03007CAA48 /* JavaScriptClassStaticGetterWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75153C022F37C03007CAA48 /* JavaScriptClassStaticGetterWrapper.swift */; };
@@ -89,7 +84,7 @@
 		C76016E22019832800622840 /* JavaScriptFinalizeCallback.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76016E12019832800622840 /* JavaScriptFinalizeCallback.swift */; };
 		C767542120269971003C4D85 /* ShadowLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76753E92026996F003C4D85 /* ShadowLayer.swift */; };
 		C767542420269971003C4D85 /* BorderLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76753EC2026996F003C4D85 /* BorderLayer.swift */; };
-		C767543320269971003C4D85 /* Property.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76753FB20269970003C4D85 /* Property.swift */; };
+		C767543320269971003C4D85 /* JavaScriptProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76753FB20269970003C4D85 /* JavaScriptProperty.swift */; };
 		C767543A20269971003C4D85 /* BitmapLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C767540220269970003C4D85 /* BitmapLayer.swift */; };
 		C767543F20269971003C4D85 /* RenderLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C767540720269971003C4D85 /* RenderLayer.swift */; };
 		C767544520269DB5003C4D85 /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C767544420269DB5003C4D85 /* TextView.swift */; };
@@ -97,8 +92,8 @@
 		C767544D2028DB7B003C4D85 /* JavaScriptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C767544C2028DB7B003C4D85 /* JavaScriptView.swift */; };
 		C7682A40203538A9006EA6D5 /* WrapperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7682A3F203538A9006EA6D5 /* WrapperView.swift */; };
 		C7682A422035395F006EA6D5 /* Layer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7682A412035395F006EA6D5 /* Layer.swift */; };
-		C76864712039146700D1903B /* PropertyType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76864702039146700D1903B /* PropertyType.swift */; };
-		C76864732039147100D1903B /* PropertyUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76864722039147100D1903B /* PropertyUnit.swift */; };
+		C76864712039146700D1903B /* JavaScriptPropertyType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76864702039146700D1903B /* JavaScriptPropertyType.swift */; };
+		C76864732039147100D1903B /* JavaScriptPropertyUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76864722039147100D1903B /* JavaScriptPropertyUnit.swift */; };
 		C77189A521014A9200337263 /* JavaScriptViewOptimizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77189A421014A9100337263 /* JavaScriptViewOptimizer.swift */; };
 		C77189A721014A9E00337263 /* JavaScriptListOptimizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77189A621014A9E00337263 /* JavaScriptListOptimizer.swift */; };
 		C77189AA2101642B00337263 /* JavaScriptGridOptimizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77189A92101642B00337263 /* JavaScriptGridOptimizer.swift */; };
@@ -205,7 +200,6 @@
 		C7BB7D3E2028F4C5004006C2 /* CGRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BB7D392028F4C5004006C2 /* CGRect.swift */; };
 		C7BB7D3F2028F4C5004006C2 /* CGSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BB7D3A2028F4C5004006C2 /* CGSize.swift */; };
 		C7BB7D402028F4C5004006C2 /* CGPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BB7D3B2028F4C5004006C2 /* CGPath.swift */; };
-		C7BB7D422028F5A1004006C2 /* Boolean.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BB7D412028F5A1004006C2 /* Boolean.swift */; };
 		C7BB7D462029062D004006C2 /* TransitionGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BB7D442029062D004006C2 /* TransitionGroup.swift */; };
 		C7BB7D472029062D004006C2 /* Transition.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BB7D452029062D004006C2 /* Transition.swift */; };
 		C7BB7D4B20293955004006C2 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BB7D4A20293955004006C2 /* Array.swift */; };
@@ -221,7 +215,7 @@
 		C7CE4B032208AB53005D5235 /* DateParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CE4B022208AB53005D5235 /* DateParser.swift */; };
 		C7CE4B052208AC4D005D5235 /* DateFormater.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CE4B042208AC4D005D5235 /* DateFormater.swift */; };
 		C7CE4B072208C93C005D5235 /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CE4B062208C93C005D5235 /* UITextField.swift */; };
-		C7CE4B09220A7824005D5235 /* TimeZone.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CE4B08220A7824005D5235 /* TimeZone.swift */; };
+		C7CE4B09220A7824005D5235 /* Timezone.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CE4B08220A7824005D5235 /* Timezone.swift */; };
 		C7D14EDC21D07058008B51D4 /* Scanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D14EDB21D07058008B51D4 /* Scanner.swift */; };
 		C7D89263206575CB00E85115 /* JavaScriptTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D89262206575CB00E85115 /* JavaScriptTextView.swift */; };
 		C7D8926520657B0000E85115 /* UIFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D8926420657B0000E85115 /* UIFont.swift */; };
@@ -266,7 +260,7 @@
 		C7E8A4F120162429005139F6 /* JavaScriptSetterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E8A4E320162429005139F6 /* JavaScriptSetterTest.swift */; };
 		C7E8A4F220162429005139F6 /* JavaScriptClassTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E8A4E420162429005139F6 /* JavaScriptClassTest.swift */; };
 		C7E8A4F320162429005139F6 /* JavaScriptGetterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E8A4E520162429005139F6 /* JavaScriptGetterTest.swift */; };
-		C7E8A4F420162429005139F6 /* JavaScriptFunctionCallbackTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E8A4E620162429005139F6 /* JavaScriptFunctionCallbackTest.swift */; };
+		C7E8A4F420162429005139F6 /* JavaScriptFunctionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E8A4E620162429005139F6 /* JavaScriptFunctionTest.swift */; };
 		C7E8A4F520162429005139F6 /* JavaScriptContextTestClassB.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E8A4E820162429005139F6 /* JavaScriptContextTestClassB.swift */; };
 		C7E8A4F620162429005139F6 /* JavaScriptEmptyClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E8A4E920162429005139F6 /* JavaScriptEmptyClass.swift */; };
 		C7E8A4F720162429005139F6 /* JavaScriptTestObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E8A4EA20162429005139F6 /* JavaScriptTestObject.swift */; };
@@ -318,6 +312,16 @@
 		C7F8C9F920C17874007E8ECA /* DLStylerMatch.h in Headers */ = {isa = PBXBuildFile; fileRef = C7F8C9F720C17874007E8ECA /* DLStylerMatch.h */; };
 		C7FAFD93205AAC900031B2E9 /* DLStylerStyleBuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7FAFD8F205AAC8F0031B2E9 /* DLStylerStyleBuilder.cpp */; };
 		C7FAFD94205AAC900031B2E9 /* DLStylerStyleBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = C7FAFD90205AAC900031B2E9 /* DLStylerStyleBuilder.h */; };
+		C7FCA0F82311B48200AFBDB6 /* JavaScriptPropertyStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FCA0F72311B48200AFBDB6 /* JavaScriptPropertyStorage.swift */; };
+		C7FCA0FA2311B49200AFBDB6 /* JavaScriptPropertyStorageBoolean.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FCA0F92311B49200AFBDB6 /* JavaScriptPropertyStorageBoolean.swift */; };
+		C7FCA0FE2311B4AA00AFBDB6 /* JavaScriptPropertyStorageNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FCA0FD2311B4AA00AFBDB6 /* JavaScriptPropertyStorageNumber.swift */; };
+		C7FCA1002311B4BA00AFBDB6 /* JavaScriptPropertyStorageString.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FCA0FF2311B4BA00AFBDB6 /* JavaScriptPropertyStorageString.swift */; };
+		C7FCA1022311B4C800AFBDB6 /* JavaScriptPropertyStorageValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FCA1012311B4C800AFBDB6 /* JavaScriptPropertyStorageValue.swift */; };
+		C7FCA104231444F600AFBDB6 /* JavaScriptPropertyParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FCA103231444F600AFBDB6 /* JavaScriptPropertyParser.swift */; };
+		C7FCA1082315CD7200AFBDB6 /* Lock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FCA1072315CD7100AFBDB6 /* Lock.swift */; };
+		C7FCA10A2316AE9A00AFBDB6 /* JavaScriptNull.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FCA1092316AE9A00AFBDB6 /* JavaScriptNull.swift */; };
+		C7FCA10C2316AFD900AFBDB6 /* JavaScriptUndefined.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FCA10B2316AFD900AFBDB6 /* JavaScriptUndefined.swift */; };
+		C7FCA1142316FA0800AFBDB6 /* JavaScriptPropertyTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FCA1132316FA0800AFBDB6 /* JavaScriptPropertyTest.swift */; };
 		C7FFB4D5204B2313000D888E /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FFB4D4204B2313000D888E /* View.swift */; };
 /* End PBXBuildFile section */
 
@@ -353,7 +357,6 @@
 		C7004C9721442AAC00138ECC /* DLStylerStyleSelectorTreePrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DLStylerStyleSelectorTreePrivate.h; path = ../../../../shared/style/DLStylerStyleSelectorTreePrivate.h; sourceTree = "<group>"; };
 		C7027CD22270DFDA001DD0F7 /* ScrollViewTouchCancelGesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollViewTouchCancelGesture.swift; sourceTree = "<group>"; };
 		C70617A320F7C03100499FDB /* TransitionListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionListener.swift; sourceTree = "<group>"; };
-		C70B58E420880943008B2137 /* Conversion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conversion.swift; sourceTree = "<group>"; };
 		C718A0A82066E24400EFEC15 /* JavaScriptImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptImageView.swift; sourceTree = "<group>"; };
 		C718A0B22066E63300EFEC15 /* ImageLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLayer.swift; sourceTree = "<group>"; };
 		C718A0B42066ED6100EFEC15 /* JavaScriptImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptImage.swift; sourceTree = "<group>"; };
@@ -374,7 +377,6 @@
 		C71E6CDE20E65FB6009B86F6 /* Updatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Updatable.swift; sourceTree = "<group>"; };
 		C71E6CE020E6617D009B86F6 /* Scrollbars.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scrollbars.swift; sourceTree = "<group>"; };
 		C71E6CE220E66188009B86F6 /* Overscroll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Overscroll.swift; sourceTree = "<group>"; };
-		C728E05C222B1B9100BE5F7F /* Locale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Locale.swift; sourceTree = "<group>"; };
 		C72E0E8F20668EE1003BCEF1 /* TextLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLayer.swift; sourceTree = "<group>"; };
 		C72E0E9220669C97003BCEF1 /* TextAlignment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextAlignment.swift; sourceTree = "<group>"; };
 		C72E0E9420669CA0003BCEF1 /* TextLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLocation.swift; sourceTree = "<group>"; };
@@ -388,10 +390,7 @@
 		C74487E1205230BB00D74D30 /* DLStylerNode.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DLStylerNode.cpp; path = ../../../../shared/style/DLStylerNode.cpp; sourceTree = "<group>"; };
 		C74487E2205230BB00D74D30 /* DLStylerNode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DLStylerNode.h; path = ../../../../shared/style/DLStylerNode.h; sourceTree = "<group>"; };
 		C75153B222EB4BC3007CAA48 /* HTTPURLResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPURLResponse.swift; sourceTree = "<group>"; };
-		C75153B422EB81F0007CAA48 /* JavaScriptContextInternal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptContextInternal.swift; sourceTree = "<group>"; };
-		C75153B622EB81FC007CAA48 /* JavaScriptValueInternal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptValueInternal.swift; sourceTree = "<group>"; };
-		C75153B822EBA05C007CAA48 /* NSMutableData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSMutableData.swift; sourceTree = "<group>"; };
-		C75153BA22EBA09B007CAA48 /* NSMutableAttributedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSMutableAttributedString.swift; sourceTree = "<group>"; };
+		C75153B822EBA05C007CAA48 /* NSData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSData.swift; sourceTree = "<group>"; };
 		C75153BC22F11CAA007CAA48 /* JavaScriptLocale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptLocale.swift; sourceTree = "<group>"; };
 		C75153BE22F3791C007CAA48 /* JavaScriptClassStaticFunctionWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptClassStaticFunctionWrapper.swift; sourceTree = "<group>"; };
 		C75153C022F37C03007CAA48 /* JavaScriptClassStaticGetterWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptClassStaticGetterWrapper.swift; sourceTree = "<group>"; };
@@ -400,7 +399,7 @@
 		C76016E12019832800622840 /* JavaScriptFinalizeCallback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptFinalizeCallback.swift; sourceTree = "<group>"; };
 		C76753E92026996F003C4D85 /* ShadowLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShadowLayer.swift; sourceTree = "<group>"; };
 		C76753EC2026996F003C4D85 /* BorderLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorderLayer.swift; sourceTree = "<group>"; };
-		C76753FB20269970003C4D85 /* Property.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Property.swift; sourceTree = "<group>"; };
+		C76753FB20269970003C4D85 /* JavaScriptProperty.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JavaScriptProperty.swift; sourceTree = "<group>"; };
 		C767540220269970003C4D85 /* BitmapLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BitmapLayer.swift; sourceTree = "<group>"; };
 		C767540720269971003C4D85 /* RenderLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RenderLayer.swift; sourceTree = "<group>"; };
 		C767544420269DB5003C4D85 /* TextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextView.swift; sourceTree = "<group>"; };
@@ -408,8 +407,8 @@
 		C767544C2028DB7B003C4D85 /* JavaScriptView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JavaScriptView.swift; sourceTree = "<group>"; };
 		C7682A3F203538A9006EA6D5 /* WrapperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrapperView.swift; sourceTree = "<group>"; };
 		C7682A412035395F006EA6D5 /* Layer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Layer.swift; sourceTree = "<group>"; };
-		C76864702039146700D1903B /* PropertyType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyType.swift; sourceTree = "<group>"; };
-		C76864722039147100D1903B /* PropertyUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyUnit.swift; sourceTree = "<group>"; };
+		C76864702039146700D1903B /* JavaScriptPropertyType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptPropertyType.swift; sourceTree = "<group>"; };
+		C76864722039147100D1903B /* JavaScriptPropertyUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptPropertyUnit.swift; sourceTree = "<group>"; };
 		C77189A421014A9100337263 /* JavaScriptViewOptimizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptViewOptimizer.swift; sourceTree = "<group>"; };
 		C77189A621014A9E00337263 /* JavaScriptListOptimizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptListOptimizer.swift; sourceTree = "<group>"; };
 		C77189A92101642B00337263 /* JavaScriptGridOptimizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptGridOptimizer.swift; sourceTree = "<group>"; };
@@ -516,7 +515,6 @@
 		C7BB7D392028F4C5004006C2 /* CGRect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGRect.swift; sourceTree = "<group>"; };
 		C7BB7D3A2028F4C5004006C2 /* CGSize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGSize.swift; sourceTree = "<group>"; };
 		C7BB7D3B2028F4C5004006C2 /* CGPath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGPath.swift; sourceTree = "<group>"; };
-		C7BB7D412028F5A1004006C2 /* Boolean.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Boolean.swift; sourceTree = "<group>"; };
 		C7BB7D442029062D004006C2 /* TransitionGroup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransitionGroup.swift; sourceTree = "<group>"; };
 		C7BB7D452029062D004006C2 /* Transition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Transition.swift; sourceTree = "<group>"; };
 		C7BB7D4A20293955004006C2 /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
@@ -532,7 +530,7 @@
 		C7CE4B022208AB53005D5235 /* DateParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateParser.swift; sourceTree = "<group>"; };
 		C7CE4B042208AC4D005D5235 /* DateFormater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormater.swift; sourceTree = "<group>"; };
 		C7CE4B062208C93C005D5235 /* UITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextField.swift; sourceTree = "<group>"; };
-		C7CE4B08220A7824005D5235 /* TimeZone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeZone.swift; sourceTree = "<group>"; };
+		C7CE4B08220A7824005D5235 /* Timezone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Timezone.swift; sourceTree = "<group>"; };
 		C7D14EDB21D07058008B51D4 /* Scanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scanner.swift; sourceTree = "<group>"; };
 		C7D89262206575CB00E85115 /* JavaScriptTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptTextView.swift; sourceTree = "<group>"; };
 		C7D8926420657B0000E85115 /* UIFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIFont.swift; sourceTree = "<group>"; };
@@ -580,7 +578,7 @@
 		C7E8A4E320162429005139F6 /* JavaScriptSetterTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JavaScriptSetterTest.swift; sourceTree = "<group>"; };
 		C7E8A4E420162429005139F6 /* JavaScriptClassTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JavaScriptClassTest.swift; sourceTree = "<group>"; };
 		C7E8A4E520162429005139F6 /* JavaScriptGetterTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JavaScriptGetterTest.swift; sourceTree = "<group>"; };
-		C7E8A4E620162429005139F6 /* JavaScriptFunctionCallbackTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JavaScriptFunctionCallbackTest.swift; sourceTree = "<group>"; };
+		C7E8A4E620162429005139F6 /* JavaScriptFunctionTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JavaScriptFunctionTest.swift; sourceTree = "<group>"; };
 		C7E8A4E820162429005139F6 /* JavaScriptContextTestClassB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JavaScriptContextTestClassB.swift; sourceTree = "<group>"; };
 		C7E8A4E920162429005139F6 /* JavaScriptEmptyClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JavaScriptEmptyClass.swift; sourceTree = "<group>"; };
 		C7E8A4EA20162429005139F6 /* JavaScriptTestObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JavaScriptTestObject.swift; sourceTree = "<group>"; };
@@ -632,6 +630,16 @@
 		C7F8C9F720C17874007E8ECA /* DLStylerMatch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DLStylerMatch.h; path = ../../../../shared/style/DLStylerMatch.h; sourceTree = "<group>"; };
 		C7FAFD8F205AAC8F0031B2E9 /* DLStylerStyleBuilder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DLStylerStyleBuilder.cpp; path = ../../../../shared/style/DLStylerStyleBuilder.cpp; sourceTree = "<group>"; };
 		C7FAFD90205AAC900031B2E9 /* DLStylerStyleBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DLStylerStyleBuilder.h; path = ../../../../shared/style/DLStylerStyleBuilder.h; sourceTree = "<group>"; };
+		C7FCA0F72311B48200AFBDB6 /* JavaScriptPropertyStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptPropertyStorage.swift; sourceTree = "<group>"; };
+		C7FCA0F92311B49200AFBDB6 /* JavaScriptPropertyStorageBoolean.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptPropertyStorageBoolean.swift; sourceTree = "<group>"; };
+		C7FCA0FD2311B4AA00AFBDB6 /* JavaScriptPropertyStorageNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptPropertyStorageNumber.swift; sourceTree = "<group>"; };
+		C7FCA0FF2311B4BA00AFBDB6 /* JavaScriptPropertyStorageString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptPropertyStorageString.swift; sourceTree = "<group>"; };
+		C7FCA1012311B4C800AFBDB6 /* JavaScriptPropertyStorageValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptPropertyStorageValue.swift; sourceTree = "<group>"; };
+		C7FCA103231444F600AFBDB6 /* JavaScriptPropertyParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptPropertyParser.swift; sourceTree = "<group>"; };
+		C7FCA1072315CD7100AFBDB6 /* Lock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lock.swift; sourceTree = "<group>"; };
+		C7FCA1092316AE9A00AFBDB6 /* JavaScriptNull.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptNull.swift; sourceTree = "<group>"; };
+		C7FCA10B2316AFD900AFBDB6 /* JavaScriptUndefined.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptUndefined.swift; sourceTree = "<group>"; };
+		C7FCA1132316FA0800AFBDB6 /* JavaScriptPropertyTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptPropertyTest.swift; sourceTree = "<group>"; };
 		C7FFB4D4204B2313000D888E /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1181,40 +1189,13 @@
 		C7E8A47720159CC2005139F6 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				C7BB7D4A20293955004006C2 /* Array.swift */,
-				C7BB7D412028F5A1004006C2 /* Boolean.swift */,
-				C7E8A4FC2016244F005139F6 /* Bundle.swift */,
-				C7EE2E0522DE2D5B00FFF0EE /* CADisplayLink.swift */,
-				C7964D632033E67E00F454F1 /* CALayer.swift */,
-				C7BB7D372028F4C5004006C2 /* CGColor.swift */,
-				C7BB7D382028F4C5004006C2 /* CGFloat.swift */,
-				C7BB7D3B2028F4C5004006C2 /* CGPath.swift */,
-				C7E309782031312700436FA4 /* CGPoint.swift */,
-				C7BB7D392028F4C5004006C2 /* CGRect.swift */,
-				C7BB7D3A2028F4C5004006C2 /* CGSize.swift */,
-				C77D6E262210C162005FAAF8 /* CTFrame.swift */,
-				C7EE2E0F22DFA84900FFF0EE /* Data.swift */,
-				C79E6EB32207650F0006DED8 /* Date.swift */,
-				C7004C57213C4CF800138ECC /* Dictionary.swift */,
-				C7E8A4D42015A792005139F6 /* Double.swift */,
-				C75153B222EB4BC3007CAA48 /* HTTPURLResponse.swift */,
-				C75153B422EB81F0007CAA48 /* JavaScriptContextInternal.swift */,
-				C75153B622EB81FC007CAA48 /* JavaScriptValueInternal.swift */,
-				C728E05C222B1B9100BE5F7F /* Locale.swift */,
-				C75153B822EBA05C007CAA48 /* NSMutableData.swift */,
-				C7D8926620657B3400E85115 /* NSAttributedString.swift */,
-				C75153BA22EBA09B007CAA48 /* NSMutableAttributedString.swift */,
-				C77D6E22220F730D005FAAF8 /* NSRegularExpression.swift */,
-				C7D14EDB21D07058008B51D4 /* Scanner.swift */,
-				C7E8A4FE2016244F005139F6 /* String.swift */,
-				C7CE4B08220A7824005D5235 /* TimeZone.swift */,
-				C777B63C22D91DB200E75E55 /* UIApplication.swift */,
-				C7BFD16B207D560E00AAD31C /* UIColor.swift */,
-				C71E6CDC20E65CCF009B86F6 /* UIEdgeInsets.swift */,
-				C7D8926420657B0000E85115 /* UIFont.swift */,
-				C7CE4B062208C93C005D5235 /* UITextField.swift */,
-				C7E30976203123DD00436FA4 /* UIView.swift */,
-				C7F2260A2081A10000ABC66D /* Unsafe.swift */,
+				C7FCA1102316EE0300AFBDB6 /* CoreText */,
+				C7FCA10F2316EDF000AFBDB6 /* CoreGraphic */,
+				C7FCA10E2316EDE300AFBDB6 /* CoreAnimation */,
+				C7FCA1122316F22800AFBDB6 /* Foundation */,
+				C7FCA10D2316ED6C00AFBDB6 /* Types */,
+				C7FCA1112316EE1F00AFBDB6 /* UIKit */,
+				C7FCA1072315CD7100AFBDB6 /* Lock.swift */,
 				C7E8A4FF2016244F005139F6 /* Runtime.h */,
 				C7E8A4FD2016244F005139F6 /* Runtime.m */,
 			);
@@ -1304,7 +1285,6 @@
 			isa = PBXGroup;
 			children = (
 				C7E8A536201624E7005139F6 /* CAPI */,
-				C70B58E420880943008B2137 /* Conversion.swift */,
 				C7E8A518201624A1005139F6 /* JavaScriptBuilder.swift */,
 				C785B0A22016EC17001DAE64 /* JavaScriptCallback.swift */,
 				C7E8A50B201624A0005139F6 /* JavaScriptClass.swift */,
@@ -1331,10 +1311,18 @@
 				C7EE2E2022E4B21100FFF0EE /* JavaScriptForOwnWrapper.swift */,
 				C7EE2E2422E4B35A00FFF0EE /* JavaScriptForEachWrapper.swift */,
 				C7E8A514201624A1005139F6 /* JavaScriptValue.swift */,
+				C7FCA1092316AE9A00AFBDB6 /* JavaScriptNull.swift */,
+				C7FCA10B2316AFD900AFBDB6 /* JavaScriptUndefined.swift */,
+				C76753FB20269970003C4D85 /* JavaScriptProperty.swift */,
+				C7FCA0F72311B48200AFBDB6 /* JavaScriptPropertyStorage.swift */,
+				C7FCA0F92311B49200AFBDB6 /* JavaScriptPropertyStorageBoolean.swift */,
+				C7FCA0FD2311B4AA00AFBDB6 /* JavaScriptPropertyStorageNumber.swift */,
+				C7FCA0FF2311B4BA00AFBDB6 /* JavaScriptPropertyStorageString.swift */,
+				C7FCA1012311B4C800AFBDB6 /* JavaScriptPropertyStorageValue.swift */,
+				C76864702039146700D1903B /* JavaScriptPropertyType.swift */,
+				C76864722039147100D1903B /* JavaScriptPropertyUnit.swift */,
+				C7FCA103231444F600AFBDB6 /* JavaScriptPropertyParser.swift */,
 				C7E8A506201624A0005139F6 /* Module.swift */,
-				C76753FB20269970003C4D85 /* Property.swift */,
-				C76864702039146700D1903B /* PropertyType.swift */,
-				C76864722039147100D1903B /* PropertyUnit.swift */,
 				C7EE2E0122DD6AE200FFF0EE /* Source.swift */,
 				C777B63E22DA49B600E75E55 /* WeakReference.swift */,
 			);
@@ -1349,9 +1337,10 @@
 				C7E8A4E120162429005139F6 /* JavaScriptObjectTest.swift */,
 				C7E8A4E520162429005139F6 /* JavaScriptGetterTest.swift */,
 				C7E8A4E320162429005139F6 /* JavaScriptSetterTest.swift */,
-				C7E8A4E620162429005139F6 /* JavaScriptFunctionCallbackTest.swift */,
+				C7E8A4E620162429005139F6 /* JavaScriptFunctionTest.swift */,
 				C7E8A4EE20162429005139F6 /* JavaScriptContextTest.swift */,
 				C7E8A4E220162429005139F6 /* JavaScriptValueTest.swift */,
+				C7FCA1132316FA0800AFBDB6 /* JavaScriptPropertyTest.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -1389,6 +1378,77 @@
 				C7E8A54C2016262A005139F6 /* JavaScriptCore.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C7FCA10D2316ED6C00AFBDB6 /* Types */ = {
+			isa = PBXGroup;
+			children = (
+				C7BB7D4A20293955004006C2 /* Array.swift */,
+				C7E8A4FC2016244F005139F6 /* Bundle.swift */,
+				C7EE2E0F22DFA84900FFF0EE /* Data.swift */,
+				C79E6EB32207650F0006DED8 /* Date.swift */,
+				C7004C57213C4CF800138ECC /* Dictionary.swift */,
+				C7E8A4D42015A792005139F6 /* Double.swift */,
+				C7E8A4FE2016244F005139F6 /* String.swift */,
+				C7D14EDB21D07058008B51D4 /* Scanner.swift */,
+				C7CE4B08220A7824005D5235 /* Timezone.swift */,
+				C7F2260A2081A10000ABC66D /* Unsafe.swift */,
+			);
+			path = Types;
+			sourceTree = "<group>";
+		};
+		C7FCA10E2316EDE300AFBDB6 /* CoreAnimation */ = {
+			isa = PBXGroup;
+			children = (
+				C7EE2E0522DE2D5B00FFF0EE /* CADisplayLink.swift */,
+				C7964D632033E67E00F454F1 /* CALayer.swift */,
+			);
+			path = CoreAnimation;
+			sourceTree = "<group>";
+		};
+		C7FCA10F2316EDF000AFBDB6 /* CoreGraphic */ = {
+			isa = PBXGroup;
+			children = (
+				C7BB7D372028F4C5004006C2 /* CGColor.swift */,
+				C7BB7D382028F4C5004006C2 /* CGFloat.swift */,
+				C7BB7D3B2028F4C5004006C2 /* CGPath.swift */,
+				C7E309782031312700436FA4 /* CGPoint.swift */,
+				C7BB7D392028F4C5004006C2 /* CGRect.swift */,
+				C7BB7D3A2028F4C5004006C2 /* CGSize.swift */,
+			);
+			path = CoreGraphic;
+			sourceTree = "<group>";
+		};
+		C7FCA1102316EE0300AFBDB6 /* CoreText */ = {
+			isa = PBXGroup;
+			children = (
+				C77D6E262210C162005FAAF8 /* CTFrame.swift */,
+			);
+			path = CoreText;
+			sourceTree = "<group>";
+		};
+		C7FCA1112316EE1F00AFBDB6 /* UIKit */ = {
+			isa = PBXGroup;
+			children = (
+				C777B63C22D91DB200E75E55 /* UIApplication.swift */,
+				C7BFD16B207D560E00AAD31C /* UIColor.swift */,
+				C71E6CDC20E65CCF009B86F6 /* UIEdgeInsets.swift */,
+				C7D8926420657B0000E85115 /* UIFont.swift */,
+				C7CE4B062208C93C005D5235 /* UITextField.swift */,
+				C7E30976203123DD00436FA4 /* UIView.swift */,
+			);
+			path = UIKit;
+			sourceTree = "<group>";
+		};
+		C7FCA1122316F22800AFBDB6 /* Foundation */ = {
+			isa = PBXGroup;
+			children = (
+				C75153B822EBA05C007CAA48 /* NSData.swift */,
+				C7D8926620657B3400E85115 /* NSAttributedString.swift */,
+				C77D6E22220F730D005FAAF8 /* NSRegularExpression.swift */,
+				C75153B222EB4BC3007CAA48 /* HTTPURLResponse.swift */,
+			);
+			path = Foundation;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1612,6 +1672,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C7FCA1082315CD7200AFBDB6 /* Lock.swift in Sources */,
 				C71E6CE120E6617D009B86F6 /* Scrollbars.swift in Sources */,
 				C777B63F22DA49B600E75E55 /* WeakReference.swift in Sources */,
 				C773DA9021DD0E2800685BDB /* TextParser.swift in Sources */,
@@ -1624,6 +1685,7 @@
 				C7004C88214411BF00138ECC /* DLStylerStyleSelectorPrivate.cpp in Sources */,
 				C7BB7D3E2028F4C5004006C2 /* CGRect.swift in Sources */,
 				C7682A422035395F006EA6D5 /* Layer.swift in Sources */,
+				C7FCA1022311B4C800AFBDB6 /* JavaScriptPropertyStorageValue.swift in Sources */,
 				C7BFD15C207D50A300AAD31C /* FormModule.swift in Sources */,
 				C7EE2E1022DFA84900FFF0EE /* Data.swift in Sources */,
 				C7B9CEA9202CDB8D002409D5 /* ApplicationDelegate.swift in Sources */,
@@ -1631,14 +1693,14 @@
 				C7BFD15E207D50F000AAD31C /* JavaScriptSpinnerView.swift in Sources */,
 				C7E8A542201624FA005139F6 /* DLContext.cpp in Sources */,
 				C77189B02106ADFD00337263 /* Point3D.swift in Sources */,
-				C728E05D222B1B9100BE5F7F /* Locale.swift in Sources */,
 				C767544720269DBD003C4D85 /* ImageView.swift in Sources */,
-				C76864712039146700D1903B /* PropertyType.swift in Sources */,
+				C76864712039146700D1903B /* JavaScriptPropertyType.swift in Sources */,
 				C78115AF2052EA0D0096AE47 /* StylerNodeDelegate.swift in Sources */,
 				C7FAFD93205AAC900031B2E9 /* DLStylerStyleBuilder.cpp in Sources */,
 				C75153BD22F11CAA007CAA48 /* JavaScriptLocale.swift in Sources */,
 				C7BB7D462029062D004006C2 /* TransitionGroup.swift in Sources */,
 				C7A3AB77214EC68100D8B15C /* JavaScriptCanvas.swift in Sources */,
+				C7FCA0FE2311B4AA00AFBDB6 /* JavaScriptPropertyStorageNumber.swift in Sources */,
 				C767542120269971003C4D85 /* ShadowLayer.swift in Sources */,
 				C7BFD16A207D541F00AAD31C /* JavaScriptTextArea.swift in Sources */,
 				C7E5D083209DE1AD0098C5FD /* DialogModule.swift in Sources */,
@@ -1656,6 +1718,7 @@
 				C7E8A4CA20159E08005139F6 /* DLLayoutPrivate.cpp in Sources */,
 				C7E5D081209DDF730098C5FD /* JavaScriptAlert.swift in Sources */,
 				C79E6EB42207650F0006DED8 /* Date.swift in Sources */,
+				C7FCA10A2316AE9A00AFBDB6 /* JavaScriptNull.swift in Sources */,
 				C77D6E23220F730D005FAAF8 /* NSRegularExpression.swift in Sources */,
 				C7E8A4CD20159E08005139F6 /* DLRelativeLayout.cpp in Sources */,
 				C7B9CEB1202CE225002409D5 /* ViewModule.swift in Sources */,
@@ -1666,12 +1729,11 @@
 				C7F2260B2081A10000ABC66D /* Unsafe.swift in Sources */,
 				C7E30977203123DD00436FA4 /* UIView.swift in Sources */,
 				C7004C58213C4CF800138ECC /* Dictionary.swift in Sources */,
-				C75153BB22EBA09B007CAA48 /* NSMutableAttributedString.swift in Sources */,
 				C7E8A4C020159E08005139F6 /* DLLayoutNode.cpp in Sources */,
 				C7E8A4C620159E08005139F6 /* DLLayoutNodePrivate.cpp in Sources */,
 				C7B9CEAF202CDBD8002409D5 /* JavaScriptWindow.swift in Sources */,
 				C7E8A5012016244F005139F6 /* Runtime.m in Sources */,
-				C76864732039147100D1903B /* PropertyUnit.swift in Sources */,
+				C76864732039147100D1903B /* JavaScriptPropertyUnit.swift in Sources */,
 				C7B9CEA8202CDB8D002409D5 /* ApplicationWindow.swift in Sources */,
 				C7D8926520657B0000E85115 /* UIFont.swift in Sources */,
 				C7E8A51E201624A2005139F6 /* JavaScriptExceptionWrapper.swift in Sources */,
@@ -1682,14 +1744,14 @@
 				C7004C902144241200138ECC /* DLStylerStyleItemPrivate.cpp in Sources */,
 				C7D8926720657B3400E85115 /* NSAttributedString.swift in Sources */,
 				C7E8A51F201624A2005139F6 /* Module.swift in Sources */,
-				C767543320269971003C4D85 /* Property.swift in Sources */,
+				C767543320269971003C4D85 /* JavaScriptProperty.swift in Sources */,
 				C7682A40203538A9006EA6D5 /* WrapperView.swift in Sources */,
-				C70B58E520880943008B2137 /* Conversion.swift in Sources */,
 				C76016E22019832800622840 /* JavaScriptFinalizeCallback.swift in Sources */,
 				C77189AE2106ADF200337263 /* Point2D.swift in Sources */,
+				C7FCA0F82311B48200AFBDB6 /* JavaScriptPropertyStorage.swift in Sources */,
 				C767542420269971003C4D85 /* BorderLayer.swift in Sources */,
 				C7FFB4D5204B2313000D888E /* View.swift in Sources */,
-				C75153B922EBA05C007CAA48 /* NSMutableData.swift in Sources */,
+				C75153B922EBA05C007CAA48 /* NSData.swift in Sources */,
 				C71E6CBC20DD4EE1009B86F6 /* JavaScriptWebView.swift in Sources */,
 				C718A0C72067F75900EFEC15 /* GraphicModule.swift in Sources */,
 				C7A19E3520ACC4DF00367E91 /* ScrollableDelegate.swift in Sources */,
@@ -1707,13 +1769,13 @@
 				C732E78820865116006014A0 /* GlobalModule.swift in Sources */,
 				C718A0B52066ED6100EFEC15 /* JavaScriptImage.swift in Sources */,
 				C7BFD16C207D560E00AAD31C /* UIColor.swift in Sources */,
+				C7FCA0FA2311B49200AFBDB6 /* JavaScriptPropertyStorageBoolean.swift in Sources */,
 				C7004C8021440DCB00138ECC /* DLStylerStyleRulePrivate.cpp in Sources */,
 				C7E8A531201624A2005139F6 /* JavaScriptBuilder.swift in Sources */,
 				C72FF045204E190500FBB36B /* ShapeLayer.swift in Sources */,
 				C700121621551A9A00CB26D4 /* DeviceModule.swift in Sources */,
 				C77DFEE1208D063900CEC1D9 /* LocaleModule.swift in Sources */,
 				C777B63D22D91DB200E75E55 /* UIApplication.swift in Sources */,
-				C75153B722EB81FC007CAA48 /* JavaScriptValueInternal.swift in Sources */,
 				C72E0E9B20669CCD003BCEF1 /* TextTransform.swift in Sources */,
 				C7E8A521201624A2005139F6 /* JavaScriptFinalizeWrapper.swift in Sources */,
 				C71E6CE320E66188009B86F6 /* Overscroll.swift in Sources */,
@@ -1749,7 +1811,7 @@
 				C7A19E3A20ADD18200367E91 /* TextInputDelegate.swift in Sources */,
 				C7B9CEAD202CDBB7002409D5 /* ApplicationModule.swift in Sources */,
 				C7E5D085209DE2290098C5FD /* AlertController.swift in Sources */,
-				C7CE4B09220A7824005D5235 /* TimeZone.swift in Sources */,
+				C7CE4B09220A7824005D5235 /* Timezone.swift in Sources */,
 				C7541A8922E6B09800586FC4 /* HttpResponse.swift in Sources */,
 				C7E8A51D201624A2005139F6 /* JavaScriptObjectBuilder.swift in Sources */,
 				C7B9CEA6202CDB8D002409D5 /* ApplicationController.swift in Sources */,
@@ -1759,6 +1821,7 @@
 				C7E8A527201624A2005139F6 /* JavaScriptGetterWrapper.swift in Sources */,
 				C7D14EDC21D07058008B51D4 /* Scanner.swift in Sources */,
 				C7CE4B032208AB53005D5235 /* DateParser.swift in Sources */,
+				C7FCA1002311B4BA00AFBDB6 /* JavaScriptPropertyStorageString.swift in Sources */,
 				C7CE4B072208C93C005D5235 /* UITextField.swift in Sources */,
 				C74487E3205230BB00D74D30 /* DLStylerNode.cpp in Sources */,
 				C7BB7D3C2028F4C5004006C2 /* CGColor.swift in Sources */,
@@ -1769,7 +1832,6 @@
 				C7E309792031312700436FA4 /* CGPoint.swift in Sources */,
 				C72E0E9320669C97003BCEF1 /* TextAlignment.swift in Sources */,
 				C767543F20269971003C4D85 /* RenderLayer.swift in Sources */,
-				C75153B522EB81F0007CAA48 /* JavaScriptContextInternal.swift in Sources */,
 				C7E8A52A201624A2005139F6 /* JavaScriptContext.swift in Sources */,
 				C7E8A524201624A2005139F6 /* JavaScriptClass.swift in Sources */,
 				C75153B322EB4BC3007CAA48 /* HTTPURLResponse.swift in Sources */,
@@ -1779,6 +1841,7 @@
 				C7E8A52D201624A2005139F6 /* JavaScriptValue.swift in Sources */,
 				C75153C122F37C03007CAA48 /* JavaScriptClassStaticGetterWrapper.swift in Sources */,
 				C78115AD2052E9CD0096AE47 /* StylerNode.swift in Sources */,
+				C7FCA10C2316AFD900AFBDB6 /* JavaScriptUndefined.swift in Sources */,
 				C7004C7C21440DB600138ECC /* DLStylerStyleRule.cpp in Sources */,
 				C7027CD32270DFDA001DD0F7 /* ScrollViewTouchCancelGesture.swift in Sources */,
 				C767544D2028DB7B003C4D85 /* JavaScriptView.swift in Sources */,
@@ -1794,12 +1857,12 @@
 				C71A11A72080F7F60004D523 /* JavaScriptWebSocket.swift in Sources */,
 				C7E8A52B201624A2005139F6 /* JavaScriptSetterWrapper.swift in Sources */,
 				C7E8A526201624A2005139F6 /* JavaScriptGetterCallback.swift in Sources */,
-				C7BB7D422028F5A1004006C2 /* Boolean.swift in Sources */,
 				C77189A521014A9200337263 /* JavaScriptViewOptimizer.swift in Sources */,
 				C7EE2E2122E4B21100FFF0EE /* JavaScriptForOwnWrapper.swift in Sources */,
 				C7E8A4D12015A699005139F6 /* LayoutNode.swift in Sources */,
 				C71E6CDF20E65FB6009B86F6 /* Updatable.swift in Sources */,
 				C7004C9421442A5200138ECC /* DLStylerStyleSelectorTree.cpp in Sources */,
+				C7FCA104231444F600AFBDB6 /* JavaScriptPropertyParser.swift in Sources */,
 				C7B40F6120B716C800892C92 /* TextArea.swift in Sources */,
 				C77DFED3208CD91600CEC1D9 /* ImageLoader.swift in Sources */,
 				C718B5B6207C41F100610F8D /* RadialGradient.swift in Sources */,
@@ -1815,6 +1878,7 @@
 				C7E8A4F520162429005139F6 /* JavaScriptContextTestClassB.swift in Sources */,
 				C7E8A4F320162429005139F6 /* JavaScriptGetterTest.swift in Sources */,
 				C7E8A4DB2015ADD5005139F6 /* AbsoluteLayoutTest.swift in Sources */,
+				C7FCA1142316FA0800AFBDB6 /* JavaScriptPropertyTest.swift in Sources */,
 				C7E9126D20EFD6FA0076774A /* LayoutNodeDelegateCounter.swift in Sources */,
 				C7E8A4F120162429005139F6 /* JavaScriptSetterTest.swift in Sources */,
 				C7E8A4F820162429005139F6 /* JavaScriptContextTestClassA.swift in Sources */,
@@ -1823,7 +1887,7 @@
 				C7E8A4F720162429005139F6 /* JavaScriptTestObject.swift in Sources */,
 				C7E8A4FB20162429005139F6 /* JavaScriptContextTest.swift in Sources */,
 				C7E8A4EF20162429005139F6 /* JavaScriptObjectTest.swift in Sources */,
-				C7E8A4F420162429005139F6 /* JavaScriptFunctionCallbackTest.swift in Sources */,
+				C7E8A4F420162429005139F6 /* JavaScriptFunctionTest.swift in Sources */,
 				C7E8A4F620162429005139F6 /* JavaScriptEmptyClass.swift in Sources */,
 				C7E8A4DA2015ADD5005139F6 /* RelativeLayoutTest.swift in Sources */,
 				C777B62E22D7838E00E75E55 /* DezelUnitTests.swift in Sources */,

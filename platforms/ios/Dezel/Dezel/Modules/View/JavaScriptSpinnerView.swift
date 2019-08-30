@@ -40,7 +40,7 @@ open class JavaScriptSpinnerView: JavaScriptView {
 	 * @property active
 	 * @since 0.7.0
 	 */
-	@objc open lazy var active = JavaScriptProperty(boolean: false) { value in
+	@objc public lazy var active = JavaScriptProperty(boolean: false) { value in
 		self.view.active = value.boolean
 	}
 
@@ -49,7 +49,7 @@ open class JavaScriptSpinnerView: JavaScriptView {
 	 * @property color
 	 * @since 0.7.0
 	 */
-	@objc open lazy var color = JavaScriptProperty(string: "#000") { value in
+	@objc public lazy var color = JavaScriptProperty(string: "#000") { value in
 		self.view.color = UIColor(cgColor: value.string.toColor())
 	}
 

@@ -14,7 +14,8 @@ import ca.logaritm.dezel.core.JavaScriptClass
 import ca.logaritm.dezel.core.JavaScriptContext
 import ca.logaritm.dezel.core.JavaScriptFunctionCallback
 import ca.logaritm.dezel.core.JavaScriptPropertyType
-import ca.logaritm.dezel.extension.BottomSheetButton
+import ca.logaritm.dezel.extension.fatalError
+import ca.logaritm.dezel.extension.widget.BottomSheetButton
 import ca.logaritm.dezel.modules.graphic.ImageLoader
 import ca.logaritm.dezel.view.graphic.Convert
 
@@ -62,11 +63,15 @@ open class JavaScriptAlert(context: JavaScriptContext) : JavaScriptClass(context
 	@Suppress("unused")
 	open fun jsFunction_present(callback: JavaScriptFunctionCallback) {
 
+		if (callback.arguments < 4) {
+			fatalError("Method JavaScriptAlert.present() requires 4 arguments.")
+		}
+
 		this.protect()
 
 		val style   = callback.argument(0).string
-		val title   = callback.argument(1).string
-		val message = callback.argument(2).string
+		val title   = callback.argument(1).string.trim()
+		val message = callback.argument(2).string.trim()
 		val buttons = mutableListOf<JavaScriptAlertButton>()
 
 		callback.argument(3).forEach { _, value ->

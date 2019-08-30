@@ -6,7 +6,7 @@ import android.util.SizeF
 import ca.logaritm.dezel.application.application
 import ca.logaritm.dezel.core.*
 import ca.logaritm.dezel.extension.Delegates
-import ca.logaritm.dezel.extension.ceiled
+import ca.logaritm.dezel.extension.util.ceiled
 import ca.logaritm.dezel.modules.graphic.ImageLoader
 import ca.logaritm.dezel.view.ImageView
 import ca.logaritm.dezel.view.graphic.Color
@@ -23,126 +23,6 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 	//--------------------------------------------------------------------------
 	// Properties
 	//--------------------------------------------------------------------------
-
-	/**
-	 * The image view's source.
-	 * @property source
-	 * @since 0.7.0
-	 */
-	open val source: JavaScriptProperty by lazy {
-
-		JavaScriptProperty(context) { value ->
-
-			this.imageLoader.load(value) { image ->
-
-				this.imageData = image
-
-				if (this.layoutNode.wrapsContentWidth ||
-					this.layoutNode.wrapsContentHeight) {
-					this.layoutNode.invalidateSize()
-				}
-			}
-		}
-	}
-
-	/**
-	 * The image view's image container fit.
-	 * @property imageFit
-	 * @since 0.7.0
-	 */
-	open val imageFit: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, "contain") {
-			this.invalidateImage()
-		}
-	}
-
-	/**
-	 * The image view's image top anchor.
-	 * @property imageAnchorTop
-	 * @since 0.7.0
-	 */
-	open val imageAnchorTop: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.5) {
-			this.invalidateImage()
-		}
-	}
-
-	/**
-	 * The image view's image left anchor.
-	 * @property imageAnchorLeft
-	 * @since 0.7.0
-	 */
-	open val imageAnchorLeft: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 0.5) {
-			this.invalidateImage()
-		}
-	}
-
-	/**
-	 * The image view's image top position.
-	 * @property imageTop
-	 * @since 0.7.0
-	 */
-	open val imageTop: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 50.0, JavaScriptPropertyUnit.PC) {
-			this.invalidateImage()
-		}
-	}
-
-	/**
-	 * The image view's image left position.
-	 * @property imageLeft
-	 * @since 0.7.0
-	 */
-	open val imageLeft: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, 50.0, JavaScriptPropertyUnit.PC) {
-			this.invalidateImage()
-		}
-	}
-
-	/**
-	 * The image view's image width.
-	 * @property imageWidth
-	 * @since 0.7.0
-	 */
-	open val imageWidth: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, "auto") {
-			this.invalidateImage()
-		}
-	}
-
-	/**
-	 * The image view's image height.
-	 * @property imageHeight
-	 * @since 0.7.0
-	 */
-	open val imageHeight: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, "auto") {
-			this.invalidageImage()
-		}
-	}
-
-	/**
-	 * The image view's image filter.
-	 * @property imageFilter
-	 * @since 0.7.0
-	 */
-	open val imageFilter: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, "none") { value ->
-			this.view.imageFilter = this.getImageFilter(value.string)
-		}
-	}
-
-	/**
-	 * The image view's image imageTint color.
-	 * @property imageTint
-	 * @since 0.7.0
-	 */
-	open val imageTint: JavaScriptProperty by lazy {
-		JavaScriptProperty(context, "transparent") { value ->
-			this.view.imageTint = Color.parse(value.string)
-		}
-	}
 
 	/**
 	 * @property imageData
@@ -434,7 +314,7 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 				"bottom" -> return 1.0
 
 				else     -> {
-					Log.d("Dezel", "Unrecognized value for imageAnchorTop: ${prop.string}")
+					Log.d("Dezel", "Unrecognized toValue for imageAnchorTop: ${prop.string}")
 				}
 			}
 		}
@@ -458,7 +338,7 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 				"right"  -> return 1.0
 
 				else     -> {
-					Log.d("Dezel", "Unrecognized value for imageAnchorLeft: ${prop.string}")
+					Log.d("Dezel", "Unrecognized toValue for imageAnchorLeft: ${prop.string}")
 				}
 			}
 		}
@@ -479,7 +359,7 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 			"grayscale" -> return ImageFilter.GRAYSCALE
 
 			else        -> {
-				Log.d("Dezel", "Unrecognized value for imageFilter: $value")
+				Log.d("Dezel", "Unrecognized toValue for imageFilter: $value")
 			}
 		}
 
@@ -488,6 +368,128 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 
 	//--------------------------------------------------------------------------
 	// JS Properties
+	//--------------------------------------------------------------------------
+
+	/**
+	 * The image view's source.
+	 * @property source
+	 * @since 0.7.0
+	 */
+	public val source by lazy {
+
+		JavaScriptProperty { value ->
+
+			this.imageLoader.load(value) { image ->
+
+				this.imageData = image
+
+				if (this.layoutNode.wrapsContentWidth ||
+					this.layoutNode.wrapsContentHeight) {
+					this.layoutNode.invalidateSize()
+				}
+			}
+		}
+	}
+
+	/**
+	 * The image view's image container fit.
+	 * @property imageFit
+	 * @since 0.7.0
+	 */
+	public val imageFit by lazy {
+		JavaScriptProperty("contain") {
+			this.invalidateImage()
+		}
+	}
+
+	/**
+	 * The image view's image top anchor.
+	 * @property imageAnchorTop
+	 * @since 0.7.0
+	 */
+	public val imageAnchorTop by lazy {
+		JavaScriptProperty(0.5) {
+			this.invalidateImage()
+		}
+	}
+
+	/**
+	 * The image view's image left anchor.
+	 * @property imageAnchorLeft
+	 * @since 0.7.0
+	 */
+	public val imageAnchorLeft by lazy {
+		JavaScriptProperty(0.5) {
+			this.invalidateImage()
+		}
+	}
+
+	/**
+	 * The image view's image top position.
+	 * @property imageTop
+	 * @since 0.7.0
+	 */
+	public val imageTop by lazy {
+		JavaScriptProperty(50.0, JavaScriptPropertyUnit.PC) {
+			this.invalidateImage()
+		}
+	}
+
+	/**
+	 * The image view's image left position.
+	 * @property imageLeft
+	 * @since 0.7.0
+	 */
+	public val imageLeft by lazy {
+		JavaScriptProperty(50.0, JavaScriptPropertyUnit.PC) {
+			this.invalidateImage()
+		}
+	}
+
+	/**
+	 * The image view's image width.
+	 * @property imageWidth
+	 * @since 0.7.0
+	 */
+	public val imageWidth by lazy {
+		JavaScriptProperty("auto") {
+			this.invalidateImage()
+		}
+	}
+
+	/**
+	 * The image view's image height.
+	 * @property imageHeight
+	 * @since 0.7.0
+	 */
+	public val imageHeight by lazy {
+		JavaScriptProperty("auto") {
+			this.invalidageImage()
+		}
+	}
+
+	/**
+	 * The image view's image filter.
+	 * @property imageFilter
+	 * @since 0.7.0
+	 */
+	public val imageFilter by lazy {
+		JavaScriptProperty("none") { value ->
+			this.view.imageFilter = this.getImageFilter(value.string)
+		}
+	}
+
+	/**
+	 * The image view's image imageTint color.
+	 * @property imageTint
+	 * @since 0.7.0
+	 */
+	public val imageTint by lazy {
+		JavaScriptProperty("transparent") { value ->
+			this.view.imageTint = Color.parse(value.string)
+		}
+	}
+
 	//--------------------------------------------------------------------------
 
 	/**
@@ -507,7 +509,7 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 	 */
 	@Suppress("unused")
 	open fun jsSet_source(callback: JavaScriptSetterCallback) {
-		this.source.set(callback.value, this)
+		this.source.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -529,7 +531,7 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 	 */
 	@Suppress("unused")
 	open fun jsSet_imageFit(callback: JavaScriptSetterCallback) {
-		this.imageFit.set(callback.value, this)
+		this.imageFit.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -551,7 +553,7 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 	 */
 	@Suppress("unused")
 	open fun jsSet_imageAnchorTop(callback: JavaScriptSetterCallback) {
-		this.imageAnchorTop.set(callback.value, this)
+		this.imageAnchorTop.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -573,7 +575,7 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 	 */
 	@Suppress("unused")
 	open fun jsSet_imageAnchorLeft(callback: JavaScriptSetterCallback) {
-		this.imageAnchorLeft.set(callback.value, this)
+		this.imageAnchorLeft.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -595,7 +597,7 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 	 */
 	@Suppress("unused")
 	open fun jsSet_imageTop(callback: JavaScriptSetterCallback) {
-		this.imageTop.set(callback.value, this)
+		this.imageTop.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -617,7 +619,7 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 	 */
 	@Suppress("unused")
 	open fun jsSet_imageLeft(callback: JavaScriptSetterCallback) {
-		this.imageLeft.set(callback.value, this)
+		this.imageLeft.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -639,7 +641,7 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 	 */
 	@Suppress("unused")
 	open fun jsSet_imageWidth(callback: JavaScriptSetterCallback) {
-		this.imageWidth.set(callback.value, this)
+		this.imageWidth.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -661,7 +663,7 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 	 */
 	@Suppress("unused")
 	open fun jsSet_imageHeight(callback: JavaScriptSetterCallback) {
-		this.imageHeight.set(callback.value, this)
+		this.imageHeight.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -683,7 +685,7 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 	 */
 	@Suppress("unused")
 	open fun jsSet_imageFilter(callback: JavaScriptSetterCallback) {
-		this.imageFilter.set(callback.value, this)
+		this.imageFilter.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -705,6 +707,6 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 	 */
 	@Suppress("unused")
 	open fun jsSet_imageTint(callback: JavaScriptSetterCallback) {
-		this.imageTint.set(callback.value, this)
+		this.imageTint.reset(callback.value, this)
 	}
 }

@@ -21,6 +21,7 @@ open class JavaScriptPlatform(context: JavaScriptContext): JavaScriptClass(conte
 	 * @since 0.7.0
 	 * @hidden
 	 */
+	@Suppress("unused")
 	open fun jsGet_name(callback: JavaScriptGetterCallback) {
 		callback.returns("android")
 	}
@@ -30,6 +31,7 @@ open class JavaScriptPlatform(context: JavaScriptContext): JavaScriptClass(conte
 	 * @since 0.7.0
 	 * @hidden
 	 */
+	@Suppress("unused")
 	open fun jsGet_version(callback: JavaScriptGetterCallback) {
 		callback.returns(Build.VERSION.RELEASE)
 	}

@@ -11,6 +11,7 @@ import ca.logaritm.dezel.core.JavaScriptClass
 import ca.logaritm.dezel.core.JavaScriptContext
 import ca.logaritm.dezel.core.JavaScriptFunctionCallback
 import ca.logaritm.dezel.core.JavaScriptGetterCallback
+import ca.logaritm.dezel.extension.fatalError
 import java.util.*
 
 /**
@@ -68,15 +69,15 @@ open class JavaScriptDevice(context: JavaScriptContext): JavaScriptClass(context
 	@Suppress("unused")
 	open fun jsFunction_sound(callback: JavaScriptFunctionCallback) {
 
-		val value = callback.argument(0)
-		if (value.isNull ||
-			value.isUndefined) {
-			return
+		if (callback.arguments < 1) {
+			fatalError("sound requires 1 argument")
 		}
 
-		if (value.isString) {
+		val sound = callback.argument(0)
 
-			when (value.string) {
+		if (sound.isString) {
+
+			when (sound.string) {
 
 				"shutter" -> {
 					MediaActionSound().play(MediaActionSound.SHUTTER_CLICK)
@@ -88,7 +89,7 @@ open class JavaScriptDevice(context: JavaScriptContext): JavaScriptClass(context
 			return
 		}
 
-		MediaActionSound().play(value.number.toInt())
+		MediaActionSound().play(sound.number.toInt())
 	}
 
 	/**

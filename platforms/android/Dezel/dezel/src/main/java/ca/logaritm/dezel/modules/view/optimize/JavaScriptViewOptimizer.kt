@@ -3,8 +3,10 @@ package ca.logaritm.dezel.modules.view.optimize
 import ca.logaritm.dezel.core.JavaScriptClass
 import ca.logaritm.dezel.core.JavaScriptContext
 import ca.logaritm.dezel.core.JavaScriptFunctionCallback
-import ca.logaritm.dezel.extension.keyOf
-import ca.logaritm.dezel.extension.pop
+import ca.logaritm.dezel.extension.fatalError
+import ca.logaritm.dezel.extension.type.keyOf
+import ca.logaritm.dezel.extension.type.let
+import ca.logaritm.dezel.extension.type.pop
 import ca.logaritm.dezel.modules.view.JavaScriptView
 
 /**
@@ -164,9 +166,15 @@ open class JavaScriptViewOptimizer(context: JavaScriptContext) : JavaScriptClass
 	 */
 	@Suppress("unused")
 	open fun jsFunction_attach(callback: JavaScriptFunctionCallback) {
-		val view = callback.argument(0).cast(JavaScriptView::class.java)
-		if (view != null) {
-			this.attach(view)
+
+		if (callback.arguments < 1) {
+			fatalError("Method JavaScriptViewOptimizer.attach() requires 1 argument.")
+		}
+
+		val view = callback.argument(0)
+
+		view.cast(JavaScriptView::class.java).let {
+			this.attach(it)
 		}
 	}
 
@@ -187,9 +195,15 @@ open class JavaScriptViewOptimizer(context: JavaScriptContext) : JavaScriptClass
 	 */
 	@Suppress("unused")
 	open fun jsFunction_cacheItem(callback: JavaScriptFunctionCallback) {
-		val view = callback.argument(0).cast(JavaScriptView::class.java)
-		if (view != null) {
-			this.cacheItem(view)
+
+		if (callback.arguments < 1) {
+			fatalError("Method JavaScriptViewOptimizer.cacheItem() requires 1 argument.")
+		}
+
+		val view = callback.argument(0)
+
+		view.cast(JavaScriptView::class.java).let {
+			this.cacheItem(it)
 		}
 	}
 
@@ -200,6 +214,10 @@ open class JavaScriptViewOptimizer(context: JavaScriptContext) : JavaScriptClass
 	 */
 	@Suppress("unused")
 	open fun jsFunction_getItem(callback: JavaScriptFunctionCallback) {
+
+		if (callback.arguments < 1) {
+			fatalError("Method JavaScriptViewOptimizer.getItem() requires 1 argument.")
+		}
 
 		val index = callback.argument(0).number.toInt()
 		if (index < 0) {
@@ -221,6 +239,10 @@ open class JavaScriptViewOptimizer(context: JavaScriptContext) : JavaScriptClass
 	 */
 	@Suppress("unused")
 	open fun jsFunction_getItemIndex(callback: JavaScriptFunctionCallback) {
+
+		if (callback.arguments < 1) {
+			fatalError("Method JavaScriptViewOptimizer.getItemIndex() requires 1 argument.")
+		}
 
 		val item = callback.argument(0).cast(JavaScriptView::class.java)
 		if (item == null) {

@@ -4,10 +4,11 @@ import android.util.Log
 import ca.logaritm.dezel.core.JavaScriptClass
 import ca.logaritm.dezel.core.JavaScriptContext
 import ca.logaritm.dezel.core.JavaScriptFunctionCallback
-import ca.logaritm.dezel.extension.createObject
-import ca.logaritm.dezel.extension.createString
-import ca.logaritm.dezel.extension.toDictionaryOfString
-import ca.logaritm.dezel.extension.toURL
+import ca.logaritm.dezel.extension.core.createObject
+import ca.logaritm.dezel.extension.core.createString
+import ca.logaritm.dezel.extension.core.toDictionaryOfString
+import ca.logaritm.dezel.extension.core.toURL
+import ca.logaritm.dezel.extension.fatalError
 import ca.logaritm.dezel.networking.HttpRequest
 import ca.logaritm.dezel.networking.HttpRequestListener
 import ca.logaritm.dezel.networking.HttpResponse
@@ -123,6 +124,10 @@ open class JavaScriptXMLHttpRequest(context: JavaScriptContext) : JavaScriptClas
 
 		this.request?.abort()
 		this.request = null
+
+		if (callback.arguments < 7) {
+			fatalError("Method JavaScriptXMLHttpRequest.request() requires 7 arguments.")
+		}
 
 		val requestUrl      = callback.argument(0)
 		val requestMethod   = callback.argument(1).string

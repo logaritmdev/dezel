@@ -34,7 +34,7 @@ public enum class Overscroll {
 		}
 
 		/**
-		 * Returns the proper overscroll from a string.
+		 * Returns the proper overscroll from a toString.
 		 * @method get
 		 * @since 0.2.0
 		 */
@@ -50,7 +50,7 @@ public enum class Overscroll {
 		}
 
 		/**
-		 * Parses the overscroll type from a number.
+		 * Parses the overscroll type from a toNumber.
 		 * @method get
 		 * @since 0.2.0
 		 */
@@ -59,7 +59,7 @@ public enum class Overscroll {
 		}
 
 		/**
-		 * Parses the overscroll type from a boolean.
+		 * Parses the overscroll type from a toBoolean.
 		 * @method get
 		 * @since 0.2.0
 		 */

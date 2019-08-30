@@ -3,7 +3,7 @@ package ca.logaritm.dezel.core
 /**
  * The unit of the property.
  * @enum JavaScriptPropertyUnit
- * @since 0.1.0
+ * @since 0.7.0
  */
 public enum class JavaScriptPropertyUnit(val value: Int) {
 

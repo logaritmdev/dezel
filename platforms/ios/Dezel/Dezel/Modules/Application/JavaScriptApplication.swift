@@ -39,7 +39,7 @@ open class JavaScriptApplication: JavaScriptClass {
 	 * @property statusBarVisible
 	 * @since 0.7.0
 	 */
-	@objc open lazy var statusBarVisible = JavaScriptProperty(boolean: true) { value in
+	@objc public lazy var statusBarVisible = JavaScriptProperty(boolean: true) { value in
 		self.context.application.statusBarVisible = value.boolean
 	}
 
@@ -48,7 +48,7 @@ open class JavaScriptApplication: JavaScriptClass {
 	 * @property statusBarForegroundColor
 	 * @since 0.7.0
 	 */
-	@objc open lazy var statusBarForegroundColor = JavaScriptProperty(string: "black") { value in
+	@objc public lazy var statusBarForegroundColor = JavaScriptProperty(string: "black") { value in
 		self.context.application.statusBarForegroundColor = UIColor(string: value.string)
 	}
 
@@ -57,7 +57,7 @@ open class JavaScriptApplication: JavaScriptClass {
 	 * @property statusBarBackgroundColor
 	 * @since 0.7.0
 	 */
-	@objc open lazy var statusBarBackgroundColor = JavaScriptProperty(string: "transparent") { value in
+	@objc public lazy var statusBarBackgroundColor = JavaScriptProperty(string: "transparent") { value in
 		self.context.application.statusBarBackgroundColor = UIColor(string: value.string)
 	}
 
@@ -66,7 +66,7 @@ open class JavaScriptApplication: JavaScriptClass {
 	 * @property badge
 	 * @since 0.7.0
 	 */
-	@objc open lazy var badge = JavaScriptProperty(number: 0) { value in
+	@objc public lazy var badge = JavaScriptProperty(number: 0) { value in
 		self.context.application.badge = value.number.toInt()
 	}
 
