@@ -14,3 +14,7 @@ FOUNDATION_EXPORT const unsigned char DezelVersionString[];
 #import "WebSocketSecurity.h"
 #import "WebSocketConnection.h"
 #import "LRUDiskCache.h"
+
+#import "DisplayBase.h"
+#import "DisplayRef.h"
+#import "DisplayNodeRef.h"

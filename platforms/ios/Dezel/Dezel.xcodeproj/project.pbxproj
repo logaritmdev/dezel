@@ -41,6 +41,45 @@
 		C7004C9821442AAC00138ECC /* DLStylerStyleSelectorTreePrivate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7004C9621442AAB00138ECC /* DLStylerStyleSelectorTreePrivate.cpp */; };
 		C7004C9921442AAC00138ECC /* DLStylerStyleSelectorTreePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = C7004C9721442AAC00138ECC /* DLStylerStyleSelectorTreePrivate.h */; };
 		C7027CD32270DFDA001DD0F7 /* ScrollViewTouchCancelGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7027CD22270DFDA001DD0F7 /* ScrollViewTouchCancelGesture.swift */; };
+		C7040D96232694B100DFDBED /* DisplayNode.h in Headers */ = {isa = PBXBuildFile; fileRef = C7040D84232694AF00DFDBED /* DisplayNode.h */; };
+		C7040D97232694B100DFDBED /* DisplayNodeRef.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7040D85232694AF00DFDBED /* DisplayNodeRef.cpp */; };
+		C7040D98232694B100DFDBED /* DisplayNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7040D86232694AF00DFDBED /* DisplayNode.cpp */; };
+		C7040D9A232694B100DFDBED /* Display.h in Headers */ = {isa = PBXBuildFile; fileRef = C7040D88232694B000DFDBED /* Display.h */; };
+		C7040D9C232694B100DFDBED /* DisplayNodeRef.h in Headers */ = {isa = PBXBuildFile; fileRef = C7040D8A232694B000DFDBED /* DisplayNodeRef.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C7040D9D232694B100DFDBED /* DisplayRef.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7040D8B232694B000DFDBED /* DisplayRef.cpp */; };
+		C7040D9E232694B100DFDBED /* DisplayNodeFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7040D8C232694B000DFDBED /* DisplayNodeFrame.cpp */; };
+		C7040D9F232694B100DFDBED /* DisplayNodeFrame.h in Headers */ = {isa = PBXBuildFile; fileRef = C7040D8D232694B000DFDBED /* DisplayNodeFrame.h */; };
+		C7040DA4232694B100DFDBED /* Display.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7040D92232694B100DFDBED /* Display.cpp */; };
+		C7040DA6232694B100DFDBED /* DisplayRef.h in Headers */ = {isa = PBXBuildFile; fileRef = C7040D94232694B100DFDBED /* DisplayRef.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C7040DAA2326974300DFDBED /* DisplayNodeAnchor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7040DA82326974300DFDBED /* DisplayNodeAnchor.cpp */; };
+		C7040DAB2326974300DFDBED /* DisplayNodeAnchor.h in Headers */ = {isa = PBXBuildFile; fileRef = C7040DA92326974300DFDBED /* DisplayNodeAnchor.h */; };
+		C7040DAE2326983700DFDBED /* DisplayNodeSize.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7040DAC2326983700DFDBED /* DisplayNodeSize.cpp */; };
+		C7040DAF2326983700DFDBED /* DisplayNodeSize.h in Headers */ = {isa = PBXBuildFile; fileRef = C7040DAD2326983700DFDBED /* DisplayNodeSize.h */; };
+		C7040DB2232698AB00DFDBED /* DisplayNodeOrigin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7040DB0232698AB00DFDBED /* DisplayNodeOrigin.cpp */; };
+		C7040DB3232698AB00DFDBED /* DisplayNodeOrigin.h in Headers */ = {isa = PBXBuildFile; fileRef = C7040DB1232698AB00DFDBED /* DisplayNodeOrigin.h */; };
+		C7040DB6232698C000DFDBED /* DisplayNodeContentSize.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7040DB4232698C000DFDBED /* DisplayNodeContentSize.cpp */; };
+		C7040DB7232698C000DFDBED /* DisplayNodeContentSize.h in Headers */ = {isa = PBXBuildFile; fileRef = C7040DB5232698C000DFDBED /* DisplayNodeContentSize.h */; };
+		C7040DBA232698D000DFDBED /* DisplayNodeContentOrigin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7040DB8232698D000DFDBED /* DisplayNodeContentOrigin.cpp */; };
+		C7040DBB232698D000DFDBED /* DisplayNodeContentOrigin.h in Headers */ = {isa = PBXBuildFile; fileRef = C7040DB9232698D000DFDBED /* DisplayNodeContentOrigin.h */; };
+		C7040DBE232698FC00DFDBED /* DisplayNodeMargin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7040DBC232698FC00DFDBED /* DisplayNodeMargin.cpp */; };
+		C7040DBF232698FC00DFDBED /* DisplayNodeMargin.h in Headers */ = {isa = PBXBuildFile; fileRef = C7040DBD232698FC00DFDBED /* DisplayNodeMargin.h */; };
+		C7040DC22326991200DFDBED /* DisplayNodeBorder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7040DC02326991200DFDBED /* DisplayNodeBorder.cpp */; };
+		C7040DC32326991200DFDBED /* DisplayNodeBorder.h in Headers */ = {isa = PBXBuildFile; fileRef = C7040DC12326991200DFDBED /* DisplayNodeBorder.h */; };
+		C7040DC62326993400DFDBED /* DisplayNodePadding.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7040DC42326993400DFDBED /* DisplayNodePadding.cpp */; };
+		C7040DC72326993400DFDBED /* DisplayNodePadding.h in Headers */ = {isa = PBXBuildFile; fileRef = C7040DC52326993400DFDBED /* DisplayNodePadding.h */; };
+		C7040DCA2326999B00DFDBED /* DisplayBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7040DC82326999B00DFDBED /* DisplayBase.cpp */; };
+		C7040DCB2326999B00DFDBED /* DisplayBase.h in Headers */ = {isa = PBXBuildFile; fileRef = C7040DC92326999B00DFDBED /* DisplayBase.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C7040DD12326A29900DFDBED /* Layout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7040DCF2326A29900DFDBED /* Layout.cpp */; };
+		C7040DD22326A29900DFDBED /* Layout.h in Headers */ = {isa = PBXBuildFile; fileRef = C7040DD02326A29900DFDBED /* Layout.h */; };
+		C7040DD62326A3C900DFDBED /* DisplayNodeStyle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7040DD42326A3C900DFDBED /* DisplayNodeStyle.cpp */; };
+		C7040DD72326A3C900DFDBED /* DisplayNodeStyle.h in Headers */ = {isa = PBXBuildFile; fileRef = C7040DD52326A3C900DFDBED /* DisplayNodeStyle.h */; };
+		C7040DDE2326B2FA00DFDBED /* RelativeLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7040DDC2326B2F900DFDBED /* RelativeLayout.cpp */; };
+		C7040DDF2326B2FA00DFDBED /* RelativeLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = C7040DDD2326B2FA00DFDBED /* RelativeLayout.h */; };
+		C7040DE22326C83F00DFDBED /* AbsoluteLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = C7040DE02326C83E00DFDBED /* AbsoluteLayout.h */; };
+		C7040DE32326C83F00DFDBED /* AbsoluteLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7040DE12326C83F00DFDBED /* AbsoluteLayout.cpp */; };
+		C7040DE52327D40900DFDBED /* Display.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7040DE42327D40900DFDBED /* Display.swift */; };
+		C7040DE72327D41200DFDBED /* DisplayDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7040DE62327D41200DFDBED /* DisplayDelegate.swift */; };
+		C7040DE92327DB2100DFDBED /* DisplayNodeDelegateCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7040DE82327DB2000DFDBED /* DisplayNodeDelegateCounter.swift */; };
 		C70617A420F7C03100499FDB /* TransitionListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = C70617A320F7C03100499FDB /* TransitionListener.swift */; };
 		C718A0A92066E24400EFEC15 /* JavaScriptImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C718A0A82066E24400EFEC15 /* JavaScriptImageView.swift */; };
 		C718A0B32066E63300EFEC15 /* ImageLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C718A0B22066E63300EFEC15 /* ImageLayer.swift */; };
@@ -322,6 +361,9 @@
 		C7FCA10A2316AE9A00AFBDB6 /* JavaScriptNull.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FCA1092316AE9A00AFBDB6 /* JavaScriptNull.swift */; };
 		C7FCA10C2316AFD900AFBDB6 /* JavaScriptUndefined.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FCA10B2316AFD900AFBDB6 /* JavaScriptUndefined.swift */; };
 		C7FCA1142316FA0800AFBDB6 /* JavaScriptPropertyTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FCA1132316FA0800AFBDB6 /* JavaScriptPropertyTest.swift */; };
+		C7FCA140231C499C00AFBDB6 /* DisplayNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FCA13F231C499C00AFBDB6 /* DisplayNode.swift */; };
+		C7FCA142231C49A700AFBDB6 /* DisplayNodeDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FCA141231C49A700AFBDB6 /* DisplayNodeDelegate.swift */; };
+		C7FCA149231C5BC400AFBDB6 /* DisplayNodeAbsoluteLayoutTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FCA148231C5BC400AFBDB6 /* DisplayNodeAbsoluteLayoutTest.swift */; };
 		C7FFB4D5204B2313000D888E /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FFB4D4204B2313000D888E /* View.swift */; };
 /* End PBXBuildFile section */
 
@@ -356,6 +398,45 @@
 		C7004C9621442AAB00138ECC /* DLStylerStyleSelectorTreePrivate.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DLStylerStyleSelectorTreePrivate.cpp; path = ../../../../shared/style/DLStylerStyleSelectorTreePrivate.cpp; sourceTree = "<group>"; };
 		C7004C9721442AAC00138ECC /* DLStylerStyleSelectorTreePrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DLStylerStyleSelectorTreePrivate.h; path = ../../../../shared/style/DLStylerStyleSelectorTreePrivate.h; sourceTree = "<group>"; };
 		C7027CD22270DFDA001DD0F7 /* ScrollViewTouchCancelGesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollViewTouchCancelGesture.swift; sourceTree = "<group>"; };
+		C7040D84232694AF00DFDBED /* DisplayNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DisplayNode.h; path = ../../../../../shared/view/display/DisplayNode.h; sourceTree = "<group>"; };
+		C7040D85232694AF00DFDBED /* DisplayNodeRef.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DisplayNodeRef.cpp; path = ../../../../../shared/view/display/DisplayNodeRef.cpp; sourceTree = "<group>"; };
+		C7040D86232694AF00DFDBED /* DisplayNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DisplayNode.cpp; path = ../../../../../shared/view/display/DisplayNode.cpp; sourceTree = "<group>"; };
+		C7040D88232694B000DFDBED /* Display.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Display.h; path = ../../../../../shared/view/display/Display.h; sourceTree = "<group>"; };
+		C7040D8A232694B000DFDBED /* DisplayNodeRef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DisplayNodeRef.h; path = ../../../../../shared/view/display/DisplayNodeRef.h; sourceTree = "<group>"; };
+		C7040D8B232694B000DFDBED /* DisplayRef.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DisplayRef.cpp; path = ../../../../../shared/view/display/DisplayRef.cpp; sourceTree = "<group>"; };
+		C7040D8C232694B000DFDBED /* DisplayNodeFrame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DisplayNodeFrame.cpp; path = ../../../../../shared/view/display/DisplayNodeFrame.cpp; sourceTree = "<group>"; };
+		C7040D8D232694B000DFDBED /* DisplayNodeFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DisplayNodeFrame.h; path = ../../../../../shared/view/display/DisplayNodeFrame.h; sourceTree = "<group>"; };
+		C7040D92232694B100DFDBED /* Display.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Display.cpp; path = ../../../../../shared/view/display/Display.cpp; sourceTree = "<group>"; };
+		C7040D94232694B100DFDBED /* DisplayRef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DisplayRef.h; path = ../../../../../shared/view/display/DisplayRef.h; sourceTree = "<group>"; };
+		C7040DA82326974300DFDBED /* DisplayNodeAnchor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DisplayNodeAnchor.cpp; path = ../../../../../shared/view/display/DisplayNodeAnchor.cpp; sourceTree = "<group>"; };
+		C7040DA92326974300DFDBED /* DisplayNodeAnchor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DisplayNodeAnchor.h; path = ../../../../../shared/view/display/DisplayNodeAnchor.h; sourceTree = "<group>"; };
+		C7040DAC2326983700DFDBED /* DisplayNodeSize.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DisplayNodeSize.cpp; path = ../../../../../shared/view/display/DisplayNodeSize.cpp; sourceTree = "<group>"; };
+		C7040DAD2326983700DFDBED /* DisplayNodeSize.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DisplayNodeSize.h; path = ../../../../../shared/view/display/DisplayNodeSize.h; sourceTree = "<group>"; };
+		C7040DB0232698AB00DFDBED /* DisplayNodeOrigin.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DisplayNodeOrigin.cpp; path = ../../../../../shared/view/display/DisplayNodeOrigin.cpp; sourceTree = "<group>"; };
+		C7040DB1232698AB00DFDBED /* DisplayNodeOrigin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DisplayNodeOrigin.h; path = ../../../../../shared/view/display/DisplayNodeOrigin.h; sourceTree = "<group>"; };
+		C7040DB4232698C000DFDBED /* DisplayNodeContentSize.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DisplayNodeContentSize.cpp; path = ../../../../../shared/view/display/DisplayNodeContentSize.cpp; sourceTree = "<group>"; };
+		C7040DB5232698C000DFDBED /* DisplayNodeContentSize.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DisplayNodeContentSize.h; path = ../../../../../shared/view/display/DisplayNodeContentSize.h; sourceTree = "<group>"; };
+		C7040DB8232698D000DFDBED /* DisplayNodeContentOrigin.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DisplayNodeContentOrigin.cpp; path = ../../../../../shared/view/display/DisplayNodeContentOrigin.cpp; sourceTree = "<group>"; };
+		C7040DB9232698D000DFDBED /* DisplayNodeContentOrigin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DisplayNodeContentOrigin.h; path = ../../../../../shared/view/display/DisplayNodeContentOrigin.h; sourceTree = "<group>"; };
+		C7040DBC232698FC00DFDBED /* DisplayNodeMargin.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DisplayNodeMargin.cpp; path = ../../../../../shared/view/display/DisplayNodeMargin.cpp; sourceTree = "<group>"; };
+		C7040DBD232698FC00DFDBED /* DisplayNodeMargin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DisplayNodeMargin.h; path = ../../../../../shared/view/display/DisplayNodeMargin.h; sourceTree = "<group>"; };
+		C7040DC02326991200DFDBED /* DisplayNodeBorder.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DisplayNodeBorder.cpp; path = ../../../../../shared/view/display/DisplayNodeBorder.cpp; sourceTree = "<group>"; };
+		C7040DC12326991200DFDBED /* DisplayNodeBorder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DisplayNodeBorder.h; path = ../../../../../shared/view/display/DisplayNodeBorder.h; sourceTree = "<group>"; };
+		C7040DC42326993400DFDBED /* DisplayNodePadding.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DisplayNodePadding.cpp; path = ../../../../../shared/view/display/DisplayNodePadding.cpp; sourceTree = "<group>"; };
+		C7040DC52326993400DFDBED /* DisplayNodePadding.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DisplayNodePadding.h; path = ../../../../../shared/view/display/DisplayNodePadding.h; sourceTree = "<group>"; };
+		C7040DC82326999B00DFDBED /* DisplayBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DisplayBase.cpp; path = ../../../../../shared/view/display/DisplayBase.cpp; sourceTree = "<group>"; };
+		C7040DC92326999B00DFDBED /* DisplayBase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DisplayBase.h; path = ../../../../../shared/view/display/DisplayBase.h; sourceTree = "<group>"; };
+		C7040DCF2326A29900DFDBED /* Layout.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Layout.cpp; path = ../../../../../shared/view/layout/Layout.cpp; sourceTree = "<group>"; };
+		C7040DD02326A29900DFDBED /* Layout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Layout.h; path = ../../../../../shared/view/layout/Layout.h; sourceTree = "<group>"; };
+		C7040DD42326A3C900DFDBED /* DisplayNodeStyle.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DisplayNodeStyle.cpp; path = ../../../../../shared/view/display/DisplayNodeStyle.cpp; sourceTree = "<group>"; };
+		C7040DD52326A3C900DFDBED /* DisplayNodeStyle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DisplayNodeStyle.h; path = ../../../../../shared/view/display/DisplayNodeStyle.h; sourceTree = "<group>"; };
+		C7040DDC2326B2F900DFDBED /* RelativeLayout.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RelativeLayout.cpp; path = ../../../../../shared/view/layout/RelativeLayout.cpp; sourceTree = "<group>"; };
+		C7040DDD2326B2FA00DFDBED /* RelativeLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RelativeLayout.h; path = ../../../../../shared/view/layout/RelativeLayout.h; sourceTree = "<group>"; };
+		C7040DE02326C83E00DFDBED /* AbsoluteLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AbsoluteLayout.h; path = ../../../../../shared/view/layout/AbsoluteLayout.h; sourceTree = "<group>"; };
+		C7040DE12326C83F00DFDBED /* AbsoluteLayout.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AbsoluteLayout.cpp; path = ../../../../../shared/view/layout/AbsoluteLayout.cpp; sourceTree = "<group>"; };
+		C7040DE42327D40900DFDBED /* Display.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Display.swift; sourceTree = "<group>"; };
+		C7040DE62327D41200DFDBED /* DisplayDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayDelegate.swift; sourceTree = "<group>"; };
+		C7040DE82327DB2000DFDBED /* DisplayNodeDelegateCounter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayNodeDelegateCounter.swift; sourceTree = "<group>"; };
 		C70617A320F7C03100499FDB /* TransitionListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionListener.swift; sourceTree = "<group>"; };
 		C718A0A82066E24400EFEC15 /* JavaScriptImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptImageView.swift; sourceTree = "<group>"; };
 		C718A0B22066E63300EFEC15 /* ImageLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLayer.swift; sourceTree = "<group>"; };
@@ -640,6 +721,9 @@
 		C7FCA1092316AE9A00AFBDB6 /* JavaScriptNull.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptNull.swift; sourceTree = "<group>"; };
 		C7FCA10B2316AFD900AFBDB6 /* JavaScriptUndefined.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptUndefined.swift; sourceTree = "<group>"; };
 		C7FCA1132316FA0800AFBDB6 /* JavaScriptPropertyTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptPropertyTest.swift; sourceTree = "<group>"; };
+		C7FCA13F231C499C00AFBDB6 /* DisplayNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayNode.swift; sourceTree = "<group>"; };
+		C7FCA141231C49A700AFBDB6 /* DisplayNodeDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayNodeDelegate.swift; sourceTree = "<group>"; };
+		C7FCA148231C5BC400AFBDB6 /* DisplayNodeAbsoluteLayoutTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayNodeAbsoluteLayoutTest.swift; sourceTree = "<group>"; };
 		C7FFB4D4204B2313000D888E /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -681,6 +765,72 @@
 				C7027CD22270DFDA001DD0F7 /* ScrollViewTouchCancelGesture.swift */,
 			);
 			path = Gesture;
+			sourceTree = "<group>";
+		};
+		C7040DCC23269C1C00DFDBED /* Wrappers */ = {
+			isa = PBXGroup;
+			children = (
+				C7040D85232694AF00DFDBED /* DisplayNodeRef.cpp */,
+				C7040D8A232694B000DFDBED /* DisplayNodeRef.h */,
+				C7040D8B232694B000DFDBED /* DisplayRef.cpp */,
+				C7040D94232694B100DFDBED /* DisplayRef.h */,
+			);
+			name = Wrappers;
+			sourceTree = "<group>";
+		};
+		C7040DCD23269D0000DFDBED /* Attributes */ = {
+			isa = PBXGroup;
+			children = (
+				C7040DA82326974300DFDBED /* DisplayNodeAnchor.cpp */,
+				C7040DA92326974300DFDBED /* DisplayNodeAnchor.h */,
+				C7040DC02326991200DFDBED /* DisplayNodeBorder.cpp */,
+				C7040DC12326991200DFDBED /* DisplayNodeBorder.h */,
+				C7040DB8232698D000DFDBED /* DisplayNodeContentOrigin.cpp */,
+				C7040DB9232698D000DFDBED /* DisplayNodeContentOrigin.h */,
+				C7040DB4232698C000DFDBED /* DisplayNodeContentSize.cpp */,
+				C7040DB5232698C000DFDBED /* DisplayNodeContentSize.h */,
+				C7040DBC232698FC00DFDBED /* DisplayNodeMargin.cpp */,
+				C7040DBD232698FC00DFDBED /* DisplayNodeMargin.h */,
+				C7040DB0232698AB00DFDBED /* DisplayNodeOrigin.cpp */,
+				C7040DB1232698AB00DFDBED /* DisplayNodeOrigin.h */,
+				C7040DC42326993400DFDBED /* DisplayNodePadding.cpp */,
+				C7040DC52326993400DFDBED /* DisplayNodePadding.h */,
+				C7040DAC2326983700DFDBED /* DisplayNodeSize.cpp */,
+				C7040DAD2326983700DFDBED /* DisplayNodeSize.h */,
+			);
+			name = Attributes;
+			sourceTree = "<group>";
+		};
+		C7040DCE2326A28800DFDBED /* Display */ = {
+			isa = PBXGroup;
+			children = (
+				C7040DCC23269C1C00DFDBED /* Wrappers */,
+				C7040DCD23269D0000DFDBED /* Attributes */,
+				C7040D92232694B100DFDBED /* Display.cpp */,
+				C7040D88232694B000DFDBED /* Display.h */,
+				C7040DC82326999B00DFDBED /* DisplayBase.cpp */,
+				C7040DC92326999B00DFDBED /* DisplayBase.h */,
+				C7040D86232694AF00DFDBED /* DisplayNode.cpp */,
+				C7040D84232694AF00DFDBED /* DisplayNode.h */,
+				C7040DD42326A3C900DFDBED /* DisplayNodeStyle.cpp */,
+				C7040DD52326A3C900DFDBED /* DisplayNodeStyle.h */,
+				C7040D8C232694B000DFDBED /* DisplayNodeFrame.cpp */,
+				C7040D8D232694B000DFDBED /* DisplayNodeFrame.h */,
+			);
+			name = Display;
+			sourceTree = "<group>";
+		};
+		C7040DD32326A2A200DFDBED /* Layout */ = {
+			isa = PBXGroup;
+			children = (
+				C7040DDC2326B2F900DFDBED /* RelativeLayout.cpp */,
+				C7040DDD2326B2FA00DFDBED /* RelativeLayout.h */,
+				C7040DE12326C83F00DFDBED /* AbsoluteLayout.cpp */,
+				C7040DE02326C83E00DFDBED /* AbsoluteLayout.h */,
+				C7040DCF2326A29900DFDBED /* Layout.cpp */,
+				C7040DD02326A29900DFDBED /* Layout.h */,
+			);
+			name = Layout;
 			sourceTree = "<group>";
 		};
 		C718A0C32067F61D00EFEC15 /* Graphic */ = {
@@ -1157,6 +1307,7 @@
 		C7E8A46820159C80005139F6 /* DezelTests */ = {
 			isa = PBXGroup;
 			children = (
+				C7FCA147231C5BB600AFBDB6 /* View */,
 				C7E8A4E0201623A3005139F6 /* Core */,
 				C7E8A47520159C92005139F6 /* Layout */,
 				C7E8A46B20159C80005139F6 /* Info.plist */,
@@ -1252,6 +1403,7 @@
 		C7E8A4DE2015AF5E005139F6 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				C7FCA126231ABAD100AFBDB6 /* Display */,
 				C77189AC2106ADE000337263 /* Geom */,
 				C7027CD12270DF7F001DD0F7 /* Gesture */,
 				C73700C52219A8CA0095A54B /* Image */,
@@ -1451,6 +1603,36 @@
 			path = Foundation;
 			sourceTree = "<group>";
 		};
+		C7FCA126231ABAD100AFBDB6 /* Display */ = {
+			isa = PBXGroup;
+			children = (
+				C7FCA128231ABB2A00AFBDB6 /* CAPI */,
+				C7FCA13F231C499C00AFBDB6 /* DisplayNode.swift */,
+				C7FCA141231C49A700AFBDB6 /* DisplayNodeDelegate.swift */,
+				C7040DE42327D40900DFDBED /* Display.swift */,
+				C7040DE62327D41200DFDBED /* DisplayDelegate.swift */,
+			);
+			path = Display;
+			sourceTree = "<group>";
+		};
+		C7FCA128231ABB2A00AFBDB6 /* CAPI */ = {
+			isa = PBXGroup;
+			children = (
+				C7040DD32326A2A200DFDBED /* Layout */,
+				C7040DCE2326A28800DFDBED /* Display */,
+			);
+			name = CAPI;
+			sourceTree = "<group>";
+		};
+		C7FCA147231C5BB600AFBDB6 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				C7FCA148231C5BC400AFBDB6 /* DisplayNodeAbsoluteLayoutTest.swift */,
+				C7040DE82327DB2000DFDBED /* DisplayNodeDelegateCounter.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -1461,6 +1643,7 @@
 				C77B0BD722262EF800917D82 /* Value.h in Headers */,
 				C77B0BD522262EF800917D82 /* Color.h in Headers */,
 				C77B0BB022262EF800917D82 /* TokenList.h in Headers */,
+				C7040DD72326A3C900DFDBED /* DisplayNodeStyle.h in Headers */,
 				C7E8A46C20159C80005139F6 /* Dezel.h in Headers */,
 				C77B0BDA22262EF800917D82 /* NumberFunctions.h in Headers */,
 				C7004C89214411BF00138ECC /* DLStylerStyleSelectorPrivate.h in Headers */,
@@ -1472,6 +1655,8 @@
 				C77B0BBD22262EF800917D82 /* Stylesheet.h in Headers */,
 				C77B0BCE22262EF800917D82 /* StylerTokenizer.h in Headers */,
 				C7E87E7E2053953500F09B22 /* DLStyler.h in Headers */,
+				C7040DB3232698AB00DFDBED /* DisplayNodeOrigin.h in Headers */,
+				C7040DAB2326974300DFDBED /* DisplayNodeAnchor.h in Headers */,
 				C77B0BB122262EF800917D82 /* Writable.h in Headers */,
 				C77B0BB522262EF800917D82 /* Tokenizer.h in Headers */,
 				C7E8A549201624FA005139F6 /* DLValue.h in Headers */,
@@ -1480,12 +1665,14 @@
 				C77B0BDC22262EF800917D82 /* UrlValue.h in Headers */,
 				C77B0BBF22262EF800917D82 /* StylerFunction.h in Headers */,
 				C7004C9921442AAC00138ECC /* DLStylerStyleSelectorTreePrivate.h in Headers */,
+				C7040DE22326C83F00DFDBED /* AbsoluteLayout.h in Headers */,
 				C77B0BC122262EF800917D82 /* StylerStylesheet.h in Headers */,
 				C77B0D792226DC4D00917D82 /* WebSocketSecurity.h in Headers */,
 				C77B0BC822262EF800917D82 /* StylerDeclaration.h in Headers */,
 				C7E8A4C820159E08005139F6 /* DLLayout.h in Headers */,
 				C7E8A5032016244F005139F6 /* Runtime.h in Headers */,
 				C7F8C9F920C17874007E8ECA /* DLStylerMatch.h in Headers */,
+				C7040D96232694B100DFDBED /* DisplayNode.h in Headers */,
 				C77B0BD322262EF800917D82 /* StringFunctions.h in Headers */,
 				C77B0BD922262EF800917D82 /* FunctionLibrary.h in Headers */,
 				C77B0BCF22262EF800917D82 /* StylerException.h in Headers */,
@@ -1495,9 +1682,12 @@
 				C77B0BC422262EF800917D82 /* StylerSelectorParser.h in Headers */,
 				C77B0BE022262EF800917D82 /* ProcessingContext.h in Headers */,
 				C7004C9521442A5200138ECC /* DLStylerStyleSelectorTree.h in Headers */,
+				C7040DA6232694B100DFDBED /* DisplayRef.h in Headers */,
+				C7040DD22326A29900DFDBED /* Layout.h in Headers */,
 				C7E87E822053956700F09B22 /* DLStylerPrivate.h in Headers */,
 				C77B0BB722262EF800917D82 /* Writer.h in Headers */,
 				C77B0BCD22262EF800917D82 /* StylerAtRule.h in Headers */,
+				C7040D9A232694B100DFDBED /* Display.h in Headers */,
 				C7004C8D2144240000138ECC /* DLStylerStyleItem.h in Headers */,
 				C7E8A4C120159E08005139F6 /* DLAbsoluteLayout.h in Headers */,
 				C77B0BBB22262EF800917D82 /* MediaQuery.h in Headers */,
@@ -1509,6 +1699,7 @@
 				C77B0BD122262EF800917D82 /* UnitValue.h in Headers */,
 				C7004C852144118D00138ECC /* DLStylerStyleSelector.h in Headers */,
 				C77B0BB822262EF800917D82 /* Token.h in Headers */,
+				C7040DAF2326983700DFDBED /* DisplayNodeSize.h in Headers */,
 				C7E8A546201624FA005139F6 /* DLContextPrivate.h in Headers */,
 				C7E8A4C920159E08005139F6 /* DLLayoutPrivate.h in Headers */,
 				C77B0BB622262EF800917D82 /* SourceMapWriter.h in Headers */,
@@ -1520,11 +1711,15 @@
 				C77B0BBE22262EF800917D82 /* StylerExtension.h in Headers */,
 				C77B0BBA22262EF800917D82 /* ParseException.h in Headers */,
 				C77B0BC222262EF800917D82 /* StylerMediaQuery.h in Headers */,
+				C7040DBF232698FC00DFDBED /* DisplayNodeMargin.h in Headers */,
 				C77B0BCA22262EF800917D82 /* StylerMixinCall.h in Headers */,
+				C7040D9C232694B100DFDBED /* DisplayNodeRef.h in Headers */,
 				C77B0BAE22262EF800917D82 /* Selector.h in Headers */,
+				C7040DB7232698C000DFDBED /* DisplayNodeContentSize.h in Headers */,
 				C77B0BC522262EF800917D82 /* StylerMixin.h in Headers */,
 				C7E8A54A201624FA005139F6 /* DLValuePrivate.h in Headers */,
 				C77B0BC322262EF800917D82 /* StylerMixinException.h in Headers */,
+				C7040DC72326993400DFDBED /* DisplayNodePadding.h in Headers */,
 				C77B0BDD22262EF800917D82 /* NumberValue.h in Headers */,
 				C77B0BC922262EF800917D82 /* StylerParser.h in Headers */,
 				C74487E4205230BB00D74D30 /* DLStylerNode.h in Headers */,
@@ -1535,11 +1730,16 @@
 				C77B0BB322262EF800917D82 /* Declaration.h in Headers */,
 				C7004C912144241200138ECC /* DLStylerStyleItemPrivate.h in Headers */,
 				C77B0BD022262EF800917D82 /* UrlFunctions.h in Headers */,
+				C7040DBB232698D000DFDBED /* DisplayNodeContentOrigin.h in Headers */,
 				C77B0BDF22262EF800917D82 /* VariableMap.h in Headers */,
 				C77B0D7C2226DC4D00917D82 /* WebSocketConnection.h in Headers */,
+				C7040DC32326991200DFDBED /* DisplayNodeBorder.h in Headers */,
+				C7040DCB2326999B00DFDBED /* DisplayBase.h in Headers */,
 				C77B0BC622262EF800917D82 /* StylerMediaQueryRuleset.h in Headers */,
+				C7040D9F232694B100DFDBED /* DisplayNodeFrame.h in Headers */,
 				C77B0BC022262EF800917D82 /* StylerClosure.h in Headers */,
 				C7E8A4CB20159E08005139F6 /* DLLayoutNode.h in Headers */,
+				C7040DDF2326B2FA00DFDBED /* RelativeLayout.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1732,11 +1932,15 @@
 				C7E8A4C020159E08005139F6 /* DLLayoutNode.cpp in Sources */,
 				C7E8A4C620159E08005139F6 /* DLLayoutNodePrivate.cpp in Sources */,
 				C7B9CEAF202CDBD8002409D5 /* JavaScriptWindow.swift in Sources */,
+				C7040DA4232694B100DFDBED /* Display.cpp in Sources */,
 				C7E8A5012016244F005139F6 /* Runtime.m in Sources */,
 				C76864732039147100D1903B /* JavaScriptPropertyUnit.swift in Sources */,
 				C7B9CEA8202CDB8D002409D5 /* ApplicationWindow.swift in Sources */,
 				C7D8926520657B0000E85115 /* UIFont.swift in Sources */,
+				C7040DB2232698AB00DFDBED /* DisplayNodeOrigin.cpp in Sources */,
+				C7040DE32326C83F00DFDBED /* AbsoluteLayout.cpp in Sources */,
 				C7E8A51E201624A2005139F6 /* JavaScriptExceptionWrapper.swift in Sources */,
+				C7FCA142231C49A700AFBDB6 /* DisplayNodeDelegate.swift in Sources */,
 				C7BB7D3F2028F4C5004006C2 /* CGSize.swift in Sources */,
 				C71E6CD720E3DBA8009B86F6 /* Synchronizer.swift in Sources */,
 				C7BCD7482094C5AD0014CD19 /* Scrollable.swift in Sources */,
@@ -1754,15 +1958,20 @@
 				C75153B922EBA05C007CAA48 /* NSData.swift in Sources */,
 				C71E6CBC20DD4EE1009B86F6 /* JavaScriptWebView.swift in Sources */,
 				C718A0C72067F75900EFEC15 /* GraphicModule.swift in Sources */,
+				C7040DE52327D40900DFDBED /* Display.swift in Sources */,
 				C7A19E3520ACC4DF00367E91 /* ScrollableDelegate.swift in Sources */,
+				C7040DD62326A3C900DFDBED /* DisplayNodeStyle.cpp in Sources */,
 				C7CE4B052208AC4D005D5235 /* DateFormater.swift in Sources */,
 				C7E8A5002016244F005139F6 /* Bundle.swift in Sources */,
 				C77189A721014A9E00337263 /* JavaScriptListOptimizer.swift in Sources */,
+				C7040D9E232694B100DFDBED /* DisplayNodeFrame.cpp in Sources */,
 				C7E8A534201624A2005139F6 /* JavaScriptFunctionCallback.swift in Sources */,
 				C718A0A92066E24400EFEC15 /* JavaScriptImageView.swift in Sources */,
+				C7040DC22326991200DFDBED /* DisplayNodeBorder.cpp in Sources */,
 				C7E8A529201624A2005139F6 /* JavaScriptClassBuilder.swift in Sources */,
 				C785B0A32016EC17001DAE64 /* JavaScriptCallback.swift in Sources */,
 				C7BFD166207D539300AAD31C /* InputType.swift in Sources */,
+				C7040D98232694B100DFDBED /* DisplayNode.cpp in Sources */,
 				C71E6CC020DD4F56009B86F6 /* WebView.swift in Sources */,
 				C7BB7D3D2028F4C5004006C2 /* CGFloat.swift in Sources */,
 				C72E0E9920669CBF003BCEF1 /* TextOverflow.swift in Sources */,
@@ -1783,15 +1992,19 @@
 				C7BB7D402028F4C5004006C2 /* CGPath.swift in Sources */,
 				C77D6E272210C162005FAAF8 /* CTFrame.swift in Sources */,
 				C7E87E7D2053953500F09B22 /* DLStyler.cpp in Sources */,
+				C7FCA140231C499C00AFBDB6 /* DisplayNode.swift in Sources */,
 				C7BB7D4B20293955004006C2 /* Array.swift in Sources */,
 				C7964D642033E67E00F454F1 /* CALayer.swift in Sources */,
 				C71E6CD920E3DBC4009B86F6 /* SynchronizerCallback.swift in Sources */,
 				C77189AA2101642B00337263 /* JavaScriptGridOptimizer.swift in Sources */,
 				C7E5D087209DE24F0098C5FD /* AlertControllerDelegate.swift in Sources */,
+				C7040DBE232698FC00DFDBED /* DisplayNodeMargin.cpp in Sources */,
+				C7040DAE2326983700DFDBED /* DisplayNodeSize.cpp in Sources */,
 				C78A2C5A21DEE6E10018712D /* TextLayout.swift in Sources */,
 				C7A19E3220AB725D00367E91 /* JavaScriptPlatform.swift in Sources */,
 				C777B5DC22D1429A00E75E55 /* CoreModule.swift in Sources */,
 				C7004C9821442AAC00138ECC /* DLStylerStyleSelectorTreePrivate.cpp in Sources */,
+				C7040DB6232698C000DFDBED /* DisplayNodeContentSize.cpp in Sources */,
 				C71A119F2080EB300004D523 /* HttpRequestDelegate.swift in Sources */,
 				C7E8A5022016244F005139F6 /* String.swift in Sources */,
 				C70617A420F7C03100499FDB /* TransitionListener.swift in Sources */,
@@ -1806,12 +2019,16 @@
 				C75153BF22F3791C007CAA48 /* JavaScriptClassStaticFunctionWrapper.swift in Sources */,
 				C700121821551B5700CB26D4 /* JavaScriptDevice.swift in Sources */,
 				C71A119D2080EB1E0004D523 /* HttpRequest.swift in Sources */,
+				C7040DCA2326999B00DFDBED /* DisplayBase.cpp in Sources */,
 				C7E8A523201624A2005139F6 /* JavaScriptFunctionWrapper.swift in Sources */,
 				C7E8A535201624A2005139F6 /* JavaScriptClassConstructorWrapper.swift in Sources */,
+				C7040DD12326A29900DFDBED /* Layout.cpp in Sources */,
+				C7040DE72327D41200DFDBED /* DisplayDelegate.swift in Sources */,
 				C7A19E3A20ADD18200367E91 /* TextInputDelegate.swift in Sources */,
 				C7B9CEAD202CDBB7002409D5 /* ApplicationModule.swift in Sources */,
 				C7E5D085209DE2290098C5FD /* AlertController.swift in Sources */,
 				C7CE4B09220A7824005D5235 /* Timezone.swift in Sources */,
+				C7040DC62326993400DFDBED /* DisplayNodePadding.cpp in Sources */,
 				C7541A8922E6B09800586FC4 /* HttpResponse.swift in Sources */,
 				C7E8A51D201624A2005139F6 /* JavaScriptObjectBuilder.swift in Sources */,
 				C7B9CEA6202CDB8D002409D5 /* ApplicationController.swift in Sources */,
@@ -1837,6 +2054,8 @@
 				C75153B322EB4BC3007CAA48 /* HTTPURLResponse.swift in Sources */,
 				C75153C322F37C11007CAA48 /* JavaScriptClassStaticSetterWrapper.swift in Sources */,
 				C7E8A4D32015A699005139F6 /* Layout.swift in Sources */,
+				C7040DBA232698D000DFDBED /* DisplayNodeContentOrigin.cpp in Sources */,
+				C7040D9D232694B100DFDBED /* DisplayRef.cpp in Sources */,
 				C7EE2E2522E4B35A00FFF0EE /* JavaScriptForEachWrapper.swift in Sources */,
 				C7E8A52D201624A2005139F6 /* JavaScriptValue.swift in Sources */,
 				C75153C122F37C03007CAA48 /* JavaScriptClassStaticGetterWrapper.swift in Sources */,
@@ -1846,14 +2065,17 @@
 				C7027CD32270DFDA001DD0F7 /* ScrollViewTouchCancelGesture.swift in Sources */,
 				C767544D2028DB7B003C4D85 /* JavaScriptView.swift in Sources */,
 				C718A0BE206748DC00EFEC15 /* ImageLiveCache.swift in Sources */,
+				C7040DAA2326974300DFDBED /* DisplayNodeAnchor.cpp in Sources */,
 				C7E8A520201624A2005139F6 /* JavaScriptSetterCallback.swift in Sources */,
 				C7BFD164207D52F100AAD31C /* TextInput.swift in Sources */,
 				C7E8A525201624A2005139F6 /* JavaScriptClassFunctionWrapper.swift in Sources */,
 				C7F8C9F820C17874007E8ECA /* DLStylerMatch.cpp in Sources */,
 				C777B62A22D77B2D00E75E55 /* TestRunner.swift in Sources */,
+				C7040D97232694B100DFDBED /* DisplayNodeRef.cpp in Sources */,
 				C71E6CC220DD50A0009B86F6 /* WebViewDelegate.swift in Sources */,
 				C7E8A4D52015A792005139F6 /* Double.swift in Sources */,
 				C7DECDFC206B351B006EE2A6 /* Clippable.swift in Sources */,
+				C7040DDE2326B2FA00DFDBED /* RelativeLayout.cpp in Sources */,
 				C71A11A72080F7F60004D523 /* JavaScriptWebSocket.swift in Sources */,
 				C7E8A52B201624A2005139F6 /* JavaScriptSetterWrapper.swift in Sources */,
 				C7E8A526201624A2005139F6 /* JavaScriptGetterCallback.swift in Sources */,
@@ -1877,12 +2099,14 @@
 			files = (
 				C7E8A4F520162429005139F6 /* JavaScriptContextTestClassB.swift in Sources */,
 				C7E8A4F320162429005139F6 /* JavaScriptGetterTest.swift in Sources */,
+				C7040DE92327DB2100DFDBED /* DisplayNodeDelegateCounter.swift in Sources */,
 				C7E8A4DB2015ADD5005139F6 /* AbsoluteLayoutTest.swift in Sources */,
 				C7FCA1142316FA0800AFBDB6 /* JavaScriptPropertyTest.swift in Sources */,
 				C7E9126D20EFD6FA0076774A /* LayoutNodeDelegateCounter.swift in Sources */,
 				C7E8A4F120162429005139F6 /* JavaScriptSetterTest.swift in Sources */,
 				C7E8A4F820162429005139F6 /* JavaScriptContextTestClassA.swift in Sources */,
 				C7E8A4F220162429005139F6 /* JavaScriptClassTest.swift in Sources */,
+				C7FCA149231C5BC400AFBDB6 /* DisplayNodeAbsoluteLayoutTest.swift in Sources */,
 				C7E8A4F020162429005139F6 /* JavaScriptValueTest.swift in Sources */,
 				C7E8A4F720162429005139F6 /* JavaScriptTestObject.swift in Sources */,
 				C7E8A4FB20162429005139F6 /* JavaScriptContextTest.swift in Sources */,
@@ -2026,7 +2250,9 @@
 		C7E8A47020159C80005139F6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = NO;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
@@ -2058,7 +2284,9 @@
 		C7E8A47120159C80005139F6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = NO;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;

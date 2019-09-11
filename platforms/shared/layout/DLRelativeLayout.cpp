@@ -21,7 +21,8 @@ using std::vector;
 inline bool
 DLRelativeLayoutNodeInvalidSize(DLLayoutNodeRef node)
 {
-	if (node->invalidSize || node->resolvedSize == false) {
+	if (node->invalidSize ||
+		node->resolvedSize == false) {
 		return true;
 	}
 
