@@ -91,14 +91,17 @@ private:
 	double measuredPaddingRight = 0;
 	double measuredPaddingBottom = 0;
 
+	double lastMeasuredWidth = 0;
+	double lastMeasuredHeight = 0;
+
 	bool resolving = false;
 
 	bool resolvedSize = false;
 	bool resolvedOrigin = false;
 	DisplayNode* resolvedParent = nullptr;
 
-	bool wrapContentWidth = false;
-	bool wrapContentHeight = false;
+	bool wrapsContentWidth = false;
+	bool wrapsContentHeight = false;
 
    	bool invalidSize = false;
 	bool invalidOrigin = false;
@@ -144,14 +147,14 @@ protected:
 	void invalidateLayout();
 	void invalidateParent();
 
-	void resolveLayout(bool force = false);
+	void resolveLayout();
 	void resolveMargin();
 	void resolveBorder();
 	void resolvePadding();
 	void resolveInnerSize();
 	void resolveContentSize();
 
-	void resolveWrap(double width, double height);
+	void resolveWrapper(double width, double height);
 
 	double measureAnchorTop();
 	double measureAnchorLeft();
@@ -261,10 +264,10 @@ public:
 
 	bool isRelative();
 	bool isAbsolute();
-	bool fillsParentWidth();
-	bool fillsParentHeight();
-	bool wrapsContentWidth();
-	bool wrapsContentHeight();
+	bool isFillingParentWidth();
+	bool isFillingParentHeight();
+	bool isWrappingContentWidth();
+	bool isWrappingContentHeight();
 
 };
 

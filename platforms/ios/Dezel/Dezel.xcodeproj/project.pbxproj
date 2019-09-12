@@ -80,6 +80,7 @@
 		C7040DE52327D40900DFDBED /* Display.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7040DE42327D40900DFDBED /* Display.swift */; };
 		C7040DE72327D41200DFDBED /* DisplayDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7040DE62327D41200DFDBED /* DisplayDelegate.swift */; };
 		C7040DE92327DB2100DFDBED /* DisplayNodeDelegateCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7040DE82327DB2000DFDBED /* DisplayNodeDelegateCounter.swift */; };
+		C7040DED232980D200DFDBED /* DisplayNodeRelativeLayoutTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7040DEC232980D200DFDBED /* DisplayNodeRelativeLayoutTest.swift */; };
 		C70617A420F7C03100499FDB /* TransitionListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = C70617A320F7C03100499FDB /* TransitionListener.swift */; };
 		C718A0A92066E24400EFEC15 /* JavaScriptImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C718A0A82066E24400EFEC15 /* JavaScriptImageView.swift */; };
 		C718A0B32066E63300EFEC15 /* ImageLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C718A0B22066E63300EFEC15 /* ImageLayer.swift */; };
@@ -437,6 +438,7 @@
 		C7040DE42327D40900DFDBED /* Display.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Display.swift; sourceTree = "<group>"; };
 		C7040DE62327D41200DFDBED /* DisplayDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayDelegate.swift; sourceTree = "<group>"; };
 		C7040DE82327DB2000DFDBED /* DisplayNodeDelegateCounter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayNodeDelegateCounter.swift; sourceTree = "<group>"; };
+		C7040DEC232980D200DFDBED /* DisplayNodeRelativeLayoutTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayNodeRelativeLayoutTest.swift; sourceTree = "<group>"; };
 		C70617A320F7C03100499FDB /* TransitionListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionListener.swift; sourceTree = "<group>"; };
 		C718A0A82066E24400EFEC15 /* JavaScriptImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptImageView.swift; sourceTree = "<group>"; };
 		C718A0B22066E63300EFEC15 /* ImageLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLayer.swift; sourceTree = "<group>"; };
@@ -1627,8 +1629,9 @@
 		C7FCA147231C5BB600AFBDB6 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				C7FCA148231C5BC400AFBDB6 /* DisplayNodeAbsoluteLayoutTest.swift */,
 				C7040DE82327DB2000DFDBED /* DisplayNodeDelegateCounter.swift */,
+				C7FCA148231C5BC400AFBDB6 /* DisplayNodeAbsoluteLayoutTest.swift */,
+				C7040DEC232980D200DFDBED /* DisplayNodeRelativeLayoutTest.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2113,6 +2116,7 @@
 				C7E8A4EF20162429005139F6 /* JavaScriptObjectTest.swift in Sources */,
 				C7E8A4F420162429005139F6 /* JavaScriptFunctionTest.swift in Sources */,
 				C7E8A4F620162429005139F6 /* JavaScriptEmptyClass.swift in Sources */,
+				C7040DED232980D200DFDBED /* DisplayNodeRelativeLayoutTest.swift in Sources */,
 				C7E8A4DA2015ADD5005139F6 /* RelativeLayoutTest.swift in Sources */,
 				C777B62E22D7838E00E75E55 /* DezelUnitTests.swift in Sources */,
 				C7E8A4FA20162429005139F6 /* JavaScriptTestClass.swift in Sources */,

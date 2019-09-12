@@ -194,7 +194,11 @@ DisplayNode::resolve()
 void
 DisplayNode::resolveNode()
 {
-	this->resolveFrame();
+	if (this->invalid) {
+		this->resolveStyle();
+		this->resolveFrame();
+		this->invalid = false;
+	}
 }
 
 void
@@ -216,8 +220,28 @@ DisplayNode::measure()
 }
 
 void
-DisplayNode::didInvalidateDisplayNodeFrame()
+DisplayNode::invalidateFrame()
 {
+	if (this->invalid) {
+		return;
+	}
+
+	this->invalid = true;
+
+	if (this->invalidateCallback) {
+		this->invalidateCallback(reinterpret_cast<DisplayNodeRef>(this));
+	}
+}
+
+void
+DisplayNode::invalidateStyle()
+{
+	if (this->invalid) {
+		return;
+	}
+
+	this->invalid = true;
+
 	if (this->invalidateCallback) {
 		this->invalidateCallback(reinterpret_cast<DisplayNodeRef>(this));
 	}

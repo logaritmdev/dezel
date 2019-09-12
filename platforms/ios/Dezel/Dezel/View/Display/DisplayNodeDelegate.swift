@@ -15,7 +15,7 @@ public protocol DisplayNodeDelegate: AnyObject {
 	func measure(node: DisplayNode, in: CGSize, min: CGSize, max: CGSize) -> CGSize?
 
 	/**
-	 * Called when the node's layout becomes invalid.
+	 * Called when the node's becomes invalid.
 	 * @method didInvalidate
 	 * @since 0.7.0
 	 */

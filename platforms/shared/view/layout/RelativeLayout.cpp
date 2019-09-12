@@ -318,11 +318,22 @@ RelativeLayout::measure(DisplayNode* child, double &remainingW, double &remainin
 {
 	const auto frame = child->frame;
 
-	const bool wrapW = frame->wrapContentWidth;
-	const bool wrapH = frame->wrapContentHeight;
+	const bool wrapW = frame->wrapsContentWidth;
+	const bool wrapH = frame->wrapsContentHeight;
 
-	double measuredW = frame->measuredWidth;
-	double measuredH = frame->measuredHeight;
+	auto measuredW = frame->measuredWidth;
+	auto measuredH = frame->measuredHeight;
+
+	frame->measuredWidthChanged = false;
+	frame->measuredHeightChanged = false;
+
+	/*
+	 * Resolving the node margin must be done before measuring because
+	 * it might influence its size, for instance, when using negatives
+	 * margins on opposite sides.
+	 */
+
+	frame->resolveMargin();
 
 	if (this->hasInvalidSize(child)) {
 
@@ -347,7 +358,7 @@ RelativeLayout::measure(DisplayNode* child, double &remainingW, double &remainin
 
 	if (wrapW || wrapH) {
 
-		frame->resolveWrap(measuredW, measuredH);
+		frame->resolveWrapper(measuredW, measuredH);
 
 	} else {
 
@@ -397,17 +408,6 @@ RelativeLayout::resolve(DisplayNode* node, const vector<DisplayNode*> &nodes)
 	for (auto child : nodes) {
 
 		const auto frame = child->frame;
-
-		frame->measuredWidthChanged = false;
-		frame->measuredHeightChanged = false;
-
-		/*
-		 * Resolving the node margin must be done before measuring because
-		 * it might influence its size, for instance, when using negatives
-		 * margins on opposite sides.
-		 */
-
-		frame->resolveMargin();
 
 		this->measure(
 			child,
@@ -502,8 +502,13 @@ RelativeLayout::resolve(DisplayNode* node, const vector<DisplayNode*> &nodes)
 	}
 
 	for (auto child : nodes) {
-		if (child->frame->measuredWidthChanged ||
-			child->frame->measuredHeightChanged) {
+
+		const auto frame = child->frame;
+
+		if (frame->lastMeasuredWidth != frame->measuredWidth ||
+			frame->lastMeasuredHeight != frame->measuredHeight) {
+			frame->lastMeasuredWidth = frame->measuredWidth;
+			frame->lastMeasuredHeight = frame->measuredHeight;
 			child->didResolveSize();
 		}
 	}

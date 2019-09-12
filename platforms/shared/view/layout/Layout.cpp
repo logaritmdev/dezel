@@ -32,8 +32,9 @@ Layout::resolve()
 		}
 
 		const auto frame = child->frame;
-		frame->wrapContentWidth = frame->shouldWrapContentWidth();
-		frame->wrapContentHeight = frame->shouldWrapContentHeight();
+
+		frame->wrapsContentWidth = frame->shouldWrapContentWidth();
+		frame->wrapsContentHeight = frame->shouldWrapContentHeight();
 
 		if (frame->isRelative()) {
 			relatives.push_back(child);
@@ -45,25 +46,24 @@ Layout::resolve()
 	const bool hasRelativeLayout = relatives.size() > 0;
 	const bool hasAbsoluteLayout = absolutes.size() > 0;
 
-	if (hasRelativeLayout) {
-		this->relativeLayout.resolve(this->node, relatives);
-	}
-
 	const auto frame = this->node->frame;
 
 	const bool autoContentW = frame->contentWidth.type == kDisplayNodeContentSizeTypeAuto;
 	const bool autoContentH = frame->contentHeight.type == kDisplayNodeContentSizeTypeAuto;
+	const auto lastContentW = frame->measuredContentWidth;
+	const auto lastContentH = frame->measuredContentHeight;
+
+	if (hasRelativeLayout) {
+		this->relativeLayout.resolve(this->node, relatives);
+	}
 
 	if (autoContentW || autoContentH) {
-
-		const double lastContentW = frame->measuredContentWidth;
-		const double lastContentH = frame->measuredContentHeight;
 
 		if (autoContentW) frame->measuredContentWidth = max(frame->measuredContentWidth, this->getExtentRight());
 		if (autoContentH) frame->measuredContentHeight = max(frame->measuredContentHeight, this->getExtentBottom());
 
-		if (lastContentW != this->node->frame->measuredContentWidth ||
-			lastContentH != this->node->frame->measuredContentHeight) {
+		if (lastContentW != frame->measuredContentWidth ||
+			lastContentH != frame->measuredContentHeight) {
 			this->node->didResolveContentSize();
 		}
 	}

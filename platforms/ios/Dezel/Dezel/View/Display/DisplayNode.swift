@@ -19,6 +19,17 @@ open class DisplayNode {
 	open weak var delegate: DisplayNodeDelegate?
 
 	/**
+	 * The display node's id.
+	 * @property id
+	 * @since 0.7.0
+	 */
+	public var id: String = "" {
+		didSet {
+			DisplayNodeSetId(self.handle, self.id)
+		}
+	}
+
+	/**
 	 * The display node's measured top.
 	 * @property measuredTop
 	 * @since 0.7.0
@@ -222,7 +233,7 @@ open class DisplayNode {
 	 * @since 0.7.0
 	 */
 	public var fillsParentWidth: Bool {
-		return DisplayNodeFillsParentWidth(self.handle)
+		return DisplayNodeIsFillingParentWidth(self.handle)
 	}
 
 	/**
@@ -231,7 +242,7 @@ open class DisplayNode {
 	 * @since 0.7.0
 	 */
 	public var fillsParentHeight: Bool {
-		return DisplayNodeFillsParentHeight(self.handle)
+		return DisplayNodeIsFillingParentHeight(self.handle)
 	}
 
 	/**
@@ -240,7 +251,7 @@ open class DisplayNode {
 	 * @since 0.7.0
 	 */
 	public var wrapsContentWidth: Bool {
-		return DisplayNodeWrapsContentWidth(self.handle)
+		return DisplayNodeIsWrappingContentWidth(self.handle)
 	}
 
 	/**
@@ -249,7 +260,7 @@ open class DisplayNode {
 	 * @since 0.7.0
 	 */
 	public var wrapsContentHeight: Bool {
-		return DisplayNodeWrapsContentHeight(self.handle)
+		return DisplayNodeIsWrappingContentHeight(self.handle)
 	}
 
 	/**
@@ -294,15 +305,6 @@ open class DisplayNode {
 	 */
 	deinit {
 		DisplayNodeDelete(self.handle)
-	}
-
-	/**
-	 * Assigns the display node's identifier.
-	 * @method setId
-	 * @since 0.7.0
-	 */
-	public func setId(_ id: String) {
-		DisplayNodeSetId(self.handle, id);
 	}
 
 	/**

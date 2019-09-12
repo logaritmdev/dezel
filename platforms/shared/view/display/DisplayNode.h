@@ -34,6 +34,7 @@ private:
     vector<DisplayNode*> children;
 
 	bool visible = true;
+	bool invalid = false;
 
 	DisplayNodeInvalidateCallback invalidateCallback = nullptr;
 	DisplayNodeMeasureCallback measureSizeCallback = nullptr;
@@ -47,13 +48,13 @@ private:
 	DisplayNodeLayoutCallback layoutBeganCallback = nullptr;
 	DisplayNodeLayoutCallback layoutEndedCallback = nullptr;
 
-
-	void invalidate();
+	void invalidateFrame();
+	void invalidateStyle();
 	void resolveNode();
 	void resolveFrame();
 	void resolveStyle();
 
-	void didInvalidateDisplayNodeFrame();
+	void didInvalidate();
 	void didResolveSize();
 	void didResolveOrigin();
 	void didResolveInnerSize();
@@ -314,19 +315,19 @@ public:
 	}
 
 	bool fillsParentWidth() {
-		return this->frame->fillsParentWidth();
+		return this->frame->isFillingParentWidth();
 	}
 
 	bool fillsParentHeight() {
-		return this->frame->fillsParentHeight();
+		return this->frame->isFillingParentHeight();
 	}
 
 	bool wrapsContentWidth() {
-		return this->frame->wrapsContentWidth();
+		return this->frame->isWrappingContentWidth();
 	}
 
 	bool wrapsContentHeight() {
-		return this->frame->wrapsContentHeight();
+		return this->frame->isWrappingContentHeight();
 	}
 
 	double getMeasuredTop() {

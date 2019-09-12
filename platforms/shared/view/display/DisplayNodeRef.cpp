@@ -378,25 +378,25 @@ DisplayNodeSetMaxPaddingBottom(DisplayNodeRef node, double max)
 }
 
 bool
-DisplayNodeFillsParentWidth(DisplayNodeRef node)
+DisplayNodeIsFillingParentWidth(DisplayNodeRef node)
 {
 	return reinterpret_cast<DisplayNode*>(node)->fillsParentWidth();
 }
 
 bool
-DisplayNodeFillsParentHeight(DisplayNodeRef node)
+DisplayNodeIsFillingParentHeight(DisplayNodeRef node)
 {
 	return reinterpret_cast<DisplayNode*>(node)->fillsParentHeight();
 }
 
 bool
-DisplayNodeWrapsContentWidth(DisplayNodeRef node)
+DisplayNodeIsWrappingContentWidth(DisplayNodeRef node)
 {
 	return reinterpret_cast<DisplayNode*>(node)->wrapsContentWidth();
 }
 
 bool
-DisplayNodeWrapsContentHeight(DisplayNodeRef node)
+DisplayNodeIsWrappingContentHeight(DisplayNodeRef node)
 {
 	return reinterpret_cast<DisplayNode*>(node)->wrapsContentHeight();
 }

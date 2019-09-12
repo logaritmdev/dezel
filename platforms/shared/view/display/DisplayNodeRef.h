@@ -443,31 +443,31 @@ void DisplayNodeSetMaxPaddingBottom(DisplayNodeRef node, double max);
 
 /**
  * Returns whether the node's width has been set to fill its parent.
- * @function DisplayNodeFillsParentWidth
+ * @function DisplayNodeIsFillingParentWidth
  * @since 0.7.0
  */
-bool DisplayNodeFillsParentWidth(DisplayNodeRef node);
+bool DisplayNodeIsFillingParentWidth(DisplayNodeRef node);
 
 /**
  * Returns whether the node's height has been set to fill its parent.
- * @function DisplayNodeFillsParentHeight
+ * @function DisplayNodeIsFillingParentHeight
  * @since 0.7.0
  */
-bool DisplayNodeFillsParentHeight(DisplayNodeRef node);
+bool DisplayNodeIsFillingParentHeight(DisplayNodeRef node);
 
 /**
  * Returns whether the node's width has been set to wraps its content.
  * @function DisplayNodeWrapsContentWidth
  * @since 0.7.0
  */
-bool DisplayNodeWrapsContentWidth(DisplayNodeRef node);
+bool DisplayNodeIsWrappingContentWidth(DisplayNodeRef node);
 
 /**
  * Returns whether the node's height has been set to wraps its content.
- * @function DisplayNodeWrapsContentHeight
+ * @function DisplayNodeIsWrappingContentHeight
  * @since 0.7.0
  */
-bool DisplayNodeWrapsContentHeight(DisplayNodeRef node);
+bool DisplayNodeIsWrappingContentHeight(DisplayNodeRef node);
 
 /**
  * Returns the display node's measured top.

@@ -1104,25 +1104,25 @@ DisplayNodeFrame::shouldWrapContentHeight()
 }
 
 bool
-DisplayNodeFrame::fillsParentWidth()
+DisplayNodeFrame::isFillingParentWidth()
 {
 	return this->width.type == kDisplayNodeSizeTypeFill;
 }
 
 bool
-DisplayNodeFrame::fillsParentHeight()
+DisplayNodeFrame::isFillingParentHeight()
 {
 	return this->height.type == kDisplayNodeSizeTypeFill;
 }
 
 bool
-DisplayNodeFrame::wrapsContentWidth()
+DisplayNodeFrame::isWrappingContentWidth()
 {
 	return this->width.type == kDisplayNodeSizeTypeWrap;
 }
 
 bool
-DisplayNodeFrame::wrapsContentHeight()
+DisplayNodeFrame::isWrappingContentHeight()
 {
 	return this->height.type == kDisplayNodeSizeTypeWrap;
 }
@@ -1130,24 +1130,7 @@ DisplayNodeFrame::wrapsContentHeight()
 void
 DisplayNodeFrame::invalidate()
 {
-	// TODO FIXME
-	//this->node->display->invalidate();
-//	if (this->node->display->invalid == false) {
-//		this->node->display->invalid = true;
-//		this->node->didInvalidateDisplayNodeFrame();
-//	}
-
-	/*
-		 TODO
-		 Once the layout is completed, this should relayout the
-		 whole thing. However, we must ignore times when the layout
-		 has been invalidated when a child was added during the
-		 beforeLayout callback
-	if (this->node->display->resolving) {
-		this->node->display->changed = true;
-
-	}
-	*/
+	this->node->invalidateFrame();
 }
 
 void
@@ -1305,13 +1288,27 @@ DisplayNodeFrame::invalidateParent()
 void
 DisplayNodeFrame::resolve()
 {
+	/*
+	 * Resolving a node means computing its border, padding inner size,
+	 * content size and layout. At the moment this method is called the
+	 * node has been given a measured size and an origin by its parent.
+	 */
+
 	if (this->resolving) {
 		return;
 	}
 
 	this->resolving = true;
 
+	this->measuredInnerWidthChanged = false;
+	this->measuredInnerHeightChanged = false;
+	this->measuredContentWidthChanged = false;
+	this->measuredContentHeightChanged = false;
+
 	if (this->node->type == kDisplayNodeTypeWindow) {
+
+		this->measuredWidthChanged = false;
+		this->measuredHeightChanged = false;
 
 		/*
 		 * This is the root node, simply apply its width and height
@@ -1330,9 +1327,6 @@ DisplayNodeFrame::resolve()
 			abort();
 		}
 
-		this->measuredWidthChanged = false;
-		this->measuredHeightChanged = false;
-
 		if (this->invalidSize) {
 
 			const auto measuredW = this->width.length;
@@ -1350,20 +1344,14 @@ DisplayNodeFrame::resolve()
 				this->invalidateInnerSize();
 			}
 
+			if (this->measuredWidthChanged ||
+				this->measuredHeightChanged) {
+				this->node->didResolveSize();
+			}
+
 			this->invalidSize = false;
 		}
 	}
-
-	/*
-	 * Prevents a node that is currently being layed out to be
-	 * layed out again. however, it must be allowed when the node viewport
-	 * is measuring by wrapping its views.
-	 */
-
-	this->measuredInnerWidthChanged = false;
-	this->measuredInnerHeightChanged = false;
-	this->measuredContentWidthChanged = false;
-	this->measuredContentHeightChanged = false;
 
 	this->resolveBorder();
 	this->resolveInnerSize();
@@ -1375,9 +1363,9 @@ DisplayNodeFrame::resolve()
 }
 
 void
-DisplayNodeFrame::resolveLayout(bool force)
+DisplayNodeFrame::resolveLayout()
 {
-	if (this->invalidLayout == false && force == false) {
+	if (this->invalidLayout == false) {
 		return;
 	}
 
@@ -1543,7 +1531,7 @@ DisplayNodeFrame::resolveContentSize()
 }
 
 void
-DisplayNodeFrame::resolveWrap(double w, double h)
+DisplayNodeFrame::resolveWrapper(double w, double h)
 {
 	if (this->resolvedSize) {
 
@@ -1559,10 +1547,11 @@ DisplayNodeFrame::resolveWrap(double w, double h)
 		}
 	}
 
-	const auto currW = this->measuredWidth;
-	const auto currH = this->measuredHeight;
-	const bool wrapW = this->wrapContentWidth;
-	const bool wrapH = this->wrapContentHeight;
+	const bool wrapW = this->wrapsContentWidth;
+	const bool wrapH = this->wrapsContentHeight;
+
+	auto measuredW = this->measuredWidth;
+	auto measuredH = this->measuredHeight;
 
 	if (wrapW) w = 0;
 	if (wrapH) h = 0;
@@ -1625,26 +1614,26 @@ DisplayNodeFrame::resolveWrap(double w, double h)
 
 		this->measuredWidth = w;
 		this->measuredHeight = h;
-
-		std::cout << "Measuring by wrapping for " << node->id << " is " << this->measuredWidth << " " << this->measuredHeight << "\n";
 	}
 
 	/*
 	 * The padding and border can be expressed as a relative measure of the
-	 * view. In the case of a wrapped node, the size will be based on the
-	 * content size.
+	 * view. In the case of a wrapped node, the padding and border size will be
+	 * based on the node size.
 	 */
 
-	if (this->measuredWidth != currW) {
-		this->invalidateBorder();
-		this->invalidatePadding();
+	if (this->measuredWidth != measuredW) {
+		this->measuredWidthChanged = true;
+		this->invalidateInnerSize();
 	}
 
-	if (this->measuredHeight != currH) {
-		this->invalidateBorder();
-		this->invalidatePadding();
+	if (this->measuredHeight != measuredH) {
+		this->measuredHeightChanged = true;
+		this->invalidateInnerSize();
 	}
 
+	this->resolveInnerSize();
+	this->resolveContentSize();
 	this->resolveBorder();
 	this->resolvePadding();
 
@@ -1658,38 +1647,67 @@ DisplayNodeFrame::resolveWrap(double w, double h)
 	const auto paddingR = this->measuredPaddingRight;
 	const auto paddingB = this->measuredPaddingBottom;
 
+	if (paddingT || paddingL ||
+		paddingR || paddingB) {
+
+		/*
+		 * A second layout pass is needed to apply padding which could not be
+		 * calculated earlier, because of relative measures.
+		 */
+
+		this->invalidateLayout();
+	}
+
 	this->measuredWidth += borderL + borderR + paddingL + paddingR;
 	this->measuredHeight += borderT + borderB + paddingT + paddingB;
 
 	const auto scale = this->node->display->getScale();
 
+	measuredW = this->measuredWidth;
+	measuredH = this->measuredHeight;
+
 	this->measuredWidth = round(this->measuredWidth, scale);
 	this->measuredHeight = round(this->measuredHeight, scale);
 
-	this->measuredWidth = clamp(this->measuredWidth, this->width.min, this->width.max);
-	this->measuredHeight = clamp(this->measuredHeight, this->height.min, this->height.max);
+	this->measuredWidth = clamp(
+		this->measuredWidth,
+		this->width.min,
+		this->width.max
+	);
 
-	if (this->measuredWidth != currW) {
-		this->measuredWidthChanged = true;
-		this->invalidateInnerSize();
-	}
+	this->measuredHeight = clamp(
+		this->measuredHeight,
+		this->height.min,
+		this->height.max
+	);
 
-	if (this->measuredHeight != currH) {
-		this->measuredHeightChanged = true;
+	if (this->measuredWidth != measuredW ||
+		this->measuredHeight != measuredH) {
+
+		/*
+		 * The node size has been limited to a certain size, this invalidates
+		 * the inner and content size as well as the layout.
+		 */
+
 		this->invalidateInnerSize();
+		this->invalidateLayout();
+
+		this->resolveInnerSize();
+		this->resolveContentSize();
 	}
 
 	/*
-	 * At this point the layout is marked as valid but it might not actually be
-	 * since it's been resolved to measured a wrapped node. If the node content
-	 * is not starting from the top left corner, the layout will be incorrect
-	 * so we need to mark the layout as invalid.
+	 * The following members, when set to true might allow the border and
+	 * padding to be resolved again. Since these are resolved here, there is
+	 * no reason to allow them to be resolved again.
 	 */
 
-	if (this->contentLocation != kDisplayNodeContentLocationStart ||
-		this->contentAlignment != kDisplayNodeContentAlignmentStart) {
-		this->invalidateLayout();
-	}
+	this->measuredWidthChanged = false;
+	this->measuredHeightChanged = false;
+	this->measuredInnerWidthChanged = false;
+	this->measuredInnerHeightChanged = false;
+	this->measuredContentWidthChanged = false;
+	this->measuredContentHeightChanged = false;
 }
 
 double

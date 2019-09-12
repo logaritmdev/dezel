@@ -493,11 +493,22 @@ AbsoluteLayout::measure(DisplayNode* child)
 {
 	const auto frame = child->frame;
 
-	const bool wrapW = frame->wrapContentWidth;
-	const bool wrapH = frame->wrapContentHeight;
+	const bool wrapW = frame->wrapsContentWidth;
+	const bool wrapH = frame->wrapsContentHeight;
 
-	double measuredW = frame->measuredWidth;
-	double measuredH = frame->measuredHeight;
+	auto measuredW = frame->measuredWidth;
+	auto measuredH = frame->measuredHeight;
+
+	frame->measuredWidthChanged = false;
+	frame->measuredHeightChanged = false;
+
+	/*
+	 * Resolving the node margin must be done before measuring because
+	 * it might influence its size, for instance, when using negatives
+	 * margins on opposite sides.
+	 */
+
+	frame->resolveMargin();
 
 	if (this->hasInvalidSize(child)) {
 		if (wrapW == false) measuredW = this->measureWidth(child);
@@ -506,7 +517,7 @@ AbsoluteLayout::measure(DisplayNode* child)
 
 	if (wrapW || wrapH) {
 
-		frame->resolveWrap(measuredW, measuredH);
+		frame->resolveWrapper(measuredW, measuredH);
 
 	} else {
 
@@ -532,21 +543,13 @@ AbsoluteLayout::resolve(DisplayNode* node, const vector<DisplayNode*> &nodes)
 
 		const auto frame = child->frame;
 
-		frame->measuredWidthChanged = false;
-		frame->measuredHeightChanged = false;
-
-		/*
-		 * Resolving the node margin must be done before measuring because
-		 * it might influence its size, for instance, when using negatives
-		 * margins on opposite sides.
-		 */
-
-		frame->resolveMargin();
 
 		this->measure(child);
 
-		if (frame->measuredWidthChanged ||
-			frame->measuredHeightChanged) {
+		if (frame->lastMeasuredWidth != frame->measuredWidth ||
+			frame->lastMeasuredHeight != frame->measuredHeight) {
+			frame->lastMeasuredWidth = frame->measuredWidth;
+			frame->lastMeasuredHeight = frame->measuredHeight;
 			child->didResolveSize();
 		}
 
