@@ -543,7 +543,6 @@ AbsoluteLayout::resolve(DisplayNode* node, const vector<DisplayNode*> &nodes)
 
 		const auto frame = child->frame;
 
-
 		this->measure(child);
 
 		if (frame->lastMeasuredWidth != frame->measuredWidth ||
