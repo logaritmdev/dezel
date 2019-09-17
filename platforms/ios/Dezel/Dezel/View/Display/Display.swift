@@ -3,7 +3,7 @@
  * @class Display
  * @since 0.7.0
  */
-open class Display {
+public class Display {
 
 	//--------------------------------------------------------------------------
 	// MARK: Properties
@@ -14,7 +14,7 @@ open class Display {
 	 * @property invalid
 	 * @since 0.7.0
 	 */
-	open var invalid: Bool {
+	public var invalid: Bool {
 		return DisplayIsInvalid(self.handle)
 	}
 
@@ -23,7 +23,7 @@ open class Display {
 	 * @property resolving
 	 * @since 0.7.0
 	 */
-	open var resolving: Bool {
+	public var resolving: Bool {
 		return DisplayIsResolving(self.handle)
 	}
 
@@ -32,8 +32,9 @@ open class Display {
 	 * @property root
 	 * @since 0.7.0
 	 */
-	open var window: LayoutNode? {
+	public var window: LayoutNode? {
 		willSet {
+		// create setter
 			DLLayoutSetRoot(self.handle, newValue?.handle)
 		}
 	}
@@ -88,7 +89,7 @@ open class Display {
 	 * @property setViewportWidth
 	 * @since 0.7.0
 	 */
-	open func setViewportWidth(_ value: CGFloat) {
+	public func setViewportWidth(_ value: CGFloat) {
 		DLLayoutSetViewportWidth(self.handle, Double(value))
 	}
 
@@ -97,7 +98,7 @@ open class Display {
 	 * @method setViewportHeight
 	 * @since 0.7.0
 	 */
-	open func setViewportHeight(_ value: CGFloat) {
+	public func setViewportHeight(_ value: CGFloat) {
 		DisplaySetViewportHeight(self.handle, Double(value))
 	}
 
@@ -106,16 +107,16 @@ open class Display {
 	 * @property setScale
 	 * @since 0.7.0
 	 */
-	open func setScale(_ value: CGFloat) {
+	public func setScale(_ value: CGFloat) {
 		DisplaySetScale(self.handle, Double(value))
 	}
 
 	/**
 	 * Assigns the display's window.
-	 * @property setScale
+	 * @property setWindow
 	 * @since 0.7.0
 	 */
-	open func setWindow(_ window: DisplayNode) {
+	public func setWindow(_ window: DisplayNode) {
 		DisplaySetWindow(self.handle, window.handle)
 	}
 
@@ -124,7 +125,7 @@ open class Display {
 	 * @method requestLayoutBeganCallback
 	 * @since 0.7.0
 	 */
-	open func requestLayoutBeganCallback(_ callback: @escaping () -> Void) {
+	public func requestLayoutBeganCallback(_ callback: @escaping () -> Void) {
 		self.layoutBeganCallbacks.append(callback)
 	}
 
@@ -133,7 +134,7 @@ open class Display {
 	 * @method requestLayoutEndedCallback
 	 * @since 0.7.0
 	 */
-	open func requestLayoutEndedCallback(_ callback: @escaping () -> Void) {
+	public func requestLayoutEndedCallback(_ callback: @escaping () -> Void) {
 		self.layoutEndedCallbacks.append(callback)
 	}
 

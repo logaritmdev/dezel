@@ -13,7 +13,7 @@ extern "C" {
  * Signature: (JJLjava/lang/String;Ljava/lang/String;Ljava/lang/Class;Ljava/lang/Object;)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptObjectBuilderExternal_createFunction
-  (JNIEnv *, jclass, jlong, jlong, jstring, jstring, jclass, jobject);
+  (JNIEnv* , jclass, jlong, jlong, jstring, jstring, jclass, jobject);
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptObjectBuilderExternal
@@ -21,7 +21,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptObjectBuilderExtern
  * Signature: (JJLjava/lang/String;Ljava/lang/String;Ljava/lang/Class;Ljava/lang/Object;)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptObjectBuilderExternal_createGetter
-  (JNIEnv *, jclass, jlong, jlong, jstring, jstring, jclass, jobject);
+  (JNIEnv* , jclass, jlong, jlong, jstring, jstring, jclass, jobject);
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptObjectBuilderExternal
@@ -29,7 +29,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptObjectBuilderExtern
  * Signature: (JJLjava/lang/String;Ljava/lang/String;Ljava/lang/Class;Ljava/lang/Object;)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptObjectBuilderExternal_createSetter
-  (JNIEnv *, jclass, jlong, jlong, jstring, jstring, jclass, jobject);
+  (JNIEnv* , jclass, jlong, jlong, jstring, jstring, jclass, jobject);
 
 #ifdef __cplusplus
 }

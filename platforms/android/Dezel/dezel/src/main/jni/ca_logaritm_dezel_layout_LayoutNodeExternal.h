@@ -13,7 +13,7 @@ extern "C" {
  * Signature: (Ljava/lang/Object;)J
  */
 JNIEXPORT jlong JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_create
-  (JNIEnv *, jclass, jobject);
+  (JNIEnv* , jclass, jobject);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -21,7 +21,7 @@ JNIEXPORT jlong JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_create
  * Signature: (J)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_delete
-  (JNIEnv *, jclass, jlong);
+  (JNIEnv* , jclass, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -29,7 +29,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_delete
  * Signature: (JLjava/lang/String;)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setId
-  (JNIEnv *, jclass, jlong, jstring);
+  (JNIEnv* , jclass, jlong, jstring);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -37,7 +37,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setId
  * Signature: (JJ)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setLayout
-  (JNIEnv *, jclass, jlong, jlong);
+  (JNIEnv* , jclass, jlong, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -45,7 +45,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setLayou
  * Signature: (J)D
  */
 JNIEXPORT jdouble JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_getMeasuredTop
-  (JNIEnv *, jclass, jlong);
+  (JNIEnv* , jclass, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -53,7 +53,7 @@ JNIEXPORT jdouble JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_getMe
  * Signature: (J)D
  */
 JNIEXPORT jdouble JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_getMeasuredLeft
-  (JNIEnv *, jclass, jlong);
+  (JNIEnv* , jclass, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -61,7 +61,7 @@ JNIEXPORT jdouble JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_getMe
  * Signature: (J)D
  */
 JNIEXPORT jdouble JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_getMeasuredRight
-  (JNIEnv *, jclass, jlong);
+  (JNIEnv* , jclass, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -69,7 +69,7 @@ JNIEXPORT jdouble JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_getMe
  * Signature: (J)D
  */
 JNIEXPORT jdouble JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_getMeasuredBottom
-  (JNIEnv *, jclass, jlong);
+  (JNIEnv* , jclass, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -77,7 +77,7 @@ JNIEXPORT jdouble JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_getMe
  * Signature: (J)D
  */
 JNIEXPORT jdouble JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_getMeasuredWidth
-  (JNIEnv *, jclass, jlong);
+  (JNIEnv* , jclass, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -85,7 +85,7 @@ JNIEXPORT jdouble JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_getMe
  * Signature: (J)D
  */
 JNIEXPORT jdouble JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_getMeasuredHeight
-  (JNIEnv *, jclass, jlong);
+  (JNIEnv* , jclass, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -93,7 +93,7 @@ JNIEXPORT jdouble JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_getMe
  * Signature: (J)D
  */
 JNIEXPORT jdouble JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_getMeasuredInnerWidth
-  (JNIEnv *, jclass, jlong);
+  (JNIEnv* , jclass, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -101,7 +101,7 @@ JNIEXPORT jdouble JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_getMe
  * Signature: (J)D
  */
 JNIEXPORT jdouble JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_getMeasuredInnerHeight
-  (JNIEnv *, jclass, jlong);
+  (JNIEnv* , jclass, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -109,7 +109,7 @@ JNIEXPORT jdouble JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_getMe
  * Signature: (J)D
  */
 JNIEXPORT jdouble JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_getMeasuredContentWidth
-  (JNIEnv *, jclass, jlong);
+  (JNIEnv* , jclass, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -117,7 +117,7 @@ JNIEXPORT jdouble JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_getMe
  * Signature: (J)D
  */
 JNIEXPORT jdouble JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_getMeasuredContentHeight
-  (JNIEnv *, jclass, jlong);
+  (JNIEnv* , jclass, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -125,7 +125,7 @@ JNIEXPORT jdouble JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_getMe
  * Signature: (J)D
  */
 JNIEXPORT jdouble JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_getMeasuredMarginTop
-  (JNIEnv *, jclass, jlong);
+  (JNIEnv* , jclass, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -133,7 +133,7 @@ JNIEXPORT jdouble JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_getMe
  * Signature: (J)D
  */
 JNIEXPORT jdouble JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_getMeasuredMarginLeft
-  (JNIEnv *, jclass, jlong);
+  (JNIEnv* , jclass, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -141,7 +141,7 @@ JNIEXPORT jdouble JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_getMe
  * Signature: (J)D
  */
 JNIEXPORT jdouble JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_getMeasuredMarginRight
-  (JNIEnv *, jclass, jlong);
+  (JNIEnv* , jclass, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -149,7 +149,7 @@ JNIEXPORT jdouble JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_getMe
  * Signature: (J)D
  */
 JNIEXPORT jdouble JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_getMeasuredMarginBottom
-  (JNIEnv *, jclass, jlong);
+  (JNIEnv* , jclass, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -157,7 +157,7 @@ JNIEXPORT jdouble JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_getMe
  * Signature: (J)D
  */
 JNIEXPORT jdouble JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_getMeasuredBorderTop
-  (JNIEnv *, jclass, jlong);
+  (JNIEnv* , jclass, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -165,7 +165,7 @@ JNIEXPORT jdouble JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_getMe
  * Signature: (J)D
  */
 JNIEXPORT jdouble JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_getMeasuredBorderLeft
-  (JNIEnv *, jclass, jlong);
+  (JNIEnv* , jclass, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -173,7 +173,7 @@ JNIEXPORT jdouble JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_getMe
  * Signature: (J)D
  */
 JNIEXPORT jdouble JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_getMeasuredBorderRight
-  (JNIEnv *, jclass, jlong);
+  (JNIEnv* , jclass, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -181,7 +181,7 @@ JNIEXPORT jdouble JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_getMe
  * Signature: (J)D
  */
 JNIEXPORT jdouble JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_getMeasuredBorderBottom
-  (JNIEnv *, jclass, jlong);
+  (JNIEnv* , jclass, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -189,7 +189,7 @@ JNIEXPORT jdouble JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_getMe
  * Signature: (J)D
  */
 JNIEXPORT jdouble JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_getMeasuredPaddingTop
-  (JNIEnv *, jclass, jlong);
+  (JNIEnv* , jclass, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -197,7 +197,7 @@ JNIEXPORT jdouble JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_getMe
  * Signature: (J)D
  */
 JNIEXPORT jdouble JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_getMeasuredPaddingLeft
-  (JNIEnv *, jclass, jlong);
+  (JNIEnv* , jclass, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -205,7 +205,7 @@ JNIEXPORT jdouble JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_getMe
  * Signature: (J)D
  */
 JNIEXPORT jdouble JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_getMeasuredPaddingRight
-  (JNIEnv *, jclass, jlong);
+  (JNIEnv* , jclass, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -213,7 +213,7 @@ JNIEXPORT jdouble JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_getMe
  * Signature: (J)D
  */
 JNIEXPORT jdouble JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_getMeasuredPaddingBottom
-  (JNIEnv *, jclass, jlong);
+  (JNIEnv* , jclass, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -221,7 +221,7 @@ JNIEXPORT jdouble JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_getMe
  * Signature: (J)D
  */
 JNIEXPORT jdouble JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_getViewportWidth
-  (JNIEnv *, jclass, jlong);
+  (JNIEnv* , jclass, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -229,7 +229,7 @@ JNIEXPORT jdouble JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_getVi
  * Signature: (J)D
  */
 JNIEXPORT jdouble JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_getViewportHeight
-  (JNIEnv *, jclass, jlong);
+  (JNIEnv* , jclass, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -237,7 +237,7 @@ JNIEXPORT jdouble JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_getVi
  * Signature: (J)Z
  */
 JNIEXPORT jboolean JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_fillsParentWidth
-  (JNIEnv *, jclass, jlong);
+  (JNIEnv* , jclass, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -245,7 +245,7 @@ JNIEXPORT jboolean JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_fill
  * Signature: (J)Z
  */
 JNIEXPORT jboolean JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_fillsParentHeight
-  (JNIEnv *, jclass, jlong);
+  (JNIEnv* , jclass, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -253,7 +253,7 @@ JNIEXPORT jboolean JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_fill
  * Signature: (J)Z
  */
 JNIEXPORT jboolean JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_wrapsContentWidth
-  (JNIEnv *, jclass, jlong);
+  (JNIEnv* , jclass, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -261,7 +261,7 @@ JNIEXPORT jboolean JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_wrap
  * Signature: (J)Z
  */
 JNIEXPORT jboolean JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_wrapsContentHeight
-  (JNIEnv *, jclass, jlong);
+  (JNIEnv* , jclass, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -269,7 +269,7 @@ JNIEXPORT jboolean JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_wrap
  * Signature: (J)Z
  */
 JNIEXPORT jboolean JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_hasInvalidSize
-  (JNIEnv *, jclass, jlong);
+  (JNIEnv* , jclass, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -277,7 +277,7 @@ JNIEXPORT jboolean JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_hasI
  * Signature: (J)Z
  */
 JNIEXPORT jboolean JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_hasInvalidPosition
-  (JNIEnv *, jclass, jlong);
+  (JNIEnv* , jclass, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -285,7 +285,7 @@ JNIEXPORT jboolean JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_hasI
  * Signature: (J)Z
  */
 JNIEXPORT jboolean JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_hasInvalidLayout
-  (JNIEnv *, jclass, jlong);
+  (JNIEnv* , jclass, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -293,7 +293,7 @@ JNIEXPORT jboolean JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_hasI
  * Signature: (JIID)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setAnchorTop
-  (JNIEnv *, jclass, jlong, jint, jint, jdouble);
+  (JNIEnv* , jclass, jlong, jint, jint, jdouble);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -301,7 +301,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setAncho
  * Signature: (JIID)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setAnchorLeft
-  (JNIEnv *, jclass, jlong, jint, jint, jdouble);
+  (JNIEnv* , jclass, jlong, jint, jint, jdouble);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -309,7 +309,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setAncho
  * Signature: (JIID)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setTop
-  (JNIEnv *, jclass, jlong, jint, jint, jdouble);
+  (JNIEnv* , jclass, jlong, jint, jint, jdouble);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -317,7 +317,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setTop
  * Signature: (JD)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setMinTop
-  (JNIEnv *, jclass, jlong, jdouble);
+  (JNIEnv* , jclass, jlong, jdouble);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -325,7 +325,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setMinTo
  * Signature: (JD)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setMaxTop
-  (JNIEnv *, jclass, jlong, jdouble);
+  (JNIEnv* , jclass, jlong, jdouble);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -333,7 +333,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setMaxTo
  * Signature: (JIID)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setLeft
-  (JNIEnv *, jclass, jlong, jint, jint, jdouble);
+  (JNIEnv* , jclass, jlong, jint, jint, jdouble);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -341,7 +341,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setLeft
  * Signature: (JD)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setMinLeft
-  (JNIEnv *, jclass, jlong, jdouble);
+  (JNIEnv* , jclass, jlong, jdouble);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -349,7 +349,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setMinLe
  * Signature: (JD)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setMaxLeft
-  (JNIEnv *, jclass, jlong, jdouble);
+  (JNIEnv* , jclass, jlong, jdouble);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -357,7 +357,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setMaxLe
  * Signature: (JIID)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setRight
-  (JNIEnv *, jclass, jlong, jint, jint, jdouble);
+  (JNIEnv* , jclass, jlong, jint, jint, jdouble);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -365,7 +365,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setRight
  * Signature: (JD)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setMinRight
-  (JNIEnv *, jclass, jlong, jdouble);
+  (JNIEnv* , jclass, jlong, jdouble);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -373,7 +373,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setMinRi
  * Signature: (JD)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setMaxRight
-  (JNIEnv *, jclass, jlong, jdouble);
+  (JNIEnv* , jclass, jlong, jdouble);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -381,7 +381,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setMaxRi
  * Signature: (JIID)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setBottom
-  (JNIEnv *, jclass, jlong, jint, jint, jdouble);
+  (JNIEnv* , jclass, jlong, jint, jint, jdouble);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -389,7 +389,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setBotto
  * Signature: (JD)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setMinBottom
-  (JNIEnv *, jclass, jlong, jdouble);
+  (JNIEnv* , jclass, jlong, jdouble);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -397,7 +397,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setMinBo
  * Signature: (JD)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setMaxBottom
-  (JNIEnv *, jclass, jlong, jdouble);
+  (JNIEnv* , jclass, jlong, jdouble);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -405,7 +405,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setMaxBo
  * Signature: (JIID)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setWidth
-  (JNIEnv *, jclass, jlong, jint, jint, jdouble);
+  (JNIEnv* , jclass, jlong, jint, jint, jdouble);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -413,7 +413,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setWidth
  * Signature: (JD)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setMinWidth
-  (JNIEnv *, jclass, jlong, jdouble);
+  (JNIEnv* , jclass, jlong, jdouble);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -421,7 +421,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setMinWi
  * Signature: (JD)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setMaxWidth
-  (JNIEnv *, jclass, jlong, jdouble);
+  (JNIEnv* , jclass, jlong, jdouble);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -429,7 +429,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setMaxWi
  * Signature: (JIID)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setHeight
-  (JNIEnv *, jclass, jlong, jint, jint, jdouble);
+  (JNIEnv* , jclass, jlong, jint, jint, jdouble);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -437,7 +437,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setHeigh
  * Signature: (JD)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setMinHeight
-  (JNIEnv *, jclass, jlong, jdouble);
+  (JNIEnv* , jclass, jlong, jdouble);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -445,7 +445,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setMinHe
  * Signature: (JD)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setMaxHeight
-  (JNIEnv *, jclass, jlong, jdouble);
+  (JNIEnv* , jclass, jlong, jdouble);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -453,7 +453,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setMaxHe
  * Signature: (JI)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setContentDirection
-  (JNIEnv *, jclass, jlong, jint);
+  (JNIEnv* , jclass, jlong, jint);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -461,7 +461,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setConte
  * Signature: (JI)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setContentLocation
-  (JNIEnv *, jclass, jlong, jint);
+  (JNIEnv* , jclass, jlong, jint);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -469,7 +469,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setConte
  * Signature: (JI)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setContentAlignment
-  (JNIEnv *, jclass, jlong, jint);
+  (JNIEnv* , jclass, jlong, jint);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -477,7 +477,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setConte
  * Signature: (JIID)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setContentTop
-  (JNIEnv *, jclass, jlong, jint, jint, jdouble);
+  (JNIEnv* , jclass, jlong, jint, jint, jdouble);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -485,7 +485,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setConte
  * Signature: (JIID)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setContentLeft
-  (JNIEnv *, jclass, jlong, jint, jint, jdouble);
+  (JNIEnv* , jclass, jlong, jint, jint, jdouble);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -493,7 +493,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setConte
  * Signature: (JIID)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setContentWidth
-  (JNIEnv *, jclass, jlong, jint, jint, jdouble);
+  (JNIEnv* , jclass, jlong, jint, jint, jdouble);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -501,7 +501,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setConte
  * Signature: (JIID)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setContentHeight
-  (JNIEnv *, jclass, jlong, jint, jint, jdouble);
+  (JNIEnv* , jclass, jlong, jint, jint, jdouble);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -509,7 +509,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setConte
  * Signature: (JIID)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setBorderTop
-  (JNIEnv *, jclass, jlong, jint, jint, jdouble);
+  (JNIEnv* , jclass, jlong, jint, jint, jdouble);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -517,7 +517,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setBorde
  * Signature: (JIID)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setBorderLeft
-  (JNIEnv *, jclass, jlong, jint, jint, jdouble);
+  (JNIEnv* , jclass, jlong, jint, jint, jdouble);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -525,7 +525,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setBorde
  * Signature: (JIID)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setBorderRight
-  (JNIEnv *, jclass, jlong, jint, jint, jdouble);
+  (JNIEnv* , jclass, jlong, jint, jint, jdouble);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -533,7 +533,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setBorde
  * Signature: (JIID)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setBorderBottom
-  (JNIEnv *, jclass, jlong, jint, jint, jdouble);
+  (JNIEnv* , jclass, jlong, jint, jint, jdouble);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -541,7 +541,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setBorde
  * Signature: (JIID)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setMarginTop
-  (JNIEnv *, jclass, jlong, jint, jint, jdouble);
+  (JNIEnv* , jclass, jlong, jint, jint, jdouble);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -549,7 +549,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setMargi
  * Signature: (JIID)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setMarginLeft
-  (JNIEnv *, jclass, jlong, jint, jint, jdouble);
+  (JNIEnv* , jclass, jlong, jint, jint, jdouble);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -557,7 +557,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setMargi
  * Signature: (JIID)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setMarginRight
-  (JNIEnv *, jclass, jlong, jint, jint, jdouble);
+  (JNIEnv* , jclass, jlong, jint, jint, jdouble);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -565,7 +565,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setMargi
  * Signature: (JIID)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setMarginBottom
-  (JNIEnv *, jclass, jlong, jint, jint, jdouble);
+  (JNIEnv* , jclass, jlong, jint, jint, jdouble);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -573,7 +573,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setMargi
  * Signature: (JD)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setMinMarginTop
-  (JNIEnv *, jclass, jlong, jdouble);
+  (JNIEnv* , jclass, jlong, jdouble);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -581,7 +581,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setMinMa
  * Signature: (JD)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setMaxMarginTop
-  (JNIEnv *, jclass, jlong, jdouble);
+  (JNIEnv* , jclass, jlong, jdouble);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -589,7 +589,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setMaxMa
  * Signature: (JD)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setMinMarginLeft
-  (JNIEnv *, jclass, jlong, jdouble);
+  (JNIEnv* , jclass, jlong, jdouble);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -597,7 +597,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setMinMa
  * Signature: (JD)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setMaxMarginLeft
-  (JNIEnv *, jclass, jlong, jdouble);
+  (JNIEnv* , jclass, jlong, jdouble);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -605,7 +605,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setMaxMa
  * Signature: (JD)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setMinMarginRight
-  (JNIEnv *, jclass, jlong, jdouble);
+  (JNIEnv* , jclass, jlong, jdouble);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -613,7 +613,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setMinMa
  * Signature: (JD)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setMaxMarginRight
-  (JNIEnv *, jclass, jlong, jdouble);
+  (JNIEnv* , jclass, jlong, jdouble);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -621,7 +621,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setMaxMa
  * Signature: (JD)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setMinMarginBottom
-  (JNIEnv *, jclass, jlong, jdouble);
+  (JNIEnv* , jclass, jlong, jdouble);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -629,7 +629,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setMinMa
  * Signature: (JD)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setMaxMarginBottom
-  (JNIEnv *, jclass, jlong, jdouble);
+  (JNIEnv* , jclass, jlong, jdouble);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -637,7 +637,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setMaxMa
  * Signature: (JIID)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setPaddingTop
-  (JNIEnv *, jclass, jlong, jint, jint, jdouble);
+  (JNIEnv* , jclass, jlong, jint, jint, jdouble);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -645,7 +645,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setPaddi
  * Signature: (JIID)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setPaddingLeft
-  (JNIEnv *, jclass, jlong, jint, jint, jdouble);
+  (JNIEnv* , jclass, jlong, jint, jint, jdouble);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -653,7 +653,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setPaddi
  * Signature: (JIID)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setPaddingRight
-  (JNIEnv *, jclass, jlong, jint, jint, jdouble);
+  (JNIEnv* , jclass, jlong, jint, jint, jdouble);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -661,7 +661,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setPaddi
  * Signature: (JIID)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setPaddingBottom
-  (JNIEnv *, jclass, jlong, jint, jint, jdouble);
+  (JNIEnv* , jclass, jlong, jint, jint, jdouble);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -669,7 +669,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setPaddi
  * Signature: (JD)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setMinPaddingTop
-  (JNIEnv *, jclass, jlong, jdouble);
+  (JNIEnv* , jclass, jlong, jdouble);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -677,7 +677,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setMinPa
  * Signature: (JD)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setMaxPaddingTop
-  (JNIEnv *, jclass, jlong, jdouble);
+  (JNIEnv* , jclass, jlong, jdouble);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -685,7 +685,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setMaxPa
  * Signature: (JD)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setMinPaddingLeft
-  (JNIEnv *, jclass, jlong, jdouble);
+  (JNIEnv* , jclass, jlong, jdouble);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -693,7 +693,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setMinPa
  * Signature: (JD)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setMaxPaddingLeft
-  (JNIEnv *, jclass, jlong, jdouble);
+  (JNIEnv* , jclass, jlong, jdouble);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -701,7 +701,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setMaxPa
  * Signature: (JD)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setMinPaddingRight
-  (JNIEnv *, jclass, jlong, jdouble);
+  (JNIEnv* , jclass, jlong, jdouble);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -709,7 +709,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setMinPa
  * Signature: (JD)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setMaxPaddingRight
-  (JNIEnv *, jclass, jlong, jdouble);
+  (JNIEnv* , jclass, jlong, jdouble);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -717,7 +717,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setMaxPa
  * Signature: (JD)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setMinPaddingBottom
-  (JNIEnv *, jclass, jlong, jdouble);
+  (JNIEnv* , jclass, jlong, jdouble);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -725,7 +725,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setMinPa
  * Signature: (JD)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setMaxPaddingBottom
-  (JNIEnv *, jclass, jlong, jdouble);
+  (JNIEnv* , jclass, jlong, jdouble);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -733,7 +733,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setMaxPa
  * Signature: (JD)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setExpand
-  (JNIEnv *, jclass, jlong, jdouble);
+  (JNIEnv* , jclass, jlong, jdouble);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -741,7 +741,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setExpan
  * Signature: (JD)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setShrink
-  (JNIEnv *, jclass, jlong, jdouble);
+  (JNIEnv* , jclass, jlong, jdouble);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -749,7 +749,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setShrin
  * Signature: (JZ)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setVisible
-  (JNIEnv *, jclass, jlong, jboolean);
+  (JNIEnv* , jclass, jlong, jboolean);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -757,7 +757,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_setVisib
  * Signature: (J)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_invalidate
-  (JNIEnv *, jclass, jlong);
+  (JNIEnv* , jclass, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -765,7 +765,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_invalida
  * Signature: (J)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_invalidateSize
-  (JNIEnv *, jclass, jlong);
+  (JNIEnv* , jclass, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -773,7 +773,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_invalida
  * Signature: (J)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_invalidatePosition
-  (JNIEnv *, jclass, jlong);
+  (JNIEnv* , jclass, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -781,7 +781,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_invalida
  * Signature: (J)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_resolve
-  (JNIEnv *, jclass, jlong);
+  (JNIEnv* , jclass, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -789,7 +789,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_resolve
  * Signature: (J)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_measure
-  (JNIEnv *, jclass, jlong);
+  (JNIEnv* , jclass, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -797,7 +797,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_measure
  * Signature: (JJ)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_appendChild
-  (JNIEnv *, jclass, jlong, jlong);
+  (JNIEnv* , jclass, jlong, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -805,7 +805,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_appendCh
  * Signature: (JJI)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_insertChild
-  (JNIEnv *, jclass, jlong, jlong, jint);
+  (JNIEnv* , jclass, jlong, jlong, jint);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutNodeExternal
@@ -813,7 +813,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_insertCh
  * Signature: (JJ)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutNodeExternal_removeChild
-  (JNIEnv *, jclass, jlong, jlong);
+  (JNIEnv* , jclass, jlong, jlong);
 
 #ifdef __cplusplus
 }

@@ -1,5 +1,5 @@
-#ifndef JAVASCRIPTSETTERWRAPPER_H
-#define JAVASCRIPTSETTERWRAPPER_H
+#ifndef JavaScriptSetterWrapper_h
+#define JavaScriptSetterWrapper_h
 
 #include <DLValue.h>
 #include <DLContext.h>
@@ -27,6 +27,6 @@ typedef struct JavaScriptSetterWrapper* JavaScriptSetterWrapperRef;
  * @function JavaScriptSetterWrapperCreate
  * @since 0.1.0
  */
-JavaScriptSetterWrapperRef JavaScriptSetterWrapperCreate(JNIEnv *env, JSContextRef context, jobject callback, const char *name, jobject ctx);
+JavaScriptSetterWrapperRef JavaScriptSetterWrapperCreate(JNIEnv* env, JSContextRef context, jobject callback, const char* name, jobject ctx);
 
 #endif

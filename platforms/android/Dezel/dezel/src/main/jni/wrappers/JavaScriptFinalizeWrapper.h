@@ -1,5 +1,5 @@
-#ifndef FINALIZEWRAPPER_H
-#define FINALIZEWRAPPER_H
+#ifndef JavaScriptFinalizeWrapper_h
+#define JavaScriptFinalizeWrapper_h
 
 #include <DLValue.h>
 #include <DLContext.h>
@@ -26,6 +26,6 @@ typedef struct JavaScriptFinalizeWrapper* JavaScriptFinalizeWrapperRef;
  * @function JavaScriptFinalizeWrapperCreate
  * @since 0.1.0
  */
-JavaScriptFinalizeWrapperRef JavaScriptFinalizeWrapperCreate(JNIEnv *env, JSContextRef context, JSObjectRef handle, jobject handler, jobject ctx);
+JavaScriptFinalizeWrapperRef JavaScriptFinalizeWrapperCreate(JNIEnv* env, JSContextRef context, JSObjectRef handle, jobject handler, jobject ctx);
 
 #endif

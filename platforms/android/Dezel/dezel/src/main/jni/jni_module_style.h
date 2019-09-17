@@ -1,5 +1,5 @@
-#ifndef JNIMODULESTYLE_H
-#define JNIMODULESTYLE_H
+#ifndef JNIModuleStyle_h
+#define JNIModuleStyle_h
 
 #include <jni.h>
 #include "jni_init.h"
@@ -15,6 +15,6 @@ extern jmethodID StyleInvalidateCallback;
  * @function JNI_OnLoad_style
  * @since 0.1.0
  */
-void JNI_OnLoad_style(JNIEnv *env);
+void JNI_OnLoad_style(JNIEnv* env);
 
 #endif

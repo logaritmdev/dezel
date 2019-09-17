@@ -3,7 +3,7 @@
 #include "JavaScriptSetter.h"
 
 jlong
-JavaScriptSetterExecute(JNIEnv *env, jobject context, jclass cls, jobject instance, jmethodID function, JSObjectRef object, JSValueRef callee, size_t argc, JSValueRef const *argv)
+JavaScriptSetterExecute(JNIEnv* env, jobject context, jclass cls, jobject instance, jmethodID function, JSObjectRef object, JSValueRef callee, size_t argc, JSValueRef const *argv)
 {
 	JNI_ARGS_CREATE(args);
 

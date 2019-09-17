@@ -1,5 +1,5 @@
-#ifndef CLASSSTATICFUNCTIONWRAPPER_H
-#define CLASSSTATICFUNCTIONWRAPPER_H
+#ifndef JavaScriptClassStaticFunctionWrapper_h
+#define JavaScriptClassStaticFunctionWrapper_h
 
 #include <DLValue.h>
 #include <DLContext.h>
@@ -11,7 +11,7 @@
  * @since 0.1.0
  */
 struct JavaScriptClassStaticFunctionWrapper {
-	JNIEnv *env;
+	JNIEnv* env;
 	jobject ctx;
 	jclass cls;
 	jmethodID callback;
@@ -28,6 +28,6 @@ typedef struct JavaScriptClassStaticFunctionWrapper* JavaScriptClassStaticFuncti
  * @function JavaScriptClassStaticFunctionWrapperCreate
  * @since 0.7.0
  */
-JavaScriptClassStaticFunctionWrapperRef JavaScriptClassStaticFunctionWrapperCreate(JNIEnv *env, JSContextRef context, const char *name, const char *fqmn, jclass cls, jobject ctx);
+JavaScriptClassStaticFunctionWrapperRef JavaScriptClassStaticFunctionWrapperCreate(JNIEnv* env, JSContextRef context, const char* name, const char* fqmn, jclass cls, jobject ctx);
 
 #endif

@@ -13,7 +13,7 @@ extern "C" {
  * Signature: (Lca/logaritm/dezel/layout/Layout;)J
  */
 JNIEXPORT jlong JNICALL Java_ca_logaritm_dezel_layout_LayoutExternal_create
-  (JNIEnv *, jclass, jobject);
+  (JNIEnv* , jclass, jobject);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutExternal
@@ -21,7 +21,7 @@ JNIEXPORT jlong JNICALL Java_ca_logaritm_dezel_layout_LayoutExternal_create
  * Signature: (J)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutExternal_delete
-  (JNIEnv *, jclass, jlong);
+  (JNIEnv* , jclass, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutExternal
@@ -29,7 +29,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutExternal_delete
  * Signature: (J)Z
  */
 JNIEXPORT jboolean JNICALL Java_ca_logaritm_dezel_layout_LayoutExternal_isInvalid
-  (JNIEnv *, jclass, jlong);
+  (JNIEnv* , jclass, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutExternal
@@ -37,7 +37,7 @@ JNIEXPORT jboolean JNICALL Java_ca_logaritm_dezel_layout_LayoutExternal_isInvali
  * Signature: (J)Z
  */
 JNIEXPORT jboolean JNICALL Java_ca_logaritm_dezel_layout_LayoutExternal_isResolving
-  (JNIEnv *, jclass, jlong);
+  (JNIEnv* , jclass, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutExternal
@@ -45,7 +45,7 @@ JNIEXPORT jboolean JNICALL Java_ca_logaritm_dezel_layout_LayoutExternal_isResolv
  * Signature: (JJ)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutExternal_setRoot
-  (JNIEnv *, jclass, jlong, jlong);
+  (JNIEnv* , jclass, jlong, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutExternal
@@ -53,7 +53,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutExternal_setRoot
  * Signature: (JD)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutExternal_setViewportWidth
-  (JNIEnv *, jclass, jlong, jdouble);
+  (JNIEnv* , jclass, jlong, jdouble);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutExternal
@@ -61,7 +61,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutExternal_setViewportW
  * Signature: (JD)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutExternal_setViewportHeight
-  (JNIEnv *, jclass, jlong, jdouble);
+  (JNIEnv* , jclass, jlong, jdouble);
 
 /*
  * Class:     ca_logaritm_dezel_layout_LayoutExternal
@@ -69,7 +69,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutExternal_setViewportH
  * Signature: (JD)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_layout_LayoutExternal_setScale
-  (JNIEnv *, jclass, jlong, jdouble);
+  (JNIEnv* , jclass, jlong, jdouble);
 
 #ifdef __cplusplus
 }

@@ -10,7 +10,7 @@
  * Method:    parse
  * Signature: ()J
  */
-jlong Java_ca_logaritm_dezel_style_StylerExternal_create(JNIEnv *, jclass) {
+jlong Java_ca_logaritm_dezel_style_StylerExternal_create(JNIEnv* , jclass) {
 	return reinterpret_cast<jlong>(DLStylerCreate());
 }
 
@@ -19,7 +19,7 @@ jlong Java_ca_logaritm_dezel_style_StylerExternal_create(JNIEnv *, jclass) {
  * Method:    delete
  * Signature: (J)V
  */
-void Java_ca_logaritm_dezel_style_StylerExternal_delete(JNIEnv *, jclass, jlong stylerPtr) {
+void Java_ca_logaritm_dezel_style_StylerExternal_delete(JNIEnv* , jclass, jlong stylerPtr) {
 	DLStylerDelete(reinterpret_cast<DLStylerRef>(stylerPtr));
 }
 
@@ -28,7 +28,7 @@ void Java_ca_logaritm_dezel_style_StylerExternal_delete(JNIEnv *, jclass, jlong 
  * Method:    setRoot
  * Signature: (JJ)V
  */
-void Java_ca_logaritm_dezel_style_StylerExternal_setRoot(JNIEnv *env, jclass, jlong stylerPtr, jlong stylerNodePtr) {
+void Java_ca_logaritm_dezel_style_StylerExternal_setRoot(JNIEnv* env, jclass, jlong stylerPtr, jlong stylerNodePtr) {
 	DLStylerSetRoot(reinterpret_cast<DLStylerRef>(stylerPtr), reinterpret_cast<DLStylerNodeRef>(stylerNodePtr));
 }
 
@@ -37,7 +37,7 @@ void Java_ca_logaritm_dezel_style_StylerExternal_setRoot(JNIEnv *env, jclass, jl
  * Method:    load
  * Signature: (JLjava/lang/String;Ljava/lang/String;)V
  */
-void Java_ca_logaritm_dezel_style_StylerExternal_load(JNIEnv *env, jclass, jlong stylerPtr, jstring codeStr, jstring fileStr) {
+void Java_ca_logaritm_dezel_style_StylerExternal_load(JNIEnv* env, jclass, jlong stylerPtr, jstring codeStr, jstring fileStr) {
 	JNI_STRING_CREATE(codeStr, code);
 	JNI_STRING_CREATE(fileStr, file);
 	DLStylerLoadStyles(reinterpret_cast<DLStylerRef>(stylerPtr), code, file);
@@ -50,7 +50,7 @@ void Java_ca_logaritm_dezel_style_StylerExternal_load(JNIEnv *env, jclass, jlong
  * Method:    setVariable
  * Signature: (JLjava/lang/String;Ljava/lang/String;)V
  */ 
-void Java_ca_logaritm_dezel_style_StylerExternal_setVariable(JNIEnv *env, jclass, jlong stylerPtr, jstring nameStr, jstring valueStr) {
+void Java_ca_logaritm_dezel_style_StylerExternal_setVariable(JNIEnv* env, jclass, jlong stylerPtr, jstring nameStr, jstring valueStr) {
 	JNI_STRING_CREATE(nameStr, name);
 	JNI_STRING_CREATE(valueStr, value);
 	DLStylerSetVariable(reinterpret_cast<DLStylerRef>(stylerPtr), name, value);

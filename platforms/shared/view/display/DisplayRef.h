@@ -68,14 +68,14 @@ void DisplaySetViewportHeight(DisplayRef display, double viewportHeight);
  * @function DisplaySetLayoutBeganCallback
  * @since 0.7.0
  */
-void DisplaySetLayoutBeganCallback(DisplayRef display, DisplayLayoutBeganCallback callback);
+void DisplaySetLayoutBeganCallback(DisplayRef display, DisplayLayoutCallback callback);
 
 /**
  * Assigns the display's layout ended callback.
  * @function DisplaySetLayoutEndedCallback
  * @since 0.7.0
  */
-void DisplaySetLayoutEndedCallback(DisplayRef display, DisplayLayoutEndedCallback callback);
+void DisplaySetLayoutEndedCallback(DisplayRef display, DisplayLayoutCallback callback);
 
 /**
  * Assigns the display's data.

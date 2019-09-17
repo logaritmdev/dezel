@@ -1,5 +1,6 @@
 #include "jni_init.h"
 #include "jni_module_core.h"
+#include "jni_module_view.h"
 #include "jni_module_style.h"
 #include "jni_module_layout.h"
 #include <string>
@@ -14,32 +15,32 @@ jmethodID StackTraceElementToString;
 static std::string error = "";
 
 jobjectArray
-JNIExceptionGetStackTrace(JNIEnv *env, jthrowable exception) {
+JNIExceptionGetStackTrace(JNIEnv* env, jthrowable exception) {
 	return (jobjectArray) env->CallObjectMethod(exception, ThrowableGetStackTrace);
 }
 
 jsize
-JNIExceptionGetStackTraceLength(JNIEnv *env, jobjectArray frames) {
+JNIExceptionGetStackTraceLength(JNIEnv* env, jobjectArray frames) {
 	return frames ? env->GetArrayLength(frames) : 0;
 }
 
 jstring
-JNIExceptionGetMessage(JNIEnv *env, jthrowable exception) {
+JNIExceptionGetMessage(JNIEnv* env, jthrowable exception) {
 	return (jstring) env->CallObjectMethod(exception, ThrowableToString);
 }
 
 jthrowable
-JNIExceptionGetCause(JNIEnv *env, jthrowable exception) {
+JNIExceptionGetCause(JNIEnv* env, jthrowable exception) {
 	return (jthrowable) env->CallObjectMethod(exception, ThrowableGetCause);
 }
 
 jstring
-JNIStackTraceElementGetString(JNIEnv *env, jobject frame) {
+JNIStackTraceElementGetString(JNIEnv* env, jobject frame) {
 	return (jstring) env->CallObjectMethod(frame,  StackTraceElementToString);
 }
 
 void
-JNIAppendException(JNIEnv *env, jthrowable exception) {
+JNIAppendException(JNIEnv* env, jthrowable exception) {
 
 	auto frames = JNIExceptionGetStackTrace(env, exception);
 	auto length = JNIExceptionGetStackTraceLength(env, frames);
@@ -95,7 +96,7 @@ JNIAppendException(JNIEnv *env, jthrowable exception) {
 }
 
 void
-JNIHandleException(JNIEnv *env) {
+JNIHandleException(JNIEnv* env) {
 
 	if (env->ExceptionCheck() == false) {
 		return;
@@ -110,7 +111,7 @@ JNIHandleException(JNIEnv *env) {
 }
 
 jclass
-JNIGetClass(JNIEnv *env, const char *name)
+JNIGetClass(JNIEnv* env, const char* name)
 {
 	auto res = env->FindClass(name);
 
@@ -122,7 +123,7 @@ JNIGetClass(JNIEnv *env, const char *name)
 }
 
 jfieldID
-JNIGetField(JNIEnv *env, jclass cls, const char *name, const char *sign)
+JNIGetField(JNIEnv* env, jclass cls, const char* name, const char* sign)
 {
 	auto res = env->GetFieldID(
 		cls,
@@ -138,7 +139,7 @@ JNIGetField(JNIEnv *env, jclass cls, const char *name, const char *sign)
 }
 
 jmethodID
-JNIGetMethod(JNIEnv *env, jclass cls, const char *name, const char *sign)
+JNIGetMethod(JNIEnv* env, jclass cls, const char* name, const char* sign)
 {
 	auto res = env->GetMethodID(
 		cls,
@@ -154,7 +155,7 @@ JNIGetMethod(JNIEnv *env, jclass cls, const char *name, const char *sign)
 }
 
 jmethodID
-JNIGetStaticMethod(JNIEnv *env, jclass cls, const char *name, const char *sign)
+JNIGetStaticMethod(JNIEnv* env, jclass cls, const char* name, const char* sign)
 {
 	auto res = env->GetStaticMethodID(
 		cls,
@@ -170,7 +171,7 @@ JNIGetStaticMethod(JNIEnv *env, jclass cls, const char *name, const char *sign)
 }
 
 jobject
-JNIGlobalRef(JNIEnv *env, jobject value)
+JNIGlobalRef(JNIEnv* env, jobject value)
 {
 	return env->NewGlobalRef(value);
 }
@@ -181,7 +182,7 @@ JNIGlobalRef(JNIEnv *env, jobject value)
 * @hidden
 */
 jclass
-JNIGlobalRef(JNIEnv *env, jclass value)
+JNIGlobalRef(JNIEnv* env, jclass value)
 {
 	return reinterpret_cast<jclass>(env->NewGlobalRef(value));
 }
@@ -205,6 +206,7 @@ JNI_OnLoad(JavaVM* vm, void* reserved)
 	StackTraceElement          = (jclass) env->NewGlobalRef(StackTraceElement);
 
 	JNI_OnLoad_core(env);
+	JNI_OnLoad_view(env);
 	JNI_OnLoad_style(env);
 	JNI_OnLoad_layout(env);
 

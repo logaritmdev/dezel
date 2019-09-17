@@ -1,5 +1,5 @@
-#ifndef PROPERTYGETTERWRAPPER_H
-#define PROPERTYGETTERWRAPPER_H
+#ifndef JavaScriptGetterWrapper_h
+#define JavaScriptGetterWrapper_h
 
 #include <DLValue.h>
 #include <DLContext.h>
@@ -27,6 +27,6 @@ typedef struct JavaScriptGetterWrapper* JavaScriptGetterWrapperRef;
  * @function JavaScriptGetterWrapperCreate
  * @since 0.1.0
  */
-JavaScriptGetterWrapperRef JavaScriptGetterWrapperCreate(JNIEnv *env, JSContextRef context, jobject callback, const char *name, jobject ctx);
+JavaScriptGetterWrapperRef JavaScriptGetterWrapperCreate(JNIEnv* env, JSContextRef context, jobject callback, const char* name, jobject ctx);
 
 #endif

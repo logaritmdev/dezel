@@ -271,18 +271,11 @@ typedef struct DisplayNodeMeasuredSize {
 } DisplayNodeMeasuredSize;
 
 /**
- * The callback when the global layout begins.
- * @typedef DisplayLayoutBeganCallback
+ * The callback when the global layout is computed.
+ * @typedef DisplayLayoutCallback
  * @since 0.7.0
  */
-typedef void (*DisplayLayoutBeganCallback)(DisplayRef layout);
-
-/**
- * The callback layout when the global layout finishes.
- * @typedef DisplayLayoutEndedCallback
- * @since 0.7.0
- */
-typedef void (*DisplayLayoutEndedCallback)(DisplayRef layout);
+typedef void (*DisplayLayoutCallback)(DisplayRef layout);
 
 /**
  * The node callback called when the node layout is invalidated.

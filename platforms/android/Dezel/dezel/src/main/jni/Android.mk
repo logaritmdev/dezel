@@ -34,8 +34,11 @@ LOCAL_SRC_FILES := wrappers/JavaScriptFunction.cpp \
                    wrappers/StylerNodeWrapper.cpp \
                    wrappers/LayoutWrapper.cpp \
                    wrappers/LayoutNodeWrapper.cpp \
+                   wrappers/DisplayWrapper.cpp \
+                   wrappers/DisplayNodeWrapper.cpp \
                    jni_init.cpp \
                    jni_module_core.cpp \
+                   jni_module_view.cpp \
                    jni_module_style.cpp \
                    jni_module_layout.cpp \
                    ca_logaritm_dezel_core_JavaScriptClassBuilderExternal.cpp \
@@ -46,7 +49,12 @@ LOCAL_SRC_FILES := wrappers/JavaScriptFunction.cpp \
                    ca_logaritm_dezel_layout_LayoutNodeExternal.cpp \
                    ca_logaritm_dezel_style_StylerExternal.cpp \
                    ca_logaritm_dezel_style_StylerNodeExternal.cpp \
+                   ca_logaritm_dezel_view_display_DisplayExternal.cpp \
+                   ca_logaritm_dezel_view_display_DisplayNodeExternal.cpp \
                    $(wildcard $(SHARED_PATH)/core/*.cpp) \
+                   $(wildcard $(SHARED_PATH)/view/display/*.cpp) \
+                   $(wildcard $(SHARED_PATH)/view/layout/*.cpp) \
+                   $(wildcard $(SHARED_PATH)/view/style/*.cpp) \
                    $(wildcard $(SHARED_PATH)/style/*.cpp) \
                    $(wildcard $(SHARED_PATH)/layout/*.cpp) \
 
@@ -62,8 +70,9 @@ LOCAL_CPPFLAGS := -std=c++11 \
                   -I$(SHARED_PATH)/style/include/dls \
                   -I$(SHARED_PATH)/style/include/value \
                   -I$(SHARED_PATH)/layout \
-                  -I$(SHARED_PATH)/i18n \
-                  -I$(SHARED_PATH)/i18n/include \
+                  -I$(SHARED_PATH)/view/display \
+                  -I$(SHARED_PATH)/view/layout \
+                  -I$(SHARED_PATH)/view/style \
                   -O3 \
                   -DANDROID
 

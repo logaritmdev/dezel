@@ -1,5 +1,5 @@
-#ifndef JAVASCRIPTVALUEFOREACHWRAPPER_H
-#define JAVASCRIPTVALUEFOREACHWRAPPER_H
+#ifndef JavaScriptValueForEachWrapper_h
+#define JavaScriptValueForEachWrapper_h
 
 #include <DLValue.h>
 #include <DLContext.h>
@@ -11,7 +11,7 @@
  * @since 0.7.0
  */
 struct JavaScriptValueForEachWrapper {
-	JNIEnv *env;
+	JNIEnv* env;
 	jobject callback;
 };
 
@@ -25,12 +25,12 @@ typedef struct JavaScriptValueForEachWrapper* JavaScriptValueForEachWrapperRef;
  * @function JavaScriptValueForEachWrapperCreate
  * @since 0.7.0
  */
-JavaScriptValueForEachWrapperRef JavaScriptValueForEachWrapperCreate(JNIEnv *env, jobject handler);
+JavaScriptValueForEachWrapperRef JavaScriptValueForEachWrapperCreate(JNIEnv* env, jobject handler);
 
 /**
  * @function JavaScriptValueForEachWrapperDelete
  * @since 0.7.0
  */
-void JavaScriptValueForEachWrapperDelete(JNIEnv *env, JavaScriptValueForEachWrapperRef wrapper);
+void JavaScriptValueForEachWrapperDelete(JNIEnv* env, JavaScriptValueForEachWrapperRef wrapper);
 
 #endif

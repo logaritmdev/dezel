@@ -53,13 +53,13 @@ DisplaySetViewportHeight(DisplayRef display, double viewportHeight)
 }
 
 void
-DisplaySetLayoutBeganCallback(DisplayRef display, DisplayLayoutBeganCallback callback)
+DisplaySetLayoutBeganCallback(DisplayRef display, DisplayLayoutCallback callback)
 {
 	reinterpret_cast<Display*>(display)->setLayoutBeganCallback(callback);
 }
 
 void
-DisplaySetLayoutEndedCallback(DisplayRef display, DisplayLayoutEndedCallback callback)
+DisplaySetLayoutEndedCallback(DisplayRef display, DisplayLayoutCallback callback)
 {
 	reinterpret_cast<Display*>(display)->setLayoutEndedCallback(callback);
 }

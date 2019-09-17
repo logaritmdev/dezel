@@ -25,8 +25,8 @@ private:
 	bool changed = false;
 	bool resolving = false;
 
-   	DisplayLayoutBeganCallback layoutBeganCallback = nullptr;
-    DisplayLayoutEndedCallback layoutEndedCallback = nullptr;
+   	DisplayLayoutCallback layoutBeganCallback = nullptr;
+    DisplayLayoutCallback layoutEndedCallback = nullptr;
 
 	void layoutBegan();
 	void layoutEnded();
@@ -40,8 +40,8 @@ public:
 	void setScale(double scale);
 	void setViewportWidth(double viewportWidth);
 	void setViewportHeight(double viewportHeight);
-	void setLayoutBeganCallback(DisplayLayoutBeganCallback layoutBeganCallback);
-	void setLayoutEndedCallback(DisplayLayoutEndedCallback layoutEndedCallback);
+	void setLayoutBeganCallback(DisplayLayoutCallback layoutBeganCallback);
+	void setLayoutEndedCallback(DisplayLayoutCallback layoutEndedCallback);
 
 	double getScale() {
 		return this->scale;

@@ -1,5 +1,5 @@
-#ifndef DEZEL_JAVASCRIPTVALUEFOROWNWRAPPER_H
-#define DEZEL_JAVASCRIPTVALUEFOROWNWRAPPER_H
+#ifndef JavaScriptValueForOwnWrapper_h
+#define JavaScriptValueForOwnWrapper_h
 
 #include <DLValue.h>
 #include <DLContext.h>
@@ -11,7 +11,7 @@
  * @since 0.7.0
  */
 struct JavaScriptValueForOwnWrapper {
-	JNIEnv *env;
+	JNIEnv* env;
 	jobject callback;
 };
 
@@ -25,12 +25,12 @@ typedef struct JavaScriptValueForOwnWrapper* JavaScriptValueForOwnWrapperRef;
  * @function JavaScriptValueForOwnWrapperCreate
  * @since 0.7.0
  */
-JavaScriptValueForOwnWrapperRef JavaScriptValueForOwnWrapperCreate(JNIEnv *env, jobject handler);
+JavaScriptValueForOwnWrapperRef JavaScriptValueForOwnWrapperCreate(JNIEnv* env, jobject handler);
 
 /**
  * @function JavaScriptValueForOwnWrapperDelete
  * @since 0.7.0
  */
-void JavaScriptValueForOwnWrapperDelete(JNIEnv *env, JavaScriptValueForOwnWrapperRef wrapper);
+void JavaScriptValueForOwnWrapperDelete(JNIEnv* env, JavaScriptValueForOwnWrapperRef wrapper);
 
 #endif

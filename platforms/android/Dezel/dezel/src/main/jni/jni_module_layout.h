@@ -1,5 +1,5 @@
-#ifndef JNIMODULELAYOUT_H
-#define JNIMODULELAYOUT_H
+#ifndef JNIModuleLayout_h
+#define JNIModuleLayout_h
 
 #include <jni.h>
 #include "jni_init.h"
@@ -32,6 +32,6 @@ extern jmethodID SizeFGetHeight;
  * @function JNI_OnLoad_layout
  * @since 0.1.0
  */
-void JNI_OnLoad_layout(JNIEnv *env);
+void JNI_OnLoad_layout(JNIEnv* env);
 
 #endif

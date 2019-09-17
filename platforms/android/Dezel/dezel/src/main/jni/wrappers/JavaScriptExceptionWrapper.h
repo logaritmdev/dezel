@@ -1,5 +1,5 @@
-#ifndef EXCEPTIONWRAPPER_H
-#define EXCEPTIONWRAPPER_H
+#ifndef JavaScriptExceptionWrapper_h
+#define JavaScriptExceptionWrapper_h
 
 #include <DLValue.h>
 #include <DLContext.h>
@@ -26,6 +26,6 @@ typedef struct JavaScriptExceptionWrapper* JavaScriptExceptionWrapperRef;
  * @function JavaScriptExceptionWrapperCreate
  * @since 0.1.0
  */
-JavaScriptExceptionWrapperRef JavaScriptExceptionWrapperCreate(JNIEnv *env, jobject handler, jobject ctx);
+JavaScriptExceptionWrapperRef JavaScriptExceptionWrapperCreate(JNIEnv* env, jobject handler, jobject ctx);
 
 #endif

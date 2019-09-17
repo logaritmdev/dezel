@@ -13,7 +13,7 @@ extern "C" {
  * Signature: ()J
  */
 JNIEXPORT jlong JNICALL Java_ca_logaritm_dezel_style_StylerExternal_create
-  (JNIEnv *, jclass);
+  (JNIEnv* , jclass);
 
 /*
  * Class:     ca_logaritm_dezel_style_StylerExternal
@@ -21,7 +21,7 @@ JNIEXPORT jlong JNICALL Java_ca_logaritm_dezel_style_StylerExternal_create
  * Signature: (J)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_style_StylerExternal_delete
-  (JNIEnv *, jclass, jlong);
+  (JNIEnv* , jclass, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_style_StylerExternal
@@ -29,7 +29,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_style_StylerExternal_delete
  * Signature: (JJ)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_style_StylerExternal_setRoot
-  (JNIEnv *, jclass, jlong, jlong);
+  (JNIEnv* , jclass, jlong, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_style_StylerExternal
@@ -37,7 +37,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_style_StylerExternal_setRoot
  * Signature: (JLjava/lang/String;Ljava/lang/String;)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_style_StylerExternal_load
-  (JNIEnv *, jclass, jlong, jstring, jstring);
+  (JNIEnv* , jclass, jlong, jstring, jstring);
 
 /*
  * Class:     ca_logaritm_dezel_style_StylerExternal
@@ -45,7 +45,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_style_StylerExternal_load
  * Signature: (JLjava/lang/String;Ljava/lang/String;)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_style_StylerExternal_setVariable
-  (JNIEnv *, jclass, jlong, jstring, jstring);
+  (JNIEnv* , jclass, jlong, jstring, jstring);
 
 #ifdef __cplusplus
 }

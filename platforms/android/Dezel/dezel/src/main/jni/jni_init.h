@@ -1,5 +1,5 @@
-#ifndef JNIINIT_H
-#define JNIINIT_H
+#ifndef JNIInit_h
+#define JNIInit_h
 
 #include <jni.h>
 #include <android/log.h>
@@ -105,7 +105,7 @@ extern jmethodID StackTraceElementToString;
  * @since 0.1.0
  */
 #define JNI_STRING_CREATE(SRC, DST) \
-	const char *DST = env->GetStringUTFChars(SRC, NULL);
+	const char* DST = env->GetStringUTFChars(SRC, NULL);
 
 /**
  * Deletes a C string
@@ -120,48 +120,48 @@ extern jmethodID StackTraceElementToString;
  * @since 0.1.0
  * @hidden
  */
-jclass JNIGetClass(JNIEnv *env, const char *name);
+jclass JNIGetClass(JNIEnv* env, const char* name);
 
 /**
  * @function JNIGetField
  * @since 0.1.0
  * @hidden
  */
-jfieldID JNIGetField(JNIEnv *env, jclass klass, const char *name, const char *sign);
+jfieldID JNIGetField(JNIEnv* env, jclass klass, const char* name, const char* sign);
 
 /**
  * @function JNIGetMethod
  * @since 0.1.0
  * @hidden
  */
-jmethodID JNIGetMethod(JNIEnv *env, jclass klass, const char *name, const char *sign);
+jmethodID JNIGetMethod(JNIEnv* env, jclass klass, const char* name, const char* sign);
 
 /**
  * @function JNIGetStaticMethod
  * @since 0.7.0
  * @hidden
  */
-jmethodID JNIGetStaticMethod(JNIEnv *env, jclass cls, const char *name, const char *sign);
+jmethodID JNIGetStaticMethod(JNIEnv* env, jclass cls, const char* name, const char* sign);
 
 /**
 * @function JNIHandleException
 * @since 0.6.0
 * @hidden
 */
-void JNIHandleException(JNIEnv *env);
+void JNIHandleException(JNIEnv* env);
 
 /**
 * @function JNIGlobalRef
 * @since 0.7.0
 * @hidden
 */
-jobject JNIGlobalRef(JNIEnv *env, jobject value);
+jobject JNIGlobalRef(JNIEnv* env, jobject value);
 
 /**
 * @function JNIGlobalRef
 * @since 0.7.0
 * @hidden
 */
-jclass JNIGlobalRef(JNIEnv *env, jclass value);
+jclass JNIGlobalRef(JNIEnv* env, jclass value);
 
 #endif

@@ -13,7 +13,7 @@ extern "C" {
  * Signature: (Ljava/lang/Object;)J
  */
 JNIEXPORT jlong JNICALL Java_ca_logaritm_dezel_style_StylerNodeExternal_create
-  (JNIEnv *, jclass, jobject);
+  (JNIEnv* , jclass, jobject);
 
 /*
  * Class:     ca_logaritm_dezel_style_StylerNodeExternal
@@ -21,7 +21,7 @@ JNIEXPORT jlong JNICALL Java_ca_logaritm_dezel_style_StylerNodeExternal_create
  * Signature: (J)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_style_StylerNodeExternal_delete
-  (JNIEnv *, jclass, jlong);
+  (JNIEnv* , jclass, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_style_StylerNodeExternal
@@ -29,7 +29,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_style_StylerNodeExternal_delete
  * Signature: (JLjava/lang/String;)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_style_StylerNodeExternal_setId
-  (JNIEnv *, jclass, jlong, jstring);
+  (JNIEnv* , jclass, jlong, jstring);
 
 /*
  * Class:     ca_logaritm_dezel_style_StylerNodeExternal
@@ -37,7 +37,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_style_StylerNodeExternal_setId
  * Signature: (JJ)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_style_StylerNodeExternal_setStyler
-  (JNIEnv *, jclass, jlong, jlong);
+  (JNIEnv* , jclass, jlong, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_style_StylerNodeExternal
@@ -45,7 +45,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_style_StylerNodeExternal_setStyler
  * Signature: (JLjava/lang/String;)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_style_StylerNodeExternal_setType
-  (JNIEnv *, jclass, jlong, jstring);
+  (JNIEnv* , jclass, jlong, jstring);
 
 /*
  * Class:     ca_logaritm_dezel_style_StylerNodeExternal
@@ -53,7 +53,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_style_StylerNodeExternal_setType
  * Signature: (JZ)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_style_StylerNodeExternal_setVisible
-  (JNIEnv *, jclass, jlong, jboolean);
+  (JNIEnv* , jclass, jlong, jboolean);
 
 /*
  * Class:     ca_logaritm_dezel_style_StylerNodeExternal
@@ -61,7 +61,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_style_StylerNodeExternal_setVisibl
  * Signature: (JJ)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_style_StylerNodeExternal_appendChild
-  (JNIEnv *, jclass, jlong, jlong);
+  (JNIEnv* , jclass, jlong, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_style_StylerNodeExternal
@@ -69,7 +69,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_style_StylerNodeExternal_appendChi
  * Signature: (JJI)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_style_StylerNodeExternal_insertChild
-  (JNIEnv *, jclass, jlong, jlong, jint);
+  (JNIEnv* , jclass, jlong, jlong, jint);
 
 /*
  * Class:     ca_logaritm_dezel_style_StylerNodeExternal
@@ -77,7 +77,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_style_StylerNodeExternal_insertChi
  * Signature: (JJ)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_style_StylerNodeExternal_removeChild
-  (JNIEnv *, jclass, jlong, jlong);
+  (JNIEnv* , jclass, jlong, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_style_StylerNodeExternal
@@ -85,7 +85,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_style_StylerNodeExternal_removeChi
  * Signature: (JJ)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_style_StylerNodeExternal_appendShadowedNode
-  (JNIEnv *, jclass, jlong, jlong);
+  (JNIEnv* , jclass, jlong, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_style_StylerNodeExternal
@@ -93,7 +93,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_style_StylerNodeExternal_appendSha
  * Signature: (JJ)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_style_StylerNodeExternal_removeShadowedNode
-  (JNIEnv *, jclass, jlong, jlong);
+  (JNIEnv* , jclass, jlong, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_style_StylerNodeExternal
@@ -101,7 +101,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_style_StylerNodeExternal_removeSha
  * Signature: (JLjava/lang/String;)Z
  */
 JNIEXPORT jboolean JNICALL Java_ca_logaritm_dezel_style_StylerNodeExternal_hasStyle
-  (JNIEnv *, jclass, jlong, jstring);
+  (JNIEnv* , jclass, jlong, jstring);
 
 /*
  * Class:     ca_logaritm_dezel_style_StylerNodeExternal
@@ -109,7 +109,7 @@ JNIEXPORT jboolean JNICALL Java_ca_logaritm_dezel_style_StylerNodeExternal_hasSt
  * Signature: (JLjava/lang/String;Z)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_style_StylerNodeExternal_setStyle
-  (JNIEnv *, jclass, jlong, jstring, jboolean);
+  (JNIEnv* , jclass, jlong, jstring, jboolean);
 
 /*
  * Class:     ca_logaritm_dezel_style_StylerNodeExternal
@@ -117,7 +117,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_style_StylerNodeExternal_setStyle
  * Signature: (JLjava/lang/String;)Z
  */
 JNIEXPORT jboolean JNICALL Java_ca_logaritm_dezel_style_StylerNodeExternal_hasState
-  (JNIEnv *, jclass, jlong, jstring);
+  (JNIEnv* , jclass, jlong, jstring);
 
 /*
  * Class:     ca_logaritm_dezel_style_StylerNodeExternal
@@ -125,7 +125,7 @@ JNIEXPORT jboolean JNICALL Java_ca_logaritm_dezel_style_StylerNodeExternal_hasSt
  * Signature: (JLjava/lang/String;Z)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_style_StylerNodeExternal_setState
-  (JNIEnv *, jclass, jlong, jstring, jboolean);
+  (JNIEnv* , jclass, jlong, jstring, jboolean);
 
 /*
  * Class:     ca_logaritm_dezel_style_StylerNodeExternal
@@ -133,7 +133,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_style_StylerNodeExternal_setState
  * Signature: (J)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_style_StylerNodeExternal_resolve
-  (JNIEnv *, jclass, jlong);
+  (JNIEnv* , jclass, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_style_StylerNodeExternal
@@ -141,7 +141,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_style_StylerNodeExternal_resolve
  * Signature: (J)Ljava/lang/Object;
  */
 JNIEXPORT jobject JNICALL Java_ca_logaritm_dezel_style_StylerNodeExternal_getData
-  (JNIEnv *, jclass, jlong);
+  (JNIEnv* , jclass, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_style_StylerNodeExternal
@@ -149,7 +149,7 @@ JNIEXPORT jobject JNICALL Java_ca_logaritm_dezel_style_StylerNodeExternal_getDat
  * Signature: (J)Ljava/lang/String;
  */
 JNIEXPORT jstring JNICALL Java_ca_logaritm_dezel_style_StylerNodeExternal_getItemProperty
-  (JNIEnv *, jclass, jlong);
+  (JNIEnv* , jclass, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_style_StylerNodeExternal
@@ -157,7 +157,7 @@ JNIEXPORT jstring JNICALL Java_ca_logaritm_dezel_style_StylerNodeExternal_getIte
  * Signature: (JI)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_style_StylerNodeExternal_setItemValueType
-  (JNIEnv *, jclass, jlong, jint);
+  (JNIEnv* , jclass, jlong, jint);
 
 /*
  * Class:     ca_logaritm_dezel_style_StylerNodeExternal
@@ -165,7 +165,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_style_StylerNodeExternal_setItemVa
  * Signature: (J)I
  */
 JNIEXPORT jint JNICALL Java_ca_logaritm_dezel_style_StylerNodeExternal_getItemValueType
-  (JNIEnv *, jclass, jlong);
+  (JNIEnv* , jclass, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_style_StylerNodeExternal
@@ -173,7 +173,7 @@ JNIEXPORT jint JNICALL Java_ca_logaritm_dezel_style_StylerNodeExternal_getItemVa
  * Signature: (JI)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_style_StylerNodeExternal_setItemValueUnit
-  (JNIEnv *, jclass, jlong, jint);
+  (JNIEnv* , jclass, jlong, jint);
 
 /*
  * Class:     ca_logaritm_dezel_style_StylerNodeExternal
@@ -181,7 +181,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_style_StylerNodeExternal_setItemVa
  * Signature: (J)I
  */
 JNIEXPORT jint JNICALL Java_ca_logaritm_dezel_style_StylerNodeExternal_getItemValueUnit
-  (JNIEnv *, jclass, jlong);
+  (JNIEnv* , jclass, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_style_StylerNodeExternal
@@ -189,7 +189,7 @@ JNIEXPORT jint JNICALL Java_ca_logaritm_dezel_style_StylerNodeExternal_getItemVa
  * Signature: (JLjava/lang/String;)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_style_StylerNodeExternal_setItemValueWithString
-  (JNIEnv *, jclass, jlong, jstring);
+  (JNIEnv* , jclass, jlong, jstring);
 
 /*
  * Class:     ca_logaritm_dezel_style_StylerNodeExternal
@@ -197,7 +197,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_style_StylerNodeExternal_setItemVa
  * Signature: (J)Ljava/lang/String;
  */
 JNIEXPORT jstring JNICALL Java_ca_logaritm_dezel_style_StylerNodeExternal_getItemValueAsString
-  (JNIEnv *, jclass, jlong);
+  (JNIEnv* , jclass, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_style_StylerNodeExternal
@@ -205,7 +205,7 @@ JNIEXPORT jstring JNICALL Java_ca_logaritm_dezel_style_StylerNodeExternal_getIte
  * Signature: (JD)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_style_StylerNodeExternal_setItemValueWithNumber
-  (JNIEnv *, jclass, jlong, jdouble);
+  (JNIEnv* , jclass, jlong, jdouble);
 
 /*
  * Class:     ca_logaritm_dezel_style_StylerNodeExternal
@@ -213,7 +213,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_style_StylerNodeExternal_setItemVa
  * Signature: (J)D
  */
 JNIEXPORT jdouble JNICALL Java_ca_logaritm_dezel_style_StylerNodeExternal_getItemValueAsNumber
-  (JNIEnv *, jclass, jlong);
+  (JNIEnv* , jclass, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_style_StylerNodeExternal
@@ -221,7 +221,7 @@ JNIEXPORT jdouble JNICALL Java_ca_logaritm_dezel_style_StylerNodeExternal_getIte
  * Signature: (JZ)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_style_StylerNodeExternal_setItemValueWithBoolean
-  (JNIEnv *, jclass, jlong, jboolean);
+  (JNIEnv* , jclass, jlong, jboolean);
 
 /*
  * Class:     ca_logaritm_dezel_style_StylerNodeExternal
@@ -229,7 +229,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_style_StylerNodeExternal_setItemVa
  * Signature: (J)Z
  */
 JNIEXPORT jboolean JNICALL Java_ca_logaritm_dezel_style_StylerNodeExternal_getItemValueAsBoolean
-  (JNIEnv *, jclass, jlong);
+  (JNIEnv* , jclass, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_style_StylerNodeExternal
@@ -237,7 +237,7 @@ JNIEXPORT jboolean JNICALL Java_ca_logaritm_dezel_style_StylerNodeExternal_getIt
  * Signature: (JLjava/lang/Object;)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_style_StylerNodeExternal_setItemData
-  (JNIEnv *, jclass, jlong, jobject);
+  (JNIEnv* , jclass, jlong, jobject);
 
 /*
  * Class:     ca_logaritm_dezel_style_StylerNodeExternal
@@ -245,7 +245,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_style_StylerNodeExternal_setItemDa
  * Signature: (J)Ljava/lang/Object;
  */
 JNIEXPORT jobject JNICALL Java_ca_logaritm_dezel_style_StylerNodeExternal_getItemData
-  (JNIEnv *, jclass, jlong);
+  (JNIEnv* , jclass, jlong);
 
 #ifdef __cplusplus
 }

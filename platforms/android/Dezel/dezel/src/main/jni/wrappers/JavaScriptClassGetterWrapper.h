@@ -1,5 +1,5 @@
-#ifndef CLASSPROPERTYGETTERWRAPPER_H
-#define CLASSPROPERTYGETTERWRAPPER_H
+#ifndef JavaScriptClassGetterWrapper_h
+#define JavaScriptClassGetterWrapper_h
 
 #include <DLValue.h>
 #include <DLContext.h>
@@ -11,7 +11,7 @@
  * @since 0.1.0
  */
 struct JavaScriptClassGetterWrapper {
-	JNIEnv *env;
+	JNIEnv* env;
 	jobject ctx;
 	jclass cls;
 	jmethodID callback;
@@ -28,6 +28,6 @@ typedef struct JavaScriptClassGetterWrapper* JavaScriptClassGetterWrapperRef;
  * @function JavaScriptClassGetterWrapperCreate
  * @since 0.1.0
  */
-JavaScriptClassGetterWrapperRef JavaScriptClassGetterWrapperCreate(JNIEnv *env, JSContextRef context, const char *name, const char *fqmn, jclass cls, jobject ctx);
+JavaScriptClassGetterWrapperRef JavaScriptClassGetterWrapperCreate(JNIEnv* env, JSContextRef context, const char* name, const char* fqmn, jclass cls, jobject ctx);
 
 #endif

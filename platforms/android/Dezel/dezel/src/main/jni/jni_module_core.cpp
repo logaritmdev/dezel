@@ -43,7 +43,7 @@ const long long kJavaScriptFinalizeWrapperKey = reinterpret_cast<long long>(new 
 const long long kJavaScriptExceptionWrapperKey = reinterpret_cast<long long>(new int(0));
 
 void
-JNI_OnLoad_core(JNIEnv *env)
+JNI_OnLoad_core(JNIEnv* env)
 {
 	StringClass = JNIGetClass(
 		env,

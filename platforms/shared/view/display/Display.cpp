@@ -48,12 +48,12 @@ Display::setViewportHeight(double value) {
 }
 
 void
-Display::setLayoutBeganCallback(DisplayLayoutBeganCallback layoutBeganCallback) {
+Display::setLayoutBeganCallback(DisplayLayoutCallback layoutBeganCallback) {
 	this->layoutBeganCallback = layoutBeganCallback;
 }
 
 void
-Display::setLayoutEndedCallback(DisplayLayoutEndedCallback layoutEndedCallback) {
+Display::setLayoutEndedCallback(DisplayLayoutCallback layoutEndedCallback) {
 	this->layoutEndedCallback = layoutEndedCallback;
 }
 

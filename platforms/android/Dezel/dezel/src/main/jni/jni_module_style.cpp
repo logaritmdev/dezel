@@ -7,7 +7,7 @@ jmethodID StyleFetchCallback;
 jmethodID StyleInvalidateCallback;
 
 void
-JNI_OnLoad_style(JNIEnv *env)
+JNI_OnLoad_style(JNIEnv* env)
 {
 	StyleClass = JNIGetClass(
 		env,

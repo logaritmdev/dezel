@@ -26,22 +26,6 @@ class DisplayNodeAbsoluteLayoutTest: XCTestCase {
 		self.display.setWindow(self.window)
 	}
 
-//	func testLayoutState() {
-//
-//		let node = DisplayNode(display: self.display)
-//		node.setTop(type: kDisplayNodeOriginTypeLength, unit: kDisplayNodeOriginUnitPX, length: 0)
-//
-//		self.window.appendChild(node)
-//
-//		XCTAssertTrue(self.window.hasInvalidLayout)
-//		XCTAssertTrue(node.hasInvalidPosition)
-//
-//		self.window.resolve()
-//
-//		XCTAssertFalse(self.window.hasInvalidLayout)
-//		XCTAssertFalse(node.hasInvalidPosition)
-//	}
-
 	func testNodePositionInPX() {
 
 		let node = DisplayNode(display: self.display)

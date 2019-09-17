@@ -48,7 +48,7 @@ JavaScriptValueForOwnCallback(JSContextRef context, JSValueRef value, const char
  * Method:    createNull
  * Signature: (J)J
  */
-jlong Java_ca_logaritm_dezel_core_JavaScriptValueExternal_createNull(JNIEnv *env, jclass, jlong contextPtr) {
+jlong Java_ca_logaritm_dezel_core_JavaScriptValueExternal_createNull(JNIEnv* env, jclass, jlong contextPtr) {
 	return reinterpret_cast<jlong>(DLValueCreateNull(reinterpret_cast<JSContextRef>(contextPtr)));
 }
 
@@ -57,7 +57,7 @@ jlong Java_ca_logaritm_dezel_core_JavaScriptValueExternal_createNull(JNIEnv *env
  * Method:    createUndefined
  * Signature: (J)J
  */
-jlong Java_ca_logaritm_dezel_core_JavaScriptValueExternal_createUndefined(JNIEnv *env, jclass, jlong contextPtr) {
+jlong Java_ca_logaritm_dezel_core_JavaScriptValueExternal_createUndefined(JNIEnv* env, jclass, jlong contextPtr) {
 	return reinterpret_cast<jlong>(DLValueCreateUndefined(reinterpret_cast<JSContextRef>(contextPtr)));
 }
 
@@ -66,7 +66,7 @@ jlong Java_ca_logaritm_dezel_core_JavaScriptValueExternal_createUndefined(JNIEnv
  * Method:    createString
  * Signature: (JLjava/lang/String;)J
  */
-jlong Java_ca_logaritm_dezel_core_JavaScriptValueExternal_createString(JNIEnv *env, jclass, jlong contextPtr, jstring valueStr) {
+jlong Java_ca_logaritm_dezel_core_JavaScriptValueExternal_createString(JNIEnv* env, jclass, jlong contextPtr, jstring valueStr) {
 	JNI_STRING_CREATE(valueStr, value);
 	JSValueRef result = DLValueCreateString(reinterpret_cast<JSContextRef>(contextPtr), value);
 	JNI_STRING_DELETE(valueStr, value);
@@ -78,7 +78,7 @@ jlong Java_ca_logaritm_dezel_core_JavaScriptValueExternal_createString(JNIEnv *e
  * Method:    createNumber
  * Signature: (JD)J
  */
-jlong Java_ca_logaritm_dezel_core_JavaScriptValueExternal_createNumber(JNIEnv *env, jclass, jlong contextPtr, jdouble value) {
+jlong Java_ca_logaritm_dezel_core_JavaScriptValueExternal_createNumber(JNIEnv* env, jclass, jlong contextPtr, jdouble value) {
 	return reinterpret_cast<jlong>(DLValueCreateNumber(reinterpret_cast<JSContextRef>(contextPtr), value));
 }
 
@@ -87,7 +87,7 @@ jlong Java_ca_logaritm_dezel_core_JavaScriptValueExternal_createNumber(JNIEnv *e
  * Method:    createBoolean
  * Signature: (JZ)J
  */
-jlong Java_ca_logaritm_dezel_core_JavaScriptValueExternal_createBoolean(JNIEnv *env, jclass, jlong contextPtr, jboolean value) {
+jlong Java_ca_logaritm_dezel_core_JavaScriptValueExternal_createBoolean(JNIEnv* env, jclass, jlong contextPtr, jboolean value) {
 	return reinterpret_cast<jlong>(DLValueCreateBoolean(reinterpret_cast<JSContextRef>(contextPtr), value));
 }
 
@@ -96,7 +96,7 @@ jlong Java_ca_logaritm_dezel_core_JavaScriptValueExternal_createBoolean(JNIEnv *
  * Method:    createEmtpyObject
  * Signature: (J)J
  */
-jlong Java_ca_logaritm_dezel_core_JavaScriptValueExternal_createEmtpyObject(JNIEnv *env, jclass, jlong contextPtr) {
+jlong Java_ca_logaritm_dezel_core_JavaScriptValueExternal_createEmtpyObject(JNIEnv* env, jclass, jlong contextPtr) {
 	return reinterpret_cast<jlong>(DLValueCreateEmptyObject(reinterpret_cast<JSContextRef>(contextPtr), NULL));
 }
 
@@ -105,7 +105,7 @@ jlong Java_ca_logaritm_dezel_core_JavaScriptValueExternal_createEmtpyObject(JNIE
  * Method:    createEmptyArray
  * Signature: (J)J
  */
-jlong Java_ca_logaritm_dezel_core_JavaScriptValueExternal_createEmptyArray(JNIEnv *env, jclass, jlong contextPtr) {
+jlong Java_ca_logaritm_dezel_core_JavaScriptValueExternal_createEmptyArray(JNIEnv* env, jclass, jlong contextPtr) {
 	return reinterpret_cast<jlong>(DLValueCreateEmptyArray(reinterpret_cast<JSContextRef>(contextPtr)));
 }
 
@@ -114,7 +114,7 @@ jlong Java_ca_logaritm_dezel_core_JavaScriptValueExternal_createEmptyArray(JNIEn
  * Method:    createFunction
  * Signature: (JLjava/lang/Object;Ljava/lang/String;Ljava/lang/Object;)J
  */
-jlong Java_ca_logaritm_dezel_core_JavaScriptValueExternal_createFunction(JNIEnv *env, jclass, jlong contextPtr, jobject callback, jstring nameStr, jobject context) {
+jlong Java_ca_logaritm_dezel_core_JavaScriptValueExternal_createFunction(JNIEnv* env, jclass, jlong contextPtr, jobject callback, jstring nameStr, jobject context) {
 
 	if (nameStr == NULL) {
 		return reinterpret_cast<jlong>(JavaScriptFunctionWrapperCreate(env, reinterpret_cast<JSContextRef>(contextPtr), callback, NULL, context)->function);
@@ -132,7 +132,7 @@ jlong Java_ca_logaritm_dezel_core_JavaScriptValueExternal_createFunction(JNIEnv 
  * Method:    protect
  * Signature: (JJ)V
  */
-void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_protect(JNIEnv *env, jclass, jlong contextPtr, jlong valuePtr) {
+void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_protect(JNIEnv* env, jclass, jlong contextPtr, jlong valuePtr) {
 	DLValueProtect(reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSValueRef>(valuePtr));
 }
 
@@ -141,7 +141,7 @@ void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_protect(JNIEnv *env, jc
  * Method:    unprotect
  * Signature: (JJ)V
  */
-void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_unprotect(JNIEnv *env, jclass, jlong contextPtr, jlong valuePtr) {
+void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_unprotect(JNIEnv* env, jclass, jlong contextPtr, jlong valuePtr) {
 	DLValueUnprotect(reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSValueRef>(valuePtr));
 }
 
@@ -150,7 +150,7 @@ void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_unprotect(JNIEnv *env, 
  * Method:    call
  * Signature: (JJJ[JILjava/lang/Object;)V
  */
-void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_call(JNIEnv *env, jclass, jlong contextPtr, jlong valuePtr, jlong objectPtr, jlongArray valuesPtr, jint argc, jobject result) {
+void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_call(JNIEnv* env, jclass, jlong contextPtr, jlong valuePtr, jlong objectPtr, jlongArray valuesPtr, jint argc, jobject result) {
 
 	JNI_LONG_ARRAY_CONVERT(argv, valuesPtr, argc, JSValueRef);
 
@@ -168,7 +168,7 @@ void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_call(JNIEnv *env, jclas
  * Method:    callMethod
  * Signature: (JJLjava/lang/String;[JILjava/lang/Object;)V
  */
-void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_callMethod(JNIEnv *env, jclass, jlong contextPtr, jlong valuePtr, jstring methodStr, jlongArray valuesPtr, jint argc, jobject result) {
+void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_callMethod(JNIEnv* env, jclass, jlong contextPtr, jlong valuePtr, jstring methodStr, jlongArray valuesPtr, jint argc, jobject result) {
 
 	JNI_LONG_ARRAY_CONVERT(argv, valuesPtr, argc, JSValueRef);
 
@@ -188,7 +188,7 @@ void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_callMethod(JNIEnv *env,
  * Method:    construct
  * Signature: (JJ[JILjava/lang/Object;)V
  */
-void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_construct(JNIEnv *env, jclass, jlong contextPtr, jlong valuePtr, jlongArray valuesPtr, jint argc, jobject result) {
+void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_construct(JNIEnv* env, jclass, jlong contextPtr, jlong valuePtr, jlongArray valuesPtr, jint argc, jobject result) {
 
 	JNI_LONG_ARRAY_CONVERT(argv, valuesPtr, argc, JSValueRef);
 
@@ -206,7 +206,7 @@ void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_construct(JNIEnv *env, 
  * Method:    defineProperty
  * Signature: (JJLjava/lang/String;JLjava/lang/Object;Ljava/lang/Object;ZZZLjava/lang/Object;)V
  */
-void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_defineProperty(JNIEnv *env, jclass, jlong contextPtr, jlong valuePtr, jstring propertyStr, jlong value, jobject getter, jobject setter, jboolean writable, jboolean enumerable, jboolean configurable, jobject context) {
+void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_defineProperty(JNIEnv* env, jclass, jlong contextPtr, jlong valuePtr, jstring propertyStr, jlong value, jobject getter, jobject setter, jboolean writable, jboolean enumerable, jboolean configurable, jobject context) {
 
 	if (value) {
 		JNI_STRING_CREATE(propertyStr, property);
@@ -231,7 +231,7 @@ void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_defineProperty(JNIEnv *
  * Method:    setProperty
  * Signature: (JJLjava/lang/String;J)V
  */
-void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setProperty__JJLjava_lang_String_2J(JNIEnv *env, jclass, jlong contextPtr, jlong valuePtr, jstring propertyStr, jlong value) {
+void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setProperty__JJLjava_lang_String_2J(JNIEnv* env, jclass, jlong contextPtr, jlong valuePtr, jstring propertyStr, jlong value) {
 	JNI_STRING_CREATE(propertyStr, property);
 	DLValueSetProperty(reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSObjectRef>(valuePtr), property, value ? reinterpret_cast<JSValueRef>(value) : NULL);
 	JNI_STRING_DELETE(propertyStr, property);
@@ -242,7 +242,7 @@ void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setProperty__JJLjava_la
  * Method:    setProperty
  * Signature: (JJLjava/lang/String;Ljava/lang/String;)V
  */
-void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setProperty__JJLjava_lang_String_2Ljava_lang_String_2(JNIEnv *env, jclass, jlong contextPtr, jlong valuePtr, jstring propertyStr, jstring valueStr) {
+void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setProperty__JJLjava_lang_String_2Ljava_lang_String_2(JNIEnv* env, jclass, jlong contextPtr, jlong valuePtr, jstring propertyStr, jstring valueStr) {
 	JNI_STRING_CREATE(valueStr, value);
 	JNI_STRING_CREATE(propertyStr, property);
 	DLValueSetPropertyWithString(reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSObjectRef>(valuePtr), property, value);
@@ -255,7 +255,7 @@ void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setProperty__JJLjava_la
  * Method:    setProperty
  * Signature: (JJLjava/lang/String;D)V
  */
-void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setProperty__JJLjava_lang_String_2D(JNIEnv *env, jclass, jlong contextPtr, jlong valuePtr, jstring propertyStr, jdouble value) {
+void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setProperty__JJLjava_lang_String_2D(JNIEnv* env, jclass, jlong contextPtr, jlong valuePtr, jstring propertyStr, jdouble value) {
 	JNI_STRING_CREATE(propertyStr, property);
 	DLValueSetPropertyWithNumber(reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSObjectRef>(valuePtr), property, value);
 	JNI_STRING_DELETE(propertyStr, property);
@@ -266,7 +266,7 @@ void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setProperty__JJLjava_la
  * Method:    setProperty
  * Signature: (JJLjava/lang/String;Z)V
  */
-void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setProperty__JJLjava_lang_String_2Z(JNIEnv *env, jclass, jlong contextPtr, jlong valuePtr, jstring propertyStr, jboolean value) {
+void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setProperty__JJLjava_lang_String_2Z(JNIEnv* env, jclass, jlong contextPtr, jlong valuePtr, jstring propertyStr, jboolean value) {
 	JNI_STRING_CREATE(propertyStr, property);
 	DLValueSetPropertyWithBoolean(reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSObjectRef>(valuePtr), property, value);
 	JNI_STRING_DELETE(propertyStr, property);
@@ -277,7 +277,7 @@ void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setProperty__JJLjava_la
  * Method:    getProperty
  * Signature: (JJLjava/lang/String;)J
  */
-jlong Java_ca_logaritm_dezel_core_JavaScriptValueExternal_getProperty(JNIEnv *env, jclass, jlong contextPtr, jlong valuePtr, jstring propertyStr) {
+jlong Java_ca_logaritm_dezel_core_JavaScriptValueExternal_getProperty(JNIEnv* env, jclass, jlong contextPtr, jlong valuePtr, jstring propertyStr) {
 	JNI_STRING_CREATE(propertyStr, property);
 	JSValueRef result = DLValueGetProperty(reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSObjectRef>(valuePtr), property);
 	JNI_STRING_DELETE(propertyStr, property);
@@ -289,7 +289,7 @@ jlong Java_ca_logaritm_dezel_core_JavaScriptValueExternal_getProperty(JNIEnv *en
  * Method:    setPropertyAtIndex
  * Signature: (JJIJ)V
  */
-void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setPropertyAtIndex__JJIJ(JNIEnv *env, jclass, jlong contextPtr, jlong valuePtr, jint index, jlong value) {
+void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setPropertyAtIndex__JJIJ(JNIEnv* env, jclass, jlong contextPtr, jlong valuePtr, jint index, jlong value) {
 	DLValueSetPropertyAtIndex(reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSObjectRef>(valuePtr), (unsigned int) index, reinterpret_cast<JSValueRef>(value));
 }
 
@@ -298,7 +298,7 @@ void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setPropertyAtIndex__JJI
  * Method:    setPropertyAtIndex
  * Signature: (JJILjava/lang/String;)V
  */
-void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setPropertyAtIndex__JJILjava_lang_String_2(JNIEnv *env, jclass, jlong contextPtr, jlong valuePtr, jint index, jstring valueStr) {
+void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setPropertyAtIndex__JJILjava_lang_String_2(JNIEnv* env, jclass, jlong contextPtr, jlong valuePtr, jint index, jstring valueStr) {
 	JNI_STRING_CREATE(valueStr, value);
 	DLValueSetPropertyAtIndexWithString(reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSObjectRef>(valuePtr), (unsigned int) index, value);
 	JNI_STRING_DELETE(valueStr, value);
@@ -309,7 +309,7 @@ void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setPropertyAtIndex__JJI
  * Method:    setPropertyAtIndex
  * Signature: (JJID)V
  */
-void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setPropertyAtIndex__JJID(JNIEnv *env, jclass, jlong contextPtr, jlong valuePtr, jint index, jdouble value) {
+void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setPropertyAtIndex__JJID(JNIEnv* env, jclass, jlong contextPtr, jlong valuePtr, jint index, jdouble value) {
 	DLValueSetPropertyAtIndexWithNumber(reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSObjectRef>(valuePtr), (unsigned int) index, value);
 }
 
@@ -318,7 +318,7 @@ void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setPropertyAtIndex__JJI
  * Method:    setPropertyAtIndex
  * Signature: (JJIZ)V
  */
-void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setPropertyAtIndex__JJIZ(JNIEnv *env, jclass, jlong contextPtr, jlong valuePtr, jint index, jboolean value) {
+void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setPropertyAtIndex__JJIZ(JNIEnv* env, jclass, jlong contextPtr, jlong valuePtr, jint index, jboolean value) {
 	DLValueSetPropertyAtIndexWithBoolean(reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSObjectRef>(valuePtr), (unsigned int) index, value);
 }
 
@@ -327,7 +327,7 @@ void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setPropertyAtIndex__JJI
  * Method:    getPropertyAtIndex
  * Signature: (JJI)J
  */
-jlong Java_ca_logaritm_dezel_core_JavaScriptValueExternal_getPropertyAtIndex(JNIEnv *env, jclass, jlong contextPtr, jlong valuePtr, jint index) {
+jlong Java_ca_logaritm_dezel_core_JavaScriptValueExternal_getPropertyAtIndex(JNIEnv* env, jclass, jlong contextPtr, jlong valuePtr, jint index) {
 	return reinterpret_cast<jlong>(DLValueGetPropertyAtIndex(reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSObjectRef>(valuePtr), (unsigned int) index));
 }
 
@@ -336,7 +336,7 @@ jlong Java_ca_logaritm_dezel_core_JavaScriptValueExternal_getPropertyAtIndex(JNI
  * Method:    forEach
  * Signature: (JJLjava/lang/Object;)V
  */
-void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_forEach(JNIEnv *env, jclass, jlong contextPtr, jlong valuePtr, jobject handler) {
+void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_forEach(JNIEnv* env, jclass, jlong contextPtr, jlong valuePtr, jobject handler) {
 	auto wrapper = JavaScriptValueForEachWrapperCreate(env, handler);
 	DLValueForEach(reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSValueRef>(valuePtr), &JavaScriptValueForEachCallback, wrapper);
 	JavaScriptValueForEachWrapperDelete(env, wrapper);
@@ -347,7 +347,7 @@ void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_forEach(JNIEnv *env, jc
  * Method:    forOwn
  * Signature: (JJLjava/lang/Object;)V
  */
-void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_forOwn(JNIEnv *env, jclass, jlong contextPtr, jlong valuePtr, jobject handler) {
+void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_forOwn(JNIEnv* env, jclass, jlong contextPtr, jlong valuePtr, jobject handler) {
 	auto wrapper = JavaScriptValueForOwnWrapperCreate(env, handler);
 	DLValueForOwn(reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSValueRef>(valuePtr), &JavaScriptValueForOwnCallback, wrapper);
 	JavaScriptValueForOwnWrapperDelete(env, wrapper);
@@ -358,7 +358,7 @@ void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_forOwn(JNIEnv *env, jcl
  * Method:    setPrototype
  * Signature: (JJJ)V
  */
-void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setPrototype(JNIEnv *env, jclass, jlong contextPtr, jlong valuePtr, jlong prototypePtr) {
+void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setPrototype(JNIEnv* env, jclass, jlong contextPtr, jlong valuePtr, jlong prototypePtr) {
 	DLValueSetPrototype(reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSObjectRef>(valuePtr), (JSValueRef) prototypePtr);
 }
 
@@ -367,7 +367,7 @@ void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setPrototype(JNIEnv *en
  * Method:    getPrototype
  * Signature: (JJ)J
  */
-jlong Java_ca_logaritm_dezel_core_JavaScriptValueExternal_getPrototype(JNIEnv *env, jclass, jlong contextPtr, jlong valuePtr) {
+jlong Java_ca_logaritm_dezel_core_JavaScriptValueExternal_getPrototype(JNIEnv* env, jclass, jlong contextPtr, jlong valuePtr) {
 	return reinterpret_cast<jlong>(DLValueGetPrototype(reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSObjectRef>(valuePtr)));
 }
 
@@ -376,7 +376,7 @@ jlong Java_ca_logaritm_dezel_core_JavaScriptValueExternal_getPrototype(JNIEnv *e
  * Method:    setAttribute
  * Signature: (JJILjava/lang/Object;)V
  */
-void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setAttribute__JJILjava_lang_Object_2(JNIEnv *env, jclass, jlong contextPtr, jlong valuePtr, jint key, jobject value) {
+void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setAttribute__JJILjava_lang_Object_2(JNIEnv* env, jclass, jlong contextPtr, jlong valuePtr, jint key, jobject value) {
 	DLValueSetAttribute(reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSObjectRef>(valuePtr), static_cast<long long>(key), value ? env->NewGlobalRef(value) : NULL);
 }
 
@@ -385,7 +385,7 @@ void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setAttribute__JJILjava_
  * Method:    setAttribute
  * Signature: (JILjava/lang/Object;)V
  */
-void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setAttribute__JILjava_lang_Object_2(JNIEnv *env, jclass, jlong valuePtr, jint key, jobject value) {
+void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setAttribute__JILjava_lang_Object_2(JNIEnv* env, jclass, jlong valuePtr, jint key, jobject value) {
 	DLValueDataSetAttribute(reinterpret_cast<DLValueDataRef>(valuePtr), static_cast<long long>(key), value ? env->NewGlobalRef(value) : NULL);
 }
 
@@ -394,7 +394,7 @@ void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setAttribute__JILjava_l
  * Method:    getAttribute
  * Signature: (JJI)Ljava/lang/Object;
  */
-jobject Java_ca_logaritm_dezel_core_JavaScriptValueExternal_getAttribute(JNIEnv *env, jclass, jlong contextPtr, jlong valuePtr, jint key) {
+jobject Java_ca_logaritm_dezel_core_JavaScriptValueExternal_getAttribute(JNIEnv* env, jclass, jlong contextPtr, jlong valuePtr, jint key) {
 	return reinterpret_cast<jobject>(DLValueGetAttribute(reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSObjectRef>(valuePtr), static_cast<long long>(key)));
 }
 
@@ -403,7 +403,7 @@ jobject Java_ca_logaritm_dezel_core_JavaScriptValueExternal_getAttribute(JNIEnv 
  * Method:    getAttribute
  * Signature: (JI)Ljava/lang/Object;
  */
-jobject Java_ca_logaritm_dezel_core_JavaScriptValueExternal_getAttribute(JNIEnv *env, jclass, jlong valuePtr, jint key) {
+jobject Java_ca_logaritm_dezel_core_JavaScriptValueExternal_getAttribute(JNIEnv* env, jclass, jlong valuePtr, jint key) {
 	return reinterpret_cast<jobject>(DLValueDataGetAttribute(reinterpret_cast<DLValueDataRef>(valuePtr), static_cast<long long>(key)));
 }
 
@@ -412,7 +412,7 @@ jobject Java_ca_logaritm_dezel_core_JavaScriptValueExternal_getAttribute(JNIEnv 
  * Method:    delAttribute
  * Signature: (JJI)V
  */
-void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_delAttribute__JJI(JNIEnv *env, jclass, jlong contextPtr, jlong valuePtr, jint key) {
+void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_delAttribute__JJI(JNIEnv* env, jclass, jlong contextPtr, jlong valuePtr, jint key) {
 	env->DeleteGlobalRef(reinterpret_cast<jobject>(DLValueGetAttribute(reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSObjectRef>(valuePtr), static_cast<long long>(key))));
 }
 
@@ -421,7 +421,7 @@ void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_delAttribute__JJI(JNIEn
  * Method:    delAttribute
  * Signature: (JI)V
  */
-void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_delAttribute__JI(JNIEnv *env, jclass, jlong valuePtr, jint key) {
+void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_delAttribute__JI(JNIEnv* env, jclass, jlong valuePtr, jint key) {
 	env->DeleteGlobalRef(reinterpret_cast<jobject>(DLValueDataGetAttribute(reinterpret_cast<DLValueDataRef>(valuePtr), static_cast<long long>(key))));
 }
 
@@ -430,7 +430,7 @@ void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_delAttribute__JI(JNIEnv
  * Method:    setAssociatedObject
  * Signature: (JJLjava/lang/Object;)V
  */
-void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setAssociatedObject(JNIEnv *env, jclass, jlong contextPtr, jlong valuePtr, jobject object) {
+void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setAssociatedObject(JNIEnv* env, jclass, jlong contextPtr, jlong valuePtr, jobject object) {
 	DLValueSetAssociatedObject(reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSObjectRef>(valuePtr), object ? env->NewGlobalRef(object) : NULL);
 }
 
@@ -439,7 +439,7 @@ void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setAssociatedObject(JNI
  * Method:    getAssociatedObject
  * Signature: (JJ)Ljava/lang/Object;
  */
-jobject Java_ca_logaritm_dezel_core_JavaScriptValueExternal_getAssociatedObject__JJ(JNIEnv *env, jclass, jlong contextPtr, jlong valuePtr) {
+jobject Java_ca_logaritm_dezel_core_JavaScriptValueExternal_getAssociatedObject__JJ(JNIEnv* env, jclass, jlong contextPtr, jlong valuePtr) {
 	return reinterpret_cast<jobject>(DLValueGetAssociatedObject(reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSObjectRef>(valuePtr)));
 }
 
@@ -448,7 +448,7 @@ jobject Java_ca_logaritm_dezel_core_JavaScriptValueExternal_getAssociatedObject_
  * Method:    getAssociatedObject
  * Signature: (J)Ljava/lang/Object;
  */
-jobject Java_ca_logaritm_dezel_core_JavaScriptValueExternal_getAssociatedObject__J(JNIEnv *env, jclass, jlong valuePtr) {
+jobject Java_ca_logaritm_dezel_core_JavaScriptValueExternal_getAssociatedObject__J(JNIEnv* env, jclass, jlong valuePtr) {
 	return reinterpret_cast<jobject>(DLValueDataGetAssociatedObject(reinterpret_cast<DLValueDataRef>(valuePtr)));
 }
 
@@ -457,7 +457,7 @@ jobject Java_ca_logaritm_dezel_core_JavaScriptValueExternal_getAssociatedObject_
  * Method:    delAssociatedObject
  * Signature: (JJ)V
  */
-JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_delAssociatedObject(JNIEnv *env, jclass, jlong contextPtr, jlong valuePtr) {
+JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_delAssociatedObject(JNIEnv* env, jclass, jlong contextPtr, jlong valuePtr) {
 	env->DeleteGlobalRef(reinterpret_cast<jobject>(DLValueGetAssociatedObject(reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSObjectRef>(valuePtr))));
 }
 
@@ -466,7 +466,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_delAs
  * Method:    setFinalizeHandler
  * Signature: (JJLjava/lang/Object;Ljava/lang/Object;)V
  */
-void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setFinalizeHandler(JNIEnv *env, jclass, jlong contextPtr, jlong valuePtr, jobject handler, jobject context) {
+void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setFinalizeHandler(JNIEnv* env, jclass, jlong contextPtr, jlong valuePtr, jobject handler, jobject context) {
 	JavaScriptFinalizeWrapperCreate(env, reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSObjectRef>(valuePtr), handler, context);
 }
 
@@ -475,7 +475,7 @@ void Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setFinalizeHandler(JNIE
  * Method:    equals
  * Signature: (JJJ)Z
  */
-jboolean Java_ca_logaritm_dezel_core_JavaScriptValueExternal_equals__JJJ(JNIEnv *env, jclass, jlong contextPtr, jlong value1Ptr, jlong value2Ptr) {
+jboolean Java_ca_logaritm_dezel_core_JavaScriptValueExternal_equals__JJJ(JNIEnv* env, jclass, jlong contextPtr, jlong value1Ptr, jlong value2Ptr) {
 	return (jboolean) DLValueEquals(reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSValueRef>(value1Ptr), reinterpret_cast<JSValueRef>(value2Ptr));
 }
 
@@ -484,7 +484,7 @@ jboolean Java_ca_logaritm_dezel_core_JavaScriptValueExternal_equals__JJJ(JNIEnv 
  * Method:    equals
  * Signature: (JJLjava/lang/String;)Z
  */
-jboolean Java_ca_logaritm_dezel_core_JavaScriptValueExternal_equals__JJLjava_lang_String_2(JNIEnv *env, jclass, jlong contextPtr, jlong valuePtr, jstring valueStr) {
+jboolean Java_ca_logaritm_dezel_core_JavaScriptValueExternal_equals__JJLjava_lang_String_2(JNIEnv* env, jclass, jlong contextPtr, jlong valuePtr, jstring valueStr) {
 	JNI_STRING_CREATE(valueStr, value);
 	bool result = DLValueEqualsString(reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSValueRef>(valuePtr), value);
 	JNI_STRING_DELETE(valueStr, value);
@@ -496,7 +496,7 @@ jboolean Java_ca_logaritm_dezel_core_JavaScriptValueExternal_equals__JJLjava_lan
  * Method:    equals
  * Signature: (JJD)Z
  */
-jboolean Java_ca_logaritm_dezel_core_JavaScriptValueExternal_equals__JJD(JNIEnv *env, jclass, jlong contextPtr, jlong valuePtr, jdouble value) {
+jboolean Java_ca_logaritm_dezel_core_JavaScriptValueExternal_equals__JJD(JNIEnv* env, jclass, jlong contextPtr, jlong valuePtr, jdouble value) {
 	return (jboolean) DLValueEqualsNumber(reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSValueRef>(valuePtr), value);
 }
 
@@ -505,7 +505,7 @@ jboolean Java_ca_logaritm_dezel_core_JavaScriptValueExternal_equals__JJD(JNIEnv 
  * Method:    equals
  * Signature: (JJZ)Z
  */
-jboolean Java_ca_logaritm_dezel_core_JavaScriptValueExternal_equals__JJZ(JNIEnv *env, jclass, jlong contextPtr, jlong valuePtr, jboolean value) {
+jboolean Java_ca_logaritm_dezel_core_JavaScriptValueExternal_equals__JJZ(JNIEnv* env, jclass, jlong contextPtr, jlong valuePtr, jboolean value) {
 	return (jboolean) DLValueEqualsBoolean(reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSValueRef>(valuePtr), value);
 }
 
@@ -514,7 +514,7 @@ jboolean Java_ca_logaritm_dezel_core_JavaScriptValueExternal_equals__JJZ(JNIEnv 
  * Method:    isString
  * Signature: (JJ)Z
  */
-jboolean Java_ca_logaritm_dezel_core_JavaScriptValueExternal_isString(JNIEnv *env, jclass, jlong contextPtr, jlong valuePtr) {
+jboolean Java_ca_logaritm_dezel_core_JavaScriptValueExternal_isString(JNIEnv* env, jclass, jlong contextPtr, jlong valuePtr) {
 	return (jboolean) DLValueIsString(reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSValueRef>(valuePtr));
 }
 
@@ -523,7 +523,7 @@ jboolean Java_ca_logaritm_dezel_core_JavaScriptValueExternal_isString(JNIEnv *en
  * Method:    isNumber
  * Signature: (JJ)Z
  */
-jboolean Java_ca_logaritm_dezel_core_JavaScriptValueExternal_isNumber(JNIEnv *env, jclass, jlong contextPtr, jlong valuePtr) {
+jboolean Java_ca_logaritm_dezel_core_JavaScriptValueExternal_isNumber(JNIEnv* env, jclass, jlong contextPtr, jlong valuePtr) {
 	return (jboolean) DLValueIsNumber(reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSValueRef>(valuePtr));
 }
 
@@ -532,7 +532,7 @@ jboolean Java_ca_logaritm_dezel_core_JavaScriptValueExternal_isNumber(JNIEnv *en
  * Method:    isBoolean
  * Signature: (JJ)Z
  */
-jboolean Java_ca_logaritm_dezel_core_JavaScriptValueExternal_isBoolean(JNIEnv *env, jclass, jlong contextPtr, jlong valuePtr) {
+jboolean Java_ca_logaritm_dezel_core_JavaScriptValueExternal_isBoolean(JNIEnv* env, jclass, jlong contextPtr, jlong valuePtr) {
 	return (jboolean) DLValueIsBoolean(reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSValueRef>(valuePtr));
 }
 
@@ -541,7 +541,7 @@ jboolean Java_ca_logaritm_dezel_core_JavaScriptValueExternal_isBoolean(JNIEnv *e
  * Method:    isFunction
  * Signature: (JJ)Z
  */
-jboolean Java_ca_logaritm_dezel_core_JavaScriptValueExternal_isFunction(JNIEnv *env, jclass, jlong contextPtr, jlong valuePtr) {
+jboolean Java_ca_logaritm_dezel_core_JavaScriptValueExternal_isFunction(JNIEnv* env, jclass, jlong contextPtr, jlong valuePtr) {
 	return (jboolean) DLValueIsFunction(reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSValueRef>(valuePtr));
 }
 
@@ -550,7 +550,7 @@ jboolean Java_ca_logaritm_dezel_core_JavaScriptValueExternal_isFunction(JNIEnv *
  * Method:    isObject
  * Signature: (JJ)Z
  */
-jboolean Java_ca_logaritm_dezel_core_JavaScriptValueExternal_isObject(JNIEnv *env, jclass, jlong contextPtr, jlong valuePtr) {
+jboolean Java_ca_logaritm_dezel_core_JavaScriptValueExternal_isObject(JNIEnv* env, jclass, jlong contextPtr, jlong valuePtr) {
 	return (jboolean) DLValueIsObject(reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSValueRef>(valuePtr));
 }
 
@@ -559,7 +559,7 @@ jboolean Java_ca_logaritm_dezel_core_JavaScriptValueExternal_isObject(JNIEnv *en
  * Method:    isArray
  * Signature: (JJ)Z
  */
-jboolean Java_ca_logaritm_dezel_core_JavaScriptValueExternal_isArray(JNIEnv *env, jclass, jlong contextPtr, jlong valuePtr) {
+jboolean Java_ca_logaritm_dezel_core_JavaScriptValueExternal_isArray(JNIEnv* env, jclass, jlong contextPtr, jlong valuePtr) {
 	return (jboolean) DLValueIsArray(reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSValueRef>(valuePtr));
 }
 
@@ -568,7 +568,7 @@ jboolean Java_ca_logaritm_dezel_core_JavaScriptValueExternal_isArray(JNIEnv *env
  * Method:    isUndefined
  * Signature: (JJ)Z
  */
-jboolean Java_ca_logaritm_dezel_core_JavaScriptValueExternal_isUndefined(JNIEnv *env, jclass, jlong contextPtr, jlong valuePtr) {
+jboolean Java_ca_logaritm_dezel_core_JavaScriptValueExternal_isUndefined(JNIEnv* env, jclass, jlong contextPtr, jlong valuePtr) {
 	return (jboolean) DLValueIsUndefined(reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSValueRef>(valuePtr));
 }
 
@@ -577,7 +577,7 @@ jboolean Java_ca_logaritm_dezel_core_JavaScriptValueExternal_isUndefined(JNIEnv 
  * Method:    isNull
  * Signature: (JJ)Z
  */
-jboolean Java_ca_logaritm_dezel_core_JavaScriptValueExternal_isNull(JNIEnv *env, jclass, jlong contextPtr, jlong valuePtr) {
+jboolean Java_ca_logaritm_dezel_core_JavaScriptValueExternal_isNull(JNIEnv* env, jclass, jlong contextPtr, jlong valuePtr) {
 	return (jboolean) DLValueIsNull(reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSValueRef>(valuePtr));
 }
 
@@ -586,7 +586,7 @@ jboolean Java_ca_logaritm_dezel_core_JavaScriptValueExternal_isNull(JNIEnv *env,
  * Method:    getType
  * Signature: (JJ)I
  */
-jint Java_ca_logaritm_dezel_core_JavaScriptValueExternal_getType(JNIEnv *env, jclass, jlong contextPtr, jlong valuePtr) {
+jint Java_ca_logaritm_dezel_core_JavaScriptValueExternal_getType(JNIEnv* env, jclass, jlong contextPtr, jlong valuePtr) {
 	return DLValueGetType(reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSValueRef>(valuePtr));
 }
 
@@ -595,7 +595,7 @@ jint Java_ca_logaritm_dezel_core_JavaScriptValueExternal_getType(JNIEnv *env, jc
  * Method:    toString
  * Signature: (JJ)Ljava/lang/String;
  */
-jstring Java_ca_logaritm_dezel_core_JavaScriptValueExternal_toString(JNIEnv *env, jclass, jlong contextPtr, jlong valuePtr) {
+jstring Java_ca_logaritm_dezel_core_JavaScriptValueExternal_toString(JNIEnv* env, jclass, jlong contextPtr, jlong valuePtr) {
 	auto ptr = DLValueToString(reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSValueRef>(valuePtr));
 	auto str = env->NewStringUTF(ptr);
 	delete ptr;
@@ -607,7 +607,7 @@ jstring Java_ca_logaritm_dezel_core_JavaScriptValueExternal_toString(JNIEnv *env
  * Method:    toNumber
  * Signature: (JJ)D
  */
-jdouble Java_ca_logaritm_dezel_core_JavaScriptValueExternal_toNumber(JNIEnv *env, jclass, jlong contextPtr, jlong valuePtr) {
+jdouble Java_ca_logaritm_dezel_core_JavaScriptValueExternal_toNumber(JNIEnv* env, jclass, jlong contextPtr, jlong valuePtr) {
 	return (jdouble) DLValueToNumber(reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSValueRef>(valuePtr));
 }
 
@@ -616,6 +616,6 @@ jdouble Java_ca_logaritm_dezel_core_JavaScriptValueExternal_toNumber(JNIEnv *env
  * Method:    toBoolean
  * Signature: (JJ)Z
  */
-jboolean Java_ca_logaritm_dezel_core_JavaScriptValueExternal_toBoolean(JNIEnv *env, jclass, jlong contextPtr, jlong valuePtr) {
+jboolean Java_ca_logaritm_dezel_core_JavaScriptValueExternal_toBoolean(JNIEnv* env, jclass, jlong contextPtr, jlong valuePtr) {
 	return (jboolean) DLValueToBoolean(reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSValueRef>(valuePtr));
 }

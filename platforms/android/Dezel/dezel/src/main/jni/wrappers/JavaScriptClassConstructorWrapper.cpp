@@ -7,13 +7,13 @@
 #include "JavaScriptClassConstructorWrapper.h"
 
 static jmethodID
-JavaScriptClassConstructorWrapperGetCallback(JNIEnv *env, jclass cls, const char *fqmn)
+JavaScriptClassConstructorWrapperGetCallback(JNIEnv* env, jclass cls, const char* fqmn)
 {
 	return JNIGetMethod(env, cls, fqmn, "(Lca/logaritm/dezel/core/JavaScriptFunctionCallback;)V");
 }
 
 static jmethodID
-JavaScriptClassConstructorWrapperGetConstructor(JNIEnv *env, jclass cls)
+JavaScriptClassConstructorWrapperGetConstructor(JNIEnv* env, jclass cls)
 {
 	return JNIGetMethod(env, cls, "<init>", "(Lca/logaritm/dezel/core/JavaScriptContext;)V");
 }
@@ -68,7 +68,7 @@ JavaScriptClassConstructorWrapperFinalize(JSContextRef context, DLValueDataRef h
 }
 
 JavaScriptClassConstructorWrapperRef
-JavaScriptClassConstructorWrapperCreate(JNIEnv *env, JSContextRef context, const char *name, const char *fqmn, jclass cls, jobject ctx)
+JavaScriptClassConstructorWrapperCreate(JNIEnv* env, JSContextRef context, const char* name, const char* fqmn, jclass cls, jobject ctx)
 {
 	JSObjectRef function = DLValueCreateFunction(context, &JavaScriptClassConstructorWrapperCallback, name);
 

@@ -147,7 +147,7 @@ open class DisplayNode {
 	}
 
 	/**
-	 * * The display node's measured bottom margin.
+	 * The display node's measured bottom margin.
 	 * @property measuredMarginBottom
 	 * @since 0.7.0
 	 */
@@ -210,7 +210,7 @@ open class DisplayNode {
 	}
 
 	/**
-	 * * The display node's measured right padding.
+	 * The display node's measured right padding.
 	 * @property measuredPaddingRight
 	 * @since 0.7.0
 	 */
@@ -229,10 +229,10 @@ open class DisplayNode {
 
 	/**
 	 * Whether the display node should fill the parent's width.
-	 * @property fillsParentWidth
+	 * @property isFillingParentWidth
 	 * @since 0.7.0
 	 */
-	public var fillsParentWidth: Bool {
+	public var isFillingParentWidth: Bool {
 		return DisplayNodeIsFillingParentWidth(self.handle)
 	}
 
@@ -241,25 +241,25 @@ open class DisplayNode {
 	 * @property fillsParentHeight
 	 * @since 0.7.0
 	 */
-	public var fillsParentHeight: Bool {
+	public var isFillingParentHeight: Bool {
 		return DisplayNodeIsFillingParentHeight(self.handle)
 	}
 
 	/**
 	 * Whether the display node should wraps the content width.
-	 * @property wrapsContentWidth
+	 * @property isWrappingContentWidth
 	 * @since 0.7.0
 	 */
-	public var wrapsContentWidth: Bool {
+	public var isWrappingContentWidth: Bool {
 		return DisplayNodeIsWrappingContentWidth(self.handle)
 	}
 
 	/**
 	 * Whether the display node should wraps the content height.
-	 * @property wrapsContentHeight
+	 * @property isWrappingContentHeight
 	 * @since 0.7.0
 	 */
-	public var wrapsContentHeight: Bool {
+	public var isWrappingContentHeight: Bool {
 		return DisplayNodeIsWrappingContentHeight(self.handle)
 	}
 
@@ -285,7 +285,7 @@ open class DisplayNode {
 		DisplayNodeSetDisplay(self.handle, display.handle)
 
 		DisplayNodeSetInvalidateCallback(self.handle, invalidateCallback)
-		DisplayNodeSetMeasureSizeCallback(self.handle, measureCallback)
+		DisplayNodeSetMeasureSizeCallback(self.handle, measureSizeCallback)
 		DisplayNodeSetResolveSizeCallback(self.handle, resolveSizeCallback)
 		DisplayNodeSetResolveOriginCallback(self.handle, resolveOriginCallback)
 		DisplayNodeSetResolveInnerSizeCallback(self.handle, resolveInnerSizeCallback)
@@ -1813,7 +1813,7 @@ open class DisplayNode {
  * @since 0.7.0
  * @hidden
  */
-private let measureCallback: @convention(c) (DisplayNodeRef?, UnsafeMutablePointer<DisplayNodeMeasuredSize>?, Double, Double, Double, Double, Double, Double) -> Void = { (ptr, res, w, h, minw, maxw, minh, maxh) in
+private let measureSizeCallback: @convention(c) (DisplayNodeRef?, UnsafeMutablePointer<DisplayNodeMeasuredSize>?, Double, Double, Double, Double, Double, Double) -> Void = { (ptr, res, w, h, minw, maxw, minh, maxh) in
 
 	if let node = DisplayNodeGetData(ptr).value as? DisplayNode {
 

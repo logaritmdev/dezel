@@ -1,5 +1,5 @@
-#ifndef JNIMODULECORE_H
-#define JNIMODULECORE_H
+#ifndef JNIModuleCore_h
+#define JNIModuleCore_h
 
 #include <jni.h>
 #include <DLValue.h>
@@ -71,6 +71,6 @@ extern const long long kJavaScriptExceptionWrapperKey;
  * @function JNI_OnLoad_core
  * @since 0.1.0
  */
-void JNI_OnLoad_core(JNIEnv *env);
+void JNI_OnLoad_core(JNIEnv* env);
 
 #endif

@@ -1,5 +1,5 @@
-#ifndef FUNCTIONWRAPPER_H
-#define FUNCTIONWRAPPER_H
+#ifndef JavaScriptFunctionWrapper_h
+#define JavaScriptFunctionWrapper_h
 
 #include <DLValue.h>
 #include <DLContext.h>
@@ -11,7 +11,7 @@
  * @since 0.1.0
  */
 struct JavaScriptFunctionWrapper {
-	JNIEnv *env;
+	JNIEnv* env;
 	jobject ctx;
 	jobject callback;
 	JSObjectRef function;
@@ -27,6 +27,6 @@ typedef struct JavaScriptFunctionWrapper* JavaScriptFunctionWrapperRef;
  * @function JavaScriptFunctionWrapperCreate
  * @since 0.1.0
  */
-JavaScriptFunctionWrapperRef JavaScriptFunctionWrapperCreate(JNIEnv *env, JSContextRef context, jobject handler, const char *name, jobject ctx);
+JavaScriptFunctionWrapperRef JavaScriptFunctionWrapperCreate(JNIEnv* env, JSContextRef context, jobject handler, const char* name, jobject ctx);
 
 #endif

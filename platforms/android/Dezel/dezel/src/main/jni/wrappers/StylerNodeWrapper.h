@@ -1,5 +1,5 @@
-#ifndef DLSTYLEWRAPPER_H
-#define DLSTYLEWRAPPER_H
+#ifndef StylerNodeWrapper_h
+#define StylerNodeWrapper_h
 
 #include <jni.h>
 #include <DLStylerNode.h>
@@ -9,7 +9,7 @@
  * @since 0.1.0
  */
 struct StylerNodeWrapper {
-	JNIEnv *env;
+	JNIEnv* env;
 	jobject object;
 };
 
@@ -23,12 +23,12 @@ typedef struct StylerNodeWrapper *StylerNodeWrapperRef;
  * @function StylerNodeWrapperCreate
  * @since 0.1.0
  */
-StylerNodeWrapperRef StylerNodeWrapperCreate(JNIEnv *env, jobject object, DLStylerNodeRef node);
+StylerNodeWrapperRef StylerNodeWrapperCreate(JNIEnv* env, jobject object, DLStylerNodeRef node);
 
 /**
  * @function StylerNodeWrapperDelete
  * @since 0.6.0
  */
-void StylerNodeWrapperDelete(JNIEnv *env, StylerNodeWrapperRef wrapper);
+void StylerNodeWrapperDelete(JNIEnv* env, StylerNodeWrapperRef wrapper);
 
 #endif

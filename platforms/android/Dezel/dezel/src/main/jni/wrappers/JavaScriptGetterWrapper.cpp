@@ -33,7 +33,7 @@ JavaScriptGetterWrapperFinalize(JSContextRef context, DLValueDataRef handle)
 }
 
 JavaScriptGetterWrapperRef
-JavaScriptGetterWrapperCreate(JNIEnv *env, JSContextRef context, jobject callback, const char *name, jobject ctx)
+JavaScriptGetterWrapperCreate(JNIEnv* env, JSContextRef context, jobject callback, const char* name, jobject ctx)
 {
 	JSObjectRef function = DLValueCreateFunction(context, &JavaScriptGetterWrapperCallback, name);
 

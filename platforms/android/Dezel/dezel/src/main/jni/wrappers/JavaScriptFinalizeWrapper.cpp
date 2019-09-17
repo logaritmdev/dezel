@@ -35,7 +35,7 @@ JavaScriptFinalizeWrapperCallback(JSContextRef context, DLValueDataRef handle)
 }
 
 JavaScriptFinalizeWrapperRef
-JavaScriptFinalizeWrapperCreate(JNIEnv *env, JSContextRef context, JSObjectRef handle, jobject callback, jobject ctx)
+JavaScriptFinalizeWrapperCreate(JNIEnv* env, JSContextRef context, JSObjectRef handle, jobject callback, jobject ctx)
 {
 	auto wrapper = new JavaScriptFinalizeWrapper();
 	wrapper->env = env;

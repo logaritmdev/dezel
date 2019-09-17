@@ -1,5 +1,5 @@
-#ifndef CLASSSTATICPROPERTYSETTERWRAPPER_H
-#define CLASSSTATICPROPERTYSETTERWRAPPER_H
+#ifndef JavaScriptClassStaticSetterWrapper_h
+#define JavaScriptClassStaticSetterWrapper_h
 
 #include <DLValue.h>
 #include <DLContext.h>
@@ -11,7 +11,7 @@
  * @since 0.7.0
  */
 struct JavaScriptClassStaticSetterWrapper {
-	JNIEnv *env;
+	JNIEnv* env;
 	jclass cls;
 	jobject ctx;
 	jmethodID callback;
@@ -28,6 +28,6 @@ typedef struct JavaScriptClassStaticSetterWrapper* JavaScriptClassStaticSetterWr
  * @function JavaScriptClassStaticSetterWrapperCreate
  * @since 0.7.0
  */
-JavaScriptClassStaticSetterWrapperRef JavaScriptClassStaticSetterWrapperCreate(JNIEnv *env, JSContextRef context, const char *name, const char *fqmn, jclass cls, jobject ctx);
+JavaScriptClassStaticSetterWrapperRef JavaScriptClassStaticSetterWrapperCreate(JNIEnv* env, JSContextRef context, const char* name, const char* fqmn, jclass cls, jobject ctx);
 
 #endif

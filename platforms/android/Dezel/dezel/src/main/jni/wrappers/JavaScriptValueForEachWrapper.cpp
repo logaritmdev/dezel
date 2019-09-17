@@ -1,7 +1,7 @@
 #include "JavaScriptValueForEachWrapper.h"
 
 JavaScriptValueForEachWrapperRef
-JavaScriptValueForEachWrapperCreate(JNIEnv *env, jobject callback)
+JavaScriptValueForEachWrapperCreate(JNIEnv* env, jobject callback)
 {
 	auto wrapper = new JavaScriptValueForEachWrapper();
 	wrapper->env = env;
@@ -10,7 +10,7 @@ JavaScriptValueForEachWrapperCreate(JNIEnv *env, jobject callback)
 }
 
 void
-JavaScriptValueForEachWrapperDelete(JNIEnv *env, JavaScriptValueForEachWrapperRef wrapper)
+JavaScriptValueForEachWrapperDelete(JNIEnv* env, JavaScriptValueForEachWrapperRef wrapper)
 {
 	env->DeleteGlobalRef(wrapper->callback);
 	delete wrapper;

@@ -6,7 +6,7 @@
 #include "JavaScriptClassStaticSetterWrapper.h"
 
 static jmethodID
-JavaScriptClassStaticSetterWrapperGetCallback(JNIEnv *env, jclass cls, const char *fqmn)
+JavaScriptClassStaticSetterWrapperGetCallback(JNIEnv* env, jclass cls, const char* fqmn)
 {
 	return JNIGetMethod(env, cls, fqmn, "(Lca/logaritm/dezel/core/JavaScriptSetterCallback;)V");
 }
@@ -43,7 +43,7 @@ JavaScriptClassStaticSetterWrapperFinalize(JSContextRef context, DLValueDataRef 
 }
 
 JavaScriptClassStaticSetterWrapperRef
-JavaScriptClassStaticSetterWrapperCreate(JNIEnv *env, JSContextRef context, const char *name, const char *fqmn, jclass cls, jobject ctx)
+JavaScriptClassStaticSetterWrapperCreate(JNIEnv* env, JSContextRef context, const char* name, const char* fqmn, jclass cls, jobject ctx)
 {
 	auto function = DLValueCreateFunction(context, &JavaScriptClassStaticSetterWrapperCallback, name);
 

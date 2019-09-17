@@ -24,7 +24,7 @@ jmethodID LayoutLayoutEndedCallback;
 jmethodID LayoutInvalidateCallback;
 
 void
-JNI_OnLoad_layout(JNIEnv *env)
+JNI_OnLoad_layout(JNIEnv* env)
 {
 	SizeFClass = JNIGetClass(
 		env,

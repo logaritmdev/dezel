@@ -32,7 +32,7 @@ LayoutEndedCallback(DLLayoutRef layout)
 }
 
 LayoutWrapperRef
-LayoutWrapperCreate(JNIEnv *env, jobject object, DLLayoutRef node)
+LayoutWrapperCreate(JNIEnv* env, jobject object, DLLayoutRef node)
 {
 	auto wrapper = new LayoutWrapper();
 	wrapper->env = env;
@@ -45,7 +45,7 @@ LayoutWrapperCreate(JNIEnv *env, jobject object, DLLayoutRef node)
 }
 
 void
-LayoutWrapperDelete(JNIEnv *env, LayoutWrapperRef wrapper)
+LayoutWrapperDelete(JNIEnv* env, LayoutWrapperRef wrapper)
 {
 	env->DeleteWeakGlobalRef(wrapper->object);
 	delete wrapper;

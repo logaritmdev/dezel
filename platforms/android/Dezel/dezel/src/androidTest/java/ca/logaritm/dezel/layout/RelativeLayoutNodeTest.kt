@@ -7,6 +7,12 @@ import org.junit.Test
 
 class RelativeLayoutNodeTest {
 
+	companion object {
+		init {
+			System.loadLibrary("dezel")
+		}
+	}
+
 	lateinit var layout: Layout
 	lateinit var window: LayoutNode
 

@@ -13,7 +13,7 @@ extern "C" {
  * Signature: (Ljava/lang/String;)J
  */
 JNIEXPORT jlong JNICALL Java_ca_logaritm_dezel_core_JavaScriptContextExternal_create
-  (JNIEnv *, jclass, jstring);
+  (JNIEnv* , jclass, jstring);
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptContextExternal
@@ -21,7 +21,7 @@ JNIEXPORT jlong JNICALL Java_ca_logaritm_dezel_core_JavaScriptContextExternal_cr
  * Signature: (J)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptContextExternal_delete
-  (JNIEnv *, jclass, jlong);
+  (JNIEnv* , jclass, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptContextExternal
@@ -29,7 +29,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptContextExternal_del
  * Signature: (J)J
  */
 JNIEXPORT jlong JNICALL Java_ca_logaritm_dezel_core_JavaScriptContextExternal_getGlobalObject
-  (JNIEnv *, jclass, jlong);
+  (JNIEnv* , jclass, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptContextExternal
@@ -37,7 +37,7 @@ JNIEXPORT jlong JNICALL Java_ca_logaritm_dezel_core_JavaScriptContextExternal_ge
  * Signature: (JLjava/lang/String;)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptContextExternal_evaluate__JLjava_lang_String_2
-  (JNIEnv *, jclass, jlong, jstring);
+  (JNIEnv* , jclass, jlong, jstring);
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptContextExternal
@@ -45,7 +45,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptContextExternal_eva
  * Signature: (JLjava/lang/String;Ljava/lang/String;)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptContextExternal_evaluate__JLjava_lang_String_2Ljava_lang_String_2
-  (JNIEnv *, jclass, jlong, jstring, jstring);
+  (JNIEnv* , jclass, jlong, jstring, jstring);
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptContextExternal
@@ -53,7 +53,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptContextExternal_eva
  * Signature: (JILjava/lang/Object;)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptContextExternal_setAttribute
-  (JNIEnv *, jclass, jlong, jint, jobject);
+  (JNIEnv* , jclass, jlong, jint, jobject);
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptContextExternal
@@ -61,7 +61,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptContextExternal_set
  * Signature: (JI)Ljava/lang/Object;
  */
 JNIEXPORT jobject JNICALL Java_ca_logaritm_dezel_core_JavaScriptContextExternal_getAttribute
-  (JNIEnv *, jclass, jlong, jint);
+  (JNIEnv* , jclass, jlong, jint);
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptContextExternal
@@ -69,7 +69,7 @@ JNIEXPORT jobject JNICALL Java_ca_logaritm_dezel_core_JavaScriptContextExternal_
  * Signature: (JI)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptContextExternal_delAttribute
-  (JNIEnv *, jclass, jlong, jint);
+  (JNIEnv* , jclass, jlong, jint);
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptContextExternal
@@ -77,7 +77,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptContextExternal_del
  * Signature: (JLjava/lang/Object;Ljava/lang/Object;)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptContextExternal_setExceptionCallback
-  (JNIEnv *, jclass, jlong, jobject, jobject);
+  (JNIEnv* , jclass, jlong, jobject, jobject);
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptContextExternal
@@ -85,7 +85,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptContextExternal_set
  * Signature: (JJ)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptContextExternal_throwError
-  (JNIEnv *, jclass, jlong, jlong);
+  (JNIEnv* , jclass, jlong, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptContextExternal
@@ -93,7 +93,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptContextExternal_thr
  * Signature: (J)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptContextExternal_garbageCollect
-  (JNIEnv *, jclass, jlong);
+  (JNIEnv* , jclass, jlong);
 
 #ifdef __cplusplus
 }

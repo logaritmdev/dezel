@@ -1,5 +1,5 @@
-#ifndef CLASSCONSTRUCTORWRAPPER_H
-#define CLASSCONSTRUCTORWRAPPER_H
+#ifndef JavaScriptClassConstructorWrapper_h
+#define JavaScriptClassConstructorWrapper_h
 
 #include <DLValue.h>
 #include <DLContext.h>
@@ -11,7 +11,7 @@
  * @since 0.1.0
  */
 struct JavaScriptClassConstructorWrapper {
-	JNIEnv *env;
+	JNIEnv* env;
 	jobject ctx;
 	jclass cls;
 	jmethodID constructor;
@@ -23,12 +23,12 @@ struct JavaScriptClassConstructorWrapper {
  * @typedef JavaScriptClassConstructorWrapperRef
  * @since 0.1.0
  */
-typedef struct JavaScriptClassConstructorWrapper *JavaScriptClassConstructorWrapperRef;
+typedef struct JavaScriptClassConstructorWrapper* JavaScriptClassConstructorWrapperRef;
 
 /**
  * @function JavaScriptClassConstructorWrapperCreate
  * @since 0.1.0
  */
-JavaScriptClassConstructorWrapperRef JavaScriptClassConstructorWrapperCreate(JNIEnv *env, JSContextRef context, const char *name, const char *fqmn, jclass cls, jobject ctx);
+JavaScriptClassConstructorWrapperRef JavaScriptClassConstructorWrapperCreate(JNIEnv* env, JSContextRef context, const char* name, const char* fqmn, jclass cls, jobject ctx);
 
 #endif

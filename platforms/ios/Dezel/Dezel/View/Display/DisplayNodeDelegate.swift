@@ -22,7 +22,7 @@ public protocol DisplayNodeDelegate: AnyObject {
 	func didInvalidate(node: DisplayNode)
 
 	/**
-	 * Called when the node's bounds is resolved.
+	 * Called when the node's size is resolved.
 	 * @method didResolveSize
 	 * @since 0.7.0
 	 */
@@ -34,6 +34,20 @@ public protocol DisplayNodeDelegate: AnyObject {
 	 * @since 0.7.0
 	 */
 	func didResolveOrigin(node: DisplayNode)
+
+	/**
+	 * Called when the node's inner size is resolved.
+	 * @method didResolveInnerSize
+	 * @since 0.7.0
+	 */
+	func didResolveInnerSize(node: DisplayNode)
+
+	/**
+	 * Called when the node's content size is resolved.
+	 * @method didResolveContentSize
+	 * @since 0.7.0
+	 */
+	func didResolveContentSize(node: DisplayNode)
 
 	/**
 	 * Called when the node's margin is resolved.
@@ -55,20 +69,6 @@ public protocol DisplayNodeDelegate: AnyObject {
 	 * @since 0.7.0
 	 */
 	func didResolvePadding(node: DisplayNode)
-
-	/**
-	 * Called when the node's inner size is resolved.
-	 * @method didResolveInnerSize
-	 * @since 0.7.0
-	 */
-	func didResolveInnerSize(node: DisplayNode)
-
-	/**
-	 * Called when the node's content size is resolved.
-	 * @method didResolveContentSize
-	 * @since 0.7.0
-	 */
-	func didResolveContentSize(node: DisplayNode)
 
 	/**
 	 * Called when the node's layout pass began.

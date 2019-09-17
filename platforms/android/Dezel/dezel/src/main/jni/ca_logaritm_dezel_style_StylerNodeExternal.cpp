@@ -10,7 +10,7 @@
  * Method:    parse
  * Signature: ()J
  */
-jlong Java_ca_logaritm_dezel_style_StylerNodeExternal_create(JNIEnv *env, jclass, jobject object) {
+jlong Java_ca_logaritm_dezel_style_StylerNodeExternal_create(JNIEnv* env, jclass, jobject object) {
 	DLStylerNodeRef styler = DLStylerNodeCreate();
 	DLStylerNodeSetData(styler, StylerNodeWrapperCreate(env, object, styler));
 	return reinterpret_cast<jlong>(styler);
@@ -21,7 +21,7 @@ jlong Java_ca_logaritm_dezel_style_StylerNodeExternal_create(JNIEnv *env, jclass
  * Method:    delete
  * Signature: (J)V
  */
-void Java_ca_logaritm_dezel_style_StylerNodeExternal_delete(JNIEnv *env, jclass, jlong stylerNodePtr) {
+void Java_ca_logaritm_dezel_style_StylerNodeExternal_delete(JNIEnv* env, jclass, jlong stylerNodePtr) {
 
 	DLStylerNodeRef node = reinterpret_cast<DLStylerNodeRef>(stylerNodePtr);
 	if (node == NULL) {
@@ -38,7 +38,7 @@ void Java_ca_logaritm_dezel_style_StylerNodeExternal_delete(JNIEnv *env, jclass,
  * Method:    setId
  * Signature: (JLjava/lang/String;)V
  */
-void Java_ca_logaritm_dezel_style_StylerNodeExternal_setId(JNIEnv *env, jclass, jlong stylerNodePtr, jstring idStr) {
+void Java_ca_logaritm_dezel_style_StylerNodeExternal_setId(JNIEnv* env, jclass, jlong stylerNodePtr, jstring idStr) {
 	JNI_STRING_CREATE(idStr, id);
 	DLStylerNodeSetId(reinterpret_cast<DLStylerNodeRef>(stylerNodePtr), id);
 	JNI_STRING_DELETE(idStr, id)
@@ -49,7 +49,7 @@ void Java_ca_logaritm_dezel_style_StylerNodeExternal_setId(JNIEnv *env, jclass, 
  * Method:    setStyler
  * Signature: (JJ)V
  */
-void Java_ca_logaritm_dezel_style_StylerNodeExternal_setStyler(JNIEnv *env, jclass, jlong stylerNodePtr, jlong stylerPtr) {
+void Java_ca_logaritm_dezel_style_StylerNodeExternal_setStyler(JNIEnv* env, jclass, jlong stylerNodePtr, jlong stylerPtr) {
 	DLStylerNodeSetStyler(reinterpret_cast<DLStylerNodeRef>(stylerNodePtr), reinterpret_cast<DLStylerRef>(stylerPtr));
 }
 
@@ -58,7 +58,7 @@ void Java_ca_logaritm_dezel_style_StylerNodeExternal_setStyler(JNIEnv *env, jcla
  * Method:    setType
  * Signature: (JLjava/lang/String;)V
  */
-void Java_ca_logaritm_dezel_style_StylerNodeExternal_setType(JNIEnv *env, jclass, jlong stylerNodePtr, jstring typeStr) {
+void Java_ca_logaritm_dezel_style_StylerNodeExternal_setType(JNIEnv* env, jclass, jlong stylerNodePtr, jstring typeStr) {
 	JNI_STRING_CREATE(typeStr, type);
 	DLStylerNodeSetType(reinterpret_cast<DLStylerNodeRef>(stylerNodePtr), type);
 	JNI_STRING_DELETE(typeStr, type);
@@ -69,7 +69,7 @@ void Java_ca_logaritm_dezel_style_StylerNodeExternal_setType(JNIEnv *env, jclass
  * Method:    setVisible
  * Signature: (JZ)V
  */
-void Java_ca_logaritm_dezel_style_StylerNodeExternal_setVisible(JNIEnv *env, jclass, jlong stylerNodePtr, jboolean visible) {
+void Java_ca_logaritm_dezel_style_StylerNodeExternal_setVisible(JNIEnv* env, jclass, jlong stylerNodePtr, jboolean visible) {
 	DLStylerNodeSetVisible(reinterpret_cast<DLStylerNodeRef>(stylerNodePtr), visible);
 }
 
@@ -78,7 +78,7 @@ void Java_ca_logaritm_dezel_style_StylerNodeExternal_setVisible(JNIEnv *env, jcl
  * Method:    appendChild
  * Signature: (JJ)V
  */
-void Java_ca_logaritm_dezel_style_StylerNodeExternal_appendChild(JNIEnv *env, jclass, jlong stylerNodePtr, jlong childPtr) {
+void Java_ca_logaritm_dezel_style_StylerNodeExternal_appendChild(JNIEnv* env, jclass, jlong stylerNodePtr, jlong childPtr) {
 	DLStylerNodeAppendChild(reinterpret_cast<DLStylerNodeRef>(stylerNodePtr), reinterpret_cast<DLStylerNodeRef>(childPtr));
 }
 
@@ -87,7 +87,7 @@ void Java_ca_logaritm_dezel_style_StylerNodeExternal_appendChild(JNIEnv *env, jc
  * Method:    insertChild
  * Signature: (JJI)V
  */
-void Java_ca_logaritm_dezel_style_StylerNodeExternal_insertChild(JNIEnv *env, jclass, jlong stylerNodePtr, jlong childPtr, jint index) {
+void Java_ca_logaritm_dezel_style_StylerNodeExternal_insertChild(JNIEnv* env, jclass, jlong stylerNodePtr, jlong childPtr, jint index) {
 	DLStylerNodeInsertChild(reinterpret_cast<DLStylerNodeRef>(stylerNodePtr), reinterpret_cast<DLStylerNodeRef>(childPtr), index);
 }
 
@@ -96,7 +96,7 @@ void Java_ca_logaritm_dezel_style_StylerNodeExternal_insertChild(JNIEnv *env, jc
  * Method:    removeChild
  * Signature: (JJ)V
  */
-void Java_ca_logaritm_dezel_style_StylerNodeExternal_removeChild(JNIEnv *env, jclass, jlong stylerNodePtr, jlong childPtr) {
+void Java_ca_logaritm_dezel_style_StylerNodeExternal_removeChild(JNIEnv* env, jclass, jlong stylerNodePtr, jlong childPtr) {
 	DLStylerNodeRemoveChild(reinterpret_cast<DLStylerNodeRef>(stylerNodePtr), reinterpret_cast<DLStylerNodeRef>(childPtr));
 }
 
@@ -105,7 +105,7 @@ void Java_ca_logaritm_dezel_style_StylerNodeExternal_removeChild(JNIEnv *env, jc
  * Method:    appendShadowedNode
  * Signature: (JJ)V
  */
-void Java_ca_logaritm_dezel_style_StylerNodeExternal_appendShadowedNode(JNIEnv *env, jclass, jlong stylerNodePtr, jlong childPtr) {
+void Java_ca_logaritm_dezel_style_StylerNodeExternal_appendShadowedNode(JNIEnv* env, jclass, jlong stylerNodePtr, jlong childPtr) {
 	DLStylerNodeAppendShadowedNode(reinterpret_cast<DLStylerNodeRef>(stylerNodePtr), reinterpret_cast<DLStylerNodeRef>(childPtr));
 }
 
@@ -114,7 +114,7 @@ void Java_ca_logaritm_dezel_style_StylerNodeExternal_appendShadowedNode(JNIEnv *
  * Method:    removeShadowedNode
  * Signature: (JJ)V
  */
-void Java_ca_logaritm_dezel_style_StylerNodeExternal_removeShadowedNode(JNIEnv *env, jclass, jlong stylerNodePtr, jlong childPtr) {
+void Java_ca_logaritm_dezel_style_StylerNodeExternal_removeShadowedNode(JNIEnv* env, jclass, jlong stylerNodePtr, jlong childPtr) {
 	DLStylerNodeRemoveShadowedNode(reinterpret_cast<DLStylerNodeRef>(stylerNodePtr), reinterpret_cast<DLStylerNodeRef>(childPtr));
 }
 
@@ -123,7 +123,7 @@ void Java_ca_logaritm_dezel_style_StylerNodeExternal_removeShadowedNode(JNIEnv *
  * Method:    hasStyle
  * Signature: (JLjava/lang/String;)Z
  */
-jboolean Java_ca_logaritm_dezel_style_StylerNodeExternal_hasStyle(JNIEnv *env, jclass, jlong stylerNodePtr, jstring styleStr) {
+jboolean Java_ca_logaritm_dezel_style_StylerNodeExternal_hasStyle(JNIEnv* env, jclass, jlong stylerNodePtr, jstring styleStr) {
 	JNI_STRING_CREATE(styleStr, style);
 	auto res = DLStylerNodeHasStyle(reinterpret_cast<DLStylerNodeRef>(stylerNodePtr), style);
 	JNI_STRING_DELETE(styleStr, style);
@@ -135,7 +135,7 @@ jboolean Java_ca_logaritm_dezel_style_StylerNodeExternal_hasStyle(JNIEnv *env, j
  * Method:    setStyle
  * Signature: (JLjava/lang/String;Z)V
  */
-void Java_ca_logaritm_dezel_style_StylerNodeExternal_setStyle(JNIEnv *env, jclass, jlong stylerNodePtr, jstring styleStr, jboolean enable) {
+void Java_ca_logaritm_dezel_style_StylerNodeExternal_setStyle(JNIEnv* env, jclass, jlong stylerNodePtr, jstring styleStr, jboolean enable) {
 	JNI_STRING_CREATE(styleStr, style);
 	DLStylerNodeSetStyle(reinterpret_cast<DLStylerNodeRef>(stylerNodePtr), style, enable);
 	JNI_STRING_DELETE(styleStr, style);
@@ -146,7 +146,7 @@ void Java_ca_logaritm_dezel_style_StylerNodeExternal_setStyle(JNIEnv *env, jclas
  * Method:    hasState
  * Signature: (JLjava/lang/String;)Z
  */
-jboolean Java_ca_logaritm_dezel_style_StylerNodeExternal_hasState(JNIEnv *env, jclass, jlong stylerNodePtr, jstring stateStr) {
+jboolean Java_ca_logaritm_dezel_style_StylerNodeExternal_hasState(JNIEnv* env, jclass, jlong stylerNodePtr, jstring stateStr) {
 	JNI_STRING_CREATE(stateStr, state);
 	auto res = DLStylerNodeHasState(reinterpret_cast<DLStylerNodeRef>(stylerNodePtr), state);
 	JNI_STRING_DELETE(stateStr, state);
@@ -158,7 +158,7 @@ jboolean Java_ca_logaritm_dezel_style_StylerNodeExternal_hasState(JNIEnv *env, j
  * Method:    setState
  * Signature: (JLjava/lang/String;Z)V
  */
-void Java_ca_logaritm_dezel_style_StylerNodeExternal_setState(JNIEnv *env, jclass, jlong stylerNodePtr, jstring stateStr, jboolean enable) {
+void Java_ca_logaritm_dezel_style_StylerNodeExternal_setState(JNIEnv* env, jclass, jlong stylerNodePtr, jstring stateStr, jboolean enable) {
 	JNI_STRING_CREATE(stateStr, state);
 	DLStylerNodeSetState(reinterpret_cast<DLStylerNodeRef>(stylerNodePtr), state, enable);
 	JNI_STRING_DELETE(stateStr, state);
@@ -169,7 +169,7 @@ void Java_ca_logaritm_dezel_style_StylerNodeExternal_setState(JNIEnv *env, jclas
  * Method:    resolve
  * Signature: (J)V
  */
-void Java_ca_logaritm_dezel_style_StylerNodeExternal_resolve(JNIEnv *env, jclass, jlong stylerNodePtr) {
+void Java_ca_logaritm_dezel_style_StylerNodeExternal_resolve(JNIEnv* env, jclass, jlong stylerNodePtr) {
 	DLStylerNodeResolve(reinterpret_cast<DLStylerNodeRef>(stylerNodePtr));
 }
 
@@ -178,7 +178,7 @@ void Java_ca_logaritm_dezel_style_StylerNodeExternal_resolve(JNIEnv *env, jclass
  * Method:    getData
  * Signature: (J)Ljava/lang/Object;
  */
-jobject Java_ca_logaritm_dezel_style_StylerNodeExternal_getData(JNIEnv *env, jclass, jlong stylerNodePtr) {
+jobject Java_ca_logaritm_dezel_style_StylerNodeExternal_getData(JNIEnv* env, jclass, jlong stylerNodePtr) {
 
 	StylerNodeWrapperRef wrapper = reinterpret_cast<StylerNodeWrapperRef>(DLStylerNodeGetData(reinterpret_cast<DLStylerNodeRef>(stylerNodePtr)));
 
@@ -194,7 +194,7 @@ jobject Java_ca_logaritm_dezel_style_StylerNodeExternal_getData(JNIEnv *env, jcl
  * Method:    getItemProperty
  * Signature: (J)Ljava/lang/String;
  */
-jstring Java_ca_logaritm_dezel_style_StylerNodeExternal_getItemProperty(JNIEnv *env, jclass, jlong stylerStyleItemPtr) {
+jstring Java_ca_logaritm_dezel_style_StylerNodeExternal_getItemProperty(JNIEnv* env, jclass, jlong stylerStyleItemPtr) {
 	return env->NewStringUTF(DLStylerStyleItemGetProperty(reinterpret_cast<DLStylerStyleItemRef>(stylerStyleItemPtr)));
 }
 
@@ -203,7 +203,7 @@ jstring Java_ca_logaritm_dezel_style_StylerNodeExternal_getItemProperty(JNIEnv *
  * Method:    setItemValueType
  * Signature: (JI)V
  */
-void Java_ca_logaritm_dezel_style_StylerNodeExternal_setItemValueType(JNIEnv *env, jclass, jlong stylerStyleItemPtr, jint type) {
+void Java_ca_logaritm_dezel_style_StylerNodeExternal_setItemValueType(JNIEnv* env, jclass, jlong stylerStyleItemPtr, jint type) {
 	DLStylerStyleItemSetValueType(reinterpret_cast<DLStylerStyleItemRef>(stylerStyleItemPtr), static_cast<DLStylerStyleItemType>(type));
 }
 
@@ -212,7 +212,7 @@ void Java_ca_logaritm_dezel_style_StylerNodeExternal_setItemValueType(JNIEnv *en
  * Method:    getItemValueType
  * Signature: (J)I
  */
-jint Java_ca_logaritm_dezel_style_StylerNodeExternal_getItemValueType(JNIEnv *env, jclass, jlong stylerStyleItemPtr) {
+jint Java_ca_logaritm_dezel_style_StylerNodeExternal_getItemValueType(JNIEnv* env, jclass, jlong stylerStyleItemPtr) {
 	return static_cast<jint>(DLStylerStyleItemGetValueType(reinterpret_cast<DLStylerStyleItemRef>(stylerStyleItemPtr)));
 }
 
@@ -221,7 +221,7 @@ jint Java_ca_logaritm_dezel_style_StylerNodeExternal_getItemValueType(JNIEnv *en
  * Method:    setItemValueUnit
  * Signature: (JI)V
  */
-void Java_ca_logaritm_dezel_style_StylerNodeExternal_setItemValueUnit(JNIEnv *env, jclass, jlong stylerStyleItemPtr, jint unit) {
+void Java_ca_logaritm_dezel_style_StylerNodeExternal_setItemValueUnit(JNIEnv* env, jclass, jlong stylerStyleItemPtr, jint unit) {
 	DLStylerStyleItemSetValueUnit(reinterpret_cast<DLStylerStyleItemRef>(stylerStyleItemPtr), static_cast<DLStylerStyleItemUnit>(unit));
 }
 
@@ -230,7 +230,7 @@ void Java_ca_logaritm_dezel_style_StylerNodeExternal_setItemValueUnit(JNIEnv *en
  * Method:    getItemValueUnit
  * Signature: (J)I
  */
-jint Java_ca_logaritm_dezel_style_StylerNodeExternal_getItemValueUnit(JNIEnv *env, jclass, jlong stylerStyleItemPtr) {
+jint Java_ca_logaritm_dezel_style_StylerNodeExternal_getItemValueUnit(JNIEnv* env, jclass, jlong stylerStyleItemPtr) {
 	return static_cast<jint>(DLStylerStyleItemGetValueUnit(reinterpret_cast<DLStylerStyleItemRef>(stylerStyleItemPtr)));
 }
 
@@ -239,7 +239,7 @@ jint Java_ca_logaritm_dezel_style_StylerNodeExternal_getItemValueUnit(JNIEnv *en
  * Method:    setItemValueWithString
  * Signature: (JLjava/lang/String;)V
  */
-void Java_ca_logaritm_dezel_style_StylerNodeExternal_setItemValueWithString(JNIEnv *env, jclass, jlong stylerStyleItemPtr, jstring valueStr) {
+void Java_ca_logaritm_dezel_style_StylerNodeExternal_setItemValueWithString(JNIEnv* env, jclass, jlong stylerStyleItemPtr, jstring valueStr) {
 	JNI_STRING_CREATE(valueStr, value);
 	DLStylerStyleItemSetValueWithString(reinterpret_cast<DLStylerStyleItemRef>(stylerStyleItemPtr), value);
 	JNI_STRING_DELETE(valueStr, value);
@@ -250,7 +250,7 @@ void Java_ca_logaritm_dezel_style_StylerNodeExternal_setItemValueWithString(JNIE
  * Method:    getItemValueAsString
  * Signature: (J)Ljava/lang/String;
  */
-jstring Java_ca_logaritm_dezel_style_StylerNodeExternal_getItemValueAsString(JNIEnv *env, jclass, jlong stylerStyleItemPtr) {
+jstring Java_ca_logaritm_dezel_style_StylerNodeExternal_getItemValueAsString(JNIEnv* env, jclass, jlong stylerStyleItemPtr) {
 	return env->NewStringUTF(DLStylerStyleItemGetValueAsString(reinterpret_cast<DLStylerStyleItemRef>(stylerStyleItemPtr)));
 }
 
@@ -259,7 +259,7 @@ jstring Java_ca_logaritm_dezel_style_StylerNodeExternal_getItemValueAsString(JNI
  * Method:    setItemValueWithNumber
  * Signature: (JD)V
  */
-void Java_ca_logaritm_dezel_style_StylerNodeExternal_setItemValueWithNumber(JNIEnv *env, jclass, jlong stylerStyleItemPtr, jdouble value) {
+void Java_ca_logaritm_dezel_style_StylerNodeExternal_setItemValueWithNumber(JNIEnv* env, jclass, jlong stylerStyleItemPtr, jdouble value) {
 	DLStylerStyleItemSetValueWithNumber(reinterpret_cast<DLStylerStyleItemRef>(stylerStyleItemPtr), value);
 }
 
@@ -268,7 +268,7 @@ void Java_ca_logaritm_dezel_style_StylerNodeExternal_setItemValueWithNumber(JNIE
  * Method:    getItemValueAsNumber
  * Signature: (J)D
  */
-jdouble Java_ca_logaritm_dezel_style_StylerNodeExternal_getItemValueAsNumber(JNIEnv *env, jclass, jlong stylerStyleItemPtr) {
+jdouble Java_ca_logaritm_dezel_style_StylerNodeExternal_getItemValueAsNumber(JNIEnv* env, jclass, jlong stylerStyleItemPtr) {
 	return static_cast<jdouble>(DLStylerStyleItemGetValueAsNumber(reinterpret_cast<DLStylerStyleItemRef>(stylerStyleItemPtr)));
 }
 
@@ -277,7 +277,7 @@ jdouble Java_ca_logaritm_dezel_style_StylerNodeExternal_getItemValueAsNumber(JNI
  * Method:    setItemValueWithBoolean
  * Signature: (JZ)V
  */
-void Java_ca_logaritm_dezel_style_StylerNodeExternal_setItemValueWithBoolean(JNIEnv *env, jclass, jlong stylerStyleItemPtr, jboolean value) {
+void Java_ca_logaritm_dezel_style_StylerNodeExternal_setItemValueWithBoolean(JNIEnv* env, jclass, jlong stylerStyleItemPtr, jboolean value) {
 	DLStylerStyleItemSetValueWithBoolean(reinterpret_cast<DLStylerStyleItemRef>(stylerStyleItemPtr), value);
 }
 
@@ -286,7 +286,7 @@ void Java_ca_logaritm_dezel_style_StylerNodeExternal_setItemValueWithBoolean(JNI
  * Method:    getItemValueAsBoolean
  * Signature: (J)Z
  */
-jboolean Java_ca_logaritm_dezel_style_StylerNodeExternal_getItemValueAsBoolean(JNIEnv *env, jclass, jlong stylerStyleItemPtr) {
+jboolean Java_ca_logaritm_dezel_style_StylerNodeExternal_getItemValueAsBoolean(JNIEnv* env, jclass, jlong stylerStyleItemPtr) {
 	return static_cast<jboolean>(DLStylerStyleItemGetValueAsBoolean(reinterpret_cast<DLStylerStyleItemRef>(stylerStyleItemPtr)));
 }
 
@@ -295,7 +295,7 @@ jboolean Java_ca_logaritm_dezel_style_StylerNodeExternal_getItemValueAsBoolean(J
  * Method:    setItemData
  * Signature: (JLjava/lang/Object;)V
  */
-void Java_ca_logaritm_dezel_style_StylerNodeExternal_setItemData(JNIEnv *env, jclass, jlong stylerStyleItemPtr, jobject data) {
+void Java_ca_logaritm_dezel_style_StylerNodeExternal_setItemData(JNIEnv* env, jclass, jlong stylerStyleItemPtr, jobject data) {
 	DLStylerStyleItemSetData(reinterpret_cast<DLStylerStyleItemRef>(stylerStyleItemPtr), env->NewGlobalRef(data));
 }
 
@@ -304,6 +304,6 @@ void Java_ca_logaritm_dezel_style_StylerNodeExternal_setItemData(JNIEnv *env, jc
  * Method:    getItemData
  * Signature: (J)Ljava/lang/Object;
  */
-jobject Java_ca_logaritm_dezel_style_StylerNodeExternal_getItemData(JNIEnv *env, jclass, jlong stylerStyleItemPtr) {
+jobject Java_ca_logaritm_dezel_style_StylerNodeExternal_getItemData(JNIEnv* env, jclass, jlong stylerStyleItemPtr) {
 	return reinterpret_cast<jobject>(DLStylerStyleItemGetData(reinterpret_cast<DLStylerStyleItemRef>(stylerStyleItemPtr)));
 }

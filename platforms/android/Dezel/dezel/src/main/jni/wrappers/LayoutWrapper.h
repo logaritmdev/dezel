@@ -1,5 +1,5 @@
-#ifndef CLASSIPRO_LAYOUTCONTEXTWRAPPER_H
-#define CLASSIPRO_LAYOUTCONTEXTWRAPPER_H
+#ifndef LayoutWrapper_h
+#define LayoutWrapper_h
 
 #include <jni.h>
 #include <DLLayout.h>
@@ -9,7 +9,7 @@
  * @since 0.4.0
  */
 struct LayoutWrapper {
-	JNIEnv *env;
+	JNIEnv* env;
 	jobject object;
 };
 
@@ -23,12 +23,12 @@ typedef struct LayoutWrapper* LayoutWrapperRef;
  * @function LayoutWrapperCreate
  * @since 0.4.0
  */
-LayoutWrapperRef LayoutWrapperCreate(JNIEnv *env, jobject object, DLLayoutRef context);
+LayoutWrapperRef LayoutWrapperCreate(JNIEnv* env, jobject object, DLLayoutRef context);
 
 /**
  * @function LayoutWrapperDelete
  * @since 0.6.0
  */
-void LayoutWrapperDelete(JNIEnv *env, LayoutWrapperRef wrapper);
+void LayoutWrapperDelete(JNIEnv* env, LayoutWrapperRef wrapper);
 
-#endif //CLASSIPRO_LAYOUTCONTEXTWRAPPER_H
+#endif

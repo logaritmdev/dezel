@@ -34,7 +34,7 @@ JavaScriptFunctionWrapperFinalize(JSContextRef context, DLValueDataRef handle)
 }
 
 JavaScriptFunctionWrapperRef
-JavaScriptFunctionWrapperCreate(JNIEnv *env, JSContextRef context, jobject callback, const char *name, jobject ctx)
+JavaScriptFunctionWrapperCreate(JNIEnv* env, JSContextRef context, jobject callback, const char* name, jobject ctx)
 {
 	auto function = DLValueCreateFunction(context, &JavaScriptFunctionWrapperCallback, name);
 

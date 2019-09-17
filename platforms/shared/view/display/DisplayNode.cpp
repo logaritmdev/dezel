@@ -111,7 +111,7 @@ DisplayNode::removeChild(DisplayNode* child)
 
 	if (w == kDisplayNodeSizeTypeWrap ||
 		h == kDisplayNodeSizeTypeWrap) {
-		this->frame->invalidateSize(); // This call was not here before but sounds like its needed
+		this->frame->invalidateSize(); 
 		this->frame->invalidateOrigin();
 		this->frame->invalidateParent();
 	}

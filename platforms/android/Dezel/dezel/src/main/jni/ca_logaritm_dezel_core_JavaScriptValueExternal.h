@@ -13,7 +13,7 @@ extern "C" {
  * Signature: (J)J
  */
 JNIEXPORT jlong JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_createNull
-  (JNIEnv *, jclass, jlong);
+  (JNIEnv* , jclass, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
@@ -21,7 +21,7 @@ JNIEXPORT jlong JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_crea
  * Signature: (J)J
  */
 JNIEXPORT jlong JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_createUndefined
-  (JNIEnv *, jclass, jlong);
+  (JNIEnv* , jclass, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
@@ -29,7 +29,7 @@ JNIEXPORT jlong JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_crea
  * Signature: (JLjava/lang/String;)J
  */
 JNIEXPORT jlong JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_createString
-  (JNIEnv *, jclass, jlong, jstring);
+  (JNIEnv* , jclass, jlong, jstring);
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
@@ -37,7 +37,7 @@ JNIEXPORT jlong JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_crea
  * Signature: (JD)J
  */
 JNIEXPORT jlong JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_createNumber
-  (JNIEnv *, jclass, jlong, jdouble);
+  (JNIEnv* , jclass, jlong, jdouble);
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
@@ -45,7 +45,7 @@ JNIEXPORT jlong JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_crea
  * Signature: (JZ)J
  */
 JNIEXPORT jlong JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_createBoolean
-  (JNIEnv *, jclass, jlong, jboolean);
+  (JNIEnv* , jclass, jlong, jboolean);
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
@@ -53,7 +53,7 @@ JNIEXPORT jlong JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_crea
  * Signature: (J)J
  */
 JNIEXPORT jlong JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_createEmtpyObject
-  (JNIEnv *, jclass, jlong);
+  (JNIEnv* , jclass, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
@@ -61,7 +61,7 @@ JNIEXPORT jlong JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_crea
  * Signature: (J)J
  */
 JNIEXPORT jlong JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_createEmptyArray
-  (JNIEnv *, jclass, jlong);
+  (JNIEnv* , jclass, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
@@ -69,7 +69,7 @@ JNIEXPORT jlong JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_crea
  * Signature: (JLjava/lang/Object;Ljava/lang/String;Ljava/lang/Object;)J
  */
 JNIEXPORT jlong JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_createFunction
-  (JNIEnv *, jclass, jlong, jobject, jstring, jobject);
+  (JNIEnv* , jclass, jlong, jobject, jstring, jobject);
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
@@ -77,7 +77,7 @@ JNIEXPORT jlong JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_crea
  * Signature: (JJ)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_protect
-  (JNIEnv *, jclass, jlong, jlong);
+  (JNIEnv* , jclass, jlong, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
@@ -85,7 +85,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_prote
  * Signature: (JJ)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_unprotect
-  (JNIEnv *, jclass, jlong, jlong);
+  (JNIEnv* , jclass, jlong, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
@@ -93,7 +93,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_unpro
  * Signature: (JJJ[JILjava/lang/Object;)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_call
-  (JNIEnv *, jclass, jlong, jlong, jlong, jlongArray, jint, jobject);
+  (JNIEnv* , jclass, jlong, jlong, jlong, jlongArray, jint, jobject);
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
@@ -101,7 +101,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_call
  * Signature: (JJLjava/lang/String;[JILjava/lang/Object;)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_callMethod
-  (JNIEnv *, jclass, jlong, jlong, jstring, jlongArray, jint, jobject);
+  (JNIEnv* , jclass, jlong, jlong, jstring, jlongArray, jint, jobject);
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
@@ -109,7 +109,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_callM
  * Signature: (JJ[JILjava/lang/Object;)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_construct
-  (JNIEnv *, jclass, jlong, jlong, jlongArray, jint, jobject);
+  (JNIEnv* , jclass, jlong, jlong, jlongArray, jint, jobject);
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
@@ -117,7 +117,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_const
  * Signature: (JJLjava/lang/String;JLjava/lang/Object;Ljava/lang/Object;ZZZLjava/lang/Object;)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_defineProperty
-  (JNIEnv *, jclass, jlong, jlong, jstring, jlong, jobject, jobject, jboolean, jboolean, jboolean, jobject);
+  (JNIEnv* , jclass, jlong, jlong, jstring, jlong, jobject, jobject, jboolean, jboolean, jboolean, jobject);
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
@@ -125,7 +125,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_defin
  * Signature: (JJLjava/lang/String;J)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setProperty__JJLjava_lang_String_2J
-  (JNIEnv *, jclass, jlong, jlong, jstring, jlong);
+  (JNIEnv* , jclass, jlong, jlong, jstring, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
@@ -133,7 +133,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setPr
  * Signature: (JJLjava/lang/String;Ljava/lang/String;)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setProperty__JJLjava_lang_String_2Ljava_lang_String_2
-  (JNIEnv *, jclass, jlong, jlong, jstring, jstring);
+  (JNIEnv* , jclass, jlong, jlong, jstring, jstring);
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
@@ -141,7 +141,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setPr
  * Signature: (JJLjava/lang/String;D)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setProperty__JJLjava_lang_String_2D
-  (JNIEnv *, jclass, jlong, jlong, jstring, jdouble);
+  (JNIEnv* , jclass, jlong, jlong, jstring, jdouble);
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
@@ -149,7 +149,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setPr
  * Signature: (JJLjava/lang/String;Z)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setProperty__JJLjava_lang_String_2Z
-  (JNIEnv *, jclass, jlong, jlong, jstring, jboolean);
+  (JNIEnv* , jclass, jlong, jlong, jstring, jboolean);
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
@@ -157,7 +157,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setPr
  * Signature: (JJLjava/lang/String;)J
  */
 JNIEXPORT jlong JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_getProperty
-  (JNIEnv *, jclass, jlong, jlong, jstring);
+  (JNIEnv* , jclass, jlong, jlong, jstring);
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
@@ -165,7 +165,7 @@ JNIEXPORT jlong JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_getP
  * Signature: (JJIJ)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setPropertyAtIndex__JJIJ
-  (JNIEnv *, jclass, jlong, jlong, jint, jlong);
+  (JNIEnv* , jclass, jlong, jlong, jint, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
@@ -173,7 +173,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setPr
  * Signature: (JJILjava/lang/String;)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setPropertyAtIndex__JJILjava_lang_String_2
-  (JNIEnv *, jclass, jlong, jlong, jint, jstring);
+  (JNIEnv* , jclass, jlong, jlong, jint, jstring);
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
@@ -181,7 +181,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setPr
  * Signature: (JJID)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setPropertyAtIndex__JJID
-  (JNIEnv *, jclass, jlong, jlong, jint, jdouble);
+  (JNIEnv* , jclass, jlong, jlong, jint, jdouble);
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
@@ -189,7 +189,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setPr
  * Signature: (JJIZ)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setPropertyAtIndex__JJIZ
-  (JNIEnv *, jclass, jlong, jlong, jint, jboolean);
+  (JNIEnv* , jclass, jlong, jlong, jint, jboolean);
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
@@ -197,7 +197,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setPr
  * Signature: (JJI)J
  */
 JNIEXPORT jlong JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_getPropertyAtIndex
-  (JNIEnv *, jclass, jlong, jlong, jint);
+  (JNIEnv* , jclass, jlong, jlong, jint);
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
@@ -205,7 +205,7 @@ JNIEXPORT jlong JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_getP
  * Signature: (JJLjava/lang/Object;)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_forEach
-  (JNIEnv *, jclass, jlong, jlong, jobject);
+  (JNIEnv* , jclass, jlong, jlong, jobject);
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
@@ -213,7 +213,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_forEa
  * Signature: (JJLjava/lang/Object;)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_forOwn
-  (JNIEnv *, jclass, jlong, jlong, jobject);
+  (JNIEnv* , jclass, jlong, jlong, jobject);
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
@@ -221,7 +221,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_forOw
  * Signature: (JJJ)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setPrototype
-  (JNIEnv *, jclass, jlong, jlong, jlong);
+  (JNIEnv* , jclass, jlong, jlong, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
@@ -229,7 +229,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setPr
  * Signature: (JJ)J
  */
 JNIEXPORT jlong JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_getPrototype
-  (JNIEnv *, jclass, jlong, jlong);
+  (JNIEnv* , jclass, jlong, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
@@ -237,7 +237,7 @@ JNIEXPORT jlong JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_getP
  * Signature: (JJILjava/lang/Object;)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setAttribute__JJILjava_lang_Object_2
-  (JNIEnv *, jclass, jlong, jlong, jint, jobject);
+  (JNIEnv* , jclass, jlong, jlong, jint, jobject);
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
@@ -245,7 +245,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setAt
  * Signature: (JILjava/lang/Object;)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setAttribute__JILjava_lang_Object_2
-  (JNIEnv *, jclass, jlong, jint, jobject);
+  (JNIEnv* , jclass, jlong, jint, jobject);
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
@@ -253,7 +253,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setAt
  * Signature: (JJI)Ljava/lang/Object;
  */
 JNIEXPORT jobject JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_getAttribute__JJI
-  (JNIEnv *, jclass, jlong, jlong, jint);
+  (JNIEnv* , jclass, jlong, jlong, jint);
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
@@ -261,7 +261,7 @@ JNIEXPORT jobject JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_ge
  * Signature: (JI)Ljava/lang/Object;
  */
 JNIEXPORT jobject JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_getAttribute__JI
-  (JNIEnv *, jclass, jlong, jint);
+  (JNIEnv* , jclass, jlong, jint);
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
@@ -269,7 +269,7 @@ JNIEXPORT jobject JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_ge
  * Signature: (JJI)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_delAttribute__JJI
-  (JNIEnv *, jclass, jlong, jlong, jint);
+  (JNIEnv* , jclass, jlong, jlong, jint);
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
@@ -277,7 +277,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_delAt
  * Signature: (JI)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_delAttribute__JI
-  (JNIEnv *, jclass, jlong, jint);
+  (JNIEnv* , jclass, jlong, jint);
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
@@ -285,7 +285,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_delAt
  * Signature: (JJLjava/lang/Object;)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setAssociatedObject
-  (JNIEnv *, jclass, jlong, jlong, jobject);
+  (JNIEnv* , jclass, jlong, jlong, jobject);
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
@@ -293,7 +293,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setAs
  * Signature: (JJ)Ljava/lang/Object;
  */
 JNIEXPORT jobject JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_getAssociatedObject__JJ
-  (JNIEnv *, jclass, jlong, jlong);
+  (JNIEnv* , jclass, jlong, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
@@ -301,7 +301,7 @@ JNIEXPORT jobject JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_ge
  * Signature: (J)Ljava/lang/Object;
  */
 JNIEXPORT jobject JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_getAssociatedObject__J
-  (JNIEnv *, jclass, jlong);
+  (JNIEnv* , jclass, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
@@ -309,7 +309,7 @@ JNIEXPORT jobject JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_ge
  * Signature: (JJ)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_delAssociatedObject
-  (JNIEnv *, jclass, jlong, jlong);
+  (JNIEnv* , jclass, jlong, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
@@ -317,7 +317,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_delAs
  * Signature: (JJLjava/lang/Object;Ljava/lang/Object;)V
  */
 JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setFinalizeHandler
-  (JNIEnv *, jclass, jlong, jlong, jobject, jobject);
+  (JNIEnv* , jclass, jlong, jlong, jobject, jobject);
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
@@ -325,7 +325,7 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_setFi
  * Signature: (JJJ)Z
  */
 JNIEXPORT jboolean JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_equals__JJJ
-  (JNIEnv *, jclass, jlong, jlong, jlong);
+  (JNIEnv* , jclass, jlong, jlong, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
@@ -333,7 +333,7 @@ JNIEXPORT jboolean JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_e
  * Signature: (JJLjava/lang/String;)Z
  */
 JNIEXPORT jboolean JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_equals__JJLjava_lang_String_2
-  (JNIEnv *, jclass, jlong, jlong, jstring);
+  (JNIEnv* , jclass, jlong, jlong, jstring);
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
@@ -341,7 +341,7 @@ JNIEXPORT jboolean JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_e
  * Signature: (JJD)Z
  */
 JNIEXPORT jboolean JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_equals__JJD
-  (JNIEnv *, jclass, jlong, jlong, jdouble);
+  (JNIEnv* , jclass, jlong, jlong, jdouble);
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
@@ -349,7 +349,7 @@ JNIEXPORT jboolean JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_e
  * Signature: (JJZ)Z
  */
 JNIEXPORT jboolean JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_equals__JJZ
-  (JNIEnv *, jclass, jlong, jlong, jboolean);
+  (JNIEnv* , jclass, jlong, jlong, jboolean);
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
@@ -357,7 +357,7 @@ JNIEXPORT jboolean JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_e
  * Signature: (JJ)Z
  */
 JNIEXPORT jboolean JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_isString
-  (JNIEnv *, jclass, jlong, jlong);
+  (JNIEnv* , jclass, jlong, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
@@ -365,7 +365,7 @@ JNIEXPORT jboolean JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_i
  * Signature: (JJ)Z
  */
 JNIEXPORT jboolean JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_isNumber
-  (JNIEnv *, jclass, jlong, jlong);
+  (JNIEnv* , jclass, jlong, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
@@ -373,7 +373,7 @@ JNIEXPORT jboolean JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_i
  * Signature: (JJ)Z
  */
 JNIEXPORT jboolean JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_isBoolean
-  (JNIEnv *, jclass, jlong, jlong);
+  (JNIEnv* , jclass, jlong, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
@@ -381,7 +381,7 @@ JNIEXPORT jboolean JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_i
  * Signature: (JJ)Z
  */
 JNIEXPORT jboolean JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_isFunction
-  (JNIEnv *, jclass, jlong, jlong);
+  (JNIEnv* , jclass, jlong, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
@@ -389,7 +389,7 @@ JNIEXPORT jboolean JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_i
  * Signature: (JJ)Z
  */
 JNIEXPORT jboolean JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_isObject
-  (JNIEnv *, jclass, jlong, jlong);
+  (JNIEnv* , jclass, jlong, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
@@ -397,7 +397,7 @@ JNIEXPORT jboolean JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_i
  * Signature: (JJ)Z
  */
 JNIEXPORT jboolean JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_isArray
-  (JNIEnv *, jclass, jlong, jlong);
+  (JNIEnv* , jclass, jlong, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
@@ -405,7 +405,7 @@ JNIEXPORT jboolean JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_i
  * Signature: (JJ)Z
  */
 JNIEXPORT jboolean JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_isUndefined
-  (JNIEnv *, jclass, jlong, jlong);
+  (JNIEnv* , jclass, jlong, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
@@ -413,7 +413,7 @@ JNIEXPORT jboolean JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_i
  * Signature: (JJ)Z
  */
 JNIEXPORT jboolean JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_isNull
-  (JNIEnv *, jclass, jlong, jlong);
+  (JNIEnv* , jclass, jlong, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
@@ -421,7 +421,7 @@ JNIEXPORT jboolean JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_i
  * Signature: (JJ)I
  */
 JNIEXPORT jint JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_getType
-  (JNIEnv *, jclass, jlong, jlong);
+  (JNIEnv* , jclass, jlong, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
@@ -429,7 +429,7 @@ JNIEXPORT jint JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_getTy
  * Signature: (JJ)Ljava/lang/String;
  */
 JNIEXPORT jstring JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_toString
-  (JNIEnv *, jclass, jlong, jlong);
+  (JNIEnv* , jclass, jlong, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
@@ -437,7 +437,7 @@ JNIEXPORT jstring JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_to
  * Signature: (JJ)D
  */
 JNIEXPORT jdouble JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_toNumber
-  (JNIEnv *, jclass, jlong, jlong);
+  (JNIEnv* , jclass, jlong, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_core_JavaScriptValueExternal
@@ -445,7 +445,7 @@ JNIEXPORT jdouble JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_to
  * Signature: (JJ)Z
  */
 JNIEXPORT jboolean JNICALL Java_ca_logaritm_dezel_core_JavaScriptValueExternal_toBoolean
-  (JNIEnv *, jclass, jlong, jlong);
+  (JNIEnv* , jclass, jlong, jlong);
 
 #ifdef __cplusplus
 }
