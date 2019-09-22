@@ -27,34 +27,43 @@ DisplayNodeFrame::~DisplayNodeFrame()
 void
 DisplayNodeFrame::setAnchorTop(DisplayNodeAnchorType type, DisplayNodeAnchorUnit unit, double length)
 {
-	if (this->anchorTop.equals(type, unit, length) == false) {
-		this->anchorTop.type = type;
-		this->anchorTop.unit = unit;
-		this->anchorTop.length = length;
-		this->invalidateOrigin();
+	if (this->anchorTop.equals(type, unit, length)) {
+		return;
 	}
+
+	this->anchorTop.type = type;
+	this->anchorTop.unit = unit;
+	this->anchorTop.length = length;
+
+	this->invalidateOrigin();
 }
 
 void
 DisplayNodeFrame::setAnchorLeft(DisplayNodeAnchorType type, DisplayNodeAnchorUnit unit, double length)
 {
-	if (this->anchorLeft.equals(type, unit, length) == false) {
-		this->anchorLeft.type = type;
-		this->anchorLeft.unit = unit;
-		this->anchorLeft.length = length;
-		this->invalidateOrigin();
+	if (this->anchorLeft.equals(type, unit, length)) {
+		return;
 	}
+
+	this->anchorLeft.type = type;
+	this->anchorLeft.unit = unit;
+	this->anchorLeft.length = length;
+
+	this->invalidateOrigin();
 }
 
 void
 DisplayNodeFrame::setTop(DisplayNodeOriginType type, DisplayNodeOriginUnit unit, double length)
 {
-	if (this->top.equals(type, unit, length) == false) {
-		this->top.type = type;
-		this->top.unit = unit;
-		this->top.length = length;
-		this->invalidateOrigin();
+	if (this->top.equals(type, unit, length)) {
+		return;
 	}
+
+	this->top.type = type;
+	this->top.unit = unit;
+	this->top.length = length;
+
+	this->invalidateOrigin();
 }
 
 void
@@ -78,12 +87,15 @@ DisplayNodeFrame::setMaxTop(double max)
 void
 DisplayNodeFrame::setLeft(DisplayNodeOriginType type, DisplayNodeOriginUnit unit, double length)
 {
-	if (this->left.equals(type, unit, length) == false) {
-		this->left.type = type;
-		this->left.unit = unit;
-		this->left.length = length;
-		this->invalidateOrigin();
+	if (this->left.equals(type, unit, length)) {
+		return;
 	}
+
+	this->left.type = type;
+	this->left.unit = unit;
+	this->left.length = length;
+
+	this->invalidateOrigin();
 }
 
 void
@@ -107,12 +119,15 @@ DisplayNodeFrame::setMaxLeft(double max)
 void
 DisplayNodeFrame::setRight(DisplayNodeOriginType type, DisplayNodeOriginUnit unit, double length)
 {
-	if (this->right.equals(type, unit, length) == false) {
-		this->right.type = type;
-		this->right.unit = unit;
-		this->right.length = length;
-		this->invalidateOrigin();
+	if (this->right.equals(type, unit, length)) {
+		return;
 	}
+
+	this->right.type = type;
+	this->right.unit = unit;
+	this->right.length = length;
+
+	this->invalidateOrigin();
 }
 
 void
@@ -136,12 +151,15 @@ DisplayNodeFrame::setMaxRight(double max)
 void
 DisplayNodeFrame::setBottom(DisplayNodeOriginType type, DisplayNodeOriginUnit unit, double length)
 {
-	if (this->bottom.equals(type, unit, length) == false) {
-		this->bottom.type = type;
-		this->bottom.unit = unit;
-		this->bottom.length = length;
-		this->invalidateOrigin();
+	if (this->bottom.equals(type, unit, length)) {
+		return;
 	}
+
+	this->bottom.type = type;
+	this->bottom.unit = unit;
+	this->bottom.length = length;
+
+	this->invalidateOrigin();
 }
 
 void
@@ -167,12 +185,15 @@ DisplayNodeFrame::setWidth(DisplayNodeSizeType type, DisplayNodeSizeUnit unit, d
 {
     length = clamp(length, 0, ABS_DBL_MAX);
 
-	if (this->width.equals(type, unit, length) == false) {
-		this->width.type = type;
-		this->width.unit = unit;
-		this->width.length = length;
-		this->invalidateSize();
+	if (this->width.equals(type, unit, length)) {
+		return;
 	}
+
+	this->width.type = type;
+	this->width.unit = unit;
+	this->width.length = length;
+
+	this->invalidateSize();
 }
 
 void
@@ -202,12 +223,15 @@ DisplayNodeFrame::setHeight(DisplayNodeSizeType type, DisplayNodeSizeUnit unit, 
 {
     length = clamp(length, 0, ABS_DBL_MAX);
 
-	if (this->height.equals(type, unit, length) == false) {
-		this->height.type = type;
-		this->height.unit = unit;
-		this->height.length = length;
-		this->invalidateSize();
+	if (this->height.equals(type, unit, length)) {
+		return;
 	}
+
+	this->height.type = type;
+	this->height.unit = unit;
+	this->height.length = length;
+
+	this->invalidateSize();
 }
 
 void
@@ -264,13 +288,16 @@ DisplayNodeFrame::setContentTop(DisplayNodeContentOriginType type, DisplayNodeCo
 {
     length = clamp(length, ABS_DBL_MIN, ABS_DBL_MAX);
 
-	if (this->contentTop.equals(type, unit, length) == false) {
-		this->contentTop.type = type;
-		this->contentTop.unit = unit;
-		this->contentTop.length = length;
-		this->measuredContentTop = length; // This is temporary until units other than pixels are available.
-		this->invalidateLayout();
+	if (this->contentTop.equals(type, unit, length)) {
+		return;
 	}
+
+	this->contentTop.type = type;
+	this->contentTop.unit = unit;
+	this->contentTop.length = length;
+	this->measuredContentTop = length; // This is temporary until units other than pixels are available.
+
+	this->invalidateLayout();
 }
 
 void
@@ -278,13 +305,16 @@ DisplayNodeFrame::setContentLeft(DisplayNodeContentOriginType type, DisplayNodeC
 {
     length = clamp(length, ABS_DBL_MIN, ABS_DBL_MAX);
 
-	if (this->contentLeft.equals(type, unit, length) == false) {
-		this->contentLeft.type = type;
-		this->contentLeft.unit = unit;
-		this->contentLeft.length = length;
-		this->measuredContentLeft = length; // This is temporary until units other than pixels are available.
-		this->invalidateLayout();
+	if (this->contentLeft.equals(type, unit, length)) {
+		return;
 	}
+
+	this->contentLeft.type = type;
+	this->contentLeft.unit = unit;
+	this->contentLeft.length = length;
+	this->measuredContentLeft = length; // This is temporary until units other than pixels are available.
+
+	this->invalidateLayout();
 }
 
 void
@@ -292,12 +322,15 @@ DisplayNodeFrame::setContentWidth(DisplayNodeContentSizeType type, DisplayNodeCo
 {
     length = clamp(length, 0, ABS_DBL_MAX);
 
-	if (this->contentWidth.equals(type, unit, length) == false) {
-		this->contentWidth.type = type;
-		this->contentWidth.unit = unit;
-		this->contentWidth.length = length;
-		this->invalidateContentSize();
+	if (this->contentWidth.equals(type, unit, length)) {
+		return;
 	}
+
+	this->contentWidth.type = type;
+	this->contentWidth.unit = unit;
+	this->contentWidth.length = length;
+
+	this->invalidateContentSize();
 }
 
 void
@@ -305,12 +338,15 @@ DisplayNodeFrame::setContentHeight(DisplayNodeContentSizeType type, DisplayNodeC
 {
     length = clamp(length, 0, ABS_DBL_MAX);
 
-	if (this->contentHeight.equals(type, unit, length) == false) {
-		this->contentHeight.type = type;
-		this->contentHeight.unit = unit;
-		this->contentHeight.length = length;
-		this->invalidateContentSize();
+	if (this->contentHeight.equals(type, unit, length)) {
+		return;
 	}
+
+	this->contentHeight.type = type;
+	this->contentHeight.unit = unit;
+	this->contentHeight.length = length;
+
+	this->invalidateContentSize();
 }
 
 void
@@ -336,12 +372,15 @@ DisplayNodeFrame::setBorderTop(DisplayNodeBorderType type, DisplayNodeBorderUnit
 {
     length = clamp(length, 0, ABS_DBL_MAX);
 
-	if (this->borderTop.equals(type, unit, length) == false) {
-    	this->borderTop.type = type;
-    	this->borderTop.unit = unit;
-    	this->borderTop.length = length;
-    	this->invalidateBorder();
+	if (this->borderTop.equals(type, unit, length)) {
+		return;
 	}
+
+	this->borderTop.type = type;
+    this->borderTop.unit = unit;
+    this->borderTop.length = length;
+
+    this->invalidateBorder();
 }
 
 void
@@ -349,12 +388,15 @@ DisplayNodeFrame::setBorderLeft(DisplayNodeBorderType type, DisplayNodeBorderUni
 {
     length = clamp(length, 0, ABS_DBL_MAX);
 
-	if (this->borderLeft.equals(type, unit, length) == false) {
-    	this->borderLeft.type = type;
-    	this->borderLeft.unit = unit;
-    	this->borderLeft.length = length;
-    	this->invalidateBorder();
+	if (this->borderLeft.equals(type, unit, length)) {
+		return;
 	}
+
+	this->borderLeft.type = type;
+    this->borderLeft.unit = unit;
+    this->borderLeft.length = length;
+
+    this->invalidateBorder();
 }
 
 void
@@ -362,12 +404,15 @@ DisplayNodeFrame::setBorderRight(DisplayNodeBorderType type, DisplayNodeBorderUn
 {
     length = clamp(length, 0, ABS_DBL_MAX);
 
-	if (this->borderRight.equals(type, unit, length) == false) {
-    	this->borderRight.type = type;
-    	this->borderRight.unit = unit;
-    	this->borderRight.length = length;
-    	this->invalidateBorder();
+	if (this->borderRight.equals(type, unit, length)) {
+		return;
 	}
+
+	this->borderRight.type = type;
+	this->borderRight.unit = unit;
+	this->borderRight.length = length;
+
+    this->invalidateBorder();
 }
 
 void
@@ -375,56 +420,71 @@ DisplayNodeFrame::setBorderBottom(DisplayNodeBorderType type, DisplayNodeBorderU
 {
     length = clamp(length, 0, ABS_DBL_MAX);
 
-	if (this->borderBottom.equals(type, unit, length) == false) {
-    	this->borderBottom.type = type;
-    	this->borderBottom.unit = unit;
-    	this->borderBottom.length = length;
-    	this->invalidateBorder();
+	if (this->borderBottom.equals(type, unit, length)) {
+		return;
 	}
+
+	this->borderBottom.type = type;
+    this->borderBottom.unit = unit;
+    this->borderBottom.length = length;
+
+    this->invalidateBorder();
 }
 
 void
 DisplayNodeFrame::setMarginTop(DisplayNodeMarginType type, DisplayNodeMarginUnit unit, double length)
 {
-	if (this->marginTop.equals(type, unit, length) == false) {
-		this->marginTop.type = type;
-		this->marginTop.unit = unit;
-		this->marginTop.length = length;
-		this->invalidateMargin();
+	if (this->marginTop.equals(type, unit, length)) {
+		return;
 	}
+
+	this->marginTop.type = type;
+	this->marginTop.unit = unit;
+	this->marginTop.length = length;
+
+	this->invalidateMargin();
 }
 
 void
 DisplayNodeFrame::setMarginLeft(DisplayNodeMarginType type, DisplayNodeMarginUnit unit, double length)
 {
-	if (this->marginLeft.equals(type, unit, length) == false) {
-		this->marginLeft.type = type;
-		this->marginLeft.unit = unit;
-		this->marginLeft.length = length;
-		this->invalidateMargin();
+	if (this->marginLeft.equals(type, unit, length)) {
+		return;
 	}
+
+	this->marginLeft.type = type;
+	this->marginLeft.unit = unit;
+	this->marginLeft.length = length;
+
+	this->invalidateMargin();
 }
 
 void
 DisplayNodeFrame::setMarginRight(DisplayNodeMarginType type, DisplayNodeMarginUnit unit, double length)
 {
-	if (this->marginRight.equals(type, unit, length) == false) {
-		this->marginRight.type = type;
-		this->marginRight.unit = unit;
-		this->marginRight.length = length;
-		this->invalidateMargin();
+	if (this->marginRight.equals(type, unit, length)) {
+		return;
 	}
+
+	this->marginRight.type = type;
+	this->marginRight.unit = unit;
+	this->marginRight.length = length;
+
+	this->invalidateMargin();
 }
 
 void
 DisplayNodeFrame::setMarginBottom(DisplayNodeMarginType type, DisplayNodeMarginUnit unit, double length)
 {
-	if (this->marginBottom.equals(type, unit, length) == false) {
-		this->marginBottom.type = type;
-		this->marginBottom.unit = unit;
-		this->marginBottom.length = length;
-		this->invalidateMargin();
+	if (this->marginBottom.equals(type, unit, length)) {
+		return;
 	}
+
+	this->marginBottom.type = type;
+	this->marginBottom.unit = unit;
+	this->marginBottom.length = length;
+
+	this->invalidateMargin();
 }
 
 void
@@ -504,12 +564,15 @@ DisplayNodeFrame::setPaddingTop(DisplayNodePaddingType type, DisplayNodePaddingU
 {
     length = clamp(length, 0, ABS_DBL_MAX);
 
-	if (this->paddingTop.equals(type, unit, length) == false) {
-		this->paddingTop.type = type;
-		this->paddingTop.unit = unit;
-		this->paddingTop.length = length;
-		this->invalidatePadding();
+	if (this->paddingTop.equals(type, unit, length)) {
+		return;
 	}
+
+	this->paddingTop.type = type;
+	this->paddingTop.unit = unit;
+	this->paddingTop.length = length;
+
+	this->invalidatePadding();
 }
 
 void
@@ -517,12 +580,15 @@ DisplayNodeFrame::setPaddingLeft(DisplayNodePaddingType type, DisplayNodePadding
 {
     length = clamp(length, 0, ABS_DBL_MAX);
 
-	if (this->paddingLeft.equals(type, unit, length) == false) {
-		this->paddingLeft.type = type;
-		this->paddingLeft.unit = unit;
-		this->paddingLeft.length = length;
-		this->invalidatePadding();
+	if (this->paddingLeft.equals(type, unit, length)) {
+		return;
 	}
+
+	this->paddingLeft.type = type;
+	this->paddingLeft.unit = unit;
+	this->paddingLeft.length = length;
+
+	this->invalidatePadding();
 }
 
 void
@@ -530,12 +596,15 @@ DisplayNodeFrame::setPaddingRight(DisplayNodePaddingType type, DisplayNodePaddin
 {
     length = clamp(length, 0, ABS_DBL_MAX);
 
-	if (this->paddingRight.equals(type, unit, length) == false) {
-		this->paddingRight.type = type;
-		this->paddingRight.unit = unit;
-		this->paddingRight.length = length;
-		this->invalidatePadding();
+	if (this->paddingRight.equals(type, unit, length)) {
+		return;
 	}
+
+	this->paddingRight.type = type;
+	this->paddingRight.unit = unit;
+	this->paddingRight.length = length;
+
+	this->invalidatePadding();
 }
 
 void
@@ -543,12 +612,15 @@ DisplayNodeFrame::setPaddingBottom(DisplayNodePaddingType type, DisplayNodePaddi
 {
     length = clamp(length, 0, ABS_DBL_MAX);
 
-	if (this->paddingBottom.equals(type, unit, length) == false) {
-		this->paddingBottom.type = type;
-		this->paddingBottom.unit = unit;
-		this->paddingBottom.length = length;
-		this->invalidatePadding();
+	if (this->paddingBottom.equals(type, unit, length)) {
+		return;
 	}
+
+	this->paddingBottom.type = type;
+	this->paddingBottom.unit = unit;
+	this->paddingBottom.length = length;
+
+	this->invalidatePadding();
 }
 
 void

@@ -84,8 +84,8 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 		switch (self.fontSize.unit) {
 
 			case .px: value = CGFloat(self.fontSize.number)
-			case .vw: value = CGFloat(self.fontSize.number / 100 * self.layoutNode.viewportWidth)
-			case .vh: value = CGFloat(self.fontSize.number / 100 * self.layoutNode.viewportHeight)
+			case .vw: value = CGFloat(self.fontSize.number / 100 * self.displayNode.display.viewportWidth)
+			case .vh: value = CGFloat(self.fontSize.number / 100 * self.displayNode.display.viewportHeight)
 
 			default:
 				value = CGFloat(self.fontSize.number)
@@ -97,9 +97,9 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 			CGFloat(self.maxFontSize.number)
 		)
 
-		if (self.layoutNode.wrapsContentWidth ||
-			self.layoutNode.wrapsContentHeight) {
-			self.layoutNode.invalidateSize()
+		if (self.displayNode.isWrappingContentWidth ||
+			self.displayNode.isWrappingContentHeight) {
+			self.displayNode.invalidateSize()
 		}
 	}
 
@@ -112,7 +112,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @method didResolvePadding
 	 * @since 0.7.0
 	 */
-	override open func didResolvePadding(node: LayoutNode) {
+	override open func didResolvePadding(node: DisplayNode) {
 		super.didResolvePadding(node: node)
 		self.view.paddingTop = CGFloat(self.resolvedPaddingTop)
 		self.view.paddingLeft = CGFloat(self.resolvedPaddingLeft)
@@ -283,9 +283,9 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 
 		self.view.fontFamily = value.string
 
-		if (self.layoutNode.wrapsContentWidth ||
-			self.layoutNode.wrapsContentHeight) {
-			self.layoutNode.invalidateSize()
+		if (self.displayNode.isWrappingContentWidth ||
+			self.displayNode.isWrappingContentHeight) {
+			self.displayNode.invalidateSize()
 		}
 	}
 
@@ -298,9 +298,9 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 
 		self.view.fontWeight = value.string
 
-		if (self.layoutNode.wrapsContentWidth ||
-			self.layoutNode.wrapsContentHeight) {
-			self.layoutNode.invalidateSize()
+		if (self.displayNode.isWrappingContentWidth ||
+			self.displayNode.isWrappingContentHeight) {
+			self.displayNode.invalidateSize()
 		}
 	}
 
@@ -313,9 +313,9 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 
 		self.view.fontStyle = value.string
 
-		if (self.layoutNode.wrapsContentWidth ||
-			self.layoutNode.wrapsContentHeight) {
-			self.layoutNode.invalidateSize()
+		if (self.displayNode.isWrappingContentWidth ||
+			self.displayNode.isWrappingContentHeight) {
+			self.displayNode.invalidateSize()
 		}
 	}
 
@@ -355,9 +355,9 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 
 		self.view.text = value.string
 
-		if (self.layoutNode.wrapsContentWidth ||
-			self.layoutNode.wrapsContentHeight) {
-			self.layoutNode.invalidateSize()
+		if (self.displayNode.isWrappingContentWidth ||
+			self.displayNode.isWrappingContentHeight) {
+			self.displayNode.invalidateSize()
 		}
 	}
 
@@ -397,9 +397,9 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 
 		self.view.textBaseline = CGFloat(value.number)
 
-		if (self.layoutNode.wrapsContentWidth ||
-			self.layoutNode.wrapsContentHeight) {
-			self.layoutNode.invalidateSize()
+		if (self.displayNode.isWrappingContentWidth ||
+			self.displayNode.isWrappingContentHeight) {
+			self.displayNode.invalidateSize()
 		}
 	}
 
@@ -412,9 +412,9 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 
 		self.view.textKerning = CGFloat(value.number)
 
-		if (self.layoutNode.wrapsContentWidth ||
-			self.layoutNode.wrapsContentHeight) {
-			self.layoutNode.invalidateSize()
+		if (self.displayNode.isWrappingContentWidth ||
+			self.displayNode.isWrappingContentHeight) {
+			self.displayNode.invalidateSize()
 		}
 	}
 
@@ -427,9 +427,9 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 
 		self.view.textLeading = CGFloat(value.number)
 
-		if (self.layoutNode.wrapsContentWidth ||
-			self.layoutNode.wrapsContentHeight) {
-			self.layoutNode.invalidateSize()
+		if (self.displayNode.isWrappingContentWidth ||
+			self.displayNode.isWrappingContentHeight) {
+			self.displayNode.invalidateSize()
 		}
 	}
 
@@ -478,9 +478,9 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 
 		self.view.textDecoration = self.getTextDecoration(value.string)
 
-		if (self.layoutNode.wrapsContentWidth ||
-			self.layoutNode.wrapsContentHeight) {
-			self.layoutNode.invalidateSize()
+		if (self.displayNode.isWrappingContentWidth ||
+			self.displayNode.isWrappingContentHeight) {
+			self.displayNode.invalidateSize()
 		}
 	}
 
@@ -493,9 +493,9 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 
 		self.view.textTransform = self.getTextTransform(value.string)
 
-		if (self.layoutNode.wrapsContentWidth ||
-			self.layoutNode.wrapsContentHeight) {
-			self.layoutNode.invalidateSize()
+		if (self.displayNode.isWrappingContentWidth ||
+			self.displayNode.isWrappingContentHeight) {
+			self.displayNode.invalidateSize()
 		}
 	}
 
@@ -508,9 +508,9 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 
 		self.view.textOverflow = self.getTextOverflow(value.string)
 
-		if (self.layoutNode.wrapsContentWidth ||
-			self.layoutNode.wrapsContentHeight) {
-			self.layoutNode.invalidateSize()
+		if (self.displayNode.isWrappingContentWidth ||
+			self.displayNode.isWrappingContentHeight) {
+			self.displayNode.invalidateSize()
 		}
 	}
 
@@ -532,9 +532,9 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 
 		self.view.maxLines = Int(value.number)
 
-		if (self.layoutNode.wrapsContentWidth ||
-			self.layoutNode.wrapsContentHeight) {
-			self.layoutNode.invalidateSize()
+		if (self.displayNode.isWrappingContentWidth ||
+			self.displayNode.isWrappingContentHeight) {
+			self.displayNode.invalidateSize()
 		}
 	}
 

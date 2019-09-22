@@ -1,5 +1,5 @@
-import Dezel
+@testable import Dezel
 
-class JavaScriptEmptyClass : JavaScriptClass {
+class JavaScriptWatEmptyClass : JavaScriptClass {
 
 }

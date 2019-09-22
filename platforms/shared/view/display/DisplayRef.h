@@ -91,6 +91,9 @@ void DisplaySetData(DisplayRef display, void *data);
  */
 void *DisplayGetData(DisplayRef display);
 
+
+void DisplayLoadStylesheet(DisplayRef display, const char* stylesheet);
+
 #if __cplusplus
 }
 #endif

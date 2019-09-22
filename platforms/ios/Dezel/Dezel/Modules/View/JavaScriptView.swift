@@ -6,7 +6,7 @@ import QuartzCore
  * @class JavaScriptView
  * @since 0.7.0
  */
-open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelegate, ScrollableDelegate, SynchronizerCallback {
+open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDelegate, SynchronizerCallback {
 
 	//--------------------------------------------------------------------------
 	// MARK: Properties
@@ -33,9 +33,16 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 */
 	public var classList: String = "View" {
 		willSet {
-			self.stylerNode.type = newValue
+			self.displayNode.setType(newValue)
 		}
 	}
+
+	/**
+	 * The node that manages this view's display properties.
+	 * @property displayNode
+	 * @since 0.7.0
+	 */
+	private(set) public var displayNode: DisplayNode!
 
 	/**
 	 * The view's content wrapper view.
@@ -71,30 +78,6 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @since 0.7.0
 	 */
 	private(set) public var children: [JavaScriptView] = []
-
-	/**
-	 * The view's shadowed views.
-	 * @property shadowed
-	 * @since 0.7.0
-	 */
-	private(set) public var shadowed: [JavaScriptView] = []
-
-	/**
-	 * The view's shadow root.
-	 * @property shadowRoot
-	 * @since 0.7.0
-	 */
-	private(set) public var shadowRoot: JavaScriptView? {
-		willSet { self.shadowRoot?.removeShadowedView(self) }
-		didSet  { self.shadowRoot?.appendShadowedView(self) }
-	}
-
-	/**
-	 * Whether this view the root of a shadowed element.
-	 * @property isShadowRoot
-	 * @since 0.7.0
-	 */
-	private(set) public var isShadowRoot: Bool = false
 
 	/**
 	 * The view's resolved top.
@@ -286,20 +269,6 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	private(set) public var resolvedFrame: Bool = false
 
 	/**
-	 * The node that manages this view's styled properties.
-	 * @property stylerNode
-	 * @since 0.7.0
-	 */
-	private(set) public var stylerNode: StylerNode!
-
-	/**
-	 * The node that manages this view's layout properties.
-	 * @property layoutNode
-	 * @since 0.7.0
-	 */
-	private(set) public var layoutNode: LayoutNode!
-
-	/**
 	 * @property zoomedView
 	 * @since 0.7.0
 	 * @hidden
@@ -419,10 +388,8 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 
 		super.init(context: context)
 
-		self.stylerNode = StylerNode(styler: context.application.styler, view: self)
-		self.layoutNode = LayoutNode(layout: context.application.layout)
-		self.stylerNode.delegate = self
-		self.layoutNode.delegate = self
+		self.displayNode = DisplayNode(display: context.application.display)
+		self.displayNode.delegate = self
 
 		self.content = self.createContentView()
 		self.wrapper = self.createWrapperView()
@@ -553,8 +520,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @since 0.7.0
 	 */
 	open func resolve() {
-		self.stylerNode.resolve()
-		self.layoutNode.resolve()
+		self.displayNode.resolve()
 	}
 
 	/**
@@ -563,8 +529,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @since 0.7.0
 	 */
 	open func measure() {
-		self.stylerNode.resolve()
-		self.layoutNode.measure()
+		self.displayNode.measure()
 	}
 
 	/**
@@ -582,7 +547,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @since 0.7.0
 	 */
 	open func scheduleLayout() {
-		self.layoutNode.invalidate()
+		self.displayNode.invalidateLayout()
 	}
 
 	/**
@@ -813,8 +778,8 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 			switch (self.backgroundImageWidth.unit) {
 
 				case .pc: backgroundImageW = self.backgroundImageWidth.number / 100 * self.resolvedWidth
-				case .vw: backgroundImageW = self.backgroundImageWidth.number / 100 * self.layoutNode.viewportWidth
-				case .vh: backgroundImageW = self.backgroundImageWidth.number / 100 * self.layoutNode.viewportHeight
+				case .vw: backgroundImageW = self.backgroundImageWidth.number / 100 * self.displayNode.display.viewportWidth;
+				case .vh: backgroundImageW = self.backgroundImageWidth.number / 100 * self.displayNode.display.viewportHeight
 				case .pw: backgroundImageW = self.backgroundImageWidth.number / 100 * self.resolvedInnerWidth
 				case .ph: backgroundImageW = self.backgroundImageWidth.number / 100 * self.resolvedInnerHeight
 				case .cw: backgroundImageW = self.backgroundImageWidth.number / 100 * self.resolvedContentWidth
@@ -836,8 +801,8 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 			switch (self.backgroundImageHeight.unit) {
 
 				case .pc: backgroundImageH = self.backgroundImageHeight.number / 100 * self.resolvedHeight
-				case .vw: backgroundImageH = self.backgroundImageHeight.number / 100 * self.layoutNode.viewportWidth
-				case .vh: backgroundImageH = self.backgroundImageHeight.number / 100 * self.layoutNode.viewportHeight
+				case .vw: backgroundImageH = self.backgroundImageHeight.number / 100 * self.displayNode.display.viewportWidth
+				case .vh: backgroundImageH = self.backgroundImageHeight.number / 100 * self.displayNode.display.viewportHeight
 				case .pw: backgroundImageH = self.backgroundImageHeight.number / 100 * self.resolvedInnerWidth
 				case .ph: backgroundImageH = self.backgroundImageHeight.number / 100 * self.resolvedInnerHeight
 				case .cw: backgroundImageH = self.backgroundImageHeight.number / 100 * self.resolvedContentWidth
@@ -852,8 +817,8 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 		switch (self.backgroundImageTop.unit) {
 
 			case .pc: backgroundImageT = self.backgroundImageTop.number / 100 * self.resolvedHeight
-			case .vw: backgroundImageT = self.backgroundImageTop.number / 100 * self.layoutNode.viewportWidth
-			case .vh: backgroundImageT = self.backgroundImageTop.number / 100 * self.layoutNode.viewportHeight
+			case .vw: backgroundImageT = self.backgroundImageTop.number / 100 * self.displayNode.display.viewportWidth
+			case .vh: backgroundImageT = self.backgroundImageTop.number / 100 * self.displayNode.display.viewportHeight
 			case .pw: backgroundImageT = self.backgroundImageTop.number / 100 * self.resolvedInnerWidth
 			case .ph: backgroundImageT = self.backgroundImageTop.number / 100 * self.resolvedInnerHeight
 			case .cw: backgroundImageT = self.backgroundImageTop.number / 100 * self.resolvedContentWidth
@@ -867,8 +832,8 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 		switch (self.backgroundImageLeft.unit) {
 
 			case .pc: backgroundImageL = self.backgroundImageLeft.number / 100 * self.resolvedWidth
-			case .vw: backgroundImageL = self.backgroundImageLeft.number / 100 * self.layoutNode.viewportWidth
-			case .vh: backgroundImageL = self.backgroundImageLeft.number / 100 * self.layoutNode.viewportHeight
+			case .vw: backgroundImageL = self.backgroundImageLeft.number / 100 * self.displayNode.display.viewportWidth
+			case .vh: backgroundImageL = self.backgroundImageLeft.number / 100 * self.displayNode.display.viewportHeight
 			case .pw: backgroundImageL = self.backgroundImageLeft.number / 100 * self.resolvedInnerWidth
 			case .ph: backgroundImageL = self.backgroundImageLeft.number / 100 * self.resolvedInnerHeight
 			case .cw: backgroundImageL = self.backgroundImageLeft.number / 100 * self.resolvedContentWidth
@@ -938,8 +903,8 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 
 		let viewW = self.resolvedWidth
 		let viewH = self.resolvedHeight
-		let viewportW = self.layoutNode.viewportWidth
-		let viewportH = self.layoutNode.viewportHeight
+		let viewportW = self.displayNode.display.viewportWidth
+		let viewportH = self.displayNode.display.viewportHeight
 		let parentW = self.parent?.resolvedInnerWidth ?? 0
 		let parentH = self.parent?.resolvedInnerHeight ?? 0
 		let containerW = self.parent?.resolvedContentWidth ?? 0
@@ -1279,19 +1244,10 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 
 	/**
 	 * @inherited
-	 * @method prepareLayoutNode
+	 * @method measure
 	 * @since 0.7.0
 	 */
-	open func prepareLayoutNode(node: LayoutNode) {
-		self.stylerNode.resolve()
-	}
-
-	/**
-	 * @inherited
-	 * @method measureLayoutNode
-	 * @since 0.7.0
-	 */
-	open func measureLayoutNode(node: LayoutNode, in bounds: CGSize, min: CGSize, max: CGSize) -> CGSize? {
+	open func measure(node: DisplayNode, in bounds: CGSize, min: CGSize, max: CGSize) -> CGSize? {
 		return self.measure(in: bounds, min: min, max: max)
 	}
 
@@ -1300,16 +1256,16 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @method didResolveSize
 	 * @since 0.7.0
 	 */
-	open func didResolveSize(node: LayoutNode) {
+	open func didResolveSize(node: DisplayNode) {
 
-		if (self.resolvedWidth != self.layoutNode.measuredWidth) {
-			self.resolvedWidth = self.layoutNode.measuredWidth
+		if (self.resolvedWidth != self.displayNode.measuredWidth) {
+			self.resolvedWidth = self.displayNode.measuredWidth
 			self.measuredWidth.reset()
 			self.invalidateFrame()
 		}
 
-		if (self.resolvedHeight != self.layoutNode.measuredHeight) {
-			self.resolvedHeight = self.layoutNode.measuredHeight
+		if (self.resolvedHeight != self.displayNode.measuredHeight) {
+			self.resolvedHeight = self.displayNode.measuredHeight
 			self.measuredHeight.reset()
 			self.invalidateFrame()
 		}
@@ -1317,19 +1273,19 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 
 	/**
 	 * @inherited
-	 * @method didResolvePosition
+	 * @method didResolveOrigin
 	 * @since 0.7.0
 	 */
-	open func didResolvePosition(node: LayoutNode) {
+	open func didResolveOrigin(node: DisplayNode) {
 
-		if (self.resolvedTop != self.layoutNode.measuredTop) {
-			self.resolvedTop = self.layoutNode.measuredTop
+		if (self.resolvedTop != self.displayNode.measuredTop) {
+			self.resolvedTop = self.displayNode.measuredTop
 			self.measuredTop.reset()
 			self.invalidateFrame()
 		}
 
-		if (self.resolvedLeft != self.layoutNode.measuredLeft) {
-			self.resolvedLeft = self.layoutNode.measuredLeft
+		if (self.resolvedLeft != self.displayNode.measuredLeft) {
+			self.resolvedLeft = self.displayNode.measuredLeft
 			self.measuredLeft.reset()
 			self.invalidateFrame()
 		}
@@ -1340,16 +1296,16 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @method didResolveInnerSize
 	 * @since 0.7.0
 	 */
-	open func didResolveInnerSize(node: LayoutNode) {
+	open func didResolveInnerSize(node: DisplayNode) {
 
-		if (self.resolvedInnerWidth != self.layoutNode.measuredInnerWidth) {
-			self.resolvedInnerWidth = self.layoutNode.measuredInnerWidth
+		if (self.resolvedInnerWidth != self.displayNode.measuredInnerWidth) {
+			self.resolvedInnerWidth = self.displayNode.measuredInnerWidth
 			self.measuredInnerWidth.reset()
 			self.invalidateFrame()
 		}
 
-		if (self.resolvedInnerHeight != self.layoutNode.measuredInnerHeight) {
-			self.resolvedInnerHeight = self.layoutNode.measuredInnerHeight
+		if (self.resolvedInnerHeight != self.displayNode.measuredInnerHeight) {
+			self.resolvedInnerHeight = self.displayNode.measuredInnerHeight
 			self.measuredInnerHeight.reset()
 			self.invalidateFrame()
 		}
@@ -1360,16 +1316,16 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @method didResolveContentSize
 	 * @since 0.7.0
 	 */
-	open func didResolveContentSize(node: LayoutNode) {
+	open func didResolveContentSize(node: DisplayNode) {
 
-		if (self.resolvedContentWidth != self.layoutNode.measuredContentWidth) {
-			self.resolvedContentWidth = self.layoutNode.measuredContentWidth
+		if (self.resolvedContentWidth != self.displayNode.measuredContentWidth) {
+			self.resolvedContentWidth = self.displayNode.measuredContentWidth
 			self.measuredContentWidth.reset()
 			self.invalidateContent()
 		}
 
-		if (self.resolvedContentHeight != self.layoutNode.measuredContentHeight) {
-			self.resolvedContentHeight = self.layoutNode.measuredContentHeight
+		if (self.resolvedContentHeight != self.displayNode.measuredContentHeight) {
+			self.resolvedContentHeight = self.displayNode.measuredContentHeight
 			self.measuredContentHeight.reset()
 			self.invalidateContent()
 		}
@@ -1380,25 +1336,25 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @method didResolveMargin
 	 * @since 0.7.0
 	 */
-	open func didResolveMargin(node: LayoutNode) {
+	open func didResolveMargin(node: DisplayNode) {
 
-		if (self.resolvedMarginTop != self.layoutNode.measuredMarginTop) {
-			self.resolvedMarginTop = self.layoutNode.measuredMarginTop
+		if (self.resolvedMarginTop != self.displayNode.measuredMarginTop) {
+			self.resolvedMarginTop = self.displayNode.measuredMarginTop
 			self.measuredMarginTop.reset()
 		}
 
-		if (self.resolvedMarginLeft != self.layoutNode.measuredMarginLeft) {
-			self.resolvedMarginLeft = self.layoutNode.measuredMarginLeft
+		if (self.resolvedMarginLeft != self.displayNode.measuredMarginLeft) {
+			self.resolvedMarginLeft = self.displayNode.measuredMarginLeft
 			self.measuredMarginLeft.reset()
 		}
 
-		if (self.resolvedMarginRight != self.layoutNode.measuredMarginRight) {
-			self.resolvedMarginRight = self.layoutNode.measuredMarginRight
+		if (self.resolvedMarginRight != self.displayNode.measuredMarginRight) {
+			self.resolvedMarginRight = self.displayNode.measuredMarginRight
 			self.measuredMarginRight.reset()
 		}
 
-		if (self.resolvedMarginBottom != self.layoutNode.measuredMarginBottom) {
-			self.resolvedMarginBottom = self.layoutNode.measuredMarginBottom
+		if (self.resolvedMarginBottom != self.displayNode.measuredMarginBottom) {
+			self.resolvedMarginBottom = self.displayNode.measuredMarginBottom
 			self.measuredMarginBottom.reset()
 		}
 	}
@@ -1408,28 +1364,28 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @method didResolveBorder
 	 * @since 0.7.0
 	 */
-	open func didResolveBorder(node: LayoutNode) {
+	open func didResolveBorder(node: DisplayNode) {
 
-		if (self.resolvedBorderTopWidth != self.layoutNode.measuredBorderTop) {
-			self.resolvedBorderTopWidth = self.layoutNode.measuredBorderTop
+		if (self.resolvedBorderTopWidth != self.displayNode.measuredBorderTop) {
+			self.resolvedBorderTopWidth = self.displayNode.measuredBorderTop
 			self.measuredBorderTopWidth.reset()
 			self.invalidateBorder()
 		}
 
-		if (self.resolvedBorderLeftWidth != self.layoutNode.measuredBorderLeft) {
-			self.resolvedBorderLeftWidth = self.layoutNode.measuredBorderLeft
+		if (self.resolvedBorderLeftWidth != self.displayNode.measuredBorderLeft) {
+			self.resolvedBorderLeftWidth = self.displayNode.measuredBorderLeft
 			self.measuredBorderLeftWidth.reset()
 			self.invalidateBorder()
 		}
 
-		if (self.resolvedBorderRightWidth != self.layoutNode.measuredBorderRight) {
-			self.resolvedBorderRightWidth = self.layoutNode.measuredBorderRight
+		if (self.resolvedBorderRightWidth != self.displayNode.measuredBorderRight) {
+			self.resolvedBorderRightWidth = self.displayNode.measuredBorderRight
 			self.measuredBorderRightWidth.reset()
 			self.invalidateBorder()
 		}
 
-		if (self.resolvedBorderBottomWidth != self.layoutNode.measuredBorderBottom) {
-			self.resolvedBorderBottomWidth = self.layoutNode.measuredBorderBottom
+		if (self.resolvedBorderBottomWidth != self.displayNode.measuredBorderBottom) {
+			self.resolvedBorderBottomWidth = self.displayNode.measuredBorderBottom
 			self.measuredBorderBottomWidth.reset()
 			self.invalidateBorder()
 		}
@@ -1440,69 +1396,56 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @method didResolvePadding
 	 * @since 0.7.0
 	 */
-	open func didResolvePadding(node: LayoutNode) {
+	open func didResolvePadding(node: DisplayNode) {
 
-		if (self.resolvedPaddingTop != self.layoutNode.measuredPaddingTop) {
-			self.resolvedPaddingTop = self.layoutNode.measuredPaddingTop
+		if (self.resolvedPaddingTop != self.displayNode.measuredPaddingTop) {
+			self.resolvedPaddingTop = self.displayNode.measuredPaddingTop
 			self.measuredPaddingTop.reset()
 		}
 
-		if (self.resolvedPaddingLeft != self.layoutNode.measuredPaddingLeft) {
-			self.resolvedPaddingLeft = self.layoutNode.measuredPaddingLeft
+		if (self.resolvedPaddingLeft != self.displayNode.measuredPaddingLeft) {
+			self.resolvedPaddingLeft = self.displayNode.measuredPaddingLeft
 			self.measuredPaddingLeft.reset()
 		}
 
-		if (self.resolvedPaddingRight != self.layoutNode.measuredPaddingRight) {
-			self.resolvedPaddingRight = self.layoutNode.measuredPaddingRight
+		if (self.resolvedPaddingRight != self.displayNode.measuredPaddingRight) {
+			self.resolvedPaddingRight = self.displayNode.measuredPaddingRight
 			self.measuredPaddingRight.reset()
 		}
 
-		if (self.resolvedPaddingBottom != self.layoutNode.measuredPaddingBottom) {
-			self.resolvedPaddingBottom = self.layoutNode.measuredPaddingBottom
+		if (self.resolvedPaddingBottom != self.displayNode.measuredPaddingBottom) {
+			self.resolvedPaddingBottom = self.displayNode.measuredPaddingBottom
 			self.measuredPaddingBottom.reset()
 		}
 	}
 
 	/**
 	 * @inherited
-	 * @method didInvalidateLayout
+	 * @method didInvalidate
 	 * @since 0.7.0
 	 */
-	open func didInvalidateLayout(node: LayoutNode) {
+	open func didInvalidate(node: DisplayNode) {
 		self.scheduleUpdate()
 	}
 
 	/**
 	 * @inherited
-	 * @method didBeginLayout
+	 * @method layoutBegan
 	 * @since 0.7.0
 	 */
-	open func didBeginLayout(node: LayoutNode) {
+	open func layoutBegan(node: DisplayNode) {
 		self.delegate?.didBeginLayout(view: self)
 		self.callMethod("nativeOnLayoutBegan")
 	}
 
 	/**
 	 * @inherited
-	 * @method didFinishLayout
+	 * @method layoutEnded
 	 * @since 0.7.0
 	 */
-	open func didFinishLayout(node: LayoutNode) {
+	open func layoutEnded(node: DisplayNode) {
 		self.delegate?.didFinishLayout(view: self)
 		self.callMethod("nativeOnLayoutFinished")
-	}
-
-	//--------------------------------------------------------------------------
-	// MARK: Methods - Render Node Delegate
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method didInvalidateStylerNode
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	open func didInvalidateStylerNode(node: StylerNode) {
-		self.scheduleUpdate()
 	}
 
 	//--------------------------------------------------------------------------
@@ -1610,18 +1553,9 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @hidden
 	 */
 	private func insertChild(_ view: JavaScriptView, at index: Int) {
-
 		self.children.insert(view, at: index)
-		self.stylerNode.insertChild(view.stylerNode, at: index)
-		self.layoutNode.insertChild(view.layoutNode, at: index)
-
+		self.displayNode.insertChild(view.displayNode, at: index)
 		self.content.insertSubview(view.wrapper, at: index)
-
-		if (self.isShadowRoot) {
-			view.updateShadowRoot(self)
-		} else {
-			view.updateShadowRoot(self.shadowRoot)
-		}
 	}
 
 	/**
@@ -1630,14 +1564,9 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @hidden
 	 */
 	open func removeChild(_ view: JavaScriptView) {
-
 		self.children.remove(view)
-		self.stylerNode.removeChild(view.stylerNode)
-		self.layoutNode.removeChild(view.layoutNode)
-
+		self.displayNode.removeChild(view.displayNode)
 		self.content.removeSubview(view.wrapper)
-
-		view.updateShadowRoot(nil)
 	}
 
 	/**
@@ -1770,40 +1699,6 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	}
 
 	/**
-	 * @method updateShadowRoot
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private func updateShadowRoot(_ root: JavaScriptView?) {
-		self.shadowRoot = root
-		if (self.isShadowRoot == false) {
-			for child in self.children {
-				child.updateShadowRoot(root)
-			}
-		}
-	}
-
-	/**
-	 * @method appendShadowedView
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private func appendShadowedView(_ view: JavaScriptView) {
-		self.shadowed.append(view)
-		self.stylerNode.appendShadowedNode(view.stylerNode)
-	}
-
-	/**
-	 * @method removeShadowedView
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private func removeShadowedView(_ view: JavaScriptView) {
-		self.shadowed.remove(view)
-		self.stylerNode.removeShadowedNode(view.stylerNode)
-	}
-
-	/**
 	 * @method isTransformed
 	 * @since 0.7.0
 	 * @hidden
@@ -1883,8 +1778,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 */
 	@objc public lazy var id = JavaScriptProperty(string: "") { value in
 		self.wrapper.id = value.string
-		self.stylerNode.id = value.string
-		self.layoutNode.id = value.string
+		self.displayNode.id = value.string
 	}
 
 	/**
@@ -2137,7 +2031,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @since 0.7.0
 	 */
 	@objc public lazy var borderTopWidth = JavaScriptProperty(number: 0) { value in
-		self.layoutNode.borderTop(value)
+		self.displayNode.setBorderTop(value)
 	}
 
 	/**
@@ -2146,7 +2040,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @since 0.7.0
 	 */
 	@objc public lazy var borderLeftWidth = JavaScriptProperty(number: 0) { value in
-		self.layoutNode.borderLeft(value)
+		self.displayNode.setBorderLeft(value)
 	}
 
 	/**
@@ -2155,7 +2049,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @since 0.7.0
 	 */
 	@objc public lazy var borderRightWidth = JavaScriptProperty(number: 0) { value in
-		self.layoutNode.borderRight(value)
+		self.displayNode.setBorderRight(value)
 	}
 
 	/**
@@ -2164,7 +2058,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @since 0.7.0
 	 */
 	@objc public lazy var borderBottomWidth = JavaScriptProperty(number: 0) { value in
-		self.layoutNode.borderBottom(value)
+		self.displayNode.setBorderBottom(value)
 	}
 
 	/**
@@ -2329,7 +2223,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @since 0.7.0
 	 */
 	@objc public lazy var top = JavaScriptProperty(string: "auto") { value in
-		self.layoutNode.top(value)
+		self.displayNode.setTop(value)
 	}
 
 	/**
@@ -2338,7 +2232,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @since 0.7.0
 	 */
 	@objc public lazy var left = JavaScriptProperty(string: "auto") { value in
-		self.layoutNode.left(value)
+		self.displayNode.setLeft(value)
 	}
 
 	/**
@@ -2347,7 +2241,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @since 0.7.0
 	 */
 	@objc public lazy var right = JavaScriptProperty(string: "auto") { value in
-		self.layoutNode.right(value)
+		self.displayNode.setRight(value)
 	}
 
 	/**
@@ -2356,7 +2250,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @since 0.7.0
 	 */
 	@objc public lazy var bottom = JavaScriptProperty(string: "auto") { value in
-		self.layoutNode.bottom(value)
+		self.displayNode.setBottom(value)
 	}
 
 	/**
@@ -2365,7 +2259,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @since 0.7.0
 	 */
 	@objc public lazy var minTop = JavaScriptProperty(number: Double.min) { value in
-		self.layoutNode.minTop(value.number)
+		self.displayNode.setMinTop(value.number)
 	}
 
 	/**
@@ -2374,7 +2268,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @since 0.7.0
 	 */
 	@objc public lazy var maxTop = JavaScriptProperty(number: Double.max) { value in
-		self.layoutNode.maxTop(value.number)
+		self.displayNode.setMaxTop(value.number)
 	}
 
 	/**
@@ -2383,7 +2277,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @since 0.7.0
 	 */
 	@objc public lazy var minLeft = JavaScriptProperty(number: Double.min) { value in
-		self.layoutNode.minLeft(value.number)
+		self.displayNode.setMinLeft(value.number)
 	}
 
 	/**
@@ -2392,7 +2286,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @since 0.7.0
 	 */
 	@objc public lazy var maxLeft = JavaScriptProperty(number: Double.max) { value in
-		self.layoutNode.maxLeft(value.number)
+		self.displayNode.setMaxLeft(value.number)
 	}
 
 	/**
@@ -2401,7 +2295,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @since 0.7.0
 	 */
 	@objc public lazy var minRight = JavaScriptProperty(number: Double.min) { value in
-		self.layoutNode.minRight(value.number)
+		self.displayNode.setMinRight(value.number)
 	}
 
 	/**
@@ -2410,7 +2304,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @since 0.7.0
 	 */
 	@objc public lazy var maxRight = JavaScriptProperty(number: Double.max) { value in
-		self.layoutNode.maxRight(value.number)
+		self.displayNode.setMaxRight(value.number)
 	}
 
 	/**
@@ -2419,7 +2313,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @since 0.7.0
 	 */
 	@objc public lazy var minBottom = JavaScriptProperty(number: Double.min) { value in
-		self.layoutNode.minBottom(value.number)
+		self.displayNode.setMinBottom(value.number)
 	}
 
 	/**
@@ -2428,7 +2322,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @since 0.7.0
 	 */
 	@objc public lazy var maxBottom = JavaScriptProperty(number: Double.max) { value in
-		self.layoutNode.maxBottom(value.number)
+		self.displayNode.setMaxBottom(value.number)
 	}
 
 	/**
@@ -2437,7 +2331,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @since 0.7.0
 	 */
 	@objc public lazy var anchorTop = JavaScriptProperty(number: 0) { value in
-		self.layoutNode.anchorTop(value)
+		self.displayNode.setAnchorTop(value)
 	}
 
 	/**
@@ -2446,7 +2340,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @since 0.7.0
 	 */
 	@objc public lazy var anchorLeft = JavaScriptProperty(number: 0) { value in
-		self.layoutNode.anchorLeft(value)
+		self.displayNode.setAnchorLeft(value)
 	}
 
 	/**
@@ -2455,7 +2349,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @since 0.7.0
 	 */
 	@objc public lazy var width = JavaScriptProperty(string: "fill") { value in
-		self.layoutNode.width(value)
+		self.displayNode.setWidth(value)
 	}
 
 	/**
@@ -2464,7 +2358,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @since 0.7.0
 	 */
 	@objc public lazy var height = JavaScriptProperty(string: "fill") { value in
-		self.layoutNode.height(value)
+		self.displayNode.setHeight(value)
 	}
 
 	/**
@@ -2473,7 +2367,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @since 0.7.0
 	 */
 	@objc public lazy var minWidth = JavaScriptProperty(number: 0) { value in
-		self.layoutNode.minWidth(value.number)
+		self.displayNode.setMinWidth(value.number)
 	}
 
 	/**
@@ -2482,7 +2376,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @since 0.7.0
 	 */
 	@objc public lazy var maxWidth = JavaScriptProperty(number: Double.max) { value in
-		self.layoutNode.maxWidth(value.number)
+		self.displayNode.setMaxWidth(value.number)
 	}
 
 	/**
@@ -2491,7 +2385,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @since 0.7.0
 	 */
 	@objc public lazy var minHeight = JavaScriptProperty(number: 0) { value in
-		self.layoutNode.minHeight(value.number)
+		self.displayNode.setMinHeight(value.number)
 	}
 
 	/**
@@ -2500,25 +2394,25 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @since 0.7.0
 	 */
 	@objc public lazy var maxHeight = JavaScriptProperty(number: Double.max) { value in
-		self.layoutNode.maxHeight(value.number)
+		self.displayNode.setMaxHeight(value.number)
 	}
 
 	/**
-	 * The view's expandable ratio.
-	 * @property expand
+	 * The view's expandable factor.
+	 * @property expandFactor
 	 * @since 0.7.0
 	 */
-	@objc public lazy var expand = JavaScriptProperty(number: 0) { value in
-		self.layoutNode.expand(value.number)
+	@objc public lazy var expandFactor = JavaScriptProperty(number: 0) { value in
+		self.displayNode.setExpandFactor(value.number)
 	}
 
 	/**
-	 * The view's shrink ratio.
-	 * @property shrink
+	 * The view's shrink factor.
+	 * @property shrinkFactor
 	 * @since 0.7.0
 	 */
-	@objc public lazy var shrink = JavaScriptProperty(number: 0) { value in
-		self.layoutNode.shrink(value.number)
+	@objc public lazy var shrinkFactor = JavaScriptProperty(number: 0) { value in
+		self.displayNode.setShrinkFactor(value.number)
 	}
 
 	/**
@@ -2527,7 +2421,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @since 0.7.0
 	 */
 	@objc public lazy var contentTop = JavaScriptProperty(number: 0) { value in
-		self.layoutNode.contentTop(value)
+		self.displayNode.setContentTop(value)
 	}
 
 	/**
@@ -2536,7 +2430,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @since 0.7.0
 	 */
 	@objc public lazy var contentLeft = JavaScriptProperty(number: 0) { value in
-		self.layoutNode.contentLeft(value)
+		self.displayNode.setContentLeft(value)
 	}
 
 	/**
@@ -2545,7 +2439,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @since 0.7.0
 	 */
 	@objc public lazy var contentWidth = JavaScriptProperty(string: "auto") { value in
-		self.layoutNode.contentWidth(value)
+		self.displayNode.setContentWidth(value)
 	}
 
 	/**
@@ -2554,7 +2448,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @since 0.7.0
 	 */
 	@objc public lazy var contentHeight = JavaScriptProperty(string: "auto") { value in
-		self.layoutNode.contentHeight(value)
+		self.displayNode.setContentHeight(value)
 	}
 
 	/**
@@ -2599,7 +2493,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @since 0.7.0
 	 */
 	@objc public lazy var contentDirection = JavaScriptProperty(string: "vertical") { value in
-		self.layoutNode.contentDirection(value)
+		self.displayNode.setContentDirection(value)
 	}
 
 	/**
@@ -2608,7 +2502,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @since 0.7.0
 	 */
 	@objc public lazy var contentLocation = JavaScriptProperty(string: "start") { value in
-		self.layoutNode.contentLocation(value)
+		self.displayNode.setContentLocation(value)
 	}
 
 	/**
@@ -2617,7 +2511,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @since 0.7.0
 	 */
 	@objc public lazy var contentAlignment = JavaScriptProperty(string: "start") { value in
-		self.layoutNode.contentAlignment(value)
+		self.displayNode.setContentAlignment(value)
 	}
 
 	/**
@@ -2706,7 +2600,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @since 0.7.0
 	 */
 	@objc public lazy var marginTop = JavaScriptProperty(number: 0) { value in
-		self.layoutNode.marginTop(value)
+		self.displayNode.setMarginTop(value)
 	}
 
 	/**
@@ -2715,7 +2609,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @since 0.7.0
 	 */
 	@objc public lazy var marginLeft = JavaScriptProperty(number: 0) { value in
-		self.layoutNode.marginLeft(value)
+		self.displayNode.setMarginLeft(value)
 	}
 
 	/**
@@ -2724,7 +2618,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @since 0.7.0
 	 */
 	@objc public lazy var marginRight = JavaScriptProperty(number: 0) { value in
-		self.layoutNode.marginRight(value)
+		self.displayNode.setMarginRight(value)
 	}
 
 	/**
@@ -2733,7 +2627,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @since 0.7.0
 	 */
 	@objc public lazy var marginBottom = JavaScriptProperty(number: 0) { value in
-		self.layoutNode.marginBottom(value)
+		self.displayNode.setMarginBottom(value)
 	}
 
 	/**
@@ -2742,7 +2636,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @since 0.7.0
 	 */
 	@objc public lazy var minMarginTop = JavaScriptProperty(number: Double.min) { value in
-		self.layoutNode.minMarginTop(value.number)
+		self.displayNode.setMinMarginTop(value.number)
 	}
 
 	/**
@@ -2751,7 +2645,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @since 0.7.0
 	 */
 	@objc public lazy var maxMarginTop = JavaScriptProperty(number: Double.max) { value in
-		self.layoutNode.maxMarginTop(value.number)
+		self.displayNode.setMaxMarginTop(value.number)
 	}
 
 	/**
@@ -2760,7 +2654,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @since 0.7.0
 	 */
 	@objc public lazy var minMarginLeft = JavaScriptProperty(number: Double.min) { value in
-		self.layoutNode.minMarginLeft(value.number)
+		self.displayNode.setMinMarginLeft(value.number)
 	}
 
 	/**
@@ -2769,7 +2663,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @since 0.7.0
 	 */
 	@objc public lazy var maxMarginLeft = JavaScriptProperty(number: Double.max) { value in
-		self.layoutNode.maxMarginLeft(value.number)
+		self.displayNode.setMaxMarginLeft(value.number)
 	}
 
 	/**
@@ -2778,7 +2672,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @since 0.7.0
 	 */
 	@objc public lazy var minMarginRight = JavaScriptProperty(number: Double.min) { value in
-		self.layoutNode.minMarginRight(value.number)
+		self.displayNode.setMinMarginRight(value.number)
 	}
 
 	/**
@@ -2787,7 +2681,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @since 0.7.0
 	 */
 	@objc public lazy var maxMarginRight = JavaScriptProperty(number: Double.max) { value in
-		self.layoutNode.maxMarginRight(value.number)
+		self.displayNode.setMaxMarginRight(value.number)
 	}
 
 	/**
@@ -2796,7 +2690,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @since 0.7.0
 	 */
 	@objc public lazy var minMarginBottom = JavaScriptProperty(number: Double.min) { value in
-		self.layoutNode.minMarginBottom(value.number)
+		self.displayNode.setMinMarginBottom(value.number)
 	}
 
 	/**
@@ -2805,7 +2699,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @since 0.7.0
 	 */
 	@objc public lazy var maxMarginBottom = JavaScriptProperty(number: Double.max) { value in
-		self.layoutNode.maxMarginBottom(value.number)
+		self.displayNode.setMaxMarginBottom(value.number)
 	}
 
 	/**
@@ -2826,7 +2720,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @since 0.7.0
 	 */
 	@objc public lazy var paddingTop = JavaScriptProperty(number: 0) { value in
-		self.layoutNode.paddingTop(value)
+		self.displayNode.setPaddingTop(value)
 	}
 
 	/**
@@ -2835,7 +2729,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @since 0.7.0
 	 */
 	@objc public lazy var paddingLeft = JavaScriptProperty(number: 0) { value in
-		self.layoutNode.paddingLeft(value)
+		self.displayNode.setPaddingLeft(value)
 	}
 
 	/**
@@ -2844,7 +2738,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @since 0.7.0
 	 */
 	@objc public lazy var paddingRight = JavaScriptProperty(number: 0) { value in
-		self.layoutNode.paddingRight(value)
+		self.displayNode.setPaddingRight(value)
 	}
 
 	/**
@@ -2853,7 +2747,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @since 0.7.0
 	 */
 	@objc public lazy var paddingBottom = JavaScriptProperty(number: 0) { value in
-		self.layoutNode.paddingBottom(value)
+		self.displayNode.setPaddingBottom(value)
 	}
 
 	/**
@@ -2862,7 +2756,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @since 0.7.0
 	 */
 	@objc public lazy var minPaddingTop = JavaScriptProperty(number: 0) { value in
-		self.layoutNode.minPaddingTop(value.number)
+		self.displayNode.setMinPaddingTop(value.number)
 	}
 
 	/**
@@ -2871,7 +2765,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @since 0.7.0
 	 */
 	@objc public lazy var maxPaddingTop = JavaScriptProperty(number: Double.max) { value in
-		self.layoutNode.maxPaddingTop(value.number)
+		self.displayNode.setMaxPaddingTop(value.number)
 	}
 
 	/**
@@ -2880,7 +2774,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @since 0.7.0
 	 */
 	@objc public lazy var minPaddingLeft = JavaScriptProperty(number: 0) { value in
-		self.layoutNode.minPaddingLeft(value.number)
+		self.displayNode.setMinPaddingLeft(value.number)
 	}
 
 	/**
@@ -2889,7 +2783,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @since 0.7.0
 	 */
 	@objc public lazy var maxPaddingLeft = JavaScriptProperty(number: Double.max) { value in
-		self.layoutNode.maxPaddingLeft(value.number)
+		self.displayNode.setMaxPaddingLeft(value.number)
 	}
 
 	/**
@@ -2898,7 +2792,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @since 0.7.0
 	 */
 	@objc public lazy var minPaddingRight = JavaScriptProperty(number: 0) { value in
-		self.layoutNode.minPaddingRight(value.number)
+		self.displayNode.setMinPaddingRight(value.number)
 	}
 
 	/**
@@ -2907,7 +2801,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @since 0.7.0
 	 */
 	@objc public lazy var maxPaddingRight = JavaScriptProperty(number: Double.max) { value in
-		self.layoutNode.maxPaddingRight(value.number)
+		self.displayNode.setMaxPaddingRight(value.number)
 	}
 
 	/**
@@ -2916,7 +2810,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @since 0.7.0
 	 */
 	@objc public lazy var minPaddingBottom = JavaScriptProperty(number: 0) { value in
-		self.layoutNode.minPaddingBottom(value.number)
+		self.displayNode.setMinPaddingBottom(value.number)
 	}
 
 	/**
@@ -2925,7 +2819,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 * @since 0.7.0
 	 */
 	@objc public lazy var maxPaddingBottom = JavaScriptProperty(number: Double.max) { value in
-		self.layoutNode.maxPaddingBottom(value.number)
+		self.displayNode.setMaxPaddingBottom(value.number)
 	}
 
 	/**
@@ -3117,8 +3011,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 */
 	@objc public lazy var visible = JavaScriptProperty(boolean: true) { value in
 		self.wrapper.visible = value.boolean
-		self.stylerNode.visible = value.boolean
-		self.layoutNode.visible = value.boolean
+		self.displayNode.setVisible(value.boolean)
 	}
 
 	/**
@@ -4643,41 +4536,41 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method jsGet_expand
+	 * @method jsGet_expandFactor
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsGet_expand(callback: JavaScriptGetterCallback) {
-		callback.returns(self.expand)
+	@objc open func jsGet_expandFactor(callback: JavaScriptGetterCallback) {
+		callback.returns(self.expandFactor)
 	}
 
 	/**
-	 * @method jsSet_expand
+	 * @method jsSet_expandFactor
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsSet_expand(callback: JavaScriptSetterCallback) {
-		self.expand.reset(callback.value, lock: self)
+	@objc open func jsSet_expandFactor(callback: JavaScriptSetterCallback) {
+		self.expandFactor.reset(callback.value, lock: self)
 	}
 
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method jsGet_shrink
+	 * @method jsGet_shrinkFactor
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsGet_shrink(callback: JavaScriptGetterCallback) {
-		callback.returns(self.shrink)
+	@objc open func jsGet_shrinkFactor(callback: JavaScriptGetterCallback) {
+		callback.returns(self.shrinkFactor)
 	}
 
 	/**
-	 * @method jsSet_shrink
+	 * @method shrinkFactor
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsSet_shrink(callback: JavaScriptSetterCallback) {
-		self.shrink.reset(callback.value, lock: self)
+	@objc open func jsSet_shrinkFactor(callback: JavaScriptSetterCallback) {
+		self.shrinkFactor.reset(callback.value, lock: self)
 	}
 	//--------------------------------------------------------------------------
 
@@ -6124,7 +6017,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 */
 	@objc open func jsGet_measuredTop(callback: JavaScriptGetterCallback) {
 
-		let measuredTop = self.layoutNode.measuredTop
+		let measuredTop = self.displayNode.measuredTop
 
 		if (self.resolvedTop != measuredTop) {
 			self.resolvedTop = measuredTop
@@ -6145,7 +6038,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 */
 	@objc open func jsGet_measuredLeft(callback: JavaScriptGetterCallback) {
 
-		let measuredLeft = self.layoutNode.measuredLeft
+		let measuredLeft = self.displayNode.measuredLeft
 
 		if (self.resolvedLeft != measuredLeft) {
 			self.resolvedLeft = measuredLeft
@@ -6166,7 +6059,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 */
 	@objc open func jsGet_measuredWidth(callback: JavaScriptGetterCallback) {
 
-		let measuredWidth = self.layoutNode.measuredWidth
+		let measuredWidth = self.displayNode.measuredWidth
 
 		if (self.resolvedWidth != measuredWidth) {
 			self.resolvedWidth = measuredWidth
@@ -6187,7 +6080,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 */
 	@objc open func jsGet_measuredHeight(callback: JavaScriptGetterCallback) {
 
-		let measuredHeight = self.layoutNode.measuredHeight
+		let measuredHeight = self.displayNode.measuredHeight
 
 		if (self.resolvedHeight != measuredHeight) {
 			self.resolvedHeight = measuredHeight
@@ -6208,7 +6101,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 */
 	@objc open func jsGet_measuredInnerWidth(callback: JavaScriptGetterCallback) {
 
-		let measuredInnerWidth = self.layoutNode.measuredInnerWidth
+		let measuredInnerWidth = self.displayNode.measuredInnerWidth
 
 		if (self.resolvedInnerWidth != measuredInnerWidth) {
 			self.resolvedInnerWidth = measuredInnerWidth
@@ -6229,7 +6122,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 */
 	@objc open func jsGet_measuredInnerHeight(callback: JavaScriptGetterCallback) {
 
-		let measuredInnerHeight = self.layoutNode.measuredInnerHeight
+		let measuredInnerHeight = self.displayNode.measuredInnerHeight
 
 		if (self.resolvedInnerHeight != measuredInnerHeight) {
 			self.resolvedInnerHeight = measuredInnerHeight
@@ -6250,7 +6143,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 */
 	@objc open func jsGet_measuredContentWidth(callback: JavaScriptGetterCallback) {
 
-		let measuredContentWidth = self.layoutNode.measuredContentWidth
+		let measuredContentWidth = self.displayNode.measuredContentWidth
 
 		if (self.resolvedContentWidth != measuredContentWidth) {
 			self.resolvedContentWidth = measuredContentWidth
@@ -6271,7 +6164,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 */
 	@objc open func jsGet_measuredContentHeight(callback: JavaScriptGetterCallback) {
 
-		let measuredContentHeight = self.layoutNode.measuredContentHeight
+		let measuredContentHeight = self.displayNode.measuredContentHeight
 
 		if (self.resolvedContentHeight != measuredContentHeight) {
 			self.resolvedContentHeight = measuredContentHeight
@@ -6292,7 +6185,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 */
 	@objc open func jsGet_measuredMarginTop(callback: JavaScriptGetterCallback) {
 
-		let measuredMarginTop = self.layoutNode.measuredTop
+		let measuredMarginTop = self.displayNode.measuredTop
 
 		if (self.resolvedMarginTop != measuredMarginTop) {
 			self.resolvedMarginTop = measuredMarginTop
@@ -6313,7 +6206,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 */
 	@objc open func jsGet_measuredMarginLeft(callback: JavaScriptGetterCallback) {
 
-		let measuredMarginLeft = self.layoutNode.measuredMarginLeft
+		let measuredMarginLeft = self.displayNode.measuredMarginLeft
 
 		if (self.resolvedMarginLeft != measuredMarginLeft) {
 			self.resolvedMarginLeft = measuredMarginLeft
@@ -6334,7 +6227,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 */
 	@objc open func jsGet_measuredMarginRight(callback: JavaScriptGetterCallback) {
 
-		let measuredMarginRight = self.layoutNode.measuredMarginRight
+		let measuredMarginRight = self.displayNode.measuredMarginRight
 
 		if (self.resolvedMarginRight != measuredMarginRight) {
 			self.resolvedMarginRight = measuredMarginRight
@@ -6355,7 +6248,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 */
 	@objc open func jsGet_measuredMarginBottom(callback: JavaScriptGetterCallback) {
 
-		let measuredMarginBottom = self.layoutNode.measuredMarginBottom
+		let measuredMarginBottom = self.displayNode.measuredMarginBottom
 
 		if (self.resolvedMarginBottom != measuredMarginBottom) {
 			self.resolvedMarginBottom = measuredMarginBottom
@@ -6376,7 +6269,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 */
 	@objc open func jsGet_measuredPaddingTop(callback: JavaScriptGetterCallback) {
 
-		let measuredPaddingTop = self.layoutNode.measuredPaddingTop
+		let measuredPaddingTop = self.displayNode.measuredPaddingTop
 
 		if (self.resolvedPaddingTop != measuredPaddingTop) {
 			self.resolvedPaddingTop = measuredPaddingTop
@@ -6397,7 +6290,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 */
 	@objc open func jsGet_measuredPaddingLeft(callback: JavaScriptGetterCallback) {
 
-		let measuredPaddingLeft = self.layoutNode.measuredPaddingLeft
+		let measuredPaddingLeft = self.displayNode.measuredPaddingLeft
 
 		if (self.resolvedPaddingLeft != measuredPaddingLeft) {
 			self.resolvedPaddingLeft = measuredPaddingLeft
@@ -6418,7 +6311,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 */
 	@objc open func jsGet_measuredPaddingRight(callback: JavaScriptGetterCallback) {
 
-		let measuredPaddingRight = self.layoutNode.measuredPaddingRight
+		let measuredPaddingRight = self.displayNode.measuredPaddingRight
 
 		if (self.resolvedPaddingRight != measuredPaddingRight) {
 			self.resolvedPaddingRight = measuredPaddingRight
@@ -6439,7 +6332,7 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 */
 	@objc open func jsGet_measuredPaddingBottom(callback: JavaScriptGetterCallback) {
 
-		let measuredPaddingBottom = self.layoutNode.measuredPaddingBottom
+		let measuredPaddingBottom = self.displayNode.measuredPaddingBottom
 
 		if (self.resolvedPaddingBottom != measuredPaddingBottom) {
 			self.resolvedPaddingBottom = measuredPaddingBottom
@@ -6498,8 +6391,8 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 			Transition.commit()
 		}
 
-		if (callback.context.application.layout.resolving) {
-			callback.context.application.layout.requestLayoutEndedCallback(animate)
+		if (callback.context.application.display.resolving) {
+			callback.context.application.display.requestLayoutEndedCallback(animate)
 			return
 		}
 
@@ -6513,15 +6406,6 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	 */
 	@objc open func jsFunction_destroy(callback: JavaScriptFunctionCallback) {
 		self.dispose()
-	}
-
-	/**
-	 * @method jsFunction_createShadowRoot
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	@objc open func jsFunction_createShadowRoot(callback: JavaScriptFunctionCallback) {
-		self.isShadowRoot = true
 	}
 
 	/**
@@ -6562,65 +6446,59 @@ open class JavaScriptView: JavaScriptClass, LayoutNodeDelegate, StylerNodeDelega
 	}
 
 	/**
-	 * @method jsFunction_hasStyle
+	 * @method jsFunction_appendStyle
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsFunction_hasStyle(callback: JavaScriptFunctionCallback) {
+	@objc open func jsFunction_appendStyle(callback: JavaScriptFunctionCallback) {
 
 		if (callback.arguments < 1) {
-			fatalError("Method JavaScriptView.hasStyle() requires 1 argument.")
+			fatalError("Method JavaScriptView.appendStyle() requires 1 argument.")
 		}
 
-		callback.returns(self.stylerNode.hasStyle(callback.argument(0).string))
+		self.displayNode.appendStyle(callback.argument(0).string)
 	}
 
 	/**
-	 * @method jsFunction_setStyle
+	 * @method jsFunction_removeStyle
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsFunction_setStyle(callback: JavaScriptFunctionCallback) {
-
-		if (callback.arguments < 2) {
-			fatalError("Method JavaScriptView.setStyle() requires 2 arguments.")
-		}
-
-		let style = callback.argument(0).string
-		let apply = callback.argument(1).boolean
-
-		self.stylerNode.setStyle(style, enable: apply)
-	}
-
-	/**
-	 * @method jsFunction_hasState
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	@objc open func jsFunction_hasState(callback: JavaScriptFunctionCallback) {
+	@objc open func jsFunction_removeStyle(callback: JavaScriptFunctionCallback) {
 
 		if (callback.arguments < 1) {
-			fatalError("Method JavaScriptView.hasState() requires 1 argument.")
+			fatalError("Method JavaScriptView.removeStyle() requires 1 argument.")
 		}
 
-		callback.returns(self.stylerNode.hasState(callback.argument(0).string))
+		self.displayNode.removeStyle(callback.argument(0).string)
 	}
 
 	/**
-	 * @method jsFunction_setState
+	 * @method jsFunction_appendState
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsFunction_setState(callback: JavaScriptFunctionCallback) {
+	@objc open func jsFunction_appendState(callback: JavaScriptFunctionCallback) {
 
-		if (callback.arguments < 2) {
-			fatalError("Method JavaScriptView.setState() requires 2 arguments.")
+		if (callback.arguments < 1) {
+			fatalError("Method JavaScriptView.appendState() requires 1 argument.")
 		}
 
-		let state = callback.argument(0).string
-		let apply = callback.argument(1).boolean
+		self.displayNode.appendState(callback.argument(0).string)
+	}
 
-		self.stylerNode.setState(state, enable: apply)
+	/**
+	 * @method jsFunction_removeState
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@objc open func jsFunction_removeState(callback: JavaScriptFunctionCallback) {
+
+		if (callback.arguments < 1) {
+			fatalError("Method JavaScriptView.removeState() requires 1 argument.")
+		}
+
+		self.displayNode.removeState(callback.argument(0).string)
 	}
 
 	/**

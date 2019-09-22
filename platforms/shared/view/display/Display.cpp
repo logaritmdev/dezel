@@ -1,6 +1,10 @@
 #include "Display.h"
 #include "DisplayNode.h"
 
+#include "Parser.h"
+#include "Sheet.h"
+
+#include <string>
 #include <queue>
 #include <iostream>
 
@@ -8,6 +12,15 @@ namespace View {
 
 using std::cout;
 using std::cerr;
+using std::string;
+
+void
+Display::loadStylesheet(string stylesheet)
+{
+	Style::Parser parser;
+	parser.parse(stylesheet);
+}
+
 
 void
 Display::setWindow(DisplayNode* window)

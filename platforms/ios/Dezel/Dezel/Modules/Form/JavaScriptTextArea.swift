@@ -86,8 +86,8 @@ open class JavaScriptTextArea: JavaScriptView, TextAreaDelegate {
 		switch (self.fontSize.unit) {
 
 			case .px: value = CGFloat(self.fontSize.number)
-			case .vw: value = CGFloat(self.fontSize.number / 100 * self.layoutNode.viewportWidth)
-			case .vh: value = CGFloat(self.fontSize.number / 100 * self.layoutNode.viewportHeight)
+			case .vw: value = CGFloat(self.fontSize.number / 100 * self.displayNode.display.viewportWidth)
+			case .vh: value = CGFloat(self.fontSize.number / 100 * self.displayNode.display.viewportHeight)
 
 			default:
 				value = CGFloat(self.fontSize.number)
@@ -124,7 +124,7 @@ open class JavaScriptTextArea: JavaScriptView, TextAreaDelegate {
 	 * @method didResolvePadding
 	 * @since 0.7.0
 	 */
-	override open func didResolvePadding(node: LayoutNode) {
+	override open func didResolvePadding(node: DisplayNode) {
 		super.didResolvePadding(node: node)
 		self.view.paddingTop = CGFloat(self.resolvedPaddingTop)
 		self.view.paddingLeft = CGFloat(self.resolvedPaddingLeft)

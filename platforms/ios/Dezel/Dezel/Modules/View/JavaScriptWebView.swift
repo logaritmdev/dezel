@@ -101,14 +101,14 @@ open class JavaScriptWebView: JavaScriptView, WebViewDelegate {
 		let contentHeight = Double(size.height)
 
 		if (self.resolvedContentWidth != contentWidth) {
-			if (self.layoutNode.wrapsContentWidth) {
-				self.layoutNode.invalidate()
+			if (self.displayNode.isWrappingContentWidth) {
+				self.displayNode.invalidateLayout()
 			}
 		}
 
 		if (self.resolvedContentHeight != contentHeight) {
-			if (self.layoutNode.wrapsContentHeight) {
-				self.layoutNode.invalidate()
+			if (self.displayNode.isWrappingContentHeight) {
+				self.displayNode.invalidateLayout()
 			}
 		}
 	}

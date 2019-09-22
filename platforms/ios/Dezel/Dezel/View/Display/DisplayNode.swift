@@ -19,6 +19,13 @@ open class DisplayNode {
 	open weak var delegate: DisplayNodeDelegate?
 
 	/**
+	 * The display node's display.
+	 * @property delegate
+	 * @since 0.7.0
+	 */
+	private(set) public var display: Display
+
+	/**
 	 * The display node's id.
 	 * @property id
 	 * @since 0.7.0
@@ -279,6 +286,8 @@ open class DisplayNode {
 	 * @since 0.7.0
 	 */
 	internal init(display: Display) {
+
+		self.display = display
 
 		self.handle = DisplayNodeCreate()
 
@@ -1661,6 +1670,38 @@ open class DisplayNode {
 	 */
 	public func setVisible(_ visible: Bool) {
 		DisplayNodeSetVisible(self.handle, visible);
+	}
+
+	public func setType(_ type: String) {
+
+	}
+
+	public func appendStyle(_ style: String) {
+
+	}
+
+	public func removeStyle(_ style: String) {
+
+	}
+
+	public func appendState(_ state: String) {
+
+	}
+
+	public func removeState(_ state: String) {
+
+	}
+
+	public func invalidateSize() {
+// TODO
+	}
+
+	public func invalidateOrigin() {
+// TODO
+	}
+
+	public func invalidateLayout() {
+		// TODO
 	}
 
 	/**

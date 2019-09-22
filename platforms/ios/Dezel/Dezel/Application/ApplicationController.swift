@@ -30,18 +30,11 @@ open class ApplicationController: UIViewController {
 	private(set) public var context: JavaScriptContext = JavaScriptContext()
 
 	/**
-	 * The application controller's styler.
+	 * The application controller's display.
 	 * @property styler
 	 * @since 0.7.0
 	 */
-	private(set) public var styler: Styler = Styler()
-
-	/**
-	 * The application controller's layout.
-	 * @property layout
-	 * @since 0.7.0
-	 */
-	private(set) public var layout: Layout = Layout()
+	private(set) public var display: Display = Display()
 
 	/**
 	 * The application controller's application.
@@ -106,9 +99,9 @@ open class ApplicationController: UIViewController {
 
 		self.registerObservers()
 
-		self.layout.scale = UIScreen.main.scale
-		self.layout.viewportWidth = UIScreen.main.bounds.width
-		self.layout.viewportHeight = UIScreen.main.bounds.height
+		self.display.scale = Double(UIScreen.main.scale)
+		self.display.viewportWidth = Double(UIScreen.main.bounds.width)
+		self.display.viewportHeight = Double(UIScreen.main.bounds.height)
 
 		var insetT: CGFloat = 20
 		var insetB: CGFloat = 0
@@ -120,8 +113,8 @@ open class ApplicationController: UIViewController {
 			}
 		}
 
-		self.styler.setVariable("safe-area-top-inset", value: "\(insetT)px")
-		self.styler.setVariable("safe-area-bottom-inset", value: "\(insetB)px")
+		self.display.setVariable("safe-area-top-inset", value: "\(insetT)px")
+		self.display.setVariable("safe-area-bottom-inset", value: "\(insetB)px")
 
 		self.context.attribute(kApplicationControllerKey, value: self)
 		self.context.global.property("_DEV_", boolean: self.isDev())
@@ -170,10 +163,12 @@ open class ApplicationController: UIViewController {
 
 		self.sources.forEach { source in
 			switch (source.category) {
-				case .style:
-					self.evaluateStyle(source.data, file: source.location)
+			//	case .style:
+					//self.evaluateStyle(source.data, file: source.location) // TODO
 				case .script:
 					self.evaluateScript(source.data, file: source.location)
+				default:
+					break
 			}
 		}
 
@@ -217,15 +212,6 @@ open class ApplicationController: UIViewController {
 	}
 
 	/**
-	 * Evaluates a style file.
-	 * @method evaluateStyle
-	 * @since 0.7.0
-	 */
-	open func evaluateStyle(_ source: String, file: String) {
-		self.styler.load(source, file: file)
-	}
-
-	/**
 	 * Evaluates a script file.
 	 * @method evaluateScript
 	 * @since 0.7.0
@@ -233,6 +219,7 @@ open class ApplicationController: UIViewController {
 	open func evaluateScript(_ source: String, file: String) {
 		self.context.evaluate(source, file: file)
 	}
+
 
 	/**
 	 * Launches the specified application.
@@ -243,9 +230,6 @@ open class ApplicationController: UIViewController {
 
 		self.application?.destroy()
 		self.application = application
-
-		self.styler.root = application.window.stylerNode
-		self.layout.root = application.window.layoutNode
 
 		application.window.width.reset(Double(UIScreen.main.bounds.width), unit: .px)
 		application.window.height.reset(Double(UIScreen.main.bounds.width), unit: .px)
@@ -269,15 +253,15 @@ open class ApplicationController: UIViewController {
 
 		Synchronizer.main.reset()
 
-		let scale = self.layout.scale
-		let viewportWidth = self.layout.viewportWidth
-		let viewportHeight = self.layout.viewportHeight
-
-		self.styler = Styler()
-		self.layout = Layout()
-		self.layout.scale = scale
-		self.layout.viewportWidth = viewportWidth
-		self.layout.viewportHeight = viewportHeight
+//		let scale = self.layout.scale
+//		let viewportWidth = self.layout.viewportWidth
+//		let viewportHeight = self.layout.viewportHeight
+//
+//		self.styler = Styler()
+//		self.layout = Layout()
+//		self.layout.scale = scale
+//		self.layout.viewportWidth = viewportWidth
+//		self.layout.viewportHeight = viewportHeight
 	}
 
 	/**
@@ -458,8 +442,8 @@ open class ApplicationController: UIViewController {
 
 		self.view.frame = bounds
 
-		self.layout.viewportWidth = bounds.width
-		self.layout.viewportHeight = bounds.height
+		self.display.viewportWidth = Double(bounds.width)
+		self.display.viewportHeight = Double(bounds.height)
 
 		if let application = self.application {
 			application.window.width.reset(Double(bounds.width))
@@ -489,8 +473,8 @@ open class ApplicationController: UIViewController {
 				delay: 0
 			) { }
 
-			self.layout.viewportWidth = size.width
-			self.layout.viewportHeight = size.height
+			self.display.viewportWidth = Double(size.width)
+			self.display.viewportHeight = Double(size.height)
 
 			if let application = self.application {
 				application.window.width.reset(Double(size.width))

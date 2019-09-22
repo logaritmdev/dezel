@@ -21,6 +21,13 @@ typedef struct OpaqueDisplay* DisplayRef;
 typedef struct OpaqueDisplayNode* DisplayNodeRef;
 
 /**
+ * @typedef DisplayNodePropertyRef
+ * @since 0.7.0
+ * @hidden
+ */
+typedef struct OpaqueDisplayNodeProperty* DisplayNodePropertyRef;
+
+/**
  * The node type.
  * @type DisplayNodetype
  * @since 0.7.0
@@ -259,6 +266,37 @@ typedef enum {
 	kDisplayNodePaddingUnitCW = 7,
 	kDisplayNodePaddingUnitCH = 8
 } DisplayNodePaddingUnit;
+
+/**
+ * The display node property type.
+ * @typeOf DisplayNodePropertyType
+ * @since 0.7.0
+ */
+typedef enum {
+	kDisplayNodePropertyTypeNull = 0,
+	kDisplayNodePropertyTypeString = 1,
+	kDisplayNodePropertyTypeNumber = 2,
+	kDisplayNodePropertyTypeBoolean = 3,
+} DisplayNodePropertyType;
+
+/**
+ * The display node property unit.
+ * @typeOf DisplayNodePropertyUnit
+ * @since 0.7.0
+ */
+typedef enum {
+	kDisplayNodePropertyUnitPX = 0,
+	kDisplayNodePropertyUnitPC = 1,
+	kDisplayNodePropertyUnitVW = 2,
+	kDisplayNodePropertyUnitVH = 3,
+	kDisplayNodePropertyUnitPW = 4,
+	kDisplayNodePropertyUnitPH = 5,
+	kDisplayNodePropertyUnitCW = 6,
+	kDisplayNodePropertyUnitCH = 7,
+	kDisplayNodePropertyUnitDeg = 8,
+	kDisplayNodePropertyUnitRad = 9,
+	kDisplayNodePropertyUnitNone = 10
+} DisplayNodePropertyUnit;
 
 /**
  * A measured size structure.

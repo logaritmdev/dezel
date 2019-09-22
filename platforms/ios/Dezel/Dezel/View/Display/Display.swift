@@ -28,14 +28,31 @@ public class Display {
 	}
 
 	/**
-	 * The layout's root node.
-	 * @property root
+	 * The display's window
+	 * @property window
 	 * @since 0.7.0
 	 */
-	public var window: LayoutNode? {
+	public var window: DisplayNode? {
 		willSet {
-		// create setter
-			DLLayoutSetRoot(self.handle, newValue?.handle)
+			DisplaySetWindow(self.handle, newValue?.handle)
+		}
+	}
+
+	public var viewportWidth: Double = 0 {
+		willSet {
+			DisplaySetViewportWidth(self.handle, newValue)
+		}
+	}
+
+	public var viewportHeight: Double = 0 {
+		willSet {
+			DisplaySetViewportHeight(self.handle, newValue)
+		}
+	}
+
+	public var scale: Double = 1 {
+		willSet {
+			DisplaySetScale(self.handle, newValue)
 		}
 	}
 
@@ -69,7 +86,7 @@ public class Display {
 	 * @since 0.7.0
 	 */
 	internal init() {
-		self.handle = DLLayoutCreate()
+		self.handle = DisplayCreate()
 		DisplaySetLayoutBeganCallback(self.handle, layoutBeganCallback)
 		DisplaySetLayoutEndedCallback(self.handle, layoutEndedCallback)
 		DisplaySetData(self.handle, UnsafeMutableRawPointer(value: self))
@@ -80,35 +97,12 @@ public class Display {
 	 * @since 0.7.0
 	 */
 	deinit {
-		DLLayoutGetData(self.handle).release()
-		DLLayoutDelete(self.handle)
+		DisplayGetData(self.handle).release()
+		DisplayDelete(self.handle)
 	}
 
-	/**
-	 * Assigns the display's viewport width.
-	 * @property setViewportWidth
-	 * @since 0.7.0
-	 */
-	public func setViewportWidth(_ value: CGFloat) {
-		DLLayoutSetViewportWidth(self.handle, Double(value))
-	}
-
-	/**
-	 * Assigns the display's viewport height.
-	 * @method setViewportHeight
-	 * @since 0.7.0
-	 */
-	public func setViewportHeight(_ value: CGFloat) {
-		DisplaySetViewportHeight(self.handle, Double(value))
-	}
-
-	/**
-	 * Assigns the display's scale.
-	 * @property setScale
-	 * @since 0.7.0
-	 */
-	public func setScale(_ value: CGFloat) {
-		DisplaySetScale(self.handle, Double(value))
+	public func setVariable(_ name: String, value: String) {
+	
 	}
 
 	/**
@@ -136,6 +130,10 @@ public class Display {
 	 */
 	public func requestLayoutEndedCallback(_ callback: @escaping () -> Void) {
 		self.layoutEndedCallbacks.append(callback)
+	}
+
+	public func loadStylesheet(_ stylesheet: String) {
+		DisplayLoadStylesheet(self.handle, stylesheet)
 	}
 
 	//--------------------------------------------------------------------------

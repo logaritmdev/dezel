@@ -3,7 +3,11 @@
 
 #include "DisplayBase.h"
 
+#include <string>
+
 namespace View {
+
+using std::string;
 
 class DisplayNode;
 class DisplayNodeFrame;
@@ -42,6 +46,8 @@ public:
 	void setViewportHeight(double viewportHeight);
 	void setLayoutBeganCallback(DisplayLayoutCallback layoutBeganCallback);
 	void setLayoutEndedCallback(DisplayLayoutCallback layoutEndedCallback);
+
+	void loadStylesheet(string stylesheet);
 
 	double getScale() {
 		return this->scale;

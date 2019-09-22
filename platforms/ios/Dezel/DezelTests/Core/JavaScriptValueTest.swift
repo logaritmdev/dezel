@@ -621,11 +621,11 @@ class JavaScriptValueTest: XCTestCase {
 	func testCast() {
 
 		let res = self.context.createReturnValue()
-		let obj = self.context.createClass(JavaScriptEmptyClass.self)
+		let obj = self.context.createClass(JavaScriptWatEmptyClass.self)
 
 		obj.construct(nil, result: res)
 
-		if let _ = res.cast(JavaScriptEmptyClass.self) {
+		if let _ = res.cast(JavaScriptWatEmptyClass.self) {
 			XCTAssertTrue(true)
 			return
 		}
@@ -684,4 +684,5 @@ func callbackReturnString(callback: JavaScriptFunctionCallback) {
 func callbackReturnObject(callback: JavaScriptFunctionCallback) {
 	callback.returns(callback.context.createEmptyObject())
 }
+
 

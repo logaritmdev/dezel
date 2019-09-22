@@ -75,3 +75,8 @@ DisplayGetData(DisplayRef display)
 {
 	return reinterpret_cast<Display*>(display)->data;
 }
+
+void DisplayLoadStylesheet(DisplayRef display, const char* stylesheet)
+{
+	return reinterpret_cast<Display*>(display)->loadStylesheet(std::string(stylesheet));
+}

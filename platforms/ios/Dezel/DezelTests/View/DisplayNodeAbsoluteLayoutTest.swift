@@ -13,8 +13,8 @@ class DisplayNodeAbsoluteLayoutTest: XCTestCase {
 		super.setUp()
 
 		self.display = Display()
-		self.display.setViewportWidth(320)
-		self.display.setViewportHeight(480)
+		self.display.viewportWidth = 320
+		self.display.viewportHeight = 480
 
 		self.window = DisplayNode(display: self.display)
 		self.window.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 320)
@@ -1176,7 +1176,7 @@ func testNodeBorderInCW() {
 		node.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPC, length: 33)
 		node.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPC, length: 33)
 
-		self.display.setScale(2)
+		self.display.scale = 2
 		self.window.appendChild(node)
 		self.window.resolve()
 

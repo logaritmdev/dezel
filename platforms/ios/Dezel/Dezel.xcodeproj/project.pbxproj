@@ -24,22 +24,6 @@
 		C700121621551A9A00CB26D4 /* DeviceModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C700121521551A9A00CB26D4 /* DeviceModule.swift */; };
 		C700121821551B5700CB26D4 /* JavaScriptDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = C700121721551B5700CB26D4 /* JavaScriptDevice.swift */; };
 		C7004C58213C4CF800138ECC /* Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7004C57213C4CF800138ECC /* Dictionary.swift */; };
-		C7004C7C21440DB600138ECC /* DLStylerStyleRule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7004C7A21440DB600138ECC /* DLStylerStyleRule.cpp */; };
-		C7004C7D21440DB600138ECC /* DLStylerStyleRule.h in Headers */ = {isa = PBXBuildFile; fileRef = C7004C7B21440DB600138ECC /* DLStylerStyleRule.h */; };
-		C7004C8021440DCB00138ECC /* DLStylerStyleRulePrivate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7004C7E21440DCA00138ECC /* DLStylerStyleRulePrivate.cpp */; };
-		C7004C8121440DCB00138ECC /* DLStylerStyleRulePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = C7004C7F21440DCB00138ECC /* DLStylerStyleRulePrivate.h */; };
-		C7004C842144118D00138ECC /* DLStylerStyleSelector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7004C822144118D00138ECC /* DLStylerStyleSelector.cpp */; };
-		C7004C852144118D00138ECC /* DLStylerStyleSelector.h in Headers */ = {isa = PBXBuildFile; fileRef = C7004C832144118D00138ECC /* DLStylerStyleSelector.h */; };
-		C7004C88214411BF00138ECC /* DLStylerStyleSelectorPrivate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7004C86214411BF00138ECC /* DLStylerStyleSelectorPrivate.cpp */; };
-		C7004C89214411BF00138ECC /* DLStylerStyleSelectorPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = C7004C87214411BF00138ECC /* DLStylerStyleSelectorPrivate.h */; };
-		C7004C8C2144240000138ECC /* DLStylerStyleItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7004C8A2144240000138ECC /* DLStylerStyleItem.cpp */; };
-		C7004C8D2144240000138ECC /* DLStylerStyleItem.h in Headers */ = {isa = PBXBuildFile; fileRef = C7004C8B2144240000138ECC /* DLStylerStyleItem.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C7004C902144241200138ECC /* DLStylerStyleItemPrivate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7004C8E2144241200138ECC /* DLStylerStyleItemPrivate.cpp */; };
-		C7004C912144241200138ECC /* DLStylerStyleItemPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = C7004C8F2144241200138ECC /* DLStylerStyleItemPrivate.h */; };
-		C7004C9421442A5200138ECC /* DLStylerStyleSelectorTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7004C9221442A5200138ECC /* DLStylerStyleSelectorTree.cpp */; };
-		C7004C9521442A5200138ECC /* DLStylerStyleSelectorTree.h in Headers */ = {isa = PBXBuildFile; fileRef = C7004C9321442A5200138ECC /* DLStylerStyleSelectorTree.h */; };
-		C7004C9821442AAC00138ECC /* DLStylerStyleSelectorTreePrivate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7004C9621442AAB00138ECC /* DLStylerStyleSelectorTreePrivate.cpp */; };
-		C7004C9921442AAC00138ECC /* DLStylerStyleSelectorTreePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = C7004C9721442AAC00138ECC /* DLStylerStyleSelectorTreePrivate.h */; };
 		C7027CD32270DFDA001DD0F7 /* ScrollViewTouchCancelGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7027CD22270DFDA001DD0F7 /* ScrollViewTouchCancelGesture.swift */; };
 		C7040D96232694B100DFDBED /* DisplayNode.h in Headers */ = {isa = PBXBuildFile; fileRef = C7040D84232694AF00DFDBED /* DisplayNode.h */; };
 		C7040D97232694B100DFDBED /* DisplayNodeRef.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7040D85232694AF00DFDBED /* DisplayNodeRef.cpp */; };
@@ -81,6 +65,7 @@
 		C7040DE72327D41200DFDBED /* DisplayDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7040DE62327D41200DFDBED /* DisplayDelegate.swift */; };
 		C7040DE92327DB2100DFDBED /* DisplayNodeDelegateCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7040DE82327DB2000DFDBED /* DisplayNodeDelegateCounter.swift */; };
 		C7040DED232980D200DFDBED /* DisplayNodeRelativeLayoutTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7040DEC232980D200DFDBED /* DisplayNodeRelativeLayoutTest.swift */; };
+		C705913B2337B1E8002EF92F /* DisplayStyleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C705913A2337B1E8002EF92F /* DisplayStyleTest.swift */; };
 		C70617A420F7C03100499FDB /* TransitionListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = C70617A320F7C03100499FDB /* TransitionListener.swift */; };
 		C718A0A92066E24400EFEC15 /* JavaScriptImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C718A0A82066E24400EFEC15 /* JavaScriptImageView.swift */; };
 		C718A0B32066E63300EFEC15 /* ImageLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C718A0B22066E63300EFEC15 /* ImageLayer.swift */; };
@@ -112,8 +97,6 @@
 		C732E78820865116006014A0 /* GlobalModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C732E78720865116006014A0 /* GlobalModule.swift */; };
 		C73700C42218C00D0095A54B /* ImageFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C73700C32218C00D0095A54B /* ImageFilter.swift */; };
 		C73700C72219A9370095A54B /* ImageEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = C73700C62219A9370095A54B /* ImageEffect.swift */; };
-		C74487E3205230BB00D74D30 /* DLStylerNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C74487E1205230BB00D74D30 /* DLStylerNode.cpp */; };
-		C74487E4205230BB00D74D30 /* DLStylerNode.h in Headers */ = {isa = PBXBuildFile; fileRef = C74487E2205230BB00D74D30 /* DLStylerNode.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C75153B322EB4BC3007CAA48 /* HTTPURLResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75153B222EB4BC3007CAA48 /* HTTPURLResponse.swift */; };
 		C75153B922EBA05C007CAA48 /* NSData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75153B822EBA05C007CAA48 /* NSData.swift */; };
 		C75153BD22F11CAA007CAA48 /* JavaScriptLocale.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75153BC22F11CAA007CAA48 /* JavaScriptLocale.swift */; };
@@ -142,66 +125,14 @@
 		C77189B22106AE0A00337263 /* Transform2D.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77189B12106AE0A00337263 /* Transform2D.swift */; };
 		C77189B42106AE1300337263 /* Transform3D.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77189B32106AE1300337263 /* Transform3D.swift */; };
 		C773DA9021DD0E2800685BDB /* TextParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C773DA8F21DD0E2800685BDB /* TextParser.swift */; };
+		C773EE562334FCFC002D5025 /* TokenizerStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C773EE542334FCFC002D5025 /* TokenizerStream.cpp */; };
+		C773EE572334FCFC002D5025 /* TokenizerStream.h in Headers */ = {isa = PBXBuildFile; fileRef = C773EE552334FCFC002D5025 /* TokenizerStream.h */; };
 		C777B5DC22D1429A00E75E55 /* CoreModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C777B5DB22D1429A00E75E55 /* CoreModule.swift */; };
 		C777B62A22D77B2D00E75E55 /* TestRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = C777B62922D77B2D00E75E55 /* TestRunner.swift */; };
 		C777B62C22D782DB00E75E55 /* TestRunner.js in Resources */ = {isa = PBXBuildFile; fileRef = C777B62B22D782DB00E75E55 /* TestRunner.js */; };
 		C777B62E22D7838E00E75E55 /* DezelUnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C777B62D22D7838E00E75E55 /* DezelUnitTests.swift */; };
 		C777B63D22D91DB200E75E55 /* UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = C777B63C22D91DB200E75E55 /* UIApplication.swift */; };
 		C777B63F22DA49B600E75E55 /* WeakReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = C777B63E22DA49B600E75E55 /* WeakReference.swift */; };
-		C77B0BAC22262EF800917D82 /* Ruleset.h in Headers */ = {isa = PBXBuildFile; fileRef = C77B0B7322262EF800917D82 /* Ruleset.h */; };
-		C77B0BAD22262EF800917D82 /* SelectorParser.h in Headers */ = {isa = PBXBuildFile; fileRef = C77B0B7422262EF800917D82 /* SelectorParser.h */; };
-		C77B0BAE22262EF800917D82 /* Selector.h in Headers */ = {isa = PBXBuildFile; fileRef = C77B0B7522262EF800917D82 /* Selector.h */; };
-		C77B0BAF22262EF800917D82 /* AtRule.h in Headers */ = {isa = PBXBuildFile; fileRef = C77B0B7622262EF800917D82 /* AtRule.h */; };
-		C77B0BB022262EF800917D82 /* TokenList.h in Headers */ = {isa = PBXBuildFile; fileRef = C77B0B7722262EF800917D82 /* TokenList.h */; };
-		C77B0BB122262EF800917D82 /* Writable.h in Headers */ = {isa = PBXBuildFile; fileRef = C77B0B7822262EF800917D82 /* Writable.h */; };
-		C77B0BB222262EF800917D82 /* Parser.h in Headers */ = {isa = PBXBuildFile; fileRef = C77B0B7922262EF800917D82 /* Parser.h */; };
-		C77B0BB322262EF800917D82 /* Declaration.h in Headers */ = {isa = PBXBuildFile; fileRef = C77B0B7A22262EF800917D82 /* Declaration.h */; };
-		C77B0BB422262EF800917D82 /* Comment.h in Headers */ = {isa = PBXBuildFile; fileRef = C77B0B7B22262EF800917D82 /* Comment.h */; };
-		C77B0BB522262EF800917D82 /* Tokenizer.h in Headers */ = {isa = PBXBuildFile; fileRef = C77B0B7C22262EF800917D82 /* Tokenizer.h */; };
-		C77B0BB622262EF800917D82 /* SourceMapWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = C77B0B7D22262EF800917D82 /* SourceMapWriter.h */; };
-		C77B0BB722262EF800917D82 /* Writer.h in Headers */ = {isa = PBXBuildFile; fileRef = C77B0B7E22262EF800917D82 /* Writer.h */; };
-		C77B0BB822262EF800917D82 /* Token.h in Headers */ = {isa = PBXBuildFile; fileRef = C77B0B7F22262EF800917D82 /* Token.h */; };
-		C77B0BB922262EF800917D82 /* RulesetStatement.h in Headers */ = {isa = PBXBuildFile; fileRef = C77B0B8022262EF800917D82 /* RulesetStatement.h */; };
-		C77B0BBA22262EF800917D82 /* ParseException.h in Headers */ = {isa = PBXBuildFile; fileRef = C77B0B8122262EF800917D82 /* ParseException.h */; };
-		C77B0BBB22262EF800917D82 /* MediaQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = C77B0B8222262EF800917D82 /* MediaQuery.h */; };
-		C77B0BBC22262EF800917D82 /* StylesheetStatement.h in Headers */ = {isa = PBXBuildFile; fileRef = C77B0B8322262EF800917D82 /* StylesheetStatement.h */; };
-		C77B0BBD22262EF800917D82 /* Stylesheet.h in Headers */ = {isa = PBXBuildFile; fileRef = C77B0B8422262EF800917D82 /* Stylesheet.h */; };
-		C77B0BBE22262EF800917D82 /* StylerExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = C77B0B8622262EF800917D82 /* StylerExtension.h */; };
-		C77B0BBF22262EF800917D82 /* StylerFunction.h in Headers */ = {isa = PBXBuildFile; fileRef = C77B0B8722262EF800917D82 /* StylerFunction.h */; };
-		C77B0BC022262EF800917D82 /* StylerClosure.h in Headers */ = {isa = PBXBuildFile; fileRef = C77B0B8822262EF800917D82 /* StylerClosure.h */; };
-		C77B0BC122262EF800917D82 /* StylerStylesheet.h in Headers */ = {isa = PBXBuildFile; fileRef = C77B0B8922262EF800917D82 /* StylerStylesheet.h */; };
-		C77B0BC222262EF800917D82 /* StylerMediaQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = C77B0B8A22262EF800917D82 /* StylerMediaQuery.h */; };
-		C77B0BC322262EF800917D82 /* StylerMixinException.h in Headers */ = {isa = PBXBuildFile; fileRef = C77B0B8B22262EF800917D82 /* StylerMixinException.h */; };
-		C77B0BC422262EF800917D82 /* StylerSelectorParser.h in Headers */ = {isa = PBXBuildFile; fileRef = C77B0B8C22262EF800917D82 /* StylerSelectorParser.h */; };
-		C77B0BC522262EF800917D82 /* StylerMixin.h in Headers */ = {isa = PBXBuildFile; fileRef = C77B0B8D22262EF800917D82 /* StylerMixin.h */; };
-		C77B0BC622262EF800917D82 /* StylerMediaQueryRuleset.h in Headers */ = {isa = PBXBuildFile; fileRef = C77B0B8E22262EF800917D82 /* StylerMediaQueryRuleset.h */; };
-		C77B0BC722262EF800917D82 /* StylerRuleset.h in Headers */ = {isa = PBXBuildFile; fileRef = C77B0B8F22262EF800917D82 /* StylerRuleset.h */; };
-		C77B0BC822262EF800917D82 /* StylerDeclaration.h in Headers */ = {isa = PBXBuildFile; fileRef = C77B0B9022262EF800917D82 /* StylerDeclaration.h */; };
-		C77B0BC922262EF800917D82 /* StylerParser.h in Headers */ = {isa = PBXBuildFile; fileRef = C77B0B9122262EF800917D82 /* StylerParser.h */; };
-		C77B0BCA22262EF800917D82 /* StylerMixinCall.h in Headers */ = {isa = PBXBuildFile; fileRef = C77B0B9222262EF800917D82 /* StylerMixinCall.h */; };
-		C77B0BCB22262EF800917D82 /* StylerMixinArguments.h in Headers */ = {isa = PBXBuildFile; fileRef = C77B0B9322262EF800917D82 /* StylerMixinArguments.h */; };
-		C77B0BCC22262EF800917D82 /* StylerSelector.h in Headers */ = {isa = PBXBuildFile; fileRef = C77B0B9422262EF800917D82 /* StylerSelector.h */; };
-		C77B0BCD22262EF800917D82 /* StylerAtRule.h in Headers */ = {isa = PBXBuildFile; fileRef = C77B0B9522262EF800917D82 /* StylerAtRule.h */; };
-		C77B0BCE22262EF800917D82 /* StylerTokenizer.h in Headers */ = {isa = PBXBuildFile; fileRef = C77B0B9622262EF800917D82 /* StylerTokenizer.h */; };
-		C77B0BCF22262EF800917D82 /* StylerException.h in Headers */ = {isa = PBXBuildFile; fileRef = C77B0B9722262EF800917D82 /* StylerException.h */; };
-		C77B0BD022262EF800917D82 /* UrlFunctions.h in Headers */ = {isa = PBXBuildFile; fileRef = C77B0B9922262EF800917D82 /* UrlFunctions.h */; };
-		C77B0BD122262EF800917D82 /* UnitValue.h in Headers */ = {isa = PBXBuildFile; fileRef = C77B0B9A22262EF800917D82 /* UnitValue.h */; };
-		C77B0BD222262EF800917D82 /* StringValue.h in Headers */ = {isa = PBXBuildFile; fileRef = C77B0B9B22262EF800917D82 /* StringValue.h */; };
-		C77B0BD322262EF800917D82 /* StringFunctions.h in Headers */ = {isa = PBXBuildFile; fileRef = C77B0B9C22262EF800917D82 /* StringFunctions.h */; };
-		C77B0BD422262EF800917D82 /* BooleanValue.h in Headers */ = {isa = PBXBuildFile; fileRef = C77B0B9D22262EF800917D82 /* BooleanValue.h */; };
-		C77B0BD522262EF800917D82 /* Color.h in Headers */ = {isa = PBXBuildFile; fileRef = C77B0B9E22262EF800917D82 /* Color.h */; };
-		C77B0BD622262EF800917D82 /* ValueProcessor.h in Headers */ = {isa = PBXBuildFile; fileRef = C77B0B9F22262EF800917D82 /* ValueProcessor.h */; };
-		C77B0BD722262EF800917D82 /* Value.h in Headers */ = {isa = PBXBuildFile; fileRef = C77B0BA022262EF800917D82 /* Value.h */; };
-		C77B0BD822262EF800917D82 /* ValueScope.h in Headers */ = {isa = PBXBuildFile; fileRef = C77B0BA122262EF800917D82 /* ValueScope.h */; };
-		C77B0BD922262EF800917D82 /* FunctionLibrary.h in Headers */ = {isa = PBXBuildFile; fileRef = C77B0BA222262EF800917D82 /* FunctionLibrary.h */; };
-		C77B0BDA22262EF800917D82 /* NumberFunctions.h in Headers */ = {isa = PBXBuildFile; fileRef = C77B0BA322262EF800917D82 /* NumberFunctions.h */; };
-		C77B0BDB22262EF800917D82 /* ValueException.h in Headers */ = {isa = PBXBuildFile; fileRef = C77B0BA422262EF800917D82 /* ValueException.h */; };
-		C77B0BDC22262EF800917D82 /* UrlValue.h in Headers */ = {isa = PBXBuildFile; fileRef = C77B0BA522262EF800917D82 /* UrlValue.h */; };
-		C77B0BDD22262EF800917D82 /* NumberValue.h in Headers */ = {isa = PBXBuildFile; fileRef = C77B0BA622262EF800917D82 /* NumberValue.h */; };
-		C77B0BDE22262EF800917D82 /* ColorFunctions.h in Headers */ = {isa = PBXBuildFile; fileRef = C77B0BA722262EF800917D82 /* ColorFunctions.h */; };
-		C77B0BDF22262EF800917D82 /* VariableMap.h in Headers */ = {isa = PBXBuildFile; fileRef = C77B0BA822262EF800917D82 /* VariableMap.h */; };
-		C77B0BE022262EF800917D82 /* ProcessingContext.h in Headers */ = {isa = PBXBuildFile; fileRef = C77B0BA922262EF800917D82 /* ProcessingContext.h */; };
-		C77B0BE122262EF800917D82 /* libStyle.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C77B0BAB22262EF800917D82 /* libStyle.a */; };
 		C77B0D4A2226D7CC00917D82 /* libLRUCache.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C77B0D492226D7CC00917D82 /* libLRUCache.a */; };
 		C77B0D4C2226D7DC00917D82 /* LRUDiskCache.h in Headers */ = {isa = PBXBuildFile; fileRef = C77B0D4B2226D7DC00917D82 /* LRUDiskCache.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C77B0D6E2226DB2400917D82 /* libWebsocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C77B0D6D2226DB2400917D82 /* libWebsocket.a */; };
@@ -211,10 +142,6 @@
 		C77D6E272210C162005FAAF8 /* CTFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77D6E262210C162005FAAF8 /* CTFrame.swift */; };
 		C77DFED3208CD91600CEC1D9 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77DFED2208CD91600CEC1D9 /* ImageLoader.swift */; };
 		C77DFEE1208D063900CEC1D9 /* LocaleModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77DFEE0208D063900CEC1D9 /* LocaleModule.swift */; };
-		C78115AA2052E8D00096AE47 /* DLStylerNodePrivate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C78115A82052E8D00096AE47 /* DLStylerNodePrivate.cpp */; };
-		C78115AB2052E8D00096AE47 /* DLStylerNodePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = C78115A92052E8D00096AE47 /* DLStylerNodePrivate.h */; };
-		C78115AD2052E9CD0096AE47 /* StylerNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C78115AC2052E9CD0096AE47 /* StylerNode.swift */; };
-		C78115AF2052EA0D0096AE47 /* StylerNodeDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C78115AE2052EA0D0096AE47 /* StylerNodeDelegate.swift */; };
 		C785B0A32016EC17001DAE64 /* JavaScriptCallback.swift in Sources */ = {isa = PBXBuildFile; fileRef = C785B0A22016EC17001DAE64 /* JavaScriptCallback.swift */; };
 		C78A2C5A21DEE6E10018712D /* TextLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = C78A2C5921DEE6E10018712D /* TextLayout.swift */; };
 		C7964D642033E67E00F454F1 /* CALayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7964D632033E67E00F454F1 /* CALayer.swift */; };
@@ -243,6 +170,20 @@
 		C7BB7D462029062D004006C2 /* TransitionGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BB7D442029062D004006C2 /* TransitionGroup.swift */; };
 		C7BB7D472029062D004006C2 /* Transition.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BB7D452029062D004006C2 /* Transition.swift */; };
 		C7BB7D4B20293955004006C2 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BB7D4A20293955004006C2 /* Array.swift */; };
+		C7BC21BE2333031400BEBD60 /* SelectorList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7BC21BC2333031400BEBD60 /* SelectorList.cpp */; };
+		C7BC21BF2333031400BEBD60 /* SelectorList.h in Headers */ = {isa = PBXBuildFile; fileRef = C7BC21BD2333031400BEBD60 /* SelectorList.h */; };
+		C7BC21C22333034100BEBD60 /* Selector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7BC21C02333034100BEBD60 /* Selector.cpp */; };
+		C7BC21C32333034100BEBD60 /* Selector.h in Headers */ = {isa = PBXBuildFile; fileRef = C7BC21C12333034100BEBD60 /* Selector.h */; };
+		C7BC21C62333041300BEBD60 /* Rule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7BC21C42333041300BEBD60 /* Rule.cpp */; };
+		C7BC21C72333041300BEBD60 /* Rule.h in Headers */ = {isa = PBXBuildFile; fileRef = C7BC21C52333041300BEBD60 /* Rule.h */; };
+		C7BC21CA2333046E00BEBD60 /* Sheet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7BC21C82333046E00BEBD60 /* Sheet.cpp */; };
+		C7BC21CB2333046E00BEBD60 /* Sheet.h in Headers */ = {isa = PBXBuildFile; fileRef = C7BC21C92333046E00BEBD60 /* Sheet.h */; };
+		C7BC21CE2333052900BEBD60 /* Parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7BC21CC2333052900BEBD60 /* Parser.cpp */; };
+		C7BC21CF2333052900BEBD60 /* Parser.h in Headers */ = {isa = PBXBuildFile; fileRef = C7BC21CD2333052900BEBD60 /* Parser.h */; };
+		C7BC21D223345CFC00BEBD60 /* Token.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7BC21D023345CFC00BEBD60 /* Token.cpp */; };
+		C7BC21D323345CFC00BEBD60 /* Token.h in Headers */ = {isa = PBXBuildFile; fileRef = C7BC21D123345CFC00BEBD60 /* Token.h */; };
+		C7BC21D623345D2F00BEBD60 /* Tokenizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7BC21D423345D2F00BEBD60 /* Tokenizer.cpp */; };
+		C7BC21D723345D2F00BEBD60 /* Tokenizer.h in Headers */ = {isa = PBXBuildFile; fileRef = C7BC21D523345D2F00BEBD60 /* Tokenizer.h */; };
 		C7BCD7482094C5AD0014CD19 /* Scrollable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BCD7472094C5AD0014CD19 /* Scrollable.swift */; };
 		C7BFD15C207D50A300AAD31C /* FormModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BFD15B207D50A300AAD31C /* FormModule.swift */; };
 		C7BFD15E207D50F000AAD31C /* JavaScriptSpinnerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BFD15D207D50F000AAD31C /* JavaScriptSpinnerView.swift */; };
@@ -270,31 +211,9 @@
 		C7E5D085209DE2290098C5FD /* AlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E5D084209DE2290098C5FD /* AlertController.swift */; };
 		C7E5D087209DE24F0098C5FD /* AlertControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E5D086209DE24F0098C5FD /* AlertControllerDelegate.swift */; };
 		C7E5D08A209DE2DC0098C5FD /* JavaScriptAlertButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E5D089209DE2DC0098C5FD /* JavaScriptAlertButton.swift */; };
-		C7E87E7520537A3600F09B22 /* Styler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E87E7420537A3600F09B22 /* Styler.swift */; };
-		C7E87E7D2053953500F09B22 /* DLStyler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7E87E7B2053953500F09B22 /* DLStyler.cpp */; };
-		C7E87E7E2053953500F09B22 /* DLStyler.h in Headers */ = {isa = PBXBuildFile; fileRef = C7E87E7C2053953500F09B22 /* DLStyler.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C7E87E812053956700F09B22 /* DLStylerPrivate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7E87E7F2053956700F09B22 /* DLStylerPrivate.cpp */; };
-		C7E87E822053956700F09B22 /* DLStylerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = C7E87E802053956700F09B22 /* DLStylerPrivate.h */; };
 		C7E8A46520159C80005139F6 /* Dezel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7E8A45B20159C80005139F6 /* Dezel.framework */; };
 		C7E8A46C20159C80005139F6 /* Dezel.h in Headers */ = {isa = PBXBuildFile; fileRef = C7E8A45E20159C80005139F6 /* Dezel.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C7E8A4C020159E08005139F6 /* DLLayoutNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7E8A4B220159E08005139F6 /* DLLayoutNode.cpp */; };
-		C7E8A4C120159E08005139F6 /* DLAbsoluteLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = C7E8A4B320159E08005139F6 /* DLAbsoluteLayout.h */; };
-		C7E8A4C220159E08005139F6 /* DLLayoutNodePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = C7E8A4B420159E08005139F6 /* DLLayoutNodePrivate.h */; };
-		C7E8A4C420159E08005139F6 /* DLAbsoluteLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7E8A4B620159E08005139F6 /* DLAbsoluteLayout.cpp */; };
-		C7E8A4C620159E08005139F6 /* DLLayoutNodePrivate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7E8A4B820159E08005139F6 /* DLLayoutNodePrivate.cpp */; };
-		C7E8A4C720159E08005139F6 /* DLLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7E8A4B920159E08005139F6 /* DLLayout.cpp */; };
-		C7E8A4C820159E08005139F6 /* DLLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = C7E8A4BA20159E08005139F6 /* DLLayout.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C7E8A4C920159E08005139F6 /* DLLayoutPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = C7E8A4BB20159E08005139F6 /* DLLayoutPrivate.h */; };
-		C7E8A4CA20159E08005139F6 /* DLLayoutPrivate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7E8A4BC20159E08005139F6 /* DLLayoutPrivate.cpp */; };
-		C7E8A4CB20159E08005139F6 /* DLLayoutNode.h in Headers */ = {isa = PBXBuildFile; fileRef = C7E8A4BD20159E08005139F6 /* DLLayoutNode.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C7E8A4CC20159E08005139F6 /* DLRelativeLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = C7E8A4BE20159E08005139F6 /* DLRelativeLayout.h */; };
-		C7E8A4CD20159E08005139F6 /* DLRelativeLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7E8A4BF20159E08005139F6 /* DLRelativeLayout.cpp */; };
-		C7E8A4D12015A699005139F6 /* LayoutNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E8A4CE2015A698005139F6 /* LayoutNode.swift */; };
-		C7E8A4D22015A699005139F6 /* LayoutNodeDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E8A4CF2015A698005139F6 /* LayoutNodeDelegate.swift */; };
-		C7E8A4D32015A699005139F6 /* Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E8A4D02015A698005139F6 /* Layout.swift */; };
 		C7E8A4D52015A792005139F6 /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E8A4D42015A792005139F6 /* Double.swift */; };
-		C7E8A4DA2015ADD5005139F6 /* RelativeLayoutTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E8A4D72015ADD5005139F6 /* RelativeLayoutTest.swift */; };
-		C7E8A4DB2015ADD5005139F6 /* AbsoluteLayoutTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E8A4D82015ADD5005139F6 /* AbsoluteLayoutTest.swift */; };
 		C7E8A4EF20162429005139F6 /* JavaScriptObjectTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E8A4E120162429005139F6 /* JavaScriptObjectTest.swift */; };
 		C7E8A4F020162429005139F6 /* JavaScriptValueTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E8A4E220162429005139F6 /* JavaScriptValueTest.swift */; };
 		C7E8A4F120162429005139F6 /* JavaScriptSetterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E8A4E320162429005139F6 /* JavaScriptSetterTest.swift */; };
@@ -340,7 +259,6 @@
 		C7E8A549201624FA005139F6 /* DLValue.h in Headers */ = {isa = PBXBuildFile; fileRef = C7E8A53F201624FA005139F6 /* DLValue.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C7E8A54A201624FA005139F6 /* DLValuePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = C7E8A540201624FA005139F6 /* DLValuePrivate.h */; };
 		C7E8A54D2016262A005139F6 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7E8A54C2016262A005139F6 /* JavaScriptCore.framework */; };
-		C7E9126D20EFD6FA0076774A /* LayoutNodeDelegateCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E9126C20EFD6FA0076774A /* LayoutNodeDelegateCounter.swift */; };
 		C7EE2E0222DD6AE200FFF0EE /* Source.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7EE2E0122DD6AE200FFF0EE /* Source.swift */; };
 		C7EE2E0622DE2D5B00FFF0EE /* CADisplayLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7EE2E0522DE2D5B00FFF0EE /* CADisplayLink.swift */; };
 		C7EE2E1022DFA84900FFF0EE /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7EE2E0F22DFA84900FFF0EE /* Data.swift */; };
@@ -348,10 +266,6 @@
 		C7EE2E2122E4B21100FFF0EE /* JavaScriptForOwnWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7EE2E2022E4B21100FFF0EE /* JavaScriptForOwnWrapper.swift */; };
 		C7EE2E2522E4B35A00FFF0EE /* JavaScriptForEachWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7EE2E2422E4B35A00FFF0EE /* JavaScriptForEachWrapper.swift */; };
 		C7F2260B2081A10000ABC66D /* Unsafe.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F2260A2081A10000ABC66D /* Unsafe.swift */; };
-		C7F8C9F820C17874007E8ECA /* DLStylerMatch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7F8C9F620C17874007E8ECA /* DLStylerMatch.cpp */; };
-		C7F8C9F920C17874007E8ECA /* DLStylerMatch.h in Headers */ = {isa = PBXBuildFile; fileRef = C7F8C9F720C17874007E8ECA /* DLStylerMatch.h */; };
-		C7FAFD93205AAC900031B2E9 /* DLStylerStyleBuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7FAFD8F205AAC8F0031B2E9 /* DLStylerStyleBuilder.cpp */; };
-		C7FAFD94205AAC900031B2E9 /* DLStylerStyleBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = C7FAFD90205AAC900031B2E9 /* DLStylerStyleBuilder.h */; };
 		C7FCA0F82311B48200AFBDB6 /* JavaScriptPropertyStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FCA0F72311B48200AFBDB6 /* JavaScriptPropertyStorage.swift */; };
 		C7FCA0FA2311B49200AFBDB6 /* JavaScriptPropertyStorageBoolean.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FCA0F92311B49200AFBDB6 /* JavaScriptPropertyStorageBoolean.swift */; };
 		C7FCA0FE2311B4AA00AFBDB6 /* JavaScriptPropertyStorageNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FCA0FD2311B4AA00AFBDB6 /* JavaScriptPropertyStorageNumber.swift */; };
@@ -382,22 +296,6 @@
 		C700121521551A9A00CB26D4 /* DeviceModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceModule.swift; sourceTree = "<group>"; };
 		C700121721551B5700CB26D4 /* JavaScriptDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptDevice.swift; sourceTree = "<group>"; };
 		C7004C57213C4CF800138ECC /* Dictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dictionary.swift; sourceTree = "<group>"; };
-		C7004C7A21440DB600138ECC /* DLStylerStyleRule.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DLStylerStyleRule.cpp; path = ../../../../shared/style/DLStylerStyleRule.cpp; sourceTree = "<group>"; };
-		C7004C7B21440DB600138ECC /* DLStylerStyleRule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DLStylerStyleRule.h; path = ../../../../shared/style/DLStylerStyleRule.h; sourceTree = "<group>"; };
-		C7004C7E21440DCA00138ECC /* DLStylerStyleRulePrivate.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DLStylerStyleRulePrivate.cpp; path = ../../../../shared/style/DLStylerStyleRulePrivate.cpp; sourceTree = "<group>"; };
-		C7004C7F21440DCB00138ECC /* DLStylerStyleRulePrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DLStylerStyleRulePrivate.h; path = ../../../../shared/style/DLStylerStyleRulePrivate.h; sourceTree = "<group>"; };
-		C7004C822144118D00138ECC /* DLStylerStyleSelector.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DLStylerStyleSelector.cpp; path = ../../../../shared/style/DLStylerStyleSelector.cpp; sourceTree = "<group>"; };
-		C7004C832144118D00138ECC /* DLStylerStyleSelector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DLStylerStyleSelector.h; path = ../../../../shared/style/DLStylerStyleSelector.h; sourceTree = "<group>"; };
-		C7004C86214411BF00138ECC /* DLStylerStyleSelectorPrivate.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DLStylerStyleSelectorPrivate.cpp; path = ../../../../shared/style/DLStylerStyleSelectorPrivate.cpp; sourceTree = "<group>"; };
-		C7004C87214411BF00138ECC /* DLStylerStyleSelectorPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DLStylerStyleSelectorPrivate.h; path = ../../../../shared/style/DLStylerStyleSelectorPrivate.h; sourceTree = "<group>"; };
-		C7004C8A2144240000138ECC /* DLStylerStyleItem.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DLStylerStyleItem.cpp; path = ../../../../shared/style/DLStylerStyleItem.cpp; sourceTree = "<group>"; };
-		C7004C8B2144240000138ECC /* DLStylerStyleItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DLStylerStyleItem.h; path = ../../../../shared/style/DLStylerStyleItem.h; sourceTree = "<group>"; };
-		C7004C8E2144241200138ECC /* DLStylerStyleItemPrivate.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DLStylerStyleItemPrivate.cpp; path = ../../../../shared/style/DLStylerStyleItemPrivate.cpp; sourceTree = "<group>"; };
-		C7004C8F2144241200138ECC /* DLStylerStyleItemPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DLStylerStyleItemPrivate.h; path = ../../../../shared/style/DLStylerStyleItemPrivate.h; sourceTree = "<group>"; };
-		C7004C9221442A5200138ECC /* DLStylerStyleSelectorTree.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DLStylerStyleSelectorTree.cpp; path = ../../../../shared/style/DLStylerStyleSelectorTree.cpp; sourceTree = "<group>"; };
-		C7004C9321442A5200138ECC /* DLStylerStyleSelectorTree.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DLStylerStyleSelectorTree.h; path = ../../../../shared/style/DLStylerStyleSelectorTree.h; sourceTree = "<group>"; };
-		C7004C9621442AAB00138ECC /* DLStylerStyleSelectorTreePrivate.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DLStylerStyleSelectorTreePrivate.cpp; path = ../../../../shared/style/DLStylerStyleSelectorTreePrivate.cpp; sourceTree = "<group>"; };
-		C7004C9721442AAC00138ECC /* DLStylerStyleSelectorTreePrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DLStylerStyleSelectorTreePrivate.h; path = ../../../../shared/style/DLStylerStyleSelectorTreePrivate.h; sourceTree = "<group>"; };
 		C7027CD22270DFDA001DD0F7 /* ScrollViewTouchCancelGesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollViewTouchCancelGesture.swift; sourceTree = "<group>"; };
 		C7040D84232694AF00DFDBED /* DisplayNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DisplayNode.h; path = ../../../../../shared/view/display/DisplayNode.h; sourceTree = "<group>"; };
 		C7040D85232694AF00DFDBED /* DisplayNodeRef.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DisplayNodeRef.cpp; path = ../../../../../shared/view/display/DisplayNodeRef.cpp; sourceTree = "<group>"; };
@@ -439,6 +337,7 @@
 		C7040DE62327D41200DFDBED /* DisplayDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayDelegate.swift; sourceTree = "<group>"; };
 		C7040DE82327DB2000DFDBED /* DisplayNodeDelegateCounter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayNodeDelegateCounter.swift; sourceTree = "<group>"; };
 		C7040DEC232980D200DFDBED /* DisplayNodeRelativeLayoutTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayNodeRelativeLayoutTest.swift; sourceTree = "<group>"; };
+		C705913A2337B1E8002EF92F /* DisplayStyleTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayStyleTest.swift; sourceTree = "<group>"; };
 		C70617A320F7C03100499FDB /* TransitionListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionListener.swift; sourceTree = "<group>"; };
 		C718A0A82066E24400EFEC15 /* JavaScriptImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptImageView.swift; sourceTree = "<group>"; };
 		C718A0B22066E63300EFEC15 /* ImageLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLayer.swift; sourceTree = "<group>"; };
@@ -470,8 +369,6 @@
 		C732E78720865116006014A0 /* GlobalModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalModule.swift; sourceTree = "<group>"; };
 		C73700C32218C00D0095A54B /* ImageFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFilter.swift; sourceTree = "<group>"; };
 		C73700C62219A9370095A54B /* ImageEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageEffect.swift; sourceTree = "<group>"; };
-		C74487E1205230BB00D74D30 /* DLStylerNode.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DLStylerNode.cpp; path = ../../../../shared/style/DLStylerNode.cpp; sourceTree = "<group>"; };
-		C74487E2205230BB00D74D30 /* DLStylerNode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DLStylerNode.h; path = ../../../../shared/style/DLStylerNode.h; sourceTree = "<group>"; };
 		C75153B222EB4BC3007CAA48 /* HTTPURLResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPURLResponse.swift; sourceTree = "<group>"; };
 		C75153B822EBA05C007CAA48 /* NSData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSData.swift; sourceTree = "<group>"; };
 		C75153BC22F11CAA007CAA48 /* JavaScriptLocale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptLocale.swift; sourceTree = "<group>"; };
@@ -500,66 +397,14 @@
 		C77189B12106AE0A00337263 /* Transform2D.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transform2D.swift; sourceTree = "<group>"; };
 		C77189B32106AE1300337263 /* Transform3D.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transform3D.swift; sourceTree = "<group>"; };
 		C773DA8F21DD0E2800685BDB /* TextParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextParser.swift; sourceTree = "<group>"; };
+		C773EE542334FCFC002D5025 /* TokenizerStream.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = TokenizerStream.cpp; path = ../../../../../shared/view/style/TokenizerStream.cpp; sourceTree = "<group>"; };
+		C773EE552334FCFC002D5025 /* TokenizerStream.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TokenizerStream.h; path = ../../../../../shared/view/style/TokenizerStream.h; sourceTree = "<group>"; };
 		C777B5DB22D1429A00E75E55 /* CoreModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreModule.swift; sourceTree = "<group>"; };
 		C777B62922D77B2D00E75E55 /* TestRunner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestRunner.swift; sourceTree = "<group>"; };
 		C777B62B22D782DB00E75E55 /* TestRunner.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = TestRunner.js; sourceTree = "<group>"; };
 		C777B62D22D7838E00E75E55 /* DezelUnitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DezelUnitTests.swift; sourceTree = "<group>"; };
 		C777B63C22D91DB200E75E55 /* UIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplication.swift; sourceTree = "<group>"; };
 		C777B63E22DA49B600E75E55 /* WeakReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeakReference.swift; sourceTree = "<group>"; };
-		C77B0B7322262EF800917D82 /* Ruleset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ruleset.h; sourceTree = "<group>"; };
-		C77B0B7422262EF800917D82 /* SelectorParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectorParser.h; sourceTree = "<group>"; };
-		C77B0B7522262EF800917D82 /* Selector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Selector.h; sourceTree = "<group>"; };
-		C77B0B7622262EF800917D82 /* AtRule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AtRule.h; sourceTree = "<group>"; };
-		C77B0B7722262EF800917D82 /* TokenList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TokenList.h; sourceTree = "<group>"; };
-		C77B0B7822262EF800917D82 /* Writable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Writable.h; sourceTree = "<group>"; };
-		C77B0B7922262EF800917D82 /* Parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Parser.h; sourceTree = "<group>"; };
-		C77B0B7A22262EF800917D82 /* Declaration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Declaration.h; sourceTree = "<group>"; };
-		C77B0B7B22262EF800917D82 /* Comment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Comment.h; sourceTree = "<group>"; };
-		C77B0B7C22262EF800917D82 /* Tokenizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tokenizer.h; sourceTree = "<group>"; };
-		C77B0B7D22262EF800917D82 /* SourceMapWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SourceMapWriter.h; sourceTree = "<group>"; };
-		C77B0B7E22262EF800917D82 /* Writer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Writer.h; sourceTree = "<group>"; };
-		C77B0B7F22262EF800917D82 /* Token.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Token.h; sourceTree = "<group>"; };
-		C77B0B8022262EF800917D82 /* RulesetStatement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RulesetStatement.h; sourceTree = "<group>"; };
-		C77B0B8122262EF800917D82 /* ParseException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParseException.h; sourceTree = "<group>"; };
-		C77B0B8222262EF800917D82 /* MediaQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaQuery.h; sourceTree = "<group>"; };
-		C77B0B8322262EF800917D82 /* StylesheetStatement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StylesheetStatement.h; sourceTree = "<group>"; };
-		C77B0B8422262EF800917D82 /* Stylesheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stylesheet.h; sourceTree = "<group>"; };
-		C77B0B8622262EF800917D82 /* StylerExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StylerExtension.h; sourceTree = "<group>"; };
-		C77B0B8722262EF800917D82 /* StylerFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StylerFunction.h; sourceTree = "<group>"; };
-		C77B0B8822262EF800917D82 /* StylerClosure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StylerClosure.h; sourceTree = "<group>"; };
-		C77B0B8922262EF800917D82 /* StylerStylesheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StylerStylesheet.h; sourceTree = "<group>"; };
-		C77B0B8A22262EF800917D82 /* StylerMediaQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StylerMediaQuery.h; sourceTree = "<group>"; };
-		C77B0B8B22262EF800917D82 /* StylerMixinException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StylerMixinException.h; sourceTree = "<group>"; };
-		C77B0B8C22262EF800917D82 /* StylerSelectorParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StylerSelectorParser.h; sourceTree = "<group>"; };
-		C77B0B8D22262EF800917D82 /* StylerMixin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StylerMixin.h; sourceTree = "<group>"; };
-		C77B0B8E22262EF800917D82 /* StylerMediaQueryRuleset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StylerMediaQueryRuleset.h; sourceTree = "<group>"; };
-		C77B0B8F22262EF800917D82 /* StylerRuleset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StylerRuleset.h; sourceTree = "<group>"; };
-		C77B0B9022262EF800917D82 /* StylerDeclaration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StylerDeclaration.h; sourceTree = "<group>"; };
-		C77B0B9122262EF800917D82 /* StylerParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StylerParser.h; sourceTree = "<group>"; };
-		C77B0B9222262EF800917D82 /* StylerMixinCall.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StylerMixinCall.h; sourceTree = "<group>"; };
-		C77B0B9322262EF800917D82 /* StylerMixinArguments.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StylerMixinArguments.h; sourceTree = "<group>"; };
-		C77B0B9422262EF800917D82 /* StylerSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StylerSelector.h; sourceTree = "<group>"; };
-		C77B0B9522262EF800917D82 /* StylerAtRule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StylerAtRule.h; sourceTree = "<group>"; };
-		C77B0B9622262EF800917D82 /* StylerTokenizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StylerTokenizer.h; sourceTree = "<group>"; };
-		C77B0B9722262EF800917D82 /* StylerException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StylerException.h; sourceTree = "<group>"; };
-		C77B0B9922262EF800917D82 /* UrlFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UrlFunctions.h; sourceTree = "<group>"; };
-		C77B0B9A22262EF800917D82 /* UnitValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnitValue.h; sourceTree = "<group>"; };
-		C77B0B9B22262EF800917D82 /* StringValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StringValue.h; sourceTree = "<group>"; };
-		C77B0B9C22262EF800917D82 /* StringFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StringFunctions.h; sourceTree = "<group>"; };
-		C77B0B9D22262EF800917D82 /* BooleanValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BooleanValue.h; sourceTree = "<group>"; };
-		C77B0B9E22262EF800917D82 /* Color.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Color.h; sourceTree = "<group>"; };
-		C77B0B9F22262EF800917D82 /* ValueProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ValueProcessor.h; sourceTree = "<group>"; };
-		C77B0BA022262EF800917D82 /* Value.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Value.h; sourceTree = "<group>"; };
-		C77B0BA122262EF800917D82 /* ValueScope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ValueScope.h; sourceTree = "<group>"; };
-		C77B0BA222262EF800917D82 /* FunctionLibrary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FunctionLibrary.h; sourceTree = "<group>"; };
-		C77B0BA322262EF800917D82 /* NumberFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NumberFunctions.h; sourceTree = "<group>"; };
-		C77B0BA422262EF800917D82 /* ValueException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ValueException.h; sourceTree = "<group>"; };
-		C77B0BA522262EF800917D82 /* UrlValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UrlValue.h; sourceTree = "<group>"; };
-		C77B0BA622262EF800917D82 /* NumberValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NumberValue.h; sourceTree = "<group>"; };
-		C77B0BA722262EF800917D82 /* ColorFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorFunctions.h; sourceTree = "<group>"; };
-		C77B0BA822262EF800917D82 /* VariableMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VariableMap.h; sourceTree = "<group>"; };
-		C77B0BA922262EF800917D82 /* ProcessingContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProcessingContext.h; sourceTree = "<group>"; };
-		C77B0BAB22262EF800917D82 /* libStyle.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libStyle.a; sourceTree = "<group>"; };
 		C77B0D492226D7CC00917D82 /* libLRUCache.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libLRUCache.a; sourceTree = "<group>"; };
 		C77B0D4B2226D7DC00917D82 /* LRUDiskCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRUDiskCache.h; sourceTree = "<group>"; };
 		C77B0D6D2226DB2400917D82 /* libWebsocket.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWebsocket.a; sourceTree = "<group>"; };
@@ -569,10 +414,6 @@
 		C77D6E262210C162005FAAF8 /* CTFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CTFrame.swift; sourceTree = "<group>"; };
 		C77DFED2208CD91600CEC1D9 /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 		C77DFEE0208D063900CEC1D9 /* LocaleModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocaleModule.swift; sourceTree = "<group>"; };
-		C78115A82052E8D00096AE47 /* DLStylerNodePrivate.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DLStylerNodePrivate.cpp; path = ../../../../shared/style/DLStylerNodePrivate.cpp; sourceTree = "<group>"; };
-		C78115A92052E8D00096AE47 /* DLStylerNodePrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DLStylerNodePrivate.h; path = ../../../../shared/style/DLStylerNodePrivate.h; sourceTree = "<group>"; };
-		C78115AC2052E9CD0096AE47 /* StylerNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StylerNode.swift; sourceTree = "<group>"; };
-		C78115AE2052EA0D0096AE47 /* StylerNodeDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StylerNodeDelegate.swift; sourceTree = "<group>"; };
 		C785B0A22016EC17001DAE64 /* JavaScriptCallback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptCallback.swift; sourceTree = "<group>"; };
 		C78A2C5921DEE6E10018712D /* TextLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLayout.swift; sourceTree = "<group>"; };
 		C7964D632033E67E00F454F1 /* CALayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CALayer.swift; sourceTree = "<group>"; };
@@ -601,6 +442,20 @@
 		C7BB7D442029062D004006C2 /* TransitionGroup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransitionGroup.swift; sourceTree = "<group>"; };
 		C7BB7D452029062D004006C2 /* Transition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Transition.swift; sourceTree = "<group>"; };
 		C7BB7D4A20293955004006C2 /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
+		C7BC21BC2333031400BEBD60 /* SelectorList.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SelectorList.cpp; path = ../../../../../shared/view/style/SelectorList.cpp; sourceTree = "<group>"; };
+		C7BC21BD2333031400BEBD60 /* SelectorList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SelectorList.h; path = ../../../../../shared/view/style/SelectorList.h; sourceTree = "<group>"; };
+		C7BC21C02333034100BEBD60 /* Selector.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Selector.cpp; path = ../../../../../shared/view/style/Selector.cpp; sourceTree = "<group>"; };
+		C7BC21C12333034100BEBD60 /* Selector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Selector.h; path = ../../../../../shared/view/style/Selector.h; sourceTree = "<group>"; };
+		C7BC21C42333041300BEBD60 /* Rule.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Rule.cpp; path = ../../../../../shared/view/style/Rule.cpp; sourceTree = "<group>"; };
+		C7BC21C52333041300BEBD60 /* Rule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Rule.h; path = ../../../../../shared/view/style/Rule.h; sourceTree = "<group>"; };
+		C7BC21C82333046E00BEBD60 /* Sheet.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Sheet.cpp; path = ../../../../../shared/view/style/Sheet.cpp; sourceTree = "<group>"; };
+		C7BC21C92333046E00BEBD60 /* Sheet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Sheet.h; path = ../../../../../shared/view/style/Sheet.h; sourceTree = "<group>"; };
+		C7BC21CC2333052900BEBD60 /* Parser.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Parser.cpp; path = ../../../../../shared/view/style/Parser.cpp; sourceTree = "<group>"; };
+		C7BC21CD2333052900BEBD60 /* Parser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Parser.h; path = ../../../../../shared/view/style/Parser.h; sourceTree = "<group>"; };
+		C7BC21D023345CFC00BEBD60 /* Token.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Token.cpp; path = ../../../../../shared/view/style/Token.cpp; sourceTree = "<group>"; };
+		C7BC21D123345CFC00BEBD60 /* Token.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Token.h; path = ../../../../../shared/view/style/Token.h; sourceTree = "<group>"; };
+		C7BC21D423345D2F00BEBD60 /* Tokenizer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Tokenizer.cpp; path = ../../../../../shared/view/style/Tokenizer.cpp; sourceTree = "<group>"; };
+		C7BC21D523345D2F00BEBD60 /* Tokenizer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Tokenizer.h; path = ../../../../../shared/view/style/Tokenizer.h; sourceTree = "<group>"; };
 		C7BCD7472094C5AD0014CD19 /* Scrollable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scrollable.swift; sourceTree = "<group>"; };
 		C7BFD15B207D50A300AAD31C /* FormModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormModule.swift; sourceTree = "<group>"; };
 		C7BFD15D207D50F000AAD31C /* JavaScriptSpinnerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptSpinnerView.swift; sourceTree = "<group>"; };
@@ -628,34 +483,12 @@
 		C7E5D084209DE2290098C5FD /* AlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertController.swift; sourceTree = "<group>"; };
 		C7E5D086209DE24F0098C5FD /* AlertControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertControllerDelegate.swift; sourceTree = "<group>"; };
 		C7E5D089209DE2DC0098C5FD /* JavaScriptAlertButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptAlertButton.swift; sourceTree = "<group>"; };
-		C7E87E7420537A3600F09B22 /* Styler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Styler.swift; sourceTree = "<group>"; };
-		C7E87E7B2053953500F09B22 /* DLStyler.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DLStyler.cpp; path = ../../../../shared/style/DLStyler.cpp; sourceTree = "<group>"; };
-		C7E87E7C2053953500F09B22 /* DLStyler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DLStyler.h; path = ../../../../shared/style/DLStyler.h; sourceTree = "<group>"; };
-		C7E87E7F2053956700F09B22 /* DLStylerPrivate.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DLStylerPrivate.cpp; path = ../../../../shared/style/DLStylerPrivate.cpp; sourceTree = "<group>"; };
-		C7E87E802053956700F09B22 /* DLStylerPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DLStylerPrivate.h; path = ../../../../shared/style/DLStylerPrivate.h; sourceTree = "<group>"; };
 		C7E8A45B20159C80005139F6 /* Dezel.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Dezel.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7E8A45E20159C80005139F6 /* Dezel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Dezel.h; sourceTree = "<group>"; };
 		C7E8A45F20159C80005139F6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C7E8A46420159C80005139F6 /* DezelTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DezelTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7E8A46B20159C80005139F6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C7E8A4B220159E08005139F6 /* DLLayoutNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DLLayoutNode.cpp; path = ../../../../shared/layout/DLLayoutNode.cpp; sourceTree = "<group>"; };
-		C7E8A4B320159E08005139F6 /* DLAbsoluteLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DLAbsoluteLayout.h; path = ../../../../shared/layout/DLAbsoluteLayout.h; sourceTree = "<group>"; };
-		C7E8A4B420159E08005139F6 /* DLLayoutNodePrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DLLayoutNodePrivate.h; path = ../../../../shared/layout/DLLayoutNodePrivate.h; sourceTree = "<group>"; };
-		C7E8A4B620159E08005139F6 /* DLAbsoluteLayout.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DLAbsoluteLayout.cpp; path = ../../../../shared/layout/DLAbsoluteLayout.cpp; sourceTree = "<group>"; };
-		C7E8A4B820159E08005139F6 /* DLLayoutNodePrivate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DLLayoutNodePrivate.cpp; path = ../../../../shared/layout/DLLayoutNodePrivate.cpp; sourceTree = "<group>"; };
-		C7E8A4B920159E08005139F6 /* DLLayout.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DLLayout.cpp; path = ../../../../shared/layout/DLLayout.cpp; sourceTree = "<group>"; };
-		C7E8A4BA20159E08005139F6 /* DLLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DLLayout.h; path = ../../../../shared/layout/DLLayout.h; sourceTree = "<group>"; };
-		C7E8A4BB20159E08005139F6 /* DLLayoutPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DLLayoutPrivate.h; path = ../../../../shared/layout/DLLayoutPrivate.h; sourceTree = "<group>"; };
-		C7E8A4BC20159E08005139F6 /* DLLayoutPrivate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DLLayoutPrivate.cpp; path = ../../../../shared/layout/DLLayoutPrivate.cpp; sourceTree = "<group>"; };
-		C7E8A4BD20159E08005139F6 /* DLLayoutNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DLLayoutNode.h; path = ../../../../shared/layout/DLLayoutNode.h; sourceTree = "<group>"; };
-		C7E8A4BE20159E08005139F6 /* DLRelativeLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DLRelativeLayout.h; path = ../../../../shared/layout/DLRelativeLayout.h; sourceTree = "<group>"; };
-		C7E8A4BF20159E08005139F6 /* DLRelativeLayout.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DLRelativeLayout.cpp; path = ../../../../shared/layout/DLRelativeLayout.cpp; sourceTree = "<group>"; };
-		C7E8A4CE2015A698005139F6 /* LayoutNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutNode.swift; sourceTree = "<group>"; };
-		C7E8A4CF2015A698005139F6 /* LayoutNodeDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutNodeDelegate.swift; sourceTree = "<group>"; };
-		C7E8A4D02015A698005139F6 /* Layout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Layout.swift; sourceTree = "<group>"; };
 		C7E8A4D42015A792005139F6 /* Double.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Double.swift; sourceTree = "<group>"; };
-		C7E8A4D72015ADD5005139F6 /* RelativeLayoutTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelativeLayoutTest.swift; sourceTree = "<group>"; };
-		C7E8A4D82015ADD5005139F6 /* AbsoluteLayoutTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AbsoluteLayoutTest.swift; sourceTree = "<group>"; };
 		C7E8A4E120162429005139F6 /* JavaScriptObjectTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JavaScriptObjectTest.swift; sourceTree = "<group>"; };
 		C7E8A4E220162429005139F6 /* JavaScriptValueTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JavaScriptValueTest.swift; sourceTree = "<group>"; };
 		C7E8A4E320162429005139F6 /* JavaScriptSetterTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JavaScriptSetterTest.swift; sourceTree = "<group>"; };
@@ -701,7 +534,6 @@
 		C7E8A53F201624FA005139F6 /* DLValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DLValue.h; path = ../../../../shared/core/DLValue.h; sourceTree = "<group>"; };
 		C7E8A540201624FA005139F6 /* DLValuePrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DLValuePrivate.h; path = ../../../../shared/core/DLValuePrivate.h; sourceTree = "<group>"; };
 		C7E8A54C2016262A005139F6 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		C7E9126C20EFD6FA0076774A /* LayoutNodeDelegateCounter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutNodeDelegateCounter.swift; sourceTree = "<group>"; };
 		C7EE2E0122DD6AE200FFF0EE /* Source.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Source.swift; sourceTree = "<group>"; };
 		C7EE2E0522DE2D5B00FFF0EE /* CADisplayLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CADisplayLink.swift; sourceTree = "<group>"; };
 		C7EE2E0F22DFA84900FFF0EE /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
@@ -709,10 +541,6 @@
 		C7EE2E2022E4B21100FFF0EE /* JavaScriptForOwnWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptForOwnWrapper.swift; sourceTree = "<group>"; };
 		C7EE2E2422E4B35A00FFF0EE /* JavaScriptForEachWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptForEachWrapper.swift; sourceTree = "<group>"; };
 		C7F2260A2081A10000ABC66D /* Unsafe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Unsafe.swift; sourceTree = "<group>"; };
-		C7F8C9F620C17874007E8ECA /* DLStylerMatch.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DLStylerMatch.cpp; path = ../../../../shared/style/DLStylerMatch.cpp; sourceTree = "<group>"; };
-		C7F8C9F720C17874007E8ECA /* DLStylerMatch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DLStylerMatch.h; path = ../../../../shared/style/DLStylerMatch.h; sourceTree = "<group>"; };
-		C7FAFD8F205AAC8F0031B2E9 /* DLStylerStyleBuilder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DLStylerStyleBuilder.cpp; path = ../../../../shared/style/DLStylerStyleBuilder.cpp; sourceTree = "<group>"; };
-		C7FAFD90205AAC900031B2E9 /* DLStylerStyleBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DLStylerStyleBuilder.h; path = ../../../../shared/style/DLStylerStyleBuilder.h; sourceTree = "<group>"; };
 		C7FCA0F72311B48200AFBDB6 /* JavaScriptPropertyStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptPropertyStorage.swift; sourceTree = "<group>"; };
 		C7FCA0F92311B49200AFBDB6 /* JavaScriptPropertyStorageBoolean.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptPropertyStorageBoolean.swift; sourceTree = "<group>"; };
 		C7FCA0FD2311B4AA00AFBDB6 /* JavaScriptPropertyStorageNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptPropertyStorageNumber.swift; sourceTree = "<group>"; };
@@ -736,7 +564,6 @@
 			files = (
 				C7E8A54D2016262A005139F6 /* JavaScriptCore.framework in Frameworks */,
 				C77B0D4A2226D7CC00917D82 /* libLRUCache.a in Frameworks */,
-				C77B0BE122262EF800917D82 /* libStyle.a in Frameworks */,
 				C77B0D6E2226DB2400917D82 /* libWebsocket.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -873,43 +700,6 @@
 			path = Type;
 			sourceTree = "<group>";
 		};
-		C72FF11B204EDD6D00FBB36B /* CAPI */ = {
-			isa = PBXGroup;
-			children = (
-				C77B0B7122262EF800917D82 /* include */,
-				C77B0BAA22262EF800917D82 /* lib */,
-				C7E87E7B2053953500F09B22 /* DLStyler.cpp */,
-				C7E87E7C2053953500F09B22 /* DLStyler.h */,
-				C7E87E7F2053956700F09B22 /* DLStylerPrivate.cpp */,
-				C7E87E802053956700F09B22 /* DLStylerPrivate.h */,
-				C74487E1205230BB00D74D30 /* DLStylerNode.cpp */,
-				C74487E2205230BB00D74D30 /* DLStylerNode.h */,
-				C78115A82052E8D00096AE47 /* DLStylerNodePrivate.cpp */,
-				C78115A92052E8D00096AE47 /* DLStylerNodePrivate.h */,
-				C7004C8A2144240000138ECC /* DLStylerStyleItem.cpp */,
-				C7004C8B2144240000138ECC /* DLStylerStyleItem.h */,
-				C7004C8E2144241200138ECC /* DLStylerStyleItemPrivate.cpp */,
-				C7004C8F2144241200138ECC /* DLStylerStyleItemPrivate.h */,
-				C7004C7A21440DB600138ECC /* DLStylerStyleRule.cpp */,
-				C7004C7B21440DB600138ECC /* DLStylerStyleRule.h */,
-				C7004C7E21440DCA00138ECC /* DLStylerStyleRulePrivate.cpp */,
-				C7004C7F21440DCB00138ECC /* DLStylerStyleRulePrivate.h */,
-				C7004C822144118D00138ECC /* DLStylerStyleSelector.cpp */,
-				C7004C832144118D00138ECC /* DLStylerStyleSelector.h */,
-				C7004C86214411BF00138ECC /* DLStylerStyleSelectorPrivate.cpp */,
-				C7004C87214411BF00138ECC /* DLStylerStyleSelectorPrivate.h */,
-				C7004C9221442A5200138ECC /* DLStylerStyleSelectorTree.cpp */,
-				C7004C9321442A5200138ECC /* DLStylerStyleSelectorTree.h */,
-				C7004C9621442AAB00138ECC /* DLStylerStyleSelectorTreePrivate.cpp */,
-				C7004C9721442AAC00138ECC /* DLStylerStyleSelectorTreePrivate.h */,
-				C7FAFD8F205AAC8F0031B2E9 /* DLStylerStyleBuilder.cpp */,
-				C7FAFD90205AAC900031B2E9 /* DLStylerStyleBuilder.h */,
-				C7F8C9F620C17874007E8ECA /* DLStylerMatch.cpp */,
-				C7F8C9F720C17874007E8ECA /* DLStylerMatch.h */,
-			);
-			name = CAPI;
-			sourceTree = "<group>";
-		};
 		C73700C52219A8CA0095A54B /* Image */ = {
 			isa = PBXGroup;
 			children = (
@@ -988,100 +778,6 @@
 				C777B62922D77B2D00E75E55 /* TestRunner.swift */,
 			);
 			path = Test;
-			sourceTree = "<group>";
-		};
-		C77B0B7122262EF800917D82 /* include */ = {
-			isa = PBXGroup;
-			children = (
-				C77B0B7222262EF800917D82 /* css */,
-				C77B0B8522262EF800917D82 /* dls */,
-				C77B0B9822262EF800917D82 /* value */,
-				C77B0B9722262EF800917D82 /* StylerException.h */,
-				C77B0BA822262EF800917D82 /* VariableMap.h */,
-				C77B0BA922262EF800917D82 /* ProcessingContext.h */,
-			);
-			name = include;
-			path = ../../../../shared/style/include;
-			sourceTree = "<group>";
-		};
-		C77B0B7222262EF800917D82 /* css */ = {
-			isa = PBXGroup;
-			children = (
-				C77B0B7322262EF800917D82 /* Ruleset.h */,
-				C77B0B7422262EF800917D82 /* SelectorParser.h */,
-				C77B0B7522262EF800917D82 /* Selector.h */,
-				C77B0B7622262EF800917D82 /* AtRule.h */,
-				C77B0B7722262EF800917D82 /* TokenList.h */,
-				C77B0B7822262EF800917D82 /* Writable.h */,
-				C77B0B7922262EF800917D82 /* Parser.h */,
-				C77B0B7A22262EF800917D82 /* Declaration.h */,
-				C77B0B7B22262EF800917D82 /* Comment.h */,
-				C77B0B7C22262EF800917D82 /* Tokenizer.h */,
-				C77B0B7D22262EF800917D82 /* SourceMapWriter.h */,
-				C77B0B7E22262EF800917D82 /* Writer.h */,
-				C77B0B7F22262EF800917D82 /* Token.h */,
-				C77B0B8022262EF800917D82 /* RulesetStatement.h */,
-				C77B0B8122262EF800917D82 /* ParseException.h */,
-				C77B0B8222262EF800917D82 /* MediaQuery.h */,
-				C77B0B8322262EF800917D82 /* StylesheetStatement.h */,
-				C77B0B8422262EF800917D82 /* Stylesheet.h */,
-			);
-			path = css;
-			sourceTree = "<group>";
-		};
-		C77B0B8522262EF800917D82 /* dls */ = {
-			isa = PBXGroup;
-			children = (
-				C77B0B8622262EF800917D82 /* StylerExtension.h */,
-				C77B0B8722262EF800917D82 /* StylerFunction.h */,
-				C77B0B8822262EF800917D82 /* StylerClosure.h */,
-				C77B0B8922262EF800917D82 /* StylerStylesheet.h */,
-				C77B0B8A22262EF800917D82 /* StylerMediaQuery.h */,
-				C77B0B8B22262EF800917D82 /* StylerMixinException.h */,
-				C77B0B8C22262EF800917D82 /* StylerSelectorParser.h */,
-				C77B0B8D22262EF800917D82 /* StylerMixin.h */,
-				C77B0B8E22262EF800917D82 /* StylerMediaQueryRuleset.h */,
-				C77B0B8F22262EF800917D82 /* StylerRuleset.h */,
-				C77B0B9022262EF800917D82 /* StylerDeclaration.h */,
-				C77B0B9122262EF800917D82 /* StylerParser.h */,
-				C77B0B9222262EF800917D82 /* StylerMixinCall.h */,
-				C77B0B9322262EF800917D82 /* StylerMixinArguments.h */,
-				C77B0B9422262EF800917D82 /* StylerSelector.h */,
-				C77B0B9522262EF800917D82 /* StylerAtRule.h */,
-				C77B0B9622262EF800917D82 /* StylerTokenizer.h */,
-			);
-			path = dls;
-			sourceTree = "<group>";
-		};
-		C77B0B9822262EF800917D82 /* value */ = {
-			isa = PBXGroup;
-			children = (
-				C77B0B9922262EF800917D82 /* UrlFunctions.h */,
-				C77B0B9A22262EF800917D82 /* UnitValue.h */,
-				C77B0B9B22262EF800917D82 /* StringValue.h */,
-				C77B0B9C22262EF800917D82 /* StringFunctions.h */,
-				C77B0B9D22262EF800917D82 /* BooleanValue.h */,
-				C77B0B9E22262EF800917D82 /* Color.h */,
-				C77B0B9F22262EF800917D82 /* ValueProcessor.h */,
-				C77B0BA022262EF800917D82 /* Value.h */,
-				C77B0BA122262EF800917D82 /* ValueScope.h */,
-				C77B0BA222262EF800917D82 /* FunctionLibrary.h */,
-				C77B0BA322262EF800917D82 /* NumberFunctions.h */,
-				C77B0BA422262EF800917D82 /* ValueException.h */,
-				C77B0BA522262EF800917D82 /* UrlValue.h */,
-				C77B0BA622262EF800917D82 /* NumberValue.h */,
-				C77B0BA722262EF800917D82 /* ColorFunctions.h */,
-			);
-			path = value;
-			sourceTree = "<group>";
-		};
-		C77B0BAA22262EF800917D82 /* lib */ = {
-			isa = PBXGroup;
-			children = (
-				C77B0BAB22262EF800917D82 /* libStyle.a */,
-			);
-			name = lib;
-			path = ../../../../shared/style/lib;
 			sourceTree = "<group>";
 		};
 		C77B0D472226D79200917D82 /* lib */ = {
@@ -1216,6 +912,29 @@
 			path = Animation;
 			sourceTree = "<group>";
 		};
+		C7BC21BB2333016200BEBD60 /* Style */ = {
+			isa = PBXGroup;
+			children = (
+				C7BC21CC2333052900BEBD60 /* Parser.cpp */,
+				C7BC21CD2333052900BEBD60 /* Parser.h */,
+				C7BC21C42333041300BEBD60 /* Rule.cpp */,
+				C7BC21C52333041300BEBD60 /* Rule.h */,
+				C7BC21C02333034100BEBD60 /* Selector.cpp */,
+				C7BC21C12333034100BEBD60 /* Selector.h */,
+				C7BC21BC2333031400BEBD60 /* SelectorList.cpp */,
+				C7BC21BD2333031400BEBD60 /* SelectorList.h */,
+				C7BC21C82333046E00BEBD60 /* Sheet.cpp */,
+				C7BC21C92333046E00BEBD60 /* Sheet.h */,
+				C7BC21D023345CFC00BEBD60 /* Token.cpp */,
+				C7BC21D123345CFC00BEBD60 /* Token.h */,
+				C7BC21D423345D2F00BEBD60 /* Tokenizer.cpp */,
+				C7BC21D523345D2F00BEBD60 /* Tokenizer.h */,
+				C773EE542334FCFC002D5025 /* TokenizerStream.cpp */,
+				C773EE552334FCFC002D5025 /* TokenizerStream.h */,
+			);
+			name = Style;
+			sourceTree = "<group>";
+		};
 		C7BFD155207CECF000AAD31C /* Global */ = {
 			isa = PBXGroup;
 			children = (
@@ -1294,11 +1013,9 @@
 				C7CE4B0E220A9044005D5235 /* Date */,
 				C7E5D088209DE2600098C5FD /* Dialog */,
 				C7E8A47720159CC2005139F6 /* Extensions */,
-				C7E8A47620159CAF005139F6 /* Layout */,
 				C7E8A4DD2015AF48005139F6 /* Modules */,
 				C71A119B2080EAFE0004D523 /* Networking */,
 				C7A19E3620ADCA0B00367E91 /* Resources */,
-				C7E8A4DC2015AF40005139F6 /* Style */,
 				C773DA8C21DD0B4800685BDB /* Text */,
 				C777B62822D77B1A00E75E55 /* Test */,
 				C7E8A4DE2015AF5E005139F6 /* View */,
@@ -1311,32 +1028,10 @@
 			children = (
 				C7FCA147231C5BB600AFBDB6 /* View */,
 				C7E8A4E0201623A3005139F6 /* Core */,
-				C7E8A47520159C92005139F6 /* Layout */,
 				C7E8A46B20159C80005139F6 /* Info.plist */,
 				C777B62D22D7838E00E75E55 /* DezelUnitTests.swift */,
 			);
 			path = DezelTests;
-			sourceTree = "<group>";
-		};
-		C7E8A47520159C92005139F6 /* Layout */ = {
-			isa = PBXGroup;
-			children = (
-				C7E8A4D82015ADD5005139F6 /* AbsoluteLayoutTest.swift */,
-				C7E8A4D72015ADD5005139F6 /* RelativeLayoutTest.swift */,
-				C7E9126C20EFD6FA0076774A /* LayoutNodeDelegateCounter.swift */,
-			);
-			path = Layout;
-			sourceTree = "<group>";
-		};
-		C7E8A47620159CAF005139F6 /* Layout */ = {
-			isa = PBXGroup;
-			children = (
-				C7E8A4B120159DF7005139F6 /* CAPI */,
-				C7E8A4D02015A698005139F6 /* Layout.swift */,
-				C7E8A4CE2015A698005139F6 /* LayoutNode.swift */,
-				C7E8A4CF2015A698005139F6 /* LayoutNodeDelegate.swift */,
-			);
-			path = Layout;
 			sourceTree = "<group>";
 		};
 		C7E8A47720159CC2005139F6 /* Extensions */ = {
@@ -1353,36 +1048,6 @@
 				C7E8A4FD2016244F005139F6 /* Runtime.m */,
 			);
 			path = Extensions;
-			sourceTree = "<group>";
-		};
-		C7E8A4B120159DF7005139F6 /* CAPI */ = {
-			isa = PBXGroup;
-			children = (
-				C7E8A4B920159E08005139F6 /* DLLayout.cpp */,
-				C7E8A4BA20159E08005139F6 /* DLLayout.h */,
-				C7E8A4BC20159E08005139F6 /* DLLayoutPrivate.cpp */,
-				C7E8A4BB20159E08005139F6 /* DLLayoutPrivate.h */,
-				C7E8A4B220159E08005139F6 /* DLLayoutNode.cpp */,
-				C7E8A4BD20159E08005139F6 /* DLLayoutNode.h */,
-				C7E8A4B820159E08005139F6 /* DLLayoutNodePrivate.cpp */,
-				C7E8A4B420159E08005139F6 /* DLLayoutNodePrivate.h */,
-				C7E8A4BF20159E08005139F6 /* DLRelativeLayout.cpp */,
-				C7E8A4BE20159E08005139F6 /* DLRelativeLayout.h */,
-				C7E8A4B620159E08005139F6 /* DLAbsoluteLayout.cpp */,
-				C7E8A4B320159E08005139F6 /* DLAbsoluteLayout.h */,
-			);
-			name = CAPI;
-			sourceTree = "<group>";
-		};
-		C7E8A4DC2015AF40005139F6 /* Style */ = {
-			isa = PBXGroup;
-			children = (
-				C72FF11B204EDD6D00FBB36B /* CAPI */,
-				C7E87E7420537A3600F09B22 /* Styler.swift */,
-				C78115AC2052E9CD0096AE47 /* StylerNode.swift */,
-				C78115AE2052EA0D0096AE47 /* StylerNodeDelegate.swift */,
-			);
-			path = Style;
 			sourceTree = "<group>";
 		};
 		C7E8A4DD2015AF48005139F6 /* Modules */ = {
@@ -1620,6 +1285,7 @@
 		C7FCA128231ABB2A00AFBDB6 /* CAPI */ = {
 			isa = PBXGroup;
 			children = (
+				C7BC21BB2333016200BEBD60 /* Style */,
 				C7040DD32326A2A200DFDBED /* Layout */,
 				C7040DCE2326A28800DFDBED /* Display */,
 			);
@@ -1632,6 +1298,7 @@
 				C7040DE82327DB2000DFDBED /* DisplayNodeDelegateCounter.swift */,
 				C7FCA148231C5BC400AFBDB6 /* DisplayNodeAbsoluteLayoutTest.swift */,
 				C7040DEC232980D200DFDBED /* DisplayNodeRelativeLayoutTest.swift */,
+				C705913A2337B1E8002EF92F /* DisplayStyleTest.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1643,105 +1310,40 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C77B0BD722262EF800917D82 /* Value.h in Headers */,
-				C77B0BD522262EF800917D82 /* Color.h in Headers */,
-				C77B0BB022262EF800917D82 /* TokenList.h in Headers */,
 				C7040DD72326A3C900DFDBED /* DisplayNodeStyle.h in Headers */,
 				C7E8A46C20159C80005139F6 /* Dezel.h in Headers */,
-				C77B0BDA22262EF800917D82 /* NumberFunctions.h in Headers */,
-				C7004C89214411BF00138ECC /* DLStylerStyleSelectorPrivate.h in Headers */,
-				C7004C8121440DCB00138ECC /* DLStylerStyleRulePrivate.h in Headers */,
-				C77B0BAD22262EF800917D82 /* SelectorParser.h in Headers */,
-				C77B0BC722262EF800917D82 /* StylerRuleset.h in Headers */,
-				C78115AB2052E8D00096AE47 /* DLStylerNodePrivate.h in Headers */,
 				C7E8A543201624FA005139F6 /* DLContext.h in Headers */,
-				C77B0BBD22262EF800917D82 /* Stylesheet.h in Headers */,
-				C77B0BCE22262EF800917D82 /* StylerTokenizer.h in Headers */,
-				C7E87E7E2053953500F09B22 /* DLStyler.h in Headers */,
 				C7040DB3232698AB00DFDBED /* DisplayNodeOrigin.h in Headers */,
+				C7BC21BF2333031400BEBD60 /* SelectorList.h in Headers */,
+				C7BC21C32333034100BEBD60 /* Selector.h in Headers */,
 				C7040DAB2326974300DFDBED /* DisplayNodeAnchor.h in Headers */,
-				C77B0BB122262EF800917D82 /* Writable.h in Headers */,
-				C77B0BB522262EF800917D82 /* Tokenizer.h in Headers */,
+				C773EE572334FCFC002D5025 /* TokenizerStream.h in Headers */,
 				C7E8A549201624FA005139F6 /* DLValue.h in Headers */,
-				C77B0BB222262EF800917D82 /* Parser.h in Headers */,
-				C77B0BCC22262EF800917D82 /* StylerSelector.h in Headers */,
-				C77B0BDC22262EF800917D82 /* UrlValue.h in Headers */,
-				C77B0BBF22262EF800917D82 /* StylerFunction.h in Headers */,
-				C7004C9921442AAC00138ECC /* DLStylerStyleSelectorTreePrivate.h in Headers */,
 				C7040DE22326C83F00DFDBED /* AbsoluteLayout.h in Headers */,
-				C77B0BC122262EF800917D82 /* StylerStylesheet.h in Headers */,
 				C77B0D792226DC4D00917D82 /* WebSocketSecurity.h in Headers */,
-				C77B0BC822262EF800917D82 /* StylerDeclaration.h in Headers */,
-				C7E8A4C820159E08005139F6 /* DLLayout.h in Headers */,
 				C7E8A5032016244F005139F6 /* Runtime.h in Headers */,
-				C7F8C9F920C17874007E8ECA /* DLStylerMatch.h in Headers */,
 				C7040D96232694B100DFDBED /* DisplayNode.h in Headers */,
-				C77B0BD322262EF800917D82 /* StringFunctions.h in Headers */,
-				C77B0BD922262EF800917D82 /* FunctionLibrary.h in Headers */,
-				C77B0BCF22262EF800917D82 /* StylerException.h in Headers */,
-				C77B0BD622262EF800917D82 /* ValueProcessor.h in Headers */,
-				C7E8A4C220159E08005139F6 /* DLLayoutNodePrivate.h in Headers */,
-				C77B0BB922262EF800917D82 /* RulesetStatement.h in Headers */,
-				C77B0BC422262EF800917D82 /* StylerSelectorParser.h in Headers */,
-				C77B0BE022262EF800917D82 /* ProcessingContext.h in Headers */,
-				C7004C9521442A5200138ECC /* DLStylerStyleSelectorTree.h in Headers */,
 				C7040DA6232694B100DFDBED /* DisplayRef.h in Headers */,
 				C7040DD22326A29900DFDBED /* Layout.h in Headers */,
-				C7E87E822053956700F09B22 /* DLStylerPrivate.h in Headers */,
-				C77B0BB722262EF800917D82 /* Writer.h in Headers */,
-				C77B0BCD22262EF800917D82 /* StylerAtRule.h in Headers */,
 				C7040D9A232694B100DFDBED /* Display.h in Headers */,
-				C7004C8D2144240000138ECC /* DLStylerStyleItem.h in Headers */,
-				C7E8A4C120159E08005139F6 /* DLAbsoluteLayout.h in Headers */,
-				C77B0BBB22262EF800917D82 /* MediaQuery.h in Headers */,
-				C77B0BD822262EF800917D82 /* ValueScope.h in Headers */,
-				C77B0BD222262EF800917D82 /* StringValue.h in Headers */,
-				C7004C7D21440DB600138ECC /* DLStylerStyleRule.h in Headers */,
-				C77B0BD422262EF800917D82 /* BooleanValue.h in Headers */,
 				C77B0D4C2226D7DC00917D82 /* LRUDiskCache.h in Headers */,
-				C77B0BD122262EF800917D82 /* UnitValue.h in Headers */,
-				C7004C852144118D00138ECC /* DLStylerStyleSelector.h in Headers */,
-				C77B0BB822262EF800917D82 /* Token.h in Headers */,
 				C7040DAF2326983700DFDBED /* DisplayNodeSize.h in Headers */,
+				C7BC21D723345D2F00BEBD60 /* Tokenizer.h in Headers */,
+				C7BC21D323345CFC00BEBD60 /* Token.h in Headers */,
 				C7E8A546201624FA005139F6 /* DLContextPrivate.h in Headers */,
-				C7E8A4C920159E08005139F6 /* DLLayoutPrivate.h in Headers */,
-				C77B0BB622262EF800917D82 /* SourceMapWriter.h in Headers */,
-				C7FAFD94205AAC900031B2E9 /* DLStylerStyleBuilder.h in Headers */,
-				C7E8A4CC20159E08005139F6 /* DLRelativeLayout.h in Headers */,
-				C77B0BCB22262EF800917D82 /* StylerMixinArguments.h in Headers */,
-				C77B0BDE22262EF800917D82 /* ColorFunctions.h in Headers */,
-				C77B0BB422262EF800917D82 /* Comment.h in Headers */,
-				C77B0BBE22262EF800917D82 /* StylerExtension.h in Headers */,
-				C77B0BBA22262EF800917D82 /* ParseException.h in Headers */,
-				C77B0BC222262EF800917D82 /* StylerMediaQuery.h in Headers */,
 				C7040DBF232698FC00DFDBED /* DisplayNodeMargin.h in Headers */,
-				C77B0BCA22262EF800917D82 /* StylerMixinCall.h in Headers */,
 				C7040D9C232694B100DFDBED /* DisplayNodeRef.h in Headers */,
-				C77B0BAE22262EF800917D82 /* Selector.h in Headers */,
 				C7040DB7232698C000DFDBED /* DisplayNodeContentSize.h in Headers */,
-				C77B0BC522262EF800917D82 /* StylerMixin.h in Headers */,
 				C7E8A54A201624FA005139F6 /* DLValuePrivate.h in Headers */,
-				C77B0BC322262EF800917D82 /* StylerMixinException.h in Headers */,
+				C7BC21C72333041300BEBD60 /* Rule.h in Headers */,
 				C7040DC72326993400DFDBED /* DisplayNodePadding.h in Headers */,
-				C77B0BDD22262EF800917D82 /* NumberValue.h in Headers */,
-				C77B0BC922262EF800917D82 /* StylerParser.h in Headers */,
-				C74487E4205230BB00D74D30 /* DLStylerNode.h in Headers */,
-				C77B0BAC22262EF800917D82 /* Ruleset.h in Headers */,
-				C77B0BAF22262EF800917D82 /* AtRule.h in Headers */,
-				C77B0BDB22262EF800917D82 /* ValueException.h in Headers */,
-				C77B0BBC22262EF800917D82 /* StylesheetStatement.h in Headers */,
-				C77B0BB322262EF800917D82 /* Declaration.h in Headers */,
-				C7004C912144241200138ECC /* DLStylerStyleItemPrivate.h in Headers */,
-				C77B0BD022262EF800917D82 /* UrlFunctions.h in Headers */,
+				C7BC21CF2333052900BEBD60 /* Parser.h in Headers */,
+				C7BC21CB2333046E00BEBD60 /* Sheet.h in Headers */,
 				C7040DBB232698D000DFDBED /* DisplayNodeContentOrigin.h in Headers */,
-				C77B0BDF22262EF800917D82 /* VariableMap.h in Headers */,
 				C77B0D7C2226DC4D00917D82 /* WebSocketConnection.h in Headers */,
 				C7040DC32326991200DFDBED /* DisplayNodeBorder.h in Headers */,
 				C7040DCB2326999B00DFDBED /* DisplayBase.h in Headers */,
-				C77B0BC622262EF800917D82 /* StylerMediaQueryRuleset.h in Headers */,
 				C7040D9F232694B100DFDBED /* DisplayNodeFrame.h in Headers */,
-				C77B0BC022262EF800917D82 /* StylerClosure.h in Headers */,
-				C7E8A4CB20159E08005139F6 /* DLLayoutNode.h in Headers */,
 				C7040DDF2326B2FA00DFDBED /* RelativeLayout.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1875,6 +1477,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C7BC21BE2333031400BEBD60 /* SelectorList.cpp in Sources */,
 				C7FCA1082315CD7200AFBDB6 /* Lock.swift in Sources */,
 				C71E6CE120E6617D009B86F6 /* Scrollbars.swift in Sources */,
 				C777B63F22DA49B600E75E55 /* WeakReference.swift in Sources */,
@@ -1884,8 +1487,8 @@
 				C7B9CEAC202CDBB7002409D5 /* JavaScriptApplication.swift in Sources */,
 				C77189B22106AE0A00337263 /* Transform2D.swift in Sources */,
 				C767544520269DB5003C4D85 /* TextView.swift in Sources */,
-				C78115AA2052E8D00096AE47 /* DLStylerNodePrivate.cpp in Sources */,
-				C7004C88214411BF00138ECC /* DLStylerStyleSelectorPrivate.cpp in Sources */,
+				C7BC21C62333041300BEBD60 /* Rule.cpp in Sources */,
+				C7BC21C22333034100BEBD60 /* Selector.cpp in Sources */,
 				C7BB7D3E2028F4C5004006C2 /* CGRect.swift in Sources */,
 				C7682A422035395F006EA6D5 /* Layer.swift in Sources */,
 				C7FCA1022311B4C800AFBDB6 /* JavaScriptPropertyStorageValue.swift in Sources */,
@@ -1898,8 +1501,6 @@
 				C77189B02106ADFD00337263 /* Point3D.swift in Sources */,
 				C767544720269DBD003C4D85 /* ImageView.swift in Sources */,
 				C76864712039146700D1903B /* JavaScriptPropertyType.swift in Sources */,
-				C78115AF2052EA0D0096AE47 /* StylerNodeDelegate.swift in Sources */,
-				C7FAFD93205AAC900031B2E9 /* DLStylerStyleBuilder.cpp in Sources */,
 				C75153BD22F11CAA007CAA48 /* JavaScriptLocale.swift in Sources */,
 				C7BB7D462029062D004006C2 /* TransitionGroup.swift in Sources */,
 				C7A3AB77214EC68100D8B15C /* JavaScriptCanvas.swift in Sources */,
@@ -1911,29 +1512,24 @@
 				C72E0E9020668EE1003BCEF1 /* TextLayer.swift in Sources */,
 				C7E8A545201624FA005139F6 /* DLValue.cpp in Sources */,
 				C7BB7D472029062D004006C2 /* Transition.swift in Sources */,
+				C7BC21D623345D2F00BEBD60 /* Tokenizer.cpp in Sources */,
 				C73700C72219A9370095A54B /* ImageEffect.swift in Sources */,
 				C72E0E9520669CA0003BCEF1 /* TextLocation.swift in Sources */,
 				C7E8A544201624FA005139F6 /* DLValuePrivate.cpp in Sources */,
 				C77189B42106AE1300337263 /* Transform3D.swift in Sources */,
 				C7A19E2E20AB721F00367E91 /* PlatformModule.swift in Sources */,
-				C7004C8C2144240000138ECC /* DLStylerStyleItem.cpp in Sources */,
-				C7E8A4C720159E08005139F6 /* DLLayout.cpp in Sources */,
-				C7E8A4CA20159E08005139F6 /* DLLayoutPrivate.cpp in Sources */,
 				C7E5D081209DDF730098C5FD /* JavaScriptAlert.swift in Sources */,
 				C79E6EB42207650F0006DED8 /* Date.swift in Sources */,
 				C7FCA10A2316AE9A00AFBDB6 /* JavaScriptNull.swift in Sources */,
 				C77D6E23220F730D005FAAF8 /* NSRegularExpression.swift in Sources */,
-				C7E8A4CD20159E08005139F6 /* DLRelativeLayout.cpp in Sources */,
 				C7B9CEB1202CE225002409D5 /* ViewModule.swift in Sources */,
 				C767543A20269971003C4D85 /* BitmapLayer.swift in Sources */,
-				C7E8A4C420159E08005139F6 /* DLAbsoluteLayout.cpp in Sources */,
 				C7BFD160207D518600AAD31C /* SpinnerView.swift in Sources */,
 				C7E45AEE21DD462C00247465 /* TextViewDelegate.swift in Sources */,
 				C7F2260B2081A10000ABC66D /* Unsafe.swift in Sources */,
 				C7E30977203123DD00436FA4 /* UIView.swift in Sources */,
+				C7BC21D223345CFC00BEBD60 /* Token.cpp in Sources */,
 				C7004C58213C4CF800138ECC /* Dictionary.swift in Sources */,
-				C7E8A4C020159E08005139F6 /* DLLayoutNode.cpp in Sources */,
-				C7E8A4C620159E08005139F6 /* DLLayoutNodePrivate.cpp in Sources */,
 				C7B9CEAF202CDBD8002409D5 /* JavaScriptWindow.swift in Sources */,
 				C7040DA4232694B100DFDBED /* Display.cpp in Sources */,
 				C7E8A5012016244F005139F6 /* Runtime.m in Sources */,
@@ -1948,7 +1544,6 @@
 				C71E6CD720E3DBA8009B86F6 /* Synchronizer.swift in Sources */,
 				C7BCD7482094C5AD0014CD19 /* Scrollable.swift in Sources */,
 				C7E8A52E201624A2005139F6 /* JavaScriptObject.swift in Sources */,
-				C7004C902144241200138ECC /* DLStylerStyleItemPrivate.cpp in Sources */,
 				C7D8926720657B3400E85115 /* NSAttributedString.swift in Sources */,
 				C7E8A51F201624A2005139F6 /* Module.swift in Sources */,
 				C767543320269971003C4D85 /* JavaScriptProperty.swift in Sources */,
@@ -1982,7 +1577,6 @@
 				C718A0B52066ED6100EFEC15 /* JavaScriptImage.swift in Sources */,
 				C7BFD16C207D560E00AAD31C /* UIColor.swift in Sources */,
 				C7FCA0FA2311B49200AFBDB6 /* JavaScriptPropertyStorageBoolean.swift in Sources */,
-				C7004C8021440DCB00138ECC /* DLStylerStyleRulePrivate.cpp in Sources */,
 				C7E8A531201624A2005139F6 /* JavaScriptBuilder.swift in Sources */,
 				C72FF045204E190500FBB36B /* ShapeLayer.swift in Sources */,
 				C700121621551A9A00CB26D4 /* DeviceModule.swift in Sources */,
@@ -1994,7 +1588,6 @@
 				C7EE2E1D22E24CCC00FFF0EE /* JavaScriptXMLHttpRequest.swift in Sources */,
 				C7BB7D402028F4C5004006C2 /* CGPath.swift in Sources */,
 				C77D6E272210C162005FAAF8 /* CTFrame.swift in Sources */,
-				C7E87E7D2053953500F09B22 /* DLStyler.cpp in Sources */,
 				C7FCA140231C499C00AFBDB6 /* DisplayNode.swift in Sources */,
 				C7BB7D4B20293955004006C2 /* Array.swift in Sources */,
 				C7964D642033E67E00F454F1 /* CALayer.swift in Sources */,
@@ -2006,16 +1599,13 @@
 				C78A2C5A21DEE6E10018712D /* TextLayout.swift in Sources */,
 				C7A19E3220AB725D00367E91 /* JavaScriptPlatform.swift in Sources */,
 				C777B5DC22D1429A00E75E55 /* CoreModule.swift in Sources */,
-				C7004C9821442AAC00138ECC /* DLStylerStyleSelectorTreePrivate.cpp in Sources */,
 				C7040DB6232698C000DFDBED /* DisplayNodeContentSize.cpp in Sources */,
 				C71A119F2080EB300004D523 /* HttpRequestDelegate.swift in Sources */,
 				C7E8A5022016244F005139F6 /* String.swift in Sources */,
 				C70617A420F7C03100499FDB /* TransitionListener.swift in Sources */,
 				C7BFD168207D541800AAD31C /* JavaScriptTextInput.swift in Sources */,
-				C7E8A4D22015A699005139F6 /* LayoutNodeDelegate.swift in Sources */,
 				C7B40F6320B7170E00892C92 /* TextAreaDelegate.swift in Sources */,
 				C7D89263206575CB00E85115 /* JavaScriptTextView.swift in Sources */,
-				C7E87E812053956700F09B22 /* DLStylerPrivate.cpp in Sources */,
 				C7E8A528201624A2005139F6 /* JavaScriptClassSetterWrapper.swift in Sources */,
 				C7A3AB79214ECBA500D8B15C /* CanvasLayer.swift in Sources */,
 				C718B5B4207C3D0D00610F8D /* LinearGradient.swift in Sources */,
@@ -2037,16 +1627,14 @@
 				C7B9CEA6202CDB8D002409D5 /* ApplicationController.swift in Sources */,
 				C7EE2E0622DE2D5B00FFF0EE /* CADisplayLink.swift in Sources */,
 				C71E6CDD20E65CCF009B86F6 /* UIEdgeInsets.swift in Sources */,
-				C7004C842144118D00138ECC /* DLStylerStyleSelector.cpp in Sources */,
 				C7E8A527201624A2005139F6 /* JavaScriptGetterWrapper.swift in Sources */,
 				C7D14EDC21D07058008B51D4 /* Scanner.swift in Sources */,
 				C7CE4B032208AB53005D5235 /* DateParser.swift in Sources */,
+				C7BC21CA2333046E00BEBD60 /* Sheet.cpp in Sources */,
 				C7FCA1002311B4BA00AFBDB6 /* JavaScriptPropertyStorageString.swift in Sources */,
 				C7CE4B072208C93C005D5235 /* UITextField.swift in Sources */,
-				C74487E3205230BB00D74D30 /* DLStylerNode.cpp in Sources */,
 				C7BB7D3C2028F4C5004006C2 /* CGColor.swift in Sources */,
 				C73700C42218C00D0095A54B /* ImageFilter.swift in Sources */,
-				C7E87E7520537A3600F09B22 /* Styler.swift in Sources */,
 				C718A0B32066E63300EFEC15 /* ImageLayer.swift in Sources */,
 				C7E8A522201624A2005139F6 /* JavaScriptClassGetterWrapper.swift in Sources */,
 				C7E309792031312700436FA4 /* CGPoint.swift in Sources */,
@@ -2056,15 +1644,14 @@
 				C7E8A524201624A2005139F6 /* JavaScriptClass.swift in Sources */,
 				C75153B322EB4BC3007CAA48 /* HTTPURLResponse.swift in Sources */,
 				C75153C322F37C11007CAA48 /* JavaScriptClassStaticSetterWrapper.swift in Sources */,
-				C7E8A4D32015A699005139F6 /* Layout.swift in Sources */,
 				C7040DBA232698D000DFDBED /* DisplayNodeContentOrigin.cpp in Sources */,
 				C7040D9D232694B100DFDBED /* DisplayRef.cpp in Sources */,
 				C7EE2E2522E4B35A00FFF0EE /* JavaScriptForEachWrapper.swift in Sources */,
 				C7E8A52D201624A2005139F6 /* JavaScriptValue.swift in Sources */,
 				C75153C122F37C03007CAA48 /* JavaScriptClassStaticGetterWrapper.swift in Sources */,
-				C78115AD2052E9CD0096AE47 /* StylerNode.swift in Sources */,
+				C7BC21CE2333052900BEBD60 /* Parser.cpp in Sources */,
 				C7FCA10C2316AFD900AFBDB6 /* JavaScriptUndefined.swift in Sources */,
-				C7004C7C21440DB600138ECC /* DLStylerStyleRule.cpp in Sources */,
+				C773EE562334FCFC002D5025 /* TokenizerStream.cpp in Sources */,
 				C7027CD32270DFDA001DD0F7 /* ScrollViewTouchCancelGesture.swift in Sources */,
 				C767544D2028DB7B003C4D85 /* JavaScriptView.swift in Sources */,
 				C718A0BE206748DC00EFEC15 /* ImageLiveCache.swift in Sources */,
@@ -2072,7 +1659,6 @@
 				C7E8A520201624A2005139F6 /* JavaScriptSetterCallback.swift in Sources */,
 				C7BFD164207D52F100AAD31C /* TextInput.swift in Sources */,
 				C7E8A525201624A2005139F6 /* JavaScriptClassFunctionWrapper.swift in Sources */,
-				C7F8C9F820C17874007E8ECA /* DLStylerMatch.cpp in Sources */,
 				C777B62A22D77B2D00E75E55 /* TestRunner.swift in Sources */,
 				C7040D97232694B100DFDBED /* DisplayNodeRef.cpp in Sources */,
 				C71E6CC220DD50A0009B86F6 /* WebViewDelegate.swift in Sources */,
@@ -2084,9 +1670,7 @@
 				C7E8A526201624A2005139F6 /* JavaScriptGetterCallback.swift in Sources */,
 				C77189A521014A9200337263 /* JavaScriptViewOptimizer.swift in Sources */,
 				C7EE2E2122E4B21100FFF0EE /* JavaScriptForOwnWrapper.swift in Sources */,
-				C7E8A4D12015A699005139F6 /* LayoutNode.swift in Sources */,
 				C71E6CDF20E65FB6009B86F6 /* Updatable.swift in Sources */,
-				C7004C9421442A5200138ECC /* DLStylerStyleSelectorTree.cpp in Sources */,
 				C7FCA104231444F600AFBDB6 /* JavaScriptPropertyParser.swift in Sources */,
 				C7B40F6120B716C800892C92 /* TextArea.swift in Sources */,
 				C77DFED3208CD91600CEC1D9 /* ImageLoader.swift in Sources */,
@@ -2103,9 +1687,8 @@
 				C7E8A4F520162429005139F6 /* JavaScriptContextTestClassB.swift in Sources */,
 				C7E8A4F320162429005139F6 /* JavaScriptGetterTest.swift in Sources */,
 				C7040DE92327DB2100DFDBED /* DisplayNodeDelegateCounter.swift in Sources */,
-				C7E8A4DB2015ADD5005139F6 /* AbsoluteLayoutTest.swift in Sources */,
 				C7FCA1142316FA0800AFBDB6 /* JavaScriptPropertyTest.swift in Sources */,
-				C7E9126D20EFD6FA0076774A /* LayoutNodeDelegateCounter.swift in Sources */,
+				C705913B2337B1E8002EF92F /* DisplayStyleTest.swift in Sources */,
 				C7E8A4F120162429005139F6 /* JavaScriptSetterTest.swift in Sources */,
 				C7E8A4F820162429005139F6 /* JavaScriptContextTestClassA.swift in Sources */,
 				C7E8A4F220162429005139F6 /* JavaScriptClassTest.swift in Sources */,
@@ -2117,7 +1700,6 @@
 				C7E8A4F420162429005139F6 /* JavaScriptFunctionTest.swift in Sources */,
 				C7E8A4F620162429005139F6 /* JavaScriptEmptyClass.swift in Sources */,
 				C7040DED232980D200DFDBED /* DisplayNodeRelativeLayoutTest.swift in Sources */,
-				C7E8A4DA2015ADD5005139F6 /* RelativeLayoutTest.swift in Sources */,
 				C777B62E22D7838E00E75E55 /* DezelUnitTests.swift in Sources */,
 				C7E8A4FA20162429005139F6 /* JavaScriptTestClass.swift in Sources */,
 			);
