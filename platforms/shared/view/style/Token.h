@@ -16,20 +16,24 @@ enum TokenType {
 	kTokenTypeIdentifier,
 	kTokenTypeVariable,
 	kTokenTypeUnit,
+	kTokenTypeHash,
+	kTokenTypeClass,
 	kTokenTypeNumber,
 	kTokenTypeString,
 	kTokenTypeFunction,
 	kTokenTypeComma,
 	kTokenTypeColon,
+	kTokenTypeDelimiter,
 	kTokenTypeSemicolon,
-	kTokenTypeBraceOpen,
-	kTokenTypeBraceClose,
-	kTokenTypeBracketOpen,
-	kTokenTypeBracketClose,
+	kTokenTypeSquareBracketOpen,
+	kTokenTypeSquareBracketClose,
+	kTokenTypeCurlyBracketOpen,
+	kTokenTypeCurlyBracketClose,
 	kTokenTypeParenthesisOpen,
 	kTokenTypeParenthesisClose,
 	kTokenTypeComment,
-	kTokenTypeEOF,
+	kTokenTypeNewline,
+	kTokenTypeEnd,
 	kTokenTypeOther
 };
 
@@ -52,7 +56,8 @@ class Token {
 
 private:
 
-	string tokenName;
+	string tokenName = "";
+	string tokenUnit = "";
 	TokenType tokenType;
 	BlockType blockType;
 
@@ -60,12 +65,19 @@ public:
 
 	Token(TokenType tokenType);
 	Token(TokenType tokenType, string name);
+	Token(TokenType tokenType, string name, string unit);
+
+	Token(TokenType tokenType, char c);
 
 	Token(TokenType tokenType, BlockType blockType);
 	Token(TokenType tokenType, BlockType blockType, string name);
 
 	string getTokenName() {
 		return this->tokenName;
+	}
+
+	string getTokenUnit() {
+		return this->tokenUnit;
 	}
 
 	TokenType getTokenType() {

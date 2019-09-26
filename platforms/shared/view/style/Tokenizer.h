@@ -5,6 +5,9 @@
 #include "TokenizerStream.h"
 #include <string>
 
+#define EOS '\0'
+
+
 namespace View::Style {
 
 using std::string;
@@ -13,44 +16,44 @@ class Tokenizer {
 
 private:
 
+	using Consumer = Token (Tokenizer::*)(char);
+
+	static const Consumer consumers[];
+
 	TokenizerStream stream;
 
-	Token processSpace(char c);
-	Token processAlpha(char c);
-	Token processDigit(char c);
+	size_t length;
 
-	Token processString(char c);
-	Token processParenthesisOpen(char c);
-	Token processParenthesisClose(char c);
-	Token processBracketOpen(char c);
-	Token processBracketClose(char c);
-	Token processBraceOpen(char c);
-	Token processBraceClose(char c);
-	Token processAt(char c);
-	Token processHash(char c);
-	Token processPlus(char c);
-	Token processMinus(char c);
-	Token processAsterisk(char c);
-	Token processComma(char c);
-	Token processPeriod(char c);
-	Token processColon(char c);
-	Token processSemicolon(char c);
-	Token processDollar(char c);
+	Token consumeEnd(char c);
+	Token consumeSpace(char c);
+	Token consumeNewline(char c);
+	Token consumeAlpha(char c);
+	Token consumeDigit(char c);
+	Token consumeDoubleQuote(char c);
+	Token consumeSingleQuote(char c);
+	Token consumeCurlyBracketOpen(char c);
+	Token consumeCurlyBracketClose(char c);
+	Token consumeSquareBracketOpen(char c);
+	Token consumeSquareBracketClose(char c);
+	Token consumeParenthesisOpen(char c);
+	Token consumeParenthesisClose(char c);
+	Token consumePlus(char c);
+	Token consumeMinus(char c);
+	Token consumeAsterisk(char c);
+	Token consumeSlash(char c);
+	Token consumeAt(char c);
+	Token consumeHash(char c);
+	Token consumeDollar(char c);
+	Token consumeComma(char c);
+	Token consumeColon(char c);
+	Token consumeSemicolon(char c);
+	Token consumePeriod(char c);
+	Token consumeAmpersand(char c);
 
-	Token processIdentifier();
-	Token processNumber();
-
-	string readName();
-	string readNumber();
-
-	bool isFollowedByNumber();
-
-	bool isNameCodePoint(char c);
-	bool isNameStartCodePoint(char c);
-	bool isSpace(char c);
-	bool isASCII(char c);
-	bool isASCIIAlpha(char c);
-	bool isASCIIDigit(char c);
+	Token consumeIdent();
+	Token consumeClass();
+	Token consumeNumber();
+	Token consumeString(char end);
 
 public:
 

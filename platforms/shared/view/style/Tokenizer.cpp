@@ -1,11 +1,190 @@
 #include "Tokenizer.h"
 
+#include <string>
+#include <functional>
+
 namespace View::Style {
 
 using std::string;
+using std::invoke;
+
+static bool isASCII(char c) {
+	return !(c & ~0x7F);
+}
+
+static bool isSpace(char c) {
+	return c == ' ' || c == '\t' || c == '\n';
+}
+
+static bool isNewline(char c) {
+	return (c == '\r' || c == '\n' || c == '\f');
+}
+
+static bool isAlpha(char c) {
+	return (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z');
+}
+
+static bool isDigit(char c) {
+	return c >= '0' && c <= '9';
+}
+
+static bool isNumberSeparator(char c) {
+	return c == '.';
+}
+
+static bool isNumberQualifier(char c) {
+	return c == '+' || c == '-';
+}
+
+static bool isNameStart(char c) {
+	return isAlpha(c) || c == '_';
+}
+
+static bool isName(char c) {
+	return isNameStart(c) || isDigit(c) || c == '-';
+}
+
+static bool isUnit(char c) {
+	return isAlpha(c) || c == '%';
+}
+
+/*
+ * Map the ASCII table to character consumers.
+ */
+
+const Tokenizer::Consumer Tokenizer::consumers[128] = {
+	&Tokenizer::consumeEnd,
+	0,
+	0,
+	0,
+	0,
+	0,
+	0,
+	0,
+	0,
+	&Tokenizer::consumeSpace,
+	&Tokenizer::consumeNewline,
+	0,
+	&Tokenizer::consumeNewline,
+	&Tokenizer::consumeNewline,
+	0,
+	0,
+	0,
+	0,
+	0,
+	0,
+	0,
+	0,
+	0,
+	0,
+	0,
+	0,
+	0,
+	0,
+	0,
+	0,
+	0,
+	0,
+	&Tokenizer::consumeSpace,
+	0,
+	&Tokenizer::consumeDoubleQuote,
+	&Tokenizer::consumeHash,
+	&Tokenizer::consumeDollar,
+	0,
+	&Tokenizer::consumeAmpersand,
+	&Tokenizer::consumeSingleQuote,
+	&Tokenizer::consumeParenthesisOpen,
+	&Tokenizer::consumeParenthesisClose,
+	&Tokenizer::consumeAsterisk,
+	&Tokenizer::consumePlus,
+	&Tokenizer::consumeComma,
+	&Tokenizer::consumeMinus,
+	&Tokenizer::consumePeriod,
+	&Tokenizer::consumeSlash,
+	&Tokenizer::consumeDigit,
+	&Tokenizer::consumeDigit,
+	&Tokenizer::consumeDigit,
+	&Tokenizer::consumeDigit,
+	&Tokenizer::consumeDigit,
+	&Tokenizer::consumeDigit,
+	&Tokenizer::consumeDigit,
+	&Tokenizer::consumeDigit,
+	&Tokenizer::consumeDigit,
+	&Tokenizer::consumeDigit,
+	&Tokenizer::consumeColon,
+	&Tokenizer::consumeSemicolon,
+	0,
+	0,
+	0,
+	0,
+	&Tokenizer::consumeAt,
+	&Tokenizer::consumeAlpha,
+	&Tokenizer::consumeAlpha,
+	&Tokenizer::consumeAlpha,
+	&Tokenizer::consumeAlpha,
+	&Tokenizer::consumeAlpha,
+	&Tokenizer::consumeAlpha,
+	&Tokenizer::consumeAlpha,
+	&Tokenizer::consumeAlpha,
+	&Tokenizer::consumeAlpha,
+	&Tokenizer::consumeAlpha,
+	&Tokenizer::consumeAlpha,
+	&Tokenizer::consumeAlpha,
+	&Tokenizer::consumeAlpha,
+	&Tokenizer::consumeAlpha,
+	&Tokenizer::consumeAlpha,
+	&Tokenizer::consumeAlpha,
+	&Tokenizer::consumeAlpha,
+	&Tokenizer::consumeAlpha,
+	&Tokenizer::consumeAlpha,
+	&Tokenizer::consumeAlpha,
+	&Tokenizer::consumeAlpha,
+	&Tokenizer::consumeAlpha,
+	&Tokenizer::consumeAlpha,
+	&Tokenizer::consumeAlpha,
+	&Tokenizer::consumeAlpha,
+	&Tokenizer::consumeAlpha,
+	&Tokenizer::consumeSquareBracketOpen,
+	0,
+	&Tokenizer::consumeSquareBracketClose,
+	0,
+	&Tokenizer::consumeAlpha,
+	0,
+	&Tokenizer::consumeAlpha,
+	&Tokenizer::consumeAlpha,
+	&Tokenizer::consumeAlpha,
+	&Tokenizer::consumeAlpha,
+	&Tokenizer::consumeAlpha,
+	&Tokenizer::consumeAlpha,
+	&Tokenizer::consumeAlpha,
+	&Tokenizer::consumeAlpha,
+	&Tokenizer::consumeAlpha,
+	&Tokenizer::consumeAlpha,
+	&Tokenizer::consumeAlpha,
+	&Tokenizer::consumeAlpha,
+	&Tokenizer::consumeAlpha,
+	&Tokenizer::consumeAlpha,
+	&Tokenizer::consumeAlpha,
+	&Tokenizer::consumeAlpha,
+	&Tokenizer::consumeAlpha,
+	&Tokenizer::consumeAlpha,
+	&Tokenizer::consumeAlpha,
+	&Tokenizer::consumeAlpha,
+	&Tokenizer::consumeAlpha,
+	&Tokenizer::consumeAlpha,
+	&Tokenizer::consumeAlpha,
+	&Tokenizer::consumeAlpha,
+	&Tokenizer::consumeAlpha,
+	&Tokenizer::consumeAlpha,
+	&Tokenizer::consumeCurlyBracketOpen,
+	0,
+	&Tokenizer::consumeCurlyBracketClose,
+	0,
+	0
+};
 
 Tokenizer::Tokenizer(TokenizerStream &stream): stream(stream) {
-
+	this->length = stream.getLength();
 }
 
 Token
@@ -13,384 +192,303 @@ Tokenizer::next()
 {
 	char c = this->stream.read();
 
-	switch (c) {
+	if (isASCII(c)) {
 
-		// NUL
-		case 0:
-			return Token(kTokenTypeEOF);
+		auto consumer = consumers[c];
 
-		case 9:
-		case 10:
-		case 12:
-		case 13:
-		case 32:
-			return this->processSpace(c);
-
-		case 'A':
-		case 'B':
-		case 'C':
-		case 'D':
-		case 'E':
-		case 'F':
-		case 'G':
-		case 'H':
-		case 'I':
-		case 'J':
-		case 'K':
-		case 'L':
-		case 'M':
-		case 'N':
-		case 'O':
-		case 'P':
-		case 'Q':
-		case 'R':
-		case 'S':
-		case 'T':
-		case 'U':
-		case 'V':
-		case 'W':
-		case 'X':
-		case 'Y':
-		case 'Z':
-		case 'a':
-		case 'b':
-		case 'c':
-		case 'd':
-		case 'e':
-		case 'f':
-		case 'g':
-		case 'h':
-		case 'i':
-		case 'j':
-		case 'k':
-		case 'l':
-		case 'm':
-		case 'n':
-		case 'o':
-		case 'p':
-		case 'q':
-		case 'r':
-		case 's':
-		case 't':
-		case 'u':
-		case 'v':
-		case 'w':
-		case 'x':
-		case 'y':
-		case 'z':
-		case '_':
-			return this->processAlpha(c);
-
-		case '0':
-		case '1':
-		case '2':
-		case '3':
-		case '4':
-		case '5':
-		case '6':
-		case '7':
-		case '8':
-			return this->processDigit(c);
-
-		case '"':
-		case '\'':
-			return this->processString(c);
-
-		case '(': return this->processParenthesisOpen(c);
-		case ')': return this->processParenthesisClose(c);
-		case '[': return this->processBracketOpen(c);
-		case ']': return this->processBracketClose(c);
-		case '{': return this->processBraceOpen(c);
-		case '}': return this->processBraceClose(c);
-		case '*': return this->processAsterisk(c);
-		case '+': return this->processPlus(c);
-		case '-': return this->processMinus(c);
-		case ',': return this->processComma(c);
-		case '.': return this->processPeriod(c);
-		case ':': return this->processColon(c);
-		case ';': return this->processSemicolon(c);
-		case '#': return this->processHash(c);
-		case '$': return this->processDollar(c);
-		case '@': return this->processAt(c);
-
-		case '/':
-			// solidus
-			break;
-		case '\\':
-			// Reverse solidus
-			break;
-
-
-
-		case '^':
-			// Not used yet.
-			break;
-
-		case '<':
-		 	// Not used yet.
-			break;
-
-		case '>':
-			// Not used yet.
-			break;
-
-		case '~':
-			// Not used yet.
-			break;
+		if (consumer) {
+			return invoke(consumer, this, c);
+		}
 	}
 
-	return Token(kTokenTypeOther);
+	return Token(kTokenTypeOther, c);
 }
 
 Token
-Tokenizer::processSpace(char c)
+Tokenizer::consumeEnd(char c)
 {
-	for (size_t i = 0; ; i++) {
+	return Token(kTokenTypeEnd);
+}
 
-		char c = this->stream.peek(i);
-
-		if (c == ' '  ||
-			c == '\t' ||
-			c == '\n') {
-			continue;
-		}
-
-		this->stream.next(i); // Probably not good
-		break;
-	}
-
+Token
+Tokenizer::consumeSpace(char c)
+{
+	this->stream.skip<isSpace>();
 	return Token(kTokenTypeSpace);
 }
 
 Token
-Tokenizer::processAlpha(char c)
+Tokenizer::consumeNewline(char c)
+{
+	this->stream.skip<isNewline>();
+	return Token(kTokenTypeNewline, c);
+}
+
+Token
+Tokenizer::consumeAlpha(char c)
 {
 	this->stream.back();
-	return this->processIdentifier();
+	return this->consumeIdent();
 }
 
 Token
-Tokenizer::processDigit(char c)
+Tokenizer::consumeDigit(char c)
 {
 	this->stream.back();
-	return this->processNumber();
+	return this->consumeNumber();
 }
 
 Token
-Tokenizer::processString(char c)
+Tokenizer::consumeDoubleQuote(char c)
 {
-	return Token(kTokenTypeOther);
+	return this->consumeString(c);
 }
 
 Token
-Tokenizer::processParenthesisOpen(char c)
+Tokenizer::consumeSingleQuote(char c)
 {
-	return Token(kTokenTypeParenthesisOpen, kBlockTypeStart);
+	return this->consumeString(c);
 }
 
 Token
-Tokenizer::processParenthesisClose(char c)
+Tokenizer::consumeCurlyBracketOpen(char c)
+{
+	return Token(kTokenTypeCurlyBracketOpen, kBlockTypeStart);
+}
+
+Token
+Tokenizer::consumeCurlyBracketClose(char c)
+{
+	return Token(kTokenTypeCurlyBracketClose, kBlockTypeEnd);
+}
+
+Token
+Tokenizer::consumeSquareBracketOpen(char c)
+{
+	return Token(kTokenTypeSquareBracketOpen, kBlockTypeStart);
+}
+
+Token
+Tokenizer::consumeSquareBracketClose(char c)
+{
+	return Token(kTokenTypeSquareBracketClose, kBlockTypeEnd);
+}
+
+Token
+Tokenizer::consumeParenthesisOpen(char c)
+{
+	return Token(kTokenTypeParenthesisOpen, kBlockTypeEnd);
+}
+
+Token
+Tokenizer::consumeParenthesisClose(char c)
 {
 	return Token(kTokenTypeParenthesisClose, kBlockTypeEnd);
 }
 
 Token
-Tokenizer::processBracketOpen(char c)
+Tokenizer::consumePlus(char c)
 {
-	return Token(kTokenTypeBracketOpen, kBlockTypeStart);
+	if (this->stream.peek<isDigit>() ||
+		this->stream.peek<isNumberSeparator>()) {
+		this->stream.back();
+		return this->consumeNumber();
+	}
+
+	return Token(kTokenTypeDelimiter, c);
 }
 
 Token
-Tokenizer::processBracketClose(char c)
+Tokenizer::consumeMinus(char c)
 {
-	return Token(kTokenTypeBracketClose, kBlockTypeEnd);
+	if (this->stream.peek<isDigit>() ||
+		this->stream.peek<isNumberSeparator>()) {
+		this->stream.back();
+		return this->consumeNumber();
+	}
+
+	return Token(kTokenTypeDelimiter, c);
 }
 
 Token
-Tokenizer::processBraceOpen(char c)
+Tokenizer::consumeAsterisk(char c)
 {
-	return Token(kTokenTypeBraceOpen, kBlockTypeStart);
+	return Token(kTokenTypeDelimiter, c);
 }
 
 Token
-Tokenizer::processBraceClose(char c)
+Tokenizer::consumeSlash(char c)
 {
-	return Token(kTokenTypeBraceClose, kBlockTypeEnd);
+	if (this->stream.peek() == '/') {
+		this->stream.next<isNewline>();
+		this->stream.next();
+		return Token(kTokenTypeComment);
+	}
+
+	if (this->stream.peek() == '*') {
+		this->stream.next();
+
+		while (true) {
+
+			size_t offset = 0;
+
+			if (this->stream.find('*', offset) == false) {
+				break;
+			}
+
+			if (this->stream.peek(offset + 1) == '/') {
+				this->stream.next(offset + 1);
+				this->stream.next();
+				break;
+			}
+		}
+
+		return Token(kTokenTypeComment);
+	}
+
+	return Token(kTokenTypeDelimiter, c);
 }
 
 Token
-Tokenizer::processAt(char c)
+Tokenizer::consumeAt(char c)
 {
-	return Token(kTokenTypeOther);
+	return Token(kTokenTypeDelimiter);
 }
 
 Token
-Tokenizer::processHash(char c)
+Tokenizer::consumeHash(char c)
 {
-	return Token(kTokenTypeOther);
+	return this->stream.peek<isName>() ? Token(kTokenTypeHash, this->stream.read<isName>()) : Token(kTokenTypeDelimiter, c);
 }
 
 Token
-Tokenizer::processPlus(char c)
+Tokenizer::consumeDollar(char c)
 {
-	return Token(kTokenTypeOther);
+	return this->stream.peek<isNameStart>() ? Token(kTokenTypeVariable, this->stream.read<isName>()) : Token(kTokenTypeOther);
 }
 
 Token
-Tokenizer::processMinus(char c)
+Tokenizer::consumePeriod(char c)
 {
-	return Token(kTokenTypeOther);
+	if (this->stream.peek<isNameStart>()) {
+		this->stream.back();
+		return this->consumeClass();
+	}
+
+	if (this->stream.peek<isDigit>()) {
+		this->stream.back();
+		return this->consumeNumber();
+	}
+
+	return Token(kTokenTypeDelimiter, c);
 }
 
 Token
-Tokenizer::processAsterisk(char c)
+Tokenizer::consumeColon(char c)
 {
-	return Token(kTokenTypeOther);
+	if (this->stream.peek<isNameStart>()) {
+		this->stream.back();
+		return this->consumeClass();
+	}
+
+	return Token(kTokenTypeColon);
 }
 
 Token
-Tokenizer::processComma(char c)
+Tokenizer::consumeComma(char c)
 {
-	return Token(kTokenTypeOther);
+	return Token(kTokenTypeComma, c);
 }
 
 Token
-Tokenizer::processPeriod(char c)
+Tokenizer::consumeSemicolon(char c)
 {
-	return Token(kTokenTypeOther);
+	return Token(kTokenTypeSemicolon, c);
 }
 
 Token
-Tokenizer::processColon(char c)
+Tokenizer::consumeAmpersand(char c)
 {
-	return Token(kTokenTypeOther);
+	return Token(kTokenTypeIdentifier, c);
 }
 
 Token
-Tokenizer::processSemicolon(char c)
+Tokenizer::consumeIdent()
 {
-	return Token(kTokenTypeOther);
-}
-
-Token
-Tokenizer::processDollar(char c)
-{
-	return Token(kTokenTypeOther);
-}
-
-Token
-Tokenizer::processIdentifier()
-{
-	auto name = this->readName();
+	string name = this->stream.read<isName>();
 
 	if (this->stream.peek() == '(') {
-		this->stream.next();
-		return Token(kTokenTypeFunction, kBlockTypeStart, name);
+		return Token(kTokenTypeFunction, name);
 	}
 
 	return Token(kTokenTypeIdentifier, name);
 }
 
 Token
-Tokenizer::processNumber()
+Tokenizer::consumeClass()
 {
-	return Token(kTokenTypeNumber, this->readNumber());
+	string name;
+	this->stream.read(name);
+	this->stream.read(name);
+	this->stream.read<isName>(name);
+	return Token(kTokenTypeClass, name);
 }
 
-string
-Tokenizer::readName()
+Token
+Tokenizer::consumeNumber()
 {
-	for (size_t i = 0; ; i++) {
+	string name;
 
-		char c = this->stream.peek(i);
+	if (this->stream.peek<isNumberQualifier>()) {
+		this->stream.read(name);
+	}
 
-		if (this->isNameCodePoint(c)) {
-			continue;
+	if (this->stream.peek<isDigit>()) {
+		this->stream.read(name);
+	}
+
+	if (this->stream.peek<isNumberSeparator>()) {
+		this->stream.read(name);
+		this->stream.read<isDigit>(name);
+	}
+
+	return Token(kTokenTypeNumber, name, this->stream.read<isUnit>());
+}
+
+Token
+Tokenizer::consumeString(char end)
+{
+	string value;
+
+	while (true) {
+
+		size_t offset = 0;
+
+		if (this->stream.find(end, offset) == false) {
+			break;
 		}
 
-		this->stream.next(i);
+		bool escaped = this->stream.peek(offset - 1) == '\\';
 
-		return this->stream.substring(i);
-	}
-}
+		if (escaped) {
 
-string
-Tokenizer::readNumber()
-{
-	if (this->isFollowedByNumber() == false) {
-		return "WAT";
-	}
+			this->stream.substring(offset - 1, value);
+			this->stream.next(offset);
+			this->stream.next();
 
-	for (size_t i = 0; ; i++) {
+			value.append(1, end);
 
-		char c = this->stream.peek(i);
+		} else {
 
-		if (this->isASCIIDigit(c)) {
-			continue;
+			this->stream.substring(offset, value);
+			this->stream.next(offset);
+			this->stream.next();
+
+			break;
 		}
-
-		this->stream.next(i);
-
-		return this->stream.substring(i);
-	}
-}
-
-bool
-Tokenizer::isFollowedByNumber()
-{
-	auto c1 = this->stream.peek();
-	auto c2 = this->stream.peek(1);
-
-	if (this->isASCIIDigit(c1)) {
-		return true;
 	}
 
-	if (c1 == '+' ||
-		c1 == '-') {
-		return this->isASCIIDigit(c2) || (c2 == '.' && this->isASCIIDigit(this->stream.peek(2)));
-	}
-
-	if (c1 == '.') {
-		return this->isASCIIDigit(c2);
-	}
-
-	return false;
-}
-
-bool
-Tokenizer::isNameCodePoint(char c)
-{
-    return this->isNameStartCodePoint(c) || this->isASCIIDigit(c) || c == '-';
-}
-
-bool
-Tokenizer::isNameStartCodePoint(char c)
-{
-    return this->isASCIIAlpha(c) || c == '_' || this->isASCII(c) == false;
-}
-
-bool
-Tokenizer::isSpace(char c)
-{
-    return c == ' ' || c == '\t' || c == '\n';
-}
-
-bool
-Tokenizer::isASCII(char c)
-{
-	return true; // TODO
-}
-
-bool
-Tokenizer::isASCIIAlpha(char c)
-{
-	return true; // TODO
-}
-
-bool
-Tokenizer::isASCIIDigit(char c)
-{
-	return true; // TODO
+	return Token(kTokenTypeString, value);
 }
 
 }

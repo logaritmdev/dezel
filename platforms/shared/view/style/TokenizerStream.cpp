@@ -6,49 +6,20 @@ using std::string;
 
 TokenizerStream::TokenizerStream(const string &input) : input(input) {
 	this->length = input.size();
-	this->offset = 0;
+	this->lower = this->getLowerBound(input);
+	this->upper = this->getUpperBound(input);
 }
 
-char
-TokenizerStream::at(size_t offset)
+size_t
+TokenizerStream::getLowerBound(const string &input)
 {
-	return offset < this->length ? this->input[offset] : '\0';
+	return 0;
 }
 
-char
-TokenizerStream::read()
+size_t
+TokenizerStream::getUpperBound(const string &input)
 {
-	return this->at(this->offset++);
-}
-
-char
-TokenizerStream::peek(size_t offset)
-{
-	return this->at(this->offset + offset);
-}
-
-void
-TokenizerStream::next(size_t offset)
-{
-	this->offset += offset;
-}
-
-void
-TokenizerStream::back(size_t offset)
-{
-	this->offset -= offset;
-}
-
-string
-TokenizerStream::substring(size_t length)
-{
-	return this->input.substr(this->offset, length);
-}
-
-string
-TokenizerStream::substring(size_t offset, size_t length)
-{
-	return this->input.substr(offset, length);
+	return input.size();
 }
 
 }
