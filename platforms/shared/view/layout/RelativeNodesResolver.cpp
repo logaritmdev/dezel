@@ -1,23 +1,26 @@
-#include "RelativeLayout.h"
+#include "RelativeNodesResolver.h"
+#include "Resolver.h"
+#include "Utility.h"
 #include "Display.h"
 #include "DisplayNode.h"
 #include "DisplayNodeFrame.h"
-#include "Layout.h"
+
 #include <iostream>
 
 namespace Dezel {
+namespace Layout {
 
 using std::cerr;
 using std::min;
 using std::max;
 
-RelativeLayout::RelativeLayout(DisplayNode* node)
+RelativeNodesResolver::RelativeNodesResolver(DisplayNode* node)
 {
 	this->node = node;
 }
 
 bool
-RelativeLayout::hasInvalidSize(DisplayNode* child)
+RelativeNodesResolver::hasInvalidSize(DisplayNode* child)
 {
 	const auto frame = child->frame;
 
@@ -101,13 +104,13 @@ RelativeLayout::hasInvalidSize(DisplayNode* child)
 }
 
 bool
-RelativeLayout::hasInvalidOrigin(DisplayNode* node)
+RelativeNodesResolver::hasInvalidOrigin(DisplayNode* node)
 {
 	return true;
 }
 
 double
-RelativeLayout::measureWidth(DisplayNode* child, double remaining)
+RelativeNodesResolver::measureWidth(DisplayNode* child, double remaining)
 {
 	const auto frame = child->frame;
 
@@ -149,7 +152,7 @@ RelativeLayout::measureWidth(DisplayNode* child, double remaining)
 }
 
 double
-RelativeLayout::measureHeight(DisplayNode* child, double remaining)
+RelativeNodesResolver::measureHeight(DisplayNode* child, double remaining)
 {
 	const auto frame = child->frame;
 
@@ -192,7 +195,7 @@ RelativeLayout::measureHeight(DisplayNode* child, double remaining)
 }
 
 double
-RelativeLayout::resolveAlignment(DisplayNode* child, double remaining)
+RelativeNodesResolver::resolveAlignment(DisplayNode* child, double remaining)
 {
 	double size = 0;
 	double headOffset = 0;
@@ -234,7 +237,7 @@ RelativeLayout::resolveAlignment(DisplayNode* child, double remaining)
 }
 
 void
-RelativeLayout::expandNodesVertically(const vector<DisplayNode*> &nodes, double space, double weights)
+RelativeNodesResolver::expandNodesVertically(const vector<DisplayNode*> &nodes, double space, double weights)
 {
 	double remainder = 0;
 
@@ -254,7 +257,7 @@ RelativeLayout::expandNodesVertically(const vector<DisplayNode*> &nodes, double 
 }
 
 void
-RelativeLayout::expandNodesHorizontally(const vector<DisplayNode*> &nodes, double space, double weights)
+RelativeNodesResolver::expandNodesHorizontally(const vector<DisplayNode*> &nodes, double space, double weights)
 {
 	double remainder = 0;
 
@@ -274,7 +277,7 @@ RelativeLayout::expandNodesHorizontally(const vector<DisplayNode*> &nodes, doubl
 }
 
 void
-RelativeLayout::shrinkNodesVertically(const vector<DisplayNode*> &nodes, double space, double weights)
+RelativeNodesResolver::shrinkNodesVertically(const vector<DisplayNode*> &nodes, double space, double weights)
 {
 	double remainder = 0;
 
@@ -294,7 +297,7 @@ RelativeLayout::shrinkNodesVertically(const vector<DisplayNode*> &nodes, double 
 }
 
 void
-RelativeLayout::shrinkNodesHorizontally(const vector<DisplayNode*> &nodes, double space, double weights)
+RelativeNodesResolver::shrinkNodesHorizontally(const vector<DisplayNode*> &nodes, double space, double weights)
 {
 	double remainder = 0;
 
@@ -314,7 +317,7 @@ RelativeLayout::shrinkNodesHorizontally(const vector<DisplayNode*> &nodes, doubl
 }
 
 void
-RelativeLayout::measure(DisplayNode* child, double &remainingW, double &remainingH, double &remainder)
+RelativeNodesResolver::measure(DisplayNode* child, double &remainingW, double &remainingH, double &remainder)
 {
 	const auto frame = child->frame;
 
@@ -377,24 +380,28 @@ RelativeLayout::measure(DisplayNode* child, double &remainingW, double &remainin
 }
 
 void
-RelativeLayout::resolve(DisplayNode* node, const vector<DisplayNode*> &nodes)
+RelativeNodesResolver::resolve()
 {
+	if (this->nodes.size() == 0) {
+		return;
+	}
+
 	this->extentTop = 0;
 	this->extentLeft = 0;
 	this->extentRight = 0;
 	this->extentBottom = 0;
 
-	const double scale = node->display->getScale();
+	const double scale = this->node->display->getScale();
 
-	const double paddingT = node->frame->measuredPaddingTop;
-	const double paddingL = node->frame->measuredPaddingLeft;
-	const double paddingR = node->frame->measuredPaddingRight;
-	const double paddingB = node->frame->measuredPaddingBottom;
+	const double paddingT = this->node->frame->measuredPaddingTop;
+	const double paddingL = this->node->frame->measuredPaddingLeft;
+	const double paddingR = this->node->frame->measuredPaddingRight;
+	const double paddingB = this->node->frame->measuredPaddingBottom;
 
-	const double contentW = max(node->frame->measuredContentWidth - paddingL - paddingR, 0.0);
-	const double contentH = max(node->frame->measuredContentHeight - paddingT - paddingB, 0.0);
-	const double contentT = node->frame->measuredContentTop + paddingT;
-	const double contentL = node->frame->measuredContentLeft + paddingL;
+	const double contentW = max(this->node->frame->measuredContentWidth - paddingL - paddingR, 0.0);
+	const double contentH = max(this->node->frame->measuredContentHeight - paddingT - paddingB, 0.0);
+	const double contentT = this->node->frame->measuredContentTop + paddingT;
+	const double contentL = this->node->frame->measuredContentLeft + paddingL;
 
 	double remainder = 0;
 	double remainingW = contentW;
@@ -405,7 +412,7 @@ RelativeLayout::resolve(DisplayNode* node, const vector<DisplayNode*> &nodes)
 	vector<DisplayNode*> shrinkables;
 	vector<DisplayNode*> expandables;
 
-	for (auto child : nodes) {
+	for (auto child : this->nodes) {
 
 		const auto frame = child->frame;
 
@@ -501,7 +508,7 @@ RelativeLayout::resolve(DisplayNode* node, const vector<DisplayNode*> &nodes)
 		}
 	}
 
-	for (auto child : nodes) {
+	for (auto child : this->nodes) {
 
 		const auto frame = child->frame;
 
@@ -546,7 +553,7 @@ RelativeLayout::resolve(DisplayNode* node, const vector<DisplayNode*> &nodes)
 			break;
 	}
 
-	for (auto child : nodes) {
+	for (auto child : this->nodes) {
 
 		const auto frame = child->frame;
 
@@ -622,6 +629,9 @@ RelativeLayout::resolve(DisplayNode* node, const vector<DisplayNode*> &nodes)
 
 	this->extentRight += paddingR;
 	this->extentBottom += paddingB;
+
+	this->nodes.clear();
 }
 
+}
 }

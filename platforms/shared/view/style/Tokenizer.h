@@ -8,11 +8,11 @@
 #include <string>
 #include <vector>
 
-namespace Dezel {
-namespace Style {
-
 using std::string;
 using std::vector;
+
+namespace Dezel {
+namespace Style {
 
 class Tokenizer {
 

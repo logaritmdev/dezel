@@ -1,11 +1,15 @@
+#include "AbsoluteNodesResolver.h"
+#include "Resolver.h"
+#include "Utility.h"
 #include "Display.h"
 #include "DisplayNode.h"
-#include "AbsoluteLayout.h"
+#include "DisplayNodeFrame.h"
 
 #include <iostream>
 #include <cstdlib>
 
 namespace Dezel {
+namespace Layout {
 
 using std::abort;
 using std::cerr;
@@ -13,13 +17,13 @@ using std::cout;
 using std::min;
 using std::max;
 
-AbsoluteLayout::AbsoluteLayout(DisplayNode* node)
+AbsoluteNodesResolver::AbsoluteNodesResolver(DisplayNode* node)
 {
 	this->node = node;
 }
 
 bool
-AbsoluteLayout::hasInvalidSize(DisplayNode* child)
+AbsoluteNodesResolver::hasInvalidSize(DisplayNode* child)
 {
 	const auto frame = child->frame;
 
@@ -100,7 +104,7 @@ AbsoluteLayout::hasInvalidSize(DisplayNode* child)
 }
 
 bool
-AbsoluteLayout::hasInvalidOrigin(DisplayNode* node)
+AbsoluteNodesResolver::hasInvalidOrigin(DisplayNode* node)
 {
 	const auto frame = node->frame;
 
@@ -198,7 +202,7 @@ AbsoluteLayout::hasInvalidOrigin(DisplayNode* node)
 }
 
 double
-AbsoluteLayout::measureTop(DisplayNode* child)
+AbsoluteNodesResolver::measureTop(DisplayNode* child)
 {
 	const auto frame = child->frame;
 
@@ -235,7 +239,7 @@ AbsoluteLayout::measureTop(DisplayNode* child)
 }
 
 double
-AbsoluteLayout::measureLeft(DisplayNode* child)
+AbsoluteNodesResolver::measureLeft(DisplayNode* child)
 {
 	const auto frame = child->frame;
 
@@ -272,7 +276,7 @@ AbsoluteLayout::measureLeft(DisplayNode* child)
 }
 
 double
-AbsoluteLayout::measureRight(DisplayNode* child)
+AbsoluteNodesResolver::measureRight(DisplayNode* child)
 {
 	const auto frame = child->frame;
 
@@ -309,7 +313,7 @@ AbsoluteLayout::measureRight(DisplayNode* child)
 }
 
 double
-AbsoluteLayout::measureBottom(DisplayNode* child)
+AbsoluteNodesResolver::measureBottom(DisplayNode* child)
 {
 	const auto frame = child->frame;
 
@@ -346,7 +350,7 @@ AbsoluteLayout::measureBottom(DisplayNode* child)
 }
 
 double
-AbsoluteLayout::measureWidth(DisplayNode* child)
+AbsoluteNodesResolver::measureWidth(DisplayNode* child)
 {
 	const auto frame = child->frame;
 
@@ -418,7 +422,7 @@ AbsoluteLayout::measureWidth(DisplayNode* child)
 }
 
 double
-AbsoluteLayout::measureHeight(DisplayNode* child)
+AbsoluteNodesResolver::measureHeight(DisplayNode* child)
 {
 	const auto frame = child->frame;
 
@@ -489,7 +493,7 @@ AbsoluteLayout::measureHeight(DisplayNode* child)
 }
 
 void
-AbsoluteLayout::measure(DisplayNode* child)
+AbsoluteNodesResolver::measure(DisplayNode* child)
 {
 	const auto frame = child->frame;
 
@@ -537,9 +541,13 @@ AbsoluteLayout::measure(DisplayNode* child)
 }
 
 void
-AbsoluteLayout::resolve(DisplayNode* node, const vector<DisplayNode*> &nodes)
+AbsoluteNodesResolver::resolve()
 {
-	for (auto child : nodes) {
+	if (this->nodes.size() == 0) {
+		return;
+	}
+
+	for (auto child : this->nodes) {
 
 		const auto frame = child->frame;
 
@@ -601,6 +609,9 @@ AbsoluteLayout::resolve(DisplayNode* node, const vector<DisplayNode*> &nodes)
 		frame->invalidSize = false;
 		frame->invalidOrigin = false;
 	}
+
+	this->nodes.clear();
 }
 
+}
 }

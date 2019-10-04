@@ -13,8 +13,6 @@
 namespace Dezel {
 namespace Style {
 
-using std::string;
-
 class Parser {
 
 private:

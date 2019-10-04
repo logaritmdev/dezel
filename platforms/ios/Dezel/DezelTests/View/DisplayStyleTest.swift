@@ -21,41 +21,52 @@ class DisplayNodeStyleTest: XCTestCase {
 	func testStylesheet() {
 
 		let stylesheet = """
-			NavigationBar {
+
+
+			NavigationBarButton,
+			SegmentedBarButton {
 
 				content-orientation: horizontal;
-				content-disposition: start;
+				content-disposition: center;
 				content-arrangement: center;
-				height: 48px + $safe-area-top-inset;
-				padding-top: $safe-area-top-inset;
-				padding-left: 6px;
-				padding-right: 6px;
+				height: 30px;
+				padding-left: 12px;
+				padding-right: 12px;
+				width: wrap;
 
-				.title-container {
-					content-orientation: horizontal;
-					content-disposition: center;
-					content-arrangement: center;
-					height: fill;
-					shrink: 1;
-				}
-
-				.buttons-container {
-					content-orientation: horizontal;
-					content-disposition: center;
-					content-arrangement: center;
-					height: fill;
-					width: wrap;
-				}
-
-				.title {
-					left: 0px;
-					lines: 1;
-					font-size: 17;
-					font-weight: 600;
+				.image {
 					height: wrap;
-					text-color: #000;
-					text-alignment: center;
 					width: wrap;
+				}
+
+				.label {
+					font-size: 17px;
+					lines: 1;
+					text-color: blue;
+					text-alignment: center;
+					text-overflow: ellipsis;
+				}
+
+				&:pressed {
+
+					.image {
+						opacity: 0.5;
+					}
+
+					.label {
+						opacity: 0.5;
+					}
+				}
+
+				&:disabled {
+
+					.image {
+						image-tint: #9da6a5;
+					}
+
+					.label {
+						text-color: #9da6a5;
+					}
 				}
 			}
 

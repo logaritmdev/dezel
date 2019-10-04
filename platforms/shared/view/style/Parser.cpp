@@ -430,11 +430,11 @@ Parser::parseFunction(TokenList& tokens)
 	auto function = new Function();
 
 	function->name = tokens.getCurrentTokenName();
-std::cout << "Parsing function  with name " << function->name << "\n";
+
 	tokens.nextToken();
 
 	while (true) {
-	std::cout << "Parsing function  " << tokens.getCurrentTokenName() << " " << tokens.getCurrentToken().description() << "\n";
+
 		if (tokens.getCurrentTokenType() == kTokenTypeSpace) {
 			tokens.nextToken();
 			continue;
@@ -480,10 +480,10 @@ std::cout << "Parsing function  with name " << function->name << "\n";
 			if (depth != 0) {
 				assert(false);
 			}
-			std::cout << "Got function !! \n";
+
 			break;
 		}
-		std::cout << "Token " << tokens.getCurrentTokenName() << " " << tokens.getCurrentToken().description() << "\n";
+
 		assert(false);
 	}
 

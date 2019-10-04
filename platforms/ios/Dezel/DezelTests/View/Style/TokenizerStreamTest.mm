@@ -7,20 +7,12 @@
 using std::string;
 using Dezel::Style::TokenizerStream;
 
-static bool isASCII(char c) {
-	return !(c & ~0x7F);
-}
-
 static bool isAlpha(char c) {
 	return (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z');
 }
 
 static bool isDigit(char c) {
 	return c >= '0' && c <= '9';
-}
-
-static bool isNameStart(char c) {
-	return isAlpha(c) || c == '_';
 }
 
 static bool isAnything(char c) {

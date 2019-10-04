@@ -5,9 +5,9 @@
 
 #include <string>
 
-namespace Dezel {
-
 using std::string;
+
+namespace Dezel {
 
 class DisplayNode;
 class DisplayNodeFrame;

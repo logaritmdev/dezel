@@ -1,20 +1,27 @@
-#ifndef AbsoluteLayout_h
-#define AbsoluteLayout_h
+#ifndef AbsoluteNodesResolver_h
+#define AbsoluteNodesResolver_h
 
 #include <vector>
 
 namespace Dezel {
+	class Display;
+	class DisplayNode;
+}
+
+namespace Dezel {
+namespace Layout {
 
 using std::vector;
 
-class Display;
-class DisplayNode;
-class Layout;
-class AbsoluteLayout {
+class Resolver;
+
+class AbsoluteNodesResolver {
 
 private:
 
 	DisplayNode* node;
+
+	vector<DisplayNode*> nodes;
 
 	bool hasInvalidSize(DisplayNode* node);
 	bool hasInvalidOrigin(DisplayNode* node);
@@ -28,14 +35,20 @@ private:
 
 public:
 
-	friend class Layout;
+	friend class Resolver;
 
-	AbsoluteLayout(DisplayNode* node);
+	AbsoluteNodesResolver(DisplayNode* node);
+
+	void append(DisplayNode* node) {
+		this->nodes.push_back(node);
+	}
 
 	void measure(DisplayNode* node);
-	void resolve(DisplayNode* node, const vector<DisplayNode*> &nodes);
+	void resolve();
+
 };
 
+}
 } 
 
 #endif

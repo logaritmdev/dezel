@@ -1,11 +1,9 @@
 #include "DisplayNode.h"
 #include "Display.h"
 #include "DisplayNodeFrame.h"
-#include "Layout.h"
+#include "Resolver.h"
 
 #include <math.h>
-#include <queue>
-#include <vector>
 #include <iostream>
 #include <algorithm>
 
@@ -13,9 +11,6 @@ namespace Dezel {
 
 using std::min;
 using std::max;
-using std::cerr;
-using std::queue;
-using std::vector;
 using std::string;
 
 DisplayNode::DisplayNode()

@@ -1,20 +1,27 @@
-#ifndef RelativeLayout_h
-#define RelativeLayout_h
+#ifndef RelativeNodesResolver_h
+#define RelativeNodesResolver_h
 
 #include <vector>
 
 namespace Dezel {
+	class Display;
+	class DisplayNode;
+}
+
+namespace Dezel {
+namespace Layout {
 
 using std::vector;
 
-class Display;
-class DisplayNode;
-class Layout;
-class RelativeLayout {
+class Resolver;
+
+class RelativeNodesResolver {
 
 private:
 
 	DisplayNode* node;
+
+	vector<DisplayNode*> nodes;
 
 	double extentTop = 0;
 	double extentLeft = 0;
@@ -36,15 +43,20 @@ private:
 
 public:
 
-	friend class Layout;
+	friend class Resolver;
 
-	RelativeLayout(DisplayNode* node);
+	RelativeNodesResolver(DisplayNode* node);
 
-	void measure(DisplayNode* node, double &remainingW, double &remainingH, double &remainder);
-	void resolve(DisplayNode* node, const vector<DisplayNode*> &nodes);
+	void append(DisplayNode* node) {
+		this->nodes.push_back(node);
+	}
+
+	void measure(Dezel::DisplayNode* child, double &remainingW, double &remainingH, double &remainder);
+	void resolve();
 
 };
 
+}
 }
 
 #endif

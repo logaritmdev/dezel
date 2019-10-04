@@ -1,15 +1,19 @@
 #include "Display.h"
 #include "DisplayNode.h"
 #include "DisplayNodeFrame.h"
-#include "Layout.h"
+#include "Resolver.h"
+#include "Utility.h"
 
 #include <iostream>
 #include <vector>
 
+using Dezel::Layout::clamp;
+using Dezel::Layout::round;
+using Dezel::Layout::scale;
+
 namespace Dezel {
 
 using std::vector;
-using std::cout;
 using std::cerr;
 using std::min;
 using std::max;

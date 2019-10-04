@@ -8,7 +8,6 @@ namespace Dezel {
 namespace Style {
 
 using std::string;
-using std::min;
 
 class TokenizerStream {
 

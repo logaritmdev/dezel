@@ -1,30 +1,24 @@
-#include "Layout.h"
+#include "Resolver.h"
 #include "Display.h"
 #include "DisplayBase.h"
 #include "DisplayNode.h"
 
 #include <iostream>
-#include <vector>
 
 namespace Dezel {
+namespace Layout {
 
-using std::vector;
-using std::cout;
-using std::cerr;
 using std::min;
 using std::max;
 
-Layout::Layout(DisplayNode* node) : relativeLayout(node), absoluteLayout(node)
+Resolver::Resolver(DisplayNode* node) : relatives(node), absolutes(node)
 {
 	this->node = node;
 }
 
 void
-Layout::resolve()
+Resolver::resolve()
 {
-	vector<DisplayNode*> relatives;
-	vector<DisplayNode*> absolutes;
-
 	for (auto &child : this->node->children) {
 
 		if (child->visible == false) {
@@ -37,14 +31,11 @@ Layout::resolve()
 		frame->wrapsContentHeight = frame->shouldWrapContentHeight();
 
 		if (frame->isRelative()) {
-			relatives.push_back(child);
+			this->relatives.append(child);
 		} else {
-			absolutes.push_back(child);
+			this->absolutes.append(child);
 		}
 	}
-
-	const bool hasRelativeLayout = relatives.size() > 0;
-	const bool hasAbsoluteLayout = absolutes.size() > 0;
 
 	const auto frame = this->node->frame;
 
@@ -53,9 +44,7 @@ Layout::resolve()
 	const auto lastContentW = frame->measuredContentWidth;
 	const auto lastContentH = frame->measuredContentHeight;
 
-	if (hasRelativeLayout) {
-		this->relativeLayout.resolve(this->node, relatives);
-	}
+	this->relatives.resolve();
 
 	if (autoContentW || autoContentH) {
 
@@ -68,9 +57,8 @@ Layout::resolve()
 		}
 	}
 
-	if (hasAbsoluteLayout) {
-		this->absoluteLayout.resolve(this->node, absolutes);
-	}
+	this->absolutes.resolve();
 }
 
+}
 } 

@@ -10,11 +10,11 @@
 #include <queue>
 #include <iostream>
 
-namespace Dezel {
-
 using std::cout;
 using std::cerr;
 using std::string;
+
+namespace Dezel {
 
 void
 Display::loadStylesheet(string input)

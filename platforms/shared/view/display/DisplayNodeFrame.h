@@ -10,9 +10,9 @@
 #include "DisplayNodePadding.h"
 #include "DisplayNodeContentSize.h"
 #include "DisplayNodeContentOrigin.h"
-#include "Layout.h"
-#include "RelativeLayout.h"
-#include "AbsoluteLayout.h"
+#include "Resolver.h"
+#include "RelativeNodesResolver.h"
+#include "AbsoluteNodesResolver.h"
 
 namespace Dezel {
 
@@ -21,7 +21,7 @@ class DisplayNodeFrame {
 
 private:
 
-	Layout layout;
+	Layout::Resolver layout;
 
 	DisplayNode* node = nullptr;
 
@@ -180,9 +180,9 @@ protected:
 public:
 
 	friend class DisplayNode;
-	friend class Layout;
-	friend class RelativeLayout;
-	friend class AbsoluteLayout;
+	friend class Layout::Resolver;
+	friend class Layout::RelativeNodesResolver;
+	friend class Layout::AbsoluteNodesResolver;
 
 	DisplayNodeFrame(DisplayNode* node);
 

@@ -4,9 +4,6 @@
 #include "DisplayBase.h"
 #include "DisplayNodeFrame.h"
 #include "DisplayNodeStyle.h"
-#include "Layout.h"
-#include "RelativeLayout.h"
-#include "AbsoluteLayout.h"
 
 #include <float.h>
 #include <string>
@@ -16,6 +13,12 @@ namespace Dezel {
 
 using std::string;
 using std::vector;
+
+namespace Layout {
+	class Resolver;
+	class RelativeNodesResolver;
+	class AbsoluteNodesResolver;
+}
 
 class Display;
 class DisplayNode {
@@ -72,9 +75,9 @@ public:
 
 	friend class Display;
 	friend class DisplayNodeFrame;
-	friend class Layout;
-	friend class RelativeLayout;
-	friend class AbsoluteLayout;
+	friend class Layout::Resolver;
+	friend class Layout::RelativeNodesResolver;
+	friend class Layout::AbsoluteNodesResolver;
 
 	void *data = NULL;
 
