@@ -1,35 +1,42 @@
 #include "Token.h"
 
-namespace View::Style {
+namespace Dezel {
+namespace Style {
 
-Token::Token(TokenType tokenType) : tokenType(tokenType)
+Token::Token(TokenType type) : type(type)
 {
 
 }
 
-Token::Token(TokenType tokenType, string tokenName) : tokenType(tokenType), tokenName(tokenName)
+Token::Token(TokenType type, string name) : type(type), name(name)
 {
 
 }
 
-Token::Token(TokenType tokenType, string tokenName, string tokenUnit) : tokenType(tokenType), tokenName(tokenName), tokenUnit(tokenUnit)
+Token::Token(TokenType type, string name, string unit) : type(type), name(name), unit(unit)
 {
 
 }
 
-Token::Token(TokenType tokenType, char tokenName) : tokenType(tokenType)
+Token::Token(TokenType type, char name) : type(type)
 {
-	this->tokenName.append(1, tokenName);
+	this->name.append(1, name);
 }
 
-Token::Token(TokenType tokenType, BlockType blockType) : tokenType(tokenType), blockType(blockType)
-{
-
-}
-
-Token::Token(TokenType tokenType, BlockType blockType, string tokenName) : tokenType(tokenType), blockType(blockType), tokenName(tokenName)
+Token::Token(TokenType type, BlockType blockType) : type(type), blockType(blockType)
 {
 
 }
 
+Token::Token(TokenType type, BlockType blockType, string name) : type(type), name(name), blockType(blockType)
+{
+
+}
+
+Token::Token(ClassType classType, string name) : type(kTokenTypeClass), name(name), classType(classType)
+{
+
+}
+
+}
 }

@@ -1,25 +1,27 @@
 #include "TokenizerStream.h"
 
-namespace View::Style {
+namespace Dezel {
+namespace Style {
 
 using std::string;
 
 TokenizerStream::TokenizerStream(const string &input) : input(input) {
-	this->length = input.size();
+	this->length = static_cast<unsigned>(input.size());
 	this->lower = this->getLowerBound(input);
 	this->upper = this->getUpperBound(input);
 }
 
-size_t
+unsigned
 TokenizerStream::getLowerBound(const string &input)
 {
-	return 0;
+	return static_cast<unsigned>(0);
 }
 
-size_t
+unsigned
 TokenizerStream::getUpperBound(const string &input)
 {
-	return input.size();
+	return static_cast<unsigned>(input.size());
 }
 
+}
 }

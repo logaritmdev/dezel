@@ -5,7 +5,7 @@
 #include "AbsoluteLayout.h"
 #include <cmath>
 
-namespace View {
+namespace Dezel {
 
 using std::round;
 

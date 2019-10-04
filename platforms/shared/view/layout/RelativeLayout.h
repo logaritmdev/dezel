@@ -3,7 +3,7 @@
 
 #include <vector>
 
-namespace View {
+namespace Dezel {
 
 using std::vector;
 

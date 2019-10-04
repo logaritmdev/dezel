@@ -2,23 +2,27 @@
 #include "DisplayNode.h"
 
 #include "Parser.h"
-#include "Sheet.h"
+#include "Stylesheet.h"
+#include "Tokenizer.h"
+#include "TokenizerStream.h"
 
 #include <string>
 #include <queue>
 #include <iostream>
 
-namespace View {
+namespace Dezel {
 
 using std::cout;
 using std::cerr;
 using std::string;
 
 void
-Display::loadStylesheet(string stylesheet)
+Display::loadStylesheet(string input)
 {
-	Style::Parser parser;
-	parser.parse(stylesheet);
+	Style::TokenizerStream stream(input);
+	Style::Tokenizer tokenizer(stream);
+	Style::Stylesheet* stylesheet = new Style::Stylesheet();
+	Style::Parser parser(stylesheet, &tokenizer);
 }
 
 

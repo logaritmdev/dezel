@@ -3,7 +3,7 @@
 
 #include "DisplayBase.h"
 
-namespace View {
+namespace Dezel {
 
 class DisplayNodeAnchor {
 

@@ -2,8 +2,8 @@
 #include "Display.h"
 #include "DisplayNode.h"
 
-using View::Display;
-using View::DisplayNode;
+using Dezel::Display;
+using Dezel::DisplayNode;
 
 DisplayNodeRef
 DisplayNodeCreate()

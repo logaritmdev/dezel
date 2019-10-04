@@ -5,7 +5,7 @@
 
 #include <string>
 
-namespace View {
+namespace Dezel {
 
 using std::string;
 

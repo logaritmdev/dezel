@@ -5,7 +5,7 @@
 
 #include <limits>
 
-namespace View {
+namespace Dezel {
 
 class DisplayNodeSize {
 

@@ -9,7 +9,7 @@
 #include <iostream>
 #include <algorithm>
 
-namespace View {
+namespace Dezel {
 
 using std::min;
 using std::max;

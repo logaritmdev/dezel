@@ -1,23 +1,55 @@
 #ifndef Rule_h
 #define Rule_h
 
-#import "SelectorList.h"
-#import "Selector.h"
-#include <vector>
+#include <string>
 
-namespace View::Style {
+namespace Dezel {
+namespace Style {
 
-using std::vector;
+using std::string;
+
+class Parser;
+class Selector;
 
 class Rule {
 
 private:
-	SelectorList selectors;
-	int number = 0;
-	int weight = 0;
 
+	Selector* tail = nullptr;
+	Selector* head = nullptr;
+
+	unsigned length = 0;
+	unsigned number = 0;
+	unsigned weight = 0;
+
+public:
+
+	friend class Parser;
+
+	const Selector* getTail() const {
+		return this->tail;
+	}
+
+	const Selector* getHead() const {
+		return this->head;
+	}
+
+	unsigned getLength() const {
+		return this->length;
+	}
+
+	unsigned getNumber() const {
+		return this->number;
+	}
+
+	unsigned getWeight() const {
+		return this->weight;
+	}
+
+	string toString(int depth = 0);
 };
 
+}
 }
 
 #endif

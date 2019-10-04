@@ -12,7 +12,7 @@
 #include <string>
 #include <vector>
 
-namespace View {
+namespace Dezel {
 
 using std::string;
 using std::vector;
@@ -79,12 +79,6 @@ public:
 	void *data = NULL;
 
 	DisplayNode();
-
-	void setId(string id);
-
-	void setType(DisplayNodeType type);
-
-	void setDisplay(Display* display);
 
 	void setAnchorTop(DisplayNodeAnchorType type, DisplayNodeAnchorUnit unit, double length) {
 		this->frame->setAnchorTop(type, unit, length);
@@ -418,6 +412,9 @@ public:
 		return this->frame->measuredPaddingBottom;
 	}
 
+	void setId(string id);
+	void setType(DisplayNodeType type);
+	void setDisplay(Display* display);
 	void setVisible(bool visible);
 
 	void appendChild(DisplayNode* child);

@@ -4,9 +4,8 @@
 #include <string>
 #include <iostream>
 
-namespace View::Style {
-
-#define PREDICATE template<bool predicate(char)>
+namespace Dezel {
+namespace Style {
 
 using std::string;
 using std::min;
@@ -16,73 +15,75 @@ class TokenizerStream {
 private:
 
 	string input;
-	size_t length = 0;
-	size_t offset = 0;
-	size_t lower = 0;
-	size_t upper = 0;
+	
+	unsigned length = 0;
+	unsigned offset = 0;
+	unsigned lower = 0;
+	unsigned upper = 0;
 
-	char at(size_t offset) {
+	char get(unsigned offset) {
 		return offset >= this->lower && offset <= this->upper ? this->input[offset] : '\0';
 	}
 
 protected:
-	size_t getLowerBound(const string &input);
-	size_t getUpperBound(const string &input);
+
+	unsigned getLowerBound(const string &input);
+	unsigned getUpperBound(const string &input);
 
 public:
 
 	TokenizerStream(const string &input);
 
-	size_t getOffset() {
+	unsigned getOffset() const {
 		return this->offset;
 	}
 
-	size_t getLength() {
+	unsigned getLength() const {
 		return this->length;
 	}
 
 	char read() {
-		return this->at(this->offset++);
+		return this->get(this->offset++);
 	}
 
 	void read(string &into) {
 		into.append(1, this->read());
 	}
 
-	char peek(size_t offset = 0) {
-		return this->at(this->offset + offset);
+	char peek(unsigned offset = 0) {
+		return this->get(this->offset + offset);
 	}
 
-	void next(size_t offset = 1) {
+	void next(unsigned offset = 1) {
 		this->offset += offset;
 	}
 
-	void back(size_t offset = 1) {
+	void back(unsigned offset = 1) {
 		this->offset -= offset;
 	}
 
-	string substring(size_t lower, size_t upper) {
+	string substring(unsigned lower, unsigned upper) const {
 		return this->input.substr(lower, upper - lower);
 	}
 
-	string substring(size_t length) {
+	string substring(unsigned length) const {
 		return this->input.substr(this->offset, length);
 	}
 
-	void substring(size_t lower, size_t upper, string &into) {
+	void substring(unsigned lower, unsigned upper, string &into) const {
 		into.append(this->substring(lower, upper));
 	}
 
-	void substring(size_t length, string &into) {
+	void substring(unsigned length, string &into) const {
 		into.append(this->substring(length));
 	}
 
 	bool next(char c) {
 
-		size_t offset = this->offset;
+		unsigned offset = this->offset;
 
 		for (;
-			offset <= this->upper && this->at(offset) != c;
+			offset <= this->upper && this->get(offset) != c;
 			offset++
 		);
 
@@ -97,10 +98,10 @@ public:
 
 	bool prev(char c) {
 
-		size_t offset = this->offset;
+		unsigned offset = this->offset;
 
 		for (;
-			offset > this->lower && this->at(offset) != c;
+			offset > this->lower && this->get(offset) != c;
 			offset--
 		);
 
@@ -113,12 +114,12 @@ public:
 		return true;
 	}
 
-	bool find(char c, size_t &index) {
+	bool find(char c, unsigned &index) {
 
-		size_t offset = this->offset;
+		unsigned offset = this->offset;
 
 		for (;
-			offset <= this->upper && this->at(offset) != c;
+			offset <= this->upper && this->get(offset) != c;
 			offset++
 		);
 
@@ -131,15 +132,15 @@ public:
 		return true;
 	}
 
-	PREDICATE string read() {
+	template<bool predicate(char)> string read() {
 
-		size_t lower = this->offset;
-		size_t upper = this->offset;
+		unsigned lower = this->offset;
+		unsigned upper = this->offset;
 
 		for (;
 
 			upper <= this->upper && predicate(
-				this->at(upper)
+				this->get(upper)
 			);
 
 			upper++
@@ -150,24 +151,24 @@ public:
 		return this->substring(lower, upper);
 	}
 
-	PREDICATE void read(string &into) {
+	template<bool predicate(char)> void read(string &into) {
 		into.append(this->read<predicate>());
 	}
 
-	PREDICATE bool peek(size_t offset = 0) {
+	template<bool predicate(char)> bool peek(unsigned offset = 0) {
 		return predicate(
 			this->peek(offset)
 		);
 	}
 
-	PREDICATE bool next() {
+	template<bool predicate(char)> bool next() {
 
-		size_t offset = this->offset;
+		unsigned offset = this->offset;
 
 		for (;
 
 			offset <= this->upper && predicate(
-				this->at(offset)
+				this->get(offset)
 			) == false;
 
 			offset++
@@ -182,14 +183,14 @@ public:
 		return true;
 	}
 
-	PREDICATE bool prev() {
+	template<bool predicate(char)> bool prev() {
 
-		size_t offset = this->offset;
+		unsigned offset = this->offset;
 
 		for (;
 
 			offset > this->lower && predicate(
-				this->at(offset)
+				this->get(offset)
 			) == false;
 
 			offset--
@@ -204,14 +205,14 @@ public:
 		return true;
 	}
 
-	PREDICATE bool skip() {
+	template<bool predicate(char)> bool skip() {
 
-		size_t offset = this->offset;
+		unsigned offset = this->offset;
 
 		for (;
 
 			offset <= this->upper && predicate(
-				this->at(offset)
+				this->get(offset)
 			);
 
 			offset++
@@ -227,6 +228,7 @@ public:
 	}
 };
 
+}
 }
 
 #endif

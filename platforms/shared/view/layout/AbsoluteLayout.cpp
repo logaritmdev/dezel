@@ -5,7 +5,7 @@
 #include <iostream>
 #include <cstdlib>
 
-namespace View {
+namespace Dezel {
 
 using std::abort;
 using std::cerr;

@@ -14,7 +14,7 @@
 #include "RelativeLayout.h"
 #include "AbsoluteLayout.h"
 
-namespace View {
+namespace Dezel {
 
 class DisplayNode;
 class DisplayNodeFrame {

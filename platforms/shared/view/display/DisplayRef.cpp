@@ -1,8 +1,8 @@
 #include "DisplayRef.h"
 #include "Display.h"
 
-using View::Display;
-using View::DisplayNode;
+using Dezel::DisplayNode;
+using Dezel::Display;
 
 DisplayRef
 DisplayCreate()

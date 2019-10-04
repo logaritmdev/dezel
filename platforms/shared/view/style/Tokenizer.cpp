@@ -3,21 +3,14 @@
 #include <string>
 #include <functional>
 
-namespace View::Style {
+namespace Dezel {
+namespace Style {
 
 using std::string;
 using std::invoke;
 
 static bool isASCII(char c) {
 	return !(c & ~0x7F);
-}
-
-static bool isSpace(char c) {
-	return c == ' ' || c == '\t' || c == '\n';
-}
-
-static bool isNewline(char c) {
-	return (c == '\r' || c == '\n' || c == '\f');
 }
 
 static bool isAlpha(char c) {
@@ -48,6 +41,22 @@ static bool isUnit(char c) {
 	return isAlpha(c) || c == '%';
 }
 
+static bool isComma(char c) {
+	return c == ',';
+}
+
+static bool isSemicolon(char c) {
+	return c == ';';
+}
+
+static bool isSpace(char c) {
+	return c == ' ' || c == '\t' || c == '\n';
+}
+
+static bool isLinebreak(char c) {
+	return (c == '\r' || c == '\n' || c == '\f');
+}
+
 /*
  * Map the ASCII table to character consumers.
  */
@@ -63,10 +72,10 @@ const Tokenizer::Consumer Tokenizer::consumers[128] = {
 	0,
 	0,
 	&Tokenizer::consumeSpace,
-	&Tokenizer::consumeNewline,
+	&Tokenizer::consumeLinebreak,
 	0,
-	&Tokenizer::consumeNewline,
-	&Tokenizer::consumeNewline,
+	&Tokenizer::consumeLinebreak,
+	&Tokenizer::consumeLinebreak,
 	0,
 	0,
 	0,
@@ -184,7 +193,25 @@ const Tokenizer::Consumer Tokenizer::consumers[128] = {
 };
 
 Tokenizer::Tokenizer(TokenizerStream &stream): stream(stream) {
-	this->length = stream.getLength();
+
+	if (this->stream.getLength() == 0) {
+		return;
+	}
+
+	while (true) {
+
+		auto token = this->next();
+
+		if (token.getType() == kTokenTypeComment) {
+			continue;
+		}
+
+		if (token.getType() == kTokenTypeEnd) {
+			return;
+		}
+
+		this->tokens.push_back(token);
+	}
 }
 
 Token
@@ -214,14 +241,14 @@ Token
 Tokenizer::consumeSpace(char c)
 {
 	this->stream.skip<isSpace>();
-	return Token(kTokenTypeSpace);
+	return Token(kTokenTypeSpace, c);
 }
 
 Token
-Tokenizer::consumeNewline(char c)
+Tokenizer::consumeLinebreak(char c)
 {
-	this->stream.skip<isNewline>();
-	return Token(kTokenTypeNewline, c);
+	this->stream.skip<isLinebreak>();
+	return Token(kTokenTypeLinebreak, c);
 }
 
 Token
@@ -295,7 +322,7 @@ Tokenizer::consumePlus(char c)
 		return this->consumeNumber();
 	}
 
-	return Token(kTokenTypeDelimiter, c);
+	return Token(kTokenTypeOther, c);
 }
 
 Token
@@ -307,20 +334,20 @@ Tokenizer::consumeMinus(char c)
 		return this->consumeNumber();
 	}
 
-	return Token(kTokenTypeDelimiter, c);
+	return Token(kTokenTypeOther, c);
 }
 
 Token
 Tokenizer::consumeAsterisk(char c)
 {
-	return Token(kTokenTypeDelimiter, c);
+	return Token(kTokenTypeOther, c);
 }
 
 Token
 Tokenizer::consumeSlash(char c)
 {
 	if (this->stream.peek() == '/') {
-		this->stream.next<isNewline>();
+		this->stream.next<isLinebreak>();
 		this->stream.next();
 		return Token(kTokenTypeComment);
 	}
@@ -330,7 +357,7 @@ Tokenizer::consumeSlash(char c)
 
 		while (true) {
 
-			size_t offset = 0;
+			unsigned offset = 0;
 
 			if (this->stream.find('*', offset) == false) {
 				break;
@@ -346,19 +373,19 @@ Tokenizer::consumeSlash(char c)
 		return Token(kTokenTypeComment);
 	}
 
-	return Token(kTokenTypeDelimiter, c);
+	return Token(kTokenTypeOther, c);
 }
 
 Token
 Tokenizer::consumeAt(char c)
 {
-	return Token(kTokenTypeDelimiter);
+	return Token(kTokenTypeAt);
 }
 
 Token
 Tokenizer::consumeHash(char c)
 {
-	return this->stream.peek<isName>() ? Token(kTokenTypeHash, this->stream.read<isName>()) : Token(kTokenTypeDelimiter, c);
+	return this->stream.peek<isName>() ? Token(kTokenTypeHash, this->stream.read<isName>()) : Token(kTokenTypeOther, c);
 }
 
 Token
@@ -372,7 +399,7 @@ Tokenizer::consumePeriod(char c)
 {
 	if (this->stream.peek<isNameStart>()) {
 		this->stream.back();
-		return this->consumeClass();
+		return this->consumeIdent();
 	}
 
 	if (this->stream.peek<isDigit>()) {
@@ -388,7 +415,7 @@ Tokenizer::consumeColon(char c)
 {
 	if (this->stream.peek<isNameStart>()) {
 		this->stream.back();
-		return this->consumeClass();
+		return this->consumeIdent();
 	}
 
 	return Token(kTokenTypeColon);
@@ -397,54 +424,64 @@ Tokenizer::consumeColon(char c)
 Token
 Tokenizer::consumeComma(char c)
 {
+	this->stream.skip<isComma>();
 	return Token(kTokenTypeComma, c);
 }
 
 Token
 Tokenizer::consumeSemicolon(char c)
 {
-	return Token(kTokenTypeSemicolon, c);
+	this->stream.skip<isSemicolon>();
+	return Token(kTokenTypeDelimiter, c);
 }
 
 Token
 Tokenizer::consumeAmpersand(char c)
 {
-	return Token(kTokenTypeIdentifier, c);
+	return Token(kTokenTypeAmpersand, c);
 }
 
 Token
 Tokenizer::consumeIdent()
 {
-	string name = this->stream.read<isName>();
+	char c = this->stream.peek();
+
+	string name;
+
+	switch (c) {
+
+		case '.':
+			this->stream.next();
+			this->stream.read<isName>(name);
+			return Token(kClassTypeStyle, name);
+
+		case ':':
+			this->stream.next();
+			this->stream.read<isName>(name);
+			return Token(kClassTypeState, name);
+	}
+
+	this->stream.read<isName>(name);
 
 	if (this->stream.peek() == '(') {
 		return Token(kTokenTypeFunction, name);
 	}
 
-	return Token(kTokenTypeIdentifier, name);
-}
-
-Token
-Tokenizer::consumeClass()
-{
-	string name;
-	this->stream.read(name);
-	this->stream.read(name);
-	this->stream.read<isName>(name);
-	return Token(kTokenTypeClass, name);
+	return Token(kTokenTypeIdent, name);
 }
 
 Token
 Tokenizer::consumeNumber()
 {
 	string name;
+	string unit;
 
 	if (this->stream.peek<isNumberQualifier>()) {
 		this->stream.read(name);
 	}
 
 	if (this->stream.peek<isDigit>()) {
-		this->stream.read(name);
+		this->stream.read<isDigit>(name);
 	}
 
 	if (this->stream.peek<isNumberSeparator>()) {
@@ -452,7 +489,11 @@ Tokenizer::consumeNumber()
 		this->stream.read<isDigit>(name);
 	}
 
-	return Token(kTokenTypeNumber, name, this->stream.read<isUnit>());
+	if (this->stream.peek<isUnit>()) {
+		this->stream.read<isUnit>(unit);
+	}
+
+	return Token(kTokenTypeNumber, name, unit);
 }
 
 Token
@@ -462,7 +503,7 @@ Tokenizer::consumeString(char end)
 
 	while (true) {
 
-		size_t offset = 0;
+		unsigned offset = 0;
 
 		if (this->stream.find(end, offset) == false) {
 			break;
@@ -491,4 +532,5 @@ Tokenizer::consumeString(char end)
 	return Token(kTokenTypeString, value);
 }
 
+}
 }

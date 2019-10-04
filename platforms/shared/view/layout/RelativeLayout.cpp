@@ -5,7 +5,7 @@
 #include "Layout.h"
 #include <iostream>
 
-namespace View {
+namespace Dezel {
 
 using std::cerr;
 using std::min;

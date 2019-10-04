@@ -2,15 +2,17 @@
 #define Tokenizer_h
 
 #include "Token.h"
+#include "TokenList.h"
 #include "TokenizerStream.h"
+
 #include <string>
+#include <vector>
 
-#define EOS '\0'
-
-
-namespace View::Style {
+namespace Dezel {
+namespace Style {
 
 using std::string;
+using std::vector;
 
 class Tokenizer {
 
@@ -22,11 +24,11 @@ private:
 
 	TokenizerStream stream;
 
-	size_t length;
+	vector<Token> tokens;
 
 	Token consumeEnd(char c);
 	Token consumeSpace(char c);
-	Token consumeNewline(char c);
+	Token consumeLinebreak(char c);
 	Token consumeAlpha(char c);
 	Token consumeDigit(char c);
 	Token consumeDoubleQuote(char c);
@@ -51,17 +53,24 @@ private:
 	Token consumeAmpersand(char c);
 
 	Token consumeIdent();
-	Token consumeClass();
 	Token consumeNumber();
 	Token consumeString(char end);
+
+	Token next();
 
 public:
 
 	Tokenizer(TokenizerStream &stream);
-
-	Token next();
+	
+	TokenList getTokens() {
+		return TokenList(
+			&(*this->tokens.begin()),
+			&(*this->tokens.end())
+		);
+	}
 };
 
+}
 }
 
 #endif
