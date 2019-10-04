@@ -67,6 +67,10 @@
 		C7040DED232980D200DFDBED /* DisplayNodeRelativeLayoutTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7040DEC232980D200DFDBED /* DisplayNodeRelativeLayoutTest.swift */; };
 		C705913B2337B1E8002EF92F /* DisplayStyleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C705913A2337B1E8002EF92F /* DisplayStyleTest.swift */; };
 		C70617A420F7C03100499FDB /* TransitionListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = C70617A320F7C03100499FDB /* TransitionListener.swift */; };
+		C710007423465CFB0035134A /* TokenList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C710007223465CFB0035134A /* TokenList.cpp */; };
+		C710007523465CFB0035134A /* TokenList.h in Headers */ = {isa = PBXBuildFile; fileRef = C710007323465CFB0035134A /* TokenList.h */; };
+		C71000782346DD230035134A /* Argument.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C71000762346DD230035134A /* Argument.cpp */; };
+		C71000792346DD230035134A /* Argument.h in Headers */ = {isa = PBXBuildFile; fileRef = C71000772346DD230035134A /* Argument.h */; };
 		C718A0A92066E24400EFEC15 /* JavaScriptImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C718A0A82066E24400EFEC15 /* JavaScriptImageView.swift */; };
 		C718A0B32066E63300EFEC15 /* ImageLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C718A0B22066E63300EFEC15 /* ImageLayer.swift */; };
 		C718A0B52066ED6100EFEC15 /* JavaScriptImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C718A0B42066ED6100EFEC15 /* JavaScriptImage.swift */; };
@@ -138,6 +142,13 @@
 		C77B0D6E2226DB2400917D82 /* libWebsocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C77B0D6D2226DB2400917D82 /* libWebsocket.a */; };
 		C77B0D792226DC4D00917D82 /* WebSocketSecurity.h in Headers */ = {isa = PBXBuildFile; fileRef = C77B0D752226DC4D00917D82 /* WebSocketSecurity.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C77B0D7C2226DC4D00917D82 /* WebSocketConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = C77B0D782226DC4D00917D82 /* WebSocketConnection.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C77D1C772340E0B600EC65E0 /* Variable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C77D1C752340E0B600EC65E0 /* Variable.cpp */; };
+		C77D1C782340E0B600EC65E0 /* Variable.h in Headers */ = {isa = PBXBuildFile; fileRef = C77D1C762340E0B600EC65E0 /* Variable.h */; };
+		C77D1C7B2341209B00EC65E0 /* Rule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C77D1C792341209B00EC65E0 /* Rule.cpp */; };
+		C77D1C7C2341209B00EC65E0 /* Rule.h in Headers */ = {isa = PBXBuildFile; fileRef = C77D1C7A2341209B00EC65E0 /* Rule.h */; };
+		C77D1C7F23422C4100EC65E0 /* TokenizerStreamTest.mm in Sources */ = {isa = PBXBuildFile; fileRef = C77D1C7E23422C4100EC65E0 /* TokenizerStreamTest.mm */; };
+		C77D1C8123422C9A00EC65E0 /* TokenizerTest.mm in Sources */ = {isa = PBXBuildFile; fileRef = C77D1C8023422C9A00EC65E0 /* TokenizerTest.mm */; };
+		C77D1C8323422CA900EC65E0 /* ParserTest.mm in Sources */ = {isa = PBXBuildFile; fileRef = C77D1C8223422CA900EC65E0 /* ParserTest.mm */; };
 		C77D6E23220F730D005FAAF8 /* NSRegularExpression.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77D6E22220F730D005FAAF8 /* NSRegularExpression.swift */; };
 		C77D6E272210C162005FAAF8 /* CTFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77D6E262210C162005FAAF8 /* CTFrame.swift */; };
 		C77DFED3208CD91600CEC1D9 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77DFED2208CD91600CEC1D9 /* ImageLoader.swift */; };
@@ -153,6 +164,12 @@
 		C7A19E3A20ADD18200367E91 /* TextInputDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A19E3920ADD18200367E91 /* TextInputDelegate.swift */; };
 		C7A3AB77214EC68100D8B15C /* JavaScriptCanvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A3AB76214EC68100D8B15C /* JavaScriptCanvas.swift */; };
 		C7A3AB79214ECBA500D8B15C /* CanvasLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A3AB78214ECBA500D8B15C /* CanvasLayer.swift */; };
+		C7B137602344340B00A6CFD5 /* Property.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7B1375E2344340B00A6CFD5 /* Property.cpp */; };
+		C7B137612344340B00A6CFD5 /* Property.h in Headers */ = {isa = PBXBuildFile; fileRef = C7B1375F2344340B00A6CFD5 /* Property.h */; };
+		C7B13764234435DB00A6CFD5 /* Function.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7B13762234435DB00A6CFD5 /* Function.cpp */; };
+		C7B13765234435DB00A6CFD5 /* Function.h in Headers */ = {isa = PBXBuildFile; fileRef = C7B13763234435DB00A6CFD5 /* Function.h */; };
+		C7B137682344365500A6CFD5 /* Value.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7B137662344365500A6CFD5 /* Value.cpp */; };
+		C7B137692344365500A6CFD5 /* Value.h in Headers */ = {isa = PBXBuildFile; fileRef = C7B137672344365500A6CFD5 /* Value.h */; };
 		C7B40F6120B716C800892C92 /* TextArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B40F6020B716C800892C92 /* TextArea.swift */; };
 		C7B40F6320B7170E00892C92 /* TextAreaDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B40F6220B7170E00892C92 /* TextAreaDelegate.swift */; };
 		C7B9CEA6202CDB8D002409D5 /* ApplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B9CEA2202CDB8D002409D5 /* ApplicationController.swift */; };
@@ -170,14 +187,12 @@
 		C7BB7D462029062D004006C2 /* TransitionGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BB7D442029062D004006C2 /* TransitionGroup.swift */; };
 		C7BB7D472029062D004006C2 /* Transition.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BB7D452029062D004006C2 /* Transition.swift */; };
 		C7BB7D4B20293955004006C2 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BB7D4A20293955004006C2 /* Array.swift */; };
-		C7BC21BE2333031400BEBD60 /* SelectorList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7BC21BC2333031400BEBD60 /* SelectorList.cpp */; };
-		C7BC21BF2333031400BEBD60 /* SelectorList.h in Headers */ = {isa = PBXBuildFile; fileRef = C7BC21BD2333031400BEBD60 /* SelectorList.h */; };
 		C7BC21C22333034100BEBD60 /* Selector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7BC21C02333034100BEBD60 /* Selector.cpp */; };
 		C7BC21C32333034100BEBD60 /* Selector.h in Headers */ = {isa = PBXBuildFile; fileRef = C7BC21C12333034100BEBD60 /* Selector.h */; };
-		C7BC21C62333041300BEBD60 /* Rule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7BC21C42333041300BEBD60 /* Rule.cpp */; };
-		C7BC21C72333041300BEBD60 /* Rule.h in Headers */ = {isa = PBXBuildFile; fileRef = C7BC21C52333041300BEBD60 /* Rule.h */; };
-		C7BC21CA2333046E00BEBD60 /* Sheet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7BC21C82333046E00BEBD60 /* Sheet.cpp */; };
-		C7BC21CB2333046E00BEBD60 /* Sheet.h in Headers */ = {isa = PBXBuildFile; fileRef = C7BC21C92333046E00BEBD60 /* Sheet.h */; };
+		C7BC21C62333041300BEBD60 /* Ruleset.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7BC21C42333041300BEBD60 /* Ruleset.cpp */; };
+		C7BC21C72333041300BEBD60 /* Ruleset.h in Headers */ = {isa = PBXBuildFile; fileRef = C7BC21C52333041300BEBD60 /* Ruleset.h */; };
+		C7BC21CA2333046E00BEBD60 /* Stylesheet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7BC21C82333046E00BEBD60 /* Stylesheet.cpp */; };
+		C7BC21CB2333046E00BEBD60 /* Stylesheet.h in Headers */ = {isa = PBXBuildFile; fileRef = C7BC21C92333046E00BEBD60 /* Stylesheet.h */; };
 		C7BC21CE2333052900BEBD60 /* Parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7BC21CC2333052900BEBD60 /* Parser.cpp */; };
 		C7BC21CF2333052900BEBD60 /* Parser.h in Headers */ = {isa = PBXBuildFile; fileRef = C7BC21CD2333052900BEBD60 /* Parser.h */; };
 		C7BC21D223345CFC00BEBD60 /* Token.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7BC21D023345CFC00BEBD60 /* Token.cpp */; };
@@ -339,6 +354,10 @@
 		C7040DEC232980D200DFDBED /* DisplayNodeRelativeLayoutTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayNodeRelativeLayoutTest.swift; sourceTree = "<group>"; };
 		C705913A2337B1E8002EF92F /* DisplayStyleTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayStyleTest.swift; sourceTree = "<group>"; };
 		C70617A320F7C03100499FDB /* TransitionListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionListener.swift; sourceTree = "<group>"; };
+		C710007223465CFB0035134A /* TokenList.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = TokenList.cpp; path = ../../../../../shared/view/style/TokenList.cpp; sourceTree = "<group>"; };
+		C710007323465CFB0035134A /* TokenList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TokenList.h; path = ../../../../../shared/view/style/TokenList.h; sourceTree = "<group>"; };
+		C71000762346DD230035134A /* Argument.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Argument.cpp; path = ../../../../../shared/view/style/Argument.cpp; sourceTree = "<group>"; };
+		C71000772346DD230035134A /* Argument.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Argument.h; path = ../../../../../shared/view/style/Argument.h; sourceTree = "<group>"; };
 		C718A0A82066E24400EFEC15 /* JavaScriptImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptImageView.swift; sourceTree = "<group>"; };
 		C718A0B22066E63300EFEC15 /* ImageLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLayer.swift; sourceTree = "<group>"; };
 		C718A0B42066ED6100EFEC15 /* JavaScriptImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptImage.swift; sourceTree = "<group>"; };
@@ -410,6 +429,13 @@
 		C77B0D6D2226DB2400917D82 /* libWebsocket.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWebsocket.a; sourceTree = "<group>"; };
 		C77B0D752226DC4D00917D82 /* WebSocketSecurity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebSocketSecurity.h; sourceTree = "<group>"; };
 		C77B0D782226DC4D00917D82 /* WebSocketConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebSocketConnection.h; sourceTree = "<group>"; };
+		C77D1C752340E0B600EC65E0 /* Variable.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Variable.cpp; path = ../../../../../shared/view/style/Variable.cpp; sourceTree = "<group>"; };
+		C77D1C762340E0B600EC65E0 /* Variable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Variable.h; path = ../../../../../shared/view/style/Variable.h; sourceTree = "<group>"; };
+		C77D1C792341209B00EC65E0 /* Rule.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Rule.cpp; path = ../../../../../shared/view/style/Rule.cpp; sourceTree = "<group>"; };
+		C77D1C7A2341209B00EC65E0 /* Rule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Rule.h; path = ../../../../../shared/view/style/Rule.h; sourceTree = "<group>"; };
+		C77D1C7E23422C4100EC65E0 /* TokenizerStreamTest.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = TokenizerStreamTest.mm; sourceTree = "<group>"; };
+		C77D1C8023422C9A00EC65E0 /* TokenizerTest.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = TokenizerTest.mm; sourceTree = "<group>"; };
+		C77D1C8223422CA900EC65E0 /* ParserTest.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ParserTest.mm; sourceTree = "<group>"; };
 		C77D6E22220F730D005FAAF8 /* NSRegularExpression.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSRegularExpression.swift; sourceTree = "<group>"; };
 		C77D6E262210C162005FAAF8 /* CTFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CTFrame.swift; sourceTree = "<group>"; };
 		C77DFED2208CD91600CEC1D9 /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
@@ -425,6 +451,12 @@
 		C7A19E3920ADD18200367E91 /* TextInputDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextInputDelegate.swift; sourceTree = "<group>"; };
 		C7A3AB76214EC68100D8B15C /* JavaScriptCanvas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptCanvas.swift; sourceTree = "<group>"; };
 		C7A3AB78214ECBA500D8B15C /* CanvasLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasLayer.swift; sourceTree = "<group>"; };
+		C7B1375E2344340B00A6CFD5 /* Property.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Property.cpp; path = ../../../../../shared/view/style/Property.cpp; sourceTree = "<group>"; };
+		C7B1375F2344340B00A6CFD5 /* Property.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Property.h; path = ../../../../../shared/view/style/Property.h; sourceTree = "<group>"; };
+		C7B13762234435DB00A6CFD5 /* Function.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Function.cpp; path = ../../../../../shared/view/style/Function.cpp; sourceTree = "<group>"; };
+		C7B13763234435DB00A6CFD5 /* Function.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Function.h; path = ../../../../../shared/view/style/Function.h; sourceTree = "<group>"; };
+		C7B137662344365500A6CFD5 /* Value.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Value.cpp; path = ../../../../../shared/view/style/Value.cpp; sourceTree = "<group>"; };
+		C7B137672344365500A6CFD5 /* Value.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Value.h; path = ../../../../../shared/view/style/Value.h; sourceTree = "<group>"; };
 		C7B40F6020B716C800892C92 /* TextArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextArea.swift; sourceTree = "<group>"; };
 		C7B40F6220B7170E00892C92 /* TextAreaDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextAreaDelegate.swift; sourceTree = "<group>"; };
 		C7B9CEA2202CDB8D002409D5 /* ApplicationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationController.swift; sourceTree = "<group>"; };
@@ -442,14 +474,12 @@
 		C7BB7D442029062D004006C2 /* TransitionGroup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransitionGroup.swift; sourceTree = "<group>"; };
 		C7BB7D452029062D004006C2 /* Transition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Transition.swift; sourceTree = "<group>"; };
 		C7BB7D4A20293955004006C2 /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
-		C7BC21BC2333031400BEBD60 /* SelectorList.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SelectorList.cpp; path = ../../../../../shared/view/style/SelectorList.cpp; sourceTree = "<group>"; };
-		C7BC21BD2333031400BEBD60 /* SelectorList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SelectorList.h; path = ../../../../../shared/view/style/SelectorList.h; sourceTree = "<group>"; };
 		C7BC21C02333034100BEBD60 /* Selector.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Selector.cpp; path = ../../../../../shared/view/style/Selector.cpp; sourceTree = "<group>"; };
 		C7BC21C12333034100BEBD60 /* Selector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Selector.h; path = ../../../../../shared/view/style/Selector.h; sourceTree = "<group>"; };
-		C7BC21C42333041300BEBD60 /* Rule.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Rule.cpp; path = ../../../../../shared/view/style/Rule.cpp; sourceTree = "<group>"; };
-		C7BC21C52333041300BEBD60 /* Rule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Rule.h; path = ../../../../../shared/view/style/Rule.h; sourceTree = "<group>"; };
-		C7BC21C82333046E00BEBD60 /* Sheet.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Sheet.cpp; path = ../../../../../shared/view/style/Sheet.cpp; sourceTree = "<group>"; };
-		C7BC21C92333046E00BEBD60 /* Sheet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Sheet.h; path = ../../../../../shared/view/style/Sheet.h; sourceTree = "<group>"; };
+		C7BC21C42333041300BEBD60 /* Ruleset.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Ruleset.cpp; path = ../../../../../shared/view/style/Ruleset.cpp; sourceTree = "<group>"; };
+		C7BC21C52333041300BEBD60 /* Ruleset.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Ruleset.h; path = ../../../../../shared/view/style/Ruleset.h; sourceTree = "<group>"; };
+		C7BC21C82333046E00BEBD60 /* Stylesheet.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Stylesheet.cpp; path = ../../../../../shared/view/style/Stylesheet.cpp; sourceTree = "<group>"; };
+		C7BC21C92333046E00BEBD60 /* Stylesheet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Stylesheet.h; path = ../../../../../shared/view/style/Stylesheet.h; sourceTree = "<group>"; };
 		C7BC21CC2333052900BEBD60 /* Parser.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Parser.cpp; path = ../../../../../shared/view/style/Parser.cpp; sourceTree = "<group>"; };
 		C7BC21CD2333052900BEBD60 /* Parser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Parser.h; path = ../../../../../shared/view/style/Parser.h; sourceTree = "<group>"; };
 		C7BC21D023345CFC00BEBD60 /* Token.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Token.cpp; path = ../../../../../shared/view/style/Token.cpp; sourceTree = "<group>"; };
@@ -849,6 +879,16 @@
 			path = Websocket;
 			sourceTree = "<group>";
 		};
+		C77D1C7D23422C2100EC65E0 /* Style */ = {
+			isa = PBXGroup;
+			children = (
+				C77D1C7E23422C4100EC65E0 /* TokenizerStreamTest.mm */,
+				C77D1C8023422C9A00EC65E0 /* TokenizerTest.mm */,
+				C77D1C8223422CA900EC65E0 /* ParserTest.mm */,
+			);
+			path = Style;
+			sourceTree = "<group>";
+		};
 		C77DFEDF208D062600CEC1D9 /* Locale */ = {
 			isa = PBXGroup;
 			children = (
@@ -915,22 +955,34 @@
 		C7BC21BB2333016200BEBD60 /* Style */ = {
 			isa = PBXGroup;
 			children = (
+				C71000762346DD230035134A /* Argument.cpp */,
+				C71000772346DD230035134A /* Argument.h */,
+				C7B13762234435DB00A6CFD5 /* Function.cpp */,
+				C7B13763234435DB00A6CFD5 /* Function.h */,
 				C7BC21CC2333052900BEBD60 /* Parser.cpp */,
 				C7BC21CD2333052900BEBD60 /* Parser.h */,
-				C7BC21C42333041300BEBD60 /* Rule.cpp */,
-				C7BC21C52333041300BEBD60 /* Rule.h */,
+				C7B1375E2344340B00A6CFD5 /* Property.cpp */,
+				C7B1375F2344340B00A6CFD5 /* Property.h */,
+				C77D1C792341209B00EC65E0 /* Rule.cpp */,
+				C77D1C7A2341209B00EC65E0 /* Rule.h */,
+				C7BC21C42333041300BEBD60 /* Ruleset.cpp */,
+				C7BC21C52333041300BEBD60 /* Ruleset.h */,
 				C7BC21C02333034100BEBD60 /* Selector.cpp */,
 				C7BC21C12333034100BEBD60 /* Selector.h */,
-				C7BC21BC2333031400BEBD60 /* SelectorList.cpp */,
-				C7BC21BD2333031400BEBD60 /* SelectorList.h */,
-				C7BC21C82333046E00BEBD60 /* Sheet.cpp */,
-				C7BC21C92333046E00BEBD60 /* Sheet.h */,
+				C7BC21C82333046E00BEBD60 /* Stylesheet.cpp */,
+				C7BC21C92333046E00BEBD60 /* Stylesheet.h */,
 				C7BC21D023345CFC00BEBD60 /* Token.cpp */,
 				C7BC21D123345CFC00BEBD60 /* Token.h */,
 				C7BC21D423345D2F00BEBD60 /* Tokenizer.cpp */,
 				C7BC21D523345D2F00BEBD60 /* Tokenizer.h */,
 				C773EE542334FCFC002D5025 /* TokenizerStream.cpp */,
 				C773EE552334FCFC002D5025 /* TokenizerStream.h */,
+				C710007223465CFB0035134A /* TokenList.cpp */,
+				C710007323465CFB0035134A /* TokenList.h */,
+				C7B137662344365500A6CFD5 /* Value.cpp */,
+				C7B137672344365500A6CFD5 /* Value.h */,
+				C77D1C752340E0B600EC65E0 /* Variable.cpp */,
+				C77D1C762340E0B600EC65E0 /* Variable.h */,
 			);
 			name = Style;
 			sourceTree = "<group>";
@@ -1295,6 +1347,7 @@
 		C7FCA147231C5BB600AFBDB6 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				C77D1C7D23422C2100EC65E0 /* Style */,
 				C7040DE82327DB2000DFDBED /* DisplayNodeDelegateCounter.swift */,
 				C7FCA148231C5BC400AFBDB6 /* DisplayNodeAbsoluteLayoutTest.swift */,
 				C7040DEC232980D200DFDBED /* DisplayNodeRelativeLayoutTest.swift */,
@@ -1314,8 +1367,8 @@
 				C7E8A46C20159C80005139F6 /* Dezel.h in Headers */,
 				C7E8A543201624FA005139F6 /* DLContext.h in Headers */,
 				C7040DB3232698AB00DFDBED /* DisplayNodeOrigin.h in Headers */,
-				C7BC21BF2333031400BEBD60 /* SelectorList.h in Headers */,
 				C7BC21C32333034100BEBD60 /* Selector.h in Headers */,
+				C7B137612344340B00A6CFD5 /* Property.h in Headers */,
 				C7040DAB2326974300DFDBED /* DisplayNodeAnchor.h in Headers */,
 				C773EE572334FCFC002D5025 /* TokenizerStream.h in Headers */,
 				C7E8A549201624FA005139F6 /* DLValue.h in Headers */,
@@ -1326,19 +1379,25 @@
 				C7040DA6232694B100DFDBED /* DisplayRef.h in Headers */,
 				C7040DD22326A29900DFDBED /* Layout.h in Headers */,
 				C7040D9A232694B100DFDBED /* Display.h in Headers */,
+				C77D1C782340E0B600EC65E0 /* Variable.h in Headers */,
+				C7B137692344365500A6CFD5 /* Value.h in Headers */,
 				C77B0D4C2226D7DC00917D82 /* LRUDiskCache.h in Headers */,
+				C71000792346DD230035134A /* Argument.h in Headers */,
 				C7040DAF2326983700DFDBED /* DisplayNodeSize.h in Headers */,
+				C77D1C7C2341209B00EC65E0 /* Rule.h in Headers */,
 				C7BC21D723345D2F00BEBD60 /* Tokenizer.h in Headers */,
 				C7BC21D323345CFC00BEBD60 /* Token.h in Headers */,
 				C7E8A546201624FA005139F6 /* DLContextPrivate.h in Headers */,
+				C710007523465CFB0035134A /* TokenList.h in Headers */,
 				C7040DBF232698FC00DFDBED /* DisplayNodeMargin.h in Headers */,
+				C7B13765234435DB00A6CFD5 /* Function.h in Headers */,
 				C7040D9C232694B100DFDBED /* DisplayNodeRef.h in Headers */,
 				C7040DB7232698C000DFDBED /* DisplayNodeContentSize.h in Headers */,
 				C7E8A54A201624FA005139F6 /* DLValuePrivate.h in Headers */,
-				C7BC21C72333041300BEBD60 /* Rule.h in Headers */,
+				C7BC21C72333041300BEBD60 /* Ruleset.h in Headers */,
 				C7040DC72326993400DFDBED /* DisplayNodePadding.h in Headers */,
 				C7BC21CF2333052900BEBD60 /* Parser.h in Headers */,
-				C7BC21CB2333046E00BEBD60 /* Sheet.h in Headers */,
+				C7BC21CB2333046E00BEBD60 /* Stylesheet.h in Headers */,
 				C7040DBB232698D000DFDBED /* DisplayNodeContentOrigin.h in Headers */,
 				C77B0D7C2226DC4D00917D82 /* WebSocketConnection.h in Headers */,
 				C7040DC32326991200DFDBED /* DisplayNodeBorder.h in Headers */,
@@ -1404,7 +1463,7 @@
 					};
 					C7E8A46320159C80005139F6 = {
 						CreatedOnToolsVersion = 9.2;
-						LastSwiftMigration = 1020;
+						LastSwiftMigration = 1100;
 						ProvisioningStyle = Automatic;
 					};
 					C7FDE42222538F9700FD3856 = {
@@ -1477,7 +1536,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C7BC21BE2333031400BEBD60 /* SelectorList.cpp in Sources */,
 				C7FCA1082315CD7200AFBDB6 /* Lock.swift in Sources */,
 				C71E6CE120E6617D009B86F6 /* Scrollbars.swift in Sources */,
 				C777B63F22DA49B600E75E55 /* WeakReference.swift in Sources */,
@@ -1487,7 +1545,7 @@
 				C7B9CEAC202CDBB7002409D5 /* JavaScriptApplication.swift in Sources */,
 				C77189B22106AE0A00337263 /* Transform2D.swift in Sources */,
 				C767544520269DB5003C4D85 /* TextView.swift in Sources */,
-				C7BC21C62333041300BEBD60 /* Rule.cpp in Sources */,
+				C7BC21C62333041300BEBD60 /* Ruleset.cpp in Sources */,
 				C7BC21C22333034100BEBD60 /* Selector.cpp in Sources */,
 				C7BB7D3E2028F4C5004006C2 /* CGRect.swift in Sources */,
 				C7682A422035395F006EA6D5 /* Layer.swift in Sources */,
@@ -1514,6 +1572,7 @@
 				C7BB7D472029062D004006C2 /* Transition.swift in Sources */,
 				C7BC21D623345D2F00BEBD60 /* Tokenizer.cpp in Sources */,
 				C73700C72219A9370095A54B /* ImageEffect.swift in Sources */,
+				C71000782346DD230035134A /* Argument.cpp in Sources */,
 				C72E0E9520669CA0003BCEF1 /* TextLocation.swift in Sources */,
 				C7E8A544201624FA005139F6 /* DLValuePrivate.cpp in Sources */,
 				C77189B42106AE1300337263 /* Transform3D.swift in Sources */,
@@ -1572,6 +1631,8 @@
 				C7040D98232694B100DFDBED /* DisplayNode.cpp in Sources */,
 				C71E6CC020DD4F56009B86F6 /* WebView.swift in Sources */,
 				C7BB7D3D2028F4C5004006C2 /* CGFloat.swift in Sources */,
+				C77D1C7B2341209B00EC65E0 /* Rule.cpp in Sources */,
+				C7B137682344365500A6CFD5 /* Value.cpp in Sources */,
 				C72E0E9920669CBF003BCEF1 /* TextOverflow.swift in Sources */,
 				C732E78820865116006014A0 /* GlobalModule.swift in Sources */,
 				C718A0B52066ED6100EFEC15 /* JavaScriptImage.swift in Sources */,
@@ -1610,6 +1671,7 @@
 				C7A3AB79214ECBA500D8B15C /* CanvasLayer.swift in Sources */,
 				C718B5B4207C3D0D00610F8D /* LinearGradient.swift in Sources */,
 				C75153BF22F3791C007CAA48 /* JavaScriptClassStaticFunctionWrapper.swift in Sources */,
+				C710007423465CFB0035134A /* TokenList.cpp in Sources */,
 				C700121821551B5700CB26D4 /* JavaScriptDevice.swift in Sources */,
 				C71A119D2080EB1E0004D523 /* HttpRequest.swift in Sources */,
 				C7040DCA2326999B00DFDBED /* DisplayBase.cpp in Sources */,
@@ -1620,6 +1682,7 @@
 				C7A19E3A20ADD18200367E91 /* TextInputDelegate.swift in Sources */,
 				C7B9CEAD202CDBB7002409D5 /* ApplicationModule.swift in Sources */,
 				C7E5D085209DE2290098C5FD /* AlertController.swift in Sources */,
+				C7B13764234435DB00A6CFD5 /* Function.cpp in Sources */,
 				C7CE4B09220A7824005D5235 /* Timezone.swift in Sources */,
 				C7040DC62326993400DFDBED /* DisplayNodePadding.cpp in Sources */,
 				C7541A8922E6B09800586FC4 /* HttpResponse.swift in Sources */,
@@ -1630,7 +1693,7 @@
 				C7E8A527201624A2005139F6 /* JavaScriptGetterWrapper.swift in Sources */,
 				C7D14EDC21D07058008B51D4 /* Scanner.swift in Sources */,
 				C7CE4B032208AB53005D5235 /* DateParser.swift in Sources */,
-				C7BC21CA2333046E00BEBD60 /* Sheet.cpp in Sources */,
+				C7BC21CA2333046E00BEBD60 /* Stylesheet.cpp in Sources */,
 				C7FCA1002311B4BA00AFBDB6 /* JavaScriptPropertyStorageString.swift in Sources */,
 				C7CE4B072208C93C005D5235 /* UITextField.swift in Sources */,
 				C7BB7D3C2028F4C5004006C2 /* CGColor.swift in Sources */,
@@ -1659,6 +1722,7 @@
 				C7E8A520201624A2005139F6 /* JavaScriptSetterCallback.swift in Sources */,
 				C7BFD164207D52F100AAD31C /* TextInput.swift in Sources */,
 				C7E8A525201624A2005139F6 /* JavaScriptClassFunctionWrapper.swift in Sources */,
+				C7B137602344340B00A6CFD5 /* Property.cpp in Sources */,
 				C777B62A22D77B2D00E75E55 /* TestRunner.swift in Sources */,
 				C7040D97232694B100DFDBED /* DisplayNodeRef.cpp in Sources */,
 				C71E6CC220DD50A0009B86F6 /* WebViewDelegate.swift in Sources */,
@@ -1675,6 +1739,7 @@
 				C7B40F6120B716C800892C92 /* TextArea.swift in Sources */,
 				C77DFED3208CD91600CEC1D9 /* ImageLoader.swift in Sources */,
 				C718B5B6207C41F100610F8D /* RadialGradient.swift in Sources */,
+				C77D1C772340E0B600EC65E0 /* Variable.cpp in Sources */,
 				C72E0E9720669CB8003BCEF1 /* TextDecoration.swift in Sources */,
 				C7E5D08A209DE2DC0098C5FD /* JavaScriptAlertButton.swift in Sources */,
 			);
@@ -1685,13 +1750,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				C7E8A4F520162429005139F6 /* JavaScriptContextTestClassB.swift in Sources */,
+				C77D1C8123422C9A00EC65E0 /* TokenizerTest.mm in Sources */,
 				C7E8A4F320162429005139F6 /* JavaScriptGetterTest.swift in Sources */,
 				C7040DE92327DB2100DFDBED /* DisplayNodeDelegateCounter.swift in Sources */,
 				C7FCA1142316FA0800AFBDB6 /* JavaScriptPropertyTest.swift in Sources */,
 				C705913B2337B1E8002EF92F /* DisplayStyleTest.swift in Sources */,
 				C7E8A4F120162429005139F6 /* JavaScriptSetterTest.swift in Sources */,
+				C77D1C8323422CA900EC65E0 /* ParserTest.mm in Sources */,
 				C7E8A4F820162429005139F6 /* JavaScriptContextTestClassA.swift in Sources */,
 				C7E8A4F220162429005139F6 /* JavaScriptClassTest.swift in Sources */,
+				C77D1C7F23422C4100EC65E0 /* TokenizerStreamTest.mm in Sources */,
 				C7FCA149231C5BC400AFBDB6 /* DisplayNodeAbsoluteLayoutTest.swift in Sources */,
 				C7E8A4F020162429005139F6 /* JavaScriptValueTest.swift in Sources */,
 				C7E8A4F720162429005139F6 /* JavaScriptTestObject.swift in Sources */,
@@ -1904,12 +1972,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2QFKX2YRS9;
 				INFOPLIST_FILE = DezelTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ca.logaritm.DezelTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1919,6 +1989,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2QFKX2YRS9;
 				INFOPLIST_FILE = DezelTests/Info.plist;
