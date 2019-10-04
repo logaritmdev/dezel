@@ -14,7 +14,7 @@
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	public override init(context: JavaScriptContext) {
+	public required init(context: JavaScriptContext) {
 		super.init(context: context)
 		self.reset(DLValueCreateNull(context.handle), protect: false)
 	}

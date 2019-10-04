@@ -260,7 +260,15 @@ open class JavaScriptValue : NSObject {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	internal init(context: JavaScriptContext) {
+	public required init(context: JavaScriptContext) {
+
+		/*
+		 * Even though this method is marked as public it should be treated
+		 * as internal. This has been changed to fix an issue where some
+		 * JavaScriptClass instance would not be instantiated as the
+		 * proper type unless this method is public.
+		 */
+
 		self.context = context
 		super.init()
 	}

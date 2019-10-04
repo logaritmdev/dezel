@@ -14,7 +14,7 @@ open class JavaScriptObject: JavaScriptValue {
 	 * @constructor
 	 * @since 0.4.0
 	 */
-	required override public init(context: JavaScriptContext) {
+	public required init(context: JavaScriptContext) {
 		super.init(context: context)
 	}
 
