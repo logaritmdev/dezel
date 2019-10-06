@@ -9,6 +9,8 @@
 #include "Property.h"
 #include "Variable.h"
 #include "Value.h"
+#include "VariableValue.h"
+#include "FunctionValue.h"
 
 namespace Dezel {
 namespace Style {
@@ -26,15 +28,16 @@ private:
 
 	Rule* parseRule(TokenList& tokens);
 	Ruleset* parseRuleset(TokenList& tokens);
+	Variable* parseVariable(TokenList& tokens);
 	Selector* parseSelector(TokenList& tokens);
 	Property* parseProperty(TokenList& tokens);
-	Variable* parseVariable(TokenList& tokens);
+
 
 	Value* parseIdentValue(TokenList& tokens);
 	Value* parseStringValue(TokenList& tokens);
 	Value* parseNumberValue(TokenList& tokens);
-
-	Function* parseFunction(TokenList& tokens);
+	Value* parseFunctionValue(TokenList& tokens);
+	Value* parseVariableValue(TokenList& tokens);
 
 public:
 

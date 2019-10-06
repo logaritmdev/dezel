@@ -11,7 +11,7 @@ TokenList::TokenList(const Token* head, const Token* tail)
 }
 
 const Token&
-TokenList::peek(unsigned offset, bool spaces) {
+TokenList::peek(size_t offset, bool spaces) {
 
 	if (spaces || offset == 0) {
 
@@ -23,7 +23,7 @@ TokenList::peek(unsigned offset, bool spaces) {
 		return *(this->curr + offset);
 	}
 
-	unsigned push = 0;
+	size_t push = 0;
 
 	while (true) {
 

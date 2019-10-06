@@ -1,5 +1,5 @@
 #include "Property.h"
-#include "Function.h"
+#include "FunctionValue.h"
 #include "Value.h"
 
 namespace Dezel {
@@ -21,16 +21,8 @@ Property::toString(int depth)
 	output.append(":");
 	output.append(" ");
 
-	if (this->function) {
-
-		output.append(this->function->toString());
-
-	} else {
-
-		for (auto value : this->values) {
-			output.append(value->toString());
-		}
-		
+	for (auto value : this->values) {
+		output.append(value->toString());
 	}
 
 	return output;

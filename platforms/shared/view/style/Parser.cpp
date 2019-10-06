@@ -5,7 +5,13 @@
 #include "Ruleset.h"
 #include "Rule.h"
 #include "Selector.h"
-#include "Function.h"
+#include "NullValue.h"
+#include "StringValue.h"
+#include "NumberValue.h"
+#include "BooleanValue.h"
+#include "FunctionValue.h"
+#include "VariableValue.h"
+#include "Argument.h"
 
 #include <iostream>
 #include <string>
@@ -43,12 +49,23 @@ Parser::Parser(Stylesheet* stylesheet, Tokenizer* tokenizer) : stylesheet(styles
 
 		if (ruleset) {
 			std::cout << "Ruleset : " << ruleset->toString();
+			tokens.nextToken();
+			tokens.skipSpace();
 		}
 
-		tokens.nextToken();
-		tokens.skipSpace();
+		auto variable = this->parseVariable(tokens);
+
+		if (variable) {
+			stylesheet->variables[variable->name] = variable;
+			tokens.nextToken();
+			tokens.skipSpace();
+		}
 
 	} while (tokens.hasNextToken());
+
+	for (auto item : stylesheet->variables) {
+		std::cout << "Variable: " << item.second->toString();
+	}
 }
 
 bool
@@ -232,6 +249,63 @@ Parser::parseRule(TokenList& tokens)
 	return rule;
 }
 
+Variable*
+Parser::parseVariable(TokenList& tokens)
+{
+	if (tokens.getCurrentTokenType() != kTokenTypeVariable) {
+		return nullptr;
+	}
+
+	if (tokens.peek(1, false).getType() != kTokenTypeColon) {
+		return nullptr;
+	}
+
+	auto variable = new Variable(tokens.getCurrentTokenName());
+
+	tokens.nextToken();
+	tokens.skipSpace();
+
+	tokens.nextToken();
+	tokens.skipSpace();
+
+	while (true) {
+
+		if (tokens.getCurrentTokenType() == kTokenTypeSpace) {
+			tokens.nextToken();
+			continue;
+		}
+
+		if (tokens.getCurrentTokenType() == kTokenTypeIdent) {
+			variable->values.push_back(this->parseIdentValue(tokens));
+			tokens.nextToken();
+			continue;
+		}
+
+		if (tokens.getCurrentTokenType() == kTokenTypeNumber) {
+			variable->values.push_back(this->parseNumberValue(tokens));
+			tokens.nextToken();
+			continue;
+		}
+
+		if (tokens.getCurrentTokenType() == kTokenTypeString) {
+			variable->values.push_back(this->parseStringValue(tokens));
+			tokens.nextToken();
+			continue;
+		}
+
+		if (tokens.getCurrentTokenType() == kTokenTypeDelimiter ||
+			tokens.getCurrentTokenType() == kTokenTypeLinebreak) {
+			break;
+		}
+
+		assert(false); // INVALID TOKEN HERE
+
+		break;
+	}
+
+	return variable;
+}
+
 Selector*
 Parser::parseSelector(TokenList& tokens)
 {
@@ -295,11 +369,6 @@ Parser::parseSelector(TokenList& tokens)
 	return selector;
 }
 
-Variable*
-Parser::parseVariable(TokenList& tokens)
-{
-	return nullptr;
-}
 
 Property*
 Parser::parseProperty(TokenList& tokens)
@@ -346,14 +415,8 @@ Parser::parseProperty(TokenList& tokens)
 		}
 
 		if (tokens.getCurrentTokenType() == kTokenTypeFunction) {
-
-			auto function = this->parseFunction(tokens);
-			if (function) {
-				property->function = function;
-			} else {
-				assert(false);
-			}
-
+			property->values.push_back(this->parseFunctionValue(tokens));
+			tokens.nextToken();
 			continue;
 		}
 
@@ -372,15 +435,15 @@ Value*
 Parser::parseIdentValue(TokenList& tokens)
 {
 	if (equals(tokens.getCurrentTokenName(), "null")) {
-		return Value::createNull();
+		return new NullValue();
 	}
 
 	if (equals(tokens.getCurrentTokenName(), "true")) {
-		return Value::createBoolean(true);
+		return new BooleanValue(true);
 	}
 
 	if (equals(tokens.getCurrentTokenName(), "false")) {
-		return Value::createBoolean(false);
+		return new BooleanValue(false);
 	}
 
 	return this->parseStringValue(tokens);
@@ -389,49 +452,92 @@ Parser::parseIdentValue(TokenList& tokens)
 Value*
 Parser::parseStringValue(TokenList& tokens)
 {
-	return Value::createString(tokens.getCurrentTokenName());
+	return new StringValue(tokens.getCurrentTokenName());
 }
 
 Value*
 Parser::parseNumberValue(TokenList& tokens)
 {
-	auto value = Value::createNumber(std::stod(tokens.getCurrentTokenName()));
-
-	if (tokens.getCurrentTokenUnit() == "%") {
-		value->unit = kValueUnitPC;
-	} else if (tokens.getCurrentTokenUnit() == "px") {
-		value->unit = kValueUnitPX;
-	} else if (tokens.getCurrentTokenUnit() == "vw") {
-		value->unit = kValueUnitVW;
-	} else if (tokens.getCurrentTokenUnit() == "vh") {
-		value->unit = kValueUnitVH;
-	} else if (tokens.getCurrentTokenUnit() == "pw") {
-		value->unit = kValueUnitPW;
-	} else if (tokens.getCurrentTokenUnit() == "ph") {
-		value->unit = kValueUnitPH;
-	} else if (tokens.getCurrentTokenUnit() == "cw") {
-		value->unit = kValueUnitCW;
-	} else if (tokens.getCurrentTokenUnit() == "ch") {
-		value->unit = kValueUnitCH;
-	} else if (tokens.getCurrentTokenUnit() == "deg") {
-		value->unit = kValueUnitDeg;
-	} else if (tokens.getCurrentTokenUnit() == "rad") {
-		value->unit = kValueUnitRad;
+	if (tokens.getCurrentTokenUnit() == "") {
+		return new NumberValue(tokens.getCurrentTokenName(), kValueUnitNone);
 	}
 
-	return value;
+	if (tokens.getCurrentTokenUnit() == "%") {
+		return new NumberValue(tokens.getCurrentTokenName(), kValueUnitPC);
+	}
+
+	if (equals(tokens.getCurrentTokenUnit(), "px")) {
+		return new NumberValue(tokens.getCurrentTokenName(), kValueUnitPX);
+	}
+
+	if (equals(tokens.getCurrentTokenUnit(), "vw")) {
+		return new NumberValue(tokens.getCurrentTokenName(), kValueUnitVW);
+	}
+
+	if (equals(tokens.getCurrentTokenUnit(), "vh")) {
+		return new NumberValue(tokens.getCurrentTokenName(), kValueUnitVH);
+	}
+
+	if (equals(tokens.getCurrentTokenUnit(), "pw")) {
+		return new NumberValue(tokens.getCurrentTokenName(), kValueUnitPW);
+	}
+
+	if (equals(tokens.getCurrentTokenUnit(), "ph")) {
+		return new NumberValue(tokens.getCurrentTokenName(), kValueUnitPH);
+	}
+
+	if (equals(tokens.getCurrentTokenUnit(), "cw")) {
+		return new NumberValue(tokens.getCurrentTokenName(), kValueUnitCW);
+	}
+
+	if (equals(tokens.getCurrentTokenUnit(), "ch")) {
+		return new NumberValue(tokens.getCurrentTokenName(), kValueUnitCH);
+	}
+
+	if (equals(tokens.getCurrentTokenUnit(), "deg")) {
+		return new NumberValue(tokens.getCurrentTokenName(), kValueUnitDeg);
+	}
+
+	if (equals(tokens.getCurrentTokenUnit(), "rad")) {
+		return new NumberValue(tokens.getCurrentTokenName(), kValueUnitRad);
+	}
+
+	assert(false);
 }
 
-Function*
-Parser::parseFunction(TokenList& tokens)
+Value*
+Parser::parseVariableValue(TokenList& tokens)
 {
-	int depth = 0;
+	if (tokens.getCurrentTokenType() != kTokenTypeVariable) {
+		return nullptr;
+	}
 
-	auto function = new Function();
-
-	function->name = tokens.getCurrentTokenName();
+	auto variable = new VariableValue(tokens.getCurrentTokenName());
 
 	tokens.nextToken();
+	tokens.skipSpace();
+
+	return variable;
+}
+
+Value*
+Parser::parseFunctionValue(TokenList& tokens)
+{
+	if (tokens.getCurrentTokenType() != kTokenTypeFunction) {
+		return nullptr;
+	}
+
+	auto function = new FunctionValue(tokens.getCurrentTokenName());
+	auto argument = new Argument();
+
+	tokens.nextToken();
+
+	if (tokens.getCurrentTokenType() != kTokenTypeParenthesisOpen) {
+		assert(false);
+	}
+
+	tokens.nextToken();
+	tokens.skipSpace();
 
 	while (true) {
 
@@ -440,47 +546,40 @@ Parser::parseFunction(TokenList& tokens)
 			continue;
 		}
 
-		if (tokens.getCurrentTokenType() == kTokenTypeComma) {
-			tokens.nextToken();
-			continue;
-		}
-
 		if (tokens.getCurrentTokenType() == kTokenTypeIdent) {
+			argument->values.push_back(this->parseIdentValue(tokens));
 			tokens.nextToken();
-			// TODO PARSE IDENT
 			continue;
 		}
 
 		if (tokens.getCurrentTokenType() == kTokenTypeString) {
+			argument->values.push_back(this->parseStringValue(tokens));
 			tokens.nextToken();
-			// TODO PARSE IDENT
 			continue;
 		}
 
 		if (tokens.getCurrentTokenType() == kTokenTypeNumber) {
+			argument->values.push_back(this->parseNumberValue(tokens));
 			tokens.nextToken();
-			// TODO PARSE IDENT
 			continue;
 		}
 
-		if (tokens.getCurrentTokenType() == kTokenTypeParenthesisOpen) {
+		if (tokens.getCurrentTokenType() == kTokenTypeVariable) {
+			argument->values.push_back(this->parseVariableValue(tokens));
 			tokens.nextToken();
-			depth++;
+			continue;
+		}
+
+		if (tokens.getCurrentTokenType() == kTokenTypeComma) {
+			tokens.nextToken();
+			function->arguments.push_back(argument);
+			argument = new Argument();
 			continue;
 		}
 
 		if (tokens.getCurrentTokenType() == kTokenTypeParenthesisClose) {
-			tokens.nextToken();
-			depth--;
-			continue;
-		}
-
-		if (tokens.getCurrentTokenType() == kTokenTypeDelimiter ||
-			tokens.getCurrentTokenType() == kTokenTypeLinebreak) {
-			if (depth != 0) {
-				assert(false);
-			}
-
+			function->arguments.push_back(argument);
+			argument = nullptr;
 			break;
 		}
 

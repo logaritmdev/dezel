@@ -15,29 +15,29 @@ private:
 
 	string input;
 	
-	unsigned length = 0;
-	unsigned offset = 0;
-	unsigned lower = 0;
-	unsigned upper = 0;
+	size_t length = 0;
+	size_t offset = 0;
+	size_t lower = 0;
+	size_t upper = 0;
 
-	char get(unsigned offset) {
+	char get(size_t offset) {
 		return offset >= this->lower && offset <= this->upper ? this->input[offset] : '\0';
 	}
 
 protected:
 
-	unsigned getLowerBound(const string &input);
-	unsigned getUpperBound(const string &input);
+	size_t getLowerBound(const string &input);
+	size_t getUpperBound(const string &input);
 
 public:
 
 	TokenizerStream(const string &input);
 
-	unsigned getOffset() const {
+	size_t getOffset() const {
 		return this->offset;
 	}
 
-	unsigned getLength() const {
+	size_t getLength() const {
 		return this->length;
 	}
 
@@ -49,37 +49,37 @@ public:
 		into.append(1, this->read());
 	}
 
-	char peek(unsigned offset = 0) {
+	char peek(size_t offset = 0) {
 		return this->get(this->offset + offset);
 	}
 
-	void next(unsigned offset = 1) {
+	void next(size_t offset = 1) {
 		this->offset += offset;
 	}
 
-	void back(unsigned offset = 1) {
+	void back(size_t offset = 1) {
 		this->offset -= offset;
 	}
 
-	string substring(unsigned lower, unsigned upper) const {
+	string substring(size_t lower, size_t upper) const {
 		return this->input.substr(lower, upper - lower);
 	}
 
-	string substring(unsigned length) const {
+	string substring(size_t length) const {
 		return this->input.substr(this->offset, length);
 	}
 
-	void substring(unsigned lower, unsigned upper, string &into) const {
+	void substring(size_t lower, size_t upper, string &into) const {
 		into.append(this->substring(lower, upper));
 	}
 
-	void substring(unsigned length, string &into) const {
+	void substring(size_t length, string &into) const {
 		into.append(this->substring(length));
 	}
 
 	bool next(char c) {
 
-		unsigned offset = this->offset;
+		size_t offset = this->offset;
 
 		for (;
 			offset <= this->upper && this->get(offset) != c;
@@ -97,7 +97,7 @@ public:
 
 	bool prev(char c) {
 
-		unsigned offset = this->offset;
+		size_t offset = this->offset;
 
 		for (;
 			offset > this->lower && this->get(offset) != c;
@@ -113,9 +113,9 @@ public:
 		return true;
 	}
 
-	bool find(char c, unsigned &index) {
+	bool find(char c, size_t &index) {
 
-		unsigned offset = this->offset;
+		size_t offset = this->offset;
 
 		for (;
 			offset <= this->upper && this->get(offset) != c;
@@ -133,8 +133,8 @@ public:
 
 	template<bool predicate(char)> string read() {
 
-		unsigned lower = this->offset;
-		unsigned upper = this->offset;
+		size_t lower = this->offset;
+		size_t upper = this->offset;
 
 		for (;
 
@@ -154,7 +154,7 @@ public:
 		into.append(this->read<predicate>());
 	}
 
-	template<bool predicate(char)> bool peek(unsigned offset = 0) {
+	template<bool predicate(char)> bool peek(size_t offset = 0) {
 		return predicate(
 			this->peek(offset)
 		);
@@ -162,7 +162,7 @@ public:
 
 	template<bool predicate(char)> bool next() {
 
-		unsigned offset = this->offset;
+		size_t offset = this->offset;
 
 		for (;
 
@@ -184,7 +184,7 @@ public:
 
 	template<bool predicate(char)> bool prev() {
 
-		unsigned offset = this->offset;
+		size_t offset = this->offset;
 
 		for (;
 
@@ -206,7 +206,7 @@ public:
 
 	template<bool predicate(char)> bool skip() {
 
-		unsigned offset = this->offset;
+		size_t offset = this->offset;
 
 		for (;
 

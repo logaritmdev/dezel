@@ -11,7 +11,7 @@ using std::string;
 using std::vector;
 
 class Value;
-class Function;
+class FunctionValue;
 class Parser;
 
 class Property {
@@ -21,14 +21,11 @@ private:
 	string name;
 	vector<Value*> values;
 
-	Function* function = nullptr;
-
 public:
 
 	friend class Parser;
 
 	Property(string name);
-
 	string toString(int depth = 0);
 
 };

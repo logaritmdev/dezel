@@ -69,7 +69,7 @@ public:
 		return this->curr->getUnit();
 	}
 
-	const Token& peek(unsigned offset = 0, bool spaces = true);
+	const Token& peek(size_t offset = 0, bool spaces = true);
 
 	void skipSpace() {
 		while (

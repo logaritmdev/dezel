@@ -1,6 +1,7 @@
-#ifndef Variable_h
-#define Variable_h
+#ifndef FunctionValue_h
+#define FunctionValue_h
 
+#include "Argument.h"
 #include "Value.h"
 
 #include <string>
@@ -14,18 +15,22 @@ using std::vector;
 
 class Parser;
 
-class Variable {
+class FunctionValue : public Value {
 
 private:
 
 	string name;
-	vector<Value*> values;
+	vector<Argument*> arguments;
 
 public:
 
 	friend class Parser;
 
-	Variable(string name);
+	FunctionValue(string name);
+
+	string getName() const {
+		return this->name;
+	}
 
 	string toString();
 

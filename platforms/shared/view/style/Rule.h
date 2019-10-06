@@ -18,9 +18,9 @@ private:
 	Selector* tail = nullptr;
 	Selector* head = nullptr;
 
-	unsigned length = 0;
-	unsigned number = 0;
-	unsigned weight = 0;
+	size_t length = 0;
+	size_t number = 0;
+	size_t weight = 0;
 
 public:
 
@@ -34,15 +34,15 @@ public:
 		return this->head;
 	}
 
-	unsigned getLength() const {
+	size_t getLength() const {
 		return this->length;
 	}
 
-	unsigned getNumber() const {
+	size_t getNumber() const {
 		return this->number;
 	}
 
-	unsigned getWeight() const {
+	size_t getWeight() const {
 		return this->weight;
 	}
 

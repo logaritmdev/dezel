@@ -1,9 +1,9 @@
 #import <XCTest/XCTest.h>
 
-#include "Tokenizer.h"
-#include "TokenizerStream.h"
-#include "Stylesheet.h"
-#include "Parser.h"
+#include "Tokenizer.hpp"
+#include "TokenizerStream.hpp"
+#include "Stylesheet.hpp"
+#include "Parser.hpp"
 
 #include <string>
 
@@ -31,6 +31,8 @@ using Dezel::Style::Parser;
 
 	string input = R""""(
 
+	$var: test wat "dasda" 1px;
+
 	NavigationBarButton,
 	SegmentedBarButton {
 
@@ -42,7 +44,7 @@ using Dezel::Style::Parser;
 		padding-right: 12px;
 		width: wrap;
 
-		some-value: max(2, 4)
+		some-value: max(2, 14px $test, 4)
 
 		.image {
 			height: wrap;

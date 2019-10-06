@@ -357,7 +357,7 @@ Tokenizer::consumeSlash(char c)
 
 		while (true) {
 
-			unsigned offset = 0;
+			size_t offset = 0;
 
 			if (this->stream.find('*', offset) == false) {
 				break;
@@ -503,7 +503,7 @@ Tokenizer::consumeString(char end)
 
 	while (true) {
 
-		unsigned offset = 0;
+		size_t offset = 0;
 
 		if (this->stream.find(end, offset) == false) {
 			break;

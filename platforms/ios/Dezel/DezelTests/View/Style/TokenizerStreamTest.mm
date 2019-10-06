@@ -1,6 +1,6 @@
 #import <XCTest/XCTest.h>
 
-#include "TokenizerStream.h"
+#include "TokenizerStream.hpp"
 
 #include <string>
 
@@ -72,7 +72,7 @@ static bool isNothing(char c) {
 
 - (void)testBackAlpha {
 	TokenizerStream stream(input);
-	stream.next(static_cast<unsigned>(15));
+	stream.next(static_cast<size_t>(15));
 	XCTAssertEqual(stream.read(), '3');
 	XCTAssertEqual(stream.prev<isAlpha>(), true);
 	XCTAssertEqual(stream.read(), 'f');
