@@ -1,6 +1,6 @@
 #import <XCTest/XCTest.h>
 
-#include "TokenizerStream.hpp"
+#include "TokenizerStream.h"
 
 #include <string>
 

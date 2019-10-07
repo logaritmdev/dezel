@@ -26,7 +26,7 @@ public:
 
 	friend class Parser;
 
-	void registerFunction(string name, Funciton* function);
+	void registerFunction(string name, Function* function);
 	void registerVariable(string name, Variable* variable);
 
 };

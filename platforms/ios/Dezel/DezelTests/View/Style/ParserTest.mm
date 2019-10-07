@@ -1,9 +1,9 @@
 #import <XCTest/XCTest.h>
 
-#include "Tokenizer.hpp"
-#include "TokenizerStream.hpp"
-#include "Stylesheet.hpp"
-#include "Parser.hpp"
+#include "Tokenizer.h"
+#include "TokenizerStream.h"
+#include "Stylesheet.h"
+#include "Parser.h"
 
 #include <string>
 

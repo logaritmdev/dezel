@@ -1,10 +1,10 @@
 #include "Display.h"
 #include "DisplayNode.h"
 
-#include "Parser.hpp"
-#include "Stylesheet.hpp"
-#include "Tokenizer.hpp"
-#include "TokenizerStream.hpp"
+#include "Parser.h"
+#include "Stylesheet.h"
+#include "Tokenizer.h"
+#include "TokenizerStream.h"
 
 #include <string>
 #include <queue>
