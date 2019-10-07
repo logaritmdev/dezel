@@ -1,13 +1,16 @@
+package ca.logaritm.dezel.core
+
+import android.util.Log
 
 /**
- * @class JavaScriptPropertyStorage
+ * @class JavaScriptPropertyValue
  * @since 0.7.0
  * @hidden
  */
-open class JavaScriptPropertyStorage {
+open class JavaScriptPropertyValue(type: JavaScriptPropertyType = JavaScriptPropertyType.NULL, unit: JavaScriptPropertyUnit = JavaScriptPropertyUnit.NONE, value: JavaScriptValue? = null) {
 
 	//--------------------------------------------------------------------------
-	// MARK: Properties
+	// Properties
 	//--------------------------------------------------------------------------
 
 	/**
@@ -15,51 +18,51 @@ open class JavaScriptPropertyStorage {
 	 * @property type
 	 * @since 0.7.0
 	 */
-	public var type: JavaScriptPropertyType = .null
+	public var type: JavaScriptPropertyType = JavaScriptPropertyType.NULL
 
 	/**
 	 * The property's unit.
 	 * @property unit
 	 * @since 0.7.0
 	 */
-	public var unit: JavaScriptPropertyUnit = .none
+	public var unit: JavaScriptPropertyUnit = JavaScriptPropertyUnit.NONE
 
 	/**
 	 * The property's string value.
 	 * @property string
 	 * @since 0.7.0
 	 */
-	public lazy var string: String = {
-		return self.toString()
-	}()
+	public val string: String by lazy {
+		this.toString()
+	}
 
 	/**
 	 * The property's number value.
 	 * @property number
 	 * @since 0.7.0
 	 */
-	public lazy var number: Double = {
-		return self.toNumber()
-	}()
+	public val number: Double by lazy {
+		this.toNumber()
+	}
 
 	/**
 	 * The property's boolean value.
 	 * @property boolean
 	 * @since 0.7.0
 	 */
-	public lazy var boolean: Bool = {
-		return self.toBoolean()
-	}()
+	public val boolean: Boolean by lazy {
+		this.toBoolean()
+	}
 
 	/**
 	 * @property value
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private var value: JavaScriptValue?
+	private var value: JavaScriptValue? = null
 
 	//--------------------------------------------------------------------------
-	// MARK: Methods
+	// Methods
 	//--------------------------------------------------------------------------
 
 	/**
@@ -67,10 +70,10 @@ open class JavaScriptPropertyStorage {
 	 * @constructor
 	 * @since 0.7.0
 	 */
-	public init(type: JavaScriptPropertyType = .null, unit: JavaScriptPropertyUnit = .none, value: JavaScriptValue? = nil) {
+	init {
 
-		self.type = type
-		self.unit = unit
+		this.type = type
+		this.unit = unit
 
 		/*
 		 * The data parameter is the JavaScript value given initialy. It's
@@ -78,7 +81,7 @@ open class JavaScriptPropertyStorage {
 		 * from the primitive values.
 		 */
 
-		self.value = value
+		this.value = value
 	}
 
 	/**
@@ -86,8 +89,8 @@ open class JavaScriptPropertyStorage {
 	 * @method store
 	 * @since 0.7.0
 	 */
-	open func store(_ value: JavaScriptValue?) {
-		self.value = value
+	open fun store(value: JavaScriptValue?) {
+		this.value = value
 	}
 
 	/**
@@ -95,7 +98,7 @@ open class JavaScriptPropertyStorage {
 	 * @method toString
 	 * @since 0.7.0
 	 */
-	open func toString() -> String {
+	override fun toString(): String {
 		return ""
 	}
 
@@ -104,7 +107,7 @@ open class JavaScriptPropertyStorage {
 	 * @method toNumber
 	 * @since 0.7.0
 	 */
-	open func toNumber() -> Double {
+	open fun toNumber(): Double {
 		return 0.0
 	}
 
@@ -113,7 +116,7 @@ open class JavaScriptPropertyStorage {
 	 * @method toBoolean
 	 * @since 0.7.0
 	 */
-	open func toBoolean() -> Bool {
+	open fun toBoolean(): Boolean {
 		return false
 	}
 
@@ -122,8 +125,8 @@ open class JavaScriptPropertyStorage {
 	 * @method equals
 	 * @since 0.7.0
 	 */
-	open func equals(_ value: JavaScriptValue) -> Bool {
-		return self.value?.equals(value) ?? false
+	open fun equals(value: JavaScriptValue): Boolean {
+		return this.value?.equals(value) ?: false
 	}
 
 	/**
@@ -131,8 +134,8 @@ open class JavaScriptPropertyStorage {
 	 * @method equals
 	 * @since 0.7.0
 	 */
-	open func equals(_ value: String) -> Bool {
-		return self.type == .string && self.string == value
+	open fun equals(value: String): Boolean {
+		return this.type == JavaScriptPropertyType.STRING && this.string == value
 	}
 
 	/**
@@ -140,8 +143,8 @@ open class JavaScriptPropertyStorage {
 	 * @method equals
 	 * @since 0.7.0
 	 */
-	open func equals(_ value: Double) -> Bool {
-		return self.type == .number && self.number == value
+	open fun equals(value: Double): Boolean {
+		return this.type == JavaScriptPropertyType.NUMBER && this.number == value
 	}
 
 	/**
@@ -149,8 +152,8 @@ open class JavaScriptPropertyStorage {
 	 * @method equals
 	 * @since 0.7.0
 	 */
-	open func equals(_ value: Double, unit: JavaScriptPropertyUnit) -> Bool {
-		return self.type == .number && self.number == value && self.unit == unit
+	open fun equals(value: Double, unit: JavaScriptPropertyUnit): Boolean {
+		return this.type == JavaScriptPropertyType.NUMBER && this.number == value && this.unit == unit
 	}
 
 	/**
@@ -158,8 +161,8 @@ open class JavaScriptPropertyStorage {
 	 * @method equals
 	 * @since 0.7.0
 	 */
-	open func equals(_ value: Bool) -> Bool {
-		return self.type == .boolean && self.boolean == value
+	open fun equals(value: Boolean): Boolean {
+		return this.type == JavaScriptPropertyType.BOOLEAN && this.boolean == value
 	}
 
 	/**
@@ -167,48 +170,42 @@ open class JavaScriptPropertyStorage {
 	 * @method equals
 	 * @since 0.7.0
 	 */
-	open func cast<T>(_ type: T.Type) -> T? {
-		return self.value?.cast(type)
+	open fun <T> cast(type: Class<T>): T? {
+		return this.value?.cast(type)
 	}
 
 	//--------------------------------------------------------------------------
-	// MARK: Internal API
+	// Internal API
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method toHandle
+	 * @method toJs
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	internal func toHandle(_ context: JavaScriptContext) -> JSValueRef? {
+	internal fun toHandle(context: JavaScriptContext): Long? {
 
-		if let value = self.value {
+		val value = this.value
+		if (value != null) {
 			return value.toHandle(context)
 		}
 
-		if (self.unit == .none) {
+		if (this.unit == JavaScriptPropertyUnit.NONE) {
 
-			switch (self.type) {
-
-				case .null:
-					self.value = context.jsnull
-				case .string:
-					self.value = context.createString(self.string)
-				case .number:
-					self.value = context.createNumber(self.number)
-				case .boolean:
-					self.value = context.createBoolean(self.boolean)
-
-				default:
-					break
+			when (this.type) {
+				JavaScriptPropertyType.NULL    -> this.value = context.jsnull
+				JavaScriptPropertyType.STRING  -> this.value = context.createString(this.string)
+				JavaScriptPropertyType.NUMBER  -> this.value = context.createNumber(this.number)
+				JavaScriptPropertyType.BOOLEAN -> this.value = context.createBoolean(this.boolean)
+				else                           -> {}
 			}
 
 		} else {
 
-			self.value = context.createString(self.string)
-			
+			this.value = context.createString(this.string)
+
 		}
 
-		return self.value?.toHandle(context)
+		return this.value?.toHandle(context)
 	}
 }

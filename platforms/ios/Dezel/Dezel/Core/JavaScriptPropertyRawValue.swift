@@ -1,20 +1,20 @@
 /**
- * @class JavaScriptPropertyStorageString
+ * @class JavaScriptPropertyRawValue
  * @since 0.7.0
  * @hidden
  */
-open class JavaScriptPropertyStorageString: JavaScriptPropertyStorage {
+open class JavaScriptPropertyRawValue : JavaScriptPropertyValue {
 
 	//--------------------------------------------------------------------------
 	// MARK: Properties
 	//--------------------------------------------------------------------------
 
 	/**
+	 * @inherited
 	 * @property data
 	 * @since 0.7.0
-	 * @hidden
 	 */
-	private var value: String
+	private var value: JavaScriptValue
 
 	//--------------------------------------------------------------------------
 	// MARK: Methods
@@ -25,9 +25,39 @@ open class JavaScriptPropertyStorageString: JavaScriptPropertyStorage {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	public init(value: String) {
+	public init(value: JavaScriptValue) {
+
 		self.value = value
-		super.init(type: .string)
+
+		/*
+		 * The value was parsed before being assigned here,
+		 * there is no need to parse it again.
+		 */
+
+		let type: JavaScriptPropertyType
+
+		switch (true) {
+
+			case value.isNull:
+				type = .null
+			case value.isUndefined:
+				type = .null
+			case value.isString:
+				type = .string
+			case value.isNumber:
+				type = .number
+			case value.isBoolean:
+				type = .boolean
+			case value.isObject:
+				type = .object
+			case value.isArray:
+				type = .array
+
+			default:
+				type = .null
+		}
+
+		super.init(type: type, unit: .none, value: value)
 	}
 
 	/**
@@ -36,7 +66,7 @@ open class JavaScriptPropertyStorageString: JavaScriptPropertyStorage {
 	 * @since 0.7.0
 	 */
 	override open func toString() -> String {
-		return self.value
+		return self.value.string
 	}
 
 	/**
@@ -45,7 +75,7 @@ open class JavaScriptPropertyStorageString: JavaScriptPropertyStorage {
 	 * @since 0.7.0
 	 */
 	override open func toNumber() -> Double {
-		return self.value.toNumber()
+		return self.value.number
 	}
 
 	/**
@@ -54,6 +84,6 @@ open class JavaScriptPropertyStorageString: JavaScriptPropertyStorage {
 	 * @since 0.7.0
 	 */
 	override open func toBoolean() -> Bool {
-		return self.value.isEmpty == false
+		return self.value.boolean
 	}
 }

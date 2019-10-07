@@ -73,6 +73,16 @@
 		C71000792346DD230035134A /* Argument.h in Headers */ = {isa = PBXBuildFile; fileRef = C71000772346DD230035134A /* Argument.h */; };
 		C710007C234793C80035134A /* Utility.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C710007A234793C80035134A /* Utility.cpp */; };
 		C710007D234793C80035134A /* Utility.h in Headers */ = {isa = PBXBuildFile; fileRef = C710007B234793C80035134A /* Utility.h */; };
+		C710008023481ABF0035134A /* StringValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C710007E23481ABF0035134A /* StringValue.cpp */; };
+		C710008123481ABF0035134A /* StringValue.h in Headers */ = {isa = PBXBuildFile; fileRef = C710007F23481ABF0035134A /* StringValue.h */; };
+		C710008423481AD60035134A /* NumberValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C710008223481AD60035134A /* NumberValue.cpp */; };
+		C710008523481AD60035134A /* NumberValue.h in Headers */ = {isa = PBXBuildFile; fileRef = C710008323481AD60035134A /* NumberValue.h */; };
+		C710008823481AEC0035134A /* BooleanValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C710008623481AEC0035134A /* BooleanValue.cpp */; };
+		C710008923481AEC0035134A /* BooleanValue.h in Headers */ = {isa = PBXBuildFile; fileRef = C710008723481AEC0035134A /* BooleanValue.h */; };
+		C7100090234828010035134A /* NullValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C710008E234828010035134A /* NullValue.cpp */; };
+		C7100091234828010035134A /* NullValue.h in Headers */ = {isa = PBXBuildFile; fileRef = C710008F234828010035134A /* NullValue.h */; };
+		C71000A12348ECDE0035134A /* VariableValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C710009F2348ECDE0035134A /* VariableValue.cpp */; };
+		C71000A22348ECDE0035134A /* VariableValue.h in Headers */ = {isa = PBXBuildFile; fileRef = C71000A02348ECDE0035134A /* VariableValue.h */; };
 		C718A0A92066E24400EFEC15 /* JavaScriptImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C718A0A82066E24400EFEC15 /* JavaScriptImageView.swift */; };
 		C718A0B32066E63300EFEC15 /* ImageLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C718A0B22066E63300EFEC15 /* ImageLayer.swift */; };
 		C718A0B52066ED6100EFEC15 /* JavaScriptImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C718A0B42066ED6100EFEC15 /* JavaScriptImage.swift */; };
@@ -110,6 +120,8 @@
 		C75153C122F37C03007CAA48 /* JavaScriptClassStaticGetterWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75153C022F37C03007CAA48 /* JavaScriptClassStaticGetterWrapper.swift */; };
 		C75153C322F37C11007CAA48 /* JavaScriptClassStaticSetterWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75153C222F37C11007CAA48 /* JavaScriptClassStaticSetterWrapper.swift */; };
 		C7541A8922E6B09800586FC4 /* HttpResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7541A8822E6B09800586FC4 /* HttpResponse.swift */; };
+		C7573892234984CA00D45247 /* Function.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7573890234984CA00D45247 /* Function.cpp */; };
+		C7573893234984CA00D45247 /* Function.h in Headers */ = {isa = PBXBuildFile; fileRef = C7573891234984CA00D45247 /* Function.h */; };
 		C76016E22019832800622840 /* JavaScriptFinalizeCallback.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76016E12019832800622840 /* JavaScriptFinalizeCallback.swift */; };
 		C767542120269971003C4D85 /* ShadowLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76753E92026996F003C4D85 /* ShadowLayer.swift */; };
 		C767542420269971003C4D85 /* BorderLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76753EC2026996F003C4D85 /* BorderLayer.swift */; };
@@ -168,8 +180,8 @@
 		C7A3AB79214ECBA500D8B15C /* CanvasLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A3AB78214ECBA500D8B15C /* CanvasLayer.swift */; };
 		C7B137602344340B00A6CFD5 /* Property.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7B1375E2344340B00A6CFD5 /* Property.cpp */; };
 		C7B137612344340B00A6CFD5 /* Property.h in Headers */ = {isa = PBXBuildFile; fileRef = C7B1375F2344340B00A6CFD5 /* Property.h */; };
-		C7B13764234435DB00A6CFD5 /* Function.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7B13762234435DB00A6CFD5 /* Function.cpp */; };
-		C7B13765234435DB00A6CFD5 /* Function.h in Headers */ = {isa = PBXBuildFile; fileRef = C7B13763234435DB00A6CFD5 /* Function.h */; };
+		C7B13764234435DB00A6CFD5 /* FunctionValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7B13762234435DB00A6CFD5 /* FunctionValue.cpp */; };
+		C7B13765234435DB00A6CFD5 /* FunctionValue.h in Headers */ = {isa = PBXBuildFile; fileRef = C7B13763234435DB00A6CFD5 /* FunctionValue.h */; };
 		C7B137682344365500A6CFD5 /* Value.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7B137662344365500A6CFD5 /* Value.cpp */; };
 		C7B137692344365500A6CFD5 /* Value.h in Headers */ = {isa = PBXBuildFile; fileRef = C7B137672344365500A6CFD5 /* Value.h */; };
 		C7B40F6120B716C800892C92 /* TextArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B40F6020B716C800892C92 /* TextArea.swift */; };
@@ -283,11 +295,11 @@
 		C7EE2E2122E4B21100FFF0EE /* JavaScriptForOwnWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7EE2E2022E4B21100FFF0EE /* JavaScriptForOwnWrapper.swift */; };
 		C7EE2E2522E4B35A00FFF0EE /* JavaScriptForEachWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7EE2E2422E4B35A00FFF0EE /* JavaScriptForEachWrapper.swift */; };
 		C7F2260B2081A10000ABC66D /* Unsafe.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F2260A2081A10000ABC66D /* Unsafe.swift */; };
-		C7FCA0F82311B48200AFBDB6 /* JavaScriptPropertyStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FCA0F72311B48200AFBDB6 /* JavaScriptPropertyStorage.swift */; };
-		C7FCA0FA2311B49200AFBDB6 /* JavaScriptPropertyStorageBoolean.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FCA0F92311B49200AFBDB6 /* JavaScriptPropertyStorageBoolean.swift */; };
-		C7FCA0FE2311B4AA00AFBDB6 /* JavaScriptPropertyStorageNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FCA0FD2311B4AA00AFBDB6 /* JavaScriptPropertyStorageNumber.swift */; };
-		C7FCA1002311B4BA00AFBDB6 /* JavaScriptPropertyStorageString.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FCA0FF2311B4BA00AFBDB6 /* JavaScriptPropertyStorageString.swift */; };
-		C7FCA1022311B4C800AFBDB6 /* JavaScriptPropertyStorageValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FCA1012311B4C800AFBDB6 /* JavaScriptPropertyStorageValue.swift */; };
+		C7FCA0F82311B48200AFBDB6 /* JavaScriptPropertyValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FCA0F72311B48200AFBDB6 /* JavaScriptPropertyValue.swift */; };
+		C7FCA0FA2311B49200AFBDB6 /* JavaScriptPropertyBooleanValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FCA0F92311B49200AFBDB6 /* JavaScriptPropertyBooleanValue.swift */; };
+		C7FCA0FE2311B4AA00AFBDB6 /* JavaScriptPropertyNumberValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FCA0FD2311B4AA00AFBDB6 /* JavaScriptPropertyNumberValue.swift */; };
+		C7FCA1002311B4BA00AFBDB6 /* JavaScriptPropertyStringValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FCA0FF2311B4BA00AFBDB6 /* JavaScriptPropertyStringValue.swift */; };
+		C7FCA1022311B4C800AFBDB6 /* JavaScriptPropertyRawValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FCA1012311B4C800AFBDB6 /* JavaScriptPropertyRawValue.swift */; };
 		C7FCA104231444F600AFBDB6 /* JavaScriptPropertyParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FCA103231444F600AFBDB6 /* JavaScriptPropertyParser.swift */; };
 		C7FCA1082315CD7200AFBDB6 /* Lock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FCA1072315CD7100AFBDB6 /* Lock.swift */; };
 		C7FCA10A2316AE9A00AFBDB6 /* JavaScriptNull.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FCA1092316AE9A00AFBDB6 /* JavaScriptNull.swift */; };
@@ -362,6 +374,16 @@
 		C71000772346DD230035134A /* Argument.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Argument.h; path = ../../../../../shared/view/style/Argument.h; sourceTree = "<group>"; };
 		C710007A234793C80035134A /* Utility.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Utility.cpp; path = ../../../../../shared/view/layout/Utility.cpp; sourceTree = "<group>"; };
 		C710007B234793C80035134A /* Utility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Utility.h; path = ../../../../../shared/view/layout/Utility.h; sourceTree = "<group>"; };
+		C710007E23481ABF0035134A /* StringValue.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = StringValue.cpp; path = ../../../../../shared/view/style/StringValue.cpp; sourceTree = "<group>"; };
+		C710007F23481ABF0035134A /* StringValue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = StringValue.h; path = ../../../../../shared/view/style/StringValue.h; sourceTree = "<group>"; };
+		C710008223481AD60035134A /* NumberValue.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = NumberValue.cpp; path = ../../../../../shared/view/style/NumberValue.cpp; sourceTree = "<group>"; };
+		C710008323481AD60035134A /* NumberValue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NumberValue.h; path = ../../../../../shared/view/style/NumberValue.h; sourceTree = "<group>"; };
+		C710008623481AEC0035134A /* BooleanValue.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BooleanValue.cpp; path = ../../../../../shared/view/style/BooleanValue.cpp; sourceTree = "<group>"; };
+		C710008723481AEC0035134A /* BooleanValue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BooleanValue.h; path = ../../../../../shared/view/style/BooleanValue.h; sourceTree = "<group>"; };
+		C710008E234828010035134A /* NullValue.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = NullValue.cpp; path = ../../../../../shared/view/style/NullValue.cpp; sourceTree = "<group>"; };
+		C710008F234828010035134A /* NullValue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NullValue.h; path = ../../../../../shared/view/style/NullValue.h; sourceTree = "<group>"; };
+		C710009F2348ECDE0035134A /* VariableValue.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = VariableValue.cpp; path = ../../../../../shared/view/style/VariableValue.cpp; sourceTree = "<group>"; };
+		C71000A02348ECDE0035134A /* VariableValue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VariableValue.h; path = ../../../../../shared/view/style/VariableValue.h; sourceTree = "<group>"; };
 		C718A0A82066E24400EFEC15 /* JavaScriptImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptImageView.swift; sourceTree = "<group>"; };
 		C718A0B22066E63300EFEC15 /* ImageLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLayer.swift; sourceTree = "<group>"; };
 		C718A0B42066ED6100EFEC15 /* JavaScriptImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptImage.swift; sourceTree = "<group>"; };
@@ -399,6 +421,8 @@
 		C75153C022F37C03007CAA48 /* JavaScriptClassStaticGetterWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptClassStaticGetterWrapper.swift; sourceTree = "<group>"; };
 		C75153C222F37C11007CAA48 /* JavaScriptClassStaticSetterWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptClassStaticSetterWrapper.swift; sourceTree = "<group>"; };
 		C7541A8822E6B09800586FC4 /* HttpResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpResponse.swift; sourceTree = "<group>"; };
+		C7573890234984CA00D45247 /* Function.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Function.cpp; path = ../../../../../shared/view/style/Function.cpp; sourceTree = "<group>"; };
+		C7573891234984CA00D45247 /* Function.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Function.h; path = ../../../../../shared/view/style/Function.h; sourceTree = "<group>"; };
 		C76016E12019832800622840 /* JavaScriptFinalizeCallback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptFinalizeCallback.swift; sourceTree = "<group>"; };
 		C76753E92026996F003C4D85 /* ShadowLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShadowLayer.swift; sourceTree = "<group>"; };
 		C76753EC2026996F003C4D85 /* BorderLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorderLayer.swift; sourceTree = "<group>"; };
@@ -457,8 +481,8 @@
 		C7A3AB78214ECBA500D8B15C /* CanvasLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasLayer.swift; sourceTree = "<group>"; };
 		C7B1375E2344340B00A6CFD5 /* Property.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Property.cpp; path = ../../../../../shared/view/style/Property.cpp; sourceTree = "<group>"; };
 		C7B1375F2344340B00A6CFD5 /* Property.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Property.h; path = ../../../../../shared/view/style/Property.h; sourceTree = "<group>"; };
-		C7B13762234435DB00A6CFD5 /* Function.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Function.cpp; path = ../../../../../shared/view/style/Function.cpp; sourceTree = "<group>"; };
-		C7B13763234435DB00A6CFD5 /* Function.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Function.h; path = ../../../../../shared/view/style/Function.h; sourceTree = "<group>"; };
+		C7B13762234435DB00A6CFD5 /* FunctionValue.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FunctionValue.cpp; path = ../../../../../shared/view/style/FunctionValue.cpp; sourceTree = "<group>"; };
+		C7B13763234435DB00A6CFD5 /* FunctionValue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FunctionValue.h; path = ../../../../../shared/view/style/FunctionValue.h; sourceTree = "<group>"; };
 		C7B137662344365500A6CFD5 /* Value.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Value.cpp; path = ../../../../../shared/view/style/Value.cpp; sourceTree = "<group>"; };
 		C7B137672344365500A6CFD5 /* Value.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Value.h; path = ../../../../../shared/view/style/Value.h; sourceTree = "<group>"; };
 		C7B40F6020B716C800892C92 /* TextArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextArea.swift; sourceTree = "<group>"; };
@@ -575,11 +599,11 @@
 		C7EE2E2022E4B21100FFF0EE /* JavaScriptForOwnWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptForOwnWrapper.swift; sourceTree = "<group>"; };
 		C7EE2E2422E4B35A00FFF0EE /* JavaScriptForEachWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptForEachWrapper.swift; sourceTree = "<group>"; };
 		C7F2260A2081A10000ABC66D /* Unsafe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Unsafe.swift; sourceTree = "<group>"; };
-		C7FCA0F72311B48200AFBDB6 /* JavaScriptPropertyStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptPropertyStorage.swift; sourceTree = "<group>"; };
-		C7FCA0F92311B49200AFBDB6 /* JavaScriptPropertyStorageBoolean.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptPropertyStorageBoolean.swift; sourceTree = "<group>"; };
-		C7FCA0FD2311B4AA00AFBDB6 /* JavaScriptPropertyStorageNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptPropertyStorageNumber.swift; sourceTree = "<group>"; };
-		C7FCA0FF2311B4BA00AFBDB6 /* JavaScriptPropertyStorageString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptPropertyStorageString.swift; sourceTree = "<group>"; };
-		C7FCA1012311B4C800AFBDB6 /* JavaScriptPropertyStorageValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptPropertyStorageValue.swift; sourceTree = "<group>"; };
+		C7FCA0F72311B48200AFBDB6 /* JavaScriptPropertyValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptPropertyValue.swift; sourceTree = "<group>"; };
+		C7FCA0F92311B49200AFBDB6 /* JavaScriptPropertyBooleanValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptPropertyBooleanValue.swift; sourceTree = "<group>"; };
+		C7FCA0FD2311B4AA00AFBDB6 /* JavaScriptPropertyNumberValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptPropertyNumberValue.swift; sourceTree = "<group>"; };
+		C7FCA0FF2311B4BA00AFBDB6 /* JavaScriptPropertyStringValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptPropertyStringValue.swift; sourceTree = "<group>"; };
+		C7FCA1012311B4C800AFBDB6 /* JavaScriptPropertyRawValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptPropertyRawValue.swift; sourceTree = "<group>"; };
 		C7FCA103231444F600AFBDB6 /* JavaScriptPropertyParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptPropertyParser.swift; sourceTree = "<group>"; };
 		C7FCA1072315CD7100AFBDB6 /* Lock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lock.swift; sourceTree = "<group>"; };
 		C7FCA1092316AE9A00AFBDB6 /* JavaScriptNull.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptNull.swift; sourceTree = "<group>"; };
@@ -696,6 +720,27 @@
 				C710007B234793C80035134A /* Utility.h */,
 			);
 			name = Layout;
+			sourceTree = "<group>";
+		};
+		C710009E2348E6670035134A /* Value */ = {
+			isa = PBXGroup;
+			children = (
+				C710008623481AEC0035134A /* BooleanValue.cpp */,
+				C710008723481AEC0035134A /* BooleanValue.h */,
+				C7B13762234435DB00A6CFD5 /* FunctionValue.cpp */,
+				C7B13763234435DB00A6CFD5 /* FunctionValue.h */,
+				C710008E234828010035134A /* NullValue.cpp */,
+				C710008F234828010035134A /* NullValue.h */,
+				C710008223481AD60035134A /* NumberValue.cpp */,
+				C710008323481AD60035134A /* NumberValue.h */,
+				C710007E23481ABF0035134A /* StringValue.cpp */,
+				C710007F23481ABF0035134A /* StringValue.h */,
+				C7B137662344365500A6CFD5 /* Value.cpp */,
+				C7B137672344365500A6CFD5 /* Value.h */,
+				C710009F2348ECDE0035134A /* VariableValue.cpp */,
+				C71000A02348ECDE0035134A /* VariableValue.h */,
+			);
+			name = Value;
 			sourceTree = "<group>";
 		};
 		C718A0C32067F61D00EFEC15 /* Graphic */ = {
@@ -961,10 +1006,11 @@
 		C7BC21BB2333016200BEBD60 /* Style */ = {
 			isa = PBXGroup;
 			children = (
+				C710009E2348E6670035134A /* Value */,
 				C71000762346DD230035134A /* Argument.cpp */,
 				C71000772346DD230035134A /* Argument.h */,
-				C7B13762234435DB00A6CFD5 /* Function.cpp */,
-				C7B13763234435DB00A6CFD5 /* Function.h */,
+				C7573890234984CA00D45247 /* Function.cpp */,
+				C7573891234984CA00D45247 /* Function.h */,
 				C7BC21CC2333052900BEBD60 /* Parser.cpp */,
 				C7BC21CD2333052900BEBD60 /* Parser.h */,
 				C7B1375E2344340B00A6CFD5 /* Property.cpp */,
@@ -985,8 +1031,6 @@
 				C773EE552334FCFC002D5025 /* TokenizerStream.h */,
 				C710007223465CFB0035134A /* TokenList.cpp */,
 				C710007323465CFB0035134A /* TokenList.h */,
-				C7B137662344365500A6CFD5 /* Value.cpp */,
-				C7B137672344365500A6CFD5 /* Value.h */,
 				C77D1C752340E0B600EC65E0 /* Variable.cpp */,
 				C77D1C762340E0B600EC65E0 /* Variable.h */,
 			);
@@ -1191,11 +1235,11 @@
 				C7FCA1092316AE9A00AFBDB6 /* JavaScriptNull.swift */,
 				C7FCA10B2316AFD900AFBDB6 /* JavaScriptUndefined.swift */,
 				C76753FB20269970003C4D85 /* JavaScriptProperty.swift */,
-				C7FCA0F72311B48200AFBDB6 /* JavaScriptPropertyStorage.swift */,
-				C7FCA0F92311B49200AFBDB6 /* JavaScriptPropertyStorageBoolean.swift */,
-				C7FCA0FD2311B4AA00AFBDB6 /* JavaScriptPropertyStorageNumber.swift */,
-				C7FCA0FF2311B4BA00AFBDB6 /* JavaScriptPropertyStorageString.swift */,
-				C7FCA1012311B4C800AFBDB6 /* JavaScriptPropertyStorageValue.swift */,
+				C7FCA0F72311B48200AFBDB6 /* JavaScriptPropertyValue.swift */,
+				C7FCA0F92311B49200AFBDB6 /* JavaScriptPropertyBooleanValue.swift */,
+				C7FCA0FD2311B4AA00AFBDB6 /* JavaScriptPropertyNumberValue.swift */,
+				C7FCA0FF2311B4BA00AFBDB6 /* JavaScriptPropertyStringValue.swift */,
+				C7FCA1012311B4C800AFBDB6 /* JavaScriptPropertyRawValue.swift */,
 				C76864702039146700D1903B /* JavaScriptPropertyType.swift */,
 				C76864722039147100D1903B /* JavaScriptPropertyUnit.swift */,
 				C7FCA103231444F600AFBDB6 /* JavaScriptPropertyParser.swift */,
@@ -1373,9 +1417,11 @@
 				C7E8A46C20159C80005139F6 /* Dezel.h in Headers */,
 				C7E8A543201624FA005139F6 /* DLContext.h in Headers */,
 				C7040DB3232698AB00DFDBED /* DisplayNodeOrigin.h in Headers */,
+				C710008123481ABF0035134A /* StringValue.h in Headers */,
 				C7BC21C32333034100BEBD60 /* Selector.h in Headers */,
 				C7B137612344340B00A6CFD5 /* Property.h in Headers */,
 				C7040DAB2326974300DFDBED /* DisplayNodeAnchor.h in Headers */,
+				C7573893234984CA00D45247 /* Function.h in Headers */,
 				C773EE572334FCFC002D5025 /* TokenizerStream.h in Headers */,
 				C7E8A549201624FA005139F6 /* DLValue.h in Headers */,
 				C710007D234793C80035134A /* Utility.h in Headers */,
@@ -1397,9 +1443,13 @@
 				C7E8A546201624FA005139F6 /* DLContextPrivate.h in Headers */,
 				C710007523465CFB0035134A /* TokenList.h in Headers */,
 				C7040DBF232698FC00DFDBED /* DisplayNodeMargin.h in Headers */,
-				C7B13765234435DB00A6CFD5 /* Function.h in Headers */,
+				C710008523481AD60035134A /* NumberValue.h in Headers */,
+				C7B13765234435DB00A6CFD5 /* FunctionValue.h in Headers */,
+				C7100091234828010035134A /* NullValue.h in Headers */,
+				C710008923481AEC0035134A /* BooleanValue.h in Headers */,
 				C7040D9C232694B100DFDBED /* DisplayNodeRef.h in Headers */,
 				C7040DB7232698C000DFDBED /* DisplayNodeContentSize.h in Headers */,
+				C71000A22348ECDE0035134A /* VariableValue.h in Headers */,
 				C7E8A54A201624FA005139F6 /* DLValuePrivate.h in Headers */,
 				C7BC21C72333041300BEBD60 /* Ruleset.h in Headers */,
 				C7040DC72326993400DFDBED /* DisplayNodePadding.h in Headers */,
@@ -1544,24 +1594,28 @@
 			buildActionMask = 2147483647;
 			files = (
 				C7FCA1082315CD7200AFBDB6 /* Lock.swift in Sources */,
+				C710008423481AD60035134A /* NumberValue.cpp in Sources */,
 				C71E6CE120E6617D009B86F6 /* Scrollbars.swift in Sources */,
+				C710008023481ABF0035134A /* StringValue.cpp in Sources */,
 				C777B63F22DA49B600E75E55 /* WeakReference.swift in Sources */,
 				C773DA9021DD0E2800685BDB /* TextParser.swift in Sources */,
 				C7EE2E0222DD6AE200FFF0EE /* Source.swift in Sources */,
 				C718A0C0206748EB00EFEC15 /* ImageDiskCache.swift in Sources */,
 				C7B9CEAC202CDBB7002409D5 /* JavaScriptApplication.swift in Sources */,
 				C77189B22106AE0A00337263 /* Transform2D.swift in Sources */,
+				C7573892234984CA00D45247 /* Function.cpp in Sources */,
 				C767544520269DB5003C4D85 /* TextView.swift in Sources */,
 				C7BC21C62333041300BEBD60 /* Ruleset.cpp in Sources */,
 				C7BC21C22333034100BEBD60 /* Selector.cpp in Sources */,
 				C7BB7D3E2028F4C5004006C2 /* CGRect.swift in Sources */,
 				C7682A422035395F006EA6D5 /* Layer.swift in Sources */,
-				C7FCA1022311B4C800AFBDB6 /* JavaScriptPropertyStorageValue.swift in Sources */,
+				C7FCA1022311B4C800AFBDB6 /* JavaScriptPropertyRawValue.swift in Sources */,
 				C7BFD15C207D50A300AAD31C /* FormModule.swift in Sources */,
 				C7EE2E1022DFA84900FFF0EE /* Data.swift in Sources */,
 				C7B9CEA9202CDB8D002409D5 /* ApplicationDelegate.swift in Sources */,
 				C7E5D07C209CBAE80098C5FD /* Resizable.swift in Sources */,
 				C7BFD15E207D50F000AAD31C /* JavaScriptSpinnerView.swift in Sources */,
+				C71000A12348ECDE0035134A /* VariableValue.cpp in Sources */,
 				C7E8A542201624FA005139F6 /* DLContext.cpp in Sources */,
 				C77189B02106ADFD00337263 /* Point3D.swift in Sources */,
 				C767544720269DBD003C4D85 /* ImageView.swift in Sources */,
@@ -1569,7 +1623,7 @@
 				C75153BD22F11CAA007CAA48 /* JavaScriptLocale.swift in Sources */,
 				C7BB7D462029062D004006C2 /* TransitionGroup.swift in Sources */,
 				C7A3AB77214EC68100D8B15C /* JavaScriptCanvas.swift in Sources */,
-				C7FCA0FE2311B4AA00AFBDB6 /* JavaScriptPropertyStorageNumber.swift in Sources */,
+				C7FCA0FE2311B4AA00AFBDB6 /* JavaScriptPropertyNumberValue.swift in Sources */,
 				C767542120269971003C4D85 /* ShadowLayer.swift in Sources */,
 				C7BFD16A207D541F00AAD31C /* JavaScriptTextArea.swift in Sources */,
 				C7E5D083209DE1AD0098C5FD /* DialogModule.swift in Sources */,
@@ -1616,7 +1670,7 @@
 				C7682A40203538A9006EA6D5 /* WrapperView.swift in Sources */,
 				C76016E22019832800622840 /* JavaScriptFinalizeCallback.swift in Sources */,
 				C77189AE2106ADF200337263 /* Point2D.swift in Sources */,
-				C7FCA0F82311B48200AFBDB6 /* JavaScriptPropertyStorage.swift in Sources */,
+				C7FCA0F82311B48200AFBDB6 /* JavaScriptPropertyValue.swift in Sources */,
 				C767542420269971003C4D85 /* BorderLayer.swift in Sources */,
 				C7FFB4D5204B2313000D888E /* View.swift in Sources */,
 				C75153B922EBA05C007CAA48 /* NSData.swift in Sources */,
@@ -1645,14 +1699,16 @@
 				C710007C234793C80035134A /* Utility.cpp in Sources */,
 				C718A0B52066ED6100EFEC15 /* JavaScriptImage.swift in Sources */,
 				C7BFD16C207D560E00AAD31C /* UIColor.swift in Sources */,
-				C7FCA0FA2311B49200AFBDB6 /* JavaScriptPropertyStorageBoolean.swift in Sources */,
+				C7FCA0FA2311B49200AFBDB6 /* JavaScriptPropertyBooleanValue.swift in Sources */,
 				C7E8A531201624A2005139F6 /* JavaScriptBuilder.swift in Sources */,
+				C710008823481AEC0035134A /* BooleanValue.cpp in Sources */,
 				C72FF045204E190500FBB36B /* ShapeLayer.swift in Sources */,
 				C700121621551A9A00CB26D4 /* DeviceModule.swift in Sources */,
 				C77DFEE1208D063900CEC1D9 /* LocaleModule.swift in Sources */,
 				C777B63D22D91DB200E75E55 /* UIApplication.swift in Sources */,
 				C72E0E9B20669CCD003BCEF1 /* TextTransform.swift in Sources */,
 				C7E8A521201624A2005139F6 /* JavaScriptFinalizeWrapper.swift in Sources */,
+				C7100090234828010035134A /* NullValue.cpp in Sources */,
 				C71E6CE320E66188009B86F6 /* Overscroll.swift in Sources */,
 				C7EE2E1D22E24CCC00FFF0EE /* JavaScriptXMLHttpRequest.swift in Sources */,
 				C7BB7D402028F4C5004006C2 /* CGPath.swift in Sources */,
@@ -1690,7 +1746,7 @@
 				C7A19E3A20ADD18200367E91 /* TextInputDelegate.swift in Sources */,
 				C7B9CEAD202CDBB7002409D5 /* ApplicationModule.swift in Sources */,
 				C7E5D085209DE2290098C5FD /* AlertController.swift in Sources */,
-				C7B13764234435DB00A6CFD5 /* Function.cpp in Sources */,
+				C7B13764234435DB00A6CFD5 /* FunctionValue.cpp in Sources */,
 				C7CE4B09220A7824005D5235 /* Timezone.swift in Sources */,
 				C7040DC62326993400DFDBED /* DisplayNodePadding.cpp in Sources */,
 				C7541A8922E6B09800586FC4 /* HttpResponse.swift in Sources */,
@@ -1702,7 +1758,7 @@
 				C7D14EDC21D07058008B51D4 /* Scanner.swift in Sources */,
 				C7CE4B032208AB53005D5235 /* DateParser.swift in Sources */,
 				C7BC21CA2333046E00BEBD60 /* Stylesheet.cpp in Sources */,
-				C7FCA1002311B4BA00AFBDB6 /* JavaScriptPropertyStorageString.swift in Sources */,
+				C7FCA1002311B4BA00AFBDB6 /* JavaScriptPropertyStringValue.swift in Sources */,
 				C7CE4B072208C93C005D5235 /* UITextField.swift in Sources */,
 				C7BB7D3C2028F4C5004006C2 /* CGColor.swift in Sources */,
 				C73700C42218C00D0095A54B /* ImageFilter.swift in Sources */,

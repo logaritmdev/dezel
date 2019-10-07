@@ -1,16 +1,12 @@
-package ca.logaritm.dezel.core
-
-import ca.logaritm.dezel.extension.type.toNumber
-
 /**
- * @class JavaScriptPropertyStorageString
+ * @class JavaScriptPropertyStringValue
  * @since 0.7.0
  * @hidden
  */
-open class JavaScriptPropertyStorageString(value: String): JavaScriptPropertyStorage(JavaScriptPropertyType.STRING) {
+open class JavaScriptPropertyStringValue: JavaScriptPropertyValue {
 
 	//--------------------------------------------------------------------------
-	// Properties
+	// MARK: Properties
 	//--------------------------------------------------------------------------
 
 	/**
@@ -21,7 +17,7 @@ open class JavaScriptPropertyStorageString(value: String): JavaScriptPropertySto
 	private var value: String
 
 	//--------------------------------------------------------------------------
-	// Methods
+	// MARK: Methods
 	//--------------------------------------------------------------------------
 
 	/**
@@ -29,8 +25,9 @@ open class JavaScriptPropertyStorageString(value: String): JavaScriptPropertySto
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	init {
-		this.value = value
+	public init(value: String) {
+		self.value = value
+		super.init(type: .string)
 	}
 
 	/**
@@ -38,8 +35,8 @@ open class JavaScriptPropertyStorageString(value: String): JavaScriptPropertySto
 	 * @method toString
 	 * @since 0.7.0
 	 */
-	override fun toString(): String {
-		return this.value
+	override open func toString() -> String {
+		return self.value
 	}
 
 	/**
@@ -47,8 +44,8 @@ open class JavaScriptPropertyStorageString(value: String): JavaScriptPropertySto
 	 * @method toNumber
 	 * @since 0.7.0
 	 */
-	override fun toNumber(): Double {
-		return this.value.toNumber()
+	override open func toNumber() -> Double {
+		return self.value.toNumber()
 	}
 
 	/**
@@ -56,7 +53,7 @@ open class JavaScriptPropertyStorageString(value: String): JavaScriptPropertySto
 	 * @method toBoolean
 	 * @since 0.7.0
 	 */
-	override fun toBoolean(): Boolean {
-		return this.value.isEmpty() == false
+	override open func toBoolean() -> Bool {
+		return self.value.isEmpty == false
 	}
 }

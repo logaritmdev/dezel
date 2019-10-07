@@ -1,8 +1,6 @@
 package ca.logaritm.dezel.core
 
-import android.util.Log
 import ca.logaritm.dezel.extension.isLocked
-import ca.logaritm.dezel.extension.type.let
 
 /**
  * A JavaScript property.
@@ -21,7 +19,7 @@ public class JavaScriptProperty {
 	 * @since 0.7.0
 	 */
 	public val type: JavaScriptPropertyType
-		get() = this.storage.type
+		get() = this.value.type
 	
 	/**
 	 * The property's unit.
@@ -29,7 +27,7 @@ public class JavaScriptProperty {
 	 * @since 0.7.0
 	 */
 	public val unit: JavaScriptPropertyUnit
-		get() = this.storage.unit
+		get() = this.value.unit
 
 	/**
 	 * The property's string value.
@@ -37,7 +35,7 @@ public class JavaScriptProperty {
 	 * @since 0.7.0
 	 */
 	public val string: String
-		get() = this.storage.string
+		get() = this.value.string
 
 	/**
 	 * The property's number value.
@@ -45,7 +43,7 @@ public class JavaScriptProperty {
 	 * @since 0.7.0
 	 */
 	public val number: Double
-		get() = this.storage.number
+		get() = this.value.number
 
 	/**
 	 * The property's boolean value.
@@ -53,7 +51,7 @@ public class JavaScriptProperty {
 	 * @since 0.7.0
 	 */
 	public val boolean: Boolean
-		get() = this.storage.boolean
+		get() = this.value.boolean
 
 	/**
 	 * Indicate whether the property is null.
@@ -111,11 +109,11 @@ public class JavaScriptProperty {
 	private var lock: Any? = null
 
 	/**
-	 * @property storage
+	 * @property value
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private var storage: JavaScriptPropertyStorage
+	private var value: JavaScriptPropertyValue
 
 	/**
 	 * @property handler
@@ -134,7 +132,7 @@ public class JavaScriptProperty {
 	 * @since 0.7.0
 	 */
 	public constructor(handler: JavaScriptPropertyHandler? = null) {
-		this.storage = JavaScriptPropertyStorage()
+		this.value = JavaScriptPropertyValue()
 		this.handler = handler
 	}
 
@@ -144,7 +142,7 @@ public class JavaScriptProperty {
 	 * @since 0.7.0
 	 */
 	public constructor(string: String, handler: JavaScriptPropertyHandler? = null) {
-		this.storage = JavaScriptPropertyStorageString(string)
+		this.value = JavaScriptPropertyStringValue(string)
 		this.handler = handler
 	}
 
@@ -154,7 +152,7 @@ public class JavaScriptProperty {
 	 * @since 0.7.0
 	 */
 	public constructor(number: Double, handler: JavaScriptPropertyHandler? = null) {
-		this.storage = JavaScriptPropertyStorageNumber(number)
+		this.value = JavaScriptPropertyNumberValue(number)
 		this.handler = handler
 	}
 
@@ -164,7 +162,7 @@ public class JavaScriptProperty {
 	 * @since 0.7.0
 	 */
 	public constructor(number: Double, unit: JavaScriptPropertyUnit, handler: JavaScriptPropertyHandler? = null) {
-		this.storage = JavaScriptPropertyStorageNumber(number, unit)
+		this.value = JavaScriptPropertyNumberValue(number, unit)
 		this.handler = handler
 	}
 
@@ -174,7 +172,7 @@ public class JavaScriptProperty {
 	 * @since 0.7.0
 	 */
 	public constructor(boolean: Boolean, handler: JavaScriptPropertyHandler? = null) {
-		this.storage = JavaScriptPropertyStorageBoolean(boolean)
+		this.value = JavaScriptPropertyBooleanValue(boolean)
 		this.handler = handler
 	}
 
@@ -264,7 +262,7 @@ public class JavaScriptProperty {
 
 		}
 
-		this.storage.store(value)
+		this.value.store(value)
 	}
 
 	/**
@@ -349,7 +347,7 @@ public class JavaScriptProperty {
 	 * @since 0.7.0
 	 */
 	public fun equals(value: JavaScriptValue): Boolean {
-		return this.storage.equals(value)
+		return this.value.equals(value)
 	}
 
 	/**
@@ -358,7 +356,7 @@ public class JavaScriptProperty {
 	 * @since 0.7.0
 	 */
 	public fun equals(value: String): Boolean {
-		return this.storage.equals(value)
+		return this.value.equals(value)
 	}
 
 	/**
@@ -367,7 +365,7 @@ public class JavaScriptProperty {
 	 * @since 0.7.0
 	 */
 	public fun equals(value: Double): Boolean {
-		return this.storage.equals(value)
+		return this.value.equals(value)
 	}
 
 	/**
@@ -376,7 +374,7 @@ public class JavaScriptProperty {
 	 * @since 0.7.0
 	 */
 	public fun equals(value: Double, unit: JavaScriptPropertyUnit): Boolean {
-		return this.storage.equals(value, unit)
+		return this.value.equals(value, unit)
 	}
 
 	/**
@@ -385,7 +383,7 @@ public class JavaScriptProperty {
 	 * @since 0.7.0
 	 */
 	public fun equals(value: Boolean): Boolean {
-		return this.storage.equals(value)
+		return this.value.equals(value)
 	}
 
 	/**
@@ -394,7 +392,7 @@ public class JavaScriptProperty {
 	 * @since 0.7.0
 	 */
 	public fun <T> cast(type: Class<T>): T? {
-		return this.storage.cast(type)
+		return this.value.cast(type)
 	}
 
 	//--------------------------------------------------------------------------
@@ -407,7 +405,7 @@ public class JavaScriptProperty {
 	 * @hidden
 	 */
 	open fun toHandle(context: JavaScriptContext): Long? {
-		return this.storage.toHandle(context)
+		return this.value.toHandle(context)
 	}
 
 	//--------------------------------------------------------------------------
@@ -420,7 +418,7 @@ public class JavaScriptProperty {
 	 * @hidden
 	 */
 	private fun update() {
-		this.storage = JavaScriptPropertyStorage()
+		this.value = JavaScriptPropertyValue()
 	}
 
 	/**
@@ -429,7 +427,7 @@ public class JavaScriptProperty {
 	 * @hidden
 	 */
 	private fun update(value: JavaScriptValue) {
-		this.storage = JavaScriptPropertyStorageValue(value)
+		this.value = JavaScriptPropertyRawValue(value)
 	}
 
 	/**
@@ -438,7 +436,7 @@ public class JavaScriptProperty {
 	 * @hidden
 	 */
 	private fun update(value: String) {
-		this.storage = JavaScriptPropertyStorageString(value)
+		this.value = JavaScriptPropertyStringValue(value)
 	}
 
 	/**
@@ -447,7 +445,7 @@ public class JavaScriptProperty {
 	 * @hidden
 	 */
 	private fun update(value: Double) {
-		this.storage = JavaScriptPropertyStorageNumber(value)
+		this.value = JavaScriptPropertyNumberValue(value)
 	}
 
 	/**
@@ -456,7 +454,7 @@ public class JavaScriptProperty {
 	 * @hidden
 	 */
 	private fun update(value: Double, unit: JavaScriptPropertyUnit) {
-		this.storage = JavaScriptPropertyStorageNumber(value, unit)
+		this.value = JavaScriptPropertyNumberValue(value, unit)
 	}
 
 	/**
@@ -465,7 +463,7 @@ public class JavaScriptProperty {
 	 * @hidden
 	 */
 	private fun update(value: Boolean) {
-		this.storage = JavaScriptPropertyStorageBoolean(value)
+		this.value = JavaScriptPropertyBooleanValue(value)
 	}
 
 	/**

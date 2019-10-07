@@ -1,11 +1,11 @@
 package ca.logaritm.dezel.core
 
 /**
- * @class JavaScriptPropertyStorageValue
+ * @class JavaScriptPropertyRawValue
  * @since 0.7.0
  * @hidden
  */
-open class JavaScriptPropertyStorageValue(value: JavaScriptValue) : JavaScriptPropertyStorage() {
+open class JavaScriptPropertyRawValue(value: JavaScriptValue) : JavaScriptPropertyValue() {
 
 	//--------------------------------------------------------------------------
 	// Properties

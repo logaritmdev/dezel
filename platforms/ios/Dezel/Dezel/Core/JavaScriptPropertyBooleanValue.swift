@@ -1,9 +1,9 @@
 /**
- * @class JavaScriptPropertyStorageBoolean
+ * @class JavaScriptPropertyBooleanValue
  * @since 0.7.0
  * @hidden
  */
-open class JavaScriptPropertyStorageBoolean: JavaScriptPropertyStorage {
+open class JavaScriptPropertyBooleanValue: JavaScriptPropertyValue {
 
 	//--------------------------------------------------------------------------
 	// MARK: Properties

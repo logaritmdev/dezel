@@ -3,11 +3,11 @@ package ca.logaritm.dezel.core
 import ca.logaritm.dezel.extension.type.toStr
 
 /**
- * @class JavaScriptPropertyStorageNumber
+ * @class JavaScriptPropertyNumberValue
  * @since 0.7.0
  * @hidden
  */
-open class JavaScriptPropertyStorageNumber(value: Double, unit: JavaScriptPropertyUnit = JavaScriptPropertyUnit.NONE): JavaScriptPropertyStorage(JavaScriptPropertyType.NUMBER, unit) {
+open class JavaScriptPropertyNumberValue(value: Double, unit: JavaScriptPropertyUnit = JavaScriptPropertyUnit.NONE): JavaScriptPropertyValue(JavaScriptPropertyType.NUMBER, unit) {
 
 	//--------------------------------------------------------------------------
 	// Properties

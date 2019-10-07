@@ -26,7 +26,7 @@ public class JavaScriptProperty: NSObject {
 	 * @since 0.7.0
 	 */
 	public var type: JavaScriptPropertyType {
-		return self.storage.type
+		return self.value.type
 	}
 
 	/**
@@ -35,7 +35,7 @@ public class JavaScriptProperty: NSObject {
 	 * @since 0.7.0
 	 */
 	public var unit: JavaScriptPropertyUnit {
-		return self.storage.unit
+		return self.value.unit
 	}
 
 	/**
@@ -44,7 +44,7 @@ public class JavaScriptProperty: NSObject {
 	 * @since 0.7.0
 	 */
 	public var string: String {
-		return self.storage.string
+		return self.value.string
 	}
 
 	/**
@@ -53,7 +53,7 @@ public class JavaScriptProperty: NSObject {
 	 * @since 0.7.0
 	 */
 	public var number: Double {
-		return self.storage.number
+		return self.value.number
 	}
 
 	/**
@@ -62,7 +62,7 @@ public class JavaScriptProperty: NSObject {
 	 * @since 0.7.0
 	 */
 	public var boolean: Bool {
-		return self.storage.boolean
+		return self.value.boolean
 	}
 
 	/**
@@ -131,7 +131,7 @@ public class JavaScriptProperty: NSObject {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private var storage: JavaScriptPropertyStorage
+	private var value: JavaScriptPropertyValue
 
 	/**
 	 * @property handler
@@ -150,7 +150,7 @@ public class JavaScriptProperty: NSObject {
 	 * @since 0.7.0
 	 */
 	public init(handler: JavaScriptPropertyHandler? = nil) {
-		self.storage = JavaScriptPropertyStorage()
+		self.value = JavaScriptPropertyValue()
 		self.handler = handler
 	}
 
@@ -160,7 +160,7 @@ public class JavaScriptProperty: NSObject {
 	 * @since 0.7.0
 	 */
 	public init(string: String, handler: JavaScriptPropertyHandler? = nil) {
-		self.storage = JavaScriptPropertyStorageString(value: string)
+		self.value = JavaScriptPropertyStringValue(value: string)
 		self.handler = handler
 	}
 
@@ -170,7 +170,7 @@ public class JavaScriptProperty: NSObject {
 	 * @since 0.7.0
 	 */
 	public init(number: Double, handler: JavaScriptPropertyHandler? = nil) {
-		self.storage = JavaScriptPropertyStorageNumber(value: number)
+		self.value = JavaScriptPropertyNumberValue(value: number)
 		self.handler = handler
 	}
 
@@ -180,7 +180,7 @@ public class JavaScriptProperty: NSObject {
 	 * @since 0.7.0
 	 */
 	public init(number: Double, unit: JavaScriptPropertyUnit, handler: JavaScriptPropertyHandler? = nil) {
-		self.storage = JavaScriptPropertyStorageNumber(value: number, unit: unit)
+		self.value = JavaScriptPropertyNumberValue(value: number, unit: unit)
 		self.handler = handler
 	}
 
@@ -190,7 +190,7 @@ public class JavaScriptProperty: NSObject {
 	 * @since 0.7.0
 	 */
 	public init(boolean: Bool, handler: JavaScriptPropertyHandler? = nil) {
-		self.storage = JavaScriptPropertyStorageBoolean(value: boolean)
+		self.value = JavaScriptPropertyBooleanValue(value: boolean)
 		self.handler = handler
 	}
 
@@ -289,7 +289,7 @@ public class JavaScriptProperty: NSObject {
 
 		}
 
-		self.storage.store(value)
+		self.value.store(value)
 	}
 
 	/**
@@ -374,7 +374,7 @@ public class JavaScriptProperty: NSObject {
 	 * @since 0.7.0
 	 */
 	public func equals(_ value: JavaScriptValue) -> Bool {
-		return self.storage.equals(value)
+		return self.value.equals(value)
 	}
 
 	/**
@@ -383,7 +383,7 @@ public class JavaScriptProperty: NSObject {
 	 * @since 0.7.0
 	 */
 	public func equals(_ value: String) -> Bool {
-		return self.storage.equals(value)
+		return self.value.equals(value)
 	}
 
 	/**
@@ -392,7 +392,7 @@ public class JavaScriptProperty: NSObject {
 	 * @since 0.7.0
 	 */
 	public func equals(_ value: Double) -> Bool {
-		return self.storage.equals(value)
+		return self.value.equals(value)
 	}
 
 	/**
@@ -401,7 +401,7 @@ public class JavaScriptProperty: NSObject {
 	 * @since 0.7.0
 	 */
 	public func equals(_ value: Double, unit: JavaScriptPropertyUnit) -> Bool {
-		return self.storage.equals(value, unit: unit)
+		return self.value.equals(value, unit: unit)
 	}
 
 	/**
@@ -410,7 +410,7 @@ public class JavaScriptProperty: NSObject {
 	 * @since 0.7.0
 	 */
 	public func equals(_ value: Bool) -> Bool {
-		return self.storage.equals(value)
+		return self.value.equals(value)
 	}
 
 	/**
@@ -419,7 +419,7 @@ public class JavaScriptProperty: NSObject {
 	 * @since 0.7.0
 	 */
 	public func cast<T>(_ type: T.Type) -> T? {
-		return self.storage.cast(type)
+		return self.value.cast(type)
 	}
 
 	//--------------------------------------------------------------------------
@@ -432,7 +432,7 @@ public class JavaScriptProperty: NSObject {
 	 * @hidden
 	 */
 	open func toHandle(_ context: JavaScriptContext) -> JSValueRef? {
-		return self.storage.toHandle(context)
+		return self.value.toHandle(context)
 	}
 
 	//--------------------------------------------------------------------------
@@ -445,7 +445,7 @@ public class JavaScriptProperty: NSObject {
 	 * @hidden
 	 */
 	private func update() {
-		self.storage = JavaScriptPropertyStorage()
+		self.value = JavaScriptPropertyValue()
 	}
 
 	/**
@@ -454,7 +454,7 @@ public class JavaScriptProperty: NSObject {
 	 * @hidden
 	 */
 	private func update(_ value: JavaScriptValue) {
-		self.storage = JavaScriptPropertyStorageValue(value: value)
+		self.value = JavaScriptPropertyRawValue(value: value)
 	}
 
 	/**
@@ -463,7 +463,7 @@ public class JavaScriptProperty: NSObject {
 	 * @hidden
 	 */
 	private func update(_ value: String) {
-		self.storage = JavaScriptPropertyStorageString(value: value)
+		self.value = JavaScriptPropertyStringValue(value: value)
 	}
 
 	/**
@@ -472,7 +472,7 @@ public class JavaScriptProperty: NSObject {
 	 * @hidden
 	 */
 	private func update(_ value: Double) {
-		self.storage = JavaScriptPropertyStorageNumber(value: value)
+		self.value = JavaScriptPropertyNumberValue(value: value)
 	}
 
 	/**
@@ -481,7 +481,7 @@ public class JavaScriptProperty: NSObject {
 	 * @hidden
 	 */
 	private func update(_ value: Double, unit: JavaScriptPropertyUnit) {
-		self.storage = JavaScriptPropertyStorageNumber(value: value, unit: unit)
+		self.value = JavaScriptPropertyNumberValue(value: value, unit: unit)
 	}
 
 	/**
@@ -490,7 +490,7 @@ public class JavaScriptProperty: NSObject {
 	 * @hidden
 	 */
 	private func update(_ value: Bool) {
-		self.storage = JavaScriptPropertyStorageBoolean(value: value)
+		self.value = JavaScriptPropertyBooleanValue(value: value)
 	}
 
 	/**

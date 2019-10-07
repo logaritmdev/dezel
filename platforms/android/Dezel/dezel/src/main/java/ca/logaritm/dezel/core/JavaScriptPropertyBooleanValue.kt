@@ -1,11 +1,11 @@
 package ca.logaritm.dezel.core
 
 /**
- * @class JavaScriptPropertyStorageBoolean
+ * @class JavaScriptPropertyBooleanValue
  * @since 0.7.0
  * @hidden
  */
-open class JavaScriptPropertyStorageBoolean(boolean: Boolean): JavaScriptPropertyStorage(JavaScriptPropertyType.BOOLEAN) {
+open class JavaScriptPropertyBooleanValue(boolean: Boolean): JavaScriptPropertyValue(JavaScriptPropertyType.BOOLEAN) {
 
 	//--------------------------------------------------------------------------
 	// Properties
