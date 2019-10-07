@@ -1,5 +1,5 @@
-#ifndef AbsoluteNodesResolver_h
-#define AbsoluteNodesResolver_h
+#ifndef AbsoluteLayoutResolver_h
+#define AbsoluteLayoutResolver_h
 
 #include <vector>
 
@@ -13,9 +13,9 @@ namespace Layout {
 
 using std::vector;
 
-class Resolver;
+class LayoutResolver;
 
-class AbsoluteNodesResolver {
+class AbsoluteLayoutResolver {
 
 private:
 
@@ -35,9 +35,9 @@ private:
 
 public:
 
-	friend class Resolver;
+	friend class LayoutResolver;
 
-	AbsoluteNodesResolver(DisplayNode* node);
+	AbsoluteLayoutResolver(DisplayNode* node);
 
 	void append(DisplayNode* node) {
 		this->nodes.push_back(node);

@@ -1,7 +1,7 @@
 #include "DisplayNode.h"
 #include "Display.h"
 #include "DisplayNodeFrame.h"
-#include "Resolver.h"
+#include "LayoutResolver.h"
 
 #include <math.h>
 #include <iostream>

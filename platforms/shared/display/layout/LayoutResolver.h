@@ -1,8 +1,8 @@
 #ifndef Resolver_h
 #define Resolver_h
 
-#include "RelativeNodesResolver.h"
-#include "AbsoluteNodesResolver.h"
+#include "RelativeLayoutResolver.h"
+#include "AbsoluteLayoutResolver.h"
 
 #include <cmath>
 
@@ -15,13 +15,13 @@ namespace Layout {
 
 using std::round;
 
-class Resolver {
+class LayoutResolver {
 
 private:
 
 	DisplayNode* node;
-	RelativeNodesResolver relatives;
-	AbsoluteNodesResolver absolutes;
+	RelativeLayoutResolver relativeLayout;
+	AbsoluteLayoutResolver absoluteLayout;
 
 public:
 
@@ -47,22 +47,22 @@ public:
 		return value;
 	}
 
-	Resolver(DisplayNode* node);
+	LayoutResolver(DisplayNode* node);
 
 	double getExtentTop() {
-		return this->relatives.extentTop;
+		return this->relativeLayout.extentTop;
 	}
 
 	double getExtentLeft() {
-		return this->relatives.extentLeft;
+		return this->relativeLayout.extentLeft;
 	}
 
 	double getExtentRight() {
-		return this->relatives.extentRight;
+		return this->relativeLayout.extentRight;
 	}
 
 	double getExtentBottom() {
-		return this->relatives.extentBottom;
+		return this->relativeLayout.extentBottom;
 	}
 
 	void resolve();

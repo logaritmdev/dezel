@@ -1,4 +1,4 @@
-#include "Resolver.h"
+#include "LayoutResolver.h"
 #include "Display.h"
 #include "DisplayBase.h"
 #include "DisplayNode.h"
@@ -11,13 +11,13 @@ namespace Layout {
 using std::min;
 using std::max;
 
-Resolver::Resolver(DisplayNode* node) : relatives(node), absolutes(node)
+LayoutResolver::LayoutResolver(DisplayNode* node) : relativeLayout(node), absoluteLayout(node)
 {
 	this->node = node;
 }
 
 void
-Resolver::resolve()
+LayoutResolver::resolve()
 {
 	for (auto &child : this->node->children) {
 
@@ -31,9 +31,9 @@ Resolver::resolve()
 		frame->wrapsContentHeight = frame->shouldWrapContentHeight();
 
 		if (frame->isRelative()) {
-			this->relatives.append(child);
+			this->relativeLayout.append(child);
 		} else {
-			this->absolutes.append(child);
+			this->absoluteLayout.append(child);
 		}
 	}
 
@@ -44,7 +44,7 @@ Resolver::resolve()
 	const auto lastContentW = frame->measuredContentWidth;
 	const auto lastContentH = frame->measuredContentHeight;
 
-	this->relatives.resolve();
+	this->relativeLayout.resolve();
 
 	if (autoContentW || autoContentH) {
 
@@ -57,7 +57,7 @@ Resolver::resolve()
 		}
 	}
 
-	this->absolutes.resolve();
+	this->absoluteLayout.resolve();
 }
 
 }

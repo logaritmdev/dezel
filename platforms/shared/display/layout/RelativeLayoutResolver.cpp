@@ -1,5 +1,5 @@
-#include "RelativeNodesResolver.h"
-#include "Resolver.h"
+#include "RelativeLayoutResolver.h"
+#include "LayoutResolver.h"
 #include "Display.h"
 #include "DisplayNode.h"
 #include "DisplayNodeFrame.h"
@@ -13,13 +13,13 @@ using std::cerr;
 using std::min;
 using std::max;
 
-RelativeNodesResolver::RelativeNodesResolver(DisplayNode* node)
+RelativeLayoutResolver::RelativeLayoutResolver(DisplayNode* node)
 {
 	this->node = node;
 }
 
 bool
-RelativeNodesResolver::hasInvalidSize(DisplayNode* child)
+RelativeLayoutResolver::hasInvalidSize(DisplayNode* child)
 {
 	const auto frame = child->frame;
 
@@ -103,13 +103,13 @@ RelativeNodesResolver::hasInvalidSize(DisplayNode* child)
 }
 
 bool
-RelativeNodesResolver::hasInvalidOrigin(DisplayNode* node)
+RelativeLayoutResolver::hasInvalidOrigin(DisplayNode* node)
 {
 	return true;
 }
 
 double
-RelativeNodesResolver::measureWidth(DisplayNode* child, double remaining)
+RelativeLayoutResolver::measureWidth(DisplayNode* child, double remaining)
 {
 	const auto frame = child->frame;
 
@@ -130,18 +130,18 @@ RelativeNodesResolver::measureWidth(DisplayNode* child, double remaining)
 	} else if (type == kDisplayNodeSizeTypeLength) {
 
 		switch (unit) {
-			case kDisplayNodeSizeUnitPC: value = Resolver::scale(value, child->parent->frame->measuredContentWidth - child->parent->frame->measuredPaddingLeft - child->parent->frame->measuredPaddingRight); break;
-			case kDisplayNodeSizeUnitPW: value = Resolver::scale(value, child->parent->frame->measuredInnerWidth); break;
-			case kDisplayNodeSizeUnitPH: value = Resolver::scale(value, child->parent->frame->measuredInnerHeight); break;
-			case kDisplayNodeSizeUnitCW: value = Resolver::scale(value, child->parent->frame->measuredContentWidth); break;
-			case kDisplayNodeSizeUnitCH: value = Resolver::scale(value, child->parent->frame->measuredContentHeight); break;
-			case kDisplayNodeSizeUnitVW: value = Resolver::scale(value, child->display->getViewportWidth()); break;
-			case kDisplayNodeSizeUnitVH: value = Resolver::scale(value, child->display->getViewportHeight()); break;
+			case kDisplayNodeSizeUnitPC: value = LayoutResolver::scale(value, child->parent->frame->measuredContentWidth - child->parent->frame->measuredPaddingLeft - child->parent->frame->measuredPaddingRight); break;
+			case kDisplayNodeSizeUnitPW: value = LayoutResolver::scale(value, child->parent->frame->measuredInnerWidth); break;
+			case kDisplayNodeSizeUnitPH: value = LayoutResolver::scale(value, child->parent->frame->measuredInnerHeight); break;
+			case kDisplayNodeSizeUnitCW: value = LayoutResolver::scale(value, child->parent->frame->measuredContentWidth); break;
+			case kDisplayNodeSizeUnitCH: value = LayoutResolver::scale(value, child->parent->frame->measuredContentHeight); break;
+			case kDisplayNodeSizeUnitVW: value = LayoutResolver::scale(value, child->display->getViewportWidth()); break;
+			case kDisplayNodeSizeUnitVH: value = LayoutResolver::scale(value, child->display->getViewportHeight()); break;
 			default: break;
 		}
 	}
 
-	value = Resolver::clamp(
+	value = LayoutResolver::clamp(
 		value,
 		frame->width.min,
 		frame->width.max
@@ -151,7 +151,7 @@ RelativeNodesResolver::measureWidth(DisplayNode* child, double remaining)
 }
 
 double
-RelativeNodesResolver::measureHeight(DisplayNode* child, double remaining)
+RelativeLayoutResolver::measureHeight(DisplayNode* child, double remaining)
 {
 	const auto frame = child->frame;
 
@@ -172,19 +172,19 @@ RelativeNodesResolver::measureHeight(DisplayNode* child, double remaining)
 	} else if (type == kDisplayNodeSizeTypeLength) {
 
 		switch (unit) {
-			case kDisplayNodeSizeUnitPC: value = Resolver::scale(value, child->parent->frame->measuredContentHeight - child->parent->frame->measuredPaddingTop - child->parent->frame->measuredPaddingBottom); break;
-			case kDisplayNodeSizeUnitPW: value = Resolver::scale(value, child->parent->frame->measuredInnerWidth); break;
-			case kDisplayNodeSizeUnitPH: value = Resolver::scale(value, child->parent->frame->measuredInnerHeight); break;
-			case kDisplayNodeSizeUnitCW: value = Resolver::scale(value, child->parent->frame->measuredContentWidth); break;
-			case kDisplayNodeSizeUnitCH: value = Resolver::scale(value, child->parent->frame->measuredContentHeight); break;
-			case kDisplayNodeSizeUnitVW: value = Resolver::scale(value, child->display->getViewportWidth()); break;
-			case kDisplayNodeSizeUnitVH: value = Resolver::scale(value, child->display->getViewportHeight()); break;
+			case kDisplayNodeSizeUnitPC: value = LayoutResolver::scale(value, child->parent->frame->measuredContentHeight - child->parent->frame->measuredPaddingTop - child->parent->frame->measuredPaddingBottom); break;
+			case kDisplayNodeSizeUnitPW: value = LayoutResolver::scale(value, child->parent->frame->measuredInnerWidth); break;
+			case kDisplayNodeSizeUnitPH: value = LayoutResolver::scale(value, child->parent->frame->measuredInnerHeight); break;
+			case kDisplayNodeSizeUnitCW: value = LayoutResolver::scale(value, child->parent->frame->measuredContentWidth); break;
+			case kDisplayNodeSizeUnitCH: value = LayoutResolver::scale(value, child->parent->frame->measuredContentHeight); break;
+			case kDisplayNodeSizeUnitVW: value = LayoutResolver::scale(value, child->display->getViewportWidth()); break;
+			case kDisplayNodeSizeUnitVH: value = LayoutResolver::scale(value, child->display->getViewportHeight()); break;
 			default: break;
 		}
 
 	}
 
-	value = Resolver::clamp(
+	value = LayoutResolver::clamp(
 		value,
 		frame->height.min,
 		frame->height.max
@@ -194,7 +194,7 @@ RelativeNodesResolver::measureHeight(DisplayNode* child, double remaining)
 }
 
 double
-RelativeNodesResolver::resolveAlignment(DisplayNode* child, double remaining)
+RelativeLayoutResolver::resolveAlignment(DisplayNode* child, double remaining)
 {
 	double size = 0;
 	double headOffset = 0;
@@ -236,7 +236,7 @@ RelativeNodesResolver::resolveAlignment(DisplayNode* child, double remaining)
 }
 
 void
-RelativeNodesResolver::expandNodesVertically(const vector<DisplayNode*> &nodes, double space, double weights)
+RelativeLayoutResolver::expandNodesVertically(const vector<DisplayNode*> &nodes, double space, double weights)
 {
 	double remainder = 0;
 
@@ -246,7 +246,7 @@ RelativeNodesResolver::expandNodesVertically(const vector<DisplayNode*> &nodes, 
 
 		double measuredH = frame->measuredHeight + (frame->expandFactor / weights * space);
 
-		measuredH = Resolver::round(measuredH, child->display->getScale(), remainder);
+		measuredH = LayoutResolver::round(measuredH, child->display->getScale(), remainder);
 
 		if (frame->measuredHeight != measuredH) {
 			frame->measuredHeight = measuredH;
@@ -256,7 +256,7 @@ RelativeNodesResolver::expandNodesVertically(const vector<DisplayNode*> &nodes, 
 }
 
 void
-RelativeNodesResolver::expandNodesHorizontally(const vector<DisplayNode*> &nodes, double space, double weights)
+RelativeLayoutResolver::expandNodesHorizontally(const vector<DisplayNode*> &nodes, double space, double weights)
 {
 	double remainder = 0;
 
@@ -266,7 +266,7 @@ RelativeNodesResolver::expandNodesHorizontally(const vector<DisplayNode*> &nodes
 
 		double measuredW = frame->measuredWidth + (frame->expandFactor / weights * space);
 
-		measuredW = Resolver::round(measuredW, child->display->getScale(), remainder);
+		measuredW = LayoutResolver::round(measuredW, child->display->getScale(), remainder);
 
 		if (frame->measuredWidth != measuredW) {
 			frame->measuredWidth = measuredW;
@@ -276,7 +276,7 @@ RelativeNodesResolver::expandNodesHorizontally(const vector<DisplayNode*> &nodes
 }
 
 void
-RelativeNodesResolver::shrinkNodesVertically(const vector<DisplayNode*> &nodes, double space, double weights)
+RelativeLayoutResolver::shrinkNodesVertically(const vector<DisplayNode*> &nodes, double space, double weights)
 {
 	double remainder = 0;
 
@@ -286,7 +286,7 @@ RelativeNodesResolver::shrinkNodesVertically(const vector<DisplayNode*> &nodes, 
 
 		double measuredH = frame->measuredHeight + (frame->shrinkFactor / weights * space);
 
-		measuredH = Resolver::round(measuredH, child->display->getScale(), remainder);
+		measuredH = LayoutResolver::round(measuredH, child->display->getScale(), remainder);
 
 		if (frame->measuredHeight != measuredH) {
 			frame->measuredHeight = measuredH;
@@ -296,7 +296,7 @@ RelativeNodesResolver::shrinkNodesVertically(const vector<DisplayNode*> &nodes, 
 }
 
 void
-RelativeNodesResolver::shrinkNodesHorizontally(const vector<DisplayNode*> &nodes, double space, double weights)
+RelativeLayoutResolver::shrinkNodesHorizontally(const vector<DisplayNode*> &nodes, double space, double weights)
 {
 	double remainder = 0;
 
@@ -306,7 +306,7 @@ RelativeNodesResolver::shrinkNodesHorizontally(const vector<DisplayNode*> &nodes
 
 		double measuredW = frame->measuredWidth + (frame->shrinkFactor / weights * space);
 
-		measuredW = Resolver::round(measuredW, child->display->getScale(), remainder);
+		measuredW = LayoutResolver::round(measuredW, child->display->getScale(), remainder);
 
 		if (frame->measuredWidth != measuredW) {
 			frame->measuredWidth = measuredW;
@@ -316,7 +316,7 @@ RelativeNodesResolver::shrinkNodesHorizontally(const vector<DisplayNode*> &nodes
 }
 
 void
-RelativeNodesResolver::measure(DisplayNode* child, double &remainingW, double &remainingH, double &remainder)
+RelativeLayoutResolver::measure(DisplayNode* child, double &remainingW, double &remainingH, double &remainder)
 {
 	const auto frame = child->frame;
 
@@ -347,13 +347,13 @@ RelativeNodesResolver::measure(DisplayNode* child, double &remainingW, double &r
 		switch (child->frame->contentDirection) {
 
 			case kDisplayNodeContentDirectionVertical:
-				if (wrapW == false) measuredW = Resolver::round(measuredW, scale);
-				if (wrapH == false) measuredH = Resolver::round(measuredH, scale, remainder);
+				if (wrapW == false) measuredW = LayoutResolver::round(measuredW, scale);
+				if (wrapH == false) measuredH = LayoutResolver::round(measuredH, scale, remainder);
 				break;
 
 			case kDisplayNodeContentDirectionHorizontal:
-				if (wrapW == false) measuredW = Resolver::round(measuredW, scale, remainder);
-				if (wrapH == false) measuredH = Resolver::round(measuredH, scale);
+				if (wrapW == false) measuredW = LayoutResolver::round(measuredW, scale, remainder);
+				if (wrapH == false) measuredH = LayoutResolver::round(measuredH, scale);
 				break;
 		}
 	}
@@ -379,7 +379,7 @@ RelativeNodesResolver::measure(DisplayNode* child, double &remainingW, double &r
 }
 
 void
-RelativeNodesResolver::resolve()
+RelativeLayoutResolver::resolve()
 {
 	if (this->nodes.size() == 0) {
 		return;
@@ -571,8 +571,8 @@ RelativeNodesResolver::resolve()
 
 			case kDisplayNodeContentDirectionVertical:
 
-				x = Resolver::round(x + this->resolveAlignment(child, alignmentSpace), scale);
-				y = Resolver::round(y + offset + marginT, scale);
+				x = LayoutResolver::round(x + this->resolveAlignment(child, alignmentSpace), scale);
+				y = LayoutResolver::round(y + offset + marginT, scale);
 
 				offset = offset + h + marginT + marginB + spacer;
 
@@ -580,8 +580,8 @@ RelativeNodesResolver::resolve()
 
 			case kDisplayNodeContentDirectionHorizontal:
 
-				x = Resolver::round(x + offset + marginL, scale);
-				y = Resolver::round(y + this->resolveAlignment(child, alignmentSpace), scale);
+				x = LayoutResolver::round(x + offset + marginL, scale);
+				y = LayoutResolver::round(y + this->resolveAlignment(child, alignmentSpace), scale);
 
 				offset = offset + w + marginL + marginR + spacer;
 

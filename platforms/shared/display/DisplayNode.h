@@ -15,9 +15,9 @@ using std::string;
 using std::vector;
 
 namespace Layout {
-	class Resolver;
-	class RelativeNodesResolver;
-	class AbsoluteNodesResolver;
+	class LayoutResolver;
+	class RelativeLayoutResolver;
+	class AbsoluteLayoutResolver;
 }
 
 class Display;
@@ -75,9 +75,9 @@ public:
 
 	friend class Display;
 	friend class DisplayNodeFrame;
-	friend class Layout::Resolver;
-	friend class Layout::RelativeNodesResolver;
-	friend class Layout::AbsoluteNodesResolver;
+	friend class Layout::LayoutResolver;
+	friend class Layout::RelativeLayoutResolver;
+	friend class Layout::AbsoluteLayoutResolver;
 
 	void *data = NULL;
 

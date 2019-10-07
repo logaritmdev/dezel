@@ -13,9 +13,9 @@ namespace Layout {
 
 using std::vector;
 
-class Resolver;
+class LayoutResolver;
 
-class RelativeNodesResolver {
+class RelativeLayoutResolver {
 
 private:
 
@@ -27,6 +27,14 @@ private:
 	double extentLeft = 0;
 	double extentRight = 0;
 	double extentBottom = 0;
+
+	inline double alignMid(double size, double container) {
+		return container / 2 - size / 2;
+	}
+
+	inline double alignEnd(double size, double container) {
+		return container - size;
+	}
 
 	bool hasInvalidSize(DisplayNode* node);
 	bool hasInvalidOrigin(DisplayNode* node);
@@ -41,19 +49,11 @@ private:
 	void shrinkNodesVertically(const vector<DisplayNode*> &nodes, double space, double weights);
 	void shrinkNodesHorizontally(const vector<DisplayNode*> &nodes, double space, double weights);
 
-	inline double alignMid(double size, double container) {
-		return container / 2 - size / 2;
-	}
-
-	inline double alignEnd(double size, double container) {
-		return container - size;
-	}
-
 public:
 
-	friend class Resolver;
+	friend class LayoutResolver;
 
-	RelativeNodesResolver(DisplayNode* node);
+	RelativeLayoutResolver(DisplayNode* node);
 
 	void append(DisplayNode* node) {
 		this->nodes.push_back(node);
