@@ -6,6 +6,9 @@
 namespace Dezel {
 namespace Style {
 
+class Parser;
+class Stylesheet;
+
 class BooleanValue : public Value {
 
 private:
@@ -13,6 +16,9 @@ private:
 	bool value = false;
 
 public:
+
+	friend class Parser;
+	friend class Stylesheet;
 
 	BooleanValue(bool value);
 

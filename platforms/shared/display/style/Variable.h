@@ -1,5 +1,7 @@
-#ifndef Property_h
-#define Property_h
+#ifndef Variable_h
+#define Variable_h
+
+#include "Value.h"
 
 #include <string>
 #include <vector>
@@ -10,11 +12,10 @@ namespace Style {
 using std::string;
 using std::vector;
 
-class Value;
-class FunctionValue;
 class Parser;
+class Stylesheet;
 
-class Property {
+class Variable {
 
 private:
 
@@ -24,9 +25,11 @@ private:
 public:
 
 	friend class Parser;
+	friend class Stylesheet;
 
-	Property(string name);
-	string toString(int depth = 0);
+	Variable(string name);
+
+	string toString();
 
 };
 

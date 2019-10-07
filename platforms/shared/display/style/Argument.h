@@ -1,5 +1,5 @@
-#ifndef Variable_h
-#define Variable_h
+#ifndef Argument_h
+#define Argument_h
 
 #include "Value.h"
 
@@ -13,19 +13,18 @@ using std::string;
 using std::vector;
 
 class Parser;
+class Stylesheet;
 
-class Variable {
+class Argument {
 
 private:
 
-	string name;
 	vector<Value*> values;
 
 public:
 
 	friend class Parser;
-
-	Variable(string name);
+	friend class Stylesheet;
 
 	string toString();
 

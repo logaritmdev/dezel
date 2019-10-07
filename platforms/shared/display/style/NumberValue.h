@@ -10,6 +10,9 @@ namespace Style {
 
 using std::string;
 
+class Parser;
+class Stylesheet;
+
 class NumberValue : public Value {
 
 private:
@@ -19,6 +22,7 @@ private:
 public:
 
 	friend class Parser;
+	friend class Stylesheet;
 
 	NumberValue(string value, ValueUnit unit);
 	NumberValue(double value, ValueUnit unit);

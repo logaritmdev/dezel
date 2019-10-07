@@ -349,7 +349,7 @@ Parser::parseSelector(TokenList& tokens)
 				break;
 
 			case kTokenTypeAmpersand:
-				selector->modifier = true;
+				selector->combinator = kCombinatorParent;
 				break;
 
 			default:

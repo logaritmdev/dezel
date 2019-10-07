@@ -9,6 +9,7 @@ namespace Style {
 using std::string;
 
 class Parser;
+class Stylesheet;
 class Selector;
 
 class Rule {
@@ -25,6 +26,7 @@ private:
 public:
 
 	friend class Parser;
+	friend class Stylesheet;
 
 	const Selector* getTail() const {
 		return this->tail;

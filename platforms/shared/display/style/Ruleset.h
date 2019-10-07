@@ -13,9 +13,10 @@ namespace Style {
 using std::string;
 using std::vector;
 
+class Parser;
+class Stylesheet;
 class Selector;
 class SelectorList;
-class Parser;
 
 class Ruleset {
 
@@ -32,8 +33,7 @@ private:
 public:
 
 	friend class Parser;
-// TODO setter adder etc..
-	Ruleset* clone();
+	friend class Stylesheet;
 
 	string toString(int depth = 0);
 

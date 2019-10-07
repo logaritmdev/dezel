@@ -17,5 +17,11 @@ Stylesheet::registerVariable(string name, Variable* variable)
 	this->variables[name] = variable;
 }
 
+void
+Stylesheet::addRuleset(Ruleset* ruleset)
+{
+	this->rulesets.push_back(ruleset);
+}
+
 }
 }

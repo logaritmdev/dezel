@@ -41,6 +41,14 @@ private:
 	void shrinkNodesVertically(const vector<DisplayNode*> &nodes, double space, double weights);
 	void shrinkNodesHorizontally(const vector<DisplayNode*> &nodes, double space, double weights);
 
+	inline double alignMid(double size, double container) {
+		return container / 2 - size / 2;
+	}
+
+	inline double alignEnd(double size, double container) {
+		return container - size;
+	}
+
 public:
 
 	friend class Resolver;

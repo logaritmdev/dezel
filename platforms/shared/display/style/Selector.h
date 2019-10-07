@@ -10,8 +10,14 @@ namespace Style {
 using std::set;
 using std::string;
 
+enum Combinator {
+	kCombinatorNone,
+	kCombinatorParent
+};
+
 class Rule;
 class Parser;
+class Stylesheet;
 
 class Selector {
 
@@ -25,11 +31,12 @@ private:
 	set<string> styles;
 	set<string> states;
 
-	bool modifier = false;
+	Combinator combinator = kCombinatorNone;
 
 public:
 
 	friend class Parser;
+	friend class Stylesheet;
 
 	Selector* getPrev() const {
 		return this->prev;

@@ -32,6 +32,7 @@ enum ValueUnit {
 };
 
 class Parser;
+class Stylesheet;
 
 class Value {
 
@@ -43,6 +44,7 @@ protected:
 public:
 
 	friend class Parser;
+	friend class Stylesheet;
 
 	Value(ValueType type, ValueUnit unit);
 

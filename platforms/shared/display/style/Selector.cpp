@@ -9,7 +9,7 @@ Selector::toString(int depth)
 {
 	string output;
 
-	if (this->modifier) {
+	if (this->combinator == kCombinatorParent) {
 		output.append("&");
 	}
 

@@ -14,6 +14,7 @@ using std::string;
 using std::vector;
 
 class Parser;
+class Stylesheet;
 
 class FunctionValue : public Value {
 
@@ -25,6 +26,7 @@ private:
 public:
 
 	friend class Parser;
+	friend class Stylesheet;
 
 	FunctionValue(string name);
 

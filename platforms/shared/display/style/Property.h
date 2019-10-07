@@ -1,7 +1,5 @@
-#ifndef Argument_h
-#define Argument_h
-
-#include "Value.h"
+#ifndef Property_h
+#define Property_h
 
 #include <string>
 #include <vector>
@@ -13,18 +11,23 @@ using std::string;
 using std::vector;
 
 class Parser;
+class Stylesheet;
+class Value;
 
-class Argument {
+class Property {
 
 private:
 
+	string name;
 	vector<Value*> values;
 
 public:
 
 	friend class Parser;
+	friend class Stylesheet;
 
-	string toString();
+	Property(string name);
+	string toString(int depth = 0);
 
 };
 

@@ -1,6 +1,5 @@
 #include "AbsoluteNodesResolver.h"
 #include "Resolver.h"
-#include "Utility.h"
 #include "Display.h"
 #include "DisplayNode.h"
 #include "DisplayNodeFrame.h"
@@ -215,19 +214,19 @@ AbsoluteNodesResolver::measureTop(DisplayNode* child)
 
 		switch (unit) {
 
-			case kDisplayNodeOriginUnitPC: value = scale(value, child->parent->frame->measuredContentHeight); break;
-			case kDisplayNodeOriginUnitPW: value = scale(value, child->parent->frame->measuredInnerWidth); break;
-			case kDisplayNodeOriginUnitPH: value = scale(value, child->parent->frame->measuredInnerHeight); break;
-			case kDisplayNodeOriginUnitCW: value = scale(value, child->parent->frame->measuredContentWidth); break;
-			case kDisplayNodeOriginUnitCH: value = scale(value, child->parent->frame->measuredContentHeight); break;
-			case kDisplayNodeOriginUnitVW: value = scale(value, child->display->getViewportWidth()); break;
-			case kDisplayNodeOriginUnitVH: value = scale(value, child->display->getViewportHeight()); break;
+			case kDisplayNodeOriginUnitPC: value = Resolver::scale(value, child->parent->frame->measuredContentHeight); break;
+			case kDisplayNodeOriginUnitPW: value = Resolver::scale(value, child->parent->frame->measuredInnerWidth); break;
+			case kDisplayNodeOriginUnitPH: value = Resolver::scale(value, child->parent->frame->measuredInnerHeight); break;
+			case kDisplayNodeOriginUnitCW: value = Resolver::scale(value, child->parent->frame->measuredContentWidth); break;
+			case kDisplayNodeOriginUnitCH: value = Resolver::scale(value, child->parent->frame->measuredContentHeight); break;
+			case kDisplayNodeOriginUnitVW: value = Resolver::scale(value, child->display->getViewportWidth()); break;
+			case kDisplayNodeOriginUnitVH: value = Resolver::scale(value, child->display->getViewportHeight()); break;
 			default: break;
 
 		}
 	}
 
-	value = clamp(
+	value = Resolver::clamp(
 		value,
 		frame->top.min,
 		frame->top.max
@@ -235,7 +234,7 @@ AbsoluteNodesResolver::measureTop(DisplayNode* child)
 
 	value += child->parent->frame->measuredContentTop;
 
-	return round(value, child->display->getScale());;
+	return Resolver::round(value, child->display->getScale());;
 }
 
 double
@@ -252,19 +251,19 @@ AbsoluteNodesResolver::measureLeft(DisplayNode* child)
 
 		switch (unit) {
 
-			case kDisplayNodeOriginUnitPC: value = scale(value, child->parent->frame->measuredContentWidth); break;
-			case kDisplayNodeOriginUnitPW: value = scale(value, child->parent->frame->measuredInnerWidth); break;
-			case kDisplayNodeOriginUnitPH: value = scale(value, child->parent->frame->measuredInnerHeight); break;
-			case kDisplayNodeOriginUnitCW: value = scale(value, child->parent->frame->measuredContentWidth); break;
-			case kDisplayNodeOriginUnitCH: value = scale(value, child->parent->frame->measuredContentHeight); break;
-			case kDisplayNodeOriginUnitVW: value = scale(value, child->display->getViewportWidth()); break;
-			case kDisplayNodeOriginUnitVH: value = scale(value, child->display->getViewportHeight()); break;
+			case kDisplayNodeOriginUnitPC: value = Resolver::scale(value, child->parent->frame->measuredContentWidth); break;
+			case kDisplayNodeOriginUnitPW: value = Resolver::scale(value, child->parent->frame->measuredInnerWidth); break;
+			case kDisplayNodeOriginUnitPH: value = Resolver::scale(value, child->parent->frame->measuredInnerHeight); break;
+			case kDisplayNodeOriginUnitCW: value = Resolver::scale(value, child->parent->frame->measuredContentWidth); break;
+			case kDisplayNodeOriginUnitCH: value = Resolver::scale(value, child->parent->frame->measuredContentHeight); break;
+			case kDisplayNodeOriginUnitVW: value = Resolver::scale(value, child->display->getViewportWidth()); break;
+			case kDisplayNodeOriginUnitVH: value = Resolver::scale(value, child->display->getViewportHeight()); break;
 			default: break;
 
 		}
 	}
 
-	value = clamp(
+	value = Resolver::clamp(
 		value,
 		frame->left.min,
 		frame->left.max
@@ -272,7 +271,7 @@ AbsoluteNodesResolver::measureLeft(DisplayNode* child)
 
 	value += child->parent->frame->measuredContentLeft;
 
-	return round(value, child->display->getScale());
+	return Resolver::round(value, child->display->getScale());
 }
 
 double
@@ -289,19 +288,19 @@ AbsoluteNodesResolver::measureRight(DisplayNode* child)
 
 		switch (unit) {
 
-			case kDisplayNodeOriginUnitPC: value = scale(value, child->parent->frame->measuredContentWidth); break;
-			case kDisplayNodeOriginUnitPW: value = scale(value, child->parent->frame->measuredInnerWidth); break;
-			case kDisplayNodeOriginUnitPH: value = scale(value, child->parent->frame->measuredInnerHeight); break;
-			case kDisplayNodeOriginUnitCW: value = scale(value, child->parent->frame->measuredContentWidth); break;
-			case kDisplayNodeOriginUnitCH: value = scale(value, child->parent->frame->measuredContentHeight); break;
-			case kDisplayNodeOriginUnitVW: value = scale(value, child->display->getViewportWidth()); break;
-			case kDisplayNodeOriginUnitVH: value = scale(value, child->display->getViewportHeight()); break;
+			case kDisplayNodeOriginUnitPC: value = Resolver::scale(value, child->parent->frame->measuredContentWidth); break;
+			case kDisplayNodeOriginUnitPW: value = Resolver::scale(value, child->parent->frame->measuredInnerWidth); break;
+			case kDisplayNodeOriginUnitPH: value = Resolver::scale(value, child->parent->frame->measuredInnerHeight); break;
+			case kDisplayNodeOriginUnitCW: value = Resolver::scale(value, child->parent->frame->measuredContentWidth); break;
+			case kDisplayNodeOriginUnitCH: value = Resolver::scale(value, child->parent->frame->measuredContentHeight); break;
+			case kDisplayNodeOriginUnitVW: value = Resolver::scale(value, child->display->getViewportWidth()); break;
+			case kDisplayNodeOriginUnitVH: value = Resolver::scale(value, child->display->getViewportHeight()); break;
 			default: break;
 
 		}
 	}
 
-	value = clamp(
+	value = Resolver::clamp(
 		value,
 		frame->right.min,
 		frame->right.max
@@ -309,7 +308,7 @@ AbsoluteNodesResolver::measureRight(DisplayNode* child)
 
 	value += child->parent->frame->measuredContentLeft;
 
-	return round(value, child->display->getScale());
+	return Resolver::round(value, child->display->getScale());
 }
 
 double
@@ -326,19 +325,19 @@ AbsoluteNodesResolver::measureBottom(DisplayNode* child)
 
 		switch (unit) {
 
-			case kDisplayNodeOriginUnitPC: value = scale(value, child->parent->frame->measuredContentHeight); break;
-			case kDisplayNodeOriginUnitPW: value = scale(value, child->parent->frame->measuredInnerWidth); break;
-			case kDisplayNodeOriginUnitPH: value = scale(value, child->parent->frame->measuredInnerHeight); break;
-			case kDisplayNodeOriginUnitCW: value = scale(value, child->parent->frame->measuredContentWidth); break;
-			case kDisplayNodeOriginUnitCH: value = scale(value, child->parent->frame->measuredContentHeight); break;
-			case kDisplayNodeOriginUnitVW: value = scale(value, child->display->getViewportWidth()); break;
-			case kDisplayNodeOriginUnitVH: value = scale(value, child->display->getViewportHeight()); break;
+			case kDisplayNodeOriginUnitPC: value = Resolver::scale(value, child->parent->frame->measuredContentHeight); break;
+			case kDisplayNodeOriginUnitPW: value = Resolver::scale(value, child->parent->frame->measuredInnerWidth); break;
+			case kDisplayNodeOriginUnitPH: value = Resolver::scale(value, child->parent->frame->measuredInnerHeight); break;
+			case kDisplayNodeOriginUnitCW: value = Resolver::scale(value, child->parent->frame->measuredContentWidth); break;
+			case kDisplayNodeOriginUnitCH: value = Resolver::scale(value, child->parent->frame->measuredContentHeight); break;
+			case kDisplayNodeOriginUnitVW: value = Resolver::scale(value, child->display->getViewportWidth()); break;
+			case kDisplayNodeOriginUnitVH: value = Resolver::scale(value, child->display->getViewportHeight()); break;
 			default: break;
 
 		}
 	}
 
-	value = clamp(
+	value = Resolver::clamp(
 		value,
 		frame->bottom.min,
 		frame->bottom.max
@@ -346,7 +345,7 @@ AbsoluteNodesResolver::measureBottom(DisplayNode* child)
 
 	value += child->parent->frame->measuredContentTop;
 
-	return round(value, child->display->getScale());
+	return Resolver::round(value, child->display->getScale());
 }
 
 double
@@ -400,25 +399,25 @@ AbsoluteNodesResolver::measureWidth(DisplayNode* child)
 	} else if (type == kDisplayNodeSizeTypeLength) {
 
 		switch (unit) {
-			case kDisplayNodeSizeUnitPC: value = scale(value, child->parent->frame->measuredContentWidth); break;
-			case kDisplayNodeSizeUnitPW: value = scale(value, child->parent->frame->measuredInnerWidth); break;
-			case kDisplayNodeSizeUnitPH: value = scale(value, child->parent->frame->measuredInnerHeight); break;
-			case kDisplayNodeSizeUnitCW: value = scale(value, child->parent->frame->measuredContentWidth); break;
-			case kDisplayNodeSizeUnitCH: value = scale(value, child->parent->frame->measuredContentHeight); break;
-			case kDisplayNodeSizeUnitVW: value = scale(value, child->display->getViewportWidth()); break;
-			case kDisplayNodeSizeUnitVH: value = scale(value, child->display->getViewportHeight()); break;
+			case kDisplayNodeSizeUnitPC: value = Resolver::scale(value, child->parent->frame->measuredContentWidth); break;
+			case kDisplayNodeSizeUnitPW: value = Resolver::scale(value, child->parent->frame->measuredInnerWidth); break;
+			case kDisplayNodeSizeUnitPH: value = Resolver::scale(value, child->parent->frame->measuredInnerHeight); break;
+			case kDisplayNodeSizeUnitCW: value = Resolver::scale(value, child->parent->frame->measuredContentWidth); break;
+			case kDisplayNodeSizeUnitCH: value = Resolver::scale(value, child->parent->frame->measuredContentHeight); break;
+			case kDisplayNodeSizeUnitVW: value = Resolver::scale(value, child->display->getViewportWidth()); break;
+			case kDisplayNodeSizeUnitVH: value = Resolver::scale(value, child->display->getViewportHeight()); break;
 			default: break;
 		}
 
 	}
 
-	value = clamp(
+	value = Resolver::clamp(
 		value,
 		frame->width.min,
 		frame->width.max
 	);
 
-	return round(value, child->display->getScale());
+	return Resolver::round(value, child->display->getScale());
 }
 
 double
@@ -471,25 +470,25 @@ AbsoluteNodesResolver::measureHeight(DisplayNode* child)
 	} else if (type == kDisplayNodeSizeTypeLength) {
 
 		switch (unit) {
-			case kDisplayNodeSizeUnitPC: value = scale(value, child->parent->frame->measuredContentHeight); break;
-			case kDisplayNodeSizeUnitPW: value = scale(value, child->parent->frame->measuredInnerWidth); break;
-			case kDisplayNodeSizeUnitPH: value = scale(value, child->parent->frame->measuredInnerHeight); break;
-			case kDisplayNodeSizeUnitCW: value = scale(value, child->parent->frame->measuredContentWidth); break;
-			case kDisplayNodeSizeUnitCH: value = scale(value, child->parent->frame->measuredContentHeight); break;
-			case kDisplayNodeSizeUnitVW: value = scale(value, child->display->getViewportWidth()); break;
-			case kDisplayNodeSizeUnitVH: value = scale(value, child->display->getViewportHeight()); break;
+			case kDisplayNodeSizeUnitPC: value = Resolver::scale(value, child->parent->frame->measuredContentHeight); break;
+			case kDisplayNodeSizeUnitPW: value = Resolver::scale(value, child->parent->frame->measuredInnerWidth); break;
+			case kDisplayNodeSizeUnitPH: value = Resolver::scale(value, child->parent->frame->measuredInnerHeight); break;
+			case kDisplayNodeSizeUnitCW: value = Resolver::scale(value, child->parent->frame->measuredContentWidth); break;
+			case kDisplayNodeSizeUnitCH: value = Resolver::scale(value, child->parent->frame->measuredContentHeight); break;
+			case kDisplayNodeSizeUnitVW: value = Resolver::scale(value, child->display->getViewportWidth()); break;
+			case kDisplayNodeSizeUnitVH: value = Resolver::scale(value, child->display->getViewportHeight()); break;
 			default: break;
 		}
 
 	}
 
-	value = clamp(
+	value = Resolver::clamp(
 		value,
 		frame->height.min,
 		frame->height.max
 	);
 
-	return round(value, child->display->getScale());
+	return Resolver::round(value, child->display->getScale());
 }
 
 void

@@ -11,6 +11,7 @@ namespace Style {
 using std::string;
 
 class Parser;
+class Stylesheet;
 
 class StringValue : public Value {
 
@@ -21,6 +22,7 @@ private:
 public:
 
 	friend class Parser;
+	friend class Stylesheet;
 
 	StringValue(string value);
 
