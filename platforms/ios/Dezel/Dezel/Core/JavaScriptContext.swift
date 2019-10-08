@@ -92,9 +92,9 @@ open class JavaScriptContext: NSObject {
 
 		super.init()
 
-		self.handle = DLContextCreate(Bundle.main.bundleIdentifier ?? "Dezel Context")
+		self.handle = JavaScriptContextCreate(Bundle.main.bundleIdentifier ?? "Dezel Context")
 
-		self.global = JavaScriptValue.create(self, handle: DLContextGetGlobalObject(self.handle))
+		self.global = JavaScriptValue.create(self, handle: JavaScriptContextGetGlobalObject(self.handle))
 		self.global.defineProperty("global", value: self.global, getter: nil, setter: nil, writable: false, enumerable: false, configurable: false)
 		self.global.defineProperty("window", value: self.global, getter: nil, setter: nil, writable: false, enumerable: false, configurable: false)
 	}
@@ -209,7 +209,7 @@ open class JavaScriptContext: NSObject {
 
 		self.garbageCollect()
 
-		DLContextDelete(self.handle)
+		JavaScriptContextDelete(self.handle)
 
 		self.running = false
 	}
@@ -355,7 +355,7 @@ open class JavaScriptContext: NSObject {
 	 * @since 0.1.0
 	 */
 	open func evaluate(_ code: String) {
-		DLContextEvaluate(self.handle, code, "<none>")
+		JavaScriptContextEvaluate(self.handle, code, "<none>")
 	}
 
 	/**
@@ -364,7 +364,7 @@ open class JavaScriptContext: NSObject {
      * @since 0.1.0
      */
 	open func evaluate(_ code: String, file: String) {
-		DLContextEvaluate(self.handle, code, file)
+		JavaScriptContextEvaluate(self.handle, code, file)
 	}
 
 	/**
@@ -374,8 +374,8 @@ open class JavaScriptContext: NSObject {
 	 */
 	open func attribute(_ key: AnyObject, value: AnyObject?) {
 		let hash = toHash(key)
-		DLContextGetAttribute(self.handle, hash)?.release()
-		DLContextSetAttribute(self.handle, hash, toRetainedOpaque(value))
+		JavaScriptContextGetAttribute(self.handle, hash)?.release()
+		JavaScriptContextSetAttribute(self.handle, hash, toRetainedOpaque(value))
 	}
 
 	/**
@@ -384,7 +384,7 @@ open class JavaScriptContext: NSObject {
 	 * @since 0.1.0
 	 */
 	open func attribute(_ key: AnyObject) -> AnyObject? {
-		return toUnretainedObject(DLContextGetAttribute(self.handle, toHash(key)))
+		return toUnretainedObject(JavaScriptContextGetAttribute(self.handle, toHash(key)))
 	}
 
 	/**
@@ -393,8 +393,8 @@ open class JavaScriptContext: NSObject {
 	 * @since 0.6.0
 	 */
 	open func handleError(handler: @escaping JavaScriptExceptionHandler) {
-		DLContextSetExceptionHandler(self.handle, JavaScriptContextExceptionCallback)
-		DLContextSetAttribute(self.handle, kExceptionWrapperKey, Unmanaged.passRetained(JavaScriptExceptionWrapper(context: self, handler: handler)).toOpaque())
+		JavaScriptContextSetExceptionHandler(self.handle, JavaScriptContextExceptionCallback)
+		JavaScriptContextSetAttribute(self.handle, kExceptionWrapperKey, Unmanaged.passRetained(JavaScriptExceptionWrapper(context: self, handler: handler)).toOpaque())
 	}
 
 	/**
@@ -485,7 +485,7 @@ private let JavaScriptContextExceptionCallback: @convention(c) (JSContextRef?, J
 	let context = context!
 
 	let wrapper = Unmanaged<JavaScriptExceptionWrapper>.fromOpaque(
-		DLContextGetAttribute(context, kExceptionWrapperKey)
+		JavaScriptContextGetAttribute(context, kExceptionWrapperKey)
 	).takeUnretainedValue()
 
 	wrapper.handler(JavaScriptValue.create(wrapper.context, handle: error))

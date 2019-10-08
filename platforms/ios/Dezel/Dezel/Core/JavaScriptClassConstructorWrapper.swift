@@ -55,7 +55,7 @@ internal final class JavaScriptClassConstructorWrapper: NSObject {
 	 */
 	internal init(context: JavaScriptContext, cls: AnyClass, sel: Selector, imp: IMP, name: String) {
 
-		let function = DLValueCreateFunction(context.handle, JavaScriptClassConstructorWrapperCallback, name)
+		let function = JavaScriptValueCreateFunction(context.handle, JavaScriptClassConstructorWrapperCallback, name)
 
 		self.context = context
 		self.function = function
@@ -65,8 +65,8 @@ internal final class JavaScriptClassConstructorWrapper: NSObject {
 
 		super.init()
 
-		DLValueSetFinalizeHandler(context.handle, function, JavaScriptClassConstructorWrapperFinalize)
-		DLValueSetAssociatedObject(context.handle, function, Unmanaged.passRetained(self).toOpaque())
+		JavaScriptValueSetFinalizeHandler(context.handle, function, JavaScriptClassConstructorWrapperFinalize)
+		JavaScriptValueSetAssociatedObject(context.handle, function, Unmanaged.passRetained(self).toOpaque())
 	}
 }
 
@@ -82,7 +82,7 @@ private let JavaScriptClassConstructorWrapperCallback: @convention(c) (JSContext
 	let argv = argv!
 
 	let wrapper = Unmanaged<JavaScriptClassConstructorWrapper>.fromOpaque(
-		DLValueGetAssociatedObject(context, callee)
+		JavaScriptValueGetAssociatedObject(context, callee)
 	).takeUnretainedValue()
 
 	guard let klass = wrapper.cls as? JavaScriptClass.Type else {
@@ -96,7 +96,7 @@ private let JavaScriptClassConstructorWrapperCallback: @convention(c) (JSContext
 		protect: false
 	)
 
-	DLValueSetAssociatedObject(context, object, UnsafeMutableRawPointer(Unmanaged.passRetained(instance).toOpaque()))
+	JavaScriptValueSetAssociatedObject(context, object, UnsafeMutableRawPointer(Unmanaged.passRetained(instance).toOpaque()))
 
 	let callback = JavaScriptFunctionCallback(
 		context: wrapper.context,
@@ -120,6 +120,6 @@ private let JavaScriptClassConstructorWrapperCallback: @convention(c) (JSContext
  * @since 0.1.0
  * @hidden
  */
-private let JavaScriptClassConstructorWrapperFinalize: @convention(c) (JSContextRef?, DLValueDataRef?) -> Void = { context, handle in
-	Unmanaged<JavaScriptGetterWrapper>.fromOpaque(DLValueDataGetAssociatedObject(handle!)).release()
+private let JavaScriptClassConstructorWrapperFinalize: @convention(c) (JSContextRef?, JavaScriptValueDataRef?) -> Void = { context, handle in
+	Unmanaged<JavaScriptGetterWrapper>.fromOpaque(JavaScriptValueDataGetAssociatedObject(handle!)).release()
 }

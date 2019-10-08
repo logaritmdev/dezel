@@ -25,17 +25,17 @@ internal final class JavaScriptObjectBuilder: JavaScriptBuilder {
 		self.forEach(template, callback: { (name, type, sel, imp) -> Void in
 
 			if (type == .function) {
-				DLValueDefineFunction(context.handle, value.handle, name, JavaScriptClassFunctionWrapper(context: context, cls: template, sel: sel, imp: imp, name: name).function)
+				JavaScriptValueDefineFunction(context.handle, value.handle, name, JavaScriptClassFunctionWrapper(context: context, cls: template, sel: sel, imp: imp, name: name).function)
 				return
 			}
 
 			if (type == .getter) {
-				DLValueDefinePropertyGetter(context.handle, value.handle, name, JavaScriptClassGetterWrapper(context: context, cls: template, sel: sel, imp: imp, name: name).function)
+				JavaScriptValueDefinePropertyGetter(context.handle, value.handle, name, JavaScriptClassGetterWrapper(context: context, cls: template, sel: sel, imp: imp, name: name).function)
 				return
 			}
 
 			if (type == .setter) {
-				DLValueDefinePropertySetter(context.handle, value.handle, name, JavaScriptClassSetterWrapper(context: context, cls: template, sel: sel, imp: imp, name: name).function)
+				JavaScriptValueDefinePropertySetter(context.handle, value.handle, name, JavaScriptClassSetterWrapper(context: context, cls: template, sel: sel, imp: imp, name: name).function)
 				return
 			}
 
@@ -45,7 +45,7 @@ internal final class JavaScriptObjectBuilder: JavaScriptBuilder {
 
 		instance.reset(value.handle)
 
-		DLValueSetAssociatedObject(context.handle, value.handle, UnsafeMutableRawPointer(value: instance))
+		JavaScriptValueSetAssociatedObject(context.handle, value.handle, UnsafeMutableRawPointer(value: instance))
 
 		return value
 	}

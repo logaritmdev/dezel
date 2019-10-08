@@ -55,7 +55,7 @@ internal final class JavaScriptClassFunctionWrapper : NSObject {
 	 */
 	internal init(context: JavaScriptContext, cls: AnyClass, sel: Selector, imp:IMP, name: String) {
 
-		let function = DLValueCreateFunction(context.handle, JavaScriptClassFunctionWrapperCallback, name)
+		let function = JavaScriptValueCreateFunction(context.handle, JavaScriptClassFunctionWrapperCallback, name)
 
 		self.context = context
 		self.function = function
@@ -65,8 +65,8 @@ internal final class JavaScriptClassFunctionWrapper : NSObject {
 
 		super.init()
 
-		DLValueSetFinalizeHandler(context.handle, function, JavaScriptClassFunctionWrapperFinalize)
-		DLValueSetAssociatedObject(context.handle, function, Unmanaged.passRetained(self).toOpaque())
+		JavaScriptValueSetFinalizeHandler(context.handle, function, JavaScriptClassFunctionWrapperFinalize)
+		JavaScriptValueSetAssociatedObject(context.handle, function, Unmanaged.passRetained(self).toOpaque())
 	}
 }
 
@@ -82,10 +82,10 @@ private let JavaScriptClassFunctionWrapperCallback : @convention(c) (JSContextRe
 	let argv = argv!
 
 	let wrapper = Unmanaged<JavaScriptClassFunctionWrapper>.fromOpaque(
-		DLValueGetAssociatedObject(context, callee)
+		JavaScriptValueGetAssociatedObject(context, callee)
 	).takeUnretainedValue()
 
-	guard let instance = DLValueGetAssociatedObject(context, object) else {
+	guard let instance = JavaScriptValueGetAssociatedObject(context, object) else {
 		return nil
 	}
 
@@ -111,6 +111,6 @@ private let JavaScriptClassFunctionWrapperCallback : @convention(c) (JSContextRe
  * @since 0.1.0
  * @hidden
  */
-private let JavaScriptClassFunctionWrapperFinalize: @convention(c) (JSContextRef?, DLValueDataRef?) -> Void = { context, handle in
-	Unmanaged<JavaScriptClassFunctionWrapper>.fromOpaque(DLValueDataGetAssociatedObject(handle!)).release()
+private let JavaScriptClassFunctionWrapperFinalize: @convention(c) (JSContextRef?, JavaScriptValueDataRef?) -> Void = { context, handle in
+	Unmanaged<JavaScriptClassFunctionWrapper>.fromOpaque(JavaScriptValueDataGetAssociatedObject(handle!)).release()
 }

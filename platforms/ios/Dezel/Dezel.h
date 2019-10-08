@@ -4,8 +4,8 @@ FOUNDATION_EXPORT double DezelVersionNumber;
 FOUNDATION_EXPORT const unsigned char DezelVersionString[];
 
 #import "Runtime.h"
-#import "DLValue.h"
-#import "DLContext.h"
+#import "JavaScriptValue.h"
+#import "JavaScriptContext.h"
 #import "WebSocketSecurity.h"
 #import "WebSocketConnection.h"
 #import "LRUDiskCache.h"

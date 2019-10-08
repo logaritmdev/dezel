@@ -16,7 +16,7 @@
 	 */
 	public required init(context: JavaScriptContext) {
 		super.init(context: context)
-		self.reset(DLValueCreateUndefined(context.handle), protect: false)
+		self.reset(JavaScriptValueCreateUndefined(context.handle), protect: false)
 	}
 
 	/**

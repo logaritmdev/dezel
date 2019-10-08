@@ -55,7 +55,7 @@ internal final class JavaScriptClassGetterWrapper: NSObject {
 	 */
 	internal init(context: JavaScriptContext, cls: AnyClass, sel: Selector, imp: IMP, name: String) {
 
-		let function = DLValueCreateFunction(context.handle, JavaScriptClassGetterWrapperCallback, nil)
+		let function = JavaScriptValueCreateFunction(context.handle, JavaScriptClassGetterWrapperCallback, nil)
 
 		self.context = context
 		self.function = function
@@ -65,8 +65,8 @@ internal final class JavaScriptClassGetterWrapper: NSObject {
 
 		super.init()
 
-		DLValueSetFinalizeHandler(context.handle, function, JavaScriptClassGetterWrapperFinalize)
-		DLValueSetAssociatedObject(context.handle, function, Unmanaged.passRetained(self).toOpaque())
+		JavaScriptValueSetFinalizeHandler(context.handle, function, JavaScriptClassGetterWrapperFinalize)
+		JavaScriptValueSetAssociatedObject(context.handle, function, Unmanaged.passRetained(self).toOpaque())
 	}
 }
 
@@ -82,10 +82,10 @@ private let JavaScriptClassGetterWrapperCallback: @convention(c) (JSContextRef?,
 	let argv = argv!
 
 	let wrapper = Unmanaged<JavaScriptClassGetterWrapper>.fromOpaque(
-		DLValueGetAssociatedObject(context, callee)
+		JavaScriptValueGetAssociatedObject(context, callee)
 	).takeUnretainedValue()
 
-	guard let instance = DLValueGetAssociatedObject(context, object) else {
+	guard let instance = JavaScriptValueGetAssociatedObject(context, object) else {
 		return nil
 	}
 
@@ -111,6 +111,6 @@ private let JavaScriptClassGetterWrapperCallback: @convention(c) (JSContextRef?,
  * @since 0.1.0
  * @hidden
  */
-private let JavaScriptClassGetterWrapperFinalize: @convention(c) (JSContextRef?, DLValueDataRef?) -> Void = { context, handle in
-	Unmanaged<JavaScriptClassGetterWrapper>.fromOpaque(DLValueDataGetAssociatedObject(handle!)).release()
+private let JavaScriptClassGetterWrapperFinalize: @convention(c) (JSContextRef?, JavaScriptValueDataRef?) -> Void = { context, handle in
+	Unmanaged<JavaScriptClassGetterWrapper>.fromOpaque(JavaScriptValueDataGetAssociatedObject(handle!)).release()
 }

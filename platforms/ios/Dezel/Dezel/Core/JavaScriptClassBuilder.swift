@@ -22,37 +22,37 @@ internal final class JavaScriptClassBuilder: JavaScriptBuilder {
 		JavaScriptBuilder.forEach(template, callback: { (name, type, sel, imp) -> Void in
 
 			if (type == .function && name == "constructor") {
-				DLValueDefineConstructor(context.handle, prototype.handle, JavaScriptClassConstructorWrapper(context: context, cls: template, sel: sel, imp: imp, name: String(describing: template)).function)
+				JavaScriptValueDefineConstructor(context.handle, prototype.handle, JavaScriptClassConstructorWrapper(context: context, cls: template, sel: sel, imp: imp, name: String(describing: template)).function)
 				return
 			}
 
 			if (type == .function) {
-				DLValueDefineFunction(context.handle, prototype.handle, name, JavaScriptClassFunctionWrapper(context: context, cls: template, sel: sel, imp: imp, name: name).function)
+				JavaScriptValueDefineFunction(context.handle, prototype.handle, name, JavaScriptClassFunctionWrapper(context: context, cls: template, sel: sel, imp: imp, name: name).function)
 				return
 			}
 
 			if (type == .getter) {
-				DLValueDefinePropertyGetter(context.handle, prototype.handle, name, JavaScriptClassGetterWrapper(context: context, cls: template, sel: sel, imp: imp, name: name).function)
+				JavaScriptValueDefinePropertyGetter(context.handle, prototype.handle, name, JavaScriptClassGetterWrapper(context: context, cls: template, sel: sel, imp: imp, name: name).function)
 				return
 			}
 
 			if (type == .setter) {
-				DLValueDefinePropertySetter(context.handle, prototype.handle, name, JavaScriptClassSetterWrapper(context: context, cls: template, sel: sel, imp: imp, name: name).function)
+				JavaScriptValueDefinePropertySetter(context.handle, prototype.handle, name, JavaScriptClassSetterWrapper(context: context, cls: template, sel: sel, imp: imp, name: name).function)
 				return
 			}
 
 			if (type == .staticFunction) {
-				DLValueDefineFunction(context.handle, statics.handle, name, JavaScriptClassStaticFunctionWrapper(context: context, cls: template, sel: sel, imp: imp, name: name).function)
+				JavaScriptValueDefineFunction(context.handle, statics.handle, name, JavaScriptClassStaticFunctionWrapper(context: context, cls: template, sel: sel, imp: imp, name: name).function)
 				return
 			}
 
 			if (type == .staticGetter) {
-				DLValueDefinePropertyGetter(context.handle, statics.handle, name, JavaScriptClassStaticGetterWrapper(context: context, cls: template, sel: sel, imp: imp, name: name).function)
+				JavaScriptValueDefinePropertyGetter(context.handle, statics.handle, name, JavaScriptClassStaticGetterWrapper(context: context, cls: template, sel: sel, imp: imp, name: name).function)
 				return
 			}
 
 			if (type == .staticSetter) {
-				DLValueDefinePropertySetter(context.handle, statics.handle, name, JavaScriptClassStaticSetterWrapper(context: context, cls: template, sel: sel, imp: imp, name: name).function)
+				JavaScriptValueDefinePropertySetter(context.handle, statics.handle, name, JavaScriptClassStaticSetterWrapper(context: context, cls: template, sel: sel, imp: imp, name: name).function)
 				return
 			}
 		})

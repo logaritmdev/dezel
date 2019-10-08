@@ -185,6 +185,8 @@
 		C792E959234BDEA70022D712 /* Stylesheet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C792E931234BDEA70022D712 /* Stylesheet.cpp */; };
 		C792E95A234BDEA70022D712 /* Function.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C792E932234BDEA70022D712 /* Function.cpp */; };
 		C792E95B234BDEA70022D712 /* StringValue.h in Headers */ = {isa = PBXBuildFile; fileRef = C792E933234BDEA70022D712 /* StringValue.h */; };
+		C792E95F234CC1E70022D712 /* PropertyList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C792E95D234CC1E70022D712 /* PropertyList.cpp */; };
+		C792E960234CC1E70022D712 /* PropertyList.h in Headers */ = {isa = PBXBuildFile; fileRef = C792E95E234CC1E70022D712 /* PropertyList.h */; };
 		C7964D642033E67E00F454F1 /* CALayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7964D632033E67E00F454F1 /* CALayer.swift */; };
 		C79E6EB42207650F0006DED8 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = C79E6EB32207650F0006DED8 /* Date.swift */; };
 		C7A19E2E20AB721F00367E91 /* PlatformModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A19E2D20AB721F00367E91 /* PlatformModule.swift */; };
@@ -277,14 +279,14 @@
 		C7E8A531201624A2005139F6 /* JavaScriptBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E8A518201624A1005139F6 /* JavaScriptBuilder.swift */; };
 		C7E8A534201624A2005139F6 /* JavaScriptFunctionCallback.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E8A51B201624A2005139F6 /* JavaScriptFunctionCallback.swift */; };
 		C7E8A535201624A2005139F6 /* JavaScriptClassConstructorWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E8A51C201624A2005139F6 /* JavaScriptClassConstructorWrapper.swift */; };
-		C7E8A542201624FA005139F6 /* DLContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7E8A538201624FA005139F6 /* DLContext.cpp */; };
-		C7E8A543201624FA005139F6 /* DLContext.h in Headers */ = {isa = PBXBuildFile; fileRef = C7E8A539201624FA005139F6 /* DLContext.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C7E8A544201624FA005139F6 /* DLValuePrivate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7E8A53A201624FA005139F6 /* DLValuePrivate.cpp */; };
-		C7E8A545201624FA005139F6 /* DLValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7E8A53B201624FA005139F6 /* DLValue.cpp */; };
-		C7E8A546201624FA005139F6 /* DLContextPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = C7E8A53C201624FA005139F6 /* DLContextPrivate.h */; };
-		C7E8A547201624FA005139F6 /* DLContextPrivate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7E8A53D201624FA005139F6 /* DLContextPrivate.cpp */; };
-		C7E8A549201624FA005139F6 /* DLValue.h in Headers */ = {isa = PBXBuildFile; fileRef = C7E8A53F201624FA005139F6 /* DLValue.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C7E8A54A201624FA005139F6 /* DLValuePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = C7E8A540201624FA005139F6 /* DLValuePrivate.h */; };
+		C7E8A542201624FA005139F6 /* JavaScriptContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7E8A538201624FA005139F6 /* JavaScriptContext.cpp */; };
+		C7E8A543201624FA005139F6 /* JavaScriptContext.h in Headers */ = {isa = PBXBuildFile; fileRef = C7E8A539201624FA005139F6 /* JavaScriptContext.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C7E8A544201624FA005139F6 /* JavaScriptValuePrivate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7E8A53A201624FA005139F6 /* JavaScriptValuePrivate.cpp */; };
+		C7E8A545201624FA005139F6 /* JavaScriptValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7E8A53B201624FA005139F6 /* JavaScriptValue.cpp */; };
+		C7E8A546201624FA005139F6 /* JavaScriptContextPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = C7E8A53C201624FA005139F6 /* JavaScriptContextPrivate.h */; };
+		C7E8A547201624FA005139F6 /* JavaScriptContextPrivate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7E8A53D201624FA005139F6 /* JavaScriptContextPrivate.cpp */; };
+		C7E8A549201624FA005139F6 /* JavaScriptValue.h in Headers */ = {isa = PBXBuildFile; fileRef = C7E8A53F201624FA005139F6 /* JavaScriptValue.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C7E8A54A201624FA005139F6 /* JavaScriptValuePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = C7E8A540201624FA005139F6 /* JavaScriptValuePrivate.h */; };
 		C7E8A54D2016262A005139F6 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7E8A54C2016262A005139F6 /* JavaScriptCore.framework */; };
 		C7EE2E0222DD6AE200FFF0EE /* Source.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7EE2E0122DD6AE200FFF0EE /* Source.swift */; };
 		C7EE2E0622DE2D5B00FFF0EE /* CADisplayLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7EE2E0522DE2D5B00FFF0EE /* CADisplayLink.swift */; };
@@ -484,6 +486,8 @@
 		C792E931234BDEA70022D712 /* Stylesheet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Stylesheet.cpp; path = ../../../../../shared/display/style/Stylesheet.cpp; sourceTree = "<group>"; };
 		C792E932234BDEA70022D712 /* Function.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Function.cpp; path = ../../../../../shared/display/style/Function.cpp; sourceTree = "<group>"; };
 		C792E933234BDEA70022D712 /* StringValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StringValue.h; path = ../../../../../shared/display/style/StringValue.h; sourceTree = "<group>"; };
+		C792E95D234CC1E70022D712 /* PropertyList.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PropertyList.cpp; path = ../../../../../shared/display/style/PropertyList.cpp; sourceTree = "<group>"; };
+		C792E95E234CC1E70022D712 /* PropertyList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PropertyList.h; path = ../../../../../shared/display/style/PropertyList.h; sourceTree = "<group>"; };
 		C7964D632033E67E00F454F1 /* CALayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CALayer.swift; sourceTree = "<group>"; };
 		C79E6EB32207650F0006DED8 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		C7A19E2D20AB721F00367E91 /* PlatformModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatformModule.swift; sourceTree = "<group>"; };
@@ -579,14 +583,14 @@
 		C7E8A518201624A1005139F6 /* JavaScriptBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JavaScriptBuilder.swift; sourceTree = "<group>"; };
 		C7E8A51B201624A2005139F6 /* JavaScriptFunctionCallback.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JavaScriptFunctionCallback.swift; sourceTree = "<group>"; };
 		C7E8A51C201624A2005139F6 /* JavaScriptClassConstructorWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JavaScriptClassConstructorWrapper.swift; sourceTree = "<group>"; };
-		C7E8A538201624FA005139F6 /* DLContext.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DLContext.cpp; path = ../../../../shared/core/DLContext.cpp; sourceTree = "<group>"; };
-		C7E8A539201624FA005139F6 /* DLContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DLContext.h; path = ../../../../shared/core/DLContext.h; sourceTree = "<group>"; };
-		C7E8A53A201624FA005139F6 /* DLValuePrivate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DLValuePrivate.cpp; path = ../../../../shared/core/DLValuePrivate.cpp; sourceTree = "<group>"; };
-		C7E8A53B201624FA005139F6 /* DLValue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DLValue.cpp; path = ../../../../shared/core/DLValue.cpp; sourceTree = "<group>"; };
-		C7E8A53C201624FA005139F6 /* DLContextPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DLContextPrivate.h; path = ../../../../shared/core/DLContextPrivate.h; sourceTree = "<group>"; };
-		C7E8A53D201624FA005139F6 /* DLContextPrivate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DLContextPrivate.cpp; path = ../../../../shared/core/DLContextPrivate.cpp; sourceTree = "<group>"; };
-		C7E8A53F201624FA005139F6 /* DLValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DLValue.h; path = ../../../../shared/core/DLValue.h; sourceTree = "<group>"; };
-		C7E8A540201624FA005139F6 /* DLValuePrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DLValuePrivate.h; path = ../../../../shared/core/DLValuePrivate.h; sourceTree = "<group>"; };
+		C7E8A538201624FA005139F6 /* JavaScriptContext.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = JavaScriptContext.cpp; path = ../../../../shared/core/JavaScriptContext.cpp; sourceTree = "<group>"; };
+		C7E8A539201624FA005139F6 /* JavaScriptContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JavaScriptContext.h; path = ../../../../shared/core/JavaScriptContext.h; sourceTree = "<group>"; };
+		C7E8A53A201624FA005139F6 /* JavaScriptValuePrivate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = JavaScriptValuePrivate.cpp; path = ../../../../shared/core/JavaScriptValuePrivate.cpp; sourceTree = "<group>"; };
+		C7E8A53B201624FA005139F6 /* JavaScriptValue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = JavaScriptValue.cpp; path = ../../../../shared/core/JavaScriptValue.cpp; sourceTree = "<group>"; };
+		C7E8A53C201624FA005139F6 /* JavaScriptContextPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JavaScriptContextPrivate.h; path = ../../../../shared/core/JavaScriptContextPrivate.h; sourceTree = "<group>"; };
+		C7E8A53D201624FA005139F6 /* JavaScriptContextPrivate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = JavaScriptContextPrivate.cpp; path = ../../../../shared/core/JavaScriptContextPrivate.cpp; sourceTree = "<group>"; };
+		C7E8A53F201624FA005139F6 /* JavaScriptValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JavaScriptValue.h; path = ../../../../shared/core/JavaScriptValue.h; sourceTree = "<group>"; };
+		C7E8A540201624FA005139F6 /* JavaScriptValuePrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JavaScriptValuePrivate.h; path = ../../../../shared/core/JavaScriptValuePrivate.h; sourceTree = "<group>"; };
 		C7E8A54C2016262A005139F6 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		C7EE2E0122DD6AE200FFF0EE /* Source.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Source.swift; sourceTree = "<group>"; };
 		C7EE2E0522DE2D5B00FFF0EE /* CADisplayLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CADisplayLink.swift; sourceTree = "<group>"; };
@@ -907,6 +911,8 @@
 				C792E90D234BDEA50022D712 /* Parser.h */,
 				C792E921234BDEA60022D712 /* Property.cpp */,
 				C792E91B234BDEA60022D712 /* Property.h */,
+				C792E95D234CC1E70022D712 /* PropertyList.cpp */,
+				C792E95E234CC1E70022D712 /* PropertyList.h */,
 				C792E914234BDEA60022D712 /* Rule.cpp */,
 				C792E912234BDEA50022D712 /* Rule.h */,
 				C792E913234BDEA60022D712 /* Ruleset.cpp */,
@@ -1261,14 +1267,14 @@
 		C7E8A536201624E7005139F6 /* CAPI */ = {
 			isa = PBXGroup;
 			children = (
-				C7E8A538201624FA005139F6 /* DLContext.cpp */,
-				C7E8A539201624FA005139F6 /* DLContext.h */,
-				C7E8A53D201624FA005139F6 /* DLContextPrivate.cpp */,
-				C7E8A53C201624FA005139F6 /* DLContextPrivate.h */,
-				C7E8A53B201624FA005139F6 /* DLValue.cpp */,
-				C7E8A53F201624FA005139F6 /* DLValue.h */,
-				C7E8A53A201624FA005139F6 /* DLValuePrivate.cpp */,
-				C7E8A540201624FA005139F6 /* DLValuePrivate.h */,
+				C7E8A538201624FA005139F6 /* JavaScriptContext.cpp */,
+				C7E8A539201624FA005139F6 /* JavaScriptContext.h */,
+				C7E8A53D201624FA005139F6 /* JavaScriptContextPrivate.cpp */,
+				C7E8A53C201624FA005139F6 /* JavaScriptContextPrivate.h */,
+				C7E8A53B201624FA005139F6 /* JavaScriptValue.cpp */,
+				C7E8A53F201624FA005139F6 /* JavaScriptValue.h */,
+				C7E8A53A201624FA005139F6 /* JavaScriptValuePrivate.cpp */,
+				C7E8A540201624FA005139F6 /* JavaScriptValuePrivate.h */,
 			);
 			name = CAPI;
 			sourceTree = "<group>";
@@ -1390,13 +1396,14 @@
 				C792E8DD234BDE630022D712 /* DisplayNodePadding.h in Headers */,
 				C792E90A234BDE900022D712 /* AbsoluteLayoutResolver.h in Headers */,
 				C792E8EE234BDE630022D712 /* DisplayNodeFrame.h in Headers */,
+				C792E960234CC1E70022D712 /* PropertyList.h in Headers */,
 				C792E95B234BDEA70022D712 /* StringValue.h in Headers */,
-				C7E8A543201624FA005139F6 /* DLContext.h in Headers */,
+				C7E8A543201624FA005139F6 /* JavaScriptContext.h in Headers */,
 				C792E8F9234BDE630022D712 /* DisplayRef.h in Headers */,
 				C792E952234BDEA70022D712 /* FunctionValue.h in Headers */,
 				C792E94E234BDEA70022D712 /* Variable.h in Headers */,
 				C792E8F0234BDE630022D712 /* DisplayNodeBorder.h in Headers */,
-				C7E8A549201624FA005139F6 /* DLValue.h in Headers */,
+				C7E8A549201624FA005139F6 /* JavaScriptValue.h in Headers */,
 				C77B0D792226DC4D00917D82 /* WebSocketSecurity.h in Headers */,
 				C792E958234BDEA70022D712 /* Function.h in Headers */,
 				C792E947234BDEA70022D712 /* Token.h in Headers */,
@@ -1418,10 +1425,10 @@
 				C792E948234BDEA70022D712 /* TokenizerStream.h in Headers */,
 				C77B0D4C2226D7DC00917D82 /* LRUDiskCache.h in Headers */,
 				C792E8DB234BDE630022D712 /* DisplayNodeRef.h in Headers */,
-				C7E8A546201624FA005139F6 /* DLContextPrivate.h in Headers */,
+				C7E8A546201624FA005139F6 /* JavaScriptContextPrivate.h in Headers */,
 				C792E953234BDEA70022D712 /* Tokenizer.h in Headers */,
 				C792E943234BDEA70022D712 /* Property.h in Headers */,
-				C7E8A54A201624FA005139F6 /* DLValuePrivate.h in Headers */,
+				C7E8A54A201624FA005139F6 /* JavaScriptValuePrivate.h in Headers */,
 				C792E8F7234BDE630022D712 /* DisplayNode.h in Headers */,
 				C792E8E5234BDE630022D712 /* DisplayNodeOrigin.h in Headers */,
 				C77B0D7C2226DC4D00917D82 /* WebSocketConnection.h in Headers */,
@@ -1583,7 +1590,7 @@
 				C7B9CEA9202CDB8D002409D5 /* ApplicationDelegate.swift in Sources */,
 				C7E5D07C209CBAE80098C5FD /* Resizable.swift in Sources */,
 				C7BFD15E207D50F000AAD31C /* JavaScriptSpinnerView.swift in Sources */,
-				C7E8A542201624FA005139F6 /* DLContext.cpp in Sources */,
+				C7E8A542201624FA005139F6 /* JavaScriptContext.cpp in Sources */,
 				C77189B02106ADFD00337263 /* Point3D.swift in Sources */,
 				C767544720269DBD003C4D85 /* ImageView.swift in Sources */,
 				C76864712039146700D1903B /* JavaScriptPropertyType.swift in Sources */,
@@ -1596,13 +1603,13 @@
 				C7BFD16A207D541F00AAD31C /* JavaScriptTextArea.swift in Sources */,
 				C792E8E7234BDE630022D712 /* DisplayNodeBorder.cpp in Sources */,
 				C7E5D083209DE1AD0098C5FD /* DialogModule.swift in Sources */,
-				C7E8A547201624FA005139F6 /* DLContextPrivate.cpp in Sources */,
+				C7E8A547201624FA005139F6 /* JavaScriptContextPrivate.cpp in Sources */,
 				C72E0E9020668EE1003BCEF1 /* TextLayer.swift in Sources */,
-				C7E8A545201624FA005139F6 /* DLValue.cpp in Sources */,
+				C7E8A545201624FA005139F6 /* JavaScriptValue.cpp in Sources */,
 				C7BB7D472029062D004006C2 /* Transition.swift in Sources */,
 				C73700C72219A9370095A54B /* ImageEffect.swift in Sources */,
 				C72E0E9520669CA0003BCEF1 /* TextLocation.swift in Sources */,
-				C7E8A544201624FA005139F6 /* DLValuePrivate.cpp in Sources */,
+				C7E8A544201624FA005139F6 /* JavaScriptValuePrivate.cpp in Sources */,
 				C77189B42106AE1300337263 /* Transform3D.swift in Sources */,
 				C7A19E2E20AB721F00367E91 /* PlatformModule.swift in Sources */,
 				C7E5D081209DDF730098C5FD /* JavaScriptAlert.swift in Sources */,
@@ -1658,6 +1665,7 @@
 				C7E8A529201624A2005139F6 /* JavaScriptClassBuilder.swift in Sources */,
 				C792E908234BDE900022D712 /* AbsoluteLayoutResolver.cpp in Sources */,
 				C785B0A32016EC17001DAE64 /* JavaScriptCallback.swift in Sources */,
+				C792E95F234CC1E70022D712 /* PropertyList.cpp in Sources */,
 				C7BFD166207D539300AAD31C /* InputType.swift in Sources */,
 				C71E6CC020DD4F56009B86F6 /* WebView.swift in Sources */,
 				C7BB7D3D2028F4C5004006C2 /* CGFloat.swift in Sources */,

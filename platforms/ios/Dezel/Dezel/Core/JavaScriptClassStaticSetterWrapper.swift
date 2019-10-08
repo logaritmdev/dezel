@@ -55,7 +55,7 @@ internal final class JavaScriptClassStaticSetterWrapper: NSObject {
 	 */
 	internal init(context: JavaScriptContext, cls: AnyClass, sel: Selector, imp: IMP, name: String) {
 
-		let function = DLValueCreateFunction(context.handle, JavaScriptClassStaticSetterWrapperCallback, nil)
+		let function = JavaScriptValueCreateFunction(context.handle, JavaScriptClassStaticSetterWrapperCallback, nil)
 
 		self.context = context
 		self.function = function
@@ -65,8 +65,8 @@ internal final class JavaScriptClassStaticSetterWrapper: NSObject {
 
 		super.init()
 
-		DLValueSetFinalizeHandler(context.handle, function, JavaScriptClassStaticSetterWrapperFinalize)
-		DLValueSetAssociatedObject(context.handle, function, Unmanaged.passRetained(self).toOpaque())
+		JavaScriptValueSetFinalizeHandler(context.handle, function, JavaScriptClassStaticSetterWrapperFinalize)
+		JavaScriptValueSetAssociatedObject(context.handle, function, Unmanaged.passRetained(self).toOpaque())
 	}
 }
 
@@ -82,7 +82,7 @@ private let JavaScriptClassStaticSetterWrapperCallback: @convention(c) (JSContex
 	let argv = argv!
 
 	let wrapper = Unmanaged<JavaScriptClassStaticSetterWrapper>.fromOpaque(
-		DLValueGetAssociatedObject(context, callee)
+		JavaScriptValueGetAssociatedObject(context, callee)
 	).takeUnretainedValue()
 
 	let callback = JavaScriptSetterCallback(
@@ -107,6 +107,6 @@ private let JavaScriptClassStaticSetterWrapperCallback: @convention(c) (JSContex
  * @since 0.7.0
  * @hidden
  */
-private let JavaScriptClassStaticSetterWrapperFinalize: @convention(c) (JSContextRef?, DLValueDataRef?) -> Void = { context, handle in
-	Unmanaged<JavaScriptClassStaticSetterWrapper>.fromOpaque(DLValueDataGetAssociatedObject(handle!)).release()
+private let JavaScriptClassStaticSetterWrapperFinalize: @convention(c) (JSContextRef?, JavaScriptValueDataRef?) -> Void = { context, handle in
+	Unmanaged<JavaScriptClassStaticSetterWrapper>.fromOpaque(JavaScriptValueDataGetAssociatedObject(handle!)).release()
 }

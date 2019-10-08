@@ -121,7 +121,7 @@ open class JavaScriptCallback: NSObject {
 	 * @since 0.1.0
 	 */
 	final public func returns(_ value: String) {
-		self.result = DLValueCreateString(self.context.handle, value)
+		self.result = JavaScriptValueCreateString(self.context.handle, value)
 	}
 
 	/**
@@ -130,7 +130,7 @@ open class JavaScriptCallback: NSObject {
 	 * @since 0.1.0
 	 */
 	final public func returns(_ value: Double) {
-		self.result = DLValueCreateNumber(self.context.handle, value)
+		self.result = JavaScriptValueCreateNumber(self.context.handle, value)
 	}
 
 	/**
@@ -139,7 +139,7 @@ open class JavaScriptCallback: NSObject {
 	 * @since 0.3.0
 	 */
 	final public func returns(_ value: Float) {
-		self.result = DLValueCreateNumber(self.context.handle, Double(value))
+		self.result = JavaScriptValueCreateNumber(self.context.handle, Double(value))
 	}
 
 	/**
@@ -148,7 +148,7 @@ open class JavaScriptCallback: NSObject {
 	 * @since 0.3.0
 	 */
 	final public func returns(_ value: Int) {
-		self.result = DLValueCreateNumber(self.context.handle, Double(value))
+		self.result = JavaScriptValueCreateNumber(self.context.handle, Double(value))
 	}
 
 	/**
@@ -157,6 +157,6 @@ open class JavaScriptCallback: NSObject {
 	 * @since 0.1.0
 	 */
 	final public func returns(_ value: Bool) {
-		self.result = DLValueCreateBoolean(self.context.handle, value)
+		self.result = JavaScriptValueCreateBoolean(self.context.handle, value)
 	}
 }

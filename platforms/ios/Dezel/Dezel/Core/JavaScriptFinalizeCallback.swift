@@ -21,7 +21,7 @@ public final class JavaScriptFinalizeCallback {
      * @property handle
      * @since 0.4.0
      */
-	private(set) public var handle: DLValueDataRef
+	private(set) public var handle: JavaScriptValueDataRef
 
 	//--------------------------------------------------------------------------
 	// MARK: Methods
@@ -32,7 +32,7 @@ public final class JavaScriptFinalizeCallback {
      * @since 0.1.0
 	 * @hidden
      */
-	internal init(context: JavaScriptContext, handle: DLValueDataRef) {
+	internal init(context: JavaScriptContext, handle: JavaScriptValueDataRef) {
 		self.context = context
 		self.handle = handle
 	}
@@ -43,7 +43,7 @@ public final class JavaScriptFinalizeCallback {
 	 * @since 0.4.0
 	 */
 	public func attribute(_ key: AnyObject) -> AnyObject? {
-		return toUnretainedObject(DLValueDataGetAttribute(self.handle, toHash(key)))
+		return toUnretainedObject(JavaScriptValueDataGetAttribute(self.handle, toHash(key)))
 	}
 
 	/**
@@ -53,7 +53,7 @@ public final class JavaScriptFinalizeCallback {
 	 */
 	public func attribute(_ key: AnyObject, value: AnyObject?) {
 		let hash = toHash(key)
-		DLValueDataGetAttribute(self.handle, hash)?.release()
-		DLValueDataSetAttribute(self.handle, hash, toRetainedOpaque(value))
+		JavaScriptValueDataGetAttribute(self.handle, hash)?.release()
+		JavaScriptValueDataSetAttribute(self.handle, hash, toRetainedOpaque(value))
 	}
 }
