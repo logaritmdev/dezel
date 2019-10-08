@@ -579,37 +579,44 @@ JavaScriptValueIsNull(JSContextRef context, JSValueRef value)
 	return JSValueIsNull(context, value);
 }
 
-int
+JavaScriptValueType
 JavaScriptValueGetType(JSContextRef context, JSValueRef value)
 {
 	switch (JSValueGetType(context, value)) {
 
 		case kJSTypeUndefined:
-			return DL_TYPE_UNDEFINED;
+			return kJavaScriptValueTypeUndefined;
 
 		case kJSTypeNull:
-			return DL_TYPE_NULL;
+			return kJavaScriptValueTypeNull;
 
 		case kJSTypeBoolean:
-			return DL_TYPE_BOOLEAN;
+			return kJavaScriptValueTypeBoolean;
 
 		case kJSTypeNumber:
-			return DL_TYPE_NUMBER;
+			return kJavaScriptValueTypeNumber;
 
 		case kJSTypeString:
-			return DL_TYPE_STRING;
+			return kJavaScriptValueTypeString;
 
 		case kJSTypeObject:
-			if (JSValueIsArray(context, value)) return DL_TYPE_ARRAY;
-			if (JSObjectIsFunction(context, (JSObjectRef)value)) return DL_TYPE_FUNCTION;
-			if (JSObjectIsConstructor(context, (JSObjectRef)value)) return DL_TYPE_FUNCTION;
-			return DL_TYPE_OBJECT;
+
+			if (JSObjectIsFunction(context, const_cast<JSObjectRef>(value)) ||
+				JSObjectIsConstructor(context, const_cast<JSObjectRef>(value))) {
+				return kJavaScriptValueTypeFunction;
+			}
+
+			if (JSValueIsArray(context, value)) {
+				return kJavaScriptValueTypeArray;
+			}
+
+			return kJavaScriptValueTypeObject;
 
 		default:
-			return DL_TYPE_NULL;
+			break;
 	}
 
-	return 0;
+	assert(false);
 }
 
 JSObjectRef

@@ -3,14 +3,16 @@
 
 #include "JavaScriptContext.h"
 
-#define DL_TYPE_UNDEFINED 1
-#define DL_TYPE_NULL      2
-#define DL_TYPE_BOOLEAN   3
-#define DL_TYPE_NUMBER    4
-#define DL_TYPE_STRING    5
-#define DL_TYPE_OBJECT    6
-#define DL_TYPE_ARRAY     7
-#define DL_TYPE_FUNCTION  8
+typedef enum {
+	kJavaScriptValueTypeUndefined = 1,
+	kJavaScriptValueTypeNull,
+	kJavaScriptValueTypeBoolean,
+	kJavaScriptValueTypeNumber,
+	kJavaScriptValueTypeString,
+	kJavaScriptValueTypeObject,
+	kJavaScriptValueTypeArray,
+	kJavaScriptValueTypeFunction
+} JavaScriptValueType;
 
 /**
  * A structure that stores image associated to a value.
@@ -385,7 +387,7 @@ bool JavaScriptValueIsNull(JSContextRef context, JSValueRef value);
  * @function JavaScriptValueGetType
  * @since 0.7.0
  */
-int JavaScriptValueGetType(JSContextRef context, JSValueRef value);
+JavaScriptValueType JavaScriptValueGetType(JSContextRef context, JSValueRef value);
 
 /**
  * Casts the specified valie into a JavaScript object.

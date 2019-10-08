@@ -154,7 +154,7 @@ open class JavaScriptValue : NSObject {
 	 * @since 0.4.0
 	 */
 	public var isUndefined: Bool {
-		return JavaScriptValueGetType(self.context.handle, self.handle) == 1
+		return JavaScriptValueGetType(self.context.handle, self.handle) == kJavaScriptValueTypeUndefined
 	}
 
 	/**
@@ -163,7 +163,7 @@ open class JavaScriptValue : NSObject {
 	 * @since 0.4.0
 	 */
 	public var isNull: Bool {
-		return JavaScriptValueGetType(self.context.handle, self.handle) == 2
+		return JavaScriptValueGetType(self.context.handle, self.handle) == kJavaScriptValueTypeNull
 	}
 
 	/**
@@ -172,7 +172,7 @@ open class JavaScriptValue : NSObject {
 	 * @since 0.4.0
 	 */
 	public var isBoolean: Bool {
-		return JavaScriptValueGetType(self.context.handle, self.handle) == 3
+		return JavaScriptValueGetType(self.context.handle, self.handle) == kJavaScriptValueTypeBoolean
 	}
 
 	/**
@@ -181,7 +181,7 @@ open class JavaScriptValue : NSObject {
 	 * @since 0.4.0
 	 */
 	public var isNumber: Bool {
-		return JavaScriptValueGetType(self.context.handle, self.handle) == 4
+		return JavaScriptValueGetType(self.context.handle, self.handle) == kJavaScriptValueTypeNumber
 	}
 
 	/**
@@ -190,7 +190,7 @@ open class JavaScriptValue : NSObject {
 	 * @since 0.4.0
 	 */
 	public var isString: Bool {
-		return JavaScriptValueGetType(self.context.handle, self.handle) == 5
+		return JavaScriptValueGetType(self.context.handle, self.handle) == kJavaScriptValueTypeString
 	}
 
 	/**
@@ -199,7 +199,7 @@ open class JavaScriptValue : NSObject {
 	 * @since 0.4.0
 	 */
 	public var isObject: Bool {
-		return JavaScriptValueGetType(self.context.handle, self.handle) == 6
+		return JavaScriptValueGetType(self.context.handle, self.handle) == kJavaScriptValueTypeObject
 	}
 
 	/**
@@ -208,7 +208,7 @@ open class JavaScriptValue : NSObject {
 	 * @since 0.4.0
 	 */
 	public var isArray: Bool {
-		return JavaScriptValueGetType(self.context.handle, self.handle) == 7
+		return JavaScriptValueGetType(self.context.handle, self.handle) == kJavaScriptValueTypeArray
 	}
 
 	/**
@@ -217,7 +217,7 @@ open class JavaScriptValue : NSObject {
 	 * @since 0.4.0
 	 */
 	public var isFunction: Bool {
-		return JavaScriptValueGetType(self.context.handle, self.handle) == 8
+		return JavaScriptValueGetType(self.context.handle, self.handle) == kJavaScriptValueTypeFunction
 	}
 
 	//--------------------------------------------------------------------------
