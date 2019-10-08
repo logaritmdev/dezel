@@ -205,8 +205,8 @@ JNI_OnLoad(JavaVM* vm, void* reserved)
 	Throwable                  = (jclass) env->NewGlobalRef(Throwable);
 	StackTraceElement          = (jclass) env->NewGlobalRef(StackTraceElement);
 
-	JNI_OnLoad_core(env);
-	JNI_OnLoad_view(env);
+	JNICoreModule(env);
+	JNIDisplayModule(env);
 	JNI_OnLoad_style(env);
 	JNI_OnLoad_layout(env);
 

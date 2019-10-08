@@ -1,7 +1,7 @@
 #include "jni_init.h"
 #include "jni_module_core.h"
-#include <DLContext.h>
-#include <DLValue.h>
+#include <JavaScriptContext.h>
+#include <JavaScriptValue.h>
 #include "JavaScriptFunction.h"
 #include "JavaScriptClassStaticFunctionWrapper.h"
 
@@ -14,7 +14,7 @@ JavaScriptClassStaticFunctionWrapperGetCallback(JNIEnv* env, jclass cls, const c
 static JSValueRef
 JavaScriptClassStaticFunctionWrapperCallback(JSContextRef context, JSObjectRef object, JSObjectRef callee, size_t argc, JSValueRef const *argv)
 {
-	auto wrapper = reinterpret_cast<JavaScriptClassStaticFunctionWrapperRef>(DLValueGetAssociatedObject(context, callee));
+	auto wrapper = reinterpret_cast<JavaScriptClassStaticFunctionWrapperRef>(JavaScriptValueGetAssociatedObject(context, callee));
 
 	auto result = JavaScriptFunctionExecute(
 		wrapper->env,
@@ -32,9 +32,9 @@ JavaScriptClassStaticFunctionWrapperCallback(JSContextRef context, JSObjectRef o
 }
 
 static void
-JavaScriptClassStaticFunctionWrapperFinalize(JSContextRef context, DLValueDataRef handle)
+JavaScriptClassStaticFunctionWrapperFinalize(JSContextRef context, JavaScriptValueDataRef handle)
 {
-	auto wrapper = reinterpret_cast<JavaScriptClassStaticFunctionWrapperRef>(DLValueDataGetAssociatedObject(handle));
+	auto wrapper = reinterpret_cast<JavaScriptClassStaticFunctionWrapperRef>(JavaScriptValueDataGetAssociatedObject(handle));
 
 	if (wrapper) {
 		wrapper->env->DeleteGlobalRef(wrapper->ctx);
@@ -45,7 +45,7 @@ JavaScriptClassStaticFunctionWrapperFinalize(JSContextRef context, DLValueDataRe
 JavaScriptClassStaticFunctionWrapperRef
 JavaScriptClassStaticFunctionWrapperCreate(JNIEnv* env, JSContextRef context, const char* name, const char* fqmn, jclass cls, jobject ctx)
 {
-	auto function = DLValueCreateFunction(context, &JavaScriptClassStaticFunctionWrapperCallback, name);
+	auto function = JavaScriptValueCreateFunction(context, &JavaScriptClassStaticFunctionWrapperCallback, name);
 
 	auto wrapper = new JavaScriptClassStaticFunctionWrapper();
 	wrapper->env = env;
@@ -54,8 +54,8 @@ JavaScriptClassStaticFunctionWrapperCreate(JNIEnv* env, JSContextRef context, co
 	wrapper->callback = JavaScriptClassStaticFunctionWrapperGetCallback(env, cls, fqmn);
 	wrapper->function = function;
 
-	DLValueSetFinalizeHandler(context, function, &JavaScriptClassStaticFunctionWrapperFinalize);
-	DLValueSetAssociatedObject(context, function, wrapper);
+	JavaScriptValueSetFinalizeHandler(context, function, &JavaScriptClassStaticFunctionWrapperFinalize);
+	JavaScriptValueSetAssociatedObject(context, function, wrapper);
 
 	return wrapper;
 }

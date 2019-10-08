@@ -1,5 +1,5 @@
-#include <DLContext.h>
-#include <DLValue.h>
+#include <JavaScriptContext.h>
+#include <JavaScriptValue.h>
 #include "wrappers/JavaScriptClassFunctionWrapper.h"
 #include "wrappers/JavaScriptClassGetterWrapper.h"
 #include "wrappers/JavaScriptClassSetterWrapper.h"
@@ -13,7 +13,7 @@
 void Java_ca_logaritm_dezel_core_JavaScriptObjectBuilderExternal_createFunction(JNIEnv* env, jclass, jlong contextPtr, jlong objectPtr, jstring nameStr, jstring fqmnStr, jclass cls, jobject context) {
 	JNI_STRING_CREATE(nameStr, name);
 	JNI_STRING_CREATE(fqmnStr, fqmn);
-	DLValueDefineFunction(reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSObjectRef>(objectPtr), name, JavaScriptClassFunctionWrapperCreate(env, reinterpret_cast<JSContextRef>(contextPtr), name, fqmn, cls, context)->function);
+	JavaScriptValueDefineFunction(reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSObjectRef>(objectPtr), name, JavaScriptClassFunctionWrapperCreate(env, reinterpret_cast<JSContextRef>(contextPtr), name, fqmn, cls, context)->function);
 	JNI_STRING_DELETE(nameStr, name);
 	JNI_STRING_DELETE(fqmnStr, fqmn);
 }
@@ -26,7 +26,7 @@ void Java_ca_logaritm_dezel_core_JavaScriptObjectBuilderExternal_createFunction(
 void Java_ca_logaritm_dezel_core_JavaScriptObjectBuilderExternal_createGetter(JNIEnv* env, jclass, jlong contextPtr, jlong objectPtr, jstring nameStr, jstring fqmnStr, jclass cls, jobject context) {
 	JNI_STRING_CREATE(nameStr, name);
 	JNI_STRING_CREATE(fqmnStr, fqmn);
-	DLValueDefinePropertyGetter(reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSObjectRef>(objectPtr), name, JavaScriptClassGetterWrapperCreate(env, reinterpret_cast<JSContextRef>(contextPtr), name, fqmn, cls, context)->function);
+	JavaScriptValueDefinePropertyGetter(reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSObjectRef>(objectPtr), name, JavaScriptClassGetterWrapperCreate(env, reinterpret_cast<JSContextRef>(contextPtr), name, fqmn, cls, context)->function);
 	JNI_STRING_DELETE(nameStr, name);
 	JNI_STRING_DELETE(fqmnStr, fqmn);
 }
@@ -39,7 +39,7 @@ void Java_ca_logaritm_dezel_core_JavaScriptObjectBuilderExternal_createGetter(JN
 void Java_ca_logaritm_dezel_core_JavaScriptObjectBuilderExternal_createSetter(JNIEnv* env, jclass, jlong contextPtr, jlong objectPtr, jstring nameStr, jstring fqmnStr, jclass cls, jobject context) {
 	JNI_STRING_CREATE(nameStr, name);
 	JNI_STRING_CREATE(fqmnStr, fqmn);
-	DLValueDefinePropertySetter(reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSObjectRef>(objectPtr), name, JavaScriptClassSetterWrapperCreate(env, reinterpret_cast<JSContextRef>(contextPtr), name, fqmn, cls, context)->function);
+	JavaScriptValueDefinePropertySetter(reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSObjectRef>(objectPtr), name, JavaScriptClassSetterWrapperCreate(env, reinterpret_cast<JSContextRef>(contextPtr), name, fqmn, cls, context)->function);
 	JNI_STRING_DELETE(nameStr, name);
 	JNI_STRING_DELETE(fqmnStr, fqmn);
 }

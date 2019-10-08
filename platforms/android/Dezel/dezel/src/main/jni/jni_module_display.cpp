@@ -23,7 +23,7 @@ jmethodID DisplayNodeLayoutBeganMethod;
 jmethodID DisplayNodeLayoutEndedMethod;
 
 void
-JNI_OnLoad_view(JNIEnv* env)
+JNIDisplayModule(JNIEnv* env)
 {
 	SizeFClass2 = JNIGetClass(
 		env,

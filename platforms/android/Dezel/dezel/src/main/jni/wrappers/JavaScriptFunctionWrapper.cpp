@@ -5,7 +5,7 @@
 static JSValueRef
 JavaScriptFunctionWrapperCallback(JSContextRef context, JSObjectRef object, JSObjectRef callee, size_t argc, JSValueRef const *argv)
 {
-	auto wrapper = reinterpret_cast<JavaScriptFunctionWrapperRef>(DLValueGetAssociatedObject(context, callee));
+	auto wrapper = reinterpret_cast<JavaScriptFunctionWrapperRef>(JavaScriptValueGetAssociatedObject(context, callee));
 
 	auto result = JavaScriptFunctionExecute(
 		wrapper->env,
@@ -23,9 +23,9 @@ JavaScriptFunctionWrapperCallback(JSContextRef context, JSObjectRef object, JSOb
 }
 
 static void
-JavaScriptFunctionWrapperFinalize(JSContextRef context, DLValueDataRef handle)
+JavaScriptFunctionWrapperFinalize(JSContextRef context, JavaScriptValueDataRef handle)
 {
-	auto wrapper = reinterpret_cast<JavaScriptFunctionWrapperRef>(DLValueDataGetAssociatedObject(handle));
+	auto wrapper = reinterpret_cast<JavaScriptFunctionWrapperRef>(JavaScriptValueDataGetAssociatedObject(handle));
 
 	if (wrapper) {
 		wrapper->env->DeleteGlobalRef(wrapper->ctx);
@@ -36,7 +36,7 @@ JavaScriptFunctionWrapperFinalize(JSContextRef context, DLValueDataRef handle)
 JavaScriptFunctionWrapperRef
 JavaScriptFunctionWrapperCreate(JNIEnv* env, JSContextRef context, jobject callback, const char* name, jobject ctx)
 {
-	auto function = DLValueCreateFunction(context, &JavaScriptFunctionWrapperCallback, name);
+	auto function = JavaScriptValueCreateFunction(context, &JavaScriptFunctionWrapperCallback, name);
 
 	auto wrapper = new JavaScriptFunctionWrapper();
 	wrapper->env = env;
@@ -44,8 +44,8 @@ JavaScriptFunctionWrapperCreate(JNIEnv* env, JSContextRef context, jobject callb
 	wrapper->callback = env->NewGlobalRef(callback);
 	wrapper->function = function;
 
-	DLValueSetFinalizeHandler(context, function, &JavaScriptFunctionWrapperFinalize);
-	DLValueSetAssociatedObject(context, function, wrapper);
+	JavaScriptValueSetFinalizeHandler(context, function, &JavaScriptFunctionWrapperFinalize);
+	JavaScriptValueSetAssociatedObject(context, function, wrapper);
 
 	return wrapper;
 }

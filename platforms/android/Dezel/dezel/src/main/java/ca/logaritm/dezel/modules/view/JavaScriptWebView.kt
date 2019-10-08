@@ -105,14 +105,14 @@ open class JavaScriptWebView(context: JavaScriptContext) : JavaScriptView(contex
 		val contentHeight = size.height.toDouble()
 
 		if (this.resolvedContentWidth != contentWidth) {
-			if (this.layoutNode.wrapsContentWidth) {
-				this.layoutNode.invalidate()
+			if (this.displayNode.isWrappingContentWidth) {
+				this.displayNode.invalidateLayout()
 			}
 		}
 
 		if (this.resolvedContentHeight != contentHeight) {
-			if (this.layoutNode.wrapsContentHeight) {
-				this.layoutNode.invalidate()
+			if (this.displayNode.isWrappingContentHeight) {
+				this.displayNode.invalidateLayout()
 			}
 		}
 	}

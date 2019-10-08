@@ -10,6 +10,50 @@ public class Display {
 	//--------------------------------------------------------------------------
 
 	/**
+	 * The display's window
+	 * @property window
+	 * @since 0.7.0
+	 */
+	public var window: DisplayNode? {
+		willSet {
+			DisplaySetWindow(self.handle, newValue?.handle)
+		}
+	}
+
+	/**
+	 * The display's viewport width.
+	 * @property viewportWidth
+	 * @since 0.7.0
+	 */
+	public var viewportWidth: Double = 0 {
+		willSet {
+			DisplaySetViewportWidth(self.handle, newValue)
+		}
+	}
+
+	/**
+	 * The display's viewport height.
+	 * @property viewportHeight
+	 * @since 0.7.0
+	 */
+	public var viewportHeight: Double = 0 {
+		willSet {
+			DisplaySetViewportHeight(self.handle, newValue)
+		}
+	}
+
+	/**
+	 * The display's scale.
+	 * @property scale
+	 * @since 0.7.0
+	 */
+	public var scale: Double = 1 {
+		willSet {
+			DisplaySetScale(self.handle, newValue)
+		}
+	}
+
+	/**
 	 * Whether the layout is invalid.
 	 * @property invalid
 	 * @since 0.7.0
@@ -25,35 +69,6 @@ public class Display {
 	 */
 	public var resolving: Bool {
 		return DisplayIsResolving(self.handle)
-	}
-
-	/**
-	 * The display's window
-	 * @property window
-	 * @since 0.7.0
-	 */
-	public var window: DisplayNode? {
-		willSet {
-			DisplaySetWindow(self.handle, newValue?.handle)
-		}
-	}
-
-	public var viewportWidth: Double = 0 {
-		willSet {
-			DisplaySetViewportWidth(self.handle, newValue)
-		}
-	}
-
-	public var viewportHeight: Double = 0 {
-		willSet {
-			DisplaySetViewportHeight(self.handle, newValue)
-		}
-	}
-
-	public var scale: Double = 1 {
-		willSet {
-			DisplaySetScale(self.handle, newValue)
-		}
 	}
 
 	/**
@@ -103,15 +118,6 @@ public class Display {
 
 	public func setVariable(_ name: String, value: String) {
 	
-	}
-
-	/**
-	 * Assigns the display's window.
-	 * @property setWindow
-	 * @since 0.7.0
-	 */
-	public func setWindow(_ window: DisplayNode) {
-		DisplaySetWindow(self.handle, window.handle)
 	}
 
 	/**

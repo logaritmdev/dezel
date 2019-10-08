@@ -20,7 +20,7 @@ open class DisplayNode {
 
 	/**
 	 * The display node's display.
-	 * @property delegate
+	 * @property display
 	 * @since 0.7.0
 	 */
 	private(set) public var display: Display

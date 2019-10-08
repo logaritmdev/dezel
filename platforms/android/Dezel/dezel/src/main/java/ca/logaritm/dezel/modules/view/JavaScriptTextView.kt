@@ -7,9 +7,9 @@ import ca.logaritm.dezel.core.*
 import ca.logaritm.dezel.extension.util.ceiled
 import ca.logaritm.dezel.extension.type.clamp
 import ca.logaritm.dezel.extension.type.max
-import ca.logaritm.dezel.layout.LayoutNode
 import ca.logaritm.dezel.view.TextView
 import ca.logaritm.dezel.view.TextViewListener
+import ca.logaritm.dezel.view.display.DisplayNode
 import ca.logaritm.dezel.view.graphic.Color
 import ca.logaritm.dezel.view.graphic.Convert
 import ca.logaritm.dezel.view.type.*
@@ -100,8 +100,8 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 
 		when (this.fontSize.unit) {
 			JavaScriptPropertyUnit.PX -> value = Convert.toPx(this.fontSize.number)
-			JavaScriptPropertyUnit.VW -> value = Convert.toPx(this.fontSize.number / 100 * this.layoutNode.viewportWidth)
-			JavaScriptPropertyUnit.VH -> value = Convert.toPx(this.fontSize.number / 100 * this.layoutNode.viewportHeight)
+			JavaScriptPropertyUnit.VW -> value = Convert.toPx(this.fontSize.number / 100 * this.displayNode.display.viewportWidth)
+			JavaScriptPropertyUnit.VH -> value = Convert.toPx(this.fontSize.number / 100 * this.displayNode.display.viewportHeight)
 			else                      -> value = Convert.toPx(this.fontSize.number)
 		}
 
@@ -110,9 +110,9 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 			Convert.toPx(this.maxFontSize.number)
 		)
 
-		if (this.layoutNode.wrapsContentWidth ||
-			this.layoutNode.wrapsContentHeight) {
-			this.layoutNode.invalidateSize()
+		if (this.displayNode.isWrappingContentWidth ||
+			this.displayNode.isWrappingContentHeight) {
+			this.displayNode.invalidateSize()
 		}
 	}
 
@@ -138,7 +138,7 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	 * @method onResolvePadding
 	 * @since 0.7.0
 	 */
-	override fun onResolvePadding(node: LayoutNode) {
+	override fun onResolvePadding(node: DisplayNode) {
 		super.onResolvePadding(node)
 		this.view.paddingTop = Convert.toPx(this.resolvedPaddingTop.toFloat())
 		this.view.paddingLeft = Convert.toPx(this.resolvedPaddingLeft.toFloat())
@@ -272,9 +272,9 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 
 			this.view.fontFamily = value.string
 
-			if (this.layoutNode.wrapsContentWidth ||
-				this.layoutNode.wrapsContentHeight) {
-				this.layoutNode.invalidateSize()
+			if (this.displayNode.isWrappingContentWidth ||
+				this.displayNode.isWrappingContentHeight) {
+				this.displayNode.invalidateSize()
 			}
 		}
 	}
@@ -290,9 +290,9 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 
 			this.view.fontWeight = value.string
 
-			if (this.layoutNode.wrapsContentWidth ||
-				this.layoutNode.wrapsContentHeight) {
-				this.layoutNode.invalidateSize()
+			if (this.displayNode.isWrappingContentWidth ||
+				this.displayNode.isWrappingContentHeight) {
+				this.displayNode.invalidateSize()
 			}
 		}
 	}
@@ -308,9 +308,9 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 
 			this.view.fontStyle = value.string
 
-			if (this.layoutNode.wrapsContentWidth ||
-				this.layoutNode.wrapsContentHeight) {
-				this.layoutNode.invalidateSize()
+			if (this.displayNode.isWrappingContentWidth ||
+				this.displayNode.isWrappingContentHeight) {
+				this.displayNode.invalidateSize()
 			}
 		}
 	}
@@ -359,9 +359,9 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 
 			this.view.text = value.string
 
-			if (this.layoutNode.wrapsContentWidth ||
-				this.layoutNode.wrapsContentHeight) {
-				this.layoutNode.invalidateSize()
+			if (this.displayNode.isWrappingContentWidth ||
+				this.displayNode.isWrappingContentHeight) {
+				this.displayNode.invalidateSize()
 			}
 		}
 	}
@@ -410,9 +410,9 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 
 			this.view.textBaseline = Convert.toPx(value.number)
 
-			if (this.layoutNode.wrapsContentWidth ||
-				this.layoutNode.wrapsContentHeight) {
-				this.layoutNode.invalidateSize()
+			if (this.displayNode.isWrappingContentWidth ||
+				this.displayNode.isWrappingContentHeight) {
+				this.displayNode.invalidateSize()
 			}
 		}
 	}
@@ -428,9 +428,9 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 
 			this.view.textKerning = Convert.toPx(value.number)
 
-			if (this.layoutNode.wrapsContentWidth ||
-				this.layoutNode.wrapsContentHeight) {
-				this.layoutNode.invalidateSize()
+			if (this.displayNode.isWrappingContentWidth ||
+				this.displayNode.isWrappingContentHeight) {
+				this.displayNode.invalidateSize()
 			}
 		}
 	}
@@ -446,9 +446,9 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 
 			this.view.textLeading = Convert.toPx(value.number)
 
-			if (this.layoutNode.wrapsContentWidth ||
-				this.layoutNode.wrapsContentHeight) {
-				this.layoutNode.invalidateSize()
+			if (this.displayNode.isWrappingContentWidth ||
+				this.displayNode.isWrappingContentHeight) {
+				this.displayNode.invalidateSize()
 			}
 		}
 	}
@@ -508,9 +508,9 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 
 			this.view.textDecoration = this.getTextDecoration(value.string)
 
-			if (this.layoutNode.wrapsContentWidth ||
-				this.layoutNode.wrapsContentHeight) {
-				this.layoutNode.invalidateSize()
+			if (this.displayNode.isWrappingContentWidth ||
+				this.displayNode.isWrappingContentHeight) {
+				this.displayNode.invalidateSize()
 			}
 		}
 	}
@@ -526,9 +526,9 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 
 			this.view.textTransform = this.getTextTransform(value.string)
 
-			if (this.layoutNode.wrapsContentWidth ||
-				this.layoutNode.wrapsContentHeight) {
-				this.layoutNode.invalidateSize()
+			if (this.displayNode.isWrappingContentWidth ||
+				this.displayNode.isWrappingContentHeight) {
+				this.displayNode.invalidateSize()
 			}
 		}
 	}
@@ -544,9 +544,9 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 
 			this.view.textOverflow = this.getTextOverflow(value.string)
 
-			if (this.layoutNode.wrapsContentWidth ||
-				this.layoutNode.wrapsContentHeight) {
-				this.layoutNode.invalidateSize()
+			if (this.displayNode.isWrappingContentWidth ||
+				this.displayNode.isWrappingContentHeight) {
+				this.displayNode.invalidateSize()
 			}
 		}
 	}
@@ -573,9 +573,9 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 
 			this.view.maxLines = value.number.toInt()
 
-			if (this.layoutNode.wrapsContentWidth ||
-				this.layoutNode.wrapsContentHeight) {
-				this.layoutNode.invalidateSize()
+			if (this.displayNode.isWrappingContentWidth ||
+				this.displayNode.isWrappingContentHeight) {
+				this.displayNode.invalidateSize()
 			}
 		}
 	}

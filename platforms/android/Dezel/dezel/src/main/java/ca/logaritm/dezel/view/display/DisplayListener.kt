@@ -2,10 +2,10 @@ package ca.logaritm.dezel.view.display
 
 /**
  * The display's listener.
- * @protocol DisplayDelegate
+ * @protocol DisplayListener
  * @since 0.7.0
  */
-interface DisplayDelegate {
+interface DisplayListener {
 
 	/**
 	 * Called when the display's layout pass began.

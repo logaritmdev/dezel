@@ -4,9 +4,7 @@ import android.util.SizeF
 import ca.logaritm.dezel.core.JavaScriptProperty
 import ca.logaritm.dezel.core.JavaScriptPropertyType
 import ca.logaritm.dezel.core.JavaScriptPropertyUnit
-import ca.logaritm.dezel.extension.Delegates
 import ca.logaritm.dezel.extension.type.toValidFloat
-import ca.logaritm.dezel.layout.*
 import ca.logaritm.dezel.view.graphic.Convert
 
 public class DisplayNode(display: Display) {
@@ -21,6 +19,14 @@ public class DisplayNode(display: Display) {
 	 * @since 0.7.0
 	 */
 	public var listener: DisplayNodeListener? = null
+
+	/**
+	 * The display node's display.
+	 * @property display
+	 * @since 0.7.0
+	 */
+	public var display: Display = display
+		private set
 
 	/**
 	 * The display node's id.
@@ -1601,6 +1607,39 @@ public class DisplayNode(display: Display) {
 	 */
 	public fun setVisible(value: Boolean) {
 		DisplayNodeExternal.setVisible(this.handle, value)
+	}
+
+
+	public fun setType(type: String) {
+
+	}
+
+	public fun appendStyle(style: String) {
+
+	}
+
+	public fun removeStyle(style: String) {
+
+	}
+
+	public fun appendState(state: String) {
+
+	}
+
+	public fun removeState(state: String) {
+
+	}
+
+	public fun invalidateSize() {
+// TODO
+	}
+
+	public fun invalidateOrigin() {
+// TODO
+	}
+
+	public fun invalidateLayout() {
+		// TODO
 	}
 
 	/**

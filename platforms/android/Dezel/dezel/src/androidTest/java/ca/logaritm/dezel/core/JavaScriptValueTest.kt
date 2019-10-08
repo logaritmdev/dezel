@@ -1,6 +1,5 @@
 package ca.logaritm.dezel.core
 
-import android.util.Log
 import ca.logaritm.dezel.classes.ValueClass
 import org.junit.Assert
 import org.junit.Before

@@ -1,12 +1,12 @@
 #include <jni.h>
-#include <DLValue.h>
-#include <DLValuePrivate.h>
+#include <JavaScriptValue.h>
+#include <JavaScriptValuePrivate.h>
 #include "JavaScriptFinalizeWrapper.h"
 
 static void
-JavaScriptFinalizeWrapperCallback(JSContextRef context, DLValueDataRef handle)
+JavaScriptFinalizeWrapperCallback(JSContextRef context, JavaScriptValueDataRef handle)
 {
-	JavaScriptFinalizeWrapperRef wrapper = (JavaScriptFinalizeWrapperRef) DLValueDataGetAttribute(handle, kJavaScriptFinalizeWrapperKey);
+	JavaScriptFinalizeWrapperRef wrapper = (JavaScriptFinalizeWrapperRef) JavaScriptValueDataGetAttribute(handle, kJavaScriptFinalizeWrapperKey);
 	if (wrapper == NULL) {
 		return;
 	}
@@ -29,7 +29,7 @@ JavaScriptFinalizeWrapperCallback(JSContextRef context, DLValueDataRef handle)
 	wrapper->env->DeleteGlobalRef(wrapper->ctx);
 	wrapper->env->DeleteGlobalRef(wrapper->callback);
 
-	DLValueDataSetAttribute(handle, kJavaScriptFinalizeWrapperKey, NULL);
+	JavaScriptValueDataSetAttribute(handle, kJavaScriptFinalizeWrapperKey, NULL);
 
 	delete wrapper;
 }
@@ -42,7 +42,7 @@ JavaScriptFinalizeWrapperCreate(JNIEnv* env, JSContextRef context, JSObjectRef h
 	wrapper->ctx = JNIGlobalRef(env, ctx);
 	wrapper->callback = env->NewGlobalRef(callback);
 
-	DLValueSetAttribute(context, handle, kJavaScriptFinalizeWrapperKey, wrapper);
-	DLValueSetFinalizeHandler(context, handle, &JavaScriptFinalizeWrapperCallback);
+	JavaScriptValueSetAttribute(context, handle, kJavaScriptFinalizeWrapperKey, wrapper);
+	JavaScriptValueSetFinalizeHandler(context, handle, &JavaScriptFinalizeWrapperCallback);
 	return wrapper;
 }

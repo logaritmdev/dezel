@@ -123,8 +123,8 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 
 			when (this.imageWidth.unit) {
 				JavaScriptPropertyUnit.PC -> imageW = this.imageWidth.number / 100 * this.resolvedWidth
-				JavaScriptPropertyUnit.VW -> imageW = this.imageWidth.number / 100 * this.layoutNode.viewportWidth
-				JavaScriptPropertyUnit.VH -> imageW = this.imageWidth.number / 100 * this.layoutNode.viewportHeight
+				JavaScriptPropertyUnit.VW -> imageW = this.imageWidth.number / 100 * this.displayNode.display.viewportWidth
+				JavaScriptPropertyUnit.VH -> imageW = this.imageWidth.number / 100 * this.displayNode.display.viewportHeight
 				JavaScriptPropertyUnit.PW -> imageW = this.imageWidth.number / 100 * this.resolvedInnerWidth
 				JavaScriptPropertyUnit.PH -> imageW = this.imageWidth.number / 100 * this.resolvedInnerHeight
 				JavaScriptPropertyUnit.CW -> imageW = this.imageWidth.number / 100 * this.resolvedContentWidth
@@ -142,8 +142,8 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 
 			when (this.imageHeight.unit) {
 				JavaScriptPropertyUnit.PC -> imageH = this.imageHeight.number / 100 * this.resolvedHeight
-				JavaScriptPropertyUnit.VW -> imageH = this.imageHeight.number / 100 * this.layoutNode.viewportWidth
-				JavaScriptPropertyUnit.VH -> imageH = this.imageHeight.number / 100 * this.layoutNode.viewportHeight
+				JavaScriptPropertyUnit.VW -> imageH = this.imageHeight.number / 100 * this.displayNode.display.viewportWidth
+				JavaScriptPropertyUnit.VH -> imageH = this.imageHeight.number / 100 * this.displayNode.display.viewportHeight
 				JavaScriptPropertyUnit.PW -> imageH = this.imageHeight.number / 100 * this.resolvedInnerWidth
 				JavaScriptPropertyUnit.PH -> imageH = this.imageHeight.number / 100 * this.resolvedInnerHeight
 				JavaScriptPropertyUnit.CW -> imageH = this.imageHeight.number / 100 * this.resolvedContentWidth
@@ -154,8 +154,8 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 
 		when (this.imageTop.unit) {
 			JavaScriptPropertyUnit.PC -> imageT = this.imageTop.number / 100 * this.resolvedInnerHeight
-			JavaScriptPropertyUnit.VW -> imageT = this.imageTop.number / 100 * this.layoutNode.viewportWidth
-			JavaScriptPropertyUnit.VH -> imageT = this.imageTop.number / 100 * this.layoutNode.viewportHeight
+			JavaScriptPropertyUnit.VW -> imageT = this.imageTop.number / 100 * this.displayNode.display.viewportWidth
+			JavaScriptPropertyUnit.VH -> imageT = this.imageTop.number / 100 * this.displayNode.display.viewportHeight
 			JavaScriptPropertyUnit.PW -> imageT = this.imageTop.number / 100 * this.resolvedInnerWidth
 			JavaScriptPropertyUnit.PH -> imageT = this.imageTop.number / 100 * this.resolvedInnerHeight
 			JavaScriptPropertyUnit.CW -> imageT = this.imageTop.number / 100 * this.resolvedContentWidth
@@ -165,8 +165,8 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 
 		when (this.imageLeft.unit) {
 			JavaScriptPropertyUnit.PC -> imageL = this.imageLeft.number / 100 * this.resolvedInnerWidth
-			JavaScriptPropertyUnit.VW -> imageL = this.imageLeft.number / 100 * this.layoutNode.viewportWidth
-			JavaScriptPropertyUnit.VH -> imageL = this.imageLeft.number / 100 * this.layoutNode.viewportHeight
+			JavaScriptPropertyUnit.VW -> imageL = this.imageLeft.number / 100 * this.displayNode.display.viewportWidth
+			JavaScriptPropertyUnit.VH -> imageL = this.imageLeft.number / 100 * this.displayNode.display.viewportHeight
 			JavaScriptPropertyUnit.PW -> imageL = this.imageLeft.number / 100 * this.resolvedInnerWidth
 			JavaScriptPropertyUnit.PH -> imageL = this.imageLeft.number / 100 * this.resolvedInnerHeight
 			JavaScriptPropertyUnit.CW -> imageL = this.imageLeft.number / 100 * this.resolvedContentWidth
@@ -383,9 +383,9 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 
 				this.imageData = image
 
-				if (this.layoutNode.wrapsContentWidth ||
-					this.layoutNode.wrapsContentHeight) {
-					this.layoutNode.invalidateSize()
+				if (this.displayNode.isWrappingContentWidth ||
+					this.displayNode.isWrappingContentHeight) {
+					this.displayNode.invalidateSize()
 				}
 			}
 		}

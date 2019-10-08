@@ -14,14 +14,12 @@ import ca.logaritm.dezel.extension.type.min
 import ca.logaritm.dezel.extension.type.until
 import ca.logaritm.dezel.extension.view.addView
 import ca.logaritm.dezel.extension.view.removeFromParent
-import ca.logaritm.dezel.layout.LayoutNode
-import ca.logaritm.dezel.layout.LayoutNodeListener
 import ca.logaritm.dezel.modules.graphic.ImageLoader
 import ca.logaritm.dezel.modules.graphic.JavaScriptCanvas
-import ca.logaritm.dezel.style.StylerNode
-import ca.logaritm.dezel.style.StylerNodeListener
 import ca.logaritm.dezel.view.*
 import ca.logaritm.dezel.view.animation.Transition
+import ca.logaritm.dezel.view.display.DisplayNode
+import ca.logaritm.dezel.view.display.DisplayNodeListener
 import ca.logaritm.dezel.view.geom.Point3D
 import ca.logaritm.dezel.view.geom.Transform3D
 import ca.logaritm.dezel.view.graphic.*
@@ -37,7 +35,7 @@ import android.view.ViewGroup as AndroidViewGroup
  * @class JavaScriptView
  * @since 0.7.0
  */
-open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context), LayoutNodeListener, StylerNodeListener, ScrollableListener, SynchronizerCallback {
+open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context), DisplayNodeListener, ScrollableListener, SynchronizerCallback {
 
 	//--------------------------------------------------------------------------
 	// Properties
@@ -63,15 +61,24 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @since 0.7.0
 	 */
 	public var classList: String by Delegates.OnSet("View") { value ->
-		this.stylerNode.type = value
+		//this.stylerNode.type = value
+		// TODO
 	}
+
+	/**
+	 * The node that manages this view's display properties.
+	 * @property displayNode
+	 * @since 0.7.0
+	 */
+	public var displayNode: DisplayNode
+		private set
 
 	/**
 	 * The view's content wrapper view.
 	 * @property wrapper
 	 * @since 0.7.0
 	 */
-	public lateinit var wrapper: WrapperView
+	public var wrapper: WrapperView
 		private set
 
 	/**
@@ -79,7 +86,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property content
 	 * @since 0.7.0
 	 */
-	public lateinit var content: AndroidView
+	public var content: AndroidView
 		private set
 
 	/**
@@ -103,32 +110,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @since 0.7.0
 	 */
 	public var children: MutableList<JavaScriptView> = mutableListOf()
-		private set
-
-	/**
-	 * The view's shadowed views.
-	 * @property shadowed
-	 * @since 0.7.0
-	 */
-	public var shadowed: MutableList<JavaScriptView> = mutableListOf()
-		private set
-
-	/**
-	 * The view's shadow shadowRoot.
-	 * @property shadowRoot
-	 * @since 0.7.0
-	 */
-	public var shadowRoot: JavaScriptView? by Delegates.OnChangeOptional<JavaScriptView>(null) { newValue, oldValue ->
-		oldValue?.removeShadowedView(this)
-		newValue?.appendShadowedView(this)
-	}
-
-	/**
-	 * Whether this view the root of a isShadowRoot element.
-	 * @property isShadowRoot
-	 * @since 0.7.0
-	 */
-	public var isShadowRoot: Boolean = false
 		private set
 
 	/**
@@ -347,22 +328,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	public var resolvedFrame: Boolean = false
 		private set
 
-	/**
-	 * @property stylerNode
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	public var stylerNode: StylerNode
-		private set
-
-	/**
-	 * @property layoutNode
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	public var layoutNode: LayoutNode
-		private set
-
 	//--------------------------------------------------------------------------
 	// Methods
 	//--------------------------------------------------------------------------
@@ -374,15 +339,8 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	init {
 
-		val application = this.context.application
-		if (application == null) {
-			throw Exception("Missing context application controller.")
-		}
-
-		this.stylerNode = StylerNode(application.styler, this)
-		this.layoutNode = LayoutNode(application.layout)
-		this.stylerNode.listener = this
-		this.layoutNode.listener = this
+		this.displayNode = DisplayNode(context.application.display)
+		this.displayNode.listener = this
 
 		this.content = this.createContentView()
 		this.wrapper = this.createWrapperView()
@@ -516,8 +474,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @since 0.7.0
 	 */
 	open fun resolve() {
-		this.stylerNode.resolve()
-		this.layoutNode.resolve()
+		this.displayNode.resolve()
 	}
 
 	/**
@@ -526,8 +483,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @since 0.7.0
 	 */
 	open fun measure() {
-		this.stylerNode.resolve()
-		this.layoutNode.measure()
+		this.displayNode.measure()
 	}
 
 	/**
@@ -545,7 +501,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @since 0.7.0
 	 */
 	open fun scheduleLayout() {
-		this.layoutNode.invalidate()
+		this.displayNode.invalidateLayout()
 	}
 
 	/**
@@ -756,8 +712,8 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 
 			when (this.backgroundImageWidth.unit) {
 				JavaScriptPropertyUnit.PC -> backgroundImageW = this.backgroundImageWidth.number / 100 * this.resolvedWidth
-				JavaScriptPropertyUnit.VW -> backgroundImageW = this.backgroundImageWidth.number / 100 * this.layoutNode.viewportWidth
-				JavaScriptPropertyUnit.VH -> backgroundImageW = this.backgroundImageWidth.number / 100 * this.layoutNode.viewportHeight
+				JavaScriptPropertyUnit.VW -> backgroundImageW = this.backgroundImageWidth.number / 100 * this.displayNode.display.viewportWidth
+				JavaScriptPropertyUnit.VH -> backgroundImageW = this.backgroundImageWidth.number / 100 * this.displayNode.display.viewportHeight
 				JavaScriptPropertyUnit.PW -> backgroundImageW = this.backgroundImageWidth.number / 100 * this.resolvedInnerWidth
 				JavaScriptPropertyUnit.PH -> backgroundImageW = this.backgroundImageWidth.number / 100 * this.resolvedInnerHeight
 				JavaScriptPropertyUnit.CW -> backgroundImageW = this.backgroundImageWidth.number / 100 * this.resolvedContentWidth
@@ -775,8 +731,8 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 
 			when (this.backgroundImageHeight.unit) {
 				JavaScriptPropertyUnit.PC -> backgroundImageH = this.backgroundImageHeight.number / 100 * this.resolvedHeight
-				JavaScriptPropertyUnit.VW -> backgroundImageH = this.backgroundImageHeight.number / 100 * this.layoutNode.viewportWidth
-				JavaScriptPropertyUnit.VH -> backgroundImageH = this.backgroundImageHeight.number / 100 * this.layoutNode.viewportHeight
+				JavaScriptPropertyUnit.VW -> backgroundImageH = this.backgroundImageHeight.number / 100 * this.displayNode.display.viewportWidth
+				JavaScriptPropertyUnit.VH -> backgroundImageH = this.backgroundImageHeight.number / 100 * this.displayNode.display.viewportHeight
 				JavaScriptPropertyUnit.PW -> backgroundImageH = this.backgroundImageHeight.number / 100 * this.resolvedInnerWidth
 				JavaScriptPropertyUnit.PH -> backgroundImageH = this.backgroundImageHeight.number / 100 * this.resolvedInnerHeight
 				JavaScriptPropertyUnit.CW -> backgroundImageH = this.backgroundImageHeight.number / 100 * this.resolvedContentWidth
@@ -787,8 +743,8 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 
 		when (this.backgroundImageTop.unit) {
 			JavaScriptPropertyUnit.PC -> backgroundImageT = this.backgroundImageTop.number / 100 * this.resolvedHeight
-			JavaScriptPropertyUnit.VW -> backgroundImageT = this.backgroundImageTop.number / 100 * this.layoutNode.viewportWidth
-			JavaScriptPropertyUnit.VH -> backgroundImageT = this.backgroundImageTop.number / 100 * this.layoutNode.viewportHeight
+			JavaScriptPropertyUnit.VW -> backgroundImageT = this.backgroundImageTop.number / 100 * this.displayNode.display.viewportWidth
+			JavaScriptPropertyUnit.VH -> backgroundImageT = this.backgroundImageTop.number / 100 * this.displayNode.display.viewportHeight
 			JavaScriptPropertyUnit.PW -> backgroundImageT = this.backgroundImageTop.number / 100 * this.resolvedInnerWidth
 			JavaScriptPropertyUnit.PH -> backgroundImageT = this.backgroundImageTop.number / 100 * this.resolvedInnerHeight
 			JavaScriptPropertyUnit.CW -> backgroundImageT = this.backgroundImageTop.number / 100 * this.resolvedContentWidth
@@ -798,8 +754,8 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 
 		when (this.backgroundImageLeft.unit) {
 			JavaScriptPropertyUnit.PC -> backgroundImageL = this.backgroundImageLeft.number / 100 * this.resolvedWidth
-			JavaScriptPropertyUnit.VW -> backgroundImageL = this.backgroundImageLeft.number / 100 * this.layoutNode.viewportWidth
-			JavaScriptPropertyUnit.VH -> backgroundImageL = this.backgroundImageLeft.number / 100 * this.layoutNode.viewportHeight
+			JavaScriptPropertyUnit.VW -> backgroundImageL = this.backgroundImageLeft.number / 100 * this.displayNode.display.viewportWidth
+			JavaScriptPropertyUnit.VH -> backgroundImageL = this.backgroundImageLeft.number / 100 * this.displayNode.display.viewportHeight
 			JavaScriptPropertyUnit.PW -> backgroundImageL = this.backgroundImageLeft.number / 100 * this.resolvedInnerWidth
 			JavaScriptPropertyUnit.PH -> backgroundImageL = this.backgroundImageLeft.number / 100 * this.resolvedInnerHeight
 			JavaScriptPropertyUnit.CW -> backgroundImageL = this.backgroundImageLeft.number / 100 * this.resolvedContentWidth
@@ -867,8 +823,8 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 
 		val viewW = this.resolvedWidth
 		val viewH = this.resolvedHeight
-		val viewportW = this.layoutNode.viewportWidth
-		val viewportH = this.layoutNode.viewportHeight
+		val viewportW = this.displayNode.display.viewportWidth
+		val viewportH = this.displayNode.display.viewportHeight
 		val parentW = this.parent?.resolvedInnerWidth ?: 0.0
 		val parentH = this.parent?.resolvedInnerHeight ?: 0.0
 		val containerW = this.parent?.resolvedContentWidth ?: 0.0
@@ -1234,21 +1190,13 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	// Methods - Layout Node Delegate
 	//--------------------------------------------------------------------------
 
-	/**
-	 * @inherited
-	 * @method prepareLayoutNode
-	 * @since 0.7.0
-	 */
-	override fun prepareLayoutNode(node: LayoutNode) {
-		this.stylerNode.resolve()
-	}
 
 	/**
 	 * @inherited
-	 * @method measureLayoutNode
+	 * @method measure
 	 * @since 0.7.0
 	 */
-	override fun measureLayoutNode(node: LayoutNode, bounds: SizeF, min: SizeF, max: SizeF): SizeF? {
+	override fun measure(node: DisplayNode, bounds: SizeF, min: SizeF, max: SizeF): SizeF? {
 		return this.measure(bounds, min, max)
 	}
 
@@ -1257,16 +1205,16 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @method onResolveSize
 	 * @since 0.7.0
 	 */
-	override fun onResolveSize(node: LayoutNode) {
+	override fun onResolveSize(node: DisplayNode) {
 
-		if (this.resolvedWidth != this.layoutNode.measuredWidth) {
-			this.resolvedWidth = this.layoutNode.measuredWidth
+		if (this.resolvedWidth != this.displayNode.measuredWidth) {
+			this.resolvedWidth = this.displayNode.measuredWidth
 			this.measuredWidth.reset(null)
 			this.invalidateFrame()
 		}
 
-		if (this.resolvedHeight != this.layoutNode.measuredHeight) {
-			this.resolvedHeight = this.layoutNode.measuredHeight
+		if (this.resolvedHeight != this.displayNode.measuredHeight) {
+			this.resolvedHeight = this.displayNode.measuredHeight
 			this.measuredHeight.reset(null)
 			this.invalidateFrame()
 		}
@@ -1274,19 +1222,19 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 
 	/**
 	 * @inherited
-	 * @method onResolvePosition
+	 * @method onResolveOrigin
 	 * @since 0.7.0
 	 */
-	override fun onResolvePosition(node: LayoutNode) {
+	override fun onResolveOrigin(node: DisplayNode) {
 
-		if (this.resolvedTop != this.layoutNode.measuredTop) {
-			this.resolvedTop = this.layoutNode.measuredTop
+		if (this.resolvedTop != this.displayNode.measuredTop) {
+			this.resolvedTop = this.displayNode.measuredTop
 			this.measuredTop.reset(null)
 			this.invalidateFrame()
 		}
 
-		if (this.resolvedLeft != this.layoutNode.measuredLeft) {
-			this.resolvedLeft = this.layoutNode.measuredLeft
+		if (this.resolvedLeft != this.displayNode.measuredLeft) {
+			this.resolvedLeft = this.displayNode.measuredLeft
 			this.measuredLeft.reset(null)
 			this.invalidateFrame()
 		}
@@ -1297,16 +1245,16 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @method onResolveInnerSize
 	 * @since 0.7.0
 	 */
-	override fun onResolveInnerSize(node: LayoutNode) {
+	override fun onResolveInnerSize(node: DisplayNode) {
 
-		if (this.resolvedInnerWidth != this.layoutNode.measuredInnerWidth) {
-			this.resolvedInnerWidth = this.layoutNode.measuredInnerWidth
+		if (this.resolvedInnerWidth != this.displayNode.measuredInnerWidth) {
+			this.resolvedInnerWidth = this.displayNode.measuredInnerWidth
 			this.measuredInnerWidth.reset(null)
 			this.invalidateFrame()
 		}
 
-		if (this.resolvedInnerHeight != this.layoutNode.measuredInnerHeight) {
-			this.resolvedInnerHeight = this.layoutNode.measuredInnerHeight
+		if (this.resolvedInnerHeight != this.displayNode.measuredInnerHeight) {
+			this.resolvedInnerHeight = this.displayNode.measuredInnerHeight
 			this.measuredInnerHeight.reset(null)
 			this.invalidateFrame()
 		}
@@ -1317,16 +1265,16 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @method onResolveContentSize
 	 * @since 0.7.0
 	 */
-	override fun onResolveContentSize(node: LayoutNode) {
+	override fun onResolveContentSize(node: DisplayNode) {
 
-		if (this.resolvedContentWidth != this.layoutNode.measuredContentWidth) {
-			this.resolvedContentWidth = this.layoutNode.measuredContentWidth
+		if (this.resolvedContentWidth != this.displayNode.measuredContentWidth) {
+			this.resolvedContentWidth = this.displayNode.measuredContentWidth
 			this.measuredContentWidth.reset(null)
 			this.invalidateContent()
 		}
 
-		if (this.resolvedContentHeight != this.layoutNode.measuredContentHeight) {
-			this.resolvedContentHeight = this.layoutNode.measuredContentHeight
+		if (this.resolvedContentHeight != this.displayNode.measuredContentHeight) {
+			this.resolvedContentHeight = this.displayNode.measuredContentHeight
 			this.measuredContentHeight.reset(null)
 			this.invalidateContent()
 		}
@@ -1337,25 +1285,25 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @method onResolveMargin
 	 * @since 0.7.0
 	 */
-	override fun onResolveMargin(node: LayoutNode) {
+	override fun onResolveMargin(node: DisplayNode) {
 
-		if (this.resolvedMarginTop != this.layoutNode.measuredMarginTop) {
-			this.resolvedMarginTop = this.layoutNode.measuredMarginTop
+		if (this.resolvedMarginTop != this.displayNode.measuredMarginTop) {
+			this.resolvedMarginTop = this.displayNode.measuredMarginTop
 			this.measuredMarginTop.reset(null)
 		}
 
-		if (this.resolvedMarginLeft != this.layoutNode.measuredMarginLeft) {
-			this.resolvedMarginLeft = this.layoutNode.measuredMarginLeft
+		if (this.resolvedMarginLeft != this.displayNode.measuredMarginLeft) {
+			this.resolvedMarginLeft = this.displayNode.measuredMarginLeft
 			this.measuredMarginLeft.reset(null)
 		}
 
-		if (this.resolvedMarginRight != this.layoutNode.measuredMarginRight) {
-			this.resolvedMarginRight = this.layoutNode.measuredMarginRight
+		if (this.resolvedMarginRight != this.displayNode.measuredMarginRight) {
+			this.resolvedMarginRight = this.displayNode.measuredMarginRight
 			this.measuredMarginRight.reset(null)
 		}
 
-		if (this.resolvedMarginBottom != this.layoutNode.measuredMarginBottom) {
-			this.resolvedMarginBottom = this.layoutNode.measuredMarginBottom
+		if (this.resolvedMarginBottom != this.displayNode.measuredMarginBottom) {
+			this.resolvedMarginBottom = this.displayNode.measuredMarginBottom
 			this.measuredMarginBottom.reset(null)
 		}
 	}
@@ -1365,28 +1313,28 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @method onResolveBorder
 	 * @since 0.7.0
 	 */
-	override fun onResolveBorder(node: LayoutNode) {
+	override fun onResolveBorder(node: DisplayNode) {
 
-		if (this.resolvedBorderTopWidth != this.layoutNode.measuredBorderTop) {
-			this.resolvedBorderTopWidth = this.layoutNode.measuredBorderTop
+		if (this.resolvedBorderTopWidth != this.displayNode.measuredBorderTop) {
+			this.resolvedBorderTopWidth = this.displayNode.measuredBorderTop
 			this.measuredBorderTopWidth.reset(null)
 			this.invalidateBorder()
 		}
 
-		if (this.resolvedBorderLeftWidth != this.layoutNode.measuredBorderLeft) {
-			this.resolvedBorderLeftWidth = this.layoutNode.measuredBorderLeft
+		if (this.resolvedBorderLeftWidth != this.displayNode.measuredBorderLeft) {
+			this.resolvedBorderLeftWidth = this.displayNode.measuredBorderLeft
 			this.measuredBorderLeftWidth.reset(null)
 			this.invalidateBorder()
 		}
 
-		if (this.resolvedBorderRightWidth != this.layoutNode.measuredBorderRight) {
-			this.resolvedBorderRightWidth = this.layoutNode.measuredBorderRight
+		if (this.resolvedBorderRightWidth != this.displayNode.measuredBorderRight) {
+			this.resolvedBorderRightWidth = this.displayNode.measuredBorderRight
 			this.measuredBorderRightWidth.reset(null)
 			this.invalidateBorder()
 		}
 
-		if (this.resolvedBorderBottomWidth != this.layoutNode.measuredBorderBottom) {
-			this.resolvedBorderBottomWidth = this.layoutNode.measuredBorderBottom
+		if (this.resolvedBorderBottomWidth != this.displayNode.measuredBorderBottom) {
+			this.resolvedBorderBottomWidth = this.displayNode.measuredBorderBottom
 			this.measuredBorderBottomWidth.reset(null)
 			this.invalidateBorder()
 		}
@@ -1397,54 +1345,54 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @method onResolvePadding
 	 * @since 0.7.0
 	 */
-	override fun onResolvePadding(node: LayoutNode) {
+	override fun onResolvePadding(node: DisplayNode) {
 
-		if (this.resolvedPaddingTop != this.layoutNode.measuredPaddingTop) {
-			this.resolvedPaddingTop = this.layoutNode.measuredPaddingTop
+		if (this.resolvedPaddingTop != this.displayNode.measuredPaddingTop) {
+			this.resolvedPaddingTop = this.displayNode.measuredPaddingTop
 			this.measuredPaddingTop.reset(null)
 		}
 
-		if (this.resolvedPaddingLeft != this.layoutNode.measuredPaddingLeft) {
-			this.resolvedPaddingLeft = this.layoutNode.measuredPaddingLeft
+		if (this.resolvedPaddingLeft != this.displayNode.measuredPaddingLeft) {
+			this.resolvedPaddingLeft = this.displayNode.measuredPaddingLeft
 			this.measuredPaddingLeft.reset(null)
 		}
 
-		if (this.resolvedPaddingRight != this.layoutNode.measuredPaddingRight) {
-			this.resolvedPaddingRight = this.layoutNode.measuredPaddingRight
+		if (this.resolvedPaddingRight != this.displayNode.measuredPaddingRight) {
+			this.resolvedPaddingRight = this.displayNode.measuredPaddingRight
 			this.measuredPaddingRight.reset(null)
 		}
 
-		if (this.resolvedPaddingBottom != this.layoutNode.measuredPaddingBottom) {
-			this.resolvedPaddingBottom = this.layoutNode.measuredPaddingBottom
+		if (this.resolvedPaddingBottom != this.displayNode.measuredPaddingBottom) {
+			this.resolvedPaddingBottom = this.displayNode.measuredPaddingBottom
 			this.measuredPaddingBottom.reset(null)
 		}
 	}
 
 	/**
 	 * @inherited
-	 * @method onInvalidateLayout
+	 * @method onInvalidate
 	 * @since 0.7.0
 	 */
-	override fun onInvalidateLayout(node: LayoutNode) {
+	override fun onInvalidate(node: DisplayNode) {
 		this.scheduleUpdate()
 	}
 
 	/**
 	 * @inherited
-	 * @method onBeginLayout
+	 * @method layoutBegan
 	 * @since 0.7.0
 	 */
-	override fun onBeginLayout(node: LayoutNode) {
+	override fun layoutBegan(node: DisplayNode) {
 		this.listener?.onBeginLayout(this)
 		this.callMethod("nativeOnLayoutBegan")
 	}
 
 	/**
 	 * @inherited
-	 * @method onFinishLayout
+	 * @method layoutEnded
 	 * @since 0.7.0
 	 */
-	override fun onFinishLayout(node: LayoutNode) {
+	override fun layoutEnded(node: DisplayNode) {
 
 		if (this.invalidFrame == false) {
 
@@ -1482,20 +1430,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 		this.listener?.onFinishLayout(this)
 		this.callMethod("nativeOnLayoutFinished")
 	}
-
-	//--------------------------------------------------------------------------
-	// Methods - Styler Node
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method onInvalidateStyleNode
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	override fun onInvalidateStyleNode(node: StylerNode) {
-		this.scheduleUpdate()
-	}
-
+	
 	//--------------------------------------------------------------------------
 	// Methods - Content JavaScriptView Observer
 	//--------------------------------------------------------------------------
@@ -1727,15 +1662,12 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	private fun insertChild(view: JavaScriptView, index: Int) {
 
 		this.children.add(index, view)
-		this.stylerNode.insertChild(view.stylerNode, index)
-		this.layoutNode.insertChild(view.layoutNode, index)
 
-		this.content.addView(view.wrapper, index)
+		this.displayNode.insertChild(view.displayNode, index)
 
-		if (this.isShadowRoot) {
-			view.updateShadowRoot(this)
-		} else {
-			view.updateShadowRoot(this.shadowRoot)
+		val content = this.content
+		if (content is AndroidViewGroup) {
+			content.addView(view.wrapper)
 		}
 
 		this.invalidateOrderIfNeeded(view)
@@ -1749,15 +1681,13 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	private fun removeChild(view: JavaScriptView) {
 
 		this.children.remove(view)
-		this.stylerNode.removeChild(view.stylerNode)
-		this.layoutNode.removeChild(view.layoutNode)
+
+		this.displayNode.removeChild(view.displayNode)
 
 		val content = this.content
 		if (content is AndroidViewGroup) {
 			content.removeView(view.wrapper)
 		}
-
-		view.updateShadowRoot(null)
 
 		this.invalidateOrderIfNeeded()
 	}
@@ -1924,42 +1854,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 		if (this.naturalOrder == false) {
 			this.invalidateOrder()
 		}
-	}
-
-	/**
-	 * @method updateShadowRoot
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private fun updateShadowRoot(root: JavaScriptView?) {
-
-		this.shadowRoot = root
-
-		if (this.isShadowRoot == false) {
-			this.children.forEach {
-				it.updateShadowRoot(root)
-			}
-		}
-	}
-
-	/**
-	 * @method appendShadowedView
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private fun appendShadowedView(view: JavaScriptView) {
-		this.shadowed.add(view)
-		this.stylerNode.appendShadowedNode(view.stylerNode)
-	}
-
-	/**
-	 * @method removeShadowedView
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private fun removeShadowedView(view: JavaScriptView) {
-		this.shadowed.remove(view)
-		this.stylerNode.removeShadowedNode(view.stylerNode)
 	}
 
 	/**
@@ -2347,7 +2241,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	public val borderTopWidth by lazy {
 		JavaScriptProperty(0.0) { value ->
-			this.layoutNode.borderTop(value)
+			this.displayNode.setBorderTop(value)
 		}
 	}
 
@@ -2358,7 +2252,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	public val borderLeftWidth by lazy {
 		JavaScriptProperty(0.0) { value ->
-			this.layoutNode.borderLeft(value)
+			this.displayNode.setBorderLeft(value)
 		}
 	}
 
@@ -2369,7 +2263,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	public val borderRightWidth by lazy {
 		JavaScriptProperty(0.0) { value ->
-			this.layoutNode.borderRight(value)
+			this.displayNode.setBorderRight(value)
 		}
 	}
 
@@ -2380,7 +2274,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	public val borderBottomWidth by lazy {
 		JavaScriptProperty(0.0) { value ->
-			this.layoutNode.borderBottom(value)
+			this.displayNode.setBorderBottom(value)
 		}
 	}
 
@@ -2581,7 +2475,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	public val top by lazy {
 		JavaScriptProperty("auto") { value ->
-			this.layoutNode.top(value)
+			this.displayNode.setTop(value)
 		}
 	}
 
@@ -2592,7 +2486,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	public val left by lazy {
 		JavaScriptProperty("auto") { value ->
-			this.layoutNode.left(value)
+			this.displayNode.setLeft(value)
 		}
 	}
 
@@ -2603,7 +2497,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	public val right by lazy {
 		JavaScriptProperty("auto") { value ->
-			this.layoutNode.right(value)
+			this.displayNode.setRight(value)
 		}
 	}
 
@@ -2614,7 +2508,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	public val bottom by lazy {
 		JavaScriptProperty("auto") { value ->
-			this.layoutNode.bottom(value)
+			this.displayNode.setBottom(value)
 		}
 	}
 
@@ -2625,7 +2519,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	public val minTop by lazy {
 		JavaScriptProperty(Double.min) { value ->
-			this.layoutNode.minTop(value.number)
+			this.displayNode.setMinTop(value.number)
 		}
 	}
 
@@ -2636,7 +2530,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	public val maxTop by lazy {
 		JavaScriptProperty(Double.max) { value ->
-			this.layoutNode.maxTop(value.number)
+			this.displayNode.setMaxTop(value.number)
 		}
 	}
 
@@ -2647,7 +2541,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	public val minLeft by lazy {
 		JavaScriptProperty(Double.min) { value ->
-			this.layoutNode.minLeft(value.number)
+			this.displayNode.setMinLeft(value.number)
 		}
 	}
 
@@ -2658,7 +2552,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	public val maxLeft by lazy {
 		JavaScriptProperty(Double.max) { value ->
-			this.layoutNode.maxLeft(value.number)
+			this.displayNode.setMaxLeft(value.number)
 		}
 	}
 
@@ -2669,7 +2563,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	public val minRight by lazy {
 		JavaScriptProperty(Double.min) { value ->
-			this.layoutNode.minRight(value.number)
+			this.displayNode.setMinRight(value.number)
 		}
 	}
 
@@ -2680,7 +2574,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	public val maxRight by lazy {
 		JavaScriptProperty(Double.max) { value ->
-			this.layoutNode.maxRight(value.number)
+			this.displayNode.setMaxRight(value.number)
 		}
 	}
 
@@ -2691,7 +2585,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	public val minBottom by lazy {
 		JavaScriptProperty(Double.min) { value ->
-			this.layoutNode.minBottom(value.number)
+			this.displayNode.setMinBottom(value.number)
 		}
 	}
 
@@ -2702,7 +2596,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	public val maxBottom by lazy {
 		JavaScriptProperty(Double.max) { value ->
-			this.layoutNode.maxBottom(value.number)
+			this.displayNode.setMaxBottom(value.number)
 		}
 	}
 
@@ -2713,7 +2607,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	public val anchorTop by lazy {
 		JavaScriptProperty(0.0) { value ->
-			this.layoutNode.anchorTop(value)
+			this.displayNode.setAnchorTop(value)
 		}
 	}
 
@@ -2724,7 +2618,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	public val anchorLeft by lazy {
 		JavaScriptProperty(0.0) { value ->
-			this.layoutNode.anchorLeft(value)
+			this.displayNode.setAnchorLeft(value)
 		}
 	}
 
@@ -2735,7 +2629,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	public val width by lazy {
 		JavaScriptProperty("fill") { value ->
-			this.layoutNode.width(value)
+			this.displayNode.setWidth(value)
 		}
 	}
 
@@ -2746,7 +2640,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	public val height by lazy {
 		JavaScriptProperty("fill") { value ->
-			this.layoutNode.height(value)
+			this.displayNode.setHeight(value)
 		}
 	}
 
@@ -2757,7 +2651,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	public val minWidth by lazy {
 		JavaScriptProperty(0.0) { value ->
-			this.layoutNode.minWidth(value.number)
+			this.displayNode.setMinWidth(value.number)
 		}
 	}
 
@@ -2768,7 +2662,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	public val maxWidth by lazy {
 		JavaScriptProperty(Double.max) { value ->
-			this.layoutNode.maxWidth(value.number)
+			this.displayNode.setMaxWidth(value.number)
 		}
 	}
 
@@ -2779,7 +2673,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	public val minHeight by lazy {
 		JavaScriptProperty(0.0) { value ->
-			this.layoutNode.minHeight(value.number)
+			this.displayNode.setMinHeight(value.number)
 		}
 	}
 
@@ -2790,29 +2684,29 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	public val maxHeight by lazy {
 		JavaScriptProperty(Double.max) { value ->
-			this.layoutNode.maxHeight(value.number)
+			this.displayNode.setMaxHeight(value.number)
 		}
 	}
 
 	/**
-	 * The view's expandable ratio.
-	 * @property expand
+	 * The view's expand factor.
+	 * @property expandFactor
 	 * @since 0.7.0
 	 */
-	public val expand by lazy {
+	public val expandFactor by lazy {
 		JavaScriptProperty(0.0) { value ->
-			this.layoutNode.expand(value.number)
+			this.displayNode.setExpandFactor(value.number)
 		}
 	}
 
 	/**
-	 * The view's shrink ratio.
-	 * @property shrink
+	 * The view's shrink factor.
+	 * @property shrinkFactor
 	 * @since 0.7.0
 	 */
-	public val shrink by lazy {
+	public val shrinkFactor by lazy {
 		JavaScriptProperty(0.0) { value ->
-			this.layoutNode.shrink(value.number)
+			this.displayNode.setShrinkFactor(value.number)
 		}
 	}
 
@@ -2823,7 +2717,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	public val contentTop by lazy {
 		JavaScriptProperty(0.0) { value ->
-			this.layoutNode.contentTop(value)
+			this.displayNode.setContentTop(value)
 		}
 	}
 
@@ -2834,7 +2728,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	public val contentLeft by lazy {
 		JavaScriptProperty(0.0) { value ->
-			this.layoutNode.contentLeft(value)
+			this.displayNode.setContentLeft(value)
 		}
 	}
 
@@ -2845,7 +2739,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	public val contentWidth by lazy {
 		JavaScriptProperty("auto") { value ->
-			this.layoutNode.contentWidth(value)
+			this.displayNode.setContentWidth(value)
 		}
 	}
 
@@ -2856,7 +2750,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	public val contentHeight by lazy {
 		JavaScriptProperty("auto") { value ->
-			this.layoutNode.contentHeight(value)
+			this.displayNode.setContentHeight(value)
 		}
 	}
 
@@ -2911,7 +2805,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	public val contentDirection by lazy {
 		JavaScriptProperty("vertical") { value ->
-			this.layoutNode.contentDirection(value)
+			this.displayNode.setContentDirection(value)
 		}
 	}
 
@@ -2922,7 +2816,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	public val contentLocation by lazy {
 		JavaScriptProperty("start") { value ->
-			this.layoutNode.contentLocation(value)
+			this.displayNode.setContentLocation(value)
 		}
 	}
 
@@ -2933,7 +2827,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	public val contentAlignment by lazy {
 		JavaScriptProperty("start") { value ->
-			this.layoutNode.contentAlignment(value)
+			this.displayNode.setContentAlignment(value)
 		}
 	}
 
@@ -3042,7 +2936,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	public val marginTop by lazy {
 		JavaScriptProperty(0.0) { value ->
-			this.layoutNode.marginTop(value)
+			this.displayNode.setMarginTop(value)
 		}
 	}
 
@@ -3053,7 +2947,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	public val marginLeft by lazy {
 		JavaScriptProperty(0.0) { value ->
-			this.layoutNode.marginLeft(value)
+			this.displayNode.setMarginLeft(value)
 		}
 	}
 
@@ -3064,7 +2958,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	public val marginRight by lazy {
 		JavaScriptProperty(0.0) { value ->
-			this.layoutNode.marginRight(value)
+			this.displayNode.setMarginRight(value)
 		}
 	}
 
@@ -3075,7 +2969,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	public val marginBottom by lazy {
 		JavaScriptProperty(0.0) { value ->
-			this.layoutNode.marginBottom(value)
+			this.displayNode.setMarginBottom(value)
 		}
 	}
 
@@ -3086,7 +2980,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	public val minMarginTop by lazy {
 		JavaScriptProperty(Double.min) { value ->
-			this.layoutNode.minMarginTop(value.number)
+			this.displayNode.setMinMarginTop(value.number)
 		}
 	}
 
@@ -3097,7 +2991,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	public val maxMarginTop by lazy {
 		JavaScriptProperty(Double.max) { value ->
-			this.layoutNode.maxMarginTop(value.number)
+			this.displayNode.setMaxMarginTop(value.number)
 		}
 	}
 
@@ -3108,7 +3002,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	public val minMarginLeft by lazy {
 		JavaScriptProperty(Double.min) { value ->
-			this.layoutNode.minMarginLeft(value.number)
+			this.displayNode.setMinMarginLeft(value.number)
 		}
 	}
 
@@ -3119,7 +3013,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	public val maxMarginLeft by lazy {
 		JavaScriptProperty(Double.max) { value ->
-			this.layoutNode.maxMarginLeft(value.number)
+			this.displayNode.setMaxMarginLeft(value.number)
 		}
 	}
 
@@ -3130,7 +3024,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	public val minMarginRight by lazy {
 		JavaScriptProperty(Double.min) { value ->
-			this.layoutNode.minMarginRight(value.number)
+			this.displayNode.setMinMarginRight(value.number)
 		}
 	}
 
@@ -3141,7 +3035,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	public val maxMarginRight by lazy {
 		JavaScriptProperty(Double.max) { value ->
-			this.layoutNode.maxMarginRight(value.number)
+			this.displayNode.setMaxMarginRight(value.number)
 		}
 	}
 
@@ -3152,7 +3046,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	public val minMarginBottom by lazy {
 		JavaScriptProperty(Double.min) { value ->
-			this.layoutNode.minMarginBottom(value.number)
+			this.displayNode.setMinMarginBottom(value.number)
 		}
 	}
 
@@ -3163,7 +3057,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	public val maxMarginBottom by lazy {
 		JavaScriptProperty(Double.max) { value ->
-			this.layoutNode.maxMarginBottom(value.number)
+			this.displayNode.setMaxMarginBottom(value.number)
 		}
 	}
 
@@ -3188,7 +3082,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	public val paddingTop by lazy {
 		JavaScriptProperty(0.0) { value ->
-			this.layoutNode.paddingTop(value)
+			this.displayNode.setPaddingTop(value)
 		}
 	}
 
@@ -3199,7 +3093,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	public val paddingLeft by lazy {
 		JavaScriptProperty(0.0) { value ->
-			this.layoutNode.paddingLeft(value)
+			this.displayNode.setPaddingLeft(value)
 		}
 	}
 
@@ -3210,7 +3104,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	public val paddingRight by lazy {
 		JavaScriptProperty(0.0) { value ->
-			this.layoutNode.paddingRight(value)
+			this.displayNode.setPaddingRight(value)
 		}
 	}
 
@@ -3221,7 +3115,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	public val paddingBottom by lazy {
 		JavaScriptProperty(0.0) { value ->
-			this.layoutNode.paddingBottom(value)
+			this.displayNode.setPaddingBottom(value)
 		}
 	}
 
@@ -3232,7 +3126,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	public val minPaddingTop by lazy {
 		JavaScriptProperty(0.0) { value ->
-			this.layoutNode.minPaddingTop(value.number)
+			this.displayNode.setMinPaddingTop(value.number)
 		}
 	}
 
@@ -3243,7 +3137,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	public val maxPaddingTop by lazy {
 		JavaScriptProperty(Double.max) { value ->
-			this.layoutNode.maxPaddingTop(value.number)
+			this.displayNode.setMaxPaddingTop(value.number)
 		}
 	}
 
@@ -3254,7 +3148,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	public val minPaddingLeft by lazy {
 		JavaScriptProperty(0.0) { value ->
-			this.layoutNode.minPaddingLeft(value.number)
+			this.displayNode.setMinPaddingLeft(value.number)
 		}
 	}
 
@@ -3265,7 +3159,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	public val maxPaddingLeft by lazy {
 		JavaScriptProperty(Double.max) { value ->
-			this.layoutNode.maxPaddingLeft(value.number)
+			this.displayNode.setMaxPaddingLeft(value.number)
 		}
 	}
 
@@ -3276,7 +3170,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	public val minPaddingRight by lazy {
 		JavaScriptProperty(0.0) { value ->
-			this.layoutNode.minPaddingRight(value.number)
+			this.displayNode.setMinPaddingRight(value.number)
 		}
 	}
 
@@ -3287,7 +3181,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	public val maxPaddingRight by lazy {
 		JavaScriptProperty(Double.max) { value ->
-			this.layoutNode.maxPaddingRight(value.number)
+			this.displayNode.setMaxPaddingRight(value.number)
 		}
 	}
 
@@ -3298,7 +3192,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	public val minPaddingBottom by lazy {
 		JavaScriptProperty(0.0) { value ->
-			this.layoutNode.minPaddingBottom(value.number)
+			this.displayNode.setMinPaddingBottom(value.number)
 		}
 	}
 
@@ -3309,7 +3203,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	public val maxPaddingBottom by lazy {
 		JavaScriptProperty(Double.max) { value ->
-			this.layoutNode.maxPaddingBottom(value.number)
+			this.displayNode.setMaxPaddingBottom(value.number)
 		}
 	}
 
@@ -3556,8 +3450,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	public val visible by lazy {
 		JavaScriptProperty(true) { value ->
-			this.stylerNode.visible = value.boolean
-			this.layoutNode.visible = value.boolean
+			this.displayNode.setVisible(value.boolean)
 			this.wrapper.visible = value.boolean
 		}
 	}
@@ -5261,45 +5154,45 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method jsGet_expand
+	 * @method jsGet_expandFactor
 	 * @since 0.7.0
 	 * @hidden
 	 */
 	@Suppress("unused")
-	open fun jsGet_expand(callback: JavaScriptGetterCallback) {
-		callback.returns(this.expand)
+	open fun jsGet_expandFactor(callback: JavaScriptGetterCallback) {
+		callback.returns(this.expandFactor)
 	}
 
 	/**
-	 * @method jsSet_expand
+	 * @method jsSet_expandFactor
 	 * @since 0.7.0
 	 * @hidden
 	 */
 	@Suppress("unused")
-	open fun jsSet_expand(callback: JavaScriptSetterCallback) {
-		this.expand.reset(callback.value, this)
+	open fun jsSet_expandFactor(callback: JavaScriptSetterCallback) {
+		this.expandFactor.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method jsGet_shrink
+	 * @method jsGet_shrinkFactor
 	 * @since 0.7.0
 	 * @hidden
 	 */
 	@Suppress("unused")
-	open fun jsGet_shrink(callback: JavaScriptGetterCallback) {
-		callback.returns(this.shrink)
+	open fun jsGet_shrinkFactor(callback: JavaScriptGetterCallback) {
+		callback.returns(this.shrinkFactor)
 	}
 
 	/**
-	 * @method jsSet_shrink
+	 * @method jsSet_shrinkFactor
 	 * @since 0.7.0
 	 * @hidden
 	 */
 	@Suppress("unused")
-	open fun jsSet_shrink(callback: JavaScriptSetterCallback) {
-		this.shrink.reset(callback.value, this)
+	open fun jsSet_shrinkFactor(callback: JavaScriptSetterCallback) {
+		this.shrinkFactor.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6890,7 +6783,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	@Suppress("unused")
 	open fun jsGet_measuredTop(callback: JavaScriptGetterCallback) {
 
-		val measuredTop = this.layoutNode.measuredTop
+		val measuredTop = this.displayNode.measuredTop
 
 		if (this.resolvedTop != measuredTop) {
 			this.resolvedTop = measuredTop
@@ -6912,7 +6805,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	@Suppress("unused")
 	open fun jsGet_measuredLeft(callback: JavaScriptGetterCallback) {
 
-		val measuredLeft = this.layoutNode.measuredLeft
+		val measuredLeft = this.displayNode.measuredLeft
 
 		if (this.resolvedLeft != measuredLeft) {
 			this.resolvedLeft = measuredLeft
@@ -6934,7 +6827,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	@Suppress("unused")
 	open fun jsGet_measuredWidth(callback: JavaScriptGetterCallback) {
 
-		val measuredWidth = this.layoutNode.measuredWidth
+		val measuredWidth = this.displayNode.measuredWidth
 
 		if (this.resolvedWidth != measuredWidth) {
 			this.resolvedWidth = measuredWidth
@@ -6956,7 +6849,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	@Suppress("unused")
 	open fun jsGet_measuredHeight(callback: JavaScriptGetterCallback) {
 
-		val measuredHeight = this.layoutNode.measuredHeight
+		val measuredHeight = this.displayNode.measuredHeight
 
 		if (this.resolvedHeight != measuredHeight) {
 			this.resolvedHeight = measuredHeight
@@ -6978,7 +6871,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	@Suppress("unused")
 	open fun jsGet_measuredInnerWidth(callback: JavaScriptGetterCallback) {
 
-		val measuredInnerWidth = this.layoutNode.measuredInnerWidth
+		val measuredInnerWidth = this.displayNode.measuredInnerWidth
 
 		if (this.resolvedInnerWidth != measuredInnerWidth) {
 			this.resolvedInnerWidth = measuredInnerWidth
@@ -7000,7 +6893,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	@Suppress("unused")
 	open fun jsGet_measuredInnerHeight(callback: JavaScriptGetterCallback) {
 
-		val measuredInnerHeight = this.layoutNode.measuredInnerHeight
+		val measuredInnerHeight = this.displayNode.measuredInnerHeight
 
 		if (this.resolvedInnerHeight != measuredInnerHeight) {
 			this.resolvedInnerHeight = measuredInnerHeight
@@ -7022,7 +6915,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	@Suppress("unused")
 	open fun jsGet_measuredContentWidth(callback: JavaScriptGetterCallback) {
 
-		val measuredContentWidth = this.layoutNode.measuredContentWidth
+		val measuredContentWidth = this.displayNode.measuredContentWidth
 
 		if (this.resolvedContentWidth != measuredContentWidth) {
 			this.resolvedContentWidth = measuredContentWidth
@@ -7044,7 +6937,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	@Suppress("unused")
 	open fun jsGet_measuredContentHeight(callback: JavaScriptGetterCallback) {
 
-		val measuredContentHeight = this.layoutNode.measuredContentHeight
+		val measuredContentHeight = this.displayNode.measuredContentHeight
 
 		if (this.resolvedContentHeight != measuredContentHeight) {
 			this.resolvedContentHeight = measuredContentHeight
@@ -7066,7 +6959,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	@Suppress("unused")
 	open fun jsGet_measuredMarginTop(callback: JavaScriptGetterCallback) {
 
-		val measuredMarginTop = this.layoutNode.measuredTop
+		val measuredMarginTop = this.displayNode.measuredTop
 
 		if (this.resolvedMarginTop != measuredMarginTop) {
 			this.resolvedMarginTop = measuredMarginTop
@@ -7088,7 +6981,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	@Suppress("unused")
 	open fun jsGet_measuredMarginLeft(callback: JavaScriptGetterCallback) {
 
-		val measuredMarginLeft = this.layoutNode.measuredMarginLeft
+		val measuredMarginLeft = this.displayNode.measuredMarginLeft
 
 		if (this.resolvedMarginLeft != measuredMarginLeft) {
 			this.resolvedMarginLeft = measuredMarginLeft
@@ -7110,7 +7003,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	@Suppress("unused")
 	open fun jsGet_measuredMarginRight(callback: JavaScriptGetterCallback) {
 
-		val measuredMarginRight = this.layoutNode.measuredMarginRight
+		val measuredMarginRight = this.displayNode.measuredMarginRight
 
 		if (this.resolvedMarginRight != measuredMarginRight) {
 			this.resolvedMarginRight = measuredMarginRight
@@ -7132,7 +7025,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	@Suppress("unused")
 	open fun jsGet_measuredMarginBottom(callback: JavaScriptGetterCallback) {
 
-		val measuredMarginBottom = this.layoutNode.measuredMarginBottom
+		val measuredMarginBottom = this.displayNode.measuredMarginBottom
 
 		if (this.resolvedMarginBottom != measuredMarginBottom) {
 			this.resolvedMarginBottom = measuredMarginBottom
@@ -7154,7 +7047,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	@Suppress("unused")
 	open fun jsGet_measuredPaddingTop(callback: JavaScriptGetterCallback) {
 
-		val measuredPaddingTop = this.layoutNode.measuredPaddingTop
+		val measuredPaddingTop = this.displayNode.measuredPaddingTop
 
 		if (this.resolvedPaddingTop != measuredPaddingTop) {
 			this.resolvedPaddingTop = measuredPaddingTop
@@ -7176,7 +7069,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	@Suppress("unused")
 	open fun jsGet_measuredPaddingLeft(callback: JavaScriptGetterCallback) {
 
-		val measuredPaddingLeft = this.layoutNode.measuredPaddingLeft
+		val measuredPaddingLeft = this.displayNode.measuredPaddingLeft
 
 		if (this.resolvedPaddingLeft != measuredPaddingLeft) {
 			this.resolvedPaddingLeft = measuredPaddingLeft
@@ -7198,7 +7091,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	@Suppress("unused")
 	open fun jsGet_measuredPaddingRight(callback: JavaScriptGetterCallback) {
 
-		val measuredPaddingRight = this.layoutNode.measuredPaddingRight
+		val measuredPaddingRight = this.displayNode.measuredPaddingRight
 
 		if (this.resolvedPaddingRight != measuredPaddingRight) {
 			this.resolvedPaddingRight = measuredPaddingRight
@@ -7220,7 +7113,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	@Suppress("unused")
 	open fun jsGet_measuredPaddingBottom(callback: JavaScriptGetterCallback) {
 
-		val measuredPaddingBottom = this.layoutNode.measuredPaddingBottom
+		val measuredPaddingBottom = this.displayNode.measuredPaddingBottom
 
 		if (this.resolvedPaddingBottom != measuredPaddingBottom) {
 			this.resolvedPaddingBottom = measuredPaddingBottom
@@ -7286,8 +7179,8 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 				}
 			}
 
-			if (callback.context.application.layout.resolving) {
-				callback.context.application.layout.requestLayoutEndedCallback(animate)
+			if (callback.context.application.display.resolving) {
+				callback.context.application.display.requestLayoutEndedCallback(animate)
 				return
 			}
 
@@ -7303,16 +7196,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	@Suppress("unused")
 	open fun jsFunction_destroy(callback: JavaScriptFunctionCallback) {
 		this.dispose()
-	}
-
-	/**
-	 * @method jsFunction_createShadowRoot
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	@Suppress("unused")
-	open fun jsFunction_createShadowRoot(callback: JavaScriptFunctionCallback) {
-		this.isShadowRoot = true
 	}
 
 	/**
@@ -7355,69 +7238,63 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * @method jsFunction_hasStyle
+	 * @method jsFunction_appendStyle
 	 * @since 0.7.0
 	 * @hidden
 	 */
 	@Suppress("unused")
-	open fun jsFunction_hasStyle(callback: JavaScriptFunctionCallback) {
+	open fun jsFunction_appendStyle(callback: JavaScriptFunctionCallback) {
 
 		if (callback.arguments < 1) {
-			fatalError("Method JavaScriptView.hasStyle() requires 1 argument.")
+			fatalError("Method JavaScriptView.appendStyle() requires 1 argument.")
 		}
 
-		callback.returns(this.stylerNode.hasStyle(callback.argument(0).string))
+		this.displayNode.appendStyle(callback.argument(0).string)
 	}
 
 	/**
-	 * @method jsFunction_setStyle
+	 * @method jsFunction_removeStyle
 	 * @since 0.7.0
 	 * @hidden
 	 */
 	@Suppress("unused")
-	open fun jsFunction_setStyle(callback: JavaScriptFunctionCallback) {
-
-		if (callback.arguments < 2) {
-			fatalError("Method JavaScriptView.setStyle() requires 2 arguments.")
-		}
-
-		val style = callback.argument(0).string
-		val apply = callback.argument(1).boolean
-
-		this.stylerNode.setStyle(style, apply)
-	}
-
-	/**
-	 * @method jsFunction_hasState
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	@Suppress("unused")
-	open fun jsFunction_hasState(callback: JavaScriptFunctionCallback) {
+	open fun jsFunction_removeStyle(callback: JavaScriptFunctionCallback) {
 
 		if (callback.arguments < 1) {
-			fatalError("Method JavaScriptView.hasState() requires 1 argument.")
+			fatalError("Method JavaScriptView.removeStyle() requires 1 argument.")
 		}
 
-		callback.returns(this.stylerNode.hasState(callback.argument(0).string))
+		this.displayNode.removeStyle(callback.argument(0).string)
 	}
 
 	/**
-	 * @method jsFunction_setState
+	 * @method jsFunction_appendState
 	 * @since 0.7.0
 	 * @hidden
 	 */
 	@Suppress("unused")
-	open fun jsFunction_setState(callback: JavaScriptFunctionCallback) {
+	open fun jsFunction_appendState(callback: JavaScriptFunctionCallback) {
 
-		if (callback.arguments < 2) {
-			fatalError("Method JavaScriptView.setState() requires 2 arguments.")
+		if (callback.arguments < 1) {
+			fatalError("Method JavaScriptView.appendState() requires 1 argument.")
 		}
 
-		val state = callback.argument(0).string
-		val apply = callback.argument(1).boolean
+		this.displayNode.appendState(callback.argument(0).string)
+	}
 
-		this.stylerNode.setState(state, apply)
+	/**
+	 * @method jsFunction_removeState
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@Suppress("unused")
+	open fun jsFunction_removeState(callback: JavaScriptFunctionCallback) {
+
+		if (callback.arguments < 1) {
+			fatalError("Method JavaScriptView.removeState() requires 1 argument.")
+		}
+
+		this.displayNode.removeState(callback.argument(0).string)
 	}
 
 	/**
@@ -7457,8 +7334,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsFunction_measure(callback: JavaScriptFunctionCallback) {
-		this.stylerNode.resolve()
-		this.layoutNode.measure()
+		this.measure()
 	}
 
 	/**

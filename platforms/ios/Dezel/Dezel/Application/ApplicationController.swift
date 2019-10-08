@@ -31,7 +31,7 @@ open class ApplicationController: UIViewController {
 
 	/**
 	 * The application controller's display.
-	 * @property styler
+	 * @property display
 	 * @since 0.7.0
 	 */
 	private(set) public var display: Display = Display()
@@ -112,7 +112,7 @@ open class ApplicationController: UIViewController {
 				insetB = max(window.safeAreaInsets.bottom, insetB)
 			}
 		}
-
+		// Todo put in stylesheet object
 		self.display.setVariable("safe-area-top-inset", value: "\(insetT)px")
 		self.display.setVariable("safe-area-bottom-inset", value: "\(insetB)px")
 

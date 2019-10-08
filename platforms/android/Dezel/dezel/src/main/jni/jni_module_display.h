@@ -28,9 +28,9 @@ extern jmethodID SizeFGetHeightMethod;
 
 /**
  * Initializes JNI related variables.
- * @function JNI_OnLoad_view
+ * @function JNIDisplayModule
  * @since 0.7.0
  */
-void JNI_OnLoad_view(JNIEnv* env);
+void JNIDisplayModule(JNIEnv* env);
 
 #endif

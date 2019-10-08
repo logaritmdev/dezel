@@ -20,7 +20,6 @@ import ca.logaritm.dezel.application.keyboard.KeyboardObserverListener
 import ca.logaritm.dezel.core.*
 import ca.logaritm.dezel.extension.Delegates
 import ca.logaritm.dezel.extension.app.viewport
-import ca.logaritm.dezel.layout.Layout
 import ca.logaritm.dezel.modules.application.ApplicationModule
 import ca.logaritm.dezel.modules.application.JavaScriptApplication
 import ca.logaritm.dezel.modules.core.CoreModule
@@ -33,7 +32,7 @@ import ca.logaritm.dezel.modules.graphic.ImageLoader
 import ca.logaritm.dezel.modules.locale.LocaleModule
 import ca.logaritm.dezel.modules.platform.PlatformModule
 import ca.logaritm.dezel.modules.view.ViewModule
-import ca.logaritm.dezel.style.Styler
+import ca.logaritm.dezel.view.display.Display
 import ca.logaritm.dezel.view.graphic.Convert
 
 /**
@@ -92,19 +91,11 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 		private set
 
 	/**
-	 * The application's styles manager.
-	 * @property styler
+	 * The application controller's display.
+	 * @property display
 	 * @since 0.7.0
 	 */
-	public var styler: Styler = Styler()
-		private set
-
-	/**
-	 * The application's layout manager.
-	 * @property layout
-	 * @since 0.7.0
-	 */
-	public var layout: Layout = Layout()
+	public var display: Display = Display()
 		private set
 
 	/**
@@ -171,12 +162,12 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 
 		val viewport = this.viewport
 
-		this.layout.scale = Convert.density
-		this.layout.viewportWidth = viewport.width
-		this.layout.viewportHeight = viewport.height
-
-		this.styler.setVariable("safe-area-top-inset", "${this.getSafeAreaTopInset()}px")
-		this.styler.setVariable("safe-area-bottom-inset", "${this.getSafeAreaBottomInset()}px")
+		this.display.scale = Convert.density.toDouble()
+		this.display.viewportWidth = viewport.width.toDouble()
+		this.display.viewportHeight = viewport.height.toDouble()
+		// Todo put in stylesheet object
+		this.display.setVariable("safe-area-top-inset", "${this.getSafeAreaTopInset()}px")
+		this.display.setVariable("safe-area-bottom-inset", "${this.getSafeAreaBottomInset()}px")
 
 		this.context.attribute(kApplicationActivityKey, this)
 		this.context.global.property("_DEV_", this.isDev())
@@ -225,7 +216,7 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 
 		this.sources.forEach { source ->
 			when (source.category) {
-				Source.Category.STYLE  -> this.evaluateStyle(source.data, source.location)
+			//	Source.Category.STYLE  -> this.evaluateStyle(source.data, source.location)
 				Source.Category.SCRIPT -> this.evaluateScript(source.data, source.location)
 			}
 		}
@@ -270,21 +261,12 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 	}
 
 	/**
-	 * Evaluates a style file.
-	 * @method evaluateStyle
-	 * @since 0.7.0
-	 */
-	open fun evaluateStyle(source: String, file: String) {
-		this.context.evaluate(source, file)
-	}
-
-	/**
 	 * Evaluates a script file.
 	 * @method evaluateScript
 	 * @since 0.7.0
 	 */
 	open fun evaluateScript(source: String, file: String) {
-		this.styler.load(source, file)
+		this.context.evaluate(source, file)
 	}
 
 	/**
@@ -296,9 +278,6 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 
 		this.application?.destroy()
 		this.application = application
-
-		this.styler.root = application.window.stylerNode
-		this.layout.root = application.window.layoutNode
 
 		val viewport = this.viewport
 		application.window.width.reset(viewport.width.toDouble(), JavaScriptPropertyUnit.PX)
@@ -560,8 +539,8 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 		this.window.decorView.setOnSystemUiVisibilityChangeListener {
 
 			val viewport = this.viewport
-			this.layout.viewportWidth = viewport.width
-			this.layout.viewportHeight = viewport.height
+			this.display.viewportWidth = viewport.width.toDouble()
+			this.display.viewportHeight = viewport.height.toDouble()
 
 			val application = this.application
 			if (application != null) {

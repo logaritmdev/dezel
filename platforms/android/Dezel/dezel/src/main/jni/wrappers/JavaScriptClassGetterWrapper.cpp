@@ -1,7 +1,7 @@
 #include "jni_init.h"
 #include "jni_module_core.h"
-#include <DLContext.h>
-#include <DLValue.h>
+#include <JavaScriptContext.h>
+#include <JavaScriptValue.h>
 #include "JavaScriptGetter.h"
 #include "JavaScriptClassGetterWrapper.h"
 
@@ -14,13 +14,13 @@ JavaScriptClassFunctionWrapperGetCallback(JNIEnv* env, jclass cls, const char* f
 static JSValueRef
 JavaScriptClassGetterWrapperCallback(JSContextRef context, JSObjectRef object, JSObjectRef callee, size_t argc, JSValueRef const *argv)
 {
-	auto wrapper = reinterpret_cast<JavaScriptClassGetterWrapperRef>(DLValueGetAssociatedObject(context, callee));
+	auto wrapper = reinterpret_cast<JavaScriptClassGetterWrapperRef>(JavaScriptValueGetAssociatedObject(context, callee));
 
 	auto result = JavaScriptGetterExecute(
 		wrapper->env,
 		wrapper->ctx,
 		wrapper->cls,
-		reinterpret_cast<jobject>(DLValueGetAssociatedObject(context, object)),
+		reinterpret_cast<jobject>(JavaScriptValueGetAssociatedObject(context, object)),
 		wrapper->callback,
 		object,
 		callee,
@@ -32,9 +32,9 @@ JavaScriptClassGetterWrapperCallback(JSContextRef context, JSObjectRef object, J
 }
 
 static void
-JavaScriptClassGetterWrapperFinalize(JSContextRef context, DLValueDataRef handle)
+JavaScriptClassGetterWrapperFinalize(JSContextRef context, JavaScriptValueDataRef handle)
 {
-	auto wrapper = reinterpret_cast<JavaScriptClassGetterWrapperRef>(DLValueDataGetAssociatedObject(handle));
+	auto wrapper = reinterpret_cast<JavaScriptClassGetterWrapperRef>(JavaScriptValueDataGetAssociatedObject(handle));
 
 	if (wrapper) {
 		wrapper->env->DeleteGlobalRef(wrapper->ctx);
@@ -45,7 +45,7 @@ JavaScriptClassGetterWrapperFinalize(JSContextRef context, DLValueDataRef handle
 JavaScriptClassGetterWrapperRef
 JavaScriptClassGetterWrapperCreate(JNIEnv* env, JSContextRef context, const char* name, const char* fqmn, jclass cls, jobject ctx)
 {
-	auto function = DLValueCreateFunction(context, &JavaScriptClassGetterWrapperCallback, name);
+	auto function = JavaScriptValueCreateFunction(context, &JavaScriptClassGetterWrapperCallback, name);
 
 	auto wrapper = new JavaScriptClassGetterWrapper();
 	wrapper->env = env;
@@ -54,8 +54,8 @@ JavaScriptClassGetterWrapperCreate(JNIEnv* env, JSContextRef context, const char
 	wrapper->callback = JavaScriptClassFunctionWrapperGetCallback(env, cls, fqmn);
 	wrapper->function = function;
 
-	DLValueSetFinalizeHandler(context, function, &JavaScriptClassGetterWrapperFinalize);
-	DLValueSetAssociatedObject(context, function, wrapper);
+	JavaScriptValueSetFinalizeHandler(context, function, &JavaScriptClassGetterWrapperFinalize);
+	JavaScriptValueSetAssociatedObject(context, function, wrapper);
 
 	return wrapper;
 }

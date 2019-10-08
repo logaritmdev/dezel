@@ -1,7 +1,5 @@
 package ca.logaritm.dezel.layout
 
-import android.util.SizeF
-import ca.logaritm.dezel.core.Finalizer
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test

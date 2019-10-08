@@ -5,7 +5,7 @@
 static void
 ContextExceptionCallback(JSContextRef context, JSValueRef error) {
 
-	JavaScriptExceptionWrapperRef wrapper = (JavaScriptExceptionWrapperRef) DLContextGetAttribute(context, kJavaScriptExceptionWrapperKey);
+	JavaScriptExceptionWrapperRef wrapper = (JavaScriptExceptionWrapperRef) JavaScriptContextGetAttribute(context, kJavaScriptExceptionWrapperKey);
 	if (wrapper == NULL) {
 		return;
 	}
@@ -41,7 +41,7 @@ ContextExceptionCallback(JSContextRef context, JSValueRef error) {
  */
 jlong Java_ca_logaritm_dezel_core_JavaScriptContextExternal_create(JNIEnv* env, jclass, jstring identifier) {
 	JNI_STRING_CREATE(identifier, name);
-	JSContextRef context = DLContextCreate(name);
+	JSContextRef context = JavaScriptContextCreate(name);
 	JNI_STRING_DELETE(identifier, name)
 	return reinterpret_cast<jlong>(context);
 }
@@ -52,7 +52,7 @@ jlong Java_ca_logaritm_dezel_core_JavaScriptContextExternal_create(JNIEnv* env, 
  * Signature: (J)V
  */
 void Java_ca_logaritm_dezel_core_JavaScriptContextExternal_delete(JNIEnv* env, jclass, jlong contextPtr) {
-	DLContextDelete(reinterpret_cast<JSContextRef>(contextPtr));
+	JavaScriptContextDelete(reinterpret_cast<JSContextRef>(contextPtr));
 }
 
 /*
@@ -61,7 +61,7 @@ void Java_ca_logaritm_dezel_core_JavaScriptContextExternal_delete(JNIEnv* env, j
  * Signature: (J)J
  */
 jlong Java_ca_logaritm_dezel_core_JavaScriptContextExternal_getGlobalObject(JNIEnv* env, jclass, jlong contextPtr) {
-	return reinterpret_cast<jlong>(DLContextGetGlobalObject(reinterpret_cast<JSContextRef>(contextPtr)));
+	return reinterpret_cast<jlong>(JavaScriptContextGetGlobalObject(reinterpret_cast<JSContextRef>(contextPtr)));
 }
 
 /*
@@ -71,7 +71,7 @@ jlong Java_ca_logaritm_dezel_core_JavaScriptContextExternal_getGlobalObject(JNIE
  */
 void Java_ca_logaritm_dezel_core_JavaScriptContextExternal_evaluate__JLjava_lang_String_2(JNIEnv* env, jclass, jlong contextPtr, jstring codeStr) {
 	JNI_STRING_CREATE(codeStr, code);
-	DLContextEvaluate(reinterpret_cast<JSContextRef>(contextPtr), code, NULL);
+	JavaScriptContextEvaluate(reinterpret_cast<JSContextRef>(contextPtr), code, NULL);
 	JNI_STRING_DELETE(codeStr, code);
 }
 
@@ -83,7 +83,7 @@ void Java_ca_logaritm_dezel_core_JavaScriptContextExternal_evaluate__JLjava_lang
 void Java_ca_logaritm_dezel_core_JavaScriptContextExternal_evaluate__JLjava_lang_String_2Ljava_lang_String_2(JNIEnv* env, jclass, jlong contextPtr, jstring codeStr, jstring fileStr) {
 	JNI_STRING_CREATE(fileStr, file);
 	JNI_STRING_CREATE(codeStr, code);
-	DLContextEvaluate(reinterpret_cast<JSContextRef>(contextPtr), code, file);
+	JavaScriptContextEvaluate(reinterpret_cast<JSContextRef>(contextPtr), code, file);
 	JNI_STRING_DELETE(codeStr, code);
 	JNI_STRING_DELETE(fileStr, file);
 }
@@ -94,7 +94,7 @@ void Java_ca_logaritm_dezel_core_JavaScriptContextExternal_evaluate__JLjava_lang
  * Signature: (JILjava/lang/Object;)V
  */
 void Java_ca_logaritm_dezel_core_JavaScriptContextExternal_setAttribute(JNIEnv* env, jclass, jlong contextPtr, jint key, jobject value) {
-	DLContextSetAttribute(reinterpret_cast<JSContextRef>(contextPtr), key, value ? env->NewGlobalRef(value) : NULL);
+	JavaScriptContextSetAttribute(reinterpret_cast<JSContextRef>(contextPtr), key, value ? env->NewGlobalRef(value) : NULL);
 }
 
 /*
@@ -103,7 +103,7 @@ void Java_ca_logaritm_dezel_core_JavaScriptContextExternal_setAttribute(JNIEnv* 
  * Signature: (JI)Ljava/lang/Object;
  */
 jobject Java_ca_logaritm_dezel_core_JavaScriptContextExternal_getAttribute(JNIEnv* env, jclass, jlong contextPtr, jint key) {
-	return reinterpret_cast<jobject>(DLContextGetAttribute(reinterpret_cast<JSContextRef>(contextPtr), key));
+	return reinterpret_cast<jobject>(JavaScriptContextGetAttribute(reinterpret_cast<JSContextRef>(contextPtr), key));
 }
 
 /*
@@ -112,7 +112,7 @@ jobject Java_ca_logaritm_dezel_core_JavaScriptContextExternal_getAttribute(JNIEn
  * Signature: (JI)V
  */
 void Java_ca_logaritm_dezel_core_JavaScriptContextExternal_delAttribute(JNIEnv* env, jclass, jlong contextPtr, jint key) {
-	env->DeleteGlobalRef(reinterpret_cast<jobject>(DLContextGetAttribute(reinterpret_cast<JSContextRef>(contextPtr), key)));
+	env->DeleteGlobalRef(reinterpret_cast<jobject>(JavaScriptContextGetAttribute(reinterpret_cast<JSContextRef>(contextPtr), key)));
 }
 
 /*
@@ -122,15 +122,15 @@ void Java_ca_logaritm_dezel_core_JavaScriptContextExternal_delAttribute(JNIEnv* 
  */
 void Java_ca_logaritm_dezel_core_JavaScriptContextExternal_setExceptionCallback(JNIEnv* env, jclass, jlong contextPtr, jobject handler, jobject context) {
 
-	JavaScriptExceptionWrapperRef wrapper = (JavaScriptExceptionWrapperRef) DLContextGetAttribute(reinterpret_cast<JSContextRef>(contextPtr), kJavaScriptExceptionWrapperKey);
+	JavaScriptExceptionWrapperRef wrapper = (JavaScriptExceptionWrapperRef) JavaScriptContextGetAttribute(reinterpret_cast<JSContextRef>(contextPtr), kJavaScriptExceptionWrapperKey);
 
 	if (wrapper) {
-		DLContextGetAttribute(reinterpret_cast<JSContextRef>(contextPtr), kJavaScriptExceptionWrapperKey);
+		JavaScriptContextGetAttribute(reinterpret_cast<JSContextRef>(contextPtr), kJavaScriptExceptionWrapperKey);
 		delete wrapper;
 	}
 
-	DLContextSetAttribute(reinterpret_cast<JSContextRef>(contextPtr), kJavaScriptExceptionWrapperKey, JavaScriptExceptionWrapperCreate(env, handler, context));
-	DLContextSetExceptionHandler(reinterpret_cast<JSContextRef>(contextPtr), &ContextExceptionCallback);
+	JavaScriptContextSetAttribute(reinterpret_cast<JSContextRef>(contextPtr), kJavaScriptExceptionWrapperKey, JavaScriptExceptionWrapperCreate(env, handler, context));
+	JavaScriptContextSetExceptionHandler(reinterpret_cast<JSContextRef>(contextPtr), &ContextExceptionCallback);
 }
 
 /*
@@ -139,7 +139,7 @@ void Java_ca_logaritm_dezel_core_JavaScriptContextExternal_setExceptionCallback(
  * Signature: (JJ)V
  */
 void Java_ca_logaritm_dezel_core_JavaScriptContextExternal_throwError(JNIEnv* env, jclass, jlong contextPtr, jlong valuePtr) {
-	DLContextHandleError(reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSValueRef>(valuePtr));
+	JavaScriptContextHandleError(reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSValueRef>(valuePtr));
 }
 
 /*

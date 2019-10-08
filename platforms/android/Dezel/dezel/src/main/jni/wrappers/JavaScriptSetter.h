@@ -1,7 +1,7 @@
 #ifndef JavaScriptSetter_h
 #define PROPERTYSETTER_H
 
-#include <DLValue.h>
+#include <JavaScriptValue.h>
 #include "jni_init.h"
 
 /**

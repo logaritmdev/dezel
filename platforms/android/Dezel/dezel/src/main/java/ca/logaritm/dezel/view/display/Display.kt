@@ -12,6 +12,38 @@ public class Display {
 	//--------------------------------------------------------------------------
 
 	/**
+	 * The display's window
+	 * @property window
+	 * @since 0.7.0
+	 */
+	public var window: DisplayNode? = null
+		set(value) = DisplayExternal.setWindow(this.handle, value?.handle ?: 0)
+
+	/**
+	 * The display's viewport width.
+	 * @property viewportWidth
+	 * @since 0.7.0
+	 */
+	public var viewportWidth: Double = 0.0
+		set(value) = DisplayExternal.setViewportWidth(this.handle, value)
+
+	/**
+	 * The display's viewport height.
+	 * @property viewportHeight
+	 * @since 0.7.0
+	 */
+	public var viewportHeight: Double = 0.0
+		set(value) = DisplayExternal.setViewportHeight(this.handle, value)
+
+	/**
+	 * The display's scale.
+	 * @property scale
+	 * @since 0.7.0
+	 */
+	public var scale: Double = 1.0
+		set(value) = DisplayExternal.setScale(this.handle, value)
+
+	/**
 	 * Whether the layout is invalid.
 	 * @property invalid
 	 * @since 0.7.0
@@ -63,40 +95,8 @@ public class Display {
 		DisplayReference.register(this)
 	}
 
-	/**
-	 * Assigns the display's viewport width.
-	 * @property setViewportWidth
-	 * @since 0.7.0
-	 */
-	public fun setViewportWidth(value: Float) {
-		DisplayExternal.setViewportWidth(this.handle, value.toDouble())
-	}
+	public fun setVariable(name: String, value: String) {
 
-	/**
-	 * Assigns the display's viewport height.
-	 * @method setViewportHeight
-	 * @since 0.7.0
-	 */
-	public fun setViewportHeight(value: Float) {
-		DisplayExternal.setViewportHeight(this.handle, value.toDouble())
-	}
-
-	/**
-	 * Assigns the display's scale.
-	 * @property setScale
-	 * @since 0.7.0
-	 */
-	public fun setScale(value: Float) {
-		DisplayExternal.setScale(this.handle, value.toDouble())
-	}
-
-	/**
-	 * Assigns the display's window.
-	 * @property setWindow
-	 * @since 0.7.0
-	 */	
-	public fun setWindow(window: DisplayNode) {
-		DisplayExternal.setWindow(this.handle, window.handle)
 	}
 
 	/**

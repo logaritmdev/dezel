@@ -4,7 +4,7 @@
 static JSValueRef
 JavaScriptSetterWrapperCallback(JSContextRef context, JSObjectRef object, JSObjectRef callee, size_t argc, JSValueRef const *argv)
 {
-	auto wrapper = reinterpret_cast<JavaScriptSetterWrapperRef>(DLValueGetAssociatedObject(context, callee));
+	auto wrapper = reinterpret_cast<JavaScriptSetterWrapperRef>(JavaScriptValueGetAssociatedObject(context, callee));
 
 	auto result = JavaScriptSetterExecute(
 		wrapper->env,
@@ -22,9 +22,9 @@ JavaScriptSetterWrapperCallback(JSContextRef context, JSObjectRef object, JSObje
 }
 
 static void
-JavaScriptSetterWrapperFinalize(JSContextRef context, DLValueDataRef handle)
+JavaScriptSetterWrapperFinalize(JSContextRef context, JavaScriptValueDataRef handle)
 {
-	auto wrapper = reinterpret_cast<JavaScriptSetterWrapperRef>(DLValueDataGetAssociatedObject(handle));
+	auto wrapper = reinterpret_cast<JavaScriptSetterWrapperRef>(JavaScriptValueDataGetAssociatedObject(handle));
 
 	if (wrapper) {
 		wrapper->env->DeleteGlobalRef(wrapper->ctx);
@@ -35,7 +35,7 @@ JavaScriptSetterWrapperFinalize(JSContextRef context, DLValueDataRef handle)
 JavaScriptSetterWrapperRef
 JavaScriptSetterWrapperCreate(JNIEnv* env, JSContextRef context, jobject callback, const char* name, jobject ctx)
 {
-	auto function = DLValueCreateFunction(context, &JavaScriptSetterWrapperCallback, name);
+	auto function = JavaScriptValueCreateFunction(context, &JavaScriptSetterWrapperCallback, name);
 
 	auto wrapper = new JavaScriptSetterWrapper();
 	wrapper->env = env;
@@ -43,8 +43,8 @@ JavaScriptSetterWrapperCreate(JNIEnv* env, JSContextRef context, jobject callbac
 	wrapper->callback = JNIGlobalRef(env, callback);
 	wrapper->function = function;
 
-	DLValueSetFinalizeHandler(context, function, &JavaScriptSetterWrapperFinalize);
-	DLValueSetAssociatedObject(context, function, wrapper);
+	JavaScriptValueSetFinalizeHandler(context, function, &JavaScriptSetterWrapperFinalize);
+	JavaScriptValueSetAssociatedObject(context, function, wrapper);
 
 	return wrapper;
 }

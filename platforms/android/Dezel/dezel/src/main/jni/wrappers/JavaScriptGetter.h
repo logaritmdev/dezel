@@ -1,7 +1,7 @@
 #ifndef JavaScriptGetter_h
 #define JavaScriptGetter_h
 
-#include <DLValue.h>
+#include <JavaScriptValue.h>
 #include "jni_init.h"
 
 /**

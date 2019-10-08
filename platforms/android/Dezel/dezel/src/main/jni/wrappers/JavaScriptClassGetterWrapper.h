@@ -1,8 +1,8 @@
 #ifndef JavaScriptClassGetterWrapper_h
 #define JavaScriptClassGetterWrapper_h
 
-#include <DLValue.h>
-#include <DLContext.h>
+#include <JavaScriptValue.h>
+#include <JavaScriptContext.h>
 #include "jni_init.h"
 #include "jni_module_core.h"
 

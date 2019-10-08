@@ -1,7 +1,7 @@
 #include "jni_init.h"
 #include "jni_module_core.h"
-#include <DLContext.h>
-#include <DLValue.h>
+#include <JavaScriptContext.h>
+#include <JavaScriptValue.h>
 #include "JavaScriptSetter.h"
 #include "JavaScriptClassSetterWrapper.h"
 
@@ -14,13 +14,13 @@ JavaScriptClassSetterWrapperGetCallback(JNIEnv* env, jclass cls, const char* fqm
 static JSValueRef
 JavaScriptClassSetterWrapperCallback(JSContextRef context, JSObjectRef object, JSObjectRef callee, size_t argc, JSValueRef const *argv)
 {
-	auto wrapper = reinterpret_cast<JavaScriptClassSetterWrapperRef>(DLValueGetAssociatedObject(context, callee));
+	auto wrapper = reinterpret_cast<JavaScriptClassSetterWrapperRef>(JavaScriptValueGetAssociatedObject(context, callee));
 
 	auto result = JavaScriptSetterExecute(
 		wrapper->env,
 		wrapper->ctx,
 		wrapper->cls,
-		reinterpret_cast<jobject>(DLValueGetAssociatedObject(context, object)),
+		reinterpret_cast<jobject>(JavaScriptValueGetAssociatedObject(context, object)),
 		wrapper->callback,
 		object,
 		callee,
@@ -32,9 +32,9 @@ JavaScriptClassSetterWrapperCallback(JSContextRef context, JSObjectRef object, J
 }
 
 static void
-JavaScriptClassSetterWrapperFinalize(JSContextRef context, DLValueDataRef handle)
+JavaScriptClassSetterWrapperFinalize(JSContextRef context, JavaScriptValueDataRef handle)
 {
-	auto wrapper = reinterpret_cast<JavaScriptClassSetterWrapperRef>(DLValueDataGetAssociatedObject(handle));
+	auto wrapper = reinterpret_cast<JavaScriptClassSetterWrapperRef>(JavaScriptValueDataGetAssociatedObject(handle));
 
 	if (wrapper) {
 		wrapper->env->DeleteGlobalRef(wrapper->ctx);
@@ -45,7 +45,7 @@ JavaScriptClassSetterWrapperFinalize(JSContextRef context, DLValueDataRef handle
 JavaScriptClassSetterWrapperRef
 JavaScriptClassSetterWrapperCreate(JNIEnv* env, JSContextRef context, const char* name, const char* fqmn, jclass cls, jobject ctx)
 {
-	auto function = DLValueCreateFunction(context, &JavaScriptClassSetterWrapperCallback, name);
+	auto function = JavaScriptValueCreateFunction(context, &JavaScriptClassSetterWrapperCallback, name);
 
 	auto wrapper = new JavaScriptClassSetterWrapper();
 	wrapper->env = env;
@@ -54,8 +54,8 @@ JavaScriptClassSetterWrapperCreate(JNIEnv* env, JSContextRef context, const char
 	wrapper->callback = JavaScriptClassSetterWrapperGetCallback(env, cls, fqmn);
 	wrapper->function = function;
 
-	DLValueSetFinalizeHandler(context, function, &JavaScriptClassSetterWrapperFinalize);
-	DLValueSetAssociatedObject(context, function, wrapper);
+	JavaScriptValueSetFinalizeHandler(context, function, &JavaScriptClassSetterWrapperFinalize);
+	JavaScriptValueSetAssociatedObject(context, function, wrapper);
 
 	return wrapper;
 }

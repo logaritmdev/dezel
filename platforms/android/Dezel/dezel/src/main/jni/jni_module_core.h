@@ -2,8 +2,8 @@
 #define JNIModuleCore_h
 
 #include <jni.h>
-#include <DLValue.h>
-#include <DLContext.h>
+#include <JavaScriptValue.h>
+#include <JavaScriptContext.h>
 #include "jni_init.h"
 
 /**
@@ -68,9 +68,9 @@ extern const long long kJavaScriptExceptionWrapperKey;
 
 /**
  * Initializes JNI related variables.
- * @function JNI_OnLoad_core
- * @since 0.1.0
+ * @function JNICoreModule
+ * @since 0.7.0
  */
-void JNI_OnLoad_core(JNIEnv* env);
+void JNICoreModule(JNIEnv* env);
 
 #endif

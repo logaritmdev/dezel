@@ -2398,7 +2398,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's expandable factor.
+	 * The view's expand factor.
 	 * @property expandFactor
 	 * @since 0.7.0
 	 */

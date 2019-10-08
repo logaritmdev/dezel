@@ -163,7 +163,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	 * @since 0.4.0
 	 */
 	public val isUndefined: Boolean
-		get() = JavaScriptValueExternal.getType(this.context.handle, this.handle) == 1
+		get() = JavaScriptValueExternal.getType(this.context.handle, this.handle) == kJavaScriptValueTypeUndefined
 
 	/**
 	 * Indicates whether the value is null.
@@ -171,7 +171,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	 * @since 0.4.0
 	 */
 	public val isNull: Boolean
-		get() = JavaScriptValueExternal.getType(this.context.handle, this.handle) == 2
+		get() = JavaScriptValueExternal.getType(this.context.handle, this.handle) == kJavaScriptValueTypeNull
 
 	/**
 	 * Indicates whether the value is a toBoolean.
@@ -179,7 +179,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	 * @since 0.4.0
 	 */
 	public val isBoolean: Boolean
-		get() = JavaScriptValueExternal.getType(this.context.handle, this.handle) == 3
+		get() = JavaScriptValueExternal.getType(this.context.handle, this.handle) == kJavaScriptValueTypeBoolean
 
 	/**
 	 * Indicates whether the value is a toNumber.
@@ -187,7 +187,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	 * @since 0.4.0
 	 */
 	public val isNumber: Boolean
-		get() = JavaScriptValueExternal.getType(this.context.handle, this.handle) == 4
+		get() = JavaScriptValueExternal.getType(this.context.handle, this.handle) == kJavaScriptValueTypeNumber
 
 	/**
 	 * Indicates whether the value is a toString.
@@ -195,7 +195,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	 * @since 0.4.0
 	 */
 	public val isString: Boolean
-		get() = JavaScriptValueExternal.getType(this.context.handle, this.handle) == 5
+		get() = JavaScriptValueExternal.getType(this.context.handle, this.handle) == kJavaScriptValueTypeString
 
 	/**
 	 * Indicates whether the value is an object.
@@ -203,7 +203,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	 * @since 0.4.0
 	 */
 	public val isObject: Boolean
-		get() = JavaScriptValueExternal.getType(this.context.handle, this.handle) == 6
+		get() = JavaScriptValueExternal.getType(this.context.handle, this.handle) == kJavaScriptValueTypeObject
 
 	/**
 	 * Indicates whether the value is an array.
@@ -211,7 +211,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	 * @since 0.4.0
 	 */
 	public val isArray: Boolean
-		get() = JavaScriptValueExternal.getType(this.context.handle, this.handle) == 7
+		get() = JavaScriptValueExternal.getType(this.context.handle, this.handle) == kJavaScriptValueTypeArray
 
 	/**
 	 * Indicates whether the value is a function.
@@ -219,7 +219,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	 * @since 0.4.0
 	 */
 	public val isFunction: Boolean
-		get() = JavaScriptValueExternal.getType(this.context.handle, this.handle) == 8
+		get() = JavaScriptValueExternal.getType(this.context.handle, this.handle) == kJavaScriptValueTypeFunction
 
 	//--------------------------------------------------------------------------
 	// Properties - Conversions

@@ -6,10 +6,10 @@ import ca.logaritm.dezel.application.application
 import ca.logaritm.dezel.core.*
 import ca.logaritm.dezel.extension.type.clamp
 import ca.logaritm.dezel.extension.type.max
-import ca.logaritm.dezel.layout.LayoutNode
 import ca.logaritm.dezel.modules.view.JavaScriptView
 import ca.logaritm.dezel.view.TextInput
 import ca.logaritm.dezel.view.TextInputListener
+import ca.logaritm.dezel.view.display.DisplayNode
 import ca.logaritm.dezel.view.graphic.Color
 import ca.logaritm.dezel.view.graphic.Convert
 import ca.logaritm.dezel.view.type.*
@@ -79,8 +79,8 @@ open class JavaScriptTextInput(context: JavaScriptContext) : JavaScriptView(cont
 
 		when (this.fontSize.unit) {
 			JavaScriptPropertyUnit.PX -> value = Convert.toPx(this.fontSize.number)
-			JavaScriptPropertyUnit.VW -> value = Convert.toPx(this.fontSize.number / 100 * this.layoutNode.viewportWidth)
-			JavaScriptPropertyUnit.VH -> value = Convert.toPx(this.fontSize.number / 100 * this.layoutNode.viewportHeight)
+			JavaScriptPropertyUnit.VW -> value = Convert.toPx(this.fontSize.number / 100 * this.displayNode.display.viewportWidth)
+			JavaScriptPropertyUnit.VH -> value = Convert.toPx(this.fontSize.number / 100 * this.displayNode.display.viewportHeight)
 			else                      -> value = Convert.toPx(this.fontSize.number)
 		}
 
@@ -260,7 +260,7 @@ open class JavaScriptTextInput(context: JavaScriptContext) : JavaScriptView(cont
 	 * @method onResolvePadding
 	 * @since 0.7.0
 	 */
-	override fun onResolvePadding(node: LayoutNode) {
+	override fun onResolvePadding(node: DisplayNode) {
 		super.onResolvePadding(node)
 		this.view.paddingTop = Convert.toPx(this.resolvedPaddingTop.toFloat())
 		this.view.paddingLeft = Convert.toPx(this.resolvedPaddingLeft.toFloat())

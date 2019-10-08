@@ -1,7 +1,7 @@
 #ifndef JavaScriptFunction_h
 #define JavaScriptFunction_h
 
-#include <DLValue.h>
+#include <JavaScriptValue.h>
 #include "jni_init.h"
 
 /**

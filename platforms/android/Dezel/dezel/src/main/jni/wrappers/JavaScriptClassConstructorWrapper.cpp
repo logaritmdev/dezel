@@ -1,7 +1,7 @@
 #include "jni_init.h"
 #include "jni_module_core.h"
-#include <DLContext.h>
-#include <DLValue.h>
+#include <JavaScriptContext.h>
+#include <JavaScriptValue.h>
 #include "JavaScriptFunction.h"
 #include "JavaScriptFunctionWrapper.h"
 #include "JavaScriptClassConstructorWrapper.h"
@@ -21,7 +21,7 @@ JavaScriptClassConstructorWrapperGetConstructor(JNIEnv* env, jclass cls)
 static JSValueRef
 JavaScriptClassConstructorWrapperCallback(JSContextRef context, JSObjectRef object, JSObjectRef callee, size_t argc, JSValueRef const *argv)
 {
-	auto wrapper = reinterpret_cast<JavaScriptClassConstructorWrapperRef>(DLValueGetAssociatedObject(context, callee));
+	auto wrapper = reinterpret_cast<JavaScriptClassConstructorWrapperRef>(JavaScriptValueGetAssociatedObject(context, callee));
 
 	auto instance = wrapper->env->NewObject(
 		wrapper->cls,
@@ -37,7 +37,7 @@ JavaScriptClassConstructorWrapperCallback(JSContextRef context, JSObjectRef obje
 		false
 	);
 
-	DLValueSetAssociatedObject(context, object, wrapper->env->NewGlobalRef(instance));
+	JavaScriptValueSetAssociatedObject(context, object, wrapper->env->NewGlobalRef(instance));
 
 	JavaScriptFunctionExecute(
 		wrapper->env,
@@ -57,9 +57,9 @@ JavaScriptClassConstructorWrapperCallback(JSContextRef context, JSObjectRef obje
 }
 
 static void
-JavaScriptClassConstructorWrapperFinalize(JSContextRef context, DLValueDataRef handle)
+JavaScriptClassConstructorWrapperFinalize(JSContextRef context, JavaScriptValueDataRef handle)
 {
-	auto wrapper = reinterpret_cast<JavaScriptClassConstructorWrapperRef>(DLValueDataGetAssociatedObject(handle));
+	auto wrapper = reinterpret_cast<JavaScriptClassConstructorWrapperRef>(JavaScriptValueDataGetAssociatedObject(handle));
 
 	if (wrapper) {
 		wrapper->env->DeleteGlobalRef(wrapper->ctx);
@@ -70,7 +70,7 @@ JavaScriptClassConstructorWrapperFinalize(JSContextRef context, DLValueDataRef h
 JavaScriptClassConstructorWrapperRef
 JavaScriptClassConstructorWrapperCreate(JNIEnv* env, JSContextRef context, const char* name, const char* fqmn, jclass cls, jobject ctx)
 {
-	JSObjectRef function = DLValueCreateFunction(context, &JavaScriptClassConstructorWrapperCallback, name);
+	JSObjectRef function = JavaScriptValueCreateFunction(context, &JavaScriptClassConstructorWrapperCallback, name);
 
 	auto wrapper = new JavaScriptClassConstructorWrapper();
 	wrapper->env = env;
@@ -80,8 +80,8 @@ JavaScriptClassConstructorWrapperCreate(JNIEnv* env, JSContextRef context, const
 	wrapper->callback = JavaScriptClassConstructorWrapperGetCallback(env, cls, fqmn);
 	wrapper->constructor = JavaScriptClassConstructorWrapperGetConstructor(env, cls);
 
-	DLValueSetFinalizeHandler(context, function, &JavaScriptClassConstructorWrapperFinalize);
-	DLValueSetAssociatedObject(context, function, wrapper);
+	JavaScriptValueSetFinalizeHandler(context, function, &JavaScriptClassConstructorWrapperFinalize);
+	JavaScriptValueSetAssociatedObject(context, function, wrapper);
 
 	return wrapper;
 }

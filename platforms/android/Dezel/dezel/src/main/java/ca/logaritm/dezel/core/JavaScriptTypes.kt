@@ -5,6 +5,20 @@ import java.lang.reflect.Method
 import kotlin.reflect.KClass
 
 /**
+ * The JavaScript value type enum
+ * @alias JavaScriptFinalizeHandler
+ * @since 0.1.0
+ */
+const val kJavaScriptValueTypeUndefined = 1
+const val kJavaScriptValueTypeNull = 2
+const val kJavaScriptValueTypeBoolean = 3
+const val kJavaScriptValueTypeNumber = 4
+const val kJavaScriptValueTypeString = 5
+const val kJavaScriptValueTypeObject = 6
+const val kJavaScriptValueTypeArray = 7
+const val kJavaScriptValueTypeFunction = 8
+
+/**
  * The type alias for function handler.
  * @alias JavaScriptFinalizeHandler
  * @since 0.1.0
