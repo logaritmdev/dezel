@@ -3,6 +3,7 @@
 
 #include "Rule.h"
 #include "Property.h"
+#include "PropertyList.h"
 
 #include <string>
 #include <vector>
@@ -23,12 +24,10 @@ class Ruleset {
 private:
 
 	Ruleset* parent = nullptr;
-
 	vector<Rule*> rules;
 	vector<Ruleset*> children;
-	vector<Rule*> modifiers;
-	vector<Property*> properties;
-	
+
+	PropertyList properties;
 
 public:
 

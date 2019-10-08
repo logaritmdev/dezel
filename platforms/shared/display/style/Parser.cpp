@@ -159,7 +159,7 @@ Parser::parseRuleset(TokenList& tokens)
 		auto property = this->parseProperty(tokens);
 
 		if (property) {
-			ruleset->properties.push_back(property);
+			ruleset->properties.set(property->name, property);
 			tokens.nextToken();
 			tokens.skipSpace();
 			continue;

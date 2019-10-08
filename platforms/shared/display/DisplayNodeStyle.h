@@ -3,6 +3,9 @@
 
 class DisplayNodeStyle {
 
+public:
+	void resolve();
+
 };
 
 #endif

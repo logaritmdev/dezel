@@ -26,6 +26,8 @@ private:
 	unordered_map<string, Variable*> variables;
 	vector<Ruleset*> rulesets;
 
+	unordered_map<string, vector<Ruleset*>> map;
+
 public:
 
 	friend class Parser;
