@@ -26,7 +26,7 @@ public:
 
 	StringValue(string value);
 
-	string getValue() const {
+	const string& getValue() const {
 		return this->value;
 	}
 

@@ -17,6 +17,7 @@ public:
 	friend class Stylesheet;
 
 	NullValue();
+
 	string toString();
 
 };

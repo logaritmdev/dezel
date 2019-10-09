@@ -187,6 +187,8 @@
 		C792E95B234BDEA70022D712 /* StringValue.h in Headers */ = {isa = PBXBuildFile; fileRef = C792E933234BDEA70022D712 /* StringValue.h */; };
 		C792E95F234CC1E70022D712 /* PropertyList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C792E95D234CC1E70022D712 /* PropertyList.cpp */; };
 		C792E960234CC1E70022D712 /* PropertyList.h in Headers */ = {isa = PBXBuildFile; fileRef = C792E95E234CC1E70022D712 /* PropertyList.h */; };
+		C792E974234D6E6E0022D712 /* ParseException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C792E972234D6E6D0022D712 /* ParseException.cpp */; };
+		C792E975234D6E6E0022D712 /* ParseException.h in Headers */ = {isa = PBXBuildFile; fileRef = C792E973234D6E6E0022D712 /* ParseException.h */; };
 		C7964D642033E67E00F454F1 /* CALayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7964D632033E67E00F454F1 /* CALayer.swift */; };
 		C79E6EB42207650F0006DED8 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = C79E6EB32207650F0006DED8 /* Date.swift */; };
 		C7A19E2E20AB721F00367E91 /* PlatformModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A19E2D20AB721F00367E91 /* PlatformModule.swift */; };
@@ -488,6 +490,8 @@
 		C792E933234BDEA70022D712 /* StringValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StringValue.h; path = ../../../../../shared/display/style/StringValue.h; sourceTree = "<group>"; };
 		C792E95D234CC1E70022D712 /* PropertyList.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PropertyList.cpp; path = ../../../../../shared/display/style/PropertyList.cpp; sourceTree = "<group>"; };
 		C792E95E234CC1E70022D712 /* PropertyList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PropertyList.h; path = ../../../../../shared/display/style/PropertyList.h; sourceTree = "<group>"; };
+		C792E972234D6E6D0022D712 /* ParseException.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ParseException.cpp; path = ../../../../../shared/display/style/ParseException.cpp; sourceTree = "<group>"; };
+		C792E973234D6E6E0022D712 /* ParseException.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ParseException.h; path = ../../../../../shared/display/style/ParseException.h; sourceTree = "<group>"; };
 		C7964D632033E67E00F454F1 /* CALayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CALayer.swift; sourceTree = "<group>"; };
 		C79E6EB32207650F0006DED8 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		C7A19E2D20AB721F00367E91 /* PlatformModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatformModule.swift; sourceTree = "<group>"; };
@@ -903,6 +907,7 @@
 			isa = PBXGroup;
 			children = (
 				C792E95C234BE2C50022D712 /* Values */,
+				C792E976234D6F200022D712 /* Exception */,
 				C792E929234BDEA70022D712 /* Argument.cpp */,
 				C792E927234BDEA70022D712 /* Argument.h */,
 				C792E932234BDEA70022D712 /* Function.cpp */,
@@ -967,6 +972,15 @@
 				C792E928234BDEA70022D712 /* VariableValue.h */,
 			);
 			name = Values;
+			sourceTree = "<group>";
+		};
+		C792E976234D6F200022D712 /* Exception */ = {
+			isa = PBXGroup;
+			children = (
+				C792E972234D6E6D0022D712 /* ParseException.cpp */,
+				C792E973234D6E6E0022D712 /* ParseException.h */,
+			);
+			name = Exception;
 			sourceTree = "<group>";
 		};
 		C7A19E2C20AB720E00367E91 /* Platform */ = {
@@ -1420,6 +1434,7 @@
 				C792E945234BDEA70022D712 /* Ruleset.h in Headers */,
 				C792E909234BDE900022D712 /* LayoutResolver.h in Headers */,
 				C792E904234BDE900022D712 /* RelativeLayoutResolver.h in Headers */,
+				C792E975234D6E6E0022D712 /* ParseException.h in Headers */,
 				C792E8DA234BDE630022D712 /* DisplayNodeContentSize.h in Headers */,
 				C7E8A5032016244F005139F6 /* Runtime.h in Headers */,
 				C792E948234BDEA70022D712 /* TokenizerStream.h in Headers */,
@@ -1706,6 +1721,7 @@
 				C7E8A5022016244F005139F6 /* String.swift in Sources */,
 				C70617A420F7C03100499FDB /* TransitionListener.swift in Sources */,
 				C7BFD168207D541800AAD31C /* JavaScriptTextInput.swift in Sources */,
+				C792E974234D6E6E0022D712 /* ParseException.cpp in Sources */,
 				C7B40F6320B7170E00892C92 /* TextAreaDelegate.swift in Sources */,
 				C7D89263206575CB00E85115 /* JavaScriptTextView.swift in Sources */,
 				C7E8A528201624A2005139F6 /* JavaScriptClassSetterWrapper.swift in Sources */,

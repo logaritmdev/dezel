@@ -29,6 +29,10 @@ public:
 
 	Variable(string name);
 
+	const vector<Value*>& getValues() const {
+		return this->values;
+	}
+
 	string toString();
 
 };

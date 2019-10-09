@@ -48,6 +48,8 @@ enum ClassType {
 	kClassTypeState
 };
 
+class Tokenizer;
+
 class Token {
 
 private:
@@ -55,11 +57,15 @@ private:
 	string name = "";
 	string unit = "";
 
+	size_t offset = 0;
+
 	TokenType type = kTokenTypeNone;
 	BlockType blockType = kBlockTypeNone;
 	ClassType classType = kClassTypeNone;
 
 public:
+
+	friend class Tokenizer;
 
 	Token(TokenType type);
 	Token(TokenType type, string name);
@@ -89,6 +95,10 @@ public:
 
 	ClassType getClassType() const {
 		return this->classType;
+	}
+
+	size_t getOffset() const {
+		return this->offset;
 	}
 
 	string description() const {

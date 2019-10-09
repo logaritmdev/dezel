@@ -37,6 +37,10 @@ public:
 		return this->vals.at(at);
 	}
 
+	size_t size() const {
+		return this->list.size();
+	}
+
 	inline iterator begin() noexcept {
 		return this->list.begin();
 	}

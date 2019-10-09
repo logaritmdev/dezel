@@ -1,5 +1,7 @@
 #include "TokenList.h"
 
+#include <iostream>
+
 namespace Dezel {
 namespace Style {
 
@@ -32,7 +34,7 @@ TokenList::peek(size_t offset, bool spaces) {
 			return this->getEndToken();
 		}
 
-		const auto token = this->curr + offset;
+		const auto token = this->curr + offset + push;
 
 		if (token->getType() == kTokenTypeSpace ||
 			token->getType() == kTokenTypeLinebreak) {

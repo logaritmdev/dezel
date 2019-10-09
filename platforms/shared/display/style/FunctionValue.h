@@ -30,8 +30,12 @@ public:
 
 	FunctionValue(string name);
 
-	string getName() const {
+	const string& getName() const {
 		return this->name;
+	}
+
+	const vector<Argument*>& getArguments() {
+		return this->arguments;
 	}
 
 	string toString();

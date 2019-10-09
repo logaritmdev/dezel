@@ -27,6 +27,15 @@ public:
 	friend class Stylesheet;
 
 	Property(string name);
+
+	const string& getName() const {
+		return this->name;
+	}
+
+	const vector<Value*>& getValues() const {
+		return this->values;
+	}
+
 	string toString(int depth = 0);
 
 };

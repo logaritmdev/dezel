@@ -26,6 +26,10 @@ public:
 	friend class Parser;
 	friend class Stylesheet;
 
+	const vector<Value*>& getValues() const {
+		return this->values;
+	}
+
 	string toString();
 
 };

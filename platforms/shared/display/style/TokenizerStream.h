@@ -225,6 +225,8 @@ public:
 
 		return true;
 	}
+
+	void transform(size_t offset, size_t& col, size_t& row);
 };
 
 }

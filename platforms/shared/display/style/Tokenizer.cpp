@@ -210,6 +210,8 @@ Tokenizer::Tokenizer(TokenizerStream &stream): stream(stream) {
 			return;
 		}
 
+		token.offset = this->stream.getOffset();
+
 		this->tokens.push_back(token);
 	}
 }
@@ -530,6 +532,12 @@ Tokenizer::consumeString(char end)
 	}
 
 	return Token(kTokenTypeString, value);
+}
+
+void
+Tokenizer::locate(const Token &token, size_t &col, size_t &row)
+{
+	this->stream.transform(token.getOffset(), col, row);
 }
 
 }

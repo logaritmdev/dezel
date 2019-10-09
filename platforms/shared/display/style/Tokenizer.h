@@ -61,13 +61,15 @@ private:
 public:
 
 	Tokenizer(TokenizerStream &stream);
-	
+
 	TokenList getTokens() {
 		return TokenList(
 			&(*this->tokens.begin()),
 			&(*this->tokens.end())
 		);
 	}
+
+	void locate(const Token& token, size_t& col, size_t& row);
 };
 
 }

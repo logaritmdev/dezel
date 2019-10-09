@@ -26,7 +26,7 @@ public:
 
 	VariableValue(string name);
 
-	string getName() const {
+	const string& getName() const {
 		return this->name;
 	}
 

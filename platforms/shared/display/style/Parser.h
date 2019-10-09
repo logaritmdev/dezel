@@ -32,7 +32,6 @@ private:
 	Selector* parseSelector(TokenList& tokens);
 	Property* parseProperty(TokenList& tokens);
 
-
 	Value* parseIdentValue(TokenList& tokens);
 	Value* parseStringValue(TokenList& tokens);
 	Value* parseNumberValue(TokenList& tokens);

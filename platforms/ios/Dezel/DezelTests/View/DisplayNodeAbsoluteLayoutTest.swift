@@ -23,7 +23,7 @@ class DisplayNodeAbsoluteLayoutTest: XCTestCase {
 		self.window.setContentHeight(type: kDisplayNodeContentSizeTypeLength, unit: kDisplayNodeContentSizeUnitPX, length: 480)
 		self.window.id = "Window"
 
-		self.display.setWindow(self.window)
+		self.display.window = self.window
 	}
 
 	func testNodePositionInPX() {

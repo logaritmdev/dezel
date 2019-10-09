@@ -64,6 +64,10 @@ public:
 		return this->states;
 	}
 
+	Combinator getCombinator() const {
+		return this->combinator;
+	}
+
 	const string& getHash() {
 
 		if (this->hash.length() == 0) {

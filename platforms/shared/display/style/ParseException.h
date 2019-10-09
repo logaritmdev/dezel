@@ -1,0 +1,47 @@
+#ifndef ParseException_h
+#define ParseException_h
+
+#include <string>
+#include <exception>
+
+namespace Dezel {
+namespace Style {
+
+using std::string;
+using std::exception;
+
+class ParseException : exception {
+
+private:
+
+	string message = "";
+	string error;
+	string token;
+	size_t col;
+	size_t row;
+
+public:
+
+	ParseException(string error, string token, size_t col, size_t row) : error(error), token(token), col(col), row(row) {
+		this->message.append(error);
+		this->message.append(" ");
+		this->message.append(token);
+		this->message.append(" at ");
+		this->message.append("line ");
+		this->message.append(std::to_string(row));
+		this->message.append(" ");
+		this->message.append("column ");
+		this->message.append(std::to_string(col));
+		this->message.append(" ");
+	}
+
+	const char* what () const throw () {
+    	return this->message.c_str();
+    }
+
+};
+
+}
+}
+
+#endif

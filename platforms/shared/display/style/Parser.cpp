@@ -12,6 +12,7 @@
 #include "FunctionValue.h"
 #include "VariableValue.h"
 #include "Argument.h"
+#include "ParseException.h"
 
 #include <iostream>
 #include <string>
@@ -48,18 +49,34 @@ Parser::Parser(Stylesheet* stylesheet, Tokenizer* tokenizer) : stylesheet(styles
 		auto ruleset = this->parseRuleset(tokens);
 
 		if (ruleset) {
-			std::cout << "Ruleset : " << ruleset->toString();
+			stylesheet->addRuleset(ruleset);
 			tokens.nextToken();
 			tokens.skipSpace();
+			continue;
 		}
 
 		auto variable = this->parseVariable(tokens);
 
 		if (variable) {
-			stylesheet->variables[variable->name] = variable;
+			stylesheet->addVariable(variable->name, variable);
 			tokens.nextToken();
 			tokens.skipSpace();
+			continue;
 		}
+
+		auto token = tokens.getCurrentToken();
+
+		size_t col = 0;
+		size_t row = 0;
+
+		this->tokenizer->locate(token, col, row);
+
+		throw ParseException(
+			"Unexpected token",
+			token.getName(),
+			col,
+			row
+		);
 
 	} while (tokens.hasNextToken());
 
@@ -132,7 +149,19 @@ Parser::parseRuleset(TokenList& tokens)
 		 * declaration list and we should abort.
 		 */
 
-		assert(false);
+		auto token = tokens.getCurrentToken();
+
+		size_t col = 0;
+		size_t row = 0;
+
+		this->tokenizer->locate(token, col, row);
+
+		throw ParseException(
+			"Unexpected token",
+			token.getName(),
+			col,
+			row
+		);
 	}
 
 	tokens.nextToken();
@@ -184,7 +213,19 @@ Parser::parseRuleset(TokenList& tokens)
 			 * declaration list and we should abort.
 			 */
 
-			assert(false);
+			auto token = tokens.getCurrentToken();
+
+			size_t col = 0;
+			size_t row = 0;
+
+			this->tokenizer->locate(token, col, row);
+
+			throw ParseException(
+				"Unexpected token",
+				token.getName(),
+				col,
+				row
+			);
 		}
 
 		break;
@@ -298,7 +339,19 @@ Parser::parseVariable(TokenList& tokens)
 			break;
 		}
 
-		assert(false); // INVALID TOKEN HERE
+		auto token = tokens.getCurrentToken();
+
+		size_t col = 0;
+		size_t row = 0;
+
+		this->tokenizer->locate(token, col, row);
+
+		throw ParseException(
+			"Unexpected token",
+			token.getName(),
+			col,
+			row
+		);
 
 		break;
 	}
@@ -502,7 +555,19 @@ Parser::parseNumberValue(TokenList& tokens)
 		return new NumberValue(tokens.getCurrentTokenName(), kValueUnitRad);
 	}
 
-	assert(false);
+	auto token = tokens.getCurrentToken();
+
+	size_t col = 0;
+	size_t row = 0;
+
+	this->tokenizer->locate(token, col, row);
+
+	throw ParseException(
+		"Unexpected token",
+		token.getName(),
+		col,
+		row
+	);
 }
 
 Value*
@@ -533,7 +598,20 @@ Parser::parseFunctionValue(TokenList& tokens)
 	tokens.nextToken();
 
 	if (tokens.getCurrentTokenType() != kTokenTypeParenthesisOpen) {
-		assert(false);
+
+		auto token = tokens.getCurrentToken();
+
+		size_t col = 0;
+		size_t row = 0;
+
+		this->tokenizer->locate(token, col, row);
+
+		throw ParseException(
+			"Unexpected token",
+			token.getName(),
+			col,
+			row
+		);
 	}
 
 	tokens.nextToken();
@@ -583,7 +661,19 @@ Parser::parseFunctionValue(TokenList& tokens)
 			break;
 		}
 
-		assert(false);
+		auto token = tokens.getCurrentToken();
+
+		size_t col = 0;
+		size_t row = 0;
+
+		this->tokenizer->locate(token, col, row);
+
+		throw ParseException(
+			"Unexpected token",
+			token.getName(),
+			col,
+			row
+		);
 	}
 
 	return function;
