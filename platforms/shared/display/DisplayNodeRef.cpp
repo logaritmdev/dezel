@@ -558,6 +558,24 @@ DisplayNodeRemoveChild(DisplayNodeRef node, DisplayNodeRef child)
 }
 
 void
+DisplayNodeInvalidateSize(DisplayNodeRef node)
+{
+	reinterpret_cast<DisplayNode*>(node)->invalidateSize();
+}
+
+void
+DisplayNodeInvalidateOrigin(DisplayNodeRef node)
+{
+	reinterpret_cast<DisplayNode*>(node)->invalidateOrigin();
+}
+
+void
+DisplayNodeInvalidateLayout(DisplayNodeRef node)
+{
+	reinterpret_cast<DisplayNode*>(node)->invalidateLayout();
+}
+
+void
 DisplayNodeResolve(DisplayNodeRef node)
 {
 	reinterpret_cast<DisplayNode*>(node)->resolve();

@@ -652,6 +652,27 @@ void DisplayNodeInsertChild(DisplayNodeRef node, DisplayNodeRef child, int index
 void DisplayNodeRemoveChild(DisplayNodeRef node, DisplayNodeRef child);
 
 /**
+ * Invalidates the node's size.
+ * @function DisplayNodeInvalidateSize
+ * @since 0.7.0
+ */
+void DisplayNodeInvalidateSize(DisplayNodeRef node);
+
+/**
+ * Invalidates the node's origin.
+ * @function DisplayNodeInvalidateOrigin
+ * @since 0.7.0
+ */
+void DisplayNodeInvalidateOrigin(DisplayNodeRef node);
+
+/**
+ * Invalidates the node's layout.
+ * @function DisplayNodeInvalidateLayout
+ * @since 0.7.0
+ */
+void DisplayNodeInvalidateLayout(DisplayNodeRef node);
+
+/**
  * Resolves layouts until the specified node is resolved.
  * @function DisplayNodeResolve
  * @since 0.7.0
@@ -675,28 +696,28 @@ void DisplayNodeSetMeasureSizeCallback(DisplayNodeRef node, DisplayNodeMeasureCa
 /**
  * Assigns the callback that is called when the node size changes.
  * @function DisplayNodeSetResolveSizeCallback
- * @since 0.2.0
+ * @since 0.7.0
  */
 void DisplayNodeSetResolveSizeCallback(DisplayNodeRef node, DisplayNodeResolveCallback callback);
 
 /**
  * Assigns the callback that is called when the node position changes.
  * @function DisplayNodeSetResolveOriginCallback
- * @since 0.2.0
+ * @since 0.7.0
  */
 void DisplayNodeSetResolveOriginCallback(DisplayNodeRef node, DisplayNodeResolveCallback callback);
 
 /**
  * Assigns the callback that is called when the node inner size changes.
  * @function DisplayNodeSetResolveInnerSizeCallback
- * @since 0.2.0
+ * @since 0.7.0
  */
 void DisplayNodeSetResolveInnerSizeCallback(DisplayNodeRef node, DisplayNodeResolveCallback callback);
 
 /**
  * Assigns the callback that is called when the node content size changes.
  * @function DisplayNodeSetResolveContentSizeCallback
- * @since 0.2.0
+ * @since 0.7.0
  */
 void DisplayNodeSetResolveContentSizeCallback(DisplayNodeRef node, DisplayNodeResolveCallback callback);
 

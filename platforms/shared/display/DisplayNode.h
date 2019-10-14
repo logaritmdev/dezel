@@ -25,16 +25,16 @@ class DisplayNode {
 
 private:
 
-	Display* display;
-
 	DisplayNodeType type = kDisplayNodeTypeView;
+
 	DisplayNodeFrame* frame;
 	DisplayNodeStyle* style;
-	
-	string id = "";
 
+	Display* display = nullptr;
 	DisplayNode* parent = nullptr;
     vector<DisplayNode*> children;
+
+	string id = "";
 
 	bool visible = true;
 	bool invalid = false;
@@ -423,6 +423,10 @@ public:
 	void appendChild(DisplayNode* child);
 	void insertChild(DisplayNode* child, int index);
 	void removeChild(DisplayNode* child);
+
+	void invalidateSize();
+	void invalidateOrigin();
+	void invalidateLayout();
 
 	void resolve();
 	void measure();

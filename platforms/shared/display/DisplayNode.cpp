@@ -113,6 +113,24 @@ DisplayNode::removeChild(DisplayNode* child)
 }
 
 void
+DisplayNode::invalidateSize()
+{
+	this->frame->invalidateSize();
+}
+
+void
+DisplayNode::invalidateOrigin()
+{
+	this->frame->invalidateOrigin();
+}
+
+void
+DisplayNode::invalidateLayout()
+{
+	this->frame->invalidateLayout();
+}
+
+void
 DisplayNode::setMeasureSizeCallback(DisplayNodeMeasureCallback callback)
 {
 	this->measureSizeCallback = callback;
