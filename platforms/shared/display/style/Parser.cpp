@@ -2,9 +2,9 @@
 #include "Token.h"
 #include "Tokenizer.h"
 #include "TokenizerStream.h"
-#include "Ruleset.h"
-#include "Rule.h"
+#include "Descriptor.h"
 #include "Selector.h"
+#include "Fragment.h"
 #include "NullValue.h"
 #include "StringValue.h"
 #include "NumberValue.h"
@@ -46,315 +46,322 @@ Parser::Parser(Stylesheet* stylesheet, Tokenizer* tokenizer) : stylesheet(styles
 
 	do {
 
-		auto ruleset = this->parseRuleset(tokens);
-
-		if (ruleset) {
-			stylesheet->addRuleset(ruleset);
-			tokens.nextToken();
-			tokens.skipSpace();
-			continue;
-		}
-
 		auto variable = this->parseVariable(tokens);
 
 		if (variable) {
-			stylesheet->addVariable(variable->name, variable);
-			tokens.nextToken();
-			tokens.skipSpace();
+			stylesheet->addVariable(variable);
 			continue;
 		}
 
-		auto token = tokens.getCurrentToken();
+		if (this->parseDescriptor(tokens, stylesheet)) {
+			continue;
+		}
 
-		size_t col = 0;
-		size_t row = 0;
+		if (tokens.getCurrTokenType() == kTokenTypeEnd) {
+			return;
+		}
 
-		this->tokenizer->locate(token, col, row);
+		/*
+		 * If we reach this point it probably mean there's a
+		 * syntax error.
+		 */
 
-		throw ParseException(
-			"Unexpected token",
-			token.getName(),
-			col,
-			row
-		);
+		this->unexpectedToken(tokens);
 
 	} while (tokens.hasNextToken());
+}
 
-	for (auto item : stylesheet->variables) {
-		std::cout << "Variable: " << item.second->toString();
+bool
+Parser::parseDescriptor(TokenList& tokens, Stylesheet* target)
+{
+	auto result = this->parseDescriptor(tokens);
+
+	if (result) {
+		target->addDescriptor(result);
+		return true;
 	}
-}
-
-bool
-Parser::parseStatement(TokenList& tokens)
-{
-
-
-//	auto variable = this->parseVariable();
-//
-//	if (variable) {
-//		return true;
-//	}
 
 	return false;
 }
 
 bool
-Parser::parseDelimiter(TokenList& tokens)
+Parser::parseDescriptor(TokenList& tokens, Descriptor* target)
 {
+	auto result = this->parseDescriptor(tokens);
+
+	if (result) {
+		target->addChildDescriptor(result);
+		return true;
+	}
+
 	return false;
 }
 
-Ruleset*
-Parser::parseRuleset(TokenList& tokens)
+bool
+Parser::parseStyleDescriptor(TokenList& tokens, Descriptor* target)
 {
-	if (tokens.getCurrentTokenType() != kTokenTypeHash &&
-		tokens.getCurrentTokenType() != kTokenTypeIdent &&
-		tokens.getCurrentTokenType() != kTokenTypeClass &&
-		tokens.getCurrentTokenType() != kTokenTypeAmpersand) {
+	auto result = this->parseStyleDescriptor(tokens);
+
+	if (result) {
+		target->addStyleDescriptor(result);
+		return true;
+	}
+
+	return false;
+}
+
+bool
+Parser::parseStateDescriptor(TokenList& tokens, Descriptor* target)
+{
+	auto result = this->parseStateDescriptor(tokens);
+
+	if (result) {
+		target->addStateDescriptor(result);
+		return true;
+	}
+
+	return false;
+}
+
+bool
+Parser::parseChildDescriptor(TokenList& tokens, Descriptor* target)
+{
+	auto result = this->parseChildDescriptor(tokens);
+
+	if (result) {
+		target->addChildDescriptor(result);
+		return true;
+	}
+
+	return false;
+}
+
+bool
+Parser::parseProperty(TokenList& tokens, Descriptor* target)
+{
+	auto result = this->parseProperty(tokens);
+
+	if (result) {
+		target->addProperty(result);
+		return true;
+	}
+
+	return false;
+}
+
+Descriptor*
+Parser::parseDescriptor(TokenList& tokens)
+{
+	if (tokens.getCurrTokenType() != kTokenTypeHash &&
+		tokens.getCurrTokenType() != kTokenTypeIdent) {
 		return nullptr;
 	}
 
-	auto ruleset = new Ruleset();
+	auto descriptor = new Descriptor();
 
-	while (true) {
+	descriptor->selector = this->parseSelector(tokens);
 
-		/*
-		 * Start parsing rules until something other than a rule or a
-		 * comma is found.
-		 */
+	tokens.skipSpace();
 
-		auto rule = this->parseRule(tokens);
-
-		if (rule) {
-			ruleset->rules.push_back(rule);
-			continue;
-		}
-
-		tokens.skipSpace();
-
-		if (tokens.getCurrentTokenType() == kTokenTypeComma) {
-			tokens.nextToken();
-			tokens.skipSpace();
-			continue;
-		}
-
-		break;
-	}
-
-	if (tokens.getCurrentTokenType() != kTokenTypeCurlyBracketOpen) {
-
-		/*
-		 * If something other than a bracked is found we have an invalid
-		 * declaration list and we should abort.
-		 */
-
-		auto token = tokens.getCurrentToken();
-
-		size_t col = 0;
-		size_t row = 0;
-
-		this->tokenizer->locate(token, col, row);
-
-		throw ParseException(
-			"Unexpected token",
-			token.getName(),
-			col,
-			row
-		);
-	}
+	this->assertTokenType(tokens, kTokenTypeCurlyBracketOpen);
 
 	tokens.nextToken();
 	tokens.skipSpace();
 
-	while (true) {
+	this->parseDescriptorBlock(tokens, descriptor);
 
-		/*
-		 * An ampersand character means a reference to the current block
-		 * of rules. It can be safely ignored when followed by a space.
-		 */
+	this->assertTokenType(tokens, kTokenTypeCurlyBracketClose);
 
-		if (tokens.peek(0).getType() == kTokenTypeAmpersand &&
-			tokens.peek(0).getType() == kTokenTypeSpace) {
-			tokens.nextToken();
-			tokens.skipSpace();
-			continue;
-		}
+	tokens.nextToken();
+	tokens.skipSpace();
 
-		/*
-		 * Parses properties.
-		 */
-
-		auto property = this->parseProperty(tokens);
-
-		if (property) {
-			ruleset->properties.set(property->name, property);
-			tokens.nextToken();
-			tokens.skipSpace();
-			continue;
-		}
-
-		/*
-		 * Parses child rulesets.
-		 */
-
-		auto child = this->parseRuleset(tokens);
-
-		if (child) {
-			child->parent = ruleset;
-			child->parent->children.push_back(child);
-			continue;
-		}
-
-		if (tokens.getCurrentTokenType() != kTokenTypeCurlyBracketClose) {
-
-			/*
-			 * If something other than a bracked is found we have an invalid
-			 * declaration list and we should abort.
-			 */
-
-			auto token = tokens.getCurrentToken();
-
-			size_t col = 0;
-			size_t row = 0;
-
-			this->tokenizer->locate(token, col, row);
-
-			throw ParseException(
-				"Unexpected token",
-				token.getName(),
-				col,
-				row
-			);
-		}
-
-		break;
-	}
-
-	/*
-	 * At this point the current token is the closing curly bracket. Skip
-	 * it so the next token is ready to read.
-	 */
-
-	 tokens.nextToken();
-	 tokens.skipSpace();
-
-	return ruleset;
+	return descriptor;
 }
 
-Rule*
-Parser::parseRule(TokenList& tokens)
+Descriptor*
+Parser::parseChildDescriptor(TokenList& tokens)
 {
-	if (tokens.getCurrentTokenType() != kTokenTypeHash &&
-		tokens.getCurrentTokenType() != kTokenTypeIdent &&
-		tokens.getCurrentTokenType() != kTokenTypeClass &&
-		tokens.getCurrentTokenType() != kTokenTypeAmpersand) {
+	return this->parseDescriptor(tokens);
+}
+
+Descriptor*
+Parser::parseStyleDescriptor(TokenList& tokens)
+{
+	if (tokens.getCurrTokenType() != kTokenTypeAt ||
+		tokens.getNextTokenType() != kTokenTypeIdent ||
+		tokens.getNextTokenName() != "style") {
 		return nullptr;
 	}
 
-	auto rule = new Rule();
+	tokens.nextToken();
 
-	while (true) {
+	this->assertTokenType(tokens, kTokenTypeIdent);
 
-		auto selector = this->parseSelector(tokens);
+	tokens.nextToken();
+	tokens.skipSpace();
 
-		if (selector) {
+	auto name = tokens.getCurrTokenName();
 
-			if (rule->head == nullptr &&
-				rule->tail == nullptr) {
+	tokens.nextToken();
+	tokens.skipSpace();
 
-				rule->head = selector;
-				rule->tail = selector;
+	this->assertTokenType(tokens, kTokenTypeCurlyBracketOpen);
 
-			} else {
+	tokens.nextToken();
+	tokens.skipSpace();
 
-				selector->prev = rule->tail;
-				selector->prev->next = selector;
+	auto descriptor = new Descriptor();
 
-				rule->tail = selector;
-			}
+	auto selector = new Selector();
+	auto fragment = new Fragment();
 
-			continue;
-		}
+	selector->head = fragment;
+	selector->tail = fragment;
+	fragment->style = name;
 
-		tokens.skipSpace();
+	descriptor->selector = selector;
 
-		if (tokens.getCurrentTokenType() != kTokenTypeHash &&
-			tokens.getCurrentTokenType() != kTokenTypeIdent &&
-			tokens.getCurrentTokenType() != kTokenTypeClass &&
-			tokens.getCurrentTokenType() != kTokenTypeAmpersand) {
-			break;
-		}
+	this->parseDescriptorBlock(tokens, descriptor);
+
+	this->assertTokenType(tokens, kTokenTypeCurlyBracketClose);
+
+	tokens.nextToken();
+	tokens.skipSpace();
+
+	return descriptor;
+}
+
+Descriptor*
+Parser::parseStateDescriptor(TokenList& tokens)
+{
+	if (tokens.getCurrTokenType() != kTokenTypeAt ||
+		tokens.getNextTokenType() != kTokenTypeIdent ||
+		tokens.getNextTokenName() != "state") {
+		return nullptr;
 	}
 
-	return rule;
+	tokens.nextToken();
+
+	this->assertTokenType(tokens, kTokenTypeIdent);
+
+	tokens.nextToken();
+	tokens.skipSpace();
+
+	this->assertTokenType(tokens, kTokenTypeIdent);
+
+	auto name = tokens.getCurrTokenName();
+
+	tokens.nextToken();
+	tokens.skipSpace();
+
+	this->assertTokenType(tokens, kTokenTypeCurlyBracketOpen);
+
+	tokens.nextToken();
+	tokens.skipSpace();
+
+	auto descriptor = new Descriptor();
+
+	auto selector = new Selector();
+	auto fragment = new Fragment();
+
+	selector->head = fragment;
+	selector->tail = fragment;
+	fragment->state = name;
+
+	descriptor->selector = selector;
+
+	this->parseDescriptorBlock(tokens, descriptor);
+
+	this->assertTokenType(tokens, kTokenTypeCurlyBracketClose);
+
+	tokens.nextToken();
+	tokens.skipSpace();
+
+	return descriptor;
+}
+
+void
+Parser::parseDescriptorBlock(TokenList& tokens, Descriptor* descriptor)
+{
+	while (true) {
+
+		if (this->parseProperty(tokens, descriptor)) continue;
+		if (this->parseStyleDescriptor(tokens, descriptor)) continue;
+		if (this->parseStateDescriptor(tokens, descriptor)) continue;
+		if (this->parseChildDescriptor(tokens, descriptor)) continue;
+
+		break;
+	}
 }
 
 Variable*
 Parser::parseVariable(TokenList& tokens)
 {
-	if (tokens.getCurrentTokenType() != kTokenTypeVariable) {
+	if (tokens.getCurrTokenType() != kTokenTypeVariable) {
 		return nullptr;
 	}
 
-	if (tokens.peek(1, false).getType() != kTokenTypeColon) {
-		return nullptr;
-	}
-
-	auto variable = new Variable(tokens.getCurrentTokenName());
+	auto name = tokens.getCurrTokenName();
 
 	tokens.nextToken();
 	tokens.skipSpace();
+
+	this->assertTokenType(tokens, kTokenTypeColon);
+
+	auto variable = new Variable(name);
 
 	tokens.nextToken();
 	tokens.skipSpace();
 
 	while (true) {
 
-		if (tokens.getCurrentTokenType() == kTokenTypeSpace) {
+		if (tokens.getCurrTokenType() == kTokenTypeSpace) {
 			tokens.nextToken();
 			continue;
 		}
 
-		if (tokens.getCurrentTokenType() == kTokenTypeIdent) {
+		if (tokens.getCurrTokenType() == kTokenTypeIdent) {
 			variable->values.push_back(this->parseIdentValue(tokens));
 			tokens.nextToken();
 			continue;
 		}
 
-		if (tokens.getCurrentTokenType() == kTokenTypeNumber) {
+		if (tokens.getCurrTokenType() == kTokenTypeNumber) {
 			variable->values.push_back(this->parseNumberValue(tokens));
 			tokens.nextToken();
 			continue;
 		}
 
-		if (tokens.getCurrentTokenType() == kTokenTypeString) {
+		if (tokens.getCurrTokenType() == kTokenTypeString) {
 			variable->values.push_back(this->parseStringValue(tokens));
 			tokens.nextToken();
 			continue;
 		}
 
-		if (tokens.getCurrentTokenType() == kTokenTypeDelimiter ||
-			tokens.getCurrentTokenType() == kTokenTypeLinebreak) {
+		if (tokens.getCurrTokenType() == kTokenTypeVariable) {
+			variable->values.push_back(this->parseVariableValue(tokens));
+			tokens.nextToken();
+			continue;
+		}
+
+		if (tokens.getCurrTokenType() == kTokenTypeFunction) {
+			variable->values.push_back(this->parseFunctionValue(tokens));
+			tokens.nextToken();
+			continue;
+		}
+
+		if (tokens.getCurrTokenType() == kTokenTypeDelimiter ||
+			tokens.getCurrTokenType() == kTokenTypeLinebreak) {
 			break;
 		}
 
-		auto token = tokens.getCurrentToken();
-
-		size_t col = 0;
-		size_t row = 0;
-
-		this->tokenizer->locate(token, col, row);
-
-		throw ParseException(
-			"Unexpected token",
-			token.getName(),
-			col,
-			row
-		);
+		this->unexpectedToken(tokens);
 
 		break;
 	}
+
+	tokens.nextToken();
+	tokens.skipSpace();
 
 	return variable;
 }
@@ -362,10 +369,8 @@ Parser::parseVariable(TokenList& tokens)
 Selector*
 Parser::parseSelector(TokenList& tokens)
 {
-	if (tokens.getCurrentTokenType() != kTokenTypeHash &&
-		tokens.getCurrentTokenType() != kTokenTypeIdent &&
-		tokens.getCurrentTokenType() != kTokenTypeClass &&
-		tokens.getCurrentTokenType() != kTokenTypeAmpersand) {
+	if (tokens.getCurrTokenType() != kTokenTypeHash &&
+		tokens.getCurrTokenType() != kTokenTypeIdent) {
 		return nullptr;
 	}
 
@@ -373,36 +378,57 @@ Parser::parseSelector(TokenList& tokens)
 
 	while (true) {
 
-		switch (tokens.getCurrentTokenType()) {
+		auto fragment = this->parseFragment(tokens);
+
+		if (fragment) {
+
+			if (selector->head == nullptr &&
+				selector->tail == nullptr) {
+
+				selector->head = fragment;
+				selector->tail = fragment;
+
+			} else {
+
+				fragment->prev = selector->tail;
+				fragment->prev->next = fragment;
+				selector->tail = fragment;
+			}
+
+			continue;
+		}
+
+		tokens.skipSpace();
+
+		if (tokens.getCurrTokenType() != kTokenTypeHash &&
+			tokens.getCurrTokenType() != kTokenTypeIdent) {
+			break;
+		}
+	}
+
+	return selector;
+}
+
+Fragment*
+Parser::parseFragment(TokenList& tokens)
+{
+	if (tokens.getCurrTokenType() != kTokenTypeHash &&
+		tokens.getCurrTokenType() != kTokenTypeIdent) {
+		return nullptr;
+	}
+
+	auto fragment = new Fragment();
+
+	while (true) {
+
+		switch (tokens.getCurrTokenType()) {
 
 			case kTokenTypeHash:
-				selector->name = tokens.getCurrentTokenName();
+				fragment->name = tokens.getCurrTokenName();
 				break;
 
 			case kTokenTypeIdent:
-				selector->type = tokens.getCurrentTokenName();
-				break;
-
-			case kTokenTypeClass:
-
-				switch (tokens.getCurrentTokenClassType()) {
-
-					case kClassTypeStyle:
-						selector->styles.insert(tokens.getCurrentTokenName());
-						break;
-
-					case kClassTypeState:
-						selector->states.insert(tokens.getCurrentTokenName());
-						break;
-
-					default:
-						break;
-				}
-
-				break;
-
-			case kTokenTypeAmpersand:
-				selector->combinator = kCombinatorParent;
+				fragment->type = tokens.getCurrTokenName();
 				break;
 
 			default:
@@ -411,75 +437,90 @@ Parser::parseSelector(TokenList& tokens)
 
 		tokens.nextToken();
 
-		if (tokens.getCurrentTokenType() != kTokenTypeHash &&
-			tokens.getCurrentTokenType() != kTokenTypeIdent &&
-			tokens.getCurrentTokenType() != kTokenTypeClass &&
-			tokens.getCurrentTokenType() != kTokenTypeAmpersand) {
+		if (tokens.getCurrTokenType() != kTokenTypeHash &&
+			tokens.getCurrTokenType() != kTokenTypeIdent) {
 			break;
 		}
 	}
 
-	return selector;
+	return fragment;
 }
-
 
 Property*
 Parser::parseProperty(TokenList& tokens)
 {
-	if (tokens.getCurrentTokenType() != kTokenTypeIdent) {
+	if (tokens.getCurrTokenType() != kTokenTypeIdent) {
 		return nullptr;
 	}
 
-	if (tokens.peek(1, false).getType() != kTokenTypeColon) {
+	if (tokens.getNextTokenType(1) == kTokenTypeSpace &&
+		tokens.getNextTokenType(2) != kTokenTypeColon) {
 		return nullptr;
 	}
 
-	auto property = new Property(tokens.getCurrentTokenName());
+	if (tokens.getNextTokenType(1) != kTokenTypeColon) {
+		return nullptr;
+	}
+
+	auto name = tokens.getCurrTokenName();
 
 	tokens.nextToken();
 	tokens.skipSpace();
+
+	this->assertTokenType(tokens, kTokenTypeColon);
+
+	auto property = new Property(name);
 
 	tokens.nextToken();
 	tokens.skipSpace();
 
 	while (true) {
 
-		if (tokens.getCurrentTokenType() == kTokenTypeSpace) {
+		if (tokens.getCurrTokenType() == kTokenTypeSpace) {
 			tokens.nextToken();
 			continue;
 		}
 
-		if (tokens.getCurrentTokenType() == kTokenTypeIdent) {
+		if (tokens.getCurrTokenType() == kTokenTypeIdent) {
 			property->values.push_back(this->parseIdentValue(tokens));
 			tokens.nextToken();
 			continue;
 		}
 
-		if (tokens.getCurrentTokenType() == kTokenTypeNumber) {
+		if (tokens.getCurrTokenType() == kTokenTypeNumber) {
 			property->values.push_back(this->parseNumberValue(tokens));
 			tokens.nextToken();
 			continue;
 		}
 
-		if (tokens.getCurrentTokenType() == kTokenTypeString) {
+		if (tokens.getCurrTokenType() == kTokenTypeString) {
 			property->values.push_back(this->parseStringValue(tokens));
 			tokens.nextToken();
 			continue;
 		}
 
-		if (tokens.getCurrentTokenType() == kTokenTypeFunction) {
+		if (tokens.getCurrTokenType() == kTokenTypeVariable) {
+			property->values.push_back(this->parseVariableValue(tokens));
+			tokens.nextToken();
+			continue;
+		}
+
+		if (tokens.getCurrTokenType() == kTokenTypeFunction) {
 			property->values.push_back(this->parseFunctionValue(tokens));
 			tokens.nextToken();
 			continue;
 		}
 
-		if (tokens.getCurrentTokenType() == kTokenTypeDelimiter ||
-			tokens.getCurrentTokenType() == kTokenTypeLinebreak) {
+		if (tokens.getCurrTokenType() == kTokenTypeDelimiter ||
+			tokens.getCurrTokenType() == kTokenTypeLinebreak) {
 			break;
 		}
 
 		break;
 	}
+
+	tokens.nextToken();
+	tokens.skipSpace();
 
 	return property;
 }
@@ -487,15 +528,15 @@ Parser::parseProperty(TokenList& tokens)
 Value*
 Parser::parseIdentValue(TokenList& tokens)
 {
-	if (equals(tokens.getCurrentTokenName(), "null")) {
+	if (equals(tokens.getCurrTokenName(), "null")) {
 		return new NullValue();
 	}
 
-	if (equals(tokens.getCurrentTokenName(), "true")) {
+	if (equals(tokens.getCurrTokenName(), "true")) {
 		return new BooleanValue(true);
 	}
 
-	if (equals(tokens.getCurrentTokenName(), "false")) {
+	if (equals(tokens.getCurrTokenName(), "false")) {
 		return new BooleanValue(false);
 	}
 
@@ -505,57 +546,157 @@ Parser::parseIdentValue(TokenList& tokens)
 Value*
 Parser::parseStringValue(TokenList& tokens)
 {
-	return new StringValue(tokens.getCurrentTokenName());
+	return new StringValue(tokens.getCurrTokenName());
 }
 
 Value*
 Parser::parseNumberValue(TokenList& tokens)
 {
-	if (tokens.getCurrentTokenUnit() == "") {
-		return new NumberValue(tokens.getCurrentTokenName(), kValueUnitNone);
+	if (tokens.getCurrTokenUnit() == "") {
+		return new NumberValue(tokens.getCurrTokenName(), kValueUnitNone);
 	}
 
-	if (tokens.getCurrentTokenUnit() == "%") {
-		return new NumberValue(tokens.getCurrentTokenName(), kValueUnitPC);
+	if (tokens.getCurrTokenUnit() == "%") {
+		return new NumberValue(tokens.getCurrTokenName(), kValueUnitPC);
 	}
 
-	if (equals(tokens.getCurrentTokenUnit(), "px")) {
-		return new NumberValue(tokens.getCurrentTokenName(), kValueUnitPX);
+	if (equals(tokens.getCurrTokenUnit(), "px")) {
+		return new NumberValue(tokens.getCurrTokenName(), kValueUnitPX);
 	}
 
-	if (equals(tokens.getCurrentTokenUnit(), "vw")) {
-		return new NumberValue(tokens.getCurrentTokenName(), kValueUnitVW);
+	if (equals(tokens.getCurrTokenUnit(), "vw")) {
+		return new NumberValue(tokens.getCurrTokenName(), kValueUnitVW);
 	}
 
-	if (equals(tokens.getCurrentTokenUnit(), "vh")) {
-		return new NumberValue(tokens.getCurrentTokenName(), kValueUnitVH);
+	if (equals(tokens.getCurrTokenUnit(), "vh")) {
+		return new NumberValue(tokens.getCurrTokenName(), kValueUnitVH);
 	}
 
-	if (equals(tokens.getCurrentTokenUnit(), "pw")) {
-		return new NumberValue(tokens.getCurrentTokenName(), kValueUnitPW);
+	if (equals(tokens.getCurrTokenUnit(), "pw")) {
+		return new NumberValue(tokens.getCurrTokenName(), kValueUnitPW);
 	}
 
-	if (equals(tokens.getCurrentTokenUnit(), "ph")) {
-		return new NumberValue(tokens.getCurrentTokenName(), kValueUnitPH);
+	if (equals(tokens.getCurrTokenUnit(), "ph")) {
+		return new NumberValue(tokens.getCurrTokenName(), kValueUnitPH);
 	}
 
-	if (equals(tokens.getCurrentTokenUnit(), "cw")) {
-		return new NumberValue(tokens.getCurrentTokenName(), kValueUnitCW);
+	if (equals(tokens.getCurrTokenUnit(), "cw")) {
+		return new NumberValue(tokens.getCurrTokenName(), kValueUnitCW);
 	}
 
-	if (equals(tokens.getCurrentTokenUnit(), "ch")) {
-		return new NumberValue(tokens.getCurrentTokenName(), kValueUnitCH);
+	if (equals(tokens.getCurrTokenUnit(), "ch")) {
+		return new NumberValue(tokens.getCurrTokenName(), kValueUnitCH);
 	}
 
-	if (equals(tokens.getCurrentTokenUnit(), "deg")) {
-		return new NumberValue(tokens.getCurrentTokenName(), kValueUnitDeg);
+	if (equals(tokens.getCurrTokenUnit(), "deg")) {
+		return new NumberValue(tokens.getCurrTokenName(), kValueUnitDeg);
 	}
 
-	if (equals(tokens.getCurrentTokenUnit(), "rad")) {
-		return new NumberValue(tokens.getCurrentTokenName(), kValueUnitRad);
+	if (equals(tokens.getCurrTokenUnit(), "rad")) {
+		return new NumberValue(tokens.getCurrTokenName(), kValueUnitRad);
 	}
 
-	auto token = tokens.getCurrentToken();
+	this->unexpectedToken(tokens);
+
+	return nullptr;
+}
+
+Value*
+Parser::parseVariableValue(TokenList& tokens)
+{
+	if (tokens.getCurrTokenType() != kTokenTypeVariable) {
+		return nullptr;
+	}
+
+	auto variable = new VariableValue(tokens.getCurrTokenName());
+
+	tokens.nextToken();
+	tokens.skipSpace();
+
+	return variable;
+}
+
+Value*
+Parser::parseFunctionValue(TokenList& tokens)
+{
+	if (tokens.getCurrTokenType() != kTokenTypeFunction) {
+		return nullptr;
+	}
+
+	auto function = new FunctionValue(tokens.getCurrTokenName());
+	auto argument = new Argument();
+
+	tokens.nextToken();
+
+	this->assertTokenType(tokens, kTokenTypeParenthesisOpen);
+
+	tokens.nextToken();
+	tokens.skipSpace();
+
+	while (true) {
+
+		if (tokens.getCurrTokenType() == kTokenTypeSpace) {
+			tokens.nextToken();
+			continue;
+		}
+
+		if (tokens.getCurrTokenType() == kTokenTypeIdent) {
+			argument->values.push_back(this->parseIdentValue(tokens));
+			tokens.nextToken();
+			continue;
+		}
+
+		if (tokens.getCurrTokenType() == kTokenTypeString) {
+			argument->values.push_back(this->parseStringValue(tokens));
+			tokens.nextToken();
+			continue;
+		}
+
+		if (tokens.getCurrTokenType() == kTokenTypeNumber) {
+			argument->values.push_back(this->parseNumberValue(tokens));
+			tokens.nextToken();
+			continue;
+		}
+
+		if (tokens.getCurrTokenType() == kTokenTypeVariable) {
+			argument->values.push_back(this->parseVariableValue(tokens));
+			tokens.nextToken();
+			continue;
+		}
+
+		if (tokens.getCurrTokenType() == kTokenTypeComma) {
+			tokens.nextToken();
+			function->arguments.push_back(argument);
+			argument = new Argument();
+			continue;
+		}
+
+		if (tokens.getCurrTokenType() == kTokenTypeParenthesisClose) {
+			function->arguments.push_back(argument);
+			argument = nullptr;
+			break;
+		}
+
+		this->unexpectedToken(tokens);
+	}
+
+	return function;
+}
+
+void
+Parser::assertTokenType(TokenList& tokens, TokenType type)
+{
+	if (tokens.getCurrTokenType() == type) {
+		return;
+	}
+
+	this->unexpectedToken(tokens);
+}
+
+void
+Parser::unexpectedToken(TokenList &tokens)
+{
+	auto token = tokens.getCurrToken();
 
 	size_t col = 0;
 	size_t row = 0;
@@ -568,115 +709,6 @@ Parser::parseNumberValue(TokenList& tokens)
 		col,
 		row
 	);
-}
-
-Value*
-Parser::parseVariableValue(TokenList& tokens)
-{
-	if (tokens.getCurrentTokenType() != kTokenTypeVariable) {
-		return nullptr;
-	}
-
-	auto variable = new VariableValue(tokens.getCurrentTokenName());
-
-	tokens.nextToken();
-	tokens.skipSpace();
-
-	return variable;
-}
-
-Value*
-Parser::parseFunctionValue(TokenList& tokens)
-{
-	if (tokens.getCurrentTokenType() != kTokenTypeFunction) {
-		return nullptr;
-	}
-
-	auto function = new FunctionValue(tokens.getCurrentTokenName());
-	auto argument = new Argument();
-
-	tokens.nextToken();
-
-	if (tokens.getCurrentTokenType() != kTokenTypeParenthesisOpen) {
-
-		auto token = tokens.getCurrentToken();
-
-		size_t col = 0;
-		size_t row = 0;
-
-		this->tokenizer->locate(token, col, row);
-
-		throw ParseException(
-			"Unexpected token",
-			token.getName(),
-			col,
-			row
-		);
-	}
-
-	tokens.nextToken();
-	tokens.skipSpace();
-
-	while (true) {
-
-		if (tokens.getCurrentTokenType() == kTokenTypeSpace) {
-			tokens.nextToken();
-			continue;
-		}
-
-		if (tokens.getCurrentTokenType() == kTokenTypeIdent) {
-			argument->values.push_back(this->parseIdentValue(tokens));
-			tokens.nextToken();
-			continue;
-		}
-
-		if (tokens.getCurrentTokenType() == kTokenTypeString) {
-			argument->values.push_back(this->parseStringValue(tokens));
-			tokens.nextToken();
-			continue;
-		}
-
-		if (tokens.getCurrentTokenType() == kTokenTypeNumber) {
-			argument->values.push_back(this->parseNumberValue(tokens));
-			tokens.nextToken();
-			continue;
-		}
-
-		if (tokens.getCurrentTokenType() == kTokenTypeVariable) {
-			argument->values.push_back(this->parseVariableValue(tokens));
-			tokens.nextToken();
-			continue;
-		}
-
-		if (tokens.getCurrentTokenType() == kTokenTypeComma) {
-			tokens.nextToken();
-			function->arguments.push_back(argument);
-			argument = new Argument();
-			continue;
-		}
-
-		if (tokens.getCurrentTokenType() == kTokenTypeParenthesisClose) {
-			function->arguments.push_back(argument);
-			argument = nullptr;
-			break;
-		}
-
-		auto token = tokens.getCurrentToken();
-
-		size_t col = 0;
-		size_t row = 0;
-
-		this->tokenizer->locate(token, col, row);
-
-		throw ParseException(
-			"Unexpected token",
-			token.getName(),
-			col,
-			row
-		);
-	}
-
-	return function;
 }
 
 }

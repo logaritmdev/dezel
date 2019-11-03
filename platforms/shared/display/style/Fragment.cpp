@@ -16,6 +16,16 @@ Fragment::toString(int depth)
 		output.append(this->name);
 	}
 
+	if (this->style.size()) {
+		output.append("@style ");
+		output.append(this->style);
+	}
+
+	if (this->state.size()) {
+		output.append("@state ");
+		output.append(this->state);
+	}
+
 	return output;
 }
 

@@ -41,10 +41,6 @@ static bool isUnit(char c) {
 	return isAlpha(c) || c == '%';
 }
 
-static bool isComma(char c) {
-	return c == ',';
-}
-
 static bool isSemicolon(char c) {
 	return c == ';';
 }
@@ -202,17 +198,18 @@ Tokenizer::Tokenizer(TokenizerStream &stream): stream(stream) {
 
 		auto token = this->next();
 
-		if (token.getType() == kTokenTypeComment) {
+		if (token.getType() == kTokenTypeNone ||
+			token.getType() == kTokenTypeComment) {
 			continue;
-		}
-
-		if (token.getType() == kTokenTypeEnd) {
-			return;
 		}
 
 		token.offset = this->stream.getOffset();
 
 		this->tokens.push_back(token);
+
+		if (token.getType() == kTokenTypeEnd) {
+			return;
+		}
 	}
 }
 
@@ -282,37 +279,37 @@ Tokenizer::consumeSingleQuote(char c)
 Token
 Tokenizer::consumeCurlyBracketOpen(char c)
 {
-	return Token(kTokenTypeCurlyBracketOpen, kBlockTypeStart);
+	return Token(kTokenTypeCurlyBracketOpen, c);
 }
 
 Token
 Tokenizer::consumeCurlyBracketClose(char c)
 {
-	return Token(kTokenTypeCurlyBracketClose, kBlockTypeEnd);
+	return Token(kTokenTypeCurlyBracketClose, c);
 }
 
 Token
 Tokenizer::consumeSquareBracketOpen(char c)
 {
-	return Token(kTokenTypeSquareBracketOpen, kBlockTypeStart);
+	return Token(kTokenTypeSquareBracketOpen, c);
 }
 
 Token
 Tokenizer::consumeSquareBracketClose(char c)
 {
-	return Token(kTokenTypeSquareBracketClose, kBlockTypeEnd);
+	return Token(kTokenTypeSquareBracketClose, c);
 }
 
 Token
 Tokenizer::consumeParenthesisOpen(char c)
 {
-	return Token(kTokenTypeParenthesisOpen, kBlockTypeEnd);
+	return Token(kTokenTypeParenthesisOpen, c);
 }
 
 Token
 Tokenizer::consumeParenthesisClose(char c)
 {
-	return Token(kTokenTypeParenthesisClose, kBlockTypeEnd);
+	return Token(kTokenTypeParenthesisClose, c);
 }
 
 Token
@@ -381,7 +378,7 @@ Tokenizer::consumeSlash(char c)
 Token
 Tokenizer::consumeAt(char c)
 {
-	return Token(kTokenTypeAt);
+	return Token(kTokenTypeAt, c);
 }
 
 Token
@@ -393,40 +390,29 @@ Tokenizer::consumeHash(char c)
 Token
 Tokenizer::consumeDollar(char c)
 {
-	return this->stream.peek<isNameStart>() ? Token(kTokenTypeVariable, this->stream.read<isName>()) : Token(kTokenTypeOther);
+	return this->stream.peek<isNameStart>() ? Token(kTokenTypeVariable, this->stream.read<isName>()) : Token(kTokenTypeOther, c);
 }
 
 Token
 Tokenizer::consumePeriod(char c)
 {
-	if (this->stream.peek<isNameStart>()) {
-		this->stream.back();
-		return this->consumeIdent();
-	}
-
 	if (this->stream.peek<isDigit>()) {
 		this->stream.back();
 		return this->consumeNumber();
 	}
 
-	return Token(kTokenTypeDelimiter, c);
+	return Token(kTokenTypeOther, c);
 }
 
 Token
 Tokenizer::consumeColon(char c)
 {
-	if (this->stream.peek<isNameStart>()) {
-		this->stream.back();
-		return this->consumeIdent();
-	}
-
-	return Token(kTokenTypeColon);
+	return Token(kTokenTypeColon, c);
 }
 
 Token
 Tokenizer::consumeComma(char c)
 {
-	this->stream.skip<isComma>();
 	return Token(kTokenTypeComma, c);
 }
 
@@ -440,28 +426,13 @@ Tokenizer::consumeSemicolon(char c)
 Token
 Tokenizer::consumeAmpersand(char c)
 {
-	return Token(kTokenTypeAmpersand, c);
+	return Token(kTokenTypeOther, c);
 }
 
 Token
 Tokenizer::consumeIdent()
 {
-	char c = this->stream.peek();
-
 	string name;
-
-	switch (c) {
-
-		case '.':
-			this->stream.next();
-			this->stream.read<isName>(name);
-			return Token(kClassTypeStyle, name);
-
-		case ':':
-			this->stream.next();
-			this->stream.read<isName>(name);
-			return Token(kClassTypeState, name);
-	}
 
 	this->stream.read<isName>(name);
 

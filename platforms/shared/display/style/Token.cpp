@@ -23,20 +23,5 @@ Token::Token(TokenType type, char name) : type(type)
 	this->name.append(1, name);
 }
 
-Token::Token(TokenType type, BlockType blockType) : type(type), blockType(blockType)
-{
-
-}
-
-Token::Token(TokenType type, BlockType blockType, string name) : type(type), name(name), blockType(blockType)
-{
-
-}
-
-Token::Token(ClassType classType, string name) : type(kTokenTypeClass), name(name), classType(classType)
-{
-
-}
-
 }
 }

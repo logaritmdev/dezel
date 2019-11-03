@@ -25,7 +25,15 @@ Descriptor::toString(int depth) {
 		output.append("\n");
 	}
 
-	for (auto child : this->childRules) {
+	for (auto style : this->styleDescriptors) {
+		output.append(style->toString(depth + 1));
+	}
+
+	for (auto state : this->stateDescriptors) {
+		output.append(state->toString(depth + 1));
+	}
+
+	for (auto child : this->childDescriptors) {
 		output.append(child->toString(depth + 1));
 	}
 

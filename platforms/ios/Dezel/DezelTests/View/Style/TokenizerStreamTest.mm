@@ -31,7 +31,7 @@ static bool isNothing(char c) {
 @implementation TokenizerStreamTest
 
 - (void)setUp {
-	input = "ABC def { } 123";;
+	input = "ABC def { } 123";;
 }
 
 - (void)tearDown {
@@ -48,7 +48,7 @@ static bool isNothing(char c) {
 	TokenizerStream stream(input);
 	XCTAssertEqual(stream.read<isAlpha>(),"ABC");
 	XCTAssertEqual(stream.read(), ' ');
-	XCTAssertEqual(stream.read<isAnything>(), "def { } 123");
+	XCTAssertEqual(stream.read<isAnything>(), "def { } 123");
 }
 
 - (void)testReadDigit {

@@ -10,14 +10,14 @@ using std::string;
 
 class Parser;
 class Stylesheet;
-class Expression;
+class Fragment;
 
 class Selector {
 
 private:
 
-	Expression* tail = nullptr;
-	Expression* head = nullptr;
+	Fragment* tail = nullptr;
+	Fragment* head = nullptr;
 
 	size_t length = 0;
 	size_t number = 0;
@@ -28,11 +28,11 @@ public:
 	friend class Parser;
 	friend class Stylesheet;
 
-	const Expression* getTail() const {
+	const Fragment* getTail() const {
 		return this->tail;
 	}
 
-	const Expression* getHead() const {
+	const Fragment* getHead() const {
 		return this->head;
 	}
 

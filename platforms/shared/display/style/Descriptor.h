@@ -7,6 +7,7 @@
 
 #include <string>
 #include <vector>
+#include <iostream>
 
 namespace Dezel {
 namespace Style {
@@ -28,9 +29,9 @@ private:
 	Selector* selector;
 	PropertyList properties;
 
-	vector<Descriptor*> styleRules;
-	vector<Descriptor*> stateRules;
-	vector<Descriptor*> childRules;
+	vector<Descriptor*> childDescriptors;
+	vector<Descriptor*> styleDescriptors;
+	vector<Descriptor*> stateDescriptors;
 
 public:
 
@@ -49,16 +50,35 @@ public:
 		return this->properties;
 	}
 
-	const vector<Descriptor*>& getStyleRules() const {
-		return this->styleRules;
+	const vector<Descriptor*>& getChildDescriptors() const {
+		return this->childDescriptors;
 	}
 
-	const vector<Descriptor*>& getStateRules() const {
-		return this->stateRules;
+	const vector<Descriptor*>& getStyleDescriptors() const {
+		return this->styleDescriptors;
 	}
 
-	const vector<Descriptor*>& getChildRules() const {
-		return this->childRules;
+	const vector<Descriptor*>& getStateDescriptors() const {
+		return this->stateDescriptors;
+	}
+
+	void addProperty(Property* property) {
+		this->properties.set(property->getName(), property);
+	}
+
+	void addChildDescriptor(Descriptor* child) {
+		child->parent = this;
+		this->childDescriptors.push_back(child);
+	}
+
+	void addStyleDescriptor(Descriptor* style) {
+		style->parent = this;
+		this->styleDescriptors.push_back(style);
+	}
+
+	void addStateDescriptor(Descriptor* state) {
+		state->parent = this;
+		this->stateDescriptors.push_back(state);
 	}
 
 	string toString(int depth = 0);

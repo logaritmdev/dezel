@@ -55,7 +55,7 @@ public:
 	ValueUnit getUnit() const {
 		return this->unit;
 	}
-	
+
 	virtual string toString() = 0;
 };
 

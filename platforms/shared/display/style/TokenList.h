@@ -16,7 +16,7 @@ private:
 	const Token* tail;
 	const Token* curr;
 
-	const Token& getEndToken() {
+	const Token& getEndToken() const {
 		static Token token(kTokenTypeEnd);
 		return token;
 	}
@@ -24,7 +24,7 @@ private:
 public:
 
 	TokenList(const Token* head, const Token* tail);
-	
+
 	void prevToken() {
 		if (this->curr > this->head) {
 			this->curr--;
@@ -45,31 +45,35 @@ public:
 		return this->curr < this->tail;
 	}
 
-	const Token& getCurrentToken() const {
+	const Token& getCurrToken() const {
 		return *(this->curr);
 	}
 
-	const TokenType getCurrentTokenType() const {
+	const TokenType getCurrTokenType() const {
 		return this->curr->getType();
 	}
 
-	const BlockType getCurrentTokenBlockType() const {
-		return this->curr->getBlockType();
-	}
-
-	const ClassType getCurrentTokenClassType() const {
-		return this->curr->getClassType();
-	}
-
-	const string& getCurrentTokenName() const {
+	const string& getCurrTokenName() const {
 		return this->curr->getName();
 	}
 
-	const string& getCurrentTokenUnit() const {
+	const string& getCurrTokenUnit() const {
 		return this->curr->getUnit();
 	}
 
-	const Token& peek(size_t offset = 0, bool spaces = true);
+	const TokenType getNextTokenType(size_t offset = 1) const  {
+		return this->peek(offset).getType();
+	}
+
+	const string& getNextTokenName(size_t offset = 1) const  {
+		return this->peek(offset).getName();
+	}
+
+	const string& getNextTokenUnit(size_t offset = 1) const {
+		return this->peek(offset).getUnit();
+	}
+
+	const Token& peek(size_t offset = 0, bool spaces = true) const;
 
 	void skipSpace() {
 		while (

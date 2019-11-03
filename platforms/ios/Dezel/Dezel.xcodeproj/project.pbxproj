@@ -148,12 +148,12 @@
 		C792E934234BDEA70022D712 /* NumberValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C792E90C234BDEA50022D712 /* NumberValue.cpp */; };
 		C792E935234BDEA70022D712 /* Parser.h in Headers */ = {isa = PBXBuildFile; fileRef = C792E90D234BDEA50022D712 /* Parser.h */; };
 		C792E936234BDEA70022D712 /* Parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C792E90E234BDEA50022D712 /* Parser.cpp */; };
-		C792E937234BDEA70022D712 /* Selector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C792E90F234BDEA50022D712 /* Selector.cpp */; };
+		C792E937234BDEA70022D712 /* Fragment.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C792E90F234BDEA50022D712 /* Fragment.cpp */; };
 		C792E938234BDEA70022D712 /* TokenList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C792E910234BDEA50022D712 /* TokenList.cpp */; };
 		C792E939234BDEA70022D712 /* Token.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C792E911234BDEA50022D712 /* Token.cpp */; };
-		C792E93A234BDEA70022D712 /* Rule.h in Headers */ = {isa = PBXBuildFile; fileRef = C792E912234BDEA50022D712 /* Rule.h */; };
-		C792E93B234BDEA70022D712 /* Ruleset.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C792E913234BDEA60022D712 /* Ruleset.cpp */; };
-		C792E93C234BDEA70022D712 /* Rule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C792E914234BDEA60022D712 /* Rule.cpp */; };
+		C792E93A234BDEA70022D712 /* Selector.h in Headers */ = {isa = PBXBuildFile; fileRef = C792E912234BDEA50022D712 /* Selector.h */; };
+		C792E93B234BDEA70022D712 /* Descriptor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C792E913234BDEA60022D712 /* Descriptor.cpp */; };
+		C792E93C234BDEA70022D712 /* Selector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C792E914234BDEA60022D712 /* Selector.cpp */; };
 		C792E93D234BDEA70022D712 /* VariableValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C792E915234BDEA60022D712 /* VariableValue.cpp */; };
 		C792E93E234BDEA70022D712 /* Value.h in Headers */ = {isa = PBXBuildFile; fileRef = C792E916234BDEA60022D712 /* Value.h */; };
 		C792E93F234BDEA70022D712 /* Value.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C792E917234BDEA60022D712 /* Value.cpp */; };
@@ -161,8 +161,8 @@
 		C792E941234BDEA70022D712 /* BooleanValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C792E919234BDEA60022D712 /* BooleanValue.cpp */; };
 		C792E942234BDEA70022D712 /* Stylesheet.h in Headers */ = {isa = PBXBuildFile; fileRef = C792E91A234BDEA60022D712 /* Stylesheet.h */; };
 		C792E943234BDEA70022D712 /* Property.h in Headers */ = {isa = PBXBuildFile; fileRef = C792E91B234BDEA60022D712 /* Property.h */; };
-		C792E944234BDEA70022D712 /* Selector.h in Headers */ = {isa = PBXBuildFile; fileRef = C792E91C234BDEA60022D712 /* Selector.h */; };
-		C792E945234BDEA70022D712 /* Ruleset.h in Headers */ = {isa = PBXBuildFile; fileRef = C792E91D234BDEA60022D712 /* Ruleset.h */; };
+		C792E944234BDEA70022D712 /* Fragment.h in Headers */ = {isa = PBXBuildFile; fileRef = C792E91C234BDEA60022D712 /* Fragment.h */; };
+		C792E945234BDEA70022D712 /* Descriptor.h in Headers */ = {isa = PBXBuildFile; fileRef = C792E91D234BDEA60022D712 /* Descriptor.h */; };
 		C792E946234BDEA70022D712 /* NumberValue.h in Headers */ = {isa = PBXBuildFile; fileRef = C792E91E234BDEA60022D712 /* NumberValue.h */; };
 		C792E947234BDEA70022D712 /* Token.h in Headers */ = {isa = PBXBuildFile; fileRef = C792E91F234BDEA60022D712 /* Token.h */; };
 		C792E948234BDEA70022D712 /* TokenizerStream.h in Headers */ = {isa = PBXBuildFile; fileRef = C792E920234BDEA60022D712 /* TokenizerStream.h */; };
@@ -451,12 +451,12 @@
 		C792E90C234BDEA50022D712 /* NumberValue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = NumberValue.cpp; path = ../../../../../shared/display/style/NumberValue.cpp; sourceTree = "<group>"; };
 		C792E90D234BDEA50022D712 /* Parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Parser.h; path = ../../../../../shared/display/style/Parser.h; sourceTree = "<group>"; };
 		C792E90E234BDEA50022D712 /* Parser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Parser.cpp; path = ../../../../../shared/display/style/Parser.cpp; sourceTree = "<group>"; };
-		C792E90F234BDEA50022D712 /* Selector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Selector.cpp; path = ../../../../../shared/display/style/Selector.cpp; sourceTree = "<group>"; };
+		C792E90F234BDEA50022D712 /* Fragment.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Fragment.cpp; path = ../../../../../shared/display/style/Fragment.cpp; sourceTree = "<group>"; };
 		C792E910234BDEA50022D712 /* TokenList.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TokenList.cpp; path = ../../../../../shared/display/style/TokenList.cpp; sourceTree = "<group>"; };
 		C792E911234BDEA50022D712 /* Token.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Token.cpp; path = ../../../../../shared/display/style/Token.cpp; sourceTree = "<group>"; };
-		C792E912234BDEA50022D712 /* Rule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Rule.h; path = ../../../../../shared/display/style/Rule.h; sourceTree = "<group>"; };
-		C792E913234BDEA60022D712 /* Ruleset.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Ruleset.cpp; path = ../../../../../shared/display/style/Ruleset.cpp; sourceTree = "<group>"; };
-		C792E914234BDEA60022D712 /* Rule.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Rule.cpp; path = ../../../../../shared/display/style/Rule.cpp; sourceTree = "<group>"; };
+		C792E912234BDEA50022D712 /* Selector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Selector.h; path = ../../../../../shared/display/style/Selector.h; sourceTree = "<group>"; };
+		C792E913234BDEA60022D712 /* Descriptor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Descriptor.cpp; path = ../../../../../shared/display/style/Descriptor.cpp; sourceTree = "<group>"; };
+		C792E914234BDEA60022D712 /* Selector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Selector.cpp; path = ../../../../../shared/display/style/Selector.cpp; sourceTree = "<group>"; };
 		C792E915234BDEA60022D712 /* VariableValue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VariableValue.cpp; path = ../../../../../shared/display/style/VariableValue.cpp; sourceTree = "<group>"; };
 		C792E916234BDEA60022D712 /* Value.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Value.h; path = ../../../../../shared/display/style/Value.h; sourceTree = "<group>"; };
 		C792E917234BDEA60022D712 /* Value.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Value.cpp; path = ../../../../../shared/display/style/Value.cpp; sourceTree = "<group>"; };
@@ -464,8 +464,8 @@
 		C792E919234BDEA60022D712 /* BooleanValue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BooleanValue.cpp; path = ../../../../../shared/display/style/BooleanValue.cpp; sourceTree = "<group>"; };
 		C792E91A234BDEA60022D712 /* Stylesheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Stylesheet.h; path = ../../../../../shared/display/style/Stylesheet.h; sourceTree = "<group>"; };
 		C792E91B234BDEA60022D712 /* Property.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Property.h; path = ../../../../../shared/display/style/Property.h; sourceTree = "<group>"; };
-		C792E91C234BDEA60022D712 /* Selector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Selector.h; path = ../../../../../shared/display/style/Selector.h; sourceTree = "<group>"; };
-		C792E91D234BDEA60022D712 /* Ruleset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Ruleset.h; path = ../../../../../shared/display/style/Ruleset.h; sourceTree = "<group>"; };
+		C792E91C234BDEA60022D712 /* Fragment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Fragment.h; path = ../../../../../shared/display/style/Fragment.h; sourceTree = "<group>"; };
+		C792E91D234BDEA60022D712 /* Descriptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Descriptor.h; path = ../../../../../shared/display/style/Descriptor.h; sourceTree = "<group>"; };
 		C792E91E234BDEA60022D712 /* NumberValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NumberValue.h; path = ../../../../../shared/display/style/NumberValue.h; sourceTree = "<group>"; };
 		C792E91F234BDEA60022D712 /* Token.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Token.h; path = ../../../../../shared/display/style/Token.h; sourceTree = "<group>"; };
 		C792E920234BDEA60022D712 /* TokenizerStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TokenizerStream.h; path = ../../../../../shared/display/style/TokenizerStream.h; sourceTree = "<group>"; };
@@ -910,6 +910,8 @@
 				C792E976234D6F200022D712 /* Exception */,
 				C792E929234BDEA70022D712 /* Argument.cpp */,
 				C792E927234BDEA70022D712 /* Argument.h */,
+				C792E90F234BDEA50022D712 /* Fragment.cpp */,
+				C792E91C234BDEA60022D712 /* Fragment.h */,
 				C792E932234BDEA70022D712 /* Function.cpp */,
 				C792E930234BDEA70022D712 /* Function.h */,
 				C792E90E234BDEA50022D712 /* Parser.cpp */,
@@ -918,12 +920,10 @@
 				C792E91B234BDEA60022D712 /* Property.h */,
 				C792E95D234CC1E70022D712 /* PropertyList.cpp */,
 				C792E95E234CC1E70022D712 /* PropertyList.h */,
-				C792E914234BDEA60022D712 /* Rule.cpp */,
-				C792E912234BDEA50022D712 /* Rule.h */,
-				C792E913234BDEA60022D712 /* Ruleset.cpp */,
-				C792E91D234BDEA60022D712 /* Ruleset.h */,
-				C792E90F234BDEA50022D712 /* Selector.cpp */,
-				C792E91C234BDEA60022D712 /* Selector.h */,
+				C792E913234BDEA60022D712 /* Descriptor.cpp */,
+				C792E91D234BDEA60022D712 /* Descriptor.h */,
+				C792E914234BDEA60022D712 /* Selector.cpp */,
+				C792E912234BDEA50022D712 /* Selector.h */,
 				C792E931234BDEA70022D712 /* Stylesheet.cpp */,
 				C792E91A234BDEA60022D712 /* Stylesheet.h */,
 				C792E911234BDEA50022D712 /* Token.cpp */,
@@ -1421,7 +1421,7 @@
 				C77B0D792226DC4D00917D82 /* WebSocketSecurity.h in Headers */,
 				C792E958234BDEA70022D712 /* Function.h in Headers */,
 				C792E947234BDEA70022D712 /* Token.h in Headers */,
-				C792E93A234BDEA70022D712 /* Rule.h in Headers */,
+				C792E93A234BDEA70022D712 /* Selector.h in Headers */,
 				C792E942234BDEA70022D712 /* Stylesheet.h in Headers */,
 				C792E8E8234BDE630022D712 /* DisplayNodeMargin.h in Headers */,
 				C792E8E6234BDE630022D712 /* DisplayNodeContentOrigin.h in Headers */,
@@ -1431,7 +1431,7 @@
 				C792E8E0234BDE630022D712 /* DisplayBase.h in Headers */,
 				C792E93E234BDEA70022D712 /* Value.h in Headers */,
 				C792E8E3234BDE630022D712 /* DisplayNodeSize.h in Headers */,
-				C792E945234BDEA70022D712 /* Ruleset.h in Headers */,
+				C792E945234BDEA70022D712 /* Descriptor.h in Headers */,
 				C792E909234BDE900022D712 /* LayoutResolver.h in Headers */,
 				C792E904234BDE900022D712 /* RelativeLayoutResolver.h in Headers */,
 				C792E975234D6E6E0022D712 /* ParseException.h in Headers */,
@@ -1447,7 +1447,7 @@
 				C792E8F7234BDE630022D712 /* DisplayNode.h in Headers */,
 				C792E8E5234BDE630022D712 /* DisplayNodeOrigin.h in Headers */,
 				C77B0D7C2226DC4D00917D82 /* WebSocketConnection.h in Headers */,
-				C792E944234BDEA70022D712 /* Selector.h in Headers */,
+				C792E944234BDEA70022D712 /* Fragment.h in Headers */,
 				C792E940234BDEA70022D712 /* TokenList.h in Headers */,
 				C792E935234BDEA70022D712 /* Parser.h in Headers */,
 				C792E946234BDEA70022D712 /* NumberValue.h in Headers */,
@@ -1640,11 +1640,11 @@
 				C7E45AEE21DD462C00247465 /* TextViewDelegate.swift in Sources */,
 				C7F2260B2081A10000ABC66D /* Unsafe.swift in Sources */,
 				C7E30977203123DD00436FA4 /* UIView.swift in Sources */,
-				C792E93B234BDEA70022D712 /* Ruleset.cpp in Sources */,
+				C792E93B234BDEA70022D712 /* Descriptor.cpp in Sources */,
 				C7004C58213C4CF800138ECC /* Dictionary.swift in Sources */,
 				C7B9CEAF202CDBD8002409D5 /* JavaScriptWindow.swift in Sources */,
 				C792E93F234BDEA70022D712 /* Value.cpp in Sources */,
-				C792E937234BDEA70022D712 /* Selector.cpp in Sources */,
+				C792E937234BDEA70022D712 /* Fragment.cpp in Sources */,
 				C7E8A5012016244F005139F6 /* Runtime.m in Sources */,
 				C76864732039147100D1903B /* JavaScriptPropertyUnit.swift in Sources */,
 				C7B9CEA8202CDB8D002409D5 /* ApplicationWindow.swift in Sources */,
@@ -1766,7 +1766,7 @@
 				C767543F20269971003C4D85 /* RenderLayer.swift in Sources */,
 				C7E8A52A201624A2005139F6 /* JavaScriptContext.swift in Sources */,
 				C7E8A524201624A2005139F6 /* JavaScriptClass.swift in Sources */,
-				C792E93C234BDEA70022D712 /* Rule.cpp in Sources */,
+				C792E93C234BDEA70022D712 /* Selector.cpp in Sources */,
 				C75153B322EB4BC3007CAA48 /* HTTPURLResponse.swift in Sources */,
 				C75153C322F37C11007CAA48 /* JavaScriptClassStaticSetterWrapper.swift in Sources */,
 				C7EE2E2522E4B35A00FFF0EE /* JavaScriptForEachWrapper.swift in Sources */,

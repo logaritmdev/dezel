@@ -6,21 +6,21 @@ namespace Dezel {
 namespace Style {
 
 void
-Stylesheet::addFunction(string name, Function* function)
+Stylesheet::addDescriptor(Descriptor* ruleset)
 {
-	this->functions[name] = function;
+	this->descriptors.push_back(ruleset);
 }
 
 void
-Stylesheet::addVariable(string name, Variable* variable)
+Stylesheet::addVariable(Variable* variable)
 {
-	this->variables[name] = variable;
+	this->variables[variable->name] = variable;
 }
 
 void
-Stylesheet::addRuleset(Ruleset* ruleset)
+Stylesheet::addFunction(Function* function)
 {
-	this->rulesets.push_back(ruleset);
+	this->functions[function->name] = function;
 }
 
 }

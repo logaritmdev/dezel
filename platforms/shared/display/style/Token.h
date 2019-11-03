@@ -12,7 +12,6 @@ enum TokenType {
 	kTokenTypeNone,
 	kTokenTypeSpace,
 	kTokenTypeIdent,
-	kTokenTypeClass,
 	kTokenTypeAt,
 	kTokenTypeHash,
 	kTokenTypeUnit,
@@ -20,7 +19,6 @@ enum TokenType {
 	kTokenTypeString,
 	kTokenTypeVariable,
 	kTokenTypeFunction,
-	kTokenTypeAmpersand,
 	kTokenTypeComma,
 	kTokenTypeColon,
 	kTokenTypeDelimiter,
@@ -36,32 +34,18 @@ enum TokenType {
 	kTokenTypeEnd,
 };
 
-enum BlockType {
-	kBlockTypeNone,
-	kBlockTypeStart,
-	kBlockTypeEnd
-};
-
-enum ClassType {
-	kClassTypeNone,
-	kClassTypeStyle,
-	kClassTypeState
-};
-
 class Tokenizer;
 
 class Token {
 
 private:
 
-	string name = "";
-	string unit = "";
-
 	size_t offset = 0;
 
 	TokenType type = kTokenTypeNone;
-	BlockType blockType = kBlockTypeNone;
-	ClassType classType = kClassTypeNone;
+
+	string name = "";
+	string unit = "";
 
 public:
 
@@ -72,10 +56,13 @@ public:
 	Token(TokenType type, string name, string unit);
 	Token(TokenType type, char c);
 
-	Token(TokenType type, BlockType blockType);
-	Token(TokenType type, BlockType blockType, string name);
+	TokenType getType() const {
+		return this->type;
+	}
 
-	Token(ClassType classType, string name);
+	size_t getOffset() const {
+		return this->offset;
+	}
 
 	const string& getName() const {
 		return this->name;
@@ -83,22 +70,6 @@ public:
 
 	const string& getUnit() const {
 		return this->unit;
-	}
-
-	TokenType getType() const {
-		return this->type;
-	}
-
-	BlockType getBlockType() const {
-		return this->blockType;
-	}
-
-	ClassType getClassType() const {
-		return this->classType;
-	}
-
-	size_t getOffset() const {
-		return this->offset;
 	}
 
 	string description() const {
@@ -111,8 +82,6 @@ public:
 				return "kTokenTypeSpace";
 			case kTokenTypeIdent:
 				return "kTokenTypeIdent";
-			case kTokenTypeClass:
-				return "kTokenTypeClass";
 			case kTokenTypeAt:
 				return "kTokenTypeAt";
 			case kTokenTypeUnit:
@@ -127,8 +96,6 @@ public:
 				return "kTokenTypeVariable";
 			case kTokenTypeFunction:
 				return "kTokenTypeFunction";
-			case kTokenTypeAmpersand:
-				return "kTokenTypeAmpersand";
 			case kTokenTypeComma:
 				return "kTokenTypeComma";
 			case kTokenTypeColon:

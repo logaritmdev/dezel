@@ -16,24 +16,24 @@ using std::vector;
 using std::unordered_map;
 
 class Paser;
-class Ruleset;
+class Descriptor;
 
 class Stylesheet {
 
 private:
 
-	vector<Ruleset*> rulesets;
+	vector<Descriptor*> descriptors;
 	unordered_map<string, Variable*> variables;
 	unordered_map<string, Function*> functions;
 
-	unordered_map<string, vector<Ruleset*>> map;
+	unordered_map<string, vector<Descriptor*>> map;
 
 public:
 
 	friend class Parser;
 
-	const vector<Ruleset*>& getRulesets() const {
-		return this->rulesets;
+	const vector<Descriptor*>& getDescriptors() const {
+		return this->descriptors;
 	}
 
 	const unordered_map<string, Variable*>& getVariables() const {
@@ -44,10 +44,9 @@ public:
 		return this->functions;
 	}
 
-	void addFunction(string name, Function* function);
-	void addVariable(string name, Variable* variable);
-
-	void addRuleset(Ruleset* ruleset);
+	void addVariable(Variable* variable);
+	void addFunction(Function* function);
+	void addDescriptor(Descriptor* descriptor);
 
 };
 

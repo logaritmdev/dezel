@@ -13,7 +13,7 @@ TokenList::TokenList(const Token* head, const Token* tail)
 }
 
 const Token&
-TokenList::peek(size_t offset, bool spaces) {
+TokenList::peek(size_t offset, bool spaces) const {
 
 	if (spaces || offset == 0) {
 
