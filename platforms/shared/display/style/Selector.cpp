@@ -1,5 +1,7 @@
 #include "Selector.h"
-#include "Rule.h"
+#include "Expression.h"
+
+#include <iostream>
 
 namespace Dezel {
 namespace Style {
@@ -7,30 +9,24 @@ namespace Style {
 string
 Selector::toString(int depth)
 {
-	string output;
+   string output;
 
-	if (this->combinator == kCombinatorParent) {
-		output.append("&");
-	}
+	output.append(depth * 2, ' ');
 
-	output.append(this->type);
+   auto selector = this->head;
 
-	if (this->name.size()) {
-		output.append("#");
-		output.append(this->name);
-	}
+   while (selector) {
 
-	for (auto style : this->styles) {
-		output.append(".");
-		output.append(style);
-	}
+	   if (output.length()) {
+		   output.append(" ");
+	   }
 
-	for (auto state : this->states) {
-		output.append(":");
-		output.append(state);
-	}
+	   output.append(selector->toString());
 
-	return output;
+	   selector = selector->getNext();
+   }
+
+   return output;
 }
 
 }

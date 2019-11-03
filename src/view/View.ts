@@ -2319,7 +2319,7 @@ function removeItem(view: View, child: View, index: number) {
  */
 function insertView(view: View, child: View, index: number) {
 	native(view).insert(native(child), index)
-} native
+}
 
 /**
  * @function removeView
@@ -2328,7 +2328,7 @@ function insertView(view: View, child: View, index: number) {
  */
 function removeView(view: View, child: View, index: number) {
 	native(view).remove(native(child), index)
-} native
+}
 
 /**
  * @function last

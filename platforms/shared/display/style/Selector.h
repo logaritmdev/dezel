@@ -1,102 +1,54 @@
-#ifndef Selector_h
-#define Selector_h
+#ifndef Rule_h
+#define Rule_h
 
-#include <set>
 #include <string>
 
 namespace Dezel {
 namespace Style {
 
-using std::set;
 using std::string;
-using std::sort;
 
-enum Combinator {
-	kCombinatorNone,
-	kCombinatorParent
-};
-
-class Rule;
 class Parser;
 class Stylesheet;
+class Expression;
 
 class Selector {
 
 private:
 
-	Selector* prev = nullptr;
-	Selector* next = nullptr;
+	Expression* tail = nullptr;
+	Expression* head = nullptr;
 
-	string hash = "";
-	string name = "";
-	string type = "";
-	set<string> styles;
-	set<string> states;
-
-	Combinator combinator = kCombinatorNone;
+	size_t length = 0;
+	size_t number = 0;
+	size_t weight = 0;
 
 public:
 
 	friend class Parser;
 	friend class Stylesheet;
 
-	Selector* getPrev() const {
-		return this->prev;
+	const Expression* getTail() const {
+		return this->tail;
 	}
 
-	Selector* getNext() const {
-		return this->next;
+	const Expression* getHead() const {
+		return this->head;
 	}
 
-	const string& getName() const {
-		return this->name;
+	size_t getLength() const {
+		return this->length;
 	}
 
-	const string& getType() const {
-		return this->type;
+	size_t getNumber() const {
+		return this->number;
 	}
 
-	const set<string>& getStyles() const {
-		return this->styles;
-	}
-
-	const set<string>& getStates() const {
-		return this->states;
-	}
-
-	Combinator getCombinator() const {
-		return this->combinator;
-	}
-
-	const string& getHash() {
-
-		if (this->hash.length() == 0) {
-
-			if (this->type.length()) {
-				this->hash.append(this->type);
-			}
-
-			if (this->name.length()) {
-				this->hash.append("#");
-				this->hash.append(this->name);
-			}
-
-			for (auto state : this->states) {
-				this->hash.append(":");
-				this->hash.append(state);
-			}
-
-			for (auto style : this->styles) {
-				this->hash.append(".");
-				this->hash.append(style);
-			}
-		}
-
-		return this->hash;
+	size_t getWeight() const {
+		return this->weight;
 	}
 
 	string toString(int depth = 0);
-
 };
 
 }
