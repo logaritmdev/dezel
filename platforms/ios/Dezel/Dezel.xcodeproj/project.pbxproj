@@ -119,7 +119,6 @@
 		C792E8E1234BDE630022D712 /* DisplayNodeOrigin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C792E8C1234BDE610022D712 /* DisplayNodeOrigin.cpp */; };
 		C792E8E2234BDE630022D712 /* DisplayNodeMargin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C792E8C2234BDE610022D712 /* DisplayNodeMargin.cpp */; };
 		C792E8E3234BDE630022D712 /* DisplayNodeSize.h in Headers */ = {isa = PBXBuildFile; fileRef = C792E8C3234BDE610022D712 /* DisplayNodeSize.h */; };
-		C792E8E4234BDE630022D712 /* DisplayNodeStyle.h in Headers */ = {isa = PBXBuildFile; fileRef = C792E8C4234BDE610022D712 /* DisplayNodeStyle.h */; };
 		C792E8E5234BDE630022D712 /* DisplayNodeOrigin.h in Headers */ = {isa = PBXBuildFile; fileRef = C792E8C5234BDE610022D712 /* DisplayNodeOrigin.h */; };
 		C792E8E6234BDE630022D712 /* DisplayNodeContentOrigin.h in Headers */ = {isa = PBXBuildFile; fileRef = C792E8C6234BDE610022D712 /* DisplayNodeContentOrigin.h */; };
 		C792E8E7234BDE630022D712 /* DisplayNodeBorder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C792E8C7234BDE610022D712 /* DisplayNodeBorder.cpp */; };
@@ -129,13 +128,10 @@
 		C792E8EB234BDE630022D712 /* DisplayNodePadding.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C792E8CB234BDE620022D712 /* DisplayNodePadding.cpp */; };
 		C792E8EC234BDE630022D712 /* DisplayNodeRef.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C792E8CC234BDE620022D712 /* DisplayNodeRef.cpp */; };
 		C792E8ED234BDE630022D712 /* DisplayRef.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C792E8CD234BDE620022D712 /* DisplayRef.cpp */; };
-		C792E8EE234BDE630022D712 /* DisplayNodeFrame.h in Headers */ = {isa = PBXBuildFile; fileRef = C792E8CE234BDE620022D712 /* DisplayNodeFrame.h */; };
 		C792E8EF234BDE630022D712 /* DisplayNodeAnchor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C792E8CF234BDE620022D712 /* DisplayNodeAnchor.cpp */; };
 		C792E8F0234BDE630022D712 /* DisplayNodeBorder.h in Headers */ = {isa = PBXBuildFile; fileRef = C792E8D0234BDE620022D712 /* DisplayNodeBorder.h */; };
-		C792E8F3234BDE630022D712 /* DisplayNodeFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C792E8D3234BDE620022D712 /* DisplayNodeFrame.cpp */; };
 		C792E8F4234BDE630022D712 /* DisplayBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C792E8D4234BDE620022D712 /* DisplayBase.cpp */; };
 		C792E8F5234BDE630022D712 /* DisplayNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C792E8D5234BDE620022D712 /* DisplayNode.cpp */; };
-		C792E8F6234BDE630022D712 /* DisplayNodeStyle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C792E8D6234BDE620022D712 /* DisplayNodeStyle.cpp */; };
 		C792E8F7234BDE630022D712 /* DisplayNode.h in Headers */ = {isa = PBXBuildFile; fileRef = C792E8D7234BDE620022D712 /* DisplayNode.h */; };
 		C792E8F8234BDE630022D712 /* Display.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C792E8D8234BDE620022D712 /* Display.cpp */; };
 		C792E8F9234BDE630022D712 /* DisplayRef.h in Headers */ = {isa = PBXBuildFile; fileRef = C792E8D9234BDE630022D712 /* DisplayRef.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -428,7 +424,6 @@
 		C792E8C1234BDE610022D712 /* DisplayNodeOrigin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DisplayNodeOrigin.cpp; path = ../../../../../shared/display/DisplayNodeOrigin.cpp; sourceTree = "<group>"; };
 		C792E8C2234BDE610022D712 /* DisplayNodeMargin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DisplayNodeMargin.cpp; path = ../../../../../shared/display/DisplayNodeMargin.cpp; sourceTree = "<group>"; };
 		C792E8C3234BDE610022D712 /* DisplayNodeSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DisplayNodeSize.h; path = ../../../../../shared/display/DisplayNodeSize.h; sourceTree = "<group>"; };
-		C792E8C4234BDE610022D712 /* DisplayNodeStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DisplayNodeStyle.h; path = ../../../../../shared/display/DisplayNodeStyle.h; sourceTree = "<group>"; };
 		C792E8C5234BDE610022D712 /* DisplayNodeOrigin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DisplayNodeOrigin.h; path = ../../../../../shared/display/DisplayNodeOrigin.h; sourceTree = "<group>"; };
 		C792E8C6234BDE610022D712 /* DisplayNodeContentOrigin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DisplayNodeContentOrigin.h; path = ../../../../../shared/display/DisplayNodeContentOrigin.h; sourceTree = "<group>"; };
 		C792E8C7234BDE610022D712 /* DisplayNodeBorder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DisplayNodeBorder.cpp; path = ../../../../../shared/display/DisplayNodeBorder.cpp; sourceTree = "<group>"; };
@@ -438,13 +433,10 @@
 		C792E8CB234BDE620022D712 /* DisplayNodePadding.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DisplayNodePadding.cpp; path = ../../../../../shared/display/DisplayNodePadding.cpp; sourceTree = "<group>"; };
 		C792E8CC234BDE620022D712 /* DisplayNodeRef.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DisplayNodeRef.cpp; path = ../../../../../shared/display/DisplayNodeRef.cpp; sourceTree = "<group>"; };
 		C792E8CD234BDE620022D712 /* DisplayRef.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DisplayRef.cpp; path = ../../../../../shared/display/DisplayRef.cpp; sourceTree = "<group>"; };
-		C792E8CE234BDE620022D712 /* DisplayNodeFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DisplayNodeFrame.h; path = ../../../../../shared/display/DisplayNodeFrame.h; sourceTree = "<group>"; };
 		C792E8CF234BDE620022D712 /* DisplayNodeAnchor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DisplayNodeAnchor.cpp; path = ../../../../../shared/display/DisplayNodeAnchor.cpp; sourceTree = "<group>"; };
 		C792E8D0234BDE620022D712 /* DisplayNodeBorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DisplayNodeBorder.h; path = ../../../../../shared/display/DisplayNodeBorder.h; sourceTree = "<group>"; };
-		C792E8D3234BDE620022D712 /* DisplayNodeFrame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DisplayNodeFrame.cpp; path = ../../../../../shared/display/DisplayNodeFrame.cpp; sourceTree = "<group>"; };
 		C792E8D4234BDE620022D712 /* DisplayBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DisplayBase.cpp; path = ../../../../../shared/display/DisplayBase.cpp; sourceTree = "<group>"; };
 		C792E8D5234BDE620022D712 /* DisplayNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DisplayNode.cpp; path = ../../../../../shared/display/DisplayNode.cpp; sourceTree = "<group>"; };
-		C792E8D6234BDE620022D712 /* DisplayNodeStyle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DisplayNodeStyle.cpp; path = ../../../../../shared/display/DisplayNodeStyle.cpp; sourceTree = "<group>"; };
 		C792E8D7234BDE620022D712 /* DisplayNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DisplayNode.h; path = ../../../../../shared/display/DisplayNode.h; sourceTree = "<group>"; };
 		C792E8D8234BDE620022D712 /* Display.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Display.cpp; path = ../../../../../shared/display/Display.cpp; sourceTree = "<group>"; };
 		C792E8D9234BDE630022D712 /* DisplayRef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DisplayRef.h; path = ../../../../../shared/display/DisplayRef.h; sourceTree = "<group>"; };
@@ -896,8 +888,6 @@
 				C792E8C6234BDE610022D712 /* DisplayNodeContentOrigin.h */,
 				C792E8BC234BDE610022D712 /* DisplayNodeContentSize.cpp */,
 				C792E8BA234BDE610022D712 /* DisplayNodeContentSize.h */,
-				C792E8D3234BDE620022D712 /* DisplayNodeFrame.cpp */,
-				C792E8CE234BDE620022D712 /* DisplayNodeFrame.h */,
 				C792E8C2234BDE610022D712 /* DisplayNodeMargin.cpp */,
 				C792E8C8234BDE610022D712 /* DisplayNodeMargin.h */,
 				C792E8C1234BDE610022D712 /* DisplayNodeOrigin.cpp */,
@@ -908,8 +898,6 @@
 				C792E8BB234BDE610022D712 /* DisplayNodeRef.h */,
 				C792E8CA234BDE620022D712 /* DisplayNodeSize.cpp */,
 				C792E8C3234BDE610022D712 /* DisplayNodeSize.h */,
-				C792E8D6234BDE620022D712 /* DisplayNodeStyle.cpp */,
-				C792E8C4234BDE610022D712 /* DisplayNodeStyle.h */,
 				C792E8CD234BDE620022D712 /* DisplayRef.cpp */,
 				C792E8D9234BDE630022D712 /* DisplayRef.h */,
 			);
@@ -1436,7 +1424,6 @@
 				C792E8DD234BDE630022D712 /* DisplayNodePadding.h in Headers */,
 				C792E90A234BDE900022D712 /* AbsoluteLayoutResolver.h in Headers */,
 				C7AA9371236F6DD500ADF997 /* InvalidStructureException.h in Headers */,
-				C792E8EE234BDE630022D712 /* DisplayNodeFrame.h in Headers */,
 				C792E960234CC1E70022D712 /* Dictionary.h in Headers */,
 				C792E95B234BDEA70022D712 /* StringValue.h in Headers */,
 				C7E8A543201624FA005139F6 /* JavaScriptContext.h in Headers */,
@@ -1453,7 +1440,6 @@
 				C792E8E8234BDE630022D712 /* DisplayNodeMargin.h in Headers */,
 				C792E8E6234BDE630022D712 /* DisplayNodeContentOrigin.h in Headers */,
 				C792E950234BDEA70022D712 /* VariableValue.h in Headers */,
-				C792E8E4234BDE630022D712 /* DisplayNodeStyle.h in Headers */,
 				C792E8DE234BDE630022D712 /* Display.h in Headers */,
 				C792E8E0234BDE630022D712 /* DisplayBase.h in Headers */,
 				C792E93E234BDEA70022D712 /* Value.h in Headers */,
@@ -1619,7 +1605,6 @@
 				C773DA9021DD0E2800685BDB /* TextParser.swift in Sources */,
 				C7EE2E0222DD6AE200FFF0EE /* Source.swift in Sources */,
 				C792E94C234BDEA70022D712 /* TokenizerStream.cpp in Sources */,
-				C792E8F3234BDE630022D712 /* DisplayNodeFrame.cpp in Sources */,
 				C718A0C0206748EB00EFEC15 /* ImageDiskCache.swift in Sources */,
 				C7B9CEAC202CDBB7002409D5 /* JavaScriptApplication.swift in Sources */,
 				C77189B22106AE0A00337263 /* Transform2D.swift in Sources */,
@@ -1760,7 +1745,6 @@
 				C7A3AB79214ECBA500D8B15C /* CanvasLayer.swift in Sources */,
 				C792E93D234BDEA70022D712 /* VariableValue.cpp in Sources */,
 				C718B5B4207C3D0D00610F8D /* LinearGradient.swift in Sources */,
-				C792E8F6234BDE630022D712 /* DisplayNodeStyle.cpp in Sources */,
 				C75153BF22F3791C007CAA48 /* JavaScriptClassStaticFunctionWrapper.swift in Sources */,
 				C700121821551B5700CB26D4 /* JavaScriptDevice.swift in Sources */,
 				C71A119D2080EB1E0004D523 /* HttpRequest.swift in Sources */,

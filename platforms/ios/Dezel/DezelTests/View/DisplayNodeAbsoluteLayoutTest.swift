@@ -17,7 +17,6 @@ class DisplayNodeAbsoluteLayoutTest: XCTestCase {
 		self.display.viewportHeight = 480
 
 		self.window = DisplayNode(display: self.display)
-		self.window.setType(kDisplayNodeTypeRoot)
 		self.window.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 320)
 		self.window.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 480)
 		self.window.setContentWidth(type: kDisplayNodeContentSizeTypeLength, unit: kDisplayNodeContentSizeUnitPX, length: 320)

@@ -9,6 +9,12 @@ using std::string;
 
 namespace Dezel {
 
+namespace Layout {
+	class LayoutResolver;
+	class AbsoluteLayoutResolver;
+	class RelativeLayoutResolver;
+}
+
 class DisplayNode;
 class DisplayNodeFrame;
 
@@ -36,7 +42,21 @@ private:
 
 public:
 
+	friend class DisplayNode;
+	friend class Layout::LayoutResolver;
+	friend class Layout::AbsoluteLayoutResolver;
+	friend class Layout::RelativeLayoutResolver;
+
 	void *data = nullptr;
+
+	void setWindow(DisplayNode* window);
+
+	void setScale(double scale) {
+		this->scale = scale;
+	}
+
+	void setViewportWidth(double viewportWidth);
+	void setViewportHeight(double viewportHeight);
 
 	void setInvalidateCallback(DisplayInvalidateCallback callback) {
 		this->invalidateCallback = callback;
@@ -45,12 +65,6 @@ public:
 	void setResolveCallback(DisplayResolveCallback callback) {
 		this->resolveCallback = callback;
 	}
-
-	void setWindow(DisplayNode* window);
-
-	void setScale(double scale);
-	void setViewportWidth(double viewportWidth);
-	void setViewportHeight(double viewportHeight);
 
 	void loadStylesheet(string stylesheet);
 
@@ -66,7 +80,7 @@ public:
 		return this->viewportHeight;
 	}
 
-	bool hasViewportWidthChanged() const {
+	bool hasNewViewportWidth() const {
 		return this->viewportWidthChanged;
 	}
 

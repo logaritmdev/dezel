@@ -24,21 +24,21 @@ DisplayNodeSetDisplay(DisplayNodeRef node, DisplayRef display)
 }
 
 void
-DisplayNodeSetType(DisplayNodeRef node, DisplayNodeType type)
+DisplayNodeSetOpaque(DisplayNodeRef node)
+{
+	reinterpret_cast<DisplayNode*>(node)->setOpaque();
+}
+
+void
+DisplayNodeSetName(DisplayNodeRef node, const char* name)
+{
+	reinterpret_cast<DisplayNode*>(node)->setName(name);
+}
+
+void
+DisplayNodeSetType(DisplayNodeRef node, const char* type)
 {
 	reinterpret_cast<DisplayNode*>(node)->setType(type);
-}
-
-void
-DisplayNodeSetName(DisplayNodeRef node, const char* id)
-{
-	reinterpret_cast<DisplayNode*>(node)->setName(id);
-}
-
-void
-DisplayNodeSetClass(DisplayNodeRef node, const char* klass)
-{
-	reinterpret_cast<DisplayNode*>(node)->setClass(klass);
 }
 
 void
@@ -410,25 +410,25 @@ DisplayNodeSetMaxPaddingBottom(DisplayNodeRef node, double max)
 bool
 DisplayNodeIsFillingParentWidth(DisplayNodeRef node)
 {
-	return reinterpret_cast<DisplayNode*>(node)->fillsParentWidth();
+	return reinterpret_cast<DisplayNode*>(node)->isFillingParentWidth();
 }
 
 bool
 DisplayNodeIsFillingParentHeight(DisplayNodeRef node)
 {
-	return reinterpret_cast<DisplayNode*>(node)->fillsParentHeight();
+	return reinterpret_cast<DisplayNode*>(node)->isFillingParentHeight();
 }
 
 bool
 DisplayNodeIsWrappingContentWidth(DisplayNodeRef node)
 {
-	return reinterpret_cast<DisplayNode*>(node)->wrapsContentWidth();
+	return reinterpret_cast<DisplayNode*>(node)->isWrappingContentWidth();
 }
 
 bool
 DisplayNodeIsWrappingContentHeight(DisplayNodeRef node)
 {
-	return reinterpret_cast<DisplayNode*>(node)->wrapsContentHeight();
+	return reinterpret_cast<DisplayNode*>(node)->isWrappingContentHeight();
 }
 
 double

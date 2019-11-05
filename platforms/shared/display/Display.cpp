@@ -27,40 +27,28 @@ Display::loadStylesheet(string input)
 void
 Display::setWindow(DisplayNode* window) {
 	this->window = window;
-	this->window->setType(kDisplayNodeTypeRoot);
-}
-
-void
-Display::setScale(double value)
-{
-	this->scale = value;
-	this->invalidate();
+	this->window->setWindow();
+	this->window->setOpaque();
 }
 
 void
 Display::setViewportWidth(double value)
 {
-	if (this->viewportWidth == value) {
-		return;
+	if (this->viewportWidth != value) {
+		this->viewportWidth = value;
+		this->viewportWidthChanged = true;
+		this->invalidate();
 	}
-
-	this->viewportWidth = value;
-	this->viewportWidthChanged = true;
-
-	this->invalidate();
 }
 
 void
 Display::setViewportHeight(double value)
 {
-	if (this->viewportHeight == value) {
-		return;
+	if (this->viewportHeight != value) {
+		this->viewportHeight = value;
+		this->viewportHeightChanged = true;
+		this->invalidate();
 	}
-
-	this->viewportHeight = value;
-	this->viewportHeightChanged = true;
-
-	this->invalidate();
 }
 
 void
@@ -93,11 +81,7 @@ Display::resolve()
 
 		auto node = queue.front();
 
-		node->resolveEntity();
-		node->resolveStyle();
-		node->resolveFrame();
-
-		node->invalid = false;
+		node->resolve();
 
 		queue.pop();
 
@@ -108,10 +92,11 @@ Display::resolve()
 		}
 	}
 
-	this->invalid = false;
 	this->resolving = false;
 	this->viewportWidthChanged = false;
 	this->viewportHeightChanged = false;
+
+	this->invalid = false;
 
 	this->didResolve();
 }

@@ -29,6 +29,13 @@ void DisplayNodeDelete(DisplayNodeRef node);
 void DisplayNodeSetDisplay(DisplayNodeRef node, DisplayRef display);
 
 /**
+* Assign the opaque flag to the display node's flags.
+* @function DisplayNodeSetOpaque
+* @since 0.4.0
+*/
+void DisplayNodeSetOpaque(DisplayNodeRef node);
+
+/**
  * Assigns the display node's identifier.
  * @function DisplayNodeSetName
  * @since 0.7.0
@@ -40,14 +47,7 @@ void DisplayNodeSetName(DisplayNodeRef node, const char* id);
  * @function DisplayNodeSetType
  * @since 0.7.0
  */
-void DisplayNodeSetType(DisplayNodeRef node, DisplayNodeType type);
-
-/**
- * Defines the display node's class.
- * @function DisplayNodeSetClass
- * @since 0.7.0
- */
-void DisplayNodeSetClass(DisplayNodeRef node, const char* klass);
+void DisplayNodeSetType(DisplayNodeRef node, const char* type);
 
 /**
  * Appends a display node's visual style.

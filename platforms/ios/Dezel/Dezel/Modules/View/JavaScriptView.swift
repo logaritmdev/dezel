@@ -1425,7 +1425,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @method layoutEnded
 	 * @since 0.7.0
 	 */
-	open func layoutEnded(node: DisplayNode) {
+	open func didResolveLayout(node: DisplayNode) {
 		self.delegate?.didFinishLayout(view: self)
 		self.callMethod("nativeOnLayoutFinished")
 	}
@@ -1768,7 +1768,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @since 0.7.0
 	 */
 	@objc public lazy var className = JavaScriptProperty(string: "") { value in
-		self.node.setClass(value.string)
+		self.node.setType(value.string)
 	}
 
 	/**
@@ -6388,6 +6388,15 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
+	 * @method jsFunction_setOpaque
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@objc open func jsFunction_setOpaque(callback: JavaScriptFunctionCallback) {
+		self.node.setOpaque()
+	}
+
+	/**
 	 * @method jsFunction_destroy
 	 * @since 0.7.0
 	 * @hidden
@@ -6540,10 +6549,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 		let x = callback.argument(1).number
 
 		self.scrollableView?.scrollTo(x: CGFloat(x), y: CGFloat(y))
-	}
-	// Pas certain
-	@objc open func jsFunction_makeEntity(callback: JavaScriptFunctionCallback) {
-		self.node.setType(kDisplayNodeTypeEntity)
 	}
 
 	//--------------------------------------------------------------------------

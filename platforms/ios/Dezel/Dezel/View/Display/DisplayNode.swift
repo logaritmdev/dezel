@@ -304,16 +304,16 @@ open class DisplayNode {
 	}
 
 	/**
-	 * Assigns the node's type.
-	 * @method setType
+	 * Marks the display node as opaque.
+	 * @method setOpaque
 	 * @since 0.7.0
 	 */
-	public func setType(_ type: DisplayNodeType) {
-		DisplayNodeSetType(self.handle, type)
+	public func setOpaque() {
+		DisplayNodeSetOpaque(self.handle)
 	}
 
 	/**
-	 * Assigns the node's name.
+	 * Assigns the display node's name.
 	 * @method setName
 	 * @since 0.7.0
 	 */
@@ -322,12 +322,12 @@ open class DisplayNode {
 	}
 
 	/**
-	 * Assigns the node's class.
-	 * @method setClass
+	 * Assigns the display node's type.
+	 * @method setType
 	 * @since 0.7.0
 	 */
-	public func setClass(_ klass: String) {
-		DisplayNodeSetClass(self.handle, klass)
+	public func setType(_ type: String) {
+		DisplayNodeSetType(self.handle, type)
 	}
 
 	/**
@@ -1750,24 +1750,6 @@ open class DisplayNode {
 	}
 
 	/**
-	 * Resolves this node only.
-	 * @method measure
-	 * @since 0.7.0
-	 */
-	public func measure() {
-		DisplayNodeMeasure(self.handle)
-	}
-
-	/**
-	 * Resolves this node and its hierarchy.
-	 * @method resolve
-	 * @since 0.7.0
-	 */
-	public func resolve() {
-		DisplayNodeResolve(self.handle)
-	}
-
-	/**
 	 * Appends a node to the receiver's children list.
 	 * @method appendChild
 	 * @since 0.7.0
@@ -1795,21 +1777,30 @@ open class DisplayNode {
 	}
 
 	/**
+	 * Resolves this node only.
+	 * @method measure
+	 * @since 0.7.0
+	 */
+	public func measure() {
+		DisplayNodeMeasure(self.handle)
+	}
+
+	/**
+	 * Resolves this node and its hierarchy.
+	 * @method resolve
+	 * @since 0.7.0
+	 */
+	public func resolve() {
+		DisplayNodeResolve(self.handle)
+	}
+
+	/**
 	 * Called when the node needs to be measured manually.
 	 * @method measure
 	 * @since 0.7.0
 	 */
 	internal func measure(in rect: CGSize, min: CGSize, max: CGSize) -> CGSize? {
 		return self.delegate?.measure(node: self, in: rect, min: min, max: max)
-	}
-
-	/**
-	 * @method didInvalidate
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	internal func didInvalidate() {
-		self.delegate?.didInvalidate(node: self)
 	}
 
 	/**
@@ -1876,21 +1867,12 @@ open class DisplayNode {
 	}
 
 	/**
-	 * @method layoutBegan
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	internal func layoutBegan() {
-		self.delegate?.layoutBegan(node: self)
-	}
-
-	/**
 	 * @method layoutEnded
 	 * @since 0.7.0
 	 * @hidden
 	 */
 	internal func didResolveLayout() {
-		self.delegate?.layoutEnded(node: self)
+		self.delegate?.didResolveLayout(node: self)
 	}
 }
 

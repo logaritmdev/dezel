@@ -17,7 +17,6 @@ class DisplayNodeRelativeLayoutTest: XCTestCase {
 		self.display.viewportHeight = 480
 
 		self.window = DisplayNode(display: self.display)
-		self.window.setType(kDisplayNodeTypeRoot)
 		self.window.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 320)
 		self.window.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 480)
 		self.window.setContentWidth(type: kDisplayNodeContentSizeTypeLength, unit: kDisplayNodeContentSizeUnitPX, length: 320)
@@ -1435,9 +1434,7 @@ class DisplayNodeRelativeLayoutTest: XCTestCase {
 		XCTAssertEqual(containerd.resolvedMargin, 0)
 		XCTAssertEqual(containerd.resolvedBorder, 0)
 		XCTAssertEqual(containerd.resolvedPadding, 0)
-		XCTAssertEqual(containerd.invalidate, 1)
-		XCTAssertEqual(containerd.layoutBegan, 1)
-		XCTAssertEqual(containerd.layoutEnded, 1)
+		XCTAssertEqual(containerd.resolvedLayout, 1)
 
 		XCTAssertEqual(node1d.measured, 1)
 		XCTAssertEqual(node1d.resolvedSize, 1)
@@ -1447,9 +1444,7 @@ class DisplayNodeRelativeLayoutTest: XCTestCase {
 		XCTAssertEqual(node1d.resolvedMargin, 0)
 		XCTAssertEqual(node1d.resolvedBorder, 0)
 		XCTAssertEqual(node1d.resolvedPadding, 0)
-		XCTAssertEqual(node1d.invalidate, 1)
-		XCTAssertEqual(node1d.layoutBegan, 1)
-		XCTAssertEqual(node1d.layoutEnded, 1)
+		XCTAssertEqual(node1d.resolvedLayout, 1)
 
 		XCTAssertEqual(node2d.measured, 1)
 		XCTAssertEqual(node2d.resolvedSize, 1)
@@ -1459,9 +1454,7 @@ class DisplayNodeRelativeLayoutTest: XCTestCase {
 		XCTAssertEqual(node2d.resolvedMargin, 0)
 		XCTAssertEqual(node2d.resolvedBorder, 0)
 		XCTAssertEqual(node2d.resolvedPadding, 0)
-		XCTAssertEqual(node2d.invalidate, 1)
-		XCTAssertEqual(node2d.layoutBegan, 1)
-		XCTAssertEqual(node2d.layoutEnded, 1)
+		XCTAssertEqual(node2d.resolvedLayout, 1)
 
 		XCTAssertEqual(node3d.measured, 1)
 		XCTAssertEqual(node3d.resolvedSize, 1)
@@ -1471,9 +1464,7 @@ class DisplayNodeRelativeLayoutTest: XCTestCase {
 		XCTAssertEqual(node3d.resolvedMargin, 0)
 		XCTAssertEqual(node3d.resolvedBorder, 0)
 		XCTAssertEqual(node3d.resolvedPadding, 0)
-		XCTAssertEqual(node3d.invalidate, 1)
-		XCTAssertEqual(node3d.layoutBegan, 1)
-		XCTAssertEqual(node3d.layoutEnded, 1)
+		XCTAssertEqual(node3d.resolvedLayout, 1)
 
 		XCTAssertEqual(node4d.measured, 0)
 		XCTAssertEqual(node4d.resolvedSize, 1)
@@ -1483,9 +1474,7 @@ class DisplayNodeRelativeLayoutTest: XCTestCase {
 		XCTAssertEqual(node4d.resolvedMargin, 0)
 		XCTAssertEqual(node4d.resolvedBorder, 0)
 		XCTAssertEqual(node4d.resolvedPadding, 0)
-		XCTAssertEqual(node4d.invalidate, 1)
-		XCTAssertEqual(node4d.layoutBegan, 0)
-		XCTAssertEqual(node4d.layoutEnded, 0)
+		XCTAssertEqual(node4d.resolvedLayout, 0)
 
 		XCTAssertEqual(node5d.measured, 0)
 		XCTAssertEqual(node5d.resolvedSize, 1)
@@ -1495,9 +1484,7 @@ class DisplayNodeRelativeLayoutTest: XCTestCase {
 		XCTAssertEqual(node5d.resolvedMargin, 0)
 		XCTAssertEqual(node5d.resolvedBorder, 0)
 		XCTAssertEqual(node5d.resolvedPadding, 0)
-		XCTAssertEqual(node5d.invalidate, 1)
-		XCTAssertEqual(node5d.layoutBegan, 0)
-		XCTAssertEqual(node5d.layoutEnded, 0)
+		XCTAssertEqual(node5d.resolvedLayout, 0)
 
 		XCTAssertEqual(node6d.measured, 0)
 		XCTAssertEqual(node6d.resolvedSize, 1)
@@ -1507,9 +1494,7 @@ class DisplayNodeRelativeLayoutTest: XCTestCase {
 		XCTAssertEqual(node6d.resolvedMargin, 0)
 		XCTAssertEqual(node6d.resolvedBorder, 0)
 		XCTAssertEqual(node6d.resolvedPadding, 0)
-		XCTAssertEqual(node6d.invalidate, 1)
-		XCTAssertEqual(node6d.layoutBegan, 0)
-		XCTAssertEqual(node6d.layoutEnded, 0)
+		XCTAssertEqual(node6d.resolvedLayout, 0)
 	}
 
 	func testWrappedNodeCallbackCountWithRelayout() {
@@ -1617,9 +1602,7 @@ class DisplayNodeRelativeLayoutTest: XCTestCase {
 		XCTAssertEqual(containerd.resolvedMargin, 0)
 		XCTAssertEqual(containerd.resolvedBorder, 0)
 		XCTAssertEqual(containerd.resolvedPadding, 1)
-		XCTAssertEqual(containerd.invalidate, 1)
-		XCTAssertEqual(containerd.layoutBegan, 2)
-		XCTAssertEqual(containerd.layoutEnded, 2)
+		XCTAssertEqual(containerd.resolvedLayout, 2)
 
 		XCTAssertEqual(node1d.measured, 1)
 		XCTAssertEqual(node1d.resolvedSize, 1)
@@ -1629,9 +1612,7 @@ class DisplayNodeRelativeLayoutTest: XCTestCase {
 		XCTAssertEqual(node1d.resolvedMargin, 0)
 		XCTAssertEqual(node1d.resolvedBorder, 0)
 		XCTAssertEqual(node1d.resolvedPadding, 0)
-		XCTAssertEqual(node1d.invalidate, 1)
-		XCTAssertEqual(node1d.layoutBegan, 1)
-		XCTAssertEqual(node1d.layoutEnded, 1)
+		XCTAssertEqual(node1d.resolvedLayout, 1)
 
 		XCTAssertEqual(node2d.measured, 1)
 		XCTAssertEqual(node2d.resolvedSize, 1)
@@ -1641,9 +1622,7 @@ class DisplayNodeRelativeLayoutTest: XCTestCase {
 		XCTAssertEqual(node2d.resolvedMargin, 0)
 		XCTAssertEqual(node2d.resolvedBorder, 0)
 		XCTAssertEqual(node2d.resolvedPadding, 0)
-		XCTAssertEqual(node2d.invalidate, 1)
-		XCTAssertEqual(node2d.layoutBegan, 1)
-		XCTAssertEqual(node2d.layoutEnded, 1)
+		XCTAssertEqual(node2d.resolvedLayout, 1)
 
 		XCTAssertEqual(node3d.measured, 1)
 		XCTAssertEqual(node3d.resolvedSize, 1)
@@ -1653,9 +1632,7 @@ class DisplayNodeRelativeLayoutTest: XCTestCase {
 		XCTAssertEqual(node3d.resolvedMargin, 0)
 		XCTAssertEqual(node3d.resolvedBorder, 0)
 		XCTAssertEqual(node3d.resolvedPadding, 0)
-		XCTAssertEqual(node3d.invalidate, 1)
-		XCTAssertEqual(node3d.layoutBegan, 1)
-		XCTAssertEqual(node3d.layoutEnded, 1)
+		XCTAssertEqual(node3d.resolvedLayout, 1)
 
 		XCTAssertEqual(node4d.measured, 0)
 		XCTAssertEqual(node4d.resolvedSize, 1)
@@ -1665,9 +1642,7 @@ class DisplayNodeRelativeLayoutTest: XCTestCase {
 		XCTAssertEqual(node4d.resolvedMargin, 0)
 		XCTAssertEqual(node4d.resolvedBorder, 0)
 		XCTAssertEqual(node4d.resolvedPadding, 0)
-		XCTAssertEqual(node4d.invalidate, 1)
-		XCTAssertEqual(node4d.layoutBegan, 0)
-		XCTAssertEqual(node4d.layoutEnded, 0)
+		XCTAssertEqual(node4d.resolvedLayout, 0)
 
 		XCTAssertEqual(node5d.measured, 0)
 		XCTAssertEqual(node5d.resolvedSize, 1)
@@ -1677,9 +1652,7 @@ class DisplayNodeRelativeLayoutTest: XCTestCase {
 		XCTAssertEqual(node5d.resolvedMargin, 0)
 		XCTAssertEqual(node5d.resolvedBorder, 0)
 		XCTAssertEqual(node5d.resolvedPadding, 0)
-		XCTAssertEqual(node5d.invalidate, 1)
-		XCTAssertEqual(node5d.layoutBegan, 0)
-		XCTAssertEqual(node5d.layoutEnded, 0)
+		XCTAssertEqual(node5d.resolvedLayout, 0)
 
 		XCTAssertEqual(node6d.measured, 0)
 		XCTAssertEqual(node6d.resolvedSize, 1)
@@ -1689,9 +1662,7 @@ class DisplayNodeRelativeLayoutTest: XCTestCase {
 		XCTAssertEqual(node6d.resolvedMargin, 0)
 		XCTAssertEqual(node6d.resolvedBorder, 0)
 		XCTAssertEqual(node6d.resolvedPadding, 0)
-		XCTAssertEqual(node6d.invalidate, 1)
-		XCTAssertEqual(node6d.layoutBegan, 0)
-		XCTAssertEqual(node6d.layoutEnded, 0)
+		XCTAssertEqual(node6d.resolvedLayout, 0)
 	}
 
 	func testNodeMeasure() {

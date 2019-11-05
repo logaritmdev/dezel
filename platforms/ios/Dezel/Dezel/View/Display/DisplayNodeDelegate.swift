@@ -15,13 +15,6 @@ public protocol DisplayNodeDelegate: AnyObject {
 	func measure(node: DisplayNode, in: CGSize, min: CGSize, max: CGSize) -> CGSize?
 
 	/**
-	 * Called when the node's becomes invalid.
-	 * @method didInvalidate
-	 * @since 0.7.0
-	 */
-	func didInvalidate(node: DisplayNode)
-
-	/**
 	 * Called when the node's size is resolved.
 	 * @method didResolveSize
 	 * @since 0.7.0
@@ -71,16 +64,9 @@ public protocol DisplayNodeDelegate: AnyObject {
 	func didResolvePadding(node: DisplayNode)
 
 	/**
-	 * Called when the node's layout pass began.
-	 * @method layoutBegan
+	 * Called when the node's layout has been resolved.
+	 * @method didResolveLayout
 	 * @since 0.7.0
 	 */
-	func layoutBegan(node: DisplayNode)
-
-	/**
-	 * Called when the node's layout pass has been finished.
-	 * @method layoutEnded
-	 * @since 0.7.0
-	 */
-	func layoutEnded(node: DisplayNode)
+	func didResolveLayout(node: DisplayNode)
 }

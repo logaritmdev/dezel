@@ -17,47 +17,49 @@ LayoutResolver::LayoutResolver(DisplayNode* node) : relativeLayout(node), absolu
 }
 
 void
-LayoutResolver::resolve()
-{
-	for (auto &child : this->node->children) {
+LayoutResolver::resolve() {
+
+	if (this->node->children.size() == 0) {
+		return;
+	}
+
+	for (auto child : this->node->children) {
 
 		if (child->visible == false) {
 			continue;
 		}
 
-		const auto frame = child->frame;
+		child->inheritedWrappedContentWidth = child->inheritsWrappedWidth();
+		child->inheritedWrappedContentHeight = child->inheritsWrappedHeight();
 
-		frame->wrapsContentWidth = frame->shouldWrapContentWidth();
-		frame->wrapsContentHeight = frame->shouldWrapContentHeight();
-
-		if (frame->isRelative()) {
+		if (child->isRelative()) {
 			this->relativeLayout.append(child);
 		} else {
 			this->absoluteLayout.append(child);
 		}
 	}
 
-	const auto frame = this->node->frame;
-
-	const bool autoContentW = frame->contentWidth.type == kDisplayNodeContentSizeTypeAuto;
-	const bool autoContentH = frame->contentHeight.type == kDisplayNodeContentSizeTypeAuto;
-	const auto lastContentW = frame->measuredContentWidth;
-	const auto lastContentH = frame->measuredContentHeight;
+	const bool autoContentW = this->node->contentWidth.type == kDisplayNodeContentSizeTypeAuto;
+	const bool autoContentH = this->node->contentHeight.type == kDisplayNodeContentSizeTypeAuto;
+	const auto lastContentW = this->node->measuredContentWidth;
+	const auto lastContentH = this->node->measuredContentHeight;
 
 	this->relativeLayout.resolve();
 
 	if (autoContentW || autoContentH) {
 
-		if (autoContentW) frame->measuredContentWidth = max(frame->measuredContentWidth, this->getExtentRight());
-		if (autoContentH) frame->measuredContentHeight = max(frame->measuredContentHeight, this->getExtentBottom());
+		if (autoContentW) this->node->measuredContentWidth = max(this->node->measuredContentWidth, this->getExtentRight());
+		if (autoContentH) this->node->measuredContentHeight = max(this->node->measuredContentHeight, this->getExtentBottom());
 
-		if (lastContentW != frame->measuredContentWidth ||
-			lastContentH != frame->measuredContentHeight) {
+		if (lastContentW != this->node->measuredContentWidth ||
+			lastContentH != this->node->measuredContentHeight) {
 			this->node->didResolveContentSize();
 		}
 	}
 
 	this->absoluteLayout.resolve();
+
+	this->node->didResolveLayout();
 }
 
 }

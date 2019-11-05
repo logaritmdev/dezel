@@ -28,17 +28,6 @@ typedef struct OpaqueDisplayNode* DisplayNodeRef;
 typedef struct OpaqueDisplayNodeProperty* DisplayNodePropertyRef;
 
 /**
- * The node type.
- * @type DisplayNodetype
- * @since 0.7.0
- */
-typedef enum {
-	kDisplayNodeTypeNode = 1,
-	kDisplayNodeTypeEntity = 2,
-	kDisplayNodeTypeRoot = 3,
-} DisplayNodeType;
-
-/**
  * The node anchor types.
  * @type DisplayNodeSizeType
  * @since 0.7.0
