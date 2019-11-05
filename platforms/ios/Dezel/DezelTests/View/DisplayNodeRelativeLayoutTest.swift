@@ -17,11 +17,12 @@ class DisplayNodeRelativeLayoutTest: XCTestCase {
 		self.display.viewportHeight = 480
 
 		self.window = DisplayNode(display: self.display)
+		self.window.setType(kDisplayNodeTypeRoot)
 		self.window.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 320)
 		self.window.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 480)
 		self.window.setContentWidth(type: kDisplayNodeContentSizeTypeLength, unit: kDisplayNodeContentSizeUnitPX, length: 320)
 		self.window.setContentHeight(type: kDisplayNodeContentSizeTypeLength, unit: kDisplayNodeContentSizeUnitPX, length: 480)
-		self.window.id = "Window"
+		self.window.setName("Window")
 
 		self.display.window = self.window
 	}
@@ -508,7 +509,6 @@ class DisplayNodeRelativeLayoutTest: XCTestCase {
 
 		XCTAssertEqual(container.measuredContentWidth, 200)
 		XCTAssertEqual(container.measuredContentHeight, 400)
-
 	}
 
 	func testWrappingFromContentSize() {
@@ -997,7 +997,7 @@ class DisplayNodeRelativeLayoutTest: XCTestCase {
 
 		self.window.appendChild(container)
 		self.window.resolve()
-print("TEST \(self.window.measuredContentWidth) \(self.window.measuredWidth)")
+
 		XCTAssertEqual(container.measuredPaddingTop, 320 * 0.2)
 		XCTAssertEqual(container.measuredPaddingLeft, 320 * 0.4)
 		XCTAssertEqual(container.measuredPaddingRight, 320 * 0.6)
@@ -1525,7 +1525,6 @@ print("TEST \(self.window.measuredContentWidth) \(self.window.measuredWidth)")
 		let node6d = DisplayNodeDelegateCounter()
 
 		let container = DisplayNode(display: self.display)
-		container.id = "CONTAINER"
 		container.delegate = containerd
 		container.setWidth(type: kDisplayNodeSizeTypeWrap, unit: kDisplayNodeSizeUnitNone, length: 0)
 		container.setHeight(type: kDisplayNodeSizeTypeWrap, unit: kDisplayNodeSizeUnitNone, length: 0)
@@ -1693,5 +1692,23 @@ print("TEST \(self.window.measuredContentWidth) \(self.window.measuredWidth)")
 		XCTAssertEqual(node6d.invalidate, 1)
 		XCTAssertEqual(node6d.layoutBegan, 0)
 		XCTAssertEqual(node6d.layoutEnded, 0)
+	}
+
+	func testNodeMeasure() {
+
+		let node = DisplayNode(display: self.display)
+		node.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 100)
+		node.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
+
+		self.window.appendChild(node)
+		self.window.resolve()
+
+		node.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 150)
+		node.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 250)
+
+		node.measure()
+
+		XCTAssertEqual(node.measuredWidth, 150)
+		XCTAssertEqual(node.measuredHeight, 250)
 	}
 }

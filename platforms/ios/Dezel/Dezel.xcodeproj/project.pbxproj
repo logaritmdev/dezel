@@ -185,8 +185,8 @@
 		C792E959234BDEA70022D712 /* Stylesheet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C792E931234BDEA70022D712 /* Stylesheet.cpp */; };
 		C792E95A234BDEA70022D712 /* Function.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C792E932234BDEA70022D712 /* Function.cpp */; };
 		C792E95B234BDEA70022D712 /* StringValue.h in Headers */ = {isa = PBXBuildFile; fileRef = C792E933234BDEA70022D712 /* StringValue.h */; };
-		C792E95F234CC1E70022D712 /* PropertyList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C792E95D234CC1E70022D712 /* PropertyList.cpp */; };
-		C792E960234CC1E70022D712 /* PropertyList.h in Headers */ = {isa = PBXBuildFile; fileRef = C792E95E234CC1E70022D712 /* PropertyList.h */; };
+		C792E95F234CC1E70022D712 /* Dictionary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C792E95D234CC1E70022D712 /* Dictionary.cpp */; };
+		C792E960234CC1E70022D712 /* Dictionary.h in Headers */ = {isa = PBXBuildFile; fileRef = C792E95E234CC1E70022D712 /* Dictionary.h */; };
 		C792E974234D6E6E0022D712 /* ParseException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C792E972234D6E6D0022D712 /* ParseException.cpp */; };
 		C792E975234D6E6E0022D712 /* ParseException.h in Headers */ = {isa = PBXBuildFile; fileRef = C792E973234D6E6E0022D712 /* ParseException.h */; };
 		C7964D642033E67E00F454F1 /* CALayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7964D632033E67E00F454F1 /* CALayer.swift */; };
@@ -198,6 +198,12 @@
 		C7A19E3A20ADD18200367E91 /* TextInputDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A19E3920ADD18200367E91 /* TextInputDelegate.swift */; };
 		C7A3AB77214EC68100D8B15C /* JavaScriptCanvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A3AB76214EC68100D8B15C /* JavaScriptCanvas.swift */; };
 		C7A3AB79214ECBA500D8B15C /* CanvasLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A3AB78214ECBA500D8B15C /* CanvasLayer.swift */; };
+		C7AA9370236F6DD500ADF997 /* InvalidStructureException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7AA936E236F6DD500ADF997 /* InvalidStructureException.cpp */; };
+		C7AA9371236F6DD500ADF997 /* InvalidStructureException.h in Headers */ = {isa = PBXBuildFile; fileRef = C7AA936F236F6DD500ADF997 /* InvalidStructureException.h */; };
+		C7AA9374236F730F00ADF997 /* InvalidOperationException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7AA9372236F730F00ADF997 /* InvalidOperationException.cpp */; };
+		C7AA9375236F730F00ADF997 /* InvalidOperationException.h in Headers */ = {isa = PBXBuildFile; fileRef = C7AA9373236F730F00ADF997 /* InvalidOperationException.h */; };
+		C7AA9378236F740E00ADF997 /* StyleResolver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7AA9376236F740E00ADF997 /* StyleResolver.cpp */; };
+		C7AA9379236F740E00ADF997 /* StyleResolver.h in Headers */ = {isa = PBXBuildFile; fileRef = C7AA9377236F740E00ADF997 /* StyleResolver.h */; };
 		C7B40F6120B716C800892C92 /* TextArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B40F6020B716C800892C92 /* TextArea.swift */; };
 		C7B40F6320B7170E00892C92 /* TextAreaDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B40F6220B7170E00892C92 /* TextAreaDelegate.swift */; };
 		C7B9CEA6202CDB8D002409D5 /* ApplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B9CEA2202CDB8D002409D5 /* ApplicationController.swift */; };
@@ -488,8 +494,8 @@
 		C792E931234BDEA70022D712 /* Stylesheet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Stylesheet.cpp; path = ../../../../../shared/display/style/Stylesheet.cpp; sourceTree = "<group>"; };
 		C792E932234BDEA70022D712 /* Function.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Function.cpp; path = ../../../../../shared/display/style/Function.cpp; sourceTree = "<group>"; };
 		C792E933234BDEA70022D712 /* StringValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StringValue.h; path = ../../../../../shared/display/style/StringValue.h; sourceTree = "<group>"; };
-		C792E95D234CC1E70022D712 /* PropertyList.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PropertyList.cpp; path = ../../../../../shared/display/style/PropertyList.cpp; sourceTree = "<group>"; };
-		C792E95E234CC1E70022D712 /* PropertyList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PropertyList.h; path = ../../../../../shared/display/style/PropertyList.h; sourceTree = "<group>"; };
+		C792E95D234CC1E70022D712 /* Dictionary.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Dictionary.cpp; path = ../../../../../shared/display/style/Dictionary.cpp; sourceTree = "<group>"; };
+		C792E95E234CC1E70022D712 /* Dictionary.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Dictionary.h; path = ../../../../../shared/display/style/Dictionary.h; sourceTree = "<group>"; };
 		C792E972234D6E6D0022D712 /* ParseException.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ParseException.cpp; path = ../../../../../shared/display/style/ParseException.cpp; sourceTree = "<group>"; };
 		C792E973234D6E6E0022D712 /* ParseException.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ParseException.h; path = ../../../../../shared/display/style/ParseException.h; sourceTree = "<group>"; };
 		C7964D632033E67E00F454F1 /* CALayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CALayer.swift; sourceTree = "<group>"; };
@@ -501,6 +507,12 @@
 		C7A19E3920ADD18200367E91 /* TextInputDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextInputDelegate.swift; sourceTree = "<group>"; };
 		C7A3AB76214EC68100D8B15C /* JavaScriptCanvas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptCanvas.swift; sourceTree = "<group>"; };
 		C7A3AB78214ECBA500D8B15C /* CanvasLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasLayer.swift; sourceTree = "<group>"; };
+		C7AA936E236F6DD500ADF997 /* InvalidStructureException.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = InvalidStructureException.cpp; path = ../../../../../shared/display/InvalidStructureException.cpp; sourceTree = "<group>"; };
+		C7AA936F236F6DD500ADF997 /* InvalidStructureException.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = InvalidStructureException.h; path = ../../../../../shared/display/InvalidStructureException.h; sourceTree = "<group>"; };
+		C7AA9372236F730F00ADF997 /* InvalidOperationException.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = InvalidOperationException.cpp; path = ../../../../../shared/display/InvalidOperationException.cpp; sourceTree = "<group>"; };
+		C7AA9373236F730F00ADF997 /* InvalidOperationException.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = InvalidOperationException.h; path = ../../../../../shared/display/InvalidOperationException.h; sourceTree = "<group>"; };
+		C7AA9376236F740E00ADF997 /* StyleResolver.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = StyleResolver.cpp; path = ../../../../../shared/display/style/StyleResolver.cpp; sourceTree = "<group>"; };
+		C7AA9377236F740E00ADF997 /* StyleResolver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = StyleResolver.h; path = ../../../../../shared/display/style/StyleResolver.h; sourceTree = "<group>"; };
 		C7B40F6020B716C800892C92 /* TextArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextArea.swift; sourceTree = "<group>"; };
 		C7B40F6220B7170E00892C92 /* TextAreaDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextAreaDelegate.swift; sourceTree = "<group>"; };
 		C7B9CEA2202CDB8D002409D5 /* ApplicationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationController.swift; sourceTree = "<group>"; };
@@ -867,6 +879,7 @@
 		C792E8B9234BDE480022D712 /* CAPI */ = {
 			isa = PBXGroup;
 			children = (
+				C7AA936D236F6DB500ADF997 /* Exception */,
 				C792E8FB234BDE7C0022D712 /* Layout */,
 				C792E8FA234BDE750022D712 /* Style */,
 				C792E8D8234BDE620022D712 /* Display.cpp */,
@@ -906,10 +919,14 @@
 		C792E8FA234BDE750022D712 /* Style */ = {
 			isa = PBXGroup;
 			children = (
-				C792E95C234BE2C50022D712 /* Values */,
 				C792E976234D6F200022D712 /* Exception */,
+				C792E95C234BE2C50022D712 /* Values */,
 				C792E929234BDEA70022D712 /* Argument.cpp */,
 				C792E927234BDEA70022D712 /* Argument.h */,
+				C792E913234BDEA60022D712 /* Descriptor.cpp */,
+				C792E91D234BDEA60022D712 /* Descriptor.h */,
+				C792E95D234CC1E70022D712 /* Dictionary.cpp */,
+				C792E95E234CC1E70022D712 /* Dictionary.h */,
 				C792E90F234BDEA50022D712 /* Fragment.cpp */,
 				C792E91C234BDEA60022D712 /* Fragment.h */,
 				C792E932234BDEA70022D712 /* Function.cpp */,
@@ -918,12 +935,10 @@
 				C792E90D234BDEA50022D712 /* Parser.h */,
 				C792E921234BDEA60022D712 /* Property.cpp */,
 				C792E91B234BDEA60022D712 /* Property.h */,
-				C792E95D234CC1E70022D712 /* PropertyList.cpp */,
-				C792E95E234CC1E70022D712 /* PropertyList.h */,
-				C792E913234BDEA60022D712 /* Descriptor.cpp */,
-				C792E91D234BDEA60022D712 /* Descriptor.h */,
 				C792E914234BDEA60022D712 /* Selector.cpp */,
 				C792E912234BDEA50022D712 /* Selector.h */,
+				C7AA9376236F740E00ADF997 /* StyleResolver.cpp */,
+				C7AA9377236F740E00ADF997 /* StyleResolver.h */,
 				C792E931234BDEA70022D712 /* Stylesheet.cpp */,
 				C792E91A234BDEA60022D712 /* Stylesheet.h */,
 				C792E911234BDEA50022D712 /* Token.cpp */,
@@ -998,6 +1013,17 @@
 				C7A19E3720ADCB3800367E91 /* TextInputClearButtonIcon@3x.png */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		C7AA936D236F6DB500ADF997 /* Exception */ = {
+			isa = PBXGroup;
+			children = (
+				C7AA936E236F6DD500ADF997 /* InvalidStructureException.cpp */,
+				C7AA936F236F6DD500ADF997 /* InvalidStructureException.h */,
+				C7AA9372236F730F00ADF997 /* InvalidOperationException.cpp */,
+				C7AA9373236F730F00ADF997 /* InvalidOperationException.h */,
+			);
+			name = Exception;
 			sourceTree = "<group>";
 		};
 		C7B9CE9E202CDB23002409D5 /* Application */ = {
@@ -1409,8 +1435,9 @@
 				C792E955234BDEA70022D712 /* NullValue.h in Headers */,
 				C792E8DD234BDE630022D712 /* DisplayNodePadding.h in Headers */,
 				C792E90A234BDE900022D712 /* AbsoluteLayoutResolver.h in Headers */,
+				C7AA9371236F6DD500ADF997 /* InvalidStructureException.h in Headers */,
 				C792E8EE234BDE630022D712 /* DisplayNodeFrame.h in Headers */,
-				C792E960234CC1E70022D712 /* PropertyList.h in Headers */,
+				C792E960234CC1E70022D712 /* Dictionary.h in Headers */,
 				C792E95B234BDEA70022D712 /* StringValue.h in Headers */,
 				C7E8A543201624FA005139F6 /* JavaScriptContext.h in Headers */,
 				C792E8F9234BDE630022D712 /* DisplayRef.h in Headers */,
@@ -1436,6 +1463,7 @@
 				C792E904234BDE900022D712 /* RelativeLayoutResolver.h in Headers */,
 				C792E975234D6E6E0022D712 /* ParseException.h in Headers */,
 				C792E8DA234BDE630022D712 /* DisplayNodeContentSize.h in Headers */,
+				C7AA9379236F740E00ADF997 /* StyleResolver.h in Headers */,
 				C7E8A5032016244F005139F6 /* Runtime.h in Headers */,
 				C792E948234BDEA70022D712 /* TokenizerStream.h in Headers */,
 				C77B0D4C2226D7DC00917D82 /* LRUDiskCache.h in Headers */,
@@ -1444,6 +1472,7 @@
 				C792E953234BDEA70022D712 /* Tokenizer.h in Headers */,
 				C792E943234BDEA70022D712 /* Property.h in Headers */,
 				C7E8A54A201624FA005139F6 /* JavaScriptValuePrivate.h in Headers */,
+				C7AA9375236F730F00ADF997 /* InvalidOperationException.h in Headers */,
 				C792E8F7234BDE630022D712 /* DisplayNode.h in Headers */,
 				C792E8E5234BDE630022D712 /* DisplayNodeOrigin.h in Headers */,
 				C77B0D7C2226DC4D00917D82 /* WebSocketConnection.h in Headers */,
@@ -1636,6 +1665,7 @@
 				C792E8E2234BDE630022D712 /* DisplayNodeMargin.cpp in Sources */,
 				C767543A20269971003C4D85 /* BitmapLayer.swift in Sources */,
 				C792E8EF234BDE630022D712 /* DisplayNodeAnchor.cpp in Sources */,
+				C7AA9378236F740E00ADF997 /* StyleResolver.cpp in Sources */,
 				C7BFD160207D518600AAD31C /* SpinnerView.swift in Sources */,
 				C7E45AEE21DD462C00247465 /* TextViewDelegate.swift in Sources */,
 				C7F2260B2081A10000ABC66D /* Unsafe.swift in Sources */,
@@ -1680,7 +1710,8 @@
 				C7E8A529201624A2005139F6 /* JavaScriptClassBuilder.swift in Sources */,
 				C792E908234BDE900022D712 /* AbsoluteLayoutResolver.cpp in Sources */,
 				C785B0A32016EC17001DAE64 /* JavaScriptCallback.swift in Sources */,
-				C792E95F234CC1E70022D712 /* PropertyList.cpp in Sources */,
+				C7AA9370236F6DD500ADF997 /* InvalidStructureException.cpp in Sources */,
+				C792E95F234CC1E70022D712 /* Dictionary.cpp in Sources */,
 				C7BFD166207D539300AAD31C /* InputType.swift in Sources */,
 				C71E6CC020DD4F56009B86F6 /* WebView.swift in Sources */,
 				C7BB7D3D2028F4C5004006C2 /* CGFloat.swift in Sources */,
@@ -1724,6 +1755,7 @@
 				C792E974234D6E6E0022D712 /* ParseException.cpp in Sources */,
 				C7B40F6320B7170E00892C92 /* TextAreaDelegate.swift in Sources */,
 				C7D89263206575CB00E85115 /* JavaScriptTextView.swift in Sources */,
+				C7AA9374236F730F00ADF997 /* InvalidOperationException.cpp in Sources */,
 				C7E8A528201624A2005139F6 /* JavaScriptClassSetterWrapper.swift in Sources */,
 				C7A3AB79214ECBA500D8B15C /* CanvasLayer.swift in Sources */,
 				C792E93D234BDEA70022D712 /* VariableValue.cpp in Sources */,

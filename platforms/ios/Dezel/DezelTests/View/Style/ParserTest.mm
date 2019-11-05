@@ -60,9 +60,9 @@ using namespace Dezel::Style;
 
 	string source = R""""(
 		$variable1 : 12px solid color "string";
-		$variable2: 12px solid color "string";
-		$variable-3 : 12px solid color "string"
-		$variable-4: 12px solid color "string"
+		$variable2: 13px solid color "string";
+		$variable-3 : 14px solid color "string"
+		$variable-4: 15px solid color "string"
 	)"""";
 
 	try {

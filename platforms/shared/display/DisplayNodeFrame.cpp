@@ -13,14 +13,13 @@ using std::cerr;
 using std::min;
 using std::max;
 
-DisplayNodeFrame::DisplayNodeFrame(DisplayNode* node) : layout(node)
+using Layout::clamp;
+using Layout::round;
+using Layout::scale;
+
+DisplayNodeFrame::DisplayNodeFrame(DisplayNode* node) : layoutResolver(node)
 {
 	this->node = node;
-}
-
-DisplayNodeFrame::~DisplayNodeFrame()
-{
-
 }
 
 void
@@ -182,7 +181,7 @@ DisplayNodeFrame::setMaxBottom(double max)
 void
 DisplayNodeFrame::setWidth(DisplayNodeSizeType type, DisplayNodeSizeUnit unit, double length)
 {
-    length = Layout::LayoutResolver::clamp(length, 0, ABS_DBL_MAX);
+    length = clamp(length, 0, ABS_DBL_MAX);
 
 	if (this->width.equals(type, unit, length)) {
 		return;
@@ -198,7 +197,7 @@ DisplayNodeFrame::setWidth(DisplayNodeSizeType type, DisplayNodeSizeUnit unit, d
 void
 DisplayNodeFrame::setMinWidth(double min)
 {
-	min = Layout::LayoutResolver::clamp(min, 0, ABS_DBL_MAX);
+	min = clamp(min, 0, ABS_DBL_MAX);
 
 	if (this->width.min != min) {
 		this->width.min = min;
@@ -209,7 +208,7 @@ DisplayNodeFrame::setMinWidth(double min)
 void
 DisplayNodeFrame::setMaxWidth(double max)
 {
-	max = Layout::LayoutResolver::clamp(max, 0, ABS_DBL_MAX);
+	max = clamp(max, 0, ABS_DBL_MAX);
 
 	if (this->width.max != max) {
 		this->width.max = max;
@@ -220,7 +219,7 @@ DisplayNodeFrame::setMaxWidth(double max)
 void
 DisplayNodeFrame::setHeight(DisplayNodeSizeType type, DisplayNodeSizeUnit unit, double length)
 {
-    length = Layout::LayoutResolver::clamp(length, 0, ABS_DBL_MAX);
+    length = clamp(length, 0, ABS_DBL_MAX);
 
 	if (this->height.equals(type, unit, length)) {
 		return;
@@ -236,7 +235,7 @@ DisplayNodeFrame::setHeight(DisplayNodeSizeType type, DisplayNodeSizeUnit unit, 
 void
 DisplayNodeFrame::setMinHeight(double min)
 {
-	min = Layout::LayoutResolver::clamp(min, 0, ABS_DBL_MAX);
+	min = clamp(min, 0, ABS_DBL_MAX);
 
 	if (this->height.min != min) {
 		this->height.min = min;
@@ -247,7 +246,7 @@ DisplayNodeFrame::setMinHeight(double min)
 void
 DisplayNodeFrame::setMaxHeight(double max)
 {
-	max = Layout::LayoutResolver::clamp(max, 0, ABS_DBL_MAX);
+	max = clamp(max, 0, ABS_DBL_MAX);
 
 	if (this->height.max != max) {
 		this->height.max = max;
@@ -274,10 +273,10 @@ DisplayNodeFrame::setContentAlignment(DisplayNodeContentAlignment alignment)
 }
 
 void
-DisplayNodeFrame::setContentLocation(DisplayNodeContentLocation location)
+DisplayNodeFrame::setContentDisposition(DisplayNodeContentDisposition location)
 {
-	if (this->contentLocation != location) {
-		this->contentLocation = location;
+	if (this->contentDisposition != location) {
+		this->contentDisposition = location;
 		this->invalidateLayout();
 	}
 }
@@ -285,7 +284,7 @@ DisplayNodeFrame::setContentLocation(DisplayNodeContentLocation location)
 void
 DisplayNodeFrame::setContentTop(DisplayNodeContentOriginType type, DisplayNodeContentOriginUnit unit, double length)
 {
-    length = Layout::LayoutResolver::clamp(length, ABS_DBL_MIN, ABS_DBL_MAX);
+    length = clamp(length, ABS_DBL_MIN, ABS_DBL_MAX);
 
 	if (this->contentTop.equals(type, unit, length)) {
 		return;
@@ -302,7 +301,7 @@ DisplayNodeFrame::setContentTop(DisplayNodeContentOriginType type, DisplayNodeCo
 void
 DisplayNodeFrame::setContentLeft(DisplayNodeContentOriginType type, DisplayNodeContentOriginUnit unit, double length)
 {
-    length = Layout::LayoutResolver::clamp(length, ABS_DBL_MIN, ABS_DBL_MAX);
+    length = clamp(length, ABS_DBL_MIN, ABS_DBL_MAX);
 
 	if (this->contentLeft.equals(type, unit, length)) {
 		return;
@@ -319,7 +318,7 @@ DisplayNodeFrame::setContentLeft(DisplayNodeContentOriginType type, DisplayNodeC
 void
 DisplayNodeFrame::setContentWidth(DisplayNodeContentSizeType type, DisplayNodeContentSizeUnit unit, double length)
 {
-    length = Layout::LayoutResolver::clamp(length, 0, ABS_DBL_MAX);
+    length = clamp(length, 0, ABS_DBL_MAX);
 
 	if (this->contentWidth.equals(type, unit, length)) {
 		return;
@@ -335,7 +334,7 @@ DisplayNodeFrame::setContentWidth(DisplayNodeContentSizeType type, DisplayNodeCo
 void
 DisplayNodeFrame::setContentHeight(DisplayNodeContentSizeType type, DisplayNodeContentSizeUnit unit, double length)
 {
-    length = Layout::LayoutResolver::clamp(length, 0, ABS_DBL_MAX);
+    length = clamp(length, 0, ABS_DBL_MAX);
 
 	if (this->contentHeight.equals(type, unit, length)) {
 		return;
@@ -369,7 +368,7 @@ DisplayNodeFrame::setShrinkFactor(double factor)
 void
 DisplayNodeFrame::setBorderTop(DisplayNodeBorderType type, DisplayNodeBorderUnit unit, double length)
 {
-    length = Layout::LayoutResolver::clamp(length, 0, ABS_DBL_MAX);
+    length = clamp(length, 0, ABS_DBL_MAX);
 
 	if (this->borderTop.equals(type, unit, length)) {
 		return;
@@ -385,7 +384,7 @@ DisplayNodeFrame::setBorderTop(DisplayNodeBorderType type, DisplayNodeBorderUnit
 void
 DisplayNodeFrame::setBorderLeft(DisplayNodeBorderType type, DisplayNodeBorderUnit unit, double length)
 {
-    length = Layout::LayoutResolver::clamp(length, 0, ABS_DBL_MAX);
+    length = clamp(length, 0, ABS_DBL_MAX);
 
 	if (this->borderLeft.equals(type, unit, length)) {
 		return;
@@ -401,7 +400,7 @@ DisplayNodeFrame::setBorderLeft(DisplayNodeBorderType type, DisplayNodeBorderUni
 void
 DisplayNodeFrame::setBorderRight(DisplayNodeBorderType type, DisplayNodeBorderUnit unit, double length)
 {
-    length = Layout::LayoutResolver::clamp(length, 0, ABS_DBL_MAX);
+    length = clamp(length, 0, ABS_DBL_MAX);
 
 	if (this->borderRight.equals(type, unit, length)) {
 		return;
@@ -417,7 +416,7 @@ DisplayNodeFrame::setBorderRight(DisplayNodeBorderType type, DisplayNodeBorderUn
 void
 DisplayNodeFrame::setBorderBottom(DisplayNodeBorderType type, DisplayNodeBorderUnit unit, double length)
 {
-    length = Layout::LayoutResolver::clamp(length, 0, ABS_DBL_MAX);
+    length = clamp(length, 0, ABS_DBL_MAX);
 
 	if (this->borderBottom.equals(type, unit, length)) {
 		return;
@@ -561,7 +560,7 @@ DisplayNodeFrame::setMaxMarginBottom(double max)
 void
 DisplayNodeFrame::setPaddingTop(DisplayNodePaddingType type, DisplayNodePaddingUnit unit, double length)
 {
-    length = Layout::LayoutResolver::clamp(length, 0, ABS_DBL_MAX);
+    length = clamp(length, 0, ABS_DBL_MAX);
 
 	if (this->paddingTop.equals(type, unit, length)) {
 		return;
@@ -577,7 +576,7 @@ DisplayNodeFrame::setPaddingTop(DisplayNodePaddingType type, DisplayNodePaddingU
 void
 DisplayNodeFrame::setPaddingLeft(DisplayNodePaddingType type, DisplayNodePaddingUnit unit, double length)
 {
-    length = Layout::LayoutResolver::clamp(length, 0, ABS_DBL_MAX);
+    length = clamp(length, 0, ABS_DBL_MAX);
 
 	if (this->paddingLeft.equals(type, unit, length)) {
 		return;
@@ -593,7 +592,7 @@ DisplayNodeFrame::setPaddingLeft(DisplayNodePaddingType type, DisplayNodePadding
 void
 DisplayNodeFrame::setPaddingRight(DisplayNodePaddingType type, DisplayNodePaddingUnit unit, double length)
 {
-    length = Layout::LayoutResolver::clamp(length, 0, ABS_DBL_MAX);
+    length = clamp(length, 0, ABS_DBL_MAX);
 
 	if (this->paddingRight.equals(type, unit, length)) {
 		return;
@@ -609,7 +608,7 @@ DisplayNodeFrame::setPaddingRight(DisplayNodePaddingType type, DisplayNodePaddin
 void
 DisplayNodeFrame::setPaddingBottom(DisplayNodePaddingType type, DisplayNodePaddingUnit unit, double length)
 {
-    length = Layout::LayoutResolver::clamp(length, 0, ABS_DBL_MAX);
+    length = clamp(length, 0, ABS_DBL_MAX);
 
 	if (this->paddingBottom.equals(type, unit, length)) {
 		return;
@@ -625,7 +624,7 @@ DisplayNodeFrame::setPaddingBottom(DisplayNodePaddingType type, DisplayNodePaddi
 void
 DisplayNodeFrame::setMinPaddingTop(double min)
 {
-	min = Layout::LayoutResolver::clamp(min, 0, ABS_DBL_MAX);
+	min = clamp(min, 0, ABS_DBL_MAX);
 
 	if (this->paddingTop.min != min) {
 		this->paddingTop.min = min;
@@ -636,7 +635,7 @@ DisplayNodeFrame::setMinPaddingTop(double min)
 void
 DisplayNodeFrame::setMaxPaddingTop(double max)
 {
-	max = Layout::LayoutResolver::clamp(max, 0, ABS_DBL_MAX);
+	max = clamp(max, 0, ABS_DBL_MAX);
 
 	if (this->paddingTop.max != max) {
 		this->paddingTop.max = max;
@@ -647,7 +646,7 @@ DisplayNodeFrame::setMaxPaddingTop(double max)
 void
 DisplayNodeFrame::setMinPaddingLeft(double min)
 {
-	min = Layout::LayoutResolver::clamp(min, 0, ABS_DBL_MAX);
+	min = clamp(min, 0, ABS_DBL_MAX);
 
 	if (this->paddingLeft.min != min) {
 		this->paddingLeft.min = min;
@@ -658,7 +657,7 @@ DisplayNodeFrame::setMinPaddingLeft(double min)
 void
 DisplayNodeFrame::setMaxPaddingLeft(double max)
 {
-	max = Layout::LayoutResolver::clamp(max, 0, ABS_DBL_MAX);
+	max = clamp(max, 0, ABS_DBL_MAX);
 
 	if (this->paddingLeft.max != max) {
 		this->paddingLeft.max = max;
@@ -669,7 +668,7 @@ DisplayNodeFrame::setMaxPaddingLeft(double max)
 void
 DisplayNodeFrame::setMinPaddingRight(double min)
 {
-	min = Layout::LayoutResolver::clamp(min, 0, ABS_DBL_MAX);
+	min = clamp(min, 0, ABS_DBL_MAX);
 
 	if (this->paddingRight.min != min) {
 		this->paddingRight.min = min;
@@ -680,7 +679,7 @@ DisplayNodeFrame::setMinPaddingRight(double min)
 void
 DisplayNodeFrame::setMaxPaddingRight(double max)
 {
-	max = Layout::LayoutResolver::clamp(max, 0, ABS_DBL_MAX);
+	max = clamp(max, 0, ABS_DBL_MAX);
 
 	if (this->paddingRight.max != max) {
 		this->paddingRight.max = max;
@@ -691,7 +690,7 @@ DisplayNodeFrame::setMaxPaddingRight(double max)
 void
 DisplayNodeFrame::setMinPaddingBottom(double min)
 {
-	min = Layout::LayoutResolver::clamp(min, 0, ABS_DBL_MAX);
+	min = clamp(min, 0, ABS_DBL_MAX);
 
 	if (this->paddingBottom.min != min) {
 		this->paddingBottom.min = min;
@@ -702,7 +701,7 @@ DisplayNodeFrame::setMinPaddingBottom(double min)
 void
 DisplayNodeFrame::setMaxPaddingBottom(double max)
 {
-	max = Layout::LayoutResolver::clamp(max, 0, ABS_DBL_MAX);
+	max = clamp(max, 0, ABS_DBL_MAX);
 
 	if (this->paddingBottom.max != max) {
 		this->paddingBottom.max = max;
@@ -745,58 +744,55 @@ DisplayNodeFrame::hasInvalidMargin()
 		return false;
 	}
 
-	if (this->node->parent) {
+	const auto parent = this->node->parent->frame;
 
-		const auto parent = this->node->parent->frame;
-
-		if (parent->measuredInnerWidthChanged) {
-			if (this->marginLeft.unit == kDisplayNodeMarginUnitPC ||
-				this->marginRight.unit == kDisplayNodeMarginUnitPC) {
-				return true;
-			}
+	if (parent->measuredInnerWidthChanged) {
+		if (this->marginLeft.unit == kDisplayNodeMarginUnitPC ||
+			this->marginRight.unit == kDisplayNodeMarginUnitPC) {
+			return true;
 		}
+	}
 
-		if (parent->measuredInnerHeightChanged) {
-			if (this->marginTop.unit == kDisplayNodeMarginUnitPC ||
-				this->marginBottom.unit == kDisplayNodeMarginUnitPC) {
-				return true;
-			}
+	if (parent->measuredInnerHeightChanged) {
+		if (this->marginTop.unit == kDisplayNodeMarginUnitPC ||
+			this->marginBottom.unit == kDisplayNodeMarginUnitPC) {
+			return true;
 		}
+	}
 
-		if (parent->measuredInnerWidthChanged) {
-			if (this->marginTop.unit == kDisplayNodeMarginUnitPW ||
-				this->marginLeft.unit == kDisplayNodeMarginUnitPW ||
-				this->marginRight.unit == kDisplayNodeMarginUnitPW ||
-				this->marginBottom.unit == kDisplayNodeMarginUnitPW) {
-				return true;
-			}
+	if (parent->measuredInnerWidthChanged) {
+		if (this->marginTop.unit == kDisplayNodeMarginUnitPW ||
+			this->marginLeft.unit == kDisplayNodeMarginUnitPW ||
+			this->marginRight.unit == kDisplayNodeMarginUnitPW ||
+			this->marginBottom.unit == kDisplayNodeMarginUnitPW) {
+			return true;
 		}
+	}
 
-		if (parent->measuredInnerHeightChanged) {
-			if (this->marginTop.unit == kDisplayNodeMarginUnitPH ||
-				this->marginLeft.unit == kDisplayNodeMarginUnitPH ||
-				this->marginRight.unit == kDisplayNodeMarginUnitPH ||
-				this->marginBottom.unit == kDisplayNodeMarginUnitPH) {
-				return true;
-			}
+	if (parent->measuredInnerHeightChanged) {
+		if (this->marginTop.unit == kDisplayNodeMarginUnitPH ||
+			this->marginLeft.unit == kDisplayNodeMarginUnitPH ||
+			this->marginRight.unit == kDisplayNodeMarginUnitPH ||
+			this->marginBottom.unit == kDisplayNodeMarginUnitPH) {
+			return true;
 		}
+	}
 
-		if (parent->measuredContentWidthChanged) {
-			if (this->marginTop.unit == kDisplayNodeMarginUnitCW ||
-				this->marginLeft.unit == kDisplayNodeMarginUnitCW ||
-				this->marginRight.unit == kDisplayNodeMarginUnitCW ||
-				this->marginBottom.unit == kDisplayNodeMarginUnitCW) {
-				return true;
-			}
+	if (parent->measuredContentWidthChanged) {
+		if (this->marginTop.unit == kDisplayNodeMarginUnitCW ||
+			this->marginLeft.unit == kDisplayNodeMarginUnitCW ||
+			this->marginRight.unit == kDisplayNodeMarginUnitCW ||
+			this->marginBottom.unit == kDisplayNodeMarginUnitCW) {
+			return true;
 		}
+	}
 
-		if (parent->measuredContentHeightChanged) {
-			if (this->marginTop.unit == kDisplayNodeMarginUnitCH ||
-				this->marginLeft.unit == kDisplayNodeMarginUnitCH ||
-				this->marginRight.unit == kDisplayNodeMarginUnitCH ||
-				this->marginBottom.unit == kDisplayNodeMarginUnitCH) {
-				return true;
-			}
+	if (parent->measuredContentHeightChanged) {
+		if (this->marginTop.unit == kDisplayNodeMarginUnitCH ||
+			this->marginLeft.unit == kDisplayNodeMarginUnitCH ||
+			this->marginRight.unit == kDisplayNodeMarginUnitCH ||
+			this->marginBottom.unit == kDisplayNodeMarginUnitCH) {
+			return true;
 		}
 	}
 
@@ -849,44 +845,41 @@ DisplayNodeFrame::hasInvalidBorder()
 		}
 	}
 
-	if (this->node->parent) {
+	const auto parent = this->node->parent->frame;
 
-		const auto parent = this->node->parent->frame;
-
-		if (parent->measuredInnerWidthChanged) {
-			if (this->borderTop.unit == kDisplayNodeBorderUnitPW ||
-				this->borderLeft.unit == kDisplayNodeBorderUnitPW ||
-				this->borderRight.unit == kDisplayNodeBorderUnitPW ||
-				this->borderBottom.unit == kDisplayNodeBorderUnitPW) {
-				return true;
-			}
+	if (parent->measuredInnerWidthChanged) {
+		if (this->borderTop.unit == kDisplayNodeBorderUnitPW ||
+			this->borderLeft.unit == kDisplayNodeBorderUnitPW ||
+			this->borderRight.unit == kDisplayNodeBorderUnitPW ||
+			this->borderBottom.unit == kDisplayNodeBorderUnitPW) {
+			return true;
 		}
+	}
 
-		if (parent->measuredInnerHeightChanged) {
-			if (this->borderTop.unit == kDisplayNodeBorderUnitPH ||
-				this->borderLeft.unit == kDisplayNodeBorderUnitPH ||
-				this->borderRight.unit == kDisplayNodeBorderUnitPH ||
-				this->borderBottom.unit == kDisplayNodeBorderUnitPH) {
-				return true;
-			}
+	if (parent->measuredInnerHeightChanged) {
+		if (this->borderTop.unit == kDisplayNodeBorderUnitPH ||
+			this->borderLeft.unit == kDisplayNodeBorderUnitPH ||
+			this->borderRight.unit == kDisplayNodeBorderUnitPH ||
+			this->borderBottom.unit == kDisplayNodeBorderUnitPH) {
+			return true;
 		}
+	}
 
-		if (parent->measuredContentWidthChanged) {
-			if (this->borderTop.unit == kDisplayNodeBorderUnitCW ||
-				this->borderLeft.unit == kDisplayNodeBorderUnitCW ||
-				this->borderRight.unit == kDisplayNodeBorderUnitCW ||
-				this->borderBottom.unit == kDisplayNodeBorderUnitCW) {
-				return true;
-			}
+	if (parent->measuredContentWidthChanged) {
+		if (this->borderTop.unit == kDisplayNodeBorderUnitCW ||
+			this->borderLeft.unit == kDisplayNodeBorderUnitCW ||
+			this->borderRight.unit == kDisplayNodeBorderUnitCW ||
+			this->borderBottom.unit == kDisplayNodeBorderUnitCW) {
+			return true;
 		}
+	}
 
-		if (parent->measuredContentHeightChanged) {
-			if (this->borderTop.unit == kDisplayNodeBorderUnitCH ||
-				this->borderLeft.unit == kDisplayNodeBorderUnitCH ||
-				this->borderRight.unit == kDisplayNodeBorderUnitCH ||
-				this->borderBottom.unit == kDisplayNodeBorderUnitCH) {
-				return true;
-			}
+	if (parent->measuredContentHeightChanged) {
+		if (this->borderTop.unit == kDisplayNodeBorderUnitCH ||
+			this->borderLeft.unit == kDisplayNodeBorderUnitCH ||
+			this->borderRight.unit == kDisplayNodeBorderUnitCH ||
+			this->borderBottom.unit == kDisplayNodeBorderUnitCH) {
+			return true;
 		}
 	}
 
@@ -944,36 +937,33 @@ DisplayNodeFrame::hasInvalidContentSize()
 		return true;
 	}
 
-	if (this->node->parent == NULL) {
+	const auto parent = this->node->parent->frame;
 
-		const auto parent = this->node->parent->frame;
-
-		if (parent->measuredInnerWidthChanged) {
-			if (this->contentWidth.unit == kDisplayNodeContentSizeUnitPW ||
-				this->contentHeight.unit == kDisplayNodeContentSizeUnitPW) {
-				return true;
-			}
+	if (parent->measuredInnerWidthChanged) {
+		if (this->contentWidth.unit == kDisplayNodeContentSizeUnitPW ||
+			this->contentHeight.unit == kDisplayNodeContentSizeUnitPW) {
+			return true;
 		}
+	}
 
-		if (parent->measuredInnerHeightChanged) {
-			if (this->contentWidth.unit == kDisplayNodeContentSizeUnitPH ||
-				this->contentHeight.unit == kDisplayNodeContentSizeUnitPH) {
-				return true;
-			}
+	if (parent->measuredInnerHeightChanged) {
+		if (this->contentWidth.unit == kDisplayNodeContentSizeUnitPH ||
+			this->contentHeight.unit == kDisplayNodeContentSizeUnitPH) {
+			return true;
 		}
+	}
 
-		if (parent->measuredContentWidthChanged) {
-			if (this->contentWidth.unit == kDisplayNodeContentSizeUnitCW ||
-				this->contentHeight.unit == kDisplayNodeContentSizeUnitCW) {
-				return true;
-			}
+	if (parent->measuredContentWidthChanged) {
+		if (this->contentWidth.unit == kDisplayNodeContentSizeUnitCW ||
+			this->contentHeight.unit == kDisplayNodeContentSizeUnitCW) {
+			return true;
 		}
+	}
 
-		if (parent->measuredContentHeightChanged) {
-			if (this->contentWidth.unit == kDisplayNodeContentSizeUnitCH ||
-				this->contentHeight.unit == kDisplayNodeContentSizeUnitCH) {
-				return true;
-			}
+	if (parent->measuredContentHeightChanged) {
+		if (this->contentWidth.unit == kDisplayNodeContentSizeUnitCH ||
+			this->contentHeight.unit == kDisplayNodeContentSizeUnitCH) {
+			return true;
 		}
 	}
 
@@ -1022,44 +1012,41 @@ DisplayNodeFrame::hasInvalidPadding()
 		}
 	}
 
-	if (this->node->parent) {
+	const auto parent = this->node->parent->frame;
 
-		const auto parent = this->node->parent->frame;
-
-		if (parent->measuredInnerWidthChanged) {
-			if (this->paddingTop.unit == kDisplayNodePaddingUnitPW ||
-				this->paddingLeft.unit == kDisplayNodePaddingUnitPW ||
-				this->paddingRight.unit == kDisplayNodePaddingUnitPW ||
-				this->paddingBottom.unit == kDisplayNodePaddingUnitPW) {
-				return true;
-			}
+	if (parent->measuredInnerWidthChanged) {
+		if (this->paddingTop.unit == kDisplayNodePaddingUnitPW ||
+			this->paddingLeft.unit == kDisplayNodePaddingUnitPW ||
+			this->paddingRight.unit == kDisplayNodePaddingUnitPW ||
+			this->paddingBottom.unit == kDisplayNodePaddingUnitPW) {
+			return true;
 		}
+	}
 
-		if (parent->measuredInnerHeightChanged) {
-			if (this->paddingTop.unit == kDisplayNodePaddingUnitPH ||
-				this->paddingLeft.unit == kDisplayNodePaddingUnitPH ||
-				this->paddingRight.unit == kDisplayNodePaddingUnitPH ||
-				this->paddingBottom.unit == kDisplayNodePaddingUnitPH) {
-				return true;
-			}
+	if (parent->measuredInnerHeightChanged) {
+		if (this->paddingTop.unit == kDisplayNodePaddingUnitPH ||
+			this->paddingLeft.unit == kDisplayNodePaddingUnitPH ||
+			this->paddingRight.unit == kDisplayNodePaddingUnitPH ||
+			this->paddingBottom.unit == kDisplayNodePaddingUnitPH) {
+			return true;
 		}
+	}
 
-		if (parent->measuredContentWidthChanged) {
-			if (this->paddingTop.unit == kDisplayNodePaddingUnitCW ||
-				this->paddingLeft.unit == kDisplayNodePaddingUnitCW ||
-				this->paddingRight.unit == kDisplayNodePaddingUnitCW ||
-				this->paddingBottom.unit == kDisplayNodePaddingUnitCW) {
-				return true;
-			}
+	if (parent->measuredContentWidthChanged) {
+		if (this->paddingTop.unit == kDisplayNodePaddingUnitCW ||
+			this->paddingLeft.unit == kDisplayNodePaddingUnitCW ||
+			this->paddingRight.unit == kDisplayNodePaddingUnitCW ||
+			this->paddingBottom.unit == kDisplayNodePaddingUnitCW) {
+			return true;
 		}
+	}
 
-		if (parent->measuredContentHeightChanged) {
-			if (this->paddingTop.unit == kDisplayNodePaddingUnitCH ||
-				this->paddingLeft.unit == kDisplayNodePaddingUnitCH ||
-				this->paddingRight.unit == kDisplayNodePaddingUnitCH ||
-				this->paddingBottom.unit == kDisplayNodePaddingUnitCH) {
-				return true;
-			}
+	if (parent->measuredContentHeightChanged) {
+		if (this->paddingTop.unit == kDisplayNodePaddingUnitCH ||
+			this->paddingLeft.unit == kDisplayNodePaddingUnitCH ||
+			this->paddingRight.unit == kDisplayNodePaddingUnitCH ||
+			this->paddingBottom.unit == kDisplayNodePaddingUnitCH) {
+			return true;
 		}
 	}
 
@@ -1093,7 +1080,7 @@ DisplayNodeFrame::hasInvalidLayout()
 bool
 DisplayNodeFrame::shouldWrapContentWidth()
 {
-	if (this->node->type == kDisplayNodeTypeWindow) {
+	if (this->node->type == kDisplayNodeTypeRoot) {
 		return false;
 	}
 
@@ -1135,7 +1122,7 @@ DisplayNodeFrame::shouldWrapContentWidth()
 bool
 DisplayNodeFrame::shouldWrapContentHeight()
 {
-	if (this->node->type == kDisplayNodeTypeWindow) {
+	if (this->node->type == kDisplayNodeTypeRoot) {
 		return false;
 	}
 
@@ -1201,7 +1188,13 @@ DisplayNodeFrame::isWrappingContentHeight()
 void
 DisplayNodeFrame::invalidate()
 {
-	this->node->invalidateFrame();
+	if (this->invalid) {
+		return;
+	}
+
+	this->invalid = true;
+
+	this->node->display->invalidate();
 }
 
 void
@@ -1213,7 +1206,7 @@ DisplayNodeFrame::invalidateSize()
 
 	this->invalidSize = true;
 
-	if (this->node->type == kDisplayNodeTypeWindow) {
+	if (this->node->type == kDisplayNodeTypeRoot) {
 		this->invalidateLayout();
 		return;
 	}
@@ -1298,7 +1291,7 @@ DisplayNodeFrame::invalidateParent()
 {
 	auto parent = this->node->parent;
 
-	if (parent == NULL ||
+	if (parent == nullptr ||
 		parent->frame->invalidLayout) {
 		return;
 	}
@@ -1321,10 +1314,10 @@ DisplayNodeFrame::invalidateParent()
 		parent->frame->invalidateOrigin();
 
 		vector<DisplayNode*> path;
-		DisplayNode* last = NULL;
+		DisplayNode* last = nullptr;
 		DisplayNode* node = parent;
 
-		while (node != NULL) {
+		while (node != nullptr) {
 
 			node = node->parent;
 
@@ -1357,6 +1350,53 @@ DisplayNodeFrame::invalidateParent()
 }
 
 void
+DisplayNodeFrame::measure()
+{
+	if (this->resolving) {
+		return;
+	}
+
+	if (this->node->type == kDisplayNodeTypeRoot) {
+		return;
+	}
+
+	if (node->parent == nullptr) {
+		return;
+	}
+
+	const auto frame = this->node->frame;
+
+	frame->wrapsContentWidth = frame->shouldWrapContentWidth();
+	frame->wrapsContentHeight = frame->shouldWrapContentHeight();
+
+	/*
+	 * This method is somewhat a private api. It allows to measure a node
+	 * manually without running the whole layout. For this reason, we need
+	 * to invoke the measure method for a specific layout type.
+	 */
+
+	if (frame->isAbsolute()) {
+
+		frame->layoutResolver.measureAbsoluteNode(this->node);
+
+	} else {
+
+		const double paddingT = this->node->parent->frame->measuredPaddingTop;
+		const double paddingL = this->node->parent->frame->measuredPaddingLeft;
+		const double paddingR = this->node->parent->frame->measuredPaddingRight;
+		const double paddingB = this->node->parent->frame->measuredPaddingBottom;
+
+		double remainder = 0;
+		double remainingW = max(this->node->parent->frame->measuredContentWidth - paddingL - paddingR, 0.0);
+		double remainingH = max(this->node->parent->frame->measuredContentHeight - paddingT - paddingB, 0.0);
+
+		frame->layoutResolver.measureRelativeNode(this->node, remainingW, remainingH, remainder);
+	}
+
+	this->invalidSize = false;
+}
+
+void
 DisplayNodeFrame::resolve()
 {
 	/*
@@ -1376,29 +1416,29 @@ DisplayNodeFrame::resolve()
 	this->measuredContentWidthChanged = false;
 	this->measuredContentHeightChanged = false;
 
-	if (this->node->type == kDisplayNodeTypeWindow) {
-
-		this->measuredWidthChanged = false;
-		this->measuredHeightChanged = false;
-
-		/*
-		 * This is the root node, simply apply its width and height
-		 * and call it a day.
-		 */
-
-		if (this->width.type != kDisplayNodeSizeTypeLength ||
-			this->width.unit != kDisplayNodeSizeUnitPX) {
-			cerr << "The root node size must be specified in pixels.";
-			abort();
-		}
-
-		if (this->height.type != kDisplayNodeSizeTypeLength ||
-			this->height.unit != kDisplayNodeSizeUnitPX) {
-			cerr << "The root node size must be specified in pixels.";
-			abort();
-		}
+	if (this->node->type == kDisplayNodeTypeRoot) {
 
 		if (this->invalidSize) {
+
+			this->measuredWidthChanged = false;
+			this->measuredHeightChanged = false;
+
+			/*
+			 * This is the root node, simply apply its width and height
+			 * and call it a day.
+			 */
+
+			if (this->width.type != kDisplayNodeSizeTypeLength ||
+				this->width.unit != kDisplayNodeSizeUnitPX) {
+				cerr << "The root node size must be specified in pixels.";
+				abort();
+			}
+
+			if (this->height.type != kDisplayNodeSizeTypeLength ||
+				this->height.unit != kDisplayNodeSizeUnitPX) {
+				cerr << "The root node size must be specified in pixels.";
+				abort();
+			}
 
 			const auto measuredW = this->width.length;
 			const auto measuredH = this->height.length;
@@ -1424,6 +1464,13 @@ DisplayNodeFrame::resolve()
 		}
 	}
 
+	/*
+	 * Each of the following starts by checking if a resolve operation is
+	 * required or not. There may be a better way to do this, but at this point
+	 * this is the best way I've found to handle sizes that needs to be
+	 * invalidated when wither the parent or the viewport size changes.
+	 */
+
 	this->resolveBorder();
 	this->resolveInnerSize();
 	this->resolveContentSize();
@@ -1431,6 +1478,8 @@ DisplayNodeFrame::resolve()
 	this->resolveLayout();
 
 	this->resolving = false;
+
+	this->invalid = false;
 }
 
 void
@@ -1441,9 +1490,8 @@ DisplayNodeFrame::resolveLayout()
 	}
 
 	if (this->node->children.size() > 0) {
-		this->node->layoutBegan();
-		this->layout.resolve();
-		this->node->layoutEnded();
+		this->layoutResolver.resolve();
+		this->node->didResolveLayout();
 	}
 
 	this->invalidLayout = false;
@@ -1604,6 +1652,8 @@ DisplayNodeFrame::resolveContentSize()
 void
 DisplayNodeFrame::resolveWrapper(double w, double h)
 {
+	this->node->resolveStyle();
+
 	if (this->resolvedSize) {
 
 		/*
@@ -1670,18 +1720,18 @@ DisplayNodeFrame::resolveWrapper(double w, double h)
 		this->measuredPaddingBottom = 0;
 
 		const auto contentAlignment = this->contentAlignment;
-		const auto contentLocation = this->contentLocation;
+		const auto contentDisposition = this->contentDisposition;
 
 		this->contentAlignment = kDisplayNodeContentAlignmentStart;
-		this->contentLocation = kDisplayNodeContentLocationStart;
+		this->contentDisposition = kDisplayNodeContentDispositionStart;
 
 		this->resolveLayout();
 
 		this->contentAlignment = contentAlignment;
-		this->contentLocation = contentLocation;
+		this->contentDisposition = contentDisposition;
 
-		if (wrapW) w = this->layout.getExtentRight() - this->layout.getExtentLeft();
-		if (wrapH) h = this->layout.getExtentBottom() - this->layout.getExtentTop();
+		if (wrapW) w = this->layoutResolver.getExtentRight() - this->layoutResolver.getExtentLeft();
+		if (wrapH) h = this->layoutResolver.getExtentBottom() - this->layoutResolver.getExtentTop();
 
 		this->measuredWidth = w;
 		this->measuredHeight = h;
@@ -1737,16 +1787,16 @@ DisplayNodeFrame::resolveWrapper(double w, double h)
 	measuredW = this->measuredWidth;
 	measuredH = this->measuredHeight;
 
-	this->measuredWidth = Layout::LayoutResolver::round(this->measuredWidth, scale);
-	this->measuredHeight = Layout::LayoutResolver::round(this->measuredHeight, scale);
+	this->measuredWidth = round(this->measuredWidth, scale);
+	this->measuredHeight = round(this->measuredHeight, scale);
 
-	this->measuredWidth = Layout::LayoutResolver::clamp(
+	this->measuredWidth = clamp(
 		this->measuredWidth,
 		this->width.min,
 		this->width.max
 	);
 
-	this->measuredHeight = Layout::LayoutResolver::clamp(
+	this->measuredHeight = clamp(
 		this->measuredHeight,
 		this->height.min,
 		this->height.max
@@ -1791,12 +1841,12 @@ DisplayNodeFrame::measureAnchorTop()
 		value = this->anchorTop.length;
 
 		switch (this->anchorTop.unit) {
-			case kDisplayNodeAnchorUnitPC: value = Layout::LayoutResolver::scale(value, this->measuredHeight); break;
+			case kDisplayNodeAnchorUnitPC: value = scale(value, this->measuredHeight); break;
 			default: break;
 		}
 	}
 
-	return Layout::LayoutResolver::round(value, this->node->display->getScale());
+	return round(value, this->node->display->getScale());
 }
 
 double
@@ -1809,12 +1859,12 @@ DisplayNodeFrame::measureAnchorLeft()
 		value = this->anchorLeft.length;
 
 		switch (this->anchorLeft.unit) {
-			case kDisplayNodeAnchorUnitPC: value = Layout::LayoutResolver::scale(value, this->measuredWidth); break;
+			case kDisplayNodeAnchorUnitPC: value = scale(value, this->measuredWidth); break;
 			default: break;
 		}
 	}
 
-	return Layout::LayoutResolver::round(value, this->node->display->getScale());
+	return round(value, this->node->display->getScale());
 }
 
 double
@@ -1829,25 +1879,25 @@ DisplayNodeFrame::measureBorderTop()
 
 		switch (unit) {
 
-			case kDisplayNodeBorderUnitPC: value = Layout::LayoutResolver::scale(value, this->measuredHeight); break;
-			case kDisplayNodeBorderUnitPW: value = Layout::LayoutResolver::scale(value, this->node->parent ? this->node->parent->frame->measuredInnerWidth : 0); break;
-			case kDisplayNodeBorderUnitPH: value = Layout::LayoutResolver::scale(value, this->node->parent ? this->node->parent->frame->measuredInnerHeight : 0); break;
-			case kDisplayNodeBorderUnitCW: value = Layout::LayoutResolver::scale(value, this->node->parent ? this->node->parent->frame->measuredContentWidth : 0); break;
-			case kDisplayNodeBorderUnitCH: value = Layout::LayoutResolver::scale(value, this->node->parent ? this->node->parent->frame->measuredContentHeight : 0); break;
-			case kDisplayNodeBorderUnitVW: value = Layout::LayoutResolver::scale(value, this->node->display->getViewportWidth()); break;
-			case kDisplayNodeBorderUnitVH: value = Layout::LayoutResolver::scale(value, this->node->display->getViewportHeight()); break;
+			case kDisplayNodeBorderUnitPC: value = scale(value, this->measuredHeight); break;
+			case kDisplayNodeBorderUnitPW: value = scale(value, this->node->parent ? this->node->parent->frame->measuredInnerWidth : 0); break;
+			case kDisplayNodeBorderUnitPH: value = scale(value, this->node->parent ? this->node->parent->frame->measuredInnerHeight : 0); break;
+			case kDisplayNodeBorderUnitCW: value = scale(value, this->node->parent ? this->node->parent->frame->measuredContentWidth : 0); break;
+			case kDisplayNodeBorderUnitCH: value = scale(value, this->node->parent ? this->node->parent->frame->measuredContentHeight : 0); break;
+			case kDisplayNodeBorderUnitVW: value = scale(value, this->node->display->getViewportWidth()); break;
+			case kDisplayNodeBorderUnitVH: value = scale(value, this->node->display->getViewportHeight()); break;
 			default: break;
 
 		}
 	}
 
-	value = Layout::LayoutResolver::clamp(
+	value = clamp(
 		value,
 		this->borderTop.min,
 		this->borderTop.max
 	);
 
-	return Layout::LayoutResolver::round(value, this->node->display->getScale());
+	return round(value, this->node->display->getScale());
 }
 
 double
@@ -1862,25 +1912,25 @@ DisplayNodeFrame::measureBorderLeft()
 
 		switch (unit) {
 
-			case kDisplayNodeBorderUnitPC: value = Layout::LayoutResolver::scale(value, this->measuredWidth); break;
-			case kDisplayNodeBorderUnitPW: value = Layout::LayoutResolver::scale(value, this->node->parent ? this->node->parent->frame->measuredInnerWidth : 0); break;
-			case kDisplayNodeBorderUnitPH: value = Layout::LayoutResolver::scale(value, this->node->parent ? this->node->parent->frame->measuredInnerHeight : 0); break;
-			case kDisplayNodeBorderUnitCW: value = Layout::LayoutResolver::scale(value, this->node->parent ? this->node->parent->frame->measuredContentWidth : 0); break;
-			case kDisplayNodeBorderUnitCH: value = Layout::LayoutResolver::scale(value, this->node->parent ? this->node->parent->frame->measuredContentHeight : 0); break;
-			case kDisplayNodeBorderUnitVW: value = Layout::LayoutResolver::scale(value, this->node->display->getViewportWidth()); break;
-			case kDisplayNodeBorderUnitVH: value = Layout::LayoutResolver::scale(value, this->node->display->getViewportHeight()); break;
+			case kDisplayNodeBorderUnitPC: value = scale(value, this->measuredWidth); break;
+			case kDisplayNodeBorderUnitPW: value = scale(value, this->node->parent ? this->node->parent->frame->measuredInnerWidth : 0); break;
+			case kDisplayNodeBorderUnitPH: value = scale(value, this->node->parent ? this->node->parent->frame->measuredInnerHeight : 0); break;
+			case kDisplayNodeBorderUnitCW: value = scale(value, this->node->parent ? this->node->parent->frame->measuredContentWidth : 0); break;
+			case kDisplayNodeBorderUnitCH: value = scale(value, this->node->parent ? this->node->parent->frame->measuredContentHeight : 0); break;
+			case kDisplayNodeBorderUnitVW: value = scale(value, this->node->display->getViewportWidth()); break;
+			case kDisplayNodeBorderUnitVH: value = scale(value, this->node->display->getViewportHeight()); break;
 			default: break;
 
 		}
 	}
 
-	value = Layout::LayoutResolver::clamp(
+	value = clamp(
 		value,
 		this->borderLeft.min,
 		this->borderLeft.max
 	);
 
-	return Layout::LayoutResolver::round(value, this->node->display->getScale());
+	return round(value, this->node->display->getScale());
 }
 
 double
@@ -1895,25 +1945,25 @@ DisplayNodeFrame::measureBorderRight()
 
 		switch (unit) {
 
-			case kDisplayNodeBorderUnitPC: value = Layout::LayoutResolver::scale(value, this->measuredWidth); break;
-			case kDisplayNodeBorderUnitPW: value = Layout::LayoutResolver::scale(value, this->node->parent ? this->node->parent->frame->measuredInnerWidth : 0); break;
-			case kDisplayNodeBorderUnitPH: value = Layout::LayoutResolver::scale(value, this->node->parent ? this->node->parent->frame->measuredInnerHeight : 0); break;
-			case kDisplayNodeBorderUnitCW: value = Layout::LayoutResolver::scale(value, this->node->parent ? this->node->parent->frame->measuredContentWidth : 0); break;
-			case kDisplayNodeBorderUnitCH: value = Layout::LayoutResolver::scale(value, this->node->parent ? this->node->parent->frame->measuredContentHeight : 0); break;
-			case kDisplayNodeBorderUnitVW: value = Layout::LayoutResolver::scale(value, this->node->display->getViewportWidth()); break;
-			case kDisplayNodeBorderUnitVH: value = Layout::LayoutResolver::scale(value, this->node->display->getViewportHeight()); break;
+			case kDisplayNodeBorderUnitPC: value = scale(value, this->measuredWidth); break;
+			case kDisplayNodeBorderUnitPW: value = scale(value, this->node->parent ? this->node->parent->frame->measuredInnerWidth : 0); break;
+			case kDisplayNodeBorderUnitPH: value = scale(value, this->node->parent ? this->node->parent->frame->measuredInnerHeight : 0); break;
+			case kDisplayNodeBorderUnitCW: value = scale(value, this->node->parent ? this->node->parent->frame->measuredContentWidth : 0); break;
+			case kDisplayNodeBorderUnitCH: value = scale(value, this->node->parent ? this->node->parent->frame->measuredContentHeight : 0); break;
+			case kDisplayNodeBorderUnitVW: value = scale(value, this->node->display->getViewportWidth()); break;
+			case kDisplayNodeBorderUnitVH: value = scale(value, this->node->display->getViewportHeight()); break;
 			default: break;
 
 		}
 	}
 
-	value = Layout::LayoutResolver::clamp(
+	value = clamp(
 		value,
 		this->borderRight.min,
 		this->borderRight.max
 	);
 
-	return Layout::LayoutResolver::round(value, this->node->display->getScale());
+	return round(value, this->node->display->getScale());
 }
 
 double
@@ -1928,25 +1978,25 @@ DisplayNodeFrame::measureBorderBottom()
 
 		switch (unit) {
 
-			case kDisplayNodeBorderUnitPC: value = Layout::LayoutResolver::scale(value, this->measuredHeight); break;
-			case kDisplayNodeBorderUnitPW: value = Layout::LayoutResolver::scale(value, this->node->parent ? this->node->parent->frame->measuredInnerWidth : 0); break;
-			case kDisplayNodeBorderUnitPH: value = Layout::LayoutResolver::scale(value, this->node->parent ? this->node->parent->frame->measuredInnerHeight : 0); break;
-			case kDisplayNodeBorderUnitCW: value = Layout::LayoutResolver::scale(value, this->node->parent ? this->node->parent->frame->measuredContentWidth : 0); break;
-			case kDisplayNodeBorderUnitCH: value = Layout::LayoutResolver::scale(value, this->node->parent ? this->node->parent->frame->measuredContentHeight : 0); break;
-			case kDisplayNodeBorderUnitVW: value = Layout::LayoutResolver::scale(value, this->node->display->getViewportWidth()); break;
-			case kDisplayNodeBorderUnitVH: value = Layout::LayoutResolver::scale(value, this->node->display->getViewportHeight()); break;
+			case kDisplayNodeBorderUnitPC: value = scale(value, this->measuredHeight); break;
+			case kDisplayNodeBorderUnitPW: value = scale(value, this->node->parent ? this->node->parent->frame->measuredInnerWidth : 0); break;
+			case kDisplayNodeBorderUnitPH: value = scale(value, this->node->parent ? this->node->parent->frame->measuredInnerHeight : 0); break;
+			case kDisplayNodeBorderUnitCW: value = scale(value, this->node->parent ? this->node->parent->frame->measuredContentWidth : 0); break;
+			case kDisplayNodeBorderUnitCH: value = scale(value, this->node->parent ? this->node->parent->frame->measuredContentHeight : 0); break;
+			case kDisplayNodeBorderUnitVW: value = scale(value, this->node->display->getViewportWidth()); break;
+			case kDisplayNodeBorderUnitVH: value = scale(value, this->node->display->getViewportHeight()); break;
 			default: break;
 
 		}
 	}
 
-	value = Layout::LayoutResolver::clamp(
+	value = clamp(
 		value,
 		this->borderBottom.min,
 		this->borderBottom.max
 	);
 
-	return Layout::LayoutResolver::round(value, this->node->display->getScale());
+	return round(value, this->node->display->getScale());
 }
 
 double
@@ -1961,25 +2011,25 @@ DisplayNodeFrame::measureMarginTop()
 
 		switch (unit) {
 
-			case kDisplayNodeMarginUnitPC: value = Layout::LayoutResolver::scale(value, this->node->parent->frame->measuredContentHeight); break;
-			case kDisplayNodeMarginUnitPW: value = Layout::LayoutResolver::scale(value, this->node->parent ? this->node->parent->frame->measuredInnerWidth : 0); break;
-			case kDisplayNodeMarginUnitPH: value = Layout::LayoutResolver::scale(value, this->node->parent ? this->node->parent->frame->measuredInnerHeight : 0); break;
-			case kDisplayNodeMarginUnitCW: value = Layout::LayoutResolver::scale(value, this->node->parent ? this->node->parent->frame->measuredContentWidth : 0); break;
-			case kDisplayNodeMarginUnitCH: value = Layout::LayoutResolver::scale(value, this->node->parent ? this->node->parent->frame->measuredContentHeight : 0); break;
-			case kDisplayNodeMarginUnitVW: value = Layout::LayoutResolver::scale(value, this->node->display->getViewportWidth()); break;
-			case kDisplayNodeMarginUnitVH: value = Layout::LayoutResolver::scale(value, this->node->display->getViewportHeight()); break;
+			case kDisplayNodeMarginUnitPC: value = scale(value, this->node->parent->frame->measuredContentHeight); break;
+			case kDisplayNodeMarginUnitPW: value = scale(value, this->node->parent ? this->node->parent->frame->measuredInnerWidth : 0); break;
+			case kDisplayNodeMarginUnitPH: value = scale(value, this->node->parent ? this->node->parent->frame->measuredInnerHeight : 0); break;
+			case kDisplayNodeMarginUnitCW: value = scale(value, this->node->parent ? this->node->parent->frame->measuredContentWidth : 0); break;
+			case kDisplayNodeMarginUnitCH: value = scale(value, this->node->parent ? this->node->parent->frame->measuredContentHeight : 0); break;
+			case kDisplayNodeMarginUnitVW: value = scale(value, this->node->display->getViewportWidth()); break;
+			case kDisplayNodeMarginUnitVH: value = scale(value, this->node->display->getViewportHeight()); break;
 			default: break;
 
 		}
 	}
 
-	value = Layout::LayoutResolver::clamp(
+	value = clamp(
 		value,
 		this->marginTop.min,
 		this->marginTop.max
 	);
 
-	return Layout::LayoutResolver::round(value, this->node->display->getScale());
+	return round(value, this->node->display->getScale());
 }
 
 double
@@ -1994,25 +2044,25 @@ DisplayNodeFrame::measureMarginLeft()
 
 		switch (unit) {
 
-			case kDisplayNodeMarginUnitPC: value = Layout::LayoutResolver::scale(value, this->node->parent->frame->measuredContentWidth); break;
-			case kDisplayNodeMarginUnitPW: value = Layout::LayoutResolver::scale(value, this->node->parent ? this->node->parent->frame->measuredInnerWidth : 0); break;
-			case kDisplayNodeMarginUnitPH: value = Layout::LayoutResolver::scale(value, this->node->parent ? this->node->parent->frame->measuredInnerHeight : 0); break;
-			case kDisplayNodeMarginUnitCW: value = Layout::LayoutResolver::scale(value, this->node->parent ? this->node->parent->frame->measuredContentWidth : 0); break;
-			case kDisplayNodeMarginUnitCH: value = Layout::LayoutResolver::scale(value, this->node->parent ? this->node->parent->frame->measuredContentHeight : 0); break;
-			case kDisplayNodeMarginUnitVW: value = Layout::LayoutResolver::scale(value, this->node->display->getViewportWidth()); break;
-			case kDisplayNodeMarginUnitVH: value = Layout::LayoutResolver::scale(value, this->node->display->getViewportHeight()); break;
+			case kDisplayNodeMarginUnitPC: value = scale(value, this->node->parent->frame->measuredContentWidth); break;
+			case kDisplayNodeMarginUnitPW: value = scale(value, this->node->parent ? this->node->parent->frame->measuredInnerWidth : 0); break;
+			case kDisplayNodeMarginUnitPH: value = scale(value, this->node->parent ? this->node->parent->frame->measuredInnerHeight : 0); break;
+			case kDisplayNodeMarginUnitCW: value = scale(value, this->node->parent ? this->node->parent->frame->measuredContentWidth : 0); break;
+			case kDisplayNodeMarginUnitCH: value = scale(value, this->node->parent ? this->node->parent->frame->measuredContentHeight : 0); break;
+			case kDisplayNodeMarginUnitVW: value = scale(value, this->node->display->getViewportWidth()); break;
+			case kDisplayNodeMarginUnitVH: value = scale(value, this->node->display->getViewportHeight()); break;
 			default: break;
 
 		}
 	}
 
-	value = Layout::LayoutResolver::clamp(
+	value = clamp(
 		value,
 		this->marginLeft.min,
 		this->marginLeft.max
 	);
 
-	return Layout::LayoutResolver::round(value, this->node->display->getScale());
+	return round(value, this->node->display->getScale());
 }
 
 double
@@ -2027,25 +2077,25 @@ DisplayNodeFrame::measureMarginRight()
 
 		switch (unit) {
 
-			case kDisplayNodeMarginUnitPC: value = Layout::LayoutResolver::scale(value, this->node->parent->frame->measuredContentWidth); break;
-			case kDisplayNodeMarginUnitPW: value = Layout::LayoutResolver::scale(value, this->node->parent ? this->node->parent->frame->measuredInnerWidth : 0); break;
-			case kDisplayNodeMarginUnitPH: value = Layout::LayoutResolver::scale(value, this->node->parent ? this->node->parent->frame->measuredInnerHeight : 0); break;
-			case kDisplayNodeMarginUnitCW: value = Layout::LayoutResolver::scale(value, this->node->parent ? this->node->parent->frame->measuredContentWidth : 0); break;
-			case kDisplayNodeMarginUnitCH: value = Layout::LayoutResolver::scale(value, this->node->parent ? this->node->parent->frame->measuredContentHeight : 0); break;
-			case kDisplayNodeMarginUnitVW: value = Layout::LayoutResolver::scale(value, this->node->display->getViewportWidth()); break;
-			case kDisplayNodeMarginUnitVH: value = Layout::LayoutResolver::scale(value, this->node->display->getViewportHeight()); break;
+			case kDisplayNodeMarginUnitPC: value = scale(value, this->node->parent->frame->measuredContentWidth); break;
+			case kDisplayNodeMarginUnitPW: value = scale(value, this->node->parent ? this->node->parent->frame->measuredInnerWidth : 0); break;
+			case kDisplayNodeMarginUnitPH: value = scale(value, this->node->parent ? this->node->parent->frame->measuredInnerHeight : 0); break;
+			case kDisplayNodeMarginUnitCW: value = scale(value, this->node->parent ? this->node->parent->frame->measuredContentWidth : 0); break;
+			case kDisplayNodeMarginUnitCH: value = scale(value, this->node->parent ? this->node->parent->frame->measuredContentHeight : 0); break;
+			case kDisplayNodeMarginUnitVW: value = scale(value, this->node->display->getViewportWidth()); break;
+			case kDisplayNodeMarginUnitVH: value = scale(value, this->node->display->getViewportHeight()); break;
 			default: break;
 
 		}
 	}
 
-	value = Layout::LayoutResolver::clamp(
+	value = clamp(
 		value,
 		this->marginRight.min,
 		this->marginRight.max
 	);
 
-	return Layout::LayoutResolver::round(value, this->node->display->getScale());
+	return round(value, this->node->display->getScale());
 }
 
 double
@@ -2060,25 +2110,25 @@ DisplayNodeFrame::measureMarginBottom()
 
 		switch (unit) {
 
-			case kDisplayNodeMarginUnitPC: value = Layout::LayoutResolver::scale(value, this->node->parent->frame->measuredContentHeight); break;
-			case kDisplayNodeMarginUnitPW: value = Layout::LayoutResolver::scale(value, this->node->parent ? this->node->parent->frame->measuredInnerWidth : 0); break;
-			case kDisplayNodeMarginUnitPH: value = Layout::LayoutResolver::scale(value, this->node->parent ? this->node->parent->frame->measuredInnerHeight : 0); break;
-			case kDisplayNodeMarginUnitCW: value = Layout::LayoutResolver::scale(value, this->node->parent ? this->node->parent->frame->measuredContentWidth : 0); break;
-			case kDisplayNodeMarginUnitCH: value = Layout::LayoutResolver::scale(value, this->node->parent ? this->node->parent->frame->measuredContentHeight : 0); break;
-			case kDisplayNodeMarginUnitVW: value = Layout::LayoutResolver::scale(value, this->node->display->getViewportWidth()); break;
-			case kDisplayNodeMarginUnitVH: value = Layout::LayoutResolver::scale(value, this->node->display->getViewportHeight()); break;
+			case kDisplayNodeMarginUnitPC: value = scale(value, this->node->parent->frame->measuredContentHeight); break;
+			case kDisplayNodeMarginUnitPW: value = scale(value, this->node->parent ? this->node->parent->frame->measuredInnerWidth : 0); break;
+			case kDisplayNodeMarginUnitPH: value = scale(value, this->node->parent ? this->node->parent->frame->measuredInnerHeight : 0); break;
+			case kDisplayNodeMarginUnitCW: value = scale(value, this->node->parent ? this->node->parent->frame->measuredContentWidth : 0); break;
+			case kDisplayNodeMarginUnitCH: value = scale(value, this->node->parent ? this->node->parent->frame->measuredContentHeight : 0); break;
+			case kDisplayNodeMarginUnitVW: value = scale(value, this->node->display->getViewportWidth()); break;
+			case kDisplayNodeMarginUnitVH: value = scale(value, this->node->display->getViewportHeight()); break;
 			default: break;
 
 		}
 	}
 
-	value = Layout::LayoutResolver::clamp(
+	value = clamp(
 		value,
 		this->marginBottom.min,
 		this->marginBottom.max
 	);
 
-	return Layout::LayoutResolver::round(value, this->node->display->getScale());
+	return round(value, this->node->display->getScale());
 }
 
 double
@@ -2093,25 +2143,25 @@ DisplayNodeFrame::measurePaddingTop()
 
 		switch (unit) {
 
-			case kDisplayNodePaddingUnitPC: value = Layout::LayoutResolver::scale(value, this->measuredInnerHeight); break;
-			case kDisplayNodePaddingUnitPW: value = Layout::LayoutResolver::scale(value, this->node->parent ? this->node->parent->frame->measuredInnerWidth : 0); break;
-			case kDisplayNodePaddingUnitPH: value = Layout::LayoutResolver::scale(value, this->node->parent ? this->node->parent->frame->measuredInnerHeight : 0); break;
-			case kDisplayNodePaddingUnitCW: value = Layout::LayoutResolver::scale(value, this->node->parent ? this->node->parent->frame->measuredContentWidth : 0); break;
-			case kDisplayNodePaddingUnitCH: value = Layout::LayoutResolver::scale(value, this->node->parent ? this->node->parent->frame->measuredContentHeight : 0); break;
-			case kDisplayNodePaddingUnitVW: value = Layout::LayoutResolver::scale(value, this->node->display->getViewportWidth()); break;
-			case kDisplayNodePaddingUnitVH: value = Layout::LayoutResolver::scale(value, this->node->display->getViewportHeight()); break;
+			case kDisplayNodePaddingUnitPC: value = scale(value, this->measuredInnerHeight); break;
+			case kDisplayNodePaddingUnitPW: value = scale(value, this->node->parent ? this->node->parent->frame->measuredInnerWidth : 0); break;
+			case kDisplayNodePaddingUnitPH: value = scale(value, this->node->parent ? this->node->parent->frame->measuredInnerHeight : 0); break;
+			case kDisplayNodePaddingUnitCW: value = scale(value, this->node->parent ? this->node->parent->frame->measuredContentWidth : 0); break;
+			case kDisplayNodePaddingUnitCH: value = scale(value, this->node->parent ? this->node->parent->frame->measuredContentHeight : 0); break;
+			case kDisplayNodePaddingUnitVW: value = scale(value, this->node->display->getViewportWidth()); break;
+			case kDisplayNodePaddingUnitVH: value = scale(value, this->node->display->getViewportHeight()); break;
 			default: break;
 
 		}
 	}
 
-	value = Layout::LayoutResolver::clamp(
+	value = clamp(
 		value,
 		this->paddingTop.min,
 		this->paddingTop.max
 	);
 
-	return Layout::LayoutResolver::round(value, this->node->display->getScale());
+	return round(value, this->node->display->getScale());
 }
 
 double
@@ -2126,25 +2176,25 @@ DisplayNodeFrame::measurePaddingLeft()
 
 		switch (unit) {
 
-			case kDisplayNodePaddingUnitPC: value = Layout::LayoutResolver::scale(value, this->measuredInnerWidth); break;
-			case kDisplayNodePaddingUnitPW: value = Layout::LayoutResolver::scale(value, this->node->parent ? this->node->parent->frame->measuredInnerWidth : 0); break;
-			case kDisplayNodePaddingUnitPH: value = Layout::LayoutResolver::scale(value, this->node->parent ? this->node->parent->frame->measuredInnerHeight : 0); break;
-			case kDisplayNodePaddingUnitCW: value = Layout::LayoutResolver::scale(value, this->node->parent ? this->node->parent->frame->measuredContentWidth : 0); break;
-			case kDisplayNodePaddingUnitCH: value = Layout::LayoutResolver::scale(value, this->node->parent ? this->node->parent->frame->measuredContentHeight : 0); break;
-			case kDisplayNodePaddingUnitVW: value = Layout::LayoutResolver::scale(value, this->node->display->getViewportWidth()); break;
-			case kDisplayNodePaddingUnitVH: value = Layout::LayoutResolver::scale(value, this->node->display->getViewportHeight()); break;
+			case kDisplayNodePaddingUnitPC: value = scale(value, this->measuredInnerWidth); break;
+			case kDisplayNodePaddingUnitPW: value = scale(value, this->node->parent ? this->node->parent->frame->measuredInnerWidth : 0); break;
+			case kDisplayNodePaddingUnitPH: value = scale(value, this->node->parent ? this->node->parent->frame->measuredInnerHeight : 0); break;
+			case kDisplayNodePaddingUnitCW: value = scale(value, this->node->parent ? this->node->parent->frame->measuredContentWidth : 0); break;
+			case kDisplayNodePaddingUnitCH: value = scale(value, this->node->parent ? this->node->parent->frame->measuredContentHeight : 0); break;
+			case kDisplayNodePaddingUnitVW: value = scale(value, this->node->display->getViewportWidth()); break;
+			case kDisplayNodePaddingUnitVH: value = scale(value, this->node->display->getViewportHeight()); break;
 			default: break;
 
 		}
 	}
 
-	value = Layout::LayoutResolver::clamp(
+	value = clamp(
 		value,
 		this->paddingLeft.min,
 		this->paddingLeft.max
 	);
 
-	return Layout::LayoutResolver::round(value, this->node->display->getScale());
+	return round(value, this->node->display->getScale());
 }
 
 double
@@ -2159,25 +2209,25 @@ DisplayNodeFrame::measurePaddingRight()
 
 		switch (unit) {
 
-			case kDisplayNodePaddingUnitPC: value = Layout::LayoutResolver::scale(value, this->measuredInnerWidth); break;
-			case kDisplayNodePaddingUnitPW: value = Layout::LayoutResolver::scale(value, this->node->parent ? this->node->parent->frame->measuredInnerWidth : 0); break;
-			case kDisplayNodePaddingUnitPH: value = Layout::LayoutResolver::scale(value, this->node->parent ? this->node->parent->frame->measuredInnerHeight : 0); break;
-			case kDisplayNodePaddingUnitCW: value = Layout::LayoutResolver::scale(value, this->node->parent ? this->node->parent->frame->measuredContentWidth : 0); break;
-			case kDisplayNodePaddingUnitCH: value = Layout::LayoutResolver::scale(value, this->node->parent ? this->node->parent->frame->measuredContentHeight : 0); break;
-			case kDisplayNodePaddingUnitVW: value = Layout::LayoutResolver::scale(value, this->node->display->getViewportWidth()); break;
-			case kDisplayNodePaddingUnitVH: value = Layout::LayoutResolver::scale(value, this->node->display->getViewportHeight()); break;
+			case kDisplayNodePaddingUnitPC: value = scale(value, this->measuredInnerWidth); break;
+			case kDisplayNodePaddingUnitPW: value = scale(value, this->node->parent ? this->node->parent->frame->measuredInnerWidth : 0); break;
+			case kDisplayNodePaddingUnitPH: value = scale(value, this->node->parent ? this->node->parent->frame->measuredInnerHeight : 0); break;
+			case kDisplayNodePaddingUnitCW: value = scale(value, this->node->parent ? this->node->parent->frame->measuredContentWidth : 0); break;
+			case kDisplayNodePaddingUnitCH: value = scale(value, this->node->parent ? this->node->parent->frame->measuredContentHeight : 0); break;
+			case kDisplayNodePaddingUnitVW: value = scale(value, this->node->display->getViewportWidth()); break;
+			case kDisplayNodePaddingUnitVH: value = scale(value, this->node->display->getViewportHeight()); break;
 			default: break;
 
 		}
 	}
 
-	value = Layout::LayoutResolver::clamp(
+	value = clamp(
 		value,
 		this->paddingRight.min,
 		this->paddingRight.max
 	);
 
-	return Layout::LayoutResolver::round(value, this->node->display->getScale());
+	return round(value, this->node->display->getScale());
 }
 
 double
@@ -2192,25 +2242,25 @@ DisplayNodeFrame::measurePaddingBottom()
 
 		switch (unit) {
 
-			case kDisplayNodePaddingUnitPC: value = Layout::LayoutResolver::scale(value, this->measuredInnerHeight); break;
-			case kDisplayNodePaddingUnitPW: value = Layout::LayoutResolver::scale(value, this->node->parent ? this->node->parent->frame->measuredInnerWidth : 0); break;
-			case kDisplayNodePaddingUnitPH: value = Layout::LayoutResolver::scale(value, this->node->parent ? this->node->parent->frame->measuredInnerHeight : 0); break;
-			case kDisplayNodePaddingUnitCW: value = Layout::LayoutResolver::scale(value, this->node->parent ? this->node->parent->frame->measuredContentWidth : 0); break;
-			case kDisplayNodePaddingUnitCH: value = Layout::LayoutResolver::scale(value, this->node->parent ? this->node->parent->frame->measuredContentHeight : 0); break;
-			case kDisplayNodePaddingUnitVW: value = Layout::LayoutResolver::scale(value, this->node->display->getViewportWidth()); break;
-			case kDisplayNodePaddingUnitVH: value = Layout::LayoutResolver::scale(value, this->node->display->getViewportHeight()); break;
+			case kDisplayNodePaddingUnitPC: value = scale(value, this->measuredInnerHeight); break;
+			case kDisplayNodePaddingUnitPW: value = scale(value, this->node->parent ? this->node->parent->frame->measuredInnerWidth : 0); break;
+			case kDisplayNodePaddingUnitPH: value = scale(value, this->node->parent ? this->node->parent->frame->measuredInnerHeight : 0); break;
+			case kDisplayNodePaddingUnitCW: value = scale(value, this->node->parent ? this->node->parent->frame->measuredContentWidth : 0); break;
+			case kDisplayNodePaddingUnitCH: value = scale(value, this->node->parent ? this->node->parent->frame->measuredContentHeight : 0); break;
+			case kDisplayNodePaddingUnitVW: value = scale(value, this->node->display->getViewportWidth()); break;
+			case kDisplayNodePaddingUnitVH: value = scale(value, this->node->display->getViewportHeight()); break;
 			default: break;
 
 		}
 	}
 
-	value = Layout::LayoutResolver::clamp(
+	value = clamp(
 		value,
 		this->paddingBottom.min,
 		this->paddingBottom.max
 	);
 
-	return Layout::LayoutResolver::round(value, this->node->display->getScale());
+	return round(value, this->node->display->getScale());
 }
 
 double
@@ -2251,13 +2301,13 @@ DisplayNodeFrame::measureContentWidth()
 
 		switch (unit) {
 
-			case kDisplayNodeContentSizeUnitPC: value = Layout::LayoutResolver::scale(value, this->measuredInnerWidth); break;
-			case kDisplayNodeContentSizeUnitPW: value = Layout::LayoutResolver::scale(value, this->node->parent ? this->node->parent->frame->measuredInnerWidth : 0); break;
-			case kDisplayNodeContentSizeUnitPH: value = Layout::LayoutResolver::scale(value, this->node->parent ? this->node->parent->frame->measuredInnerHeight : 0); break;
-			case kDisplayNodeContentSizeUnitCW: value = Layout::LayoutResolver::scale(value, this->node->parent ? this->node->parent->frame->measuredContentWidth : 0); break;
-			case kDisplayNodeContentSizeUnitCH: value = Layout::LayoutResolver::scale(value, this->node->parent ? this->node->parent->frame->measuredContentHeight : 0); break;
-			case kDisplayNodeContentSizeUnitVW: value = Layout::LayoutResolver::scale(value, this->node->display->getViewportWidth()); break;
-			case kDisplayNodeContentSizeUnitVH: value = Layout::LayoutResolver::scale(value, this->node->display->getViewportHeight()); break;
+			case kDisplayNodeContentSizeUnitPC: value = scale(value, this->measuredInnerWidth); break;
+			case kDisplayNodeContentSizeUnitPW: value = scale(value, this->node->parent ? this->node->parent->frame->measuredInnerWidth : 0); break;
+			case kDisplayNodeContentSizeUnitPH: value = scale(value, this->node->parent ? this->node->parent->frame->measuredInnerHeight : 0); break;
+			case kDisplayNodeContentSizeUnitCW: value = scale(value, this->node->parent ? this->node->parent->frame->measuredContentWidth : 0); break;
+			case kDisplayNodeContentSizeUnitCH: value = scale(value, this->node->parent ? this->node->parent->frame->measuredContentHeight : 0); break;
+			case kDisplayNodeContentSizeUnitVW: value = scale(value, this->node->display->getViewportWidth()); break;
+			case kDisplayNodeContentSizeUnitVH: value = scale(value, this->node->display->getViewportHeight()); break;
 			default: break;
 
 		}
@@ -2265,7 +2315,7 @@ DisplayNodeFrame::measureContentWidth()
 		value = max(value, this->measuredInnerWidth);
 	}
 
-	return Layout::LayoutResolver::round(value, this->node->display->getScale());
+	return round(value, this->node->display->getScale());
 }
 
 double
@@ -2284,13 +2334,13 @@ DisplayNodeFrame::measureContentHeight()
 
 		switch (unit) {
 
-			case kDisplayNodeContentSizeUnitPC: value = Layout::LayoutResolver::scale(value, this->measuredInnerHeight); break;
-			case kDisplayNodeContentSizeUnitPW: value = Layout::LayoutResolver::scale(value, this->node->parent ? this->node->parent->frame->measuredInnerWidth : 0); break;
-			case kDisplayNodeContentSizeUnitPH: value = Layout::LayoutResolver::scale(value, this->node->parent ? this->node->parent->frame->measuredInnerHeight : 0); break;
-			case kDisplayNodeContentSizeUnitCW: value = Layout::LayoutResolver::scale(value, this->node->parent ? this->node->parent->frame->measuredContentWidth : 0); break;
-			case kDisplayNodeContentSizeUnitCH: value = Layout::LayoutResolver::scale(value, this->node->parent ? this->node->parent->frame->measuredContentHeight : 0); break;
-			case kDisplayNodeContentSizeUnitVW: value = Layout::LayoutResolver::scale(value, this->node->display->getViewportWidth()); break;
-			case kDisplayNodeContentSizeUnitVH: value = Layout::LayoutResolver::scale(value, this->node->display->getViewportHeight()); break;
+			case kDisplayNodeContentSizeUnitPC: value = scale(value, this->measuredInnerHeight); break;
+			case kDisplayNodeContentSizeUnitPW: value = scale(value, this->node->parent ? this->node->parent->frame->measuredInnerWidth : 0); break;
+			case kDisplayNodeContentSizeUnitPH: value = scale(value, this->node->parent ? this->node->parent->frame->measuredInnerHeight : 0); break;
+			case kDisplayNodeContentSizeUnitCW: value = scale(value, this->node->parent ? this->node->parent->frame->measuredContentWidth : 0); break;
+			case kDisplayNodeContentSizeUnitCH: value = scale(value, this->node->parent ? this->node->parent->frame->measuredContentHeight : 0); break;
+			case kDisplayNodeContentSizeUnitVW: value = scale(value, this->node->display->getViewportWidth()); break;
+			case kDisplayNodeContentSizeUnitVH: value = scale(value, this->node->display->getViewportHeight()); break;
 			default: break;
 
 		}
@@ -2298,7 +2348,7 @@ DisplayNodeFrame::measureContentHeight()
 		value = max(value, this->measuredInnerHeight);
 	}
 
-	return Layout::LayoutResolver::round(value, this->node->display->getScale());
+	return round(value, this->node->display->getScale());
 }
 
 bool

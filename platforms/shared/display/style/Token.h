@@ -47,6 +47,8 @@ private:
 	string name = "";
 	string unit = "";
 
+	bool equals(const string& str1, const string& str2) const;
+
 public:
 
 	friend class Tokenizer;
@@ -71,6 +73,9 @@ public:
 	const string& getUnit() const {
 		return this->unit;
 	}
+
+	bool hasName(string name) const;
+	bool hasUnit(string unit) const;
 
 	string description() const {
 

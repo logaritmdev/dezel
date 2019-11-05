@@ -3,7 +3,7 @@
 
 #include "Selector.h"
 #include "Property.h"
-#include "PropertyList.h"
+#include "Dictionary.h"
 
 #include <string>
 #include <vector>
@@ -27,7 +27,7 @@ private:
 	Descriptor* parent = nullptr;
 
 	Selector* selector;
-	PropertyList properties;
+	Dictionary properties;
 
 	vector<Descriptor*> childDescriptors;
 	vector<Descriptor*> styleDescriptors;
@@ -46,7 +46,7 @@ public:
 		return this->selector;
 	}
 
-	const PropertyList& getProperties() const {
+	const Dictionary& getProperties() const {
 		return this->properties;
 	}
 

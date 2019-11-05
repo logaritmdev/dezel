@@ -6,12 +6,11 @@
 #include "Tokenizer.h"
 #include "TokenizerStream.h"
 
-#include <string>
 #include <queue>
+#include <string>
 #include <iostream>
 
-using std::cout;
-using std::cerr;
+using std::queue;
 using std::string;
 
 namespace Dezel {
@@ -25,22 +24,22 @@ Display::loadStylesheet(string input)
 	Style::Parser parser(stylesheet, &tokenizer);
 }
 
-
 void
-Display::setWindow(DisplayNode* window)
-{
+Display::setWindow(DisplayNode* window) {
 	this->window = window;
-	this->window->setType(kDisplayNodeTypeWindow);
+	this->window->setType(kDisplayNodeTypeRoot);
 }
 
 void
-Display::setScale(double value) {
+Display::setScale(double value)
+{
 	this->scale = value;
+	this->invalidate();
 }
 
 void
-Display::setViewportWidth(double value) {
-
+Display::setViewportWidth(double value)
+{
 	if (this->viewportWidth == value) {
 		return;
 	}
@@ -52,8 +51,8 @@ Display::setViewportWidth(double value) {
 }
 
 void
-Display::setViewportHeight(double value) {
-
+Display::setViewportHeight(double value)
+{
 	if (this->viewportHeight == value) {
 		return;
 	}
@@ -65,62 +64,71 @@ Display::setViewportHeight(double value) {
 }
 
 void
-Display::setLayoutBeganCallback(DisplayLayoutCallback layoutBeganCallback) {
-	this->layoutBeganCallback = layoutBeganCallback;
-}
-
-void
-Display::setLayoutEndedCallback(DisplayLayoutCallback layoutEndedCallback) {
-	this->layoutEndedCallback = layoutEndedCallback;
-}
-
-void
-Display::layoutBegan() {
-	if (this->layoutBeganCallback) {
-		this->layoutBeganCallback(reinterpret_cast<DisplayRef>(this));
-	}
-}
-
-void
-Display::layoutEnded() {
-	if (this->layoutEndedCallback) {
-		this->layoutEndedCallback(reinterpret_cast<DisplayRef>(this));
-	}
-}
-
-void
 Display::invalidate()
 {
-	this->invalid = true;
+	if (this->invalid == false) {
+		this->invalid = true;
+		this->didInvalidate();
+	}
 }
 
 void
 Display::resolve()
 {
+	if (this->invalid == false) {
+		return;
+	}
+
 	if (this->resolving) {
 		return;
 	}
 
 	this->resolving = true;
 
-	if (this->invalid) {
-		this->resolveNode(this->window);
+	queue<DisplayNode*> queue;
+
+	queue.push(this->window);
+
+	while (queue.size() > 0) {
+
+		auto node = queue.front();
+
+		node->resolveEntity();
+		node->resolveStyle();
+		node->resolveFrame();
+
+		node->invalid = false;
+
+		queue.pop();
+
+		for (auto child : node->children) {
+			if (child->visible) {
+				queue.push(child);
+			}
+		}
 	}
 
+	this->invalid = false;
 	this->resolving = false;
+	this->viewportWidthChanged = false;
+	this->viewportHeightChanged = false;
+
+	this->didResolve();
 }
 
 void
-Display::resolveNode(DisplayNode* node)
+Display::didInvalidate()
 {
-	if (node->visible == false) {
-		return;
+	if (this->invalidateCallback) {
+		this->invalidateCallback(reinterpret_cast<DisplayRef>(this));
 	}
+}
 
-	node->resolveNode();
-
-	for (auto child : node->children) {
-		this->resolveNode(child);
+void
+Display::didResolve()
+{
+	if (this->resolveCallback) {
+		this->resolveCallback(reinterpret_cast<DisplayRef>(this));
 	}
 }
 

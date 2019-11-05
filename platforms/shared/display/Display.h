@@ -26,54 +26,59 @@ private:
 	bool viewportHeightChanged = false;
 
 	bool invalid = false;
-	bool changed = false;
 	bool resolving = false;
 
-   	DisplayLayoutCallback layoutBeganCallback = nullptr;
-    DisplayLayoutCallback layoutEndedCallback = nullptr;
+	DisplayInvalidateCallback invalidateCallback = nullptr;
+   	DisplayResolveCallback resolveCallback = nullptr;
 
-	void layoutBegan();
-	void layoutEnded();
-	void resolveNode(DisplayNode* node);
+	void didInvalidate();
+	void didResolve();
 
 public:
 
 	void *data = nullptr;
 
+	void setInvalidateCallback(DisplayInvalidateCallback callback) {
+		this->invalidateCallback = callback;
+	}
+
+	void setResolveCallback(DisplayResolveCallback callback) {
+		this->resolveCallback = callback;
+	}
+
 	void setWindow(DisplayNode* window);
+
 	void setScale(double scale);
 	void setViewportWidth(double viewportWidth);
 	void setViewportHeight(double viewportHeight);
-	void setLayoutBeganCallback(DisplayLayoutCallback layoutBeganCallback);
-	void setLayoutEndedCallback(DisplayLayoutCallback layoutEndedCallback);
 
 	void loadStylesheet(string stylesheet);
 
-	double getScale() {
+	double getScale() const {
 		return this->scale;
 	}
 
-	double getViewportWidth() {
+	double getViewportWidth() const {
 		return this->viewportWidth;
 	}
 
-	double getViewportHeight() {
+	double getViewportHeight() const {
 		return this->viewportHeight;
 	}
 
-	bool hasViewportWidthChanged() {
+	bool hasViewportWidthChanged() const {
 		return this->viewportWidthChanged;
 	}
 
-	bool hasViewportHeightChanged() {
+	bool hasViewportHeightChanged() const {
 		return this->viewportHeightChanged;
 	}
 
-	bool isInvalid() {
+	bool isInvalid() const {
 		return this->invalid;
 	}
 
-	bool isResolving() {
+	bool isResolving() const {
 		return this->resolving;
 	}
 

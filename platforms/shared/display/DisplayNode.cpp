@@ -2,39 +2,26 @@
 #include "Display.h"
 #include "DisplayNodeFrame.h"
 #include "LayoutResolver.h"
+#include "InvalidStructureException.h"
+#include "InvalidOperationException.h"
 
 #include <math.h>
 #include <iostream>
 #include <algorithm>
+#include <string>
+#include <sstream>
 
 namespace Dezel {
 
 using std::min;
 using std::max;
 using std::string;
+using std::stringstream;
 
 DisplayNode::DisplayNode()
 {
 	this->frame = new DisplayNodeFrame(this);
-}
-
-void
-DisplayNode::setId(string id)
-{
-	this->id = id;
-	// todo invalidate layout
-}
-
-void
-DisplayNode::setType(DisplayNodeType type)
-{
-	this->type = type;
-}
-
-void
-DisplayNode::setDisplay(Display* display)
-{
-	this->display = display;
+	this->style = new DisplayNodeStyle(this);
 }
 
 void
@@ -55,6 +42,10 @@ DisplayNode::appendChild(DisplayNode* child)
 void
 DisplayNode::insertChild(DisplayNode* child, int index)
 {
+	if (child->parent) {
+		throw new InvalidStructureException("Cannot insert a child from another tree.");
+	}
+
 	auto it = find(
 		this->children.begin(),
 		this->children.end(),
@@ -85,6 +76,10 @@ DisplayNode::insertChild(DisplayNode* child, int index)
 void
 DisplayNode::removeChild(DisplayNode* child)
 {
+	if (child->parent == nullptr) {
+		throw new InvalidStructureException("Cannot remove a child.");
+	}
+
 	auto it = find(
 		this->children.begin(),
 		this->children.end(),
@@ -95,9 +90,12 @@ DisplayNode::removeChild(DisplayNode* child)
 		return;
 	}
 
-	this->children.erase(it);
+	child->entity->removeElement(child);
 
-	child->parent = NULL;
+	child->parent = nullptr;
+	child->entity = nullptr;
+
+	this->children.erase(it);
 
 	this->frame->invalidateLayout();
 
@@ -110,6 +108,28 @@ DisplayNode::removeChild(DisplayNode* child)
 		this->frame->invalidateOrigin();
 		this->frame->invalidateParent();
 	}
+}
+
+void
+DisplayNode::appendElement(DisplayNode* node)
+{
+	this->elements.push_back(node);
+}
+
+void
+DisplayNode::removeElement(DisplayNode* node)
+{
+	auto it = find(
+		this->elements.begin(),
+		this->elements.end(),
+		node
+	);
+
+	if (it == this->elements.end()) {
+		return;
+	}
+
+	this->elements.erase(it);
 }
 
 void
@@ -131,72 +151,6 @@ DisplayNode::invalidateLayout()
 }
 
 void
-DisplayNode::setMeasureSizeCallback(DisplayNodeMeasureCallback callback)
-{
-	this->measureSizeCallback = callback;
-}
-
-void
-DisplayNode::setResolveSizeCallback(DisplayNodeResolveCallback callback)
-{
-	this->resolveSizeCallback = callback;
-}
-
-void
-DisplayNode::setResolveOriginCallback(DisplayNodeResolveCallback callback)
-{
-	this->resolveOriginCallback = callback;
-}
-
-void
-DisplayNode::setResolveInnerSizeCallback(DisplayNodeResolveCallback callback)
-{
-	this->resolveInnerSizeCallback = callback;
-}
-
-void
-DisplayNode::setResolveContentSizeCallback(DisplayNodeResolveCallback callback)
-{
-	this->resolveContentSizeCallback = callback;
-}
-
-void
-DisplayNode::setResolveMarginCallback(DisplayNodeResolveCallback callback)
-{
-	this->resolveMarginCallback = callback;
-}
-
-void
-DisplayNode::setResolveBorderCallback(DisplayNodeResolveCallback callback)
-{
-	this->resolveBorderCallback = callback;
-}
-
-void
-DisplayNode::setResolvePaddingCallback(DisplayNodeResolveCallback callback)
-{
-	this->resolvePaddingCallback = callback;
-}
-
-void
-DisplayNode::setLayoutBeganCallback(DisplayNodeLayoutCallback callback)
-{
-	this->layoutBeganCallback = callback;
-}
-
-void
-DisplayNode::setLayoutEndedCallback(DisplayNodeLayoutCallback callback)
-{
-	this->layoutEndedCallback = callback;
-}
-
-void
-DisplayNode::setInvalidateCallback(DisplayNodeInvalidateCallback callback)
-{
-	this->invalidateCallback = callback;
-}
-
-void
 DisplayNode::resolve()
 {
 	if (this->display) {
@@ -205,13 +159,37 @@ DisplayNode::resolve()
 }
 
 void
-DisplayNode::resolveNode()
+DisplayNode::resolveEntity()
 {
-	if (this->invalid) {
-		this->resolveStyle();
-		this->resolveFrame();
-		this->invalid = false;
+	if (this->entity) {
+		return;
 	}
+
+	DisplayNode* entity = this;
+
+	if (this->type == kDisplayNodeTypeNode) {
+
+		while (true) {
+
+			entity = entity->parent;
+
+			if (entity) {
+
+				if (entity->type == kDisplayNodeTypeRoot ||
+					entity->type == kDisplayNodeTypeEntity) {
+					break;
+				}
+
+				continue;
+			}
+
+			throw new InvalidStructureException("Display tree is missing a root entity");
+		}
+	}
+
+	entity->appendElement(this);
+
+	this->entity = entity;
 }
 
 void
@@ -223,41 +201,13 @@ DisplayNode::resolveFrame()
 void
 DisplayNode::resolveStyle()
 {
-
+	this->style->resolve();
 }
 
 void
 DisplayNode::measure()
 {
-	// TODO
-}
-
-void
-DisplayNode::invalidateFrame()
-{
-	if (this->invalid) {
-		return;
-	}
-
-	this->invalid = true;
-
-	if (this->invalidateCallback) {
-		this->invalidateCallback(reinterpret_cast<DisplayNodeRef>(this));
-	}
-}
-
-void
-DisplayNode::invalidateStyle()
-{
-	if (this->invalid) {
-		return;
-	}
-
-	this->invalid = true;
-
-	if (this->invalidateCallback) {
-		this->invalidateCallback(reinterpret_cast<DisplayNodeRef>(this));
-	}
+	this->frame->measure();
 }
 
 void
@@ -325,19 +275,17 @@ DisplayNode::didResolvePadding()
 }
 
 void
-DisplayNode::layoutBegan()
+DisplayNode::didResolveLayout()
 {
-	if (this->layoutBeganCallback) {
-		this->layoutBeganCallback(reinterpret_cast<DisplayNodeRef>(this));
+	if (this->resolveLayoutCallback) {
+		this->resolveLayoutCallback(reinterpret_cast<DisplayNodeRef>(this));
 	}
 }
 
 void
-DisplayNode::layoutEnded()
+DisplayNode::didResolveStyle()
 {
-	if (this->layoutEndedCallback) {
-		this->layoutEndedCallback(reinterpret_cast<DisplayNodeRef>(this));
-	}
+	// TODO
 }
 
 } 

@@ -24,15 +24,45 @@ DisplayNodeSetDisplay(DisplayNodeRef node, DisplayRef display)
 }
 
 void
-DisplayNodeSetId(DisplayNodeRef node, const char* id)
-{
-	reinterpret_cast<DisplayNode*>(node)->setId(id);
-}
-
-void
 DisplayNodeSetType(DisplayNodeRef node, DisplayNodeType type)
 {
 	reinterpret_cast<DisplayNode*>(node)->setType(type);
+}
+
+void
+DisplayNodeSetName(DisplayNodeRef node, const char* id)
+{
+	reinterpret_cast<DisplayNode*>(node)->setName(id);
+}
+
+void
+DisplayNodeSetClass(DisplayNodeRef node, const char* klass)
+{
+	reinterpret_cast<DisplayNode*>(node)->setClass(klass);
+}
+
+void
+DisplayNodeAppendStyle(DisplayNodeRef node, const char* style)
+{
+	reinterpret_cast<DisplayNode*>(node)->appendStyle(std::string(style));
+}
+
+void
+DisplayNodeRemoveStyle(DisplayNodeRef node, const char* style)
+{
+	reinterpret_cast<DisplayNode*>(node)->removeStyle(std::string(style));
+}
+
+void
+DisplayNodeAppendState(DisplayNodeRef node, const char* state)
+{
+	reinterpret_cast<DisplayNode*>(node)->appendState(std::string(state));
+}
+
+void
+DisplayNodeRemoveState(DisplayNodeRef node, const char* state)
+{
+	reinterpret_cast<DisplayNode*>(node)->removeState(std::string(state));
 }
 
 void
@@ -168,9 +198,9 @@ DisplayNodeSetContentAlignment(DisplayNodeRef node, DisplayNodeContentAlignment 
 }
 
 void
-DisplayNodeSetContentLocation(DisplayNodeRef node, DisplayNodeContentLocation location)
+DisplayNodeSetContentDisposition(DisplayNodeRef node, DisplayNodeContentDisposition location)
 {
-	reinterpret_cast<DisplayNode*>(node)->setContentLocation(location);
+	reinterpret_cast<DisplayNode*>(node)->setContentDisposition(location);
 }
 
 void
@@ -636,21 +666,9 @@ DisplayNodeSetResolvePaddingCallback(DisplayNodeRef node, DisplayNodeResolveCall
 }
 
 void
-DisplayNodeSetLayoutBeganCallback(DisplayNodeRef node, DisplayNodeLayoutCallback callback)
+DisplayNodeSetResolveLayoutCallback(DisplayNodeRef node, DisplayNodeResolveCallback callback)
 {
-	reinterpret_cast<DisplayNode*>(node)->setLayoutBeganCallback(callback);
-}
-
-void
-DisplayNodeSetLayoutEndedCallback(DisplayNodeRef node, DisplayNodeLayoutCallback callback)
-{
-	reinterpret_cast<DisplayNode*>(node)->setLayoutEndedCallback(callback);
-}
-
-void
-DisplayNodeSetInvalidateCallback(DisplayNodeRef node, DisplayNodeInvalidateCallback callback)
-{
-	reinterpret_cast<DisplayNode*>(node)->setInvalidateCallback(callback);
+	reinterpret_cast<DisplayNode*>(node)->setResolveLayoutCallback(callback);
 }
 
 void

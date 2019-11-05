@@ -59,7 +59,7 @@ public:
 		this->nodes.push_back(node);
 	}
 
-	void measure(Dezel::DisplayNode* child, double &remainingW, double &remainingH, double &remainder);
+	void measure(DisplayNode* child, double &remainingW, double &remainingH, double &remainder);
 	void resolve();
 
 };

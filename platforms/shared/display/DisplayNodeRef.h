@@ -30,10 +30,10 @@ void DisplayNodeSetDisplay(DisplayNodeRef node, DisplayRef display);
 
 /**
  * Assigns the display node's identifier.
- * @function DisplayNodeSetId
+ * @function DisplayNodeSetName
  * @since 0.7.0
  */
-void DisplayNodeSetId(DisplayNodeRef node, const char* id);
+void DisplayNodeSetName(DisplayNodeRef node, const char* id);
 
 /**
  * Assigns the display node's type.
@@ -41,6 +41,41 @@ void DisplayNodeSetId(DisplayNodeRef node, const char* id);
  * @since 0.7.0
  */
 void DisplayNodeSetType(DisplayNodeRef node, DisplayNodeType type);
+
+/**
+ * Defines the display node's class.
+ * @function DisplayNodeSetClass
+ * @since 0.7.0
+ */
+void DisplayNodeSetClass(DisplayNodeRef node, const char* klass);
+
+/**
+ * Appends a display node's visual style.
+ * @function DisplayNodeAppendStyle
+ * @since 0.7.0
+ */
+void DisplayNodeAppendStyle(DisplayNodeRef node, const char* style);
+
+/**
+ * Removes a display node's visual style.
+ * @function DisplayNodeRemoveStyle
+ * @since 0.7.0
+ */
+void DisplayNodeRemoveStyle(DisplayNodeRef node, const char* style);
+
+/**
+ * Appends a display node's visual state.
+ * @function DisplayNodeAppendState
+ * @since 0.7.0
+ */
+void DisplayNodeAppendState(DisplayNodeRef node, const char* state);
+
+/**
+ * Removes a display node's visual state.
+ * @function DisplayNodeRemoveState
+ * @since 0.7.0
+*/
+void DisplayNodeRemoveState(DisplayNodeRef node, const char* state);
 
 /**
  * Assigns the display node's top anchor position.
@@ -191,10 +226,10 @@ void DisplayNodeSetContentDirection(DisplayNodeRef node, DisplayNodeContentDirec
 
 /**
  * Assigns the display node's content gravity specification.
- * @function DisplayNodeSetContentLocation
+ * @function DisplayNodeSetContentDisposition
  * @since 0.7.0
  */
-void DisplayNodeSetContentLocation(DisplayNodeRef node, DisplayNodeContentLocation placement);
+void DisplayNodeSetContentDisposition(DisplayNodeRef node, DisplayNodeContentDisposition placement);
 
 /**
  * Assigns the display node's content alignment specification.
@@ -743,25 +778,11 @@ void DisplayNodeSetResolveBorderCallback(DisplayNodeRef node, DisplayNodeResolve
 void DisplayNodeSetResolvePaddingCallback(DisplayNodeRef node, DisplayNodeResolveCallback callback);
 
 /**
- * Assigns the callback that is called once a node begins its layout.
- * @function DisplayNodeSetLayoutBeganCallback
- * @since 0.7.0
- */
-void DisplayNodeSetLayoutBeganCallback(DisplayNodeRef node, DisplayNodeLayoutCallback callback);
-
-/**
  * Assigns the callback that is called once a node completes its layout.
  * @function DisplayNodeSetLayoutEndedCallback
  * @since 0.7.0
  */
-void DisplayNodeSetLayoutEndedCallback(DisplayNodeRef node, DisplayNodeLayoutCallback callback);
-
-/**
- * Assigns the callback that is called when a node layout is invalidated.
- * @function DisplayNodeInvalidateCallback
- * @since 0.7.0
- */
-void DisplayNodeSetInvalidateCallback(DisplayNodeRef node, DisplayNodeInvalidateCallback callback);
+void DisplayNodeSetResolveLayoutCallback(DisplayNodeRef node, DisplayNodeResolveCallback callback);
 
 /**
  * Assigns the display node's user data.

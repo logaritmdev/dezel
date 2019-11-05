@@ -25,21 +25,23 @@ class DisplayNode {
 
 private:
 
-	DisplayNodeType type = kDisplayNodeTypeView;
+	DisplayNodeType type = kDisplayNodeTypeNode;
 
 	DisplayNodeFrame* frame;
 	DisplayNodeStyle* style;
 
 	Display* display = nullptr;
 	DisplayNode* parent = nullptr;
-    vector<DisplayNode*> children;
+	DisplayNode* entity = nullptr;
 
-	string id = "";
+    vector<DisplayNode*> children;
+    vector<DisplayNode*> elements;
+
+	string name = "";
 
 	bool visible = true;
 	bool invalid = false;
 
-	DisplayNodeInvalidateCallback invalidateCallback = nullptr;
 	DisplayNodeMeasureCallback measureSizeCallback = nullptr;
 	DisplayNodeResolveCallback resolveSizeCallback = nullptr;
 	DisplayNodeResolveCallback resolveOriginCallback = nullptr;
@@ -48,12 +50,12 @@ private:
 	DisplayNodeResolveCallback resolveMarginCallback = nullptr;
 	DisplayNodeResolveCallback resolveBorderCallback = nullptr;
 	DisplayNodeResolveCallback resolvePaddingCallback = nullptr;
-	DisplayNodeLayoutCallback layoutBeganCallback = nullptr;
-	DisplayNodeLayoutCallback layoutEndedCallback = nullptr;
+	DisplayNodeResolveCallback resolveLayoutCallback = nullptr;
 
-	void invalidateFrame();
-	void invalidateStyle();
-	void resolveNode();
+	void appendElement(DisplayNode* node);
+	void removeElement(DisplayNode* node);
+
+	void resolveEntity();
 	void resolveFrame();
 	void resolveStyle();
 
@@ -65,23 +67,55 @@ private:
 	void didResolveMargin();
 	void didResolveBorder();
 	void didResolvePadding();
+	void didResolveLayout();
+	void didResolveStyle();
 
 	void measure(DisplayNodeMeasuredSize* size, double w, double h, double minw, double maxw, double minh, double maxh);
-
-	void layoutBegan();
-	void layoutEnded();
 
 public:
 
 	friend class Display;
 	friend class DisplayNodeFrame;
+	friend class DisplayNodeStyle;
 	friend class Layout::LayoutResolver;
 	friend class Layout::RelativeLayoutResolver;
 	friend class Layout::AbsoluteLayoutResolver;
 
-	void *data = NULL;
+	void *data = nullptr;
 
 	DisplayNode();
+
+	void setDisplay(Display* display) {
+		this->display = display;
+	}
+
+	void setType(DisplayNodeType type) {
+		this->type = type;
+	}
+
+	void setName(string name) {
+		this->name = name;
+	}
+
+	void setClass(string klass) {
+		this->style->setClass(klass);
+	}
+
+	void appendStyle(string style) {
+		this->style->appendStyle(style);
+	}
+
+	void removeStyle(string style) {
+		this->style->removeStyle(style);
+	}
+
+	void appendState(string state) {
+		this->style->appendState(state);
+	}
+
+	void removeState(string state) {
+		this->style->removeState(state);
+	}
 
 	void setAnchorTop(DisplayNodeAnchorType type, DisplayNodeAnchorUnit unit, double length) {
 		this->frame->setAnchorTop(type, unit, length);
@@ -171,8 +205,8 @@ public:
 		this->frame->setContentAlignment(alignment);
 	}
 
-	void setContentLocation(DisplayNodeContentLocation location) {
-		this->frame->setContentLocation(location);
+	void setContentDisposition(DisplayNodeContentDisposition location) {
+		this->frame->setContentDisposition(location);
 	}
 
 	void setContentTop(DisplayNodeContentOriginType type, DisplayNodeContentOriginUnit unit, double length) {
@@ -311,6 +345,42 @@ public:
 		this->frame->setMaxPaddingBottom(max);
 	}
 
+	void setMeasureSizeCallback(DisplayNodeMeasureCallback callback) {
+		this->measureSizeCallback = callback;
+	}
+
+	void setResolveSizeCallback(DisplayNodeResolveCallback callback) {
+		this->resolveSizeCallback = callback;
+	}
+
+	void setResolveOriginCallback(DisplayNodeResolveCallback callback) {
+		this->resolveOriginCallback = callback;
+	}
+
+	void setResolveInnerSizeCallback(DisplayNodeResolveCallback callback) {
+		this->resolveInnerSizeCallback = callback;
+	}
+
+	void setResolveContentSizeCallback(DisplayNodeResolveCallback callback) {
+		this->resolveContentSizeCallback = callback;
+	}
+
+	void setResolveMarginCallback(DisplayNodeResolveCallback callback) {
+		this->resolveMarginCallback = callback;
+	}
+
+	void setResolveBorderCallback(DisplayNodeResolveCallback callback) {
+		this->resolveBorderCallback = callback;
+	}
+
+	void setResolvePaddingCallback(DisplayNodeResolveCallback callback) {
+		this->resolvePaddingCallback = callback;
+	}
+
+	void setResolveLayoutCallback(DisplayNodeResolveCallback callback) {
+		this->resolveLayoutCallback = callback;
+	}
+
 	bool fillsParentWidth() {
 		return this->frame->isFillingParentWidth();
 	}
@@ -327,121 +397,106 @@ public:
 		return this->frame->isWrappingContentHeight();
 	}
 
-	double getMeasuredTop() {
+	double getMeasuredTop() const {
 		return this->frame->measuredTop;
 	}
 
-	double getMeasuredLeft() {
+	double getMeasuredLeft() const {
 		return this->frame->measuredLeft;
 	}
 
-	double getMeasuredRight() {
+	double getMeasuredRight() const {
 		return this->frame->measuredRight;
 	}
 
-	double getMeasuredBottom() {
+	double getMeasuredBottom() const {
 		return this->frame->measuredBottom;
 	}
 
-	double getMeasuredWidth() {
+	double getMeasuredWidth() const {
 		return this->frame->measuredWidth;
 	}
 
-	double getMeasuredHeight() {
+	double getMeasuredHeight() const {
 		return this->frame->measuredHeight;
 	}
 
-	double getMeasuredInnerWidth() {
+	double getMeasuredInnerWidth() const {
 		return this->frame->measuredInnerWidth;
 	}
 
-	double getMeasuredInnerHeight() {
+	double getMeasuredInnerHeight() const {
 		return this->frame->measuredInnerHeight;
 	}
 
-	double getMeasuredContentWidth() {
+	double getMeasuredContentWidth() const {
 		return this->frame->measuredContentWidth;
 	}
 
-	double getMeasuredContentHeight() {
+	double getMeasuredContentHeight() const {
 		return this->frame->measuredContentHeight;
 	}
 
-	double getMeasuredMarginTop() {
+	double getMeasuredMarginTop() const {
 		return this->frame->measuredMarginTop;
 	}
 
-	double getMeasuredBorderTop() {
+	double getMeasuredBorderTop() const {
 		return this->frame->measuredBorderTop;
 	}
 
-	double getMeasuredBorderLeft() {
+	double getMeasuredBorderLeft() const {
 		return this->frame->measuredBorderLeft;
 	}
 
-	double getMeasuredBorderRight() {
+	double getMeasuredBorderRight() const {
 		return this->frame->measuredBorderRight;
 	}
 
-	double getMeasuredBorderBottom() {
+	double getMeasuredBorderBottom() const {
 		return this->frame->measuredBorderBottom;
 	}
 
-	double getMeasuredMarginLeft() {
+	double getMeasuredMarginLeft() const {
 		return this->frame->measuredMarginLeft;
 	}
 
-	double getMeasuredMarginRight() {
+	double getMeasuredMarginRight() const {
 		return this->frame->measuredMarginRight;
 	}
 
-	double getMeasuredMarginBottom() {
+	double getMeasuredMarginBottom() const {
 		return this->frame->measuredMarginBottom;
 	}
 
-	double getMeasuredPaddingTop() {
+	double getMeasuredPaddingTop() const {
 		return this->frame->measuredPaddingTop;
 	}
 
-	double getMeasuredPaddingLeft() {
+	double getMeasuredPaddingLeft() const {
 		return this->frame->measuredPaddingLeft;
 	}
 
-	double getMeasuredPaddingRight() {
+	double getMeasuredPaddingRight() const {
 		return this->frame->measuredPaddingRight;
 	}
 
-	double getMeasuredPaddingBottom() {
+	double getMeasuredPaddingBottom() const {
 		return this->frame->measuredPaddingBottom;
 	}
-
-	void setId(string id);
-	void setType(DisplayNodeType type);
-	void setDisplay(Display* display);
-	void setVisible(bool visible);
 
 	void appendChild(DisplayNode* child);
 	void insertChild(DisplayNode* child, int index);
 	void removeChild(DisplayNode* child);
 
+	void setVisible(bool visible);
+
 	void invalidateSize();
 	void invalidateOrigin();
 	void invalidateLayout();
 
-	void resolve();
 	void measure();
-
-	void setInvalidateCallback(DisplayNodeInvalidateCallback callback);
-	void setMeasureSizeCallback(DisplayNodeMeasureCallback callback);
-	void setResolveSizeCallback(DisplayNodeResolveCallback callback);
-	void setResolveOriginCallback(DisplayNodeResolveCallback callback);
-	void setResolveInnerSizeCallback(DisplayNodeResolveCallback callback);
-	void setResolveContentSizeCallback(DisplayNodeResolveCallback callback);
-	void setResolveMarginCallback(DisplayNodeResolveCallback callback);
-	void setResolveBorderCallback(DisplayNodeResolveCallback callback);
-	void setResolvePaddingCallback(DisplayNodeResolveCallback callback);
-	void setLayoutBeganCallback(DisplayNodeLayoutCallback callback);
-	void setLayoutEndedCallback(DisplayNodeLayoutCallback callback);
+	void resolve();
 
 };
 

@@ -81,7 +81,7 @@ open class JavaScriptViewOptimizer : JavaScriptClass, JavaScriptView.Delegate {
 	 */
 	open func cacheItem(_ item: JavaScriptView) {
 
-		let type = item.className
+		let type = item.className.string
 
 		if (self.cache[type] == nil) {
 			self.cache[type] = []

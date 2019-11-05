@@ -17,13 +17,14 @@
 namespace Dezel {
 
 class DisplayNode;
+
 class DisplayNodeFrame {
 
 private:
 
-	Layout::LayoutResolver layout;
-
 	DisplayNode* node = nullptr;
+
+	bool visible = true;
 
 	DisplayNodeAnchor anchorTop;
 	DisplayNodeAnchor anchorLeft;
@@ -38,7 +39,7 @@ private:
 
 	DisplayNodeContentDirection contentDirection = kDisplayNodeContentDirectionVertical;
 	DisplayNodeContentAlignment contentAlignment = kDisplayNodeContentAlignmentStart;
-	DisplayNodeContentLocation contentLocation = kDisplayNodeContentLocationStart;
+	DisplayNodeContentDisposition contentDisposition = kDisplayNodeContentDispositionStart;
 
 	DisplayNodeContentOrigin contentTop;
 	DisplayNodeContentOrigin contentLeft;
@@ -63,7 +64,35 @@ private:
     double expandFactor = 0;
 	double shrinkFactor = 0;
 
-	bool visible = true;
+	bool invalid = false;
+   	bool invalidSize = false;
+	bool invalidOrigin = false;
+	bool invalidMargin = false;
+	bool invalidBorder = false;
+	bool invalidPadding = false;
+	bool invalidInnerSize = false;
+	bool invalidContentSize = false;
+	bool invalidContentOrigin = false;
+	bool invalidLayout = false;
+
+	Layout::LayoutResolver layoutResolver;
+
+	bool resolving = false;
+
+	bool resolvedSize = false;
+	bool resolvedOrigin = false;
+
+	DisplayNode* resolvedParent = nullptr;
+
+	bool wrapsContentWidth = false;
+	bool wrapsContentHeight = false;
+
+	bool measuredWidthChanged = false;
+	bool measuredHeightChanged = false;
+	bool measuredInnerWidthChanged = false;
+	bool measuredInnerHeightChanged = false;
+	bool measuredContentWidthChanged = false;
+	bool measuredContentHeightChanged = false;
 
     double measuredTop = 0;
 	double measuredLeft = 0;
@@ -93,32 +122,6 @@ private:
 
 	double lastMeasuredWidth = 0;
 	double lastMeasuredHeight = 0;
-
-	bool resolving = false;
-
-	bool resolvedSize = false;
-	bool resolvedOrigin = false;
-	DisplayNode* resolvedParent = nullptr;
-
-	bool wrapsContentWidth = false;
-	bool wrapsContentHeight = false;
-
-   	bool invalidSize = false;
-	bool invalidOrigin = false;
-	bool invalidMargin = false;
-	bool invalidBorder = false;
-	bool invalidPadding = false;
-	bool invalidInnerSize = false;
-	bool invalidContentSize = false;
-	bool invalidContentOrigin = false;
-	bool invalidLayout = false;
-
-	bool measuredWidthChanged = false;
-	bool measuredHeightChanged = false;
-	bool measuredInnerWidthChanged = false;
-	bool measuredInnerHeightChanged = false;
-	bool measuredContentWidthChanged = false;
-	bool measuredContentHeightChanged = false;
 
 	void invalidate();
 
@@ -186,8 +189,6 @@ public:
 
 	DisplayNodeFrame(DisplayNode* node);
 
-	~DisplayNodeFrame();
-
 	void setAnchorTop(DisplayNodeAnchorType type, DisplayNodeAnchorUnit unit, double length);
 	void setAnchorLeft(DisplayNodeAnchorType type, DisplayNodeAnchorUnit unit, double length);
 
@@ -215,7 +216,7 @@ public:
 
 	void setContentDirection(DisplayNodeContentDirection direction);
 	void setContentAlignment(DisplayNodeContentAlignment alignment);
-	void setContentLocation(DisplayNodeContentLocation placement);
+	void setContentDisposition(DisplayNodeContentDisposition placement);
 
 	void setContentTop(DisplayNodeContentOriginType type, DisplayNodeContentOriginUnit unit, double length);
 	void setContentLeft(DisplayNodeContentOriginType type, DisplayNodeContentOriginUnit unit, double length);
@@ -260,6 +261,7 @@ public:
 
 	void setVisible(bool visible);
 
+	void measure();
 	void resolve();
 
 	bool isRelative();

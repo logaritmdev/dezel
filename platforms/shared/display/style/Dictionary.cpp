@@ -1,11 +1,11 @@
 
-#include "PropertyList.h"
+#include "Dictionary.h"
 
 namespace Dezel {
 namespace Style {
 
 void
-PropertyList::set(string name, Property* property)
+Dictionary::set(string name, Property* property)
 {
 	if (this->vals.count(name) > 0) {
 		this->vals[name] = property;

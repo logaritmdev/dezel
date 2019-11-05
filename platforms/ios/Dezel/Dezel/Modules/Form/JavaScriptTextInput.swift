@@ -86,8 +86,8 @@ open class JavaScriptTextInput: JavaScriptView, TextInputDelegate {
 		switch (self.fontSize.unit) {
 
 			case .px: value = CGFloat(self.fontSize.number)
-			case .vw: value = CGFloat(self.fontSize.number / 100 * self.displayNode.display.viewportWidth)
-			case .vh: value = CGFloat(self.fontSize.number / 100 * self.displayNode.display.viewportHeight)
+			case .vw: value = CGFloat(self.fontSize.number / 100 * self.node.display.viewportWidth)
+			case .vh: value = CGFloat(self.fontSize.number / 100 * self.node.display.viewportHeight)
 
 			default:
 				value = CGFloat(self.fontSize.number)

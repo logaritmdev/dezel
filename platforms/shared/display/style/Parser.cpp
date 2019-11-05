@@ -23,21 +23,6 @@ namespace Style {
 
 using std::string;
 
-static bool equals(const string& str1, const string& str2) {
-
-	if (str1.size() != str2.size()) {
-        return false;
-    }
-
-    for (auto c1 = str1.begin(), c2 = str2.begin(); c1 != str1.end(); ++c1, ++c2) {
-        if (tolower(*c1) != tolower(*c2)) {
-            return false;
-        }
-    }
-
-    return true;
-}
-
 Parser::Parser(Stylesheet* stylesheet, Tokenizer* tokenizer) : stylesheet(stylesheet), tokenizer(tokenizer)
 {
 	auto tokens = this->tokenizer->getTokens();
@@ -284,12 +269,10 @@ void
 Parser::parseDescriptorBlock(TokenList& tokens, Descriptor* descriptor)
 {
 	while (true) {
-
 		if (this->parseProperty(tokens, descriptor)) continue;
 		if (this->parseStyleDescriptor(tokens, descriptor)) continue;
 		if (this->parseStateDescriptor(tokens, descriptor)) continue;
 		if (this->parseChildDescriptor(tokens, descriptor)) continue;
-
 		break;
 	}
 }
@@ -394,6 +377,19 @@ Parser::parseSelector(TokenList& tokens)
 				fragment->prev->next = fragment;
 				selector->tail = fragment;
 			}
+
+			selector->offset = tokens.getCurrToken().getOffset();
+
+			if (fragment->type.size())
+				selector->weight += 1;
+			if (fragment->name.size())
+				selector->weight += 10;
+			if (fragment->style.size())
+				selector->weight += 100;
+			if (fragment->state.size())
+				selector->weight += 100;
+
+			selector->length++;
 
 			continue;
 		}
@@ -528,15 +524,15 @@ Parser::parseProperty(TokenList& tokens)
 Value*
 Parser::parseIdentValue(TokenList& tokens)
 {
-	if (equals(tokens.getCurrTokenName(), "null")) {
+	if (tokens.getCurrToken().hasName("null")) {
 		return new NullValue();
 	}
 
-	if (equals(tokens.getCurrTokenName(), "true")) {
+	if (tokens.getCurrToken().hasName("true")) {
 		return new BooleanValue(true);
 	}
 
-	if (equals(tokens.getCurrTokenName(), "false")) {
+	if (tokens.getCurrToken().hasName("false")) {
 		return new BooleanValue(false);
 	}
 
@@ -560,39 +556,39 @@ Parser::parseNumberValue(TokenList& tokens)
 		return new NumberValue(tokens.getCurrTokenName(), kValueUnitPC);
 	}
 
-	if (equals(tokens.getCurrTokenUnit(), "px")) {
+	if (tokens.getCurrToken().hasUnit("px")) {
 		return new NumberValue(tokens.getCurrTokenName(), kValueUnitPX);
 	}
 
-	if (equals(tokens.getCurrTokenUnit(), "vw")) {
+	if (tokens.getCurrToken().hasUnit("vw")) {
 		return new NumberValue(tokens.getCurrTokenName(), kValueUnitVW);
 	}
 
-	if (equals(tokens.getCurrTokenUnit(), "vh")) {
+	if (tokens.getCurrToken().hasUnit("vh")) {
 		return new NumberValue(tokens.getCurrTokenName(), kValueUnitVH);
 	}
 
-	if (equals(tokens.getCurrTokenUnit(), "pw")) {
+	if (tokens.getCurrToken().hasUnit("pw")) {
 		return new NumberValue(tokens.getCurrTokenName(), kValueUnitPW);
 	}
 
-	if (equals(tokens.getCurrTokenUnit(), "ph")) {
+	if (tokens.getCurrToken().hasUnit("ph")) {
 		return new NumberValue(tokens.getCurrTokenName(), kValueUnitPH);
 	}
 
-	if (equals(tokens.getCurrTokenUnit(), "cw")) {
+	if (tokens.getCurrToken().hasUnit("cw")) {
 		return new NumberValue(tokens.getCurrTokenName(), kValueUnitCW);
 	}
 
-	if (equals(tokens.getCurrTokenUnit(), "ch")) {
+	if (tokens.getCurrToken().hasUnit("ch")) {
 		return new NumberValue(tokens.getCurrTokenName(), kValueUnitCH);
 	}
 
-	if (equals(tokens.getCurrTokenUnit(), "deg")) {
+	if (tokens.getCurrToken().hasUnit("deg")) {
 		return new NumberValue(tokens.getCurrTokenName(), kValueUnitDeg);
 	}
 
-	if (equals(tokens.getCurrTokenUnit(), "rad")) {
+	if (tokens.getCurrToken().hasUnit("rad")) {
 		return new NumberValue(tokens.getCurrTokenName(), kValueUnitRad);
 	}
 
@@ -623,8 +619,8 @@ Parser::parseFunctionValue(TokenList& tokens)
 		return nullptr;
 	}
 
-	auto function = new FunctionValue(tokens.getCurrTokenName());
 	auto argument = new Argument();
+	auto function = new FunctionValue(tokens.getCurrTokenName());
 
 	tokens.nextToken();
 

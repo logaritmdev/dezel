@@ -105,8 +105,8 @@ open class JavaScriptImageView: JavaScriptView {
 			switch (self.imageWidth.unit) {
 
 				case .pc: imageW = self.imageWidth.number / 100 * self.resolvedInnerWidth
-				case .vw: imageW = self.imageWidth.number / 100 * self.displayNode.display.viewportWidth
-				case .vh: imageW = self.imageWidth.number / 100 * self.displayNode.display.viewportHeight
+				case .vw: imageW = self.imageWidth.number / 100 * self.node.display.viewportWidth
+				case .vh: imageW = self.imageWidth.number / 100 * self.node.display.viewportHeight
 				case .pw: imageW = self.imageWidth.number / 100 * self.resolvedInnerWidth
 				case .ph: imageW = self.imageWidth.number / 100 * self.resolvedInnerHeight
 				case .cw: imageW = self.imageWidth.number / 100 * self.resolvedContentWidth
@@ -128,8 +128,8 @@ open class JavaScriptImageView: JavaScriptView {
 			switch (self.imageHeight.unit) {
 
 				case .pc: imageH = self.imageHeight.number / 100 * self.resolvedInnerHeight
-				case .vw: imageH = self.imageHeight.number / 100 * self.displayNode.display.viewportWidth
-				case .vh: imageH = self.imageHeight.number / 100 * self.displayNode.display.viewportHeight
+				case .vw: imageH = self.imageHeight.number / 100 * self.node.display.viewportWidth
+				case .vh: imageH = self.imageHeight.number / 100 * self.node.display.viewportHeight
 				case .pw: imageH = self.imageHeight.number / 100 * self.resolvedInnerWidth
 				case .ph: imageH = self.imageHeight.number / 100 * self.resolvedInnerHeight
 				case .cw: imageH = self.imageHeight.number / 100 * self.resolvedContentWidth
@@ -144,8 +144,8 @@ open class JavaScriptImageView: JavaScriptView {
 		switch (self.imageTop.unit) {
 
 			case .pc: imageT = self.imageTop.number / 100 * self.resolvedInnerHeight
-			case .vw: imageT = self.imageTop.number / 100 * self.displayNode.display.viewportWidth
-			case .vh: imageT = self.imageTop.number / 100 * self.displayNode.display.viewportHeight
+			case .vw: imageT = self.imageTop.number / 100 * self.node.display.viewportWidth
+			case .vh: imageT = self.imageTop.number / 100 * self.node.display.viewportHeight
 			case .pw: imageT = self.imageTop.number / 100 * self.resolvedInnerWidth
 			case .ph: imageT = self.imageTop.number / 100 * self.resolvedInnerHeight
 			case .cw: imageT = self.imageTop.number / 100 * self.resolvedContentWidth
@@ -159,8 +159,8 @@ open class JavaScriptImageView: JavaScriptView {
 		switch (self.imageLeft.unit) {
 
 			case .pc: imageL = self.imageLeft.number / 100 * self.resolvedInnerWidth
-			case .vw: imageL = self.imageLeft.number / 100 * self.displayNode.display.viewportWidth
-			case .vh: imageL = self.imageLeft.number / 100 * self.displayNode.display.viewportHeight
+			case .vw: imageL = self.imageLeft.number / 100 * self.node.display.viewportWidth
+			case .vh: imageL = self.imageLeft.number / 100 * self.node.display.viewportHeight
 			case .pw: imageL = self.imageLeft.number / 100 * self.resolvedInnerWidth
 			case .ph: imageL = self.imageLeft.number / 100 * self.resolvedInnerHeight
 			case .cw: imageL = self.imageLeft.number / 100 * self.resolvedContentWidth
@@ -357,9 +357,9 @@ open class JavaScriptImageView: JavaScriptView {
 
 			self.imageData = image
 
-			if (self.displayNode.isWrappingContentWidth ||
-				self.displayNode.isWrappingContentHeight) {
-				self.displayNode.invalidateSize()
+			if (self.node.isWrappingContentWidth ||
+				self.node.isWrappingContentHeight) {
+				self.node.invalidateSize()
 			}
 		}
 	}

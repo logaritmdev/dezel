@@ -432,7 +432,7 @@ open class JavaScriptListOptimizer : JavaScriptViewOptimizer {
 
 		item.protect()
 
-		self.types[index] = item.className
+		self.types[index] = item.className.string
 
 		return item
 	}

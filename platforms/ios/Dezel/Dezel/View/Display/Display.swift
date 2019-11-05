@@ -102,8 +102,8 @@ public class Display {
 	 */
 	internal init() {
 		self.handle = DisplayCreate()
-		DisplaySetLayoutBeganCallback(self.handle, layoutBeganCallback)
-		DisplaySetLayoutEndedCallback(self.handle, layoutEndedCallback)
+		DisplaySetInvalidateCallback(self.handle, displayInvalidateCallback)
+		DisplaySetResolveCallback(self.handle, displayResolveCallback)
 		DisplaySetData(self.handle, UnsafeMutableRawPointer(value: self))
 	}
 
@@ -185,16 +185,15 @@ public class Display {
 	}
 }
 
-
 /**
- * @const layoutBeganCallback
+ * @const displayInvalidateCallback
  * @since 0.7.0
  * @hidden
  */
-private let layoutBeganCallback: @convention(c) (DisplayRef?) -> Void = { ptr in
-	if let display = DisplayGetData(ptr).value as? Display {
-		display.layoutBegan()
-	}
+private let displayInvalidateCallback: @convention(c) (DisplayRef?) -> Void = { ptr in
+//	if let display = DisplayGetData(ptr).value as? Display {
+//		display.layoutBegan()
+//	}
 }
 
 /**
@@ -202,8 +201,8 @@ private let layoutBeganCallback: @convention(c) (DisplayRef?) -> Void = { ptr in
  * @since 0.7.0
  * @hidden
  */
-private let layoutEndedCallback: @convention(c) (DisplayRef?) -> Void = { ptr in
-	if let display = DisplayGetData(ptr).value as? Display {
-		display.layoutEnded()
-	}
+private let displayResolveCallback: @convention(c) (DisplayRef?) -> Void = { ptr in
+//	if let display = DisplayGetData(ptr).value as? Display {
+//		display.layoutEnded()
+//	}
 }

@@ -33,9 +33,9 @@ typedef struct OpaqueDisplayNodeProperty* DisplayNodePropertyRef;
  * @since 0.7.0
  */
 typedef enum {
-	kDisplayNodeTypeView = 1,
-	kDisplayNodeTypeComponent = 2,
-	kDisplayNodeTypeWindow = 3,
+	kDisplayNodeTypeNode = 1,
+	kDisplayNodeTypeEntity = 2,
+	kDisplayNodeTypeRoot = 3,
 } DisplayNodeType;
 
 /**
@@ -173,13 +173,13 @@ typedef enum {
  * @since 0.7.0
  */
 typedef enum {
-	kDisplayNodeContentLocationStart = 1,
-	kDisplayNodeContentLocationCenter = 2,
-	kDisplayNodeContentLocationEnd = 3,
-	kDisplayNodeContentLocationSpaceAround = 4,
-	kDisplayNodeContentLocationSpaceBetween = 5,
-	kDisplayNodeContentLocationSpaceEvenly = 6
-} DisplayNodeContentLocation;
+	kDisplayNodeContentDispositionStart = 1,
+	kDisplayNodeContentDispositionCenter = 2,
+	kDisplayNodeContentDispositionEnd = 3,
+	kDisplayNodeContentDispositionSpaceAround = 4,
+	kDisplayNodeContentDispositionSpaceBetween = 5,
+	kDisplayNodeContentDispositionSpaceEvenly = 6
+} DisplayNodeContentDisposition;
 
 /**
  * The node content alignment values.
@@ -309,25 +309,18 @@ typedef struct DisplayNodeMeasuredSize {
 } DisplayNodeMeasuredSize;
 
 /**
- * The callback when the global layout is computed.
- * @typedef DisplayLayoutCallback
- * @since 0.7.0
- */
-typedef void (*DisplayLayoutCallback)(DisplayRef layout);
+* The callback when the display is invalidated.
+* @typedef DisplayResolveCallback
+* @since 0.7.0
+*/
+typedef void (*DisplayInvalidateCallback)(DisplayRef display);
 
 /**
- * The node callback called when the node layout is invalidated.
- * @typedef DisplayNodeInvalidateCallback
+ * The callback when the display is resolved.
+ * @typedef DisplayResolveCallback
  * @since 0.7.0
  */
-typedef void (*DisplayNodeInvalidateCallback)(DisplayNodeRef node);
-
-/**
- * The node callback before the layout is computed.
- * @typedef DisplayNodeLayoutCallback
- * @since 0.7.0
- */
-typedef void (*DisplayNodeLayoutCallback)(DisplayNodeRef node);
+typedef void (*DisplayResolveCallback)(DisplayRef display);
 
 /**
  * The node callback called when the node needs to be measured.
@@ -342,20 +335,6 @@ typedef void (*DisplayNodeMeasureCallback)(DisplayNodeRef node, DisplayNodeMeasu
  * @since 0.7.0
  */
 typedef void (*DisplayNodeResolveCallback)(DisplayNodeRef node);
-
-/**
- * The node callback called when the node layout is invalidated.
- * @typedef DisplayNodeInvalidateCallback
- * @since 0.7.0
- */
-typedef void (*DisplayNodeInvalidateCallback)(DisplayNodeRef node);
-
-/**
- * The node callback before the layout is computed.
- * @typedef DisplayNodeLayoutCallback
- * @since 0.7.0
- */
-typedef void (*DisplayNodeLayoutCallback)(DisplayNodeRef node);
 
 /**
  * The node callback called when the node needs to be measured.

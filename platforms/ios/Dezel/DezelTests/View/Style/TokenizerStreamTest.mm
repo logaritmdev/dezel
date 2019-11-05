@@ -31,7 +31,7 @@ static bool isNothing(char c) {
 @implementation TokenizerStreamTest
 
 - (void)setUp {
-	input = "ABC def { } 123";;
+	input = "ABC def { } 123";
 }
 
 - (void)tearDown {
@@ -72,7 +72,7 @@ static bool isNothing(char c) {
 
 - (void)testBackAlpha {
 	TokenizerStream stream(input);
-	stream.next(static_cast<size_t>(15));
+	stream.next(static_cast<size_t>(14));
 	XCTAssertEqual(stream.read(), '3');
 	XCTAssertEqual(stream.prev<isAlpha>(), true);
 	XCTAssertEqual(stream.read(), 'f');

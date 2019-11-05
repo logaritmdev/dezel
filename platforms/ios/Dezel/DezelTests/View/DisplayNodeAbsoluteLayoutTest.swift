@@ -17,11 +17,12 @@ class DisplayNodeAbsoluteLayoutTest: XCTestCase {
 		self.display.viewportHeight = 480
 
 		self.window = DisplayNode(display: self.display)
+		self.window.setType(kDisplayNodeTypeRoot)
 		self.window.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 320)
 		self.window.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 480)
 		self.window.setContentWidth(type: kDisplayNodeContentSizeTypeLength, unit: kDisplayNodeContentSizeUnitPX, length: 320)
 		self.window.setContentHeight(type: kDisplayNodeContentSizeTypeLength, unit: kDisplayNodeContentSizeUnitPX, length: 480)
-		self.window.id = "Window"
+		self.window.setName("Window")
 
 		self.display.window = self.window
 	}
@@ -1192,15 +1193,15 @@ func testNodeBorderInCW() {
 		container.setTop(type: kDisplayNodeOriginTypeLength, unit: kDisplayNodeOriginUnitPX, length: 0)
 		container.setWidth(type: kDisplayNodeSizeTypeWrap, unit: kDisplayNodeSizeUnitNone, length: 0)
 		container.setHeight(type: kDisplayNodeSizeTypeWrap, unit: kDisplayNodeSizeUnitNone, length: 0)
-
+container.setName("CONTAINER")
 		let node1 = DisplayNode(display: self.display)
 		node1.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
 		node1.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
-
+node1.setName("NODE1")
 		let node2 = DisplayNode(display: self.display)
 		node2.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
 		node2.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
-
+node1.setName("NODE2")
 		container.appendChild(node1)
 		container.appendChild(node2)
 
@@ -2064,6 +2065,25 @@ func testNodeBorderInCW() {
 		XCTAssertEqual(node2.measuredLeft, 0)
 		XCTAssertEqual(node2.measuredWidth, 200)
 		XCTAssertEqual(node2.measuredHeight, 200)
+	}
+
+	func testNodeMeasure() {
+
+		let node = DisplayNode(display: self.display)
+		node.setTop(type: kDisplayNodeOriginTypeLength, unit: kDisplayNodeOriginUnitPX, length: 0)
+		node.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 100)
+		node.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
+
+		self.window.appendChild(node)
+		self.window.resolve()
+
+		node.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 150)
+		node.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 250)
+
+		node.measure()
+
+		XCTAssertEqual(node.measuredWidth, 150)
+		XCTAssertEqual(node.measuredHeight, 250)
 	}
 }
 

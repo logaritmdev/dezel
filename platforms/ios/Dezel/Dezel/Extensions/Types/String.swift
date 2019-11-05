@@ -133,20 +133,6 @@ internal extension String {
 	}
 
 	/**
-	 * @method until
-	 * @since 0.2.0
-	 * @hidden
-	 */
-	func until(_ char: Character) -> String {
-
-		if let index = self.firstIndex(of: char) {
-			return String(self[..<index])
-		}
-
-		return self
-	}
-
-	/**
 	 * @method match
 	 * @since 0.1.0
 	 * @hidden

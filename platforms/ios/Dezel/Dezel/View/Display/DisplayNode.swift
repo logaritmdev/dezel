@@ -26,17 +26,6 @@ open class DisplayNode {
 	private(set) public var display: Display
 
 	/**
-	 * The display node's id.
-	 * @property id
-	 * @since 0.7.0
-	 */
-	public var id: String = "" {
-		didSet {
-			DisplayNodeSetId(self.handle, self.id)
-		}
-	}
-
-	/**
 	 * The display node's measured top.
 	 * @property measuredTop
 	 * @since 0.7.0
@@ -293,17 +282,15 @@ open class DisplayNode {
 
 		DisplayNodeSetDisplay(self.handle, display.handle)
 
-		DisplayNodeSetInvalidateCallback(self.handle, invalidateCallback)
-		DisplayNodeSetMeasureSizeCallback(self.handle, measureSizeCallback)
-		DisplayNodeSetResolveSizeCallback(self.handle, resolveSizeCallback)
-		DisplayNodeSetResolveOriginCallback(self.handle, resolveOriginCallback)
-		DisplayNodeSetResolveInnerSizeCallback(self.handle, resolveInnerSizeCallback)
-		DisplayNodeSetResolveContentSizeCallback(self.handle, resolveContentSizeCallback)
-		DisplayNodeSetResolveMarginCallback(self.handle, resolveMarginCallback)
-		DisplayNodeSetResolveBorderCallback(self.handle, resolveBorderCallback)
-		DisplayNodeSetResolvePaddingCallback(self.handle, resolvePaddingCallback)
-		DisplayNodeSetLayoutBeganCallback(self.handle, layoutBeganCallback)
-		DisplayNodeSetLayoutEndedCallback(self.handle, layoutEndedCallback)
+		DisplayNodeSetMeasureSizeCallback(self.handle, displayNodeMeasureSizeCallback)
+		DisplayNodeSetResolveSizeCallback(self.handle, displayNodeResolveSizeCallback)
+		DisplayNodeSetResolveOriginCallback(self.handle, displayNodeResolveOriginCallback)
+		DisplayNodeSetResolveInnerSizeCallback(self.handle, displayNodeResolveInnerSizeCallback)
+		DisplayNodeSetResolveContentSizeCallback(self.handle, displayNodeResolveContentSizeCallback)
+		DisplayNodeSetResolveMarginCallback(self.handle, displayNodeResolveMarginCallback)
+		DisplayNodeSetResolveBorderCallback(self.handle, displayNodeResolveBorderCallback)
+		DisplayNodeSetResolvePaddingCallback(self.handle, displayNodeResolvePaddingCallback)
+		DisplayNodeSetResolveLayoutCallback(self.handle, displayNodeResolveLayoutCallback)
 
 		DisplayNodeSetData(self.handle, UnsafeMutableRawPointer(unretained: self))
 	}
@@ -314,6 +301,69 @@ open class DisplayNode {
 	 */
 	deinit {
 		DisplayNodeDelete(self.handle)
+	}
+
+	/**
+	 * Assigns the node's type.
+	 * @method setType
+	 * @since 0.7.0
+	 */
+	public func setType(_ type: DisplayNodeType) {
+		DisplayNodeSetType(self.handle, type)
+	}
+
+	/**
+	 * Assigns the node's name.
+	 * @method setName
+	 * @since 0.7.0
+	 */
+	public func setName(_ name: String) {
+		DisplayNodeSetName(self.handle, name)
+	}
+
+	/**
+	 * Assigns the node's class.
+	 * @method setClass
+	 * @since 0.7.0
+	 */
+	public func setClass(_ klass: String) {
+		DisplayNodeSetClass(self.handle, klass)
+	}
+
+	/**
+	 * Appends a display node's visual style.
+	 * @method appendStyle
+	 * @since 0.7.0
+	 */
+	public func appendStyle(_ style: String) {
+		DisplayNodeAppendStyle(self.handle, style)
+	}
+
+	/**
+	 * Removes a display node's visual style.
+	 * @method removeStyle
+	 * @since 0.7.0
+	 */
+	public func removeStyle(_ style: String) {
+		DisplayNodeRemoveStyle(self.handle, style)
+	}
+
+	/**
+	 * Appends a display node's visual state.
+	 * @method appendState
+	 * @since 0.7.0
+	 */
+	public func appendState(_ state: String) {
+		DisplayNodeAppendState(self.handle, state)
+	}
+
+	/**
+	 * Removes a display node's visual state.
+	 * @method removeState
+	 * @since 0.7.0
+	 */
+	public func removeState(_ state: String) {
+		DisplayNodeRemoveState(self.handle, state)
 	}
 
 	/**
@@ -847,20 +897,20 @@ open class DisplayNode {
 
 	/**
 	 * Assigns the display node's content location specification.
-	 * @method setContentLocation
+	 * @method setContentDisposition
 	 * @since 0.7.0
 	 */
-	public func setContentLocation(_ value: JavaScriptProperty) {
+	public func setContentDisposition(_ value: JavaScriptProperty) {
 
 		if (value.type == .string) {
 
 			switch (value.string) {
-				case "center":        self.setContentLocation(kDisplayNodeContentLocationCenter)
-				case "start":         self.setContentLocation(kDisplayNodeContentLocationStart)
-				case "end":           self.setContentLocation(kDisplayNodeContentLocationEnd)
-				case "space-around":  self.setContentLocation(kDisplayNodeContentLocationSpaceAround)
-				case "space-evenly":  self.setContentLocation(kDisplayNodeContentLocationSpaceEvenly)
-				case "space-between": self.setContentLocation(kDisplayNodeContentLocationSpaceBetween)
+				case "center":        self.setContentDisposition(kDisplayNodeContentDispositionCenter)
+				case "start":         self.setContentDisposition(kDisplayNodeContentDispositionStart)
+				case "end":           self.setContentDisposition(kDisplayNodeContentDispositionEnd)
+				case "space-around":  self.setContentDisposition(kDisplayNodeContentDispositionSpaceAround)
+				case "space-evenly":  self.setContentDisposition(kDisplayNodeContentDispositionSpaceEvenly)
+				case "space-between": self.setContentDisposition(kDisplayNodeContentDispositionSpaceBetween)
 				default: break
 			}
 
@@ -872,11 +922,11 @@ open class DisplayNode {
 
 	/**
 	 * Assigns the display node's content location specification.
-	 * @method setContentLocation
+	 * @method setContentDisposition
 	 * @since 0.7.0
 	 */
-	public func setContentLocation(_ contentLocation: DisplayNodeContentLocation) {
-		DisplayNodeSetContentLocation(self.handle, contentLocation)
+	public func setContentDisposition(_ contentDisposition: DisplayNodeContentDisposition) {
+		DisplayNodeSetContentDisposition(self.handle, contentDisposition)
 	}
 
 	/**
@@ -1672,54 +1722,49 @@ open class DisplayNode {
 		DisplayNodeSetVisible(self.handle, visible);
 	}
 
-	public func setType(_ type: String) {
-
-	}
-
-	public func appendStyle(_ style: String) {
-
-	}
-
-	public func removeStyle(_ style: String) {
-
-	}
-
-	public func appendState(_ state: String) {
-
-	}
-
-	public func removeState(_ state: String) {
-
-	}
-
-	public func invalidateSize() {
-// TODO
-	}
-
-	public func invalidateOrigin() {
-// TODO
-	}
-
-	public func invalidateLayout() {
-		// TODO
-	}
-
 	/**
-	 * Resolves the whole hierarchy.
-	 * @method resolve
+	 * Invalidates the node's size.
+	 * @method invalidateSize
 	 * @since 0.7.0
 	 */
-	public func resolve() {
-		DisplayNodeResolve(self.handle)
+	public func invalidateSize() {
+		DisplayNodeInvalidateSize(self.handle)
 	}
 
 	/**
-	 * Measures this node.
+	 * Invalidates the node's origin.
+	 * @method invalidateOrigin
+	 * @since 0.7.0
+	 */
+	public func invalidateOrigin() {
+		DisplayNodeInvalidateOrigin(self.handle)
+	}
+
+	/**
+	 * Invalidates the node's layout.
+	 * @method invalidateLayout
+	 * @since 0.7.0
+	 */
+	public func invalidateLayout() {
+		DisplayNodeInvalidateLayout(self.handle)
+	}
+
+	/**
+	 * Resolves this node only.
 	 * @method measure
 	 * @since 0.7.0
 	 */
 	public func measure() {
 		DisplayNodeMeasure(self.handle)
+	}
+
+	/**
+	 * Resolves this node and its hierarchy.
+	 * @method resolve
+	 * @since 0.7.0
+	 */
+	public func resolve() {
+		DisplayNodeResolve(self.handle)
 	}
 
 	/**
@@ -1844,7 +1889,7 @@ open class DisplayNode {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	internal func layoutEnded() {
+	internal func didResolveLayout() {
 		self.delegate?.layoutEnded(node: self)
 	}
 }
@@ -1854,7 +1899,7 @@ open class DisplayNode {
  * @since 0.7.0
  * @hidden
  */
-private let measureSizeCallback: @convention(c) (DisplayNodeRef?, UnsafeMutablePointer<DisplayNodeMeasuredSize>?, Double, Double, Double, Double, Double, Double) -> Void = { (ptr, res, w, h, minw, maxw, minh, maxh) in
+private let displayNodeMeasureSizeCallback: @convention(c) (DisplayNodeRef?, UnsafeMutablePointer<DisplayNodeMeasuredSize>?, Double, Double, Double, Double, Double, Double) -> Void = { (ptr, res, w, h, minw, maxw, minh, maxh) in
 
 	if let node = DisplayNodeGetData(ptr).value as? DisplayNode {
 
@@ -1870,111 +1915,89 @@ private let measureSizeCallback: @convention(c) (DisplayNodeRef?, UnsafeMutableP
 }
 
 /**
- * @const invalidateCallback
+ * @const displayNodeResolveSizeCallback
  * @since 0.7.0
  * @hidden
  */
-private let invalidateCallback: @convention(c) (DisplayNodeRef?) -> Void = { ptr in
-	if let node = DisplayNodeGetData(ptr).value as? DisplayNode {
-		node.didInvalidate()
-	}
-}
-
-/**
- * @const resolveSizeCallback
- * @since 0.7.0
- * @hidden
- */
-private let resolveSizeCallback: @convention(c) (DisplayNodeRef?) -> Void = { ptr in
+private let displayNodeResolveSizeCallback: @convention(c) (DisplayNodeRef?) -> Void = { ptr in
 	if let node = DisplayNodeGetData(ptr).value as? DisplayNode {
 		node.didResolveSize()
 	}
 }
 
 /**
- * @const resolveOriginCallback
+ * @const displayNodeResolveOriginCallback
  * @since 0.7.0
  * @hidden
  */
-private let resolveOriginCallback: @convention(c) (DisplayNodeRef?) -> Void = { ptr in
+private let displayNodeResolveOriginCallback: @convention(c) (DisplayNodeRef?) -> Void = { ptr in
 	if let node = DisplayNodeGetData(ptr).value as? DisplayNode {
 		node.didResolveOrigin()
 	}
 }
 
 /**
- * @const resolveInnerSizeCallback
+ * @const displayNodeResolveInnerSizeCallback
  * @since 0.7.0
  * @hidden
  */
-private let resolveInnerSizeCallback: @convention(c) (DisplayNodeRef?) -> Void = { ptr in
+private let displayNodeResolveInnerSizeCallback: @convention(c) (DisplayNodeRef?) -> Void = { ptr in
 	if let node = DisplayNodeGetData(ptr).value as? DisplayNode {
 		node.didResolveInnerSize()
 	}
 }
 
 /**
- * @const resolveContentSizeCallback
+ * @const displayNodeResolveContentSizeCallback
  * @since 0.7.0
  * @hidden
  */
-private let resolveContentSizeCallback: @convention(c) (DisplayNodeRef?) -> Void = { ptr in
+private let displayNodeResolveContentSizeCallback: @convention(c) (DisplayNodeRef?) -> Void = { ptr in
 	if let node = DisplayNodeGetData(ptr).value as? DisplayNode {
 		node.didResolveContentSize()
 	}
 }
 
 /**
- * @const resolveMarginCallback
+ * @const displayNodeResolveMarginCallback
  * @since 0.7.0
  * @hidden
  */
-private let resolveMarginCallback: @convention(c) (DisplayNodeRef?) -> Void = { ptr in
+private let displayNodeResolveMarginCallback: @convention(c) (DisplayNodeRef?) -> Void = { ptr in
 	if let node = DisplayNodeGetData(ptr).value as? DisplayNode {
 		node.didResolveMargin()
 	}
 }
 
 /**
- * @const resolveBorderCallback
+ * @const displayNodeResolveBorderCallback
  * @since 0.7.0
  * @hidden
  */
-private let resolveBorderCallback: @convention(c) (DisplayNodeRef?) -> Void = { ptr in
+private let displayNodeResolveBorderCallback: @convention(c) (DisplayNodeRef?) -> Void = { ptr in
 	if let node = DisplayNodeGetData(ptr).value as? DisplayNode {
 		node.didResolveBorder()
 	}
 }
 
 /**
- * @const resolvePaddingCallback
+ * @const displayNodeResolvePaddingCallback
  * @since 0.7.0
  * @hidden
  */
-private let resolvePaddingCallback: @convention(c) (DisplayNodeRef?) -> Void = { ptr in
+private let displayNodeResolvePaddingCallback: @convention(c) (DisplayNodeRef?) -> Void = { ptr in
 	if let node = DisplayNodeGetData(ptr).value as? DisplayNode {
 		node.didResolvePadding()
 	}
 }
 
 /**
- * @const layoutBeganCallback
+ * @const displayNodeResolveLayoutCallback
  * @since 0.7.0
  * @hidden
  */
-private let layoutBeganCallback: @convention(c) (DisplayNodeRef?) -> Void = { ptr in
+private let displayNodeResolveLayoutCallback: @convention(c) (DisplayNodeRef?) -> Void = { ptr in
 	if let node = DisplayNodeGetData(ptr).value as? DisplayNode {
-		node.layoutBegan()
-	}
-}
-
-/**
- * @const layoutEndedCallback
- * @since 0.7.0
- * @hidden
- */
-private let layoutEndedCallback: @convention(c) (DisplayNodeRef?) -> Void = { ptr in
-	if let node = DisplayNodeGetData(ptr).value as? DisplayNode {
-		node.layoutEnded()
+		node.didResolveLayout()
 	}
 }

@@ -20,7 +20,7 @@ private:
 	Fragment* head = nullptr;
 
 	size_t length = 0;
-	size_t number = 0;
+	size_t offset = 0;
 	size_t weight = 0;
 
 public:
@@ -40,8 +40,8 @@ public:
 		return this->length;
 	}
 
-	size_t getNumber() const {
-		return this->number;
+	size_t getOffset() const {
+		return this->offset;
 	}
 
 	size_t getWeight() const {

@@ -14,7 +14,7 @@ using std::string;
 using std::vector;
 using std::unordered_map;
 
-class PropertyList {
+class Dictionary {
 
 private:
 
