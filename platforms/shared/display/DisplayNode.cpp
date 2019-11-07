@@ -2,6 +2,10 @@
 #include "Display.h"
 #include "DisplayNode.h"
 #include "LayoutResolver.h"
+#include "Descriptor.h"
+#include "Selector.h"
+#include "Fragment.h"
+#include "Matcher.h"
 #include "InvalidStructureException.h"
 #include "InvalidOperationException.h"
 
@@ -21,9 +25,21 @@ using Layout::clamp;
 using Layout::round;
 using Layout::scale;
 
-DisplayNode::DisplayNode() : layout(this), style(this)
+using Style::Matcher;
+
+DisplayNode::DisplayNode() : layout(this)
 {
 
+}
+
+DisplayNode::DisplayNode(Display* display) : layout(this)
+{
+	this->display = display;
+}
+
+DisplayNode::DisplayNode(Display* display, string type) : DisplayNode(display)
+{
+	this->setType(type);
 }
 
 //------------------------------------------------------------------------------
@@ -33,6 +49,16 @@ DisplayNode::DisplayNode() : layout(this), style(this)
 void
 DisplayNode::appendElement(DisplayNode* node)
 {
+	auto it = find(
+		this->elements.begin(),
+		this->elements.end(),
+		node
+	);
+
+	if (it != this->elements.end()) {
+		return;
+	}
+
 	this->elements.push_back(node);
 }
 
@@ -575,10 +601,11 @@ DisplayNode::invalidateParent()
 void
 DisplayNode::invalidateStyle()
 {
-	// TODO
+	if (this->invalidStyle == false) {
+		this->invalidStyle = true;
+		this->invalidate();
+	}
 }
-
-
 
 bool
 DisplayNode::inheritsWrappedWidth()
@@ -665,9 +692,53 @@ DisplayNode::inheritsWrappedHeight()
 }
 
 void
+DisplayNode::resolveLinks()
+{
+	if (this->master) {
+		return;
+	}
+
+	DisplayNode* master = this;
+
+	if (this->isOpaque() == false &&
+		this->isWindow() == false) {
+
+		while (true) {
+
+			master = master->parent;
+
+			if (master) {
+
+				if (master->isOpaque() ||
+					master->isWindow()) {
+					break;
+				}
+
+				continue;
+			}
+
+			throw new InvalidStructureException("Display tree is missing a window");
+		}
+	}
+
+	master->appendElement(this);
+
+	this->master = master;
+}
+
+void
 DisplayNode::resolveStyle()
 {
+	if (this->invalidStyle == false) {
+		return;
+	}
 
+	if (this->display->stylesheet == nullptr) {
+		return;
+	}
+	
+
+	this->invalidStyle = false;
 }
 
 void
@@ -676,7 +747,8 @@ DisplayNode::resolveFrame()
 	/*
 	 * Resolving a node means computing its border, padding inner size,
 	 * content size and layout. At the moment this method is called the
-	 * node has been given a measured size and an origin by its parent.
+	 * node has been given a measured size and an origin by the layout
+	 * pass from its parent.
 	 */
 
 	this->measuredInnerWidthChanged = false;
@@ -1711,7 +1783,7 @@ DisplayNode::setType(string type)
 	stringstream stream(type);
 
 	while (getline(stream, token, ' ')) {
-		this->classes.push_back(token);
+		this->types.push_back(token);
 	}
 
 	this->invalidateStyle();
@@ -2494,6 +2566,9 @@ DisplayNode::appendChild(DisplayNode* child)
 void
 DisplayNode::insertChild(DisplayNode* child, int index)
 {
+	// TODO
+	// Automatically add first-child / last-child state
+	
 	if (child->parent) {
 		throw InvalidStructureException("Cannot insert a child from another tree.");
 	}
@@ -2542,10 +2617,12 @@ DisplayNode::removeChild(DisplayNode* child)
 		return;
 	}
 
-	child->master->removeElement(child);
+	if (child->master) {
+		child->master->removeElement(child);
+		child->master = nullptr;
+	}
 
 	child->parent = nullptr;
-	child->master = nullptr;
 
 	this->children.erase(it);
 
@@ -2580,36 +2657,7 @@ DisplayNode::resolve()
 
 	this->resolving = true;
 
-	if (this->master == nullptr) {
-
-		DisplayNode* master = this;
-
-		if (this->isOpaque() == false &&
-			this->isWindow() == false) {
-
-			while (true) {
-
-				master = master->parent;
-
-				if (master) {
-
-					if (master->isOpaque() ||
-						master->isWindow()) {
-						break;
-					}
-
-					continue;
-				}
-
-				throw new InvalidStructureException("Display tree is missing a window");
-			}
-		}
-
-		master->appendElement(this);
-
-		this->master = master;
-	}
-
+	this->resolveLinks();
 	this->resolveStyle();
 	this->resolveFrame();
 
@@ -2661,6 +2709,45 @@ DisplayNode::measure()
 	}
 
 	this->invalidSize = false;
+}
+
+string
+DisplayNode::toString()
+{
+	string output;
+
+	if (this->name.length() > 0) {
+		output.append("#");
+		output.append(this->name);
+	}
+
+	output.append("[");
+	output.append(this->type);
+	output.append("]");
+
+	if (this->styles.size() > 0) {
+
+		output.append(" ");
+		output.append("Style: ");
+
+		for (auto & style : this->styles) {
+			output.append(style);
+			output.append(" ");
+		}
+	}
+
+	if (this->styles.size() > 0) {
+
+		output.append(" ");
+		output.append("State: ");
+
+		for (auto & state : this->states) {
+			output.append(state);
+			output.append(" ");
+		}
+	}
+
+	return output;
 }
 
 } 

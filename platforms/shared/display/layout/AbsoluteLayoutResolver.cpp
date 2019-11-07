@@ -18,6 +18,10 @@ AbsoluteLayoutResolver::AbsoluteLayoutResolver(DisplayNode* node)
 	this->node = node;
 }
 
+//------------------------------------------------------------------------------
+// MARK: Private API
+//------------------------------------------------------------------------------
+
 bool
 AbsoluteLayoutResolver::hasInvalidSize(DisplayNode* child)
 {
@@ -463,6 +467,10 @@ AbsoluteLayoutResolver::measureHeight(DisplayNode* child)
 
 	return round(value, child->display->scale);
 }
+
+//------------------------------------------------------------------------------
+// MARK: Public API
+//------------------------------------------------------------------------------
 
 void
 AbsoluteLayoutResolver::measure(DisplayNode* child)

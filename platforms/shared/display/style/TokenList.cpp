@@ -5,6 +5,10 @@
 namespace Dezel {
 namespace Style {
 
+//------------------------------------------------------------------------------
+// MARK: Public API
+//------------------------------------------------------------------------------
+
 TokenList::TokenList(const Token* head, const Token* tail)
 {
 	this->head = head;

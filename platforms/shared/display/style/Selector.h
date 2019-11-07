@@ -1,6 +1,8 @@
 #ifndef Rule_h
 #define Rule_h
 
+#include "Specifier.h"
+
 #include <string>
 
 namespace Dezel {
@@ -10,29 +12,41 @@ using std::string;
 
 class Parser;
 class Stylesheet;
+class Descriptor;
 class Fragment;
 
 class Selector {
 
 private:
 
+	Descriptor* descriptor = nullptr;
+
+	Selector* parent = nullptr;
 	Fragment* tail = nullptr;
 	Fragment* head = nullptr;
 
 	size_t length = 0;
 	size_t offset = 0;
-	size_t weight = 0;
 
 public:
 
 	friend class Parser;
 	friend class Stylesheet;
+	friend class Descriptor;
 
-	const Fragment* getTail() const {
+	Descriptor* getDescriptor() const {
+		return this->descriptor;
+	}
+
+	Selector* getParent() const {
+		return this->parent;
+	}
+
+	Fragment* getTail() const {
 		return this->tail;
 	}
 
-	const Fragment* getHead() const {
+	Fragment* getHead() const {
 		return this->head;
 	}
 
@@ -44,11 +58,7 @@ public:
 		return this->offset;
 	}
 
-	size_t getWeight() const {
-		return this->weight;
-	}
-
-	string toString(int depth = 0);
+	string toString(int depth = 0) const;
 };
 
 }

@@ -5,6 +5,10 @@
 namespace Dezel {
 namespace Style {
 
+//------------------------------------------------------------------------------
+// MARK: Public API
+//------------------------------------------------------------------------------
+
 Token::Token(TokenType type) : type(type)
 {
 
@@ -32,7 +36,11 @@ Token::equals(const string& str1, const string& str2) const {
 		return false;
 	}
 
-	for (auto c1 = str1.begin(), c2 = str2.begin(); c1 != str1.end(); ++c1, ++c2) {
+	for (
+		auto c1 = str1.begin(),
+		     c2 = str2.begin();
+		     c1 != str1.end();
+		     ++c1, ++c2) {
 		if (tolower(*c1) != tolower(*c2)) {
 			return false;
 		}

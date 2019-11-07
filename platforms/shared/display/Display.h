@@ -2,10 +2,13 @@
 #define Display_h
 
 #include "DisplayBase.h"
+#include "Stylesheet.h"
 
 #include <string>
+#include <queue>
 
 using std::string;
+using std::queue;
 
 namespace Dezel {
 
@@ -15,12 +18,25 @@ namespace Layout {
 	class RelativeLayoutResolver;
 }
 
+namespace Style {
+	class StyleResolver;
+	class Stylesheet;
+}
+
+using Layout::LayoutResolver;
+using Layout::AbsoluteLayoutResolver;
+using Layout::RelativeLayoutResolver;
+using Style::StyleResolver;
+using Style::Stylesheet;
+
 class DisplayNode;
 class DisplayNodeFrame;
 
 class Display {
 
 private:
+
+	queue<DisplayNode*> walker;
 
 	DisplayNode* window = nullptr;
 
@@ -31,7 +47,10 @@ private:
 	bool viewportWidthChanged = false;
 	bool viewportHeightChanged = false;
 
+	Stylesheet* stylesheet = nullptr;
+
 	bool invalid = false;
+	bool updated = false;
 	bool resolving = false;
 
 	DisplayInvalidateCallback invalidateCallback = nullptr;
@@ -43,20 +62,19 @@ private:
 public:
 
 	friend class DisplayNode;
-	friend class Layout::LayoutResolver;
-	friend class Layout::AbsoluteLayoutResolver;
-	friend class Layout::RelativeLayoutResolver;
+	friend class LayoutResolver;
+	friend class AbsoluteLayoutResolver;
+	friend class RelativeLayoutResolver;
 
 	void *data = nullptr;
 
 	void setWindow(DisplayNode* window);
 
-	void setScale(double scale) {
-		this->scale = scale;
-	}
-
+	void setScale(double scale);
 	void setViewportWidth(double viewportWidth);
 	void setViewportHeight(double viewportHeight);
+
+	void setStylesheet(Stylesheet* stylesheet);
 
 	void setInvalidateCallback(DisplayInvalidateCallback callback) {
 		this->invalidateCallback = callback;
@@ -65,8 +83,6 @@ public:
 	void setResolveCallback(DisplayResolveCallback callback) {
 		this->resolveCallback = callback;
 	}
-
-	void loadStylesheet(string stylesheet);
 
 	double getScale() const {
 		return this->scale;
@@ -78,6 +94,10 @@ public:
 
 	double getViewportHeight() const {
 		return this->viewportHeight;
+	}
+
+	Stylesheet* getStylesheet() const {
+		return this->stylesheet;
 	}
 
 	bool hasNewViewportWidth() const {
@@ -98,6 +118,7 @@ public:
 
 	void invalidate();
 	void resolve();
+
 };
 
 } 

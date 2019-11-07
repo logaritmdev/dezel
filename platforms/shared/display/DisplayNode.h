@@ -10,7 +10,6 @@
 #include "DisplayNodePadding.h"
 #include "DisplayNodeContentSize.h"
 #include "DisplayNodeContentOrigin.h"
-#include "StyleResolver.h"
 #include "LayoutResolver.h"
 #include "RelativeLayoutResolver.h"
 #include "AbsoluteLayoutResolver.h"
@@ -22,11 +21,21 @@
 
 namespace Dezel {
 
+namespace Style {
+	class Descriptor;
+	class Selector;
+	class Fragment;
+}
+
 using std::string;
 using std::vector;
 
-using Style::StyleResolver;
 using Layout::LayoutResolver;
+using Layout::AbsoluteLayoutResolver;
+using Layout::RelativeLayoutResolver;
+using Style::Descriptor;
+using Style::Selector;
+using Style::Fragment;
 
 typedef enum {
 	kDisplayNodeFlagNone   = 0,
@@ -57,11 +66,9 @@ private:
 	string name = "";
 	string type = "";
 
-	vector<string> classes;
+	vector<string> types;
 	vector<string> styles;
 	vector<string> states;
-
-	StyleResolver style;
 
 	bool visible = true;
 
@@ -200,7 +207,7 @@ protected:
 	bool inheritsWrappedWidth();
 	bool inheritsWrappedHeight();
 
-	void resolveEntity();
+	void resolveLinks();
 	void resolveStyle();
 	void resolveFrame();
 	void resolveMargin();
@@ -251,13 +258,15 @@ protected:
 public:
 
 	friend class Display;
-	friend class Layout::LayoutResolver;
-	friend class Layout::RelativeLayoutResolver;
-	friend class Layout::AbsoluteLayoutResolver;
+	friend class LayoutResolver;
+	friend class RelativeLayoutResolver;
+	friend class AbsoluteLayoutResolver;
 
 	void *data = nullptr;
 
 	DisplayNode();
+	DisplayNode(Display* display);
+	DisplayNode(Display* display, string type);
 
 	void setDisplay(Display* display) {
 		this->display = display;
@@ -271,12 +280,48 @@ public:
 		this->flags = this->flags | kDisplayNodeFlagOpaque;
 	}
 
+	DisplayNode* getMaster() const {
+		return this->master;
+	}
+
+	DisplayNode* getParent() const {
+		return this->parent;
+	}
+
+	const vector<DisplayNode*>& getChildren() const {
+		return this->children;
+	}
+
+	const vector<DisplayNode*>& getElements() const {
+		return this->elements;
+	}
+
 	void setName(string name);
 	void setType(string type);
 	void appendStyle(string style);
 	void removeStyle(string style);
 	void appendState(string state);
 	void removeState(string state);
+
+	const string& getName() const {
+		return this->name;
+	}
+
+	const string& getType() const {
+		return this->type;
+	}
+
+	const vector<string>& getTypes() const {
+		return this->types;
+	}
+
+	const vector<string>& getStyles() const {
+		return this->styles;
+	}
+
+	const vector<string>& getStates() const {
+		return this->states;
+	}
 
 	void setVisible(bool visible);
 
@@ -386,6 +431,10 @@ public:
 		this->resolveLayoutCallback = callback;
 	}
 
+//	void setResolveStyleCallback(DisplayNodeResolveStyleCallback callback) {
+//
+//	}
+
 	double getMeasuredTop() const {
 		return this->measuredTop;
 	}
@@ -478,6 +527,10 @@ public:
 	void insertChild(DisplayNode* child, int index);
 	void removeChild(DisplayNode* child);
 
+	bool isVisible() const {
+		return this->visible;
+	}
+
 	bool isOpaque() const {
 		return this->flags & kDisplayNodeFlagOpaque;
 	}
@@ -526,6 +579,8 @@ public:
 
 	void measure();
 	void resolve();
+
+	string toString();
 
 };
 

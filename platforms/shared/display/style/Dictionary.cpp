@@ -4,6 +4,10 @@
 namespace Dezel {
 namespace Style {
 
+//------------------------------------------------------------------------------
+// MARK: Public API
+//------------------------------------------------------------------------------
+
 void
 Dictionary::set(string name, Property* property)
 {

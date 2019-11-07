@@ -192,14 +192,22 @@
 		C7A19E3520ACC4DF00367E91 /* ScrollableDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A19E3420ACC4DF00367E91 /* ScrollableDelegate.swift */; };
 		C7A19E3820ADCB3800367E91 /* TextInputClearButtonIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = C7A19E3720ADCB3800367E91 /* TextInputClearButtonIcon@3x.png */; };
 		C7A19E3A20ADD18200367E91 /* TextInputDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A19E3920ADD18200367E91 /* TextInputDelegate.swift */; };
+		C7A2C2AB2372F90200219BA5 /* Matcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7A2C2A92372F90200219BA5 /* Matcher.cpp */; };
+		C7A2C2AC2372F90200219BA5 /* Matcher.h in Headers */ = {isa = PBXBuildFile; fileRef = C7A2C2AA2372F90200219BA5 /* Matcher.h */; };
+		C7A2C2AF2372F92500219BA5 /* DisplayWalker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7A2C2AD2372F92500219BA5 /* DisplayWalker.cpp */; };
+		C7A2C2B02372F92500219BA5 /* DisplayWalker.h in Headers */ = {isa = PBXBuildFile; fileRef = C7A2C2AE2372F92500219BA5 /* DisplayWalker.h */; };
+		C7A2C2B32373AA1C00219BA5 /* Specifier.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7A2C2B12373AA1C00219BA5 /* Specifier.cpp */; };
+		C7A2C2B42373AA1C00219BA5 /* Specifier.h in Headers */ = {isa = PBXBuildFile; fileRef = C7A2C2B22373AA1C00219BA5 /* Specifier.h */; };
+		C7A2C2B82373B11600219BA5 /* StylesheetTest.mm in Sources */ = {isa = PBXBuildFile; fileRef = C7A2C2B72373B11600219BA5 /* StylesheetTest.mm */; };
+		C7A2C2BB2373C75000219BA5 /* Match.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7A2C2B92373C75000219BA5 /* Match.cpp */; };
+		C7A2C2BC2373C75000219BA5 /* Match.h in Headers */ = {isa = PBXBuildFile; fileRef = C7A2C2BA2373C75000219BA5 /* Match.h */; };
 		C7A3AB77214EC68100D8B15C /* JavaScriptCanvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A3AB76214EC68100D8B15C /* JavaScriptCanvas.swift */; };
 		C7A3AB79214ECBA500D8B15C /* CanvasLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A3AB78214ECBA500D8B15C /* CanvasLayer.swift */; };
 		C7AA9370236F6DD500ADF997 /* InvalidStructureException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7AA936E236F6DD500ADF997 /* InvalidStructureException.cpp */; };
 		C7AA9371236F6DD500ADF997 /* InvalidStructureException.h in Headers */ = {isa = PBXBuildFile; fileRef = C7AA936F236F6DD500ADF997 /* InvalidStructureException.h */; };
 		C7AA9374236F730F00ADF997 /* InvalidOperationException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7AA9372236F730F00ADF997 /* InvalidOperationException.cpp */; };
 		C7AA9375236F730F00ADF997 /* InvalidOperationException.h in Headers */ = {isa = PBXBuildFile; fileRef = C7AA9373236F730F00ADF997 /* InvalidOperationException.h */; };
-		C7AA9378236F740E00ADF997 /* StyleResolver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7AA9376236F740E00ADF997 /* StyleResolver.cpp */; };
-		C7AA9379236F740E00ADF997 /* StyleResolver.h in Headers */ = {isa = PBXBuildFile; fileRef = C7AA9377236F740E00ADF997 /* StyleResolver.h */; };
+		C7AA93842372061000ADF997 /* MatcherTest.mm in Sources */ = {isa = PBXBuildFile; fileRef = C7AA93832372061000ADF997 /* MatcherTest.mm */; };
 		C7B40F6120B716C800892C92 /* TextArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B40F6020B716C800892C92 /* TextArea.swift */; };
 		C7B40F6320B7170E00892C92 /* TextAreaDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B40F6220B7170E00892C92 /* TextAreaDelegate.swift */; };
 		C7B9CEA6202CDB8D002409D5 /* ApplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B9CEA2202CDB8D002409D5 /* ApplicationController.swift */; };
@@ -497,14 +505,22 @@
 		C7A19E3420ACC4DF00367E91 /* ScrollableDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollableDelegate.swift; sourceTree = "<group>"; };
 		C7A19E3720ADCB3800367E91 /* TextInputClearButtonIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TextInputClearButtonIcon@3x.png"; sourceTree = "<group>"; };
 		C7A19E3920ADD18200367E91 /* TextInputDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextInputDelegate.swift; sourceTree = "<group>"; };
+		C7A2C2A92372F90200219BA5 /* Matcher.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Matcher.cpp; path = ../../../../../shared/display/style/Matcher.cpp; sourceTree = "<group>"; };
+		C7A2C2AA2372F90200219BA5 /* Matcher.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Matcher.h; path = ../../../../../shared/display/style/Matcher.h; sourceTree = "<group>"; };
+		C7A2C2AD2372F92500219BA5 /* DisplayWalker.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DisplayWalker.cpp; path = ../../../../../shared/display/DisplayWalker.cpp; sourceTree = "<group>"; };
+		C7A2C2AE2372F92500219BA5 /* DisplayWalker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DisplayWalker.h; path = ../../../../../shared/display/DisplayWalker.h; sourceTree = "<group>"; };
+		C7A2C2B12373AA1C00219BA5 /* Specifier.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Specifier.cpp; path = ../../../../../shared/display/style/Specifier.cpp; sourceTree = "<group>"; };
+		C7A2C2B22373AA1C00219BA5 /* Specifier.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Specifier.h; path = ../../../../../shared/display/style/Specifier.h; sourceTree = "<group>"; };
+		C7A2C2B72373B11600219BA5 /* StylesheetTest.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = StylesheetTest.mm; sourceTree = "<group>"; };
+		C7A2C2B92373C75000219BA5 /* Match.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Match.cpp; path = ../../../../../shared/display/style/Match.cpp; sourceTree = "<group>"; };
+		C7A2C2BA2373C75000219BA5 /* Match.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Match.h; path = ../../../../../shared/display/style/Match.h; sourceTree = "<group>"; };
 		C7A3AB76214EC68100D8B15C /* JavaScriptCanvas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptCanvas.swift; sourceTree = "<group>"; };
 		C7A3AB78214ECBA500D8B15C /* CanvasLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasLayer.swift; sourceTree = "<group>"; };
 		C7AA936E236F6DD500ADF997 /* InvalidStructureException.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = InvalidStructureException.cpp; path = ../../../../../shared/display/InvalidStructureException.cpp; sourceTree = "<group>"; };
 		C7AA936F236F6DD500ADF997 /* InvalidStructureException.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = InvalidStructureException.h; path = ../../../../../shared/display/InvalidStructureException.h; sourceTree = "<group>"; };
 		C7AA9372236F730F00ADF997 /* InvalidOperationException.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = InvalidOperationException.cpp; path = ../../../../../shared/display/InvalidOperationException.cpp; sourceTree = "<group>"; };
 		C7AA9373236F730F00ADF997 /* InvalidOperationException.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = InvalidOperationException.h; path = ../../../../../shared/display/InvalidOperationException.h; sourceTree = "<group>"; };
-		C7AA9376236F740E00ADF997 /* StyleResolver.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = StyleResolver.cpp; path = ../../../../../shared/display/style/StyleResolver.cpp; sourceTree = "<group>"; };
-		C7AA9377236F740E00ADF997 /* StyleResolver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = StyleResolver.h; path = ../../../../../shared/display/style/StyleResolver.h; sourceTree = "<group>"; };
+		C7AA93832372061000ADF997 /* MatcherTest.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = MatcherTest.mm; sourceTree = "<group>"; };
 		C7B40F6020B716C800892C92 /* TextArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextArea.swift; sourceTree = "<group>"; };
 		C7B40F6220B7170E00892C92 /* TextAreaDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextAreaDelegate.swift; sourceTree = "<group>"; };
 		C7B9CEA2202CDB8D002409D5 /* ApplicationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationController.swift; sourceTree = "<group>"; };
@@ -855,6 +871,8 @@
 				C77D1C7E23422C4100EC65E0 /* TokenizerStreamTest.mm */,
 				C77D1C8023422C9A00EC65E0 /* TokenizerTest.mm */,
 				C77D1C8223422CA900EC65E0 /* ParserTest.mm */,
+				C7AA93832372061000ADF997 /* MatcherTest.mm */,
+				C7A2C2B72373B11600219BA5 /* StylesheetTest.mm */,
 			);
 			path = Style;
 			sourceTree = "<group>";
@@ -900,6 +918,8 @@
 				C792E8C3234BDE610022D712 /* DisplayNodeSize.h */,
 				C792E8CD234BDE620022D712 /* DisplayRef.cpp */,
 				C792E8D9234BDE630022D712 /* DisplayRef.h */,
+				C7A2C2AD2372F92500219BA5 /* DisplayWalker.cpp */,
+				C7A2C2AE2372F92500219BA5 /* DisplayWalker.h */,
 			);
 			name = CAPI;
 			sourceTree = "<group>";
@@ -919,14 +939,16 @@
 				C792E91C234BDEA60022D712 /* Fragment.h */,
 				C792E932234BDEA70022D712 /* Function.cpp */,
 				C792E930234BDEA70022D712 /* Function.h */,
+				C7A2C2A92372F90200219BA5 /* Matcher.cpp */,
+				C7A2C2AA2372F90200219BA5 /* Matcher.h */,
+				C7A2C2B92373C75000219BA5 /* Match.cpp */,
+				C7A2C2BA2373C75000219BA5 /* Match.h */,
 				C792E90E234BDEA50022D712 /* Parser.cpp */,
 				C792E90D234BDEA50022D712 /* Parser.h */,
 				C792E921234BDEA60022D712 /* Property.cpp */,
 				C792E91B234BDEA60022D712 /* Property.h */,
 				C792E914234BDEA60022D712 /* Selector.cpp */,
 				C792E912234BDEA50022D712 /* Selector.h */,
-				C7AA9376236F740E00ADF997 /* StyleResolver.cpp */,
-				C7AA9377236F740E00ADF997 /* StyleResolver.h */,
 				C792E931234BDEA70022D712 /* Stylesheet.cpp */,
 				C792E91A234BDEA60022D712 /* Stylesheet.h */,
 				C792E911234BDEA50022D712 /* Token.cpp */,
@@ -941,6 +963,8 @@
 				C792E916234BDEA60022D712 /* Value.h */,
 				C792E925234BDEA70022D712 /* Variable.cpp */,
 				C792E926234BDEA70022D712 /* Variable.h */,
+				C7A2C2B12373AA1C00219BA5 /* Specifier.cpp */,
+				C7A2C2B22373AA1C00219BA5 /* Specifier.h */,
 			);
 			name = Style;
 			sourceTree = "<group>";
@@ -1440,6 +1464,8 @@
 				C792E8E8234BDE630022D712 /* DisplayNodeMargin.h in Headers */,
 				C792E8E6234BDE630022D712 /* DisplayNodeContentOrigin.h in Headers */,
 				C792E950234BDEA70022D712 /* VariableValue.h in Headers */,
+				C7A2C2B02372F92500219BA5 /* DisplayWalker.h in Headers */,
+				C7A2C2B42373AA1C00219BA5 /* Specifier.h in Headers */,
 				C792E8DE234BDE630022D712 /* Display.h in Headers */,
 				C792E8E0234BDE630022D712 /* DisplayBase.h in Headers */,
 				C792E93E234BDEA70022D712 /* Value.h in Headers */,
@@ -1449,7 +1475,7 @@
 				C792E904234BDE900022D712 /* RelativeLayoutResolver.h in Headers */,
 				C792E975234D6E6E0022D712 /* ParseException.h in Headers */,
 				C792E8DA234BDE630022D712 /* DisplayNodeContentSize.h in Headers */,
-				C7AA9379236F740E00ADF997 /* StyleResolver.h in Headers */,
+				C7A2C2BC2373C75000219BA5 /* Match.h in Headers */,
 				C7E8A5032016244F005139F6 /* Runtime.h in Headers */,
 				C792E948234BDEA70022D712 /* TokenizerStream.h in Headers */,
 				C77B0D4C2226D7DC00917D82 /* LRUDiskCache.h in Headers */,
@@ -1467,6 +1493,7 @@
 				C792E935234BDEA70022D712 /* Parser.h in Headers */,
 				C792E946234BDEA70022D712 /* NumberValue.h in Headers */,
 				C792E94F234BDEA70022D712 /* Argument.h in Headers */,
+				C7A2C2AC2372F90200219BA5 /* Matcher.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1638,6 +1665,7 @@
 				C7BB7D472029062D004006C2 /* Transition.swift in Sources */,
 				C73700C72219A9370095A54B /* ImageEffect.swift in Sources */,
 				C72E0E9520669CA0003BCEF1 /* TextLocation.swift in Sources */,
+				C7A2C2B32373AA1C00219BA5 /* Specifier.cpp in Sources */,
 				C7E8A544201624FA005139F6 /* JavaScriptValuePrivate.cpp in Sources */,
 				C77189B42106AE1300337263 /* Transform3D.swift in Sources */,
 				C7A19E2E20AB721F00367E91 /* PlatformModule.swift in Sources */,
@@ -1650,12 +1678,12 @@
 				C792E8E2234BDE630022D712 /* DisplayNodeMargin.cpp in Sources */,
 				C767543A20269971003C4D85 /* BitmapLayer.swift in Sources */,
 				C792E8EF234BDE630022D712 /* DisplayNodeAnchor.cpp in Sources */,
-				C7AA9378236F740E00ADF997 /* StyleResolver.cpp in Sources */,
 				C7BFD160207D518600AAD31C /* SpinnerView.swift in Sources */,
 				C7E45AEE21DD462C00247465 /* TextViewDelegate.swift in Sources */,
 				C7F2260B2081A10000ABC66D /* Unsafe.swift in Sources */,
 				C7E30977203123DD00436FA4 /* UIView.swift in Sources */,
 				C792E93B234BDEA70022D712 /* Descriptor.cpp in Sources */,
+				C7A2C2AB2372F90200219BA5 /* Matcher.cpp in Sources */,
 				C7004C58213C4CF800138ECC /* Dictionary.swift in Sources */,
 				C7B9CEAF202CDBD8002409D5 /* JavaScriptWindow.swift in Sources */,
 				C792E93F234BDEA70022D712 /* Value.cpp in Sources */,
@@ -1683,6 +1711,7 @@
 				C767542420269971003C4D85 /* BorderLayer.swift in Sources */,
 				C7FFB4D5204B2313000D888E /* View.swift in Sources */,
 				C75153B922EBA05C007CAA48 /* NSData.swift in Sources */,
+				C7A2C2BB2373C75000219BA5 /* Match.cpp in Sources */,
 				C71E6CBC20DD4EE1009B86F6 /* JavaScriptWebView.swift in Sources */,
 				C718A0C72067F75900EFEC15 /* GraphicModule.swift in Sources */,
 				C7040DE52327D40900DFDBED /* Display.swift in Sources */,
@@ -1701,6 +1730,7 @@
 				C71E6CC020DD4F56009B86F6 /* WebView.swift in Sources */,
 				C7BB7D3D2028F4C5004006C2 /* CGFloat.swift in Sources */,
 				C72E0E9920669CBF003BCEF1 /* TextOverflow.swift in Sources */,
+				C7A2C2AF2372F92500219BA5 /* DisplayWalker.cpp in Sources */,
 				C732E78820865116006014A0 /* GlobalModule.swift in Sources */,
 				C718A0B52066ED6100EFEC15 /* JavaScriptImage.swift in Sources */,
 				C7BFD16C207D560E00AAD31C /* UIColor.swift in Sources */,
@@ -1825,6 +1855,7 @@
 				C77D1C8123422C9A00EC65E0 /* TokenizerTest.mm in Sources */,
 				C7E8A4F320162429005139F6 /* JavaScriptGetterTest.swift in Sources */,
 				C7040DE92327DB2100DFDBED /* DisplayNodeDelegateCounter.swift in Sources */,
+				C7A2C2B82373B11600219BA5 /* StylesheetTest.mm in Sources */,
 				C7FCA1142316FA0800AFBDB6 /* JavaScriptPropertyTest.swift in Sources */,
 				C705913B2337B1E8002EF92F /* DisplayStyleTest.swift in Sources */,
 				C7E8A4F120162429005139F6 /* JavaScriptSetterTest.swift in Sources */,
@@ -1836,6 +1867,7 @@
 				C7E8A4F020162429005139F6 /* JavaScriptValueTest.swift in Sources */,
 				C7E8A4F720162429005139F6 /* JavaScriptTestObject.swift in Sources */,
 				C7E8A4FB20162429005139F6 /* JavaScriptContextTest.swift in Sources */,
+				C7AA93842372061000ADF997 /* MatcherTest.mm in Sources */,
 				C7E8A4EF20162429005139F6 /* JavaScriptObjectTest.swift in Sources */,
 				C7E8A4F420162429005139F6 /* JavaScriptFunctionTest.swift in Sources */,
 				C7E8A4F620162429005139F6 /* JavaScriptEmptyClass.swift in Sources */,

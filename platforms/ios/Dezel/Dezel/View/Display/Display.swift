@@ -138,10 +138,6 @@ public class Display {
 		self.layoutEndedCallbacks.append(callback)
 	}
 
-	public func loadStylesheet(_ stylesheet: String) {
-		DisplayLoadStylesheet(self.handle, stylesheet)
-	}
-
 	//--------------------------------------------------------------------------
 	// MARK: Methods
 	//--------------------------------------------------------------------------

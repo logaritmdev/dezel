@@ -53,7 +53,7 @@ using namespace Dezel::Style;
 		[NSException raise:@"ParseException" format: @"%s", e.what()];
 	}
 
-	XCTAssertEqual(stylesheet->getDescriptors().size(), 0);
+	XCTAssertEqual(stylesheet->getRootDescriptors().size(), 0);
 }
 
 - (void)testVariable {
@@ -199,9 +199,9 @@ using namespace Dezel::Style;
 		[NSException raise:@"ParseException" format: @"%s", e.what()];
 	}
 
-	XCTAssertEqual(stylesheet->getDescriptors().size(), 2);
+	XCTAssertEqual(stylesheet->getRootDescriptors().size(), 2);
 
-	auto descriptor = stylesheet->getDescriptors().front();
+	auto descriptor = stylesheet->getRootDescriptors().front();
 
 	auto selector = descriptor->getSelector();
 	auto properties = descriptor->getProperties();

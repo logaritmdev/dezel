@@ -6,8 +6,12 @@
 namespace Dezel {
 namespace Style {
 
+//------------------------------------------------------------------------------
+// MARK: Public API
+//------------------------------------------------------------------------------
+
 string
-Selector::toString(int depth)
+Selector::toString(int depth) const
 {
    string output;
 

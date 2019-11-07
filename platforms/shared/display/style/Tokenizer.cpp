@@ -188,6 +188,10 @@ const Tokenizer::Consumer Tokenizer::consumers[128] = {
 	0
 };
 
+//------------------------------------------------------------------------------
+// MARK: Public API
+//------------------------------------------------------------------------------
+
 Tokenizer::Tokenizer(TokenizerStream &stream): stream(stream) {
 
 	if (this->stream.getLength() == 0) {

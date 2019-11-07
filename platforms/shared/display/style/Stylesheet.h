@@ -9,6 +9,11 @@
 #include <unordered_map>
 
 namespace Dezel {
+	class Display;
+	class DisplayNode;
+}
+
+namespace Dezel {
 namespace Style {
 
 using std::string;
@@ -22,18 +27,28 @@ class Stylesheet {
 
 private:
 
-	vector<Descriptor*> descriptors;
+	vector<Descriptor*> rootDescriptors;
+	vector<Descriptor*> ruleDescriptors;
+
 	unordered_map<string, Variable*> variables;
 	unordered_map<string, Function*> functions;
-
-	unordered_map<string, vector<Descriptor*>> map;
 
 public:
 
 	friend class Parser;
 
-	const vector<Descriptor*>& getDescriptors() const {
-		return this->descriptors;
+	void addVariable(Variable* variable);
+	void addFunction(Function* function);
+	void addDescriptor(Descriptor* descriptor);
+
+	void find(DisplayNode* node, vector<Descriptor*>& result);
+
+	const vector<Descriptor*>& getRootDescriptors() const {
+		return this->rootDescriptors;
+	}
+
+	const vector<Descriptor*>& getRuleDescriptors() const {
+		return this->ruleDescriptors;
 	}
 
 	const unordered_map<string, Variable*>& getVariables() const {
@@ -43,10 +58,6 @@ public:
 	const unordered_map<string, Function*>& getFunctions() const {
 		return this->functions;
 	}
-
-	void addVariable(Variable* variable);
-	void addFunction(Function* function);
-	void addDescriptor(Descriptor* descriptor);
 
 };
 

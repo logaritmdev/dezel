@@ -3,6 +3,10 @@
 namespace Dezel {
 namespace Style {
 
+//------------------------------------------------------------------------------
+// MARK: Public API
+//------------------------------------------------------------------------------
+
 VariableValue::VariableValue(string name) : Value(kValueTypeVariable, kValueUnitNone), name(name)
 {
 

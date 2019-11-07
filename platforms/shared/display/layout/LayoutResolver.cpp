@@ -11,6 +11,10 @@ namespace Layout {
 using std::min;
 using std::max;
 
+//------------------------------------------------------------------------------
+// MARK: Public API
+//------------------------------------------------------------------------------
+
 LayoutResolver::LayoutResolver(DisplayNode* node) : relativeLayout(node), absoluteLayout(node)
 {
 	this->node = node;

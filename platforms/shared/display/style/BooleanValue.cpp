@@ -3,6 +3,10 @@
 namespace Dezel {
 namespace Style {
 
+//------------------------------------------------------------------------------
+// MARK: Public API
+//------------------------------------------------------------------------------
+
 BooleanValue::BooleanValue(bool value) : Value(kValueTypeBoolean, kValueUnitNone), value(value)
 {
 

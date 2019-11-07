@@ -1,6 +1,6 @@
 #include "Display.h"
 #include "DisplayNode.h"
-
+#include "DisplayWalker.h"
 #include "Parser.h"
 #include "Stylesheet.h"
 #include "Tokenizer.h"
@@ -15,20 +15,25 @@ using std::string;
 
 namespace Dezel {
 
-void
-Display::loadStylesheet(string input)
-{
-	Style::TokenizerStream stream(input);
-	Style::Tokenizer tokenizer(stream);
-	Style::Stylesheet* stylesheet = new Style::Stylesheet();
-	Style::Parser parser(stylesheet, &tokenizer);
-}
+//------------------------------------------------------------------------------
+// MARK: Public API
+//------------------------------------------------------------------------------
 
 void
 Display::setWindow(DisplayNode* window) {
 	this->window = window;
 	this->window->setWindow();
 	this->window->setOpaque();
+	this->invalidate();
+}
+
+void
+Display::setScale(double value)
+{
+	if (this->scale != value) {
+		this->scale = value;
+		this->invalidate();
+	}
 }
 
 void
@@ -52,6 +57,15 @@ Display::setViewportHeight(double value)
 }
 
 void
+Display::setStylesheet(Stylesheet* stylesheet)
+{
+	if (this->stylesheet != stylesheet) {
+		this->stylesheet = stylesheet;
+		this->invalidate();
+	}
+}
+
+void
 Display::invalidate()
 {
 	if (this->invalid == false) {
@@ -63,6 +77,10 @@ Display::invalidate()
 void
 Display::resolve()
 {
+	if (this->window == nullptr) {
+		return;
+	}
+
 	if (this->invalid == false) {
 		return;
 	}
@@ -73,26 +91,14 @@ Display::resolve()
 
 	this->resolving = true;
 
-	queue<DisplayNode*> queue;
+	DisplayWalker walker(this->window);
 
-	queue.push(this->window);
-
-	while (queue.size() > 0) {
-
-		auto node = queue.front();
-
-		node->resolve();
-
-		queue.pop();
-
-		for (auto child : node->children) {
-			if (child->visible) {
-				queue.push(child);
-			}
-		}
+	while (walker.next()) {
+		walker.getNode()->resolve();
 	}
 
 	this->resolving = false;
+
 	this->viewportWidthChanged = false;
 	this->viewportHeightChanged = false;
 

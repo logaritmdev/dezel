@@ -2,12 +2,18 @@
 #define Ruleset_h
 
 #include "Selector.h"
+#include "Fragment.h"
 #include "Property.h"
 #include "Dictionary.h"
+#include "DisplayNode.h"
 
 #include <string>
 #include <vector>
 #include <iostream>
+
+namespace Dezel {
+	class DisplayNode;
+}
 
 namespace Dezel {
 namespace Style {
@@ -19,6 +25,7 @@ class Parser;
 class Stylesheet;
 class Selector;
 class Fragment;
+class Specifier;
 
 class Descriptor {
 
@@ -27,11 +34,15 @@ private:
 	Descriptor* parent = nullptr;
 
 	Selector* selector;
+
 	Dictionary properties;
 
 	vector<Descriptor*> childDescriptors;
 	vector<Descriptor*> styleDescriptors;
 	vector<Descriptor*> stateDescriptors;
+
+	void setParentSelector(Descriptor* descriptor);
+	void setParentFragment(Descriptor* descriptor);
 
 public:
 
@@ -42,7 +53,7 @@ public:
 		return this->parent;
 	}
 
-	const Selector* getSelector() const {
+	Selector* getSelector() const {
 		return this->selector;
 	}
 
@@ -62,24 +73,15 @@ public:
 		return this->stateDescriptors;
 	}
 
+	void addChildDescriptor(Descriptor* child);
+	void addStyleDescriptor(Descriptor* style);
+	void addStateDescriptor(Descriptor* state);
+
 	void addProperty(Property* property) {
 		this->properties.set(property->getName(), property);
 	}
 
-	void addChildDescriptor(Descriptor* child) {
-		child->parent = this;
-		this->childDescriptors.push_back(child);
-	}
-
-	void addStyleDescriptor(Descriptor* style) {
-		style->parent = this;
-		this->styleDescriptors.push_back(style);
-	}
-
-	void addStateDescriptor(Descriptor* state) {
-		state->parent = this;
-		this->stateDescriptors.push_back(state);
-	}
+	bool match(DisplayNode* node, Specifier& weight);
 
 	string toString(int depth = 0);
 

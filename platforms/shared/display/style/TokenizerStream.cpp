@@ -5,6 +5,10 @@ namespace Style {
 
 using std::string;
 
+//------------------------------------------------------------------------------
+// MARK: Public API
+//------------------------------------------------------------------------------
+
 TokenizerStream::TokenizerStream(const string &input) : input(input) {
 	this->length = static_cast<size_t>(input.size());
 	this->lower = this->getLowerBound(input);

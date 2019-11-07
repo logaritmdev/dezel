@@ -29,6 +29,8 @@ private:
 	bool parseChildDescriptor(TokenList& tokens, Descriptor* descriptor);
 	bool parseStyleDescriptor(TokenList& tokens, Descriptor* descriptor);
 	bool parseStateDescriptor(TokenList& tokens, Descriptor* descriptor);
+	bool parseVariable(TokenList& tokens, Stylesheet* stylesheet);
+	bool parseSelector(TokenList& tokens, Descriptor* descriptor);
 	bool parseProperty(TokenList& tokens, Descriptor* descriptor);
 
 	Descriptor* parseDescriptor(TokenList& tokens);

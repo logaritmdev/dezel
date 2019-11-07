@@ -17,6 +17,10 @@ RelativeLayoutResolver::RelativeLayoutResolver(DisplayNode* node)
 	this->node = node;
 }
 
+//------------------------------------------------------------------------------
+// MARK: Private API
+//------------------------------------------------------------------------------
+
 bool
 RelativeLayoutResolver::hasInvalidSize(DisplayNode* child)
 {
@@ -296,6 +300,10 @@ RelativeLayoutResolver::shrinkNodesHorizontally(const vector<DisplayNode*> &node
 		}
 	}
 }
+
+//------------------------------------------------------------------------------
+// MARK: Public API
+//------------------------------------------------------------------------------
 
 void
 RelativeLayoutResolver::measure(DisplayNode* child, double &remainingW, double &remainingH, double &remainder)

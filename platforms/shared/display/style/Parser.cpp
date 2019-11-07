@@ -31,16 +31,8 @@ Parser::Parser(Stylesheet* stylesheet, Tokenizer* tokenizer) : stylesheet(styles
 
 	do {
 
-		auto variable = this->parseVariable(tokens);
-
-		if (variable) {
-			stylesheet->addVariable(variable);
-			continue;
-		}
-
-		if (this->parseDescriptor(tokens, stylesheet)) {
-			continue;
-		}
+		if (this->parseVariable(tokens, stylesheet)) continue;
+		if (this->parseDescriptor(tokens, stylesheet)) continue;
 
 		if (tokens.getCurrTokenType() == kTokenTypeEnd) {
 			return;
@@ -55,6 +47,10 @@ Parser::Parser(Stylesheet* stylesheet, Tokenizer* tokenizer) : stylesheet(styles
 
 	} while (tokens.hasNextToken());
 }
+
+//------------------------------------------------------------------------------
+// MARK: Private API
+//------------------------------------------------------------------------------
 
 bool
 Parser::parseDescriptor(TokenList& tokens, Stylesheet* target)
@@ -122,6 +118,33 @@ Parser::parseChildDescriptor(TokenList& tokens, Descriptor* target)
 }
 
 bool
+Parser::parseVariable(TokenList& tokens, Stylesheet* target)
+{
+	auto result = this->parseVariable(tokens);
+
+	if (result) {
+		target->addVariable(result);
+		return true;
+	}
+
+	return false;
+}
+
+bool
+Parser::parseSelector(TokenList& tokens, Descriptor* target)
+{
+	auto result = this->parseSelector(tokens);
+
+	if (result) {
+		target->selector = result;
+		target->selector->descriptor = target;
+		return true;
+	}
+
+	return false;
+}
+
+bool
 Parser::parseProperty(TokenList& tokens, Descriptor* target)
 {
 	auto result = this->parseProperty(tokens);
@@ -144,8 +167,8 @@ Parser::parseDescriptor(TokenList& tokens)
 
 	auto descriptor = new Descriptor();
 
-	descriptor->selector = this->parseSelector(tokens);
-
+	this->parseSelector(tokens, descriptor);
+	
 	tokens.skipSpace();
 
 	this->assertTokenType(tokens, kTokenTypeCurlyBracketOpen);
@@ -202,6 +225,7 @@ Parser::parseStyleDescriptor(TokenList& tokens)
 
 	selector->head = fragment;
 	selector->tail = fragment;
+
 	fragment->style = name;
 
 	descriptor->selector = selector;
@@ -251,6 +275,7 @@ Parser::parseStateDescriptor(TokenList& tokens)
 
 	selector->head = fragment;
 	selector->tail = fragment;
+
 	fragment->state = name;
 
 	descriptor->selector = selector;
@@ -365,6 +390,8 @@ Parser::parseSelector(TokenList& tokens)
 
 		if (fragment) {
 
+			fragment->selector = selector;
+
 			if (selector->head == nullptr &&
 				selector->tail == nullptr) {
 
@@ -379,16 +406,6 @@ Parser::parseSelector(TokenList& tokens)
 			}
 
 			selector->offset = tokens.getCurrToken().getOffset();
-
-			if (fragment->type.size())
-				selector->weight += 1;
-			if (fragment->name.size())
-				selector->weight += 10;
-			if (fragment->style.size())
-				selector->weight += 100;
-			if (fragment->state.size())
-				selector->weight += 100;
-
 			selector->length++;
 
 			continue;
@@ -706,6 +723,10 @@ Parser::unexpectedToken(TokenList &tokens)
 		row
 	);
 }
+
+//------------------------------------------------------------------------------
+// MARK: Public API
+//------------------------------------------------------------------------------
 
 }
 }

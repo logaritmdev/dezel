@@ -1,36 +1,57 @@
 #ifndef Selector_h
 #define Selector_h
 
-#include <set>
 #include <string>
+#include <vector>
+
+namespace Dezel {
+	class DisplayNode;
+}
 
 namespace Dezel {
 namespace Style {
 
-using std::set;
 using std::string;
-using std::sort;
+using std::vector;
 
-class Selector;
 class Parser;
 class Stylesheet;
+class Selector;
+class Specifier;
 
 class Fragment {
 
 private:
 
+	Selector* selector = nullptr;
+
+	Fragment* parent = nullptr;
 	Fragment* prev = nullptr;
 	Fragment* next = nullptr;
 
 	string name = "";
 	string type = "";
-	string style = ""; // for style at-rule
-	string state = ""; // for state at-rule
+	string style = "";
+	string state = "";
+
+	bool matchName(DisplayNode* node, Specifier& weight);
+	bool matchType(DisplayNode* node, Specifier& weight);
+	bool matchStyle(DisplayNode* node, Specifier& weight);
+	bool matchState(DisplayNode* node, Specifier& weight);
 
 public:
 
 	friend class Parser;
 	friend class Stylesheet;
+	friend class Descriptor;
+
+	Selector* getSelector() const {
+		return this->selector;
+	}
+
+	Fragment* getParent() const {
+		return this->prev ? this->prev : this->parent;
+	}
 
 	Fragment* getPrev() const {
 		return this->prev;
@@ -55,6 +76,16 @@ public:
 	const string& getState() const {
 		return this->state;
 	}
+
+	bool isStyle() const {
+		return this->style.length() > 0;
+	}
+
+	bool isState() const {
+		return this->state.length() > 0;
+	}
+
+	bool match(DisplayNode* node, Specifier& weight);
 
 	string toString(int depth = 0);
 

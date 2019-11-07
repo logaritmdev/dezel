@@ -3,6 +3,10 @@
 namespace Dezel {
 namespace Style {
 
+//------------------------------------------------------------------------------
+// MARK: Public API
+//------------------------------------------------------------------------------
+
 NullValue::NullValue() : Value(kValueTypeNull, kValueUnitNone)
 {
 

@@ -6,6 +6,9 @@ namespace Style {
 using std::to_string;
 using std::stod;
 
+//------------------------------------------------------------------------------
+// MARK: Public API
+//------------------------------------------------------------------------------
 
 NumberValue::NumberValue(double value, ValueUnit unit) : Value(kValueTypeNumber, unit), value(value)
 {
