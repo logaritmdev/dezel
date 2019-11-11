@@ -26,7 +26,7 @@ public class JavaScriptProperty: NSObject {
 	 * @since 0.7.0
 	 */
 	public var type: JavaScriptPropertyType {
-		return self.value.type
+		return self.currentValue.type
 	}
 
 	/**
@@ -35,7 +35,7 @@ public class JavaScriptProperty: NSObject {
 	 * @since 0.7.0
 	 */
 	public var unit: JavaScriptPropertyUnit {
-		return self.value.unit
+		return self.currentValue.unit
 	}
 
 	/**
@@ -44,7 +44,7 @@ public class JavaScriptProperty: NSObject {
 	 * @since 0.7.0
 	 */
 	public var string: String {
-		return self.value.string
+		return self.currentValue.string
 	}
 
 	/**
@@ -53,7 +53,7 @@ public class JavaScriptProperty: NSObject {
 	 * @since 0.7.0
 	 */
 	public var number: Double {
-		return self.value.number
+		return self.currentValue.number
 	}
 
 	/**
@@ -62,7 +62,7 @@ public class JavaScriptProperty: NSObject {
 	 * @since 0.7.0
 	 */
 	public var boolean: Bool {
-		return self.value.boolean
+		return self.currentValue.boolean
 	}
 
 	/**
@@ -131,7 +131,14 @@ public class JavaScriptProperty: NSObject {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private var value: JavaScriptPropertyValue
+	private var currentValue: JavaScriptPropertyValue
+
+	/**
+	 * @property initial
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private var initialValue: JavaScriptPropertyValue
 
 	/**
 	 * @property handler
@@ -150,7 +157,8 @@ public class JavaScriptProperty: NSObject {
 	 * @since 0.7.0
 	 */
 	public init(handler: JavaScriptPropertyHandler? = nil) {
-		self.value = JavaScriptPropertyValue()
+		self.currentValue = JavaScriptPropertyValue()
+		self.initialValue = self.currentValue
 		self.handler = handler
 	}
 
@@ -160,7 +168,8 @@ public class JavaScriptProperty: NSObject {
 	 * @since 0.7.0
 	 */
 	public init(string: String, handler: JavaScriptPropertyHandler? = nil) {
-		self.value = JavaScriptPropertyStringValue(value: string)
+		self.currentValue = JavaScriptPropertyStringValue(value: string)
+		self.initialValue = self.currentValue
 		self.handler = handler
 	}
 
@@ -170,7 +179,8 @@ public class JavaScriptProperty: NSObject {
 	 * @since 0.7.0
 	 */
 	public init(number: Double, handler: JavaScriptPropertyHandler? = nil) {
-		self.value = JavaScriptPropertyNumberValue(value: number)
+		self.currentValue = JavaScriptPropertyNumberValue(value: number)
+		self.initialValue = self.currentValue
 		self.handler = handler
 	}
 
@@ -180,7 +190,8 @@ public class JavaScriptProperty: NSObject {
 	 * @since 0.7.0
 	 */
 	public init(number: Double, unit: JavaScriptPropertyUnit, handler: JavaScriptPropertyHandler? = nil) {
-		self.value = JavaScriptPropertyNumberValue(value: number, unit: unit)
+		self.currentValue = JavaScriptPropertyNumberValue(value: number, unit: unit)
+		self.initialValue = self.currentValue
 		self.handler = handler
 	}
 
@@ -190,7 +201,8 @@ public class JavaScriptProperty: NSObject {
 	 * @since 0.7.0
 	 */
 	public init(boolean: Bool, handler: JavaScriptPropertyHandler? = nil) {
-		self.value = JavaScriptPropertyBooleanValue(value: boolean)
+		self.currentValue = JavaScriptPropertyBooleanValue(value: boolean)
+		self.initialValue = self.currentValue
 		self.handler = handler
 	}
 
@@ -227,11 +239,11 @@ public class JavaScriptProperty: NSObject {
 	}
 
 	/**
-	 * Resets this property's value to null.
+	 * Resets this property's value to null or its initial value.
 	 * @method reset
 	 * @since 0.7.0
 	 */
-	public func reset(lock: AnyObject? = nil) {
+	public func reset(lock: AnyObject? = nil, initial: Bool = false) {
 
 		if isLocked(self.lock, key: lock) {
 			return
@@ -239,9 +251,20 @@ public class JavaScriptProperty: NSObject {
 
 		self.lock = lock
 
-		if (self.isNull == false) {
-			self.update()
-			self.change()
+		if (initial) {
+
+			if (self.equals(self.initialValue) == false) {
+				self.update(self.initialValue)
+				self.change();
+			}
+
+		} else {
+
+			if (self.isNull == false) {
+				self.update()
+				self.change()
+			}
+
 		}
 	}
 
@@ -289,7 +312,7 @@ public class JavaScriptProperty: NSObject {
 
 		}
 
-		self.value.store(value)
+		self.currentValue.store(value)
 	}
 
 	/**
@@ -373,8 +396,36 @@ public class JavaScriptProperty: NSObject {
 	 * @method equals
 	 * @since 0.7.0
 	 */
+	public func equals(_ value: JavaScriptPropertyValue) -> Bool {
+
+		switch (self.type) {
+
+			case .null:
+				return value.type == .null
+
+			case .string:
+				return value.equals(self.string)
+
+			case .number:
+				return value.equals(self.number)
+
+			case .boolean:
+				return value.equals(self.boolean)
+
+			default:
+				break;
+		}
+
+		return self.currentValue === value
+	}
+
+	/**
+	 * Indicate whether this property's value is a specified JavaScript value.
+	 * @method equals
+	 * @since 0.7.0
+	 */
 	public func equals(_ value: JavaScriptValue) -> Bool {
-		return self.value.equals(value)
+		return self.currentValue.equals(value)
 	}
 
 	/**
@@ -383,7 +434,7 @@ public class JavaScriptProperty: NSObject {
 	 * @since 0.7.0
 	 */
 	public func equals(_ value: String) -> Bool {
-		return self.value.equals(value)
+		return self.currentValue.equals(value)
 	}
 
 	/**
@@ -392,7 +443,7 @@ public class JavaScriptProperty: NSObject {
 	 * @since 0.7.0
 	 */
 	public func equals(_ value: Double) -> Bool {
-		return self.value.equals(value)
+		return self.currentValue.equals(value)
 	}
 
 	/**
@@ -401,7 +452,7 @@ public class JavaScriptProperty: NSObject {
 	 * @since 0.7.0
 	 */
 	public func equals(_ value: Double, unit: JavaScriptPropertyUnit) -> Bool {
-		return self.value.equals(value, unit: unit)
+		return self.currentValue.equals(value, unit: unit)
 	}
 
 	/**
@@ -410,7 +461,7 @@ public class JavaScriptProperty: NSObject {
 	 * @since 0.7.0
 	 */
 	public func equals(_ value: Bool) -> Bool {
-		return self.value.equals(value)
+		return self.currentValue.equals(value)
 	}
 
 	/**
@@ -419,7 +470,7 @@ public class JavaScriptProperty: NSObject {
 	 * @since 0.7.0
 	 */
 	public func cast<T>(_ type: T.Type) -> T? {
-		return self.value.cast(type)
+		return self.currentValue.cast(type)
 	}
 
 	//--------------------------------------------------------------------------
@@ -432,7 +483,7 @@ public class JavaScriptProperty: NSObject {
 	 * @hidden
 	 */
 	open func toHandle(_ context: JavaScriptContext) -> JSValueRef? {
-		return self.value.toHandle(context)
+		return self.currentValue.toHandle(context)
 	}
 
 	//--------------------------------------------------------------------------
@@ -445,7 +496,16 @@ public class JavaScriptProperty: NSObject {
 	 * @hidden
 	 */
 	private func update() {
-		self.value = JavaScriptPropertyValue()
+		self.currentValue = JavaScriptPropertyValue()
+	}
+
+	/**
+	 * @method update
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private func update(_ value: JavaScriptPropertyValue) {
+		self.currentValue = value
 	}
 
 	/**
@@ -454,7 +514,7 @@ public class JavaScriptProperty: NSObject {
 	 * @hidden
 	 */
 	private func update(_ value: JavaScriptValue) {
-		self.value = JavaScriptPropertyRawValue(value: value)
+		self.currentValue = JavaScriptPropertyRawValue(value: value)
 	}
 
 	/**
@@ -463,7 +523,7 @@ public class JavaScriptProperty: NSObject {
 	 * @hidden
 	 */
 	private func update(_ value: String) {
-		self.value = JavaScriptPropertyStringValue(value: value)
+		self.currentValue = JavaScriptPropertyStringValue(value: value)
 	}
 
 	/**
@@ -472,7 +532,7 @@ public class JavaScriptProperty: NSObject {
 	 * @hidden
 	 */
 	private func update(_ value: Double) {
-		self.value = JavaScriptPropertyNumberValue(value: value)
+		self.currentValue = JavaScriptPropertyNumberValue(value: value)
 	}
 
 	/**
@@ -481,7 +541,7 @@ public class JavaScriptProperty: NSObject {
 	 * @hidden
 	 */
 	private func update(_ value: Double, unit: JavaScriptPropertyUnit) {
-		self.value = JavaScriptPropertyNumberValue(value: value, unit: unit)
+		self.currentValue = JavaScriptPropertyNumberValue(value: value, unit: unit)
 	}
 
 	/**
@@ -490,7 +550,7 @@ public class JavaScriptProperty: NSObject {
 	 * @hidden
 	 */
 	private func update(_ value: Bool) {
-		self.value = JavaScriptPropertyBooleanValue(value: value)
+		self.currentValue = JavaScriptPropertyBooleanValue(value: value)
 	}
 
 	/**

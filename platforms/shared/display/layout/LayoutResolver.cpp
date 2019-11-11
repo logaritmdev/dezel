@@ -21,6 +21,12 @@ LayoutResolver::LayoutResolver(DisplayNode* node) : relativeLayout(node), absolu
 }
 
 void
+LayoutResolver::prepare()
+{
+	this->node->didPrepareLayout();
+}
+
+void
 LayoutResolver::resolve() {
 
 	if (this->node->children.size() == 0) {

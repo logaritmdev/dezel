@@ -21,6 +21,21 @@ Stylesheet::addDescriptor(Descriptor* descriptor)
 	}
 
 	if (descriptor->properties.size() > 0) {
+
+		if (descriptor->selector->tail->isStyle() ||
+			descriptor->selector->tail->isState()) {
+
+			if (descriptor->selector->tail->isStyle())
+				this->styleDescriptors.push_back(descriptor);
+			if (descriptor->selector->tail->isState())
+				this->stateDescriptors.push_back(descriptor);
+
+		} else {
+
+			this->typeDescriptors.push_back(descriptor);
+
+		}
+
 		this->ruleDescriptors.push_back(descriptor);
 	}
 
@@ -47,12 +62,6 @@ void
 Stylesheet::addFunction(Function* function)
 {
 	this->functions[function->name] = function;
-}
-
-void
-Stylesheet::find(DisplayNode* node, vector<Descriptor*>& result)
-{
-
 }
 
 }

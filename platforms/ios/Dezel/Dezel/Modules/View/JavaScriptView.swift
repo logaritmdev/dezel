@@ -1221,7 +1221,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	//--------------------------------------------------------------------------
-	// MARK: Methods - Layout Node Delegate
+	// MARK: Methods - Display Node Delegate
 	//--------------------------------------------------------------------------
 
 	/**
@@ -1231,6 +1231,15 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 */
 	open func measure(node: DisplayNode, in bounds: CGSize, min: CGSize, max: CGSize) -> CGSize? {
 		return self.measure(in: bounds, min: min, max: max)
+	}
+
+	/**
+	 * @inherited
+	 * @method didInvalidate
+	 * @since 0.7.0
+	 */
+	open func didInvalidate(node: DisplayNode) {
+		self.scheduleUpdate()
 	}
 
 	/**
@@ -1403,31 +1412,21 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 
 	/**
 	 * @inherited
-	 * @method didInvalidate
+	 * @method didPrepareLayout
 	 * @since 0.7.0
 	 */
-	open func didInvalidate(node: DisplayNode) {
-		self.scheduleUpdate()
+	open func didPrepareLayout(node: DisplayNode) {
+		self.delegate?.didPrepareLayout(view: self)
 	}
 
 	/**
 	 * @inherited
-	 * @method layoutBegan
-	 * @since 0.7.0
-	 */
-	open func layoutBegan(node: DisplayNode) {
-		self.delegate?.didBeginLayout(view: self)
-		self.callMethod("nativeOnLayoutBegan")
-	}
-
-	/**
-	 * @inherited
-	 * @method layoutEnded
+	 * @method didResolveLayout
 	 * @since 0.7.0
 	 */
 	open func didResolveLayout(node: DisplayNode) {
-		self.delegate?.didFinishLayout(view: self)
-		self.callMethod("nativeOnLayoutFinished")
+		self.delegate?.didResolveLayout(view: self)
+		self.callMethod("nativeOnLayout")
 	}
 
 	//--------------------------------------------------------------------------
@@ -6380,7 +6379,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 		}
 
 		if (callback.context.application.display.resolving) {
-			callback.context.application.display.requestLayoutEndedCallback(animate)
+			callback.context.application.display.registerResolveCallback(animate)
 			return
 		}
 
@@ -6569,7 +6568,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
  * @hidden
  */
 public protocol ViewDelegate: class {
-	func didBeginLayout(view: JavaScriptView)
-	func didFinishLayout(view: JavaScriptView)
+	func didPrepareLayout(view: JavaScriptView)
+	func didResolveLayout(view: JavaScriptView)
 	func didScroll(view: JavaScriptView)
 }

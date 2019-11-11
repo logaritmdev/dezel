@@ -21,6 +21,17 @@ public class Display {
 	}
 
 	/**
+	 * The display's scale.
+	 * @property scale
+	 * @since 0.7.0
+	 */
+	public var scale: Double = 1 {
+		willSet {
+			DisplaySetScale(self.handle, newValue)
+		}
+	}
+
+	/**
 	 * The display's viewport width.
 	 * @property viewportWidth
 	 * @since 0.7.0
@@ -39,17 +50,6 @@ public class Display {
 	public var viewportHeight: Double = 0 {
 		willSet {
 			DisplaySetViewportHeight(self.handle, newValue)
-		}
-	}
-
-	/**
-	 * The display's scale.
-	 * @property scale
-	 * @since 0.7.0
-	 */
-	public var scale: Double = 1 {
-		willSet {
-			DisplaySetScale(self.handle, newValue)
 		}
 	}
 
@@ -83,14 +83,14 @@ public class Display {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private var layoutBeganCallbacks: [(() -> Void)] = []
+	private var prepareCallbacks: [(() -> Void)] = []
 
 	/**
 	 * @property layoutEndedCallbacks
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private var layoutEndedCallbacks: [(() -> Void)] = []
+	private var dispatchCallback: [(() -> Void)] = []
 
 	//--------------------------------------------------------------------------
 	// MARK: Methods
@@ -102,7 +102,7 @@ public class Display {
 	 */
 	internal init() {
 		self.handle = DisplayCreate()
-		DisplaySetInvalidateCallback(self.handle, displayInvalidateCallback)
+		DisplaySetPrepareCallback(self.handle, displayPrepareCallback)
 		DisplaySetResolveCallback(self.handle, displayResolveCallback)
 		DisplaySetData(self.handle, UnsafeMutableRawPointer(value: self))
 	}
@@ -116,26 +116,32 @@ public class Display {
 		DisplayDelete(self.handle)
 	}
 
-	public func setVariable(_ name: String, value: String) {
-	
+	/**
+	 * Resolves the entire display.
+	 * @method resolve
+	 * @since 0.7.0
+	 */
+	public func resolve() {
+		DisplayResolve(self.handle)
 	}
 
 	/**
 	 * Requests a callback that will be executed when the global layout begins.
-	 * @method requestLayoutBeganCallback
+	 * @method registerPrepareCallback
 	 * @since 0.7.0
 	 */
-	public func requestLayoutBeganCallback(_ callback: @escaping () -> Void) {
-		self.layoutBeganCallbacks.append(callback)
+
+	public func registerPrepareCallback(_ callback: @escaping () -> Void) {
+		self.prepareCallbacks.append(callback)
 	}
 
 	/**
 	 * Requests a callback that will be executed when the global layout finishes.
-	 * @method requestLayoutEndedCallback
+	 * @method registerResolveCallback
 	 * @since 0.7.0
 	 */
-	public func requestLayoutEndedCallback(_ callback: @escaping () -> Void) {
-		self.layoutEndedCallbacks.append(callback)
+	public func registerResolveCallback(_ callback: @escaping () -> Void) {
+		self.dispatchCallback.append(callback)
 	}
 
 	//--------------------------------------------------------------------------
@@ -143,20 +149,20 @@ public class Display {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method layoutBegan
+	 * @method didPrepare
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	internal func layoutBegan() {
+	internal func didPrepare() {
 		self.dispatchLayoutBeganEvent()
 	}
 
 	/**
-	 * @method layoutEnded
+	 * @method didResolve
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	internal func layoutEnded() {
+	internal func didResolve() {
 		self.dispatchLayoutEndedEvent()
 	}
 
@@ -166,8 +172,8 @@ public class Display {
 	 * @hidden
 	 */
 	internal func dispatchLayoutBeganEvent() {
-		self.layoutBeganCallbacks.forEach { $0() }
-		self.layoutBeganCallbacks.removeAll()
+		self.prepareCallbacks.forEach { $0() }
+		self.prepareCallbacks.removeAll()
 	}
 
 	/**
@@ -176,29 +182,29 @@ public class Display {
 	 * @hidden
 	 */
 	internal func dispatchLayoutEndedEvent() {
-		self.layoutEndedCallbacks.forEach { $0() }
-		self.layoutEndedCallbacks.removeAll()
+		self.dispatchCallback.forEach { $0() }
+		self.dispatchCallback.removeAll()
 	}
 }
 
 /**
- * @const displayInvalidateCallback
+ * @const displayPrepareCallback
  * @since 0.7.0
  * @hidden
  */
-private let displayInvalidateCallback: @convention(c) (DisplayRef?) -> Void = { ptr in
-//	if let display = DisplayGetData(ptr).value as? Display {
-//		display.layoutBegan()
-//	}
+private let displayPrepareCallback: @convention(c) (DisplayRef?) -> Void = { ptr in
+	if let display = DisplayGetData(ptr).value as? Display {
+		display.didPrepare()
+	}
 }
 
 /**
- * @const layoutEndedCallback
+ * @const displayResolveCallback
  * @since 0.7.0
  * @hidden
  */
 private let displayResolveCallback: @convention(c) (DisplayRef?) -> Void = { ptr in
-//	if let display = DisplayGetData(ptr).value as? Display {
-//		display.layoutEnded()
-//	}
+	if let display = DisplayGetData(ptr).value as? Display {
+		display.didResolve()
+	}
 }

@@ -50,6 +50,7 @@ public:
 		this->relativeLayout.measure(node, remainingW, remainingH, remainder);
 	}
 
+	void prepare();
 	void resolve();
 };
 

@@ -1,7 +1,7 @@
 #ifndef Rule_h
 #define Rule_h
 
-#include "Specifier.h"
+#include "Importance.h"
 
 #include <string>
 

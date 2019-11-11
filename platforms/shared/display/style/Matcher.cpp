@@ -11,11 +11,6 @@ namespace Style {
 
 using std::sort;
 
-Matcher::Matcher(Stylesheet* stylesheet)
-{
-	this->stylesheet = stylesheet;
-}
-
 //------------------------------------------------------------------------------
 // MARK: Private API
 //------------------------------------------------------------------------------
@@ -34,19 +29,13 @@ Matcher::compare(const Match& a, const Match& b)
 }
 
 bool
-Matcher::match(DisplayNode* node, vector<Match>& matches)
-{
-	return this->match(node, matches, this->stylesheet->getRuleDescriptors());
-}
-
-bool
 Matcher::match(DisplayNode* node, vector<Match>& matches, const vector<Descriptor*>& descriptors)
 {
 	bool matched = false;
 
 	for (auto descriptor : descriptors) {
 
-		Specifier importance;
+		Importance importance;
 
 		if (descriptor->match(node, importance)) {
 

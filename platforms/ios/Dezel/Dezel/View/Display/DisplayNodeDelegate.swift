@@ -8,11 +8,25 @@ import Foundation
 public protocol DisplayNodeDelegate: AnyObject {
 
 	/**
+	 * Returns the property using its name.
+	 * @method getProperty
+	 * @since 0.7.0
+	 */
+	func getProperty(_ name: String) -> JavaScriptProperty?
+
+	/**
 	 * Called when the node needs to be measured manually.
 	 * @method measure
 	 * @since 0.7.0
 	 */
 	func measure(node: DisplayNode, in: CGSize, min: CGSize, max: CGSize) -> CGSize?
+
+	/**
+	 * Called when the node is invalidated.
+	 * @method didInvalidate
+	 * @since 0.7.0
+	 */
+	func didInvalidate(node: DisplayNode)
 
 	/**
 	 * Called when the node's size is resolved.
@@ -64,9 +78,17 @@ public protocol DisplayNodeDelegate: AnyObject {
 	func didResolvePadding(node: DisplayNode)
 
 	/**
-	 * Called when the node's layout has been resolved.
+	 * Called before the node's layout is resolved.
+	 * @method didPrepareLayout
+	 * @since 0.7.0
+	 */
+	func didPrepareLayout(node: DisplayNode)
+
+	/**
+	 * Called when the node's layout is resolved.
 	 * @method didResolveLayout
 	 * @since 0.7.0
 	 */
 	func didResolveLayout(node: DisplayNode)
+
 }

@@ -53,11 +53,21 @@ private:
 	bool updated = false;
 	bool resolving = false;
 
-	DisplayInvalidateCallback invalidateCallback = nullptr;
-   	DisplayResolveCallback resolveCallback = nullptr;
+	DisplayCallback invalidateCallback = nullptr;
+	DisplayCallback prepareCallback = nullptr;
+   	DisplayCallback resolveCallback = nullptr;
 
-	void didInvalidate();
-	void didResolve();
+	void didPrepare() {
+		if (this->prepareCallback) {
+			this->prepareCallback(reinterpret_cast<DisplayRef>(this));
+		}
+	}
+
+	void didResolve() {
+		if (this->resolveCallback) {
+			this->resolveCallback(reinterpret_cast<DisplayRef>(this));
+		}
+	}
 
 public:
 
@@ -76,11 +86,11 @@ public:
 
 	void setStylesheet(Stylesheet* stylesheet);
 
-	void setInvalidateCallback(DisplayInvalidateCallback callback) {
-		this->invalidateCallback = callback;
+	void setPrepareCallback(DisplayCallback callback) {
+		this->prepareCallback = callback;
 	}
 
-	void setResolveCallback(DisplayResolveCallback callback) {
+	void setResolveCallback(DisplayCallback callback) {
 		this->resolveCallback = callback;
 	}
 

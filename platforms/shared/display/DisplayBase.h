@@ -28,6 +28,13 @@ typedef struct OpaqueDisplayNode* DisplayNodeRef;
 typedef struct OpaqueDisplayNodeProperty* DisplayNodePropertyRef;
 
 /**
+ * @typedef DisplayNodePropertyRef
+ * @since 0.7.0
+ * @hidden
+ */
+typedef struct OpaqueDisplayNodePropertyValue* DisplayNodePropertyValueRef;
+
+/**
  * The node anchor types.
  * @type DisplayNodeSizeType
  * @since 0.7.0
@@ -257,35 +264,37 @@ typedef enum {
 } DisplayNodePaddingUnit;
 
 /**
- * The display node property type.
- * @typeOf DisplayNodePropertyType
+ * The display node property value type.
+ * @typeOf DisplayNodePropertyValueType
  * @since 0.7.0
  */
-typedef enum {
-	kDisplayNodePropertyTypeNull = 0,
-	kDisplayNodePropertyTypeString = 1,
-	kDisplayNodePropertyTypeNumber = 2,
-	kDisplayNodePropertyTypeBoolean = 3,
-} DisplayNodePropertyType;
+typedef enum DisplayNodePropertyValueType {
+	kDisplayNodePropertyValueTypeNull,
+	kDisplayNodePropertyValueTypeString,
+	kDisplayNodePropertyValueTypeNumber,
+	kDisplayNodePropertyValueTypeBoolean,
+	kDisplayNodePropertyValueTypeFunction,
+	kDisplayNodePropertyValueTypeVariable
+} DisplayNodePropertyValueType;
 
 /**
- * The display node property unit.
- * @typeOf DisplayNodePropertyUnit
+ * The display node property value unit.
+ * @typeOf DisplayNodePropertyValueUnit
  * @since 0.7.0
  */
 typedef enum {
-	kDisplayNodePropertyUnitPX = 0,
-	kDisplayNodePropertyUnitPC = 1,
-	kDisplayNodePropertyUnitVW = 2,
-	kDisplayNodePropertyUnitVH = 3,
-	kDisplayNodePropertyUnitPW = 4,
-	kDisplayNodePropertyUnitPH = 5,
-	kDisplayNodePropertyUnitCW = 6,
-	kDisplayNodePropertyUnitCH = 7,
-	kDisplayNodePropertyUnitDeg = 8,
-	kDisplayNodePropertyUnitRad = 9,
-	kDisplayNodePropertyUnitNone = 10
-} DisplayNodePropertyUnit;
+	kDisplayNodePropertyValueUnitNone,
+	kDisplayNodePropertyValueUnitPX,
+	kDisplayNodePropertyValueUnitPC,
+	kDisplayNodePropertyValueUnitVW,
+	kDisplayNodePropertyValueUnitVH,
+	kDisplayNodePropertyValueUnitPW,
+	kDisplayNodePropertyValueUnitPH,
+	kDisplayNodePropertyValueUnitCW,
+	kDisplayNodePropertyValueUnitCH,
+	kDisplayNodePropertyValueUnitDeg,
+	kDisplayNodePropertyValueUnitRad
+} DisplayNodePropertyValueUnit;
 
 /**
  * A measured size structure.
@@ -298,18 +307,11 @@ typedef struct DisplayNodeMeasuredSize {
 } DisplayNodeMeasuredSize;
 
 /**
-* The callback when the display is invalidated.
-* @typedef DisplayResolveCallback
-* @since 0.7.0
-*/
-typedef void (*DisplayInvalidateCallback)(DisplayRef display);
-
-/**
  * The callback when the display is resolved.
  * @typedef DisplayResolveCallback
  * @since 0.7.0
  */
-typedef void (*DisplayResolveCallback)(DisplayRef display);
+typedef void (*DisplayCallback)(DisplayRef display);
 
 /**
  * The node callback called when the node needs to be measured.
@@ -323,7 +325,7 @@ typedef void (*DisplayNodeMeasureCallback)(DisplayNodeRef node, DisplayNodeMeasu
  * @typedef DisplayNodeResolveCallback
  * @since 0.7.0
  */
-typedef void (*DisplayNodeResolveCallback)(DisplayNodeRef node);
+typedef void (*DisplayNodeCallback)(DisplayNodeRef node);
 
 /**
  * The node callback called when the node needs to be measured.
@@ -333,10 +335,10 @@ typedef void (*DisplayNodeResolveCallback)(DisplayNodeRef node);
 typedef void (*DisplayNodeMeasureCallback)(DisplayNodeRef node, DisplayNodeMeasuredSize* size, double w, double h, double minw, double maxw, double minh, double maxh);
 
 /**
- * The node resolve callback.
- * @typedef DisplayNodeResolveCallback
+ * The node callback called when the node needs to update a property.
+ * @typedef DisplayNodeUpdateCallback
  * @since 0.7.0
  */
-typedef void (*DisplayNodeResolveCallback)(DisplayNodeRef node);
+typedef void (*DisplayNodeUpdateCallback)(DisplayNodeRef node, DisplayNodePropertyRef property, const char* name);
 
 #endif

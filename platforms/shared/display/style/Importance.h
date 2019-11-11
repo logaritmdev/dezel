@@ -8,14 +8,14 @@ namespace Style {
 
 using std::string;
 
-struct Specifier {
+struct Importance {
 
 	int type = 0;
 	int name = 0;
 	int style = 0;
 	int state = 0;
 
-	bool operator == (const Specifier& b) const  {
+	bool operator == (const Importance& b) const  {
 		return (
 			this->style == b.style &&
 			this->state == b.state &&
@@ -24,7 +24,7 @@ struct Specifier {
 		);
 	}
 
-	bool operator > (const Specifier& b) const {
+	bool operator > (const Importance& b) const {
 		if (this->style > b.style) return true;
 		if (this->state > b.state) return true;
 		if (this->name > b.name) return true;
@@ -32,7 +32,7 @@ struct Specifier {
 		return false;
 	}
 
-	bool operator < (const Specifier& b) const {
+	bool operator < (const Importance& b) const {
 		if (this->style < b.style) return true;
 		if (this->state < b.state) return true;
 		if (this->name < b.name) return true;

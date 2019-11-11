@@ -3,9 +3,12 @@
 #include "DisplayNode.h"
 #include "LayoutResolver.h"
 #include "Descriptor.h"
+#include "PropertyList.h"
 #include "Selector.h"
 #include "Fragment.h"
 #include "Matcher.h"
+#include "Match.h"
+#include "Trait.h"
 #include "InvalidStructureException.h"
 #include "InvalidOperationException.h"
 
@@ -25,7 +28,15 @@ using Layout::clamp;
 using Layout::round;
 using Layout::scale;
 
+using Style::PropertyList;
 using Style::Matcher;
+using Style::Match;
+using Style::Trait;
+using Style::kTraitAll;
+using Style::kTraitName;
+using Style::kTraitType;
+using Style::kTraitStyle;
+using Style::kTraitState;
 
 DisplayNode::DisplayNode() : layout(this)
 {
@@ -47,35 +58,46 @@ DisplayNode::DisplayNode(Display* display, string type) : DisplayNode(display)
 //------------------------------------------------------------------------------
 
 void
+DisplayNode::explode(string type)
+{
+	string token;
+	stringstream stream(type);
+
+	while (getline(stream, token, ' ')) {
+		this->types.push_back(token);
+	}
+}
+
+void // TODO Find proper name
 DisplayNode::appendElement(DisplayNode* node)
 {
 	auto it = find(
-		this->elements.begin(),
-		this->elements.end(),
+		this->entities.begin(),
+		this->entities.end(),
 		node
 	);
 
-	if (it != this->elements.end()) {
+	if (it != this->entities.end()) {
 		return;
 	}
 
-	this->elements.push_back(node);
+	this->entities.push_back(node);
 }
 
 void
 DisplayNode::removeElement(DisplayNode* node)
 {
 	auto it = find(
-		this->elements.begin(),
-		this->elements.end(),
+		this->entities.begin(),
+		this->entities.end(),
 		node
 	);
 
-	if (it == this->elements.end()) {
+	if (it == this->entities.end()) {
 		return;
 	}
 
-	this->elements.erase(it);
+	this->entities.erase(it);
 }
 
 //------------------------------------------------------------------------------
@@ -599,10 +621,19 @@ DisplayNode::invalidateParent()
 }
 
 void
-DisplayNode::invalidateStyle()
+DisplayNode::invalidateTraits(Trait trait)
 {
-	if (this->invalidStyle == false) {
-		this->invalidStyle = true;
+	if (this->traits & trait) {
+		return;
+	}
+
+	if (this->forceResolveStyle && trait & kTraitStyle) this->forceResolveStyle = false;
+	if (this->forceResolveState && trait & kTraitState) this->forceResolveState = false;
+
+	this->traits = this->traits | trait;
+
+	if (this->invalidTraits == false) {
+		this->invalidTraits = true;
 		this->invalidate();
 	}
 }
@@ -692,9 +723,9 @@ DisplayNode::inheritsWrappedHeight()
 }
 
 void
-DisplayNode::resolveLinks()
+DisplayNode::resolveHolder()
 {
-	if (this->master) {
+	if (this->holder) {
 		return;
 	}
 
@@ -723,26 +754,86 @@ DisplayNode::resolveLinks()
 
 	master->appendElement(this);
 
-	this->master = master;
+	this->holder = master;
 }
 
 void
-DisplayNode::resolveStyle()
+DisplayNode::resolveTraits()
 {
-	if (this->invalidStyle == false) {
-		return;
-	}
-
 	if (this->display->stylesheet == nullptr) {
 		return;
 	}
-	
 
-	this->invalidStyle = false;
+	if (this->invalidTraits == false &&
+		this->forceResolveStyle == false &&
+		this->forceResolveState == false) {
+		return;
+	}
+
+	Matcher matcher;
+	
+	vector<Match> matches;
+
+	if (this->traits & kTraitName ||
+		this->traits & kTraitType) {
+		matcher.match(this, matches, this->display->stylesheet->getTypeDescriptors());
+	}
+
+	if (this->traits & kTraitStyle) {
+		matcher.match(this, matches, this->display->stylesheet->getStyleDescriptors());
+	}
+
+	if (this->traits & kTraitState) {
+		matcher.match(this, matches, this->display->stylesheet->getStateDescriptors());
+	}
+
+	PropertyList properties;
+
+	for (auto match : matches) {
+		properties.merge(match.getDescriptor()->getProperties());
+	}
+
+	for (auto property : properties) {
+		this->update(
+			property->getName(),
+			property
+		);
+	}
+
+	/*
+	 * This node was given a style or a state that might affect children
+	 * down the line. When this happens we set a flag indicating that
+	 * even if the node is not invalid, it must
+	 */
+	if (this->invalidTraits & kTraitStyle ||
+		this->invalidTraits & kTraitState) {
+
+		for (auto child : this->entities) {
+
+			if (this->invalidTraits & kTraitStyle) {
+				child->forceResolveStyle = true;
+			}
+
+			if (this->invalidTraits & kTraitState) {
+				child->forceResolveState = true;
+			}
+		}
+	}
+
+	/*
+	TODO
+	Déterminer si le style / state a été appliqué et résolvé
+	Mettre les flags
+	 */
+
+	this->traits = kTraitAll;
+	this->forceResolveStyle = false;
+	this->forceResolveState = false;
+	this->invalidTraits = false;
 }
 
 void
-DisplayNode::resolveFrame()
+DisplayNode::resolveLayout()
 {
 	/*
 	 * Resolving a node means computing its border, padding inner size,
@@ -813,7 +904,8 @@ DisplayNode::resolveFrame()
 	this->resolveInnerSize();
 	this->resolveContentSize();
 	this->resolvePadding();
-	this->resolveLayout();
+
+	this->performLayout();
 }
 
 void
@@ -969,18 +1061,9 @@ DisplayNode::resolvePadding()
 }
 
 void
-DisplayNode::resolveLayout()
-{
-	if (this->invalidLayout) {
-		this->invalidLayout = false;
-		this->layout.resolve();
-	}
-}
-
-void
 DisplayNode::resolveWrapper(double w, double h)
 {
-	this->resolveStyle();
+	this->resolveTraits();
 
 	if (this->resolvedSize) {
 
@@ -1053,7 +1136,7 @@ DisplayNode::resolveWrapper(double w, double h)
 		this->contentAlignment = kDisplayNodeContentAlignmentStart;
 		this->contentDisposition = kDisplayNodeContentDispositionStart;
 
-		this->resolveLayout();
+		this->performLayout();
 
 		this->contentAlignment = contentAlignment;
 		this->contentDisposition = contentDisposition;
@@ -1157,6 +1240,19 @@ DisplayNode::resolveWrapper(double w, double h)
 	this->measuredInnerHeightChanged = false;
 	this->measuredContentWidthChanged = false;
 	this->measuredContentHeightChanged = false;
+}
+
+void
+DisplayNode::performLayout()
+{
+	if (this->invalidLayout == false) {
+		return;
+	}
+
+	this->layout.prepare();
+	this->layout.resolve();
+
+	this->invalidLayout = false;
 }
 
 double
@@ -1679,84 +1775,6 @@ DisplayNode::measureContentHeight()
 	return round(value, this->display->scale);
 }
 
-void
-DisplayNode::measure(DisplayNodeMeasuredSize* size, double w, double h, double minw, double maxw, double minh, double maxh)
-{
-	if (this->measureSizeCallback) {
-		this->measureSizeCallback(reinterpret_cast<DisplayNodeRef>(this), size, w, h, minw, maxw, minh, maxh);
-	}
-}
-
-void
-DisplayNode::didResolveSize()
-{
-	if (this->resolveSizeCallback) {
-		this->resolveSizeCallback(reinterpret_cast<DisplayNodeRef>(this));
-	}
-}
-
-void
-DisplayNode::didResolveOrigin()
-{
-	if (this->resolveOriginCallback) {
-		this->resolveOriginCallback(reinterpret_cast<DisplayNodeRef>(this));
-	}
-}
-
-void
-DisplayNode::didResolveInnerSize()
-{
-	if (this->resolveInnerSizeCallback) {
-		this->resolveInnerSizeCallback(reinterpret_cast<DisplayNodeRef>(this));
-	}
-}
-
-void
-DisplayNode::didResolveContentSize()
-{
-	if (this->resolveContentSizeCallback) {
-		this->resolveContentSizeCallback(reinterpret_cast<DisplayNodeRef>(this));
-	}
-}
-
-void
-DisplayNode::didResolveMargin()
-{
-	if (this->resolveMarginCallback) {
-		this->resolveMarginCallback(reinterpret_cast<DisplayNodeRef>(this));
-	}
-}
-
-void
-DisplayNode::didResolveBorder()
-{
-	if (this->resolveBorderCallback) {
-		this->resolveBorderCallback(reinterpret_cast<DisplayNodeRef>(this));
-	}
-}
-
-void
-DisplayNode::didResolvePadding()
-{
-	if (this->resolvePaddingCallback) {
-		this->resolvePaddingCallback(reinterpret_cast<DisplayNodeRef>(this));
-	}
-}
-
-void
-DisplayNode::didResolveLayout()
-{
-	if (this->resolveLayoutCallback) {
-		this->resolveLayoutCallback(reinterpret_cast<DisplayNodeRef>(this));
-	}
-}
-
-void
-DisplayNode::didResolveStyle()
-{
-	// TODO
-}
-
 //------------------------------------------------------------------------------
 // MARK: Public API
 //------------------------------------------------------------------------------
@@ -1766,27 +1784,19 @@ DisplayNode::setName(string name)
 {
 	if (this->name != name) {
 		this->name = name;
-		this->invalidateStyle();
+		this->invalidateTraits(Style::kTraitName);
 	}
 }
 
 void
 DisplayNode::setType(string type)
 {
-	if (this->type == type) {
-		return;
+	if (this->type != type) {
+		this->type = type;
+		this->explode(type);
+		this->invalidateTraits(Style::kTraitType);
 	}
 
-	this->type = type;
-
-	string token;
-	stringstream stream(type);
-
-	while (getline(stream, token, ' ')) {
-		this->types.push_back(token);
-	}
-
-	this->invalidateStyle();
 }
 
 void
@@ -1804,7 +1814,7 @@ DisplayNode::appendStyle(string style)
 
 	this->styles.push_back(style);
 
-	this->invalidateStyle();
+	this->invalidateTraits(Style::kTraitStyle);
 }
 
 void
@@ -1822,7 +1832,7 @@ DisplayNode::removeStyle(string style)
 
 	this->styles.erase(it);
 
-	this->invalidateStyle();
+	this->invalidateTraits(Style::kTraitStyle);
 }
 
 void
@@ -1840,7 +1850,7 @@ DisplayNode::appendState(string state)
 
 	this->states.push_back(state);
 
-	this->invalidateStyle();
+	this->invalidateTraits(Style::kTraitState);
 }
 
 void
@@ -1858,7 +1868,7 @@ DisplayNode::removeState(string state)
 
 	this->states.erase(it);
 
-	this->invalidateStyle();
+	this->invalidateTraits(Style::kTraitState);
 }
 
 void
@@ -2587,6 +2597,15 @@ DisplayNode::insertChild(DisplayNode* child, int index)
 
 	child->parent = this;
 
+	if (child->name.size())
+		child->invalidateTraits(kTraitName);
+	if (child->type.size())
+		child->invalidateTraits(kTraitType);
+	if (child->styles.size())
+		child->invalidateTraits(kTraitStyle);
+	if (child->states.size())
+		child->invalidateTraits(kTraitState);
+
 	this->invalidateLayout();
 
 	const auto w = this->width.type;
@@ -2617,9 +2636,9 @@ DisplayNode::removeChild(DisplayNode* child)
 		return;
 	}
 
-	if (child->master) {
-		child->master->removeElement(child);
-		child->master = nullptr;
+	if (child->holder) {
+		child->holder->removeElement(child);
+		child->holder = nullptr;
 	}
 
 	child->parent = nullptr;
@@ -2657,9 +2676,9 @@ DisplayNode::resolve()
 
 	this->resolving = true;
 
-	this->resolveLinks();
-	this->resolveStyle();
-	this->resolveFrame();
+	this->resolveHolder();
+	this->resolveTraits();
+	this->resolveLayout();
 
 	this->resolving = false;
 

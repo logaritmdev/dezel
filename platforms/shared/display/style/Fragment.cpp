@@ -1,7 +1,7 @@
 #include "Fragment.h"
 #include "Selector.h"
 #include "Descriptor.h"
-#include "Specifier.h"
+#include "Importance.h"
 #include "DisplayNode.h"
 
 namespace Dezel {
@@ -16,14 +16,14 @@ using std::distance;
 //------------------------------------------------------------------------------
 
 bool
-Fragment::matchName(DisplayNode* node, Specifier& weight)
+Fragment::matchName(DisplayNode* node, Importance& importance)
 {
 	if (this->name == "") {
 
 		/*
 		 * This fragment des not specify a name. Consider it a match
 		 * since this is technically positive, but do not increase
-		 * the weight.
+		 * the importance.
 		 */
 
 		return true;
@@ -32,14 +32,14 @@ Fragment::matchName(DisplayNode* node, Specifier& weight)
 	auto matched = node->getName() == this->name;
 
 	if (matched) {
-		weight.name += 1;
+		importance.name += 1;
 	}
 
 	return matched;
 }
 
 bool
-Fragment::matchType(DisplayNode* node, Specifier& weight)
+Fragment::matchType(DisplayNode* node, Importance& importance)
 {
 	if (this->type == "") {
 
@@ -49,7 +49,7 @@ Fragment::matchType(DisplayNode* node, Specifier& weight)
 		 * will automatically be views.
 		 */
 
-		weight.type += 1;
+		importance.type += 1;
 
 		return true;
 	}
@@ -76,25 +76,25 @@ Fragment::matchType(DisplayNode* node, Specifier& weight)
 		/*
 		 * Since types supports inheritance, we want to make sure that a base
 		 * types such as View does not override an extended type such as
-		 * Button. To do this, we increase the weight by the matched type
+		 * Button. To do this, we increase the importance by the matched type
 		 * to the first items in the node's type vector.
 		 */
 
-		weight.type += static_cast<int>(types.size() - distance(beg, it));
+		importance.type += static_cast<int>(types.size() - distance(beg, it));
 	}
 
 	return matched;
 }
 
 bool
-Fragment::matchStyle(DisplayNode* node, Specifier& weight)
+Fragment::matchStyle(DisplayNode* node, Importance& importance)
 {
 	if (this->style == "") {
 
 		/*
 		 * This fragment des not specify a style. Consider it a match
 		 * since this is technically positive, but do not increase
-		 * the weight.
+		 * the importance.
 		 */
 
 		return true;
@@ -108,7 +108,7 @@ Fragment::matchStyle(DisplayNode* node, Specifier& weight)
 
 	/*
 	 * Try to find the fragment style within the node style list. If found,
-	 * increase the style weight.
+	 * increase the style importance.
 	 */
 
 	auto beg = styles.begin();
@@ -123,21 +123,21 @@ Fragment::matchStyle(DisplayNode* node, Specifier& weight)
 	auto matched = it != end;
 
 	if (matched) {
-		weight.style += 1;
+		importance.style += 1;
 	}
 
 	return matched;
 }
 
 bool
-Fragment::matchState(DisplayNode* node, Specifier& weight)
+Fragment::matchState(DisplayNode* node, Importance& importance)
 {
 	if (this->state == "") {
 
 		/*
 		 * This fragment des not specify a style. Consider it a match
 		 * since this is technically positive, but do not increase
-		 * the weight.
+		 * the importance.
 		 */
 
 		return true;
@@ -151,7 +151,7 @@ Fragment::matchState(DisplayNode* node, Specifier& weight)
 
 	/*
 	 * Try to find the fragment state within the node state list. If found,
-	 * increase the state weight.
+	 * increase the state importance.
 	 */
 
 	auto beg = states.begin();
@@ -166,7 +166,7 @@ Fragment::matchState(DisplayNode* node, Specifier& weight)
 	auto matched = it != end;
 
 	if (matched) {
-		weight.state += 1;
+		importance.state += 1;
 	}
 
 	return matched;
@@ -177,24 +177,24 @@ Fragment::matchState(DisplayNode* node, Specifier& weight)
 //------------------------------------------------------------------------------
 
 bool
-Fragment::match(DisplayNode* node, Specifier& weight)
+Fragment::match(DisplayNode* node, Importance& importance)
 {
-	Specifier w;
+	Importance i;
 
-	auto matchedName = this->matchName(node, w);
-	auto matchedType = this->matchType(node, w);
-	auto matchedStyle = this->matchStyle(node, w);
-	auto matchedState = this->matchState(node, w);
+	auto matchedName = this->matchName(node, i);
+	auto matchedType = this->matchType(node, i);
+	auto matchedStyle = this->matchStyle(node, i);
+	auto matchedState = this->matchState(node, i);
 
 	if (matchedName &&
 		matchedType &&
 		matchedStyle &&
 		matchedState) {
 
-		weight.name += w.name;
-		weight.type += w.type;
-		weight.style += w.style;
-		weight.state += w.state;
+		importance.name += i.name;
+		importance.type += i.type;
+		importance.style += i.style;
+		importance.state += i.state;
 
 		return true;
 	}

@@ -13,6 +13,9 @@
 #include "LayoutResolver.h"
 #include "RelativeLayoutResolver.h"
 #include "AbsoluteLayoutResolver.h"
+#include "PropertyList.h"
+#include "Property.h"
+#include "Trait.h"
 
 #include <float.h>
 #include <string>
@@ -25,6 +28,8 @@ namespace Style {
 	class Descriptor;
 	class Selector;
 	class Fragment;
+	class Property;
+	class PropertyList;
 }
 
 using std::string;
@@ -36,6 +41,9 @@ using Layout::RelativeLayoutResolver;
 using Style::Descriptor;
 using Style::Selector;
 using Style::Fragment;
+using Style::PropertyList;
+using Style::Property;
+using Style::Trait;
 
 typedef enum {
 	kDisplayNodeFlagNone   = 0,
@@ -58,10 +66,10 @@ private:
 
 	Display* display = nullptr;
 
+	DisplayNode* holder = nullptr;
 	DisplayNode* parent = nullptr;
-	DisplayNode* master = nullptr;
     vector<DisplayNode*> children;
-    vector<DisplayNode*> elements;
+    vector<DisplayNode*> entities;
 
 	string name = "";
 	string type = "";
@@ -69,6 +77,9 @@ private:
 	vector<string> types;
 	vector<string> styles;
 	vector<string> states;
+
+	PropertyList initialProperties;
+	PropertyList currentProperties;
 
 	bool visible = true;
 
@@ -111,6 +122,7 @@ private:
 	double shrinkFactor = 0;
 
 	bool invalid = false;
+
    	bool invalidSize = false;
 	bool invalidOrigin = false;
 	bool invalidMargin = false;
@@ -120,17 +132,25 @@ private:
 	bool invalidContentOrigin = false;
 	bool invalidPadding = false;
 	bool invalidLayout = false;
-	bool invalidStyle = false;
 
-	DisplayNodeMeasureCallback measureSizeCallback = nullptr;
-	DisplayNodeResolveCallback resolveSizeCallback = nullptr;
-	DisplayNodeResolveCallback resolveOriginCallback = nullptr;
-	DisplayNodeResolveCallback resolveInnerSizeCallback = nullptr;
-	DisplayNodeResolveCallback resolveContentSizeCallback = nullptr;
-	DisplayNodeResolveCallback resolveMarginCallback = nullptr;
-	DisplayNodeResolveCallback resolveBorderCallback = nullptr;
-	DisplayNodeResolveCallback resolvePaddingCallback = nullptr;
-	DisplayNodeResolveCallback resolveLayoutCallback = nullptr;
+	bool invalidTraits = false;
+	bool forceResolveStyle = false;
+	bool forceResolveState = false;
+
+	Trait traits = Style::kTraitAll;
+
+	DisplayNodeCallback invalidateCallback = nullptr;
+	DisplayNodeCallback resolveSizeCallback = nullptr;
+	DisplayNodeCallback resolveOriginCallback = nullptr;
+	DisplayNodeCallback resolveInnerSizeCallback = nullptr;
+	DisplayNodeCallback resolveContentSizeCallback = nullptr;
+	DisplayNodeCallback resolveMarginCallback = nullptr;
+	DisplayNodeCallback resolveBorderCallback = nullptr;
+	DisplayNodeCallback resolvePaddingCallback = nullptr;
+	DisplayNodeCallback prepareLayoutCallback = nullptr;
+	DisplayNodeCallback resolveLayoutCallback = nullptr;
+	DisplayNodeMeasureCallback measureCallback = nullptr;
+	DisplayNodeUpdateCallback updateCallback = nullptr;
 
 	LayoutResolver layout;
 
@@ -155,7 +175,6 @@ private:
 	double measuredLeft = 0;
 	double measuredRight = 0;
 	double measuredBottom = 0;
-
 	double measuredWidth = 0;
 	double measuredHeight = 0;
     double measuredInnerWidth = 0;
@@ -180,6 +199,7 @@ private:
 	double lastMeasuredWidth = 0;
 	double lastMeasuredHeight = 0;
 
+	void explode(string type);
 	void appendElement(DisplayNode* node);
 	void removeElement(DisplayNode* node);
 
@@ -195,6 +215,7 @@ protected:
 	bool hasInvalidLayout();
 
 	void invalidate();
+
 	void invalidateInnerSize();
 	void invalidateContentSize();
 	void invalidateContentOrigin();
@@ -202,26 +223,23 @@ protected:
 	void invalidateBorder();
 	void invalidatePadding();
 	void invalidateParent();
-	void invalidateStyle();
+
+	void invalidateTraits(Trait trait);
 
 	bool inheritsWrappedWidth();
 	bool inheritsWrappedHeight();
 
-	void resolveLinks();
-	void resolveStyle();
-	void resolveFrame();
+	void resolveHolder();
+	void resolveTraits();
+	void resolveLayout();
 	void resolveMargin();
 	void resolveBorder();
 	void resolveInnerSize();
 	void resolveContentSize();
 	void resolvePadding();
-	void resolveLayout();
-
 	void resolveWrapper(double width, double height);
 
-	bool hasNewParent() {
-		return this->resolvedParent != this->parent;
-	}
+	void performLayout();
 
 	double measureAnchorTop();
 	double measureAnchorLeft();
@@ -242,18 +260,85 @@ protected:
 	double measureContentWidth();
 	double measureContentHeight();
 
-	void measure(DisplayNodeMeasuredSize* size, double w, double h, double minw, double maxw, double minh, double maxh);
+	bool hasNewParent() {
+		return this->resolvedParent != this->parent;
+	}
 
-	void didInvalidate();
-	void didResolveSize();
-	void didResolveOrigin();
-	void didResolveInnerSize();
-	void didResolveContentSize();
-	void didResolveMargin();
-	void didResolveBorder();
-	void didResolvePadding();
-	void didResolveLayout();
-	void didResolveStyle();
+	void didInvalidate() {
+		if (this->invalidateCallback) {
+			this->invalidateCallback(reinterpret_cast<DisplayNodeRef>(this));
+		}
+	}
+
+	void didResolveSize() {
+		if (this->resolveSizeCallback) {
+			this->resolveSizeCallback(reinterpret_cast<DisplayNodeRef>(this));
+		}
+	}
+
+	void didResolveOrigin() {
+		if (this->resolveOriginCallback) {
+			this->resolveOriginCallback(reinterpret_cast<DisplayNodeRef>(this));
+		}
+	}
+
+	void didResolveInnerSize() {
+		if (this->resolveInnerSizeCallback) {
+			this->resolveInnerSizeCallback(reinterpret_cast<DisplayNodeRef>(this));
+		}
+	}
+
+	void didResolveContentSize() {
+		if (this->resolveContentSizeCallback) {
+			this->resolveContentSizeCallback(reinterpret_cast<DisplayNodeRef>(this));
+		}
+	}
+
+	void didResolveMargin() {
+		if (this->resolveMarginCallback) {
+			this->resolveMarginCallback(reinterpret_cast<DisplayNodeRef>(this));
+		}
+	}
+
+	void didResolveBorder() {
+		if (this->resolveBorderCallback) {
+			this->resolveBorderCallback(reinterpret_cast<DisplayNodeRef>(this));
+		}
+	}
+
+	void didResolvePadding() {
+		if (this->resolvePaddingCallback) {
+			this->resolvePaddingCallback(reinterpret_cast<DisplayNodeRef>(this));
+		}
+	}
+
+	void didPrepareLayout() {
+		if (this->prepareLayoutCallback) {
+			this->prepareLayoutCallback(reinterpret_cast<DisplayNodeRef>(this));
+		}
+	}
+
+	void didResolveLayout() {
+		if (this->resolveLayoutCallback) {
+			this->resolveLayoutCallback(reinterpret_cast<DisplayNodeRef>(this));
+		}
+	}
+
+	void measure(DisplayNodeMeasuredSize* size, double w, double h, double minw, double maxw, double minh, double maxh) {
+		if (this->measureCallback) {
+			this->measureCallback(reinterpret_cast<DisplayNodeRef>(this), size, w, h, minw, maxw, minh, maxh);
+		}
+	}
+
+	void update(string name, Property* property) {
+		if (this->updateCallback) {
+			this->updateCallback(
+				reinterpret_cast<DisplayNodeRef>(this),
+				reinterpret_cast<DisplayNodePropertyRef>(property),
+				name.c_str()
+			);
+		}
+	}
 
 public:
 
@@ -280,8 +365,8 @@ public:
 		this->flags = this->flags | kDisplayNodeFlagOpaque;
 	}
 
-	DisplayNode* getMaster() const {
-		return this->master;
+	DisplayNode* getHolder() const {
+		return this->holder;
 	}
 
 	DisplayNode* getParent() const {
@@ -292,8 +377,8 @@ public:
 		return this->children;
 	}
 
-	const vector<DisplayNode*>& getElements() const {
-		return this->elements;
+	const vector<DisplayNode*>& getEntities() const {
+		return this->entities;
 	}
 
 	void setName(string name);
@@ -395,45 +480,53 @@ public:
 	void setMinPaddingBottom(double min);
 	void setMaxPaddingBottom(double max);
 
-	void setMeasureSizeCallback(DisplayNodeMeasureCallback callback) {
-		this->measureSizeCallback = callback;
+	void setInvalidateCallback(DisplayNodeCallback callback) {
+		this->invalidateCallback = callback;
 	}
 
-	void setResolveSizeCallback(DisplayNodeResolveCallback callback) {
+	void setResolveSizeCallback(DisplayNodeCallback callback) {
 		this->resolveSizeCallback = callback;
 	}
 
-	void setResolveOriginCallback(DisplayNodeResolveCallback callback) {
+	void setResolveOriginCallback(DisplayNodeCallback callback) {
 		this->resolveOriginCallback = callback;
 	}
 
-	void setResolveInnerSizeCallback(DisplayNodeResolveCallback callback) {
+	void setResolveInnerSizeCallback(DisplayNodeCallback callback) {
 		this->resolveInnerSizeCallback = callback;
 	}
 
-	void setResolveContentSizeCallback(DisplayNodeResolveCallback callback) {
+	void setResolveContentSizeCallback(DisplayNodeCallback callback) {
 		this->resolveContentSizeCallback = callback;
 	}
 
-	void setResolveMarginCallback(DisplayNodeResolveCallback callback) {
+	void setResolveMarginCallback(DisplayNodeCallback callback) {
 		this->resolveMarginCallback = callback;
 	}
 
-	void setResolveBorderCallback(DisplayNodeResolveCallback callback) {
+	void setResolveBorderCallback(DisplayNodeCallback callback) {
 		this->resolveBorderCallback = callback;
 	}
 
-	void setResolvePaddingCallback(DisplayNodeResolveCallback callback) {
+	void setResolvePaddingCallback(DisplayNodeCallback callback) {
 		this->resolvePaddingCallback = callback;
 	}
 
-	void setResolveLayoutCallback(DisplayNodeResolveCallback callback) {
+	void setPrepareLayoutCallback(DisplayNodeCallback callback) {
+		this->prepareLayoutCallback = callback;
+	}
+
+	void setResolveLayoutCallback(DisplayNodeCallback callback) {
 		this->resolveLayoutCallback = callback;
 	}
 
-//	void setResolveStyleCallback(DisplayNodeResolveStyleCallback callback) {
-//
-//	}
+	void setMeasureCallback(DisplayNodeMeasureCallback callback) {
+		this->measureCallback = callback;
+	}
+
+	void setUpdateCallback(DisplayNodeUpdateCallback callback) {
+		this->updateCallback = callback;
+	}
 
 	double getMeasuredTop() const {
 		return this->measuredTop;
@@ -576,7 +669,7 @@ public:
 	void invalidateSize();
 	void invalidateOrigin();
 	void invalidateLayout();
-
+	
 	void measure();
 	void resolve();
 

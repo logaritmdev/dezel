@@ -1,5 +1,5 @@
 
-#include "Dictionary.h"
+#include "PropertyList.h"
 
 namespace Dezel {
 namespace Style {
@@ -9,9 +9,12 @@ namespace Style {
 //------------------------------------------------------------------------------
 
 void
-Dictionary::set(string name, Property* property)
+PropertyList::set(string name, Property* property)
 {
-	if (this->vals.count(name) > 0) {
+// TODO
+// Si une propriété est ajouté par après mais uqe la key existe déja
+// on enleve mais on fait toujours un push back
+	if (this->vals.find(name) != this->vals.end()) {
 		this->vals[name] = property;
 		return;
 	}
@@ -22,6 +25,15 @@ Dictionary::set(string name, Property* property)
 	this->keys[name] = position;
 	this->list.push_back(property);
 }
+
+void
+PropertyList::merge(const PropertyList& dictionary)
+{
+	for (auto property : dictionary.list) {
+		this->set(property->getName(), property);
+	}
+}
+
 
 }
 }

@@ -25,6 +25,7 @@ public:
 	friend class Stylesheet;
 
 	StringValue(string value);
+	StringValue(const char* value);
 
 	const string& getValue() const {
 		return this->value;

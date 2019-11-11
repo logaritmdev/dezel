@@ -618,57 +618,75 @@ DisplayNodeMeasure(DisplayNodeRef node)
 }
 
 void
-DisplayNodeSetMeasureSizeCallback(DisplayNodeRef node, DisplayNodeMeasureCallback callback)
+DisplayNodeSetInvalidateCallback(DisplayNodeRef node, DisplayNodeCallback callback)
 {
-	reinterpret_cast<DisplayNode*>(node)->setMeasureSizeCallback(callback);
+	reinterpret_cast<DisplayNode*>(node)->setInvalidateCallback(callback);
 }
 
 void
-DisplayNodeSetResolveSizeCallback(DisplayNodeRef node, DisplayNodeResolveCallback callback)
+DisplayNodeSetResolveSizeCallback(DisplayNodeRef node, DisplayNodeCallback callback)
 {
 	reinterpret_cast<DisplayNode*>(node)->setResolveSizeCallback(callback);
 }
 
 void
-DisplayNodeSetResolveOriginCallback(DisplayNodeRef node, DisplayNodeResolveCallback callback)
+DisplayNodeSetResolveOriginCallback(DisplayNodeRef node, DisplayNodeCallback callback)
 {
 	reinterpret_cast<DisplayNode*>(node)->setResolveOriginCallback(callback);
 }
 
 void
-DisplayNodeSetResolveInnerSizeCallback(DisplayNodeRef node, DisplayNodeResolveCallback callback)
+DisplayNodeSetResolveInnerSizeCallback(DisplayNodeRef node, DisplayNodeCallback callback)
 {
 	reinterpret_cast<DisplayNode*>(node)->setResolveInnerSizeCallback(callback);
 }
 
 void
-DisplayNodeSetResolveContentSizeCallback(DisplayNodeRef node, DisplayNodeResolveCallback callback)
+DisplayNodeSetResolveContentSizeCallback(DisplayNodeRef node, DisplayNodeCallback callback)
 {
 	reinterpret_cast<DisplayNode*>(node)->setResolveContentSizeCallback(callback);
 }
 
 void
-DisplayNodeSetResolveMarginCallback(DisplayNodeRef node, DisplayNodeResolveCallback callback)
+DisplayNodeSetResolveMarginCallback(DisplayNodeRef node, DisplayNodeCallback callback)
 {
 	reinterpret_cast<DisplayNode*>(node)->setResolveMarginCallback(callback);
 }
 
 void
-DisplayNodeSetResolveBorderCallback(DisplayNodeRef node, DisplayNodeResolveCallback callback)
+DisplayNodeSetResolveBorderCallback(DisplayNodeRef node, DisplayNodeCallback callback)
 {
 	reinterpret_cast<DisplayNode*>(node)->setResolveBorderCallback(callback);
 }
 
 void
-DisplayNodeSetResolvePaddingCallback(DisplayNodeRef node, DisplayNodeResolveCallback callback)
+DisplayNodeSetResolvePaddingCallback(DisplayNodeRef node, DisplayNodeCallback callback)
 {
 	reinterpret_cast<DisplayNode*>(node)->setResolvePaddingCallback(callback);
 }
 
 void
-DisplayNodeSetResolveLayoutCallback(DisplayNodeRef node, DisplayNodeResolveCallback callback)
+DisplayNodeSetPrepareLayoutCallback(DisplayNodeRef node, DisplayNodeCallback callback)
+{
+	reinterpret_cast<DisplayNode*>(node)->setPrepareLayoutCallback(callback);
+}
+
+void
+DisplayNodeSetResolveLayoutCallback(DisplayNodeRef node, DisplayNodeCallback callback)
 {
 	reinterpret_cast<DisplayNode*>(node)->setResolveLayoutCallback(callback);
+}
+
+void
+DisplayNodeSetMeasureCallback(DisplayNodeRef node, DisplayNodeMeasureCallback callback)
+{
+	reinterpret_cast<DisplayNode*>(node)->setMeasureCallback(callback);
+}
+
+void
+DisplayNodeSetUpdateCallback(DisplayNodeRef node, DisplayNodeUpdateCallback callback)
+{
+	reinterpret_cast<DisplayNode*>(node)->setUpdateCallback(callback);
 }
 
 void

@@ -83,10 +83,10 @@ using namespace Dezel::Style;
 		window->appendChild(screen);
 		screen->appendChild(button);
 
-		Matcher matcher(stylesheet);
+		Matcher matcher;
 
 		matches.clear();
-		matcher.match(button, matches);
+		matcher.match(button, matches, stylesheet->getRuleDescriptors());
 
 		XCTAssertEqual(matches.size(), 1);
 
@@ -127,10 +127,10 @@ using namespace Dezel::Style;
 		window->appendChild(screen);
 		screen->appendChild(button);
 
-		Matcher matcher(stylesheet);
+		Matcher matcher;
 
 		matches.clear();
-		matcher.match(button, matches);
+		matcher.match(button, matches, stylesheet->getRuleDescriptors());
 
 		XCTAssertEqual(matches.size(), 2);
 
@@ -187,10 +187,10 @@ using namespace Dezel::Style;
 		window->appendChild(screen);
 		screen->appendChild(button);
 
-		Matcher matcher(stylesheet);
+		Matcher matcher;
 
 		matches.clear();
-		matcher.match(button, matches);
+		matcher.match(button, matches, stylesheet->getRuleDescriptors());
 
 		XCTAssertEqual(matches.size(), 3);
 
@@ -267,10 +267,10 @@ using namespace Dezel::Style;
 		screen->appendChild(slider);
 		slider->appendChild(handle);
 
-		Matcher matcher(stylesheet);
+		Matcher matcher;
 
 		matches.clear();
-		matcher.match(button, matches);
+		matcher.match(button, matches, stylesheet->getRuleDescriptors());
 
 		XCTAssertEqual(matches.size(), 3);
 
@@ -297,7 +297,7 @@ using namespace Dezel::Style;
 		XCTAssertEqual(matches[2].importance.state, 0);
 
 		matches.clear();
-		matcher.match(handle, matches);
+		matcher.match(handle, matches, stylesheet->getRuleDescriptors());
 
 		XCTAssertEqual(matches.size(), 3);
 
@@ -365,10 +365,10 @@ using namespace Dezel::Style;
 		button->appendChild(label);
 		button->appendChild(image);
 
-		Matcher matcher(stylesheet);
+		Matcher matcher;
 
 		matches.clear();
-		matcher.match(label, matches);
+		matcher.match(label, matches, stylesheet->getRuleDescriptors());
 
 		XCTAssertEqual(matches.size(), 1);
 
@@ -380,7 +380,7 @@ using namespace Dezel::Style;
 		XCTAssertEqual(matches[0].importance.state, 0);
 
 		matches.clear();
-		matcher.match(image, matches);
+		matcher.match(image, matches, stylesheet->getRuleDescriptors());
 
 		XCTAssertEqual(matches.size(), 1);
 
@@ -444,10 +444,10 @@ using namespace Dezel::Style;
 		button->appendChild(label);
 		button->appendChild(image);
 
-		Matcher matcher(stylesheet);
+		Matcher matcher;
 
 		matches.clear();
-		matcher.match(label, matches);
+		matcher.match(label, matches, stylesheet->getRuleDescriptors());
 
 		XCTAssertEqual(matches.size(), 2);
 
@@ -519,10 +519,10 @@ using namespace Dezel::Style;
 		button->appendChild(label);
 		button->appendChild(image);
 
-		Matcher matcher(stylesheet);
+		Matcher matcher;
 
 		matches.clear();
-		matcher.match(label, matches);
+		matcher.match(label, matches, stylesheet->getRuleDescriptors());
 
 		XCTAssertEqual(matches.size(), 2);
 
@@ -602,10 +602,10 @@ using namespace Dezel::Style;
 		button->appendChild(label);
 		button->appendChild(image);
 
-		Matcher matcher(stylesheet);
+		Matcher matcher;
 
 		matches.clear();
-		matcher.match(label, matches);
+		matcher.match(label, matches, stylesheet->getRuleDescriptors());
 
 		XCTAssertEqual(matches.size(), 3);
 

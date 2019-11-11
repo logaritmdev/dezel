@@ -113,8 +113,8 @@ open class ApplicationController: UIViewController {
 			}
 		}
 		// Todo put in stylesheet object
-		self.display.setVariable("safe-area-top-inset", value: "\(insetT)px")
-		self.display.setVariable("safe-area-bottom-inset", value: "\(insetB)px")
+//		self.display.setVariable("safe-area-top-inset", value: "\(insetT)px")
+//		self.display.setVariable("safe-area-bottom-inset", value: "\(insetB)px")
 
 		self.context.attribute(kApplicationControllerKey, value: self)
 		self.context.global.property("_DEV_", boolean: self.isDev())

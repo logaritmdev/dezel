@@ -1,7 +1,7 @@
 #include "Descriptor.h"
 #include "Selector.h"
 #include "Fragment.h"
-#include "Specifier.h"
+#include "Importance.h"
 #include "DisplayNode.h"
 
 #include <iostream>
@@ -23,6 +23,79 @@ void
 Descriptor::setParentFragment(Descriptor* descriptor)
 {
 	descriptor->selector->head->parent = this->selector->tail;
+}
+
+bool
+Descriptor::matchNode(DisplayNode* node, Importance& importance)
+{
+	return this->selector->getTail()->match(node, importance);
+}
+
+bool
+Descriptor::matchPath(DisplayNode* node, Importance& importance)
+{
+	auto test = this->selector->getTail();
+
+	if (test->isStyle() ||
+		test->isState()) {
+
+		test = test->getParent();
+
+	} else {
+
+		test = test->getParent();
+		node = node->getParent();
+
+	}
+
+	if (test == nullptr) {
+		return true;
+	}
+
+	while (node) {
+
+		bool match = test->match(node, importance);
+
+		if (match == false) {
+
+			/*
+			 * The selector fragment didn't match the current node. Before
+			 * trying with the parent node, we must check whether the node is
+			 * the root of an opaque node.
+			 */
+
+			if (node->isOpaque() ||
+				node->isWindow()) {
+				break;
+			}
+
+			/*
+			 * Try the same selector fragment with the parent node.
+			 */
+
+			 node = node->getParent();
+
+			 continue;
+		}
+
+		if (test->isStyle() ||
+			test->isState()) {
+
+			test = test->getParent();
+
+		} else {
+
+			test = test->getParent();
+			node = node->getParent();
+
+		}
+
+		if (test == nullptr) {
+			return true;
+		}
+	}
+
+	return false;
 }
 
 //------------------------------------------------------------------------------
@@ -57,93 +130,12 @@ Descriptor::addStateDescriptor(Descriptor* state)
 }
 
 bool
-Descriptor::match(DisplayNode* node, Specifier& weight)
+Descriptor::match(DisplayNode* node, Importance& importance)
 {
-	auto root = node;
-	auto rule = this->selector->getTail();
-
-	if (rule == nullptr) {
-		return false;
-	}
-
-	while (rule && node) {
-
-		if (rule->match(node, weight) == false) {
-
-			/*
-			 * The rule didn't match the root node, the original node
-			 * given to this function. In this case, we know the whole
-			 * selector won't match.
-			 */
-
-			if (node == root) {
-				return false;
-			}
-
-			/*
-			 * The fragment didn't match the current node. Before trying with
-			 * the parent node, we must check whether the node is the root
-			 * of an opaque node.
-			 */
-
-			if (node->isOpaque() ||
-				node->isWindow()) {
-				return false;
-			}
-
-			/*
-			 * When a fragment does not match, we try the rule again with the
-			 * parent node.
-			 */
-
-			 node = node->getParent();
-
-			 if (node == nullptr) {
-				return false;
-			 }
-
-			 continue;
-		}
-
-		/*
-		 * The current rule is a style or state modifier thus not actual node
-		 * in the selector but some kind of modifier of the parent or ancestor
-		 * fragment. When this happens we need to go to the next parent rule
-		 * without going to the parent node.
-		 */
-
-		if (rule->isStyle() ||
-			rule->isState()) {
-
-			rule = rule->getParent();
-
-			if (rule == nullptr) {
-				return true;
-			}
-
-			continue;
-		}
-
-		/*
-		 * The fragment matched. We can try to match the next rule if any or
-		 * look into the parent descriptor if necessary.
-		 */
-
-		rule = rule->getParent();
-		node = node->getParent();
-
-		if (rule == nullptr) {
-			return true;
-		}
-
-		if (node == nullptr) {
-			return false;
-		}
-
-		continue;
-	}
-
-	return true;
+	return (
+		this->matchNode(node, importance) &&
+		this->matchPath(node, importance)
+	);
 }
 
 string

@@ -1,6 +1,8 @@
 #ifndef Selector_h
 #define Selector_h
 
+#include "Trait.h"
+
 #include <string>
 #include <vector>
 
@@ -17,7 +19,7 @@ using std::vector;
 class Parser;
 class Stylesheet;
 class Selector;
-class Specifier;
+class Importance;
 
 class Fragment {
 
@@ -34,10 +36,10 @@ private:
 	string style = "";
 	string state = "";
 
-	bool matchName(DisplayNode* node, Specifier& weight);
-	bool matchType(DisplayNode* node, Specifier& weight);
-	bool matchStyle(DisplayNode* node, Specifier& weight);
-	bool matchState(DisplayNode* node, Specifier& weight);
+	bool matchName(DisplayNode* node, Importance& importance);
+	bool matchType(DisplayNode* node, Importance& importance);
+	bool matchStyle(DisplayNode* node, Importance& importance);
+	bool matchState(DisplayNode* node, Importance& importance);
 
 public:
 
@@ -85,7 +87,7 @@ public:
 		return this->state.length() > 0;
 	}
 
-	bool match(DisplayNode* node, Specifier& weight);
+	bool match(DisplayNode* node, Importance& importance);
 
 	string toString(int depth = 0);
 

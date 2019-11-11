@@ -116,19 +116,19 @@ open class JavaScriptViewOptimizer : JavaScriptClass, JavaScriptView.Delegate {
 
 	/**
 	 * @inherited
-	 * @method didBeginLayout
+	 * @method didPrepareLayout
 	 * @since 0.7.0
 	 */
-	open func didBeginLayout(view: JavaScriptView) {
+	open func didPrepareLayout(view: JavaScriptView) {
 
 	}
 
 	/**
 	 * @inherited
-	 * @method didFinishLayout
+	 * @method didResolveLayout
 	 * @since 0.7.0
 	 */
-	open func didFinishLayout(view: JavaScriptView) {
+	open func didResolveLayout(view: JavaScriptView) {
 
 	}
 

@@ -722,67 +722,88 @@ void DisplayNodeResolve(DisplayNodeRef node);
 void DisplayNodeMeasure(DisplayNodeRef node);
 
 /**
- * Assigns the callback that is called when the node needs to retrieve its natural size.s
- * @function DisplayNodeSetMeasureSizeCallback
+ * Assigns the callback that is called when the node is invalidated.
+ * @function DisplayNodeSetInvalidateCallback
  * @since 0.7.0
  */
-void DisplayNodeSetMeasureSizeCallback(DisplayNodeRef node, DisplayNodeMeasureCallback callback);
+void DisplayNodeSetInvalidateCallback(DisplayNodeRef node, DisplayNodeCallback callback);
 
 /**
  * Assigns the callback that is called when the node size changes.
  * @function DisplayNodeSetResolveSizeCallback
  * @since 0.7.0
  */
-void DisplayNodeSetResolveSizeCallback(DisplayNodeRef node, DisplayNodeResolveCallback callback);
+void DisplayNodeSetResolveSizeCallback(DisplayNodeRef node, DisplayNodeCallback callback);
 
 /**
  * Assigns the callback that is called when the node position changes.
  * @function DisplayNodeSetResolveOriginCallback
  * @since 0.7.0
  */
-void DisplayNodeSetResolveOriginCallback(DisplayNodeRef node, DisplayNodeResolveCallback callback);
+void DisplayNodeSetResolveOriginCallback(DisplayNodeRef node, DisplayNodeCallback callback);
 
 /**
  * Assigns the callback that is called when the node inner size changes.
  * @function DisplayNodeSetResolveInnerSizeCallback
  * @since 0.7.0
  */
-void DisplayNodeSetResolveInnerSizeCallback(DisplayNodeRef node, DisplayNodeResolveCallback callback);
+void DisplayNodeSetResolveInnerSizeCallback(DisplayNodeRef node, DisplayNodeCallback callback);
 
 /**
  * Assigns the callback that is called when the node content size changes.
  * @function DisplayNodeSetResolveContentSizeCallback
  * @since 0.7.0
  */
-void DisplayNodeSetResolveContentSizeCallback(DisplayNodeRef node, DisplayNodeResolveCallback callback);
+void DisplayNodeSetResolveContentSizeCallback(DisplayNodeRef node, DisplayNodeCallback callback);
 
 /**
  * Assigns the callback that is called when the node margin changes.
  * @function DisplayNodeSetResolveMarginCallback
  * @since 0.7.0
  */
-void DisplayNodeSetResolveMarginCallback(DisplayNodeRef node, DisplayNodeResolveCallback callback);
+void DisplayNodeSetResolveMarginCallback(DisplayNodeRef node, DisplayNodeCallback callback);
 
 /**
  * Assigns the callback that is called when the node border changes.
  * @function DisplayNodeSetResolveBorderCallback
  * @since 0.7.0
  */
-void DisplayNodeSetResolveBorderCallback(DisplayNodeRef node, DisplayNodeResolveCallback callback);
+void DisplayNodeSetResolveBorderCallback(DisplayNodeRef node, DisplayNodeCallback callback);
 
 /**
  * Assigns the callback that is called when the node padding changes.
  * @function DisplayNodeSetResolvePaddingCallback
  * @since 0.7.0
  */
-void DisplayNodeSetResolvePaddingCallback(DisplayNodeRef node, DisplayNodeResolveCallback callback);
+void DisplayNodeSetResolvePaddingCallback(DisplayNodeRef node, DisplayNodeCallback callback);
 
 /**
- * Assigns the callback that is called once a node completes its layout.
- * @function DisplayNodeSetLayoutEndedCallback
+ * Assigns the callback that is called when the node begins its layout pass.
+ * @function DisplayNodeSetPrepareLayoutCallback
  * @since 0.7.0
  */
-void DisplayNodeSetResolveLayoutCallback(DisplayNodeRef node, DisplayNodeResolveCallback callback);
+void DisplayNodeSetPrepareLayoutCallback(DisplayNodeRef node, DisplayNodeCallback callback);
+
+/**
+ * Assigns the callback that is called when the node finishes its layout pass.
+ * @function DisplayNodeSetResolveLayoutCallback
+ * @since 0.7.0
+ */
+void DisplayNodeSetResolveLayoutCallback(DisplayNodeRef node, DisplayNodeCallback callback);
+
+/**
+ * Assigns the callback that is called when the node needs to retrieve its natural size.
+ * @function DisplayNodeSetMeasureCallback
+ * @since 0.7.0
+ */
+void DisplayNodeSetMeasureCallback(DisplayNodeRef node, DisplayNodeMeasureCallback callback);
+
+/**
+ * Assigns the callback that is called when a node needs to update a property.
+ * @function DisplayNodeSetUpdateCallback
+ * @since 0.7.0
+ */
+void DisplayNodeSetUpdateCallback(DisplayNodeRef node, DisplayNodeUpdateCallback callback);
 
 /**
  * Assigns the display node's user data.

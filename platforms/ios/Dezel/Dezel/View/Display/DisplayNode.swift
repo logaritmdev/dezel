@@ -282,7 +282,6 @@ open class DisplayNode {
 
 		DisplayNodeSetDisplay(self.handle, display.handle)
 
-		DisplayNodeSetMeasureSizeCallback(self.handle, displayNodeMeasureSizeCallback)
 		DisplayNodeSetResolveSizeCallback(self.handle, displayNodeResolveSizeCallback)
 		DisplayNodeSetResolveOriginCallback(self.handle, displayNodeResolveOriginCallback)
 		DisplayNodeSetResolveInnerSizeCallback(self.handle, displayNodeResolveInnerSizeCallback)
@@ -291,6 +290,8 @@ open class DisplayNode {
 		DisplayNodeSetResolveBorderCallback(self.handle, displayNodeResolveBorderCallback)
 		DisplayNodeSetResolvePaddingCallback(self.handle, displayNodeResolvePaddingCallback)
 		DisplayNodeSetResolveLayoutCallback(self.handle, displayNodeResolveLayoutCallback)
+		DisplayNodeSetMeasureCallback(self.handle, displayNodeMeasureSizeCallback)
+		DisplayNodeSetUpdateCallback(self.handle, displayNodeUpdateCallback);
 
 		DisplayNodeSetData(self.handle, UnsafeMutableRawPointer(unretained: self))
 	}
@@ -1723,7 +1724,7 @@ open class DisplayNode {
 	}
 
 	/**
-	 * Invalidates the node's size.
+	 * Invalidates the display node's size.
 	 * @method invalidateSize
 	 * @since 0.7.0
 	 */
@@ -1732,7 +1733,7 @@ open class DisplayNode {
 	}
 
 	/**
-	 * Invalidates the node's origin.
+	 * Invalidates the display node's origin.
 	 * @method invalidateOrigin
 	 * @since 0.7.0
 	 */
@@ -1741,7 +1742,7 @@ open class DisplayNode {
 	}
 
 	/**
-	 * Invalidates the node's layout.
+	 * Invalidates the display node's layout.
 	 * @method invalidateLayout
 	 * @since 0.7.0
 	 */
@@ -1750,7 +1751,7 @@ open class DisplayNode {
 	}
 
 	/**
-	 * Appends a node to the receiver's children list.
+	 * Appends a node to the display node's children list.
 	 * @method appendChild
 	 * @since 0.7.0
 	 */
@@ -1759,7 +1760,7 @@ open class DisplayNode {
 	}
 
 	/**
-	 * Inserts a node to the receiver's children list.
+	 * Inserts a node to the display node's children list.
 	 * @method insertChild
 	 * @since 0.7.0
 	 */
@@ -1768,7 +1769,7 @@ open class DisplayNode {
 	}
 
 	/**
-	 * Removes a node from the receiver's children list.
+	 * Removes a node from the display node's children list.
 	 * @method removeChild
 	 * @since 0.7.0
 	 */
@@ -1777,7 +1778,7 @@ open class DisplayNode {
 	}
 
 	/**
-	 * Resolves this node only.
+	 * Measure this display node.
 	 * @method measure
 	 * @since 0.7.0
 	 */
@@ -1786,7 +1787,7 @@ open class DisplayNode {
 	}
 
 	/**
-	 * Resolves this node and its hierarchy.
+	 * Resolves this display node and its hierarchy.
 	 * @method resolve
 	 * @since 0.7.0
 	 */
@@ -1801,6 +1802,24 @@ open class DisplayNode {
 	 */
 	internal func measure(in rect: CGSize, min: CGSize, max: CGSize) -> CGSize? {
 		return self.delegate?.measure(node: self, in: rect, min: min, max: max)
+	}
+
+	/**
+	 * Called when the display node needs to set a property on its delegate.
+	 * @method update
+	 * @since 0.7.0
+	 */
+	internal func update(name: String, property: DisplayNodePropertyRef?) {
+
+	}
+
+	/**
+	 * @method didInvalidate
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	internal func didInvalidate() {
+		self.delegate?.didInvalidate(node: self)
 	}
 
 	/**
@@ -1867,7 +1886,16 @@ open class DisplayNode {
 	}
 
 	/**
-	 * @method layoutEnded
+	 * @method didPrepareLayout
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	internal func didPrepareLayout() {
+		self.delegate?.didPrepareLayout(node: self)
+	}
+
+	/**
+	 * @method didResolveLayout
 	 * @since 0.7.0
 	 * @hidden
 	 */
@@ -1877,22 +1905,13 @@ open class DisplayNode {
 }
 
 /**
- * @const measureCallback
+ * @const displayNodeDidInvalidateCallback
  * @since 0.7.0
  * @hidden
  */
-private let displayNodeMeasureSizeCallback: @convention(c) (DisplayNodeRef?, UnsafeMutablePointer<DisplayNodeMeasuredSize>?, Double, Double, Double, Double, Double, Double) -> Void = { (ptr, res, w, h, minw, maxw, minh, maxh) in
-
+private let displayNodeDidInvalidateCallback: @convention(c) (DisplayNodeRef?) -> Void = { ptr in
 	if let node = DisplayNodeGetData(ptr).value as? DisplayNode {
-
-		let min = CGSize(width: minw, height: minh)
-		let max = CGSize(width: maxw, height: maxh)
-		let bounds = CGSize(width: w, height: h)
-
-		if let size = node.measure(in: bounds, min: min, max: max), let res = res {
-			res.pointee.width = Double(size.width)
-			res.pointee.height = Double(size.height)
-		}
+		node.didInvalidate()
 	}
 }
 
@@ -1974,6 +1993,17 @@ private let displayNodeResolvePaddingCallback: @convention(c) (DisplayNodeRef?) 
 }
 
 /**
+ * @const displayNodePrepareLayoutCallback
+ * @since 0.7.0
+ * @hidden
+ */
+private let displayNodePrepareLayoutCallback: @convention(c) (DisplayNodeRef?) -> Void = { ptr in
+	if let node = DisplayNodeGetData(ptr).value as? DisplayNode {
+		node.didPrepareLayout()
+	}
+}
+
+/**
  * @const displayNodeResolveLayoutCallback
  * @since 0.7.0
  * @hidden
@@ -1981,5 +2011,37 @@ private let displayNodeResolvePaddingCallback: @convention(c) (DisplayNodeRef?) 
 private let displayNodeResolveLayoutCallback: @convention(c) (DisplayNodeRef?) -> Void = { ptr in
 	if let node = DisplayNodeGetData(ptr).value as? DisplayNode {
 		node.didResolveLayout()
+	}
+}
+
+/**
+ * @const displayNodeMeasureSizeCallback
+ * @since 0.7.0
+ * @hidden
+ */
+private let displayNodeMeasureSizeCallback: @convention(c) (DisplayNodeRef?, UnsafeMutablePointer<DisplayNodeMeasuredSize>?, Double, Double, Double, Double, Double, Double) -> Void = { (ptr, res, w, h, minw, maxw, minh, maxh) in
+
+	if let node = DisplayNodeGetData(ptr).value as? DisplayNode {
+
+		let min = CGSize(width: minw, height: minh)
+		let max = CGSize(width: maxw, height: maxh)
+		let bounds = CGSize(width: w, height: h)
+
+		if let size = node.measure(in: bounds, min: min, max: max), let res = res {
+			res.pointee.width = Double(size.width)
+			res.pointee.height = Double(size.height)
+		}
+	}
+}
+
+/**
+ * @const displayNodePropertySetterCallback
+ * @since 0.7.0
+ * @hidden
+ */
+private let displayNodeUpdateCallback: @convention(c) (DisplayNodeRef?, DisplayNodePropertyRef?, UnsafePointer<Int8>?) -> Void = { ptr, property, name in
+	guard let name = name else { return }
+	if let node = DisplayNodeGetData(ptr).value as? DisplayNode {
+		node.update(name: name.string, property: property)
 	}
 }

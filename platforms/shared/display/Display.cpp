@@ -68,10 +68,7 @@ Display::setStylesheet(Stylesheet* stylesheet)
 void
 Display::invalidate()
 {
-	if (this->invalid == false) {
-		this->invalid = true;
-		this->didInvalidate();
-	}
+	this->invalid = true;
 }
 
 void
@@ -91,11 +88,15 @@ Display::resolve()
 
 	this->resolving = true;
 
+	this->didPrepare();
+
 	DisplayWalker walker(this->window);
 
 	while (walker.next()) {
 		walker.getNode()->resolve();
 	}
+
+	this->didResolve();
 
 	this->resolving = false;
 
@@ -103,24 +104,6 @@ Display::resolve()
 	this->viewportHeightChanged = false;
 
 	this->invalid = false;
-
-	this->didResolve();
-}
-
-void
-Display::didInvalidate()
-{
-	if (this->invalidateCallback) {
-		this->invalidateCallback(reinterpret_cast<DisplayRef>(this));
-	}
-}
-
-void
-Display::didResolve()
-{
-	if (this->resolveCallback) {
-		this->resolveCallback(reinterpret_cast<DisplayRef>(this));
-	}
 }
 
 }

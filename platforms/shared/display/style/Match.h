@@ -1,7 +1,7 @@
 #ifndef Match_h
 #define Match_h
 
-#include "Specifier.h"
+#include "Importance.h"
 
 namespace Dezel {
 namespace Style {
@@ -20,7 +20,7 @@ public:
 	friend class Matcher;
 	friend class Descriptor;
 
-	Specifier importance;
+	Importance importance;
 
 	Descriptor* getDescriptor() const {
 		return this->descriptor;

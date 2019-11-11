@@ -67,66 +67,6 @@ open class JavaScriptObject: JavaScriptValue {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Assigns a toValue to a JavaScript property.
-	 * @method setProperty
-	 * @since 0.7.0
-	 */
-	open func setProperty(_ name: String, value: JavaScriptValue?) {
-
-		if let property = self.property(for: name) {
-			property.reset(value)
-			return
-		}
-
-		self.property(name, value: value)
-	}
-
-	/**
-	 * Assigns a toValue to a JavaScript property.
-	 * @method setProperty
-	 * @since 0.7.0
-	 */
-	open func setProperty(_ name: String, string value: String) {
-
-		if let property = self.property(for: name) {
-			property.reset(value)
-			return
-		}
-
-		self.property(name, string: value)
-	}
-
-	/**
-	 * Assigns a toValue to a JavaScript property.
-	 * @method setProperty
-	 * @since 0.7.0
-	 */
-	open func setProperty(_ name: String, number value: Double, unit: JavaScriptPropertyUnit = .none) {
-
-		if let property = self.property(for: name) {
-			property.reset(value, unit: unit)
-			return
-		}
-
-		self.property(name, number: value)
-	}
-
-	/**
-	 * Assigns a toValue to a JavaScript property.
-	 * @method setProperty
-	 * @since 0.7.0
-	 */
-	open func setProperty(_ name: String, boolean value: Bool) {
-
-		if let property = self.property(for: name) {
-			property.reset(value)
-			return
-		}
-
-		self.property(name, boolean: value)
-	}
-
-	/**
 	 * Returns a JavaScript property.
 	 * @method getPropert
 	 * @since 0.7.0

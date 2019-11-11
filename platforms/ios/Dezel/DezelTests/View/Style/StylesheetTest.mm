@@ -4,7 +4,7 @@
 #include "Descriptor.h"
 #include "Selector.h"
 #include "Fragment.h"
-#include "Specifier.h"
+#include "Importance.h"
 #include "Tokenizer.h"
 #include "TokenizerStream.h"
 #include "Parser.h"

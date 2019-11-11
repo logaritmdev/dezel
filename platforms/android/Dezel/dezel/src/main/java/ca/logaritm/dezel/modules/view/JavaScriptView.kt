@@ -1428,9 +1428,9 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 		}
 
 		this.listener?.onFinishLayout(this)
-		this.callMethod("nativeOnLayoutFinished")
+		this.callMethod("nativeOnLayout")
 	}
-	
+
 	//--------------------------------------------------------------------------
 	// Methods - Content JavaScriptView Observer
 	//--------------------------------------------------------------------------

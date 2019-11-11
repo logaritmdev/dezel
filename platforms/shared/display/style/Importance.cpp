@@ -1,4 +1,4 @@
-#include "Specifier.h"
+#include "Importance.h"
 
 namespace Dezel {
 namespace Style {
@@ -6,7 +6,7 @@ namespace Style {
 using std::to_string;
 
 string
-Specifier::toString() const
+Importance::toString() const
 {
 	string output;
 	output.append("[");

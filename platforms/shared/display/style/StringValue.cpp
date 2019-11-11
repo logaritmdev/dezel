@@ -12,6 +12,11 @@ StringValue::StringValue(string value) : Value(kValueTypeString, kValueUnitNone)
 
 }
 
+StringValue::StringValue(const char* value) : Value(kValueTypeString, kValueUnitNone), value(string(value))
+{
+
+}
+
 string
 StringValue::toString()
 {

@@ -61,6 +61,10 @@
 		C732E78820865116006014A0 /* GlobalModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C732E78720865116006014A0 /* GlobalModule.swift */; };
 		C73700C42218C00D0095A54B /* ImageFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C73700C32218C00D0095A54B /* ImageFilter.swift */; };
 		C73700C72219A9370095A54B /* ImageEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = C73700C62219A9370095A54B /* ImageEffect.swift */; };
+		C7429F842375104900A29FB7 /* DisplayNodePropertyRef.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7429F822375104900A29FB7 /* DisplayNodePropertyRef.cpp */; };
+		C7429F852375104900A29FB7 /* DisplayNodePropertyRef.h in Headers */ = {isa = PBXBuildFile; fileRef = C7429F832375104900A29FB7 /* DisplayNodePropertyRef.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C7429F892378580F00A29FB7 /* Trait.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7429F872378580F00A29FB7 /* Trait.cpp */; };
+		C7429F8A2378580F00A29FB7 /* Trait.h in Headers */ = {isa = PBXBuildFile; fileRef = C7429F882378580F00A29FB7 /* Trait.h */; };
 		C75153B322EB4BC3007CAA48 /* HTTPURLResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75153B222EB4BC3007CAA48 /* HTTPURLResponse.swift */; };
 		C75153B922EBA05C007CAA48 /* NSData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75153B822EBA05C007CAA48 /* NSData.swift */; };
 		C75153BD22F11CAA007CAA48 /* JavaScriptLocale.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75153BC22F11CAA007CAA48 /* JavaScriptLocale.swift */; };
@@ -181,8 +185,8 @@
 		C792E959234BDEA70022D712 /* Stylesheet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C792E931234BDEA70022D712 /* Stylesheet.cpp */; };
 		C792E95A234BDEA70022D712 /* Function.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C792E932234BDEA70022D712 /* Function.cpp */; };
 		C792E95B234BDEA70022D712 /* StringValue.h in Headers */ = {isa = PBXBuildFile; fileRef = C792E933234BDEA70022D712 /* StringValue.h */; };
-		C792E95F234CC1E70022D712 /* Dictionary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C792E95D234CC1E70022D712 /* Dictionary.cpp */; };
-		C792E960234CC1E70022D712 /* Dictionary.h in Headers */ = {isa = PBXBuildFile; fileRef = C792E95E234CC1E70022D712 /* Dictionary.h */; };
+		C792E95F234CC1E70022D712 /* PropertyList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C792E95D234CC1E70022D712 /* PropertyList.cpp */; };
+		C792E960234CC1E70022D712 /* PropertyList.h in Headers */ = {isa = PBXBuildFile; fileRef = C792E95E234CC1E70022D712 /* PropertyList.h */; };
 		C792E974234D6E6E0022D712 /* ParseException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C792E972234D6E6D0022D712 /* ParseException.cpp */; };
 		C792E975234D6E6E0022D712 /* ParseException.h in Headers */ = {isa = PBXBuildFile; fileRef = C792E973234D6E6E0022D712 /* ParseException.h */; };
 		C7964D642033E67E00F454F1 /* CALayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7964D632033E67E00F454F1 /* CALayer.swift */; };
@@ -196,8 +200,8 @@
 		C7A2C2AC2372F90200219BA5 /* Matcher.h in Headers */ = {isa = PBXBuildFile; fileRef = C7A2C2AA2372F90200219BA5 /* Matcher.h */; };
 		C7A2C2AF2372F92500219BA5 /* DisplayWalker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7A2C2AD2372F92500219BA5 /* DisplayWalker.cpp */; };
 		C7A2C2B02372F92500219BA5 /* DisplayWalker.h in Headers */ = {isa = PBXBuildFile; fileRef = C7A2C2AE2372F92500219BA5 /* DisplayWalker.h */; };
-		C7A2C2B32373AA1C00219BA5 /* Specifier.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7A2C2B12373AA1C00219BA5 /* Specifier.cpp */; };
-		C7A2C2B42373AA1C00219BA5 /* Specifier.h in Headers */ = {isa = PBXBuildFile; fileRef = C7A2C2B22373AA1C00219BA5 /* Specifier.h */; };
+		C7A2C2B32373AA1C00219BA5 /* Importance.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7A2C2B12373AA1C00219BA5 /* Importance.cpp */; };
+		C7A2C2B42373AA1C00219BA5 /* Importance.h in Headers */ = {isa = PBXBuildFile; fileRef = C7A2C2B22373AA1C00219BA5 /* Importance.h */; };
 		C7A2C2B82373B11600219BA5 /* StylesheetTest.mm in Sources */ = {isa = PBXBuildFile; fileRef = C7A2C2B72373B11600219BA5 /* StylesheetTest.mm */; };
 		C7A2C2BB2373C75000219BA5 /* Match.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7A2C2B92373C75000219BA5 /* Match.cpp */; };
 		C7A2C2BC2373C75000219BA5 /* Match.h in Headers */ = {isa = PBXBuildFile; fileRef = C7A2C2BA2373C75000219BA5 /* Match.h */; };
@@ -374,6 +378,10 @@
 		C732E78720865116006014A0 /* GlobalModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalModule.swift; sourceTree = "<group>"; };
 		C73700C32218C00D0095A54B /* ImageFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFilter.swift; sourceTree = "<group>"; };
 		C73700C62219A9370095A54B /* ImageEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageEffect.swift; sourceTree = "<group>"; };
+		C7429F822375104900A29FB7 /* DisplayNodePropertyRef.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DisplayNodePropertyRef.cpp; path = ../../../../../shared/display/DisplayNodePropertyRef.cpp; sourceTree = "<group>"; };
+		C7429F832375104900A29FB7 /* DisplayNodePropertyRef.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DisplayNodePropertyRef.h; path = ../../../../../shared/display/DisplayNodePropertyRef.h; sourceTree = "<group>"; };
+		C7429F872378580F00A29FB7 /* Trait.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Trait.cpp; path = ../../../../../shared/display/style/Trait.cpp; sourceTree = "<group>"; };
+		C7429F882378580F00A29FB7 /* Trait.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Trait.h; path = ../../../../../shared/display/style/Trait.h; sourceTree = "<group>"; };
 		C75153B222EB4BC3007CAA48 /* HTTPURLResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPURLResponse.swift; sourceTree = "<group>"; };
 		C75153B822EBA05C007CAA48 /* NSData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSData.swift; sourceTree = "<group>"; };
 		C75153BC22F11CAA007CAA48 /* JavaScriptLocale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptLocale.swift; sourceTree = "<group>"; };
@@ -494,8 +502,8 @@
 		C792E931234BDEA70022D712 /* Stylesheet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Stylesheet.cpp; path = ../../../../../shared/display/style/Stylesheet.cpp; sourceTree = "<group>"; };
 		C792E932234BDEA70022D712 /* Function.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Function.cpp; path = ../../../../../shared/display/style/Function.cpp; sourceTree = "<group>"; };
 		C792E933234BDEA70022D712 /* StringValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StringValue.h; path = ../../../../../shared/display/style/StringValue.h; sourceTree = "<group>"; };
-		C792E95D234CC1E70022D712 /* Dictionary.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Dictionary.cpp; path = ../../../../../shared/display/style/Dictionary.cpp; sourceTree = "<group>"; };
-		C792E95E234CC1E70022D712 /* Dictionary.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Dictionary.h; path = ../../../../../shared/display/style/Dictionary.h; sourceTree = "<group>"; };
+		C792E95D234CC1E70022D712 /* PropertyList.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PropertyList.cpp; path = ../../../../../shared/display/style/PropertyList.cpp; sourceTree = "<group>"; };
+		C792E95E234CC1E70022D712 /* PropertyList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PropertyList.h; path = ../../../../../shared/display/style/PropertyList.h; sourceTree = "<group>"; };
 		C792E972234D6E6D0022D712 /* ParseException.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ParseException.cpp; path = ../../../../../shared/display/style/ParseException.cpp; sourceTree = "<group>"; };
 		C792E973234D6E6E0022D712 /* ParseException.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ParseException.h; path = ../../../../../shared/display/style/ParseException.h; sourceTree = "<group>"; };
 		C7964D632033E67E00F454F1 /* CALayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CALayer.swift; sourceTree = "<group>"; };
@@ -509,8 +517,8 @@
 		C7A2C2AA2372F90200219BA5 /* Matcher.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Matcher.h; path = ../../../../../shared/display/style/Matcher.h; sourceTree = "<group>"; };
 		C7A2C2AD2372F92500219BA5 /* DisplayWalker.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DisplayWalker.cpp; path = ../../../../../shared/display/DisplayWalker.cpp; sourceTree = "<group>"; };
 		C7A2C2AE2372F92500219BA5 /* DisplayWalker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DisplayWalker.h; path = ../../../../../shared/display/DisplayWalker.h; sourceTree = "<group>"; };
-		C7A2C2B12373AA1C00219BA5 /* Specifier.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Specifier.cpp; path = ../../../../../shared/display/style/Specifier.cpp; sourceTree = "<group>"; };
-		C7A2C2B22373AA1C00219BA5 /* Specifier.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Specifier.h; path = ../../../../../shared/display/style/Specifier.h; sourceTree = "<group>"; };
+		C7A2C2B12373AA1C00219BA5 /* Importance.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Importance.cpp; path = ../../../../../shared/display/style/Importance.cpp; sourceTree = "<group>"; };
+		C7A2C2B22373AA1C00219BA5 /* Importance.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Importance.h; path = ../../../../../shared/display/style/Importance.h; sourceTree = "<group>"; };
 		C7A2C2B72373B11600219BA5 /* StylesheetTest.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = StylesheetTest.mm; sourceTree = "<group>"; };
 		C7A2C2B92373C75000219BA5 /* Match.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Match.cpp; path = ../../../../../shared/display/style/Match.cpp; sourceTree = "<group>"; };
 		C7A2C2BA2373C75000219BA5 /* Match.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Match.h; path = ../../../../../shared/display/style/Match.h; sourceTree = "<group>"; };
@@ -724,6 +732,19 @@
 			path = Image;
 			sourceTree = "<group>";
 		};
+		C7429F8623759B8100A29FB7 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				C7429F822375104900A29FB7 /* DisplayNodePropertyRef.cpp */,
+				C7429F832375104900A29FB7 /* DisplayNodePropertyRef.h */,
+				C792E8CC234BDE620022D712 /* DisplayNodeRef.cpp */,
+				C792E8BB234BDE610022D712 /* DisplayNodeRef.h */,
+				C792E8CD234BDE620022D712 /* DisplayRef.cpp */,
+				C792E8D9234BDE630022D712 /* DisplayRef.h */,
+			);
+			name = API;
+			sourceTree = "<group>";
+		};
 		C767544B2028DB60003C4D85 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -889,6 +910,7 @@
 		C792E8B9234BDE480022D712 /* CAPI */ = {
 			isa = PBXGroup;
 			children = (
+				C7429F8623759B8100A29FB7 /* API */,
 				C7AA936D236F6DB500ADF997 /* Exception */,
 				C792E8FB234BDE7C0022D712 /* Layout */,
 				C792E8FA234BDE750022D712 /* Style */,
@@ -912,12 +934,8 @@
 				C792E8C5234BDE610022D712 /* DisplayNodeOrigin.h */,
 				C792E8CB234BDE620022D712 /* DisplayNodePadding.cpp */,
 				C792E8BD234BDE610022D712 /* DisplayNodePadding.h */,
-				C792E8CC234BDE620022D712 /* DisplayNodeRef.cpp */,
-				C792E8BB234BDE610022D712 /* DisplayNodeRef.h */,
 				C792E8CA234BDE620022D712 /* DisplayNodeSize.cpp */,
 				C792E8C3234BDE610022D712 /* DisplayNodeSize.h */,
-				C792E8CD234BDE620022D712 /* DisplayRef.cpp */,
-				C792E8D9234BDE630022D712 /* DisplayRef.h */,
 				C7A2C2AD2372F92500219BA5 /* DisplayWalker.cpp */,
 				C7A2C2AE2372F92500219BA5 /* DisplayWalker.h */,
 			);
@@ -933,20 +951,22 @@
 				C792E927234BDEA70022D712 /* Argument.h */,
 				C792E913234BDEA60022D712 /* Descriptor.cpp */,
 				C792E91D234BDEA60022D712 /* Descriptor.h */,
-				C792E95D234CC1E70022D712 /* Dictionary.cpp */,
-				C792E95E234CC1E70022D712 /* Dictionary.h */,
 				C792E90F234BDEA50022D712 /* Fragment.cpp */,
 				C792E91C234BDEA60022D712 /* Fragment.h */,
 				C792E932234BDEA70022D712 /* Function.cpp */,
 				C792E930234BDEA70022D712 /* Function.h */,
-				C7A2C2A92372F90200219BA5 /* Matcher.cpp */,
-				C7A2C2AA2372F90200219BA5 /* Matcher.h */,
+				C7A2C2B12373AA1C00219BA5 /* Importance.cpp */,
+				C7A2C2B22373AA1C00219BA5 /* Importance.h */,
 				C7A2C2B92373C75000219BA5 /* Match.cpp */,
 				C7A2C2BA2373C75000219BA5 /* Match.h */,
+				C7A2C2A92372F90200219BA5 /* Matcher.cpp */,
+				C7A2C2AA2372F90200219BA5 /* Matcher.h */,
 				C792E90E234BDEA50022D712 /* Parser.cpp */,
 				C792E90D234BDEA50022D712 /* Parser.h */,
 				C792E921234BDEA60022D712 /* Property.cpp */,
 				C792E91B234BDEA60022D712 /* Property.h */,
+				C792E95D234CC1E70022D712 /* PropertyList.cpp */,
+				C792E95E234CC1E70022D712 /* PropertyList.h */,
 				C792E914234BDEA60022D712 /* Selector.cpp */,
 				C792E912234BDEA50022D712 /* Selector.h */,
 				C792E931234BDEA70022D712 /* Stylesheet.cpp */,
@@ -959,12 +979,12 @@
 				C792E920234BDEA60022D712 /* TokenizerStream.h */,
 				C792E910234BDEA50022D712 /* TokenList.cpp */,
 				C792E918234BDEA60022D712 /* TokenList.h */,
+				C7429F872378580F00A29FB7 /* Trait.cpp */,
+				C7429F882378580F00A29FB7 /* Trait.h */,
 				C792E917234BDEA60022D712 /* Value.cpp */,
 				C792E916234BDEA60022D712 /* Value.h */,
 				C792E925234BDEA70022D712 /* Variable.cpp */,
 				C792E926234BDEA70022D712 /* Variable.h */,
-				C7A2C2B12373AA1C00219BA5 /* Specifier.cpp */,
-				C7A2C2B22373AA1C00219BA5 /* Specifier.h */,
 			);
 			name = Style;
 			sourceTree = "<group>";
@@ -1448,7 +1468,7 @@
 				C792E8DD234BDE630022D712 /* DisplayNodePadding.h in Headers */,
 				C792E90A234BDE900022D712 /* AbsoluteLayoutResolver.h in Headers */,
 				C7AA9371236F6DD500ADF997 /* InvalidStructureException.h in Headers */,
-				C792E960234CC1E70022D712 /* Dictionary.h in Headers */,
+				C792E960234CC1E70022D712 /* PropertyList.h in Headers */,
 				C792E95B234BDEA70022D712 /* StringValue.h in Headers */,
 				C7E8A543201624FA005139F6 /* JavaScriptContext.h in Headers */,
 				C792E8F9234BDE630022D712 /* DisplayRef.h in Headers */,
@@ -1465,10 +1485,11 @@
 				C792E8E6234BDE630022D712 /* DisplayNodeContentOrigin.h in Headers */,
 				C792E950234BDEA70022D712 /* VariableValue.h in Headers */,
 				C7A2C2B02372F92500219BA5 /* DisplayWalker.h in Headers */,
-				C7A2C2B42373AA1C00219BA5 /* Specifier.h in Headers */,
+				C7A2C2B42373AA1C00219BA5 /* Importance.h in Headers */,
 				C792E8DE234BDE630022D712 /* Display.h in Headers */,
 				C792E8E0234BDE630022D712 /* DisplayBase.h in Headers */,
 				C792E93E234BDEA70022D712 /* Value.h in Headers */,
+				C7429F8A2378580F00A29FB7 /* Trait.h in Headers */,
 				C792E8E3234BDE630022D712 /* DisplayNodeSize.h in Headers */,
 				C792E945234BDEA70022D712 /* Descriptor.h in Headers */,
 				C792E909234BDE900022D712 /* LayoutResolver.h in Headers */,
@@ -1494,6 +1515,7 @@
 				C792E946234BDEA70022D712 /* NumberValue.h in Headers */,
 				C792E94F234BDEA70022D712 /* Argument.h in Headers */,
 				C7A2C2AC2372F90200219BA5 /* Matcher.h in Headers */,
+				C7429F852375104900A29FB7 /* DisplayNodePropertyRef.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1665,7 +1687,7 @@
 				C7BB7D472029062D004006C2 /* Transition.swift in Sources */,
 				C73700C72219A9370095A54B /* ImageEffect.swift in Sources */,
 				C72E0E9520669CA0003BCEF1 /* TextLocation.swift in Sources */,
-				C7A2C2B32373AA1C00219BA5 /* Specifier.cpp in Sources */,
+				C7A2C2B32373AA1C00219BA5 /* Importance.cpp in Sources */,
 				C7E8A544201624FA005139F6 /* JavaScriptValuePrivate.cpp in Sources */,
 				C77189B42106AE1300337263 /* Transform3D.swift in Sources */,
 				C7A19E2E20AB721F00367E91 /* PlatformModule.swift in Sources */,
@@ -1679,6 +1701,7 @@
 				C767543A20269971003C4D85 /* BitmapLayer.swift in Sources */,
 				C792E8EF234BDE630022D712 /* DisplayNodeAnchor.cpp in Sources */,
 				C7BFD160207D518600AAD31C /* SpinnerView.swift in Sources */,
+				C7429F842375104900A29FB7 /* DisplayNodePropertyRef.cpp in Sources */,
 				C7E45AEE21DD462C00247465 /* TextViewDelegate.swift in Sources */,
 				C7F2260B2081A10000ABC66D /* Unsafe.swift in Sources */,
 				C7E30977203123DD00436FA4 /* UIView.swift in Sources */,
@@ -1725,7 +1748,7 @@
 				C792E908234BDE900022D712 /* AbsoluteLayoutResolver.cpp in Sources */,
 				C785B0A32016EC17001DAE64 /* JavaScriptCallback.swift in Sources */,
 				C7AA9370236F6DD500ADF997 /* InvalidStructureException.cpp in Sources */,
-				C792E95F234CC1E70022D712 /* Dictionary.cpp in Sources */,
+				C792E95F234CC1E70022D712 /* PropertyList.cpp in Sources */,
 				C7BFD166207D539300AAD31C /* InputType.swift in Sources */,
 				C71E6CC020DD4F56009B86F6 /* WebView.swift in Sources */,
 				C7BB7D3D2028F4C5004006C2 /* CGFloat.swift in Sources */,
@@ -1753,6 +1776,7 @@
 				C77D6E272210C162005FAAF8 /* CTFrame.swift in Sources */,
 				C7FCA140231C499C00AFBDB6 /* DisplayNode.swift in Sources */,
 				C7BB7D4B20293955004006C2 /* Array.swift in Sources */,
+				C7429F892378580F00A29FB7 /* Trait.cpp in Sources */,
 				C7964D642033E67E00F454F1 /* CALayer.swift in Sources */,
 				C71E6CD920E3DBC4009B86F6 /* SynchronizerCallback.swift in Sources */,
 				C77189AA2101642B00337263 /* JavaScriptGridOptimizer.swift in Sources */,

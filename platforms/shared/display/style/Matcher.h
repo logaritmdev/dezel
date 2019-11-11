@@ -23,16 +23,12 @@ class Matcher {
 
 private:
 
-	Stylesheet* stylesheet = nullptr;
-
 	static bool compare(const Match& a, const Match& b);
 
 public:
 
-	Matcher(Stylesheet* stylesheet);
-
-	bool match(DisplayNode* node, vector<Match>& matches);
 	bool match(DisplayNode* node, vector<Match>& matches, const vector<Descriptor*>& descriptors);
+
 };
 
 }

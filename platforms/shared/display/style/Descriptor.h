@@ -4,7 +4,8 @@
 #include "Selector.h"
 #include "Fragment.h"
 #include "Property.h"
-#include "Dictionary.h"
+#include "PropertyList.h"
+#include "Trait.h"
 #include "DisplayNode.h"
 
 #include <string>
@@ -25,7 +26,7 @@ class Parser;
 class Stylesheet;
 class Selector;
 class Fragment;
-class Specifier;
+class Importance;
 
 class Descriptor {
 
@@ -35,7 +36,7 @@ private:
 
 	Selector* selector;
 
-	Dictionary properties;
+	PropertyList properties;
 
 	vector<Descriptor*> childDescriptors;
 	vector<Descriptor*> styleDescriptors;
@@ -43,6 +44,9 @@ private:
 
 	void setParentSelector(Descriptor* descriptor);
 	void setParentFragment(Descriptor* descriptor);
+
+	bool matchNode(DisplayNode* node, Importance& importance);
+	bool matchPath(DisplayNode* node, Importance& importance);
 
 public:
 
@@ -57,7 +61,7 @@ public:
 		return this->selector;
 	}
 
-	const Dictionary& getProperties() const {
+	const PropertyList& getProperties() const {
 		return this->properties;
 	}
 
@@ -81,7 +85,7 @@ public:
 		this->properties.set(property->getName(), property);
 	}
 
-	bool match(DisplayNode* node, Specifier& weight);
+	bool match(DisplayNode* node, Importance& importance);
 
 	string toString(int depth = 0);
 

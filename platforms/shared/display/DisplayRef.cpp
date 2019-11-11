@@ -16,18 +16,6 @@ DisplayDelete(DisplayRef display)
 	delete reinterpret_cast<Display*>(display);
 }
 
-bool
-DisplayIsInvalid(DisplayRef display)
-{
-	return reinterpret_cast<Display*>(display)->isInvalid();
-}
-
-bool
-DisplayIsResolving(DisplayRef display)
-{
-	return reinterpret_cast<Display*>(display)->isResolving();
-}
-
 void
 DisplaySetWindow(DisplayRef display, DisplayNodeRef window)
 {
@@ -53,13 +41,13 @@ DisplaySetViewportHeight(DisplayRef display, double viewportHeight)
 }
 
 void
-DisplaySetInvalidateCallback(DisplayRef display, DisplayInvalidateCallback callback)
+DisplaySetPrepareCallback(DisplayRef display, DisplayCallback callback)
 {
-	reinterpret_cast<Display*>(display)->setInvalidateCallback(callback);
+	reinterpret_cast<Display*>(display)->setPrepareCallback(callback);
 }
 
 void
-DisplaySetResolveCallback(DisplayRef display, DisplayResolveCallback callback)
+DisplaySetResolveCallback(DisplayRef display, DisplayCallback callback)
 {
 	reinterpret_cast<Display*>(display)->setResolveCallback(callback);
 }
@@ -74,4 +62,22 @@ void*
 DisplayGetData(DisplayRef display)
 {
 	return reinterpret_cast<Display*>(display)->data;
+}
+
+bool
+DisplayIsInvalid(DisplayRef display)
+{
+	return reinterpret_cast<Display*>(display)->isInvalid();
+}
+
+bool
+DisplayIsResolving(DisplayRef display)
+{
+	return reinterpret_cast<Display*>(display)->isResolving();
+}
+
+void
+DisplayResolve(DisplayRef display)
+{
+	return reinterpret_cast<Display*>(display)->resolve();
 }

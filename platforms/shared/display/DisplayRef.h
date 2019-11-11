@@ -22,20 +22,6 @@ DisplayRef DisplayCreate();
 void DisplayDelete(DisplayRef display);
 
 /**
- * Indicates whether the display is invalid.
- * @function DisplayIsInvalid
- * @since 0.7.0
- */
-bool DisplayIsInvalid(DisplayRef display);
-
-/**
- * Indicates whether the display is resolving.
- * @function DisplayGetData
- * @since 0.7.0
- */
-bool DisplayIsResolving(DisplayRef display);
-
-/**
  * Assigns the display's window.
  * @function DisplaySetWindow
  * @since 0.4.0
@@ -64,18 +50,18 @@ void DisplaySetViewportWidth(DisplayRef display, double viewportWidth);
 void DisplaySetViewportHeight(DisplayRef display, double viewportHeight);
 
 /**
- * Assigns the display's layout began callback.
- * @function DisplaySetLayoutBeganCallback
+ * Assigns the display's prepare callback.
+ * @function DisplaySetPrepareCallback
  * @since 0.7.0
  */
-void DisplaySetInvalidateCallback(DisplayRef display, DisplayResolveCallback callback);
+void DisplaySetPrepareCallback(DisplayRef display, DisplayCallback callback);
 
 /**
- * Assigns the display's layout ended callback.
- * @function DisplaySetLayoutEndedCallback
+ * Assigns the display's resolve callback.
+ * @function DisplaySetResolveCallback
  * @since 0.7.0
  */
-void DisplaySetResolveCallback(DisplayRef display, DisplayResolveCallback callback);
+void DisplaySetResolveCallback(DisplayRef display, DisplayCallback callback);
 
 /**
  * Assigns the display's data.
@@ -90,6 +76,27 @@ void DisplaySetData(DisplayRef display, void *data);
  * @since 0.7.0
  */
 void *DisplayGetData(DisplayRef display);
+
+/**
+ * Indicates whether the display is invalid.
+ * @function DisplayIsInvalid
+ * @since 0.7.0
+ */
+bool DisplayIsInvalid(DisplayRef display);
+
+/**
+ * Indicates whether the display is resolving.
+ * @function DisplayGetData
+ * @since 0.7.0
+ */
+bool DisplayIsResolving(DisplayRef display);
+
+/**
+ * Resolves the display.
+ * @function DisplayResolve
+ * @since 0.7.0
+ */
+void DisplayResolve(DisplayRef display);
 
 #if __cplusplus
 }

@@ -36,6 +36,10 @@ public:
 		return this->values;
 	}
 
+	void appendValue(Value* value);
+	void insertValue(size_t index, Value* value);
+	void removeValue(size_t index);
+
 	string toString(int depth = 0);
 
 };

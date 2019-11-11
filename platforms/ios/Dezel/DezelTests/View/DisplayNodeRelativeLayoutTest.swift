@@ -1474,6 +1474,7 @@ class DisplayNodeRelativeLayoutTest: XCTestCase {
 		XCTAssertEqual(node4d.resolvedMargin, 0)
 		XCTAssertEqual(node4d.resolvedBorder, 0)
 		XCTAssertEqual(node4d.resolvedPadding, 0)
+		XCTAssertEqual(node4d.preparedLayout, 0)
 		XCTAssertEqual(node4d.resolvedLayout, 0)
 
 		XCTAssertEqual(node5d.measured, 0)
@@ -1484,6 +1485,7 @@ class DisplayNodeRelativeLayoutTest: XCTestCase {
 		XCTAssertEqual(node5d.resolvedMargin, 0)
 		XCTAssertEqual(node5d.resolvedBorder, 0)
 		XCTAssertEqual(node5d.resolvedPadding, 0)
+		XCTAssertEqual(node5d.preparedLayout, 0)
 		XCTAssertEqual(node5d.resolvedLayout, 0)
 
 		XCTAssertEqual(node6d.measured, 0)
@@ -1494,6 +1496,7 @@ class DisplayNodeRelativeLayoutTest: XCTestCase {
 		XCTAssertEqual(node6d.resolvedMargin, 0)
 		XCTAssertEqual(node6d.resolvedBorder, 0)
 		XCTAssertEqual(node6d.resolvedPadding, 0)
+		XCTAssertEqual(node6d.preparedLayout, 0)
 		XCTAssertEqual(node6d.resolvedLayout, 0)
 	}
 
@@ -1653,6 +1656,7 @@ class DisplayNodeRelativeLayoutTest: XCTestCase {
 		XCTAssertEqual(node5d.resolvedBorder, 0)
 		XCTAssertEqual(node5d.resolvedPadding, 0)
 		XCTAssertEqual(node5d.resolvedLayout, 0)
+		XCTAssertEqual(node5d.preparedLayout, 0)
 
 		XCTAssertEqual(node6d.measured, 0)
 		XCTAssertEqual(node6d.resolvedSize, 1)
@@ -1663,6 +1667,7 @@ class DisplayNodeRelativeLayoutTest: XCTestCase {
 		XCTAssertEqual(node6d.resolvedBorder, 0)
 		XCTAssertEqual(node6d.resolvedPadding, 0)
 		XCTAssertEqual(node6d.resolvedLayout, 0)
+		XCTAssertEqual(node6d.preparedLayout, 0)
 	}
 
 	func testNodeMeasure() {

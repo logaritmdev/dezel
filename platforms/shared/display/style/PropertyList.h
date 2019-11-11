@@ -14,7 +14,7 @@ using std::string;
 using std::vector;
 using std::unordered_map;
 
-class Dictionary {
+class PropertyList {
 
 private:
 
@@ -23,9 +23,6 @@ private:
 	unordered_map<string, Property*> vals;
 
 public:
-
-    typedef vector<Property*>::iterator iterator;
-    typedef vector<Property*>::const_iterator const_iterator;
 
 	void set(string name, Property* property);
 
@@ -36,6 +33,11 @@ public:
 	Property* get(string at) const {
 		return this->vals.at(at);
 	}
+
+	void merge(const PropertyList& dictionary);
+
+    typedef vector<Property*>::iterator iterator;
+    typedef vector<Property*>::const_iterator const_iterator;
 
 	size_t size() const {
 		return this->list.size();

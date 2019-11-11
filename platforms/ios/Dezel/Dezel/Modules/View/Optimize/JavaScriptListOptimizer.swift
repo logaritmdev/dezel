@@ -281,10 +281,10 @@ open class JavaScriptListOptimizer : JavaScriptViewOptimizer {
 
 	/**
 	 * @inherited
-	 * @method didBeginLayout
+	 * @method didPrepareLayout
 	 * @since 0.7.0
 	 */
-	override open func didBeginLayout(view: JavaScriptView) {
+	override open func didPrepareLayout(view: JavaScriptView) {
 
 		let length = self.length
 		if (length == 0) {
@@ -357,10 +357,10 @@ open class JavaScriptListOptimizer : JavaScriptViewOptimizer {
 
 	/**
 	 * @inherited
-	 * @method didFinishLayout
+	 * @method didResolveLayout
 	 * @since 0.7.0
 	 */
-	override open func didFinishLayout(view: JavaScriptView) {
+	override open func didResolveLayout(view: JavaScriptView) {
 		self.contentOffsetInvalid = false
 		self.contentLengthInvalid = false
 	}

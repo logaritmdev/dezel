@@ -14,6 +14,24 @@ Property::Property(string name) : name(name)
 
 }
 
+void
+Property::appendValue(Value* value)
+{
+	this->values.push_back(value);
+}
+
+void
+Property::insertValue(size_t index, Value* value)
+{
+	this->values.insert(this->values.begin() + index, value);
+}
+
+void
+Property::removeValue(size_t index)
+{
+	this->values.erase(this->values.begin() + index);
+}
+
 string
 Property::toString(int depth)
 {
