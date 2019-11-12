@@ -71,7 +71,7 @@ open class JavaScriptWebView(context: JavaScriptContext) : JavaScriptView(contex
 	}
 
 	//--------------------------------------------------------------------------
-	// JavaScriptWebView Listener
+	// JavaScriptWebView JavaScriptViewListener
 	//--------------------------------------------------------------------------
 
 	/**

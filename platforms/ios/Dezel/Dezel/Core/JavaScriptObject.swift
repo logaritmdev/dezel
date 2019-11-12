@@ -68,20 +68,20 @@ open class JavaScriptObject: JavaScriptValue {
 
 	/**
 	 * Returns a JavaScript property.
-	 * @method getPropert
+	 * @method getProperty
 	 * @since 0.7.0
 	 */
 	open func getProperty(_ name: String) -> JavaScriptProperty? {
-		return self.property(for: name)
+		return self.value(forKey: name) as? JavaScriptProperty
 	}
 
 	/**
-	 * @method property
+	 * Assigns a JavaScript property.
+	 * @method setProperty
 	 * @since 0.7.0
-	 * @hidden
 	 */
-	private func property(for name: String) -> JavaScriptProperty? {
-		return self.value(forKey: name) as? JavaScriptProperty
+	open func setProperty(_ name: String, value: JavaScriptProperty) {
+		self.setValue(value, forKey: name)
 	}
 
 	//--------------------------------------------------------------------------

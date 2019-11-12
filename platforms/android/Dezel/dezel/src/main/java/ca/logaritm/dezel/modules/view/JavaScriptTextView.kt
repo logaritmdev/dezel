@@ -117,7 +117,7 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	}
 
 	//--------------------------------------------------------------------------
-	// Methods - Content Text JavaScriptView Listener
+	// Methods - Content Text JavaScriptView JavaScriptViewListener
 	//--------------------------------------------------------------------------
 
 	/**
@@ -599,7 +599,7 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	 */
 	@Suppress("unused")
 	open fun jsSet_fontFamily(callback: JavaScriptSetterCallback) {
-		this.fontFamily.reset(callback.value, this)
+		this.fontFamily.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -621,7 +621,7 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	 */
 	@Suppress("unused")
 	open fun jsSet_fontWeight(callback: JavaScriptSetterCallback) {
-		this.fontWeight.reset(callback.value, this)
+		this.fontWeight.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -643,7 +643,7 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	 */
 	@Suppress("unused")
 	open fun jsSet_fontStyle(callback: JavaScriptSetterCallback) {
-		this.fontStyle.reset(callback.value, this)
+		this.fontStyle.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -665,7 +665,7 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	 */
 	@Suppress("unused")
 	open fun jsSet_fontSize(callback: JavaScriptSetterCallback) {
-		this.fontSize.reset(callback.value, this)
+		this.fontSize.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -687,7 +687,7 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	 */
 	@Suppress("unused")
 	open fun jsSet_minFontSize(callback: JavaScriptSetterCallback) {
-		this.minFontSize.reset(callback.value, this)
+		this.minFontSize.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -709,7 +709,7 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	 */
 	@Suppress("unused")
 	open fun jsSet_maxFontSize(callback: JavaScriptSetterCallback) {
-		this.maxFontSize.reset(callback.value, this)
+		this.maxFontSize.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -731,7 +731,7 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	 */
 	@Suppress("unused")
 	open fun jsSet_text(callback: JavaScriptSetterCallback) {
-		this.text.reset(callback.value, this)
+		this.text.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -753,7 +753,7 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	 */
 	@Suppress("unused")
 	open fun jsSet_textColor(callback: JavaScriptSetterCallback) {
-		this.textColor.reset(callback.value, this)
+		this.textColor.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -775,7 +775,7 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	 */
 	@Suppress("unused")
 	open fun jsSet_textAlignment(callback: JavaScriptSetterCallback) {
-		this.textAlignment.reset(callback.value, this)
+		this.textAlignment.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -797,7 +797,7 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	 */
 	@Suppress("unused")
 	open fun jsSet_textLocation(callback: JavaScriptSetterCallback) {
-		this.textLocation.reset(callback.value, this)
+		this.textLocation.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -819,7 +819,7 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	 */
 	@Suppress("unused")
 	open fun jsSet_textBaseline(callback: JavaScriptSetterCallback) {
-		this.textBaseline.reset(callback.value, this)
+		this.textBaseline.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -841,7 +841,7 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	 */
 	@Suppress("unused")
 	open fun jsSet_textKerning(callback: JavaScriptSetterCallback) {
-		this.textKerning.reset(callback.value, this)
+		this.textKerning.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -863,7 +863,7 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	 */
 	@Suppress("unused")
 	open fun jsSet_textLeading(callback: JavaScriptSetterCallback) {
-		this.textLeading.reset(callback.value, this)
+		this.textLeading.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -885,7 +885,7 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	 */
 	@Suppress("unused")
 	open fun jsSet_textDecoration(callback: JavaScriptSetterCallback) {
-		this.textDecoration.reset(callback.value, this)
+		this.textDecoration.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -907,7 +907,7 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	 */
 	@Suppress("unused")
 	open fun jsSet_textTransform(callback: JavaScriptSetterCallback) {
-		this.textTransform.reset(callback.value, this)
+		this.textTransform.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -929,7 +929,7 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	 */
 	@Suppress("unused")
 	open fun jsSet_textShadowBlur(callback: JavaScriptSetterCallback) {
-		this.textShadowBlur.reset(callback.value, this)
+		this.textShadowBlur.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -951,7 +951,7 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	 */
 	@Suppress("unused")
 	open fun jsSet_textShadowColor(callback: JavaScriptSetterCallback) {
-		this.textShadowColor.reset(callback.value, this)
+		this.textShadowColor.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -973,7 +973,7 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	 */
 	@Suppress("unused")
 	open fun jsSet_textShadowOffsetTop(callback: JavaScriptSetterCallback) {
-		this.textShadowOffsetTop.reset(callback.value, this)
+		this.textShadowOffsetTop.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -995,7 +995,7 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	 */
 	@Suppress("unused")
 	open fun jsSet_textShadowOffsetLeft(callback: JavaScriptSetterCallback) {
-		this.textShadowOffsetLeft.reset(callback.value, this)
+		this.textShadowOffsetLeft.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -1017,7 +1017,7 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	 */
 	@Suppress("unused")
 	open fun jsSet_textOverflow(callback: JavaScriptSetterCallback) {
-		this.textOverflow.reset(callback.value, this)
+		this.textOverflow.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -1039,7 +1039,7 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	 */
 	@Suppress("unused")
 	open fun jsSet_linkColor(callback: JavaScriptSetterCallback) {
-		this.linkColor.reset(callback.value, this)
+		this.linkColor.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -1061,6 +1061,6 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	 */
 	@Suppress("unused")
 	open fun jsSet_maxLines(callback: JavaScriptSetterCallback) {
-		this.maxLines.reset(callback.value, this)
+		this.maxLines.reset(callback.value, lock = this)
 	}
 }

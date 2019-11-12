@@ -85,7 +85,7 @@ open class JavaScriptSpinnerView(context: JavaScriptContext) : JavaScriptView(co
 	 */
 	@Suppress("unused")
 	open fun jsSet_active(callback: JavaScriptSetterCallback) {
-		this.active.reset(callback.value, this)
+		this.active.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -107,6 +107,6 @@ open class JavaScriptSpinnerView(context: JavaScriptContext) : JavaScriptView(co
 	 */
 	@Suppress("unused")
 	open fun jsSet_color(callback: JavaScriptSetterCallback) {
-		this.color.reset(callback.value, this)
+		this.color.reset(callback.value, lock = this)
 	}
 }

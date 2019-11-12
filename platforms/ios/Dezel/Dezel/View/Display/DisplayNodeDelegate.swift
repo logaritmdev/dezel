@@ -8,20 +8,6 @@ import Foundation
 public protocol DisplayNodeDelegate: AnyObject {
 
 	/**
-	 * Returns the property using its name.
-	 * @method getProperty
-	 * @since 0.7.0
-	 */
-	func getProperty(_ name: String) -> JavaScriptProperty?
-
-	/**
-	 * Called when the node needs to be measured manually.
-	 * @method measure
-	 * @since 0.7.0
-	 */
-	func measure(node: DisplayNode, in: CGSize, min: CGSize, max: CGSize) -> CGSize?
-
-	/**
 	 * Called when the node is invalidated.
 	 * @method didInvalidate
 	 * @since 0.7.0
@@ -90,5 +76,26 @@ public protocol DisplayNodeDelegate: AnyObject {
 	 * @since 0.7.0
 	 */
 	func didResolveLayout(node: DisplayNode)
+
+	/**
+	 * Called when the node needs to be measured manually.
+	 * @method measure
+	 * @since 0.7.0
+	 */
+	func measure(node: DisplayNode, in: CGSize, min: CGSize, max: CGSize) -> CGSize?
+
+	/**
+	 * Returns a JavaScript property.
+	 * @method getProperty
+	 * @since 0.7.0
+	 */
+	func getProperty(_ name: String) -> JavaScriptProperty?
+
+	/**
+	 * Assigns a JavaScript property.
+	 * @method setProperty
+	 * @since 0.7.0
+	 */
+	func setProperty(_ name: String, value: JavaScriptProperty)
 
 }

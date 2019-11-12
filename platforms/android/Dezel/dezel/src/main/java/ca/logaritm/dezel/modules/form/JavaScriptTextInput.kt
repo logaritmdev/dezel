@@ -91,7 +91,7 @@ open class JavaScriptTextInput(context: JavaScriptContext) : JavaScriptView(cont
 	}
 
 	//--------------------------------------------------------------------------
-	// Methods - Content Text Input Listener
+	// Methods - Content Text Input JavaScriptViewListener
 	//--------------------------------------------------------------------------
 
 	/**

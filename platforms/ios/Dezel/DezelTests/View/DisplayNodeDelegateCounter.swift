@@ -14,11 +14,6 @@ public class DisplayNodeDelegateCounter : DisplayNodeDelegate {
 	public var preparedLayout: Int = 0
 	public var resolvedLayout: Int = 0
 
-	open func measure(node: DisplayNode, in bounds: CGSize, min: CGSize, max: CGSize) -> CGSize? {
-		self.measured += 1
-		return CGSize(width: -1, height: -1)
-	}
-
 	public func didInvalidate(node: DisplayNode) {
 		self.invalidate += 1
 	}
@@ -61,7 +56,14 @@ public class DisplayNodeDelegateCounter : DisplayNodeDelegate {
 		self.resolvedLayout += 1
 	}
 
-	public func getProperty(_ name: String) -> JavaScriptProperty? {
+	open func measure(node: DisplayNode, in bounds: CGSize, min: CGSize, max: CGSize) -> CGSize? {
+		self.measured += 1
+		return CGSize(width: -1, height: -1)
+	}
+
+	public func resolve(node: DisplayNode, property: String) -> JavaScriptProperty? {
 		return nil;
 	}
+
+
 }

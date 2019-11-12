@@ -1795,23 +1795,9 @@ open class DisplayNode {
 		DisplayNodeResolve(self.handle)
 	}
 
-	/**
-	 * Called when the node needs to be measured manually.
-	 * @method measure
-	 * @since 0.7.0
-	 */
-	internal func measure(in rect: CGSize, min: CGSize, max: CGSize) -> CGSize? {
-		return self.delegate?.measure(node: self, in: rect, min: min, max: max)
-	}
-
-	/**
-	 * Called when the display node needs to set a property on its delegate.
-	 * @method update
-	 * @since 0.7.0
-	 */
-	internal func update(name: String, property: DisplayNodePropertyRef?) {
-
-	}
+	//--------------------------------------------------------------------------
+	// MARK: Internal API
+	//--------------------------------------------------------------------------
 
 	/**
 	 * @method didInvalidate
@@ -1901,6 +1887,24 @@ open class DisplayNode {
 	 */
 	internal func didResolveLayout() {
 		self.delegate?.didResolveLayout(node: self)
+	}
+
+	/**
+	 * Called when the node needs to be measured manually.
+	 * @method measure
+	 * @since 0.7.0
+	 */
+	internal func measure(in rect: CGSize, min: CGSize, max: CGSize) -> CGSize? {
+		return self.delegate?.measure(node: self, in: rect, min: min, max: max)
+	}
+
+	/**
+	 * Called when the display node needs to set a property on its delegate.
+	 * @method update
+	 * @since 0.7.0
+	 */
+	internal func update(name: String, property: DisplayNodePropertyRef?) {
+
 	}
 }
 

@@ -25,10 +25,13 @@ Stylesheet::addDescriptor(Descriptor* descriptor)
 		if (descriptor->selector->tail->isStyle() ||
 			descriptor->selector->tail->isState()) {
 
-			if (descriptor->selector->tail->isStyle())
+			if (descriptor->selector->tail->isStyle()) {
 				this->styleDescriptors.push_back(descriptor);
-			if (descriptor->selector->tail->isState())
+			}
+
+			if (descriptor->selector->tail->isState()) {
 				this->stateDescriptors.push_back(descriptor);
+			}
 
 		} else {
 

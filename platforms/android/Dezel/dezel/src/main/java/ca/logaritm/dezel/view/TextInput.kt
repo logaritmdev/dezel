@@ -516,7 +516,7 @@ open class TextInput(context: Context, listener: TextInputListener?) : EditText(
 	}
 
 	//--------------------------------------------------------------------------
-	// Click Listener
+	// Click JavaScriptViewListener
 	//--------------------------------------------------------------------------
 
 	/**
@@ -538,7 +538,7 @@ open class TextInput(context: Context, listener: TextInputListener?) : EditText(
 	}
 
 	//--------------------------------------------------------------------------
-	// Date Picker Listener
+	// Date Picker JavaScriptViewListener
 	//--------------------------------------------------------------------------
 
 	/**
@@ -559,7 +559,7 @@ open class TextInput(context: Context, listener: TextInputListener?) : EditText(
 	}
 
 	//--------------------------------------------------------------------------
-	// Time Picker Listener
+	// Time Picker JavaScriptViewListener
 	//--------------------------------------------------------------------------
 
 	/**

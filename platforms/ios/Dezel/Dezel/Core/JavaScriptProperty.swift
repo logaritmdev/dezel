@@ -127,18 +127,18 @@ public class JavaScriptProperty: NSObject {
 	private var lock: AnyObject?
 
 	/**
-	 * @property storage
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private var currentValue: JavaScriptPropertyValue
-
-	/**
 	 * @property initial
 	 * @since 0.7.0
 	 * @hidden
 	 */
 	private var initialValue: JavaScriptPropertyValue
+
+	/**
+	 * @property storage
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private var currentValue: JavaScriptPropertyValue
 
 	/**
 	 * @property handler
@@ -157,8 +157,8 @@ public class JavaScriptProperty: NSObject {
 	 * @since 0.7.0
 	 */
 	public init(handler: JavaScriptPropertyHandler? = nil) {
-		self.currentValue = JavaScriptPropertyValue()
-		self.initialValue = self.currentValue
+		self.initialValue = JavaScriptPropertyValue()
+		self.currentValue = self.initialValue
 		self.handler = handler
 	}
 
@@ -168,8 +168,8 @@ public class JavaScriptProperty: NSObject {
 	 * @since 0.7.0
 	 */
 	public init(string: String, handler: JavaScriptPropertyHandler? = nil) {
-		self.currentValue = JavaScriptPropertyStringValue(value: string)
-		self.initialValue = self.currentValue
+		self.initialValue = JavaScriptPropertyStringValue(value: string)
+		self.currentValue = self.initialValue
 		self.handler = handler
 	}
 
@@ -179,8 +179,8 @@ public class JavaScriptProperty: NSObject {
 	 * @since 0.7.0
 	 */
 	public init(number: Double, handler: JavaScriptPropertyHandler? = nil) {
-		self.currentValue = JavaScriptPropertyNumberValue(value: number)
-		self.initialValue = self.currentValue
+		self.initialValue = JavaScriptPropertyNumberValue(value: number)
+		self.currentValue = self.initialValue
 		self.handler = handler
 	}
 
@@ -190,8 +190,8 @@ public class JavaScriptProperty: NSObject {
 	 * @since 0.7.0
 	 */
 	public init(number: Double, unit: JavaScriptPropertyUnit, handler: JavaScriptPropertyHandler? = nil) {
-		self.currentValue = JavaScriptPropertyNumberValue(value: number, unit: unit)
-		self.initialValue = self.currentValue
+		self.initialValue = JavaScriptPropertyNumberValue(value: number, unit: unit)
+		self.currentValue = self.initialValue
 		self.handler = handler
 	}
 
@@ -201,14 +201,64 @@ public class JavaScriptProperty: NSObject {
 	 * @since 0.7.0
 	 */
 	public init(boolean: Bool, handler: JavaScriptPropertyHandler? = nil) {
-		self.currentValue = JavaScriptPropertyBooleanValue(value: boolean)
-		self.initialValue = self.currentValue
+		self.initialValue = JavaScriptPropertyBooleanValue(value: boolean)
+		self.currentValue = self.initialValue
 		self.handler = handler
 	}
 
 	/**
-	 * Parses the string and
-	 * @method reset
+	 * Initializes the property to nil.
+	 * @constructor
+	 * @since 0.7.0
+	 */
+	public convenience init(lock: AnyObject, handler: JavaScriptPropertyHandler? = nil) {
+		self.init(handler: handler)
+		self.lock = lock
+	}
+
+	/**
+	 * Initializes the property with a string.
+	 * @constructor
+	 * @since 0.7.0
+	 */
+	public convenience init(string: String, lock: AnyObject, handler: JavaScriptPropertyHandler? = nil) {
+		self.init(string: string, handler: handler)
+		self.lock = lock
+	}
+
+	/**
+	 * Initializes the property with a number.
+	 * @constructor
+	 * @since 0.7.0
+	 */
+	public convenience init(number: Double, lock: AnyObject, handler: JavaScriptPropertyHandler? = nil) {
+		self.init(number: number, handler: handler)
+		self.lock = lock
+	}
+
+	/**
+	 * Initializes the property with a number.
+	 * @constructor
+	 * @since 0.7.0
+	 */
+	public convenience init(number: Double, unit: JavaScriptPropertyUnit, lock: AnyObject, handler: JavaScriptPropertyHandler? = nil) {
+		self.init(number: number, unit: unit, handler: handler)
+		self.lock = lock
+	}
+
+	/**
+	 * Initializes the property with a boolean.
+	 * @constructor
+	 * @since 0.7.0
+	 */
+	public convenience init(boolean: Bool, lock: AnyObject, handler: JavaScriptPropertyHandler? = nil) {
+		self.init(boolean: boolean, handler: handler)
+		self.lock = lock
+	}
+
+	/**
+	 * Parses the string assign its result to the property.
+	 * @method parse
 	 * @since 0.7.0
 	 */
 	public func parse(_ value: String, lock: AnyObject? = nil) {
@@ -255,7 +305,7 @@ public class JavaScriptProperty: NSObject {
 
 			if (self.equals(self.initialValue) == false) {
 				self.update(self.initialValue)
-				self.change();
+				self.change()
 			}
 
 		} else {

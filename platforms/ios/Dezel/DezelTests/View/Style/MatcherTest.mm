@@ -1,6 +1,7 @@
 #import <XCTest/XCTest.h>
 #include "Display.h"
 #include "DisplayNode.h"
+#include "DisplayNodePropertyRef.h"
 #include "Tokenizer.h"
 #include "TokenizerStream.h"
 #include "Value.h"
@@ -20,6 +21,13 @@ using std::exception;
 
 using namespace Dezel;
 using namespace Dezel::Style;
+
+static vector<DisplayNodePropertyRef> properties;
+
+static void displayNodeUpdateCallback(DisplayNodeRef node, DisplayNodePropertyRef property, const char* name)
+{
+	properties.push_back(property);
+}
 
 @interface MatcherTest : XCTestCase {
 	Display* display;
@@ -54,6 +62,8 @@ using namespace Dezel::Style;
 	screen = new DisplayNode(display, "Screen Component View");
 
 	display->setWindow(window);
+
+	properties.clear();
 }
 
 - (void)tearDown {
@@ -618,5 +628,205 @@ using namespace Dezel::Style;
 		[NSException raise:@"Exception" format: @"%s", e.what()];
 	}
 }
+
+- (void)testPropertyResolution {
+
+	try {
+
+		string source = R""""(
+
+			Button {
+				button-prop-1: value1;
+				button-prop-2: value2;
+			}
+
+		)"""";
+
+		auto stylesheet = [self parse:source];
+
+		vector<Match> matches;
+
+		auto button = new DisplayNode(display, "Button Component View");
+
+		window->appendChild(screen);
+		screen->appendChild(button);
+
+		display->setStylesheet(stylesheet);
+
+		button->setUpdateCallback(displayNodeUpdateCallback);
+		button->resolve();
+
+		XCTAssertEqual(properties.size(), 2);
+		XCTAssertEqual(strcmp(DisplayNodePropertyGetName(properties[0]), "button-prop-1"), 0);
+		XCTAssertEqual(strcmp(DisplayNodePropertyGetName(properties[1]), "button-prop-2"), 0);
+
+	} catch (exception &e) {
+		[NSException raise:@"Exception" format: @"%s", e.what()];
+	}
+}
+
+- (void)testPropertyResolutionWithState {
+
+	try {
+
+		string source = R""""(
+
+			Button {
+
+				button-prop-1: value1;
+				button-prop-2: value2;
+
+				@state a-state {
+					button-prop-2: value3;
+					button-prop-3: value2;
+				}
+			}
+
+		)"""";
+
+		auto stylesheet = [self parse:source];
+
+		vector<Match> matches;
+
+		auto button = new DisplayNode(display, "Button Component View");
+
+		window->appendChild(screen);
+		screen->appendChild(button);
+
+		display->setStylesheet(stylesheet);
+
+		button->setUpdateCallback(displayNodeUpdateCallback);
+		button->resolve();
+
+		XCTAssertEqual(properties.size(), 2);
+
+		XCTAssertEqual(strcmp(DisplayNodePropertyGetName(properties[0]), "button-prop-1"), 0);
+		XCTAssertEqual(strcmp(DisplayNodePropertyGetName(properties[1]), "button-prop-2"), 0);
+
+		properties.clear();
+
+		button->appendState("a-state");
+		button->resolve();
+
+		XCTAssertEqual(properties.size(), 2);
+		XCTAssertEqual(strcmp(DisplayNodePropertyGetName(properties[0]), "button-prop-2"), 0);
+		XCTAssertEqual(strcmp(DisplayNodePropertyGetName(properties[1]), "button-prop-3"), 0);
+
+	} catch (exception &e) {
+		[NSException raise:@"Exception" format: @"%s", e.what()];
+	}
+}
+
+- (void)testPropertyResolutionWithStyle {
+
+	try {
+
+		string source = R""""(
+
+			Button {
+
+				button-prop-1: value1;
+				button-prop-2: value2;
+
+				@style a-style {
+					button-prop-2: value3;
+					button-prop-3: value2;
+				}
+			}
+
+		)"""";
+
+		auto stylesheet = [self parse:source];
+
+		vector<Match> matches;
+
+		auto button = new DisplayNode(display, "Button Component View");
+
+		window->appendChild(screen);
+		screen->appendChild(button);
+
+		display->setStylesheet(stylesheet);
+
+		button->setUpdateCallback(displayNodeUpdateCallback);
+		button->resolve();
+
+		XCTAssertEqual(properties.size(), 2);
+
+		XCTAssertEqual(strcmp(DisplayNodePropertyGetName(properties[0]), "button-prop-1"), 0);
+		XCTAssertEqual(strcmp(DisplayNodePropertyGetName(properties[1]), "button-prop-2"), 0);
+
+		properties.clear();
+
+		button->appendStyle("a-style");
+		button->resolve();
+
+		XCTAssertEqual(properties.size(), 2);
+		XCTAssertEqual(strcmp(DisplayNodePropertyGetName(properties[0]), "button-prop-2"), 0);
+		XCTAssertEqual(strcmp(DisplayNodePropertyGetName(properties[1]), "button-prop-3"), 0);
+
+	} catch (exception &e) {
+		[NSException raise:@"Exception" format: @"%s", e.what()];
+	}
+}
+
+
+
+- (void)testNestedPropertyResolutionWithState {
+
+	try {
+
+		string source = R""""(
+
+			Button {
+
+				button-prop-1: value1;
+				button-prop-2: value2;
+
+				#label {
+	
+				}
+
+				@state a-state {
+					button-prop-2: value3;
+					button-prop-3: value2;
+				}
+
+			}
+
+		)"""";
+
+		auto stylesheet = [self parse:source];
+
+		vector<Match> matches;
+
+		auto button = new DisplayNode(display, "Button Component View");
+
+		window->appendChild(screen);
+		screen->appendChild(button);
+
+		display->setStylesheet(stylesheet);
+
+		button->setUpdateCallback(displayNodeUpdateCallback);
+		button->resolve();
+
+		XCTAssertEqual(properties.size(), 2);
+
+		XCTAssertEqual(strcmp(DisplayNodePropertyGetName(properties[0]), "button-prop-1"), 0);
+		XCTAssertEqual(strcmp(DisplayNodePropertyGetName(properties[1]), "button-prop-2"), 0);
+
+		properties.clear();
+
+		button->appendState("a-state");
+		button->resolve();
+
+		XCTAssertEqual(properties.size(), 2);
+		XCTAssertEqual(strcmp(DisplayNodePropertyGetName(properties[0]), "button-prop-2"), 0);
+		XCTAssertEqual(strcmp(DisplayNodePropertyGetName(properties[1]), "button-prop-3"), 0);
+
+	} catch (exception &e) {
+		[NSException raise:@"Exception" format: @"%s", e.what()];
+	}
+}
+
 
 @end

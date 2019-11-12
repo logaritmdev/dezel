@@ -12,7 +12,6 @@ import ca.logaritm.dezel.extension.type.*
 import ca.logaritm.dezel.extension.type.max
 import ca.logaritm.dezel.extension.type.min
 import ca.logaritm.dezel.extension.type.until
-import ca.logaritm.dezel.extension.view.addView
 import ca.logaritm.dezel.extension.view.removeFromParent
 import ca.logaritm.dezel.modules.graphic.ImageLoader
 import ca.logaritm.dezel.modules.graphic.JavaScriptCanvas
@@ -46,7 +45,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @property listener
 	 * @since 0.7.0
 	 */
-	open var listener: Listener? = null
+	open var listener: JavaScriptViewListener? = null
 
 	/**
 	 * The view's JavaScript class name.
@@ -3505,7 +3504,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @hidden
 	 */
 	public val measuredTop by lazy {
-		JavaScriptProperty()
+		JavaScriptProperty(lock = this)
 	}
 
 	/**
@@ -3514,7 +3513,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @hidden
 	 */
 	public val measuredLeft by lazy {
-		JavaScriptProperty()
+		JavaScriptProperty(lock = this)
 	}
 
 	/**
@@ -3523,7 +3522,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @hidden
 	 */
 	public val measuredWidth by lazy {
-		JavaScriptProperty()
+		JavaScriptProperty(lock = this)
 	}
 
 	/**
@@ -3532,7 +3531,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @hidden
 	 */
 	public val measuredHeight by lazy {
-		JavaScriptProperty()
+		JavaScriptProperty(lock = this)
 	}
 
 	/**
@@ -3541,7 +3540,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @hidden
 	 */
 	public val measuredInnerWidth by lazy {
-		JavaScriptProperty()
+		JavaScriptProperty(lock = this)
 	}
 
 	/**
@@ -3550,7 +3549,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @hidden
 	 */
 	public val measuredInnerHeight by lazy {
-		JavaScriptProperty()
+		JavaScriptProperty(lock = this)
 	}
 
 	/**
@@ -3559,7 +3558,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @hidden
 	 */
 	public val measuredContentWidth by lazy {
-		JavaScriptProperty()
+		JavaScriptProperty(lock = this)
 	}
 
 	/**
@@ -3568,7 +3567,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @hidden
 	 */
 	public val measuredContentHeight by lazy {
-		JavaScriptProperty()
+		JavaScriptProperty(lock = this)
 	}
 
 	/**
@@ -3577,7 +3576,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @hidden
 	 */
 	public val measuredMarginTop by lazy {
-		JavaScriptProperty()
+		JavaScriptProperty(lock = this)
 	}
 
 	/**
@@ -3586,7 +3585,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @hidden
 	 */
 	public val measuredMarginLeft by lazy {
-		JavaScriptProperty()
+		JavaScriptProperty(lock = this)
 	}
 
 	/**
@@ -3595,7 +3594,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @hidden
 	 */
 	public val measuredMarginRight by lazy {
-		JavaScriptProperty()
+		JavaScriptProperty(lock = this)
 	}
 
 	/**
@@ -3604,7 +3603,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @hidden
 	 */
 	public val measuredMarginBottom by lazy {
-		JavaScriptProperty()
+		JavaScriptProperty(lock = this)
 	}
 
 	/**
@@ -3613,7 +3612,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @hidden
 	 */
 	public val measuredBorderTopWidth by lazy {
-		JavaScriptProperty()
+		JavaScriptProperty(lock = this)
 	}
 
 	/**
@@ -3622,7 +3621,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @hidden
 	 */
 	public val measuredBorderLeftWidth by lazy {
-		JavaScriptProperty()
+		JavaScriptProperty(lock = this)
 	}
 
 	/**
@@ -3631,7 +3630,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @hidden
 	 */
 	public val measuredBorderRightWidth by lazy {
-		JavaScriptProperty()
+		JavaScriptProperty(lock = this)
 	}
 
 	/**
@@ -3640,7 +3639,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @hidden
 	 */
 	public val measuredBorderBottomWidth by lazy {
-		JavaScriptProperty()
+		JavaScriptProperty(lock = this)
 	}
 
 	/**
@@ -3649,7 +3648,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @hidden
 	 */
 	public val measuredPaddingTop by lazy {
-		JavaScriptProperty()
+		JavaScriptProperty(lock = this)
 	}
 
 	/**
@@ -3658,7 +3657,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @hidden
 	 */
 	public val measuredPaddingLeft by lazy {
-		JavaScriptProperty()
+		JavaScriptProperty(lock = this)
 	}
 
 	/**
@@ -3667,7 +3666,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @hidden
 	 */
 	public val measuredPaddingRight by lazy {
-		JavaScriptProperty()
+		JavaScriptProperty(lock = this)
 	}
 
 	/**
@@ -3676,7 +3675,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @hidden
 	 */
 	public val measuredPaddingBottom by lazy {
-		JavaScriptProperty()
+		JavaScriptProperty(lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3746,7 +3745,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_id(callback: JavaScriptSetterCallback) {
-		this.id.reset(callback.value, this)
+		this.id.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3768,7 +3767,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_backgroundColor(callback: JavaScriptSetterCallback) {
-		this.backgroundColor.reset(callback.value, this)
+		this.backgroundColor.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3790,7 +3789,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_backgroundImage(callback: JavaScriptSetterCallback) {
-		this.backgroundImage.reset(callback.value, this)
+		this.backgroundImage.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3812,7 +3811,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_backgroundImageFit(callback: JavaScriptSetterCallback) {
-		this.backgroundImageFit.reset(callback.value, this)
+		this.backgroundImageFit.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3834,7 +3833,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_backgroundImageAnchorTop(callback: JavaScriptSetterCallback) {
-		this.backgroundImageAnchorTop.reset(callback.value, this)
+		this.backgroundImageAnchorTop.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3856,7 +3855,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_backgroundImageAnchorLeft(callback: JavaScriptSetterCallback) {
-		this.backgroundImageAnchorLeft.reset(callback.value, this)
+		this.backgroundImageAnchorLeft.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3878,7 +3877,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_backgroundImageTop(callback: JavaScriptSetterCallback) {
-		this.backgroundImageTop.reset(callback.value, this)
+		this.backgroundImageTop.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3900,7 +3899,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_backgroundImageLeft(callback: JavaScriptSetterCallback) {
-		this.backgroundImageLeft.reset(callback.value, this)
+		this.backgroundImageLeft.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3922,7 +3921,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_backgroundImageWidth(callback: JavaScriptSetterCallback) {
-		this.backgroundImageWidth.reset(callback.value, this)
+		this.backgroundImageWidth.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3944,7 +3943,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_backgroundImageHeight(callback: JavaScriptSetterCallback) {
-		this.backgroundImageHeight.reset(callback.value, this)
+		this.backgroundImageHeight.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3966,7 +3965,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_backgroundImageTint(callback: JavaScriptSetterCallback) {
-		this.backgroundImageTint.reset(callback.value, this)
+		this.backgroundImageTint.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4005,7 +4004,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_border(callback: JavaScriptSetterCallback) {
-		this.border.reset(callback.value, this)
+		this.border.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4027,7 +4026,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_borderTop(callback: JavaScriptSetterCallback) {
-		this.borderTop.reset(callback.value, this)
+		this.borderTop.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4049,7 +4048,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_borderLeft(callback: JavaScriptSetterCallback) {
-		this.borderLeft.reset(callback.value, this)
+		this.borderLeft.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4071,7 +4070,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_borderRight(callback: JavaScriptSetterCallback) {
-		this.borderRight.reset(callback.value, this)
+		this.borderRight.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4093,7 +4092,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_borderBottom(callback: JavaScriptSetterCallback) {
-		this.borderBottom.reset(callback.value, this)
+		this.borderBottom.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4122,7 +4121,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_borderWidth(callback: JavaScriptSetterCallback) {
-		this.borderWidth.reset(callback.value, this)
+		this.borderWidth.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4151,7 +4150,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_borderColor(callback: JavaScriptSetterCallback) {
-		this.borderColor.reset(callback.value, this)
+		this.borderColor.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4173,7 +4172,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_borderTopColor(callback: JavaScriptSetterCallback) {
-		this.borderTopColor.reset(callback.value, this)
+		this.borderTopColor.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4195,7 +4194,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_borderLeftColor(callback: JavaScriptSetterCallback) {
-		this.borderLeftColor.reset(callback.value, this)
+		this.borderLeftColor.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4217,7 +4216,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_borderRightColor(callback: JavaScriptSetterCallback) {
-		this.borderRightColor.reset(callback.value, this)
+		this.borderRightColor.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4239,7 +4238,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_borderBottomColor(callback: JavaScriptSetterCallback) {
-		this.borderBottomColor.reset(callback.value, this)
+		this.borderBottomColor.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4261,7 +4260,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_borderTopWidth(callback: JavaScriptSetterCallback) {
-		this.borderTopWidth.reset(callback.value, this)
+		this.borderTopWidth.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4283,7 +4282,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_borderLeftWidth(callback: JavaScriptSetterCallback) {
-		this.borderLeftWidth.reset(callback.value, this)
+		this.borderLeftWidth.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4305,7 +4304,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_borderRightWidth(callback: JavaScriptSetterCallback) {
-		this.borderRightWidth.reset(callback.value, this)
+		this.borderRightWidth.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4327,7 +4326,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_borderBottomWidth(callback: JavaScriptSetterCallback) {
-		this.borderBottomWidth.reset(callback.value, this)
+		this.borderBottomWidth.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4349,7 +4348,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_minBorderTopWidth(callback: JavaScriptSetterCallback) {
-		this.minBorderTopWidth.reset(callback.value, this)
+		this.minBorderTopWidth.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4371,7 +4370,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_maxBorderTopWidth(callback: JavaScriptSetterCallback) {
-		this.maxBorderTopWidth.reset(callback.value, this)
+		this.maxBorderTopWidth.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4393,7 +4392,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_minBorderLeftWidth(callback: JavaScriptSetterCallback) {
-		this.minBorderLeftWidth.reset(callback.value, this)
+		this.minBorderLeftWidth.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4415,7 +4414,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_maxBorderLeftWidth(callback: JavaScriptSetterCallback) {
-		this.maxBorderLeftWidth.reset(callback.value, this)
+		this.maxBorderLeftWidth.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4437,7 +4436,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_minBorderRightWidth(callback: JavaScriptSetterCallback) {
-		this.minBorderRightWidth.reset(callback.value, this)
+		this.minBorderRightWidth.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4459,7 +4458,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_maxBorderRightWidth(callback: JavaScriptSetterCallback) {
-		this.maxBorderRightWidth.reset(callback.value, this)
+		this.maxBorderRightWidth.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4481,7 +4480,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_minBorderBottomWidth(callback: JavaScriptSetterCallback) {
-		this.minBorderBottomWidth.reset(callback.value, this)
+		this.minBorderBottomWidth.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4503,7 +4502,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_maxBorderBottomWidth(callback: JavaScriptSetterCallback) {
-		this.maxBorderBottomWidth.reset(callback.value, this)
+		this.maxBorderBottomWidth.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4532,7 +4531,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_borderRadius(callback: JavaScriptSetterCallback) {
-		this.borderRadius.reset(callback.value, this)
+		this.borderRadius.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4554,7 +4553,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_borderTopLeftRadius(callback: JavaScriptSetterCallback) {
-		this.borderTopLeftRadius.reset(callback.value, this)
+		this.borderTopLeftRadius.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4576,7 +4575,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_borderTopRightRadius(callback: JavaScriptSetterCallback) {
-		this.borderTopRightRadius.reset(callback.value, this)
+		this.borderTopRightRadius.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4598,7 +4597,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_borderBottomLeftRadius(callback: JavaScriptSetterCallback) {
-		this.borderBottomLeftRadius.reset(callback.value, this)
+		this.borderBottomLeftRadius.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4620,7 +4619,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_borderBottomRightRadius(callback: JavaScriptSetterCallback) {
-		this.borderBottomRightRadius.reset(callback.value, this)
+		this.borderBottomRightRadius.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4642,7 +4641,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_shadowBlur(callback: JavaScriptSetterCallback) {
-		this.shadowBlur.reset(callback.value, this)
+		this.shadowBlur.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4664,7 +4663,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_shadowColor(callback: JavaScriptSetterCallback) {
-		this.shadowColor.reset(callback.value, this)
+		this.shadowColor.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4686,7 +4685,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_shadowOffsetTop(callback: JavaScriptSetterCallback) {
-		this.shadowOffsetTop.reset(callback.value, this)
+		this.shadowOffsetTop.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4708,7 +4707,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_shadowOffsetLeft(callback: JavaScriptSetterCallback) {
-		this.shadowOffsetLeft.reset(callback.value, this)
+		this.shadowOffsetLeft.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4730,7 +4729,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_top(callback: JavaScriptSetterCallback) {
-		this.top.reset(callback.value, this)
+		this.top.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4752,7 +4751,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_left(callback: JavaScriptSetterCallback) {
-		this.left.reset(callback.value, this)
+		this.left.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4774,7 +4773,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_right(callback: JavaScriptSetterCallback) {
-		this.right.reset(callback.value, this)
+		this.right.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4796,7 +4795,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_bottom(callback: JavaScriptSetterCallback) {
-		this.bottom.reset(callback.value, this)
+		this.bottom.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4818,7 +4817,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_minTop(callback: JavaScriptSetterCallback) {
-		this.minTop.reset(callback.value, this)
+		this.minTop.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4840,7 +4839,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_maxTop(callback: JavaScriptSetterCallback) {
-		this.maxTop.reset(callback.value, this)
+		this.maxTop.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4862,7 +4861,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_minLeft(callback: JavaScriptSetterCallback) {
-		this.minLeft.reset(callback.value, this)
+		this.minLeft.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4884,7 +4883,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_maxLeft(callback: JavaScriptSetterCallback) {
-		this.maxLeft.reset(callback.value, this)
+		this.maxLeft.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4906,7 +4905,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_minRight(callback: JavaScriptSetterCallback) {
-		this.minRight.reset(callback.value, this)
+		this.minRight.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4928,7 +4927,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_maxRight(callback: JavaScriptSetterCallback) {
-		this.maxRight.reset(callback.value, this)
+		this.maxRight.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4950,7 +4949,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_minBottom(callback: JavaScriptSetterCallback) {
-		this.minBottom.reset(callback.value, this)
+		this.minBottom.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4972,7 +4971,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_maxBottom(callback: JavaScriptSetterCallback) {
-		this.maxBottom.reset(callback.value, this)
+		this.maxBottom.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4994,7 +4993,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_anchorTop(callback: JavaScriptSetterCallback) {
-		this.anchorTop.reset(callback.value, this)
+		this.anchorTop.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5016,7 +5015,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_anchorLeft(callback: JavaScriptSetterCallback) {
-		this.anchorLeft.reset(callback.value, this)
+		this.anchorLeft.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5038,7 +5037,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_width(callback: JavaScriptSetterCallback) {
-		this.width.reset(callback.value, this)
+		this.width.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5060,7 +5059,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_height(callback: JavaScriptSetterCallback) {
-		this.height.reset(callback.value, this)
+		this.height.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5082,7 +5081,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_minWidth(callback: JavaScriptSetterCallback) {
-		this.minWidth.reset(callback.value, this)
+		this.minWidth.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5104,7 +5103,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_maxWidth(callback: JavaScriptSetterCallback) {
-		this.maxWidth.reset(callback.value, this)
+		this.maxWidth.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5126,7 +5125,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_minHeight(callback: JavaScriptSetterCallback) {
-		this.minHeight.reset(callback.value, this)
+		this.minHeight.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5148,7 +5147,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_maxHeight(callback: JavaScriptSetterCallback) {
-		this.maxHeight.reset(callback.value, this)
+		this.maxHeight.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5170,7 +5169,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_expandFactor(callback: JavaScriptSetterCallback) {
-		this.expandFactor.reset(callback.value, this)
+		this.expandFactor.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5192,7 +5191,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_shrinkFactor(callback: JavaScriptSetterCallback) {
-		this.shrinkFactor.reset(callback.value, this)
+		this.shrinkFactor.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5214,7 +5213,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_contentTop(callback: JavaScriptSetterCallback) {
-		this.contentTop.reset(callback.value, this)
+		this.contentTop.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5236,7 +5235,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_contentLeft(callback: JavaScriptSetterCallback) {
-		this.contentLeft.reset(callback.value, this)
+		this.contentLeft.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5258,7 +5257,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_contentWidth(callback: JavaScriptSetterCallback) {
-		this.contentWidth.reset(callback.value, this)
+		this.contentWidth.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5280,7 +5279,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_contentHeight(callback: JavaScriptSetterCallback) {
-		this.contentHeight.reset(callback.value, this)
+		this.contentHeight.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5302,7 +5301,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_contentInsetTop(callback: JavaScriptSetterCallback) {
-		this.contentInsetTop.reset(callback.value, this)
+		this.contentInsetTop.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5324,7 +5323,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_contentInsetLeft(callback: JavaScriptSetterCallback) {
-		this.contentInsetLeft.reset(callback.value, this)
+		this.contentInsetLeft.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5346,7 +5345,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_contentInsetRight(callback: JavaScriptSetterCallback) {
-		this.contentInsetRight.reset(callback.value, this)
+		this.contentInsetRight.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5368,7 +5367,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_contentInsetBottom(callback: JavaScriptSetterCallback) {
-		this.contentInsetBottom.reset(callback.value, this)
+		this.contentInsetBottom.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5390,7 +5389,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_contentDirection(callback: JavaScriptSetterCallback) {
-		this.contentDirection.reset(callback.value, this)
+		this.contentDirection.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5412,7 +5411,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_contentLocation(callback: JavaScriptSetterCallback) {
-		this.contentLocation.reset(callback.value, this)
+		this.contentLocation.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5434,7 +5433,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_contentAlignment(callback: JavaScriptSetterCallback) {
-		this.contentAlignment.reset(callback.value, this)
+		this.contentAlignment.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5456,7 +5455,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_scrollable(callback: JavaScriptSetterCallback) {
-		this.scrollable.reset(callback.value, this)
+		this.scrollable.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5478,7 +5477,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_scrollbars(callback: JavaScriptSetterCallback) {
-		this.scrollbars.reset(callback.value, this)
+		this.scrollbars.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5500,7 +5499,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_overscroll(callback: JavaScriptSetterCallback) {
-		this.overscroll.reset(callback.value, this)
+		this.overscroll.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5522,7 +5521,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_momentum(callback: JavaScriptSetterCallback) {
-		this.momentum.reset(callback.value, this)
+		this.momentum.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5544,7 +5543,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_scrollTop(callback: JavaScriptSetterCallback) {
-		this.scrollTop.reset(callback.value, this)
+		this.scrollTop.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5566,7 +5565,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_scrollLeft(callback: JavaScriptSetterCallback) {
-		this.scrollTop.reset(callback.value, this)
+		this.scrollTop.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5619,7 +5618,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_margin(callback: JavaScriptSetterCallback) {
-		this.margin.reset(callback.value, this)
+		this.margin.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5641,7 +5640,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_marginTop(callback: JavaScriptSetterCallback) {
-		this.marginTop.reset(callback.value, this)
+		this.marginTop.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5663,7 +5662,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_marginLeft(callback: JavaScriptSetterCallback) {
-		this.marginLeft.reset(callback.value, this)
+		this.marginLeft.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5685,7 +5684,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_marginRight(callback: JavaScriptSetterCallback) {
-		this.marginRight.reset(callback.value, this)
+		this.marginRight.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5707,7 +5706,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_marginBottom(callback: JavaScriptSetterCallback) {
-		this.marginBottom.reset(callback.value, this)
+		this.marginBottom.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5729,7 +5728,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_minMarginTop(callback: JavaScriptSetterCallback) {
-		this.minMarginTop.reset(callback.value, this)
+		this.minMarginTop.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5751,7 +5750,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_maxMarginTop(callback: JavaScriptSetterCallback) {
-		this.maxMarginTop.reset(callback.value, this)
+		this.maxMarginTop.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5773,7 +5772,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_minMarginLeft(callback: JavaScriptSetterCallback) {
-		this.minMarginLeft.reset(callback.value, this)
+		this.minMarginLeft.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5795,7 +5794,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_maxMarginLeft(callback: JavaScriptSetterCallback) {
-		this.maxMarginLeft.reset(callback.value, this)
+		this.maxMarginLeft.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5817,7 +5816,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_minMarginRight(callback: JavaScriptSetterCallback) {
-		this.minMarginRight.reset(callback.value, this)
+		this.minMarginRight.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5839,7 +5838,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_maxMarginRight(callback: JavaScriptSetterCallback) {
-		this.maxMarginRight.reset(callback.value, this)
+		this.maxMarginRight.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5861,7 +5860,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_minMarginBottom(callback: JavaScriptSetterCallback) {
-		this.minMarginBottom.reset(callback.value, this)
+		this.minMarginBottom.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5883,7 +5882,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_maxMarginBottom(callback: JavaScriptSetterCallback) {
-		this.maxMarginBottom.reset(callback.value, this)
+		this.maxMarginBottom.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5912,7 +5911,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_padding(callback: JavaScriptSetterCallback) {
-		this.padding.reset(callback.value, this)
+		this.padding.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5934,7 +5933,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_paddingTop(callback: JavaScriptSetterCallback) {
-		this.paddingTop.reset(callback.value, this)
+		this.paddingTop.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5956,7 +5955,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_paddingLeft(callback: JavaScriptSetterCallback) {
-		this.paddingLeft.reset(callback.value, this)
+		this.paddingLeft.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5978,7 +5977,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_paddingRight(callback: JavaScriptSetterCallback) {
-		this.paddingRight.reset(callback.value, this)
+		this.paddingRight.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6000,7 +5999,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_paddingBottom(callback: JavaScriptSetterCallback) {
-		this.paddingBottom.reset(callback.value, this)
+		this.paddingBottom.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6022,7 +6021,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_minPaddingTop(callback: JavaScriptSetterCallback) {
-		this.minPaddingTop.reset(callback.value, this)
+		this.minPaddingTop.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6044,7 +6043,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_maxPaddingTop(callback: JavaScriptSetterCallback) {
-		this.maxPaddingTop.reset(callback.value, this)
+		this.maxPaddingTop.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6066,7 +6065,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_minPaddingLeft(callback: JavaScriptSetterCallback) {
-		this.minPaddingLeft.reset(callback.value, this)
+		this.minPaddingLeft.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6088,7 +6087,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_maxPaddingLeft(callback: JavaScriptSetterCallback) {
-		this.maxPaddingLeft.reset(callback.value, this)
+		this.maxPaddingLeft.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6110,7 +6109,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_minPaddingRight(callback: JavaScriptSetterCallback) {
-		this.minPaddingRight.reset(callback.value, this)
+		this.minPaddingRight.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6132,7 +6131,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_maxPaddingRight(callback: JavaScriptSetterCallback) {
-		this.maxPaddingRight.reset(callback.value, this)
+		this.maxPaddingRight.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6154,7 +6153,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_minPaddingBottom(callback: JavaScriptSetterCallback) {
-		this.minPaddingBottom.reset(callback.value, this)
+		this.minPaddingBottom.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6176,7 +6175,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_maxPaddingBottom(callback: JavaScriptSetterCallback) {
-		this.maxPaddingBottom.reset(callback.value, this)
+		this.maxPaddingBottom.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6198,7 +6197,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_originX(callback: JavaScriptSetterCallback) {
-		this.originX.reset(callback.value, this)
+		this.originX.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6220,7 +6219,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_originY(callback: JavaScriptSetterCallback) {
-		this.originY.reset(callback.value, this)
+		this.originY.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6242,7 +6241,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_originZ(callback: JavaScriptSetterCallback) {
-		this.originZ.reset(callback.value, this)
+		this.originZ.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6264,7 +6263,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_translationX(callback: JavaScriptSetterCallback) {
-		this.translationX.reset(callback.value, this)
+		this.translationX.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6286,7 +6285,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_translationY(callback: JavaScriptSetterCallback) {
-		this.translationY.reset(callback.value, this)
+		this.translationY.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6308,7 +6307,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_translationZ(callback: JavaScriptSetterCallback) {
-		this.translationZ.reset(callback.value, this)
+		this.translationZ.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6330,7 +6329,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_rotationX(callback: JavaScriptSetterCallback) {
-		this.rotationX.reset(callback.value, this)
+		this.rotationX.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6352,7 +6351,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_rotationY(callback: JavaScriptSetterCallback) {
-		this.rotationY.reset(callback.value, this)
+		this.rotationY.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6374,7 +6373,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_rotationZ(callback: JavaScriptSetterCallback) {
-		this.rotationZ.reset(callback.value, this)
+		this.rotationZ.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6396,7 +6395,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_scaleX(callback: JavaScriptSetterCallback) {
-		this.scaleX.reset(callback.value, this)
+		this.scaleX.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6418,7 +6417,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_scaleY(callback: JavaScriptSetterCallback) {
-		this.scaleY.reset(callback.value, this)
+		this.scaleY.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6440,7 +6439,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_scaleZ(callback: JavaScriptSetterCallback) {
-		this.scaleZ.reset(callback.value, this)
+		this.scaleZ.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6462,7 +6461,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_zIndex(callback: JavaScriptSetterCallback) {
-		this.zIndex.reset(callback.value, this)
+		this.zIndex.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6484,7 +6483,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_zoomable(callback: JavaScriptSetterCallback) {
-		this.zoomable.reset(callback.value, this)
+		this.zoomable.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6506,7 +6505,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_minZoom(callback: JavaScriptSetterCallback) {
-		this.minZoom.reset(callback.value, this)
+		this.minZoom.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6528,7 +6527,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_maxZoom(callback: JavaScriptSetterCallback) {
-		this.maxZoom.reset(callback.value, this)
+		this.maxZoom.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6572,7 +6571,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_touchable(callback: JavaScriptSetterCallback) {
-		this.touchable.reset(callback.value, this)
+		this.touchable.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6594,7 +6593,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_touchOffsetTop(callback: JavaScriptSetterCallback) {
-		this.touchOffsetTop.reset(callback.value, this)
+		this.touchOffsetTop.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6616,7 +6615,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_touchOffsetLeft(callback: JavaScriptSetterCallback) {
-		this.touchOffsetLeft.reset(callback.value, this)
+		this.touchOffsetLeft.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6638,7 +6637,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_touchOffsetRight(callback: JavaScriptSetterCallback) {
-		this.touchOffsetRight.reset(callback.value, this)
+		this.touchOffsetRight.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6660,7 +6659,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_touchOffsetBottom(callback: JavaScriptSetterCallback) {
-		this.touchOffsetBottom.reset(callback.value, this)
+		this.touchOffsetBottom.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6682,7 +6681,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_visible(callback: JavaScriptSetterCallback) {
-		this.visible.reset(callback.value, this)
+		this.visible.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6704,7 +6703,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_opacity(callback: JavaScriptSetterCallback) {
-		this.opacity.reset(callback.value, this)
+		this.opacity.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6726,7 +6725,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_drawable(callback: JavaScriptSetterCallback) {
-		this.drawable.reset(callback.value, this)
+		this.drawable.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6748,7 +6747,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_clipped(callback: JavaScriptSetterCallback) {
-		this.clipped.reset(callback.value, this)
+		this.clipped.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6770,7 +6769,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	@Suppress("unused")
 	open fun jsSet_paged(callback: JavaScriptSetterCallback) {
-		this.paged.reset(callback.value, this)
+		this.paged.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6787,11 +6786,11 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 
 		if (this.resolvedTop != measuredTop) {
 			this.resolvedTop = measuredTop
-			this.measuredTop.reset(null)
+			this.measuredTop.reset(lock = this)
 		}
 
 		if (this.measuredTop.isNull) {
-			this.measuredTop.reset(this.resolvedTop)
+			this.measuredTop.reset(this.resolvedTop, lock = this)
 		}
 
 		callback.returns(this.measuredTop)
@@ -6809,11 +6808,11 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 
 		if (this.resolvedLeft != measuredLeft) {
 			this.resolvedLeft = measuredLeft
-			this.measuredLeft.reset(null)
+			this.measuredLeft.reset(lock = this)
 		}
 
 		if (this.measuredLeft.isNull) {
-			this.measuredLeft.reset(this.resolvedLeft)
+			this.measuredLeft.reset(this.resolvedLeft, lock = this)
 		}
 
 		callback.returns(this.measuredLeft)
@@ -6831,11 +6830,11 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 
 		if (this.resolvedWidth != measuredWidth) {
 			this.resolvedWidth = measuredWidth
-			this.measuredWidth.reset(null)
+			this.measuredWidth.reset(lock = this)
 		}
 
 		if (this.measuredWidth.isNull) {
-			this.measuredWidth.reset(this.resolvedWidth)
+			this.measuredWidth.reset(this.resolvedWidth, lock = this)
 		}
 
 		callback.returns(this.measuredWidth)
@@ -6853,11 +6852,11 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 
 		if (this.resolvedHeight != measuredHeight) {
 			this.resolvedHeight = measuredHeight
-			this.measuredHeight.reset(null)
+			this.measuredHeight.reset(lock = this)
 		}
 
 		if (this.measuredHeight.isNull) {
-			this.measuredHeight.reset(this.resolvedHeight)
+			this.measuredHeight.reset(this.resolvedHeight, lock = this)
 		}
 
 		callback.returns(this.measuredHeight)
@@ -6875,11 +6874,11 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 
 		if (this.resolvedInnerWidth != measuredInnerWidth) {
 			this.resolvedInnerWidth = measuredInnerWidth
-			this.measuredInnerWidth.reset(null)
+			this.measuredInnerWidth.reset(lock = this)
 		}
 
 		if (this.measuredInnerWidth.isNull) {
-			this.measuredInnerWidth.reset(this.resolvedInnerWidth)
+			this.measuredInnerWidth.reset(this.resolvedInnerWidth, lock = this)
 		}
 
 		callback.returns(this.measuredInnerWidth)
@@ -6897,11 +6896,11 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 
 		if (this.resolvedInnerHeight != measuredInnerHeight) {
 			this.resolvedInnerHeight = measuredInnerHeight
-			this.measuredInnerHeight.reset(null)
+			this.measuredInnerHeight.reset(lock = this)
 		}
 
 		if (this.measuredInnerHeight.isNull) {
-			this.measuredInnerHeight.reset(this.resolvedInnerHeight)
+			this.measuredInnerHeight.reset(this.resolvedInnerHeight, lock = this)
 		}
 
 		callback.returns(this.measuredInnerHeight)
@@ -6919,11 +6918,11 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 
 		if (this.resolvedContentWidth != measuredContentWidth) {
 			this.resolvedContentWidth = measuredContentWidth
-			this.measuredContentWidth.reset(null)
+			this.measuredContentWidth.reset(lock = this)
 		}
 
 		if (this.measuredContentWidth.isNull) {
-			this.measuredContentWidth.reset(this.resolvedContentWidth)
+			this.measuredContentWidth.reset(this.resolvedContentWidth, lock = this)
 		}
 
 		callback.returns(this.measuredContentWidth)
@@ -6941,11 +6940,11 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 
 		if (this.resolvedContentHeight != measuredContentHeight) {
 			this.resolvedContentHeight = measuredContentHeight
-			this.measuredContentHeight.reset(null)
+			this.measuredContentHeight.reset(lock = this)
 		}
 
 		if (this.measuredContentHeight.isNull) {
-			this.measuredContentHeight.reset(this.resolvedContentHeight)
+			this.measuredContentHeight.reset(this.resolvedContentHeight, lock = this)
 		}
 
 		callback.returns(this.measuredContentHeight)
@@ -6963,11 +6962,11 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 
 		if (this.resolvedMarginTop != measuredMarginTop) {
 			this.resolvedMarginTop = measuredMarginTop
-			this.measuredMarginTop.reset(null)
+			this.measuredMarginTop.reset(lock = this)
 		}
 
 		if (this.measuredMarginTop.isNull) {
-			this.measuredMarginTop.reset(this.resolvedMarginTop)
+			this.measuredMarginTop.reset(this.resolvedMarginTop, lock = this)
 		}
 
 		callback.returns(this.measuredMarginTop)
@@ -6985,11 +6984,11 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 
 		if (this.resolvedMarginLeft != measuredMarginLeft) {
 			this.resolvedMarginLeft = measuredMarginLeft
-			this.measuredMarginLeft.reset(null)
+			this.measuredMarginLeft.reset(lock = this)
 		}
 
 		if (this.measuredMarginLeft.isNull) {
-			this.measuredMarginLeft.reset(this.resolvedMarginLeft)
+			this.measuredMarginLeft.reset(this.resolvedMarginLeft, lock = this)
 		}
 
 		callback.returns(this.measuredMarginLeft)
@@ -7007,11 +7006,11 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 
 		if (this.resolvedMarginRight != measuredMarginRight) {
 			this.resolvedMarginRight = measuredMarginRight
-			this.measuredMarginRight.reset(null)
+			this.measuredMarginRight.reset(lock = this)
 		}
 
 		if (this.measuredMarginRight.isNull) {
-			this.measuredMarginRight.reset(this.resolvedMarginRight)
+			this.measuredMarginRight.reset(this.resolvedMarginRight, lock = this)
 		}
 
 		callback.returns(this.measuredMarginRight)
@@ -7029,11 +7028,11 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 
 		if (this.resolvedMarginBottom != measuredMarginBottom) {
 			this.resolvedMarginBottom = measuredMarginBottom
-			this.measuredMarginBottom.reset(null)
+			this.measuredMarginBottom.reset(lock = this)
 		}
 
 		if (this.measuredMarginBottom.isNull) {
-			this.measuredMarginBottom.reset(this.resolvedMarginBottom)
+			this.measuredMarginBottom.reset(this.resolvedMarginBottom, lock = this)
 		}
 
 		callback.returns(this.measuredMarginBottom)
@@ -7051,11 +7050,11 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 
 		if (this.resolvedPaddingTop != measuredPaddingTop) {
 			this.resolvedPaddingTop = measuredPaddingTop
-			this.measuredPaddingTop.reset(null)
+			this.measuredPaddingTop.reset(lock = this)
 		}
 
 		if (this.measuredPaddingTop.isNull) {
-			this.measuredPaddingTop.reset(this.resolvedPaddingTop)
+			this.measuredPaddingTop.reset(this.resolvedPaddingTop, lock = this)
 		}
 
 		callback.returns(this.measuredPaddingTop)
@@ -7073,11 +7072,11 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 
 		if (this.resolvedPaddingLeft != measuredPaddingLeft) {
 			this.resolvedPaddingLeft = measuredPaddingLeft
-			this.measuredPaddingLeft.reset(null)
+			this.measuredPaddingLeft.reset(lock = this)
 		}
 
 		if (this.measuredPaddingLeft.isNull) {
-			this.measuredPaddingLeft.reset(this.resolvedPaddingLeft)
+			this.measuredPaddingLeft.reset(this.resolvedPaddingLeft, lock = this)
 		}
 
 		callback.returns(this.measuredPaddingLeft)
@@ -7095,11 +7094,11 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 
 		if (this.resolvedPaddingRight != measuredPaddingRight) {
 			this.resolvedPaddingRight = measuredPaddingRight
-			this.measuredPaddingRight.reset(null)
+			this.measuredPaddingRight.reset(lock = this)
 		}
 
 		if (this.measuredPaddingRight.isNull) {
-			this.measuredPaddingRight.reset(this.resolvedPaddingRight)
+			this.measuredPaddingRight.reset(this.resolvedPaddingRight, lock = this)
 		}
 
 		callback.returns(this.measuredPaddingRight)
@@ -7117,11 +7116,11 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 
 		if (this.resolvedPaddingBottom != measuredPaddingBottom) {
 			this.resolvedPaddingBottom = measuredPaddingBottom
-			this.measuredPaddingBottom.reset(null)
+			this.measuredPaddingBottom.reset(lock = this)
 		}
 
 		if (this.measuredPaddingBottom.isNull) {
-			this.measuredPaddingBottom.reset(this.resolvedPaddingBottom)
+			this.measuredPaddingBottom.reset(this.resolvedPaddingBottom, lock = this)
 		}
 
 		callback.returns(this.measuredPaddingBottom)
@@ -7364,10 +7363,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 
 	/**
 	 * The view's listener.
-	 * @class ViewDelegate
+	 * @class JavaScriptViewListener
 	 * @since 0.7.0
 	 */
-	public interface Listener {
+	public interface JavaScriptViewListener {
 		fun onBeginLayout(view: JavaScriptView)
 		fun onFinishLayout(view: JavaScriptView)
 		fun onScroll(view: JavaScriptView)

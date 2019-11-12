@@ -86,7 +86,7 @@ internal class TransformAnimator(view: WrapperView, startValue: Transform, final
 	}
 
 	//--------------------------------------------------------------------------
-	// Mehods - Animator Listener
+	// Mehods - Animator JavaScriptViewListener
 	//--------------------------------------------------------------------------
 
 	/**

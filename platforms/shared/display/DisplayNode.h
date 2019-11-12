@@ -15,6 +15,7 @@
 #include "AbsoluteLayoutResolver.h"
 #include "PropertyList.h"
 #include "Property.h"
+#include "Match.h"
 #include "Trait.h"
 
 #include <float.h>
@@ -38,11 +39,13 @@ using std::vector;
 using Layout::LayoutResolver;
 using Layout::AbsoluteLayoutResolver;
 using Layout::RelativeLayoutResolver;
+
 using Style::Descriptor;
 using Style::Selector;
 using Style::Fragment;
 using Style::PropertyList;
 using Style::Property;
+using Style::Match;
 using Style::Trait;
 
 typedef enum {
@@ -77,9 +80,6 @@ private:
 	vector<string> types;
 	vector<string> styles;
 	vector<string> states;
-
-	PropertyList initialProperties;
-	PropertyList currentProperties;
 
 	bool visible = true;
 
@@ -138,6 +138,12 @@ private:
 	bool forceResolveState = false;
 
 	Trait traits = Style::kTraitAll;
+
+	vector<Match> matchedTypes;
+	vector<Match> matchedStyles;
+	vector<Match> matchedStates;
+
+	PropertyList properties;
 
 	DisplayNodeCallback invalidateCallback = nullptr;
 	DisplayNodeCallback resolveSizeCallback = nullptr;
@@ -200,8 +206,8 @@ private:
 	double lastMeasuredHeight = 0;
 
 	void explode(string type);
-	void appendElement(DisplayNode* node);
-	void removeElement(DisplayNode* node);
+	void appendEntity(DisplayNode* node);
+	void removeEntity(DisplayNode* node);
 
 protected:
 

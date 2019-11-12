@@ -69,7 +69,7 @@ internal class OpacityAnimator(view: AndroidView, startValue: Float, finalValue:
 	}
 
 	//--------------------------------------------------------------------------
-	// Mehods - Animator Listener
+	// Mehods - Animator JavaScriptViewListener
 	//--------------------------------------------------------------------------
 
 	/**

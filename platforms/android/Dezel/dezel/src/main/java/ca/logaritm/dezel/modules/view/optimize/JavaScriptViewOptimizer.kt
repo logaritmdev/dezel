@@ -14,7 +14,7 @@ import ca.logaritm.dezel.modules.view.JavaScriptView
  * @class JavaScriptViewOptimizer
  * @since 0.7.0
  */
-open class JavaScriptViewOptimizer(context: JavaScriptContext) : JavaScriptClass(context), JavaScriptView.Listener {
+open class JavaScriptViewOptimizer(context: JavaScriptContext) : JavaScriptClass(context), JavaScriptView.JavaScriptViewListener {
 
 	//--------------------------------------------------------------------------
 	// Properties

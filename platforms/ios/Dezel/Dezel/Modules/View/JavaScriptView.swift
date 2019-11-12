@@ -1226,15 +1226,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 
 	/**
 	 * @inherited
-	 * @method measure
-	 * @since 0.7.0
-	 */
-	open func measure(node: DisplayNode, in bounds: CGSize, min: CGSize, max: CGSize) -> CGSize? {
-		return self.measure(in: bounds, min: min, max: max)
-	}
-
-	/**
-	 * @inherited
 	 * @method didInvalidate
 	 * @since 0.7.0
 	 */
@@ -1427,6 +1418,15 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	open func didResolveLayout(node: DisplayNode) {
 		self.delegate?.didResolveLayout(view: self)
 		self.callMethod("nativeOnLayout")
+	}
+
+	/**
+	 * @inherited
+	 * @method measure
+	 * @since 0.7.0
+	 */
+	open func measure(node: DisplayNode, in bounds: CGSize, min: CGSize, max: CGSize) -> CGSize? {
+		return self.measure(in: bounds, min: min, max: max)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3045,140 +3045,140 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @property measuredTop
 	 * @since 0.7.0
 	 */
-	private(set) public lazy var measuredTop = JavaScriptProperty()
+	private(set) public lazy var measuredTop = JavaScriptProperty(lock: self)
 
 	/**
 	 * The view's measured left.
 	 * @property measuredLeft
 	 * @since 0.7.0
 	 */
-	private(set) public lazy var measuredLeft = JavaScriptProperty()
+	private(set) public lazy var measuredLeft = JavaScriptProperty(lock: self)
 
 	/**
 	 * The view's measured width.
 	 * @property measuredWidth
 	 * @since 0.7.0
 	 */
-	private(set) public lazy var measuredWidth = JavaScriptProperty()
+	private(set) public lazy var measuredWidth = JavaScriptProperty(lock: self)
 
 	/**
 	 * The view's measured height.
 	 * @property measuredHeight
 	 * @since 0.7.0
 	 */
-	private(set) public lazy var measuredHeight = JavaScriptProperty()
+	private(set) public lazy var measuredHeight = JavaScriptProperty(lock: self)
 
 	/**
 	 * The view's measured inner width.
 	 * @property measuredInnerWidth
 	 * @since 0.7.0
 	 */
-	private(set) public lazy var measuredInnerWidth = JavaScriptProperty()
+	private(set) public lazy var measuredInnerWidth = JavaScriptProperty(lock: self)
 
 	/**
 	 * The view's measured inner height.
 	 * @property measuredInnerHeight
 	 * @since 0.7.0
 	 */
-	private(set) public lazy var measuredInnerHeight = JavaScriptProperty()
+	private(set) public lazy var measuredInnerHeight = JavaScriptProperty(lock: self)
 
 	/**
 	 * The view's measured content width.
 	 * @property measuredContentWidth
 	 * @since 0.7.0
 	 */
-	private(set) public lazy var measuredContentWidth = JavaScriptProperty()
+	private(set) public lazy var measuredContentWidth = JavaScriptProperty(lock: self)
 
 	/**
 	 * The view's measured content height.
 	 * @property measuredContentHeight
 	 * @since 0.7.0
 	 */
-	private(set) public lazy var measuredContentHeight = JavaScriptProperty()
+	private(set) public lazy var measuredContentHeight = JavaScriptProperty(lock: self)
 
 	/**
 	 * The view's measured margin top.
 	 * @property measuredMarginTop
 	 * @since 0.7.0
 	 */
-	private(set) public lazy var measuredMarginTop = JavaScriptProperty()
+	private(set) public lazy var measuredMarginTop = JavaScriptProperty(lock: self)
 
 	/**
 	 * The view's measured margin left.
 	 * @property measuredMarginLeft
 	 * @since 0.7.0
 	 */
-	private(set) public lazy var measuredMarginLeft = JavaScriptProperty()
+	private(set) public lazy var measuredMarginLeft = JavaScriptProperty(lock: self)
 
 	/**
 	 * The view's measured margin right.
 	 * @property measuredMarginRight
 	 * @since 0.7.0
 	 */
-	private(set) public lazy var measuredMarginRight = JavaScriptProperty()
+	private(set) public lazy var measuredMarginRight = JavaScriptProperty(lock: self)
 
 	/**
 	 * The view's measured margin bottom.
 	 * @property measuredMarginBottom
 	 * @since 0.7.0
 	 */
-	private(set) public lazy var measuredMarginBottom = JavaScriptProperty()
+	private(set) public lazy var measuredMarginBottom = JavaScriptProperty(lock: self)
 
 	/**
 	 * The view's measured border top width.
 	 * @property measuredBorderTopWidth
 	 * @since 0.7.0
 	 */
-	private(set) public lazy var measuredBorderTopWidth = JavaScriptProperty()
+	private(set) public lazy var measuredBorderTopWidth = JavaScriptProperty(lock: self)
 
 	/**
 	 * The view's measured border left width.
 	 * @property measuredBorderLeftWidth
 	 * @since 0.7.0
 	 */
-	private(set) public lazy var measuredBorderLeftWidth = JavaScriptProperty()
+	private(set) public lazy var measuredBorderLeftWidth = JavaScriptProperty(lock: self)
 
 	/**
 	 * The view's measured border right width.
 	 * @property measuredBorderRightWidth
 	 * @since 0.7.0
 	 */
-	private(set) public lazy var measuredBorderRightWidth = JavaScriptProperty()
+	private(set) public lazy var measuredBorderRightWidth = JavaScriptProperty(lock: self)
 
 	/**
 	 * The view's measured border bottom width.
 	 * @property measuredBorderBottomWidth
 	 * @since 0.7.0
 	 */
-	private(set) public lazy var measuredBorderBottomWidth = JavaScriptProperty()
+	private(set) public lazy var measuredBorderBottomWidth = JavaScriptProperty(lock: self)
 
 	/**
 	 * The view's measured padding top.
 	 * @property measuredPaddingTop
 	 * @since 0.7.0
 	 */
-	private(set) public lazy var measuredPaddingTop = JavaScriptProperty()
+	private(set) public lazy var measuredPaddingTop = JavaScriptProperty(lock: self)
 
 	/**
 	 * The view's measured padding left.
 	 * @property measuredPaddingLeft
 	 * @since 0.7.0
 	 */
-	private(set) public lazy var measuredPaddingLeft = JavaScriptProperty()
+	private(set) public lazy var measuredPaddingLeft = JavaScriptProperty(lock: self)
 
 	/**
 	 * The view's measured padding right.
 	 * @property measuredPaddingRight
 	 * @since 0.7.0
 	 */
-	private(set) public lazy var measuredPaddingRight = JavaScriptProperty()
+	private(set) public lazy var measuredPaddingRight = JavaScriptProperty(lock: self)
 
 	/**
 	 * The view's measured padding bottom.
 	 * @property measuredPaddingBottom
 	 * @since 0.7.0
 	 */
-	private(set) public lazy var measuredPaddingBottom = JavaScriptProperty()
+	private(set) public lazy var measuredPaddingBottom = JavaScriptProperty(lock: self)
 
 	//--------------------------------------------------------------------------
 
@@ -6008,11 +6008,11 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 
 		if (self.resolvedTop != measuredTop) {
 			self.resolvedTop = measuredTop
-			self.measuredTop.reset()
+			self.measuredTop.reset(lock: self)
 		}
 
 		if (self.measuredTop.isNull) {
-			self.measuredTop.reset(self.resolvedTop)
+			self.measuredTop.reset(self.resolvedTop, lock: self)
 		}
 
 		callback.returns(self.measuredTop)
@@ -6029,11 +6029,11 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 
 		if (self.resolvedLeft != measuredLeft) {
 			self.resolvedLeft = measuredLeft
-			self.measuredLeft.reset()
+			self.measuredLeft.reset(lock: self)
 		}
 
 		if (self.measuredLeft.isNull) {
-			self.measuredLeft.reset(self.resolvedLeft)
+			self.measuredLeft.reset(self.resolvedLeft, lock: self)
 		}
 
 		callback.returns(self.measuredLeft)
@@ -6050,11 +6050,11 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 
 		if (self.resolvedWidth != measuredWidth) {
 			self.resolvedWidth = measuredWidth
-			self.measuredWidth.reset()
+			self.measuredWidth.reset(lock: self)
 		}
 
 		if (self.measuredWidth.isNull) {
-			self.measuredWidth.reset(self.resolvedWidth)
+			self.measuredWidth.reset(self.resolvedWidth, lock: self)
 		}
 
 		callback.returns(self.measuredWidth)
@@ -6071,11 +6071,11 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 
 		if (self.resolvedHeight != measuredHeight) {
 			self.resolvedHeight = measuredHeight
-			self.measuredHeight.reset()
+			self.measuredHeight.reset(lock: self)
 		}
 
 		if (self.measuredHeight.isNull) {
-			self.measuredHeight.reset(self.resolvedHeight)
+			self.measuredHeight.reset(self.resolvedHeight, lock: self)
 		}
 
 		callback.returns(self.measuredHeight)
@@ -6092,11 +6092,11 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 
 		if (self.resolvedInnerWidth != measuredInnerWidth) {
 			self.resolvedInnerWidth = measuredInnerWidth
-			self.measuredInnerWidth.reset()
+			self.measuredInnerWidth.reset(lock: self)
 		}
 
 		if (self.measuredInnerWidth.isNull) {
-			self.measuredInnerWidth.reset(self.resolvedInnerWidth)
+			self.measuredInnerWidth.reset(self.resolvedInnerWidth, lock: self)
 		}
 
 		callback.returns(self.measuredInnerWidth)
@@ -6113,11 +6113,11 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 
 		if (self.resolvedInnerHeight != measuredInnerHeight) {
 			self.resolvedInnerHeight = measuredInnerHeight
-			self.measuredInnerHeight.reset()
+			self.measuredInnerHeight.reset(lock: self)
 		}
 
 		if (self.measuredInnerHeight.isNull) {
-			self.measuredInnerHeight.reset(self.resolvedInnerHeight)
+			self.measuredInnerHeight.reset(self.resolvedInnerHeight, lock: self)
 		}
 
 		callback.returns(self.measuredInnerHeight)
@@ -6134,11 +6134,11 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 
 		if (self.resolvedContentWidth != measuredContentWidth) {
 			self.resolvedContentWidth = measuredContentWidth
-			self.measuredContentWidth.reset()
+			self.measuredContentWidth.reset(lock: self)
 		}
 
 		if (self.measuredContentWidth.isNull) {
-			self.measuredContentWidth.reset(self.resolvedContentWidth)
+			self.measuredContentWidth.reset(self.resolvedContentWidth, lock: self)
 		}
 
 		callback.returns(self.measuredContentWidth)
@@ -6155,11 +6155,11 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 
 		if (self.resolvedContentHeight != measuredContentHeight) {
 			self.resolvedContentHeight = measuredContentHeight
-			self.measuredContentHeight.reset()
+			self.measuredContentHeight.reset(lock: self)
 		}
 
 		if (self.measuredContentHeight.isNull) {
-			self.measuredContentHeight.reset(self.resolvedContentHeight)
+			self.measuredContentHeight.reset(self.resolvedContentHeight, lock: self)
 		}
 
 		callback.returns(self.measuredContentHeight)
@@ -6176,11 +6176,11 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 
 		if (self.resolvedMarginTop != measuredMarginTop) {
 			self.resolvedMarginTop = measuredMarginTop
-			self.measuredMarginTop.reset()
+			self.measuredMarginTop.reset(lock: self)
 		}
 
 		if (self.measuredMarginTop.isNull) {
-			self.measuredMarginTop.reset(self.resolvedMarginTop)
+			self.measuredMarginTop.reset(self.resolvedMarginTop, lock: self)
 		}
 
 		callback.returns(self.measuredMarginTop)
@@ -6197,11 +6197,11 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 
 		if (self.resolvedMarginLeft != measuredMarginLeft) {
 			self.resolvedMarginLeft = measuredMarginLeft
-			self.measuredMarginLeft.reset()
+			self.measuredMarginLeft.reset(lock: self)
 		}
 
 		if (self.measuredMarginLeft.isNull) {
-			self.measuredMarginLeft.reset(self.resolvedMarginLeft)
+			self.measuredMarginLeft.reset(self.resolvedMarginLeft, lock: self)
 		}
 
 		callback.returns(self.measuredMarginLeft)
@@ -6218,11 +6218,11 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 
 		if (self.resolvedMarginRight != measuredMarginRight) {
 			self.resolvedMarginRight = measuredMarginRight
-			self.measuredMarginRight.reset()
+			self.measuredMarginRight.reset(lock: self)
 		}
 
 		if (self.measuredMarginRight.isNull) {
-			self.measuredMarginRight.reset(self.resolvedMarginRight)
+			self.measuredMarginRight.reset(self.resolvedMarginRight, lock: self)
 		}
 
 		callback.returns(self.measuredMarginRight)
@@ -6239,11 +6239,11 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 
 		if (self.resolvedMarginBottom != measuredMarginBottom) {
 			self.resolvedMarginBottom = measuredMarginBottom
-			self.measuredMarginBottom.reset()
+			self.measuredMarginBottom.reset(lock: self)
 		}
 
 		if (self.measuredMarginBottom.isNull) {
-			self.measuredMarginBottom.reset(self.resolvedMarginBottom)
+			self.measuredMarginBottom.reset(self.resolvedMarginBottom, lock: self)
 		}
 
 		callback.returns(self.measuredMarginBottom)
@@ -6260,11 +6260,11 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 
 		if (self.resolvedPaddingTop != measuredPaddingTop) {
 			self.resolvedPaddingTop = measuredPaddingTop
-			self.measuredPaddingTop.reset()
+			self.measuredPaddingTop.reset(lock: self)
 		}
 
 		if (self.measuredPaddingTop.isNull) {
-			self.measuredPaddingTop.reset(self.resolvedPaddingTop)
+			self.measuredPaddingTop.reset(self.resolvedPaddingTop, lock: self)
 		}
 
 		callback.returns(self.measuredPaddingTop)
@@ -6281,11 +6281,11 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 
 		if (self.resolvedPaddingLeft != measuredPaddingLeft) {
 			self.resolvedPaddingLeft = measuredPaddingLeft
-			self.measuredPaddingLeft.reset()
+			self.measuredPaddingLeft.reset(lock: self)
 		}
 
 		if (self.measuredPaddingLeft.isNull) {
-			self.measuredPaddingLeft.reset(self.resolvedPaddingLeft)
+			self.measuredPaddingLeft.reset(self.resolvedPaddingLeft, lock: self)
 		}
 
 		callback.returns(self.measuredPaddingLeft)
@@ -6302,11 +6302,11 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 
 		if (self.resolvedPaddingRight != measuredPaddingRight) {
 			self.resolvedPaddingRight = measuredPaddingRight
-			self.measuredPaddingRight.reset()
+			self.measuredPaddingRight.reset(lock: self)
 		}
 
 		if (self.measuredPaddingRight.isNull) {
-			self.measuredPaddingRight.reset(self.resolvedPaddingRight)
+			self.measuredPaddingRight.reset(self.resolvedPaddingRight, lock: self)
 		}
 
 		callback.returns(self.measuredPaddingRight)
@@ -6323,11 +6323,11 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 
 		if (self.resolvedPaddingBottom != measuredPaddingBottom) {
 			self.resolvedPaddingBottom = measuredPaddingBottom
-			self.measuredPaddingBottom.reset()
+			self.measuredPaddingBottom.reset(lock: self)
 		}
 
 		if (self.measuredPaddingBottom.isNull) {
-			self.measuredPaddingBottom.reset(self.resolvedPaddingBottom)
+			self.measuredPaddingBottom.reset(self.resolvedPaddingBottom, lock: self)
 		}
 
 		callback.returns(self.measuredPaddingBottom)
@@ -6559,15 +6559,15 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @type ViewDelegate
 	 * @since 0.7.0
 	 */
-	public typealias Delegate = ViewDelegate
+	public typealias Delegate = JavaScriptViewDelegate
 }
 
 /**
- * @type ViewDelegate
+ * @type JavaScriptViewDelegate
  * @since 0.7.0
  * @hidden
  */
-public protocol ViewDelegate: class {
+public protocol JavaScriptViewDelegate: class {
 	func didPrepareLayout(view: JavaScriptView)
 	func didResolveLayout(view: JavaScriptView)
 	func didScroll(view: JavaScriptView)

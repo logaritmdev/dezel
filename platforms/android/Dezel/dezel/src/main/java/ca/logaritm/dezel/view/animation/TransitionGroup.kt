@@ -552,7 +552,7 @@ public class TransitionGroup(val activity: ApplicationActivity): Animator.Animat
 	}
 
 	//--------------------------------------------------------------------------
-	// Mehods - Animator Listener
+	// Mehods - Animator JavaScriptViewListener
 	//--------------------------------------------------------------------------
 
 	/**

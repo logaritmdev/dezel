@@ -21,10 +21,6 @@ class Fragment;
 
 class Matcher {
 
-private:
-
-	static bool compare(const Match& a, const Match& b);
-
 public:
 
 	bool match(DisplayNode* node, vector<Match>& matches, const vector<Descriptor*>& descriptors);

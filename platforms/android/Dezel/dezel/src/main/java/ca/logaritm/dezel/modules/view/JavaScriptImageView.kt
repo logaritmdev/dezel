@@ -509,7 +509,7 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 	 */
 	@Suppress("unused")
 	open fun jsSet_source(callback: JavaScriptSetterCallback) {
-		this.source.reset(callback.value, this)
+		this.source.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -531,7 +531,7 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 	 */
 	@Suppress("unused")
 	open fun jsSet_imageFit(callback: JavaScriptSetterCallback) {
-		this.imageFit.reset(callback.value, this)
+		this.imageFit.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -553,7 +553,7 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 	 */
 	@Suppress("unused")
 	open fun jsSet_imageAnchorTop(callback: JavaScriptSetterCallback) {
-		this.imageAnchorTop.reset(callback.value, this)
+		this.imageAnchorTop.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -575,7 +575,7 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 	 */
 	@Suppress("unused")
 	open fun jsSet_imageAnchorLeft(callback: JavaScriptSetterCallback) {
-		this.imageAnchorLeft.reset(callback.value, this)
+		this.imageAnchorLeft.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -597,7 +597,7 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 	 */
 	@Suppress("unused")
 	open fun jsSet_imageTop(callback: JavaScriptSetterCallback) {
-		this.imageTop.reset(callback.value, this)
+		this.imageTop.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -619,7 +619,7 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 	 */
 	@Suppress("unused")
 	open fun jsSet_imageLeft(callback: JavaScriptSetterCallback) {
-		this.imageLeft.reset(callback.value, this)
+		this.imageLeft.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -641,7 +641,7 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 	 */
 	@Suppress("unused")
 	open fun jsSet_imageWidth(callback: JavaScriptSetterCallback) {
-		this.imageWidth.reset(callback.value, this)
+		this.imageWidth.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -663,7 +663,7 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 	 */
 	@Suppress("unused")
 	open fun jsSet_imageHeight(callback: JavaScriptSetterCallback) {
-		this.imageHeight.reset(callback.value, this)
+		this.imageHeight.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -685,7 +685,7 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 	 */
 	@Suppress("unused")
 	open fun jsSet_imageFilter(callback: JavaScriptSetterCallback) {
-		this.imageFilter.reset(callback.value, this)
+		this.imageFilter.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -707,6 +707,6 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 	 */
 	@Suppress("unused")
 	open fun jsSet_imageTint(callback: JavaScriptSetterCallback) {
-		this.imageTint.reset(callback.value, this)
+		this.imageTint.reset(callback.value, lock = this)
 	}
 }

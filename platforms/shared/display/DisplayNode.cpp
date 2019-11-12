@@ -38,6 +38,17 @@ using Style::kTraitType;
 using Style::kTraitStyle;
 using Style::kTraitState;
 
+static bool importance(const Match& a, const Match& b) {
+
+	if (a.importance == b.importance) {
+		return (
+			a.getDescriptor()->getSelector()->getOffset() < b.getDescriptor()->getSelector()->getOffset()
+		);
+	}
+
+	return a.importance < b.importance;
+}
+
 DisplayNode::DisplayNode() : layout(this)
 {
 
@@ -69,7 +80,7 @@ DisplayNode::explode(string type)
 }
 
 void // TODO Find proper name
-DisplayNode::appendElement(DisplayNode* node)
+DisplayNode::appendEntity(DisplayNode* node)
 {
 	auto it = find(
 		this->entities.begin(),
@@ -85,7 +96,7 @@ DisplayNode::appendElement(DisplayNode* node)
 }
 
 void
-DisplayNode::removeElement(DisplayNode* node)
+DisplayNode::removeEntity(DisplayNode* node)
 {
 	auto it = find(
 		this->entities.begin(),
@@ -729,19 +740,19 @@ DisplayNode::resolveHolder()
 		return;
 	}
 
-	DisplayNode* master = this;
+	DisplayNode* holder = this;
 
 	if (this->isOpaque() == false &&
 		this->isWindow() == false) {
 
 		while (true) {
 
-			master = master->parent;
+			holder = holder->parent;
 
-			if (master) {
+			if (holder) {
 
-				if (master->isOpaque() ||
-					master->isWindow()) {
+				if (holder->isOpaque() ||
+					holder->isWindow()) {
 					break;
 				}
 
@@ -752,9 +763,9 @@ DisplayNode::resolveHolder()
 		}
 	}
 
-	master->appendElement(this);
+	holder->appendEntity(this);
 
-	this->holder = master;
+	this->holder = holder;
 }
 
 void
@@ -770,34 +781,70 @@ DisplayNode::resolveTraits()
 		return;
 	}
 
-	Matcher matcher;
-	
-	vector<Match> matches;
+	if (this->invalidTraits) {
 
-	if (this->traits & kTraitName ||
-		this->traits & kTraitType) {
-		matcher.match(this, matches, this->display->stylesheet->getTypeDescriptors());
-	}
+		Matcher matcher;
 
-	if (this->traits & kTraitStyle) {
-		matcher.match(this, matches, this->display->stylesheet->getStyleDescriptors());
-	}
+		if (this->traits & kTraitName ||
+			this->traits & kTraitType) {
+			this->matchedTypes.clear();
+			matcher.match(this, this->matchedTypes, this->display->stylesheet->getTypeDescriptors());
+		}
 
-	if (this->traits & kTraitState) {
-		matcher.match(this, matches, this->display->stylesheet->getStateDescriptors());
-	}
+		if (this->traits & kTraitStyle) {
+			this->matchedStyles.clear();
+			matcher.match(this, this->matchedStates, this->display->stylesheet->getStyleDescriptors());
+		}
 
-	PropertyList properties;
+		if (this->traits & kTraitState) {
+			this->matchedStates.clear();
+			matcher.match(this, this->matchedStates, this->display->stylesheet->getStateDescriptors());
+		}
 
-	for (auto match : matches) {
-		properties.merge(match.getDescriptor()->getProperties());
-	}
-
-	for (auto property : properties) {
-		this->update(
-			property->getName(),
-			property
+		auto reserve = (
+			this->matchedTypes.size() +
+			this->matchedStyles.size() +
+			this->matchedStates.size()
 		);
+
+		vector<Match> matches;
+		matches.reserve(reserve);
+		matches.insert(matches.end(), this->matchedTypes.begin(), this->matchedTypes.end());
+		matches.insert(matches.end(), this->matchedStyles.begin(), this->matchedStyles.end());
+		matches.insert(matches.end(), this->matchedStates.begin(), this->matchedStates.end());
+
+		sort(
+			matches.begin(),
+			matches.end(),
+			importance
+		);
+
+		PropertyList properties;
+
+		for (auto match : matches) {
+			properties.merge(match.getDescriptor()->getProperties());
+		}
+
+		vector<Property*> insert;
+		vector<Property*> update;
+		vector<Property*> remove;
+
+		insert.reserve(max(this->properties.size(), properties.size()));
+		update.reserve(max(this->properties.size(), properties.size()));
+		remove.reserve(max(this->properties.size(), properties.size()));
+
+		this->properties.diffs(
+			properties,
+			insert,
+			update,
+			remove
+		);
+
+		for (auto property : remove) this->update(property->getName(), nullptr);
+		for (auto property : update) this->update(property->getName(), property);
+		for (auto property : insert) this->update(property->getName(), property);
+
+		this->properties = properties;
 	}
 
 	/*
@@ -805,6 +852,7 @@ DisplayNode::resolveTraits()
 	 * down the line. When this happens we set a flag indicating that
 	 * even if the node is not invalid, it must
 	 */
+
 	if (this->invalidTraits & kTraitStyle ||
 		this->invalidTraits & kTraitState) {
 
@@ -827,9 +875,9 @@ DisplayNode::resolveTraits()
 	 */
 
 	this->traits = kTraitAll;
+	this->invalidTraits = false;
 	this->forceResolveStyle = false;
 	this->forceResolveState = false;
-	this->invalidTraits = false;
 }
 
 void
@@ -2637,7 +2685,7 @@ DisplayNode::removeChild(DisplayNode* child)
 	}
 
 	if (child->holder) {
-		child->holder->removeElement(child);
+		child->holder->removeEntity(child);
 		child->holder = nullptr;
 	}
 

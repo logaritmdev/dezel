@@ -12,21 +12,8 @@ namespace Style {
 using std::sort;
 
 //------------------------------------------------------------------------------
-// MARK: Private API
+// MARK: Public API
 //------------------------------------------------------------------------------
-
-bool
-Matcher::compare(const Match& a, const Match& b)
-{
-	if (a.importance == b.importance) {
-		return (
-			a.getDescriptor()->getSelector()->getOffset() <
-			b.getDescriptor()->getSelector()->getOffset()
-		);
-	}
-
-	return a.importance < b.importance;
-}
 
 bool
 Matcher::match(DisplayNode* node, vector<Match>& matches, const vector<Descriptor*>& descriptors)
@@ -46,14 +33,6 @@ Matcher::match(DisplayNode* node, vector<Match>& matches, const vector<Descripto
 			matches.push_back(match);
 			matched = true;
 		} 
-	}
-
-	if (matched) {
-		sort(
-			matches.begin(),
-			matches.end(),
-			Matcher::compare
-		);
 	}
 
 	return matched;

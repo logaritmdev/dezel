@@ -4,6 +4,8 @@
 namespace Dezel {
 namespace Style {
 
+using std::rotate;
+
 //------------------------------------------------------------------------------
 // MARK: Public API
 //------------------------------------------------------------------------------
@@ -11,29 +13,68 @@ namespace Style {
 void
 PropertyList::set(string name, Property* property)
 {
-// TODO
-// Si une propriété est ajouté par après mais uqe la key existe déja
-// on enleve mais on fait toujours un push back
-	if (this->vals.find(name) != this->vals.end()) {
-		this->vals[name] = property;
+	if (this->has(name)) {
+
+		auto index = this->order[name];
+
+		rotate(
+			this->array.begin() + index,
+			this->array.begin() + index + 1,
+			this->array.end()
+		);
+
+		auto position = this->array.size() - 1;
+
+		this->items[name] = property;
+		this->order[name] = position;
 		return;
 	}
 
-	const auto position = this->list.size();
+	auto position = this->array.size();
 
-	this->vals[name] = property;
-	this->keys[name] = position;
-	this->list.push_back(property);
+	this->items[name] = property;
+	this->order[name] = position;
+	this->array.push_back(property);
 }
 
 void
 PropertyList::merge(const PropertyList& dictionary)
 {
-	for (auto property : dictionary.list) {
-		this->set(property->getName(), property);
+	for (auto property : dictionary.array) {
+		this->set(
+			property->getName(),
+			property
+		);
 	}
 }
 
+void
+PropertyList::diffs(const PropertyList& dictionary, vector<Property*>& inserts, vector<Property*>& updates, vector<Property*>& removes)
+{
+	auto remains = dictionary.items;
+
+	for (auto & item : this->items) {
+
+		const auto key = item.first;
+		const auto val = item.second;
+
+		remains.erase(key);
+
+		if (dictionary.has(key) == false) {
+			removes.push_back(val);
+			continue;
+		}
+
+		if (dictionary.get(key) != val) {
+			updates.push_back(val);
+			continue;
+		}
+	}
+
+	for (auto & item : remains) {
+		inserts.push_back(item.second);
+	}
+}
 
 }
 }
