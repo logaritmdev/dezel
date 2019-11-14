@@ -16,8 +16,8 @@
 #include "PropertyList.h"
 #include "Property.h"
 #include "Match.h"
-#include "Trait.h"
 
+#include <iostream>
 #include <float.h>
 #include <string>
 #include <vector>
@@ -46,7 +46,6 @@ using Style::Fragment;
 using Style::PropertyList;
 using Style::Property;
 using Style::Match;
-using Style::Trait;
 
 typedef enum {
 	kDisplayNodeFlagNone   = 0,
@@ -69,10 +68,9 @@ private:
 
 	Display* display = nullptr;
 
-	DisplayNode* holder = nullptr;
+	DisplayNode* window = nullptr;
 	DisplayNode* parent = nullptr;
     vector<DisplayNode*> children;
-    vector<DisplayNode*> entities;
 
 	string name = "";
 	string type = "";
@@ -122,7 +120,6 @@ private:
 	double shrinkFactor = 0;
 
 	bool invalid = false;
-
    	bool invalidSize = false;
 	bool invalidOrigin = false;
 	bool invalidMargin = false;
@@ -132,16 +129,9 @@ private:
 	bool invalidContentOrigin = false;
 	bool invalidPadding = false;
 	bool invalidLayout = false;
-
 	bool invalidTraits = false;
-	bool forceResolveStyle = false;
-	bool forceResolveState = false;
-
-	Trait traits = Style::kTraitAll;
-
-	vector<Match> matchedTypes;
-	vector<Match> matchedStyles;
-	vector<Match> matchedStates;
+	bool invalidStyleTraits = false;
+	bool invalidStateTraits = false;
 
 	PropertyList properties;
 
@@ -206,8 +196,6 @@ private:
 	double lastMeasuredHeight = 0;
 
 	void explode(string type);
-	void appendEntity(DisplayNode* node);
-	void removeEntity(DisplayNode* node);
 
 protected:
 
@@ -221,7 +209,6 @@ protected:
 	bool hasInvalidLayout();
 
 	void invalidate();
-
 	void invalidateInnerSize();
 	void invalidateContentSize();
 	void invalidateContentOrigin();
@@ -229,13 +216,13 @@ protected:
 	void invalidateBorder();
 	void invalidatePadding();
 	void invalidateParent();
-
-	void invalidateTraits(Trait trait);
+	void invalidateTraits();
+	void invalidateStyleTraits();
+	void invalidateStateTraits();
 
 	bool inheritsWrappedWidth();
 	bool inheritsWrappedHeight();
 
-	void resolveHolder();
 	void resolveTraits();
 	void resolveLayout();
 	void resolveMargin();
@@ -371,20 +358,12 @@ public:
 		this->flags = this->flags | kDisplayNodeFlagOpaque;
 	}
 
-	DisplayNode* getHolder() const {
-		return this->holder;
-	}
-
 	DisplayNode* getParent() const {
 		return this->parent;
 	}
 
 	const vector<DisplayNode*>& getChildren() const {
 		return this->children;
-	}
-
-	const vector<DisplayNode*>& getEntities() const {
-		return this->entities;
 	}
 
 	void setName(string name);

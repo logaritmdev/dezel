@@ -46,11 +46,9 @@ public class DisplayNodeDelegateCounter : DisplayNodeDelegate {
 		self.resolvedPadding += 1
 	}
 
-
 	public func didPrepareLayout(node: DisplayNode) {
 		self.preparedLayout += 1
 	}
-
 
 	open func didResolveLayout(node: DisplayNode) {
 		self.resolvedLayout += 1
@@ -61,8 +59,12 @@ public class DisplayNodeDelegateCounter : DisplayNodeDelegate {
 		return CGSize(width: -1, height: -1)
 	}
 
-	public func resolve(node: DisplayNode, property: String) -> JavaScriptProperty? {
+	public func getProperty(_ name: String) -> JavaScriptProperty? {
 		return nil;
+	}
+
+	public func setProperty(_ name: String, value: JavaScriptProperty) {
+
 	}
 
 

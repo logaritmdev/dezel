@@ -10,7 +10,7 @@ using std::queue;
 class Display;
 class DisplayNode;
 
-class DisplayWalker {
+class DisplayNodeWalker {
 
 private:
 
@@ -32,7 +32,7 @@ private:
 
 public:
 
-	DisplayWalker(DisplayNode* root);
+	DisplayNodeWalker(DisplayNode* root);
 
 	DisplayNode* getNode() const {
 		return this->node;

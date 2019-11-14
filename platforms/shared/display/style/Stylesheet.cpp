@@ -4,14 +4,123 @@
 #include "Variable.h"
 #include "Selector.h"
 #include "Fragment.h"
+#include "Value.h"
+#include "StringValue.h"
+#include "NumberValue.h"
+#include "InvalidInvocationException.h"
 
 namespace Dezel {
 namespace Style {
 
+using std::min;
+
+//------------------------------------------------------------------------------
+// MARK: Default Functions
+//------------------------------------------------------------------------------
+
+namespace Functions {
+
+static void min(const Function* function, const vector<Argument>& arguments, vector<Value*> result)
+{
+	function->assertArgumentCount(arguments, 2);
+
+	auto arg1 = arguments[0].getValues();
+	auto arg2 = arguments[1].getValues();
+
+	if (arg1.size() != arg2.size()) {
+		throw InvalidInvocationException(
+			"The function `min` requires that each argument have the same amount of values."
+		);
+	}
+
+	auto length = arg1.size();
+
+	result.reserve(length);
+
+	for (int i = 0; i < length; i++) {
+
+		auto va = arg1[i];
+		auto vb = arg2[i];
+
+		if (va->getType() != kValueTypeNumber ||
+			vb->getType() != kValueTypeNumber) {
+			throw InvalidInvocationException(
+				"The function `min` requires that each argument must be a number."
+			);
+		}
+
+		if (va->getUnit() != vb->getUnit()) {
+			throw InvalidInvocationException(
+				"The function `min` requires that each argument have the same type and unit."
+			);
+		}
+
+		auto na = reinterpret_cast<NumberValue*>(va)->getValue();
+		auto nb = reinterpret_cast<NumberValue*>(va)->getValue();
+
+		result.push_back(new NumberValue(std::min(na, nb), va->getUnit()));
+	}
+}
+
+static void max(const Function* function, const vector<Argument>& arguments, vector<Value*> result)
+{
+	function->assertArgumentCount(arguments, 2);
+
+	auto arg1 = arguments[0].getValues();
+	auto arg2 = arguments[1].getValues();
+
+	if (arg1.size() != arg2.size()) {
+		throw InvalidInvocationException(
+			"The function `min` requires that each argument have the same amount of values."
+		);
+	}
+
+	auto length = arg1.size();
+
+	result.reserve(length);
+
+	for (int i = 0; i < length; i++) {
+
+		auto va = arg1[i];
+		auto vb = arg2[i];
+
+		if (va->getType() != kValueTypeNumber ||
+			vb->getType() != kValueTypeNumber) {
+			throw InvalidInvocationException(
+				"The function `min` requires that each argument must be a number."
+			);
+		}
+
+		if (va->getUnit() != vb->getUnit()) {
+			throw InvalidInvocationException(
+				"The function `min` requires that each argument have the same type and unit."
+			);
+		}
+
+		auto na = reinterpret_cast<NumberValue*>(va)->getValue();
+		auto nb = reinterpret_cast<NumberValue*>(va)->getValue();
+
+		result.push_back(new NumberValue(std::max(na, nb), va->getUnit()));
+	}
+}
+
+}
 
 //------------------------------------------------------------------------------
 // MARK: Public API
 //------------------------------------------------------------------------------
+
+Stylesheet::Stylesheet()
+{
+	this->addFunction(new Function("min", Functions::min));
+	this->addFunction(new Function("max", Functions::max));
+}
+
+Stylesheet::~Stylesheet()
+{
+	for (auto variable : this->variables) delete variable.second;
+	for (auto function : this->functions) delete function.second;
+}
 
 void
 Stylesheet::addDescriptor(Descriptor* descriptor)
@@ -21,37 +130,11 @@ Stylesheet::addDescriptor(Descriptor* descriptor)
 	}
 
 	if (descriptor->properties.size() > 0) {
-
-		if (descriptor->selector->tail->isStyle() ||
-			descriptor->selector->tail->isState()) {
-
-			if (descriptor->selector->tail->isStyle()) {
-				this->styleDescriptors.push_back(descriptor);
-			}
-
-			if (descriptor->selector->tail->isState()) {
-				this->stateDescriptors.push_back(descriptor);
-			}
-
-		} else {
-
-			this->typeDescriptors.push_back(descriptor);
-
-		}
-
 		this->ruleDescriptors.push_back(descriptor);
 	}
 
 	for (auto child : descriptor->childDescriptors) {
 		this->addDescriptor(child);
-	}
-
-	for (auto style : descriptor->styleDescriptors) {
-		this->addDescriptor(style);
-	}
-
-	for (auto state : descriptor->stateDescriptors) {
-		this->addDescriptor(state);
 	}
 }
 

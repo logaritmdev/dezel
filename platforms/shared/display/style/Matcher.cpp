@@ -1,6 +1,7 @@
 #include "Stylesheet.h"
 #include "Descriptor.h"
 #include "Matcher.h"
+#include "Matches.h"
 #include "Match.h"
 #include "Selector.h"
 #include "Fragment.h"
@@ -16,7 +17,7 @@ using std::sort;
 //------------------------------------------------------------------------------
 
 bool
-Matcher::match(DisplayNode* node, vector<Match>& matches, const vector<Descriptor*>& descriptors)
+Matcher::match(DisplayNode* node, Matches& matches, const vector<Descriptor*>& descriptors)
 {
 	bool matched = false;
 

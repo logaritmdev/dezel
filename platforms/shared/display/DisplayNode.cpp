@@ -1,14 +1,15 @@
 #include "DisplayNode.h"
 #include "Display.h"
 #include "DisplayNode.h"
+#include "DisplayNodeWalker.h"
 #include "LayoutResolver.h"
 #include "Descriptor.h"
 #include "PropertyList.h"
 #include "Selector.h"
 #include "Fragment.h"
 #include "Matcher.h"
+#include "Matches.h"
 #include "Match.h"
-#include "Trait.h"
 #include "InvalidStructureException.h"
 #include "InvalidOperationException.h"
 
@@ -30,24 +31,7 @@ using Layout::scale;
 
 using Style::PropertyList;
 using Style::Matcher;
-using Style::Match;
-using Style::Trait;
-using Style::kTraitAll;
-using Style::kTraitName;
-using Style::kTraitType;
-using Style::kTraitStyle;
-using Style::kTraitState;
-
-static bool importance(const Match& a, const Match& b) {
-
-	if (a.importance == b.importance) {
-		return (
-			a.getDescriptor()->getSelector()->getOffset() < b.getDescriptor()->getSelector()->getOffset()
-		);
-	}
-
-	return a.importance < b.importance;
-}
+using Style::Matches;
 
 DisplayNode::DisplayNode() : layout(this)
 {
@@ -77,38 +61,6 @@ DisplayNode::explode(string type)
 	while (getline(stream, token, ' ')) {
 		this->types.push_back(token);
 	}
-}
-
-void // TODO Find proper name
-DisplayNode::appendEntity(DisplayNode* node)
-{
-	auto it = find(
-		this->entities.begin(),
-		this->entities.end(),
-		node
-	);
-
-	if (it != this->entities.end()) {
-		return;
-	}
-
-	this->entities.push_back(node);
-}
-
-void
-DisplayNode::removeEntity(DisplayNode* node)
-{
-	auto it = find(
-		this->entities.begin(),
-		this->entities.end(),
-		node
-	);
-
-	if (it == this->entities.end()) {
-		return;
-	}
-
-	this->entities.erase(it);
 }
 
 //------------------------------------------------------------------------------
@@ -632,20 +584,29 @@ DisplayNode::invalidateParent()
 }
 
 void
-DisplayNode::invalidateTraits(Trait trait)
+DisplayNode::invalidateTraits()
 {
-	if (this->traits & trait) {
-		return;
-	}
-
-	if (this->forceResolveStyle && trait & kTraitStyle) this->forceResolveStyle = false;
-	if (this->forceResolveState && trait & kTraitState) this->forceResolveState = false;
-
-	this->traits = this->traits | trait;
-
 	if (this->invalidTraits == false) {
 		this->invalidTraits = true;
 		this->invalidate();
+	}
+}
+
+void
+DisplayNode::invalidateStyleTraits()
+{
+	if (this->invalidStyleTraits == false) {
+		this->invalidStyleTraits = true;
+		this->invalidateTraits();
+	}
+}
+
+void
+DisplayNode::invalidateStateTraits()
+{
+	if (this->invalidStateTraits == false) {
+		this->invalidStateTraits = true;
+		this->invalidateTraits();
 	}
 }
 
@@ -734,150 +695,62 @@ DisplayNode::inheritsWrappedHeight()
 }
 
 void
-DisplayNode::resolveHolder()
-{
-	if (this->holder) {
-		return;
-	}
-
-	DisplayNode* holder = this;
-
-	if (this->isOpaque() == false &&
-		this->isWindow() == false) {
-
-		while (true) {
-
-			holder = holder->parent;
-
-			if (holder) {
-
-				if (holder->isOpaque() ||
-					holder->isWindow()) {
-					break;
-				}
-
-				continue;
-			}
-
-			throw new InvalidStructureException("Display tree is missing a window");
-		}
-	}
-
-	holder->appendEntity(this);
-
-	this->holder = holder;
-}
-
-void
 DisplayNode::resolveTraits()
 {
 	if (this->display->stylesheet == nullptr) {
 		return;
 	}
 
-	if (this->invalidTraits == false &&
-		this->forceResolveStyle == false &&
-		this->forceResolveState == false) {
+	if (this->invalidTraits == false) {
 		return;
 	}
 
-	if (this->invalidTraits) {
+	Matches matches;
+	Matcher matcher;
 
-		Matcher matcher;
+	matcher.match(this, matches, this->display->stylesheet->getRuleDescriptors());
+	matches.order();
 
-		if (this->traits & kTraitName ||
-			this->traits & kTraitType) {
-			this->matchedTypes.clear();
-			matcher.match(this, this->matchedTypes, this->display->stylesheet->getTypeDescriptors());
-		}
+	PropertyList properties;
 
-		if (this->traits & kTraitStyle) {
-			this->matchedStyles.clear();
-			matcher.match(this, this->matchedStates, this->display->stylesheet->getStyleDescriptors());
-		}
-
-		if (this->traits & kTraitState) {
-			this->matchedStates.clear();
-			matcher.match(this, this->matchedStates, this->display->stylesheet->getStateDescriptors());
-		}
-
-		auto reserve = (
-			this->matchedTypes.size() +
-			this->matchedStyles.size() +
-			this->matchedStates.size()
-		);
-
-		vector<Match> matches;
-		matches.reserve(reserve);
-		matches.insert(matches.end(), this->matchedTypes.begin(), this->matchedTypes.end());
-		matches.insert(matches.end(), this->matchedStyles.begin(), this->matchedStyles.end());
-		matches.insert(matches.end(), this->matchedStates.begin(), this->matchedStates.end());
-
-		sort(
-			matches.begin(),
-			matches.end(),
-			importance
-		);
-
-		PropertyList properties;
-
-		for (auto match : matches) {
-			properties.merge(match.getDescriptor()->getProperties());
-		}
-
-		vector<Property*> insert;
-		vector<Property*> update;
-		vector<Property*> remove;
-
-		insert.reserve(max(this->properties.size(), properties.size()));
-		update.reserve(max(this->properties.size(), properties.size()));
-		remove.reserve(max(this->properties.size(), properties.size()));
-
-		this->properties.diffs(
-			properties,
-			insert,
-			update,
-			remove
-		);
-
-		for (auto property : remove) this->update(property->getName(), nullptr);
-		for (auto property : update) this->update(property->getName(), property);
-		for (auto property : insert) this->update(property->getName(), property);
-
-		this->properties = properties;
+	for (auto match : matches) {
+		properties.merge(match.getDescriptor()->getProperties());
 	}
 
-	/*
-	 * This node was given a style or a state that might affect children
-	 * down the line. When this happens we set a flag indicating that
-	 * even if the node is not invalid, it must
-	 */
+	vector<Property*> insert;
+	vector<Property*> update;
+	vector<Property*> remove;
 
-	if (this->invalidTraits & kTraitStyle ||
-		this->invalidTraits & kTraitState) {
+	insert.reserve(max(this->properties.size(), properties.size()));
+	update.reserve(max(this->properties.size(), properties.size()));
+	remove.reserve(max(this->properties.size(), properties.size()));
 
-		for (auto child : this->entities) {
+	this->properties.diffs(
+		properties,
+		insert,
+		update,
+		remove
+	);
 
-			if (this->invalidTraits & kTraitStyle) {
-				child->forceResolveStyle = true;
-			}
+	for (auto property : remove) this->update(property->getName(), nullptr);
+	for (auto property : update) this->update(property->getName(), property);
+	for (auto property : insert) this->update(property->getName(), property);
 
-			if (this->invalidTraits & kTraitState) {
-				child->forceResolveState = true;
-			}
+	this->properties = properties;
+
+	if (this->invalidStyleTraits ||
+		this->invalidStateTraits) {
+
+		DisplayNodeWalker walker(this);
+
+		while (walker.next()) {
+			walker.getNode()->invalidateTraits();
 		}
 	}
 
-	/*
-	TODO
-	Déterminer si le style / state a été appliqué et résolvé
-	Mettre les flags
-	 */
-
-	this->traits = kTraitAll;
 	this->invalidTraits = false;
-	this->forceResolveStyle = false;
-	this->forceResolveState = false;
+	this->invalidStyleTraits = false;
+	this->invalidStateTraits = false;
 }
 
 void
@@ -1832,7 +1705,7 @@ DisplayNode::setName(string name)
 {
 	if (this->name != name) {
 		this->name = name;
-		this->invalidateTraits(Style::kTraitName);
+		this->invalidateTraits();
 	}
 }
 
@@ -1842,7 +1715,7 @@ DisplayNode::setType(string type)
 	if (this->type != type) {
 		this->type = type;
 		this->explode(type);
-		this->invalidateTraits(Style::kTraitType);
+		this->invalidateTraits();
 	}
 
 }
@@ -1862,7 +1735,7 @@ DisplayNode::appendStyle(string style)
 
 	this->styles.push_back(style);
 
-	this->invalidateTraits(Style::kTraitStyle);
+	this->invalidateStyleTraits();
 }
 
 void
@@ -1880,7 +1753,7 @@ DisplayNode::removeStyle(string style)
 
 	this->styles.erase(it);
 
-	this->invalidateTraits(Style::kTraitStyle);
+	this->invalidateStyleTraits();
 }
 
 void
@@ -1898,7 +1771,7 @@ DisplayNode::appendState(string state)
 
 	this->states.push_back(state);
 
-	this->invalidateTraits(Style::kTraitState);
+	this->invalidateStateTraits();
 }
 
 void
@@ -1916,7 +1789,7 @@ DisplayNode::removeState(string state)
 
 	this->states.erase(it);
 
-	this->invalidateTraits(Style::kTraitState);
+	this->invalidateStateTraits();
 }
 
 void
@@ -2645,15 +2518,6 @@ DisplayNode::insertChild(DisplayNode* child, int index)
 
 	child->parent = this;
 
-	if (child->name.size())
-		child->invalidateTraits(kTraitName);
-	if (child->type.size())
-		child->invalidateTraits(kTraitType);
-	if (child->styles.size())
-		child->invalidateTraits(kTraitStyle);
-	if (child->states.size())
-		child->invalidateTraits(kTraitState);
-
 	this->invalidateLayout();
 
 	const auto w = this->width.type;
@@ -2665,6 +2529,8 @@ DisplayNode::insertChild(DisplayNode* child, int index)
 		this->invalidateOrigin();
 		this->invalidateParent();
 	}
+
+	child->invalidateTraits();
 }
 
 void
@@ -2682,11 +2548,6 @@ DisplayNode::removeChild(DisplayNode* child)
 
 	if (it == this->children.end()) {
 		return;
-	}
-
-	if (child->holder) {
-		child->holder->removeEntity(child);
-		child->holder = nullptr;
 	}
 
 	child->parent = nullptr;
@@ -2724,7 +2585,6 @@ DisplayNode::resolve()
 
 	this->resolving = true;
 
-	this->resolveHolder();
 	this->resolveTraits();
 	this->resolveLayout();
 

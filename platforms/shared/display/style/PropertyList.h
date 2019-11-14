@@ -18,24 +18,24 @@ class PropertyList {
 
 private:
 
-	vector<Property*> array;
-	unordered_map<string, size_t> order;
-	unordered_map<string, Property*> items;
+	vector<string> keys;
+	vector<Property*> vals;
+	unordered_map<string, Property*> data;
 
 public:
 
-	void set(string name, Property* property);
+	void add(Property* property);
 
 	Property* get(size_t idx) const {
-		return this->array.at(idx);
+		return this->vals.at(idx);
 	}
 
 	Property* get(string key) const {
-		return this->items.at(key);
+		return this->data.at(key);
 	}
 
 	bool has(string key) const {
-		return this->items.find(key) != this->items.end();
+		return this->data.find(key) != this->data.end();
 	}
 
 	void merge(const PropertyList& dictionary);
@@ -49,23 +49,23 @@ public:
     typedef vector<Property*>::const_iterator const_iterator;
 
 	size_t size() const {
-		return this->array.size();
+		return this->vals.size();
 	}
 
 	inline iterator begin() noexcept {
-		return this->array.begin();
+		return this->vals.begin();
 	}
 
 	inline iterator end() noexcept {
-		return this->array.end();
+		return this->vals.end();
 	}
 
 	inline const_iterator cbegin() const noexcept {
-		return this->array.cbegin();
+		return this->vals.cbegin();
 	}
 
 	inline const_iterator cend() const noexcept {
-		return this->array.cend();
+		return this->vals.cend();
 	}
 };
 

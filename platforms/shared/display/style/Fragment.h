@@ -1,8 +1,6 @@
 #ifndef Selector_h
 #define Selector_h
 
-#include "Trait.h"
-
 #include <string>
 #include <vector>
 

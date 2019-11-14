@@ -23,19 +23,19 @@ static bool isNothing(char c) {
 	return false;
 }
 
-@interface TokenizerStreamTest : XCTestCase {
+@interface StyleTokenizerStreamTest : XCTestCase {
 	string input;
 }
 @end
 
-@implementation TokenizerStreamTest
+@implementation StyleTokenizerStreamTest
 
 - (void)setUp {
 	input = "ABC def { } 123";
 }
 
 - (void)tearDown {
-
+	input = "";
 }
 
 - (void)testRead {

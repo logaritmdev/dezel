@@ -1,8 +1,6 @@
 #ifndef Matcher_h
 #define Matcher_h
 
-#include "Match.h"
-
 #include <vector>
 
 namespace Dezel {
@@ -18,13 +16,14 @@ class Stylesheet;
 class Descriptor;
 class Selector;
 class Fragment;
+class Matches;
 
 class Matcher {
 
 public:
 
-	bool match(DisplayNode* node, vector<Match>& matches, const vector<Descriptor*>& descriptors);
-
+	bool match(DisplayNode* node, Matches& matches, const vector<Descriptor*>& descriptors);
+	// tood matcher recursive
 };
 
 }

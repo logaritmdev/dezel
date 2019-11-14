@@ -1,6 +1,6 @@
 #include "Display.h"
 #include "DisplayNode.h"
-#include "DisplayWalker.h"
+#include "DisplayNodeWalker.h"
 #include "Parser.h"
 #include "Stylesheet.h"
 #include "Tokenizer.h"
@@ -20,7 +20,8 @@ namespace Dezel {
 //------------------------------------------------------------------------------
 
 void
-Display::setWindow(DisplayNode* window) {
+Display::setWindow(DisplayNode* window)
+{
 	this->window = window;
 	this->window->setWindow();
 	this->window->setOpaque();
@@ -90,7 +91,7 @@ Display::resolve()
 
 	this->didPrepare();
 
-	DisplayWalker walker(this->window);
+	DisplayNodeWalker walker(this->window);
 
 	while (walker.next()) {
 		walker.getNode()->resolve();

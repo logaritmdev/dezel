@@ -1,62 +1,79 @@
 
 #include "PropertyList.h"
 
+#include <iostream>
+#include <iterator>
+
 namespace Dezel {
 namespace Style {
 
 using std::rotate;
+using std::distance;
 
 //------------------------------------------------------------------------------
 // MARK: Public API
 //------------------------------------------------------------------------------
 
 void
-PropertyList::set(string name, Property* property)
+PropertyList::add(Property* property)
 {
+	auto name = property->getName();
+
 	if (this->has(name)) {
 
-		auto index = this->order[name];
+		auto dist = distance(this->keys.begin(), find(
+			this->keys.begin(),
+			this->keys.end(),
+			name
+		));
 
 		rotate(
-			this->array.begin() + index,
-			this->array.begin() + index + 1,
-			this->array.end()
+			this->keys.begin() + dist,
+			this->keys.begin() + dist + 1,
+			this->keys.end()
 		);
 
-		auto position = this->array.size() - 1;
+		this->vals[dist] = property;
 
-		this->items[name] = property;
-		this->order[name] = position;
+		rotate(
+			this->vals.begin() + dist,
+			this->vals.begin() + dist + 1,
+			this->vals.end()
+		);
+
+		this->data[name] = property;
 		return;
 	}
 
-	auto position = this->array.size();
-
-	this->items[name] = property;
-	this->order[name] = position;
-	this->array.push_back(property);
+	this->keys.push_back(name);
+	this->vals.push_back(property);
+	this->data[name] = property;
 }
 
 void
 PropertyList::merge(const PropertyList& dictionary)
 {
-	for (auto property : dictionary.array) {
-		this->set(
-			property->getName(),
-			property
-		);
+	if (this->size() == 0) {
+		this->keys = dictionary.keys;
+		this->vals = dictionary.vals;
+		this->data = dictionary.data;
+		return;
+	}
+
+	for (auto property : dictionary.vals) {
+		this->add(property);
 	}
 }
 
 void
 PropertyList::diffs(const PropertyList& dictionary, vector<Property*>& inserts, vector<Property*>& updates, vector<Property*>& removes)
 {
-	auto remains = dictionary.items;
+	auto remains = dictionary.data;
 
-	for (auto & item : this->items) {
+	for (auto & property : this->data) {
 
-		const auto key = item.first;
-		const auto val = item.second;
+		const auto key = property.first;
+		const auto val = property.second;
 
 		remains.erase(key);
 
@@ -65,8 +82,10 @@ PropertyList::diffs(const PropertyList& dictionary, vector<Property*>& inserts, 
 			continue;
 		}
 
-		if (dictionary.get(key) != val) {
-			updates.push_back(val);
+		const auto cur = dictionary.get(key);
+
+		if (cur != val) {
+			updates.push_back(cur);
 			continue;
 		}
 	}

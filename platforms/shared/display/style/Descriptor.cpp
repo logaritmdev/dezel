@@ -114,18 +114,14 @@ Descriptor::addChildDescriptor(Descriptor* child)
 void
 Descriptor::addStyleDescriptor(Descriptor* style)
 {
-	style->parent = this;
-	this->setParentSelector(style);
-	this->setParentFragment(style);
+	this->addChildDescriptor(style);
 	this->styleDescriptors.push_back(style);
 }
 
 void
 Descriptor::addStateDescriptor(Descriptor* state)
 {
-	state->parent = this;
-	this->setParentSelector(state);
-	this->setParentFragment(state);
+	this->addChildDescriptor(state);
 	this->stateDescriptors.push_back(state);
 }
 
@@ -154,14 +150,6 @@ Descriptor::toString(int depth) {
 		output.append(property->toString(depth + 1));
 		output.append(";");
 		output.append("\n");
-	}
-
-	for (auto style : this->styleDescriptors) {
-		output.append(style->toString(depth + 1));
-	}
-
-	for (auto state : this->stateDescriptors) {
-		output.append(state->toString(depth + 1));
 	}
 
 	for (auto child : this->childDescriptors) {

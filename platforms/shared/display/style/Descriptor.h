@@ -5,7 +5,6 @@
 #include "Fragment.h"
 #include "Property.h"
 #include "PropertyList.h"
-#include "Trait.h"
 #include "DisplayNode.h"
 
 #include <string>
@@ -82,7 +81,7 @@ public:
 	void addStateDescriptor(Descriptor* state);
 
 	void addProperty(Property* property) {
-		this->properties.set(property->getName(), property);
+		this->properties.add(property);
 	}
 
 	bool match(DisplayNode* node, Importance& importance);

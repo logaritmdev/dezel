@@ -1,15 +1,15 @@
-#include "DisplayWalker.h"
+#include "DisplayNodeWalker.h"
 #include "DisplayNode.h"
 
 namespace Dezel {
 
-DisplayWalker::DisplayWalker(DisplayNode* root)
+DisplayNodeWalker::DisplayNodeWalker(DisplayNode* root)
 {
 	this->queue.push(root);
 }
 
 bool
-DisplayWalker::next()
+DisplayNodeWalker::next()
 {
 	if (this->queue.size() == 0) {
 		return false;

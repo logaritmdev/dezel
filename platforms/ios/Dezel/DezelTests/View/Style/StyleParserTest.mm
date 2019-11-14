@@ -15,13 +15,13 @@
 using std::string;
 using namespace Dezel::Style;
 
-@interface ParserTest : XCTestCase {
+@interface StyleParserTest : XCTestCase {
 	Stylesheet* stylesheet;
 }
 
 @end
 
-@implementation ParserTest
+@implementation StyleParserTest
 
 - (void)setUp {
 	stylesheet = new Stylesheet();
@@ -244,7 +244,7 @@ using namespace Dezel::Style;
 
 	auto children = descriptor->getChildDescriptors();
 
-	XCTAssertEqual(children.size(), 1);
+	XCTAssertEqual(children.size(), 3);
 
 	auto child = children[0];
 
@@ -265,7 +265,6 @@ using namespace Dezel::Style;
 	XCTAssertEqual(state->getProperties().get(0)->getValues().at(0)->getType(), kValueTypeString);
 	XCTAssertEqual(state->getProperties().get(1)->getName(), "prop-2");
 	XCTAssertEqual(state->getProperties().get(1)->getValues().at(0)->getType(), kValueTypeString);
-	// TODO test inner
 
 	auto styleDescriptor = descriptor->getStyleDescriptors().at(0);
 
