@@ -19,15 +19,23 @@ class PropertyList {
 private:
 
 	vector<string> keys;
-	vector<Property*> vals;
+	vector<Property*> list;
 	unordered_map<string, Property*> data;
+
+	static void diff(
+		const PropertyList& initial,
+		const PropertyList& current,
+		vector<Property*>& inserts,
+		vector<Property*>& updates,
+		vector<Property*>& removes
+	);
 
 public:
 
 	void add(Property* property);
 
 	Property* get(size_t idx) const {
-		return this->vals.at(idx);
+		return this->list.at(idx);
 	}
 
 	Property* get(string key) const {
@@ -38,8 +46,8 @@ public:
 		return this->data.find(key) != this->data.end();
 	}
 
-	void merge(const PropertyList& dictionary);
-	void diffs(const PropertyList& dictionary, vector<Property*>& inserts, vector<Property*>& updates, vector<Property*>& removes);
+	void merge(const PropertyList& properties);
+	void diffs(const PropertyList& properties, vector<Property*>& inserts, vector<Property*>& updates, vector<Property*>& removes);
 
 	//--------------------------------------------------------------------------
 	// MARK: Iterator
@@ -49,23 +57,23 @@ public:
     typedef vector<Property*>::const_iterator const_iterator;
 
 	size_t size() const {
-		return this->vals.size();
+		return this->list.size();
 	}
 
 	inline iterator begin() noexcept {
-		return this->vals.begin();
+		return this->list.begin();
 	}
 
 	inline iterator end() noexcept {
-		return this->vals.end();
+		return this->list.end();
 	}
 
 	inline const_iterator cbegin() const noexcept {
-		return this->vals.cbegin();
+		return this->list.cbegin();
 	}
 
 	inline const_iterator cend() const noexcept {
-		return this->vals.cend();
+		return this->list.cend();
 	}
 };
 
