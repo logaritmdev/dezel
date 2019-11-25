@@ -1,0 +1,46 @@
+NavigationBarButton {
+
+	content-direction: horizontal;
+	content-alignment: center;
+	content-disposition: center;
+	height: 30px;
+	padding-left: 6px;
+	padding-right: 6px;
+	touch-offset-top: -4px;
+	touch-offset-left: -4px;
+	touch-offset-right: -4px;
+	touch-offset-bottom: -12px;
+	width: wrap;
+
+	#image {
+		height: wrap;
+		width: wrap;
+	}
+
+	#label {
+		font-size: 17px;
+		max-lines: 1;
+	}
+
+	@state pressed {
+
+		#image {
+			opacity: 0.5;
+		}
+
+		#label {
+			opacity: 0.5;
+		}
+	}
+
+	@state disabled {
+
+		#image {
+			image-tint: #9da6a5;
+		}
+
+		#label {
+			text-color: #9da6a5;
+		}
+	}
+}

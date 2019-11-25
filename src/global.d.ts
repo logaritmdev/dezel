@@ -23,27 +23,6 @@ declare const _DEV_: boolean
  */
 declare const _SIM_: boolean
 
-/**
- * Use Dezel.importClass instead.
- * @method importClass
- * @since 0.7.0
- */
-declare function importClass(uid: string): any
-
-/**
- * Use Dezel.importClass instead.
- * @method importClass
- * @since 0.7.0
- */
-declare function importObject(uid: string): any
-
-/**
- * Use Dezel.registerApplication instead.
- * @method registerApplication
- * @since 0.7.0
- */
-declare function registerApplication(application: any, id: string): void
-
 //------------------------------------------------------------------------------
 // JSX
 //------------------------------------------------------------------------------

@@ -1,3 +1,4 @@
+import { viewInsertAfter } from '../view/private/View'
 import { Application } from '../application/Application'
 import { ApplicationKeyboardEvent } from '../application/Application'
 import { Component } from '../component/Component'
@@ -5,187 +6,119 @@ import { bound } from '../decorator/bound'
 import { watch } from '../decorator/watch'
 import { Event } from '../event/Event'
 import { ViewMoveToWindowEvent } from '../view/View'
-import { ScreenDismissGesture } from './gesture/ScreenDismissGesture'
-import { ScreenTransition } from './transition/ScreenTransition'
-import { ScreenTransitionRegistry } from './transition/ScreenTransition'
-import { Content } from './Content'
+import { setScreenActive } from './private/Screen'
+import { setScreenPresented } from './private/Screen'
+import { setScreenPresentee } from './private/Screen'
+import { setScreenPresenter } from './private/Screen'
+import { setScreenTransition } from './private/Screen'
+import { $active } from './symbol/Screen'
+import { $dismissing } from './symbol/Screen'
+import { $modal } from './symbol/Screen'
+import { $presented } from './symbol/Screen'
+import { $presentee } from './symbol/Screen'
+import { $presenter } from './symbol/Screen'
+import { $presenting } from './symbol/Screen'
+import { $transition } from './symbol/Screen'
 import { Enclosure } from './Enclosure'
-import { Footer } from './Footer'
-import { Header } from './Header'
-import './Screen.ds'
-import './Screen.ds.android'
-import './Screen.ds.ios'
-
-/**
- * @symbol PRESENTER
- * @since 0.1.0
- */
-export const PRESENTER = Symbol('presenter')
-
-/**
- * @symbol PRESENTEE
- * @since 0.1.0
- */
-export const PRESENTEE = Symbol('presentee')
-
-/**
- * @symbol PRESENTED
- * @since 0.1.0
- */
-export const PRESENTED = Symbol('presented')
-
-/**
- * @symbol TRANSITION
- * @since 0.4.0
- */
-export const TRANSITION = Symbol('transition')
-
-/**
- * @symbol MODAL
- * @since 0.4.0
- */
-export const MODAL = Symbol('modal')
-
-/**
- * @symbol PRESENTING
- * @since 0.4.0
- */
-export const PRESENTING = Symbol('presenting')
-
-/**
- * @symbol DISMISSING
- * @since 0.4.0
- */
-export const DISMISSING = Symbol('dismissing')
-
-/**
- * @symbol ACTIVE
- * @since 0.1.0
- */
-export const ACTIVE = Symbol('active')
+import { ScreenDismissGesture } from './ScreenDismissGesture'
+import { ScreenTransition } from './ScreenTransition'
+import { ScreenTransitionRegistry } from './ScreenTransitionRegistry'
+import './style/Screen.style'
+import './style/Screen.style.android'
+import './style/Screen.style.ios'
 
 /**
  * @class Screen
  * @super View
  * @since 0.1.0
  */
-export abstract class Screen<TRefs = any, TResult = any> extends Component<TRefs> {
+export abstract class Screen<TResult = any> extends Component {
 
 	//--------------------------------------------------------------------------
 	// Propertis
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The screen's status bar visibility.
 	 * @property statusBarVisible
 	 * @since 0.1.0
 	 */
 	public statusBarVisible: boolean = true
 
 	/**
-	 * The screen's status bar foreground color.
 	 * @property statusBarForegroundColor
 	 * @since 0.1.0
 	 */
 	public statusBarForegroundColor: 'white' | 'black' = 'black'
 
 	/**
-	 * The screen's status bar foreground color.
 	 * @property statusBarBackgroundColor
 	 * @since 0.1.0
 	 */
 	public statusBarBackgroundColor: string = 'transparent'
 
 	/**
-	 * The gesture used to dismiss this screen.
 	 * @property dismissGesture
 	 * @since 0.5.0
 	 */
 	@watch public dismissGesture: ScreenDismissGesture | null = null
 
 	/**
-	 * Convenience property to get the current application.
-	 * @property application
-	 * @since 0.5.0
-	 */
-	public get application(): Application {
-
-		let application = Application.main
-		if (application == null) {
-			throw new Error(`
-				Screen error:
-				Unable to retrieve the current application. Has it been launched ?
-			`)
-		}
-
-		return application
-	}
-
-	/**
-	 * The screen presented by this screen.
 	 * @property presentee
 	 * @since 0.1.0
 	 */
 	public get presentee(): Screen | undefined | null {
-		return this[PRESENTEE]
+		return this[$presentee]
 	}
 
 	/**
-	 * The screen that presents this screen.
 	 * @property presenter
 	 * @since 0.1.0
 	 */
 	public get presenter(): Screen | undefined | null {
-		return this[PRESENTER]
+		return this[$presenter]
 	}
 
 	/**
-	 * Whether the screen is currently presented.
 	 * @property presented
 	 * @since 0.5.0
 	 */
 	public get presented(): boolean {
-		return this[PRESENTED]
+		return this[$presented]
 	}
 
 	/**
-	 * Whether the screen is being presented.
 	 * @property presenting
 	 * @since 0.4.0
 	 */
 	public get presenting(): boolean {
-		return this[PRESENTING]
+		return this[$presenting]
 	}
 
 	/**
-	 * Whether the screen is being dismissed.
 	 * @property dismissing
 	 * @since 0.4.0
 	 */
 	public get dismissing(): boolean {
-		return this[DISMISSING]
+		return this[$dismissing]
 	}
 
 	/**
-	 * Returns whether the screen is active on the screen.
 	 * @property active
 	 * @since 0.1.0
 	 */
 	public get active(): boolean {
-		return this[ACTIVE]
+		return this[$active]
 	}
 
 	/**
-	 * Returns whether the screen is presented modally.
 	 * @property active
 	 * @since 0.1.0
 	 */
 	public get modal(): boolean {
-		return this[MODAL]
+		return this[$modal]
 	}
 
 	/**
-	 * The screen's result if any.
 	 * @property result
 	 * @since 0.1.0
 	 */
@@ -196,7 +129,6 @@ export abstract class Screen<TRefs = any, TResult = any> extends Component<TRefs
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method destroy
 	 * @since 0.3.0
 	 */
@@ -208,24 +140,17 @@ export abstract class Screen<TRefs = any, TResult = any> extends Component<TRefs
 		// in the case where the view is destroyed without being
 		// dismissed first (like when multiple screen are dismissed at once)
 
-		super.destroy()
+		return super.destroy()
 	}
 
 	/**
-	 * Presents a screen.
 	 * @method present
 	 * @since 0.3.0
 	 */
 	public present(screen: Screen, transition?: ScreenTransition | string, options: ScreenPresentationOptions = {}): Promise<void> {
 
 		if (screen.presenting) {
-
-			console.error(`
-				Screen error:
-				This screen is being presented.
-			`)
-
-			return Promise.resolve()
+			return Promise.reject()
 		}
 
 		if (this.presentee) {
@@ -246,33 +171,28 @@ export abstract class Screen<TRefs = any, TResult = any> extends Component<TRefs
 
 			}
 
-			console.error(`
-				Screen error:
-				This screen already has a presented screen
-			`)
-
-			return Promise.resolve()
+			throw new Error(
+				`Screen error: ` +
+				`Screen has already a presented screen.`
+			)
 		}
 
 		if (this.window == null ||
 			this.parent == null) {
-
-			console.error(`
-				Screen error:
-				The screen is not within a hierarchy
-			`)
-
-			return Promise.resolve()
+			throw new Error(
+				`Screen error: ` +
+				`Screen is not within a hierarchy.`
+			)
 		}
 
 		if (typeof transition == 'string') {
 
 			let constructor = ScreenTransitionRegistry.get(transition)
 			if (constructor == null) {
-				throw new Error(`
-					Screen error:
-					The transition ${transition} does not exists. Has it been registered ?
-				`)
+				throw new Error(
+					`Screen error: ` +
+					`Screen transition ${transition} does not exists. Has it been registered ?`
+				)
 			}
 
 			transition = new constructor()
@@ -282,11 +202,11 @@ export abstract class Screen<TRefs = any, TResult = any> extends Component<TRefs
 		let presentedScreen = screen
 		let presentedTransition = transition || null
 
-		presentedScreen[PRESENTING] = true
+		presentedScreen[$presenting] = true
 
-		presenterScreen.setPresentee(presentedScreen)
-		presentedScreen.setPresenter(presenterScreen)
-		presentedScreen.setTransition(presentedTransition)
+		setScreenPresentee(presenterScreen, presentedScreen)
+		setScreenPresenter(presentedScreen, presenterScreen)
+		setScreenTransition(presentedScreen, presentedTransition)
 
 		return new Promise(success => {
 
@@ -312,7 +232,6 @@ export abstract class Screen<TRefs = any, TResult = any> extends Component<TRefs
 	}
 
 	/**
-	 * Presents a screen that returns a promise who's resolved when the screen returns.
 	 * @method prompt
 	 * @since 0.3.0
 	 */
@@ -336,21 +255,19 @@ export abstract class Screen<TRefs = any, TResult = any> extends Component<TRefs
 
 			}
 
-			console.error(`
-				Screen error:
-				This screen already has a presented screen
-			`)
-
-			return Promise.resolve(null)
+			throw new Error(
+				`Screen error: ` +
+				`Screen has already a presented screen.`
+			)
 		}
 
 		if (this.window == null ||
 			this.parent == null) {
 
-			console.error(`
-				Screen error:
-				The screen is not within a hierarchy
-			`)
+			console.error(
+				`Screen error: ` +
+				`The screen is not within a hierarchy.`
+			)
 
 			return Promise.resolve(null)
 		}
@@ -361,28 +278,21 @@ export abstract class Screen<TRefs = any, TResult = any> extends Component<TRefs
 	}
 
 	/**
-	 * Dismiss this screen from its presenter.
 	 * @method dismiss
 	 * @since 0.3.0
 	 */
 	public dismiss(transition?: ScreenTransition | string | null): Promise<void> {
 
 		if (this.dismissing) {
-
-			console.error(`
-				Screen error:
-				This screen is being dismissed.
-			`)
-
-			return Promise.resolve()
+			return Promise.reject()
 		}
 
 		if (this.presenter == null) {
 
-			console.error(`
-				Screen error:
-				This screen is the root screen and cannot be dismissed.
-			`)
+			console.error(
+				`Screen error: ` +
+				`This screen is the root screen and cannot be dismissed.`
+			)
 
 			return Promise.resolve()
 		}
@@ -391,23 +301,23 @@ export abstract class Screen<TRefs = any, TResult = any> extends Component<TRefs
 
 			let constructor = ScreenTransitionRegistry.get(transition)
 			if (constructor == null) {
-				throw new Error(`
-					Screen error:
-					The transition ${transition} does not exists. Has it been registered ?
-				`)
+				throw new Error(
+					`Screen error: ` +
+					`The transition ${transition} does not exists. Has it been registered ?`
+				)
 			}
 
 			transition = new constructor()
 		}
 
 		if (transition == null) {
-			transition = this[TRANSITION]
+			transition = this[$transition]
 		}
 
 		let dismissedScreen = this
 		let dismissedTransition = transition
 
-		dismissedScreen[DISMISSING] = true
+		dismissedScreen[$dismissing] = true
 
 		return new Promise(success => {
 
@@ -435,7 +345,6 @@ export abstract class Screen<TRefs = any, TResult = any> extends Component<TRefs
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method onPropertyChange
 	 * @since 0.5.0
 	 */
@@ -454,12 +363,9 @@ export abstract class Screen<TRefs = any, TResult = any> extends Component<TRefs
 				newScreenDismissGesture.attach(this)
 			}
 		}
-
-		super.onPropertyChange(property, newValue, oldValue)
 	}
 
 	/**
-	 * @inherited
 	 * @method onEvent
 	 * @since 0.7.0
 	 */
@@ -532,7 +438,6 @@ export abstract class Screen<TRefs = any, TResult = any> extends Component<TRefs
 	}
 
 	/**
-	 * Called before this screen is presented.
 	 * @method onBeforePresent
 	 * @since 0.3.0
 	 */
@@ -541,7 +446,6 @@ export abstract class Screen<TRefs = any, TResult = any> extends Component<TRefs
 	}
 
 	/**
-	 * Called once this screen is presented.
 	 * @method onPresent
 	 * @since 0.3.0
 	 */
@@ -550,7 +454,6 @@ export abstract class Screen<TRefs = any, TResult = any> extends Component<TRefs
 	}
 
 	/**
-	 * Called when this screen is dismissed before the animation occurs.
 	 * @method onBeforeDismiss
 	 * @since 0.3.0
 	 */
@@ -559,7 +462,6 @@ export abstract class Screen<TRefs = any, TResult = any> extends Component<TRefs
 	}
 
 	/**
-	 * Called when this screen is dismissed after the animation occurs.
 	 * @method onDismiss
 	 * @since 0.3.0
 	 */
@@ -568,7 +470,6 @@ export abstract class Screen<TRefs = any, TResult = any> extends Component<TRefs
 	}
 
 	/**
-	 * Called when this screen dismissal has been cancelled.
 	 * @method onDismissCancel
 	 * @since 0.4.0
 	 */
@@ -577,7 +478,6 @@ export abstract class Screen<TRefs = any, TResult = any> extends Component<TRefs
 	}
 
 	/**
-	 * Called before the entering view transition starts.
 	 * @method onBeforeEnter
 	 * @since 0.3.0
 	 */
@@ -586,7 +486,6 @@ export abstract class Screen<TRefs = any, TResult = any> extends Component<TRefs
 	}
 
 	/**
-	 * Called once the entering view transition completes.
 	 * @method onEnter
 	 * @since 0.3.0
 	 */
@@ -595,7 +494,6 @@ export abstract class Screen<TRefs = any, TResult = any> extends Component<TRefs
 	}
 
 	/**
-	 * Called before the leaving view transition starts.
 	 * @method onBeforeLeave
 	 * @since 0.3.0
 	 */
@@ -604,7 +502,6 @@ export abstract class Screen<TRefs = any, TResult = any> extends Component<TRefs
 	}
 
 	/**
-	 * Called once the leaving view transition completes.
 	 * @method onLeave
 	 * @since 0.3.0
 	 */
@@ -613,7 +510,6 @@ export abstract class Screen<TRefs = any, TResult = any> extends Component<TRefs
 	}
 
 	/**
-	 * Called when a back command is requested.
 	 * @method onBack
 	 * @since 0.3.0
 	 */
@@ -637,7 +533,6 @@ export abstract class Screen<TRefs = any, TResult = any> extends Component<TRefs
 	}
 
 	/**
-	 * Called before the on-screen keyboard appears.
 	 * @method onBeforeKeyboardShow
 	 * @since 0.3.0
 	 */
@@ -646,7 +541,6 @@ export abstract class Screen<TRefs = any, TResult = any> extends Component<TRefs
 	}
 
 	/**
-	 * Called when the on-screen keyboard appears.
 	 * @method onKeyboardShow
 	 * @since 0.3.0
 	 */
@@ -655,7 +549,6 @@ export abstract class Screen<TRefs = any, TResult = any> extends Component<TRefs
 	}
 
 	/**
-	 * Called before the on-screen keyboard disappears.
 	 * @method onBeforeKeyboardHide
 	 * @since 0.3.0
 	 */
@@ -664,7 +557,6 @@ export abstract class Screen<TRefs = any, TResult = any> extends Component<TRefs
 	}
 
 	/**
-	 * Called when the on-screen keyboard disappears.
 	 * @method onKeyboardHide
 	 * @since 0.3.0
 	 */
@@ -673,7 +565,6 @@ export abstract class Screen<TRefs = any, TResult = any> extends Component<TRefs
 	}
 
 	/**
-	 * Called when the on-screen keyboard resizes.
 	 * @method onKeyboardResize
 	 * @since 0.3.0
 	 */
@@ -682,30 +573,31 @@ export abstract class Screen<TRefs = any, TResult = any> extends Component<TRefs
 	}
 
 	/**
-	 * @inherited
 	 * @method onMoveToWindowDefault
 	 * @since 0.4.0
 	 */
 	protected onMoveToWindowDefault(event: Event<ViewMoveToWindowEvent>) {
-		// TODO
-		// Use pubsub ?
-		//super.onMoveToWindowDefault(event)
+
+		let application = Application.main
+		if (application == null) {
+			return
+		}
 
 		if (event.data.window) {
-			this.application.on('beforekeyboardshow', this.onBeforeApplicationKeyboardShow)
-			this.application.on('beforekeyboardhide', this.onBeforeApplicationKeyboardHide)
-			this.application.on('keyboardshow', this.onApplicationKeyboardShow)
-			this.application.on('keyboardhide', this.onApplicationKeyboardHide)
-			this.application.on('keyboardresize', this.onApplicationKeyboardResize)
+			application.on('beforekeyboardshow', this.onBeforeApplicationKeyboardShow)
+			application.on('beforekeyboardhide', this.onBeforeApplicationKeyboardHide)
+			application.on('keyboardshow', this.onApplicationKeyboardShow)
+			application.on('keyboardhide', this.onApplicationKeyboardHide)
+			application.on('keyboardresize', this.onApplicationKeyboardResize)
 			return
 		}
 
 		if (event.data.window == null) {
-			this.application.off('beforekeyboardshow', this.onBeforeApplicationKeyboardShow)
-			this.application.off('beforekeyboardhide', this.onBeforeApplicationKeyboardHide)
-			this.application.off('keyboardshow', this.onApplicationKeyboardShow)
-			this.application.off('keyboardhide', this.onApplicationKeyboardHide)
-			this.application.off('keyboardresize', this.onApplicationKeyboardResize)
+			application.off('beforekeyboardshow', this.onBeforeApplicationKeyboardShow)
+			application.off('beforekeyboardhide', this.onBeforeApplicationKeyboardHide)
+			application.off('keyboardshow', this.onApplicationKeyboardShow)
+			application.off('keyboardhide', this.onApplicationKeyboardHide)
+			application.off('keyboardresize', this.onApplicationKeyboardResize)
 			return
 		}
 	}
@@ -720,51 +612,6 @@ export abstract class Screen<TRefs = any, TResult = any> extends Component<TRefs
 	 * @hidden
 	 */
 	public enclosure: Enclosure | null = null
-
-	/**
-	 * @method setActive
-	 * @since 0.3.0
-	 * @hidden
-	 */
-	public setActive(active: boolean) {
-		this[ACTIVE] = active
-	}
-
-	/**
-	 * @method setPresenter
-	 * @since 0.3.0
-	 * @hidden
-	 */
-	public setPresenter(screen: Screen | null) {
-		this[PRESENTER] = screen
-	}
-
-	/**
-	 * @method setPresentee
-	 * @since 0.3.0
-	 * @hidden
-	 */
-	public setPresentee(screen: Screen | null) {
-		this[PRESENTEE] = screen
-	}
-
-	/**
-	 * @method setPresented
-	 * @since 0.5.0
-	 * @hidden
-	 */
-	public setPresented(presented: boolean) {
-		this[PRESENTED] = presented
-	}
-
-	/**
-	 * @method setTransition
-	 * @since 0.4.0
-	 * @hidden
-	 */
-	public setTransition(transition: ScreenTransition | null) {
-		this[TRANSITION] = transition
-	}
 
 	/**
 	 * @method emitBeforePresent
@@ -842,9 +689,15 @@ export abstract class Screen<TRefs = any, TResult = any> extends Component<TRefs
 	 * @hidden
 	 */
 	public updateStatusBar() {
-		this.application.statusBarVisible = this.statusBarVisible
-		this.application.statusBarForegroundColor = this.statusBarForegroundColor
-		this.application.statusBarBackgroundColor = this.statusBarBackgroundColor
+
+		let application = Application.main
+		if (application == null) {
+			return
+		}
+
+		application.statusBarVisible = this.statusBarVisible
+		application.statusBarForegroundColor = this.statusBarForegroundColor
+		application.statusBarBackgroundColor = this.statusBarBackgroundColor
 	}
 
 	/**
@@ -864,16 +717,16 @@ export abstract class Screen<TRefs = any, TResult = any> extends Component<TRefs
 		let destroy = event.canceled == false
 
 		if (this.presenter) {
-			this.presenter.setPresentee(null)
+			setScreenPresentee(this.presenter, null)
 		}
 
-		this.setPresenter(null)
-		this.setPresentee(null)
-		this.setTransition(null)
+		setScreenPresenter(this, null)
+		setScreenPresentee(this, null)
+		setScreenTransition(this, null)
 
 		this.removeFromParent()
 
-		this[MODAL] = false
+		this[$modal] = false
 
 		this.emit('dispose')
 
@@ -889,60 +742,60 @@ export abstract class Screen<TRefs = any, TResult = any> extends Component<TRefs
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @property [MODAL]
-	 * @since 0.4.0
+	 * @property $presenter
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private [MODAL]: boolean = false
+	private [$presenter]: Screen | null = null
 
 	/**
-	 * @property [ACTIVE]
-	 * @since 0.3.0
+	 * @property $presentee
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private [ACTIVE]: boolean = false
+	private [$presentee]: Screen | null = null
 
 	/**
-	 * @property [PRESENTER]
-	 * @since 0.3.0
+	 * @property $presented
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private [PRESENTER]: Screen | null = null
+	private [$presented]: boolean = false
 
 	/**
-	 * @property [PRESENTEE]
-	 * @since 0.3.0
+	 * @property $transition
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private [PRESENTEE]: Screen | null = null
+	private [$transition]: ScreenTransition | null = null
 
 	/**
-	 * @property [PRESENTED]
-	 * @since 0.5.0
+	 * @property $presenting
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private [PRESENTED]: boolean = false
+	private [$presenting]: boolean = false
 
 	/**
-	 * @property [TRANSITION]
-	 * @since 0.4.0
+	 * @property $dismissing
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private [TRANSITION]: ScreenTransition | null = null
+	private [$dismissing]: boolean = false
 
 	/**
-	 * @property [PRESENTING]
-	 * @since 0.4.0
+	 * @property $modal
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private [PRESENTING]: boolean = false
+	private [$modal]: boolean = false
 
 	/**
-	 * @property [DISMISSING]
-	 * @since 0.4.0
+	 * @property $active
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private [DISMISSING]: boolean = false
+	private [$active]: boolean = false
 
 	/**
 	 * @method performPresent
@@ -958,10 +811,10 @@ export abstract class Screen<TRefs = any, TResult = any> extends Component<TRefs
 
 			if (window == null ||
 				parent == null) {
-				throw new Error(`
-					Screen error:
-					The screen screen is not part of valid a hierarchy.
-				`)
+				throw new Error(
+					`Screen error: ` +
+					`The screen screen is not part of valid a hierarchy.`
+				)
 			}
 
 			window.touchable = false
@@ -984,24 +837,25 @@ export abstract class Screen<TRefs = any, TResult = any> extends Component<TRefs
 
 				let dismissedScreenEnclosure = this.getModalEnclosure()
 				if (dismissedScreenEnclosure == null) {
-					throw new Error(`
-						Screen error:
-						Unable to retrieve the window's last presented screen.
-					`)
+					throw new Error(
+						`Screen error: ` +
+						`Unable to retrieve the window's last presented screen.`
+					)
 				}
 
 				dismissedScreen = dismissedScreenEnclosure.screen
 
-				window.insertAfter(
+				window.insert(
 					presentedScreenEnclosure,
-					dismissedScreenEnclosure
+					window.children.indexOf(dismissedScreenEnclosure)
 				)
 
-				presentedScreen[MODAL] = true
+				presentedScreen[$modal] = true
 
 			} else {
 
-				parent.insertAfter(
+				viewInsertAfter(
+					parent,
 					presentedScreenEnclosure,
 					presenterScreen
 				)
@@ -1038,11 +892,11 @@ export abstract class Screen<TRefs = any, TResult = any> extends Component<TRefs
 			await presentedScreen.emitPresent(transition)
 			await presentedScreen.emitEnter(transition)
 
-			dismissedScreen.setActive(false)
-			presentedScreen.setActive(true)
-			presentedScreen.setPresented(true)
+			setScreenActive(dismissedScreen, false)
+			setScreenActive(presentedScreen, true)
+			setScreenPresented(presentedScreen, true)
 
-			presentedScreen[PRESENTING] = false
+			presentedScreen[$presenting] = false
 
 			window.touchable = true
 
@@ -1064,10 +918,10 @@ export abstract class Screen<TRefs = any, TResult = any> extends Component<TRefs
 
 			let window = this.window
 			if (window == null) {
-				throw new Error(`
-					Screen error:
-					The screen screen is not part of valid a hierarchy.
-				`)
+				throw new Error(
+					`Screen error: ` +
+					`The screen screen is not part of valid a hierarchy.`
+				)
 			}
 
 			window.touchable = false
@@ -1078,40 +932,41 @@ export abstract class Screen<TRefs = any, TResult = any> extends Component<TRefs
 
 			let dismissedScreen: Screen = this
 			let presentedScreen: Screen = this.presenter!
-
 			let presentedScreenEnclosure = presentedScreen.enclosure
 			let dismissedScreenEnclosure = dismissedScreen.enclosure
 
+			// TODO
+			// Make this better
 			let dismissed = this.getPresenteeList()
 			if (dismissed.length) {
 
-				dismissedScreen[DISMISSING] = false
+				dismissedScreen[$dismissing] = false
 				dismissedScreen = dismissed[0]
-				dismissedScreen[DISMISSING] = true
+				dismissedScreen[$dismissing] = true
 
 				dismissed.push(this)
 				dismissed.shift()
 
 				for (let screen of dismissed) {
-					screen[DISMISSING] = true
+					screen[$dismissing] = true
 				}
 			}
 
-			if (this[MODAL]) {
+			if (this[$modal]) {
 
 				if (dismissedScreenEnclosure == null) {
-					throw new Error(`
-						Screen error:
-						The dismissed screen is missing its enclosure.
-					`)
+					throw new Error(
+						`Screen error: ` +
+						`The dismissed screen is missing its enclosure.`
+					)
 				}
 
 				let index = window.children.indexOf(dismissedScreenEnclosure)
 				if (index == -1) {
-					throw new Error(`
-						Screen error:
-						The modal screen is not found within the hierarchy.
-					`)
+					throw new Error(
+						`Screen error: ` +
+						`The modal screen is not found within the hierarchy.`
+					)
 				}
 
 				presentedScreenEnclosure = window.children[index - 1] as Enclosure
@@ -1139,7 +994,7 @@ export abstract class Screen<TRefs = any, TResult = any> extends Component<TRefs
 
 			if (event.canceled) {
 
-				dismissedScreen[DISMISSING] = false
+				dismissedScreen[$dismissing] = false
 
 				presentedScreen.visible = false
 				dismissedScreen.visible = true
@@ -1180,22 +1035,22 @@ export abstract class Screen<TRefs = any, TResult = any> extends Component<TRefs
 				screen.emitDismiss(transition)
 			}
 
-			dismissedScreen.setPresented(false)
-			dismissedScreen.setActive(false)
-			presentedScreen.setActive(true)
+			dismissedScreen[$active] = false
+			presentedScreen[$active] = true
+			dismissedScreen[$presented] = false
 
 			for (let screen of dismissed) {
-				screen.setActive(false)
-				screen.setPresented(false)
+				screen[$active] = false
+				screen[$presented] = false
 			}
 
-			dismissedScreen[DISMISSING] = false
+			dismissedScreen[$dismissing] = false
 
 			dismissedScreen.dispose()
 
 			for (let screen of dismissed) {
 
-				screen[DISMISSING] = false
+				screen[$dismissing] = false
 
 				screen.dispose()
 
@@ -1263,10 +1118,10 @@ export abstract class Screen<TRefs = any, TResult = any> extends Component<TRefs
 		while (node) {
 
 			if (node.dismissing) {
-				throw new Error(`
-					Screen error:
-					Cannot dismiss a screen while another screen is being dismissed.
-				`)
+				throw new Error(
+					`Screen error: ` +
+					`Cannot dismiss a screen while another screen is being dismissed.`
+				)
 			}
 
 			list.unshift(node)
@@ -1322,6 +1177,7 @@ export abstract class Screen<TRefs = any, TResult = any> extends Component<TRefs
 		this.emit(event)
 	}
 }
+
 
 /**
  * @interface ScreenPresentationOptions

@@ -1,12 +1,13 @@
 import { watch } from '../decorator/watch'
 import { View } from '../view/View'
 import { Component } from './Component'
-import './Dots.ds'
-import './Dots.ds.android'
-import './Dots.ds.ios'
-
+import { Root } from './Root'
+import './style/Dots.style'
+import './style/Dots.style.android'
+import './style/Dots.style.ios'
+// TODO
+// Selected index, selected value
 /**
- * Displays dots indicator.
  * @class Dots
  * @super Component
  * @since 0.5.0
@@ -18,19 +19,17 @@ export class Dots extends Component {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The amount of dots.
 	 * @property amount
 	 * @since 0.5.0
 	 */
 	@watch public amount: number = 0
 
 	/**
-	 * The selected dot index.
 	 * @property selectedIndex
 	 * @since 0.5.0
 	 */
 	public get selectedIndex(): number | undefined {
-		return this.getSelectedDotIndex()
+		return this.getSelectedIndex()
 	}
 
 	//--------------------------------------------------------------------------
@@ -38,22 +37,20 @@ export class Dots extends Component {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method render
 	 * @since 0.7.0
 	 */
 	public render() {
 		return (
-			<View />
+			<Root />
 		)
 	}
 
 	/**
-	 * Selects a dot using the specified index.
 	 * @method select
 	 * @since 0.5.0
 	 */
-	public select(index: number | undefined | null) {
+	public select(index: number | null) {
 
 		if (index == this.selectedIndex) {
 			return this
@@ -71,7 +68,6 @@ export class Dots extends Component {
 	}
 
 	/**
-	 * @inherited
 	 * @method onPropertyChange
 	 * @since 0.4.0
 	 */
@@ -84,14 +80,10 @@ export class Dots extends Component {
 			let amount = newValue as number
 			if (amount) {
 				for (let i = 0; i < amount; i++) {
-					this.append(<Dot />)
+					this.append(<View style="dot" />)
 				}
 			}
-
-			return
 		}
-
-		super.onPropertyChange(property, newValue, oldValue)
 	}
 
 	//--------------------------------------------------------------------------
@@ -110,7 +102,7 @@ export class Dots extends Component {
 	 * @since 0.5.0
 	 * @hidden
 	 */
-	private getSelectedDotIndex() {
+	private getSelectedIndex() {
 		return this.selectedDot ? this.children.indexOf(this.selectedDot) : undefined
 	}
 
@@ -127,7 +119,7 @@ export class Dots extends Component {
 		}
 
 		this.selectedDot = dot
-		this.selectedDot.setState('selected')
+		this.selectedDot.states.append('selected')
 
 		return this
 	}
@@ -140,27 +132,10 @@ export class Dots extends Component {
 	private clearSelection() {
 
 		if (this.selectedDot) {
-			this.selectedDot.setState('selected', false)
+			this.selectedDot.states.remove('selected')
 			this.selectedDot = null
 		}
 
 		return this
-	}
-}
-
-/**
- * @class Dot
- * @since 1.0.0
- * @hidden
- */
-export class Dot extends Component {
-
-	/**
-	 * @inherited
-	 * @method render
-	 * @since 0.7.0
-	 */
-	public render() {
-		return null
 	}
 }

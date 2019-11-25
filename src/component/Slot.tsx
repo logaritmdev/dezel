@@ -1,39 +1,87 @@
-import { Placeholder } from '../placeholder/Placeholder'
+import { Placeholder } from '../view/Placeholder'
 import { View } from '../view/View'
+import { ViewInsertEvent } from '../view/View'
+import { ViewRemoveEvent } from '../view/View'
+import { getComponent } from './private/Component'
+import { setComponentSlot } from './private/Component'
+import { $container } from './symbol/Slot'
 import { Component } from './Component'
 
 /**
- * @symbol CONTAINER
- * @since 0.7.0
- */
-export const CONTAINER = Symbol('container')
-
-/**
- * TODO
  * @class Slot
  * @super Placeholder
  * @since 0.7.0
  */
-export abstract class Slot extends Placeholder {
+export class Slot extends Placeholder {
 
 	//--------------------------------------------------------------------------
 	// Properties
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The slot's name.
 	 * @property name
 	 * @since 0.7.0
 	 */
-	public abstract get name(): string
+	public name: string = ""
 
 	/**
-	 * The slot's container.
+	 * @property main
+	 * @since 0.7.0
+	 */
+	public main: boolean = false
+
+	/**
 	 * @property container
 	 * @since 0.7.0
 	 */
 	public get container(): Component | null {
-		return this[CONTAINER]
+		return this[$container]
+	}
+
+	//--------------------------------------------------------------------------
+	// Protected
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method onInsert
+	 * @since 0.7.0
+	 */
+	protected onInsert(child: View, index: number) {
+		if (this.container) {
+			this.container.emit<ViewInsertEvent>('insert', { data: { child, index } })
+		}
+	}
+
+	/**
+	 * @method onRemove
+	 * @since 0.7.0
+	 */
+	protected onRemove(child: View, index: number) {
+		if (this.container) {
+			this.container.emit<ViewRemoveEvent>('remove', { data: { child, index } })
+		}
+	}
+
+	/**
+	 * @method onMoveToParent
+	 * @since 0.7.0
+	 */
+	protected onMoveToParent(parent: View | null) {
+
+		if (parent) {
+
+			let component = getComponent()
+			if (component == null) {
+				return
+			}
+
+			this[$container] = component
+
+			setComponentSlot(component, this)
+
+		} else {
+			// TODO
+		}
 	}
 
 	//--------------------------------------------------------------------------
@@ -41,30 +89,9 @@ export abstract class Slot extends Placeholder {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @property CONTAINER
+	 * @property container
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private [CONTAINER]: Component | null = null
-
-	//--------------------------------------------------------------------------
-	// JSX
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @property __jsxProps
-	 * @since 0.4.0
-	 * @hidden
-	 */
-	public __jsxProps: any
-
-}
-
-/**
- * @function setContainer
- * @since 0.7.0
- * @hidden
- */
-export function setContainer(slot: Slot, component: Component | null) {
-	slot[CONTAINER] = component
+	private [$container]: Component | null = null
 }

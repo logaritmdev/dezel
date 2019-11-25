@@ -1,5 +1,4 @@
 /**
- * A Point3D object represents a point in a 3D space.
  * @class Point3D
  * @since 0.1.0
  */
@@ -10,21 +9,18 @@ export class Point3D {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The value of the point on the X axis.
 	 * @property x
 	 * @since 0.1.0
 	 */
 	public x: number = 0
 
 	/**
-	 * The value of the point on the Y axis.
 	 * @property y
 	 * @since 0.1.0
 	 */
 	public y: number = 0
 
 	/**
-	 * The value of the point on the Z axis.
 	 * @property z
 	 * @since 0.1.0
 	 */
@@ -35,7 +31,6 @@ export class Point3D {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Initializes the point.
 	 * @constructor
 	 * @since 0.1.0
 	 */

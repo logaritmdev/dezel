@@ -17,97 +17,97 @@ export class Transform3D {
 	// d1	d2	d3	d4
 
 	/**
-	 * public a1
+	 * @property a1
 	 * @since 0.1.0
 	 */
 	public a1 = 1
 
 	/**
-	 * public b1
+	 * @property b1
 	 * @since 0.1.0
 	 */
 	public b1 = 0
 
 	/**
-	 * public c1
+	 * @property c1
 	 * @since 0.1.0
 	 */
 	public c1 = 0
 
 	/**
-	 * public d1
+	 * @property d1
 	 * @since 0.1.0
 	 */
 	public d1 = 1
 
 	/**
-	 * public a2
+	 * @property a2
 	 * @since 0.1.0
 	 */
 	public a2 = 0
 
 	/**
-	 * public b2
+	 * @property b2
 	 * @since 0.1.0
 	 */
 	public b2 = 1
 
 	/**
-	 * public c2
+	 * @property c2
 	 * @since 0.1.0
 	 */
 	public c2 = 0
 
 	/**
-	 * public d2
+	 * @property d2
 	 * @since 0.1.0
 	 */
 	public d2 = 1
 
 	/**
-	 * public a3
+	 * @property a3
 	 * @since 0.1.0
 	 */
 	public a3 = 0
 
 	/**
-	 * public b3
+	 * @property b3
 	 * @since 0.1.0
 	 */
 	public b3 = 0
 
 	/**
-	 * public c3
+	 * @property c3
 	 * @since 0.1.0
 	 */
 	public c3 = 1
 
 	/**
-	 * public d3
+	 * @property d3
 	 * @since 0.1.0
 	 */
 	public d3 = 1
 
 	/**
-	 * public a4
+	 * @property a4
 	 * @since 0.1.0
 	 */
 	public a4 = 0
 
 	/**
-	 * public b4
+	 * @property b4
 	 * @since 0.1.0
 	 */
 	public b4 = 1
 
 	/**
-	 * public c4
+	 * @property c4
 	 * @since 0.1.0
 	 */
 	public c4 = 0
 
 	/**
-	 * public d4
+	 * @property d4
 	 * @since 0.1.0
 	 */
 	public d4 = 1
@@ -117,7 +117,6 @@ export class Transform3D {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Initializes the transformation matrix.
 	 * @constructor
 	 * @since 0.1.0
 	 */
@@ -168,7 +167,6 @@ export class Transform3D {
 	}
 
 	/**
-	 * Translates the matrix.
 	 * @method translate
 	 * @since 0.1.0
 	 */
@@ -181,7 +179,6 @@ export class Transform3D {
 	}
 
 	/**
-	 * Scales the matrix.
 	 * @method scale
 	 * @since 0.1.0
 	 */
@@ -207,7 +204,6 @@ export class Transform3D {
 	}
 
 	/**
-	 * Rotates the matrix.
 	 * @method rotate
 	 * @since 0.1.0
 	 */
@@ -302,7 +298,6 @@ export class Transform3D {
 	}
 
 	/**
-	 * Add perspective to the matrix.
 	 * @method perspective
 	 * @since 0.1.0
 	 */
@@ -321,7 +316,6 @@ export class Transform3D {
 	}
 
 	/**
-	 * Multiply the matrix with the specified matrix.
 	 * @method concat
 	 * @since 0.1.0
 	 */
@@ -431,7 +425,6 @@ export class Transform3D {
 	}
 
 	/**
-	 * Resets the matrix.
 	 * @method reset
 	 * @since 0.1.0
 	 */
@@ -461,7 +454,6 @@ export class Transform3D {
 	}
 
 	/**
-	 * Transforms a point using the matrix.
 	 * @method transform
 	 * @since 0.1.0
 	 */
@@ -480,7 +472,6 @@ export class Transform3D {
 	}
 
 	/**
-	 * Indicates whether the matrix is the identity matrix.
 	 * @method isIdentity
 	 * @since 0.1.0
 	 */

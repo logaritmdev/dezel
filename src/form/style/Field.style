@@ -1,0 +1,9 @@
+Field {
+
+	height: wrap;
+	margin-bottom: 24px;
+
+	@state last-child {
+		margin-bottom: 0px;
+	}
+}

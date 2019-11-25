@@ -1,70 +1,55 @@
 import { state } from '../decorator/state'
 import { Event } from '../event/Event'
 import { TouchEvent } from '../touch/TouchEvent'
+import { Reference } from '../view/Reference'
 import { View } from '../view/View'
 import { Component } from './Component'
 import { Image } from './Image'
 import { Label } from './Label'
-import './NavigationBarButton.ds'
-import './NavigationBarButton.ds.android'
-import './NavigationBarButton.ds.ios'
+import './style/NavigationBarButton.style'
+import './style/NavigationBarButton.style.android'
+import './style/NavigationBarButton.style.ios'
 
 /**
- * The internal references.
- * @interface Refs
- * @since 0.7.0
- */
-interface Refs {
-	label: Label
-	image: Image
-}
-
-/**
- * Displays a pressable element that performs an action in a navigation bar.
  * @class NavigationBarButton
  * @super Component
  * @since 0.1.0
  */
-export class NavigationBarButton extends Component<Refs> {
+export class NavigationBarButton extends Component {
 
 	//--------------------------------------------------------------------------
 	// Properties
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The navigation bar button's label.
 	 * @property label
 	 * @since 0.1.0
 	 */
 	public get label(): Label {
-		return this.refs.label
+		return this.refs.label.get()
 	}
 
 	/**
-	 * The navigation bar button's image.
 	 * @property image
 	 * @since 0.5.0
 	 */
 	public get image(): Image {
-		return this.refs.image
+		return this.refs.image.get()
 	}
 
 	/**
-	 * Whether the state of this navigation bar button is pressed.
 	 * @property pressed
 	 * @since 0.1.0
 	 */
 	@state public pressed: boolean = false
 
 	/**
-	 * Whether the state of this navigation bar button is selected.
 	 * @property selected
 	 * @since 0.1.0
 	 */
 	@state public selected: boolean = false
 
 	/**
-	 * Whether the state of this navigation bar button is disabled.
 	 * @property disabled
 	 * @since 0.1.0
 	 */
@@ -75,15 +60,14 @@ export class NavigationBarButton extends Component<Refs> {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method render
 	 * @since 0.3.0
 	 */
 	public render() {
 		return (
 			<View>
-				<Image for={this} id="image" style="image" />
-				<Label for={this} id="label" style="label" />
+				<Image ref={this.refs.image} id="image" />
+				<Label ref={this.refs.label} id="label" />
 			</View>
 		)
 	}
@@ -93,7 +77,6 @@ export class NavigationBarButton extends Component<Refs> {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method onEvent
 	 * @since 0.7.0
 	 */
@@ -117,9 +100,6 @@ export class NavigationBarButton extends Component<Refs> {
 	 * @hidden
 	 */
 	protected onTouchCancel(event: TouchEvent) {
-
-		super.onTouchCancel(event)
-
 		if (this.pressed && event.targetTouches.length == 0) {
 			this.pressed = false
 		}
@@ -131,9 +111,6 @@ export class NavigationBarButton extends Component<Refs> {
 	 * @hidden
 	 */
 	protected onTouchStart(event: TouchEvent) {
-
-		super.onTouchStart(event)
-
 		if (this.pressed == false) {
 			this.pressed = true
 		}
@@ -145,12 +122,9 @@ export class NavigationBarButton extends Component<Refs> {
 	 * @hidden
 	 */
 	protected onTouchEnd(event: TouchEvent) {
-
-		super.onTouchEnd(event)
-
 		if (this.pressed && event.targetTouches.length == 0) {
 			this.pressed = false
-			this.emitPress(event)
+			this.press(event)
 		}
 	}
 
@@ -159,11 +133,29 @@ export class NavigationBarButton extends Component<Refs> {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method emitPress
+	 * @property refs
 	 * @since 0.2.0
 	 * @hidden
 	 */
-	private emitPress(event: TouchEvent) {
-		event.touches.hits(this) && this.emit('press')
+	private refs = {
+		label: new Reference<Label>(),
+		image: new Reference<Image>()
+	}
+
+	/**
+	 * @method press
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private press(event?: TouchEvent) {
+
+		if (event &&
+			event.hits(this) == false) {
+			return
+		}
+
+		this.emit('press')
+
+		return this
 	}
 }

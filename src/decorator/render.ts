@@ -1,10 +1,5 @@
+import { renderComponent } from '../component/private/Component'
 import { Component } from '../component/Component'
-
-/**
- * @symbol ID
- * @since 0.7.0
- */
-export const ARRAY = Symbol('id')
 
 /**
  * @function decorate
@@ -29,8 +24,8 @@ function decorate(prototype: object, property: string, descriptor: PropertyDescr
 
 	let get = getter && function (this: Component) {
 
-		if (this.built == false) {
-			this.build()
+		if (this.rendered == false) {
+			renderComponent(this)
 		}
 
 		return getter.call(this)
@@ -39,8 +34,8 @@ function decorate(prototype: object, property: string, descriptor: PropertyDescr
 
 	let set = setter && function (this: Component, value: any) {
 
-		if (this.built == false) {
-			this.build()
+		if (this.rendered == false) {
+			renderComponent(this)
 		}
 
 		return setter.call(this, value)
@@ -62,8 +57,7 @@ function decorate(prototype: object, property: string, descriptor: PropertyDescr
 }
 
 /**
- * Delegates the property to the component's view.
- * @function delegate
+ * @decorator render
  * @since 0.7.0
  */
 export function render(prototype: object, property: string, descriptor: PropertyDescriptor | undefined) {

@@ -38,8 +38,7 @@ function decorate(prototype: object, property: string, descriptor: PropertyDescr
 }
 
 /**
- * TODO: Decorator description
- * @function bound
+ * @decorator bound
  * @since 0.1.0
  */
 export function bound(prototype: object, property: string, descriptor: PropertyDescriptor) {

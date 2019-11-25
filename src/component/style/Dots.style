@@ -1,0 +1,21 @@
+Dots {
+	content-direction: horizontal;
+	content-alignment: center;
+	content-disposition: center;
+	height: 8px;
+	touchable: false;
+}
+
+Dot {
+
+	background-color: rgba(255, 255, 255, 0.5);
+	border-radius: 4px;
+	height: 8px;
+	margin-left: 6px;
+	margin-right: 6px;
+	width: 8px;
+
+	@state selected {
+		background-color: rgba(255, 255, 255, 1)
+	}
+}

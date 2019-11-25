@@ -1,23 +1,10 @@
-import { setRef } from '../component/Component'
+import { getComponent } from '../component/private/Component'
+import { renderComponent } from '../component/private/Component'
+import { setComponentSlot } from '../component/private/Component'
 import { Component } from '../component/Component'
-import { setChildren } from '../component/Host'
-import { setProperties } from '../component/Host'
-import { Host } from '../component/Host'
+import { Root } from '../component/Root'
 import { Slot } from '../component/Slot'
-import { Placeholder } from '../placeholder/Placeholder'
 import { View } from '../view/View'
-
-/**
- * @symbol MAIN
- * @since 0.7.0
- */
-export const MAIN = Symbol('main')
-
-/**
- * @symbol CONTAINER
- * @since 0.7.0
- */
-export const CONTAINER = Symbol('container')
 
 /**
  * @function createElement
@@ -26,16 +13,15 @@ export const CONTAINER = Symbol('container')
  */
 export function createElement(Type: any, properties: any, ...children: Array<View>) {
 
-	let view = create(Type, properties)
+	let node = create(Type, properties)
 
-	if (view instanceof Host) {
-		setChildren(view, children)
-		setProperties(view, properties)
-		return view
+	if (node instanceof Root) {
+		node.reset(children)
+		return node
 	}
 
-	if (view instanceof Component) {
-		view.build()
+	if (node instanceof Component) {
+		renderComponent(node)
 	}
 
 	if (properties) {
@@ -43,29 +29,11 @@ export function createElement(Type: any, properties: any, ...children: Array<Vie
 		let style = properties.style as string
 		let state = properties.state as string
 
-		if (style) setStyles(view, ...style.split(' '))
-		if (state) setStates(view, ...state.split(' '))
+		if (style) setStyles(node, ...style.split(' '))
+		if (state) setStates(node, ...state.split(' '))
 
 		delete properties.style
 		delete properties.state
-
-		let container = properties.for as Component
-		if (container) {
-
-			let identifier = properties.id
-			if (identifier) {
-				setRef(container, identifier, view)
-			}
-
-			setContainer(view, container)
-		}
-
-		delete properties.for
-
-		let main = properties.main
-		if (main) {
-			setMain(view, main)
-		}
 
 		for (let key in properties) {
 
@@ -74,13 +42,13 @@ export function createElement(Type: any, properties: any, ...children: Array<Vie
 				continue
 			}
 
-			set(view, key, properties[key])
+			assign(node, key, properties[key])
 		}
 	}
 
-	append(view, children)
+	append(node, children)
 
-	return view
+	return node
 }
 
 /**
@@ -91,10 +59,10 @@ export function createElement(Type: any, properties: any, ...children: Array<Vie
 function create(Type: any, properties: any) {
 
 	if (Type == null) {
-		throw new Error(`
-			JSX Error:
-			Unable to create element, type is null.
-		`)
+		throw new Error(
+			`JSX error: ` +
+			`Unable to create element, type is null.`
+		)
 	}
 
 	if (properties == null ||
@@ -151,56 +119,14 @@ function append(view: any, children: Array<any>) {
 			 * method from its container.
 			 */
 
-			let container = getContainer(node)
-			if (container) {
-				container.defineSlot(node, view, getMain(view))
-				continue
+			let component = getComponent()
+			if (component) {
+				setComponentSlot(component, node)
 			}
-		}
-
-		if (node instanceof Placeholder) {
-			node.enter(view, view.children.length)
-			continue
 		}
 
 		view.append(node)
 	}
-}
-
-/**
- * @function setMain
- * @since 0.7.0
- * @hidden
- */
-function setMain(slot: any, main: boolean) {
-	slot[MAIN] = main
-}
-
-/**
- * @function getMain
- * @since 0.7.0
- * @hidden
- */
-function getMain(slot: any) {
-	return slot[MAIN]
-}
-
-/**
- * @function setContainer
- * @since 0.7.0
- * @hidden
- */
-function setContainer(view: any, container: Component) {
-	view[CONTAINER] = container
-}
-
-/**
- * @function getContainer
- * @since 0.7.0
- * @hidden
- */
-function getContainer(view: any): Component | null {
-	return view[CONTAINER]
 }
 
 /**
@@ -209,7 +135,7 @@ function getContainer(view: any): Component | null {
  * @hidden
  */
 function setStyles(view: View, ...styles: Array<string>) {
-	for (let style of styles) view.setStyle(style)
+	for (let style of styles) view.styles.append(style)
 }
 
 /**
@@ -218,7 +144,7 @@ function setStyles(view: View, ...styles: Array<string>) {
  * @hidden
  */
 function setStates(view: View, ...states: Array<string>) {
-	for (let state of states) view.setState(state)
+	for (let state of states) view.states.append(state)
 }
 
 /**
@@ -226,7 +152,7 @@ function setStates(view: View, ...states: Array<string>) {
  * @since 0.4.0
  * @hidden
  */
-function set(view: any, key: string, value: any) {
+function assign(view: any, key: string, value: any) {
 
 	let type = typeof value
 

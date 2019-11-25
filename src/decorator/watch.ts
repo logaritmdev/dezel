@@ -39,8 +39,7 @@ function decorate(prototype: object, property: string) {
 }
 
 /**
- * TODO: Decorator description
- * @function watch
+ * @decorator watch
  * @since 0.1.0
  */
 export function watch(prototype: object, property: string) {

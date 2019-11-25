@@ -4,17 +4,6 @@ import { Image } from '../graphic/Image'
 import { bridge } from '../native/bridge'
 import { native } from '../native/native'
 
-/**
- * @interface AlertButtonOptions
- * @since 0.1.0
- */
-export interface AlertButtonOptions {
-	id?: string
-	label?: string
-	image?: string | Image
-	style?: 'normal' | 'cancel' | 'destructive'
-}
-
 @bridge('dezel.dialog.AlertButton')
 
 /**
@@ -79,7 +68,6 @@ export class AlertButton extends Emitter {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method onEvent
 	 * @since 0.7.0
 	 */
@@ -116,4 +104,15 @@ export class AlertButton extends Emitter {
 	private nativeOnPress() {
 		this.emit('press')
 	}
+}
+
+/**
+ * @interface AlertButtonOptions
+ * @since 0.1.0
+ */
+export interface AlertButtonOptions {
+	id?: string
+	label?: string
+	image?: string | Image
+	style?: 'normal' | 'cancel' | 'destructive'
 }

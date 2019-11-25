@@ -1,5 +1,4 @@
 /**
- * A Point2D object represents a point in a 2D space.
  * @class Point2D
  * @since 0.1.0
  */
@@ -10,14 +9,12 @@ export class Point2D {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The value of the point on the X axis.
 	 * @property x
 	 * @since 0.1.0
 	 */
 	public x: number = 0
 
 	/**
-	 * The value of the point on the Y axis.
 	 * @property y
 	 * @since 0.1.0
 	 */

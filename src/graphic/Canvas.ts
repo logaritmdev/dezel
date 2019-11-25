@@ -4,7 +4,6 @@ import { native } from '../native/native'
 @bridge('dezel.graphic.Canvas')
 
 /**
- * Manages a drawable canvas.
  * @class Image
  * @since 0.4.0
  */

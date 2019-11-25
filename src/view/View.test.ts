@@ -300,11 +300,11 @@ describe('View', () => {
 	})
 
 	it('should have a valid initial expand property value', () => {
-		expect(view.expand).toBe(0)
+		expect(view.expandFactor).toBe(0)
 	})
 
 	it('should have a valid initial shrink property value', () => {
-		expect(view.shrink).toBe(0)
+		expect(view.shrinkFactor).toBe(0)
 	})
 
 	it('should have a valid initial contentTop property value', () => {
@@ -343,8 +343,8 @@ describe('View', () => {
 		expect(view.contentDirection).toBe('vertical')
 	})
 
-	it('should have a valid initial contentLocation property value', () => {
-		expect(view.contentLocation).toBe('start')
+	it('should have a valid initial contentDisposition property value', () => {
+		expect(view.contentDisposition).toBe('start')
 	})
 
 	it('should have a valid initial contentAlignment property value', () => {
@@ -363,8 +363,8 @@ describe('View', () => {
 		expect(view.overscroll).toBe('auto')
 	})
 
-	it('should have a valid initial momentum property value', () => {
-		expect(view.momentum).toBe(true)
+	it('should have a valid initial scrollMomentum property value', () => {
+		expect(view.scrollMomentum).toBe(true)
 	})
 
 	it('should have a valid initial scrollTop property value', () => {
@@ -719,40 +719,6 @@ describe('View', () => {
 
 	})
 
-	it('should insert a child view after another', () => {
-
-		let v1 = new View()
-		let v2 = new View()
-		let v3 = new View()
-
-		view.append(v1)
-		view.append(v2)
-
-		view.insertAfter(v3, v1)
-
-		expect(view.children[0]).toBe(v1)
-		expect(view.children[1]).toBe(v3)
-		expect(view.children[2]).toBe(v2)
-
-	})
-
-	it('should insert a child view before another', () => {
-
-		let v1 = new View()
-		let v2 = new View()
-		let v3 = new View()
-
-		view.append(v1)
-		view.append(v2)
-
-		view.insertBefore(v3, v1)
-
-		expect(view.children[0]).toBe(v3)
-		expect(view.children[1]).toBe(v1)
-		expect(view.children[2]).toBe(v2)
-
-	})
-
 	it('should set the child view parent when inserting', () => {
 
 		let root = new View()
@@ -944,25 +910,25 @@ describe('View', () => {
 
 	it('should set a style', () => {
 
-		view.setStyle('style1', true)
-		view.setStyle('style1', false)
-		view.setStyle('style2', true)
+		view.styles.append('style1')
+		view.styles.remove('style1')
+		view.styles.append('style2')
 
-		expect(view.hasStyle('style1')).toBe(false)
-		expect(view.hasStyle('style2')).toBe(true)
-		expect(view.hasStyle('style3')).toBe(false)
+		expect(view.styles.has('style1')).toBe(false)
+		expect(view.styles.has('style2')).toBe(true)
+		expect(view.styles.has('style3')).toBe(false)
 
 	})
 
 	it('should set a state', () => {
 
-		view.setState('state1', true)
-		view.setState('state1', false)
-		view.setState('state2', true)
+		view.states.append('state1')
+		view.states.remove('state1')
+		view.states.append('state2')
 
-		expect(view.hasState('state1')).toBe(false)
-		expect(view.hasState('state2')).toBe(true)
-		expect(view.hasState('state3')).toBe(false)
+		expect(view.states.has('state1')).toBe(false)
+		expect(view.states.has('state2')).toBe(true)
+		expect(view.states.has('state3')).toBe(false)
 
 	})
 
@@ -984,16 +950,16 @@ describe('View', () => {
 
 	})
 
-	it('should call the native view measure method', () => {
+	// it('should call the native view measure method', () => {
 
-		native(view).measure = jasmine.createSpy()
-		view.measure()
+	// 	native(view).measure = jasmine.createSpy()
+	// 	view.measure()
 
-		expect(native(view).measure).toHaveBeenCalled()
+	// 	expect(native(view).measure).toHaveBeenCalled()
 
-	})
+	// })
 
-	it('should call the native view resolve method', () => {
+	it('should call the native view resolve  method', () => {
 
 		native(view).resolve = jasmine.createSpy()
 		view.resolve()
@@ -1020,7 +986,6 @@ describe('View', () => {
 		v.onTouchMove = jasmine.createSpy()
 		v.onTouchEnd = jasmine.createSpy()
 		v.onDestroy = jasmine.createSpy()
-		v.onBeforeLayout = jasmine.createSpy()
 		v.onLayout = jasmine.createSpy()
 		v.onRedraw = jasmine.createSpy()
 		v.onInsert = jasmine.createSpy()
@@ -1043,7 +1008,6 @@ describe('View', () => {
 		let touchCancel = new TouchEvent('touchcancel', {
 			propagable: true,
 			cancelable: false,
-			dispatcher: view,
 			touches: new TouchList([]),
 			activeTouches: new TouchList([]),
 			targetTouches: new TouchList([]),
@@ -1052,7 +1016,6 @@ describe('View', () => {
 		let touchStart = new TouchEvent('touchstart', {
 			propagable: true,
 			cancelable: true,
-			dispatcher: view,
 			touches: new TouchList([]),
 			activeTouches: new TouchList([]),
 			targetTouches: new TouchList([]),
@@ -1061,7 +1024,6 @@ describe('View', () => {
 		let touchMove = new TouchEvent('touchmove', {
 			propagable: true,
 			cancelable: true,
-			dispatcher: view,
 			touches: new TouchList([]),
 			activeTouches: new TouchList([]),
 			targetTouches: new TouchList([]),
@@ -1070,7 +1032,6 @@ describe('View', () => {
 		let touchEnd = new TouchEvent('touchend', {
 			propagable: true,
 			cancelable: false,
-			dispatcher: view,
 			touches: new TouchList([]),
 			activeTouches: new TouchList([]),
 			targetTouches: new TouchList([]),
@@ -1105,7 +1066,6 @@ describe('View', () => {
 		v.emit('zoom')
 
 		expect(v.onDestroy).toHaveBeenCalled()
-		expect(v.onBeforeLayout).toHaveBeenCalled()
 		expect(v.onLayout).toHaveBeenCalled()
 		expect(v.onRedraw).toHaveBeenCalledWith(canvas)
 		expect(v.onInsert).toHaveBeenCalledWith(view, 1)

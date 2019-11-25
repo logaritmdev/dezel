@@ -4,8 +4,7 @@ import { native } from '../native/native'
 @bridge('dezel.locale.Locale')
 
 /**
- * Contains information about the current locale.
- * @class Storage
+ * @class Locale
  * @since 0.4.0
  */
 export class Locale {
@@ -15,7 +14,6 @@ export class Locale {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The current locale.
 	 * @property current
 	 * @since 0.7.0
 	 */
@@ -29,46 +27,38 @@ export class Locale {
 	}
 
 	//--------------------------------------------------------------------------
-	// Methods
+	// Properties
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The current locale language.
 	 * @property language
 	 * @since 0.4.0
 	 */
 	@native public language!: string
 
 	/**
-	 * The current locale region.
 	 * @property region
 	 * @since 0.4.0
 	 */
 	@native public region!: string
 
 	/**
-	 * Whether the local is left to right.
 	 * @property ltr
 	 * @since 0.7.0
 	 */
 	@native public ltr!: boolean
 
 	/**
-	 * Whether the local is right to left.
 	 * @property rtl
 	 * @since 0.7.0
 	 */
 	@native public rtl!: boolean
 
-	//--------------------------------------------------------------------------
-	// Native API
-	//--------------------------------------------------------------------------
-
 }
 
 /**
- * The current locale.
- * @var current
+ * @const current
  * @since 0.7.0
+ * @hidden
  */
 let current: Locale | null = null

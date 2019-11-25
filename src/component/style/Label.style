@@ -1,0 +1,4 @@
+Label {
+	text-location: middle;
+	max-max-lines: 1;
+}

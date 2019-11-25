@@ -1,12 +1,12 @@
 import { state } from '../decorator/state'
+import { TouchEvent } from '../touch/TouchEvent'
 import { View } from '../view/View'
 import { Component } from './Component'
-import './ListItem.ds'
-import './ListItem.ds.android'
-import './ListItem.ds.ios'
+import './style/ListItem.style'
+import './style/ListItem.style.android'
+import './style/ListItem.style.ios'
 
 /**
- * The base class for items displayed in a list.
  * @class ListItem
  * @super Component
  * @since 0.1.0
@@ -18,43 +18,92 @@ export abstract class ListItem extends Component {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Whether the state of this item is pressed.
+	 * @property selectable
+	 * @since 0.4.0
+	 */
+	public selectable: boolean = true
+
+	/**
 	 * @property pressed
 	 * @since 0.1.0
 	 */
 	@state public pressed: boolean = false
 
 	/**
-	 * Whether the state of this item is selected.
 	 * @property selected
 	 * @since 0.1.0
 	 */
 	@state public selected: boolean = false
 
 	/**
-	 * Whether the state of this item is disabled.
 	 * @property disabled
 	 * @since 0.1.0
 	 */
 	@state public disabled: boolean = false
-
-	/**
-	 * Whether this item is selectable.
-	 * @property selectable
-	 * @since 0.4.0
-	 */
-	public selectable: boolean = true
 
 	//--------------------------------------------------------------------------
 	// Methods
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method render
 	 * @since 0.7.0
 	 */
 	public render() {
 		return null
+	}
+
+	//--------------------------------------------------------------------------
+	// Events
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method onTouchCancel
+	 * @since 0.1.0
+	 */
+	protected onTouchCancel(event: TouchEvent) {
+		if (this.pressed && event.targetTouches.length == 0) {
+			this.pressed = false
+		}
+	}
+
+	/**
+	 * @method onTouchStart
+	 * @since 0.1.0
+	 */
+	protected onTouchStart(event: TouchEvent) {
+		if (this.pressed == false && this.disabled == false && this.selectable) {
+			this.pressed = true
+		}
+	}
+
+	/**
+	 * @method onTouchEnd
+	 * @since 0.1.0
+	 */
+	protected onTouchEnd(event: TouchEvent) {
+		if (this.pressed && event.targetTouches.length == 0) {
+			this.pressed = false
+			this.press(event)
+		}
+	}
+
+	//--------------------------------------------------------------------------
+	// Private API
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method press
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private press(event?: TouchEvent) {
+
+		if (event &&
+			event.hits(this) == false) {
+			return
+		}
+
+		this.emit('press')
 	}
 }

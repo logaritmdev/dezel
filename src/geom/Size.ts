@@ -25,7 +25,6 @@ export class Size {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Initializes the size.
 	 * @constructor
 	 * @since 0.1.0
 	 */

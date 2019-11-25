@@ -1,12 +1,11 @@
 import { SpinnerView } from '../view/SpinnerView'
-import './Spinner.ds'
-import './Spinner.ds.android'
-import './Spinner.ds.ios'
+import './style/Spinner.style'
+import './style/Spinner.style.android'
+import './style/Spinner.style.ios'
 
 /**
- * Displays a spinner.
  * @class Spinner
- * @super Component
+ * @super SpinnerView
  * @since 0.4.0
  */
 export class Spinner extends SpinnerView {

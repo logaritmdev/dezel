@@ -3,36 +3,13 @@ import { Emitter } from '../event/Emitter'
 import { Event } from '../event/Event'
 import { bridge } from '../native/bridge'
 import { native } from '../native/native'
+import { $presented } from './symbol/Alert'
+import { $selection } from './symbol/Alert'
 import { AlertButton } from './AlertButton'
-
-/**
- * @symbol SELECTION
- * @since 0.4.0
- */
-export const SELECTION = Symbol('button')
-
-/**
- * @symbol PRESENTED
- * @since 0.4.0
- */
-export const PRESENTED = Symbol('presented')
-
-/**
- * @interface AlertOptions
- * @super Emitter
- * @since 0.1.0
- */
-export interface AlertOptions {
-	style?: 'alert' | 'sheet'
-	title?: string
-	message?: string
-	buttons?: Array<AlertButton>
-}
 
 @bridge('dezel.dialog.Alert')
 
 /**
- * Displays an alert.
  * @class Alert
  * @super Emitter
  * @since 0.1.0
@@ -44,40 +21,35 @@ export class Alert extends Emitter {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The alert's style.
 	 * @property style
 	 * @since 0.1.0
 	 */
 	public readonly style: 'alert' | 'sheet'
 
 	/**
-	 * The alert's title.
 	 * @property title
 	 * @since 0.1.0
 	 */
 	public readonly title: string
 
 	/**
-	 * The alert's message.
 	 * @property message
 	 * @since 0.1.0
 	 */
 	public readonly message: string
 
 	/**
-	 * The alert's buttons.
 	 * @property buttons
 	 * @since 0.1.0
 	 */
 	public readonly buttons: Array<AlertButton>
 
 	/**
-	 * Whether the alert is presented.
 	 * @property presented
 	 * @since 0.4.0
 	 */
 	public get presented(): boolean {
-		return this[PRESENTED]
+		return this[$presented]
 	}
 
 	//--------------------------------------------------------------------------
@@ -85,7 +57,6 @@ export class Alert extends Emitter {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Initializes the alert.
 	 * @constructor
 	 * @since 0.1.0
 	 */
@@ -102,23 +73,16 @@ export class Alert extends Emitter {
 	}
 
 	/**
-	 * Presents the alert.
 	 * @method present
 	 * @since 0.1.0
 	 */
 	public present() {
 
 		if (this.presented) {
-
-			console.error(`
-				Alert error:
-				This alert is already presented.
-			`)
-
 			return this
 		}
 
-		this[SELECTION] = 'ok'
+		this[$selection] = 'ok'
 
 		native(this).present(
 			this.style,
@@ -131,19 +95,12 @@ export class Alert extends Emitter {
 	}
 
 	/**
-	 * Dismisses the alert.
 	 * @method dismiss
 	 * @since 0.1.0
 	 */
 	public dismiss() {
 
 		if (this.presented) {
-
-			console.error(`
-				Alert error:
-				This alert is not presented.
-			`)
-
 			return this
 		}
 
@@ -153,19 +110,12 @@ export class Alert extends Emitter {
 	}
 
 	/**
-	 * Presents the alert.
 	 * @method present
 	 * @since 0.3.0
 	 */
 	public prompt(): Promise<string> {
 
 		if (this.presented) {
-
-			console.error(`
-				Alert error:
-				This alert is already presented.
-			`)
-
 			return Promise.resolve('')
 		}
 
@@ -179,7 +129,6 @@ export class Alert extends Emitter {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method onEvent
 	 * @since 0.7.0
 	 */
@@ -200,7 +149,6 @@ export class Alert extends Emitter {
 	}
 
 	/**
-	 * Called when the alert is presented.
 	 * @method onPresent
 	 * @since 0.1.0
 	 */
@@ -209,7 +157,6 @@ export class Alert extends Emitter {
 	}
 
 	/**
-	 * Called when the alert is dismissed.
 	 * @method onDismiss
 	 * @since 0.1.0
 	 */
@@ -222,18 +169,18 @@ export class Alert extends Emitter {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @property [PRESENTED]
+	 * @property $presented
 	 * @since 0.3.0
 	 * @hidden
 	 */
-	private [PRESENTED]: boolean = false
+	private [$presented]: boolean = false
 
 	/**
-	 * @property [SELECTION]
+	 * @property $selection
 	 * @since 0.4.0
 	 * @hidden
 	 */
-	private [SELECTION]: string = ''
+	private [$selection]: string = ''
 
 	/**
 	 * @method onButtonPress
@@ -241,7 +188,7 @@ export class Alert extends Emitter {
 	 * @hidden
 	 */
 	@bound private onButtonPress(event: Event) {
-		this[SELECTION] = (event.sender as AlertButton).id
+		this[$selection] = (event.sender as AlertButton).id
 	}
 
 	//--------------------------------------------------------------------------
@@ -254,8 +201,8 @@ export class Alert extends Emitter {
 	 * @hidden
 	 */
 	private nativeOnPresent() {
-		this[PRESENTED] = true
-		this.emit('present')
+		this[$presented] = true
+		this.emit<AlertPresentEvent>('present')
 	}
 
 	/**
@@ -264,9 +211,28 @@ export class Alert extends Emitter {
 	 * @hidden
 	 */
 	private nativeOnDismiss() {
-		this[PRESENTED] = false
-		this.emit<AlertDismissEvent>('dismiss', { data: { button: this[SELECTION] } })
+		this[$presented] = false
+		this.emit<AlertDismissEvent>('dismiss', { data: { button: this[$selection] } })
 	}
+}
+
+/**
+ * @interface AlertOptions
+ * @since 0.1.0
+ */
+export interface AlertOptions {
+	style?: 'alert' | 'sheet'
+	title?: string
+	message?: string
+	buttons?: Array<AlertButton>
+}
+
+/**
+ * @type AlertPresentEvent
+ * @since 0.3.0
+ */
+export type AlertPresentEvent = {
+
 }
 
 /**

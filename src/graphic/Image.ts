@@ -5,6 +5,8 @@ import { native } from '../native/native'
 @bridge('dezel.graphic.Image')
 
 /**
+ * TODO
+ * Merge in componetn IMage
  * Manages an image's data.
  * @class Image
  * @super Emitter

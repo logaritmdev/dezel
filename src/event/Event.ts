@@ -1,43 +1,17 @@
+import { $cancelable } from './symbol/Event'
+import { $canceled } from './symbol/Event'
+import { $capturable } from './symbol/Event'
+import { $captured } from './symbol/Event'
+import { $data } from './symbol/Event'
+import { $propagable } from './symbol/Event'
+import { $sender } from './symbol/Event'
+import { $stoppable } from './symbol/Event'
+import { $stopped } from './symbol/Event'
+import { $target } from './symbol/Event'
+import { $type } from './symbol/Event'
 import { Emitter } from './Emitter'
 
 /**
- * @symbol SENDER
- * @since 0.1.0
- */
-export const SENDER = Symbol('sender')
-
-/**
- * @symbol TARGET
- * @since 0.1.0
- */
-export const TARGET = Symbol('target')
-
-/**
- * @symbol CANCELED
- * @since 0.1.0
- */
-export const CANCELED = Symbol('canceled')
-
-/**
- * The event data interface.
- * @interface EventListener
- * @since 0.1.0
- */
-export type EventListener = (event: any) => any | void
-
-/**
- * The event options interface.
- * @interface EventOptions
- * @since 0.1.0
- */
-export interface EventOptions<T extends any = any> {
-	propagable?: boolean
-	cancelable?: boolean
-	data?: T
-}
-
-/**
- * An event being dispatched.
  * @class Event
  * @since 0.1.0
  */
@@ -48,120 +22,176 @@ export class Event<T extends any = any> {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The event's type.
 	 * @property type
 	 * @since 0.1.0
 	 */
-	public readonly type: string
+	public get type(): string {
+		return this[$type]
+	}
 
 	/**
-	 * Whether this event is propagable.
 	 * @property propagable
 	 * @since 0.1.0
 	 */
-	public readonly propagable: boolean
+	public get propagable(): boolean {
+		return this[$propagable]
+	}
 
 	/**
-	 * Whether this event is cancelable.
 	 * @property cancelable
 	 * @since 0.1.0
 	 */
-	public readonly cancelable: boolean
-
-	/**
-	 * The initial emitter of the event.
-	 * @property sender
-	 * @since 0.1.0
-	 */
-	public get sender(): Emitter {
-		return this[SENDER]!
+	public get cancelable(): boolean {
+		return this[$cancelable]
 	}
 
 	/**
-	 * The current emitter of the event.
-	 * @property target
-	 * @since 0.1.0
+	 * @property capturable
+	 * @since 0.7.0
 	 */
-	public get target(): Emitter {
-		return this[TARGET]!
+	public get capturable(): boolean {
+		return this[$capturable]
 	}
 
 	/**
-	 * Whether this event has been stopped.
+	 * @property stoppable
+	 * @since 0.1.0
+	 */
+	public get stoppable(): boolean {
+		return this[$stoppable]
+	}
+
+	/**
 	 * @property canceled
 	 * @since 0.1.0
 	 */
 	public get canceled(): boolean {
-		return this[CANCELED]
+		return this[$canceled]
 	}
 
 	/**
-	 * The event's data.
+	 * @property captured
+	 * @since 0.7.0
+	 */
+	public get captured(): boolean {
+		return this[$captured]
+	}
+
+	/**
+	 * @property stopped
+	 * @since 0.7.0
+	 */
+	public get stopped(): boolean {
+		return this[$stopped]
+	}
+
+	/**
+	 * @property target
+	 * @since 0.1.0
+	 */
+	public get target(): Emitter {
+		return this[$target]!
+	}
+
+	/**
+	 * @property sender
+	 * @since 0.1.0
+	 */
+	public get sender(): Emitter {
+		return this[$sender]!
+	}
+
+	/**
 	 * @property data
 	 * @since 0.1.0
 	 */
-	public readonly data: T
+	public get data(): T {
+		return this[$data]
+	}
 
 	//--------------------------------------------------------------------------
 	// Methods
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Initializes the event.
 	 * @constructor
 	 * @since 0.1.0
 	 */
 	constructor(type: string, options: EventOptions<T> = {}) {
-
-		type = type.toLowerCase()
-
-		this.type = type
-		this.data = options.data || {} as any
-		this.propagable = options.propagable || false
-		this.cancelable = options.cancelable || false
-
-		this[CANCELED] = false
+		this[$type] = type.toLowerCase()
+		this[$data] = options.data || {} as any
+		this[$propagable] = options.propagable || false
+		this[$cancelable] = options.cancelable || false
+		this[$capturable] = options.capturable || false
+		this[$stoppable] = options.stoppable || true
 	}
 
 	/**
-	 * Cancels this event.
 	 * @method cancel
 	 * @since 0.1.0
 	 */
 	public cancel() {
 
+		if (this.canceled) {
+			return this
+		}
+
 		if (this.cancelable == false) {
 			throw new Error(
 				'Event error: ' +
-				'This event cannot be stopped because it is not cancelable.'
+				'This event cannot be canceled because it is not cancelable.'
 			)
 		}
 
-		this[CANCELED] = true
+		this[$canceled] = true
 
 		return this
 	}
 
-	//--------------------------------------------------------------------------
-	// Internal API
-	//--------------------------------------------------------------------------
-
 	/**
-	 * @method setSender
+	 * @method capture
 	 * @since 0.1.0
-	 * @hidden
 	 */
-	public setSender(sender: Emitter) {
-		this[SENDER] = sender
+	public capture() {
+
+		if (this.captured) {
+			return this
+		}
+
+		if (this.capturable == false) {
+			throw new Error(
+				'Event error: ' +
+				'This event cannot be captured because it is not capturable.'
+			)
+		}
+
+		this[$captured] = true
+
+		this.retarget()
+
+		return this
 	}
 
 	/**
-	 * @method setTarget
-	 * @since 0.1.0
-	 * @hidden
+	 * @method stop
+	 * @since 0.7.0
 	 */
-	public setTarget(target: Emitter) {
-		this[TARGET] = target
+	public stop() {
+
+		if (this.stopped) {
+			return this
+		}
+
+		if (this.stoppable == false) {
+			throw new Error(
+				'Event error: ' +
+				'This event cannot be stopped because it is not stoppable.'
+			)
+		}
+
+		this[$stopped] = true
+
+		return this
 	}
 
 	//--------------------------------------------------------------------------
@@ -169,23 +199,107 @@ export class Event<T extends any = any> {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @property [SENDER]
-	 * @since 0.1.0
+	 * @property $type
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private [SENDER]: Emitter | null = null
+	private [$type]: string
 
 	/**
-	 * @property [TARGET]
-	 * @since 0.1.0
+	 * @property $propagable
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private [TARGET]: Emitter | null = null
+	private [$propagable]: boolean = false
 
 	/**
-	 * @property [CANCELED]
-	 * @since 0.1.0
+	 * @property $cancelable
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private [CANCELED]: boolean
+	private [$cancelable]: boolean = false
+
+	/**
+	 * @property $capturable
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private [$capturable]: boolean = false
+
+	/**
+	 * @property $stoppable
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private [$stoppable]: boolean = false
+
+	/**
+	 * @property $canceled
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private [$canceled]: boolean = false
+
+	/**
+	 * @property $captured
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private [$captured]: boolean = false
+
+	/**
+	 * @property $stopped
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private [$stopped]: boolean = false
+
+	/**
+	 * @property $target
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private [$target]: Emitter | null = null
+
+	/**
+	 * @property $sender
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private [$sender]: Emitter | null = null
+
+	/**
+	 * @property $data
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private [$data]: T
+
+	/**
+	 * @method retarget
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	protected retarget() {
+		this[$target] = this[$sender]
+		return this
+	}
 }
+
+/**
+ * @interface EventOptions
+ * @since 0.1.0
+ */
+export interface EventOptions<T extends any = any> {
+	propagable?: boolean
+	cancelable?: boolean
+	capturable?: boolean
+	stoppable?: boolean
+	data?: T
+}
+
+/**
+ * @interface EventListener
+ * @since 0.1.0
+ */
+export type EventListener = (event: any) => any | void

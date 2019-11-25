@@ -1,55 +1,49 @@
 import { Application } from '../application/Application'
 import { native } from '../native/native'
+import { $classes } from './symbol/Dezel'
+import { $objects } from './symbol/Dezel'
 
 /**
- * TODO
  * @class Dezel
  * @since 0.7.0
  */
 export class Dezel {
 
 	/**
-	 * Imports a native class.
 	 * @method importClass
 	 * @since 0.7.0
 	 */
-	public static importClass(uid: string, init: boolean = false): any {
+	public static importClass(name: string): any {
 
-		let Class = this.classes[uid]
-		if (Class == null) {
-			Class = this.classes[uid] = importClass(uid)
+		let value = this[$classes][name]
+		if (value == null) {
+			value = this[$classes][name] = importClass(name)
 		}
 
-		return init ? new Class : Class
+		return value
 	}
 
 	/**
-	 * Imports a native object.
 	 * @method importObject
 	 * @since 0.7.0
 	 */
-	public static importObject(uid: string) {
+	public static importObject(name: string) {
 
-		let object = this.objects[uid]
-		if (object == null) {
-			object = this.objects[uid] = importObject(uid)
+		let value = this[$objects][name]
+		if (value == null) {
+			value = this[$objects][name] = importObject(name)
 		}
 
-		return object
+		return value
 	}
 
 	/**
-	 * Register the main application.
 	 * @method registerApplication
 	 * @since 0.7.0
 	 */
-	public static registerApplication(application: Application, uid: string = '') {
-
-		if (uid == '') {
-			uid = 'default'
-		}
-
-		registerApplication(native(application), uid || 'dezel.application.main')
+	public static registerApplication(application: Application) {
+		registerApplication(native(application))
+		return this
 	}
 
 	//--------------------------------------------------------------------------
@@ -57,16 +51,44 @@ export class Dezel {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @property classes
+	 * @property $classes
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private static classes: any = {}
+	private static [$classes]: any = {}
 
 	/**
-	 * @property objects
+	 * @property $objects
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private static objects: any = {}
+	private static [$objects]: any = {}
 }
+
+/**
+ * @const __util__
+ * @since 0.7.0
+ * @hidden
+ */
+declare const __util__: any
+
+/**
+ * @const importClass
+ * @since 0.7.0
+ * @hidden
+ */
+const importClass = __util__.importClass.bind(__util__)
+
+/**
+ * @const importObject
+ * @since 0.7.0
+ * @hidden
+ */
+const importObject = __util__.importObject.bind(__util__)
+
+/**
+ * @const registerApplication
+ * @since 0.7.0
+ * @hidden
+ */
+const registerApplication = __util__.registerApplication.bind(__util__)

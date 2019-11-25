@@ -4,7 +4,6 @@ import { native } from '../native/native'
 @bridge('dezel.device.Device')
 
 /**
- * Contains informations regarding the current device.
  * @class Device
  * @since 0.4.0
  */
@@ -15,7 +14,6 @@ export class Device {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The current device.
 	 * @property current
 	 * @since 0.7.0
 	 */
@@ -33,7 +31,6 @@ export class Device {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Returns the device's name.
 	 * @property name
 	 * @since 0.4.0
 	 */
@@ -46,7 +43,6 @@ export class Device {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Plays a device sound.
 	 * @method sound
 	 * @since 0.4.0
 	 */
@@ -56,7 +52,6 @@ export class Device {
 	}
 
 	/**
-	 * Vibrates the device.
 	 * @method vibrate
 	 * @since 0.4.0
 	 */
@@ -68,7 +63,7 @@ export class Device {
 
 /**
  * The current device.
- * @var current
+ * @const current
  * @since 0.7.0
  */
 let current: Device | null = null

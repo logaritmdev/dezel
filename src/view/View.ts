@@ -1,66 +1,23 @@
+import { setEmitterResponder } from '../event/private/Emitter'
 import { Emitter } from '../event/Emitter'
 import { Event } from '../event/Event'
-import { GestureManager } from '../gesture/GestureManager'
 import { Canvas } from '../graphic/Canvas'
 import { Image } from '../graphic/Image'
 import { bridge } from '../native/bridge'
 import { native } from '../native/native'
-import { Location } from '../placeholder/Placeholder'
-import { Placeholder } from '../placeholder/Placeholder'
 import { TouchEvent } from '../touch/TouchEvent'
+import { $children } from './symbol/View'
+import { $gestures } from './symbol/View'
+import { $states } from './symbol/View'
+import { $styles } from './symbol/View'
+import { Placeholder } from './Placeholder'
+import { StateList } from './StateList'
+import { StyleList } from './StyleList'
 import { Window } from './Window'
-
-/**
- * @symbol ID
- * @since 0.7.0
- */
-export const ID = Symbol('id')
-
-/**
- * @symbol MOUNTED
- * @since 0.7.0
- */
-export const MOUNTED = Symbol('mounted')
-
-/**
- * @symbol CHILDREN
- * @since 0.1.0
- */
-export const CHILDREN = Symbol('children')
-
-/**
- * @symbol GESTURES
- * @since 0.4.0
- */
-export const GESTURES = Symbol('gestures')
-
-/**
- * @const DEFAULT_DURATION
- * @since 0.4.0
- */
-export const DEFAULT_DURATION = 350
-
-/**
- * @const DEFAULT_EQUATION
- * @since 0.4.0
- */
-export const DEFAULT_EQUATION = [0.25, 0.1, 0.25, 1.0]
-
-/**
- * View animations options.
- * @interface ViewTransitionOptions
- * @since 0.1.0
- */
-export interface ViewTransitionOptions {
-	equation?: string | Array<number>
-	duration?: string | number
-	delay?: number
-}
 
 @bridge('dezel.view.View')
 
 /**
- * Displays a rectangular element drawn onto the screen.
  * @class View
  * @super Emitter
  * @since 0.1.0
@@ -72,7 +29,6 @@ export class View extends Emitter {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Creates a transition for all properties and view updated in the callback.
 	 * @method transition
 	 * @since 0.1.0
 	 */
@@ -82,8 +38,8 @@ export class View extends Emitter {
 
 		let animate: Function
 		let options: ViewTransitionOptions = {
-			duration: DEFAULT_DURATION,
-			equation: DEFAULT_EQUATION,
+			duration: AnimationDefaultDuration,
+			equation: AnimationDefaultEquation,
 			delay: 0
 		}
 
@@ -100,8 +56,8 @@ export class View extends Emitter {
 
 		}
 
-		let duration = DEFAULT_DURATION
-		let equation = DEFAULT_EQUATION
+		let duration = AnimationDefaultDuration
+		let equation = AnimationDefaultEquation
 		let delay = options.delay || 0
 
 		if (typeof options.duration == 'string') {
@@ -110,11 +66,11 @@ export class View extends Emitter {
 			if (value) {
 				duration = value
 			} else {
-				duration = DEFAULT_DURATION
+				duration = AnimationDefaultDuration
 			}
 
 		} else {
-			duration = options.duration || DEFAULT_DURATION
+			duration = options.duration || AnimationDefaultDuration
 		}
 
 		if (typeof options.equation == 'string') {
@@ -137,7 +93,7 @@ export class View extends Emitter {
 
 				} else {
 
-					equation = DEFAULT_EQUATION
+					equation = AnimationDefaultEquation
 
 				}
 			}
@@ -164,28 +120,22 @@ export class View extends Emitter {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Returns the view's identifier.
-	 * @property id
-	 * @since 0.1.0
+	 * @property styles
+	 * @since 0.7.0
 	 */
-	public get id(): string {
-		return this[ID]
+	public get styles(): StyleList {
+		return this[$styles]
 	}
 
 	/**
-	 * Assigns the view's indentifier.
-	 * @property id
-	 * @since 0.1.0
+	 * @property states
+	 * @since 0.7.0
 	 */
-	public set id(value: string) {
-		if (this[ID] != value) {
-			this[ID] = value
-			native(this).id = value
-		}
+	public get states(): StateList {
+		return this[$states]
 	}
 
 	/**
-	 * The view's window.
 	 * @property window
 	 * @since 0.1.0
 	 */
@@ -194,7 +144,6 @@ export class View extends Emitter {
 	}
 
 	/**
-	 * The view's parent view.
 	 * @property parent
 	 * @since 0.1.0
 	 */
@@ -203,977 +152,845 @@ export class View extends Emitter {
 	}
 
 	/**
-	 * The view's children.
 	 * @property children
 	 * @since 0.1.0
 	 */
 	public get children(): ReadonlyArray<View> {
-		return this[CHILDREN]
+		return this[$children]
 	}
 
 	/**
-	 * The view's gestures.
 	 * @property gestures
 	 * @since 0.7.0
-	 */
+
 	public get gestures(): GestureManager {
-		return this[GESTURES]
+		return this[$gestures]
 	}
+	*/
 
 	/**
-	 * The view's background color.
+	 * @property id
+	 * @since 0.1.0
+	 */
+	@native public id!: string
+
+	/**
 	 * @property backgroundColor
 	 * @since 0.1.0
 	 */
 	@native public backgroundColor!: string
 
 	/**
-	 * The view's background image.
 	 * @property backgroundImage
 	 * @since 0.1.0
 	 */
 	@native public backgroundImage!: Image | string | null
 
 	/**
-	 * The view's background image container fitting.
 	 * @property backgroundImageFit
 	 * @since 0.4.0
 	 */
 	@native public backgroundImageFit!: 'fit' | 'fill' | 'none'
 
 	/**
-	 * The view's background image vertical point from which it will be positioned.
 	 * @property backgroundImageAnchorTop
 	 * @since 0.1.0
 	 */
 	@native public backgroundImageAnchorTop!: 'top' | 'center' | 'bottom' | number | string
 
 	/**
-	 * The view's background image horizontal point from which it will be positioned.
 	 * @property backgroundImageAnchorLeft
 	 * @since 0.1.0
 	 */
 	@native public backgroundImageAnchorLeft!: 'left' | 'center' | 'right' | number | string
 
 	/**
-	 * The view's background image top position.
 	 * @property backgroundImageTop
 	 * @since 0.1.0
 	 */
 	@native public backgroundImageTop!: number | string
 
 	/**
-	 * The view's background image left position.
 	 * @property backgroundImageLeft
 	 * @since 0.1.0
 	 */
 	@native public backgroundImageLeft!: number | string
 
 	/**
-	 * The view's background image width;
 	 * @property backgroundImageWidth
 	 * @since 0.1.0
 	 */
 	@native public backgroundImageWidth!: 'auto' | number
 
 	/**
-	 * The view's background image height.
 	 * @property backgroundImageHeight
 	 * @since 0.1.0
 	 */
 	@native public backgroundImageHeight!: 'auto' | number
 
 	/**
-	 * The view's background image tint.
 	 * @property backgroundImageTint
 	 * @since 0.7.0
 	 */
 	@native public backgroundImageTint!: string | 'none'
 
 	/**
-	 * The view's border.
 	 * @property border
 	 * @since 0.2.0
 	 */
 	@native public border!: any
 
 	/**
-	 * The view's border width.
 	 * @property borderWidth
 	 * @since 0.2.0
 	 */
 	@native public borderWidth!: any
 
 	/**
-	 * The view's border color.
 	 * @property borderColor
 	 * @since 0.2.0
 	 */
 	@native public borderColor!: any
 
 	/**
-	 * The view's top border.
 	 * @property borderTop
 	 * @since 0.4.0
 	 */
 	@native public borderTop!: any
 
 	/**
-	 * The view's left border.
 	 * @property borderLeft
 	 * @since 0.4.0
 	 */
 	@native public borderLeft!: any
 
 	/**
-	 * The view's right border.
 	 * @property borderRight
 	 * @since 0.4.0
 	 */
 	@native public borderRight!: any
 
 	/**
-	 * The view's bottom border.
 	 * @property borderBottom
 	 * @since 0.4.0
 	 */
 	@native public borderBottom!: any
 
 	/**
-	 * The view's top border color.
 	 * @property borderTopColor
 	 * @since 0.1.0
 	 */
 	@native public borderTopColor!: string
 
 	/**
-	 * The view's left border color.
 	 * @property borderLeftColor
 	 * @since 0.1.0
 	 */
 	@native public borderLeftColor!: string
 
 	/**
-	 * The view's right border color.
 	 * @property borderRightColor
 	 * @since 0.1.0
 	 */
 	@native public borderRightColor!: string
 
 	/**
-	 * The view's bottom border color.
 	 * @property borderBottomColor
 	 * @since 0.1.0
 	 */
 	@native public borderBottomColor!: string
 
 	/**
-	 * The view's top border width.
 	 * @property borderTopWidth
 	 * @since 0.1.0
 	 */
 	@native public borderTopWidth!: number | string
 
 	/**
-	 * The view's left border width.
 	 * @property borderLeftWidth
 	 * @since 0.1.0
 	 */
 	@native public borderLeftWidth!: number | string
 
 	/**
-	 * The view's right border width.
 	 * @property borderRightWidth
 	 * @since 0.1.0
 	 */
 	@native public borderRightWidth!: number | string
 
 	/**
-	 * The view's bottom border width.
 	 * @property borderBottomWidth
 	 * @since 0.1.0
 	 */
 	@native public borderBottomWidth!: number | string
 
 	/**
-	 * The view's minimum top border width.
 	 * @property minBorderTopWidth
 	 * @since 0.1.0
 	 */
 	@native public minBorderTopWidth!: number
 
 	/**
-	 * The view's maximum top border width.
 	 * @property maxBorderTopWidth
 	 * @since 0.1.0
 	 */
 	@native public maxBorderTopWidth!: number
 
 	/**
-	 * The view's minimum left border width.
 	 * @property minBorderLeftWidth
 	 * @since 0.1.0
 	 */
 	@native public minBorderLeftWidth!: number
 
 	/**
-	 * The view's maximum left border width.
 	 * @property maxBorderLeftWidth
 	 * @since 0.1.0
 	 */
 	@native public maxBorderLeftWidth!: number
 
 	/**
-	 * The view's minimum right border width.
 	 * @property minBorderRightWidth
 	 * @since 0.1.0
 	 */
 	@native public minBorderRightWidth!: number
 
 	/**
-	 * The view's maximum right border width.
 	 * @property maxBorderRightWidth
 	 * @since 0.1.0
 	 */
 	@native public maxBorderRightWidth!: number
 
 	/**
-	 * The view's minimum bottom border width.
 	 * @property minBorderBottomWidth
 	 * @since 0.1.0
 	 */
 	@native public minBorderBottomWidth!: number
 
 	/**
-	 * The view's maximum bottom border width.
 	 * @property maxBorderBottomWidth
 	 * @since 0.1.0
 	 */
 	@native public maxBorderBottomWidth!: number
 
 	/**
-	 * The view's border radius.
 	 * @property borderRadius
 	 * @since 0.2.0
 	 */
 	@native public borderRadius!: any
 
 	/**
-	 * The view's top left border radius.
 	 * @property borderTopLeftRadius
 	 * @since 0.1.0
 	 */
 	@native public borderTopLeftRadius!: number
 
 	/**
-	 * The view's top right border radius.
 	 * @property borderTopRightRadius
 	 * @since 0.1.0
 	 */
 	@native public borderTopRightRadius!: number
 
 	/**
-	 * The view's bottom left border radius.
 	 * @property borderBottomLeftRadius
 	 * @since 0.1.0
 	 */
 	@native public borderBottomLeftRadius!: number
 
 	/**
-	 * The view's bottom right border radius.
 	 * @property borderBottomRightRadius
 	 * @since 0.1.0
 	 */
 	@native public borderBottomRightRadius!: number
 
 	/**
-	 * The view's shadow blur distance.
 	 * @property shadowBlur
 	 * @since 0.1.0
 	 */
 	@native public shadowBlur!: number
 
 	/**
-	 * The view's shadow color.
 	 * @property shadowColor
 	 * @since 0.1.0
 	 */
 	@native public shadowColor!: string
 
 	/**
-	 * The view's shadow vertical offset.
 	 * @property shadowOffsetTop
 	 * @since 0.1.0
 	 */
 	@native public shadowOffsetTop!: number
 
 	/**
-	 * The view's shadow vertical offset.
 	 * @property shadowOffsetLeft
 	 * @since 0.1.0
 	 */
 	@native public shadowOffsetLeft!: number
 
 	/**
-	 * The view's top position relative to its parent.
 	 * @property top
 	 * @since 0.1.0
 	 */
 	@native public top!: number | string
 
 	/**
-	 * The view's left position relative to its parent.
 	 * @property left
 	 * @since 0.1.0
 	 */
 	@native public left!: number | string
 
 	/**
-	 * The view's right position relative to its parent.
 	 * @property right
 	 * @since 0.1.0
 	 */
 	@native public right!: number | string
 
 	/**
-	 * The view's bottom position relative to its parent.
 	 * @property bottom
 	 * @since 0.1.0
 	 */
 	@native public bottom!: number | string
 
 	/**
-	 * The view's minimum top position relative to its parent.
 	 * @property minTop
 	 * @since 0.1.0
 	 */
 	@native public minTop!: number
 
 	/**
-	 * The view's maximum top position relative to its parent.
 	 * @property maxTop
 	 * @since 0.1.0
 	 */
 	@native public maxTop!: number
 
 	/**
-	 * The view's minimum left position relative to its parent.
 	 * @property minLeft
 	 * @since 0.1.0
 	 */
 	@native public minLeft!: number
 
 	/**
-	 * The view's maximum left position relative to its parent.
 	 * @property maxLeft
 	 * @since 0.1.0
 	 */
 	@native public maxLeft!: number
 
 	/**
-	 * The view's minimum right position relative to its parent.
 	 * @property minRight
 	 * @since 0.1.0
 	 */
 	@native public minRight!: number
 
 	/**
-	 * The view's maximum right position relative to its parent.
 	 * @property maxRight
 	 * @since 0.1.0
 	 */
 	@native public maxRight!: number
 
 	/**
-	 * The view's minimum bottom position relative to its parent.
 	 * @property minBottom
 	 * @since 0.1.0
 	 */
 	@native public minBottom!: number
 
 	/**
-	 * The view's maximum bottom position relative to its parent.
 	 * @property maxBottom
 	 * @since 0.1.0
 	 */
 	@native public maxBottom!: number
 
 	/**
-	 * The view's vertical point from which it will be positioned.
 	 * @property anchorTop
 	 * @since 0.1.0
 	 */
 	@native public anchorTop!: 'top' | 'center' | 'bottom' | number | string
 
 	/**
-	 * The view's horizontal point from which it will be positioned.
 	 * @property anchorLeft
 	 * @since 0.1.0
 	 */
 	@native public anchorLeft!: 'left' | 'center' | 'right' | number | string
 
 	/**
-	 * The view's width.
 	 * @property width
 	 * @since 0.1.0
 	 */
 	@native public width!: number | string | 'fill' | 'wrap'
 
 	/**
-	 * The view's height.
 	 * @property height
 	 * @since 0.1.0
 	 */
 	@native public height!: number | string | 'fill' | 'wrap'
 
 	/**
-	 * The view's minimum width.
 	 * @property minWidth
 	 * @since 0.1.0
 	 */
 	@native public minWidth!: number
 
 	/**
-	 * The view's maximum width.
 	 * @property maxWidth
 	 * @since 0.1.0
 	 */
 	@native public maxWidth!: number
 
 	/**
-	 * The view's minimum height.
 	 * @property minHeight
 	 * @since 0.1.0
 	 */
 	@native public minHeight!: number
 
 	/**
-	 * The view's maximum height.
 	 * @property maxHeight
 	 * @since 0.1.0
 	 */
 	@native public maxHeight!: number
 
 	/**
-	 * Determine how much this view can expand to fill the remaining space.
-	 * @property expand
-	 * @since 0.1.0
+	 * @property expandFactor
+	 * @since 0.7.0
 	 */
-	@native public expand!: number
+	@native public expandFactor!: number
 
 	/**
-	 * Determine how much this view can shrink to fit the original space.
-	 * @property shrink
-	 * @since 0.1.0
+	 * @property shrinkFactor
+	 * @since 0.7.0
 	 */
-	@native public shrink!: number
+	@native public shrinkFactor!: number
 
 	/**
-	 * The view's top offset to layout its children.
 	 * @property contentTop
 	 * @since 0.1.0
 	 */
 	@native public contentTop!: number
 
 	/**
-	 * The view's left offset to layout its children.
 	 * @property contentLeft
 	 * @since 0.1.0
 	 */
 	@native public contentLeft!: number
 
 	/**
-	 * The view's horizontal size used to layout its children.
 	 * @property contentWidth
 	 * @since 0.1.0
 	 */
 	@native public contentWidth!: number | string | 'auto'
 
 	/**
-	 * The view's vertical size used to layout its children.
 	 * @property contentHeight
 	 * @since 0.1.0
 	 */
 	@native public contentHeight!: number | string | 'auto'
 
 	/**
-	 * The view's content top inset.
 	 * @property contentInsetTop
 	 * @since 0.1.0
 	 */
 	@native public contentInsetTop!: number
 
 	/**
-	 * The view's content left inset.
 	 * @property contentInsetLeft
 	 * @since 0.1.0
 	 */
 	@native public contentInsetLeft!: number
 
 	/**
-	 * The view's content right offset.
 	 * @property contentInsetRight
 	 * @since 0.1.0
 	 */
 	@native public contentInsetRight!: number
 
 	/**
-	 * The view's content bottom offset.
 	 * @property contentInsetBottom
 	 * @since 0.1.0
 	 */
 	@native public contentInsetBottom!: number
 
 	/**
-	 * The view's natural layout direction.
 	 * @property contentDirection
 	 * @since 0.7.0
 	 */
 	@native public contentDirection!: 'vertical' | 'horizontal'
 
 	/**
-	 * The view's content alignment on the main axis.
-	 * @property contentLocation
-	 * @since 0.7.0
-	 */
-	@native public contentLocation!: 'start' | 'center' | 'end' | 'space-around' | 'space-between' | 'space-evenly'
-
-	/**
-	 * The view's content alignment on the cross axis.
 	 * @property contentAlignment
 	 * @since 0.7.0
 	 */
 	@native public contentAlignment!: 'start' | 'center' | 'end'
 
 	/**
-	 * Determines whether the view can scroll.
-	 * @property scrollable
-	 * @since 0.1.0
+	 * @property contentDisposition
+	 * @since 0.7.0
 	 */
-	@native public scrollable!: boolean
+	@native public contentDisposition!: 'start' | 'center' | 'end' | 'space-around' | 'space-between' | 'space-evenly'
 
 	/**
-	 * The view's scrollbars mode.
-	 * @property scrollbars
-	 * @since 0.1.0
-	 */
-	@native public scrollbars!: boolean | 'none' | 'both' | 'vertical' | 'horizontal'
-
-	/**
-	 * Determines whether the view can overscroll.
-	 * @property overscroll
-	 * @since 0.1.0
-	 */
-	@native public overscroll!: boolean | 'auto' | 'never' | 'always' | 'always-x' | 'always-y'
-
-	/**
-	 * Determines whether the view content has momentum when scrolling.
-	 * @property momentum
-	 * @since 0.1.0
-	 */
-	@native public momentum!: boolean
-
-	/**
-	 * The view's scroll on the vertical axis.
-	 * @property scrollTop
-	 * @since 0.1.0
-	 */
-	@native public scrollTop!: number
-
-	/**
-	 * The view's scroll on the horizontal axis.
-	 * @property scrollLeft
-	 * @since 0.1.0
-	 */
-	@native public scrollLeft!: number
-
-	/**
-	 * Wether the view is scrolling.
-	 * @property scrolling
-	 * @since 0.1.0
-	 */
-	@native public scrolling!: boolean
-
-	/**
-	 * Wether the view is dragging.
-	 * @property dragging
-	 * @since 0.1.0
-	 */
-	@native public dragging!: boolean
-
-	/**
-	 * The view's margin.
 	 * @property margin
 	 * @since 0.2.0
 	 */
 	@native public margin!: any
 
 	/**
-	 * The view's top margin.
 	 * @property marginTop
 	 * @since 0.1.0
 	 */
 	@native public marginTop!: number
 
 	/**
-	 * The view's left margin.
 	 * @property marginLeft
 	 * @since 0.1.0
 	 */
 	@native public marginLeft!: number
 
 	/**
-	 * The view's right margin.
 	 * @property marginRight
 	 * @since 0.1.0
 	 */
 	@native public marginRight!: number
 
 	/**
-	 * The view's bottom margin.
 	 * @property marginBottom
 	 * @since 0.1.0
 	 */
 	@native public marginBottom!: number
 
 	/**
-	 * The view's minimum top margin.
 	 * @property minMarginTop
 	 * @since 0.1.0
 	 */
 	@native public minMarginTop!: number
 
 	/**
-	 * The view's maximum top margin.
 	 * @property maxMarginTop
 	 * @since 0.1.0
 	 */
 	@native public maxMarginTop!: number
 
 	/**
-	 * The view's minimum left margin.
 	 * @property minMarginLeft
 	 * @since 0.1.0
 	 */
 	@native public minMarginLeft!: number
 
 	/**
-	 * The view's maximum left margin.
 	 * @property maxMarginLeft
 	 * @since 0.1.0
 	 */
 	@native public maxMarginLeft!: number
 
 	/**
-	 * The view's minimum right margin.
 	 * @property minMarginRight
 	 * @since 0.1.0
 	 */
 	@native public minMarginRight!: number
 
 	/**
-	 * The view's maximum right margin.
 	 * @property maxMarginRight
 	 * @since 0.1.0
 	 */
 	@native public maxMarginRight!: number
 
 	/**
-	 * The view's minimum bottom margin.
 	 * @property minMarginBottom
 	 * @since 0.1.0
 	 */
 	@native public minMarginBottom!: number
 
 	/**
-	 * The view's maximum bottom margin.
 	 * @property maxMarginBottom
 	 * @since 0.1.0
 	 */
 	@native public maxMarginBottom!: number
 
 	/**
-	 * The view's padding.
 	 * @property padding
 	 * @since 0.2.0
 	 */
 	@native public padding!: any
 
 	/**
-	 * The view's top padding.
 	 * @property paddingTop
 	 * @since 0.1.0
 	 */
 	@native public paddingTop!: number
 
 	/**
-	 * The view's left padding.
 	 * @property paddingLeft
 	 * @since 0.1.0
 	 */
 	@native public paddingLeft!: number
 
 	/**
-	 * The view's right padding.
 	 * @property paddingRight
 	 * @since 0.1.0
 	 */
 	@native public paddingRight!: number
 
 	/**
-	 * The view's bottom padding.
 	 * @property paddingBottom
 	 * @since 0.1.0
 	 */
 	@native public paddingBottom!: number
 
 	/**
-	 * The view's minimum top padding.
 	 * @property minPaddingTop
 	 * @since 0.1.0
 	 */
 	@native public minPaddingTop!: number
 
 	/**
-	 * The view's maximum top padding.
 	 * @property maxPaddingTop
 	 * @since 0.1.0
 	 */
 	@native public maxPaddingTop!: number
 
 	/**
-	 * The view's minimum left padding.
 	 * @property minPaddingLeft
 	 * @since 0.1.0
 	 */
 	@native public minPaddingLeft!: number
 
 	/**
-	 * The view's maximum left padding.
 	 * @property maxPaddingLeft
 	 * @since 0.1.0
 	 */
 	@native public maxPaddingLeft!: number
 
 	/**
-	 * The view's minimum right padding.
 	 * @property minPaddingRight
 	 * @since 0.1.0
 	 */
 	@native public minPaddingRight!: number
 
 	/**
-	 * The view's maximum right padding.
 	 * @property maxPaddingRight
 	 * @since 0.1.0
 	 */
 	@native public maxPaddingRight!: number
 
 	/**
-	 * The view's minimum bottom padding.
 	 * @property minPaddingBottom
 	 * @since 0.1.0
 	 */
 	@native public minPaddingBottom!: number
 
 	/**
-	 * The view's maximum bottom padding.
 	 * @property maxPaddingBottom
 	 * @since 0.1.0
 	 */
 	@native public maxPaddingBottom!: number
 
 	/**
-	 * The view's horizontal origin for all transformations.
 	 * @property originX
 	 * @since 0.1.0
 	 */
 	@native public originX!: number
 
 	/**
-	 * The view's vertical origin for all transformations.
 	 * @property originY
 	 * @since 0.1.0
 	 */
 	@native public originY!: number
 
 	/**
-	 * The view's vertical origin for all transformations.
 	 * @property originZ
 	 * @since 0.1.0
 	 */
 	@native public originZ!: number
 
 	/**
-	 * The view's translation on the x axis.
 	 * @property translationX
 	 * @since 0.1.0
 	 */
 	@native public translationX!: number | string
 
 	/**
-	 * The view's translation on the y axis.
 	 * @property translationY
 	 * @since 0.1.0
 	 */
 	@native public translationY!: number | string
 
 	/**
-	 * The view's translation on the z axis.
 	 * @property translationZ
 	 * @since 0.1.0
 	 */
 	@native public translationZ!: number
 
 	/**
-	 * The view's on the x axis.
 	 * @property rotationX
 	 * @since 0.1.0
 	 */
 	@native public rotationX!: number | string
 
 	/**
-	 * The view's rotation on the y axis.
 	 * @property rotationY
 	 * @since 0.1.0
 	 */
 	@native public rotationY!: number | string
 
 	/**
-	 * The view's rotation on the z axis.
 	 * @property rotationZ
 	 * @since 0.1.0
 	 */
 	@native public rotationZ!: number | string
 
 	/**
-	 * The view's scale on the x axis.
 	 * @property scaleX
 	 * @since 0.1.0
 	 */
 	@native public scaleX!: number
 
 	/**
-	 * The view's translation on the y axis.
 	 * @property scaleY
 	 * @since 0.1.0
 	 */
 	@native public scaleY!: number
 
 	/**
-	 * The view's translation on the z axis.
 	 * @property scaleZ
 	 * @since 0.1.0
 	 */
 	@native public scaleZ!: number
 
 	/**
-	 * The view's z position relatived to its siblings.
 	 * @property zIndex
 	 * @since 0.1.0
 	 */
 	@native public zIndex!: number
 
 	/**
-	 * Whether the view is zoomable.
+	 * @property scrollable
+	 * @since 0.1.0
+	 */
+	@native public scrollable!: boolean
+
+	/**
+	 * @property scrollbars
+	 * @since 0.1.0
+	 */
+	@native public scrollbars!: boolean | 'none' | 'both' | 'vertical' | 'horizontal'
+
+	/**
+	 * @property overscroll
+	 * @since 0.1.0
+	 */
+	@native public overscroll!: boolean | 'auto' | 'never' | 'always' | 'always-x' | 'always-y'
+
+	/**
+	 * @property scrollTop
+	 * @since 0.1.0
+	 */
+	@native public scrollTop!: number
+
+	/**
+	 * @property scrollLeft
+	 * @since 0.1.0
+	 */
+	@native public scrollLeft!: number
+
+	/**
+	 * @property scrollMomentum
+	 * @since 0.1.0
+	 */
+	@native public scrollMomentum!: boolean
+
+	/**
+	 * @property scrolling
+	 * @since 0.1.0
+	 */
+	@native public scrolling!: boolean
+
+	/**
+	 * @property dragging
+	 * @since 0.1.0
+	 */
+	@native public dragging!: boolean
+
+	/**
 	 * @property zoomable
 	 * @since 0.3.0
 	 */
 	@native public zoomable!: boolean
 
 	/**
-	 * The view's minimum zoom.
 	 * @property minZoom
 	 * @since 0.3.0
 	 */
 	@native public minZoom!: number
 
 	/**
-	 * The view's maximum zoom.
 	 * @property maxZoom
 	 * @since 0.3.0
 	 */
 	@native public maxZoom!: number
 
 	/**
-	 * The view that is being zoomed.
 	 * @property zoomedView
 	 * @since 0.3.0
 	 */
 	@native public zoomedView!: View | null
 
 	/**
-	 * Whether touch interactions are enabled for this view.
 	 * @property touchable
 	 * @since 0.1.0
 	 */
 	@native public touchable!: boolean
 
 	/**
-	 * The top offset for this view touchable area.
 	 * @property touchOffsetTop
 	 * @since 0.1.0
 	 */
 	@native public touchOffsetTop!: number
 
 	/**
-	 * The left offset for this view touchable area.
 	 * @property touchOffsetLeft
 	 * @since 0.1.0
 	 */
 	@native public touchOffsetLeft!: number
 
 	/**
-	 * The right offset for this view touchable area.
 	 * @property touchOffsetRight
 	 * @since 0.1.0
 	 */
 	@native public touchOffsetRight!: number
 
 	/**
-	 * The bottom offset for this view touchable area.
 	 * @property touchOffsetBottom
 	 * @since 0.1.0
 	 */
 	@native public touchOffsetBottom!: number
 
 	/**
-	 * Determines whether the view is visible.
 	 * @property visible
 	 * @since 0.1.0
 	 */
 	@native public visible!: boolean
 
 	/**
-	 * The view's opacity.
 	 * @property opacity
 	 * @since 0.1.0
 	 */
 	@native public opacity!: number
 
 	/**
-	 * Whether the view is drawable
 	 * @property drawable
 	 * @since 0.4.0
 	 */
 	@native public drawable!: boolean
 
 	/**
-	 * The view's content clipping status.
 	 * @property clipped
 	 * @since 0.1.0
 	 */
 	@native public clipped!: boolean
 
 	/**
-	 * Whether the view snaps to pages.
 	 * @property paged
 	 * @since 0.4.0
 	 */
 	@native public paged!: boolean
 
 	/**
-	 * The view's top position once it's been measured.
 	 * @property measuredTop
 	 * @since 0.1.0
 	 */
@@ -1182,7 +999,6 @@ export class View extends Emitter {
 	}
 
 	/**
-	 * The view's left position once it's been measured.
 	 * @property measuredLeft
 	 * @since 0.1.0
 	 */
@@ -1191,7 +1007,6 @@ export class View extends Emitter {
 	}
 
 	/**
-	 * The view's width once it's been measured.
 	 * @property measuredWidth
 	 * @since 0.1.0
 	 */
@@ -1200,7 +1015,6 @@ export class View extends Emitter {
 	}
 
 	/**
-	 * The view's height once it's been measured.
 	 * @property measuredHeight
 	 * @since 0.1.0
 	 */
@@ -1209,7 +1023,6 @@ export class View extends Emitter {
 	}
 
 	/**
-	 * The width of the view minus its borders and padding.
 	 * @property measuredInnerWidth
 	 * @since 0.1.0
 	 */
@@ -1218,7 +1031,6 @@ export class View extends Emitter {
 	}
 
 	/**
-	 * The height of the view minus its borders and padding.
 	 * @property measuredInnerHeight
 	 * @since 0.1.0
 	 */
@@ -1227,7 +1039,6 @@ export class View extends Emitter {
 	}
 
 	/**
-	 * The view's content width used to layout its children once it's been measured.
 	 * @property measuredContentWidth
 	 * @since 0.1.0
 	 */
@@ -1236,7 +1047,6 @@ export class View extends Emitter {
 	}
 
 	/**
-	 * The view's content height used to layout its children once it's been measured.
 	 * @property measuredContentHeight
 	 * @since 0.1.0
 	 */
@@ -1245,7 +1055,6 @@ export class View extends Emitter {
 	}
 
 	/**
-	 * The view's measured margin top.
 	 * @property measuredMarginTop
 	 * @since 0.1.0
 	 */
@@ -1254,7 +1063,6 @@ export class View extends Emitter {
 	}
 
 	/**
-	 * The view's measured margin left.
 	 * @property measuredMarginLeft
 	 * @since 0.1.0
 	 */
@@ -1263,7 +1071,6 @@ export class View extends Emitter {
 	}
 
 	/**
-	 * The view's measured margin right.
 	 * @property measuredMarginRight
 	 * @since 0.1.0
 	 */
@@ -1272,7 +1079,6 @@ export class View extends Emitter {
 	}
 
 	/**
-	 * The view's measured margin bottom.
 	 * @property measuredMarginBottom
 	 * @since 0.1.0
 	 */
@@ -1281,7 +1087,6 @@ export class View extends Emitter {
 	}
 
 	/**
-	 * The view's measured padding top.
 	 * @property measuredPaddingTop
 	 * @since 0.1.0
 	 */
@@ -1290,7 +1095,6 @@ export class View extends Emitter {
 	}
 
 	/**
-	 * The view's measured padding left.
 	 * @property measuredPaddingLeft
 	 * @since 0.1.0
 	 */
@@ -1299,7 +1103,6 @@ export class View extends Emitter {
 	}
 
 	/**
-	 * The view's measured padding right.
 	 * @property measuredPaddingRight
 	 * @since 0.1.0
 	 */
@@ -1308,7 +1111,6 @@ export class View extends Emitter {
 	}
 
 	/**
-	 * The view's measured padding bottom.
 	 * @property measuredPaddingBottom
 	 * @since 0.1.0
 	 */
@@ -1321,78 +1123,48 @@ export class View extends Emitter {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Initializes this view.
 	 * @constructor
 	 * @since 0.1.0
 	 */
 	constructor() {
 		super()
-		let classList = getClassList(this)
-		if (classList) native(this).classList = classList
+		native(this).className = getClassName(this)
 	}
 
 	/**
-	 * Releases the objects associated to this view.
 	 * @method destroy
 	 * @since 0.1.0
 	 */
 	public destroy() {
 
-		this.emit('destroy')
-
-		while (this.children.length) {
-
-			/*
-			 * TODO
-			 * Could this be done better on native.
-			 */
-
-			this.children[this.children.length - 1].destroy()
+		if (this.parent) {
+			this.parent.remove(this)
 		}
-
-		this.removeFromParent()
-
-		this[GESTURES].destroy()
 
 		native(this).destroy()
 
-		super.destroy()
+		return super.destroy()
 	}
 
 	/**
-	 * Makes this view a shadow root.
-	 * @method createShadowRoot
-	 * @since 0.1.0
-	 */
-	public createShadowRoot() {
-		native(this).createShadowRoot()
-	}
-
-	/**
-	 * Appends a child at the end of this view's child list.
 	 * @method append
 	 * @since 0.1.0
 	 */
-	public append(child: View) {
-		return this.insert(child, this.children.length)
-	}
-
-	/**
-	 * Appends a child at this end of the parent's child list.
-	 * @method appendTo
-	 * @since 0.7.0
-	 */
-	public appendTo(parent: View) {
-		parent.append(this)
+	public append(child: View | Placeholder) {
+		this.insert(child, this.children.length)
 		return this
 	}
 
 	/**
-	 * Inserts a child at an index of this view's child list.
 	 * @method insert
 	 * @since 0.1.0
 	 */
-	public insert(child: View, index: number) {
+	public insert(child: View | Placeholder, index: number) {
+
+		if (child instanceof Placeholder) {
+			child.embed(this, index)
+			return this
+		}
 
 		if (child.parent) {
 			child.parent.remove(child)
@@ -1404,84 +1176,43 @@ export class View extends Emitter {
 			index = 0
 		}
 
-		child.setResponder(this)
+		setEmitterResponder(child, this)
 
 		insertItem(this, child, index)
 		insertView(this, child, index)
 
-		this.emit<ViewInsertEvent>('insert', {
-			data: {
-				child,
-				index
-			}
-		})
+		this.emit<ViewInsertEvent>('insert', { data: { child, index } })
 
 		return this
 	}
 
 	/**
-	 * Inserts a child after another child from this view's child list.
-	 * @method insertAfter
-	 * @since 0.1.0
-	 */
-	public insertAfter(child: View, after: View) {
-
-		let index = this.children.indexOf(after)
-		if (index == -1) {
-			throw new Error('The specified view cannot be found.')
-		}
-
-		this.insert(child, index + 1)
-
-		return this
-	}
-
-	/**
-	 * Inserts a child before another child from this view's child list.
-	 * @method insertBefore
-	 * @since 0.1.0
-	 */
-	public insertBefore(child: View, before: View) {
-
-		let index = this.children.indexOf(before)
-		if (index == -1) {
-			throw new Error('The specified view cannot be found.')
-		}
-
-		this.insert(child, index)
-
-		return this
-	}
-
-	/**
-	 * Removes a child from this view's child list.
 	 * @method remove
 	 * @since 0.1.0
 	 */
-	public remove(child: View) {
+	public remove(child: View | Placeholder) {
+
+		if (child instanceof Placeholder) {
+			child.destroy()
+			return this
+		}
 
 		let index = this.children.indexOf(child)
 		if (index == -1) {
 			return this
 		}
 
+		setEmitterResponder(child, null)
+
 		removeItem(this, child, index)
 		removeView(this, child, index)
 
-		child.setResponder(null)
-
-		this.emit<ViewRemoveEvent>('remove', {
-			data: {
-				child,
-				index
-			}
-		})
+		this.emit<ViewRemoveEvent>('remove', { data: { child, index } })
 
 		return this
 	}
 
 	/**
-	 * Removes this view from its parent view.
 	 * @method removeFromParent
 	 * @since 0.1.0
 	 */
@@ -1496,7 +1227,6 @@ export class View extends Emitter {
 	}
 
 	/**
-	 * Remove all views this view.
 	 * @method empty
 	 * @since 0.7.0
 	 */
@@ -1510,7 +1240,6 @@ export class View extends Emitter {
 	}
 
 	/**
-	 * Replaces this view with a specified view.
 	 * @method replaceWith
 	 * @since 0.1.0
 	 */
@@ -1531,7 +1260,6 @@ export class View extends Emitter {
 	}
 
 	/**
-	 * Indicates whether this view is a parent of the specified view.
 	 * @method contains
 	 * @since 0.1.0
 	 */
@@ -1555,52 +1283,10 @@ export class View extends Emitter {
 	}
 
 	//--------------------------------------------------------------------------
-	// Placeholders
-	//--------------------------------------------------------------------------
-
-	/**
-	 * Insert a placeholder within this view.
-	 * @method insertPlaceholder
-	 * @since 0.7.0
-	 */
-	public insertPlaceholder(placeholder: Placeholder, location: Location = Location.Float, position?: number) {
-		placeholder.enter(this, position == null ? this.children.length : position, location)
-		return this
-	}
-
-	/**
-	 * Removes a placeholder from this view.
-	 * @method removePlaceholder
-	 * @since 0.7.0
-	 */
-	public removePlaceholder(placeholder: Placeholder) {
-		placeholder.leave()
-	}
-
-	//--------------------------------------------------------------------------
 	// Lifecycle
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Called when the view is added to the tree.
-	 * @method onMount
-	 * @since 0.7.0
-	 */
-	protected onMount() {
-
-	}
-
-	/**
-	 * Called when the view is removed from the tree.
-	 * @method onUnmount
-	 * @since 0.7.0
-	 */
-	protected onUnmount() {
-
-	}
-
-	/**
-	 * Called when the view is destroyed.
 	 * @method onDestroy
 	 * @since 0.4.0
 	 */
@@ -1609,86 +1295,43 @@ export class View extends Emitter {
 	}
 
 	//--------------------------------------------------------------------------
-	// Style
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method hasStyle
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	public hasStyle(style: string) {
-		return native(this).hasStyle(style)
-	}
-
-	/**
-	 * Toggles a visual style from this view.
-	 * @method setStyle
-	 * @since 0.7.0
-	 */
-	public setStyle(style: string, enable: boolean = true) {
-		native(this).setStyle(style, enable)
-	}
-
-	//--------------------------------------------------------------------------
-	// State
-	//--------------------------------------------------------------------------
-
-	/**
-	 * Indicates whether the specified state has been set.
-	 * @method hasState
-	 * @since 0.1.0
-	 */
-	public hasState(state: string) {
-		return native(this).hasState(state)
-	}
-
-	/**
-	 * @method setState
-	 * @since 0.1.0
-	 */
-	public setState(state: string, enable: boolean = true) {
-		native(this).setState(state, enable)
-	}
-
-	//--------------------------------------------------------------------------
 	// Methods: Measuring and Drawing
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Invalidates the view's drawing and schedule a redraw update.
 	 * @method scheduleRedraw
 	 * @since 0.1.0
 	 */
 	public scheduleRedraw() {
 		native(this).scheduleRedraw()
+		return this
 	}
 
 	/**
-	 * Invalidates the view's layout and schedule a layout update.
 	 * @method scheduleLayout
 	 * @since 0.1.0
 	 */
 	public scheduleLayout() {
 		native(this).scheduleLayout()
+		return this
 	}
 
 	/**
-	 * Resolves this view's size and position.
-	 * @method measure
-	 * @since 0.1.0
-	 */
-	public measure() {
-		native(this).measure()
-	}
-
-	/**
-	 * Resolves this view's size and position and its entire tree.
 	 * @method resolve
 	 * @since 0.1.0
 	 */
 	public resolve() {
 		native(this).resolve()
+		return this
+	}
+
+	/**
+	 * @method measure
+	 * @since 0.1.0
+	 */
+	public measure() {
+		native(this).measure()
+		return this
 	}
 
 	//--------------------------------------------------------------------------
@@ -1696,18 +1339,17 @@ export class View extends Emitter {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Convenience method to transition properties from a single view.
 	 * @method transition
 	 * @since 0.4.0
 	 */
-	public transition(animate: ViewProperties<View>): Promise<void>
-	public transition(options: ViewTransitionOptions, animate: ViewProperties<View>): Promise<void>
+	public transition(animate: ViewTransitionProperties<View>): Promise<void>
+	public transition(options: ViewTransitionOptions, animate: ViewTransitionProperties<View>): Promise<void>
 	public transition(...args: Array<any>): Promise<void> {
 
 		let animate: any = {}
 		let options: ViewTransitionOptions = {
-			duration: DEFAULT_DURATION,
-			equation: DEFAULT_EQUATION,
+			duration: AnimationDefaultDuration,
+			equation: AnimationDefaultEquation,
 			delay: 0
 		}
 
@@ -1730,12 +1372,12 @@ export class View extends Emitter {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Scrolls to a specific location.
 	 * @method scrollTo
 	 * @since 0.1.0
 	 */
 	public scrollTo(top: number, left: number = 0) {
 		native(this).scrollTo(top, left)
+		return this
 	}
 
 	//--------------------------------------------------------------------------
@@ -1743,7 +1385,6 @@ export class View extends Emitter {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method onEvent
 	 * @since 0.7.0
 	 */
@@ -1776,17 +1417,13 @@ export class View extends Emitter {
 				return
 			}
 
-			this.gestures.dispatchTouchEvent(event)
+			//this.gestures.dispatchTouchEvent(event)
 		}
 
 		switch (event.type) {
 
 			case 'destroy':
 				this.onDestroy()
-				break
-
-			case 'beforelayout':
-				this.onBeforeLayout()
 				break
 
 			case 'layout':
@@ -1811,14 +1448,6 @@ export class View extends Emitter {
 
 			case 'movetowindow':
 				this.onMoveToWindow(event.data.window)
-				break
-
-			case 'mount':
-				this.onMount()
-				break
-
-			case 'unmount':
-				this.onUnmount()
 				break
 
 			case 'scrollstart':
@@ -1864,53 +1493,6 @@ export class View extends Emitter {
 	}
 
 	/**
-	 * @inherited
-	 * @method onDispatch
-	 * @since 0.1.0
-	 */
-	public onDispatch(event: Event) {
-
-		super.onDispatch(event)
-
-		if (event.cancelable && event instanceof TouchEvent) {
-
-			if (event.type == 'touchstart' ||
-				event.type == 'touchmove') {
-
-				if (this.cancelScroll == false && this.scrollable && event.canceled) {
-					this.cancelScroll = true
-					this.scrollable = false
-				}
-
-				return
-			}
-
-			if (event.type == 'touchcancel' ||
-				event.type == 'touchend') {
-
-				if (event.activeTouches.length == 0) {
-					if (this.cancelScroll) {
-						this.cancelScroll = false
-						this.scrollable = true
-					}
-				}
-
-				return
-			}
-		}
-	}
-
-	/**
-	 * Called before a layout operation occurs.
-	 * @method onBeforeLayout
-	 * @since 0.1.0
-	 */
-	protected onBeforeLayout() {
-
-	}
-
-	/**
-	 * Called once a layout operation occurs.
 	 * @method onLayout
 	 * @since 0.1.0
 	 */
@@ -1919,7 +1501,14 @@ export class View extends Emitter {
 	}
 
 	/**
-	 * Called when a child view is added.
+	 * @method onRedraw
+	 * @since 0.4.0
+	 */
+	protected onRedraw(canvas: Canvas) {
+
+	}
+
+	/**
 	 * @method onInsert
 	 * @since 0.1.0
 	 */
@@ -1928,7 +1517,6 @@ export class View extends Emitter {
 	}
 
 	/**
-	 * Called when a child view is removed.
 	 * @method onRemove
 	 * @since 0.1.0
 	 */
@@ -1937,7 +1525,6 @@ export class View extends Emitter {
 	}
 
 	/**
-	 * Called when this view is moved to a window.
 	 * @method onMoveToWindow
 	 * @since 0.2.0
 	 */
@@ -1946,7 +1533,6 @@ export class View extends Emitter {
 	}
 
 	/**
-	 * Called when this view is moved to a parent view.
 	 * @method onMoveToParent
 	 * @since 0.2.0
 	 */
@@ -2035,15 +1621,6 @@ export class View extends Emitter {
 	}
 
 	/**
-	 * @method onRedraw
-	 * @since 0.4.0
-	 */
-	protected onRedraw(canvas: Canvas) {
-
-	}
-
-	/**
-	 * Called when a touch cancel event occurs.
 	 * @method onTouchCancel
 	 * @since 0.1.0
 	 */
@@ -2052,7 +1629,6 @@ export class View extends Emitter {
 	}
 
 	/**
-	 * Called when a touch start event occurs.
 	 * @method onTouchStart
 	 * @since 0.1.0
 	 */
@@ -2061,7 +1637,6 @@ export class View extends Emitter {
 	}
 
 	/**
-	 * Called when a touch move event occurs.
 	 * @method onTouchMove
 	 * @since 0.1.0
 	 */
@@ -2070,7 +1645,6 @@ export class View extends Emitter {
 	}
 
 	/**
-	 * Called when a touch end event occurs.
 	 * @method onTouchEnd
 	 * @since 0.1.0
 	 */
@@ -2094,6 +1668,38 @@ export class View extends Emitter {
 	//--------------------------------------------------------------------------
 
 	/**
+	 * @method dispatchTouchCancel
+	 * @since 0.7.0
+	 */
+	public dispatchTouchCancel(event: TouchEvent) {
+
+	}
+
+	/**
+	 * @method dispatchTouchStart
+	 * @since 0.7.0
+	 */
+	public dispatchTouchStart(event: TouchEvent) {
+
+	}
+
+	/**
+	 * @method dispatchTouchMove
+	 * @since 0.7.0
+	 */
+	public dispatchTouchMove(evnet: TouchEvent) {
+
+	}
+
+	/**
+	 * @method dispatchTouchEnd
+	 * @since 0.7.0
+	 */
+	public dispatchTouchEnd(event: TouchEvent) {
+
+	}
+
+	/**
 	 * TODO
 	 * @method setDefaultValue
 	 * @since 0.4.0
@@ -2108,43 +1714,52 @@ export class View extends Emitter {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @property ID
+	 * @property $styles
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private [ID]: string = ''
+	private [$styles]: StyleList = new StyleList(this)
 
 	/**
-	 * @property MOUNTED
+	 * @property $states
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private [MOUNTED]: boolean = false
+	private [$states]: StateList = new StateList(this)
 
 	/**
-	 * @property CHILDREN
-	 * @since 0.1.0
+	 * @property $children
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private [CHILDREN]: Array<View> = []
+	private [$children]: Array<View> = []
 
 	/**
-	 * @property GESTURES
-	 * @since 0.4.0
+	 * @property $gestures
+	 * @since 0.7.0
 	 * @hidden
-	 */
-	private [GESTURES]: GestureManager = new GestureManager(this)
 
+	private [$gestures]: GestureManager = new GestureManager(this)
+ 	*/
 	/**
 	 * @property cancelScroll
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	private cancelScroll: boolean = false
+	private cancelScroll: boolean = false // TODO Symbol ?
 
 	//--------------------------------------------------------------------------
 	// Native API
 	//--------------------------------------------------------------------------
+
+	/**
+	 * @method nativeOnDestroy
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private nativeOnDestroy() {
+		this.emit('destroy')
+	}
 
 	/**
 	 * @method nativeOnMoveToParent
@@ -2161,28 +1776,7 @@ export class View extends Emitter {
 	 * @hidden
 	 */
 	private nativeOnMoveToWindow(window: Window) {
-
 		this.emit<ViewMoveToWindowEvent>('movetowindow', { data: { window } })
-
-		/*
-		 * This is a convenience event to make cleaner and
-		 * more verbose code.
-		 */
-
-		if (window) {
-
-			if (this[MOUNTED] == false) {
-				this[MOUNTED] = true
-				this.emit('mount')
-			}
-
-		} else {
-
-			if (this[MOUNTED]) {
-				this[MOUNTED] = false
-				this.emit('unmount')
-			}
-		}
 	}
 
 	/**
@@ -2267,20 +1861,11 @@ export class View extends Emitter {
 	}
 
 	/**
-	 * @method nativeOnLayoutBegan
+	 * @method nativeOnLayout
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private nativeOnLayoutBegan() {
-		this.emit('beforelayout')
-	}
-
-	/**
-	 * @method nativeOnLayoutFinished
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private nativeOnLayoutFinished() {
+	private nativeOnLayout() {
 		this.emit('layout')
 	}
 
@@ -2295,56 +1880,18 @@ export class View extends Emitter {
 }
 
 /**
- * @function insertItem
- * @since 0.7.0
- * @hidden
+ * @const AnimationDefaultDuration
+ * @since 0.4.0
  */
-function insertItem(view: View, child: View, index: number) {
-	view[CHILDREN].splice(index, 0, child)
-}
+export const AnimationDefaultDuration = 350
 
 /**
- * @function removeItem
- * @since 0.7.0
- * @hidden
+ * @const AnimationDefaultEquation
+ * @since 0.4.0
  */
-function removeItem(view: View, child: View, index: number) {
-	view[CHILDREN].splice(index, 1)
-}
+export const AnimationDefaultEquation = [0.25, 0.1, 0.25, 1.0]
 
 /**
- * @function insertView
- * @since 0.7.0
- * @hidden
- */
-function insertView(view: View, child: View, index: number) {
-	native(view).insert(native(child), index)
-}
-
-/**
- * @function removeView
- * @since 0.7.0
- * @hidden
- */
-function removeView(view: View, child: View, index: number) {
-	native(view).remove(native(child), index)
-}
-
-/**
- * @function last
- * @sinceremoveView
- * @hidden
- */
-function last(list: ReadonlyArray<View>) {
-	return list[list.length - 1]
-}
-
-//------------------------------------------------------------------------------
-// Constants
-//------------------------------------------------------------------------------
-
-/**
- * Animation duration registry.
  * @const AnimationDurationRegistry
  * @since 0.1.0
  */
@@ -2353,7 +1900,6 @@ AnimationDurationRegistry.set('slow', 750)
 AnimationDurationRegistry.set('fast', 250)
 
 /**
- * Animation equation registry.
  * @const AnimationEquationRegistry
  * @since 0.1.0
  */
@@ -2364,9 +1910,23 @@ AnimationEquationRegistry.set('ease-in', [0.42, 0.0, 1.0, 1.0])
 AnimationEquationRegistry.set('ease-out', [0.0, 0.0, 0.58, 1.0])
 AnimationEquationRegistry.set('ease-in-out', [0.42, 0, 0.58, 1.0])
 
-//------------------------------------------------------------------------------
-// Types
-//------------------------------------------------------------------------------
+/**
+ * @interface ViewTransitionOptions
+ * @since 0.1.0
+ */
+export interface ViewTransitionOptions {
+	equation?: string | Array<number>
+	duration?: string | number
+	delay?: number
+}
+
+/**
+ * @type ViewTransitionProperties
+ * @since 0.4.0
+ */
+export type ViewTransitionProperties<T> = {
+	[P in keyof T]?: T[P]
+}
 
 /**
  * @type ViewInsertEvent
@@ -2411,53 +1971,82 @@ export type ViewRedrawEvent = {
 }
 
 /**
- * Optional properies from a specified class.
- * @type ViewProperties
- * @since 0.4.0
- */
-export type ViewProperties<T> = {
-	[P in keyof T]?: T[P]
-}
-
-//------------------------------------------------------------------------------
-// Functions
-//------------------------------------------------------------------------------
-
-/**
- * @const classListCache
+ * @const classes
  * @since 0.4.0
  * @hidden
  */
-const classListCache = new Map<any, any>()
+const classes = new Map<any, any>()
+
+/**
+ * @function insertItem
+ * @since 0.7.0
+ * @hidden
+ */
+function insertItem(view: View, child: View, index: number) {
+	view[$children].splice(index, 0, child)
+}
+
+/**
+ * @function removeItem
+ * @since 0.7.0
+ * @hidden
+ */
+function removeItem(view: View, child: View, index: number) {
+	view[$children].splice(index, 1)
+}
+
+/**
+ * @function insertView
+ * @since 0.7.0
+ * @hidden
+ */
+function insertView(view: View, child: View, index: number) {
+	native(view).insert(native(child), index)
+}
+
+/**
+ * @function removeView
+ * @since 0.7.0
+ * @hidden
+ */
+function removeView(view: View, child: View, index: number) {
+	native(view).remove(native(child), index)
+}
+
+/**
+ * @function last
+ * @sinceremoveView
+ * @hidden
+ */
+function last(list: ReadonlyArray<View>) {
+	return list[list.length - 1]
+}
 
 /**
  * @function getClassList
  * @since 0.2.0
  * @hidden
  */
-export const getClassList = (view: View) => {
+function getClassName(view: View) {
 
-	let classList = view.constructor.name
-
-	if (view.constructor != View) {
-
-		let classListValue = classListCache.get(view.constructor)
-		if (classListValue == null) {
-			classListCache.set(view.constructor, classListValue = getClassListValue(view))
-		}
-
-		classList = classListValue
+	if (view.constructor == View) {
+		return 'View'
 	}
 
-	return classList
+	let className = classes.get(view.constructor)
+	if (className == null) {
+		classes.set(view.constructor, className = getClassList(view))
+	}
+
+	return className
 }
 
 /**
- * @function getClassListValue
+ * @function getClassList
  * @since 0.4.0
  * @hidden
  */
-export const getClassListValue = (view: View) => {
+function getClassList(view: View) {
 
 	let klass = view.constructor.name
 	let proto = view.constructor.prototype
@@ -2471,7 +2060,7 @@ export const getClassListValue = (view: View) => {
 			proto = null
 		}
 
-		klass = klass + '.' + constructor.name
+		klass = klass + ' ' + constructor.name
 	}
 
 	return klass

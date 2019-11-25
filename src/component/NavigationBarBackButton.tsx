@@ -1,14 +1,13 @@
 import { NavigationBarButton } from './NavigationBarButton'
-import './NavigationBarBackButton.ds'
-import './NavigationBarBackButton.ds.android'
-import './NavigationBarBackButton.ds.ios'
+import './style/NavigationBarBackButton.style'
+import './style/NavigationBarBackButton.style.android'
+import './style/NavigationBarBackButton.style.ios'
 
 /**
- * Displays a back button in a navigation bar.
  * @class NavigationBarBackButton
  * @super NavigationBarButton
  * @since 0.1.0
  */
 export class NavigationBarBackButton extends NavigationBarButton {
-
+	public slot: string = 'back'
 }

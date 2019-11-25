@@ -1,5 +1,6 @@
+import { setEmitterResponder } from './private/Emitter'
+import { $listeners } from './symbol/Emitter'
 import { Emitter } from './Emitter'
-import { LISTENERS } from './Emitter'
 import { Event } from './Event'
 
 describe('Emitter', () => {
@@ -244,16 +245,14 @@ describe('Emitter', () => {
 })
 
 function getListeners(emitter: Emitter, type: string) {
-	return emitter[LISTENERS][type]
+	return emitter[$listeners][type]
 }
 
 function setResponders(emitter: Emitter, responders: Array<Emitter>) {
 
-	emitter.setResponder(responders[0])
+	setEmitterResponder(emitter, responders[0])
 
 	for (let i = 0; i < responders.length - 1; i++) {
-		responders[i].setResponder(
-			responders[i + 1]
-		)
+		setEmitterResponder(responders[i], responders[i + 1])
 	}
 }

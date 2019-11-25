@@ -1,5 +1,5 @@
 import { Dezel } from '../core/Dezel'
-import { NATIVE } from '../native/symbols'
+import { $native } from './symbol/native'
 
 /**
  * @function decorate
@@ -8,24 +8,23 @@ import { NATIVE } from '../native/symbols'
  */
 function decorate(constructor: any, className: string) {
 
-	let Class = Dezel.importClass(className)
-	if (Class == null) {
+	let klass = Dezel.importClass(className)
+	if (klass == null) {
 		throw new Error(
-			`Bridge error: ` +
+			`Dezel error: ` +
 			`The native class ${className} does not exist.`
 		)
 	}
 
-	for (let key in Class.statics) {
-		Class[key] = Class.statics[key]
+	for (let key in klass.statics) {
+		klass[key] = klass.statics[key]
 	}
 
-	constructor[NATIVE] = Class
+	constructor[$native] = klass
 }
 
 /**
- * TODO: Decorator description
- * @function bridge
+ * @decorator bridge
  * @since 0.1.0
  */
 export function bridge(classname: string) {

@@ -1,12 +1,7 @@
 import { View } from '../view/View'
+import { $touches } from './symbol/TouchList'
 import { iterator } from '../iterator'
 import { Touch } from './Touch'
-
-/**
- * @symbol TOUCHES
- * @since 0.4.0
- */
-export const TOUCHES = Symbol('touches')
 
 /**
  * Manages a list of touches.
@@ -20,12 +15,11 @@ export class TouchList implements Iterable<Touch> {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The amount of touches.
 	 * @property length
 	 * @since 0.4.0
 	 */
 	public get length(): number {
-		return this[TOUCHES].length
+		return this[$touches].length
 	}
 
 	//--------------------------------------------------------------------------
@@ -37,34 +31,29 @@ export class TouchList implements Iterable<Touch> {
 	 * @since 0.4.0
 	 */
 	constructor(touches: Array<Touch>) {
-		this[TOUCHES] = touches
+		this[$touches] = touches
 	}
 
 	/**
-	 * Returns the touch at a specified index.
 	 * @method item
 	 * @since 0.4.0
 	 */
 	public item(index: number) {
-		return this[TOUCHES][index]
+		return this[$touches][index]
 	}
 
 	/**
-	 * Finds a specified touch within the list.
-	 * @method find
-	 * @since 0.4.0
-	 */
-	public find(touch: Touch) {
-		return this[TOUCHES].find(t => t.identifier == touch.identifier)
-	}
-
-	/**
-	 * Finds the touch that hits the specified view.
 	 * @method hits
-	 * @since 0.4.0
+	 * @since 0.7.0
 	 */
-	public hits(view: View) {
-		return this[TOUCHES].find(t => t.hits(view)) != null
+	public hits(target: View) {
+
+		let result = this[$touches].find(touch => touch.hits(target))
+		if (result) {
+			return true
+		}
+
+		return false
 	}
 
 	//--------------------------------------------------------------------------
@@ -77,7 +66,7 @@ export class TouchList implements Iterable<Touch> {
 	 * @since 0.4.0
 	 */
 	public [Symbol.iterator]() {
-		return iterator<Touch>(this[TOUCHES])
+		return iterator<Touch>(this[$touches])
 	}
 
 	//--------------------------------------------------------------------------
@@ -85,9 +74,9 @@ export class TouchList implements Iterable<Touch> {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @property [TOUCHES]
-	 * @since 0.4.0
+	 * @property $touches
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	[TOUCHES]: Array<Touch> = []
+	private [$touches]: Array<Touch> = []
 }

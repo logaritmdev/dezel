@@ -1,7 +1,6 @@
 import { Point2D } from './Point2d'
 
 /**
- * Provides the transformations methods for a 2d matrix.
  * @class Transform2D
  * @since 0.1.0
  */
@@ -16,37 +15,37 @@ export class Transform2D {
 	//	0	0	1
 
 	/**
-	 * public a
+	 * @property a
 	 * @since 0.1.0
 	 */
 	public a = 1
 
 	/**
-	 * public b
+	 * @property b
 	 * @since 0.1.0
 	 */
 	public b = 0
 
 	/**
-	 * public c
+	 * @property c
 	 * @since 0.1.0
 	 */
 	public c = 0
 
 	/**
-	 * public d
+	 * @property d
 	 * @since 0.1.0
 	 */
 	public d = 1
 
 	/**
-	 * public e
+	 * @property e
 	 * @since 0.1.0
 	 */
 	public e = 0
 
 	/**
-	 * public f
+	 * @property f
 	 * @since 0.1.0
 	 */
 	public f = 0
@@ -56,7 +55,6 @@ export class Transform2D {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Initializes the matrix.
 	 * @constructor
 	 * @since 0.1.0
 	 */
@@ -87,7 +85,6 @@ export class Transform2D {
 	}
 
 	/**
-	 * Translates the matrix.
 	 * @method translate
 	 * @since 0.1.0
 	 */
@@ -98,7 +95,6 @@ export class Transform2D {
 	}
 
 	/**
-	 * Scales the matrix.
 	 * @method scale
 	 * @since 0.1.0
 	 */
@@ -111,7 +107,6 @@ export class Transform2D {
 	}
 
 	/**
-	 * Rotates the matrix.
 	 * @method rotate
 	 * @since 0.1.0
 	 */
@@ -136,7 +131,6 @@ export class Transform2D {
 	}
 
 	/**
-	 * Multiply the matrix with the specified matrix.
 	 * @method concat
 	 * @since 0.1.0
 	 */
@@ -185,7 +179,6 @@ export class Transform2D {
 	}
 
 	/**
-	 * Resets the matrix.
 	 * @method reset
 	 * @since 0.1.0
 	 */
@@ -200,7 +193,6 @@ export class Transform2D {
 	}
 
 	/**
-	 * Transforms a point using the matrix.
 	 * @method transform
 	 * @since 0.1.0
 	 */
@@ -213,7 +205,6 @@ export class Transform2D {
 	}
 
 	/**
-	 * Indicates whether the matrix is the identity matrix.
 	 * @method isIdentity
 	 * @since 0.1.0
 	 */

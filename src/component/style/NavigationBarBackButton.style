@@ -1,0 +1,19 @@
+NavigationBarBackButton {
+
+	padding-left: 6px;
+	padding-right: 6px;
+	touch-offset-top: -12px;
+	touch-offset-left: -12px;
+	touch-offset-right: -12px;
+	touch-offset-bottom: -12px;
+
+	#image {
+		source: 'images/navigation-bar-back-button.png';
+		height: 20px;
+		width: 12px;
+	}
+
+	#label {
+		margin-left: 6px;
+	}
+}

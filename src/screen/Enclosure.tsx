@@ -1,24 +1,12 @@
-import { Event } from '../event/Event'
 import { View } from '../view/View'
-import { ViewInsertEvent } from '../view/View'
-import { ViewRemoveEvent } from '../view/View'
+import { $screen } from './symbol/Enclosure'
 import { Screen } from './Screen'
-
-import './Enclosure.ds'
-import './Enclosure.ds.ios'
-import './Enclosure.ds.android'
-
-/**
- * @symbol SCREEN
- * @since 0.4.0
- */
-export const SCREEN = Symbol('screen')
+import './style/Enclosure.style'
 
 /**
  * @class Enclosure
  * @super View
  * @since 0.4.0
- * @hidden
  */
 export class Enclosure extends View {
 
@@ -32,7 +20,7 @@ export class Enclosure extends View {
 	 * @since 0.4.0
 	 */
 	public get screen(): Screen {
-		return this[SCREEN]
+		return this[$screen]
 	}
 
 	//--------------------------------------------------------------------------
@@ -46,23 +34,31 @@ export class Enclosure extends View {
 	 */
 	constructor(screen: Screen) {
 		super()
-		this[SCREEN] = screen
-		this[SCREEN].enclosure = this
+		this[$screen] = screen
+		this[$screen].enclosure = this
 		this.append(screen)
 	}
 
 	/**
-	 * @inherited
+	 * @method embed
+	 * @since 0.7.0
+	 */
+	public embed(view: View) {
+		view.append(this)
+		return this
+	}
+
+	/**
 	 * @method destroy
 	 * @since 0.4.0
 	 */
 	public destroy() {
 
-		if (this[SCREEN]) {
-			this[SCREEN].enclosure = null
+		if (this[$screen]) {
+			this[$screen].enclosure = null
 		}
 
-		super.destroy()
+		return super.destroy()
 	}
 
 	//--------------------------------------------------------------------------
@@ -70,9 +66,9 @@ export class Enclosure extends View {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @property [SCREEN]
-	 * @since 0.4.0
+	 * @property $screen
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private [SCREEN]: Screen
+	private [$screen]: Screen
 }

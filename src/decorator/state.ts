@@ -32,8 +32,7 @@ function decorate(prototype: object, property: string) {
 }
 
 /**
- * TODO: Decorator description
- * @function state
+ * @decorator state
  * @since 0.1.0
  */
 export function state(prototype: object, property: string) {

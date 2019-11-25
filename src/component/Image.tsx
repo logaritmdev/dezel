@@ -1,12 +1,11 @@
 import { ImageView } from '../view/ImageView'
-import './Image.ds'
-import './Image.ds.android'
-import './Image.ds.ios'
+import './style/Image.style'
+import './style/Image.style.android'
+import './style/Image.style.ios'
 
 /**
- * Displays text.
  * @class Image
- * @super Component
+ * @super ImageView
  * @since 0.7.0
  */
 export class Image extends ImageView {

@@ -5,25 +5,19 @@ import { Event } from '../event/Event'
 import { Platform } from '../platform/Platform'
 import { Touch } from '../touch/Touch'
 import { TouchEvent } from '../touch/TouchEvent'
+import { Reference } from '../view/Reference'
 import { View } from '../view/View'
 import { Component } from './Component'
-import { Host } from './Host'
+import { Root } from './Root'
 import { Spinner } from './Spinner'
-import './Refresher.ds'
-import './Refresher.ds.android'
-import './Refresher.ds.ios'
+import './style/Refresher.style'
+import './style/Refresher.style.android'
+import './style/Refresher.style.ios'
+
+// TODO
+// FIXME
 
 /**
- * The internal references.
- * @interface Refs
- * @since 0.7.0
- */
-interface Refs {
-	spinner: Spinner
-}
-
-/**
- * Displays a refresh indicator within a scrollable element.
  * @class Refresher
  * @super Component
  * @since 0.2.0
@@ -35,30 +29,26 @@ export class Refresher extends Component {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The refresher's spinner.
 	 * @property spinner
 	 * @since 0.2.0
 	 */
 	public get spinner(): Spinner {
-		return this.refs.spinner
+		return this.refs.spinner.get()
 	}
 
 	/**
-	 * The view that contains the refresh indicator.
 	 * @property view
 	 * @since 0.2.0
 	 */
 	@watch public view: View | null = null
 
 	/**
-	 * Whether the can be refreshed.
 	 * @property refreshable
 	 * @since 0.2.0
 	 */
 	@state public refreshable: boolean = false
 
 	/**
-	 * Whether the indicator is refreshing.
 	 * @property refreshing
 	 * @since 0.2.0
 	 */
@@ -69,20 +59,18 @@ export class Refresher extends Component {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method render
 	 * @since 0.3.0
 	 */
 	public render() {
 		return (
-			<Host>
-				<Spinner for={this} id="spinner" style="spinner" />
-			</Host>
+			<Root>
+				<Spinner ref={this.refs.spinner} id="spinner" />
+			</Root>
 		)
 	}
 
 	/**
-	 * Indicates to the indicator that refreshing is completed.
 	 * @method done
 	 * @since 0.2.0
 	 */
@@ -148,16 +136,21 @@ export class Refresher extends Component {
 					newView.on('touchend', this.onViewTouchEnd)
 				}
 			}
-
-			return
 		}
-
-		super.onPropertyChange(property, newValue, oldValue)
 	}
 
 	//--------------------------------------------------------------------------
 	// Private API
 	//--------------------------------------------------------------------------
+
+	/**
+	 * @property refs
+	 * @since 0.2.0
+	 * @hidden
+	 */
+	private refs = {
+		spinner: new Reference<Spinner>()
+	}
 
 	/**
 	 * @property trackedTouch
@@ -276,7 +269,7 @@ export class Refresher extends Component {
 
 			let touch = event.touches.item(i)
 
-			if (touch.identifier == tracked.identifier) {
+			if (touch == tracked) {
 
 				let diff = touch.y - (startY - scrollT)
 				if (diff > this.measuredHeight) {
@@ -318,7 +311,7 @@ export class Refresher extends Component {
 
 			let touch = event.touches.item(i)
 
-			if (touch.identifier == tracked.identifier) {
+			if (touch == tracked) {
 
 				this.trackedTouch = null
 				this.trackedTouchStartX = 0

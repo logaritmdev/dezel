@@ -1,6 +1,0 @@
-Content {
-	height: fill;
-	expand: 1;
-	shrink: 1;
-	scrollable: true;
-}

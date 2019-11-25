@@ -1,32 +1,10 @@
 import * as diff from 'fast-array-diff'
 import { Emitter } from '../event/Emitter'
+import { $data } from './symbol/DataSource'
+import { $rows } from './symbol/DataSource'
 import { iterator } from '../iterator'
 
 /**
- * @symbol DATA
- * @since 0.1.0
- */
-export const DATA = Symbol('data')
-
-/**
- * @symbol ROWS
- * @since 0.1.0
- */
-export const ROWS = Symbol('rows')
-
-/**
- * The comparator values.
- * @enum Comparison
- * @since 0.2.0
- */
-export interface DataSourceOptions<T> {
-	isEqual?: (a: T, b: T) => boolean
-	isNewer?: (a: T, b: T) => boolean
-	filter?: (a: T) => boolean
-}
-
-/**
- * Manages an array of data.
  * @class DataSource
  * @super Emitter
  * @since 0.1.0
@@ -38,7 +16,6 @@ export class DataSource<T> extends Emitter {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The data source filtered data.
 	 * @property data
 	 * @since 0.1.0
 	 */
@@ -46,14 +23,13 @@ export class DataSource<T> extends Emitter {
 
 		if (this.invalid == true) {
 			this.invalid = false
-			this[ROWS] = this.generate()
+			this[$rows] = this.generate()
 		}
 
-		return this[ROWS]
+		return this[$rows]
 	}
 
 	/**
-	 * The data source's size.
 	 * @property size
 	 * @since 0.1.0
 	 */
@@ -61,10 +37,10 @@ export class DataSource<T> extends Emitter {
 
 		if (this.invalid == true) {
 			this.invalid = false
-			this[ROWS] = this.generate()
+			this[$rows] = this.generate()
 		}
 
-		return this[ROWS].length
+		return this[$rows].length
 	}
 
 	/**
@@ -79,7 +55,6 @@ export class DataSource<T> extends Emitter {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Initializes the data source with optional data.
 	 * @constructor
 	 * @since 0.1.0
 	 */
@@ -98,19 +73,18 @@ export class DataSource<T> extends Emitter {
 		}
 
 		if (data instanceof DataSource) {
-			this[DATA] = data[DATA].slice(0)
-			this[ROWS] = data[ROWS].slice(0)
+			this[$data] = data[$data].slice(0)
+			this[$rows] = data[$rows].slice(0)
 			return
 		}
 
 		data = data.slice(0)
 
-		this[DATA] = data
-		this[ROWS] = data
+		this[$data] = data
+		this[$rows] = data
 	}
 
 	/**
-	 * Indicates whether the data sources has data at a specified row index.
 	 * @method has
 	 * @since 0.1.0
 	 */
@@ -119,22 +93,20 @@ export class DataSource<T> extends Emitter {
 	}
 
 	/**
-	 * Returns the data at a specified row index.
 	 * @method get
 	 * @since 0.1.0
 	 */
 	public get(index: number): T | undefined {
-		return this[ROWS][index]
+		return this[$rows][index]
 	}
 
 	/**
-	 * Finds a value from the filtered data.
 	 * @method find
 	 * @since 0.1.0
 	 */
 	public find(predicate: (value: T) => boolean) {
 
-		for (let value of this[ROWS]) {
+		for (let value of this[$rows]) {
 			let found = predicate(value)
 			if (found == true) {
 				return value
@@ -145,7 +117,6 @@ export class DataSource<T> extends Emitter {
 	}
 
 	/**
-	 * Finds the index of a value from the filtered data.
 	 * @method findIndex
 	 * @since 0.1.0
 	 */
@@ -153,14 +124,13 @@ export class DataSource<T> extends Emitter {
 
 		let value = this.find(predicate)
 		if (value) {
-			return this[ROWS].indexOf(value)
+			return this[$rows].indexOf(value)
 		}
 
 		return null
 	}
 
 	/**
-	 * Appends data to the data source.
 	 * @method append
 	 * @since 0.1.0
 	 */
@@ -169,7 +139,6 @@ export class DataSource<T> extends Emitter {
 	}
 
 	/**
-	 * Inserts data in the data source at a specified index.
 	 * @method insert
 	 * @since 0.1.0
 	 */
@@ -182,34 +151,32 @@ export class DataSource<T> extends Emitter {
 		}
 
 		this.invalid = true
-		this[DATA].splice(index, 0, ...rows)
+		this[$data].splice(index, 0, ...rows)
 		this.emit<DataSourceInsertEvent<T>>('insert', { data: { index, rows } })
 
 		return this
 	}
 
 	/**
-	 * Removes data from the data source at a specified index.
 	 * @method remove
 	 * @since 0.1.0
 	 */
 	public remove(rows: Array<T>) {
 
-		let index = this[DATA].indexOf(rows[0])
+		let index = this[$data].indexOf(rows[0])
 		if (index < this.minIndex ||
 			index > this.maxIndex) {
 			return this
 		}
 
 		this.invalid = true
-		this[DATA].splice(index, rows.length)
+		this[$data].splice(index, rows.length)
 		this.emit<DataSourceRemoveEvent<T>>('remove', { data: { index, rows } })
 
 		return this
 	}
 
 	/**
-	 * Updates the data.
 	 * @method update
 	 * @since 0.2.0
 	 */
@@ -255,7 +222,7 @@ export class DataSource<T> extends Emitter {
 			}
 
 			this.invalid = true
-			this[DATA][index] = newValue
+			this[$data][index] = newValue
 			this.emit<DataSourceChangeEvent<T>>('change', { data: { index, value: newValue } })
 		}
 
@@ -265,21 +232,19 @@ export class DataSource<T> extends Emitter {
 	}
 
 	/**
-	 * Reset the data source data with new data.
 	 * @method reset
 	 * @since 0.1.0
 	 */
 	public reset(data: Array<T>) {
 
 		this.invalid = true
-		this[DATA] = data.slice(0)
+		this[$data] = data.slice(0)
 		this.emit<DataSourceReloadEvent<T>>('reload')
 
 		return this
 	}
 
 	/**
-	 * Refreshes the current data.
 	 * @method reload
 	 * @since 0.1.0
 	 */
@@ -292,7 +257,6 @@ export class DataSource<T> extends Emitter {
 	}
 
 	/**
-	 * Removes all the data source data.
 	 * @method clear
 	 * @since 0.1.0
 	 */
@@ -302,9 +266,10 @@ export class DataSource<T> extends Emitter {
 			return this
 		}
 
+		this[$data] = []
+		this[$rows] = []
+
 		this.invalid = false
-		this[DATA] = []
-		this[ROWS] = []
 
 		this.emit<DataSourceReloadEvent<T>>('reload')
 
@@ -321,7 +286,7 @@ export class DataSource<T> extends Emitter {
 	 * @since 0.1.0
 	 */
 	[Symbol.iterator]() {
-		return iterator(this[ROWS])
+		return iterator(this[$rows])
 	}
 
 	//--------------------------------------------------------------------------
@@ -329,22 +294,18 @@ export class DataSource<T> extends Emitter {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @property [DATA]
-	 * @since 0.1.0
+	 * @property $data
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private [DATA]: Array<T> = []
+	private [$data]: Array<T> = []
 
 	/**
-	 * @property [ROWS]
-	 * @since 0.1.0
+	 * @property $rows
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private [ROWS]: Array<T> = []
-
-	//--------------------------------------------------------------------------
-	// Private API
-	//--------------------------------------------------------------------------
+	private [$rows]: Array<T> = []
 
 	/**
 	 * @property minIndex
@@ -361,7 +322,7 @@ export class DataSource<T> extends Emitter {
 	 * @hidden
 	 */
 	private get maxIndex(): number {
-		return this[DATA].length - 1
+		return this[$data].length - 1
 	}
 
 	/**
@@ -410,10 +371,10 @@ export class DataSource<T> extends Emitter {
 
 		let filter = this.filter
 		if (filter == null) {
-			return this[DATA]
+			return this[$data]
 		}
 
-		return this[DATA].filter(filter)
+		return this[$data].filter(filter)
 	}
 
 	/**
@@ -456,6 +417,16 @@ export class DataSource<T> extends Emitter {
 			updates: updates
 		}
 	}
+}
+
+/**
+ * @enum DataSourceOptions
+ * @since 0.2.0
+ */
+export interface DataSourceOptions<T> {
+	isEqual?: (a: T, b: T) => boolean
+	isNewer?: (a: T, b: T) => boolean
+	filter?: (a: T) => boolean
 }
 
 /**

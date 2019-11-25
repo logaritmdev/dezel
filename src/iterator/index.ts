@@ -1,7 +1,7 @@
 /**
- * Creates an iterator for the specified array.
  * @function iterator
  * @since 0.6.0
+ * @hidden
  */
 export function iterator<T>(array: Array<T> | any) {
 

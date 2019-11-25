@@ -1,10 +1,9 @@
 import { TextView } from '../view/TextView'
-import './Label.ds'
-import './Label.ds.android'
-import './Label.ds.ios'
+import './style/Label.style'
+import './style/Label.style.android'
+import './style/Label.style.ios'
 
 /**
- * TODO
  * @class Label
  * @super TextView
  * @since 0.7.0

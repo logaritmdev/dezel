@@ -4,7 +4,6 @@ import { native } from '../native/native'
 @bridge('dezel.platform.Platform')
 
 /**
- * Contains informations regarding the current platform.
  * @class Platform
  * @since 0.1.0
  */
@@ -15,7 +14,6 @@ export class Platform {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The current device.
 	 * @property current
 	 * @since 0.7.0
 	 */
@@ -33,7 +31,6 @@ export class Platform {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Returns the platform's name.
 	 * @property name
 	 * @since 0.1.0
 	 */
@@ -42,23 +39,17 @@ export class Platform {
 	}
 
 	/**
-	 * Returns the platform's version.
 	 * @property version
 	 * @since 0.1.0
 	 */
 	public get version(): string {
 		return native(this).version
 	}
-
-	//--------------------------------------------------------------------------
-	// Native API
-	//--------------------------------------------------------------------------
-
 }
 
 /**
- * The current platform.
- * @var current
+ * @const current
  * @since 0.7.0
+ * @hidden
  */
 let current: Platform | null = null

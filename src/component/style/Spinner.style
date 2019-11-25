@@ -1,0 +1,6 @@
+Spinner {
+	content-alignment: center;
+	content-disposition: center;
+	height: wrap;
+	width: wrap;
+}

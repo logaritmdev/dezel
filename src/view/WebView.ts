@@ -6,7 +6,6 @@ import { View } from './View'
 @bridge('dezel.view.WebView')
 
 /**
- * Displays a stripped down web browser.
  * @class WebView
  * @super View
  * @since 0.2.0
@@ -18,7 +17,6 @@ export class WebView extends View {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Initializes this view.
 	 * @constructor
 	 * @since 0.2.0
 	 */
@@ -29,17 +27,15 @@ export class WebView extends View {
 	}
 
 	/**
-	 * Loads an URL.
-	 * @method load
-	 * @since 0.2.0
+	 * @method loadURL
+	 * @since 0.7.0
 	 */
-	public load(url: string) {
+	public loadURL(url: string) {
 		native(this).load(url)
 		return this
 	}
 
 	/**
-	 * Loads HTML.
 	 * @method loadHTML
 	 * @since 0.2.0
 	 */
@@ -49,7 +45,6 @@ export class WebView extends View {
 	}
 
 	/**
-	 * Reloads the webview.
 	 * @method reload
 	 * @since 0.2.0
 	 */
@@ -59,7 +54,6 @@ export class WebView extends View {
 	}
 
 	/**
-	 * Stops the webview's loading.
 	 * @method stop
 	 * @since 0.2.0
 	 */
@@ -69,7 +63,6 @@ export class WebView extends View {
 	}
 
 	/**
-	 * Go back in the webview's history.
 	 * @method back
 	 * @since 0.2.0
 	 */
@@ -79,7 +72,6 @@ export class WebView extends View {
 	}
 
 	/**
-	 * Go forward in the webview's history.
 	 * @method forward
 	 * @since 0.2.0
 	 */
@@ -93,7 +85,6 @@ export class WebView extends View {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method onEvent
 	 * @since 0.7.0
 	 */

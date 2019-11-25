@@ -1,3 +1,5 @@
+import { setEventSender } from './private/Event'
+import { setEventTarget } from './private/Event'
 import { Emitter } from './Emitter'
 import { Event } from './Event'
 import { EventOptions } from './Event'
@@ -59,7 +61,7 @@ it('should set the sender', () => {
 
 	let value = new Emitter()
 	let event = create('test')
-	event.setSender(value)
+	setEventSender(event, value)
 
 	expect(event.sender).toBe(value)
 })
@@ -68,7 +70,7 @@ it('shluld set the target', () => {
 
 	let value = new Emitter()
 	let event = create('test')
-	event.setTarget(value)
+	setEventTarget(event, value)
 
 	expect(event.target).toBe(value)
 })

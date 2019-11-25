@@ -3,19 +3,19 @@ import { watch } from '../decorator/watch'
 import { Event } from '../event/Event'
 import { Touch } from '../touch/Touch'
 import { TouchEvent } from '../touch/TouchEvent'
+import { Reference } from '../view/Reference'
 import { View } from '../view/View'
-import { ViewInsertEvent } from '../view/View'
-import { ViewRemoveEvent } from '../view/View'
+import { $selectedIndex } from './symbol/List'
+import { $selectedValue } from './symbol/List'
 import { Component } from './Component'
 import { ListItem } from './ListItem'
-import { ListManager } from './ListManager'
-import { Refresher } from './Refresher'
-import './List.ds'
-import './List.ds.android'
-import './List.ds.ios'
+import { Root } from './Root'
+import { Slot } from './Slot'
+import './style/List.style'
+import './style/List.style.android'
+import './style/List.style.ios'
 
 /**
- * Displays a scrollable array of elements.
  * @class List
  * @super Component
  * @since 0.1.0
@@ -27,40 +27,19 @@ export class List extends Component {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The list's items.
 	 * @property items
 	 * @since 0.1.0
 	 */
-	@watch public items: Array<ListItem> = []
+	public get items(): Slot {
+		return this.refs.items.get()
+	}
 
 	/**
-	 * The list's manager.
-	 * @property manager
-	 * @since 0.4.0
-	 */
-	@watch public manager: ListManager | null = null
-
-	/**
-	 * The list's refresher.
-	 * @property refresher
-	 * @since 0.2.0
-	 */
-	@watch public refresher: Refresher | null = null
-
-	/**
-	 * Whether the list is selectable.
-	 * @property selectable
-	 * @since 0.1.0
-	 */
-	public selectable: boolean = true
-
-	/**
-	 * The list's selected item index.
 	 * @property selectedIndex
 	 * @since 0.1.0
 	 */
-	public get selectedIndex(): number | undefined | null {
-		return this.manager ? this.manager.selectedIndex : this.getSelectedItemIndex()
+	public get selectedIndex(): number | null {
+		return this[$selectedIndex]
 	}
 
 	//--------------------------------------------------------------------------
@@ -68,51 +47,38 @@ export class List extends Component {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method render
 	 * @since 0.7.0
 	 */
 	public render() {
-		return null
+		return (
+			<Root>
+				<Slot ref={this.refs.items} main="true" />
+			</Root>
+		)
 	}
 
 	/**
-	 * @inherited
-	 * @method destroy
-	 * @since 0.2.0
-	 */
-	public destroy() {
-
-		this.items = []
-
-		if (this.manager) {
-			this.manager.detach()
-			this.manager.destroy()
-			this.manager = null
-		}
-
-		super.destroy()
-
-		return this
-	}
-
-	/**
-	 * Selects an item at a specified index.
 	 * @method select
 	 * @since 0.1.0
 	 */
-	public select(index: ListItem | number | undefined | null) {
+	public select(index: number | null) {
 
-		if (this.manager) {
-			this.manager.select(index)
+		if (index == this.selectedIndex) {
 			return this
 		}
 
-		if (index instanceof ListItem) {
-			index = this.items.indexOf(index)
-		}
+		let event = new Event<ListBeforeSelectEvent>('beforeselect', {
+			cancelable: true,
+			propagable: false,
+			data: {
+				index
+			}
+		})
 
-		if (index == this.selectedIndex) {
+		this.emit(event)
+
+		if (event.canceled) {
 			return this
 		}
 
@@ -132,92 +98,47 @@ export class List extends Component {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
+	 * @method onBeforeSelect
+	 * @since 0.7.0
+	 */
+	protected onBeforeSelect(index: number) {
+
+	}
+
+	/**
+	 * @method onSelect
+	 * @since 0.7.0
+	 */
+	protected onSelect(index: number) {
+
+	}
+
+	/**
+	 * @method onDeselect
+	 * @since 0.7.0
+	 */
+	protected onDeselect(index: number) {
+
+	}
+
+	/**
 	 * @method onInsert
 	 * @since 0.1.0
 	 */
 	protected onInsert(child: View, index: number) {
-
-		super.onInsert(child, index)
-
 		if (child instanceof ListItem) {
-
-			child.on('touchcancel', this.onListItemTouchCancel)
-			child.on('touchstart', this.onListItemTouchStart)
-			child.on('touchend', this.onListItemTouchEnd)
-
-			this.insertListItem(child, index)
+			child.on('press', this.onListItemPress)
 		}
 	}
 
 	/**
-	 * @inherited
 	 * @method onRemove
 	 * @since 0.1.0
 	 */
 	protected onRemove(child: View, index: number) {
-
-		super.onRemove(child, index)
-
 		if (child instanceof ListItem) {
-
-			child.off('touchcancel', this.onListItemTouchCancel)
-			child.off('touchstart', this.onListItemTouchStart)
-			child.off('touchend', this.onListItemTouchEnd)
-
-			this.removeListItem(child, index)
+			child.off('press', this.onListItemPress)
 		}
-	}
-
-	/**
-	 * @inherited
-	 * @method onPropertyChange
-	 * @since 0.4.0
-	 */
-	protected onPropertyChange(property: string, newValue: any, oldValue: any) {
-
-		if (property == 'items') {
-
-			let newItems = newValue as Array<ListItem>
-			let oldItems = oldValue as Array<ListItem>
-			if (oldItems) for (let item of oldItems) this.remove(item)
-			if (newItems) for (let item of newItems) this.append(item)
-
-			return
-		}
-
-		if (property == 'manager') {
-
-			let newProvider = newValue as ListManager<any>
-			let oldProvider = oldValue as ListManager<any>
-			if (oldProvider) oldProvider.detach()
-
-			if (newProvider) {
-				newProvider.attach(this)
-			}
-
-			return
-		}
-
-		if (property == 'refresher') {
-
-			let newRefresher = newValue as Refresher
-			let oldRefresher = oldValue as Refresher
-
-			if (oldRefresher) {
-				oldRefresher.view = null
-				this.remove(oldRefresher)
-			}
-
-			if (newRefresher) {
-				newRefresher.view = this
-				this.insert(newRefresher, 0)
-			}
-
-			return
-		}
-
-		super.onPropertyChange(property, newValue, oldValue)
 	}
 
 	//--------------------------------------------------------------------------
@@ -225,33 +146,26 @@ export class List extends Component {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @property touch
-	 * @since 0.1.0
+	 * @property selectedIndex
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private touch: Touch | null = null
+	private [$selectedIndex]: number | null = null
 
 	/**
-	 * @property pressedItem
-	 * @since 0.1.0
+	 * @property selectedValue
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private pressedItem: ListItem | null = null
+	private [$selectedValue]: ListItem | null = null
 
 	/**
-	 * @property selectedItem
-	 * @since 0.1.0
+	 * @property refs
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private selectedItem: ListItem | null = null
-
-	/**
-	 * @method getSelectedItemIndex
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	private getSelectedItemIndex() {
-		return this.selectedItem ? this.children.indexOf(this.selectedItem) : undefined
+	private refs = {
+		items: new Reference<Slot>()
 	}
 
 	/**
@@ -261,15 +175,20 @@ export class List extends Component {
 	 */
 	private applySelection(index: number) {
 
-		let item = this.items[index]
-		if (item == null) {
+		let value = this.items.children[index]
+		if (value == null) {
 			return this
 		}
 
-		this.selectedItem = item
-		this.selectedItem.selected = true
+		if (value instanceof ListItem) {
 
-		this.emit<ListSelectEvent>('select', { data: { index } })
+			value.selected = true
+
+			this[$selectedIndex] = index
+			this[$selectedValue] = value
+
+			this.emit<ListSelectEvent>('select', { data: { index } })
+		}
 
 		return this
 	}
@@ -281,127 +200,40 @@ export class List extends Component {
 	 */
 	private clearSelection() {
 
-		if (this.selectedItem) {
-			this.selectedItem.selected = false
-			this.emit<ListDeselectEvent>('deselect', { data: { index: this.selectedIndex! } })
+		let index = this[$selectedIndex]
+		let value = this[$selectedValue]
+
+		if (value == null ||
+			index == null) {
+			return this
 		}
 
-		this.selectedItem = null
+		value.selected = false
+
+		this[$selectedIndex] = null
+		this[$selectedValue] = null
+
+		this.emit<ListDeselectEvent>('deselect', { data: { index } })
 
 		return this
 	}
 
 	/**
-	 * @method insertListItem
-	 * @since 0.4.0
+	 * @method onSegmentedBarButtonPress
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private insertListItem(item: ListItem, index: number) {
-
-		if (this.items[index] != item) {
-			this.items.splice(index, 0, item)
-		}
-
-		return this
+	@bound private onListItemPress(event: Event) {
+		this.select(this.items.children.indexOf(event.sender as ListItem))
 	}
+}
 
-	/**
-	 * @method removeListItem
-	 * @since 0.4.0
-	 * @hidden
-	 */
-	private removeListItem(item: ListItem, index: number) {
-
-		if (this.pressedItem == item) {
-			this.pressedItem.pressed = false
-			this.pressedItem = null
-		}
-
-		if (this.selectedItem == item) {
-			this.selectedItem.selected = false
-			this.selectedItem = null
-		}
-
-		if (this.items[index] == item) {
-			this.items.splice(index, 1)
-		}
-
-		return this
-	}
-
-	//--------------------------------------------------------------------------
-	// Private API - Events
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method onListItemTouchCancel
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@bound private onListItemTouchCancel(event: TouchEvent) {
-
-		if (this.selectable == false || this.pressedItem == null || this.touch == null) {
-			return
-		}
-
-		let touch = event.touches.find(this.touch)
-		if (touch) {
-			this.pressedItem.pressed = false
-			this.pressedItem = null
-		}
-	}
-
-	/**
-	 * @method onListItemTouchStart
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@bound private onListItemTouchStart(event: TouchEvent) {
-
-		if (this.selectable == false || this.pressedItem) {
-			return
-		}
-
-		let item = event.sender as ListItem
-		if (item.selectable == false) {
-			return
-		}
-
-		this.touch = event.touches.item(0)
-		this.pressedItem = item as ListItem
-		this.pressedItem.pressed = true
-	}
-
-	/**
-	 * @method onListItemTouchEnd
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@bound private onListItemTouchEnd(event: TouchEvent) {
-
-		if (this.selectable == false || this.pressedItem == null || this.touch == null) {
-			return
-		}
-
-		let item = this.pressedItem
-
-		let touch = event.touches.find(this.touch)
-		if (touch) {
-
-			this.pressedItem.pressed = false
-			this.pressedItem = null
-
-			if (touch.hits(item)) {
-
-				if (this.manager) {
-					this.manager.select(item)
-					return
-				}
-
-				this.select(item)
-			}
-		}
-	}
+/**
+ * @type ListBeforeSelectEvent
+ * @since 0.7.0
+ */
+export type ListBeforeSelectEvent = {
+	index: number | null
 }
 
 /**

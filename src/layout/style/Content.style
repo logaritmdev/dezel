@@ -1,0 +1,6 @@
+Content {
+	height: fill;
+	expand-factor: 1;
+	shrink-factor: 1;
+	scrollable: true;
+}

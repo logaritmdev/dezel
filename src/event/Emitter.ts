@@ -1,22 +1,13 @@
 import { Dictionary } from 'lodash'
+import { setEventSender } from './private/Event'
+import { setEventTarget } from './private/Event'
+import { $listeners } from './symbol/Emitter'
+import { $responder } from './symbol/Emitter'
 import { Event } from './Event'
 import { EventListener } from './Event'
 import { EventOptions } from './Event'
 
 /**
- * @symbol RESPONDER
- * @since 0.4.0
- */
-export const RESPONDER = Symbol('responder')
-
-/**
- * @symbol LISTENERS
- * @since 0.4.0
- */
-export const LISTENERS = Symbol('listeners')
-
-/**
- * Manages event listening and dispatching.
  * @class Emitter
  * @since 0.1.0
  */
@@ -27,12 +18,11 @@ export class Emitter {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The emitter that responds to a bubbled event.
 	 * @property responder
 	 * @since 0.1.0
 	 */
 	public get responder(): Emitter | null {
-		return this[RESPONDER]
+		return this[$responder]
 	}
 
 	//--------------------------------------------------------------------------
@@ -40,47 +30,43 @@ export class Emitter {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Prepare this emitter to be garbage collected.
 	 * @method destroy
 	 * @since 0.1.0
 	 */
 	public destroy() {
-		this[RESPONDER] = null
-		this[LISTENERS] = {}
+		this[$responder] = null
+		this[$listeners] = {}
+		return this
 	}
 
 	/**
-	 * Add an event handler for a specified event.
 	 * @method on
 	 * @since 0.1.0
 	 */
 	public on(type: string, listener: EventListener) {
-		insertListener(this, type.toLowerCase(), listener)
+		insertItem(this, type, listener)
 		return this
 	}
 
 	/**
-	 * Add an event handler for a specified event that will be run only once.
 	 * @method one
 	 * @since 0.7.0
 	 */
 	public one(type: string, listener: EventListener) {
-		insertListener(this, type.toLowerCase(), listener, true)
+		insertItem(this, type, listener, true)
 		return this
 	}
 
 	/**
-	 * Remove an event handler for a specified event.
 	 * @method off
 	 * @since 0.1.0
 	 */
 	public off(type: string, listener: EventListener) {
-		removeListener(this, type.toLowerCase(), listener)
+		removeItem(this, type, listener)
 		return this
 	}
 
 	/**
-	 * Emits and event to the eventListeners.
 	 * @method emit
 	 * @since 0.1.0
 	 */
@@ -96,16 +82,15 @@ export class Emitter {
 
 		}
 
-		event.setTarget(this)
-		event.setSender(this)
+		setEventTarget(event, this)
+		setEventSender(event, this)
 
-		this.dispatch(event)
+		dispatchEvent(this, event)
 
 		return this
 	}
 
 	/**
-	 * Called when an event is received.
 	 * @method onEvent
 	 * @since 0.7.0
 	 */
@@ -113,93 +98,38 @@ export class Emitter {
 
 	}
 
-	/**
-	 * Called once the event has been dispatched.
-	 * @method onDispatch
-	 * @since 0.1.0
-	 */
-	public onDispatch(event: Event) {
-
-	}
-
-	/**
-	 * Called when a property receives a new value.
-	 * @method onPropertyChange
-	 * @since 0.4.0
-	 */
-	protected onPropertyChange(property: string, newValue: any, oldValue: any) {
-
-	}
-
-	//--------------------------------------------------------------------------
-	// Internal API
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method setResponder
-	 * @since 0.4.0
-	 * @hidden
-	 */
-	public setResponder(responder: Emitter | null) {
-		this[RESPONDER] = responder
-	}
-
 	//--------------------------------------------------------------------------
 	// Private API
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @property [RESPONDER]
-	 * @since 0.4.0
+	 * @property $responder
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private [RESPONDER]: Emitter | null = null
+	private [$responder]: Emitter | null = null
 
 	/**
-	 * @property [LISTENERS]
-	 * @since 0.4.0
+	 * @property $listeners
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private [LISTENERS]: Dictionary<Array<Function>> = {}
-
-	/**
-	 * @method dispatch
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	private dispatch(event: Event) {
-
-		event.setSender(this)
-
-		this.onEvent(event)
-
-		if (event.canceled == false) {
-			issue(this, event)
-		}
-
-		this.onDispatch(event)
-
-		if (event.canceled ||
-			event.propagable == false) {
-			return
-		}
-
-		if (this.responder) {
-			this.responder.dispatch(event)
-		}
-	}
+	private [$listeners]: Dictionary<Array<Function>> = {}
 }
 
+
 /**
- * @function insertListener
+ * @function insertItem
  * @since 0.7.0
  * @hidden
  */
-function insertListener(emitter: Emitter, type: string, listener: EventListener, one: boolean = false) {
+function insertItem(emitter: Emitter, type: string, listener: EventListener, one: boolean = false) {
 
-	let listeners = emitter[LISTENERS][type]
+	type = type.toLowerCase()
+
+	let listeners = emitter[$listeners][type]
 	if (listeners == null) {
-		listeners = emitter[LISTENERS][type] = []
+		listeners = emitter[$listeners][type] = []
 	}
 
 	if (one) {
@@ -223,13 +153,15 @@ function insertListener(emitter: Emitter, type: string, listener: EventListener,
 }
 
 /**
- * @function removeListener
+ * @function removeItem
  * @since 0.7.0
  * @hidden
  */
-function removeListener(emitter: Emitter, type: string, listener: EventListener) {
+function removeItem(emitter: Emitter, type: string, listener: EventListener) {
 
-	let listeners = emitter[LISTENERS][type]
+	type = type.toLowerCase()
+
+	let listeners = emitter[$listeners][type]
 	if (listeners == null) {
 		return
 	}
@@ -241,21 +173,50 @@ function removeListener(emitter: Emitter, type: string, listener: EventListener)
 }
 
 /**
- * @function issue
+ * @function dispatchEvent
  * @since 0.7.0
  * @hidden
  */
-function issue(emitter: Emitter, event: Event) {
+function dispatchEvent(sender: Emitter, event: Event) {
 
-	let listeners = emitter[LISTENERS][event.type]
-	if (listeners == null) {
+	setEventSender(event, sender)
+
+	sender.onEvent(event)
+
+	if (event.stopped ||
+		event.canceled ||
+		event.captured) {
 		return
 	}
 
-	for (let listener of listeners) {
-		listener.call(
-			emitter,
-			event
-		)
+	invokeListeners(sender, event)
+
+	if (event.stopped ||
+		event.canceled ||
+		event.captured) {
+		return
+	}
+
+	if (event.propagable == false) {
+		return
+	}
+
+	let responder = sender.responder
+	if (responder) {
+		dispatchEvent(responder, event)
+	}
+}
+
+/**
+ * @function invokeListeners
+ * @since 0.7.0
+ * @hidden
+ */
+function invokeListeners(sender: Emitter, event: Event) {
+	let listeners = sender[$listeners][event.type]
+	if (listeners) {
+		listeners.forEach(listener => {
+			listener.call(null, event)
+		})
 	}
 }
