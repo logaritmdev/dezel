@@ -1,11 +1,15 @@
 import '../index'
 import { Dictionary } from 'lodash'
 import { setEmitterResponder } from '../event/private/Emitter'
+import { setEventTarget } from '../event/private/Event'
 import { setScreenActive } from '../screen/private/Screen'
 import { setScreenPresented } from '../screen/private/Screen'
+import { setTouchCanceled } from '../touch/private/Touch'
+import { setTouchCaptured } from '../touch/private/Touch'
+import { setTouchIdentifier } from '../touch/private/Touch'
+import { setTouchLocationX } from '../touch/private/Touch'
+import { setTouchLocationY } from '../touch/private/Touch'
 import { setTouchTarget } from '../touch/private/Touch'
-import { setTouchX } from '../touch/private/Touch'
-import { setTouchY } from '../touch/private/Touch'
 import { watch } from '../decorator/watch'
 import { Emitter } from '../event/Emitter'
 import { Event } from '../event/Event'
@@ -18,9 +22,10 @@ import { TouchEvent } from '../touch/TouchEvent'
 import { TouchList } from '../touch/TouchList'
 import { View } from '../view/View'
 import { Window } from '../view/Window'
-import { $canceledTouches } from './symbol/Application'
-import { $capturedTargets } from './symbol/Application'
-import { $capturedTouches } from './symbol/Application'
+import { cancelTouchMove } from './private/Application'
+import { cancelTouchStart } from './private/Application'
+import { captureTouchMove } from './private/Application'
+import { captureTouchStart } from './private/Application'
 import { $touches } from './symbol/Application'
 
 @bridge('dezel.application.Application')
@@ -119,11 +124,8 @@ export class Application extends Emitter {
 	 * @since 0.2.0
 	 */
 	public destroy() {
-
 		this.emit('destroy')
-
 		this.window.destroy()
-
 		return this
 	}
 
@@ -141,51 +143,6 @@ export class Application extends Emitter {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method dispatchTouchCancel
-	 * @since 0.7.0
-	 */
-	public dispatchTouchCancel(inputs: Array<InputTouch>) {
-
-		let targets = new Map()
-
-		for (let input of inputs) {
-
-			if (isCanceled(this, input)) {
-				continue
-			}
-
-			let touch = this[$touches][input.pointer]
-			if (touch) {
-				mapTouchTarget(targets, touch)
-			}
-		}
-
-		/*
-		 * At this point, canceled touches are removed.
-		 */
-
-		for (let [target, touches] of targets) {
-
-			let event = new TouchEvent('touchcancel', {
-				propagable: true,
-				capturable: false,
-				cancelable: false,
-				touches: getTouchList(touches),
-				activeTouches: getActiveTouchList(this[$touches]),
-				targetTouches: getTargetTouchList(this[$touches], target)
-			})
-
-			target.emit(event)
-		}
-
-		for (let input of inputs) {
-			delete this[$touches][input.pointer]
-			delete this[$canceledTouches][input.pointer]
-			delete this[$capturedTouches][input.pointer]
-		}
-	}
-
-	/**
 	 * @method dispatchTouchStart
 	 * @since 0.7.0
 	 */
@@ -195,46 +152,31 @@ export class Application extends Emitter {
 
 		for (let input of inputs) {
 
-			if (isCanceled(this, input)) {
+			let target = this.window.findViewAt(
+				input.x,
+				input.y
+			)
+
+			if (target == null) {
 				continue
 			}
 
-			let x = input.x
-			let y = input.y
+			let touch = new Touch(target)
 
-			let target = this.window.findViewAt(x, y)
-			if (target) {
+			mapTouchTarget(targets, touch)
 
-				if (this[$touches][input.pointer] == null) {
-					this[$touches][input.pointer] = new Touch(input.pointer, target, x, y)
-				} else {
+			setTouchIdentifier(touch, input.pointer)
+			setTouchLocationX(touch, input.x)
+			setTouchLocationY(touch, input.y)
 
-					throw new Error(
-						`Application error: ` +
-						`A touch with pointer ${input.pointer} has already been registered.`
-					)
-
-				}
-
-				mapTouchTarget(targets, this[$touches][input.pointer])
-			}
-
-			global.$0 = target
+			setTouch(this, input, touch)
 		}
-
-		/*
-		 * At this point, canceled touches are removed.
-		 */
 
 		for (let [target, touches] of targets) {
 
-			let captured = touches.some((touch: Touch) => {
-				return isCaptured(this, touch)
-			})
-
 			let event = new TouchEvent('touchstart', {
-				propagable: captured == false,
-				capturable: captured == false,
+				propagable: true,
+				capturable: true,
 				cancelable: true,
 				touches: getTouchList(touches),
 				activeTouches: getActiveTouchList(this[$touches]),
@@ -246,17 +188,18 @@ export class Application extends Emitter {
 			if (event.canceled ||
 				event.captured) {
 
-				let map = getInputTouchMap(inputs)
+				updateInputTouches(event, inputs)
 
-				if (event.canceled) {
-					cancelTouchEvent(this, map, event)
+				switch (true) {
+					case event.canceled: cancelTouchStart(event); break
+					case event.captured: captureTouchStart(event); break
 				}
 
-				if (event.captured) {
-					captureTouchEvent(this, map, event)
-				}
+				setEventTarget(event, event.sender)
 
-				dispatchTouchCancel(event)
+				for (let touch of event.touches) {
+					setTouchTarget(touch, event.sender)
+				}
 			}
 		}
 	}
@@ -267,30 +210,24 @@ export class Application extends Emitter {
 	 */
 	public dispatchTouchMove(inputs: Array<InputTouch>) {
 
-		let targets = new Map()
+		let targets = new Map<View, Array<Touch>>()
 
 		for (let input of inputs) {
 
-			if (isCanceled(this, input)) {
+			let touch = getTouch(this, input)
+			if (touch == null) {
 				continue
 			}
 
-			let touch = this[$touches][input.pointer]
-			if (touch) {
-				setTouchX(touch, input.x)
-				setTouchY(touch, input.y)
-				mapTouchTarget(targets, touch)
-			}
+			mapTouchTarget(targets, touch)
+			setTouchLocationX(touch, input.x)
+			setTouchLocationY(touch, input.y)
 		}
-
-		/*
-		 * At this point, canceled touches are removed.
-		 */
 
 		for (let [target, touches] of targets) {
 
-			let captured = touches.some((touch: Touch) => {
-				return isCaptured(this, touch)
+			let captured = touches.some(touch => {
+				return touch.captured
 			})
 
 			let event = new TouchEvent('touchmove', {
@@ -307,17 +244,18 @@ export class Application extends Emitter {
 			if (event.canceled ||
 				event.captured) {
 
-				let map = getInputTouchMap(inputs)
+				updateInputTouches(event, inputs)
 
-				if (event.canceled) {
-					cancelTouchEvent(this, map, event)
+				switch (true) {
+					case event.canceled: cancelTouchMove(event); break
+					case event.captured: captureTouchMove(event); break
 				}
 
-				if (event.captured) {
-					captureTouchEvent(this, map, event)
-				}
+				setEventTarget(event, event.sender)
 
-				dispatchTouchCancel(event)
+				for (let touch of event.touches) {
+					setTouchTarget(touch, event.sender)
+				}
 			}
 		}
 	}
@@ -328,28 +266,24 @@ export class Application extends Emitter {
 	 */
 	public dispatchTouchEnd(inputs: Array<InputTouch>) {
 
-		let targets = new Map()
+		let targets = new Map<View, Array<Touch>>()
 
 		for (let input of inputs) {
 
-			if (isCanceled(this, input)) {
+			let touch = getTouch(this, input)
+			if (touch == null) {
 				continue
 			}
 
-			let touch = this[$touches][input.pointer]
-			if (touch) {
-				mapTouchTarget(targets, touch)
-			}
+			mapTouchTarget(targets, touch)
+			setTouchLocationX(touch, input.x)
+			setTouchLocationY(touch, input.y)
 		}
-
-		/*
-		 * At this point, canceled touches are removed.
-		 */
 
 		for (let [target, touches] of targets) {
 
-			let captured = touches.some((touch: Touch) => {
-				return isCaptured(this, touch)
+			let captured = touches.some(touch => {
+				return touch.captured
 			})
 
 			let event = new TouchEvent('touchend', {
@@ -364,11 +298,48 @@ export class Application extends Emitter {
 			target.emit(event)
 		}
 
+		removeInputTouches(inputs, this)
+	}
+
+	/**
+	 * @method dispatchTouchCancel
+	 * @since 0.7.0
+	 */
+	public dispatchTouchCancel(inputs: Array<InputTouch>) {
+
+		let targets = new Map<View, Array<Touch>>()
+
 		for (let input of inputs) {
-			delete this[$touches][input.pointer]
-			delete this[$canceledTouches][input.pointer]
-			delete this[$capturedTouches][input.pointer]
+
+			let touch = getTouch(this, input)
+			if (touch == null) {
+				continue
+			}
+
+			mapTouchTarget(targets, touch)
+			setTouchLocationX(touch, input.x)
+			setTouchLocationY(touch, input.y)
 		}
+
+		for (let [target, touches] of targets) {
+
+			let captured = touches.some(touch => {
+				return touch.captured
+			})
+
+			let event = new TouchEvent('touchcancel', {
+				propagable: captured == false,
+				capturable: false,
+				cancelable: false,
+				touches: getTouchList(touches),
+				activeTouches: getActiveTouchList(this[$touches]),
+				targetTouches: getTargetTouchList(this[$touches], target)
+			})
+
+			target.emit(event)
+		}
+
+		removeInputTouches(inputs, this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -559,9 +530,9 @@ export class Application extends Emitter {
 
 				this.window.append(enclosure)
 
+				this.statusBarVisible = newScreen.statusBarVisible
 				this.statusBarForegroundColor = newScreen.statusBarForegroundColor
 				this.statusBarBackgroundColor = newScreen.statusBarBackgroundColor
-				this.statusBarVisible = newScreen.statusBarVisible
 
 				newScreen.emit('beforepresent')
 				newScreen.emit('beforeenter')
@@ -584,20 +555,6 @@ export class Application extends Emitter {
 	 * @hidden
 	 */
 	private [$touches]: Dictionary<Touch> = {}
-
-	/**
-	 * @property $canceledTouches
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	private [$canceledTouches]: Dictionary<Touch> = {}
-
-	/**
-	 * @property $capturedTouches
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	private [$capturedTouches]: Dictionary<Touch> = {}
 
 	//--------------------------------------------------------------------------
 	// Native API
@@ -774,8 +731,8 @@ export interface InputTouch {
 	pointer: number
 	x: number
 	y: number
-	canceled?: boolean
-	captured?: boolean
+	canceled: boolean
+	captured: boolean
 	receiver?: any
 }
 
@@ -822,12 +779,47 @@ function mapTouchTarget(targets: Map<any, any>, touch: Touch) {
 }
 
 /**
+ * @function setTouch
+ * @since 0.7.0
+ * @hidden
+ */
+function setTouch(application: Application, input: InputTouch, touch: Touch) {
+
+	if (application[$touches][input.pointer] == null) {
+		application[$touches][input.pointer] = touch
+		return
+	}
+
+	throw new Error(
+		`Application error: ` +
+		`The touch ${input.pointer} has already been registered.`
+	)
+}
+
+/**
+ * @function getTouch
+ * @since 0.7.0
+ * @hidden
+ */
+function getTouch(application: Application, input: InputTouch) {
+
+	let touch = application[$touches][input.pointer]
+
+	if (touch &&
+		touch.canceled) {
+		return null
+	}
+
+	return touch
+}
+
+/**
  * @function getTouchList
  * @since 0.5.0
  * @hidden
  */
-function getTouchList(touches: Dictionary<Touch>) {
-	return new TouchList(Object.keys(touches).map(key => touches[key]))
+function getTouchList(touches: Array<Touch>) {
+	return new TouchList(touches)
 }
 
 /**
@@ -844,16 +836,16 @@ function getActiveTouchList(touches: Dictionary<Touch>) {
  * @since 0.4.0
  * @hidden
  */
-function getTargetTouchList(touches: Dictionary<Touch>, target: any) {
+function getTargetTouchList(touches: Dictionary<Touch>, target: View) {
 	return new TouchList(Object.keys(touches).map(key => touches[key]).filter(touch => touch.target == target))
 }
 
 /**
- * @method getInputTouchMap
+ * @method updateInputTouches
  * @since 0.7.0
  * @hidden
  */
-function getInputTouchMap(inputs: Array<InputTouch>) {
+function updateInputTouches(event: TouchEvent, inputs: Array<InputTouch>) {
 
 	let map: Dictionary<InputTouch> = {}
 
@@ -863,110 +855,34 @@ function getInputTouchMap(inputs: Array<InputTouch>) {
 		}
 	}
 
-	return map
-}
-
-/**
- * @method isCanceled
- * @since 0.7.0
- * @hidden
- */
-function isCanceled(application: Application, touch: InputTouch | Touch) {
-	return application[$canceledTouches][touch.pointer] != null
-}
-
-/**
- * @method isCaptured
- * @since 0.7.0
- * @hidden
- */
-function isCaptured(application: Application, touch: InputTouch | Touch) {
-	return application[$capturedTouches][touch.pointer] != null
-}
-
-/**
- * @method cancelTouchEvent
- * @since 0.7.0
- * @hidden
- */
-function cancelTouchEvent(application: Application, inputs: Dictionary<InputTouch>, event: TouchEvent) {
-
 	for (let touch of event.touches) {
 
-		if (isCanceled(application, touch)) {
+		let input = map[touch.identifier]
+		if (input == null) {
 			continue
 		}
 
-		let input = inputs[touch.pointer]
-		if (input) {
-			input.canceled = true
-			input.captured = false
-			input.receiver = null
+		if (input.canceled ||
+			input.captured) {
+			continue
 		}
 
-		application[$canceledTouches][touch.pointer] = touch
+		input.canceled = touch.canceled
+		input.captured = touch.captured
+
+		if (input.captured) {
+			input.receiver = native(event.sender)
+		}
 	}
 }
 
 /**
- * @function captureTouchEvent
+ * @method removeInputTouches
  * @since 0.7.0
  * @hidden
  */
-function captureTouchEvent(application: Application, inputs: Dictionary<InputTouch>, event: TouchEvent) {
-
-	let receiver = event.sender
-
-	for (let touch of event.touches) {
-
-		if (isCaptured(application, touch)) {
-			continue
-		}
-
-		let input = inputs[touch.pointer]
-		if (input) {
-			input.captured = true
-			input.receiver = receiver
-		}
-
-		application[$capturedTouches][touch.pointer] = touch
-
-		/*
-		 * The touch target is set once on the touch start event. By resetting
-		 * the target, we can change the receiver.
-		 */
-
-		setTouchTarget(touch, receiver as View)
+function removeInputTouches(inputs: Array<InputTouch>, application: Application) {
+	for (let input of inputs) {
+		delete application[$touches][input.pointer]
 	}
-}
-
-/**
- * @function dispatchTouchCancel
- * @since 0.7.0
- * @hidden
- */
-function dispatchTouchCancel(event: TouchEvent) {
-
-	let responder = event.sender.responder
-
-	/*
-	 * This touch cancel event needs to be dispatched to the targets that have
-	 * received the original touch start or touch move event. The easiest way
-	 * is to emit an even to the original target while the object that
-	 * triggered the cancel has no responder.
-	 */
-
-	setEmitterResponder(event.sender, null)
-
-	event.target.emit(
-		new TouchEvent('touchcancel', {
-			propagable: true,
-			cancelable: false,
-			touches: event.touches,
-			activeTouches: event.activeTouches,
-			targetTouches: event.targetTouches
-		})
-	)
-
-	setEmitterResponder(event.sender, responder)
 }

@@ -183,7 +183,7 @@ function dispatchEvent(sender: Emitter, event: Event) {
 
 	sender.onEvent(event)
 
-	if (event.stopped ||
+	if (event.finished ||
 		event.canceled ||
 		event.captured) {
 		return
@@ -191,7 +191,7 @@ function dispatchEvent(sender: Emitter, event: Event) {
 
 	invokeListeners(sender, event)
 
-	if (event.stopped ||
+	if (event.finished ||
 		event.canceled ||
 		event.captured) {
 		return

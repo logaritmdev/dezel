@@ -2,7 +2,7 @@
  * @symbol pointer
  * @since 0.7.0
  */
-export const $pointer = Symbol('pointer')
+export const $identifier = Symbol('pointer')
 
 /**
  * @symbol target
@@ -21,3 +21,15 @@ export const $x = Symbol('x')
  * @since 0.7.0
  */
 export const $y = Symbol('y')
+
+/**
+ * @symbol $canceled
+ * @since 0.7.0
+ */
+export const $canceled = Symbol('canceled')
+
+/**
+ * @symbol $captured
+ * @since 0.7.0
+ */
+export const $captured = Symbol('captured')

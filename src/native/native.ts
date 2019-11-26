@@ -63,11 +63,10 @@ function decorate(prototype: object, property: string) {
 			throw new Error(`Dezel error: Unable to retrieve native object.`)
 		}
 
-		object[property] = (
-			isNative(value) ?
-				toNative(value) :
-				value
-		)
+		// TODO
+		// FIXME
+		object['$' + property] = value // prevents native object from being collected
+		object[property] = isNative(value) ? toNative(value) : value
 	}
 
 	Object.defineProperty(prototype, property, { get, set })

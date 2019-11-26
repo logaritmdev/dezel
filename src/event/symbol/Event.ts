@@ -23,10 +23,10 @@ export const $cancelable = Symbol('cancelable')
 export const $capturable = Symbol('capturable')
 
 /**
- * @symbol stoppable
+ * @symbol finishable
  * @since 0.7.0
  */
-export const $stoppable = Symbol('stoppable')
+export const $finishable = Symbol('finishable')
 
 /**
  * @symbol canceled
@@ -41,10 +41,10 @@ export const $canceled = Symbol('canceled')
 export const $captured = Symbol('captured')
 
 /**
- * @symbol stopped
+ * @symbol finished
  * @since 0.7.0
  */
-export const $stopped = Symbol('stopped')
+export const $finished = Symbol('finished')
 
 /**
  * @symbol target

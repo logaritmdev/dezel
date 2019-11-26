@@ -2,6 +2,9 @@ import { Emitter } from '../event/Emitter'
 import { Event } from '../event/Event'
 import { EventOptions } from '../event/Event'
 import { View } from '../view/View'
+import { setTouchCanceled } from './private/Touch'
+import { setTouchCaptured } from './private/Touch'
+import { setTouchTarget } from './private/Touch'
 import { $activeTouches } from './symbol/TouchEvent'
 import { $targetTouches } from './symbol/TouchEvent'
 import { $touches } from './symbol/TouchEvent'
@@ -67,6 +70,30 @@ export class TouchEvent extends Event<any> {
 	}
 
 	//--------------------------------------------------------------------------
+	// Protected API
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method onCancel
+	 * @since 0.7.0
+	 */
+	protected onCancel() {
+		for (let touch of this.touches) {
+			setTouchCanceled(touch, true)
+		}
+	}
+
+	/**
+	 * @method onCapture
+	 * @since 0.7.0
+	 */
+	protected onCapture() {
+		for (let touch of this.touches) {
+			setTouchCaptured(touch, true)
+		}
+	}
+
+	//--------------------------------------------------------------------------
 	// Private API
 	//--------------------------------------------------------------------------
 
@@ -90,7 +117,6 @@ export class TouchEvent extends Event<any> {
 	 * @hidden
 	 */
 	private [$targetTouches]: TouchList
-
 }
 
 /**
