@@ -22,6 +22,12 @@ private:
 	Stylesheet* stylesheet;
 	Tokenizer* tokenizer;
 
+	string file;
+
+	Parser(Stylesheet* stylesheet, Tokenizer* tokenizer);
+	Parser(Stylesheet* stylesheet, Tokenizer* tokenizer, string file);
+	Parser(Variable* variable, Tokenizer* tokenizer);
+
 	bool parse();
 
 	bool parseDescriptor(TokenList& tokens, Stylesheet* stylesheet);
@@ -45,11 +51,14 @@ private:
 	Fragment* parseFragment(TokenList& tokens);
 	Property* parseProperty(TokenList& tokens);
 
+	Value* parseValue(TokenList& tokens);
 	Value* parseIdentValue(TokenList& tokens);
 	Value* parseStringValue(TokenList& tokens);
 	Value* parseNumberValue(TokenList& tokens);
 	Value* parseFunctionValue(TokenList& tokens);
 	Value* parseVariableValue(TokenList& tokens);
+
+	string toCamelCase(string name);
 
 	void assertTokenType(TokenList& tokens, TokenType type);
 
@@ -57,7 +66,9 @@ private:
 
 public:
 
-	Parser(Stylesheet* stylesheet, Tokenizer* tokenizer);
+	static void parse(Stylesheet* stylesheet, const string& source);
+	static void parse(Stylesheet* stylesheet, const string& source, const string& url);
+	static void parse(Variable* variable, const string& source);
 
 };
 

@@ -7,6 +7,10 @@
 #include "Value.h"
 #include "StringValue.h"
 #include "NumberValue.h"
+#include "BooleanValue.h"
+#include "Tokenizer.h"
+#include "TokenizerStream.h"
+#include "Parser.h"
 #include "InvalidInvocationException.h"
 
 namespace Dezel {
@@ -123,6 +127,38 @@ Stylesheet::~Stylesheet()
 }
 
 void
+Stylesheet::setVariable(string name, string value)
+{
+	auto variable = new Variable(name);
+	Parser::parse(this, value);
+	this->addVariable(variable);
+}
+
+void
+Stylesheet::evaluate(string source)
+{
+	Parser::parse(this, source);
+}
+
+void
+Stylesheet::evaluate(string source, string url)
+{
+	Parser::parse(this, source, url);
+}
+
+void
+Stylesheet::addVariable(Variable* variable)
+{
+	this->variables[variable->name] = variable;
+}
+
+void
+Stylesheet::addFunction(Function* function)
+{
+	this->functions[function->name] = function;
+}
+
+void
 Stylesheet::addDescriptor(Descriptor* descriptor)
 {
 	if (descriptor->parent == nullptr) {
@@ -136,18 +172,6 @@ Stylesheet::addDescriptor(Descriptor* descriptor)
 	for (auto child : descriptor->childDescriptors) {
 		this->addDescriptor(child);
 	}
-}
-
-void
-Stylesheet::addVariable(Variable* variable)
-{
-	this->variables[variable->name] = variable;
-}
-
-void
-Stylesheet::addFunction(Function* function)
-{
-	this->functions[function->name] = function;
 }
 
 }

@@ -1,8 +1,10 @@
 #include "DisplayRef.h"
 #include "Display.h"
+#include "Stylesheet.h"
 
 using Dezel::DisplayNode;
 using Dezel::Display;
+using Dezel::Style::Stylesheet;
 
 DisplayRef
 DisplayCreate()
@@ -14,6 +16,12 @@ void
 DisplayDelete(DisplayRef display)
 {
 	delete reinterpret_cast<Display*>(display);
+}
+
+void
+DisplaySetStylesheet(DisplayRef display, StylesheetRef stylesheet)
+{
+	reinterpret_cast<Display*>(display)->setStylesheet(reinterpret_cast<Stylesheet*>(stylesheet));
 }
 
 void

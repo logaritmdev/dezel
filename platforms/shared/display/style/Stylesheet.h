@@ -41,6 +41,11 @@ public:
 
 	~Stylesheet();
 
+	void setVariable(string name, string value);
+
+	void evaluate(string source);
+	void evaluate(string source, string url);
+
 	void addVariable(Variable* variable);
 	void addFunction(Function* function);
 	void addDescriptor(Descriptor* descriptor);

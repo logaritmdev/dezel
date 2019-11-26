@@ -17,12 +17,13 @@ private:
 	string message = "";
 	string error;
 	string token;
+	string file;
 	size_t col;
 	size_t row;
 
 public:
 
-	ParseException(string error, string token, size_t col, size_t row) : error(error), token(token), col(col), row(row) {
+	ParseException(string error, string token, string file, size_t col, size_t row) : error(error), token(token), file(file), col(col), row(row) {
 		this->message.append(error);
 		this->message.append(" ");
 		this->message.append(token);
@@ -32,7 +33,24 @@ public:
 		this->message.append(" ");
 		this->message.append("column ");
 		this->message.append(std::to_string(col));
-		this->message.append(" ");
+		this->message.append(" in ");
+		this->message.append(file);
+	}
+
+	const string& getMessage() {
+		return this->message;
+	}
+
+	const string& getFile() {
+		return this->file;
+	}
+
+	size_t getCol() {
+		return this->col;
+	}
+
+	size_t getRow() {
+		return this->row;
 	}
 
 	const char* what () const throw () {

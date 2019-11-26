@@ -8,814 +8,814 @@ extern "C" {
 #endif
 
 /**
- * Creates a display node.
  * @function DisplayNodeCreate;
  * @since 0.7.0
+ * @hidden
  */
 DisplayNodeRef DisplayNodeCreate();
 
 /**
- * Releases a display node.
  * @function DisplayNodeDelete
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeDelete(DisplayNodeRef node);
 
 /**
- * Assigns the display node's display.
  * @function DisplayNodeSetDisplay
  * @since 0.4.0
+ * @hidden
  */
 void DisplayNodeSetDisplay(DisplayNodeRef node, DisplayRef display);
 
 /**
-* Assign the opaque flag to the display node's flags.
-* @function DisplayNodeSetOpaque
-* @since 0.4.0
-*/
+ * @function DisplayNodeSetOpaque
+ * @since 0.7.0
+ * @hidden
+ */
 void DisplayNodeSetOpaque(DisplayNodeRef node);
 
 /**
- * Assigns the display node's identifier.
  * @function DisplayNodeSetName
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeSetName(DisplayNodeRef node, const char* id);
 
 /**
- * Assigns the display node's type.
  * @function DisplayNodeSetType
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeSetType(DisplayNodeRef node, const char* type);
 
 /**
- * Appends a display node's visual style.
  * @function DisplayNodeAppendStyle
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeAppendStyle(DisplayNodeRef node, const char* style);
 
 /**
- * Removes a display node's visual style.
  * @function DisplayNodeRemoveStyle
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeRemoveStyle(DisplayNodeRef node, const char* style);
 
 /**
- * Appends a display node's visual state.
  * @function DisplayNodeAppendState
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeAppendState(DisplayNodeRef node, const char* state);
 
 /**
- * Removes a display node's visual state.
  * @function DisplayNodeRemoveState
  * @since 0.7.0
+ * @hidden
 */
 void DisplayNodeRemoveState(DisplayNodeRef node, const char* state);
 
 /**
- * Assigns the display node's top anchor position.
  * @function DisplayNodeSetAnchorTop
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeSetAnchorTop(DisplayNodeRef node, DisplayNodeAnchorType type, DisplayNodeAnchorUnit unit, double length);
 
 /**
- * Assigns the display node's left anchor position.
  * @function DisplayNodeSetAnchorLeft
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeSetAnchorLeft(DisplayNodeRef node, DisplayNodeAnchorType type, DisplayNodeAnchorUnit unit, double length);
 
 /**
- * Assigns the display node's top position specification.
  * @function DisplayNodeSetTop
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeSetTop(DisplayNodeRef node, DisplayNodeOriginType type, DisplayNodeOriginUnit unit, double length);
 
 /**
- * Assigns the display node's minimum top position.
  * @function DisplayNodeSetMinTop
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeSetMinTop(DisplayNodeRef node, double min);
 
 /**
- * Assigns the display node's maximum top position.
  * @function DisplayNodeSetMaxTop
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeSetMaxTop(DisplayNodeRef node, double max);
 
 /**
- * Assigns the display node's left position specification.
  * @function DisplayNodeSetLeft
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeSetLeft(DisplayNodeRef node, DisplayNodeOriginType type, DisplayNodeOriginUnit unit, double length);
 
 /**
- * Assigns the display node's minimum left position.
  * @function DisplayNodeSetMinLeft
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeSetMinLeft(DisplayNodeRef node, double min);
 
 /**
- * Assigns the display node's maximum left position.
  * @function DisplayNodeSetMaxLeft
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeSetMaxLeft(DisplayNodeRef node, double max);
 
 /**
- * Assigns the display node's right position specification.
  * @function DisplayNodeSetRight
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeSetRight(DisplayNodeRef node, DisplayNodeOriginType type, DisplayNodeOriginUnit unit, double length);
 
 /**
- * Assigns the display node's minimum right position.
  * @function DisplayNodeSetMinRight
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeSetMinRight(DisplayNodeRef node, double min);
 
 /**
- * Assigns the display node's maximum right position.
  * @function DisplayNodeSetMaxRight
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeSetMaxRight(DisplayNodeRef node, double max);
 
 /**
- * Assigns the display node's bottom position specification.
  * @function DisplayNodeSetBottom
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeSetBottom(DisplayNodeRef node, DisplayNodeOriginType type, DisplayNodeOriginUnit unit, double length);
 
 /**
- * Assigns the display node's minimum bottom position.
  * @function DisplayNodeSetMinBottom
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeSetMinBottom(DisplayNodeRef node, double min);
 
 /**
- * Assigns the display node's maximum bottom position.
  * @function DisplayNodeSetMaxBottom
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeSetMaxBottom(DisplayNodeRef node, double max);
 
 /**
- * Assigns the display node's width specification.
  * @function DisplayNodeSetWidth
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeSetWidth(DisplayNodeRef node, DisplayNodeSizeType type, DisplayNodeSizeUnit unit, double length);
 
 /**
- * Assigns the display node's minimum width.
  * @function DisplayNodeSetMinWidth
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeSetMinWidth(DisplayNodeRef node, double min);
 
 /**
- * Assigns the display node's maximum width.
  * @function DisplayNodeSetMaxWidth
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeSetMaxWidth(DisplayNodeRef node, double max);
 
 /**
- * Assigns the display node's height specification.
  * @function DisplayNodeSetHeight
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeSetHeight(DisplayNodeRef node, DisplayNodeSizeType type, DisplayNodeSizeUnit unit, double length);
 
 /**
- * Assigns the display node's minimum width.
  * @function DisplayNodeSetMinHeight
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeSetMinHeight(DisplayNodeRef node, double min);
 
 /**
- * Assigns the display node's maximum width.
  * @function DisplayNodeSetMaxHeight
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeSetMaxHeight(DisplayNodeRef node, double max);
 
 /**
- * Assigns the display node's content direction specification.
  * @function DisplayNodeSetContentDirection
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeSetContentDirection(DisplayNodeRef node, DisplayNodeContentDirection direction);
 
 /**
- * Assigns the display node's content gravity specification.
- * @function DisplayNodeSetContentDisposition
- * @since 0.7.0
- */
-void DisplayNodeSetContentDisposition(DisplayNodeRef node, DisplayNodeContentDisposition placement);
-
-/**
- * Assigns the display node's content alignment specification.
  * @function DisplayNodeSetContentAlignment
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeSetContentAlignment(DisplayNodeRef node, DisplayNodeContentAlignment alignment);
 
 /**
- * Assigns the display node's content top specification.
+ * @function DisplayNodeSetContentDisposition
+ * @since 0.7.0
+ * @hidden
+ */
+void DisplayNodeSetContentDisposition(DisplayNodeRef node, DisplayNodeContentDisposition placement);
+
+/**
  * @function DisplayNodeSetContentTop
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeSetContentTop(DisplayNodeRef node, DisplayNodeContentOriginType type, DisplayNodeContentOriginUnit unit, double length);
 
 /**
- * Assigns the display node's content left specification.
  * @function DisplayNodeSetContentLeft
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeSetContentLeft(DisplayNodeRef node, DisplayNodeContentOriginType type, DisplayNodeContentOriginUnit unit, double length);
 
 /**
- * Assigns the display node's content width specification.
  * @function DisplayNodeSetContentWidth
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeSetContentWidth(DisplayNodeRef node, DisplayNodeContentSizeType type, DisplayNodeContentSizeUnit unit, double length);
 
 /**
- * Assigns the display node's content height specification.
  * @function DisplayNodeSetContentHeight
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeSetContentHeight(DisplayNodeRef node, DisplayNodeContentSizeType type, DisplayNodeContentSizeUnit unit, double length);
 
 /**
- * Assigns whether the display node's can expand to fill remaining space.
  * @function DisplayNodeSetExpandFactor
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeSetExpandFactor(DisplayNodeRef node, double factor);
 
 /**
- * Assigns whether the display node's can shrint to fit existing space.
  * @function DisplayNodeSetShrinkFactorable
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeSetShrinkFactor(DisplayNodeRef node, double factor);
 
 /**
- * Assigns the display node's border top specification.
  * @function DisplayNodeSetBorderTop
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeSetBorderTop(DisplayNodeRef node, DisplayNodeBorderType type, DisplayNodeBorderUnit unit, double length);
 
 /**
- * Assigns the display node's border left specification.
  * @function DisplayNodeSetBorderLeft
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeSetBorderLeft(DisplayNodeRef node, DisplayNodeBorderType type, DisplayNodeBorderUnit unit, double length);
 
 /**
- * Assigns the display node's border right specification.
  * @function DisplayNodeSetBorderRight
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeSetBorderRight(DisplayNodeRef node, DisplayNodeBorderType type, DisplayNodeBorderUnit unit, double length);
 
 /**
- * Assigns the display node's border bottom specification.
  * @function DisplayNodeSetBorderBottom
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeSetBorderBottom(DisplayNodeRef node, DisplayNodeBorderType type, DisplayNodeBorderUnit unit, double length);
 
 /**
- * Assigns the display node's margin top specification.
  * @function DisplayNodeSetMarginTop
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeSetMarginTop(DisplayNodeRef node, DisplayNodeMarginType type, DisplayNodeMarginUnit unit, double length);
 
 /**
- * Assigns the display node's margin left specification.
  * @function DisplayNodeSetMarginLeft
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeSetMarginLeft(DisplayNodeRef node, DisplayNodeMarginType type, DisplayNodeMarginUnit unit, double length);
 
 /**
- * Assigns the display node's margin right specification.
  * @function DisplayNodeSetMarginRight
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeSetMarginRight(DisplayNodeRef node, DisplayNodeMarginType type, DisplayNodeMarginUnit unit, double length);
 
 /**
- * Assigns the display node's margin bottom specification.
  * @function DisplayNodeSetMarginBottom
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeSetMarginBottom(DisplayNodeRef node, DisplayNodeMarginType type, DisplayNodeMarginUnit unit, double length);
 
 /**
- * Assigns the display node's minimum top margin.
  * @function DisplayNodeSetMinMarginTop
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeSetMinMarginTop(DisplayNodeRef node, double min);
 
 /**
- * Assigns the display node's maximum top margin.
  * @function DisplayNodeSetMaxMarginTop
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeSetMaxMarginTop(DisplayNodeRef node, double max);
 
 /**
- * Assigns the display node's minimum left margin.
  * @function DisplayNodeSetMinMarginLeft
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeSetMinMarginLeft(DisplayNodeRef node, double min);
 
 /**
- * Assigns the display node's maximum left margin.
  * @function DisplayNodeSetMaxMarginLeft
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeSetMaxMarginLeft(DisplayNodeRef node, double max);
 
 /**
- * Assigns the display node's minimum right margin.
  * @function DisplayNodeSetMinMarginRight
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeSetMinMarginRight(DisplayNodeRef node, double min);
 
 /**
- * Assigns the display node's maximum right margin.
  * @function DisplayNodeSetMaxMarginRight
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeSetMaxMarginRight(DisplayNodeRef node, double max);
 
 /**
- * Assigns the display node's minimum bottom margin.
  * @function DisplayNodeSetMinMarginBottom
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeSetMinMarginBottom(DisplayNodeRef node, double min);
 
 /**
- * Assigns the display node's maximum bottom margin.
  * @function DisplayNodeSetMaxMarginBottom
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeSetMaxMarginBottom(DisplayNodeRef node, double max);
 
 /**
- * Assigns the display node's padding top specification.
  * @function DisplayNodeSetPaddingTop
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeSetPaddingTop(DisplayNodeRef node, DisplayNodePaddingType type, DisplayNodePaddingUnit unit, double length);
 
 /**
- * Assigns the display node's padding left specification.
  * @function DisplayNodeSetPaddingLeft
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeSetPaddingLeft(DisplayNodeRef node, DisplayNodePaddingType type, DisplayNodePaddingUnit unit, double length);
 
 /**
- * Assigns the display node's padding right specification.
  * @function DisplayNodeSetPaddingRight
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeSetPaddingRight(DisplayNodeRef node, DisplayNodePaddingType type, DisplayNodePaddingUnit unit, double length);
 
 /**
- * Assigns the display node's padding bottom specification.
  * @function DisplayNodeSetPaddingBottom
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeSetPaddingBottom(DisplayNodeRef node, DisplayNodePaddingType type, DisplayNodePaddingUnit unit, double length);
 
 /**
- * Assigns the display node's minimum top padding.
  * @function DisplayNodeSetMinPaddingTop
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeSetMinPaddingTop(DisplayNodeRef node, double min);
 
 /**
- * Assigns the display node's maximum top padding.
  * @function DisplayNodeSetMaxPaddingTop
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeSetMaxPaddingTop(DisplayNodeRef node, double max);
 
 /**
- * Assigns the display node's minimum left padding.
  * @function DisplayNodeSetMinPaddingLeft
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeSetMinPaddingLeft(DisplayNodeRef node, double min);
 
 /**
- * Assigns the display node's maximum left padding.
  * @function DisplayNodeSetMaxPaddingLeft
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeSetMaxPaddingLeft(DisplayNodeRef node, double max);
 
 /**
- * Assigns the display node's minimum right padding.
  * @function DisplayNodeSetMinPaddingRight
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeSetMinPaddingRight(DisplayNodeRef node, double min);
 
 /**
- * Assigns the display node's maximum right padding.
  * @function DisplayNodeSetMaxPaddingRight
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeSetMaxPaddingRight(DisplayNodeRef node, double max);
 
 /**
- * Assigns the display node's minimum bottom padding.
  * @function DisplayNodeSetMinPaddingBottom
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeSetMinPaddingBottom(DisplayNodeRef node, double min);
 
 /**
- * Assigns the display node's maximum bottom padding.
  * @function DisplayNodeSetMaxPaddingBottom
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeSetMaxPaddingBottom(DisplayNodeRef node, double max);
 
 /**
- * Returns whether the node's width has been set to fill its parent.
  * @function DisplayNodeIsFillingParentWidth
  * @since 0.7.0
+ * @hidden
  */
 bool DisplayNodeIsFillingParentWidth(DisplayNodeRef node);
 
 /**
- * Returns whether the node's height has been set to fill its parent.
  * @function DisplayNodeIsFillingParentHeight
  * @since 0.7.0
+ * @hidden
  */
 bool DisplayNodeIsFillingParentHeight(DisplayNodeRef node);
 
 /**
- * Returns whether the node's width has been set to wraps its content.
  * @function DisplayNodeWrapsContentWidth
  * @since 0.7.0
+ * @hidden
  */
 bool DisplayNodeIsWrappingContentWidth(DisplayNodeRef node);
 
 /**
- * Returns whether the node's height has been set to wraps its content.
  * @function DisplayNodeIsWrappingContentHeight
  * @since 0.7.0
+ * @hidden
  */
 bool DisplayNodeIsWrappingContentHeight(DisplayNodeRef node);
 
 /**
- * Returns the display node's measured top.
  * @function DisplayNodeGetMeasuredTop
  * @since 0.7.0
+ * @hidden
  */
 double DisplayNodeGetMeasuredTop(DisplayNodeRef node);
 
 /**
- * Returns the display node's measured left.
  * @function DisplayNodeGetMeasuredLeft
  * @since 0.7.0
+ * @hidden
  */
 double DisplayNodeGetMeasuredLeft(DisplayNodeRef node);
 
 /**
- * Returns the display node's measured right.
  * @function DisplayNodeGetMeasuredRight
  * @since 0.7.0
+ * @hidden
  */
 double DisplayNodeGetMeasuredRight(DisplayNodeRef node);
 
 /**
- * Returns the display node's measured bottom.
  * @function DisplayNodeGetMeasuredBottom
  * @since 0.7.0
+ * @hidden
  */
 double DisplayNodeGetMeasuredBottom(DisplayNodeRef node);
 
 /**
- * Returns the display node's measured width.
  * @function DisplayNodeGetMeasuredWidth
  * @since 0.7.0
+ * @hidden
  */
 double DisplayNodeGetMeasuredWidth(DisplayNodeRef node);
 
 /**
- * Returns the display node's measured height.
  * @function DisplayNodeGetMeasuredHeight
  * @since 0.7.0
+ * @hidden
  */
 double DisplayNodeGetMeasuredHeight(DisplayNodeRef node);
 
 /**
- * Returns the display node's measured inner width;
  * @function DisplayNodeGetMeasuredInnerWidth
  * @since 0.7.0
+ * @hidden
  */
 double DisplayNodeGetMeasuredInnerWidth(DisplayNodeRef node);
 
 /**
- * Returns the display node's measured inner height;
  * @function DisplayNodeGetMeasuredInnerHeight
  * @since 0.7.0
+ * @hidden
  */
 double DisplayNodeGetMeasuredInnerHeight(DisplayNodeRef node);
 
 /**
- * Returns the display node's measured content width.
  * @function DisplayNodeGetMeasuredContentWidth
  * @since 0.7.0
+ * @hidden
  */
 double DisplayNodeGetMeasuredContentWidth(DisplayNodeRef node);
 
 /**
- * Returns the display node's measured content height.
  * @function DisplayNodeGetMeasuredContentHeight
  * @since 0.7.0
+ * @hidden
  */
 double DisplayNodeGetMeasuredContentHeight(DisplayNodeRef node);
 
 /**
- * Returns the display node's measured border top.
  * @function DisplayNodeGetMeasuredBorderTop
  * @since 0.7.0
+ * @hidden
  */
 double DisplayNodeGetMeasuredBorderTop(DisplayNodeRef node);
 
 /**
- * Returns the display node's measured border left.
  * @function DisplayNodeGetMeasuredBorderLeft
  * @since 0.7.0
+ * @hidden
  */
 double DisplayNodeGetMeasuredBorderLeft(DisplayNodeRef node);
 
 /**
- * Returns the display node's measured border right.
  * @function DisplayNodeGetMeasuredBorderRight
  * @since 0.7.0
+ * @hidden
  */
 double DisplayNodeGetMeasuredBorderRight(DisplayNodeRef node);
 
 /**
- * Returns the display node's measured border bottom.
  * @function DisplayNodeGetMeasuredBorderBottom
  * @since 0.7.0
+ * @hidden
  */
 double DisplayNodeGetMeasuredBorderBottom(DisplayNodeRef node);
 
 /**
- * Returns the display node's measured margin top.
  * @function DisplayNodeGetMeasuredMarginTop
  * @since 0.7.0
+ * @hidden
  */
 double DisplayNodeGetMeasuredMarginTop(DisplayNodeRef node);
 
 /**
- * Returns the display node's measured margin left.
  * @function DisplayNodeGetMeasuredMarginLeft
  * @since 0.7.0
+ * @hidden
  */
 double DisplayNodeGetMeasuredMarginLeft(DisplayNodeRef node);
 
 /**
- * Returns the display node's measured margin right.
  * @function DisplayNodeGetMeasuredMarginRight
  * @since 0.7.0
+ * @hidden
  */
 double DisplayNodeGetMeasuredMarginRight(DisplayNodeRef node);
 
 /**
- * Returns the display node's measured margin bottom.
  * @function DisplayNodeGetMeasuredMarginBottom
  * @since 0.7.0
+ * @hidden
  */
 double DisplayNodeGetMeasuredMarginBottom(DisplayNodeRef node);
 
 /**
- * Returns the display node's measured padding top.
  * @function DisplayNodeGetMeasuredPaddingTop
  * @since 0.7.0
+ * @hidden
  */
 double DisplayNodeGetMeasuredPaddingTop(DisplayNodeRef node);
 
 /**
- * Returns the display node's measured padding left.
  * @function DisplayNodeGetMeasuredPaddingLeft
  * @since 0.7.0
+ * @hidden
  */
 double DisplayNodeGetMeasuredPaddingLeft(DisplayNodeRef node);
 
 /**
- * Returns the display node's measured padding right.
  * @function DisplayNodeGetMeasuredPaddingRight
  * @since 0.7.0
+ * @hidden
  */
 double DisplayNodeGetMeasuredPaddingRight(DisplayNodeRef node);
 
 /**
- * Returns the display node's measured padding bottom.
  * @function DisplayNodeGetMeasuredPaddingBottom
  * @since 0.7.0
+ * @hidden
  */
 double DisplayNodeGetMeasuredPaddingBottom(DisplayNodeRef node);
 
 /**
- * Assigns whether the node is visible.
  * @function DisplayNodeSetVisible
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeSetVisible(DisplayNodeRef node, bool visible);
 
 /**
- * Appends a node to the receiver's children list.
  * @function DisplayNodeInsertChild
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeAppendChild(DisplayNodeRef node, DisplayNodeRef child);
 
 /**
- * Inserts a node to the receiver's children list.
  * @function DisplayNodeInsertChild
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeInsertChild(DisplayNodeRef node, DisplayNodeRef child, int index);
 
 /**
- * Appends a node to the receiver's children list.
  * @function DisplayNodeRemoveChild
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeRemoveChild(DisplayNodeRef node, DisplayNodeRef child);
 
 /**
- * Invalidates the node's size.
  * @function DisplayNodeInvalidateSize
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeInvalidateSize(DisplayNodeRef node);
 
 /**
- * Invalidates the node's origin.
  * @function DisplayNodeInvalidateOrigin
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeInvalidateOrigin(DisplayNodeRef node);
 
 /**
- * Invalidates the node's layout.
  * @function DisplayNodeInvalidateLayout
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeInvalidateLayout(DisplayNodeRef node);
 
 /**
- * Resolves layouts until the specified node is resolved.
  * @function DisplayNodeResolve
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeResolve(DisplayNodeRef node);
 
 /**
- * Measures the display node in a specified size.
  * @function DisplayNodeMeasure
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeMeasure(DisplayNodeRef node);
 
 /**
- * Assigns the callback that is called when the node is invalidated.
  * @function DisplayNodeSetInvalidateCallback
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeSetInvalidateCallback(DisplayNodeRef node, DisplayNodeCallback callback);
 
 /**
- * Assigns the callback that is called when the node size changes.
  * @function DisplayNodeSetResolveSizeCallback
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeSetResolveSizeCallback(DisplayNodeRef node, DisplayNodeCallback callback);
 
 /**
- * Assigns the callback that is called when the node position changes.
  * @function DisplayNodeSetResolveOriginCallback
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeSetResolveOriginCallback(DisplayNodeRef node, DisplayNodeCallback callback);
 
 /**
- * Assigns the callback that is called when the node inner size changes.
  * @function DisplayNodeSetResolveInnerSizeCallback
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeSetResolveInnerSizeCallback(DisplayNodeRef node, DisplayNodeCallback callback);
 
 /**
- * Assigns the callback that is called when the node content size changes.
  * @function DisplayNodeSetResolveContentSizeCallback
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeSetResolveContentSizeCallback(DisplayNodeRef node, DisplayNodeCallback callback);
 
 /**
- * Assigns the callback that is called when the node margin changes.
  * @function DisplayNodeSetResolveMarginCallback
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeSetResolveMarginCallback(DisplayNodeRef node, DisplayNodeCallback callback);
 
 /**
- * Assigns the callback that is called when the node border changes.
  * @function DisplayNodeSetResolveBorderCallback
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeSetResolveBorderCallback(DisplayNodeRef node, DisplayNodeCallback callback);
 
 /**
- * Assigns the callback that is called when the node padding changes.
  * @function DisplayNodeSetResolvePaddingCallback
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeSetResolvePaddingCallback(DisplayNodeRef node, DisplayNodeCallback callback);
 
 /**
- * Assigns the callback that is called when the node begins its layout pass.
  * @function DisplayNodeSetPrepareLayoutCallback
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeSetPrepareLayoutCallback(DisplayNodeRef node, DisplayNodeCallback callback);
 
 /**
- * Assigns the callback that is called when the node finishes its layout pass.
  * @function DisplayNodeSetResolveLayoutCallback
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeSetResolveLayoutCallback(DisplayNodeRef node, DisplayNodeCallback callback);
 
 /**
- * Assigns the callback that is called when the node needs to retrieve its natural size.
  * @function DisplayNodeSetMeasureCallback
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeSetMeasureCallback(DisplayNodeRef node, DisplayNodeMeasureCallback callback);
 
 /**
- * Assigns the callback that is called when a node needs to update a property.
  * @function DisplayNodeSetUpdateCallback
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeSetUpdateCallback(DisplayNodeRef node, DisplayNodeUpdateCallback callback);
 
 /**
- * Assigns the display node's user data.
  * @function DisplayNodeSetData
  * @since 0.7.0
+ * @hidden
  */
 void DisplayNodeSetData(DisplayNodeRef node, void *data);
 
 /**
- * Returns the display node's user data.
  * @function DisplayNodeSetData
  * @since 0.7.0
+ * @hidden
  */
 void* DisplayNodeGetData(DisplayNodeRef node);
 

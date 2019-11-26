@@ -7,55 +7,67 @@
 #define ABS_DBL_MAX +DBL_MAX
 
 /**
- * An opaque display reference.
  * @typedef DisplayRef
  * @since 0.7.0
+ * @hidden
  */
 typedef struct OpaqueDisplay* DisplayRef;
 
 /**
- * An opaque display node reference.
- * @typedef DisplayNode
+ * @typedef DisplayNodeRef
  * @since 0.7.0
+ * @hidden
  */
 typedef struct OpaqueDisplayNode* DisplayNodeRef;
 
 /**
- * @typedef DisplayNodePropertyRef
+ * @typedef PropertyRef
  * @since 0.7.0
  * @hidden
  */
-typedef struct OpaqueDisplayNodeProperty* DisplayNodePropertyRef;
+typedef struct OpaqueProperty* PropertyRef;
 
 /**
- * @typedef DisplayNodePropertyRef
+ * @typedef StylesheetRef
  * @since 0.7.0
  * @hidden
  */
-typedef struct OpaqueDisplayNodePropertyValue* DisplayNodePropertyValueRef;
+typedef struct OpaqueStylesheet* StylesheetRef;
 
 /**
- * The node anchor types.
+* @typedef ParseError
+* @since 0.7.0
+* @hidden
+*/
+typedef struct {
+	const char* message;
+	const char* url;
+	unsigned col;
+	unsigned row;
+} ParseError;
+
+/**
  * @type DisplayNodeSizeType
  * @since 0.7.0
+ * @hidden
  */
 typedef enum {
 	kDisplayNodeAnchorTypeLength = 1
 } DisplayNodeAnchorType;
 
 /**
- * The node anchor units.
  * @type DisplayNodeAnchorUnit
  * @since 0.7.0
+ * @hidden
  */
 typedef enum {
 	kDisplayNodeAnchorUnitPC = 1
 } DisplayNodeAnchorUnit;
 
 /**
- * The node size types.
  * @type DisplayNodeSizeType
  * @since 0.7.0
+ * @hidden
  */
 typedef enum {
 	kDisplayNodeSizeTypeFill = 1,
@@ -64,9 +76,9 @@ typedef enum {
 } DisplayNodeSizeType;
 
 /**
- * The node size units.
  * @type DisplayNodeSizeUnit
  * @since 0.7.0
+ * @hidden
  */
 typedef enum {
 	kDisplayNodeSizeUnitNone = 1,
@@ -81,9 +93,9 @@ typedef enum {
 } DisplayNodeSizeUnit;
 
 /**
- * The node position types.
  * @type DisplayNodeOriginType
  * @since 0.7.0
+ * @hidden
  */
 typedef enum {
 	kDisplayNodeOriginTypeAuto = 1,
@@ -91,9 +103,9 @@ typedef enum {
 } DisplayNodeOriginType;
 
 /**
- * The node position units.
  * @type DisplayNodeOriginUnit
  * @since 0.7.0
+ * @hidden
  */
 typedef enum {
 	kDisplayNodeOriginUnitNone = 1,
@@ -108,18 +120,18 @@ typedef enum {
 } DisplayNodeOriginUnit;
 
 /**
- * The node content position values.
  * @type DisplayNodeContentSize
  * @since 0.7.0
+ * @hidden
  */
 typedef enum {
 	kDisplayNodeContentOriginTypeLength = 1
 } DisplayNodeContentOriginType;
 
 /**
- * The node content position units.
  * @type DisplayNodeContentOriginUnit
  * @since 0.7.0
+ * @hidden
  */
 typedef enum {
 	kDisplayNodeContentOriginUnitNone = 1,
@@ -127,9 +139,9 @@ typedef enum {
 } DisplayNodeContentOriginUnit;
 
 /**
- * The node content size values.
  * @type DisplayNodeContentSize
  * @since 0.7.0
+ * @hidden
  */
 typedef enum {
 	kDisplayNodeContentSizeTypeAuto = 1,
@@ -137,9 +149,9 @@ typedef enum {
 } DisplayNodeContentSizeType;
 
 /**
- * The node content size units.
  * @type DisplayNodeContentSizeUnit
  * @since 0.7.0
+ * @hidden
  */
 typedef enum {
 	kDisplayNodeContentSizeUnitNone = 1,
@@ -154,9 +166,9 @@ typedef enum {
 } DisplayNodeContentSizeUnit;
 
 /**
- * The node content direction values.
  * @type DisplayNodeContentDirection
  * @since 0.7.0
+ * @hidden
  */
 typedef enum {
 	kDisplayNodeContentDirectionVertical = 1,
@@ -164,9 +176,9 @@ typedef enum {
 } DisplayNodeContentDirection;
 
 /**
- * The node content gravity values.
  * @type DisplayNodeContentAlignment
  * @since 0.7.0
+ * @hidden
  */
 typedef enum {
 	kDisplayNodeContentDispositionStart = 1,
@@ -178,9 +190,9 @@ typedef enum {
 } DisplayNodeContentDisposition;
 
 /**
- * The node content alignment values.
  * @type DisplayNodeContentAlignment
  * @since 0.7.0
+ * @hidden
  */
 typedef enum {
 	kDisplayNodeContentAlignmentStart = 1,
@@ -189,18 +201,18 @@ typedef enum {
 } DisplayNodeContentAlignment;
 
 /**
- * The node margin types.
  * @type DisplayNodeMarginType
  * @since 0.7.0
+ * @hidden
  */
 typedef enum {
     kDisplayNodeBorderTypeLength = 1
 } DisplayNodeBorderType;
 
 /**
- * The node border units.
  * @type DisplayNodeBorderUnit
  * @since 0.7.0
+ * @hidden
  */
 typedef enum {
     kDisplayNodeBorderUnitPX = 1,
@@ -214,18 +226,18 @@ typedef enum {
 } DisplayNodeBorderUnit;
 
 /**
- * The node margin types.
  * @type DisplayNodeMarginType
  * @since 0.7.0
+ * @hidden
  */
 typedef enum {
 	kDisplayNodeMarginTypeLength = 1
 } DisplayNodeMarginType;
 
 /**
- * The node margin units.
  * @type DisplayNodeMarginUnit
  * @since 0.7.0
+ * @hidden
  */
 typedef enum {
 	kDisplayNodeMarginUnitPX = 1,
@@ -239,18 +251,18 @@ typedef enum {
 } DisplayNodeMarginUnit;
 
 /**
- * The node padding types.
  * @type DisplayNodePaddingType
  * @since 0.7.0
+ * @hidden
  */
 typedef enum {
 	kDisplayNodePaddingTypeLength = 1
 } DisplayNodePaddingType;
 
 /**
- * The node padding units.
  * @type DisplayNodePaddingUnit
  * @since 0.7.0
+ * @hidden
  */
 typedef enum {
 	kDisplayNodePaddingUnitPX = 1,
@@ -264,81 +276,81 @@ typedef enum {
 } DisplayNodePaddingUnit;
 
 /**
- * The display node property value type.
- * @typeOf DisplayNodePropertyValueType
+ * @typeOf PropertyValueType
  * @since 0.7.0
- */
-typedef enum DisplayNodePropertyValueType {
-	kDisplayNodePropertyValueTypeNull,
-	kDisplayNodePropertyValueTypeString,
-	kDisplayNodePropertyValueTypeNumber,
-	kDisplayNodePropertyValueTypeBoolean,
-	kDisplayNodePropertyValueTypeFunction,
-	kDisplayNodePropertyValueTypeVariable
-} DisplayNodePropertyValueType;
-
-/**
- * The display node property value unit.
- * @typeOf DisplayNodePropertyValueUnit
- * @since 0.7.0
+ * @hidden
  */
 typedef enum {
-	kDisplayNodePropertyValueUnitNone,
-	kDisplayNodePropertyValueUnitPX,
-	kDisplayNodePropertyValueUnitPC,
-	kDisplayNodePropertyValueUnitVW,
-	kDisplayNodePropertyValueUnitVH,
-	kDisplayNodePropertyValueUnitPW,
-	kDisplayNodePropertyValueUnitPH,
-	kDisplayNodePropertyValueUnitCW,
-	kDisplayNodePropertyValueUnitCH,
-	kDisplayNodePropertyValueUnitDeg,
-	kDisplayNodePropertyValueUnitRad
-} DisplayNodePropertyValueUnit;
+	kPropertyValueTypeNull,
+	kPropertyValueTypeString,
+	kPropertyValueTypeNumber,
+	kPropertyValueTypeBoolean,
+	kPropertyValueTypeFunction,
+	kPropertyValueTypeVariable
+} PropertyValueType;
 
 /**
- * A measured size structure.
+ * @typeOf PropertyValueUnit
+ * @since 0.7.0
+ * @hidden
+ */
+typedef enum {
+	kPropertyValueUnitNone,
+	kPropertyValueUnitPX,
+	kPropertyValueUnitPC,
+	kPropertyValueUnitVW,
+	kPropertyValueUnitVH,
+	kPropertyValueUnitPW,
+	kPropertyValueUnitPH,
+	kPropertyValueUnitCW,
+	kPropertyValueUnitCH,
+	kPropertyValueUnitDeg,
+	kPropertyValueUnitRad
+} PropertyValueUnit;
+
+/**
  * @typedef DisplayNodeMeasuredSize
  * @since 0.7.0
+ * @hidden
  */
-typedef struct DisplayNodeMeasuredSize {
+typedef struct {
 	double width;
 	double height;
 } DisplayNodeMeasuredSize;
 
 /**
- * The callback when the display is resolved.
  * @typedef DisplayResolveCallback
  * @since 0.7.0
+ * @hidden
  */
 typedef void (*DisplayCallback)(DisplayRef display);
 
 /**
- * The node callback called when the node needs to be measured.
  * @typedef DisplayNodeMeasureCallback
  * @since 0.7.0
+ * @hidden
  */
 typedef void (*DisplayNodeMeasureCallback)(DisplayNodeRef node, DisplayNodeMeasuredSize* size, double w, double h, double minw, double maxw, double minh, double maxh);
 
 /**
- * The node resolve callback.
  * @typedef DisplayNodeResolveCallback
  * @since 0.7.0
+ * @hidden
  */
 typedef void (*DisplayNodeCallback)(DisplayNodeRef node);
 
 /**
- * The node callback called when the node needs to be measured.
  * @typedef DisplayNodeMeasureCallback
  * @since 0.7.0
+ * @hidden
  */
 typedef void (*DisplayNodeMeasureCallback)(DisplayNodeRef node, DisplayNodeMeasuredSize* size, double w, double h, double minw, double maxw, double minh, double maxh);
 
 /**
- * The node callback called when the node needs to update a property.
  * @typedef DisplayNodeUpdateCallback
  * @since 0.7.0
+ * @hidden
  */
-typedef void (*DisplayNodeUpdateCallback)(DisplayNodeRef node, DisplayNodePropertyRef property, const char* name);
+typedef void (*DisplayNodeUpdateCallback)(DisplayNodeRef node, PropertyRef property, const char* name);
 
 #endif

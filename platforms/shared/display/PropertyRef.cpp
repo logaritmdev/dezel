@@ -1,4 +1,4 @@
-#include "DisplayNodePropertyRef.h"
+#include "PropertyRef.h"
 #include "Property.h"
 #include "Value.h"
 #include "StringValue.h"
@@ -18,31 +18,37 @@ using Dezel::Style::BooleanValue;
 using std::string;
 
 const char*
-DisplayNodePropertyGetName(DisplayNodePropertyRef property)
+PropertyGetName(PropertyRef property)
 {
 	return reinterpret_cast<Property*>(property)->getName().c_str();
 }
 
 unsigned
-DisplayNodePropertyGetValueCount(DisplayNodePropertyRef property)
+PropertyGetValueCount(PropertyRef property)
 {
-	return static_cast<unsigned>(reinterpret_cast<Property*>(property)->getValues().size());
+	return static_cast<unsigned>(
+		reinterpret_cast<Property*>(property)->getValues().size()
+	);
 }
 
-DisplayNodePropertyValueType
-DisplayNodePropertyGetValueType(DisplayNodePropertyRef property, unsigned index)
+PropertyValueType
+PropertyGetValueType(PropertyRef property, unsigned index)
 {
-	return static_cast<DisplayNodePropertyValueType>(reinterpret_cast<Property*>(property)->getValues().at(index)->getType());
+	return static_cast<PropertyValueType>(
+		reinterpret_cast<Property*>(property)->getValues().at(index)->getType()
+	);
 }
 
-DisplayNodePropertyValueUnit
-DisplayNodePropertyGetValueUnit(DisplayNodePropertyRef property, unsigned index)
+PropertyValueUnit
+PropertyGetValueUnit(PropertyRef property, unsigned index)
 {
-	return static_cast<DisplayNodePropertyValueUnit>(reinterpret_cast<Property*>(property)->getValues().at(index)->getUnit());
+	return static_cast<PropertyValueUnit>(
+		reinterpret_cast<Property*>(property)->getValues().at(index)->getUnit()
+	);
 }
 
 const char*
-DisplayNodePropertyGetValueAsString(DisplayNodePropertyRef property, unsigned index)
+PropertyGetValueAsString(PropertyRef property, unsigned index)
 {
 	return reinterpret_cast<StringValue*>(
 		reinterpret_cast<Property*>(property)->getValues().at(index)
@@ -50,7 +56,7 @@ DisplayNodePropertyGetValueAsString(DisplayNodePropertyRef property, unsigned in
 }
 
 double
-DisplayNodePropertyGetValueAsNumber(DisplayNodePropertyRef property, unsigned index)
+PropertyGetValueAsNumber(PropertyRef property, unsigned index)
 {
 	return reinterpret_cast<NumberValue*>(
 		reinterpret_cast<Property*>(property)->getValues().at(index)
@@ -58,27 +64,9 @@ DisplayNodePropertyGetValueAsNumber(DisplayNodePropertyRef property, unsigned in
 }
 
 bool
-DisplayNodePropertyGetValueAsBoolean(DisplayNodePropertyRef property, unsigned index)
+PropertyGetValueAsBoolean(PropertyRef property, unsigned index)
 {
 	return reinterpret_cast<BooleanValue*>(
 		reinterpret_cast<Property*>(property)->getValues().at(index)
 	)->getValue();
-}
-
-void
-DisplayNodePropertyInsertValueWithString(DisplayNodePropertyRef property, unsigned index, const char* value)
-{
-	reinterpret_cast<Property*>(property)->insertValue(index, new StringValue(value));
-}
-
-void
-DisplayNodePropertyInsertValueWithNumber(DisplayNodePropertyRef property, unsigned index, double value, DisplayNodePropertyValueUnit unit)
-{
-	reinterpret_cast<Property*>(property)->insertValue(index, new NumberValue(value, static_cast<ValueUnit>(unit)));
-}
-
-void
-DisplayNodePropertyInsertValueAsBoolean(DisplayNodePropertyRef property, unsigned index, bool value)
-{
-	reinterpret_cast<Property*>(property)->insertValue(index, new BooleanValue(value));
 }

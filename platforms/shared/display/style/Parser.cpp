@@ -5,13 +5,13 @@
 #include "Descriptor.h"
 #include "Selector.h"
 #include "Fragment.h"
+#include "Argument.h"
 #include "NullValue.h"
 #include "StringValue.h"
 #include "NumberValue.h"
 #include "BooleanValue.h"
 #include "FunctionValue.h"
 #include "VariableValue.h"
-#include "Argument.h"
 #include "ParseException.h"
 
 #include <iostream>
@@ -23,7 +23,36 @@ namespace Style {
 
 using std::string;
 
-Parser::Parser(Stylesheet* stylesheet, Tokenizer* tokenizer) : stylesheet(stylesheet), tokenizer(tokenizer)
+void
+Parser::parse(Stylesheet* stylesheet, const string& source)
+{
+	TokenizerStream stream(source);
+	Tokenizer tokenizer(stream);
+	Parser parser(stylesheet, &tokenizer);
+}
+
+void
+Parser::parse(Stylesheet* stylesheet, const string& source, const string& url)
+{
+	TokenizerStream stream(source);
+	Tokenizer tokenizer(stream);
+	Parser parser(stylesheet, &tokenizer, url);
+}
+
+void
+Parser::parse(Variable* variable, const string& source)
+{
+	TokenizerStream stream(source);
+	Tokenizer tokenizer(stream);
+	Parser parser(variable, &tokenizer);
+}
+
+Parser::Parser(Stylesheet* stylesheet, Tokenizer* tokenizer) : Parser(stylesheet, tokenizer, "<anonymous file>")
+{
+
+}
+
+Parser::Parser(Stylesheet* stylesheet, Tokenizer* tokenizer, string file) : stylesheet(stylesheet), tokenizer(tokenizer), file(file)
 {
 	auto tokens = this->tokenizer->getTokens();
 
@@ -46,6 +75,24 @@ Parser::Parser(Stylesheet* stylesheet, Tokenizer* tokenizer) : stylesheet(styles
 		this->unexpectedToken(tokens);
 
 	} while (tokens.hasNextToken());
+}
+
+Parser::Parser(Variable* variable, Tokenizer* tokenizer)
+{
+	auto tokens = this->tokenizer->getTokens();
+
+	while (true) {
+
+		auto value = this->parseValue(tokens);
+
+		if (value) {
+			variable->values.push_back(value);
+			tokens.nextToken();
+			continue;
+		}
+
+		break;
+	}
 }
 
 //------------------------------------------------------------------------------
@@ -323,47 +370,13 @@ Parser::parseVariable(TokenList& tokens)
 
 	while (true) {
 
-		if (tokens.getCurrTokenType() == kTokenTypeSpace) {
+		auto value = this->parseValue(tokens);
+
+		if (value) {
+			variable->values.push_back(value);
 			tokens.nextToken();
 			continue;
 		}
-
-		if (tokens.getCurrTokenType() == kTokenTypeIdent) {
-			variable->values.push_back(this->parseIdentValue(tokens));
-			tokens.nextToken();
-			continue;
-		}
-
-		if (tokens.getCurrTokenType() == kTokenTypeNumber) {
-			variable->values.push_back(this->parseNumberValue(tokens));
-			tokens.nextToken();
-			continue;
-		}
-
-		if (tokens.getCurrTokenType() == kTokenTypeString) {
-			variable->values.push_back(this->parseStringValue(tokens));
-			tokens.nextToken();
-			continue;
-		}
-
-		if (tokens.getCurrTokenType() == kTokenTypeVariable) {
-			variable->values.push_back(this->parseVariableValue(tokens));
-			tokens.nextToken();
-			continue;
-		}
-
-		if (tokens.getCurrTokenType() == kTokenTypeFunction) {
-			variable->values.push_back(this->parseFunctionValue(tokens));
-			tokens.nextToken();
-			continue;
-		}
-
-		if (tokens.getCurrTokenType() == kTokenTypeDelimiter ||
-			tokens.getCurrTokenType() == kTokenTypeLinebreak) {
-			break;
-		}
-
-		this->unexpectedToken(tokens);
 
 		break;
 	}
@@ -482,51 +495,19 @@ Parser::parseProperty(TokenList& tokens)
 
 	this->assertTokenType(tokens, kTokenTypeColon);
 
-	auto property = new Property(name);
+	auto property = new Property(this->toCamelCase(name));
 
 	tokens.nextToken();
 	tokens.skipSpace();
 
 	while (true) {
 
-		if (tokens.getCurrTokenType() == kTokenTypeSpace) {
+		auto value = this->parseValue(tokens);
+
+		if (value) {
+			property->values.push_back(value);
 			tokens.nextToken();
 			continue;
-		}
-
-		if (tokens.getCurrTokenType() == kTokenTypeIdent) {
-			property->values.push_back(this->parseIdentValue(tokens));
-			tokens.nextToken();
-			continue;
-		}
-
-		if (tokens.getCurrTokenType() == kTokenTypeNumber) {
-			property->values.push_back(this->parseNumberValue(tokens));
-			tokens.nextToken();
-			continue;
-		}
-
-		if (tokens.getCurrTokenType() == kTokenTypeString) {
-			property->values.push_back(this->parseStringValue(tokens));
-			tokens.nextToken();
-			continue;
-		}
-
-		if (tokens.getCurrTokenType() == kTokenTypeVariable) {
-			property->values.push_back(this->parseVariableValue(tokens));
-			tokens.nextToken();
-			continue;
-		}
-
-		if (tokens.getCurrTokenType() == kTokenTypeFunction) {
-			property->values.push_back(this->parseFunctionValue(tokens));
-			tokens.nextToken();
-			continue;
-		}
-
-		if (tokens.getCurrTokenType() == kTokenTypeDelimiter ||
-			tokens.getCurrTokenType() == kTokenTypeLinebreak) {
-			break;
 		}
 
 		break;
@@ -536,6 +517,43 @@ Parser::parseProperty(TokenList& tokens)
 	tokens.skipSpace();
 
 	return property;
+}
+
+Value*
+Parser::parseValue(TokenList& tokens)
+{
+	if (tokens.getCurrTokenType() == kTokenTypeSpace) {
+		tokens.nextToken();
+	}
+
+	if (tokens.getCurrTokenType() == kTokenTypeIdent) {
+		return this->parseIdentValue(tokens);
+	}
+
+	if (tokens.getCurrTokenType() == kTokenTypeNumber) {
+		return this->parseNumberValue(tokens);
+	}
+
+	if (tokens.getCurrTokenType() == kTokenTypeString) {
+		return this->parseStringValue(tokens);
+	}
+
+	if (tokens.getCurrTokenType() == kTokenTypeVariable) {
+		return this->parseVariableValue(tokens);
+	}
+
+	if (tokens.getCurrTokenType() == kTokenTypeFunction) {
+		return this->parseFunctionValue(tokens);
+	}
+
+	if (tokens.getCurrTokenType() == kTokenTypeDelimiter ||
+		tokens.getCurrTokenType() == kTokenTypeLinebreak) {
+		return nullptr;
+	}
+
+	this->unexpectedToken(tokens);
+
+	return nullptr;
 }
 
 Value*
@@ -696,6 +714,34 @@ Parser::parseFunctionValue(TokenList& tokens)
 	return function;
 }
 
+string
+Parser::toCamelCase(string name)
+{
+// TODO
+// Optimize
+	string tmp;
+
+	for (int i = 0; i < name.length(); i++){
+
+        if (name[i] == '-') {
+
+			tmp = name.substr(i + 1, 1);
+
+			transform(
+				tmp.begin(),
+				tmp.end(),
+				tmp.begin(),
+				::toupper
+			);
+
+            name.erase(i, 2);
+            name.insert(i, tmp);
+       }
+    }
+
+	return name;
+}
+
 void
 Parser::assertTokenType(TokenList& tokens, TokenType type)
 {
@@ -719,6 +765,7 @@ Parser::unexpectedToken(TokenList &tokens)
 	throw ParseException(
 		"Unexpected token",
 		token.getName(),
+		this->file,
 		col,
 		row
 	);

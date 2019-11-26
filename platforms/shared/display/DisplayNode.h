@@ -327,7 +327,7 @@ protected:
 		if (this->updateCallback) {
 			this->updateCallback(
 				reinterpret_cast<DisplayNodeRef>(this),
-				reinterpret_cast<DisplayNodePropertyRef>(property),
+				reinterpret_cast<PropertyRef>(property),
 				name.c_str()
 			);
 		}

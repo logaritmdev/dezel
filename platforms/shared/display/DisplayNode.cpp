@@ -741,6 +741,13 @@ DisplayNode::resolveTraits()
 	if (this->invalidStyleTraits ||
 		this->invalidStateTraits) {
 
+		/*
+		 * TODO
+		 * There is an optimization to be done here. First, there's no need
+		 * to invalidate the tree if none of the matched styles have child
+		 * descriptors..
+		 */
+
 		DisplayNodeWalker walker(this);
 
 		while (walker.next()) {

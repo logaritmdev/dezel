@@ -8,93 +8,100 @@ extern "C" {
 #endif
 
 /**
- * Creates a display.
- * @function DisplayCreate;
+ * @function DisplayCreate
  * @since 0.7.0
+ * @hidden
  */
 DisplayRef DisplayCreate();
 
 /**
- * Releases a display.
  * @function DisplayDelete
  * @since 0.7.0
+ * @hidden
  */
 void DisplayDelete(DisplayRef display);
 
 /**
- * Assigns the display's window.
+ * @function DisplaySetStylesheet
+ * @since 0.7.0
+ * @hidden
+ */
+void DisplaySetStylesheet(DisplayRef display, StylesheetRef stylesheet);
+
+/**
  * @function DisplaySetWindow
- * @since 0.4.0
+ * @since 0.7.0
+ * @hidden
  */
 void DisplaySetWindow(DisplayRef display, DisplayNodeRef window);
 
 /**
- * Assigns the display's scale.
  * @function DisplaySetScale
  * @since 0.7.0
+ * @hidden
  */
 void DisplaySetScale(DisplayRef display, double scale);
 
 /**
- * Assigns the display's viewport width.
  * @function DisplaySetViewportWidth
  * @since 0.7.0
+ * @hidden
  */
 void DisplaySetViewportWidth(DisplayRef display, double viewportWidth);
 
 /**
- * Assigns the display's viewport height.
  * @function DisplaySetViewportHeight
  * @since 0.7.0
+ * @hidden
  */
 void DisplaySetViewportHeight(DisplayRef display, double viewportHeight);
 
 /**
- * Assigns the display's prepare callback.
  * @function DisplaySetPrepareCallback
  * @since 0.7.0
+ * @hidden
  */
 void DisplaySetPrepareCallback(DisplayRef display, DisplayCallback callback);
 
 /**
- * Assigns the display's resolve callback.
  * @function DisplaySetResolveCallback
  * @since 0.7.0
+ * @hidden
  */
 void DisplaySetResolveCallback(DisplayRef display, DisplayCallback callback);
 
 /**
- * Assigns the display's data.
  * @function DisplaySetData
  * @since 0.7.0
+ * @hidden
  */
 void DisplaySetData(DisplayRef display, void *data);
 
 /**
- * Returns the display's data.
  * @function DisplayGetData
  * @since 0.7.0
+ * @hidden
  */
-void *DisplayGetData(DisplayRef display);
+void* DisplayGetData(DisplayRef display);
 
 /**
- * Indicates whether the display is invalid.
  * @function DisplayIsInvalid
  * @since 0.7.0
+ * @hidden
  */
 bool DisplayIsInvalid(DisplayRef display);
 
 /**
- * Indicates whether the display is resolving.
  * @function DisplayGetData
  * @since 0.7.0
+ * @hidden
  */
 bool DisplayIsResolving(DisplayRef display);
 
 /**
- * Resolves the display.
  * @function DisplayResolve
  * @since 0.7.0
+ * @hidden
  */
 void DisplayResolve(DisplayRef display);
 

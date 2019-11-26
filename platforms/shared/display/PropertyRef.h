@@ -8,74 +8,53 @@ extern "C" {
 #endif
 
 /**
- * Returns the display node's property name.
- * @function DisplayNodePropertyGetName
+ * @function PropertyGetName
  * @since 0.7.0
+ * @hidden
  */
-const char* DisplayNodePropertyGetName(DisplayNodePropertyRef property);
+const char* PropertyGetName(PropertyRef property);
 
 /**
- * Returns the display node's property value count.
- * @function DisplayNodePropertyGetValueCount
+ * @function PropertyGetValueCount
  * @since 0.7.0
+ * @hidden
  */
-unsigned DisplayNodePropertyGetValueCount(DisplayNodePropertyRef property);
+unsigned PropertyGetValueCount(PropertyRef property);
 
 /**
- * Returns the display node's property value type.
- * @function DisplayNodePropertyGetValueType
+ * @function PropertyGetValueType
  * @since 0.7.0
+ * @hidden
  */
-DisplayNodePropertyValueType DisplayNodePropertyGetValueType(DisplayNodePropertyRef property, unsigned index);
+PropertyValueType PropertyGetValueType(PropertyRef property, unsigned index);
 
 /**
- * Returns the display node's property value unit.
- * @function DisplayNodePropertyGetValueUnit
+ * @function PropertyGetValueUnit
  * @since 0.7.0
+ * @hidden
  */
-DisplayNodePropertyValueUnit DisplayNodePropertyGetValueUnit(DisplayNodePropertyRef property, unsigned index);
+PropertyValueUnit PropertyGetValueUnit(PropertyRef property, unsigned index);
 
 /**
- * Returns the display node's property value as a string.
- * @function DisplayNodePropertyGetValueAsString
+ * @function PropertyGetValueAsString
  * @since 0.7.0
+ * @hidden
  */
-const char* DisplayNodePropertyGetValueAsString(DisplayNodePropertyRef property, unsigned index);
+const char* PropertyGetValueAsString(PropertyRef property, unsigned index);
 
 /**
- * Returns the display node's property value as a number.
- * @function DisplayNodePropertyGetValueAsNumber
+ * @function PropertyGetValueAsNumber
  * @since 0.7.0
+ * @hidden
  */
-double DisplayNodePropertyGetValueAsNumber(DisplayNodePropertyRef property, unsigned index);
+double PropertyGetValueAsNumber(PropertyRef property, unsigned index);
 
 /**
- * Returns the display node's property value as a boolean.
- * @function DisplayNodePropertyGetValueAsBoolean
+ * @function PropertyGetValueAsBoolean
  * @since 0.7.0
+ * @hidden
  */
-bool DisplayNodePropertyGetValueAsBoolean(DisplayNodePropertyRef property, unsigned index);
-
-/**
- * Assigns the display node's property value with a string.
- * @function DisplayNodePropertyInsertValueWithString
- * @since 0.7.0
- */
-void DisplayNodePropertyInsertValueWithString(DisplayNodePropertyRef property, unsigned index, const char* value);
-
-/**
- * Assigns the display node's property value with a number.
- * @function DisplayNodePropertyInsertValueWithNumber
- * @since 0.7.0
- */
-void DisplayNodePropertyInsertValueWithNumber(DisplayNodePropertyRef property, unsigned index, double value);
-
-/**
- * Assigns the display node's property value with a boolean.
- * @function DisplayNodePropertyInsertValueAsBoolean
- * @since 0.7.0
- */
-void DisplayNodePropertyInsertValueAsBoolean(DisplayNodePropertyRef property, unsigned index, bool value);
+bool PropertyGetValueAsBoolean(PropertyRef property, unsigned index);
 
 #if __cplusplus
 }
