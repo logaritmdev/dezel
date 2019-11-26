@@ -1903,8 +1903,61 @@ open class DisplayNode {
 	 * @method update
 	 * @since 0.7.0
 	 */
-	internal func update(name: String, property: DisplayNodePropertyRef?) {
+	internal func update(name: String, property: PropertyRef?) {
+	print("update \(name)")
+		guard let prop = self.delegate?.getProperty(name) else {
+			return
+		}
 
+		if (property == nil) {
+			prop.reset(lock: nil, initial: true)
+			return
+		}
+
+		let count = PropertyGetValueCount(property)
+
+		if (count == 1) {
+
+			switch (PropertyGetValueType(property, 0)) {
+
+				case kPropertyValueTypeNull:
+					prop.reset()
+
+				case kPropertyValueTypeString:
+					prop.reset(PropertyGetValueAsString(property, 0).string)
+
+				case kPropertyValueTypeNumber:
+					prop.reset(PropertyGetValueAsNumber(property, 0), unit: toUnit(src: PropertyGetValueUnit(property, 0)))
+
+				case kPropertyValueTypeBoolean:
+					prop.reset(PropertyGetValueAsBoolean(property, 0))
+
+				case kPropertyValueTypeFunction:
+				break
+				case kPropertyValueTypeVariable:
+					break
+
+				default:
+					break;
+			}
+		}
+	}
+}
+
+func toUnit(src: PropertyValueUnit) -> JavaScriptPropertyUnit {
+	switch (src) {
+	case kPropertyValueUnitNone: return .none
+	case kPropertyValueUnitPX: return .px
+	case kPropertyValueUnitPC: return .pc
+	case kPropertyValueUnitVW: return .vw
+	case kPropertyValueUnitVH: return .vh
+	case kPropertyValueUnitPW: return .pw
+	case kPropertyValueUnitPH: return .ph
+	case kPropertyValueUnitCW: return .cw
+	case kPropertyValueUnitCH: return .ch
+	case kPropertyValueUnitDeg: return .deg
+	case kPropertyValueUnitRad: return .rad
+	default: return .none
 	}
 }
 
@@ -2039,11 +2092,12 @@ private let displayNodeMeasureSizeCallback: @convention(c) (DisplayNodeRef?, Uns
 }
 
 /**
- * @const displayNodePropertySetterCallback
+ * @const PropertySetterCallback
  * @since 0.7.0
  * @hidden
  */
-private let displayNodeUpdateCallback: @convention(c) (DisplayNodeRef?, DisplayNodePropertyRef?, UnsafePointer<Int8>?) -> Void = { ptr, property, name in
+private let displayNodeUpdateCallback: @convention(c) (DisplayNodeRef?, PropertyRef?, UnsafePointer<Int8>?) -> Void = { ptr, property, name in
+	print("WAT")
 	guard let name = name else { return }
 	if let node = DisplayNodeGetData(ptr).value as? DisplayNode {
 		node.update(name: name.string, property: property)

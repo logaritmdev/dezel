@@ -1,8 +1,8 @@
 import Foundation
 
 /**
- * The application window needed to handle touch events.
  * @class ApplicationWindow
+ * @super UIWindow
  * @since 0.7.0
  */
 open class ApplicationWindow: UIWindow {
@@ -12,120 +12,146 @@ open class ApplicationWindow: UIWindow {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
      * @method sendEvent
      * @since 0.7.0
      */
 	override open func sendEvent(_ event: UIEvent) {
 
+		if (event.type == .touches) {
+			self.dispatchTouchEvent(event.allTouches!, with: event)
+			return
+		}
+
 		super.sendEvent(event)
+	}
+
+	//--------------------------------------------------------------------------
+	// MARK: Touch Management
+	//--------------------------------------------------------------------------
+
+	/**
+     * @method dispatchTouchEvent
+     * @since 0.7.0
+     */
+	open func dispatchTouchEvent(_ touches: Set<UITouch>, with event: UIEvent) {
 
 		guard let root = self.rootViewController?.view else {
 			return
 		}
 
-		if (event.type == .touches) {
+		var began: Set<UITouch> = Set<UITouch>()
+		var moved: Set<UITouch> = Set<UITouch>()
+		var ended: Set<UITouch> = Set<UITouch>()
+		var canceled: Set<UITouch> = Set<UITouch>()
 
-			var began: Set<UITouch> = Set<UITouch>()
-			var moved: Set<UITouch> = Set<UITouch>()
-			var ended: Set<UITouch> = Set<UITouch>()
-			var cancelled: Set<UITouch> = Set<UITouch>()
+		for touch in touches {
 
-			if let touches = event.allTouches {
+			switch (touch.phase) {
 
-				for touch in touches {
+				case .began:
+					began.insert(touch)
+				case .moved:
+					moved.insert(touch)
+				case .ended:
+					ended.insert(touch)
+				case .cancelled:
+					canceled.insert(touch)
 
-					switch (touch.phase) {
+				default:
+					break
+			}
+		}
 
-						case .began: began.insert(touch)
-						case .moved: moved.insert(touch)
-						case .ended: ended.insert(touch)
-						case .cancelled: cancelled.insert(touch)
+		let filter = { (touch: UITouch) -> Bool in
 
-						default:
-							break
-					}
+			let target = self.hitTest(touch.location(in: self), with: event)
+
+			if (touch.phase == .ended) {
+
+				/*
+				 * The touch has probaby moved outside of the bounds
+				 * of the simulator.
+				 */
+
+				if (target == nil) {
+					return true
 				}
+			}
 
-				let filter = { (touch: UITouch) -> Bool in
+			if let view = target {
+				return view == root || view.isDescendant(of: root)
+			}
 
-					let target = self.hitTest(touch.location(in: self), with: event)
+			return false
+		}
 
-					if (touch.phase == .ended) {
+		began = began.filter(filter)
+		moved = moved.filter(filter)
+		ended = ended.filter(filter)
 
-						/*
-						 * The touch has probaby moved outside of the bounds
-						 * of the simulator.
-						 */
+		if (began.count > 0) {
+			self.dispatchTouchBegan(began, with: event)
+		}
 
-						if (target == nil) {
-							return true
-						}
-					}
+		if (moved.count > 0) {
+			self.dispatchTouchMoved(moved, with: event)
+		}
 
-					if let view = target {
-						return view == root || view.isDescendant(of: root)
-					}
+		if (ended.count > 0) {
+			self.dispatchTouchEnded(ended, with: event)
+		}
 
-					return false
-				}
+		if (canceled.count > 0) {
+			self.dispatchTouchCanceled(canceled, with: event)
+		}
 
-				began = began.filter(filter)
-				moved = moved.filter(filter)
-				ended = ended.filter(filter)
+		super.sendEvent(event)
 
-				if (began.count > 0) {
-					self.dispatchTouchBegan(began)
-				}
+		for touch in touches where touch.touchCanceled == false {
 
-				if (moved.count > 0) {
-					self.dispatchTouchMoved(moved)
-				}
+			touch.touchCanceled = true
 
-				if (ended.count > 0) {
-					self.dispatchTouchEnded(ended)
-				}
+			if (touch.canceled) {
+				touch.view?.dispatchTouchCancel(touch, with: event)
+				continue
+			}
 
-				if (cancelled.count > 0) {
-					self.dispatchTouchCancelled(cancelled)
-				}
+			if (touch.captured) {
+				touch.view?.dispatchTouchCancel(touch, with: event, skip: touch.receiver)
+				continue
 			}
 		}
 	}
 
 	/**
-	 * Dispatches a touch began event.
      * @method dispatchTouchBegan
      * @since 0.7.0
      */
-	open func dispatchTouchBegan(_ touches: Set<UITouch>) {
+	open func dispatchTouchBegan(_ touches: Set<UITouch>, with event: UIEvent) {
 		NotificationCenter.default.post(name: ApplicationDelegate.touchesBeganNotification, object: self, userInfo: ["touches": touches])
 	}
 
 	/**
-	 * Dispatches a touch moved event.
      * @method dispatchTouchMoved
      * @since 0.7.0
      */
-	open func dispatchTouchMoved(_ touches: Set<UITouch>) {
+	open func dispatchTouchMoved(_ touches: Set<UITouch>, with event: UIEvent) {
 		NotificationCenter.default.post(name: ApplicationDelegate.touchesMovedNotification, object: self, userInfo: ["touches": touches])
 	}
 
 	/**
-	 * Dispatches a touch ended event.
      * @method dispatchTouchEnded
      * @since 0.7.0
      */
-	open func dispatchTouchEnded(_ touches: Set<UITouch>) {
+	open func dispatchTouchEnded(_ touches: Set<UITouch>, with event: UIEvent) {
 		NotificationCenter.default.post(name: ApplicationDelegate.touchesEndedNotification, object: self, userInfo: ["touches": touches])
 	}
 
 	/**
-	 * Dispatches a touch cancelled event.
-     * @method dispatchTouchCancelled
+     * @method dispatchTouchCanceled
      * @since 0.7.0
      */
-	open func dispatchTouchCancelled(_ touches: Set<UITouch>) {
-		NotificationCenter.default.post(name: ApplicationDelegate.touchesCancelledNotification, object: self, userInfo: ["touches": touches])
+	open func dispatchTouchCanceled(_ touches: Set<UITouch>, with event: UIEvent) {
+		NotificationCenter.default.post(name: ApplicationDelegate.touchesCanceledNotification, object: self, userInfo: ["touches": touches])
 	}
 }

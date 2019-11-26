@@ -1,8 +1,8 @@
 import Foundation
 
 /**
- * The application delegate that must extend the application delegate.
  * @class ApplicationDelegate
+ * @super UIResponder
  * @since 0.7.0
  */
 open class ApplicationDelegate: UIResponder, UIApplicationDelegate {
@@ -37,7 +37,7 @@ open class ApplicationDelegate: UIResponder, UIApplicationDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	public static let touchesCancelledNotification = Notification.Name("touchesCancelled")
+	public static let touchesCanceledNotification = Notification.Name("touchesCancelled")
 
 	/**
 	 * @const openUniversalURLNotification
@@ -65,7 +65,6 @@ open class ApplicationDelegate: UIResponder, UIApplicationDelegate {
 	//--------------------------------------------------------------------------
 
     /**
-     * The application window.
 	 * @since 0.7.0
 	 * @hidden
      */
@@ -100,7 +99,7 @@ open class ApplicationDelegate: UIResponder, UIApplicationDelegate {
 	 * @since 0.7.0
 	 */
 	open func application(_ application: UIApplication, continue activity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
-		NotificationCenter.default.post(name: ApplicationDelegate.openUniversalURLNotification, object: self, userInfo: ["url": activity.webpageURL as Any])
+		NotificationCenter.default.post(name: ApplicationDelegate.openResourceURLNotification, object: self, userInfo: ["url": activity.webpageURL as Any])
 		return true
 	}
 

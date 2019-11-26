@@ -1,120 +1,89 @@
 import UIKit
 
 /**
- * An application view controller.
  * @class ApplicationController
+ * @super UIViewController
  * @since 0.7.0
  */
-open class ApplicationController: UIViewController {
+open class ApplicationController: UIViewController, StylesheetDelegate {
 
 	//--------------------------------------------------------------------------
 	// MARK: Properties
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The application's badge.
-	 * @property badge
+	 * @property sources
 	 * @since 0.7.0
 	 */
-	open var badge: Int = 0 {
-		didSet {
-			UIApplication.shared.applicationIconBadgeNumber = self.badge
-		}
-	}
+	open var sources: [Source] = []
 
 	/**
-	 * The application controller's context.
-	 * @property context
+	 * @property modules
 	 * @since 0.7.0
 	 */
-	private(set) public var context: JavaScriptContext = JavaScriptContext()
+	open var modules: [Module] = []
 
 	/**
-	 * The application controller's display.
+	 * @property stylesheet
+	 * @since 0.7.0
+	 */
+	private(set) public var stylesheet: Stylesheet = Stylesheet()
+
+	/**
 	 * @property display
 	 * @since 0.7.0
 	 */
 	private(set) public var display: Display = Display()
 
 	/**
-	 * The application controller's application.
+	 * @property context
+	 * @since 0.7.0
+	 */
+	private(set) public var context: JavaScriptContext = JavaScriptContext()
+
+	/**
 	 * @property application
 	 * @since 0.7.0
 	 */
 	private(set) public var application: JavaScriptApplication?
-
-	/**
-	 * @property modules
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private var modules: [String: AnyClass] = [:]
-
-	/**
-	 * @property classes
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private var classes: [String: AnyClass] = [:]
-
-	/**
-	 * @property sources
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private var sources: [Source] = []
-
-	/**
-	 * @property running
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private var running: Bool = false
 
 	//--------------------------------------------------------------------------
 	// MARK: Methods
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Creates the application context and required components.
-	 * @method setup
+	 * @constructor
 	 * @since 0.7.0
 	 */
-	open func configure() {
-
+	required public init?(coder: NSCoder) {
+		super.init(coder: coder)
+		self.initialize()
 	}
 
 	/**
-	 * Creates the application context and required components.
-	 * @method setup
+	 * @constructor
 	 * @since 0.7.0
 	 */
-	open func setup() {
+	override init(nibName: String?, bundle:  Bundle?) {
+		super.init(nibName: nibName, bundle: bundle)
+		self.initialize()
+	}
 
-		if (self.running) {
-			return
-		}
+	/**
+	 * @destructor
+	 * @since 0.7.0
+	 */
+	deinit {
+		self.unregisterObservers()
+	}
 
-		self.running = true
+	/**
+	 * @method initialize
+	 * @since 0.7.0
+	 */
+	open func initialize() {
 
 		self.registerObservers()
-
-		self.display.scale = Double(UIScreen.main.scale)
-		self.display.viewportWidth = Double(UIScreen.main.bounds.width)
-		self.display.viewportHeight = Double(UIScreen.main.bounds.height)
-
-		var insetT: CGFloat = 20
-		var insetB: CGFloat = 0
-
-		if #available(iOS 11.0, *) {
-			if let window = UIApplication.shared.windows.first {
-				insetT = max(window.safeAreaInsets.top, insetT)
-				insetB = max(window.safeAreaInsets.bottom, insetB)
-			}
-		}
-		// Todo put in stylesheet object
-//		self.display.setVariable("safe-area-top-inset", value: "\(insetT)px")
-//		self.display.setVariable("safe-area-bottom-inset", value: "\(insetB)px")
 
 		self.context.attribute(kApplicationControllerKey, value: self)
 		self.context.global.property("_DEV_", boolean: self.isDev())
@@ -139,129 +108,40 @@ open class ApplicationController: UIViewController {
 				"Stack Trace:  \n " +
 				"\(stack)"
 
-			self.didThrowError(error: error)
-
 			fatalError(message)
 		}
-
-		self.registerModule("dezel.CoreModule", with: CoreModule.self)
-		self.registerModule("dezel.GlobalModule", with: GlobalModule.self)
-		self.registerModule("dezel.LocaleModule", with: LocaleModule.self)
-		self.registerModule("dezel.DeviceModule", with: DeviceModule.self)
-		self.registerModule("dezel.PlatformModule", with: PlatformModule.self)
-		self.registerModule("dezel.DialogModule", with: DialogModule.self)
-		self.registerModule("dezel.GraphicModule", with: GraphicModule.self)
-		self.registerModule("dezel.ViewModule", with: ViewModule.self)
-		self.registerModule("dezel.FormModule", with: FormModule.self)
-		self.registerModule("dezel.ApplicationModule", with: ApplicationModule.self)
-
-		self.configure()
-
-		self.context.registerModules(self.modules)
-		self.context.registerClasses(self.classes)
-		self.context.setup()
-
-		self.sources.forEach { source in
-			switch (source.category) {
-			//	case .style:
-					//self.evaluateStyle(source.data, file: source.location) // TODO
-				case .script:
-					self.evaluateScript(source.data, file: source.location)
-				default:
-					break
-			}
-		}
-
-		self.didLoad()
 	}
 
 	/**
-	 * Registers a context module.
-	 * @method registerModule
+	 * @method regsiter
 	 * @since 0.7.0
 	 */
-	open func registerModule(_ uid: String, with value: AnyClass) {
-		self.modules[uid] = value
+	open func register(_ application: JavaScriptApplication) {
+		self.application = application
 	}
 
 	/**
-	 * Registers a context class.
-	 * @method registerClass
+	 * @method configure
 	 * @since 0.7.0
 	 */
-	open func registerClass(_ uid: String, with value: AnyClass) {
-		self.classes[uid] = value
+	open func configure() {
+
 	}
 
 	/**
-	 * Registers a style file.
-	 * @method registerStyle
+	 * @method evaluateStyle
 	 * @since 0.7.0
 	 */
-	open func registerStyle(_ location: String) {
-		self.sources.append(Source(location: location, category: .style))
+	open func evaluateStyle(_ source: String, url: String) {
+		self.stylesheet.evaluate(source, url: url)
 	}
 
 	/**
-	 * Registers a script file.
-	 * @method registerScript
-	 * @since 0.7.0
-	 */
-	open func registerScript(_ location: String) {
-		self.sources.append(Source(location: location, category: .script))
-	}
-
-	/**
-	 * Evaluates a script file.
 	 * @method evaluateScript
 	 * @since 0.7.0
 	 */
-	open func evaluateScript(_ source: String, file: String) {
-		self.context.evaluate(source, file: file)
-	}
-
-
-	/**
-	 * Launches the specified application.
-	 * @method launch
-	 * @since 0.7.0
-	 */
-	open func launch(_ application: JavaScriptApplication, identifier: String = "default") {
-
-		self.application?.destroy()
-		self.application = application
-
-		application.window.width.reset(Double(UIScreen.main.bounds.width), unit: .px)
-		application.window.height.reset(Double(UIScreen.main.bounds.width), unit: .px)
-		self.view.addSubview(application.window)
-
-		self.didLaunchApplication(application: application)
-	}
-
-	/**
-	 * Reloads the current application.
-	 * @method reload
-	 * @since 0.7.0
-	 */
-	open func reload() {
-
-		// TODO
-		// FIX THIS
-
-		self.application?.destroy()
-		self.application = nil
-
-		Synchronizer.main.reset()
-
-//		let scale = self.layout.scale
-//		let viewportWidth = self.layout.viewportWidth
-//		let viewportHeight = self.layout.viewportHeight
-//
-//		self.styler = Styler()
-//		self.layout = Layout()
-//		self.layout.scale = scale
-//		self.layout.viewportWidth = viewportWidth
-//		self.layout.viewportHeight = viewportHeight
+	open func evaluateScript(_ source: String, url: String) {
+		self.context.evaluate(source, url: url)
 	}
 
 	/**
@@ -283,6 +163,149 @@ open class ApplicationController: UIViewController {
 	}
 
 	//--------------------------------------------------------------------------
+	// MARK: Methods - View Management
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @inherited
+	 * @method loadView
+	 * @since 0.7.0
+	 */
+	override open func loadView() {
+		self.view = UIView(frame: UIScreen.main.bounds)
+	}
+
+	/**
+	 * @inherited
+	 * @method viewDidLoad
+	 * @since 0.7.0
+	 */
+	override open func viewDidLoad() {
+
+		self.view.isHidden = false
+		self.view.isOpaque = true
+		self.view.backgroundColor = UIColor.black
+
+		self.view.addSubview(self.statusBar)
+
+		var insetT: CGFloat = 20
+		var insetB: CGFloat = 0
+
+		if #available(iOS 11.0, *) {
+			if let window = UIApplication.shared.windows.first {
+				insetT = max(window.safeAreaInsets.top, insetT)
+				insetB = max(window.safeAreaInsets.bottom, insetB)
+			}
+		}
+
+		self.stylesheet.delegate = self
+		self.stylesheet.setVariable("safe-area-top-inset", value: "\(insetT)px")
+		self.stylesheet.setVariable("safe-area-bottom-inset", value: "\(insetB)px")
+
+		self.display.scale = Double(UIScreen.main.scale)
+		self.display.viewportWidth = Double(UIScreen.main.bounds.width)
+		self.display.viewportHeight = Double(UIScreen.main.bounds.height)
+		self.display.stylesheet = self.stylesheet
+
+		self.configure()
+
+		self.modules.append(JavaScriptUtilModule())
+		self.modules.append(JavaScriptGlobalModule())
+		self.modules.append(JavaScriptPlatformModule())
+		self.modules.append(JavaScriptLocaleModule())
+		self.modules.append(JavaScriptDeviceModule())
+		self.modules.append(JavaScriptDialogModule())
+		self.modules.append(JavaScriptGraphicModule())
+		self.modules.append(JavaScriptViewModule())
+		self.modules.append(JavaScriptFormModule())
+		self.modules.append(JavaScriptApplicationModule())
+
+		for module in self.modules {
+			module.register(context: self.context)
+		}
+
+		for source in self.sources {
+			switch (source.type) {
+				case .style:
+					self.evaluateStyle(source.data, url: source.path)
+				case .script:
+					self.evaluateScript(source.data, url: source.path)
+			}
+		}
+
+		guard let application = self.application else {
+			return
+			//fatalError("Missing application. Did you forget to call registerApplication ?")
+		}
+
+		self.display.window = application.window.node
+
+		application.window.width.reset(Double(UIScreen.main.bounds.width), unit: .px, lock: self)
+		application.window.height.reset(Double(UIScreen.main.bounds.height), unit: .px, lock: self)
+
+		self.view.addSubview(application.window)
+	}
+
+	/**
+	 * @inherited
+	 * @method viewWillLayoutSubviews
+	 * @since 0.7.0
+	 */
+	override open func viewWillLayoutSubviews() {
+
+		let bounds = UIScreen.main.bounds
+
+		self.view.frame = bounds
+
+		self.display.viewportWidth = Double(bounds.width)
+		self.display.viewportHeight = Double(bounds.height)
+
+		if let application = self.application {
+			application.window.width.reset(Double(bounds.width))
+			application.window.height.reset(Double(bounds.height))
+		}
+
+		self.statusBar.frame = UIApplication.shared.statusBarFrame
+	}
+
+	/**
+	 * @inherited
+	 * @method viewWillTransition
+	 * @since 0.7.0
+	 */
+	override open func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+
+		super.viewWillTransition(to: size, with: coordinator)
+
+		coordinator.animate(alongsideTransition: { context in
+
+			let duration = self.getRotationAnimationDuration(context: context)
+			let equation = self.getRotationAnimationEquation(context: context)
+
+			Transition.create(
+				duration: duration,
+				equation: equation,
+				delay: 0
+			) { }
+
+			self.display.viewportWidth = Double(size.width)
+			self.display.viewportHeight = Double(size.height)
+
+			if let application = self.application {
+				application.window.width.reset(Double(size.width))
+				application.window.height.reset(Double(size.height))
+			}
+
+			Synchronizer.main.execute()
+
+			Transition.commit()
+
+			self.statusBar.frame = UIApplication.shared.statusBarFrame
+
+		}, completion: nil)
+	}
+
+	//--------------------------------------------------------------------------
 	// MARK: Methods - Touch Management
 	//--------------------------------------------------------------------------
 
@@ -292,7 +315,7 @@ open class ApplicationController: UIViewController {
 	 * @since 0.7.0
 	 */
 	open func dispatchTouchCancel(_ touches: Set<UITouch>) {
-		self.dispatchTouchEvent("nativeOnTouchCancel", touches: touches)
+		self.dispatchTouchEvent("touchcancel", touches: touches)
 	}
 
 	/**
@@ -301,7 +324,7 @@ open class ApplicationController: UIViewController {
 	 * @since 0.7.0
 	 */
 	open func dispatchTouchStart(_ touches: Set<UITouch>) {
-		self.dispatchTouchEvent("nativeOnTouchStart", touches: touches)
+		self.dispatchTouchEvent("touchstart", touches: touches)
 	}
 
 	/**
@@ -310,7 +333,7 @@ open class ApplicationController: UIViewController {
 	 * @since 0.7.0
 	 */
 	open func dispatchTouchMove(_ touches: Set<UITouch>) {
-		self.dispatchTouchEvent("nativeOnTouchMove", touches: touches)
+		self.dispatchTouchEvent("touchmove", touches: touches)
 	}
 
 	/**
@@ -319,7 +342,70 @@ open class ApplicationController: UIViewController {
 	 * @since 0.7.0
 	 */
 	open func dispatchTouchEnd(_ touches: Set<UITouch>) {
-		self.dispatchTouchEvent("nativeOnTouchEnd", touches: touches)
+		self.dispatchTouchEvent("touchend", touches: touches)
+	}
+
+	/**
+	 * @method dispatchTouchEvent
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private func dispatchTouchEvent(_ type: String, touches: Set<UITouch>) {
+
+		guard let application = self.application else {
+			return
+		}
+
+		let array = self.context.createEmptyArray()
+
+		for (i, t) in touches.enumerated() {
+
+			let point = t.location(
+				in: self.view
+			)
+
+			let touch = self.context.createEmptyObject()
+			touch.property("pointer", number: Double(unsafeBitCast(t, to: Int.self)))
+			touch.property("x", number: Double(point.x))
+			touch.property("y", number: Double(point.y))
+			touch.property("canceled", boolean: t.canceled)
+			touch.property("captured", boolean: t.captured)
+
+			array.property(i, value: touch)
+		}
+
+		switch (type) {
+
+			case "touchcancel":
+				application.callMethod("nativeOnTouchCancel", arguments: [array], result: nil)
+			case "touchstart":
+				application.callMethod("nativeOnTouchStart", arguments: [array], result: nil)
+			case "touchmove":
+				application.callMethod("nativeOnTouchMove", arguments: [array], result: nil)
+			case "touchend":
+				application.callMethod("nativeOnTouchEnd", arguments: [array], result: nil)
+
+			default:
+				break;
+		}
+
+		for (i, t) in touches.enumerated() {
+
+			let touch = array.property(i)
+			t.canceled = touch.property("canceled").boolean
+			t.captured = touch.property("captured").boolean
+
+			let receiver = touch.property("receiver")
+			if (receiver.isNull ||
+				receiver.isUndefined) {
+				continue
+			}
+
+			if (t.captured &&
+				t.receiver == nil) {
+				t.receiver = receiver.cast(JavaScriptView.self)!.content
+			}
+		}
 	}
 
 	//--------------------------------------------------------------------------
@@ -400,118 +486,6 @@ open class ApplicationController: UIViewController {
 	 */
 	open func keyboardDidResize(_ notification: Notification) {
 		self.dispatchKeyboardEvent("nativeboardResize", notification: notification)
-	}
-
-	//--------------------------------------------------------------------------
-	// MARK: Methods - View Management
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @inherited
-	 * @method loadView
-	 * @since 0.7.0
-	 */
-	override open func loadView() {
-		self.view = UIView(frame: UIScreen.main.bounds)
-	}
-
-	/**
-	 * @inherited
-	 * @method viewDidLoad
-	 * @since 0.7.0
-	 */
-	override open func viewDidLoad() {
-
-		self.view.isHidden = false
-		self.view.isOpaque = true
-		self.view.backgroundColor = UIColor.black
-
-		self.view.addSubview(self.statusBar)
-
-		self.setup()
-	}
-
-	/**
-	 * @inherited
-	 * @method viewWillLayoutSubviews
-	 * @since 0.7.0
-	 */
-	override open func viewWillLayoutSubviews() {
-
-		let bounds = UIScreen.main.bounds
-
-		self.view.frame = bounds
-
-		self.display.viewportWidth = Double(bounds.width)
-		self.display.viewportHeight = Double(bounds.height)
-
-		if let application = self.application {
-			application.window.width.reset(Double(bounds.width))
-			application.window.height.reset(Double(bounds.height))
-		}
-
-		self.statusBar.frame = UIApplication.shared.statusBarFrame
-	}
-
-	/**
-	 * @inherited
-	 * @method viewWillTransition
-	 * @since 0.7.0
-	 */
-	override open func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-
-		super.viewWillTransition(to: size, with: coordinator)
-
-		coordinator.animate(alongsideTransition: { context in
-
-			let duration = self.getRotationAnimationDuration(context: context)
-			let equation = self.getRotationAnimationEquation(context: context)
-
-			Transition.create(
-				duration: duration,
-				equation: equation,
-				delay: 0
-			) { }
-
-			self.display.viewportWidth = Double(size.width)
-			self.display.viewportHeight = Double(size.height)
-
-			if let application = self.application {
-				application.window.width.reset(Double(size.width))
-				application.window.height.reset(Double(size.height))
-			}
-
-			Synchronizer.main.execute()
-
-			Transition.commit()
-
-			self.statusBar.frame = UIApplication.shared.statusBarFrame
-
-		}, completion: nil)
-	}
-
-	/**
-	 * @method getRotationAnimationDuration
-	 * @since 0.7.0
- 	 * @hidden
-	 */
-	open func getRotationAnimationDuration(context: UIViewControllerTransitionCoordinatorContext) -> TimeInterval {
-		return context.transitionDuration
-	}
-
-	/**
-	 * @method getRotationAnimationEquation
-	 * @since 0.7.0
- 	 * @hidden
-	 */
-	open func getRotationAnimationEquation(context: UIViewControllerTransitionCoordinatorContext) -> CAMediaTimingFunction {
-
-	 	/*
-	 	 * Right now, on iOS 12, the context completionCurve does not match the
-	 	 * available curves. Ease in out seems to be the closest
-	 	 */
-
-		return CAMediaTimingFunction(name: .easeInEaseOut)
 	}
 
 	//--------------------------------------------------------------------------
@@ -610,46 +584,6 @@ open class ApplicationController: UIViewController {
 		}
 
 		return (r == 1 && g == 1 && b == 1 && a == 1) ? .lightContent : .default
-	}
-
-	//--------------------------------------------------------------------------
-	// MARK: Methods - Lifecycle
-	//--------------------------------------------------------------------------
-
-	/**
-	 * Called when the context has been loaded.
-	 * @method didLoad
-	 * @since 0.7.0
-	 */
-	open func didLoad() {
-
-	}
-
-	/**
-	 * Called when a JavaScript error is thrown.
-	 * @method didThrowError
-	 * @since 0.7.0
-	 */
-	open func didThrowError(error: JavaScriptValue) {
-
-	}
-
-	/**
-	 * Called when a JavaScript application is launched.
-	 * @method didLaunchApplication
-	 * @since 0.7.0
-	 */
-	open func didLaunchApplication(application: JavaScriptApplication) {
-
-	}
-
-	/**
-	 * Called when a JavaScript application is reloaded.
-	 * @method didReloadApplication
-	 * @since 0.7.0
-	 */
-	open func didReloadApplication(application: JavaScriptApplication) {
-
 	}
 
 	//--------------------------------------------------------------------------
@@ -809,6 +743,19 @@ open class ApplicationController: UIViewController {
 	}
 
 	//--------------------------------------------------------------------------
+	// MARK: Stylesheet Delegate
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method didThrowError
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	open func didThrowError(stylesheet: Stylesheet, error: String, col: Int, row: Int, url: String) {
+		print("Stylesheet error \(error)")
+	}
+
+	//--------------------------------------------------------------------------
 	// MARK: Private API
 	//--------------------------------------------------------------------------
 
@@ -821,7 +768,7 @@ open class ApplicationController: UIViewController {
 		NotificationCenter.default.addObserver(self, selector: #selector(handleTouchBegan), name: ApplicationDelegate.touchesBeganNotification, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(handleTouchMoved), name: ApplicationDelegate.touchesMovedNotification, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(handleTouchEnded), name: ApplicationDelegate.touchesEndedNotification, object: nil)
-		NotificationCenter.default.addObserver(self, selector: #selector(handleTouchCancelled), name: ApplicationDelegate.touchesCancelledNotification, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(handleTouchCancelled), name: ApplicationDelegate.touchesCanceledNotification, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(handleResourceURL), name: ApplicationDelegate.openResourceURLNotification, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(handleUniversalURL), name: ApplicationDelegate.openUniversalURLNotification, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(handleEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
@@ -840,33 +787,27 @@ open class ApplicationController: UIViewController {
 	}
 
 	/**
-	 * @method dispatchTouchEvent
+	 * @method getRotationAnimationDuration
 	 * @since 0.7.0
-	 * @hidden
+ 	 * @hidden
 	 */
-	private func dispatchTouchEvent(_ name: String, touches: Set<UITouch>) {
+	open func getRotationAnimationDuration(context: UIViewControllerTransitionCoordinatorContext) -> TimeInterval {
+		return context.transitionDuration
+	}
 
-		guard let application = self.application else {
-			return
-		}
+	/**
+	 * @method getRotationAnimationEquation
+	 * @since 0.7.0
+ 	 * @hidden
+	 */
+	open func getRotationAnimationEquation(context: UIViewControllerTransitionCoordinatorContext) -> CAMediaTimingFunction {
 
-		let array = self.context.createEmptyArray()
+	 	/*
+	 	 * Right now, on iOS 12, the context completionCurve does not match the
+	 	 * available curves. Ease in out seems to be the closest
+	 	 */
 
-		for (i, t) in touches.enumerated() {
-
-			let point = t.location(
-				in: self.view
-			)
-
-			let touch = self.context.createEmptyObject()
-			touch.property("identifier", number: Double(unsafeBitCast(t, to: Int.self)))
-			touch.property("x", number: Double(point.x))
-			touch.property("y", number: Double(point.y))
-
-			array.property(i, value: touch)
-		}
-
-		application.callMethod(name, arguments: [array], result: nil)
+		return CAMediaTimingFunction(name: .easeInEaseOut)
 	}
 
 	/**

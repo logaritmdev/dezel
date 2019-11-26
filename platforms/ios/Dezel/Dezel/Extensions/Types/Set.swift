@@ -1,9 +1,18 @@
-//
-//  Set.swift
-//  Dezel
-//
-//  Created by Jean-Philippe Déry on 2019-11-21.
-//  Copyright © 2019 Jean-Philippe Déry. All rights reserved.
-//
+/**
+ * @extension Set
+ * @since 0.7.0
+ * @hidden
+ */
+internal extension Set where Element : Hashable {
 
-import Foundation
+	/**
+	 * @method concat
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	mutating func concat(_ other: Set<Element>) {
+		for value in other {
+			self.insert(value)
+		}
+	}
+}

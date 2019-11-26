@@ -45,9 +45,7 @@ using namespace Dezel::Style;
 
 	try {
 
-		TokenizerStream stream(source);
-		Tokenizer tokenizer(stream);
-		Parser parser(stylesheet, &tokenizer);
+		Parser::parse(stylesheet, source);
 
 	} catch (ParseException &e) {
 		[NSException raise:@"ParseException" format: @"%s", e.what()];
@@ -67,9 +65,7 @@ using namespace Dezel::Style;
 
 	try {
 
-		TokenizerStream stream(source);
-		Tokenizer tokenizer(stream);
-		Parser parser(stylesheet, &tokenizer);
+		Parser::parse(stylesheet, source);
 
 	} catch (ParseException &e) {
 		[NSException raise:@"ParseException" format: @"%s", e.what()];
@@ -148,9 +144,9 @@ using namespace Dezel::Style;
 	XCTAssertEqual(dynamic_cast<StringValue*>(values[3])->getValue(), "string");
 }
 
--(void)testRuleset {
+-(void)testDescriptors {
 
-	string input = R""""(
+	string source = R""""(
 
 	TypeDeclaration {
 
@@ -191,9 +187,7 @@ using namespace Dezel::Style;
 
 	try {
 
-		TokenizerStream stream(input);
-		Tokenizer tokenizer(stream);
-		Parser parser(stylesheet, &tokenizer);
+		Parser::parse(stylesheet, source);
 
 	} catch (ParseException &e) {
 		[NSException raise:@"ParseException" format: @"%s", e.what()];
@@ -211,26 +205,26 @@ using namespace Dezel::Style;
 	XCTAssertEqual(selector->getHead()->getType(), "TypeDeclaration");
 
 	auto values = properties.get(0)->getValues();
-
-	XCTAssertEqual(properties.get(0)->getName(), "prop-1");
+std::cout << "TEST " << properties.get(0)->getName() << "\n";
+	XCTAssertEqual(properties.get(0)->getName(), "prop1");
 	XCTAssertEqual(dynamic_cast<StringValue*>(values[0])->getType(), kValueTypeString);
 	XCTAssertEqual(dynamic_cast<StringValue*>(values[0])->getValue(), "value1");
 
 	values = properties.get(1)->getValues();
 
-	XCTAssertEqual(properties.get(1)->getName(), "prop-2");
+	XCTAssertEqual(properties.get(1)->getName(), "prop2");
 	XCTAssertEqual(dynamic_cast<StringValue*>(values[0])->getType(), kValueTypeString);
 	XCTAssertEqual(dynamic_cast<StringValue*>(values[0])->getValue(), "value2");
 
 	values = properties.get(2)->getValues();
 
-	XCTAssertEqual(properties.get(2)->getName(), "prop-3");
+	XCTAssertEqual(properties.get(2)->getName(), "prop3");
 	XCTAssertEqual(dynamic_cast<StringValue*>(values[0])->getType(), kValueTypeString);
 	XCTAssertEqual(dynamic_cast<StringValue*>(values[0])->getValue(), "value3");
 
 	values = properties.get(3)->getValues();
 
-	XCTAssertEqual(properties.get(3)->getName(), "prop-4");
+	XCTAssertEqual(properties.get(3)->getName(), "prop4");
 	XCTAssertEqual(dynamic_cast<FunctionValue*>(values[0])->getType(), kValueTypeFunction);
 	XCTAssertEqual(dynamic_cast<FunctionValue*>(values[0])->getName(), "function");
 
@@ -250,9 +244,9 @@ using namespace Dezel::Style;
 
 	XCTAssertEqual(child->getSelector()->getHead()->getName(), "id-child-ruleset");
 	XCTAssertEqual(child->getProperties().size(), 2);
-	XCTAssertEqual(child->getProperties().get(0)->getName(), "prop-1");
+	XCTAssertEqual(child->getProperties().get(0)->getName(), "prop1");
 	XCTAssertEqual(child->getProperties().get(0)->getValues().at(0)->getType(), kValueTypeString);
-	XCTAssertEqual(child->getProperties().get(1)->getName(), "prop-2");
+	XCTAssertEqual(child->getProperties().get(1)->getName(), "prop2");
 	XCTAssertEqual(child->getProperties().get(1)->getValues().at(0)->getType(), kValueTypeString);
 
 	XCTAssertEqual(descriptor->getStateDescriptors().size(), 1);
@@ -261,20 +255,50 @@ using namespace Dezel::Style;
 
 	XCTAssertEqual(state->getSelector()->getHead()->getState(), "state-descriptor");
 	XCTAssertEqual(state->getProperties().size(), 2);
-	XCTAssertEqual(state->getProperties().get(0)->getName(), "prop-1");
+	XCTAssertEqual(state->getProperties().get(0)->getName(), "prop1");
 	XCTAssertEqual(state->getProperties().get(0)->getValues().at(0)->getType(), kValueTypeString);
-	XCTAssertEqual(state->getProperties().get(1)->getName(), "prop-2");
+	XCTAssertEqual(state->getProperties().get(1)->getName(), "prop2");
 	XCTAssertEqual(state->getProperties().get(1)->getValues().at(0)->getType(), kValueTypeString);
 
 	auto styleDescriptor = descriptor->getStyleDescriptors().at(0);
 
 	XCTAssertEqual(styleDescriptor->getSelector()->getHead()->getStyle(), "style-descriptor");
 	XCTAssertEqual(styleDescriptor->getProperties().size(), 2);
-	XCTAssertEqual(styleDescriptor->getProperties().get(0)->getName(), "prop-1");
+	XCTAssertEqual(styleDescriptor->getProperties().get(0)->getName(), "prop1");
 	XCTAssertEqual(styleDescriptor->getProperties().get(0)->getValues().at(0)->getType(), kValueTypeString);
-	XCTAssertEqual(styleDescriptor->getProperties().get(1)->getName(), "prop-2");
+	XCTAssertEqual(styleDescriptor->getProperties().get(1)->getName(), "prop2");
 	XCTAssertEqual(styleDescriptor->getProperties().get(1)->getValues().at(0)->getType(), kValueTypeString);
 	// TODO test inner
+
+}
+
+-(void)testPropertiesCamelCase {
+
+	string source = R""""(
+
+	TypeDeclaration {
+		a-property: value1;
+		a-property-with-longer-name: value2;
+	}
+
+	)"""";
+
+	try {
+
+		Parser::parse(stylesheet, source);
+
+	} catch (ParseException &e) {
+		[NSException raise:@"ParseException" format: @"%s", e.what()];
+	}
+
+	XCTAssertEqual(stylesheet->getRootDescriptors().size(), 1);
+
+	auto properties = stylesheet->getRootDescriptors().front()->getProperties();
+
+	XCTAssertEqual(properties.size(), 2);
+
+	XCTAssertEqual(properties.get(0)->getName(), "aProperty");
+	XCTAssertEqual(properties.get(1)->getName(), "aPropertyWithLongerName");
 
 }
 

@@ -15,7 +15,7 @@ open class JavaScriptContext: NSObject {
 	 * @since 0.7.0
 	 */
 	private(set) public lazy var jsnull: JavaScriptValue = {
-		return JavaScriptNull(context: self)
+		return self.createNull()
 	}()
 
 	/**
@@ -24,7 +24,23 @@ open class JavaScriptContext: NSObject {
 	 * @since 0.7.0
 	 */
 	private(set) public lazy var jsundefined: JavaScriptValue = {
-		return JavaScriptUndefined(context: self)
+		return self.createUndefined()
+	}()
+
+	/**
+	 * @const jstrue
+	 * @since 0.7.0
+	 */
+	private(set) public lazy var jstrue: JavaScriptValue = {
+		return self.createBoolean(true)
+	}()
+
+	/**
+	 * @const jsfalse
+	 * @since 0.7.0
+	 */
+	private(set) public lazy var jsfalse: JavaScriptValue = {
+		return self.createBoolean(false)
 	}()
 
 	//--------------------------------------------------------------------------
@@ -46,13 +62,6 @@ open class JavaScriptContext: NSObject {
 	private(set) public var global: JavaScriptValue!
 
 	/**
-     * The context's registered modules.
-     * @property modules
-     * @since 0.1.0
-     */
-	internal(set) public var modules: [String: Module] = [:]
-
-	/**
      * The context's registered objects.
      * @property objects
      * @since 0.1.0
@@ -72,13 +81,6 @@ open class JavaScriptContext: NSObject {
      * @since 0.7.0
      */
 	internal(set) public var globals: [String: JavaScriptValue] = [:]
-
-	/**
-	 * @property running
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	private var running: Bool = false
 
 	//--------------------------------------------------------------------------
 	// MARK: Methods
@@ -109,17 +111,6 @@ open class JavaScriptContext: NSObject {
 	}
 
 	/**
-	 * Register multiple modules.
-	 * @method registerModules
-	 * @since 0.7.0
-	 */
-	open func registerModules(_ modules: [String: AnyClass]) {
-		modules.forEach {
-			self.registerModule($0.key, with: $0.value)
-		}
-	}
-
-	/**
 	 * Register multiple objects.
 	 * @method registerObjects
 	 * @since 0.7.0
@@ -142,15 +133,6 @@ open class JavaScriptContext: NSObject {
 	}
 
 	/**
-     * Registers a context module.
-     * @method registerModule
-     * @since 0.1.0
-     */
-	open func registerModule(_ uid: String, with value: AnyClass) {
-		self.modules[uid] = Module.create(value, context: self)
-	}
-
-	/**
 	 * Registers a context object.
 	 * @method registerObject
 	 * @since 0.1.0
@@ -169,39 +151,12 @@ open class JavaScriptContext: NSObject {
 	}
 
 	/**
-     * Loads the context dependencies.
-     * @method setup
-     * @since 0.7.0
-     */
-	open func setup() {
-
-		if (self.running) {
-			return
-		}
-
-		self.running = true
-
-		self.modules.forEach {
-			$0.value.initialize()
-		}
-	}
-
-	/**
      * Disposes the context.
      * @method dispose
      * @since 0.1.0
      */
 	open func dispose() {
 
-		if (self.running == false) {
-			return
-		}
-
-		for (_, module) in self.modules {
-			module.dispose()
-		}
-
-		self.modules.removeAll()
 		self.objects.removeAll()
 		self.classes.removeAll()
 
@@ -210,8 +165,6 @@ open class JavaScriptContext: NSObject {
 		self.garbageCollect()
 
 		JavaScriptContextDelete(self.handle)
-
-		self.running = false
 	}
 
 	/**
@@ -354,8 +307,8 @@ open class JavaScriptContext: NSObject {
 	 * @method evaluate
 	 * @since 0.1.0
 	 */
-	open func evaluate(_ code: String) {
-		JavaScriptContextEvaluate(self.handle, code, "<none>")
+	open func evaluate(_ source: String) {
+		JavaScriptContextEvaluate(self.handle, source, "<none>")
 	}
 
 	/**
@@ -363,8 +316,8 @@ open class JavaScriptContext: NSObject {
      * @method evaluate
      * @since 0.1.0
      */
-	open func evaluate(_ code: String, file: String) {
-		JavaScriptContextEvaluate(self.handle, code, file)
+	open func evaluate(_ source: String, url: String) {
+		JavaScriptContextEvaluate(self.handle, source, url)
 	}
 
 	/**
@@ -393,7 +346,7 @@ open class JavaScriptContext: NSObject {
 	 * @since 0.6.0
 	 */
 	open func handleError(handler: @escaping JavaScriptExceptionHandler) {
-		JavaScriptContextSetExceptionHandler(self.handle, JavaScriptContextExceptionCallback)
+		JavaScriptContextSetExceptionHandler(self.handle, javaScriptContextExceptionCallback)
 		JavaScriptContextSetAttribute(self.handle, kExceptionWrapperKey, Unmanaged.passRetained(JavaScriptExceptionWrapper(context: self, handler: handler)).toOpaque())
 	}
 
@@ -423,11 +376,11 @@ public typealias JavaScriptExceptionHandler = (JavaScriptValue) -> (Void)
 public extension JavaScriptContext {
 
 	/**
-	 * @property application
+	 * @property controller
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	var application: ApplicationController {
+	var controller: ApplicationController {
 		return self.attribute(kApplicationControllerKey) as! ApplicationController
 	}
 
@@ -473,13 +426,12 @@ public extension JavaScriptContext {
 	}
 }
 
-
-
 /**
+ * @function javaScriptContextExceptionCallback
  * @since 0.1.0
  * @hidden
  */
-private let JavaScriptContextExceptionCallback: @convention(c) (JSContextRef?, JSValueRef?) -> Void = { context, error in
+private let javaScriptContextExceptionCallback: @convention(c) (JSContextRef?, JSValueRef?) -> Void = { context, error in
 
 	let error = error!
 	let context = context!

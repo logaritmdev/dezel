@@ -1,42 +1,42 @@
 /**
- * @class JavaScriptCoreUtil
+ * @class JavaScriptUtil
  * @since 0.7.0
  * @hidden
  */
-open class JavaScriptCoreUtil: JavaScriptClass {
+open class JavaScriptUtil: JavaScriptClass {
 
 	//--------------------------------------------------------------------------
 	// MARK: JS Functions
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @property importClass
+	 * @property jsFunction_importClass
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private func importClass(callback: JavaScriptFunctionCallback) {
+	@objc open func jsFunction_importClass(callback: JavaScriptFunctionCallback) {
 		if let result = self.context.classes[callback.argument(0).string] {
 			callback.returns(result)
 		}
 	}
 
 	/**
-	 * @property importObject
+	 * @property jsFunction_importObject
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private func importObject(callback: JavaScriptFunctionCallback) {
+	@objc open func jsFunction_importObject(callback: JavaScriptFunctionCallback) {
 		if let result = self.context.objects[callback.argument(0).string] {
 			callback.returns(result)
 		}
 	}
 
 	/**
-	 * @property registerApplication
+	 * @property jsFunction_registerApplication
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private func registerApplication(callback: JavaScriptFunctionCallback) {
+	@objc open func jsFunction_registerApplication(callback: JavaScriptFunctionCallback) {
 		if let application = callback.argument(0).cast(JavaScriptApplication.self) {
 			self.context.controller.register(application)
 		}

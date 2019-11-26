@@ -1,7 +1,7 @@
 #import <XCTest/XCTest.h>
 #include "Display.h"
 #include "DisplayNode.h"
-#include "DisplayNodePropertyRef.h"
+#include "PropertyRef.h"
 #include "Tokenizer.h"
 #include "TokenizerStream.h"
 #include "Value.h"
@@ -36,13 +36,8 @@ using namespace Dezel::Style;
 @implementation StyleMatcherTest
 
 - (Stylesheet*)parse:(string)source {
-
 	auto stylesheet = new Stylesheet();
-
-	TokenizerStream stream(source);
-	Tokenizer tokenizer(stream);
-	Parser parser(stylesheet, &tokenizer);
-
+	Parser::parse(stylesheet, source);
 	return stylesheet;
 }
 
@@ -92,12 +87,15 @@ using namespace Dezel::Style;
 
 		XCTAssertEqual(matches.size(), 1);
 
-		XCTAssertEqual(matches[0].getDescriptor()->getSelector()->getTail()->getType(), "Button");
+		if (matches.size() == 1) {
 
-		XCTAssertEqual(matches[0].importance.type, 3);
-		XCTAssertEqual(matches[0].importance.name, 0);
-		XCTAssertEqual(matches[0].importance.style, 0);
-		XCTAssertEqual(matches[0].importance.state, 0);
+			XCTAssertEqual(matches[0].getDescriptor()->getSelector()->getTail()->getType(), "Button");
+
+			XCTAssertEqual(matches[0].importance.type, 3);
+			XCTAssertEqual(matches[0].importance.name, 0);
+			XCTAssertEqual(matches[0].importance.style, 0);
+			XCTAssertEqual(matches[0].importance.state, 0);
+		}
 
 	} catch (exception &e) {
 		[NSException raise:@"Exception" format: @"%s", e.what()];
@@ -136,19 +134,23 @@ using namespace Dezel::Style;
 
 		XCTAssertEqual(matches.size(), 2);
 
-		XCTAssertEqual(matches[0].getDescriptor()->getSelector()->getTail()->getType(), "View");
+		if (matches.size() == 2) {
 
-		XCTAssertEqual(matches[0].importance.type, 1);
-		XCTAssertEqual(matches[0].importance.name, 0);
-		XCTAssertEqual(matches[0].importance.style, 0);
-		XCTAssertEqual(matches[0].importance.state, 0);
+			XCTAssertEqual(matches[0].getDescriptor()->getSelector()->getTail()->getType(), "View");
 
-		XCTAssertEqual(matches[1].getDescriptor()->getSelector()->getTail()->getType(), "Button");
+			XCTAssertEqual(matches[0].importance.type, 1);
+			XCTAssertEqual(matches[0].importance.name, 0);
+			XCTAssertEqual(matches[0].importance.style, 0);
+			XCTAssertEqual(matches[0].importance.state, 0);
 
-		XCTAssertEqual(matches[1].importance.type, 3);
-		XCTAssertEqual(matches[1].importance.name, 0);
-		XCTAssertEqual(matches[1].importance.style, 0);
-		XCTAssertEqual(matches[1].importance.state, 0);
+			XCTAssertEqual(matches[1].getDescriptor()->getSelector()->getTail()->getType(), "Button");
+
+			XCTAssertEqual(matches[1].importance.type, 3);
+			XCTAssertEqual(matches[1].importance.name, 0);
+			XCTAssertEqual(matches[1].importance.style, 0);
+			XCTAssertEqual(matches[1].importance.state, 0);
+
+		}
 
 	} catch (exception &e) {
 		[NSException raise:@"Exception" format: @"%s", e.what()];

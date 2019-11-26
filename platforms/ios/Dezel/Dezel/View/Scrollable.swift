@@ -62,11 +62,11 @@ public protocol Scrollable: AnyObject {
 	var scrollHeight: CGFloat { get set }
 
 	/**
-	 * Whether the scrollable view has momentum.
-	 * @property momentum
+	 * Whether the scrollable view has scrollMomentum.
+	 * @property scrollMomentum
 	 * @since 0.2.0
 	 */
-	var momentum: Bool { get set }
+	var scrollMomentum: Bool { get set }
 
 	/**
 	 * The scrollable view's top content inset.
@@ -139,5 +139,3 @@ public protocol Scrollable: AnyObject {
 	func scrollTo(x: CGFloat, y: CGFloat)
 
 }
-
-

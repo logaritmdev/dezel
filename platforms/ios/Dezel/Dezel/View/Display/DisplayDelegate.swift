@@ -1,5 +1,3 @@
-import Foundation
-
 /**
  * The display's delegate.
  * @protocol DisplayDelegate

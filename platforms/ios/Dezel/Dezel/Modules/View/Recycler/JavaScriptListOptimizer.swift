@@ -50,14 +50,14 @@ open class JavaScriptListOptimizer : JavaScriptViewOptimizer {
 	private(set) public var length: Int = 0
 
 	/**
-	 * @property head
+	 * @property headIndex
 	 * @since 0.2.0
 	 * @hidden
 	 */
 	private var headIndex: Int = -1
 
 	/**
-	 * @property tail
+	 * @property tailIndex
 	 * @since 0.2.0
 	 * @hidden
 	 */

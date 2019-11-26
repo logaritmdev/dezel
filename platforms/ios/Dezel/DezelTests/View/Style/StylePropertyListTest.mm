@@ -1,7 +1,7 @@
 #import <XCTest/XCTest.h>
 #include "Display.h"
 #include "DisplayNode.h"
-#include "DisplayNodePropertyRef.h"
+#include "PropertyRef.h"
 #include "Tokenizer.h"
 #include "TokenizerStream.h"
 #include "Property.h"
@@ -155,7 +155,6 @@ using namespace Dezel::Style;
 
 - (void)testPropertyMerging {
 
-
 	try {
 
 		PropertyList properties;
@@ -192,13 +191,13 @@ using namespace Dezel::Style;
 		XCTAssertEqual(properties.size(), 4);
 		XCTAssertEqual(properties.get(0)->getName(), "prop1");
 		XCTAssertEqual(properties.get(1)->getName(), "prop4");
-		XCTAssertEqual(properties.get(2)->getName(), "prop3");
-		XCTAssertEqual(properties.get(3)->getName(), "prop2");
+		XCTAssertEqual(properties.get(2)->getName(), "prop2");
+		XCTAssertEqual(properties.get(3)->getName(), "prop3");
 
 		XCTAssertEqual(reinterpret_cast<StringValue*>(properties.get(0)->getValues().at(0))->getValue(), "value1");
 		XCTAssertEqual(reinterpret_cast<StringValue*>(properties.get(1)->getValues().at(0))->getValue(), "value4");
-		XCTAssertEqual(reinterpret_cast<StringValue*>(properties.get(2)->getValues().at(0))->getValue(), "super-value3");
-		XCTAssertEqual(reinterpret_cast<StringValue*>(properties.get(3)->getValues().at(0))->getValue(), "super-value2");
+		XCTAssertEqual(reinterpret_cast<StringValue*>(properties.get(2)->getValues().at(0))->getValue(), "super-value2");
+		XCTAssertEqual(reinterpret_cast<StringValue*>(properties.get(3)->getValues().at(0))->getValue(), "super-value3");
 
 	} catch (exception &e) {
 		[NSException raise:@"Exception" format: @"%s", e.what()];

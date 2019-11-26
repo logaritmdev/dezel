@@ -16,7 +16,7 @@ open class Source {
 	 * @enum Category
 	 * @since 0.7.0
 	 */
-	public enum Category {
+	public enum `Type` {
 		case style
 		case script
 	}
@@ -30,14 +30,14 @@ open class Source {
 	 * @property category
 	 * @since 0.7.0
 	 */
-	private(set) public var category: Category
+	private(set) public var type: Type
 
 	/**
 	 * The source's location.
 	 * @property location
 	 * @since 0.7.0
 	 */
-	private(set) public var location: String
+	private(set) public var path: String
 
 	/**
 	 * The source's data.
@@ -57,9 +57,9 @@ open class Source {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	public init(location: String, category: Category) {
-		self.location = location
-		self.category = category
+	public init(type: Type, path: String) {
+		self.type = type
+		self.path = path
 	}
 
 	/**
@@ -71,15 +71,15 @@ open class Source {
 
 		do {
 
-			if (self.location.hasPrefix("http://") ||
-				self.location.hasPrefix("https://")) {
-				return try String(contentsOf: URL(string: self.location)!)
+			if (self.path.hasPrefix("http://") ||
+				self.path.hasPrefix("https://")) {
+				return try String(contentsOf: URL(string: self.path)!)
 			}
 
-			return try String(contentsOfFile: Bundle.main.path(forResource: self.location, ofType: nil)!)
+			return try String(contentsOfFile: Bundle.main.path(forResource: self.path, ofType: nil)!)
 
 		} catch _ {
-			fatalError("Cannot load source at location \(self.location).")
+			fatalError("Cannot load source at location \(self.path).")
 		}
 	}
 }

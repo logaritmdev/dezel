@@ -75,9 +75,12 @@ public class ScrollViewTouchCancelGesture: UIGestureRecognizer, UIGestureRecogni
 	 * @since 0.6.0
 	 */
 	override open func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent) {
+
 		for touch in touches {
 			self.touches.insert(touch)
 		}
+
+		super.touchesBegan(touches, with: event)
 	}
 
 	/**
@@ -94,6 +97,8 @@ public class ScrollViewTouchCancelGesture: UIGestureRecognizer, UIGestureRecogni
 		if (self.touches.count == 0) {
 			self.restart()
 		}
+
+		super.touchesEnded(touches, with: event)
 	}
 
 	/**
@@ -110,6 +115,8 @@ public class ScrollViewTouchCancelGesture: UIGestureRecognizer, UIGestureRecogni
 		if (self.touches.count == 0) {
 			self.restart()
 		}
+
+		super.touchesCancelled(touches, with: event)
 	}
 
 	/**

@@ -9,6 +9,8 @@ public class Display {
 	// MARK: Properties
 	//--------------------------------------------------------------------------
 
+
+
 	/**
 	 * The display's window
 	 * @property window
@@ -50,6 +52,12 @@ public class Display {
 	public var viewportHeight: Double = 0 {
 		willSet {
 			DisplaySetViewportHeight(self.handle, newValue)
+		}
+	}
+
+	public var stylesheet: Stylesheet? {
+		willSet {
+			DisplaySetStylesheet(self.handle, newValue?.handle)
 		}
 	}
 

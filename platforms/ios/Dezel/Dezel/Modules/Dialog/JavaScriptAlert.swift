@@ -33,7 +33,7 @@ open class JavaScriptAlert: JavaScriptClass, AlertControllerDelegate {
 
 		self.protect()
 
-		self.context.application.presentedViewController?.dismiss(animated: true, completion: nil)
+		self.context.controller.presentedViewController?.dismiss(animated: true, completion: nil)
 
 		let style   = callback.argument(0).string
 		let title   = callback.argument(1).string.trim()
@@ -102,7 +102,7 @@ open class JavaScriptAlert: JavaScriptClass, AlertControllerDelegate {
 
 		alertController.delegate = self
 
-		self.context.application.present(alertController, animated: true, completion: nil)
+		self.context.controller.present(alertController, animated: true, completion: nil)
 	}
 
 	/**

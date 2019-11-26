@@ -18,28 +18,19 @@ open class JavaScriptWindow: JavaScriptView {
 		self.wrapper.removeFromSuperview()
 	}
 
-	/**
-	 * Finds a view from this window's hierarchy at the specified point.
-	 * @method viewFromPoint
-	 * @since 0.7.0
-	 */
-	open func viewFromPoint(x: Double, y: Double, visible: Bool = true, touchable: Bool = true) -> JavaScriptView? {
-		return self.findViewAt(point: Point3D(x: x, y: y, z: 0.0), matrix: Transform3D(), visible: visible, touchable: touchable)
-	}
-
 	//--------------------------------------------------------------------------
 	// JavaScript Functions
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method jsFunction_viewFromPoint
+	 * @method jsFunction_findViewAt
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsFunction_viewFromPoint(callback: JavaScriptFunctionCallback) {
+	@objc open func jsFunction_findViewAt(callback: JavaScriptFunctionCallback) {
 
 		if (callback.arguments < 4) {
-			fatalError("Method JavaScriptWindow.viewFromPoint() requires 4 arguments.")
+			fatalError("Method JavaScriptWindow.findViewAt() requires 4 arguments.")
 		}
 
 		let x = callback.argument(0).number
@@ -47,7 +38,7 @@ open class JavaScriptWindow: JavaScriptView {
 		let v = callback.argument(2).boolean
 		let t = callback.argument(3).boolean
 
-		if let view = self.viewFromPoint(x: x, y: y, visible: v, touchable: t) {
+		if let view = self.findViewAt(point: Point3D(x: x, y: y, z: 0.0), matrix: Transform3D(), visible: v, touchable: t) {
 			callback.returns(view)
 		}
 	}

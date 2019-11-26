@@ -151,11 +151,11 @@ public class WebView: WKWebView, WKNavigationDelegate, UIScrollViewDelegate, Scr
 	}
 
 	/**
-	 * Whether the web view has momentum.
-	 * @property momentum
+	 * Whether the web view has scrollMomentum.
+	 * @property scrollMomentum
 	 * @since 0.7.0
 	 */
-	open var momentum: Bool = true
+	open var scrollMomentum: Bool = true
 
 	/**
 	 * The web view's top content inset.
@@ -219,7 +219,7 @@ public class WebView: WKWebView, WKNavigationDelegate, UIScrollViewDelegate, Scr
 	 */
 	open var zoomable: Bool = false {
 		willSet {
-			
+
 		}
 	}
 
@@ -391,7 +391,7 @@ public class WebView: WKWebView, WKNavigationDelegate, UIScrollViewDelegate, Scr
 
 		self.contentLoaded = false
 		self.contentLoading = true
-		
+
 		self.loadHTMLString(html, baseURL: base.appendingPathComponent("app"))
 	}
 
@@ -521,7 +521,8 @@ public class WebView: WKWebView, WKNavigationDelegate, UIScrollViewDelegate, Scr
 	 * @hidden
 	 */
 	@objc open func scrollViewDidCancelTouch(gesture: ScrollViewTouchCancelGesture) {
-		UIApplication.shared.window?.dispatchTouchCancelled(gesture.touches)
+		// TODO
+		//UIApplication.shared.window?.dispatchTouchCancelled(gesture.touches)
 	}
 
 	//--------------------------------------------------------------------------
@@ -663,7 +664,7 @@ public class WebView: WKWebView, WKNavigationDelegate, UIScrollViewDelegate, Scr
 				return
 			}
 
-			if (content.momentum == false) {
+			if (content.scrollMomentum == false) {
 				targetContentOffset.pointee = scrollView.contentOffset
 				self.didFinishDragging()
 			}

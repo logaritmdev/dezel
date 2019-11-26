@@ -150,11 +150,11 @@ open class View : UIScrollView, UIScrollViewDelegate, Scrollable {
 	}
 
 	/**
-	 * Whether the scroll view has momentum.
-	 * @property momentum
+	 * Whether the scroll view has scrollMomentum.
+	 * @property scrollMomentum
 	 * @since 0.7.0
 	 */
-	open var momentum: Bool = true
+	open var scrollMomentum: Bool = true
 
 	/**
 	 * The scroll view's top content inset.
@@ -319,10 +319,13 @@ open class View : UIScrollView, UIScrollViewDelegate, Scrollable {
 	 * @method touchesCancelled
 	 * @since 0.7.0
 	 */
+	 /*
 	override open func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
 		super.touchesCancelled(touches, with: event)
-		UIApplication.shared.window?.dispatchTouchCancelled(touches)
+		// TODO
+		//UIApplication.shared.window?.dispatchTouchCancelled(touches)
 	}
+	*/
 
 	//--------------------------------------------------------------------------
 	// MARK: Methods - Animations
@@ -421,7 +424,7 @@ open class View : UIScrollView, UIScrollViewDelegate, Scrollable {
 	 * @hidden
 	 */
 	open func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        if (self.momentum == false) {
+        if (self.scrollMomentum == false) {
 			targetContentOffset.pointee = scrollView.contentOffset
 			self.didFinishDragging()
 		}

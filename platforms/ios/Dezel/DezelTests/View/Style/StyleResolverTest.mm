@@ -1,7 +1,6 @@
 #import <XCTest/XCTest.h>
 #include "Display.h"
 #include "DisplayNode.h"
-#include "DisplayNodePropertyRef.h"
 #include "Tokenizer.h"
 #include "TokenizerStream.h"
 #include "Value.h"
@@ -14,6 +13,7 @@
 #include "Matcher.h"
 #include "Matches.h"
 #include "Match.h"
+#include "PropertyRef.h"
 
 #include <string>
 
@@ -23,21 +23,21 @@ using std::exception;
 using namespace Dezel;
 using namespace Dezel::Style;
 
-static vector<DisplayNodePropertyRef> buttonProperties;
-static vector<DisplayNodePropertyRef> labelProperties;
-static vector<DisplayNodePropertyRef> imageProperties;
+static vector<PropertyRef> buttonProperties;
+static vector<PropertyRef> labelProperties;
+static vector<PropertyRef> imageProperties;
 
-static void buttonUpdateCallback(DisplayNodeRef node, DisplayNodePropertyRef property, const char* name)
+static void buttonUpdateCallback(DisplayNodeRef node, PropertyRef property, const char* name)
 {
 	buttonProperties.push_back(property);
 }
 
-static void labelUpdateCallback(DisplayNodeRef node, DisplayNodePropertyRef property, const char* name)
+static void labelUpdateCallback(DisplayNodeRef node, PropertyRef property, const char* name)
 {
 	labelProperties.push_back(property);
 }
 
-static void imageUpdateCallback(DisplayNodeRef node, DisplayNodePropertyRef property, const char* name)
+static void imageUpdateCallback(DisplayNodeRef node, PropertyRef property, const char* name)
 {
 	imageProperties.push_back(property);
 }
@@ -55,13 +55,8 @@ static void imageUpdateCallback(DisplayNodeRef node, DisplayNodePropertyRef prop
 @implementation StyleResolverTest
 
 - (Stylesheet*)parse:(string)source {
-
 	auto stylesheet = new Stylesheet();
-
-	TokenizerStream stream(source);
-	Tokenizer tokenizer(stream);
-	Parser parser(stylesheet, &tokenizer);
-
+	Parser::parse(stylesheet, source);
 	return stylesheet;
 }
 
@@ -115,10 +110,10 @@ static void imageUpdateCallback(DisplayNodeRef node, DisplayNodePropertyRef prop
 		XCTAssertEqual(buttonProperties.size(), 2);
 
 		if (buttonProperties.size() == 2) {
-			XCTAssertEqual(strcmp(DisplayNodePropertyGetName(buttonProperties[0]), "button-prop-1"), 0);
-			XCTAssertEqual(strcmp(DisplayNodePropertyGetName(buttonProperties[1]), "button-prop-2"), 0);
-			XCTAssertEqual(strcmp(DisplayNodePropertyGetValueAsString(buttonProperties[0], 0), "value1"), 0);
-			XCTAssertEqual(strcmp(DisplayNodePropertyGetValueAsString(buttonProperties[1], 0), "value2"), 0);
+			XCTAssertEqual(strcmp(PropertyGetName(buttonProperties[0]), "buttonProp1"), 0);
+			XCTAssertEqual(strcmp(PropertyGetName(buttonProperties[1]), "buttonProp2"), 0);
+			XCTAssertEqual(strcmp(PropertyGetValueAsString(buttonProperties[0], 0), "value1"), 0);
+			XCTAssertEqual(strcmp(PropertyGetValueAsString(buttonProperties[1], 0), "value2"), 0);
 		}
 
 	} catch (exception &e) {
@@ -163,8 +158,8 @@ static void imageUpdateCallback(DisplayNodeRef node, DisplayNodePropertyRef prop
 		XCTAssertEqual(buttonProperties.size(), 2);
 
 		if (buttonProperties.size() == 2) {
-			XCTAssertEqual(strcmp(DisplayNodePropertyGetName(buttonProperties[0]), "button-prop-1"), 0);
-			XCTAssertEqual(strcmp(DisplayNodePropertyGetName(buttonProperties[1]), "button-prop-2"), 0);
+			XCTAssertEqual(strcmp(PropertyGetName(buttonProperties[0]), "buttonProp1"), 0);
+			XCTAssertEqual(strcmp(PropertyGetName(buttonProperties[1]), "buttonProp2"), 0);
 		}
 
 		buttonProperties.clear();
@@ -175,12 +170,12 @@ static void imageUpdateCallback(DisplayNodeRef node, DisplayNodePropertyRef prop
 		XCTAssertEqual(buttonProperties.size(), 3);
 
 		if (buttonProperties.size() == 3) {
-			XCTAssertEqual(strcmp(DisplayNodePropertyGetName(buttonProperties[0]), "button-prop-2"), 0);
-			XCTAssertEqual(strcmp(DisplayNodePropertyGetName(buttonProperties[1]), "button-prop-3"), 0);
-			XCTAssertEqual(strcmp(DisplayNodePropertyGetName(buttonProperties[2]), "button-prop-4"), 0);
-			XCTAssertEqual(strcmp(DisplayNodePropertyGetValueAsString(buttonProperties[0], 0), "super-value-2"), 0);
-			XCTAssertEqual(strcmp(DisplayNodePropertyGetValueAsString(buttonProperties[1], 0), "value3"), 0);
-			XCTAssertEqual(strcmp(DisplayNodePropertyGetValueAsString(buttonProperties[2], 0), "value4"), 0);
+			XCTAssertEqual(strcmp(PropertyGetName(buttonProperties[0]), "buttonProp2"), 0);
+			XCTAssertEqual(strcmp(PropertyGetName(buttonProperties[1]), "buttonProp3"), 0);
+			XCTAssertEqual(strcmp(PropertyGetName(buttonProperties[2]), "buttonProp4"), 0);
+			XCTAssertEqual(strcmp(PropertyGetValueAsString(buttonProperties[0], 0), "super-value-2"), 0);
+			XCTAssertEqual(strcmp(PropertyGetValueAsString(buttonProperties[1], 0), "value3"), 0);
+			XCTAssertEqual(strcmp(PropertyGetValueAsString(buttonProperties[2], 0), "value4"), 0);
 		}
 
 	} catch (exception &e) {
@@ -225,8 +220,8 @@ static void imageUpdateCallback(DisplayNodeRef node, DisplayNodePropertyRef prop
 		XCTAssertEqual(buttonProperties.size(), 2);
 
 		if (buttonProperties.size() == 2) {
-			XCTAssertEqual(strcmp(DisplayNodePropertyGetName(buttonProperties[0]), "button-prop-1"), 0);
-			XCTAssertEqual(strcmp(DisplayNodePropertyGetName(buttonProperties[1]), "button-prop-2"), 0);
+			XCTAssertEqual(strcmp(PropertyGetName(buttonProperties[0]), "buttonProp1"), 0);
+			XCTAssertEqual(strcmp(PropertyGetName(buttonProperties[1]), "buttonProp2"), 0);
 		}
 
 		buttonProperties.clear();
@@ -237,12 +232,12 @@ static void imageUpdateCallback(DisplayNodeRef node, DisplayNodePropertyRef prop
 		XCTAssertEqual(buttonProperties.size(), 3);
 
 		if (buttonProperties.size() == 3) {
-			XCTAssertEqual(strcmp(DisplayNodePropertyGetName(buttonProperties[0]), "button-prop-2"), 0);
-			XCTAssertEqual(strcmp(DisplayNodePropertyGetName(buttonProperties[1]), "button-prop-3"), 0);
-			XCTAssertEqual(strcmp(DisplayNodePropertyGetName(buttonProperties[2]), "button-prop-4"), 0);
-			XCTAssertEqual(strcmp(DisplayNodePropertyGetValueAsString(buttonProperties[0], 0), "super-value-2"), 0);
-			XCTAssertEqual(strcmp(DisplayNodePropertyGetValueAsString(buttonProperties[1], 0), "value3"), 0);
-			XCTAssertEqual(strcmp(DisplayNodePropertyGetValueAsString(buttonProperties[2], 0), "value4"), 0);
+			XCTAssertEqual(strcmp(PropertyGetName(buttonProperties[0]), "buttonProp2"), 0);
+			XCTAssertEqual(strcmp(PropertyGetName(buttonProperties[1]), "buttonProp3"), 0);
+			XCTAssertEqual(strcmp(PropertyGetName(buttonProperties[2]), "buttonProp4"), 0);
+			XCTAssertEqual(strcmp(PropertyGetValueAsString(buttonProperties[0], 0), "super-value-2"), 0);
+			XCTAssertEqual(strcmp(PropertyGetValueAsString(buttonProperties[1], 0), "value3"), 0);
+			XCTAssertEqual(strcmp(PropertyGetValueAsString(buttonProperties[2], 0), "value4"), 0);
 		}
 
 	} catch (exception &e) {
@@ -317,30 +312,30 @@ static void imageUpdateCallback(DisplayNodeRef node, DisplayNodePropertyRef prop
 		XCTAssertEqual(buttonProperties.size(), 2);
 
 		if (buttonProperties.size() == 2) {
-			XCTAssertEqual(strcmp(DisplayNodePropertyGetName(buttonProperties[0]), "button-prop-1"), 0);
-			XCTAssertEqual(strcmp(DisplayNodePropertyGetName(buttonProperties[1]), "button-prop-2"), 0);
-			XCTAssertEqual(strcmp(DisplayNodePropertyGetValueAsString(buttonProperties[0], 0), "value1"), 0);
-			XCTAssertEqual(strcmp(DisplayNodePropertyGetValueAsString(buttonProperties[1], 0), "value2"), 0);
+			XCTAssertEqual(strcmp(PropertyGetName(buttonProperties[0]), "buttonProp1"), 0);
+			XCTAssertEqual(strcmp(PropertyGetName(buttonProperties[1]), "buttonProp2"), 0);
+			XCTAssertEqual(strcmp(PropertyGetValueAsString(buttonProperties[0], 0), "value1"), 0);
+			XCTAssertEqual(strcmp(PropertyGetValueAsString(buttonProperties[1], 0), "value2"), 0);
 		}
 
 		XCTAssertEqual(labelProperties.size(), 2);
 
 		if (labelProperties.size() == 2) {
-			XCTAssertEqual(strcmp(DisplayNodePropertyGetName(labelProperties[0]), "label-prop-1"), 0);
-			XCTAssertEqual(strcmp(DisplayNodePropertyGetName(labelProperties[1]), "label-prop-2"), 0);
-			XCTAssertEqual(strcmp(DisplayNodePropertyGetValueAsString(labelProperties[0], 0), "value1"), 0);
-			XCTAssertEqual(strcmp(DisplayNodePropertyGetValueAsString(labelProperties[1], 0), "value2"), 0);
+			XCTAssertEqual(strcmp(PropertyGetName(labelProperties[0]), "labelProp1"), 0);
+			XCTAssertEqual(strcmp(PropertyGetName(labelProperties[1]), "labelProp2"), 0);
+			XCTAssertEqual(strcmp(PropertyGetValueAsString(labelProperties[0], 0), "value1"), 0);
+			XCTAssertEqual(strcmp(PropertyGetValueAsString(labelProperties[1], 0), "value2"), 0);
 		}
 
 		XCTAssertEqual(imageProperties.size(), 3);
 
 		if (imageProperties.size() == 3) {
-			XCTAssertEqual(strcmp(DisplayNodePropertyGetName(imageProperties[0]), "image-prop-1"), 0);
-			XCTAssertEqual(strcmp(DisplayNodePropertyGetName(imageProperties[1]), "image-prop-2"), 0);
-			XCTAssertEqual(strcmp(DisplayNodePropertyGetName(imageProperties[2]), "image-prop-3"), 0);
-			XCTAssertEqual(strcmp(DisplayNodePropertyGetValueAsString(imageProperties[0], 0), "value1"), 0);
-			XCTAssertEqual(strcmp(DisplayNodePropertyGetValueAsString(imageProperties[1], 0), "value2"), 0);
-			XCTAssertEqual(strcmp(DisplayNodePropertyGetValueAsString(imageProperties[2], 0), "value3"), 0);
+			XCTAssertEqual(strcmp(PropertyGetName(imageProperties[0]), "imageProp1"), 0);
+			XCTAssertEqual(strcmp(PropertyGetName(imageProperties[1]), "imageProp2"), 0);
+			XCTAssertEqual(strcmp(PropertyGetName(imageProperties[2]), "imageProp3"), 0);
+			XCTAssertEqual(strcmp(PropertyGetValueAsString(imageProperties[0], 0), "value1"), 0);
+			XCTAssertEqual(strcmp(PropertyGetValueAsString(imageProperties[1], 0), "value2"), 0);
+			XCTAssertEqual(strcmp(PropertyGetValueAsString(imageProperties[2], 0), "value3"), 0);
 		}
 
 		buttonProperties.clear();
@@ -353,26 +348,26 @@ static void imageUpdateCallback(DisplayNodeRef node, DisplayNodePropertyRef prop
 		XCTAssertEqual(buttonProperties.size(), 2);
 
 		if (buttonProperties.size() == 2) {
-			XCTAssertEqual(strcmp(DisplayNodePropertyGetName(buttonProperties[0]), "button-prop-2"), 0);
-			XCTAssertEqual(strcmp(DisplayNodePropertyGetName(buttonProperties[1]), "button-prop-3"), 0);
-			XCTAssertEqual(strcmp(DisplayNodePropertyGetValueAsString(buttonProperties[0], 0), "super-value2"), 0);
-			XCTAssertEqual(strcmp(DisplayNodePropertyGetValueAsString(buttonProperties[1], 0), "super-value3"), 0);
+			XCTAssertEqual(strcmp(PropertyGetName(buttonProperties[0]), "buttonProp2"), 0);
+			XCTAssertEqual(strcmp(PropertyGetName(buttonProperties[1]), "buttonProp3"), 0);
+			XCTAssertEqual(strcmp(PropertyGetValueAsString(buttonProperties[0], 0), "super-value2"), 0);
+			XCTAssertEqual(strcmp(PropertyGetValueAsString(buttonProperties[1], 0), "super-value3"), 0);
 		}
 
 		XCTAssertEqual(labelProperties.size(), 2);
 
 		if (labelProperties.size() == 2) {
-			XCTAssertEqual(strcmp(DisplayNodePropertyGetName(labelProperties[0]), "label-prop-1"), 0);
-			XCTAssertEqual(strcmp(DisplayNodePropertyGetName(labelProperties[1]), "label-prop-2"), 0);
-			XCTAssertEqual(strcmp(DisplayNodePropertyGetValueAsString(labelProperties[0], 0), "super-value1"), 0);
-			XCTAssertEqual(strcmp(DisplayNodePropertyGetValueAsString(labelProperties[1], 0), "super-value2"), 0);
+			XCTAssertEqual(strcmp(PropertyGetName(labelProperties[0]), "labelProp1"), 0);
+			XCTAssertEqual(strcmp(PropertyGetName(labelProperties[1]), "labelProp2"), 0);
+			XCTAssertEqual(strcmp(PropertyGetValueAsString(labelProperties[0], 0), "super-value1"), 0);
+			XCTAssertEqual(strcmp(PropertyGetValueAsString(labelProperties[1], 0), "super-value2"), 0);
 		}
 
 		XCTAssertEqual(imageProperties.size(), 1);
 
 		if (imageProperties.size() == 1) {
-			XCTAssertEqual(strcmp(DisplayNodePropertyGetName(imageProperties[0]), "image-prop-2"), 0);
-			XCTAssertEqual(strcmp(DisplayNodePropertyGetValueAsString(imageProperties[0], 0), "super-value2"), 0);
+			XCTAssertEqual(strcmp(PropertyGetName(imageProperties[0]), "imageProp2"), 0);
+			XCTAssertEqual(strcmp(PropertyGetValueAsString(imageProperties[0], 0), "super-value2"), 0);
 		}
 
 	} catch (exception &e) {

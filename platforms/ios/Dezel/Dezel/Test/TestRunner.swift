@@ -35,29 +35,17 @@ open class TestRunner: ApplicationController {
 	 * @since 0.7.0
 	 */
 	open func start(host: String, port: String) {
+
 		self.host = host
 		self.port = port
-		self.setup()
-	}
 
-	/**
-	 * @inherited
-	 * @method configure
-	 * @since 0.7.0
-	 */
-	override open func configure() {
+		self.viewDidLoad()
+
 		self.context.global.property("KARMA_HOST", string: self.host)
 		self.context.global.property("KARMA_PORT", string: self.port)
-	}
 
-	/**
-	 * @inherited
-	 * @method didLoad
-	 * @since 0.7.0
-	 */
-	override open func didLoad() {
 		do {
-			self.context.evaluate(try String(contentsOfFile: Bundle.resource("TestRunner.js")!), file: "TestRunner.js")
+			self.context.evaluate(try String(contentsOfFile: Bundle.resource("TestRunner.js")!), url: "TestRunner.js")
 		} catch {
 			fatalError()
 		}

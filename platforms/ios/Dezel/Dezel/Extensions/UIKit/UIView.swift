@@ -7,7 +7,7 @@ internal extension UIView {
 
 	/**
 	 * @method addSubview
-	 * @since 0.7.0
+	 * @since 0.1.0
 	 * @hidden
 	 */
 	func addSubview(_ view: JavaScriptView) {
@@ -16,7 +16,7 @@ internal extension UIView {
 
 	/**
 	 * @method removeSubview
-	 * @since 0.7.0
+	 * @since 0.1.0
 	 * @hidden
 	 */
 	func removeSubview(_ view: JavaScriptView) {

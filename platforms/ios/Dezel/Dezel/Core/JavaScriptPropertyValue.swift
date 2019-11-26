@@ -82,11 +82,11 @@ open class JavaScriptPropertyValue {
 	}
 
 	/**
-	 * Stores the backing JavaScript value.
-	 * @method store
+	 * Sets the backing JavaScript value.
+	 * @method reset
 	 * @since 0.7.0
 	 */
-	open func store(_ value: JavaScriptValue?) {
+	open func reset(_ value: JavaScriptValue?) {
 		self.value = value
 	}
 

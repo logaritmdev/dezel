@@ -1,9 +1,8 @@
 /**
- * @class JavaScriptUtilModule
+ * @class JavaScriptFormModule
  * @since 0.7.0
- * @hidden
  */
-open class JavaScriptUtilModule: Module {
+open class JavaScriptFormModule: Module {
 
 	//--------------------------------------------------------------------------
 	// MARK: Methods
@@ -15,14 +14,8 @@ open class JavaScriptUtilModule: Module {
 	 * @since 0.7.0
 	 */
 	override open func register(context: JavaScriptContext) {
-		context.global.defineProperty(
-			"__util__",
-			value: context.createObject(JavaScriptUtil.self),
-			getter: nil,
-			setter: nil,
-			writable: false,
-			enumerable: false,
-			configurable: false
-		)
+		context.registerClass("dezel.form.TextInput", with: JavaScriptTextInput.self)
+		context.registerClass("dezel.form.TextArea", with: JavaScriptTextArea.self)
 	}
 }
+

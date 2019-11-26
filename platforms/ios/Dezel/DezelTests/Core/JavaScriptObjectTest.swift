@@ -9,7 +9,6 @@ class JavaScriptObjectTest: XCTestCase {
 		super.setUp()
 		self.context.dispose()
 		self.context = JavaScriptContext()
-		self.context.setup()
     }
 
 	func testObjectTemplate() {

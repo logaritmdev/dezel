@@ -839,7 +839,6 @@ open class WrapperView: UIView, TransitionListener {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method action
 	 * @since 0.1.0
 	 */
@@ -852,7 +851,6 @@ open class WrapperView: UIView, TransitionListener {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method shouldBeginTransitionAnimation
 	 * @since 0.2.0
 	 */
@@ -867,7 +865,6 @@ open class WrapperView: UIView, TransitionListener {
 	}
 
 	/**
-	 * @inherited
 	 * @method willBeginTransitionAnimation
 	 * @since 0.2.0
 	 */
@@ -906,7 +903,6 @@ open class WrapperView: UIView, TransitionListener {
 	}
 
 	/**
-	 * @inherited
 	 * @method didCommitTransition
 	 * @since 0.6.0
 	 */
@@ -915,7 +911,6 @@ open class WrapperView: UIView, TransitionListener {
 	}
 
 	/**
-	 * @inherited
 	 * @method didFinishTransition
 	 * @since 0.2.0
 	 */

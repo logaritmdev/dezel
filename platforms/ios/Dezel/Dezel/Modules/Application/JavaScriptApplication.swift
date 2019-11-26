@@ -1,7 +1,7 @@
 /**
  * @class JavaScriptApplication
+ * @super JavaScriptClass
  * @since 0.7.0
- * @hidden
  */
 open class JavaScriptApplication: JavaScriptClass {
 
@@ -10,7 +10,6 @@ open class JavaScriptApplication: JavaScriptClass {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The application's window.
 	 * @property window
 	 * @since 0.7.0
 	 */
@@ -21,7 +20,6 @@ open class JavaScriptApplication: JavaScriptClass {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Destroys the application.
 	 * @method destroy
 	 * @since 0.7.0
 	 */
@@ -35,39 +33,35 @@ open class JavaScriptApplication: JavaScriptClass {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The application's status bar visibility status.
 	 * @property statusBarVisible
 	 * @since 0.7.0
 	 */
 	@objc public lazy var statusBarVisible = JavaScriptProperty(boolean: true) { value in
-		self.context.application.statusBarVisible = value.boolean
+		self.context.controller.statusBarVisible = value.boolean
 	}
 
 	/**
-	 * The application's status bar foreground color.
 	 * @property statusBarForegroundColor
 	 * @since 0.7.0
 	 */
 	@objc public lazy var statusBarForegroundColor = JavaScriptProperty(string: "black") { value in
-		self.context.application.statusBarForegroundColor = UIColor(string: value.string)
+		self.context.controller.statusBarForegroundColor = UIColor(string: value.string)
 	}
 
 	/**
-	 * The application's status bar foreground color.
 	 * @property statusBarBackgroundColor
 	 * @since 0.7.0
 	 */
 	@objc public lazy var statusBarBackgroundColor = JavaScriptProperty(string: "transparent") { value in
-		self.context.application.statusBarBackgroundColor = UIColor(string: value.string)
+		self.context.controller.statusBarBackgroundColor = UIColor(string: value.string)
 	}
 
 	/**
-	 * The application's badge.
 	 * @property badge
 	 * @since 0.7.0
 	 */
 	@objc public lazy var badge = JavaScriptProperty(number: 0) { value in
-		self.context.application.badge = value.number.toInt()
+		UIApplication.shared.applicationIconBadgeNumber = value.number.toInt()
 	}
 
 	//--------------------------------------------------------------------------

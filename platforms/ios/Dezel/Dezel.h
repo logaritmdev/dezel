@@ -13,4 +13,5 @@ FOUNDATION_EXPORT const unsigned char DezelVersionString[];
 #import "DisplayBase.h"
 #import "DisplayRef.h"
 #import "DisplayNodeRef.h"
-#import "DisplayNodePropertyRef.h"
+#import "PropertyRef.h"
+#import "StylesheetRef.h"

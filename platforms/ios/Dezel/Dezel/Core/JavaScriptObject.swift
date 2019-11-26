@@ -104,6 +104,7 @@ open class JavaScriptObject: JavaScriptValue {
 			 */
 
 			if let this = JavaScriptValueDataGetAssociatedObject(callback.handle) {
+print("Finalize \(self)")
 				 Unmanaged<JavaScriptValue>.fromOpaque(this).takeUnretainedValue().dispose()
 			}
 		}

@@ -341,13 +341,13 @@ public class JavaScriptProperty: NSObject {
 			switch (result.type) {
 
 				case .null:
-					self.reset()
+					self.reset(lock: lock)
 				case .string:
-					self.reset(result.string)
+					self.reset(result.string, lock: lock)
 				case .number:
-					self.reset(result.number, unit: result.unit)
+					self.reset(result.number, unit: result.unit, lock: lock)
 				case .boolean:
-					self.reset(result.boolean)
+					self.reset(result.boolean, lock: lock)
 
 				default:
 					break
@@ -362,7 +362,7 @@ public class JavaScriptProperty: NSObject {
 
 		}
 
-		self.currentValue.store(value)
+		self.currentValue.reset(value)
 	}
 
 	/**

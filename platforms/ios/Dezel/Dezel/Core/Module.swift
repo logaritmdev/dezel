@@ -3,61 +3,25 @@
  * @class Module
  * @since 0.1.0
  */
-open class Module : NSObject {
-
-	//--------------------------------------------------------------------------
-	// MARK: Static
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method create
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	internal static func create(_ module: AnyClass, context: JavaScriptContext) -> Module {
-		return (module as! Module.Type).init(context: context)
-	}
-
-	//--------------------------------------------------------------------------
-	// MARK: Properties
-	//--------------------------------------------------------------------------
-
-	/**
-	 * The module context.
-	 * @var context
-	 * @since 0.1.0
-	 */
-	public var context: JavaScriptContext
+open class Module {
 
 	//--------------------------------------------------------------------------
 	// MARK: Methods
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @constructor
-	 * @since 0.1.0
-	 * @hidden
+	 * @method register
+	 * @since 0.7.0
 	 */
-	public required init(context: JavaScriptContext) {
-		self.context = context
-		super.init()
-	}
-
-	/**
-	 * Initializes the module.
-	 * @method initialize
-	 * @since 0.1.0
-	 */
-	open func initialize() {
+	open func register(context: JavaScriptContext) {
 
 	}
 
 	/**
-	 * Disposes the module.
-	 * @method dispose
-	 * @since 0.1.0
+	 * @method unregister
+	 * @since 0.7.0
 	 */
-	open func dispose() {
+	open func unregister(context: JavaScriptContext) {
 
 	}
 }

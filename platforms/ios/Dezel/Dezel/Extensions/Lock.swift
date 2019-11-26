@@ -5,13 +5,9 @@
  */
 func isLocked(_ lock: AnyObject?, key: AnyObject?) -> Bool {
 
-	guard let lock = lock else {
+	if (lock == nil) {
 		return false
 	}
 
-	if let key = key {
-		return lock === key
-	}
-
-	return true
+	return lock !== key
 }

@@ -21,6 +21,19 @@ open class JavaScriptClass: JavaScriptObject {
 	//--------------------------------------------------------------------------
 
 	/**
+	 * @method cast
+	 * @since 0.7.0
+	 */
+	override open func cast<T>(_ type: T.Type) -> T? {
+
+		if let instance = self.instance {
+			return instance.cast(type)
+		}
+
+		return super.cast(type)
+	}
+
+	/**
 	 * @inherited
 	 * @method call
 	 * @since 0.7.0

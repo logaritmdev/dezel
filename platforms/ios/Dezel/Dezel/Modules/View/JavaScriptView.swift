@@ -370,7 +370,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 
 		super.init(context: context)
 
-		self.node = DisplayNode(display: context.application.display)
+		self.node = DisplayNode(display: context.controller.display)
 		self.node.delegate = self
 
 		self.content = self.createContentView()
@@ -1535,8 +1535,8 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 */
 	private func insertChild(_ view: JavaScriptView, at index: Int) {
 		self.children.insert(view, at: index)
-		self.node.insertChild(view.node, at: index)
 		self.content.insertSubview(view.wrapper, at: index)
+		self.node.insertChild(view.node, at: index)
 	}
 
 	/**
@@ -1546,8 +1546,8 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 */
 	open func removeChild(_ view: JavaScriptView) {
 		self.children.remove(view)
-		self.node.removeChild(view.node)
 		self.content.removeSubview(view.wrapper)
+		self.node.removeChild(view.node)
 	}
 
 	/**
@@ -2531,12 +2531,12 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * Whether this view's content scrolls with momentum.
-	 * @property momentum
+	 * Whether this view's content scrolls with scrollMomentum.
+	 * @property scrollMomentum
 	 * @since 0.7.0
 	 */
-	@objc public lazy var momentum = JavaScriptProperty(boolean: true) { value in
-		self.scrollableView?.momentum = value.boolean
+	@objc public lazy var scrollMomentum = JavaScriptProperty(boolean: true) { value in
+		self.scrollableView?.scrollMomentum = value.boolean
 	}
 
 	/**
@@ -4842,21 +4842,21 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	//--------------------------------------------------------------------------
 
 	/**
-     * @method jsGet_momentum
+     * @method jsGet_scrollMomentum
      * @since 0.7.0
      * @hidden
      */
-	@objc open func jsGet_momentum(callback: JavaScriptGetterCallback) {
-		callback.returns(self.momentum)
+	@objc open func jsGet_scrollMomentum(callback: JavaScriptGetterCallback) {
+		callback.returns(self.scrollMomentum)
 	}
 
 	/**
-     * @method jsSet_momentum
+     * @method jsSet_scrollMomentum
      * @since 0.7.0
      * @hidden
      */
-	@objc open func jsSet_momentum(callback: JavaScriptSetterCallback) {
-		self.momentum.reset(callback.value, lock: self)
+	@objc open func jsSet_scrollMomentum(callback: JavaScriptSetterCallback) {
+		self.scrollMomentum.reset(callback.value, lock: self)
 	}
 
 	//--------------------------------------------------------------------------
@@ -6378,8 +6378,8 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 			Transition.commit()
 		}
 
-		if (callback.context.application.display.resolving) {
-			callback.context.application.display.registerResolveCallback(animate)
+		if (callback.context.controller.display.resolving) {
+			callback.context.controller.display.registerResolveCallback(animate)
 			return
 		}
 
