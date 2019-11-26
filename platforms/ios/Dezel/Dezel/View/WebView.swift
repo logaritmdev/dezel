@@ -12,14 +12,12 @@ public class WebView: WKWebView, WKNavigationDelegate, UIScrollViewDelegate, Scr
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The web view's delegate.
 	 * @property scrollableDelegate
 	 * @since 0.7.0
 	 */
 	open weak var scrollableDelegate: ScrollableDelegate?
 
 	/**
-	 * Whether the web view is scrollable.
 	 * @property scrollable
 	 * @since 0.7.0
 	 */
@@ -30,7 +28,6 @@ public class WebView: WKWebView, WKNavigationDelegate, UIScrollViewDelegate, Scr
 	}
 
 	/**
-	 * Whether the scroll displays scrollbars.
 	 * @property scrollbars
 	 * @since 0.7.0
 	 */
@@ -60,7 +57,6 @@ public class WebView: WKWebView, WKNavigationDelegate, UIScrollViewDelegate, Scr
 	}
 
 	/**
-	 * Whether the scrollable view can overscroll.
 	 * @property overscroll
 	 * @since 0.7.0
 	 */
@@ -99,7 +95,6 @@ public class WebView: WKWebView, WKNavigationDelegate, UIScrollViewDelegate, Scr
 	}
 
 	/**
-	 * The scrollable view's scroll top.
 	 * @property scrollTop
 	 * @since 0.7.0
 	 */
@@ -112,7 +107,6 @@ public class WebView: WKWebView, WKNavigationDelegate, UIScrollViewDelegate, Scr
 	}
 
 	/**
-	 * The web view's scroll left.
 	 * @property scrollLeft
 	 * @since 0.7.0
 	 */
@@ -125,7 +119,6 @@ public class WebView: WKWebView, WKNavigationDelegate, UIScrollViewDelegate, Scr
 	}
 
 	/**
-	 * The scrollable view's scroll width.
 	 * @property scrollWidth
 	 * @since 0.7.0
 	 */
@@ -138,7 +131,6 @@ public class WebView: WKWebView, WKNavigationDelegate, UIScrollViewDelegate, Scr
 	}
 
 	/**
-	 * The scrollable view's scroll height.
 	 * @property scrollHeight
 	 * @since 0.7.0
 	 */
@@ -151,14 +143,12 @@ public class WebView: WKWebView, WKNavigationDelegate, UIScrollViewDelegate, Scr
 	}
 
 	/**
-	 * Whether the web view has scrollMomentum.
 	 * @property scrollMomentum
 	 * @since 0.7.0
 	 */
 	open var scrollMomentum: Bool = true
 
 	/**
-	 * The web view's top content inset.
 	 * @property contentInsetTop
 	 * @since 0.7.0
 	 */
@@ -169,7 +159,6 @@ public class WebView: WKWebView, WKNavigationDelegate, UIScrollViewDelegate, Scr
 	}
 
 	/**
-	 * The web view's left content inset.
 	 * @property contentInsetLeft
 	 * @since 0.7.0
 	 */
@@ -180,7 +169,6 @@ public class WebView: WKWebView, WKNavigationDelegate, UIScrollViewDelegate, Scr
 	}
 
 	/**
-	 * The web view's right content inset.
 	 * @property contentInsetRight
 	 * @since 0.7.0
 	 */
@@ -191,7 +179,6 @@ public class WebView: WKWebView, WKNavigationDelegate, UIScrollViewDelegate, Scr
 	}
 
 	/**
-	 * The web view's bottom content inset.
 	 * @property contentInsetBottom
 	 * @since 0.7.0
 	 */
@@ -202,7 +189,6 @@ public class WebView: WKWebView, WKNavigationDelegate, UIScrollViewDelegate, Scr
 	}
 
 	/**
-	 * Whether the web view's is paged.
 	 * @property paged
 	 * @since 0.7.0
 	 */
@@ -213,7 +199,6 @@ public class WebView: WKWebView, WKNavigationDelegate, UIScrollViewDelegate, Scr
 	}
 
 	/**
-	 * Whether the scrollable view's is zoomable.
 	 * @property zoomable
 	 * @since 0.7.0
 	 */
@@ -224,7 +209,6 @@ public class WebView: WKWebView, WKNavigationDelegate, UIScrollViewDelegate, Scr
 	}
 
 	/**
-	 * The scrollable view min zoom.
 	 * @property minZoom
 	 * @since 0.7.0
 	 */
@@ -235,7 +219,6 @@ public class WebView: WKWebView, WKNavigationDelegate, UIScrollViewDelegate, Scr
 	}
 
 	/**
-	 * The scrollable view max zoom.
 	 * @property maxZoom
 	 * @since 0.7.0
 	 */
@@ -246,7 +229,6 @@ public class WebView: WKWebView, WKNavigationDelegate, UIScrollViewDelegate, Scr
 	}
 
 	/**
-	 * The view that is zoomed.
 	 * @property zoomedView
 	 * @since 0.7.0
 	 */
@@ -334,7 +316,6 @@ public class WebView: WKWebView, WKNavigationDelegate, UIScrollViewDelegate, Scr
 	}
 
 	/**
-	 * @inherited
 	 * @method action
 	 * @since 0.7.0
 	 */
@@ -343,7 +324,6 @@ public class WebView: WKWebView, WKNavigationDelegate, UIScrollViewDelegate, Scr
 	}
 
 	/**
-	 * Measures the natural size of this view only including itself.
 	 * @method measure
 	 * @since 0.7.0
 	 */
@@ -447,7 +427,6 @@ public class WebView: WKWebView, WKNavigationDelegate, UIScrollViewDelegate, Scr
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Smooth scroll the scroll view's to the specified location.
 	 * @method scrollTo
 	 * @since 0.1.0
 	 */
@@ -521,8 +500,7 @@ public class WebView: WKWebView, WKNavigationDelegate, UIScrollViewDelegate, Scr
 	 * @hidden
 	 */
 	@objc open func scrollViewDidCancelTouch(gesture: ScrollViewTouchCancelGesture) {
-		// TODO
-		//UIApplication.shared.window?.dispatchTouchCancelled(gesture.touches)
+		UIApplication.shared.window?.dispatchTouchCanceled(gesture.touches)
 	}
 
 	//--------------------------------------------------------------------------

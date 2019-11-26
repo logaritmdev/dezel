@@ -1,5 +1,4 @@
 /**
- * A type checked value with optional unit.
  * @class Property
  * @since 0.1.0
  */
@@ -10,7 +9,6 @@ open class JavaScriptProperty: NSObject {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Parses a raw property string.
 	 * @method parse
 	 * @since 0.2.0
 	 */
@@ -25,35 +23,30 @@ open class JavaScriptProperty: NSObject {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The property's type.
 	 * @property type
 	 * @since 0.1.0
 	 */
 	private(set) public var type: PropertyType = .null
 
 	/**
-	 * The property's unit.
 	 * @property unit
 	 * @since 0.1.0
 	 */
 	private(set) public var unit: PropertyUnit = .none
 
 	/**
-	 * The property's string value.
 	 * @property string
 	 * @since 0.1.0
 	 */
 	lazy private(set) public var string: String = self.initializeString()
 
 	/**
-	 * The property's number value.
 	 * @property number
 	 * @since 0.1.0
 	 */
 	lazy private(set) public var number: Double = self.initializeNumber()
 
 	/**
-	 * The property's boolean value.
 	 * @property boolean
 	 * @since 0.1.0
 	 */
@@ -71,7 +64,6 @@ open class JavaScriptProperty: NSObject {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Initializes the property to null.
 	 * @constructor
 	 * @since 0.1.0
 	 */
@@ -80,7 +72,6 @@ open class JavaScriptProperty: NSObject {
 	}
 
 	/**
-	 * Initializes the property to a string.
 	 * @constructor
 	 * @since 0.1.0
 	 */
@@ -90,7 +81,6 @@ open class JavaScriptProperty: NSObject {
 	}
 
 	/**
-	 * Initializes the value.
 	 * @constructor
 	 * @since 0.1.0
 	 */
@@ -100,7 +90,6 @@ open class JavaScriptProperty: NSObject {
 	}
 
 	/**
-	 * Initializes the value.
 	 * @constructor
 	 * @since 0.1.0
 	 */
@@ -110,7 +99,6 @@ open class JavaScriptProperty: NSObject {
 	}
 
 	/**
-	 * Initializes the value.
 	 * @constructor
 	 * @since 0.1.0
 	 */
@@ -120,7 +108,6 @@ open class JavaScriptProperty: NSObject {
 	}
 
 	/**
-	 * Initializes the property using a JavaScript value.
 	 * @constructor
 	 * @since 0.1.0
 	 */
@@ -163,7 +150,6 @@ open class JavaScriptProperty: NSObject {
 	}
 
 	/**
-	 * Resets the property's value.
 	 * @method reset
 	 * @since 0.1.0
 	 */
@@ -173,7 +159,6 @@ open class JavaScriptProperty: NSObject {
 	}
 
 	/**
-	 * Resets the property's value.
 	 * @method reset
 	 * @since 0.1.0
 	 */
@@ -183,7 +168,6 @@ open class JavaScriptProperty: NSObject {
 	}
 
 	/**
-	 * Resets the property's value.
 	 * @method reset
 	 * @since 0.1.0
 	 */
@@ -193,7 +177,6 @@ open class JavaScriptProperty: NSObject {
 	}
 
 	/**
-	 * Resets the property's value.
 	 * @method reset
 	 * @since 0.1.0
 	 */
@@ -203,7 +186,6 @@ open class JavaScriptProperty: NSObject {
 	}
 
 	/**
-	 * Returns the property as a value created in the specified context.
 	 * @method value
 	 * @since 0.1.0
 	 */
@@ -226,7 +208,6 @@ open class JavaScriptProperty: NSObject {
 	}
 
 	/**
-	 * Casts the property to a specified type.
 	 * @method cast
 	 * @since 0.1.0
 	 */

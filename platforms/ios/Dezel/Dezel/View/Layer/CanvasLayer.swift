@@ -1,7 +1,6 @@
 import UIKit
 
 /**
- * The layer that renders the view's border.
  * @class CanvasLayer
  * @super Layer
  * @since 0.4.0
@@ -13,7 +12,6 @@ public class CanvasLayer: Layer {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The callback to execute when the canvas needs to be draw.
 	 * @property drawCanvas
 	 * @since 0.4.0
 	 */
@@ -42,7 +40,6 @@ public class CanvasLayer: Layer {
 	}
 
 	/**
-	 * @inherited
 	 * @method draw
 	 * @since 0.4.0
 	 */

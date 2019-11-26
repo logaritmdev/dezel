@@ -52,14 +52,12 @@ internal extension Double {
 }
 
 /**
- * Double extension.
  * @extension Double
  * @since 0.7.0
  */
 public extension Double {
 
 	/**
-	 * Converts to a string.
 	 * @method toString
 	 * @since 0.7.0
 	 */
@@ -67,4 +65,3 @@ public extension Double {
 		return self.truncatingRemainder(dividingBy: 1) == 0 ? String(format: "%.0f", self) : String(self)
 	}
 }
-

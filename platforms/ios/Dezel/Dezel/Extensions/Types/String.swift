@@ -157,14 +157,12 @@ internal extension String {
 }
 
 /**
- * String extensions.
  * @extension String
  * @since 0.7.0
  */
 public extension String {
 
 	/**
-	 * Converts to a number.
 	 * @method toNumber
 	 * @since 0.7.0
 	 */
@@ -203,7 +201,6 @@ public extension String {
 	}
 
 	/**
-	 * Converts to a color.
 	 * @method toNumber
 	 * @since 0.7.0
 	 */

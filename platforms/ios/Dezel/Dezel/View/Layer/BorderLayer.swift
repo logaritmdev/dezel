@@ -1,7 +1,6 @@
 import UIKit
 
 /**
- * The layer that renders the view's border.
  * @class BorderLayer
  * @super Layer
  * @since 0.1.0
@@ -13,7 +12,6 @@ public class BorderLayer: Layer {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method needsDisplay
 	 * @since 0.1.0
 	 */
@@ -213,7 +211,6 @@ public class BorderLayer: Layer {
 	}
 
 	/**
-	 * @inherited
 	 * @method display
 	 * @since 0.1.0
 	 */
@@ -400,7 +397,6 @@ public class BorderLayer: Layer {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method action
 	 * @since 0.1.0
 	 */

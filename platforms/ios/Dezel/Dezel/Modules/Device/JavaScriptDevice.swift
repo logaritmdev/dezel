@@ -2,8 +2,8 @@ import AudioToolbox
 
 /**
  * @class JavaScriptDevice
+ * @super JavaScriptClass
  * @since 0.7.0
- * @hidden
  */
 open class JavaScriptDevice: JavaScriptClass {
 

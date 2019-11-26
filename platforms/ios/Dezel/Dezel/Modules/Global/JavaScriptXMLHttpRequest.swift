@@ -2,6 +2,7 @@ import Foundation
 
 /**
  * @class JavaScriptXMLHttpRequest
+ * @super JavaScriptClass
  * @since 0.7.0
  */
 open class JavaScriptXMLHttpRequest: JavaScriptClass, HttpRequestDelegate {
@@ -22,7 +23,6 @@ open class JavaScriptXMLHttpRequest: JavaScriptClass, HttpRequestDelegate {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method dispose
 	 * @since 0.6.0
 	 */

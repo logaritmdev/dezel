@@ -1,7 +1,6 @@
 public typealias ImageLoaderCallback = (UIImage?) -> Void
 
 /**
- * Manages images loading.
  * @class ImageLoader
  * @since 0.1.0
  */
@@ -26,7 +25,6 @@ open class ImageLoader: NSObject {
 	private static var diskCache: ImageDiskCache = ImageDiskCache()
 
 	/**
-	 * The default image loader.
 	 * @property main
 	 * @since 0.6.0
 	 */
@@ -48,7 +46,6 @@ open class ImageLoader: NSObject {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Convenience method to load an image from a Property object.
 	 * @method load
 	 * @since 0.1.0
 	 */
@@ -72,7 +69,6 @@ open class ImageLoader: NSObject {
 	}
 
 	/**
-	 * Loads the image from the specified source.
 	 * @method load
 	 * @since 0.1.0
 	 */
@@ -105,7 +101,6 @@ open class ImageLoader: NSObject {
 	}
 
 	/**
-	 * Loads the image from disk.
 	 * @method loadDiskImage
 	 * @since 0.1.0
 	 */
@@ -120,7 +115,6 @@ open class ImageLoader: NSObject {
 	}
 
 	/**
-	 * Loads the image from the network.
 	 * @method loadHttpImage
 	 * @since 0.1.0
 	 */

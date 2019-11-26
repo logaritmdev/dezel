@@ -15,7 +15,6 @@ export class Enclosure extends View {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The wrapped screen.
 	 * @property screen
 	 * @since 0.4.0
 	 */
@@ -28,7 +27,6 @@ export class Enclosure extends View {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Initializes the component.
 	 * @constructor
 	 * @since 0.4.0
 	 */

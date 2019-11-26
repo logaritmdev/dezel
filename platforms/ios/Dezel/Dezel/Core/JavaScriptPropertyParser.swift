@@ -1,5 +1,4 @@
 /**
- * Parses numeric properties.
  * @class JavaScriptPropertyParser
  * @since 0.7.0
  */
@@ -10,49 +9,42 @@ open class JavaScriptPropertyParser {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The result.
 	 * @struct Result
 	 * @since 0.7.0
 	 */
 	public class Result {
 
 		/**
-		 * The result's type.
 		 * @property type
 		 * @since 0.7.0
 		 */
 		public var type: JavaScriptPropertyType = .null
 
 		/**
-		 * The result's unit.
 		 * @property unit
 		 * @since 0.7.0
 		 */
 		public var unit: JavaScriptPropertyUnit = .none
 
 		/**
-		 * The result's string.
 		 * @property string
 		 * @since 0.7.0
 		 */
 		public var string: String!
 
 		/**
-		 * The result's number.
 		 * @property number
 		 * @since 0.7.0
 		 */
 		public var number: Double!
 
 		/**
-		 * The result's boolean.
 		 * @property boolean
 		 * @since 0.7.0
 		 */
 		public var boolean: Bool!
 
 		/**
-		 * Indicate whether the result is null.
 		 * @property isNull
 		 * @since 0.7.0
 		 */
@@ -61,7 +53,6 @@ open class JavaScriptPropertyParser {
 		}
 
 		/**
-		 * Indicate whether the result is a string.
 		 * @property isString
 		 * @since 0.7.0
 		 */
@@ -70,7 +61,6 @@ open class JavaScriptPropertyParser {
 		}
 
 		/**
-		 * Indicate whether the result is a number.
 		 * @property isNumber
 		 * @since 0.7.0
 		 */
@@ -79,7 +69,6 @@ open class JavaScriptPropertyParser {
 		}
 
 		/**
-		 * Indicate whether the result is a boolean.
 		 * @property isBoolean
 		 * @since 0.7.0
 		 */
@@ -88,7 +77,6 @@ open class JavaScriptPropertyParser {
 		}
 
 		/**
-		 * Initializes the result.
 		 * @constructor
 		 * @since 0.7.0
 		 */
@@ -98,7 +86,6 @@ open class JavaScriptPropertyParser {
 		}
 
 		/**
-		 * Initializes the result.
 		 * @constructor
 		 * @since 0.7.0
 		 */
@@ -109,7 +96,6 @@ open class JavaScriptPropertyParser {
 		}
 
 		/**
-		 * Initializes the result.
 		 * @constructor
 		 * @since 0.7.0
 		 */
@@ -120,7 +106,6 @@ open class JavaScriptPropertyParser {
 		}
 
 		/**
-		 * Initializes the result.
 		 * @constructor
 		 * @since 0.7.0
 		 */
@@ -131,7 +116,6 @@ open class JavaScriptPropertyParser {
 		}
 
 		/**
-		 * Initializes the result.
 		 * @constructor
 		 * @since 0.7.0
 		 */
@@ -147,7 +131,6 @@ open class JavaScriptPropertyParser {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Parses the specified JavaScript value.
 	 * @method parse
 	 * @since 0.7.0
 	 */
@@ -174,7 +157,6 @@ open class JavaScriptPropertyParser {
 	}
 
 	/**
-	 * Parses the specified string.
 	 * @method parse
 	 * @since 0.7.0
 	 */

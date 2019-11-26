@@ -21,7 +21,7 @@ open class ApplicationController: UIViewController, StylesheetDelegate {
 	 * @property modules
 	 * @since 0.7.0
 	 */
-	open var modules: [Module] = []
+	open var modules: [JavaScriptModule] = []
 
 	/**
 	 * @property stylesheet
@@ -145,7 +145,6 @@ open class ApplicationController: UIViewController, StylesheetDelegate {
 	}
 
 	/**
-	 * Opens a resource URL.
 	 * @method openResourceURL
 	 * @since 0.7.0
 	 */
@@ -154,7 +153,6 @@ open class ApplicationController: UIViewController, StylesheetDelegate {
 	}
 
 	/**
-	 * Opens a universal URL.
 	 * @method openUniversalURL
 	 * @since 0.7.0
 	 */
@@ -167,7 +165,6 @@ open class ApplicationController: UIViewController, StylesheetDelegate {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method loadView
 	 * @since 0.7.0
 	 */
@@ -176,7 +173,6 @@ open class ApplicationController: UIViewController, StylesheetDelegate {
 	}
 
 	/**
-	 * @inherited
 	 * @method viewDidLoad
 	 * @since 0.7.0
 	 */
@@ -247,7 +243,6 @@ open class ApplicationController: UIViewController, StylesheetDelegate {
 	}
 
 	/**
-	 * @inherited
 	 * @method viewWillLayoutSubviews
 	 * @since 0.7.0
 	 */
@@ -269,7 +264,6 @@ open class ApplicationController: UIViewController, StylesheetDelegate {
 	}
 
 	/**
-	 * @inherited
 	 * @method viewWillTransition
 	 * @since 0.7.0
 	 */
@@ -310,7 +304,6 @@ open class ApplicationController: UIViewController, StylesheetDelegate {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Dispatches a touchcancel event.
 	 * @method dispatchTouchCancel
 	 * @since 0.7.0
 	 */
@@ -319,7 +312,6 @@ open class ApplicationController: UIViewController, StylesheetDelegate {
 	}
 
 	/**
-	 * Dispatches a touchstart event.
 	 * @method dispatchTouchStart
 	 * @since 0.7.0
 	 */
@@ -328,7 +320,6 @@ open class ApplicationController: UIViewController, StylesheetDelegate {
 	}
 
 	/**
-	 * Dispatches a touchmove event.
 	 * @method dispatchTouchMove
 	 * @since 0.7.0
 	 */
@@ -337,7 +328,6 @@ open class ApplicationController: UIViewController, StylesheetDelegate {
 	}
 
 	/**
-	 * Dispatches a touchend event.
 	 * @method dispatchTouchEnd
 	 * @since 0.7.0
 	 */
@@ -413,7 +403,6 @@ open class ApplicationController: UIViewController, StylesheetDelegate {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Notifies the application it has moved to the background.
 	 * @method enterBackground
 	 * @since 0.7.0
 	 */
@@ -422,7 +411,6 @@ open class ApplicationController: UIViewController, StylesheetDelegate {
 	}
 
 	/**
-	 * Notifies the application it has moved to the foreground.
 	 * @method enterForeground
 	 * @since 0.7.0
 	 */
@@ -435,7 +423,6 @@ open class ApplicationController: UIViewController, StylesheetDelegate {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Notifies the application it has moved to the foreground.
 	 * @method keyboardWillShow
 	 * @since 0.7.0
 	 */
@@ -444,7 +431,6 @@ open class ApplicationController: UIViewController, StylesheetDelegate {
 	}
 
 	/**
-	 * Notifies the application it has moved to the foreground.
 	 * @method keyboardDidShow
 	 * @since 0.7.0
 	 */
@@ -453,7 +439,6 @@ open class ApplicationController: UIViewController, StylesheetDelegate {
 	}
 
 	/**
-	 * Notifies the application it has moved to the foreground.
 	 * @method keyboardWillHide
 	 * @since 0.7.0
 	 */
@@ -462,7 +447,6 @@ open class ApplicationController: UIViewController, StylesheetDelegate {
 	}
 
 	/**
-	 * Notifies the application it has moved to the foreground.
 	 * @method keyboardDidHide
 	 * @since 0.7.0
 	 */
@@ -471,7 +455,6 @@ open class ApplicationController: UIViewController, StylesheetDelegate {
 	}
 
 	/**
-	 * Notifies the application it has moved to the foreground.
 	 * @method keyboardWillResize
 	 * @since 0.7.0
 	 */
@@ -480,7 +463,6 @@ open class ApplicationController: UIViewController, StylesheetDelegate {
 	}
 
 	/**
-	 * Notifies the application it has moved to the foreground.
 	 * @method keyboardDidResize
 	 * @since 0.7.0
 	 */
@@ -493,7 +475,6 @@ open class ApplicationController: UIViewController, StylesheetDelegate {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The application's status bar visibility status.
 	 * @property statusBarVisible
 	 * @since 0.7.0
 	 */
@@ -506,7 +487,6 @@ open class ApplicationController: UIViewController, StylesheetDelegate {
 	}
 
 	/**
-	 * The application's status bar foreground color (white or black)
 	 * @property statusBarForegroundColor
 	 * @since 0.7.0
 	 */
@@ -519,7 +499,6 @@ open class ApplicationController: UIViewController, StylesheetDelegate {
 	}
 
 	/**
-	 * The application's status bar background color.
 	 * @property statusBarBackgroundColor
 	 * @since 0.7.0
 	 */
@@ -539,7 +518,6 @@ open class ApplicationController: UIViewController, StylesheetDelegate {
 	private var statusBar: UIView = UIView(frame: .zero)
 
 	/**
-	 * @inherited
 	 * @property prefersStatusBarHidden
 	 * @since 0.7.0
 	 */
@@ -553,7 +531,6 @@ open class ApplicationController: UIViewController, StylesheetDelegate {
 	}
 
 	/**
-	 * @inherited
 	 * @property preferredStatusBarStyle
 	 * @since 0.7.0
 	 */

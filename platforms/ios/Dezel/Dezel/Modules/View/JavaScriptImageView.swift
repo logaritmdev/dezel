@@ -1,7 +1,7 @@
 /**
  * @class JavaScriptImageView
+ * @super JavaScriptView
  * @since 0.7.0
- * @hidden
  */
 open class JavaScriptImageView: JavaScriptView {
 
@@ -48,7 +48,6 @@ open class JavaScriptImageView: JavaScriptView {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method createContentView
 	 * @since 0.7.0
 	 */
@@ -57,7 +56,6 @@ open class JavaScriptImageView: JavaScriptView {
 	}
 
 	/**
-	 * @inherited
 	 * @method update
 	 * @since 0.7.0
 	 */
@@ -76,7 +74,6 @@ open class JavaScriptImageView: JavaScriptView {
 	}
 
 	/**
-	 * Updates the image.
 	 * @method updateImage
 	 * @since 0.7.0
 	 */
@@ -224,7 +221,6 @@ open class JavaScriptImageView: JavaScriptView {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method measure
 	 * @since 0.7.0
 	 */
@@ -347,7 +343,6 @@ open class JavaScriptImageView: JavaScriptView {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The image view's source.
 	 * @property source
 	 * @since 0.7.0
 	 */
@@ -365,7 +360,6 @@ open class JavaScriptImageView: JavaScriptView {
 	}
 
 	/**
-	 * The image view's image container fit.
 	 * @property imageFit
 	 * @since 0.7.0
 	 */
@@ -374,7 +368,6 @@ open class JavaScriptImageView: JavaScriptView {
 	}
 
 	/**
-	 * The image view's image top anchor.
 	 * @property imageAnchorTop
 	 * @since 0.7.0
 	 */
@@ -383,7 +376,6 @@ open class JavaScriptImageView: JavaScriptView {
 	}
 
 	/**
-	 * The image view's image left anchor.
 	 * @property imageAnchorLeft
 	 * @since 0.7.0
 	 */
@@ -392,7 +384,6 @@ open class JavaScriptImageView: JavaScriptView {
 	}
 
 	/**
-	 * The image view's image top position.
 	 * @property imageTop
 	 * @since 0.7.0
 	 */
@@ -401,7 +392,6 @@ open class JavaScriptImageView: JavaScriptView {
 	}
 
 	/**
-	 * The image view's image left position.
 	 * @property imageLeft
 	 * @since 0.7.0
 	 */
@@ -410,7 +400,6 @@ open class JavaScriptImageView: JavaScriptView {
 	}
 
 	/**
-	 * The image view's image width.
 	 * @property imageWidth
 	 * @since 0.7.0
 	 */
@@ -419,7 +408,6 @@ open class JavaScriptImageView: JavaScriptView {
 	}
 
 	/**
-	 * The image view's image height.
 	 * @property imageHeight
 	 * @since 0.7.0
 	 */
@@ -428,7 +416,6 @@ open class JavaScriptImageView: JavaScriptView {
 	}
 
 	/**
-	 * The image view's image filter.
 	 * @property imageFilter
 	 * @since 0.7.0
 	 */
@@ -437,7 +424,6 @@ open class JavaScriptImageView: JavaScriptView {
 	}
 
 	/**
-	 * The image view's image tint color.
 	 * @property imageTint
 	 * @since 0.7.0
 	 */

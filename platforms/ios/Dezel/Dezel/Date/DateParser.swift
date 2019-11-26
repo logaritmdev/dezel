@@ -1,7 +1,7 @@
 /**
- * Convenience class to parse dates.
  * @class DateParser
  * @since 0.5.0
+ * @hidden
  */
 open class DateParser {
 
@@ -26,9 +26,9 @@ open class DateParser {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Parses the specified ISO date string.
 	 * @method parse
 	 * @since 0.5.0
+	 * @hidden
 	 */
 	public static func parse(_ string: String) -> Date {
 		return self.parser.date(from: string) ?? Date()

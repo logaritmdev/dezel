@@ -1,5 +1,4 @@
 /**
- * The base class for callbacks.
  * @class JavaScriptCallback
  * @since 0.1.0
  */
@@ -10,14 +9,12 @@ open class JavaScriptCallback: NSObject {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The callback context.
 	 * @property context
 	 * @since 0.1.0
 	 */
 	private(set) public var context: JavaScriptContext
 
 	/**
-	 * The callback object.
 	 * @property target
 	 * @since 0.1.0
 	 */
@@ -26,7 +23,6 @@ open class JavaScriptCallback: NSObject {
 	}()
 
 	/**
-	 * The callback function.
 	 * @property callee
 	 * @since 0.1.0
 	 */
@@ -35,7 +31,6 @@ open class JavaScriptCallback: NSObject {
 	}()
 
 	/**
-	 * The callback argument length.
 	 * @property arguments
 	 * @since 0.1.0
 	 */
@@ -98,7 +93,6 @@ open class JavaScriptCallback: NSObject {
 	}
 
 	/**
-	 * Assigns the callback's return value.
 	 * @method returns
 	 * @since 0.1.0
 	 */
@@ -107,7 +101,6 @@ open class JavaScriptCallback: NSObject {
 	}
 
 	/**
-	 * Assigns the callback's return value using a property.
 	 * @method returns
 	 * @since 0.1.0
 	 */
@@ -116,7 +109,6 @@ open class JavaScriptCallback: NSObject {
 	}
 
 	/**
-	 * Assigns the callback's return value using a string.
 	 * @method returns
 	 * @since 0.1.0
 	 */
@@ -125,7 +117,6 @@ open class JavaScriptCallback: NSObject {
 	}
 
 	/**
-	 * Assigns the callback's return value using a number.
 	 * @method returns
 	 * @since 0.1.0
 	 */
@@ -134,7 +125,6 @@ open class JavaScriptCallback: NSObject {
 	}
 
 	/**
-	 * Assigns the callback's return value using a number.
 	 * @method returns
 	 * @since 0.3.0
 	 */
@@ -143,7 +133,6 @@ open class JavaScriptCallback: NSObject {
 	}
 
 	/**
-	 * Assigns the callback's return value using a number.
 	 * @method returns
 	 * @since 0.3.0
 	 */
@@ -152,7 +141,6 @@ open class JavaScriptCallback: NSObject {
 	}
 
 	/**
-	 * Assigns the callback's return value using a boolean.
 	 * @method returns
 	 * @since 0.1.0
 	 */

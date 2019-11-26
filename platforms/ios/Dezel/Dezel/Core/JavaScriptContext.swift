@@ -1,5 +1,4 @@
 /**
- * A JavaScript execution environment.
  * @class JavaScriptContext
  * @since 0.1.0
  */
@@ -10,7 +9,6 @@ open class JavaScriptContext: NSObject {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The null JavaScript value.
 	 * @const jsnull
 	 * @since 0.7.0
 	 */
@@ -19,7 +17,6 @@ open class JavaScriptContext: NSObject {
 	}()
 
 	/**
-	 * The undefined JavaScript value.
 	 * @const jsundefined
 	 * @since 0.7.0
 	 */
@@ -48,35 +45,30 @@ open class JavaScriptContext: NSObject {
 	//--------------------------------------------------------------------------
 
 	/**
-     * The context's handle.
      * @property handle
      * @since 0.1.0
      */
 	private(set) public var handle: JSContextRef!
 
 	/**
-     * The context global object.
      * @property global
      * @since 0.1.0
      */
 	private(set) public var global: JavaScriptValue!
 
 	/**
-     * The context's registered objects.
-     * @property objects
-     * @since 0.1.0
-     */
-	internal(set) public var objects: [String: JavaScriptValue] = [:]
-
-	/**
-     * The context's registered classes.
      * @property classes
      * @since 0.1.0
      */
 	internal(set) public var classes: [String: JavaScriptValue] = [:]
 
 	/**
-     * The context's registered globals.
+     * @property objects
+     * @since 0.1.0
+     */
+	internal(set) public var objects: [String: JavaScriptValue] = [:]
+
+	/**
      * @property globals
      * @since 0.7.0
      */
@@ -102,7 +94,6 @@ open class JavaScriptContext: NSObject {
 	}
 
 	/**
-     * Disposes of the context upon destruction.
 	 * @destructor
      * @since 0.1.0
      */
@@ -111,18 +102,6 @@ open class JavaScriptContext: NSObject {
 	}
 
 	/**
-	 * Register multiple objects.
-	 * @method registerObjects
-	 * @since 0.7.0
-	 */
-	open func registerObjects(_ objects: [String: AnyClass]) {
-		objects.forEach {
-			self.registerObject($0.key, with: $0.value)
-		}
-	}
-
-	/**
-	 * Register multiple classes.
 	 * @method registerClasses
 	 * @since 0.7.0
 	 */
@@ -133,16 +112,16 @@ open class JavaScriptContext: NSObject {
 	}
 
 	/**
-	 * Registers a context object.
-	 * @method registerObject
-	 * @since 0.1.0
+	 * @method registerObjects
+	 * @since 0.7.0
 	 */
-	open func registerObject(_ uid: String, with value: AnyClass) {
-		self.objects[uid] = self.createObject(value)
+	open func registerObjects(_ objects: [String: AnyClass]) {
+		objects.forEach {
+			self.registerObject($0.key, with: $0.value)
+		}
 	}
 
 	/**
-	 * Registers a context class.
 	 * @method registerClass
 	 * @since 0.1.0
 	 */
@@ -151,7 +130,14 @@ open class JavaScriptContext: NSObject {
 	}
 
 	/**
-     * Disposes the context.
+	 * @method registerObject
+	 * @since 0.1.0
+	 */
+	open func registerObject(_ uid: String, with value: AnyClass) {
+		self.objects[uid] = self.createObject(value)
+	}
+
+	/**
      * @method dispose
      * @since 0.1.0
      */
@@ -159,7 +145,6 @@ open class JavaScriptContext: NSObject {
 
 		self.objects.removeAll()
 		self.classes.removeAll()
-
 		self.global.dispose()
 
 		self.garbageCollect()
@@ -168,7 +153,6 @@ open class JavaScriptContext: NSObject {
 	}
 
 	/**
-	 * Creates a value which contains the null JavaScript value.
 	 * @method createNull
 	 * @since 0.1.0
 	 */
@@ -177,7 +161,6 @@ open class JavaScriptContext: NSObject {
 	}
 
 	/**
-	 * Creates a value which contains the undefined JavaScript value.
 	 * @method createUndefined
 	 * @since 0.1.0
 	 */
@@ -186,7 +169,6 @@ open class JavaScriptContext: NSObject {
 	}
 
 	/**
-	 * Creates a value which contains a string JavaScript value.
 	 * @method createString
 	 * @since 0.1.0
 	 */
@@ -195,7 +177,6 @@ open class JavaScriptContext: NSObject {
 	}
 
 	/**
-	 * Creates a value which contains a numeric JavaScript value.
 	 * @method createNumber
 	 * @since 0.1.0
 	 */
@@ -204,7 +185,6 @@ open class JavaScriptContext: NSObject {
 	}
 
 	/**
-	 * Creates a value which contains a numeric JavaScript value.
 	 * @method createNumber
 	 * @since 0.3.0
 	 */
@@ -213,7 +193,6 @@ open class JavaScriptContext: NSObject {
 	}
 
 	/**
-	 * Creates a value which contains a numeric JavaScript value.
 	 * @method createNumber
 	 * @since 0.3.0
 	 */
@@ -222,7 +201,6 @@ open class JavaScriptContext: NSObject {
 	}
 
 	/**
-	 * Creates a value which contains a numeric JavaScript value.
 	 * @method createNumber
 	 * @since 0.3.0
 	 */
@@ -231,7 +209,6 @@ open class JavaScriptContext: NSObject {
 	}
 
 	/**
-	 * Creates a value which contains a boolean JavaScript value.
 	 * @method createBoolean
 	 * @since 0.1.0
 	 */
@@ -240,7 +217,6 @@ open class JavaScriptContext: NSObject {
 	}
 
 	/**
-	 * Creates a value which contains an empty JavaScript object.
 	 * @method createEmptyObject
 	 * @since 0.1.0
 	 */
@@ -249,7 +225,6 @@ open class JavaScriptContext: NSObject {
 	}
 
 	/**
-	 * Creates a value which contains an empty JavaScript array.
 	 * @method createEmptyArray
 	 * @since 0.1.0
 	 */
@@ -258,7 +233,6 @@ open class JavaScriptContext: NSObject {
 	}
 
 	/**
-	 * Creates a value bound to a native function.
 	 * @method createFunction
 	 * @since 0.1.0
 	 */
@@ -267,7 +241,6 @@ open class JavaScriptContext: NSObject {
 	}
 
 	/**
-	 * Creates a value bound to a native function.
 	 * @method createFunction
 	 * @since 0.1.0
 	 */
@@ -276,7 +249,6 @@ open class JavaScriptContext: NSObject {
 	}
 
 	/**
-	 * Creates a value bound to an object template instance.
 	 * @method createObject
 	 * @since 0.1.0
 	 */
@@ -285,7 +257,6 @@ open class JavaScriptContext: NSObject {
 	}
 
 	/**
-	 * Creates a value bound to a class template.
 	 * @method createClass
 	 * @since 0.1.0
 	 */
@@ -294,7 +265,6 @@ open class JavaScriptContext: NSObject {
 	}
 
 	/**
-     * Creates an empty return value.
      * @method createReturnValue
      * @since 0.1.0
      */
@@ -303,7 +273,6 @@ open class JavaScriptContext: NSObject {
 	}
 
 	/**
-	 * Evaluates JavaScript code.
 	 * @method evaluate
 	 * @since 0.1.0
 	 */
@@ -312,7 +281,6 @@ open class JavaScriptContext: NSObject {
 	}
 
 	/**
-     * Evaluates JavaScript code with a file indicator.
      * @method evaluate
      * @since 0.1.0
      */
@@ -321,7 +289,6 @@ open class JavaScriptContext: NSObject {
 	}
 
 	/**
-	 * Assigns an attribute on this context.
 	 * @method attribute
 	 * @since 0.1.0
 	 */
@@ -332,7 +299,6 @@ open class JavaScriptContext: NSObject {
 	}
 
 	/**
-	 * Returns an attribute from this cibtext.
 	 * @method attribute
 	 * @since 0.1.0
 	 */
@@ -341,7 +307,6 @@ open class JavaScriptContext: NSObject {
 	}
 
 	/**
-	 * Assigns the context's exception handler.
 	 * @method handleError
 	 * @since 0.6.0
 	 */
@@ -351,7 +316,6 @@ open class JavaScriptContext: NSObject {
 	}
 
 	/**
-	 * Requests a garbage collection.
      * @method garbageCollect
      * @since 0.1.0
      */
@@ -360,9 +324,7 @@ open class JavaScriptContext: NSObject {
 	}
 }
 
-
 /**
- * The type alias for an exception handler callback.
  * @alias ExceptionHandler
  * @since 0.1.0
  */

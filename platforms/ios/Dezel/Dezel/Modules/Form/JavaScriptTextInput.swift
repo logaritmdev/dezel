@@ -1,6 +1,6 @@
 /**
- * An editable text input.
  * @class JavaScriptTextInput
+ * @super JavaScriptView
  * @since 0.7.0
  */
 open class JavaScriptTextInput: JavaScriptView, TextInputDelegate {
@@ -37,7 +37,6 @@ open class JavaScriptTextInput: JavaScriptView, TextInputDelegate {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method createContentView
 	 * @since 0.7.0
 	 */
@@ -46,7 +45,6 @@ open class JavaScriptTextInput: JavaScriptView, TextInputDelegate {
 	}
 
 	/**
-	 * @inherited
 	 * @method update
 	 * @since 0.7.0
 	 */
@@ -66,7 +64,6 @@ open class JavaScriptTextInput: JavaScriptView, TextInputDelegate {
 	}
 
 	/**
-	 * Updates the font.
 	 * @method updateFont
 	 * @since 0.7.0
 	 */
@@ -75,7 +72,6 @@ open class JavaScriptTextInput: JavaScriptView, TextInputDelegate {
 	}
 
 	/**
-	 * Updates the font size based on its unit.
 	 * @method updateFontSize
 	 * @since 0.7.0
 	 */
@@ -105,7 +101,6 @@ open class JavaScriptTextInput: JavaScriptView, TextInputDelegate {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method measure
 	 * @since 0.7.0
 	 */
@@ -123,7 +118,6 @@ open class JavaScriptTextInput: JavaScriptView, TextInputDelegate {
 	}
 
 	/**
-	 * @inherited
 	 * @method didResolvePadding
 	 * @since 0.7.0
 	 */
@@ -140,7 +134,6 @@ open class JavaScriptTextInput: JavaScriptView, TextInputDelegate {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method didChange
 	 * @since 0.7.0
 	 */
@@ -150,7 +143,6 @@ open class JavaScriptTextInput: JavaScriptView, TextInputDelegate {
 	}
 
 	/**
-	 * @inherited
 	 * @method didFocus
 	 * @since 0.7.0
 	 */
@@ -159,7 +151,6 @@ open class JavaScriptTextInput: JavaScriptView, TextInputDelegate {
 	}
 
 	/**
-	 * @inherited
 	 * @method didBlur
 	 * @since 0.7.0
 	 */
@@ -319,7 +310,6 @@ open class JavaScriptTextInput: JavaScriptView, TextInputDelegate {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The text input's input type.
 	 * @property type
 	 * @since 0.7.0
 	 */
@@ -328,7 +318,6 @@ open class JavaScriptTextInput: JavaScriptView, TextInputDelegate {
 	}
 
 	/**
-	 * The text input's value.
 	 * @property value
 	 * @since 0.7.0
 	 */
@@ -337,7 +326,6 @@ open class JavaScriptTextInput: JavaScriptView, TextInputDelegate {
 	}
 
 	/**
-	 * The text input's placeholder.
 	 * @property placeholder
 	 * @since 0.7.0
 	 */
@@ -346,7 +334,6 @@ open class JavaScriptTextInput: JavaScriptView, TextInputDelegate {
 	}
 
 	/**
-	 * The text input's placeholder color.
 	 * @property placeholderColor
 	 * @since 0.7.0
 	 */
@@ -355,7 +342,6 @@ open class JavaScriptTextInput: JavaScriptView, TextInputDelegate {
 	}
 
 	/**
-	 * The text input's value format.
 	 * @property format
 	 * @since 0.7.0
 	 */
@@ -364,8 +350,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputDelegate {
 	}
 
 	/**
-	 * The text input's value format locale.
-	 * @property format
+	 * @property locale
 	 * @since 0.7.0
 	 */
 	@objc public lazy var locale = JavaScriptProperty(string: "") { value in
@@ -373,7 +358,6 @@ open class JavaScriptTextInput: JavaScriptView, TextInputDelegate {
 	}
 
 	/**
-	 * The text input's autocorrect status.
 	 * @property autocorrect
 	 * @since 0.7.0
 	 */
@@ -382,7 +366,6 @@ open class JavaScriptTextInput: JavaScriptView, TextInputDelegate {
 	}
 
 	/**
-	 * The text input's autocapitalize status.
 	 * @property autocapitalize
 	 * @since 0.7.0
 	 */
@@ -391,7 +374,6 @@ open class JavaScriptTextInput: JavaScriptView, TextInputDelegate {
 	}
 
 	/**
-	 * The text input's font family.
 	 * @property fontFamily
 	 * @since 0.7.0
 	 */
@@ -400,7 +382,6 @@ open class JavaScriptTextInput: JavaScriptView, TextInputDelegate {
 	}
 
 	/**
-	 * The text input's font weight.
 	 * @property fontWeight
 	 * @since 0.7.0
 	 */
@@ -409,7 +390,6 @@ open class JavaScriptTextInput: JavaScriptView, TextInputDelegate {
 	}
 
 	/**
-	 * The text input's font style.
 	 * @property fontStyle
 	 * @since 0.7.0
 	 */
@@ -418,7 +398,6 @@ open class JavaScriptTextInput: JavaScriptView, TextInputDelegate {
 	}
 
 	/**
-	 * The text input's font size.
 	 * @property fontSize
 	 * @since 0.7.0
 	 */
@@ -427,7 +406,6 @@ open class JavaScriptTextInput: JavaScriptView, TextInputDelegate {
 	}
 
 	/**
-	 * The text input's minimum font size.
 	 * @property minFontSize
 	 * @since 0.7.0
 	 */
@@ -436,7 +414,6 @@ open class JavaScriptTextInput: JavaScriptView, TextInputDelegate {
 	}
 
 	/**
-	 * The text input's maximum font size.
 	 * @property maxFontSize
 	 * @since 0.7.0
 	 */
@@ -445,7 +422,6 @@ open class JavaScriptTextInput: JavaScriptView, TextInputDelegate {
 	}
 
 	/**
-	 * The text input's text color.
 	 * @property textColor
 	 * @since 0.7.0
 	 */
@@ -454,7 +430,6 @@ open class JavaScriptTextInput: JavaScriptView, TextInputDelegate {
 	}
 
 	/**
-	 * The text input's text alignment.
 	 * @property textAlignment
 	 * @since 0.7.0
 	 */
@@ -463,7 +438,6 @@ open class JavaScriptTextInput: JavaScriptView, TextInputDelegate {
 	}
 
 	/**
-	 * The text input's text location.
 	 * @property textLocation
 	 * @since 0.7.0
 	 */
@@ -472,7 +446,6 @@ open class JavaScriptTextInput: JavaScriptView, TextInputDelegate {
 	}
 
 	/**
-	 * The text input's text kerning.
 	 * @property textKerning
 	 * @since 0.7.0
 	 */
@@ -481,7 +454,6 @@ open class JavaScriptTextInput: JavaScriptView, TextInputDelegate {
 	}
 
 	/**
-	 * The text input's text leading.
 	 * @property textLeading
 	 * @since 0.7.0
 	 */
@@ -490,7 +462,6 @@ open class JavaScriptTextInput: JavaScriptView, TextInputDelegate {
 	}
 
 	/**
-	 * The text input's text shadow blur.
 	 * @property textShadowBlur
 	 * @since 0.7.0
 	 */
@@ -499,7 +470,6 @@ open class JavaScriptTextInput: JavaScriptView, TextInputDelegate {
 	}
 
 	/**
-	 * The text input's text shadow color.
 	 * @property textShadowColor
 	 * @since 0.7.0
 	 */
@@ -508,7 +478,6 @@ open class JavaScriptTextInput: JavaScriptView, TextInputDelegate {
 	}
 
 	/**
-	 * The text input's text shadow offset top.
 	 * @property textShadowOffsetTop
 	 * @since 0.7.0
 	 */
@@ -517,7 +486,6 @@ open class JavaScriptTextInput: JavaScriptView, TextInputDelegate {
 	}
 
 	/**
-	 * The text input's text shadow offset left.
 	 * @property textShadowOffsetLeft
 	 * @since 0.7.0
 	 */
@@ -526,7 +494,6 @@ open class JavaScriptTextInput: JavaScriptView, TextInputDelegate {
 	}
 
 	/**
-	 * The text input's text decoration.
 	 * @property textDecoration
 	 * @since 0.7.0
 	 */
@@ -535,7 +502,6 @@ open class JavaScriptTextInput: JavaScriptView, TextInputDelegate {
 	}
 
 	/**
-	 * The text input's text transform.
 	 * @property textTransform
 	 * @since 0.7.0
 	 */
@@ -544,7 +510,6 @@ open class JavaScriptTextInput: JavaScriptView, TextInputDelegate {
 	}
 
 	/**
-	 * Whether the text input is clearable.
 	 * @property clearable
 	 * @since 0.7.0
 	 */
@@ -553,7 +518,6 @@ open class JavaScriptTextInput: JavaScriptView, TextInputDelegate {
 	}
 
 	/**
-	 * The text input's clear button color.
 	 * @property clearButtonColor
 	 * @since 0.7.0
 	 */

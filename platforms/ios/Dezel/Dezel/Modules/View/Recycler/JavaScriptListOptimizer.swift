@@ -1,5 +1,4 @@
 /**
- * Optimizes contents displayed as a list.
  * @class JavaScriptListOptimizer
  * @super JavaScriptViewOptimizer
  * @since 0.7.0
@@ -11,14 +10,12 @@ open class JavaScriptListOptimizer : JavaScriptViewOptimizer {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The optimized content's orientation.
 	 * @property orientation
 	 * @since 0.2.0
 	 */
 	open var orientation: Orientation = .vertical
 
 	/**
-	 * The optimized content's minimum index.
 	 * @property minimum
 	 * @since 0.2.0
 	 */
@@ -27,7 +24,6 @@ open class JavaScriptListOptimizer : JavaScriptViewOptimizer {
 	}
 
 	/**
-	 * The optimized content's maximum index.
 	 * @property maximum
 	 * @since 0.2.0
 	 */
@@ -36,14 +32,12 @@ open class JavaScriptListOptimizer : JavaScriptViewOptimizer {
 	}
 
 	/**
-	 * The estimated item size.
 	 * @property estimatedItemSize
 	 * @since 0.7.0
 	 */
 	private(set) public var estimatedItemSize: Double = 0
 
 	/**
-	 * The optimized content's length.
 	 * @property length
 	 * @since 0.2.0
 	 */
@@ -145,7 +139,6 @@ open class JavaScriptListOptimizer : JavaScriptViewOptimizer {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method reload
 	 * @since 0.2.0
 	 */
@@ -166,7 +159,6 @@ open class JavaScriptListOptimizer : JavaScriptViewOptimizer {
 	}
 
 	/**
-	 * Updates the list content if needed.
 	 * @method updateIfNeeded
 	 * @since 0.2.0
 	 */
@@ -245,7 +237,6 @@ open class JavaScriptListOptimizer : JavaScriptViewOptimizer {
 	}
 
 	/**
-	 * Updates the list content based on the scroll position.
 	 * @method update
 	 * @since 0.2.0
 	 */
@@ -280,7 +271,6 @@ open class JavaScriptListOptimizer : JavaScriptViewOptimizer {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method didPrepareLayout
 	 * @since 0.7.0
 	 */
@@ -356,7 +346,6 @@ open class JavaScriptListOptimizer : JavaScriptViewOptimizer {
 	}
 
 	/**
-	 * @inherited
 	 * @method didResolveLayout
 	 * @since 0.7.0
 	 */
@@ -366,7 +355,6 @@ open class JavaScriptListOptimizer : JavaScriptViewOptimizer {
 	}
 
 	/**
-	 * @inherited
 	 * @method didScroll
 	 * @since 0.7.0
 	 */

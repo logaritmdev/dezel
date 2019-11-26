@@ -1,7 +1,7 @@
 /**
  * @class JavaScriptTextView
+ * @super JavaScriptView
  * @since 0.7.0
- * @hidden
  */
 open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 
@@ -30,7 +30,6 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method createContentView
 	 * @since 0.7.0
 	 */
@@ -39,7 +38,6 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	}
 
 	/**
-	 * @inherited
 	 * @method measure
 	 * @since 0.7.0
 	 */
@@ -56,7 +54,6 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	/**
 	 * @method update
 	 * @since 0.7.0
-	 * @hidden
 	 */
 	override open func update() {
 
@@ -73,7 +70,6 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	}
 
 	/**
-	 * Resolves the font size based on its unit.
 	 * @method updateFontSize
 	 * @since 0.7.0
 	 */
@@ -108,7 +104,6 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method didResolvePadding
 	 * @since 0.7.0
 	 */
@@ -125,7 +120,6 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method didPressLink
 	 * @since 0.7.0
 	 */
@@ -275,7 +269,6 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The text view's font family.
 	 * @property fontFamily
 	 * @since 0.7.0
 	 */
@@ -290,7 +283,6 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	}
 
 	/**
-	 * The text view's font weight.
 	 * @property fontWeight
 	 * @since 0.7.0
 	 */
@@ -305,7 +297,6 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	}
 
 	/**
-	 * The text view's font style.
 	 * @property fontStyle
 	 * @since 0.7.0
 	 */
@@ -320,7 +311,6 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	}
 
 	/**
-	 * The text view's font size.
 	 * @property fontSize
 	 * @since 0.7.0
 	 */
@@ -329,7 +319,6 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	}
 
 	/**
-	 * The text view's minimum font size.
 	 * @property minFontSize
 	 * @since 0.7.0
 	 */
@@ -338,7 +327,6 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	}
 
 	/**
-	 * The text view's maximum font size.
 	 * @property maxFontSize
 	 * @since 0.7.0
 	 */
@@ -347,7 +335,6 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	}
 
 	/**
-	 * The text view's text.
 	 * @property text
 	 * @since 0.7.0
 	 */
@@ -362,7 +349,6 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	}
 
 	/**
-	 * The text view's text color.
 	 * @property textColor
 	 * @since 0.7.0
 	 */
@@ -371,7 +357,6 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	}
 
 	/**
-	 * The text view's text alignment.
 	 * @property textAlignment
 	 * @since 0.7.0
 	 */
@@ -380,7 +365,6 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	}
 
 	/**
-	 * The text view's text location.
 	 * @property textLocation
 	 * @since 0.7.0
 	 */
@@ -389,7 +373,6 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	}
 
 	/**
-	 * The text view's text baseline.
 	 * @property textBaseline
 	 * @since 0.7.0
 	 */
@@ -404,7 +387,6 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	}
 
 	/**
-	 * The text view's text kerning.
 	 * @property textKerning
 	 * @since 0.7.0
 	 */
@@ -419,7 +401,6 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	}
 
 	/**
-	 * The text view's text leading.
 	 * @property textLeading
 	 * @since 0.7.0
 	 */
@@ -434,7 +415,6 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	}
 
 	/**
-	 * The text view's text shadow blur.
 	 * @property textShadowBlur
 	 * @since 0.7.0
 	 */
@@ -443,7 +423,6 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	}
 
 	/**
-	 * The text view's text shadow color.
 	 * @property textShadowColor
 	 * @since 0.7.0
 	 */
@@ -452,7 +431,6 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	}
 
 	/**
-	 * The text view's text shadow offset top.
 	 * @property textShadowOffsetTop
 	 * @since 0.7.0
 	 */
@@ -461,7 +439,6 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	}
 
 	/**
-	 * The text view's text shadow offset left.
 	 * @property textShadowOffsetLeft
 	 * @since 0.7.0
 	 */
@@ -470,7 +447,6 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	}
 
 	/**
-	 * The text view's text decoration.
 	 * @property textDecoration
 	 * @since 0.7.0
 	 */
@@ -485,7 +461,6 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	}
 
 	/**
-	 * The text view's text transform mode.
 	 * @property textTransform
 	 * @since 0.7.0
 	 */
@@ -500,7 +475,6 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	}
 
 	/**
-	 * The text view's text overflow.
 	 * @property textOverflow
 	 * @since 0.7.0
 	 */
@@ -515,7 +489,6 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	}
 
 	/**
-	 * The text view's link color.
 	 * @property linkColor
 	 * @since 0.7.0
 	 */
@@ -524,7 +497,6 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	}
 
 	/**
-	 * The text view's maximum amount of lines.
 	 * @property maxLines
 	 * @since 0.7.0
 	 */

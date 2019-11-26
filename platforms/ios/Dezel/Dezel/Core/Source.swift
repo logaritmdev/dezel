@@ -1,7 +1,6 @@
 import Foundation
 
 /**
- * A context source file.
  * @class Source
  * @since 0.7.0
  */
@@ -12,8 +11,7 @@ open class Source {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Source categories.
-	 * @enum Category
+	 * @enum Type
 	 * @since 0.7.0
 	 */
 	public enum `Type` {
@@ -26,21 +24,18 @@ open class Source {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The source's category.
-	 * @property category
+	 * @property type
 	 * @since 0.7.0
 	 */
 	private(set) public var type: Type
 
 	/**
-	 * The source's location.
-	 * @property location
+	 * @property path
 	 * @since 0.7.0
 	 */
 	private(set) public var path: String
 
 	/**
-	 * The source's data.
 	 * @property data
 	 * @since 0.7.0
 	 */
@@ -55,12 +50,15 @@ open class Source {
 	/**
 	 * @constructor
 	 * @since 0.7.0
-	 * @hidden
 	 */
 	public init(type: Type, path: String) {
 		self.type = type
 		self.path = path
 	}
+
+	//--------------------------------------------------------------------------
+	// MARK: Private API
+	//--------------------------------------------------------------------------
 
 	/**
 	 * @method read

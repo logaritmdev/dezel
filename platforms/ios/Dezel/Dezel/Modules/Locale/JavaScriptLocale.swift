@@ -2,8 +2,8 @@ import AudioToolbox
 
 /**
  * @class JavaScriptLocale
+ * @super JavaScriptClass
  * @since 0.7.0
- * @hidden
  */
 open class JavaScriptLocale: JavaScriptClass {
 
@@ -29,28 +29,24 @@ open class JavaScriptLocale: JavaScriptClass {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The locale's language.
 	 * @property language
 	 * @since 0.7.0
 	 */
 	open lazy var language = JavaScriptProperty()
 
 	/**
-	 * The locale's region.
 	 * @property region
 	 * @since 0.7.0
 	 */
 	open lazy var region = JavaScriptProperty()
 
 	/**
-	 * Whether the locale is left to right.
 	 * @property ltr
 	 * @since 0.7.0
 	 */
 	open lazy var ltr = JavaScriptProperty()
 
 	/**
-	 * Whether the locale is right to left.
 	 * @property ltr
 	 * @since 0.7.0
 	 */

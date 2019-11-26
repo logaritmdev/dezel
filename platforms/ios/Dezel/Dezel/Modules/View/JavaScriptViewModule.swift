@@ -1,16 +1,15 @@
 /**
  * @class JavaScriptViewModule
+ * @super JavaScriptModule
  * @since 0.7.0
- * @hidden
  */
-open class JavaScriptViewModule: Module {
+open class JavaScriptViewModule: JavaScriptModule {
 
 	//--------------------------------------------------------------------------
 	// MARK: Methods
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method register
 	 * @since 0.7.0
 	 */

@@ -22,7 +22,6 @@ public class BitmapLayer: Layer {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method needsDisplay
 	 * @since 0.1.0
 	 */
@@ -170,7 +169,6 @@ public class BitmapLayer: Layer {
 	}
 
 	/**
-	 * @inherited
 	 * @method display
 	 * @since 0.1.0
 	 */
@@ -262,7 +260,6 @@ public class BitmapLayer: Layer {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method action
 	 * @since 0.1.0
 	 */

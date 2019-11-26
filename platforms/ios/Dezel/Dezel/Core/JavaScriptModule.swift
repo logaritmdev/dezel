@@ -1,9 +1,8 @@
 /**
- * The base class for context modules.
  * @class Module
  * @since 0.1.0
  */
-open class Module {
+open class JavaScriptModule {
 
 	//--------------------------------------------------------------------------
 	// MARK: Methods

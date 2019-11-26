@@ -10,21 +10,18 @@ public class LinearGradient: NSObject {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The gradient's color.
 	 * @property colors
 	 * @since 0.1.0
 	 */
 	private(set) public var colors: [CGColor] = []
 
 	/**
-	 * The gradient's color locations.
 	 * @property points
 	 * @since 0.1.0
 	 */
 	private(set) public var points: [CGFloat] = []
 
 	/**
-	 * The gradient's angle.
 	 * @property angle
 	 * @since 0.1.0
 	 */

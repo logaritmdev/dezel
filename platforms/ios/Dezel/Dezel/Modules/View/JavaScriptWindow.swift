@@ -1,6 +1,6 @@
 /**
- * The window class.
  * @class JavaScriptWindow
+ * @super JavaScriptView
  * @since 0.7.0
  */
 open class JavaScriptWindow: JavaScriptView {
@@ -10,7 +10,6 @@ open class JavaScriptWindow: JavaScriptView {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Removes the window.
 	 * @method remove
 	 * @since 0.7.0
 	 */

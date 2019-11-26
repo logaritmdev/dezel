@@ -1,5 +1,4 @@
 /**
- * The layer that renders text.
  * @class TextLayer
  * @super Layer
  * @since 0.1.0
@@ -11,7 +10,6 @@ open class TextLayer: Layer {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method needsDisplay
 	 * @since 0.1.0
 	 */
@@ -32,7 +30,6 @@ open class TextLayer: Layer {
 	//----------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @property bounds
 	 * @since 0.1.0
 	 */
@@ -53,42 +50,36 @@ open class TextLayer: Layer {
 	}
 
 	/**
-	 * The text layer's text layout.
 	 * @property layout
 	 * @since 0.5.0
 	 */
 	private(set) public var layout: TextLayout = TextLayout()
 
 	/**
-	 * The text layer's text color.
 	 * @property textColor
 	 * @since 0.1.0
 	 */
 	@NSManaged public var textColor: CGColor
 
 	/**
-	 * The text layer's text kerning.
 	 * @property textKerning
 	 * @since 0.1.0
 	 */
 	@NSManaged public var textKerning: CGFloat
 
 	/**
-	 * The text layer's text leading.
 	 * @property textLeading
 	 * @since 0.1.0
 	 */
 	@NSManaged public var textLeading: CGFloat
 
 	/**
-	 * The text layer's text baseline.
 	 * @property textBaseline
 	 * @since 0.1.0
 	 */
 	@NSManaged public var textBaseline: CGFloat
 
 	/**
-	 * The text layer's font family.
 	 * @property fontFamily
 	 * @since 0.1.0
 	 */
@@ -103,7 +94,6 @@ open class TextLayer: Layer {
 	}
 
 	/**
-	 * The text layer's font weight.
 	 * @property fontWeight
 	 * @since 0.1.0
 	 */
@@ -118,7 +108,6 @@ open class TextLayer: Layer {
 	}
 
 	/**
-	 * The text layer's font size.
 	 * @property fontSize
 	 * @since 0.1.0
 	 */
@@ -133,7 +122,6 @@ open class TextLayer: Layer {
 	}
 
 	/**
-	 * The text layer's font style.
 	 * @property fontStyle
 	 * @since 0.1.0
 	 */
@@ -148,7 +136,6 @@ open class TextLayer: Layer {
 	}
 
 	/**
-	 * The text layer's text.
 	 * @property text
 	 * @since 0.1.0
 	 */
@@ -160,7 +147,6 @@ open class TextLayer: Layer {
 	}
 
 	/**
-	 * The text layer's text decoration.
 	 * @property textDecoration
 	 * @since 0.1.0
 	 */
@@ -173,7 +159,6 @@ open class TextLayer: Layer {
 	}
 
 	/**
-	 * The text layer's text transform.
 	 * @property textTransform
 	 * @since 0.1.0
 	 */
@@ -186,7 +171,6 @@ open class TextLayer: Layer {
 	}
 
 	/**
-	 * The text layer's text alignment.
 	 * @property textAlignment
 	 * @since 0.1.0
 	 */
@@ -199,7 +183,6 @@ open class TextLayer: Layer {
 	}
 
 	/**
-	 * The text layer's text location.
 	 * @property textLocation
 	 * @since 0.7.0
 	 */
@@ -211,7 +194,6 @@ open class TextLayer: Layer {
 	}
 
 	/**
-	 * The text layer's text overflow.
 	 * @property textOverflow
 	 * @since 0.1.0
 	 */
@@ -223,7 +205,6 @@ open class TextLayer: Layer {
 	}
 
 	/**
-	 * The text layer's maximum amount of lines.
 	 * @property maxLines
 	 * @since 0.7.0
 	 */
@@ -235,7 +216,6 @@ open class TextLayer: Layer {
 	}
 
 	/**
-	 * The text layer's link color.
 	 * @property linkColor
 	 * @since 0.5.0
 	 */
@@ -248,7 +228,6 @@ open class TextLayer: Layer {
 	}
 
 	/**
-	 * The text layer's link decoration.
 	 * @property linkDecoration
 	 * @since 0.5.0
 	 */
@@ -377,7 +356,6 @@ open class TextLayer: Layer {
 	}
 
 	/**
-	 * Returns the character at the specified location.
 	 * @method find
 	 * @since 0.5.0
 	 */
@@ -436,7 +414,6 @@ open class TextLayer: Layer {
 	}
 
 	/**
-	 * Updates the attributes.
 	 * @method updateAttributes
 	 * @since 0.4.0
 	 */
@@ -478,7 +455,6 @@ open class TextLayer: Layer {
 	}
 
 	/**
-	 * Updates the attributed text string.
 	 * @method updateAttributedText
 	 * @since 0.5.0
 	 */
@@ -514,7 +490,6 @@ open class TextLayer: Layer {
 	}
 
 	/**
-	 * Updates the attributed ellipsis string.
 	 * @method updateAttributedEllipsis
 	 * @since 0.5.0
 	 */
@@ -523,7 +498,6 @@ open class TextLayer: Layer {
 	}
 
 	/**
-	 * @inherited
 	 * @method didChangeValue
 	 * @since 0.1.0
 	 */

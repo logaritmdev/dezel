@@ -1,5 +1,4 @@
 /**
- * Image on-disk cache.
  * @class ImageDiskCache
  * @since 0.1.0
  */

@@ -65,6 +65,7 @@ open class ApplicationDelegate: UIResponder, UIApplicationDelegate {
 	//--------------------------------------------------------------------------
 
     /**
+     * @property window
 	 * @since 0.7.0
 	 * @hidden
      */
@@ -84,7 +85,6 @@ open class ApplicationDelegate: UIResponder, UIApplicationDelegate {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method applicationOpenUrl
 	 * @since 0.7.0
 	 */
@@ -94,7 +94,6 @@ open class ApplicationDelegate: UIResponder, UIApplicationDelegate {
 	}
 
 	/**
-	 * @inherited
 	 * @method applicationContinueUserActivity
 	 * @since 0.7.0
 	 */
@@ -104,7 +103,6 @@ open class ApplicationDelegate: UIResponder, UIApplicationDelegate {
 	}
 
 	/**
-	 * @inherited
 	 * @method applicationDidRegisterForRemoteNotificationsWithDeviceToken
 	 * @since 0.7.0
 	 */

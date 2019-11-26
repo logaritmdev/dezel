@@ -25,7 +25,6 @@ export class Point2D {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Initializes the point.
 	 * @constructor
 	 * @since 0.1.0
 	 */

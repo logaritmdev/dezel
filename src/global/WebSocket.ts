@@ -1,51 +1,20 @@
 import { bridge } from '../native/bridge'
 import { native } from '../native/native'
+import { $binaryType } from './symbol/WebSocket'
+import { $bufferedAmount } from './symbol/WebSocket'
+import { $extensions } from './symbol/WebSocket'
+import { $protocol } from './symbol/WebSocket'
+import { $readyState } from './symbol/WebSocket'
+import { $url } from './symbol/WebSocket'
 import { Event } from './Event'
 import { MessageEvent } from './Event'
 import { ProgressEvent } from './Event'
 import { EventTarget } from './EventTarget'
 import { Exception } from './Exception'
 
-/**
- * @symbol URL
- * @since 0.7.0
- */
-export const URL = Symbol('url')
-
-/**
- * @symbol PROTOCOL
- * @since 0.7.0
- */
-export const PROTOCOL = Symbol('protocol')
-
-/**
- * @symbol EXTENSIONS
- * @since 0.7.0
- */
-export const EXTENSIONS = Symbol('extensions')
-
-/**
- * @symbol READY_STATE
- * @since 0.7.0
- */
-export const READY_STATE = Symbol('readyState')
-
-/**
- * @symbol BINARY_TYPE
- * @since 0.7.0
- */
-export const BINARY_TYPE = Symbol('binaryType')
-
-/**
- * @symbol BUFFERED_AMOUNT
- * @since 0.7.0
- */
-export const BUFFERED_AMOUNT = Symbol('bufferedAmount')
-
 @bridge('dezel.global.WebSocket')
 
 /**
- * TODO
  * @class WebSocket
  * @super EventTarget
  * @since 0.7.0
@@ -57,28 +26,24 @@ export class WebSocket extends EventTarget {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * TODO
 	 * @const CONNECTING
 	 * @since 0.7.0
 	 */
 	public static readonly CONNECTING = 0
 
 	/**
-	 * TODO
 	 * @const OPEN
 	 * @since 0.7.0
 	 */
 	public static readonly OPEN = 1
 
 	/**
-	 * TODO
 	 * @const CLOSING
 	 * @since 0.7.0
 	 */
 	public static readonly CLOSING = 2
 
 	/**
-	 * TODO
 	 * @const CLOSED
 	 * @since 0.7.0
 	 */
@@ -89,66 +54,59 @@ export class WebSocket extends EventTarget {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The WebSocket connection's url.
 	 * @property url
 	 * @since 0.7.0
 	 */
 	public get url(): string {
-		return this[URL]
+		return this[$url]
 	}
 
 	/**
-	 * The WebSocket connection's protocol.
 	 * @property protocol
 	 * @since 0.7.0
 	 */
 	public get protocol(): string {
-		return this[PROTOCOL]
+		return this[$protocol]
 	}
 
 	/**
-	 * The WebSocket connection's protocol.
 	 * @property extensions
 	 * @since 0.7.0
 	 */
 	public get extensions(): string {
-		return this[EXTENSIONS]
+		return this[$extensions]
 	}
 
 	/**
-	 * The WebSocket connection's state.
 	 * @property protocol
 	 * @since 0.7.0
 	 */
 	public get readyState(): number {
-		return this[READY_STATE]
+		return this[$readyState]
 	}
 
 	/**
-	 * The WebSocket connection's binary type.
 	 * @property binaryType
 	 * @since 0.7.0
 	 */
 	public get binaryType(): string {
-		return this[BINARY_TYPE]
+		return this[$binaryType]
 	}
 
 	/**
-	 * The WebSocket connection's binary type.
 	 * @property binaryType
 	 * @since 0.7.0
 	 */
 	public set binaryType(value: string) {
-		this[BINARY_TYPE] = value
+		this[$binaryType] = value
 	}
 
 	/**
-	 * The WebSocket connection's binary type.
 	 * @property bufferedAmount
 	 * @since 0.7.0
 	 */
 	public get bufferedAmount(): number {
-		return this[BUFFERED_AMOUNT]
+		return this[$bufferedAmount]
 	}
 
 	//--------------------------------------------------------------------------
@@ -156,7 +114,6 @@ export class WebSocket extends EventTarget {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Todo
 	 * @constructor
 	 * @since 0.7.0
 	 */
@@ -170,7 +127,7 @@ export class WebSocket extends EventTarget {
 
 		if (url.startsWith('ws') == false &&
 			url.startsWith('wss') == false) {
-			this[READY_STATE] = WebSocket.CLOSED
+			this[$readyState] = WebSocket.CLOSED
 			throw Exception.create(Exception.Code.SyntaxError)
 		}
 
@@ -178,7 +135,6 @@ export class WebSocket extends EventTarget {
 	}
 
 	/**
-	 * Todo
 	 * @method send
 	 * @since 0.7.0
 	 */
@@ -197,7 +153,6 @@ export class WebSocket extends EventTarget {
 	}
 
 	/**
-	 * Todo
 	 * @method send
 	 * @since 0.7.0
 	 */
@@ -208,12 +163,12 @@ export class WebSocket extends EventTarget {
 			return
 		}
 
-		if (this[READY_STATE] == WebSocket.CONNECTING) {
-			this[READY_STATE] = WebSocket.CLOSING
+		if (this[$readyState] == WebSocket.CONNECTING) {
+			this[$readyState] = WebSocket.CLOSING
 			return
 		}
 
-		this[READY_STATE] = WebSocket.CLOSING
+		this[$readyState] = WebSocket.CLOSING
 
 		native(this).close(code, reason)
 	}
@@ -223,46 +178,46 @@ export class WebSocket extends EventTarget {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @property URL
+	 * @property $url
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private [URL]: string = ''
+	private [$url]: string = ''
 
 	/**
-	 * @property PROTOCOL
+	 * @property $protocol
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private [PROTOCOL]: string = ''
+	private [$protocol]: string = ''
 
 	/**
-	 * @property EXTENSIONS
+	 * @property $extensions
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private [EXTENSIONS]: string = ''
+	private [$extensions]: string = ''
 
 	/**
-	 * @property READY_STATE
+	 * @property $readyState
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private [READY_STATE]: number = 0
+	private [$readyState]: number = 0
 
 	/**
-	 * @property BINARY_TYPE
+	 * @property $binaryType
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private [BINARY_TYPE]: string = ''
+	private [$binaryType]: string = ''
 
 	/**
-	 * @property BUFFERED_AMOUNT
+	 * @property $bufferedAmount
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private [BUFFERED_AMOUNT]: number = 0
+	private [$bufferedAmount]: number = 0
 
 	//--------------------------------------------------------------------------
 	// Native API
@@ -280,10 +235,10 @@ export class WebSocket extends EventTarget {
 			return
 		}
 
-		this[READY_STATE] = WebSocket.OPEN
+		this[$readyState] = WebSocket.OPEN
 
-		this[PROTOCOL] = protocol
-		this[EXTENSIONS] = extensions
+		this[$protocol] = protocol
+		this[$extensions] = extensions
 
 		this.dispatchEvent(new Event('open'))
 	}
@@ -317,7 +272,7 @@ export class WebSocket extends EventTarget {
 	 * @hidden
 	 */
 	private nativeOnDisconnect() {
-		this[READY_STATE] = WebSocket.CLOSED
+		this[$readyState] = WebSocket.CLOSED
 	}
 
 	/**

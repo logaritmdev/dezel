@@ -1,12 +1,10 @@
 /**
- * TextView delegate.
- * @interface TextViewDelegate
+ * @protocol TextViewDelegate
  * @since 0.7.0
  */
 public protocol TextViewDelegate: class {
 
 	/**
-	 * Called when a link is pressed.
 	 * @method onPressLink
 	 * @since 0.7.0
 	 */

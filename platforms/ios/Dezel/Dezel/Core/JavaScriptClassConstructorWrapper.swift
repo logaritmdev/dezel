@@ -55,7 +55,7 @@ internal final class JavaScriptClassConstructorWrapper: NSObject {
 	 */
 	internal init(context: JavaScriptContext, cls: AnyClass, sel: Selector, imp: IMP, name: String) {
 
-		let function = JavaScriptValueCreateFunction(context.handle, JavaScriptClassConstructorWrapperCallback, name)
+		let function = JavaScriptValueCreateFunction(context.handle, javaScriptClassConstructorWrapperCallback, name)
 
 		self.context = context
 		self.function = function
@@ -65,16 +65,17 @@ internal final class JavaScriptClassConstructorWrapper: NSObject {
 
 		super.init()
 
-		JavaScriptValueSetFinalizeHandler(context.handle, function, JavaScriptClassConstructorWrapperFinalize)
+		JavaScriptValueSetFinalizeHandler(context.handle, function, javaScriptClassConstructorWrapperFinalize)
 		JavaScriptValueSetAssociatedObject(context.handle, function, Unmanaged.passRetained(self).toOpaque())
 	}
 }
 
 /**
- * @since 0.1.0
+ * @function javaScriptClassConstructorWrapperCallback
+ * @since 0.7.0
  * @hidden
  */
-private let JavaScriptClassConstructorWrapperCallback: @convention(c) (JSContextRef?, JSObjectRef?, JSObjectRef?, Int, UnsafePointer<JSValueRef?>?) -> JSValueRef? = { context, object, callee, argc, argv in
+private let javaScriptClassConstructorWrapperCallback: @convention(c) (JSContextRef?, JSObjectRef?, JSObjectRef?, Int, UnsafePointer<JSValueRef?>?) -> JSValueRef? = { context, object, callee, argc, argv in
 
 	let context = context!
 	let object = object!
@@ -117,9 +118,10 @@ private let JavaScriptClassConstructorWrapperCallback: @convention(c) (JSContext
 }
 
 /**
- * @since 0.1.0
+ * @function javaScriptClassConstructorWrapperFinalize
+ * @since 0.7.0
  * @hidden
  */
-private let JavaScriptClassConstructorWrapperFinalize: @convention(c) (JSContextRef?, JavaScriptValueDataRef?) -> Void = { context, handle in
+private let javaScriptClassConstructorWrapperFinalize: @convention(c) (JSContextRef?, JavaScriptValueDataRef?) -> Void = { context, handle in
 	Unmanaged<JavaScriptGetterWrapper>.fromOpaque(JavaScriptValueDataGetAssociatedObject(handle!)).release()
 }

@@ -55,7 +55,7 @@ internal final class JavaScriptClassStaticSetterWrapper: NSObject {
 	 */
 	internal init(context: JavaScriptContext, cls: AnyClass, sel: Selector, imp: IMP, name: String) {
 
-		let function = JavaScriptValueCreateFunction(context.handle, JavaScriptClassStaticSetterWrapperCallback, nil)
+		let function = JavaScriptValueCreateFunction(context.handle, javaScriptClassStaticSetterWrapperCallback, nil)
 
 		self.context = context
 		self.function = function
@@ -65,16 +65,17 @@ internal final class JavaScriptClassStaticSetterWrapper: NSObject {
 
 		super.init()
 
-		JavaScriptValueSetFinalizeHandler(context.handle, function, JavaScriptClassStaticSetterWrapperFinalize)
+		JavaScriptValueSetFinalizeHandler(context.handle, function, javaScriptClassStaticSetterWrapperFinalize)
 		JavaScriptValueSetAssociatedObject(context.handle, function, Unmanaged.passRetained(self).toOpaque())
 	}
 }
 
 /**
+ * @function javaScriptClassStaticSetterWrapperCallback
  * @since 0.7.0
  * @hidden
  */
-private let JavaScriptClassStaticSetterWrapperCallback: @convention(c) (JSContextRef?, JSObjectRef?, JSObjectRef?, Int, UnsafePointer<JSValueRef?>?) -> JSValueRef? = { context, object, callee, argc, argv in
+private let javaScriptClassStaticSetterWrapperCallback: @convention(c) (JSContextRef?, JSObjectRef?, JSObjectRef?, Int, UnsafePointer<JSValueRef?>?) -> JSValueRef? = { context, object, callee, argc, argv in
 
 	let context = context!
 	let object = object!
@@ -104,9 +105,10 @@ private let JavaScriptClassStaticSetterWrapperCallback: @convention(c) (JSContex
 }
 
 /**
+ * @function javaScriptClassStaticSetterWrapperFinalize
  * @since 0.7.0
  * @hidden
  */
-private let JavaScriptClassStaticSetterWrapperFinalize: @convention(c) (JSContextRef?, JavaScriptValueDataRef?) -> Void = { context, handle in
+private let javaScriptClassStaticSetterWrapperFinalize: @convention(c) (JSContextRef?, JavaScriptValueDataRef?) -> Void = { context, handle in
 	Unmanaged<JavaScriptClassStaticSetterWrapper>.fromOpaque(JavaScriptValueDataGetAssociatedObject(handle!)).release()
 }

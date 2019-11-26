@@ -144,7 +144,6 @@ internal extension NSMutableAttributedString {
 }
 
 /**
- * Attributed string text attributes.
  * @typealias TextAttributes
  * @since 0.5.0
  */

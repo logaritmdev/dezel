@@ -2,8 +2,8 @@ import WebKit
 
 /**
  * @class JavaScriptWebView
+ * @super JavaScriptView
  * @since 0.7.0
- * @hidden
  */
 open class JavaScriptWebView: JavaScriptView, WebViewDelegate {
 
@@ -38,7 +38,6 @@ open class JavaScriptWebView: JavaScriptView, WebViewDelegate {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method createContentView
 	 * @since 0.7.0
 	 */
@@ -47,7 +46,6 @@ open class JavaScriptWebView: JavaScriptView, WebViewDelegate {
 	}
 
 	/**
-	 * @inherited
 	 * @method dispose
 	 * @since 0.6.0
 	 */
@@ -58,7 +56,6 @@ open class JavaScriptWebView: JavaScriptView, WebViewDelegate {
 	}
 
 	/**
-	 * @inherited
 	 * @method measure
 	 * @since 0.7.0
 	 */

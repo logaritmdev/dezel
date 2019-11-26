@@ -1,6 +1,6 @@
 /**
- * The arguments object provided to a function.
  * @class JavaScriptFunctionCallback
+ * @super JavaScriptCallback
  * @since 0.1.0
  */
 public final class JavaScriptFunctionCallback: JavaScriptCallback {
@@ -10,7 +10,6 @@ public final class JavaScriptFunctionCallback: JavaScriptCallback {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Returns an argument at a specified index.
 	 * @method argument
 	 * @since 0.1.0
 	 */
@@ -24,7 +23,6 @@ public final class JavaScriptFunctionCallback: JavaScriptCallback {
 	}
 
 	/**
-	 * Returns an argument at a specified index.
 	 * @method argument
 	 * @since 0.1.0
 	 */

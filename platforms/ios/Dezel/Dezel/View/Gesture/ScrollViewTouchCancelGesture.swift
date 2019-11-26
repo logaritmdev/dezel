@@ -1,8 +1,8 @@
 import Foundation
 
 /**
- * Detect scroll view touch cancel event.
  * @class ScrollViewTouchCancelGesture
+ * @super UIGestureRecognizer
  * @since 0.6.0
  * @hidden
  */
@@ -70,7 +70,6 @@ public class ScrollViewTouchCancelGesture: UIGestureRecognizer, UIGestureRecogni
 	}
 
 	/**
-	 * @inherited
 	 * @method touchesBegan
 	 * @since 0.6.0
 	 */
@@ -84,7 +83,6 @@ public class ScrollViewTouchCancelGesture: UIGestureRecognizer, UIGestureRecogni
 	}
 
 	/**
-	 * @inherited
 	 * @method touchesEnded
 	 * @since 0.6.0
 	 */
@@ -102,7 +100,6 @@ public class ScrollViewTouchCancelGesture: UIGestureRecognizer, UIGestureRecogni
 	}
 
 	/**
-	 * @inherited
 	 * @method touchesCancelled
 	 * @since 0.6.0
 	 */
@@ -143,7 +140,6 @@ public class ScrollViewTouchCancelGesture: UIGestureRecognizer, UIGestureRecogni
 	}
 
 	/**
-	 * @inherited
 	 * @method gestureRecognizerShouldRecognizeSimultaneouslyWith
 	 * @since 0.6.0
 	 */

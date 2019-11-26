@@ -4,7 +4,6 @@ import { iterator } from '../iterator'
 import { Touch } from './Touch'
 
 /**
- * Manages a list of touches.
  * @class TouchList
  * @since 0.3.0
  */
@@ -61,7 +60,6 @@ export class TouchList implements Iterable<Touch> {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Iterator
 	 * @property [Symbol.iterator]
 	 * @since 0.4.0
 	 */

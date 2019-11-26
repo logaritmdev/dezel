@@ -1,5 +1,4 @@
 /**
- * Manages transitions animations.
  * @class Transition
  * @since 0.1.0
  */
@@ -12,7 +11,6 @@ public final class Transition {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The transition that is being created.
 	 * @property current
 	 * @since 0.1.0
 	 */
@@ -21,7 +19,6 @@ public final class Transition {
 	}
 
 	/**
-	 * Creates a new transition.
 	 * @method create
 	 * @since 0.1.0
 	 */
@@ -43,7 +40,6 @@ public final class Transition {
 	}
 
 	/**
-	 * Commits the transition.
 	 * @method commit
 	 * @since 0.1.0
 	 */
@@ -59,7 +55,6 @@ public final class Transition {
 	}
 
 	/**
-	 * Convenience method to create core animation action for a given layer.
 	 * @method action
 	 * @since 0.1.0
 	 */

@@ -1,5 +1,6 @@
 /**
  * @class JavaScriptPropertyRawValue
+ * @super JavaScriptPropertyValue
  * @since 0.7.0
  * @hidden
  */
@@ -10,7 +11,6 @@ open class JavaScriptPropertyRawValue : JavaScriptPropertyValue {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @property data
 	 * @since 0.7.0
 	 */
@@ -61,7 +61,6 @@ open class JavaScriptPropertyRawValue : JavaScriptPropertyValue {
 	}
 
 	/**
-	 * @inherited
 	 * @method toString
 	 * @since 0.7.0
 	 */
@@ -70,7 +69,6 @@ open class JavaScriptPropertyRawValue : JavaScriptPropertyValue {
 	}
 
 	/**
-	 * @inherited
 	 * @method toNumber
 	 * @since 0.7.0
 	 */
@@ -79,7 +77,6 @@ open class JavaScriptPropertyRawValue : JavaScriptPropertyValue {
 	}
 
 	/**
-	 * @inherited
 	 * @method toBoolean
 	 * @since 0.7.0
 	 */

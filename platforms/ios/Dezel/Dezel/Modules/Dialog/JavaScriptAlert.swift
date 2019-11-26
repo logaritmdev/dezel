@@ -1,7 +1,7 @@
 /**
  * @class JavaScriptAlert
+ * @super JavaScriptClass
  * @since 0.1.0
- * @hidden
  */
 open class JavaScriptAlert: JavaScriptClass, AlertControllerDelegate {
 

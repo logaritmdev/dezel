@@ -1,7 +1,6 @@
 import UIKit
 
 /**
- * The layer that renders the view's shadow.
  * @class ShadowLayer
  * @super Layer
  * @since 0.1.0
@@ -13,7 +12,6 @@ open class ShadowLayer: Layer {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method needsDisplay
 	 * @since 0.1.0
 	 */
@@ -36,49 +34,42 @@ open class ShadowLayer: Layer {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The shadow layer's blur size.
 	 * @property shadowBlur
 	 * @since 0.1.0
 	 */
 	@NSManaged public var shadowBlur: CGFloat
 
 	/**
-	 * The shadow layer's shadow top offset.
 	 * @property shadowOffsetTop
 	 * @since 0.1.0
 	 */
 	@NSManaged public var shadowOffsetTop: CGFloat
 
 	/**
-	 * The shadow layer's shadow left offset.
 	 * @property shadowOffsetLeft
 	 * @since 0.1.0
 	 */
 	@NSManaged public var shadowOffsetLeft: CGFloat
 
 	/**
-	 * The shadow layer's top left radius.
 	 * @property borderTopLeftRadius
 	 * @since 0.1.0
 	 */
 	@NSManaged public var borderTopLeftRadius: CGFloat
 
 	/**
-	 * The shadow layer's top right radius.
 	 * @property borderTopRightRadius
 	 * @since 0.1.0
 	 */
 	@NSManaged public var borderTopRightRadius: CGFloat
 
 	/**
-	 * The shadow layer's bottom left radius.
 	 * @property borderBottomLeftRadius
 	 * @since 0.1.0
 	 */
 	@NSManaged public var borderBottomLeftRadius: CGFloat
 
 	/**
-	 * The shadow layer's bottom right radius.
 	 * @property borderBottomRightRadius
 	 * @since 0.1.0
 	 */
@@ -126,7 +117,6 @@ open class ShadowLayer: Layer {
 	}
 
 	/**
-	 * @inherited
 	 * @method resize
 	 * @since 0.1.0
 	 */
@@ -172,7 +162,6 @@ open class ShadowLayer: Layer {
 	}
 
 	/**
-	 * @inherited
 	 * @method update
 	 * @since 0.1.0
 	 */
@@ -181,7 +170,6 @@ open class ShadowLayer: Layer {
 	}
 
 	/**
-	 * @inherited
 	 * @method display
 	 * @since 0.1.0
 	 */
@@ -310,7 +298,6 @@ open class ShadowLayer: Layer {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method action
 	 * @since 0.1.0
 	 */

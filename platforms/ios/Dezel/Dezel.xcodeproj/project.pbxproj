@@ -288,7 +288,7 @@
 		C7E8A5032016244F005139F6 /* Runtime.h in Headers */ = {isa = PBXBuildFile; fileRef = C7E8A4FF2016244F005139F6 /* Runtime.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C7E8A51D201624A2005139F6 /* JavaScriptObjectBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E8A504201624A0005139F6 /* JavaScriptObjectBuilder.swift */; };
 		C7E8A51E201624A2005139F6 /* JavaScriptExceptionWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E8A505201624A0005139F6 /* JavaScriptExceptionWrapper.swift */; };
-		C7E8A51F201624A2005139F6 /* Module.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E8A506201624A0005139F6 /* Module.swift */; };
+		C7E8A51F201624A2005139F6 /* JavaScriptModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E8A506201624A0005139F6 /* JavaScriptModule.swift */; };
 		C7E8A520201624A2005139F6 /* JavaScriptSetterCallback.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E8A507201624A0005139F6 /* JavaScriptSetterCallback.swift */; };
 		C7E8A521201624A2005139F6 /* JavaScriptFinalizeWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E8A508201624A0005139F6 /* JavaScriptFinalizeWrapper.swift */; };
 		C7E8A522201624A2005139F6 /* JavaScriptClassGetterWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E8A509201624A0005139F6 /* JavaScriptClassGetterWrapper.swift */; };
@@ -329,8 +329,6 @@
 		C7FCA1022311B4C800AFBDB6 /* JavaScriptPropertyRawValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FCA1012311B4C800AFBDB6 /* JavaScriptPropertyRawValue.swift */; };
 		C7FCA104231444F600AFBDB6 /* JavaScriptPropertyParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FCA103231444F600AFBDB6 /* JavaScriptPropertyParser.swift */; };
 		C7FCA1082315CD7200AFBDB6 /* Lock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FCA1072315CD7100AFBDB6 /* Lock.swift */; };
-		C7FCA10A2316AE9A00AFBDB6 /* JavaScriptNull.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FCA1092316AE9A00AFBDB6 /* JavaScriptNull.swift */; };
-		C7FCA10C2316AFD900AFBDB6 /* JavaScriptUndefined.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FCA10B2316AFD900AFBDB6 /* JavaScriptUndefined.swift */; };
 		C7FCA1142316FA0800AFBDB6 /* JavaScriptPropertyTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FCA1132316FA0800AFBDB6 /* JavaScriptPropertyTest.swift */; };
 		C7FCA140231C499C00AFBDB6 /* DisplayNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FCA13F231C499C00AFBDB6 /* DisplayNode.swift */; };
 		C7FCA142231C49A700AFBDB6 /* DisplayNodeDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FCA141231C49A700AFBDB6 /* DisplayNodeDelegate.swift */; };
@@ -619,7 +617,7 @@
 		C7E8A4FF2016244F005139F6 /* Runtime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Runtime.h; sourceTree = "<group>"; };
 		C7E8A504201624A0005139F6 /* JavaScriptObjectBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JavaScriptObjectBuilder.swift; sourceTree = "<group>"; };
 		C7E8A505201624A0005139F6 /* JavaScriptExceptionWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JavaScriptExceptionWrapper.swift; sourceTree = "<group>"; };
-		C7E8A506201624A0005139F6 /* Module.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Module.swift; sourceTree = "<group>"; };
+		C7E8A506201624A0005139F6 /* JavaScriptModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JavaScriptModule.swift; sourceTree = "<group>"; };
 		C7E8A507201624A0005139F6 /* JavaScriptSetterCallback.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JavaScriptSetterCallback.swift; sourceTree = "<group>"; };
 		C7E8A508201624A0005139F6 /* JavaScriptFinalizeWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JavaScriptFinalizeWrapper.swift; sourceTree = "<group>"; };
 		C7E8A509201624A0005139F6 /* JavaScriptClassGetterWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JavaScriptClassGetterWrapper.swift; sourceTree = "<group>"; };
@@ -660,8 +658,6 @@
 		C7FCA1012311B4C800AFBDB6 /* JavaScriptPropertyRawValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptPropertyRawValue.swift; sourceTree = "<group>"; };
 		C7FCA103231444F600AFBDB6 /* JavaScriptPropertyParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptPropertyParser.swift; sourceTree = "<group>"; };
 		C7FCA1072315CD7100AFBDB6 /* Lock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lock.swift; sourceTree = "<group>"; };
-		C7FCA1092316AE9A00AFBDB6 /* JavaScriptNull.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptNull.swift; sourceTree = "<group>"; };
-		C7FCA10B2316AFD900AFBDB6 /* JavaScriptUndefined.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptUndefined.swift; sourceTree = "<group>"; };
 		C7FCA1132316FA0800AFBDB6 /* JavaScriptPropertyTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptPropertyTest.swift; sourceTree = "<group>"; };
 		C7FCA13F231C499C00AFBDB6 /* DisplayNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayNode.swift; sourceTree = "<group>"; };
 		C7FCA141231C49A700AFBDB6 /* DisplayNodeDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayNodeDelegate.swift; sourceTree = "<group>"; };
@@ -1328,8 +1324,6 @@
 				C7EE2E2022E4B21100FFF0EE /* JavaScriptForOwnWrapper.swift */,
 				C7EE2E2422E4B35A00FFF0EE /* JavaScriptForEachWrapper.swift */,
 				C7E8A514201624A1005139F6 /* JavaScriptValue.swift */,
-				C7FCA1092316AE9A00AFBDB6 /* JavaScriptNull.swift */,
-				C7FCA10B2316AFD900AFBDB6 /* JavaScriptUndefined.swift */,
 				C76753FB20269970003C4D85 /* JavaScriptProperty.swift */,
 				C7FCA0F72311B48200AFBDB6 /* JavaScriptPropertyValue.swift */,
 				C7FCA0F92311B49200AFBDB6 /* JavaScriptPropertyBooleanValue.swift */,
@@ -1339,7 +1333,7 @@
 				C76864702039146700D1903B /* JavaScriptPropertyType.swift */,
 				C76864722039147100D1903B /* JavaScriptPropertyUnit.swift */,
 				C7FCA103231444F600AFBDB6 /* JavaScriptPropertyParser.swift */,
-				C7E8A506201624A0005139F6 /* Module.swift */,
+				C7E8A506201624A0005139F6 /* JavaScriptModule.swift */,
 				C7EE2E0122DD6AE200FFF0EE /* Source.swift */,
 				C777B63E22DA49B600E75E55 /* WeakReference.swift */,
 			);
@@ -1739,7 +1733,6 @@
 				C7A19E2E20AB721F00367E91 /* JavaScriptPlatformModule.swift in Sources */,
 				C7E5D081209DDF730098C5FD /* JavaScriptAlert.swift in Sources */,
 				C79E6EB42207650F0006DED8 /* Date.swift in Sources */,
-				C7FCA10A2316AE9A00AFBDB6 /* JavaScriptNull.swift in Sources */,
 				C792E956234BDEA70022D712 /* NullValue.cpp in Sources */,
 				C77D6E23220F730D005FAAF8 /* NSRegularExpression.swift in Sources */,
 				C7B9CEB1202CE225002409D5 /* JavaScriptViewModule.swift in Sources */,
@@ -1769,7 +1762,7 @@
 				C7BCD7482094C5AD0014CD19 /* Scrollable.swift in Sources */,
 				C7E8A52E201624A2005139F6 /* JavaScriptObject.swift in Sources */,
 				C7D8926720657B3400E85115 /* NSAttributedString.swift in Sources */,
-				C7E8A51F201624A2005139F6 /* Module.swift in Sources */,
+				C7E8A51F201624A2005139F6 /* JavaScriptModule.swift in Sources */,
 				C767543320269971003C4D85 /* JavaScriptProperty.swift in Sources */,
 				C7682A40203538A9006EA6D5 /* WrapperView.swift in Sources */,
 				C76016E22019832800622840 /* JavaScriptFinalizeCallback.swift in Sources */,
@@ -1894,7 +1887,6 @@
 				C75153C122F37C03007CAA48 /* JavaScriptClassStaticGetterWrapper.swift in Sources */,
 				C7A48919237DA62B00457D02 /* InvalidInvocationException.cpp in Sources */,
 				C792E94B234BDEA70022D712 /* Tokenizer.cpp in Sources */,
-				C7FCA10C2316AFD900AFBDB6 /* JavaScriptUndefined.swift in Sources */,
 				C7027CD32270DFDA001DD0F7 /* ScrollViewTouchCancelGesture.swift in Sources */,
 				C767544D2028DB7B003C4D85 /* JavaScriptView.swift in Sources */,
 				C718A0BE206748DC00EFEC15 /* ImageLiveCache.swift in Sources */,

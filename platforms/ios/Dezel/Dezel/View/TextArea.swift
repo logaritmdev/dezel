@@ -10,7 +10,6 @@ open class TextArea: UITextView, UITextViewDelegate {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The text area's value.
 	 * @property value
 	 * @since 0.7.0
 	 */
@@ -22,7 +21,6 @@ open class TextArea: UITextView, UITextViewDelegate {
 	}
 
 	/**
-	 * The text area's placeholder.
 	 * @property placeholder
 	 * @since 0.7.0
 	 */
@@ -33,7 +31,6 @@ open class TextArea: UITextView, UITextViewDelegate {
 	}
 
 	/**
-	 * The text area's placeholder color.
 	 * @property placeholderColor
 	 * @since 0.7.0
 	 */
@@ -44,7 +41,6 @@ open class TextArea: UITextView, UITextViewDelegate {
 	}
 
 	/**
-	 * The text area's font family.
 	 * @property fontFamily
 	 * @since 0.7.0
 	 */
@@ -56,7 +52,6 @@ open class TextArea: UITextView, UITextViewDelegate {
 	}
 
 	/**
-	 * The text area's font weight.
 	 * @property fontWeight
 	 * @since 0.7.0
 	 */
@@ -68,7 +63,6 @@ open class TextArea: UITextView, UITextViewDelegate {
 	}
 
 	/**
-	 * The text area's font style.
 	 * @property fontStyle
 	 * @since 0.7.0
 	 */
@@ -80,7 +74,6 @@ open class TextArea: UITextView, UITextViewDelegate {
 	}
 
 	/**
-	 * The text area's font size.
 	 * @property fontSize
 	 * @since 0.7.0
 	 */
@@ -92,7 +85,6 @@ open class TextArea: UITextView, UITextViewDelegate {
 	}
 
 	/**
-	 * The text area's text color.
 	 * @property textColor
 	 * @since 0.7.0
 	 */
@@ -103,7 +95,6 @@ open class TextArea: UITextView, UITextViewDelegate {
 	}
 
 	/**
-	 * The text area's text horizontal alignment.
 	 * @property textAlign
 	 * @since 0.7.0
 	 */
@@ -114,7 +105,6 @@ open class TextArea: UITextView, UITextViewDelegate {
 	}
 
 	/**
-	 * The text area's text location.
 	 * @property textLocation
 	 * @since 0.7.0
 	 */
@@ -125,7 +115,6 @@ open class TextArea: UITextView, UITextViewDelegate {
 	}
 
 	/**
-	 * The text area's text kerning.
 	 * @property textKerning
 	 * @since 0.7.0
 	 */
@@ -136,7 +125,6 @@ open class TextArea: UITextView, UITextViewDelegate {
 	}
 
 	/**
-	 * The text area's text leading.
 	 * @property textLeading
 	 * @since 0.7.0
 	 */
@@ -147,7 +135,6 @@ open class TextArea: UITextView, UITextViewDelegate {
 	}
 
 	/**
-	 * The text area's text decoration.
 	 * @property textDecoration
 	 * @since 0.7.0
 	 */
@@ -158,7 +145,6 @@ open class TextArea: UITextView, UITextViewDelegate {
 	}
 
 	/**
-	 * The text area's text transform.
 	 * @property textTransform
 	 * @since 0.7.0
 	 */
@@ -169,7 +155,6 @@ open class TextArea: UITextView, UITextViewDelegate {
 	}
 
 	/**
-	 * The text area's text shadow blur distance.
 	 * @property textShadowBlur
 	 * @since 0.7.0
 	 */
@@ -180,7 +165,6 @@ open class TextArea: UITextView, UITextViewDelegate {
 	}
 
 	/**
-	 * The text area's text shadow color.
 	 * @property textShadowColor
 	 * @since 0.7.0
 	 */
@@ -191,7 +175,6 @@ open class TextArea: UITextView, UITextViewDelegate {
 	}
 
 	/**
-	 * The text area's text shadow vertical offset.
 	 * @property textShadowOffsetTop
 	 * @since 0.7.0
 	 */
@@ -202,7 +185,6 @@ open class TextArea: UITextView, UITextViewDelegate {
 	}
 
 	/**
-	 * The text area's text shadow horizontal offset.
 	 * @property textShadowOffsetLeft
 	 * @since 0.7.0
 	 */
@@ -213,7 +195,6 @@ open class TextArea: UITextView, UITextViewDelegate {
 	}
 
 	/**
-	 * The text area's top padding.
 	 * @property paddingTop
 	 * @since 0.7.0
 	 */
@@ -224,7 +205,6 @@ open class TextArea: UITextView, UITextViewDelegate {
 	}
 
 	/**
-	 * The text area's left padding.
 	 * @property paddingLeft
 	 * @since 0.7.0
 	 */
@@ -235,7 +215,6 @@ open class TextArea: UITextView, UITextViewDelegate {
 	}
 
 	/**
-	 * The text area's right padding.
 	 * @property paddingRight
 	 * @since 0.7.0
 	 */
@@ -246,7 +225,6 @@ open class TextArea: UITextView, UITextViewDelegate {
 	}
 
 	/**
-	 * The text area's bottom padding.
 	 * @property paddingBottom
 	 * @since 0.7.0
 	 */
@@ -257,7 +235,6 @@ open class TextArea: UITextView, UITextViewDelegate {
 	}
 
 	/**
-	 * The text area's attributed placeholder.
 	 * @property attributedPlaceholder
 	 * @since 0.7.0
 	 */
@@ -337,7 +314,6 @@ open class TextArea: UITextView, UITextViewDelegate {
 	}
 
 	/**
-	 * @inherited
 	 * @method layoutSubviews
 	 * @since 0.7.0
 	 */
@@ -355,7 +331,6 @@ open class TextArea: UITextView, UITextViewDelegate {
 	}
 
 	/**
-	 * @inherited
 	 * @method action
 	 * @since 0.7.0
 	 */
@@ -364,7 +339,6 @@ open class TextArea: UITextView, UITextViewDelegate {
 	}
 
 	/**
-	 * Brings the focus to the text input.
 	 * @method focus
 	 * @since 0.7.0
 	 */
@@ -375,7 +349,6 @@ open class TextArea: UITextView, UITextViewDelegate {
 	}
 
 	/**
-	 * Clears the focus from the text input.
 	 * @method blur
 	 * @since 0.7.0
 	 */
@@ -386,7 +359,6 @@ open class TextArea: UITextView, UITextViewDelegate {
 	}
 
 	/**
-	 * @inherited
 	 * @method draw
 	 * @since 0.7.0
 	 */

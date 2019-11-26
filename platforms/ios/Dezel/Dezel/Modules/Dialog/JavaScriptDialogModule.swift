@@ -1,16 +1,15 @@
 /**
  * @class JavaScriptDialogModule
+ * @super JavaScriptModule
  * @since 0.7.0
- * @hidden
  */
-open class JavaScriptDialogModule: Module {
+open class JavaScriptDialogModule: JavaScriptModule {
 
 	//--------------------------------------------------------------------------
 	// MARK: Methods
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method register
 	 * @since 0.7.0
 	 */

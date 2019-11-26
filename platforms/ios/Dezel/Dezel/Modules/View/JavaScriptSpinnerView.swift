@@ -1,7 +1,7 @@
 /**
  * @class JavaScriptSpinnerView
+ * @super JavaScriptView
  * @since 0.7.0
- * @hidden
  */
 open class JavaScriptSpinnerView: JavaScriptView {
 
@@ -23,7 +23,6 @@ open class JavaScriptSpinnerView: JavaScriptView {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method createContentView
 	 * @since 0.7.0
 	 */
@@ -36,7 +35,6 @@ open class JavaScriptSpinnerView: JavaScriptView {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The activity view's active status.
 	 * @property active
 	 * @since 0.7.0
 	 */
@@ -45,7 +43,6 @@ open class JavaScriptSpinnerView: JavaScriptView {
 	}
 
 	/**
-	 * The activity view's color.
 	 * @property color
 	 * @since 0.7.0
 	 */

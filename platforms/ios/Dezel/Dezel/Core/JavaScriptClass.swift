@@ -1,6 +1,6 @@
 /**
- * The base class for bridged classes.
  * @class JavaScriptClass
+ * @super JavaScriptObject
  * @since 0.1.0
  */
 open class JavaScriptClass: JavaScriptObject {
@@ -34,7 +34,6 @@ open class JavaScriptClass: JavaScriptObject {
 	}
 
 	/**
-	 * @inherited
 	 * @method call
 	 * @since 0.7.0
 	 */
@@ -49,7 +48,6 @@ open class JavaScriptClass: JavaScriptObject {
 	}
 
 	/**
-	 * @inherited
 	 * @method call
 	 * @since 0.7.0
 	 */
@@ -64,7 +62,6 @@ open class JavaScriptClass: JavaScriptObject {
 	}
 
 	/**
-	 * @inherited
 	 * @method callMethod
 	 * @since 0.7.0
 	 */
@@ -79,7 +76,6 @@ open class JavaScriptClass: JavaScriptObject {
 	}
 
 	/**
-	 * @inherited
 	 * @method callMethod
 	 * @since 0.7.0
 	 */
@@ -94,7 +90,6 @@ open class JavaScriptClass: JavaScriptObject {
 	}
 
 	/**
-	 * @inherited
 	 * @method construct
 	 * @since 0.7.0
 	 */
@@ -109,7 +104,6 @@ open class JavaScriptClass: JavaScriptObject {
 	}
 
 	/**
-	 * @inherited
 	 * @method construct
 	 * @since 0.7.0
 	 */
@@ -124,7 +118,6 @@ open class JavaScriptClass: JavaScriptObject {
 	}
 
 	/**
-	 * @inherited
 	 * @method defineProperty
 	 * @since 0.7.0
 	 */
@@ -157,7 +150,6 @@ open class JavaScriptClass: JavaScriptObject {
 	}
 
 	/**
-	 * @inherited
 	 * @method property
 	 * @since 0.7.0
 	 */
@@ -172,7 +164,6 @@ open class JavaScriptClass: JavaScriptObject {
 	}
 
 	/**
-	 * @inherited
 	 * @method property
 	 * @since 0.7.0
 	 */
@@ -187,7 +178,6 @@ open class JavaScriptClass: JavaScriptObject {
 	}
 
 	/**
-	 * @inherited
 	 * @method property
 	 * @since 0.7.0
 	 */
@@ -202,7 +192,6 @@ open class JavaScriptClass: JavaScriptObject {
 	}
 
 	/**
-	 * @inherited
 	 * @method property
 	 * @since 0.7.0
 	 */
@@ -217,7 +206,6 @@ open class JavaScriptClass: JavaScriptObject {
 	}
 
 	/**
-	 * @inherited
 	 * @method property
 	 * @since 0.4.0
 	 */
@@ -232,7 +220,6 @@ open class JavaScriptClass: JavaScriptObject {
 	}
 
 	/**
-	 * @inherited
 	 * @method property
 	 * @since 0.4.0
 	 */
@@ -247,7 +234,6 @@ open class JavaScriptClass: JavaScriptObject {
 	}
 
 	/**
-	 * @inherited
 	 * @method property
 	 * @since 0.4.0
 	 */
@@ -262,7 +248,6 @@ open class JavaScriptClass: JavaScriptObject {
 	}
 
 	/**
-	 * @inherited
 	 * @method property
 	 * @since 0.7.0
 	 */
@@ -277,7 +262,6 @@ open class JavaScriptClass: JavaScriptObject {
 	}
 
 	/**
-	 * @inherited
 	 * @method property
 	 * @since 0.7.0
 	 */
@@ -286,7 +270,6 @@ open class JavaScriptClass: JavaScriptObject {
 	}
 
 	/**
-	 * @inherited
 	 * @method property
 	 * @since 0.7.0
 	 */
@@ -301,7 +284,6 @@ open class JavaScriptClass: JavaScriptObject {
 	}
 
 	/**
-	 * @inherited
 	 * @method property
 	 * @since 0.7.0
 	 */
@@ -316,7 +298,6 @@ open class JavaScriptClass: JavaScriptObject {
 	}
 
 	/**
-	 * @inherited
 	 * @method property
 	 * @since 0.7.0
 	 */
@@ -331,7 +312,6 @@ open class JavaScriptClass: JavaScriptObject {
 	}
 
 	/**
-	 * @inherited
 	 * @method property
 	 * @since 0.4.0
 	 */
@@ -346,7 +326,6 @@ open class JavaScriptClass: JavaScriptObject {
 	}
 
 	/**
-	 * @inherited
 	 * @method property
 	 * @since 0.4.0
 	 */
@@ -361,7 +340,6 @@ open class JavaScriptClass: JavaScriptObject {
 	}
 
 	/**
-	 * @inherited
 	 * @method property
 	 * @since 0.4.0
 	 */
@@ -376,7 +354,6 @@ open class JavaScriptClass: JavaScriptObject {
 	}
 
 	/**
-	 * @inherited
 	 * @method property
 	 * @since 0.7.0
 	 */
@@ -391,7 +368,6 @@ open class JavaScriptClass: JavaScriptObject {
 	}
 
 	/**
-	 * @inherited
 	 * @method property
 	 * @since 0.7.0
 	 */
@@ -400,7 +376,6 @@ open class JavaScriptClass: JavaScriptObject {
 	}
 
 	/**
-	 * @inherited
 	 * @method forEach
 	 * @since 0.7.0
 	 */
@@ -415,7 +390,6 @@ open class JavaScriptClass: JavaScriptObject {
 	}
 
 	/**
-	 * @inherited
 	 * @method forOwn
 	 * @since 0.7.0
 	 */
@@ -430,7 +404,6 @@ open class JavaScriptClass: JavaScriptObject {
 	}
 
 	/**
-	 * @inherited
 	 * @method prototype
 	 * @since 0.7.0
 	 */
@@ -445,7 +418,6 @@ open class JavaScriptClass: JavaScriptObject {
 	}
 
 	/**
-	 * @inherited
 	 * @method prototype
 	 * @since 0.7.0
 	 */
@@ -454,7 +426,6 @@ open class JavaScriptClass: JavaScriptObject {
 	}
 
 	/**
-	 * Called when the value gets protected.
 	 * @method didProtectValue
 	 * @since 0.4.0
 	 */
@@ -469,7 +440,6 @@ open class JavaScriptClass: JavaScriptObject {
 	}
 
 	/**
-	 * Called when the value gets unprotected.
 	 * @method didUnprotectValue
 	 * @since 0.4.0
 	 */
@@ -488,9 +458,9 @@ open class JavaScriptClass: JavaScriptObject {
 	//--------------------------------------------------------------------------
 
 	/**
-     * Default constructor implementation.
      * @method jsFunction_constructor
      * @since 0.1.0
+     * @hidden
      */
 	@objc open func jsFunction_constructor(callback: JavaScriptFunctionCallback) {
 

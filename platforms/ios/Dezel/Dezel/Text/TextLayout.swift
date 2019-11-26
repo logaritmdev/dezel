@@ -1,7 +1,6 @@
 import CoreText
 
 /**
- * Break up text into lines that fits into specified bounds.
  * @class TextLayout
  * @since 0.5.0
  */
@@ -12,7 +11,6 @@ open class TextLayout: NSObject {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The text layout's text.
 	 * @property text
 	 * @since 0.5.0
 	 */
@@ -23,7 +21,6 @@ open class TextLayout: NSObject {
 	}
 
 	/**
-	 * The text layout's ellipsis.
 	 * @property ellipsis
 	 * @since 0.5.0
 	 */
@@ -34,7 +31,6 @@ open class TextLayout: NSObject {
 	}
 
 	/**
-	 * The text layer's text kerning.
 	 * @property textKerning
 	 * @since 0.1.0
 	 */
@@ -45,7 +41,6 @@ open class TextLayout: NSObject {
 	}
 
 	/**
-	 * The text layer's text leading.
 	 * @property textLeading
 	 * @since 0.1.0
 	 */
@@ -56,7 +51,6 @@ open class TextLayout: NSObject {
 	}
 
 	/**
-	 * The text layer's text baseline.
 	 * @property textBaseline
 	 * @since 0.1.0
 	 */
@@ -67,7 +61,6 @@ open class TextLayout: NSObject {
 	}
 
 	/**
-	 * The text layer's text location.
 	 * @property textLocation
 	 * @since 0.7.0
 	 */
@@ -78,7 +71,6 @@ open class TextLayout: NSObject {
 	}
 
 	/**
-	 * The text layout's text overflow.
 	 * @property textOverflow
 	 * @since 0.5.0
 	 */
@@ -89,7 +81,6 @@ open class TextLayout: NSObject {
 	}
 
 	/**
-	 * The text layout's maximum amount of lines.
 	 * @property maxLines
 	 * @since 0.7.0
 	 */
@@ -100,42 +91,36 @@ open class TextLayout: NSObject {
 	}
 
 	/**
-	 * The text layout given size.
 	 * @property bounds
 	 * @since 0.5.0
 	 */
 	private(set) public var bounds: CGSize = .zero
 
 	/**
-	 * The text layout's computed limits.
-	 * @property extent
+	 * @property limits
 	 * @since 0.5.0
 	 */
 	private(set) public var limits: CGSize = .zero
 
 	/**
-	 * The text layout's size that is taken.
 	 * @property extent
 	 * @since 0.5.0
 	 */
 	private(set) public var extent: CGSize = .zero
 
 	/**
-	 * The text layout's size measured by the frame setter.
 	 * @property length
 	 * @since 0.5.0
 	 */
 	private(set) public var length: CGSize = .zero
 
 	/**
-	 * The text layout's frame offset.
 	 * @property offset
 	 * @since 0.5.0
 	 */
 	private(set) public var offset: CGPoint = .zero
 
 	/**
-	 * Whether the text layout is invalid.
 	 * @property invalid
 	 * @since 0.5.0
 	 */
@@ -160,7 +145,6 @@ open class TextLayout: NSObject {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Returns the character at the specified location.
 	 * @method find
 	 * @since 0.5.0
 	 */
@@ -229,7 +213,6 @@ open class TextLayout: NSObject {
 	}
 
 	/**
-	 * Invalidates the layout.
 	 * @method invalidate
 	 * @since 0.5.0
 	 */
@@ -238,7 +221,6 @@ open class TextLayout: NSObject {
 	}
 
 	/**
-	 * Builds the layout.
 	 * @method build
 	 * @since 0.5.0
 	 */
@@ -319,8 +301,7 @@ open class TextLayout: NSObject {
 	}
 
 	/**
-	 * Draws the text layout.
-	 * @method invalidate
+	 * @method draw
 	 * @since 0.5.0
 	 */
 	open func draw(in context: CGContext) {

@@ -281,7 +281,6 @@ export class DataSource<T> extends Emitter {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Iterator
 	 * @property [Symbol.iterator]
 	 * @since 0.1.0
 	 */

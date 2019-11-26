@@ -62,7 +62,6 @@ export class Device {
 }
 
 /**
- * The current device.
  * @const current
  * @since 0.7.0
  */

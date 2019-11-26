@@ -1,16 +1,6 @@
-/**
- * Symbols
- */
-export const TYPE = Symbol('type')
-
-interface EventInit {
-	bubbles?: boolean
-	cancelable?: boolean
-	composed?: boolean
-}
+import { $type } from './symbol/Event'
 
 /**
- * TODO
  * @class Event
  * @since 0.7.0
  */
@@ -21,12 +11,11 @@ export class Event {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * TODO
 	 * @property type
 	 * @since 0.7.0
 	 */
 	public get type(): string {
-		return this[TYPE]
+		return this[$type]
 	}
 
 	//--------------------------------------------------------------------------
@@ -39,7 +28,7 @@ export class Event {
 	 */
 	constructor(type: string, options?: any) {
 
-		this[TYPE] = type
+		this[$type] = type
 
 		if (options) {
 			Object.assign(this, options)
@@ -56,7 +45,6 @@ export class Event {
 	}
 
 	/**
-	 * TODO
 	 * @method stopPropagation
 	 * @since 0.7.0
 	 */
@@ -65,7 +53,6 @@ export class Event {
 	}
 
 	/**
-	 * TODO
 	 * @method stopImmediatePropagation
 	 * @since 0.7.0
 	 */
@@ -78,13 +65,27 @@ export class Event {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @property TYPE
+	 * @property $type
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private [TYPE]: string
+	private [$type]: string
 }
 
+/**
+ * @interface EventInit
+ * @since 0.7.0
+ */
+interface EventInit {
+	bubbles?: boolean
+	cancelable?: boolean
+	composed?: boolean
+}
+
+/**
+ * @interface ProgressEventInit
+ * @since 0.7.0
+ */
 interface ProgressEventInit extends EventInit {
 	lengthComputable?: boolean
 	loaded?: number
@@ -96,6 +97,7 @@ interface ProgressEventInit extends EventInit {
  * @since 0.7.0
  */
 export class ProgressEvent extends Event {
+
 	/**
 	 * @constructor
 	 * @since 0.7.0
@@ -112,7 +114,6 @@ export class ProgressEvent extends Event {
 export class MessageEvent extends Event {
 
 }
-
 
 /**
  * @class CloseEvent

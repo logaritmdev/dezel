@@ -1,11 +1,11 @@
 /**
  * @class JavaScriptApplicationModule
+ * @super JavaScriptModule
  * @since 0.7.0
  */
-public class JavaScriptApplicationModule: Module {
+public class JavaScriptApplicationModule: JavaScriptModule {
 
 	/**
-	 * @inherited
 	 * @method register
 	 * @since 0.7.0
 	 */

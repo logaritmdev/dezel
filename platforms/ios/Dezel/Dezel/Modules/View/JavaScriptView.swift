@@ -2,8 +2,8 @@ import UIKit
 import QuartzCore
 
 /**
- * The base class for view types.
  * @class JavaScriptView
+ * @super JavaScriptClass
  * @since 0.7.0
  */
 open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDelegate, SynchronizerCallback {
@@ -13,189 +13,162 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The view's delegate.
 	 * @property delegate
 	 * @since 0.7.0
 	 */
 	open weak var delegate: Delegate?
 
 	/**
-	 * The view's display node.
-	 * @property displayNode
+	 * @property node
 	 * @since 0.7.0
 	 */
 	private(set) public var node: DisplayNode!
 
 	/**
-	 * The view's content wrapper view.
 	 * @property wrapper
 	 * @since 0.7.0
 	 */
 	private(set) public var wrapper: WrapperView!
 
 	/**
-	 * The view that displays this view's content.
 	 * @property content
 	 * @since 0.7.0
 	 */
 	private(set) public var content: UIView!
 
 	/**
-	 * The view's JavaScript window.
 	 * @property window
 	 * @since 0.7.0
 	 */
 	private(set) public var window: JavaScriptWindow?
 
 	/**
-	 * The view's JavaScript parent.
 	 * @property parent
 	 * @since 0.7.0
 	 */
 	private(set) public var parent: JavaScriptView?
 
 	/**
-	 * The view's children.
 	 * @property children
 	 * @since 0.7.0
 	 */
 	private(set) public var children: [JavaScriptView] = []
 
 	/**
-	 * The view's resolved top.
 	 * @property resolvedTop
 	 * @since 0.7.0
 	 */
 	private(set) public var resolvedTop: Double = 0
 
 	/**
-	 * The view's resolved left.
 	 * @property resolvedLeft
 	 * @since 0.7.0
 	 */
 	private(set) public var resolvedLeft: Double = 0
 
 	/**
-	 * The view's resolved width.
 	 * @property resolvedWidth
 	 * @since 0.7.0
 	 */
 	private(set) public var resolvedWidth: Double = 0
 
 	/**
-	 * The view's resolved height.
 	 * @property resolvedHeight
 	 * @since 0.7.0
 	 */
 	private(set) public var resolvedHeight: Double = 0
 
 	/**
-	 * The view's resolved inner width.
 	 * @property resolvedInnerWidth
 	 * @since 0.7.0
 	 */
 	private(set) public var resolvedInnerWidth: Double = 0
 
 	/**
-	 * The view's resolved inner height.
 	 * @property resolvedInnerHeight
 	 * @since 0.7.0
 	 */
 	private(set) public var resolvedInnerHeight: Double = 0
 
 	/**
-	 * The view's resolved content width.
 	 * @property resolvedContentWidth
 	 * @since 0.7.0
 	 */
 	private(set) public var resolvedContentWidth: Double = 0
 
 	/**
-	 * The view's resolved content height.
 	 * @property resolvedContentHeight
 	 * @since 0.7.0
 	 */
 	private(set) public var resolvedContentHeight: Double = 0
 
 	/**
-	 * The view's resolved margin top.
 	 * @property resolvedMarginTop
 	 * @since 0.7.0
 	 */
 	private(set) public var resolvedMarginTop: Double = 0
 
 	/**
-	 * The view's resolved margin left.
 	 * @property resolvedMarginLeft
 	 * @since 0.7.0
 	 */
 	private(set) public var resolvedMarginLeft: Double = 0
 
 	/**
-	 * The view's resolved margin right.
 	 * @property resolvedMarginRight
 	 * @since 0.7.0
 	 */
 	private(set) public var resolvedMarginRight: Double = 0
 
 	/**
-	 * The view's resolved margin bottom.
 	 * @property resolvedMarginBottom
 	 * @since 0.7.0
 	 */
 	private(set) public var resolvedMarginBottom: Double = 0
 
 	/**
-	 * The view's resolved border top width.
 	 * @property resolvedBorderTopWidth
 	 * @since 0.7.0
 	 */
 	private(set) public var resolvedBorderTopWidth: Double = 0
 
 	/**
-	 * The view's resolved border left width.
 	 * @property resolvedBorderLeftWidth
 	 * @since 0.7.0
 	 */
 	private(set) public var resolvedBorderLeftWidth: Double = 0
 
 	/**
-	 * The view's resolved border right width.
 	 * @property resolvedBorderRightWidth
 	 * @since 0.7.0
 	 */
 	private(set) public var resolvedBorderRightWidth: Double = 0
 
 	/**
-	 * The view's resolved border bottom width.
 	 * @property resolvedBorderBottomWidth
 	 * @since 0.7.0
 	 */
 	private(set) public var resolvedBorderBottomWidth: Double = 0
 
 	/**
-	 * The view's resolved padding top.
 	 * @property resolvedPaddingTop
 	 * @since 0.7.0
 	 */
 	private(set) public var resolvedPaddingTop: Double = 0
 
 	/**
-	 * The view's resolved padding left.
 	 * @property resolvedPaddingLeft
 	 * @since 0.7.0
 	 */
 	private(set) public var resolvedPaddingLeft: Double = 0
 
 	/**
-	 * The view's resolved padding right.
 	 * @property resolvedPaddingRight
 	 * @since 0.7.0
 	 */
 	private(set) public var resolvedPaddingRight: Double = 0
 
 	/**
-	 * The view's resolved padding bottom.
 	 * @property resolvedPaddingBottom
 	 * @since 0.7.0
 	 */
@@ -244,7 +217,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	private(set) public var resolvedRotationZ: Double = 0.0
 
 	/**
-	 * Whether the view's frame has been resolved.
 	 * @property resolvedFrame
 	 * @since 0.7.0
 	 */
@@ -402,7 +374,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * @inherited
 	 * @method dispose
 	 * @since 0.7.0
 	 */
@@ -422,7 +393,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * Creates the wrapper view.
 	 * @method createWrapperView
 	 * @since 0.7.0
 	 */
@@ -431,7 +401,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * Creates the content view.
 	 * @method createContentView
 	 * @since 0.7.0
 	 */
@@ -440,7 +409,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * Inserts a view into this view's content.
 	 * @method insert
 	 * @since 0.7.0
 	 */
@@ -460,7 +428,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * Removes a view from this view's content.
 	 * @method remove
 	 * @since 0.7.0
 	 */
@@ -477,7 +444,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * Inserts this view into a receiving view.
 	 * @method inject
 	 * @since 0.7.0
 	 */
@@ -497,7 +463,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * Returns this view within the specified bounds.
 	 * @method measure
 	 * @since 0.7.0
 	 */
@@ -506,7 +471,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * Measures this view without performing a layout.
 	 * @method measure
 	 * @since 0.7.0
 	 */
@@ -515,7 +479,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * Resolves this view styles and layout.
 	 * @method resolve
 	 * @since 0.7.0
 	 */
@@ -524,7 +487,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * Schedules a layout pass on the next update cycle.
 	 * @method scheduleLayout
 	 * @since 0.7.0
 	 */
@@ -533,7 +495,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * Schedules a redraw pass on the next update cycle.
 	 * @method scheduleRedraw
 	 * @since 0.7.0
 	 */
@@ -552,7 +513,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Schedules a update on the next cycle.
 	 * @method scheduleUpdate
 	 * @since 0.7.0
 	 */
@@ -564,7 +524,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * Dispatches the update to the receivers.
 	 * @method performUpdate
 	 * @since 0.7.0
 	 */
@@ -578,7 +537,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * Updates the visual aspects of the view.
 	 * @method update
 	 * @since 0.7.0
 	 */
@@ -631,7 +589,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * Updates the view's frame.
 	 * @method updateFrame
 	 * @since 0.7.0
 	 */
@@ -671,7 +628,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * Updates the view's shadow.
 	 * @method updateShadow
 	 * @since 0.7.0
 	 */
@@ -683,7 +639,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * Updates the view's border.
 	 * @method updateBorder
 	 * @since 0.7.0
 	 */
@@ -699,7 +654,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * Updates the view's background color.
 	 * @method updateBitmapColor
 	 * @since 0.7.0
 	 */
@@ -731,7 +685,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * Updates the view's background image.
 	 * @method updateBitmapImage
 	 * @since 0.7.0
 	 */
@@ -875,7 +828,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * Update the view's transform.
 	 * @method updateTransform
 	 * @since 0.7.0
 	 */
@@ -1006,7 +958,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * Update the view's content.
 	 * @method updateContent
 	 * @since 0.7.0
 	 */
@@ -1020,7 +971,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Indicates whether the point is contained within this view.
 	 * @method isPointInView
 	 * @since 0.7.0
 	 */
@@ -1041,7 +991,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * Finds the view at the specific point.
 	 * @method findViewAt
 	 * @since 0.7.0
 	 */
@@ -1212,7 +1161,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * Creates the canvas object used to draw inside this view.
 	 * @method createCanvas
 	 * @since 0.7.0
 	 */
@@ -1225,7 +1173,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method didInvalidate
 	 * @since 0.7.0
 	 */
@@ -1234,7 +1181,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * @inherited
 	 * @method didResolveSize
 	 * @since 0.7.0
 	 */
@@ -1254,7 +1200,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * @inherited
 	 * @method didResolveOrigin
 	 * @since 0.7.0
 	 */
@@ -1274,7 +1219,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * @inherited
 	 * @method didResolveInnerSize
 	 * @since 0.7.0
 	 */
@@ -1294,7 +1238,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * @inherited
 	 * @method didResolveContentSize
 	 * @since 0.7.0
 	 */
@@ -1314,7 +1257,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * @inherited
 	 * @method didResolveMargin
 	 * @since 0.7.0
 	 */
@@ -1342,7 +1284,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * @inherited
 	 * @method didResolveBorder
 	 * @since 0.7.0
 	 */
@@ -1374,7 +1315,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * @inherited
 	 * @method didResolvePadding
 	 * @since 0.7.0
 	 */
@@ -1402,7 +1342,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * @inherited
 	 * @method didPrepareLayout
 	 * @since 0.7.0
 	 */
@@ -1411,7 +1350,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * @inherited
 	 * @method didResolveLayout
 	 * @since 0.7.0
 	 */
@@ -1421,7 +1359,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * @inherited
 	 * @method measure
 	 * @since 0.7.0
 	 */
@@ -1434,7 +1371,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method didBeginDragging
 	 * @since 0.7.0
 	 */
@@ -1444,7 +1380,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * @inherited
 	 * @method didFinishDragging
 	 * @since 0.7.0
 	 */
@@ -1454,7 +1389,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * @inherited
 	 * @method didDrag
 	 * @since 0.7.0
 	 */
@@ -1463,7 +1397,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * @inherited
 	 * @method didBeginScrolling
 	 * @since 0.7.0
 	 */
@@ -1473,7 +1406,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * @inherited
 	 * @method didFinishScrolling
 	 * @since 0.7.0
 	 */
@@ -1483,7 +1415,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * @inherited
 	 * @method didScroll
 	 * @since 0.7.0
 	 */
@@ -1498,7 +1429,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * @inherited
 	 * @method didBeginZooming
 	 * @since 0.7.0
 	 */
@@ -1507,7 +1437,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * @inherited
 	 * @method didFinishZooming
 	 * @since 0.7.0
 	 */
@@ -1516,7 +1445,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * @inherited
 	 * @method didZoom
 	 * @since 0.7.0
 	 */
@@ -1753,7 +1681,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The view's id.
 	 * @property id
 	 * @since 0.7.0
 	 */
@@ -1762,7 +1689,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's class name.
 	 * @property className
 	 * @since 0.7.0
 	 */
@@ -1771,7 +1697,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's background color.
 	 * @property backgroundColor
 	 * @since 0.7.0
 	 */
@@ -1780,7 +1705,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's background image.
 	 * @property backgroundImage
 	 * @since 0.7.0
 	 */
@@ -1791,7 +1715,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's background image container fit.
 	 * @property backgroundImageFit
 	 * @since 0.7.0
 	 */
@@ -1800,7 +1723,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's background image top anchor.
 	 * @property backgroundImageAnchorTop
 	 * @since 0.7.0
 	 */
@@ -1809,7 +1731,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's background image left anchor.
 	 * @property backgroundImageAnchorLeft
 	 * @since 0.7.0
 	 */
@@ -1818,7 +1739,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's background image top position.
 	 * @property backgroundImageTop
 	 * @since 0.7.0
 	 */
@@ -1827,7 +1747,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's background image left position.
 	 * @property backgroundImageLeft
 	 * @since 0.7.0
 	 */
@@ -1836,7 +1755,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's background image width.
 	 * @property backgroundImageWidth
 	 * @since 0.7.0
 	 */
@@ -1845,7 +1763,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's background image height.
 	 * @property backgroundImageHeight
 	 * @since 0.7.0
 	 */
@@ -1854,7 +1771,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The background image tint color.
 	 * @property backgroundImageTint
 	 * @since 0.7.0
 	 */
@@ -1863,7 +1779,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's border.
 	 * @property border
 	 * @since 0.7.0
 	 */
@@ -1891,7 +1806,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's top border.
 	 * @property borderTop
 	 * @since 0.7.0
 	 */
@@ -1907,7 +1821,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's left border.
 	 * @property borderTop
 	 * @since 0.7.0
 	 */
@@ -1923,7 +1836,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's right border.
 	 * @property borderRight
 	 * @since 0.7.0
 	 */
@@ -1939,7 +1851,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's bottom border.
 	 * @property borderBottom
 	 * @since 0.7.0
 	 */
@@ -1955,7 +1866,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's border width.
 	 * @property borderWidth
 	 * @since 0.7.0
 	 */
@@ -1967,7 +1877,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's border color.
 	 * @property borderColor
 	 * @since 0.7.0
 	 */
@@ -1979,7 +1888,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's border top color.
 	 * @property borderTopColor
 	 * @since 0.7.0
 	 */
@@ -1988,7 +1896,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's border left color.
 	 * @property borderLeftColor
 	 * @since 0.7.0
 	 */
@@ -1997,7 +1904,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's border right color.
 	 * @property borderRightColor
 	 * @since 0.7.0
 	 */
@@ -2006,7 +1912,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's border bottom color.
 	 * @property borderBottomColor
 	 * @since 0.7.0
 	 */
@@ -2015,7 +1920,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's border top width.
 	 * @property borderTopWidth
 	 * @since 0.7.0
 	 */
@@ -2024,7 +1928,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's border left width.
 	 * @property borderLeftWidth
 	 * @since 0.7.0
 	 */
@@ -2033,7 +1936,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's border right width.
 	 * @property borderRightWidth
 	 * @since 0.7.0
 	 */
@@ -2042,7 +1944,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's border bottom width.
 	 * @property borderBottomWidth
 	 * @since 0.7.0
 	 */
@@ -2051,7 +1952,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's absolute minimum border top width.
 	 * @property minBorderTopWidth
 	 * @since 0.7.0
 	 */
@@ -2060,7 +1960,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's absolute maximum border top width.
 	 * @property maxBorderTopWidth
 	 * @since 0.7.0
 	 */
@@ -2069,7 +1968,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's absolute minimum border left width.
 	 * @property minBorderLeftWidth
 	 * @since 0.7.0
 	 */
@@ -2078,7 +1976,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's absolute maximum border left width.
 	 * @property maxBorderLeftWidth
 	 * @since 0.7.0
 	 */
@@ -2087,7 +1984,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's absolute minimum border right width.
 	 * @property minBorderRightWidth
 	 * @since 0.7.0
 	 */
@@ -2096,7 +1992,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's absolute maximum border right width.
 	 * @property maxBorderRightWidth
 	 * @since 0.7.0
 	 */
@@ -2105,7 +2000,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's absolute minimum border bottom width.
 	 * @property minBorderBottomWidth
 	 * @since 0.7.0
 	 */
@@ -2114,7 +2008,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's absolute maximum border bottom width.
 	 * @property maxBorderBottomWidth
 	 * @since 0.7.0
 	 */
@@ -2123,7 +2016,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's border radius.
 	 * @property borderRadius
 	 * @since 0.7.0
 	 */
@@ -2135,7 +2027,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's border top left corner radius.
 	 * @property borderTopLeftRadius
 	 * @since 0.7.0
 	 */
@@ -2144,7 +2035,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's border top right corner radius.
 	 * @property borderTopRightRadius
 	 * @since 0.7.0
 	 */
@@ -2153,7 +2043,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's border bottom left corner radius.
 	 * @property borderBottomLeftRadius
 	 * @since 0.7.0
 	 */
@@ -2162,7 +2051,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's border bottom right corner radius.
 	 * @property borderBottomRightRadius
 	 * @since 0.7.0
 	 */
@@ -2171,7 +2059,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's shadow blur distance.
 	 * @property shadowBlur
 	 * @since 0.7.0
 	 */
@@ -2180,7 +2067,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's shadow color.
 	 * @property shadowColor
 	 * @since 0.7.0
 	 */
@@ -2189,7 +2075,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's shadow's top offset.
 	 * @property shadowOffsetTop
 	 * @since 0.7.0
 	 */
@@ -2198,7 +2083,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's shadow's left offset.
 	 * @property shadowOffsetLeft
 	 * @since 0.7.0
 	 */
@@ -2207,7 +2091,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's top position.
 	 * @property top
 	 * @since 0.7.0
 	 */
@@ -2216,7 +2099,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's left position.
 	 * @property left
 	 * @since 0.7.0
 	 */
@@ -2225,7 +2107,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's right position.
 	 * @property right
 	 * @since 0.7.0
 	 */
@@ -2234,7 +2115,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's bottom position.
 	 * @property bottom
 	 * @since 0.7.0
 	 */
@@ -2243,7 +2123,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's absolute minimum top position.
 	 * @property minTop
 	 * @since 0.7.0
 	 */
@@ -2252,7 +2131,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's absolute maximum top position.
 	 * @property maxTop
 	 * @since 0.7.0
 	 */
@@ -2261,7 +2139,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's absolute minimum left position.
 	 * @property minLeft
 	 * @since 0.7.0
 	 */
@@ -2270,7 +2147,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's absolute maximum left position.
 	 * @property maxLeft
 	 * @since 0.7.0
 	 */
@@ -2279,7 +2155,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's absolute minimum right position.
 	 * @property minRight
 	 * @since 0.7.0
 	 */
@@ -2288,7 +2163,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's absolute maximum right position.
 	 * @property maxRight
 	 * @since 0.7.0
 	 */
@@ -2297,7 +2171,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's absolute minimum bottom position.
 	 * @property minBottom
 	 * @since 0.7.0
 	 */
@@ -2306,7 +2179,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's absolute maximum bottom position.
 	 * @property maxBottom
 	 * @since 0.7.0
 	 */
@@ -2315,7 +2187,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's vertical point from with it will be positioned.
 	 * @property anchorTop
 	 * @since 0.7.0
 	 */
@@ -2324,7 +2195,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's horizontal point from with it will be positioned.
 	 * @property anchorLeft
 	 * @since 0.7.0
 	 */
@@ -2333,7 +2203,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's width.
 	 * @property width
 	 * @since 0.7.0
 	 */
@@ -2342,7 +2211,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's height.
 	 * @property height
 	 * @since 0.7.0
 	 */
@@ -2351,7 +2219,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's absolute minimum width.
 	 * @property minWidth
 	 * @since 0.7.0
 	 */
@@ -2360,7 +2227,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's absolute maximum width.
 	 * @property maxWidth
 	 * @since 0.7.0
 	 */
@@ -2369,7 +2235,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's absolute minimum height.
 	 * @property minHeight
 	 * @since 0.7.0
 	 */
@@ -2378,7 +2243,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's absolute maximum height.
 	 * @property maxHeight
 	 * @since 0.7.0
 	 */
@@ -2387,7 +2251,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's expand factor.
 	 * @property expandFactor
 	 * @since 0.7.0
 	 */
@@ -2396,7 +2259,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's shrink factor.
 	 * @property shrinkFactor
 	 * @since 0.7.0
 	 */
@@ -2405,7 +2267,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's content top.
 	 * @property contentTop
 	 * @since 0.7.0
 	 */
@@ -2414,7 +2275,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's content left.
 	 * @property contentLeft
 	 * @since 0.7.0
 	 */
@@ -2423,7 +2283,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's content width.
 	 * @property contentWidth
 	 * @since 0.7.0
 	 */
@@ -2432,7 +2291,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's content height.
 	 * @property contentHeight
 	 * @since 0.7.0
 	 */
@@ -2441,7 +2299,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's content top inset.
 	 * @property contentInsetTop
 	 * @since 0.7.0
 	 */
@@ -2450,7 +2307,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's content left inset.
 	 * @property contentInsetLeft
 	 * @since 0.7.0
 	 */
@@ -2459,7 +2315,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's content right inset.
 	 * @property contentInsetRight
 	 * @since 0.7.0
 	 */
@@ -2468,7 +2323,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's content bottom inset.
 	 * @property contentInsetBottom
 	 * @since 0.7.0
 	 */
@@ -2477,7 +2331,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's content orientation.
 	 * @property contentDirection
 	 * @since 0.7.0
 	 */
@@ -2486,7 +2339,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's content alignment on the cross axis.
 	 * @property contentAlignment
 	 * @since 0.7.0
 	 */
@@ -2495,7 +2347,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's content alignment on the main axis.
 	 * @property contentDisposition
 	 * @since 0.7.0
 	 */
@@ -2504,7 +2355,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * Whether this view's content can scroll.
 	 * @property scrollable
 	 * @since 0.7.0
 	 */
@@ -2513,7 +2363,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * Whether this view's content displays scrollbars.
 	 * @property scrollbars
 	 * @since 0.7.0
 	 */
@@ -2522,7 +2371,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * Whether this view's content can overscroll.
 	 * @property overscroll
 	 * @since 0.7.0
 	 */
@@ -2531,7 +2379,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * Whether this view's content scrolls with scrollMomentum.
 	 * @property scrollMomentum
 	 * @since 0.7.0
 	 */
@@ -2540,7 +2387,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's top scroll offset.
 	 * @property scrollTop
 	 * @since 0.7.0
 	 */
@@ -2549,7 +2395,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's left scroll offset.
 	 * @property scrollLeft
 	 * @since 0.7.0
 	 */
@@ -2558,21 +2403,18 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * Whether this view is scrolling.
 	 * @property scrolling
 	 * @since 0.7.0
 	 */
 	@objc public lazy var scrolling = JavaScriptProperty(boolean: false)
 
 	/**
-	 * Whether this view is dragging.
 	 * @property dragging
 	 * @since 0.7.0
 	 */
 	@objc public lazy var dragging = JavaScriptProperty(boolean: false)
 
 	/**
-	 * The view's margin.
 	 * @property margin
 	 * @since 0.7.0
 	 */
@@ -2584,7 +2426,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's top margin.
 	 * @property marginTop
 	 * @since 0.7.0
 	 */
@@ -2593,7 +2434,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's left margin.
 	 * @property marginLeft
 	 * @since 0.7.0
 	 */
@@ -2602,7 +2442,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's right margin.
 	 * @property marginRight
 	 * @since 0.7.0
 	 */
@@ -2611,7 +2450,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's bottom margin.
 	 * @property marginBottom
 	 * @since 0.7.0
 	 */
@@ -2620,7 +2458,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's absolute minimum top margin.
 	 * @property minMarginTop
 	 * @since 0.7.0
 	 */
@@ -2629,7 +2466,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's absolute maximum top margin.
 	 * @property maxMarginTop
 	 * @since 0.7.0
 	 */
@@ -2638,7 +2474,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's absolute minimum left margin.
 	 * @property minMarginLeft
 	 * @since 0.7.0
 	 */
@@ -2647,7 +2482,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's absolute maximum left margin.
 	 * @property maxMarginLeft
 	 * @since 0.7.0
 	 */
@@ -2656,7 +2490,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's absolute minimum right margin.
 	 * @property minMarginRight
 	 * @since 0.7.0
 	 */
@@ -2665,7 +2498,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's absolute maximum right margin.
 	 * @property maxMarginRight
 	 * @since 0.7.0
 	 */
@@ -2674,7 +2506,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's absolute minimum bottom margin.
 	 * @property minMarginBottom
 	 * @since 0.7.0
 	 */
@@ -2683,7 +2514,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's absolute maximum bottom margin.
 	 * @property maxMarginBottom
 	 * @since 0.7.0
 	 */
@@ -2692,7 +2522,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's padding.
 	 * @property padding
 	 * @since 0.7.0
 	 */
@@ -2704,7 +2533,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's top padding.
 	 * @property paddingTop
 	 * @since 0.7.0
 	 */
@@ -2713,7 +2541,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's left padding.
 	 * @property paddingLeft
 	 * @since 0.7.0
 	 */
@@ -2722,7 +2549,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's right padding.
 	 * @property paddingRight
 	 * @since 0.7.0
 	 */
@@ -2731,7 +2557,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's bottom padding.
 	 * @property paddingBottom
 	 * @since 0.7.0
 	 */
@@ -2740,7 +2565,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's absolute minimum top padding.
 	 * @property minPaddingTop
 	 * @since 0.7.0
 	 */
@@ -2749,7 +2573,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's absolute maximum top padding.
 	 * @property maxPaddingTop
 	 * @since 0.7.0
 	 */
@@ -2758,7 +2581,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's absolute minimum left padding.
 	 * @property minPaddingLeft
 	 * @since 0.7.0
 	 */
@@ -2767,7 +2589,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's absolute maximum left padding.
 	 * @property maxPaddingLeft
 	 * @since 0.7.0
 	 */
@@ -2776,7 +2597,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's absolute minimum right padding.
 	 * @property minPaddingRight
 	 * @since 0.7.0
 	 */
@@ -2785,7 +2605,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's absolute maximum right padding.
 	 * @property maxPaddingRight
 	 * @since 0.7.0
 	 */
@@ -2794,7 +2613,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's absolute minimum bottom padding.
 	 * @property minPaddingBottom
 	 * @since 0.7.0
 	 */
@@ -2803,7 +2621,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's absolute maximum bottom padding.
 	 * @property maxPaddingBottom
 	 * @since 0.7.0
 	 */
@@ -2812,7 +2629,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's transformation origin on the x axis.
 	 * @property originX
 	 * @since 0.7.0
 	 */
@@ -2821,7 +2637,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's transformation origin on the y axis.
 	 * @property originY
 	 * @since 0.7.0
 	 */
@@ -2830,7 +2645,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's transformation origin on the z axis.
 	 * @property originZ
 	 * @since 0.7.0
 	 */
@@ -2839,7 +2653,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's translation on the x axis.
 	 * @property translationX
 	 * @since 0.7.0
 	 */
@@ -2848,7 +2661,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's translation on the y axis.
 	 * @property translationY
 	 * @since 0.7.0
 	 */
@@ -2857,17 +2669,14 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's translation on the z axis.
 	 * @property translationZ
 	 * @since 0.7.0
-	 * @hidden
 	 */
 	@objc public lazy var translationZ = JavaScriptProperty(number: 0) { value in
 		self.invalidateTransform()
 	}
 
 	/**
-	 * The view's rotation on the x axis.
 	 * @property rotationX
 	 * @since 0.7.0
 	 */
@@ -2876,7 +2685,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's rotation on the y axis.
 	 * @property rotationY
 	 * @since 0.7.0
 	 */
@@ -2885,7 +2693,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's rotation on the z axis.
 	 * @property rotationZ
 	 * @since 0.7.0
 	 */
@@ -2894,7 +2701,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's scale on the x axis.
 	 * @property scaleX
 	 * @since 0.7.0
 	 */
@@ -2903,7 +2709,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's scale on the y axis.
 	 * @property scaleY
 	 * @since 0.7.0
 	 */
@@ -2912,7 +2717,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's scale on the z axis.
 	 * @property scaleZ
 	 * @since 0.7.0
 	 */
@@ -2921,7 +2725,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's index on the z position relative to its siblings.
 	 * @property zIndex
 	 * @since 0.7.0
 	 */
@@ -2930,7 +2733,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * Whether the view is zoomable.
 	 * @property zoomable
 	 * @since 0.7.0
 	 */
@@ -2939,7 +2741,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's minimum zoom.
 	 * @property minZoom
 	 * @since 0.7.0
 	 */
@@ -2948,7 +2749,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's maximum zoom.
 	 * @property maxZoom
 	 * @since 0.7.0
 	 */
@@ -2957,7 +2757,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * Whether this view can interact with touches.
 	 * @property touchable
 	 * @since 0.7.0
 	 */
@@ -2966,35 +2765,30 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The top offset for this view touchable area.
 	 * @property touchOffsetTop
 	 * @since 0.7.0
 	 */
 	@objc public lazy var touchOffsetTop = JavaScriptProperty(number: 0.0)
 
 	/**
-	 * The left offset for this view touchable area.
 	 * @property touchOffsetLeft
 	 * @since 0.7.0
 	 */
 	@objc public lazy var touchOffsetLeft = JavaScriptProperty(number: 0.0)
 
 	/**
-	 * The right offset for this view touchable area.
 	 * @property touchOffsetRight
 	 * @since 0.7.0
 	 */
 	@objc public lazy var touchOffsetRight = JavaScriptProperty(number: 0.0)
 
 	/**
-	 * The bottom offset for this view touchable area.
 	 * @property touchOffsetBottom
 	 * @since 0.7.0
 	 */
 	@objc public lazy var touchOffsetBottom = JavaScriptProperty(number: 0.0)
 
 	/**
-	 * The view's visibility status.
 	 * @property visible
 	 * @since 0.7.0
 	 */
@@ -3004,7 +2798,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's opacity.
 	 * @property opacity
 	 * @since 0.7.0
 	 * @hidden
@@ -3014,7 +2807,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * Whether this view can be drawn by user.
 	 * @property drawable
 	 * @since 0.7.0
 	 */
@@ -3023,7 +2815,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * Whether this view's content is clipped to its bounds.
 	 * @property clipped
 	 * @since 0.7.0
 	 */
@@ -3032,7 +2823,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * Whether this view's content is paged.
 	 * @property paged
 	 * @since 0.7.0
 	 */
@@ -3041,140 +2831,120 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
-	 * The view's measured top.
 	 * @property measuredTop
 	 * @since 0.7.0
 	 */
 	private(set) public lazy var measuredTop = JavaScriptProperty(lock: self)
 
 	/**
-	 * The view's measured left.
 	 * @property measuredLeft
 	 * @since 0.7.0
 	 */
 	private(set) public lazy var measuredLeft = JavaScriptProperty(lock: self)
 
 	/**
-	 * The view's measured width.
 	 * @property measuredWidth
 	 * @since 0.7.0
 	 */
 	private(set) public lazy var measuredWidth = JavaScriptProperty(lock: self)
 
 	/**
-	 * The view's measured height.
 	 * @property measuredHeight
 	 * @since 0.7.0
 	 */
 	private(set) public lazy var measuredHeight = JavaScriptProperty(lock: self)
 
 	/**
-	 * The view's measured inner width.
 	 * @property measuredInnerWidth
 	 * @since 0.7.0
 	 */
 	private(set) public lazy var measuredInnerWidth = JavaScriptProperty(lock: self)
 
 	/**
-	 * The view's measured inner height.
 	 * @property measuredInnerHeight
 	 * @since 0.7.0
 	 */
 	private(set) public lazy var measuredInnerHeight = JavaScriptProperty(lock: self)
 
 	/**
-	 * The view's measured content width.
 	 * @property measuredContentWidth
 	 * @since 0.7.0
 	 */
 	private(set) public lazy var measuredContentWidth = JavaScriptProperty(lock: self)
 
 	/**
-	 * The view's measured content height.
 	 * @property measuredContentHeight
 	 * @since 0.7.0
 	 */
 	private(set) public lazy var measuredContentHeight = JavaScriptProperty(lock: self)
 
 	/**
-	 * The view's measured margin top.
 	 * @property measuredMarginTop
 	 * @since 0.7.0
 	 */
 	private(set) public lazy var measuredMarginTop = JavaScriptProperty(lock: self)
 
 	/**
-	 * The view's measured margin left.
 	 * @property measuredMarginLeft
 	 * @since 0.7.0
 	 */
 	private(set) public lazy var measuredMarginLeft = JavaScriptProperty(lock: self)
 
 	/**
-	 * The view's measured margin right.
 	 * @property measuredMarginRight
 	 * @since 0.7.0
 	 */
 	private(set) public lazy var measuredMarginRight = JavaScriptProperty(lock: self)
 
 	/**
-	 * The view's measured margin bottom.
 	 * @property measuredMarginBottom
 	 * @since 0.7.0
 	 */
 	private(set) public lazy var measuredMarginBottom = JavaScriptProperty(lock: self)
 
 	/**
-	 * The view's measured border top width.
 	 * @property measuredBorderTopWidth
 	 * @since 0.7.0
 	 */
 	private(set) public lazy var measuredBorderTopWidth = JavaScriptProperty(lock: self)
 
 	/**
-	 * The view's measured border left width.
 	 * @property measuredBorderLeftWidth
 	 * @since 0.7.0
 	 */
 	private(set) public lazy var measuredBorderLeftWidth = JavaScriptProperty(lock: self)
 
 	/**
-	 * The view's measured border right width.
 	 * @property measuredBorderRightWidth
 	 * @since 0.7.0
 	 */
 	private(set) public lazy var measuredBorderRightWidth = JavaScriptProperty(lock: self)
 
 	/**
-	 * The view's measured border bottom width.
 	 * @property measuredBorderBottomWidth
 	 * @since 0.7.0
 	 */
 	private(set) public lazy var measuredBorderBottomWidth = JavaScriptProperty(lock: self)
 
 	/**
-	 * The view's measured padding top.
 	 * @property measuredPaddingTop
 	 * @since 0.7.0
 	 */
 	private(set) public lazy var measuredPaddingTop = JavaScriptProperty(lock: self)
 
 	/**
-	 * The view's measured padding left.
 	 * @property measuredPaddingLeft
 	 * @since 0.7.0
 	 */
 	private(set) public lazy var measuredPaddingLeft = JavaScriptProperty(lock: self)
 
 	/**
-	 * The view's measured padding right.
 	 * @property measuredPaddingRight
 	 * @since 0.7.0
 	 */
 	private(set) public lazy var measuredPaddingRight = JavaScriptProperty(lock: self)
 
 	/**
-	 * The view's measured padding bottom.
 	 * @property measuredPaddingBottom
 	 * @since 0.7.0
 	 */
@@ -6555,7 +6325,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The view's delegate.
 	 * @type ViewDelegate
 	 * @since 0.7.0
 	 */

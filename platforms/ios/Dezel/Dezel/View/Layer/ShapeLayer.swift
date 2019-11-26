@@ -1,7 +1,6 @@
 import UIKit
 
 /**
- * The base class for layer used to render a view.
  * @class ShapeLayer
  * @since 0.1.0
  */
@@ -12,7 +11,6 @@ open class ShapeLayer: CAShapeLayer, CALayerDelegate, CAAnimationDelegate {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method defaultAction
 	 * @since 0.1.0
 	 */
@@ -67,7 +65,6 @@ open class ShapeLayer: CAShapeLayer, CALayerDelegate, CAAnimationDelegate {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method action
 	 * @since 0.1.0
 	 */
@@ -120,7 +117,6 @@ open class ShapeLayer: CAShapeLayer, CALayerDelegate, CAAnimationDelegate {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method animationDidStart
 	 * @since 0.1.0
 	 */
@@ -129,7 +125,6 @@ open class ShapeLayer: CAShapeLayer, CALayerDelegate, CAAnimationDelegate {
 	}
 
 	/**
-	 * @inherited
 	 * @method animationDidStop
 	 * @since 0.1.0
 	 */

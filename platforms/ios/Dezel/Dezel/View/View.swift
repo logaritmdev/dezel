@@ -11,14 +11,12 @@ open class View : UIScrollView, UIScrollViewDelegate, Scrollable {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The scroll view's delegate.
 	 * @property scrollableDelegate
 	 * @since 0.7.0
 	 */
 	open weak var scrollableDelegate: ScrollableDelegate?
 
 	/**
-	 * Whether the scroll view is scrollable.
 	 * @property scrollable
 	 * @since 0.7.0
 	 */
@@ -29,7 +27,6 @@ open class View : UIScrollView, UIScrollViewDelegate, Scrollable {
 	}
 
 	/**
-	 * Whether the scroll displays scrollbars.
 	 * @property scrollbars
 	 * @since 0.7.0
 	 */
@@ -59,7 +56,6 @@ open class View : UIScrollView, UIScrollViewDelegate, Scrollable {
 	}
 
 	/**
-	 * Whether the scrollable view can overscroll.
 	 * @property overscroll
 	 * @since 0.7.0
 	 */
@@ -98,7 +94,6 @@ open class View : UIScrollView, UIScrollViewDelegate, Scrollable {
 	}
 
 	/**
-	 * The scrollable view's scroll top.
 	 * @property scrollTop
 	 * @since 0.7.0
 	 */
@@ -111,7 +106,6 @@ open class View : UIScrollView, UIScrollViewDelegate, Scrollable {
 	}
 
 	/**
-	 * The scroll view's scroll left.
 	 * @property scrollLeft
 	 * @since 0.7.0
 	 */
@@ -124,7 +118,6 @@ open class View : UIScrollView, UIScrollViewDelegate, Scrollable {
 	}
 
 	/**
-	 * The scrollable view's scroll width.
 	 * @property scrollWidth
 	 * @since 0.7.0
 	 */
@@ -137,7 +130,6 @@ open class View : UIScrollView, UIScrollViewDelegate, Scrollable {
 	}
 
 	/**
-	 * The scrollable view's scroll height.
 	 * @property scrollHeight
 	 * @since 0.7.0
 	 */
@@ -150,14 +142,12 @@ open class View : UIScrollView, UIScrollViewDelegate, Scrollable {
 	}
 
 	/**
-	 * Whether the scroll view has scrollMomentum.
 	 * @property scrollMomentum
 	 * @since 0.7.0
 	 */
 	open var scrollMomentum: Bool = true
 
 	/**
-	 * The scroll view's top content inset.
 	 * @property contentInsetTop
 	 * @since 0.7.0
 	 */
@@ -168,7 +158,6 @@ open class View : UIScrollView, UIScrollViewDelegate, Scrollable {
 	}
 
 	/**
-	 * The scroll view's left content inset.
 	 * @property contentInsetLeft
 	 * @since 0.7.0
 	 */
@@ -179,7 +168,6 @@ open class View : UIScrollView, UIScrollViewDelegate, Scrollable {
 	}
 
 	/**
-	 * The scroll view's right content inset.
 	 * @property contentInsetRight
 	 * @since 0.7.0
 	 */
@@ -190,7 +178,6 @@ open class View : UIScrollView, UIScrollViewDelegate, Scrollable {
 	}
 
 	/**
-	 * The scroll view's bottom content inset.
 	 * @property contentInsetBottom
 	 * @since 0.7.0
 	 */
@@ -201,7 +188,6 @@ open class View : UIScrollView, UIScrollViewDelegate, Scrollable {
 	}
 
 	/**
-	 * Whether the scroll view's is paged.
 	 * @property paged
 	 * @since 0.7.0
 	 */
@@ -212,14 +198,12 @@ open class View : UIScrollView, UIScrollViewDelegate, Scrollable {
 	}
 
 	/**
-	 * Whether the scrollable view's is zoomable.
 	 * @property zoomable
 	 * @since 0.7.0
 	 */
 	open var zoomable: Bool = false
 
 	/**
-	 * The scrollable view min zoom.
 	 * @property minZoom
 	 * @since 0.7.0
 	 */
@@ -230,7 +214,6 @@ open class View : UIScrollView, UIScrollViewDelegate, Scrollable {
 	}
 
 	/**
-	 * The scrollable view max zoom.
 	 * @property maxZoom
 	 * @since 0.7.0
 	 */
@@ -241,7 +224,6 @@ open class View : UIScrollView, UIScrollViewDelegate, Scrollable {
 	}
 
 	/**
-	 * The view that is zoomed.
 	 * @property zoomedView
 	 * @since 0.7.0
 	 */
@@ -315,24 +297,18 @@ open class View : UIScrollView, UIScrollViewDelegate, Scrollable {
 	}
 
 	/**
-	 * @inherited
 	 * @method touchesCancelled
 	 * @since 0.7.0
 	 */
-	 /*
 	override open func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-		super.touchesCancelled(touches, with: event)
-		// TODO
-		//UIApplication.shared.window?.dispatchTouchCancelled(touches)
+		UIApplication.shared.window?.dispatchTouchCanceled(touches)
 	}
-	*/
 
 	//--------------------------------------------------------------------------
 	// MARK: Methods - Animations
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method action
 	 * @since 0.7.0
 	 */
@@ -345,7 +321,6 @@ open class View : UIScrollView, UIScrollViewDelegate, Scrollable {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Smooth scroll the scroll view's to the specified location.
 	 * @method scrollTo
 	 * @since 0.7.0
 	 */

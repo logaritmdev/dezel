@@ -1,5 +1,4 @@
 /**
- * The view wrapping the view's content view.
  * @class WrapperView
  * @since 0.1.0
  */
@@ -10,14 +9,12 @@ open class WrapperView: UIView, TransitionListener {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The wrapper's id.
 	 * @property id
 	 * @since 0.2.0
 	 */
 	open var id: String = ""
 
 	/**
-	 * @inherited
 	 * @property bounds
 	 * @since 0.1.0
 	 */
@@ -37,14 +34,12 @@ open class WrapperView: UIView, TransitionListener {
 	}
 
 	/**
-	 * The wrapper's content view.
 	 * @property content
 	 * @since 0.1.0
 	 */
 	open var content: UIView
 
 	/**
-	 * The wrapper's border top color.
 	 * @property borderTopColor
 	 * @since 0.1.0
 	 */
@@ -57,7 +52,6 @@ open class WrapperView: UIView, TransitionListener {
 	}
 
 	/**
-	 * The wrapper's border left color.
 	 * @property borderLeftColor
 	 * @since 0.1.0
 	 */
@@ -70,7 +64,6 @@ open class WrapperView: UIView, TransitionListener {
 	}
 
 	/**
-	 * The wrapper's border right color.
 	 * @property borderRightColor
 	 * @since 0.1.0
 	 */
@@ -83,7 +76,6 @@ open class WrapperView: UIView, TransitionListener {
 	}
 
 	/**
-	 * The wrapper's border bottom color.
 	 * @property borderBottomColor
 	 * @since 0.1.0
 	 */
@@ -96,7 +88,6 @@ open class WrapperView: UIView, TransitionListener {
 	}
 
 	/**
-	 * The wrapper's border top width.
 	 * @property borderTopWidth
 	 * @since 0.1.0
 	 */
@@ -111,7 +102,6 @@ open class WrapperView: UIView, TransitionListener {
 	}
 
 	/**
-	 * The wrapper's border left width.
 	 * @property borderLeftWidth
 	 * @since 0.1.0
 	 */
@@ -126,7 +116,6 @@ open class WrapperView: UIView, TransitionListener {
 	}
 
 	/**
-	 * The wrapper's border right width.
 	 * @property borderRightWidth
 	 * @since 0.1.0
 	 */
@@ -141,7 +130,6 @@ open class WrapperView: UIView, TransitionListener {
 	}
 
 	/**
-	 * The wrapper's border bottom width.
 	 * @property borderBottomWidth
 	 * @since 0.1.0
 	 */
@@ -156,7 +144,6 @@ open class WrapperView: UIView, TransitionListener {
 	}
 
 	/**
-	 * The wrapper's border top left corner radius.
 	 * @property borderTopLeftRadius
 	 * @since 0.1.0
 	 */
@@ -169,7 +156,6 @@ open class WrapperView: UIView, TransitionListener {
 	}
 
 	/**
-	 * The wrapper's border top right corner radius.
 	 * @property borderTopRightRadius
 	 * @since 0.1.0
 	 */
@@ -182,7 +168,6 @@ open class WrapperView: UIView, TransitionListener {
 	}
 
 	/**
-	 * The wrapper's border bottom left corner radius.
 	 * @property borderBottomLeftRadius
 	 * @since 0.1.0
 	 */
@@ -195,7 +180,6 @@ open class WrapperView: UIView, TransitionListener {
 	}
 
 	/**
-	 * The wrapper's border bottom right corner radius.
 	 * @property borderBottomRightRadius
 	 * @since 0.1.0
 	 */
@@ -208,7 +192,6 @@ open class WrapperView: UIView, TransitionListener {
 	}
 
 	/**
-	 * The wrapper's background color.
 	 * @property backgroundKolor
 	 * @since 0.1.0
 	 */
@@ -221,7 +204,6 @@ open class WrapperView: UIView, TransitionListener {
 	}
 
 	/**
-	 * The wrapper's background linear gradient.
 	 * @property backgroundLinearGradient
 	 * @since 0.1.0
 	 */
@@ -234,7 +216,6 @@ open class WrapperView: UIView, TransitionListener {
 	}
 
 	/**
-	 * The wrapper's background linear gradient.
 	 * @property backgroundRadialGradient
 	 * @since 0.1.0
 	 */
@@ -247,7 +228,6 @@ open class WrapperView: UIView, TransitionListener {
 	}
 
 	/**
-	 * The wrapper's background image.
 	 * @property backgroundImage
 	 * @since 0.1.0
 	 */
@@ -260,7 +240,6 @@ open class WrapperView: UIView, TransitionListener {
 	}
 
 	/**
-	 * The wrapper's background image top position.
 	 * @property backgroundImageTop
 	 * @since 0.1.0
 	 */
@@ -273,7 +252,6 @@ open class WrapperView: UIView, TransitionListener {
 	}
 
 	/**
-	 * The wrapper's background image left position.
 	 * @property backgroundImageLeft
 	 * @since 0.1.0
 	 */
@@ -286,7 +264,6 @@ open class WrapperView: UIView, TransitionListener {
 	}
 
 	/**
-	 * The wrapper's background image width.
 	 * @property backgroundImageWidth
 	 * @since 0.1.0
 	 */
@@ -299,7 +276,6 @@ open class WrapperView: UIView, TransitionListener {
 	}
 
 	/**
-	 * The wrapper's background image height.
 	 * @property backgroundImageHeight
 	 * @since 0.1.0
 	 */
@@ -312,7 +288,6 @@ open class WrapperView: UIView, TransitionListener {
 	}
 
 	/**
-	 * The wrapper's background image tint.
 	 * @property backgroundImageTint
 	 * @since 0.1.0
 	 */
@@ -325,7 +300,6 @@ open class WrapperView: UIView, TransitionListener {
 	}
 
 	/**
-	 * The wrapper's shadow blur distance.
 	 * @property shadowBlur
 	 * @since 0.1.0
 	 */
@@ -338,7 +312,6 @@ open class WrapperView: UIView, TransitionListener {
 	}
 
 	/**
-	 * The wrapper's shadow color.
 	 * @property shadowColor
 	 * @since 0.1.0
 	 */
@@ -351,7 +324,6 @@ open class WrapperView: UIView, TransitionListener {
 	}
 
 	/**
-	 * The wrapper's shadow's top offset.
 	 * @property shadowOffsetTop
 	 * @since 0.1.0
 	 */
@@ -364,7 +336,6 @@ open class WrapperView: UIView, TransitionListener {
 	}
 
 	/**
-	 * The wrapper's shadow's left offset.
 	 * @property shadowOffsetLeft
 	 * @since 0.1.0
 	 */
@@ -377,7 +348,6 @@ open class WrapperView: UIView, TransitionListener {
 	}
 
 	/**
-	 * The wrapper's visibility status.
 	 * @property visible
 	 * @since 0.1.0
 	 */
@@ -388,7 +358,6 @@ open class WrapperView: UIView, TransitionListener {
 	}
 
 	/**
-	 * The wrapper's drawable status.
 	 * @property drawable
 	 * @since 0.4.0
 	 */
@@ -399,14 +368,12 @@ open class WrapperView: UIView, TransitionListener {
 	}
 
 	/**
-	 * The wrapper's drawing callback.
 	 * @property draw
 	 * @since 0.4.0
 	 */
 	open var draw: WrapperViewDraw?
 
 	/**
-	 * Indicates whether this view has a valid frame.
 	 * @property hasFrame
 	 * @since 0.2.0
 	 */
@@ -538,7 +505,6 @@ open class WrapperView: UIView, TransitionListener {
 	}
 
 	/**
-	 * Updates the render node values.
 	 * @method update
 	 * @since 0.1.0
 	 */
@@ -578,7 +544,6 @@ open class WrapperView: UIView, TransitionListener {
 	}
 
 	/**
-	 * Updates the view frame.
 	 * @method updateFrame
 	 * @since 0.2.0
 	 */
@@ -624,7 +589,6 @@ open class WrapperView: UIView, TransitionListener {
 	}
 
 	/**
-	 * Updates the render node shape.
 	 * @method updateShape
 	 * @since 0.2.0
 	 */
@@ -826,7 +790,6 @@ open class WrapperView: UIView, TransitionListener {
 	}
 
 	/**
-	 * Tells to the canvas layer that it needs to be redraw.
 	 * @method scheduleRedraw
 	 * @since 0.4.0
 	 */
@@ -1141,7 +1104,6 @@ open class WrapperView: UIView, TransitionListener {
 }
 
 /**
- * The draw callback.
  * @alias WrapperViewDraw
  * @since 0.4.0
  */

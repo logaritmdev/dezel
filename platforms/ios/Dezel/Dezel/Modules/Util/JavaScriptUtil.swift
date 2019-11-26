@@ -1,7 +1,7 @@
 /**
  * @class JavaScriptUtil
+ * @super JavaScriptClass
  * @since 0.7.0
- * @hidden
  */
 open class JavaScriptUtil: JavaScriptClass {
 

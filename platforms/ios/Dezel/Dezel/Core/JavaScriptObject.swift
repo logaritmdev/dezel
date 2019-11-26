@@ -1,6 +1,6 @@
 /**
- * The base class for bridged object.
  * @class JavaScriptObject
+ * @super JavaScriptValue
  * @since 0.1.0
  */
 open class JavaScriptObject: JavaScriptValue {
@@ -10,7 +10,6 @@ open class JavaScriptObject: JavaScriptValue {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Initializes the JavaScript object.
 	 * @constructor
 	 * @since 0.4.0
 	 */
@@ -19,7 +18,6 @@ open class JavaScriptObject: JavaScriptValue {
 	}
 
 	/**
-	 * @overridden
 	 * @method dispose
 	 * @since 0.6.0
 	 */
@@ -34,7 +32,6 @@ open class JavaScriptObject: JavaScriptValue {
 	}
 
 	/**
-	 * Returns an attribute from this object.
 	 * @method attribute
 	 * @since 0.1.0
 	 */
@@ -43,7 +40,6 @@ open class JavaScriptObject: JavaScriptValue {
 	}
 
 	/**
-	 * Assigns an attribute on this object.
 	 * @method attribute
 	 * @since 0.1.0
 	 */
@@ -54,7 +50,6 @@ open class JavaScriptObject: JavaScriptValue {
 	}
 
 	/**
-	 * Assigns the value's finalize handler.
 	 * @method finalize
 	 * @since 0.4.0
 	 */
@@ -67,7 +62,6 @@ open class JavaScriptObject: JavaScriptValue {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Returns a JavaScript property.
 	 * @method getProperty
 	 * @since 0.7.0
 	 */
@@ -76,7 +70,6 @@ open class JavaScriptObject: JavaScriptValue {
 	}
 
 	/**
-	 * Assigns a JavaScript property.
 	 * @method setProperty
 	 * @since 0.7.0
 	 */
@@ -89,7 +82,6 @@ open class JavaScriptObject: JavaScriptValue {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method didResetValue
 	 * @since 0.4.0
 	 */
@@ -104,7 +96,6 @@ open class JavaScriptObject: JavaScriptValue {
 			 */
 
 			if let this = JavaScriptValueDataGetAssociatedObject(callback.handle) {
-print("Finalize \(self)")
 				 Unmanaged<JavaScriptValue>.fromOpaque(this).takeUnretainedValue().dispose()
 			}
 		}

@@ -1,5 +1,6 @@
 /**
  * @class JavaScriptObjectBuilder
+ * @super JavaScriptBuilder
  * @since 0.1.0
  * @hidden
  */

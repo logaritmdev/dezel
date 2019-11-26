@@ -1,16 +1,15 @@
 /**
  * @class JavaScriptGraphicModule
+ * @super JavaScriptModule
  * @since 0.7.0
- * @hidden
  */
-open class JavaScriptGraphicModule: Module {
+open class JavaScriptGraphicModule: JavaScriptModule {
 
 	//--------------------------------------------------------------------------
 	// MARK: Methods
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method register
 	 * @since 0.7.0
 	 */

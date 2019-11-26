@@ -10,7 +10,6 @@ open class AlertController: UIAlertController {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Convenience method to create an alert controller.
 	 * @method create
 	 * @since 0.1.0
 	 */
@@ -41,7 +40,6 @@ open class AlertController: UIAlertController {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The alert controller delegate.
 	 * @property delegate
 	 * @since 0.1.0
 	 */

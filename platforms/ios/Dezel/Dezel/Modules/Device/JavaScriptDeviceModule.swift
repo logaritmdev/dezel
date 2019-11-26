@@ -1,12 +1,11 @@
 /**
  * @class JavaScriptDeviceModule
+ * @super JavaScriptModule
  * @since 0.7.0
- * @hidden
  */
-public class JavaScriptDeviceModule : Module {
+public class JavaScriptDeviceModule : JavaScriptModule {
 
     /**
-     * @inherited
      * @method register
      * @since 0.7.0
      */

@@ -1,9 +1,5 @@
+import { $listeners } from './symbol/EventTarget'
 import { Event } from './Event'
-
-/**
- * Symbols
- */
-export const LISTENERS = Symbol('listeners')
 
 /**
  * @class EventTarget
@@ -23,9 +19,9 @@ export class EventTarget {
 	 */
 	public addEventListener(type: string, listener?: any, options?: any) {
 
-		let listeners = this[LISTENERS][type]
+		let listeners = this[$listeners][type]
 		if (listeners == null) {
-			listeners = this[LISTENERS][type] = []
+			listeners = this[$listeners][type] = []
 		}
 
 		if (listeners.indexOf(listener) == -1) {
@@ -42,7 +38,7 @@ export class EventTarget {
 	 */
 	public removeEventListener(type: string, listener?: any, options?: any) {
 
-		let listeners = this[LISTENERS][type]
+		let listeners = this[$listeners][type]
 		if (listeners == null) {
 			return
 		}
@@ -53,7 +49,7 @@ export class EventTarget {
 		}
 
 		if (listeners.length == 0) {
-			delete this[LISTENERS][type]
+			delete this[$listeners][type]
 		}
 
 		return this
@@ -73,7 +69,7 @@ export class EventTarget {
 			callback.apply(this, arguments)
 		}
 
-		let listeners = this[LISTENERS][event.type]
+		let listeners = this[$listeners][event.type]
 		if (listeners == null) {
 			return false
 		}
@@ -96,5 +92,5 @@ export class EventTarget {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	private [LISTENERS]: any = {}
+	private [$listeners]: any = {}
 }

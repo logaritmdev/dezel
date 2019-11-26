@@ -1,6 +1,6 @@
 /**
- * A property setter callback.
  * @class JavaScriptSetterCallback
+ * @super JavaScriptCallback
  * @since 0.1.0
  */
 public final class JavaScriptSetterCallback: JavaScriptCallback {
@@ -10,7 +10,6 @@ public final class JavaScriptSetterCallback: JavaScriptCallback {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Returns the property setter's value.
 	 * @property value
 	 * @since 0.1.0
 	 */

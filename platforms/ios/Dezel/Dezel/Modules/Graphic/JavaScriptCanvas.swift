@@ -1,6 +1,6 @@
 /**
- * TODO
  * @class JavaScriptCanvas
+ * @super JavaScriptClass
  * @since 0.7.0
  */
 open class JavaScriptCanvas: JavaScriptClass {
@@ -42,7 +42,6 @@ open class JavaScriptCanvas: JavaScriptClass {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Assigns the context to be used.
 	 * @method use
 	 * @since 0.7.0
 	 */
@@ -55,7 +54,6 @@ open class JavaScriptCanvas: JavaScriptClass {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The canvas fill style.
 	 * @property fillStyle
 	 * @since 0.7.0
 	 */
@@ -64,7 +62,6 @@ open class JavaScriptCanvas: JavaScriptClass {
 	}
 
 	/**
-	 * The canvas stroke style.
 	 * @property strokeStyle
 	 * @since 0.7.0
 	 */
@@ -73,7 +70,6 @@ open class JavaScriptCanvas: JavaScriptClass {
 	}
 
 	/**
-	 * The canvas line cap mode.
 	 * @property lineCap
 	 * @since 0.7.0
 	 */
@@ -87,7 +83,6 @@ open class JavaScriptCanvas: JavaScriptClass {
 	}
 
 	/**
-	 * The canvas line join mode.
 	 * @property lineJoin
 	 * @since 0.7.0
 	 */
@@ -101,7 +96,6 @@ open class JavaScriptCanvas: JavaScriptClass {
 	}
 
 	/**
-	 * The canvas line width.
 	 * @property lineWidth
 	 * @since 0.7.0
 	 */
@@ -110,7 +104,6 @@ open class JavaScriptCanvas: JavaScriptClass {
 	}
 
 	/**
-	 * The canvas horizontal shadow offset.
 	 * @property shadowOffsetX
 	 * @since 0.7.0
 	 */
@@ -120,7 +113,6 @@ open class JavaScriptCanvas: JavaScriptClass {
 	}
 
 	/**
-	 * The canvas vertical shadow offset.
 	 * @property shadowOffsetY
 	 * @since 0.7.0
 	 */
@@ -130,7 +122,6 @@ open class JavaScriptCanvas: JavaScriptClass {
 	}
 
 	/**
-	 * The canvas shadow blur.
 	 * @property shadowBlur
 	 * @since 0.7.0
 	 */
@@ -140,7 +131,6 @@ open class JavaScriptCanvas: JavaScriptClass {
 	}
 
 	/**
-	 * The canvas shadow color.
 	 * @property shadowBlur
 	 * @since 0.7.0
 	 */
@@ -150,7 +140,6 @@ open class JavaScriptCanvas: JavaScriptClass {
 	}
 
 	/**
-	 * The canvas global alpha.
 	 * @property globalAlpha
 	 * @since 0.7.0
 	 */
@@ -159,7 +148,6 @@ open class JavaScriptCanvas: JavaScriptClass {
 	}
 
 	/**
-	 * The canvas global alpha.
 	 * @property globalAlpha
 	 * @since 0.7.0
 	 */

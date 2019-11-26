@@ -42,10 +42,11 @@ internal final class JavaScriptValueForOwnWrapper: NSObject {
 }
 
 /**
+ * @function javaScriptValueForOwnCallback
  * @since 0.7.0
  * @hidden
  */
-internal let JavaScriptValueForOwnCallback: @convention(c) (JSContextRef?, JSValueRef?, UnsafePointer<Int8>?, UnsafeMutableRawPointer?) -> Void = { context, value, name, data in
+internal let javaScriptValueForOwnCallback: @convention(c) (JSContextRef?, JSValueRef?, UnsafePointer<Int8>?, UnsafeMutableRawPointer?) -> Void = { context, value, name, data in
 
 	let context = context!
 	let value = value!

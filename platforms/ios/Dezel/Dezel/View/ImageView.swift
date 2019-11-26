@@ -10,7 +10,6 @@ open class ImageView: UIView, Updatable, Clippable, TransitionListener {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @property bounds
 	 * @since 0.6.0
 	 */
@@ -31,7 +30,6 @@ open class ImageView: UIView, Updatable, Clippable, TransitionListener {
 	}
 
 	/**
-	 * The image view's image.
 	 * @property image
 	 * @since 0.7.0
 	 */
@@ -42,7 +40,6 @@ open class ImageView: UIView, Updatable, Clippable, TransitionListener {
 	}
 
 	/**
-	 * The image view's image top position.
 	 * @property imageTop
 	 * @since 0.7.0
 	 */
@@ -53,7 +50,6 @@ open class ImageView: UIView, Updatable, Clippable, TransitionListener {
 	}
 
 	/**
-	 * The image view's image left position.
 	 * @property imageLeft
 	 * @since 0.7.0
 	 */
@@ -64,7 +60,6 @@ open class ImageView: UIView, Updatable, Clippable, TransitionListener {
 	}
 
 	/**
-	 * The image view's image width.
 	 * @property imageWidth
 	 * @since 0.7.0
 	 */
@@ -75,7 +70,6 @@ open class ImageView: UIView, Updatable, Clippable, TransitionListener {
 	}
 
 	/**
-	 * The image view's image height.
 	 * @property imageHeight
 	 * @since 0.7.0
 	 */
@@ -86,7 +80,6 @@ open class ImageView: UIView, Updatable, Clippable, TransitionListener {
 	}
 
 	/**
-	 * The image view's image filter.
 	 * @property imageFilter
 	 * @since 0.7.0
 	 */
@@ -97,7 +90,6 @@ open class ImageView: UIView, Updatable, Clippable, TransitionListener {
 	}
 
 	/**
-	 * The image view's image tint.
 	 * @property imageTint
 	 * @since 0.7.0
 	 */
@@ -108,7 +100,6 @@ open class ImageView: UIView, Updatable, Clippable, TransitionListener {
 	}
 
 	/**
-	 * Indicates whether this view has a valid frame.
 	 * @property hasFrame
 	 * @since 0.7.0
 	 */
@@ -159,7 +150,6 @@ open class ImageView: UIView, Updatable, Clippable, TransitionListener {
 	}
 
 	/**
-	 * @inherited
 	 * @method update
 	 * @since 0.7.0
 	 */
@@ -171,7 +161,6 @@ open class ImageView: UIView, Updatable, Clippable, TransitionListener {
 	}
 
 	/**
-	 * Updates the image layer frame.
 	 * @method updateImageLayerFrame
 	 * @since 0.7.0
 	 */
@@ -185,7 +174,6 @@ open class ImageView: UIView, Updatable, Clippable, TransitionListener {
 	}
 
 	/**
-	 * Measures the natural image view size.
 	 * @method measure
 	 * @since 0.7.0
 	 */
@@ -219,7 +207,6 @@ open class ImageView: UIView, Updatable, Clippable, TransitionListener {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method action
 	 * @since 0.7.0
 	 */
@@ -232,7 +219,6 @@ open class ImageView: UIView, Updatable, Clippable, TransitionListener {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method shouldBeginTransitionAnimation
 	 * @since 0.7.0
 	 */
@@ -247,7 +233,6 @@ open class ImageView: UIView, Updatable, Clippable, TransitionListener {
 	}
 
 	/**
-	 * @inherited
 	 * @method willBeginTransitionAnimation
 	 * @since 0.7.0
 	 */
@@ -256,7 +241,6 @@ open class ImageView: UIView, Updatable, Clippable, TransitionListener {
 	}
 
 	/**
-	 * @inherited
 	 * @method didCommitTransition
 	 * @since 0.6.0
 	 */
@@ -265,7 +249,6 @@ open class ImageView: UIView, Updatable, Clippable, TransitionListener {
 	}
 
 	/**
-	 * @inherited
 	 * @method didFinishTransition
 	 * @since 0.7.0
 	 */

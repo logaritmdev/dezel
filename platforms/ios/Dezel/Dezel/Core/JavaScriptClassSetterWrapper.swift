@@ -55,7 +55,7 @@ internal final class JavaScriptClassSetterWrapper: NSObject {
 	 */
 	internal init(context: JavaScriptContext, cls: AnyClass, sel: Selector, imp: IMP, name: String) {
 
-		let function = JavaScriptValueCreateFunction(context.handle, JavaScriptClassSetterWrapperCallback, nil)
+		let function = JavaScriptValueCreateFunction(context.handle, javaScriptClassSetterWrapperCallback, nil)
 
 		self.context = context
 		self.function = function
@@ -65,16 +65,17 @@ internal final class JavaScriptClassSetterWrapper: NSObject {
 
 		super.init()
 
-		JavaScriptValueSetFinalizeHandler(context.handle, function, JavaScriptClassSetterWrapperFinalize)
+		JavaScriptValueSetFinalizeHandler(context.handle, function, javaScriptClassSetterWrapperFinalize)
 		JavaScriptValueSetAssociatedObject(context.handle, function, Unmanaged.passRetained(self).toOpaque())
 	}
 }
 
 /**
- * @since 0.1.0
+ * @function javaScriptClassSetterWrapperCallback
+ * @since 0.7.0
  * @hidden
  */
-private let JavaScriptClassSetterWrapperCallback: @convention(c) (JSContextRef?, JSObjectRef?, JSObjectRef?, Int, UnsafePointer<JSValueRef?>?) -> JSValueRef? = { context, object, callee, argc, argv in
+private let javaScriptClassSetterWrapperCallback: @convention(c) (JSContextRef?, JSObjectRef?, JSObjectRef?, Int, UnsafePointer<JSValueRef?>?) -> JSValueRef? = { context, object, callee, argc, argv in
 
 	let context = context!
 	let object = object!
@@ -108,9 +109,10 @@ private let JavaScriptClassSetterWrapperCallback: @convention(c) (JSContextRef?,
 }
 
 /**
- * @since 0.1.0
+ * @function javaScriptClassSetterWrapperFinalize
+ * @since 0.7.0
  * @hidden
  */
-private let JavaScriptClassSetterWrapperFinalize: @convention(c) (JSContextRef?, JavaScriptValueDataRef?) -> Void = { context, handle in
+private let javaScriptClassSetterWrapperFinalize: @convention(c) (JSContextRef?, JavaScriptValueDataRef?) -> Void = { context, handle in
 	Unmanaged<JavaScriptClassSetterWrapper>.fromOpaque(JavaScriptValueDataGetAssociatedObject(handle!)).release()
 }

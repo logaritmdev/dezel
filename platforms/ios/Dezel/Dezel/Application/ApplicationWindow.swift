@@ -90,19 +90,19 @@ open class ApplicationWindow: UIWindow {
 		ended = ended.filter(filter)
 
 		if (began.count > 0) {
-			self.dispatchTouchBegan(began, with: event)
+			self.dispatchTouchBegan(began)
 		}
 
 		if (moved.count > 0) {
-			self.dispatchTouchMoved(moved, with: event)
+			self.dispatchTouchMoved(moved)
 		}
 
 		if (ended.count > 0) {
-			self.dispatchTouchEnded(ended, with: event)
+			self.dispatchTouchEnded(ended)
 		}
 
 		if (canceled.count > 0) {
-			self.dispatchTouchCanceled(canceled, with: event)
+			self.dispatchTouchCanceled(canceled)
 		}
 
 		super.sendEvent(event)
@@ -127,7 +127,7 @@ open class ApplicationWindow: UIWindow {
      * @method dispatchTouchBegan
      * @since 0.7.0
      */
-	open func dispatchTouchBegan(_ touches: Set<UITouch>, with event: UIEvent) {
+	open func dispatchTouchBegan(_ touches: Set<UITouch>) {
 		NotificationCenter.default.post(name: ApplicationDelegate.touchesBeganNotification, object: self, userInfo: ["touches": touches])
 	}
 
@@ -135,7 +135,7 @@ open class ApplicationWindow: UIWindow {
      * @method dispatchTouchMoved
      * @since 0.7.0
      */
-	open func dispatchTouchMoved(_ touches: Set<UITouch>, with event: UIEvent) {
+	open func dispatchTouchMoved(_ touches: Set<UITouch>) {
 		NotificationCenter.default.post(name: ApplicationDelegate.touchesMovedNotification, object: self, userInfo: ["touches": touches])
 	}
 
@@ -143,7 +143,7 @@ open class ApplicationWindow: UIWindow {
      * @method dispatchTouchEnded
      * @since 0.7.0
      */
-	open func dispatchTouchEnded(_ touches: Set<UITouch>, with event: UIEvent) {
+	open func dispatchTouchEnded(_ touches: Set<UITouch>) {
 		NotificationCenter.default.post(name: ApplicationDelegate.touchesEndedNotification, object: self, userInfo: ["touches": touches])
 	}
 
@@ -151,7 +151,7 @@ open class ApplicationWindow: UIWindow {
      * @method dispatchTouchCanceled
      * @since 0.7.0
      */
-	open func dispatchTouchCanceled(_ touches: Set<UITouch>, with event: UIEvent) {
+	open func dispatchTouchCanceled(_ touches: Set<UITouch>) {
 		NotificationCenter.default.post(name: ApplicationDelegate.touchesCanceledNotification, object: self, userInfo: ["touches": touches])
 	}
 }

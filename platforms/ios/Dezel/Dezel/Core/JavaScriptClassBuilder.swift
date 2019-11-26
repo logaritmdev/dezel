@@ -1,7 +1,8 @@
 /**
- * Creates a JavaScript constructor from a native class.
  * @class JavaScriptClassBuilder
+ * @super JavaScriptBuilder
  * @since 0.1.0
+ * @hidden
  */
 internal final class JavaScriptClassBuilder: JavaScriptBuilder {
 

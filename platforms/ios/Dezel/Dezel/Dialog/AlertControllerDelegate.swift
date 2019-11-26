@@ -1,5 +1,4 @@
 /**
- * The protocol that notifies a received about state change within an alert.
  * @protocol AlertControllerDelegate
  * @since 0.1.0
  */

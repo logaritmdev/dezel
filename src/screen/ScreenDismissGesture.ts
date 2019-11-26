@@ -19,7 +19,6 @@ export const SCREEN = Symbol('screen')
 export const STARTED = Symbol('started')
 
 /**
- * The base class to implement dismiss gestures.
  * @class ScreenDismissGesture
  * @since 0.5.0
  */

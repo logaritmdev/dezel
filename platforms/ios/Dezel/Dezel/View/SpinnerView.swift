@@ -10,7 +10,6 @@ open class SpinnerView: UIActivityIndicatorView {
 	//----------------------------------------------------------------------
 
 	/**
-	 * Determines whether the activity view is animated.
 	 * @property active
 	 * @since 0.7.0
 	 */
@@ -24,9 +23,9 @@ open class SpinnerView: UIActivityIndicatorView {
 		}
 	}
 
-	//----------------------------------------------------------------------
+	//--------------------------------------------------------------------------
 	// MARK: Methods
-	//----------------------------------------------------------------------
+	//--------------------------------------------------------------------------
 
 	/**
 	 * @constructor
@@ -47,7 +46,6 @@ open class SpinnerView: UIActivityIndicatorView {
 	}
 
 	/**
-	 * @inherited
 	 * @method action
 	 * @since 0.7.0
 	 */

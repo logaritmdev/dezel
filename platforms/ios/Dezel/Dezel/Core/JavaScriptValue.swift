@@ -1,5 +1,4 @@
 /**
- * Contains a JavaScript value from the current context.
  * @class JavaScriptValue
  * @since 0.1.0
  */
@@ -124,14 +123,12 @@ open class JavaScriptValue : NSObject {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The value's context.
 	 * @property context
 	 * @since 0.1.0
 	 */
 	private(set) public var context: JavaScriptContext
 
 	/**
-	 * The value's handle.
 	 * @property handle
 	 * @since 0.1.0
 	 */
@@ -149,7 +146,6 @@ open class JavaScriptValue : NSObject {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Indicates whether the value is undefined.
 	 * @property isUndefined
 	 * @since 0.4.0
 	 */
@@ -158,7 +154,6 @@ open class JavaScriptValue : NSObject {
 	}
 
 	/**
-	 * Indicates whether the value is null.
 	 * @property isNull
 	 * @since 0.4.0
 	 */
@@ -167,7 +162,6 @@ open class JavaScriptValue : NSObject {
 	}
 
 	/**
-	 * Indicates whether the value is a boolean.
 	 * @property isBoolean
 	 * @since 0.4.0
 	 */
@@ -176,7 +170,6 @@ open class JavaScriptValue : NSObject {
 	}
 
 	/**
-	 * Indicates whether the value is a number.
 	 * @property isNumber
 	 * @since 0.4.0
 	 */
@@ -185,7 +178,6 @@ open class JavaScriptValue : NSObject {
 	}
 
 	/**
-	 * Indicates whether the value is a string.
 	 * @property isString
 	 * @since 0.4.0
 	 */
@@ -194,7 +186,6 @@ open class JavaScriptValue : NSObject {
 	}
 
 	/**
-	 * Indicates whether the value is an object.
 	 * @property isObject
 	 * @since 0.4.0
 	 */
@@ -203,7 +194,6 @@ open class JavaScriptValue : NSObject {
 	}
 
 	/**
-	 * Indicates whether the value is an array.
 	 * @property isObject
 	 * @since 0.4.0
 	 */
@@ -212,7 +202,6 @@ open class JavaScriptValue : NSObject {
 	}
 
 	/**
-	 * Indicates whether the value is a function.
 	 * @property isFunction
 	 * @since 0.4.0
 	 */
@@ -225,7 +214,6 @@ open class JavaScriptValue : NSObject {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Converts the value to a string value.
 	 * @property string
 	 * @since 0.2.0
 	 */
@@ -234,7 +222,6 @@ open class JavaScriptValue : NSObject {
 	}()
 
 	/**
-	 * Converts the value to a double value.
 	 * @property number
 	 * @since 0.2.0
 	 */
@@ -243,7 +230,6 @@ open class JavaScriptValue : NSObject {
 	}()
 
 	/**
-	 * Converts the value to a boolean value.
 	 * @property boolean
 	 * @since 0.2.0
 	 */
@@ -274,7 +260,6 @@ open class JavaScriptValue : NSObject {
 	}
 
 	/**
-	 * Protect the value making it not garbage collectable.
 	 * @method protect
 	 * @since 0.1.0
 	 */
@@ -290,7 +275,6 @@ open class JavaScriptValue : NSObject {
 	}
 
 	/**
-	 * Unprotect the value making it garbage collectable.
 	 * @method unprotect
 	 * @since 0.1.0
 	 */
@@ -312,7 +296,6 @@ open class JavaScriptValue : NSObject {
 	}
 
 	/**
-	 * Disposes the value.
 	 * @method dispose
 	 * @since 0.1.0
 	 */
@@ -328,7 +311,6 @@ open class JavaScriptValue : NSObject {
 	}
 
 	/**
-	 * Casts the value to a specified type.
 	 * @method cast
 	 * @since 0.1.0
 	 */
@@ -337,7 +319,6 @@ open class JavaScriptValue : NSObject {
 	}
 
 	/**
-	 * Executes the value as a function.
 	 * @method call
 	 * @since 0.1.0
 	 */
@@ -346,7 +327,6 @@ open class JavaScriptValue : NSObject {
 	}
 
 	/**
-	 * Executes the value as a function with arguments.
 	 * @method call
 	 * @since 0.1.0
 	 */
@@ -363,7 +343,6 @@ open class JavaScriptValue : NSObject {
 	}
 
 	/**
-	 * Executes a method from the value.
 	 * @method callMethod
 	 * @since 0.1.0
 	 */
@@ -372,7 +351,6 @@ open class JavaScriptValue : NSObject {
 	}
 
 	/**
-	 * Executes a method with arguments from the value.
 	 * @method callMethod
 	 * @since 0.1.0
 	 */
@@ -389,7 +367,6 @@ open class JavaScriptValue : NSObject {
 	}
 
 	/**
-	 * Executes the value as a constructor.
 	 * @method construct
 	 * @since 0.1.0
 	 */
@@ -398,7 +375,6 @@ open class JavaScriptValue : NSObject {
 	}
 
 	/**
-	 * Executes the value as a constructor with arguments.
 	 * @method construct
 	 * @since 0.1.0
 	 */
@@ -415,7 +391,6 @@ open class JavaScriptValue : NSObject {
 	}
 
 	/**
-	 * Defines a property on the value.
 	 * @method defineProperty
 	 * @since 0.1.0
 	 */
@@ -436,7 +411,6 @@ open class JavaScriptValue : NSObject {
 	}
 
 	/**
-	 * Assigns the value of a property.
 	 * @method property
 	 * @since 0.1.0
 	 */
@@ -445,7 +419,6 @@ open class JavaScriptValue : NSObject {
 	}
 
 	/**
-	 * Assigns the value of a property using a property.
 	 * @method property
 	 * @since 0.1.0
 	 */
@@ -454,7 +427,6 @@ open class JavaScriptValue : NSObject {
 	}
 
 	/**
-	 * Assigns the value of a property using a string.
 	 * @method property
 	 * @since 0.1.0
 	 */
@@ -463,7 +435,6 @@ open class JavaScriptValue : NSObject {
 	}
 
 	/**
-	 * Assigns the value of a property using a number.
 	 * @method property
 	 * @since 0.1.0
 	 */
@@ -472,7 +443,6 @@ open class JavaScriptValue : NSObject {
 	}
 
 	/**
-	 * Assigns the value of a property using a number.
 	 * @method property
 	 * @since 0.4.0
 	 */
@@ -481,7 +451,6 @@ open class JavaScriptValue : NSObject {
 	}
 
 	/**
-	 * Assigns the value of a property using a number.
 	 * @method property
 	 * @since 0.4.0
 	 */
@@ -490,7 +459,6 @@ open class JavaScriptValue : NSObject {
 	}
 
 	/**
-	 * Assigns the value of a property using a number.
 	 * @method property
 	 * @since 0.4.0
 	 */
@@ -499,7 +467,6 @@ open class JavaScriptValue : NSObject {
 	}
 
 	/**
-	 * Assigns the value of a property using a boolean.
 	 * @method property
 	 * @since 0.1.0
 	 */
@@ -508,7 +475,6 @@ open class JavaScriptValue : NSObject {
 	}
 
 	/**
-	 * Returns the value of a property.
 	 * @method property
 	 * @since 0.1.0
 	 */
@@ -517,7 +483,6 @@ open class JavaScriptValue : NSObject {
 	}
 
 	/**
-	 * Assigns the value of a property at a specified index.
 	 * @method property
 	 * @since 0.1.0
 	 */
@@ -526,7 +491,6 @@ open class JavaScriptValue : NSObject {
 	}
 
 	/**
-	 * Assigns the value of a property at a specified index using a string.
 	 * @method property
 	 * @since 0.1.0
 	 */
@@ -535,7 +499,6 @@ open class JavaScriptValue : NSObject {
 	}
 
 	/**
-	 * Assigns the value of a property at a specified index using a number.
 	 * @method property
 	 * @since 0.1.0
 	 */
@@ -544,7 +507,6 @@ open class JavaScriptValue : NSObject {
 	}
 
 	/**
-	 * Assigns the value of a property at a specified index using a number.
 	 * @method property
 	 * @since 0.4.0
 	 */
@@ -553,7 +515,6 @@ open class JavaScriptValue : NSObject {
 	}
 
 	/**
-	 * Assigns the value of a property at a specified index using a number.
 	 * @method property
 	 * @since 0.4.0
 	 */
@@ -562,7 +523,6 @@ open class JavaScriptValue : NSObject {
 	}
 
 	/**
-	 * Assigns the value of a property at a specified index using a number.
 	 * @method property
 	 * @since 0.4.0
 	 */
@@ -571,7 +531,6 @@ open class JavaScriptValue : NSObject {
 	}
 
 	/**
-	 * Assigns the value of a property at a specified index using a boolean.
 	 * @method property
 	 * @since 0.1.0
 	 */
@@ -580,7 +539,6 @@ open class JavaScriptValue : NSObject {
 	}
 
 	/**
-	 * Returns the value of a property at a specified index.
 	 * @method property
 	 * @since 0.1.0
 	 */
@@ -589,31 +547,28 @@ open class JavaScriptValue : NSObject {
 	}
 
 	/**
-	 * Executes a provided function once for each array element.
 	 * @method forEach
 	 * @since 0.7.0
 	 */
 	open func forEach(_ handler: @escaping JavaScriptForEachHandler) {
 		let wrapper = JavaScriptValueForEachWrapper(context: self.context, handler: handler)
-		JavaScriptValueForEach(self.context.handle, self.handle, JavaScriptValueForEachCallback,
+		JavaScriptValueForEach(self.context.handle, self.handle, javaScriptValueForEachCallback,
 			toUnretainedOpaque(wrapper)
 		)
 	}
 
 	/**
-	 * Executes a provided function once for each object properties.
 	 * @method forOwn
 	 * @since 0.7.0
 	 */
 	open func forOwn(_ handler: @escaping JavaScriptForOwnHandler) {
 		let wrapper = JavaScriptValueForOwnWrapper(context: self.context, handler: handler)
-		JavaScriptValueForOwn(self.context.handle, self.handle, JavaScriptValueForOwnCallback,
+		JavaScriptValueForOwn(self.context.handle, self.handle, javaScriptValueForOwnCallback,
 			toUnretainedOpaque(wrapper)
 		)
 	}
 
 	/**
-	 * Assigns the internal prototype of this value.
 	 * @method prototype
 	 * @since 0.1.0
 	 */
@@ -622,7 +577,6 @@ open class JavaScriptValue : NSObject {
 	}
 
 	/**
-	 * Returns the internal prototype of this value.
 	 * @method prototype
 	 * @since 0.1.0
 	 */
@@ -631,7 +585,6 @@ open class JavaScriptValue : NSObject {
 	}
 
 	/**
-	 * Indicates the value is equal and the same type as the specified value.
 	 * @method equals
 	 * @since 0.1.0
 	 */
@@ -640,7 +593,6 @@ open class JavaScriptValue : NSObject {
 	}
 
 	/**
-	 * Indicates if the value is the specified string.
 	 * @method equals
 	 * @since 0.1.0
 	 */
@@ -649,7 +601,6 @@ open class JavaScriptValue : NSObject {
 	}
 
 	/**
-	 * Indicates if the value is the specified number.
 	 * @method equals
 	 * @since 0.1.0
 	 */
@@ -658,7 +609,6 @@ open class JavaScriptValue : NSObject {
 	}
 
 	/**
-	 * Indicates if the value is the specified boolean.
 	 * @method equals
 	 * @since 0.1.0
 	 */
@@ -671,7 +621,6 @@ open class JavaScriptValue : NSObject {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Called when the value gets protected.
 	 * @method didProtectValue
 	 * @since 0.4.0
 	 */
@@ -680,7 +629,6 @@ open class JavaScriptValue : NSObject {
 	}
 
 	/**
-	 * Called when the value gets unprotected.
 	 * @method didUnprotectValue
 	 * @since 0.4.0
 	 */
@@ -689,7 +637,6 @@ open class JavaScriptValue : NSObject {
 	}
 
 	/**
-	 * Called when the value get reset
 	 * @method didReset
 	 * @since 0.4.0
 	 */
@@ -737,49 +684,42 @@ internal let kFinalizeWrapperKey = Int64(CChar(exactly:0)!.hashValue)
 internal let kExceptionWrapperKey = Int64(CChar(exactly: 0)!.hashValue)
 
 /**
- * The type alias for function callback.
  * @alias JavaScriptFinalizeHandler
  * @since 0.2.0
  */
 public typealias JavaScriptFinalizeHandler = (JavaScriptFinalizeCallback) -> (Void)
 
 /**
- * The function callback alias.
  * @alias JavaScriptFunctionHandler
  * @since 0.2.0
  */
 public typealias JavaScriptFunctionHandler = (JavaScriptFunctionCallback) -> (Void)
 
 /**
- * The type alias for property getter callback.
  * @alias JavaScriptGetterHandler
  * @since 0.2.0
  */
 public typealias JavaScriptGetterHandler = (JavaScriptGetterCallback) -> (Void)
 
 /**
- * The type alias for property setter callback.
  * @alias JavaScriptSetterHandler
  * @since 0.2.0
  */
 public typealias JavaScriptSetterHandler = (JavaScriptSetterCallback) -> (Void)
 
 /**
- * The type alias for arguments.
  * @alias JavaScriptArguments
  * @since 0.2.0
  */
 public typealias JavaScriptArguments = [JavaScriptValue?]
 
 /**
- * The object for each handler.
  * @alias JavaScriptForOwnHandler
  * @since 0.7.0
  */
 public typealias JavaScriptForOwnHandler = (String, JavaScriptValue) -> Void
 
 /**
- * The array for each handler.
  * @alias JavaScriptForEachHandler
  * @since 0.7.0
  */

@@ -14,7 +14,6 @@ export class Reference<T extends View | Placeholder> {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The referenced value.
 	 * @property value
 	 * @since 0.7.0
 	 */

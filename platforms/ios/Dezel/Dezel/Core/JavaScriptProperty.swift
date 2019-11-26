@@ -1,5 +1,4 @@
 /**
- * A JavaScript property.
  * @class JavaScriptProperty
  * @since 0.7.0
  */
@@ -10,7 +9,6 @@ public class JavaScriptProperty: NSObject {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The property change handler.
 	 * @alias JavaScriptPropertyHandler
 	 * @since 0.7.0
 	 */
@@ -21,7 +19,6 @@ public class JavaScriptProperty: NSObject {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The property's type.
 	 * @property type
 	 * @since 0.7.0
 	 */
@@ -30,7 +27,6 @@ public class JavaScriptProperty: NSObject {
 	}
 
 	/**
-	 * The property's unit.
 	 * @property unit
 	 * @since 0.7.0
 	 */
@@ -39,7 +35,6 @@ public class JavaScriptProperty: NSObject {
 	}
 
 	/**
-	 * The property's string value.
 	 * @property string
 	 * @since 0.7.0
 	 */
@@ -48,7 +43,6 @@ public class JavaScriptProperty: NSObject {
 	}
 
 	/**
-	 * The property's number value.
 	 * @property number
 	 * @since 0.7.0
 	 */
@@ -57,7 +51,6 @@ public class JavaScriptProperty: NSObject {
 	}
 
 	/**
-	 * The property's boolean value.
 	 * @property boolean
 	 * @since 0.7.0
 	 */
@@ -66,7 +59,6 @@ public class JavaScriptProperty: NSObject {
 	}
 
 	/**
-	 * Indicate whether the property is null.
 	 * @property isNull
 	 * @since 0.7.0
 	 */
@@ -75,7 +67,6 @@ public class JavaScriptProperty: NSObject {
 	}
 
 	/**
-	 * Indicate whether the property is a string.
 	 * @property isString
 	 * @since 0.7.0
 	 */
@@ -84,7 +75,6 @@ public class JavaScriptProperty: NSObject {
 	}
 
 	/**
-	 * Indicate whether the property is a number.
 	 * @property isNumber
 	 * @since 0.7.0
 	 */
@@ -93,7 +83,6 @@ public class JavaScriptProperty: NSObject {
 	}
 
 	/**
-	 * Indicate whether the property is a boolean.
 	 * @property isBoolean
 	 * @since 0.7.0
 	 */
@@ -102,7 +91,6 @@ public class JavaScriptProperty: NSObject {
 	}
 
 	/**
-	 * Indicate whether the property is an object.
 	 * @property isObject
 	 * @since 0.7.0
 	 */
@@ -111,7 +99,6 @@ public class JavaScriptProperty: NSObject {
 	}
 
 	/**
-	 * Indicate whether the property is an array.
 	 * @property isArray
 	 * @since 0.7.0
 	 */
@@ -152,7 +139,6 @@ public class JavaScriptProperty: NSObject {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Initializes the property to nil.
 	 * @constructor
 	 * @since 0.7.0
 	 */
@@ -163,7 +149,6 @@ public class JavaScriptProperty: NSObject {
 	}
 
 	/**
-	 * Initializes the property with a string.
 	 * @constructor
 	 * @since 0.7.0
 	 */
@@ -174,7 +159,6 @@ public class JavaScriptProperty: NSObject {
 	}
 
 	/**
-	 * Initializes the property with a number.
 	 * @constructor
 	 * @since 0.7.0
 	 */
@@ -185,7 +169,6 @@ public class JavaScriptProperty: NSObject {
 	}
 
 	/**
-	 * Initializes the property with a number.
 	 * @constructor
 	 * @since 0.7.0
 	 */
@@ -196,7 +179,6 @@ public class JavaScriptProperty: NSObject {
 	}
 
 	/**
-	 * Initializes the property with a boolean.
 	 * @constructor
 	 * @since 0.7.0
 	 */
@@ -207,7 +189,6 @@ public class JavaScriptProperty: NSObject {
 	}
 
 	/**
-	 * Initializes the property to nil.
 	 * @constructor
 	 * @since 0.7.0
 	 */
@@ -217,7 +198,6 @@ public class JavaScriptProperty: NSObject {
 	}
 
 	/**
-	 * Initializes the property with a string.
 	 * @constructor
 	 * @since 0.7.0
 	 */
@@ -227,7 +207,6 @@ public class JavaScriptProperty: NSObject {
 	}
 
 	/**
-	 * Initializes the property with a number.
 	 * @constructor
 	 * @since 0.7.0
 	 */
@@ -237,7 +216,6 @@ public class JavaScriptProperty: NSObject {
 	}
 
 	/**
-	 * Initializes the property with a number.
 	 * @constructor
 	 * @since 0.7.0
 	 */
@@ -247,7 +225,6 @@ public class JavaScriptProperty: NSObject {
 	}
 
 	/**
-	 * Initializes the property with a boolean.
 	 * @constructor
 	 * @since 0.7.0
 	 */
@@ -257,7 +234,6 @@ public class JavaScriptProperty: NSObject {
 	}
 
 	/**
-	 * Parses the string assign its result to the property.
 	 * @method parse
 	 * @since 0.7.0
 	 */
@@ -289,7 +265,6 @@ public class JavaScriptProperty: NSObject {
 	}
 
 	/**
-	 * Resets this property's value to null or its initial value.
 	 * @method reset
 	 * @since 0.7.0
 	 */
@@ -319,7 +294,6 @@ public class JavaScriptProperty: NSObject {
 	}
 
 	/**
-	 * Resets this property's value using a JavaScript value.
 	 * @method reset
 	 * @since 0.7.0
 	 */
@@ -366,7 +340,6 @@ public class JavaScriptProperty: NSObject {
 	}
 
 	/**
-	 * Resets this property's value using a string.
 	 * @method reset
 	 * @since 0.7.0
 	 */
@@ -385,7 +358,6 @@ public class JavaScriptProperty: NSObject {
 	}
 
 	/**
-	 * Resets this property's value using a number.
 	 * @method reset
 	 * @since 0.7.0
 	 */
@@ -404,7 +376,6 @@ public class JavaScriptProperty: NSObject {
 	}
 
 	/**
-	 * Resets this property's value using a number.
 	 * @method reset
 	 * @since 0.7.0
 	 */
@@ -423,7 +394,6 @@ public class JavaScriptProperty: NSObject {
 	}
 
 	/**
-	 * Resets this property's value using a boolean.
 	 * @method reset
 	 * @since 0.7.0
 	 */
@@ -442,7 +412,6 @@ public class JavaScriptProperty: NSObject {
 	}
 
 	/**
-	 * Indicate whether this property's value is a specified JavaScript value.
 	 * @method equals
 	 * @since 0.7.0
 	 */
@@ -470,7 +439,6 @@ public class JavaScriptProperty: NSObject {
 	}
 
 	/**
-	 * Indicate whether this property's value is a specified JavaScript value.
 	 * @method equals
 	 * @since 0.7.0
 	 */
@@ -479,7 +447,6 @@ public class JavaScriptProperty: NSObject {
 	}
 
 	/**
-	 * Indicate whether this property's value is a specified string.
 	 * @method equals
 	 * @since 0.7.0
 	 */
@@ -488,7 +455,6 @@ public class JavaScriptProperty: NSObject {
 	}
 
 	/**
-	 * Indicate whether this property's value is a specified number.
 	 * @method equals
 	 * @since 0.7.0
 	 */
@@ -497,7 +463,6 @@ public class JavaScriptProperty: NSObject {
 	}
 
 	/**
-	 * Indicate whether this property's value is a specified number.
 	 * @method equals
 	 * @since 0.7.0
 	 */
@@ -506,7 +471,6 @@ public class JavaScriptProperty: NSObject {
 	}
 
 	/**
-	 * Indicate whether this property's value is a specified boolean.
 	 * @method equals
 	 * @since 0.7.0
 	 */
@@ -515,7 +479,6 @@ public class JavaScriptProperty: NSObject {
 	}
 
 	/**
-	 * Casts the property to a specified type.
 	 * @method cast
 	 * @since 0.7.0
 	 */

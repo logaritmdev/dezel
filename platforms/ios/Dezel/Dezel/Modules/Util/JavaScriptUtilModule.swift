@@ -1,16 +1,15 @@
 /**
  * @class JavaScriptUtilModule
- * @since 0.7.0
+ * @super JavaScriptModule
  * @hidden
  */
-open class JavaScriptUtilModule: Module {
+open class JavaScriptUtilModule: JavaScriptModule {
 
 	//--------------------------------------------------------------------------
 	// MARK: Methods
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method register
 	 * @since 0.7.0
 	 */

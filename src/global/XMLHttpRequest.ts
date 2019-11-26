@@ -2,112 +2,27 @@ import { Dictionary } from 'lodash'
 import { bound } from '../decorator/bound'
 import { bridge } from '../native/bridge'
 import { native } from '../native/native'
+import { $abort } from './symbol/XMLHttpRequest'
+import { $error } from './symbol/XMLHttpRequest'
+import { $headers } from './symbol/XMLHttpRequest'
+import { $method } from './symbol/XMLHttpRequest'
+import { $password } from './symbol/XMLHttpRequest'
+import { $readyState } from './symbol/XMLHttpRequest'
+import { $response } from './symbol/XMLHttpRequest'
+import { $responseHeaders } from './symbol/XMLHttpRequest'
+import { $responseText } from './symbol/XMLHttpRequest'
+import { $responseType } from './symbol/XMLHttpRequest'
+import { $responseUrl } from './symbol/XMLHttpRequest'
+import { $sent } from './symbol/XMLHttpRequest'
+import { $statusCode } from './symbol/XMLHttpRequest'
+import { $statusText } from './symbol/XMLHttpRequest'
+import { $timeout } from './symbol/XMLHttpRequest'
+import { $url } from './symbol/XMLHttpRequest'
+import { $username } from './symbol/XMLHttpRequest'
 import { Event } from './Event'
 import { ProgressEvent } from './Event'
 import { EventTarget } from './EventTarget'
 import { Exception } from './Exception'
-
-/**
- * @symbol READY_STATE
- * @since 0.7.0
- */
-export const READY_STATE = Symbol('readyState')
-
-/**
- * @symbol URL
- * @since 0.7.0
- */
-export const URL = Symbol('url')
-
-/**
- * @symbol METHOD
- * @since 0.7.0
- */
-export const METHOD = Symbol('method')
-
-/**
- * @symbol HEADERS
- * @since 0.7.0
- */
-export const HEADERS = Symbol('headers')
-
-/**
- * @symbol TIMEOUT
- * @since 0.7.0
- */
-export const TIMEOUT = Symbol('timeout')
-
-/**
- * @symbol USERNAME
- * @since 0.7.0
- */
-export const USERNAME = Symbol('username')
-
-/**
- * @symbol PASSWORD
- * @since 0.7.0
- */
-export const PASSWORD = Symbol('password')
-
-/**
- * @symbol RESPONSE
- * @since 0.7.0
- */
-export const RESPONSE = Symbol('response')
-
-/**
- * @symbol RESPONSE_TEXT
- * @since 0.7.0
- */
-export const RESPONSE_TEXT = Symbol('responseText')
-
-/**
- * @symbol RESPONSE_TYPE
- * @since 0.7.0
- */
-export const RESPONSE_TYPE = Symbol('responseType')
-
-/**
- * @symbol RESPONSE_HEADERS
- * @since 0.7.0
- */
-export const RESPONSE_HEADERS = Symbol('responseHeader')
-
-/**
- * @symbol RESPONSE_URL
- * @since 0.7.0
- */
-export const RESPONSE_URL = Symbol('responseURL')
-
-/**
- * @symbol STATUS_CODE
- * @since 0.7.0
- */
-export const STATUS_CODE = Symbol('statusCode')
-
-/**
- * @symbol STATUS_TEXT
- * @since 0.7.0
- */
-export const STATUS_TEXT = Symbol('statusText')
-
-/**
- * @symbol SENT
- * @since 0.7.0
- */
-export const SENT = Symbol('sent')
-
-/**
- * @symbol ERROR
- * @since 0.7.0
- */
-export const ERROR = Symbol('error')
-
-/**
- * @symbol ABORT
- * @since 0.7.0
- */
-export const ABORT = Symbol('abort')
 
 /**
  * @bridge dezel.global.XMLHttpRequest
@@ -116,7 +31,6 @@ export const ABORT = Symbol('abort')
 @bridge('dezel.global.XMLHttpRequest')
 
 /**
- * Manages Http requests.
  * @class XMLHttpRequest
  * @super EventTarget
  * @since 0.7.0
@@ -162,25 +76,22 @@ export class XMLHttpRequest extends EventTarget {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The state of the request.
 	 * @property readyState
 	 * @since 0.7.0
 	 */
 	public get readyState(): number {
-		return this[READY_STATE]
+		return this[$readyState]
 	}
 
 	/**
-	 * The request's response.
 	 * @property response
 	 * @since 0.7.0
 	 */
 	public get response(): any {
-		return this[RESPONSE]
+		return this[$response]
 	}
 
 	/**
-	 * The request's text response.
 	 * @property responseText
 	 * @since 0.7.0
 	 */
@@ -191,20 +102,18 @@ export class XMLHttpRequest extends EventTarget {
 			throw Exception.create(Exception.Code.InvalidStateError)
 		}
 
-		return this[RESPONSE_TEXT]
+		return this[$responseText]
 	}
 
 	/**
-	 * The request's response type.
 	 * @property responseType
 	 * @since 0.7.0
 	 */
 	public get responseType(): string {
-		return this[RESPONSE_TYPE]
+		return this[$responseType]
 	}
 
 	/**
-	 * The request's response type.
 	 * @property responseType
 	 * @since 0.7.0
 	 */
@@ -214,20 +123,18 @@ export class XMLHttpRequest extends EventTarget {
 			throw Exception.create(Exception.Code.InvalidStateError)
 		}
 
-		this[RESPONSE_TYPE] = value
+		this[$responseType] = value
 	}
 
 	/**
-	 * The request's response URL.
 	 * @property responseURL
 	 * @since 0.7.0
 	 */
 	public get responseURL(): string {
-		return this[RESPONSE_URL]
+		return this[$responseUrl]
 	}
 
 	/**
-	 * The request's response XML document.
 	 * @property responseXML
 	 * @since 0.7.0
 	 */
@@ -236,7 +143,6 @@ export class XMLHttpRequest extends EventTarget {
 	}
 
 	/**
-	 * The request's status.
 	 * @property status
 	 * @since 0.7.0
 	 */
@@ -248,11 +154,10 @@ export class XMLHttpRequest extends EventTarget {
 			return 0
 		}
 
-		return this[STATUS_CODE]
+		return this[$statusCode]
 	}
 
 	/**
-	 * The request's status text.
 	 * @property statusText
 	 * @since 0.7.0
 	 */
@@ -264,20 +169,18 @@ export class XMLHttpRequest extends EventTarget {
 			return ""
 		}
 
-		return this[STATUS_TEXT]
+		return this[$statusText]
 	}
 
 	/**
-	 * The requests's timeout.
 	 * @property timeout
 	 * @since 0.7.0
 	 */
 	public get timeout(): number {
-		return this[TIMEOUT]
+		return this[$timeout]
 	}
 
 	/**
-	 * The requests's timeout.
 	 * @property timeout
 	 * @since 0.7.0
 	 */
@@ -287,7 +190,7 @@ export class XMLHttpRequest extends EventTarget {
 			throw Exception.create(Exception.Code.InvalidStateError)
 		}
 
-		this[TIMEOUT] = value
+		this[$timeout] = value
 	}
 
 	//--------------------------------------------------------------------------
@@ -295,7 +198,6 @@ export class XMLHttpRequest extends EventTarget {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Initializes a request.
 	 * @method open
 	 * @since 0.7.0
 	 */
@@ -312,14 +214,14 @@ export class XMLHttpRequest extends EventTarget {
 			throw new SyntaxError('Invalid request method')
 		}
 
-		this[URL] = url
-		this[METHOD] = method
-		this[USERNAME] = username
-		this[PASSWORD] = password
+		this[$url] = url
+		this[$method] = method
+		this[$username] = username
+		this[$password] = password
 
-		this[SENT] = false
-		this[ERROR] = false
-		this[ABORT] = false
+		this[$sent] = false
+		this[$error] = false
+		this[$abort] = false
 
 		this.clearRequest()
 		this.clearResponse()
@@ -328,30 +230,28 @@ export class XMLHttpRequest extends EventTarget {
 	}
 
 	/**
-	 * Aborts the request if it has already been sent.
 	 * @method open
 	 * @since 0.7.0
 	 */
 	public abort() {
 
-		this[ABORT] = true
+		this[$abort] = true
 
 		this.clearRequest()
 		this.clearResponse()
 
-		if (this[SENT] && this.readyState == XMLHttpRequest.OPENED || this.readyState == XMLHttpRequest.HEADERS_RECEIVED || this.readyState == XMLHttpRequest.LOADING) {
-			this[SENT] = false
+		if (this[$sent] && this.readyState == XMLHttpRequest.OPENED || this.readyState == XMLHttpRequest.HEADERS_RECEIVED || this.readyState == XMLHttpRequest.LOADING) {
+			this[$sent] = false
 			this.changeState(XMLHttpRequest.DONE)
 			this.dispatchEvent(new ProgressEvent('abort'))
 		}
 
-		if (this[READY_STATE] == XMLHttpRequest.DONE) {
-			this[READY_STATE] = XMLHttpRequest.UNSENT
+		if (this[$readyState] == XMLHttpRequest.DONE) {
+			this[$readyState] = XMLHttpRequest.UNSENT
 		}
 	}
 
 	/**
-	 * Sends the request.
 	 * @method open
 	 * @since 0.7.0
 	 */
@@ -361,16 +261,16 @@ export class XMLHttpRequest extends EventTarget {
 			throw Exception.create(Exception.Code.InvalidStateError)
 		}
 
-		this[SENT] = true
-		this[ERROR] = false
+		this[$sent] = true
+		this[$error] = false
 
 		native(this).request(
-			this[URL],
-			this[METHOD],
-			this[HEADERS],
-			this[TIMEOUT],
-			this[USERNAME],
-			this[PASSWORD],
+			this[$url],
+			this[$method],
+			this[$headers],
+			this[$timeout],
+			this[$username],
+			this[$password],
 			data
 		)
 
@@ -378,7 +278,6 @@ export class XMLHttpRequest extends EventTarget {
 	}
 
 	/**
-	 * Overrides the MIME type returned by the server.
 	 * @method overrideMimeType
 	 * @since 0.7.0
 	 */
@@ -393,7 +292,6 @@ export class XMLHttpRequest extends EventTarget {
 	}
 
 	/**
-	 * Returns all the response headers.
 	 * @method getAllResponseHeaders
 	 * @since 0.7.0
 	 */
@@ -404,7 +302,7 @@ export class XMLHttpRequest extends EventTarget {
 		}
 
 		let headers = ''
-		let entries = Object.entries(this[RESPONSE_HEADERS])
+		let entries = Object.entries(this[$responseHeaders])
 
 		for (let entry of entries) {
 
@@ -421,7 +319,6 @@ export class XMLHttpRequest extends EventTarget {
 	}
 
 	/**
-	 * Returns the string containing the text of the specified header.
 	 * @method getResponseHeader
 	 * @since 0.7.0
 	 */
@@ -431,7 +328,7 @@ export class XMLHttpRequest extends EventTarget {
 			return ''
 		}
 
-		return this[RESPONSE_HEADERS][name]
+		return this[$responseHeaders][name]
 	}
 
 	/**
@@ -445,7 +342,7 @@ export class XMLHttpRequest extends EventTarget {
 			throw Exception.create(Exception.Code.InvalidStateError)
 		}
 
-		this[HEADERS][name] = value
+		this[$headers][name] = value
 	}
 
 	//--------------------------------------------------------------------------
@@ -453,123 +350,123 @@ export class XMLHttpRequest extends EventTarget {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @property URL
+	 * @property $url
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private [URL]: string = ''
+	private [$url]: string = ''
 
 	/**
-	 * @property METHOD
+	 * @property $method
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private [METHOD]: string = ''
+	private [$method]: string = ''
 
 	/**
-	 * @property HEADERS
+	 * @property $headers
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private [HEADERS]: Dictionary<string> = {}
+	private [$headers]: Dictionary<string> = {}
 
 	/**
-	 * @property TIMEOUT
+	 * @property timeout
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private [TIMEOUT]: number = 60000
+	private [$timeout]: number = 60000
 
 	/**
-	 * @property USERNAME
+	 * @property $username
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private [USERNAME]?: string = ''
+	private [$username]?: string = ''
 
 	/**
-	 * @property PASSWORD
+	 * @property $password
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private [PASSWORD]?: string = ''
+	private [$password]?: string = ''
 
 	/**
-	 * @property READY_STATE
+	 * @property $readyState
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private [READY_STATE]: number = 0
+	private [$readyState]: number = 0
 
 	/**
-	 * @property RESPONSE
+	 * @property $response
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private [RESPONSE]: string = ''
+	private [$response]: string = ''
 
 	/**
-	 * @property RESPONSE_TEXT
+	 * @property $responseText
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private [RESPONSE_TEXT]: string = ''
+	private [$responseText]: string = ''
 
 	/**
-	 * @property RESPONSE_TYPE
+	 * @property $responseType
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private [RESPONSE_TYPE]: string = ''
+	private [$responseType]: string = ''
 
 	/**
-	 * @property RESPONSE_HEADERS
+	 * @property $responseHeaders
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private [RESPONSE_HEADERS]: Dictionary<string> = {}
+	private [$responseHeaders]: Dictionary<string> = {}
 
 	/**
-	 * @property RESPONSE_URL
+	 * @property responseUrl
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private [RESPONSE_URL]: string = ''
+	private [$responseUrl]: string = ''
 
 	/**
-	 * @property STATUS
+	 * @property statusCode
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private [STATUS_CODE]: number = 0
+	private [$statusCode]: number = 0
 
 	/**
-	 * @property STATUS_TEXT
+	 * @property statusText
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private [STATUS_TEXT]: string = ''
+	private [$statusText]: string = ''
 
 	/**
-	 * @property SENT
+	 * @property $sent
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private [SENT]: boolean = false
+	private [$sent]: boolean = false
 
 	/**
-	 * @property ERROR
+	 * @property $error
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private [ERROR]: boolean = false
+	private [$error]: boolean = false
 
 	/**
-	 * @property ABORT
+	 * @property $abort
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private [ABORT]: boolean = false
+	private [$abort]: boolean = false
 
 	/**
 	 * @property sent
@@ -577,7 +474,7 @@ export class XMLHttpRequest extends EventTarget {
 	 * @hidden
 	 */
 	private get sent(): boolean {
-		return this[SENT]
+		return this[$sent]
 	}
 
 	/**
@@ -586,7 +483,7 @@ export class XMLHttpRequest extends EventTarget {
 	 * @hidden
 	 */
 	private get error(): boolean {
-		return this[ERROR]
+		return this[$error]
 	}
 
 	/**
@@ -600,7 +497,7 @@ export class XMLHttpRequest extends EventTarget {
 			return
 		}
 
-		this[READY_STATE] = state
+		this[$readyState] = state
 
 		if (state <= XMLHttpRequest.OPENED ||
 			state == XMLHttpRequest.DONE) {
@@ -619,7 +516,7 @@ export class XMLHttpRequest extends EventTarget {
 	 * @hidden
 	 */
 	private clearRequest() {
-		this[HEADERS] = {}
+		this[$headers] = {}
 	}
 
 	/**
@@ -628,8 +525,8 @@ export class XMLHttpRequest extends EventTarget {
 	 * @hidden
 	 */
 	private clearResponse() {
-		this[RESPONSE] = ''
-		this[RESPONSE_TEXT] = ''
+		this[$response] = ''
+		this[$responseText] = ''
 	}
 
 	//--------------------------------------------------------------------------
@@ -662,15 +559,15 @@ export class XMLHttpRequest extends EventTarget {
 
 		headers = Object.assign({}, headers)
 
-		this[RESPONSE] = data
-		this[RESPONSE_TEXT] = data
-		this[RESPONSE_HEADERS] = headers
-		this[RESPONSE_URL] = url
+		this[$response] = data
+		this[$responseText] = data
+		this[$responseHeaders] = headers
+		this[$responseUrl] = url
 
-		this[STATUS_CODE] = statusCode
-		this[STATUS_TEXT] = statusText
+		this[$statusCode] = statusCode
+		this[$statusText] = statusText
 
-		this[SENT] = false
+		this[$sent] = false
 
 		this.changeState(XMLHttpRequest.DONE)
 	}
@@ -685,8 +582,8 @@ export class XMLHttpRequest extends EventTarget {
 		this.clearRequest()
 		this.clearResponse()
 
-		this[SENT] = false
-		this[ERROR] = true
+		this[$sent] = false
+		this[$error] = true
 
 		this.changeState(XMLHttpRequest.DONE)
 

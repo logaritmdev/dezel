@@ -1,7 +1,7 @@
 /**
  * @class JavaScriptWebSocket
+ * @super JavaScriptClass
  * @since 0.7.0
- * @hidden
  */
 public class JavaScriptWebSocket: JavaScriptClass, WebSocketDelegate {
 
@@ -10,7 +10,6 @@ public class JavaScriptWebSocket: JavaScriptClass, WebSocketDelegate {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The WebSocket connection.
 	 * @property socket
 	 * @since 0.7.0
 	 */
@@ -21,7 +20,6 @@ public class JavaScriptWebSocket: JavaScriptClass, WebSocketDelegate {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method dispose
 	 * @since 0.7.0
 	 */

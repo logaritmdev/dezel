@@ -1,5 +1,4 @@
 /**
- * The scrollable view's overscroll options.
  * @enum Overscroll
  * @since 0.2.0
  */
@@ -12,7 +11,6 @@ public enum Overscroll {
 	case alwaysY
 
 	/**
-	 * Parses the overscroll type from a property.
 	 * @method get
 	 * @since 0.2.0
 	 */
@@ -33,7 +31,6 @@ public enum Overscroll {
 	}
 
 	/**
-	 * Parses the overscroll type from a string.
 	 * @method get
 	 * @since 0.2.0
 	 */
@@ -58,7 +55,6 @@ public enum Overscroll {
 	}
 
 	/**
-	 * Parses the overscroll type from a number.
 	 * @method get
 	 * @since 0.2.0
 	 */
@@ -67,7 +63,6 @@ public enum Overscroll {
 	}
 
 	/**
-	 * Parses the overscroll type from a boolean.
 	 * @method get
 	 * @since 0.2.0
 	 */

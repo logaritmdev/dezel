@@ -1,5 +1,4 @@
 /**
- * The type of properties.
  * @enum JavaScriptPropertyType
  * @since 0.7.0
  */

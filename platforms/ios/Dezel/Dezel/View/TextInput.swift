@@ -10,7 +10,6 @@ open class TextInput: UITextField, UITextFieldDelegate {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The text input's type.
 	 * @property type
 	 * @since 0.7.0
 	 */
@@ -46,7 +45,6 @@ open class TextInput: UITextField, UITextFieldDelegate {
 	}
 
 	/**
-	 * The text input's value.
 	 * @property value
 	 * @since 0.7.0
 	 */
@@ -68,7 +66,6 @@ open class TextInput: UITextField, UITextFieldDelegate {
 	}
 
 	/**
-	 * The text input's placeholder.
 	 * @property placeholder
 	 * @since 0.7.0
 	 */
@@ -79,7 +76,6 @@ open class TextInput: UITextField, UITextFieldDelegate {
 	}
 
 	/**
-	 * The text input's placeholder color.
 	 * @property placeholderColor
 	 * @since 0.7.0
 	 */
@@ -90,7 +86,6 @@ open class TextInput: UITextField, UITextFieldDelegate {
 	}
 
 	/**
-	 * The text input's value format.
 	 * @property format
 	 * @since 0.7.0
 	 */
@@ -101,7 +96,6 @@ open class TextInput: UITextField, UITextFieldDelegate {
 	}
 
 	/**
-	 * The text input's value format locale.
 	 * @property locale
 	 * @since 0.7.0
 	 */
@@ -112,7 +106,6 @@ open class TextInput: UITextField, UITextFieldDelegate {
 	}
 
 	/**
-	 * The text input's font family.
 	 * @property fontFamily
 	 * @since 0.7.0
 	 */
@@ -124,7 +117,6 @@ open class TextInput: UITextField, UITextFieldDelegate {
 	}
 
 	/**
-	 * The text input's font weight.
 	 * @property fontWeight
 	 * @since 0.7.0
 	 */
@@ -136,7 +128,6 @@ open class TextInput: UITextField, UITextFieldDelegate {
 	}
 
 	/**
-	 * The text input's font style.
 	 * @property fontStyle
 	 * @since 0.7.0
 	 */
@@ -148,7 +139,6 @@ open class TextInput: UITextField, UITextFieldDelegate {
 	}
 
 	/**
-	 * The text input's font size.
 	 * @property fontSize
 	 * @since 0.7.0
 	 */
@@ -160,7 +150,6 @@ open class TextInput: UITextField, UITextFieldDelegate {
 	}
 
 	/**
-	 * The text input's text color.
 	 * @property textColor
 	 * @since 0.7.0
 	 */
@@ -171,7 +160,6 @@ open class TextInput: UITextField, UITextFieldDelegate {
 	}
 
 	/**
-	 * The text input's text horizontal alignment.
 	 * @property textAlign
 	 * @since 0.7.0
 	 */
@@ -182,7 +170,6 @@ open class TextInput: UITextField, UITextFieldDelegate {
 	}
 
 	/**
-	 * The text input's text location.
 	 * @property textLocation
 	 * @since 0.7.0
 	 */
@@ -203,7 +190,6 @@ open class TextInput: UITextField, UITextFieldDelegate {
 	}
 
 	/**
-	 * The text input's text kerning.
 	 * @property textKerning
 	 * @since 0.7.0
 	 */
@@ -214,7 +200,6 @@ open class TextInput: UITextField, UITextFieldDelegate {
 	}
 
 	/**
-	 * The text input's text leading.
 	 * @property textLeading
 	 * @since 0.7.0
 	 */
@@ -225,7 +210,6 @@ open class TextInput: UITextField, UITextFieldDelegate {
 	}
 
 	/**
-	 * The text input's text decoration.
 	 * @property textDecoration
 	 * @since 0.7.0
 	 */
@@ -236,7 +220,6 @@ open class TextInput: UITextField, UITextFieldDelegate {
 	}
 
 	/**
-	 * The text input's text transform.
 	 * @property textTransform
 	 * @since 0.7.0
 	 */
@@ -247,7 +230,6 @@ open class TextInput: UITextField, UITextFieldDelegate {
 	}
 
 	/**
-	 * The text input's text shadow blur distance.
 	 * @property textShadowBlur
 	 * @since 0.7.0
 	 */
@@ -258,7 +240,6 @@ open class TextInput: UITextField, UITextFieldDelegate {
 	}
 
 	/**
-	 * The text input's text shadow color.
 	 * @property textShadowColor
 	 * @since 0.7.0
 	 */
@@ -269,7 +250,6 @@ open class TextInput: UITextField, UITextFieldDelegate {
 	}
 
 	/**
-	 * The text input's text shadow vertical offset.
 	 * @property textShadowOffsetTop
 	 * @since 0.7.0
 	 */
@@ -280,7 +260,6 @@ open class TextInput: UITextField, UITextFieldDelegate {
 	}
 
 	/**
-	 * The text input's text shadow horizontal offset.
 	 * @property textShadowOffsetLeft
 	 * @since 0.7.0
 	 */
@@ -291,7 +270,6 @@ open class TextInput: UITextField, UITextFieldDelegate {
 	}
 
 	/**
-	 * The text input's top padding.
 	 * @property paddingTop
 	 * @since 0.7.0
 	 */
@@ -302,7 +280,6 @@ open class TextInput: UITextField, UITextFieldDelegate {
 	}
 
 	/**
-	 * The text input's left padding.
 	 * @property paddingLeft
 	 * @since 0.7.0
 	 */
@@ -313,7 +290,6 @@ open class TextInput: UITextField, UITextFieldDelegate {
 	}
 
 	/**
-	 * The text input's right padding.
 	 * @property paddingRight
 	 * @since 0.7.0
 	 */
@@ -324,7 +300,6 @@ open class TextInput: UITextField, UITextFieldDelegate {
 	}
 
 	/**
-	 * The text input's bottom padding.
 	 * @property paddingBottom
 	 * @since 0.7.0
 	 */
@@ -335,7 +310,6 @@ open class TextInput: UITextField, UITextFieldDelegate {
 	}
 
 	/**
-	 * Whether the text input is clearable.
 	 * @property clearable
 	 * @since 0.7.0
 	 */
@@ -356,7 +330,6 @@ open class TextInput: UITextField, UITextFieldDelegate {
 	}
 
 	/**
-	 * The text input's clear button color.
 	 * @property clearButtonColor
 	 * @since 0.7.0
 	 */
@@ -461,7 +434,6 @@ open class TextInput: UITextField, UITextFieldDelegate {
 	}
 
 	/**
-	 * @inherited
 	 * @method action
 	 * @since 0.7.0
 	 */
@@ -470,7 +442,6 @@ open class TextInput: UITextField, UITextFieldDelegate {
 	}
 
 	/**
-	 * Brings the focus to the text input.
 	 * @method focus
 	 * @since 0.7.0
 	 */
@@ -481,7 +452,6 @@ open class TextInput: UITextField, UITextFieldDelegate {
 	}
 
 	/**
-	 * Clears the focus from the text input.
 	 * @method blur
 	 * @since 0.7.0
 	 */
@@ -508,7 +478,6 @@ open class TextInput: UITextField, UITextFieldDelegate {
 	}
 
 	/**
-	 * @inherited
 	 * @method draw
 	 * @since 0.7.0
 	 */
@@ -533,7 +502,6 @@ open class TextInput: UITextField, UITextFieldDelegate {
 	}
 
 	/**
-	 * @inherited
 	 * @method clear
 	 * @since 0.7.0
 	 */

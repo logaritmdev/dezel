@@ -1,7 +1,6 @@
 import UIKit
 
 /**
- * The base layer.
  * @class Layer
  * @super CAGradientLayer
  * @since 0.1.0
@@ -13,7 +12,6 @@ open class Layer: CAGradientLayer, CALayerDelegate {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method defaultAction
 	 * @since 0.1.0
 	 */
@@ -56,7 +54,6 @@ open class Layer: CAGradientLayer, CALayerDelegate {
 	}
 
 	/**
-	 * Called when the layer is resized.
 	 * @method resize
 	 * @since 0.1.0
 	 */
@@ -65,7 +62,6 @@ open class Layer: CAGradientLayer, CALayerDelegate {
 	}
 
 	/**
-	 * Called when the layer is about to update.
 	 * @method update
 	 * @since 0.1.0
 	 */
@@ -78,7 +74,6 @@ open class Layer: CAGradientLayer, CALayerDelegate {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method action
 	 * @since 0.1.0
 	 */

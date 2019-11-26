@@ -1,7 +1,6 @@
 import Foundation
 
 /**
- * Parses HTML to create an attributed string.
  * @class TextParser
  * @since 0.5.0
  */
@@ -12,21 +11,18 @@ open class TextParser: NSObject, XMLParserDelegate {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The parsed attributed string.
 	 * @property string
 	 * @since 0.5.0
 	 */
 	private(set) public var string: NSMutableAttributedString!
 
 	/**
-	 * The link text color.
 	 * @property linkTextColor
 	 * @since 0.5.0
 	 */
 	private(set) public var linkTextColor: CGColor
 
 	/**
-	 * The link text decoration.
 	 * @property linkTextDecoration
 	 * @since 0.5.0
 	 */
@@ -108,7 +104,6 @@ open class TextParser: NSObject, XMLParserDelegate {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method parserDidStartElement
 	 * @since 0.5.0
 	 */
@@ -147,7 +142,6 @@ open class TextParser: NSObject, XMLParserDelegate {
 	}
 
 	/**
-	 * @inherited
 	 * @method parserDidEndElement
 	 * @since 0.5.0
 	 */
@@ -188,7 +182,6 @@ open class TextParser: NSObject, XMLParserDelegate {
 	}
 
 	/**
-	 * @inherited
 	 * @method parserFoundCharacters
 	 * @since 0.5.0
 	 */
@@ -206,6 +199,11 @@ open class TextParser: NSObject, XMLParserDelegate {
 		self.text.append(string)
 	}
 
+	/**
+	 * @struct Options
+	 * @since 0.5.0
+	 * @hidden
+	 */
 	public struct Options {
 		public var linkTextColor: CGColor = CGColorCreateRGBA(r: 0, g: 0, b: 1, a: 1)
 		public var linkTextDecoration: TextDecoration = .underline
@@ -271,7 +269,6 @@ open class TextParser: NSObject, XMLParserDelegate {
 		}
 
 		/**
-		 * Configures the node.
 		 * @method configure
 		 * @since 0.5.0
 		 */
@@ -280,7 +277,6 @@ open class TextParser: NSObject, XMLParserDelegate {
 		}
 
 		/**
-		 * Applies the attributes to the string.
 		 * @method apply
 		 * @since 0.5.0
 		 */
@@ -318,7 +314,6 @@ open class TextParser: NSObject, XMLParserDelegate {
 		private var color: String?
 
 		/**
-		 * @inherited
 		 * @method configure
 		 * @since 0.5.0
 		 */
@@ -329,7 +324,6 @@ open class TextParser: NSObject, XMLParserDelegate {
 		}
 
 		/**
-		 * @inherited
 		 * @method apply
 		 * @since 0.5.0
 		 */
@@ -339,7 +333,6 @@ open class TextParser: NSObject, XMLParserDelegate {
 		}
 
 		/**
-		 * @inherited
 		 * @method applyFont
 		 * @since 0.5.0
 		 */
@@ -364,7 +357,6 @@ open class TextParser: NSObject, XMLParserDelegate {
 		}
 
 		/**
-		 * @inherited
 		 * @method applyColor
 		 * @since 0.5.0
 		 */
@@ -393,7 +385,6 @@ open class TextParser: NSObject, XMLParserDelegate {
 		private var href: String?
 
 		/**
-		 * @inherited
 		 * @method configure
 		 * @since 0.5.0
 		 */
@@ -402,7 +393,6 @@ open class TextParser: NSObject, XMLParserDelegate {
 		}
 
 		/**
-		 * @inherited
 		 * @method apply
 		 * @since 0.5.0
 		 */
@@ -426,7 +416,6 @@ open class TextParser: NSObject, XMLParserDelegate {
 	private class B: Node {
 
 		/**
-		 * @inherited
 		 * @method apply
 		 * @since 0.5.0
 		 */
@@ -443,7 +432,6 @@ open class TextParser: NSObject, XMLParserDelegate {
 	private class I: Node {
 
 		/**
-		 * @inherited
 		 * @method apply
 		 * @since 0.5.0
 		 */
@@ -460,7 +448,6 @@ open class TextParser: NSObject, XMLParserDelegate {
 	private class U: Node {
 
 		/**
-		 * @inherited
 		 * @method apply
 		 * @since 0.5.0
 		 */

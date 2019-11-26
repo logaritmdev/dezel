@@ -1,5 +1,4 @@
 /**
- * A finalizer callback.
  * @class JavaScriptFinalizeCallback
  * @since 0.1.0
  */
@@ -10,16 +9,16 @@ public final class JavaScriptFinalizeCallback {
 	//--------------------------------------------------------------------------
 
     /**
-     * The finalized value's context.
      * @property context
      * @since 0.1.0
+	 * @hidden
      */
 	private(set) public var context: JavaScriptContext
 
     /**
-     * The finalized value's data handle.
      * @property handle
      * @since 0.4.0
+	 * @hidden
      */
 	private(set) public var handle: JavaScriptValueDataRef
 
@@ -38,7 +37,6 @@ public final class JavaScriptFinalizeCallback {
 	}
 
 	/**
-	 * Returns an attribute from this finalized value.
 	 * @method attribute
 	 * @since 0.4.0
 	 */
@@ -47,7 +45,6 @@ public final class JavaScriptFinalizeCallback {
 	}
 
 	/**
-	 * Assigns an attribute on this finalized value.
 	 * @method attribute
 	 * @since 0.4.0
 	 */

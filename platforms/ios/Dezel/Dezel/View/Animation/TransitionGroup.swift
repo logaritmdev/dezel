@@ -10,14 +10,12 @@ public final class TransitionGroup {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The transition's listeners.
 	 * @property listeners
 	 * @since 0.2.0
 	 */
 	private(set) public var listeners: [TransitionListener] = []
 
 	/**
-	 * The transition's completion callback.
 	 * @property callback
 	 * @since 0.1.0
 	 */
@@ -28,7 +26,6 @@ public final class TransitionGroup {
 	}
 
 	/**
-	 * The transition's duration.
 	 * @property duration
 	 * @since 0.1.0
 	 */
@@ -39,7 +36,6 @@ public final class TransitionGroup {
 	}
 
 	/**
-	 * The transition's equation.
 	 * @property equation
 	 * @since 0.1.0
 	 */
@@ -50,7 +46,6 @@ public final class TransitionGroup {
 	}
 
 	/**
-	 * The transition's delay.
 	 * @property delay
 	 * @since 0.1.0
 	 */

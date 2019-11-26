@@ -3,21 +3,18 @@
 //------------------------------------------------------------------------------
 
 /**
- * The global object.
  * @const global
  * @sine 0.1.0
  */
 declare var global: any
 
 /**
- * Whether the application is in development mode.
  * @const _DEV_
  * @since 0.1.0
  */
 declare const _DEV_: boolean
 
 /**
- * Whether the application is running on the simulator.
  * @const _DEV_
  * @since 0.1.0
  */
@@ -28,7 +25,6 @@ declare const _SIM_: boolean
 //------------------------------------------------------------------------------
 
 /**
- * JSX definitions.
  * @namespace JSX
  * @since 0.1.0
  */
@@ -41,7 +37,6 @@ declare namespace JSX {
 }
 
 /**
- * Play nicer with JSX.
  * @namespace React
  * @since 0.1.0
  */

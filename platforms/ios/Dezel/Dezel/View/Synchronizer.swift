@@ -1,5 +1,4 @@
 /**
- * Synchronizes update with display refresh.
  * @class Synchronizer
  * @since 0.7.0
  */
@@ -10,7 +9,6 @@ public class Synchronizer: NSObject {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The main update display manager instance.
 	 * @property main
 	 * @sine 0.7.0
 	 */
@@ -67,7 +65,6 @@ public class Synchronizer: NSObject {
 	}
 
 	/**
-	 * Schedules an update display callback.
 	 * @method schedule
 	 * @since 0.7.0
 	 */
@@ -82,7 +79,6 @@ public class Synchronizer: NSObject {
 	}
 
 	/**
-	 * Executes scheduled callbacks.
 	 * @method execute
 	 * @since 0.7.0
 	 */
@@ -114,7 +110,6 @@ public class Synchronizer: NSObject {
 	}
 
 	/**
-	 * Resets the update display manager.
 	 * @method reset
 	 * @since 0.7.0
 	 */

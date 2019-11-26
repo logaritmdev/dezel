@@ -1,5 +1,6 @@
 /**
  * @class JavaScriptPropertyBooleanValue
+ * @super JavaScriptPropertyValue
  * @since 0.7.0
  * @hidden
  */
@@ -31,7 +32,6 @@ open class JavaScriptPropertyBooleanValue: JavaScriptPropertyValue {
 	}
 
 	/**
-	 * @inherited
 	 * @method toString
 	 * @since 0.7.0
 	 */
@@ -40,7 +40,6 @@ open class JavaScriptPropertyBooleanValue: JavaScriptPropertyValue {
 	}
 
 	/**
-	 * @inherited
 	 * @method toNumber
 	 * @since 0.7.0
 	 */
@@ -49,7 +48,6 @@ open class JavaScriptPropertyBooleanValue: JavaScriptPropertyValue {
 	}
 
 	/**
-	 * @inherited
 	 * @method toBoolean
 	 * @since 0.7.0
 	 */

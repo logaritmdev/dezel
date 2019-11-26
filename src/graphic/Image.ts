@@ -19,7 +19,6 @@ export class Image extends Emitter {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Returns a promise that resolves when an image is loaded.
 	 * @method load
 	 * @since 0.1.0
 	 */
@@ -41,14 +40,12 @@ export class Image extends Emitter {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The image's source.
 	 * @property source
 	 * @since 0.1.0
 	 */
 	@native public source: string = ''
 
 	/**
-	 * The image's natural width.
 	 * @property width
 	 * @since 0.1.0
 	 */
@@ -57,7 +54,6 @@ export class Image extends Emitter {
 	}
 
 	/**
-	 * The image's natural height.
 	 * @property height
 	 * @since 0.1.0
 	 */
@@ -66,7 +62,6 @@ export class Image extends Emitter {
 	}
 
 	/**
-	 * Whether the image is loading.
 	 * @property loading
 	 * @since 0.1.0
 	 */
@@ -75,7 +70,6 @@ export class Image extends Emitter {
 	}
 
 	/**
-	 * Whether the image is completely loaded.
 	 * @property complete
 	 * @since 0.1.0
 	 */

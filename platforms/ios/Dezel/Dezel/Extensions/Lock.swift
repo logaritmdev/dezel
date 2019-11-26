@@ -1,5 +1,4 @@
 /**
- * Indicate whether an object is locked.
  * @function isLocked
  * @since 0.7.0
  */

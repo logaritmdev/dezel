@@ -41,7 +41,7 @@ public final class JavaScriptGetterWrapper: NSObject {
 	 */
 	public init(context: JavaScriptContext, handler: @escaping JavaScriptGetterHandler) {
 
-		let function = JavaScriptValueCreateFunction(context.handle, JavaScriptGetterWrapperCallback, nil)
+		let function = JavaScriptValueCreateFunction(context.handle, javaScriptGetterWrapperCallback, nil)
 
 		self.context = context
 		self.handler = handler
@@ -49,16 +49,17 @@ public final class JavaScriptGetterWrapper: NSObject {
 
 		super.init()
 
-		JavaScriptValueSetFinalizeHandler(context.handle, function, JavaScriptGetterWrapperFinalize)
+		JavaScriptValueSetFinalizeHandler(context.handle, function, javaScriptGetterWrapperFinalize)
 		JavaScriptValueSetAssociatedObject(context.handle, function, Unmanaged.passRetained(self).toOpaque())
 	}
 }
 
 /**
- * @since 0.1.0
+ * @function javaScriptGetterWrapperCallback
+ * @since 0.7.0
  * @hidden
  */
-private let JavaScriptGetterWrapperCallback: @convention(c) (JSContextRef?, JSObjectRef?, JSObjectRef?, Int, UnsafePointer<JSValueRef?>?) -> JSValueRef? = { context, object, callee, argc, argv in
+private let javaScriptGetterWrapperCallback: @convention(c) (JSContextRef?, JSObjectRef?, JSObjectRef?, Int, UnsafePointer<JSValueRef?>?) -> JSValueRef? = { context, object, callee, argc, argv in
 
 	let context = context!
 	let object = object!
@@ -81,9 +82,10 @@ private let JavaScriptGetterWrapperCallback: @convention(c) (JSContextRef?, JSOb
 }
 
 /**
- * @since 0.1.0
+ * @function javaScriptGetterWrapperFinalize
+ * @since 0.7.0
  * @hidden
  */
-private let JavaScriptGetterWrapperFinalize: @convention(c) (JSContextRef?, JavaScriptValueDataRef?) -> Void = { context, handle in
+private let javaScriptGetterWrapperFinalize: @convention(c) (JSContextRef?, JavaScriptValueDataRef?) -> Void = { context, handle in
 	Unmanaged<JavaScriptGetterWrapper>.fromOpaque(JavaScriptValueDataGetAssociatedObject(handle!)).release()
 }

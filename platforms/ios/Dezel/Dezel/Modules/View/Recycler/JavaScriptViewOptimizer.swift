@@ -1,6 +1,6 @@
 /**
- * The base class for content optimizers.
  * @class JavaScriptViewOptimizer
+ * @super JavaScriptClass
  * @since 0.7.0
  */
 open class JavaScriptViewOptimizer : JavaScriptClass, JavaScriptView.Delegate {
@@ -10,21 +10,18 @@ open class JavaScriptViewOptimizer : JavaScriptClass, JavaScriptView.Delegate {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The optimized view.
 	 * @property view
 	 * @since 0.7.0
 	 */
 	public weak var view: JavaScriptView!
 
 	/**
-	 * The items that are displayed.
 	 * @property items
 	 * @since 0.7.0
 	 */
 	internal(set) public var items: [Int: JavaScriptView] = [:]
 
 	/**
-	 * The items that are cached.
 	 * @property cache
 	 * @since 0.7.0
 	 */
@@ -35,7 +32,6 @@ open class JavaScriptViewOptimizer : JavaScriptClass, JavaScriptView.Delegate {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Attaches this optimizer to a specified view.
 	 * @method attach
 	 * @since 0.7.0
 	 */
@@ -45,7 +41,6 @@ open class JavaScriptViewOptimizer : JavaScriptClass, JavaScriptView.Delegate {
 	}
 
 	/**
-	 * Detaches this optimizer from a specified view.
 	 * @method detach
 	 * @since 0.7.0
 	 */
@@ -66,7 +61,6 @@ open class JavaScriptViewOptimizer : JavaScriptClass, JavaScriptView.Delegate {
 	}
 
 	/**
-	 * Reloads this optimizer.
 	 * @method reload
 	 * @since 0.7.0
 	 */
@@ -75,7 +69,6 @@ open class JavaScriptViewOptimizer : JavaScriptClass, JavaScriptView.Delegate {
 	}
 
 	/**
-	 * Caches a item for future reuse.
 	 * @method cacheItem
 	 * @since 0.7.0
 	 */
@@ -91,7 +84,6 @@ open class JavaScriptViewOptimizer : JavaScriptClass, JavaScriptView.Delegate {
 	}
 
 	/**
-	 * Returns an item that was previously used and cached.
 	 * @method reuseItem
 	 * @since 0.7.0
 	 */
@@ -115,7 +107,6 @@ open class JavaScriptViewOptimizer : JavaScriptClass, JavaScriptView.Delegate {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method didPrepareLayout
 	 * @since 0.7.0
 	 */
@@ -124,7 +115,6 @@ open class JavaScriptViewOptimizer : JavaScriptClass, JavaScriptView.Delegate {
 	}
 
 	/**
-	 * @inherited
 	 * @method didResolveLayout
 	 * @since 0.7.0
 	 */
@@ -133,7 +123,6 @@ open class JavaScriptViewOptimizer : JavaScriptClass, JavaScriptView.Delegate {
 	}
 
 	/**
-	 * @inherited
 	 * @method didScroll
 	 * @since 0.7.0
 	 */

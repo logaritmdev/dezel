@@ -1,15 +1,15 @@
 /**
  * @class JavaScriptFormModule
+ * @super JavaScriptModule
  * @since 0.7.0
  */
-open class JavaScriptFormModule: Module {
+open class JavaScriptFormModule: JavaScriptModule {
 
 	//--------------------------------------------------------------------------
 	// MARK: Methods
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method register
 	 * @since 0.7.0
 	 */

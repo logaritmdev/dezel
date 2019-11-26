@@ -1,7 +1,6 @@
 import UIKit
 
 /**
- * The layer that renders the view.
  * @class RenderLayer
  * @super Layer
  * @since 0.1.0
@@ -13,7 +12,6 @@ public class RenderLayer: Layer, TransitionListener {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method needsDisplay
 	 * @since 0.1.0
 	 */
@@ -34,28 +32,24 @@ public class RenderLayer: Layer, TransitionListener {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The layer's top left radius.
 	 * @property borderTopLeftRadius
 	 * @since 0.1.0
 	 */
 	@NSManaged public var borderTopLeftRadius: CGFloat
 
 	/**
-	 * The layer's top right radius.
 	 * @property borderTopRightRadius
 	 * @since 0.1.0
 	 */
 	@NSManaged public var borderTopRightRadius: CGFloat
 
 	/**
-	 * The layer's top bottom left radius.
 	 * @property borderBottomLeftRadius
 	 * @since 0.1.0
 	 */
 	@NSManaged public var borderBottomLeftRadius: CGFloat
 
 	/**
-	 * The layer's bottom right radius.
 	 * @property borderBottomRightRadius
 	 * @since 0.1.0
 	 */
@@ -107,7 +101,6 @@ public class RenderLayer: Layer, TransitionListener {
 	}
 
 	/**
-	 * @inherited
 	 * @method update
 	 * @since 0.1.0
 	 */
@@ -168,7 +161,6 @@ public class RenderLayer: Layer, TransitionListener {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method shouldBeginTransitionAnimation
 	 * @since 0.2.0
 	 */
@@ -177,7 +169,6 @@ public class RenderLayer: Layer, TransitionListener {
 	}
 
 	/**
-	 * @inherited
 	 * @method willBeginTransitionAnimation
 	 * @since 0.2.0
 	 */
@@ -189,7 +180,6 @@ public class RenderLayer: Layer, TransitionListener {
 	}
 
 	/**
-	 * @inherited
 	 * @method didCommitTransition
 	 * @since 0.6.0
 	 */
@@ -198,7 +188,6 @@ public class RenderLayer: Layer, TransitionListener {
 	}
 
 	/**
-	 * @inherited
 	 * @method didFinishTransition
 	 * @since 0.2.0
 	 */

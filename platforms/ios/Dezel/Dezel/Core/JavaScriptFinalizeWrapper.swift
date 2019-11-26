@@ -39,16 +39,17 @@ internal final class JavaScriptFinalizeWrapper: NSObject {
 
 		super.init()
 
-		JavaScriptValueSetFinalizeHandler(context.handle, handle, JavaScriptFinalizeWrapperCallback)
+		JavaScriptValueSetFinalizeHandler(context.handle, handle, javaScriptFinalizeWrapperCallback)
 		JavaScriptValueSetAttribute(context.handle, handle, kFinalizeWrapperKey, Unmanaged.passRetained(self).toOpaque())
 	}
 }
 
 /**
- * @since 0.1.0
+ * @function javaScriptFinalizeWrapperCallback
+ * @since 0.7.0
  * @hidden
  */
-private let JavaScriptFinalizeWrapperCallback : @convention(c) (JSContextRef?, JavaScriptValueDataRef?) -> Void = { context, handle in
+private let javaScriptFinalizeWrapperCallback : @convention(c) (JSContextRef?, JavaScriptValueDataRef?) -> Void = { context, handle in
 
 	let wrapper = Unmanaged<JavaScriptFinalizeWrapper>.fromOpaque(
 		JavaScriptValueDataGetAttribute(handle, kFinalizeWrapperKey)

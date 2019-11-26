@@ -1,5 +1,4 @@
 /**
- * Manages a display of nodes.
  * @class Display
  * @since 0.7.0
  */
@@ -9,10 +8,7 @@ public class Display {
 	// MARK: Properties
 	//--------------------------------------------------------------------------
 
-
-
 	/**
-	 * The display's window
 	 * @property window
 	 * @since 0.7.0
 	 */
@@ -23,7 +19,6 @@ public class Display {
 	}
 
 	/**
-	 * The display's scale.
 	 * @property scale
 	 * @since 0.7.0
 	 */
@@ -34,7 +29,6 @@ public class Display {
 	}
 
 	/**
-	 * The display's viewport width.
 	 * @property viewportWidth
 	 * @since 0.7.0
 	 */
@@ -45,7 +39,6 @@ public class Display {
 	}
 
 	/**
-	 * The display's viewport height.
 	 * @property viewportHeight
 	 * @since 0.7.0
 	 */
@@ -55,6 +48,10 @@ public class Display {
 		}
 	}
 
+	/**
+	 * @property stylesheet
+	 * @since 0.7.0
+	 */
 	public var stylesheet: Stylesheet? {
 		willSet {
 			DisplaySetStylesheet(self.handle, newValue?.handle)
@@ -62,7 +59,6 @@ public class Display {
 	}
 
 	/**
-	 * Whether the layout is invalid.
 	 * @property invalid
 	 * @since 0.7.0
 	 */
@@ -71,7 +67,6 @@ public class Display {
 	}
 
 	/**
-	 * Whether the layout is resolving.
 	 * @property resolving
 	 * @since 0.7.0
 	 */
@@ -87,14 +82,14 @@ public class Display {
 	private(set) public var handle: DisplayRef
 
 	/**
-	 * @property layoutBeganCallbacks
+	 * @property prepareCallbacks
 	 * @since 0.7.0
 	 * @hidden
 	 */
 	private var prepareCallbacks: [(() -> Void)] = []
 
 	/**
-	 * @property layoutEndedCallbacks
+	 * @property dispatchCallback
 	 * @since 0.7.0
 	 * @hidden
 	 */
@@ -125,7 +120,6 @@ public class Display {
 	}
 
 	/**
-	 * Resolves the entire display.
 	 * @method resolve
 	 * @since 0.7.0
 	 */
@@ -134,17 +128,14 @@ public class Display {
 	}
 
 	/**
-	 * Requests a callback that will be executed when the global layout begins.
 	 * @method registerPrepareCallback
 	 * @since 0.7.0
 	 */
-
 	public func registerPrepareCallback(_ callback: @escaping () -> Void) {
 		self.prepareCallbacks.append(callback)
 	}
 
 	/**
-	 * Requests a callback that will be executed when the global layout finishes.
 	 * @method registerResolveCallback
 	 * @since 0.7.0
 	 */
@@ -196,7 +187,7 @@ public class Display {
 }
 
 /**
- * @const displayPrepareCallback
+ * @function displayPrepareCallback
  * @since 0.7.0
  * @hidden
  */
@@ -207,7 +198,7 @@ private let displayPrepareCallback: @convention(c) (DisplayRef?) -> Void = { ptr
 }
 
 /**
- * @const displayResolveCallback
+ * @function displayResolveCallback
  * @since 0.7.0
  * @hidden
  */

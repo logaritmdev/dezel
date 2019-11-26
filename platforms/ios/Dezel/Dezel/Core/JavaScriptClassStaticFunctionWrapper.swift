@@ -55,7 +55,7 @@ internal final class JavaScriptClassStaticFunctionWrapper : NSObject {
 	 */
 	internal init(context: JavaScriptContext, cls: AnyClass, sel: Selector, imp:IMP, name: String) {
 
-		let function = JavaScriptValueCreateFunction(context.handle, JavaScriptClassStaticFunctionWrapperCallback, name)
+		let function = JavaScriptValueCreateFunction(context.handle, javaScriptClassStaticFunctionWrapperCallback, name)
 
 		self.context = context
 		self.function = function
@@ -65,16 +65,17 @@ internal final class JavaScriptClassStaticFunctionWrapper : NSObject {
 
 		super.init()
 
-		JavaScriptValueSetFinalizeHandler(context.handle, function, JavaScriptClassStaticFunctionWrapperFinalize)
+		JavaScriptValueSetFinalizeHandler(context.handle, function, javaScriptClassStaticFunctionWrapperFinalize)
 		JavaScriptValueSetAssociatedObject(context.handle, function, Unmanaged.passRetained(self).toOpaque())
 	}
 }
 
 /**
+ * @function javaScriptClassStaticFunctionWrapperCallback
  * @since 0.7.0
  * @hidden
  */
-private let JavaScriptClassStaticFunctionWrapperCallback : @convention(c) (JSContextRef?, JSObjectRef?, JSObjectRef?, Int, UnsafePointer<JSValueRef?>?) -> JSValueRef? = { context, object, callee, argc, argv in
+private let javaScriptClassStaticFunctionWrapperCallback : @convention(c) (JSContextRef?, JSObjectRef?, JSObjectRef?, Int, UnsafePointer<JSValueRef?>?) -> JSValueRef? = { context, object, callee, argc, argv in
 
 	let context = context!
 	let object = object!
@@ -104,9 +105,10 @@ private let JavaScriptClassStaticFunctionWrapperCallback : @convention(c) (JSCon
 }
 
 /**
+ * @function javaScriptClassStaticFunctionWrapperFinalize
  * @since 0.7.0
  * @hidden
  */
-private let JavaScriptClassStaticFunctionWrapperFinalize: @convention(c) (JSContextRef?, JavaScriptValueDataRef?) -> Void = { context, handle in
+private let javaScriptClassStaticFunctionWrapperFinalize: @convention(c) (JSContextRef?, JavaScriptValueDataRef?) -> Void = { context, handle in
 	Unmanaged<JavaScriptClassStaticFunctionWrapper>.fromOpaque(JavaScriptValueDataGetAssociatedObject(handle!)).release()
 }

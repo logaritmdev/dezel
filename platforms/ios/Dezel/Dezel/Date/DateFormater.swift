@@ -1,7 +1,7 @@
 /**
- * Convenience class to format dates.
  * @class DateFormater
  * @since 0.5.0
+ * @hidden
  */
 public class DateFormater {
 
@@ -23,9 +23,9 @@ public class DateFormater {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Formats the specified date using a format and a locale.
 	 * @method format
 	 * @since 0.5.0
+	 * @hidden
 	 */
 	public static func format(_ date: Date, format: String, locale: String) -> String {
 		self.formatter.dateFormat = format
@@ -35,9 +35,9 @@ public class DateFormater {
 	}
 
 	/**
-	 * Convenience method to format a date using the ISO standard.
 	 * @method iso
 	 * @since 0.5.0
+	 * @hidden
 	 */
 	public static func iso(_ date: Date) -> String {
 		self.formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"

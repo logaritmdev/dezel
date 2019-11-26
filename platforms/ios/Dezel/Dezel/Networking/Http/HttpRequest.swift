@@ -12,42 +12,36 @@ open class HttpRequest: NSObject, URLSessionDelegate, URLSessionTaskDelegate, UR
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The request's delegate.
 	 * @property delegate
 	 * @since 0.1.0
 	 */
 	open weak var delegate: HttpRequestDelegate?
 
 	/**
-	 * The request's headers.
 	 * @property headers
 	 * @since 0.1.0
 	 */
 	open var headers: [String: String] = [:]
 
 	/**
-	 * The request's timeout.
 	 * @property timeout
 	 * @since 0.1.0
 	 */
 	open var timeout: TimeInterval = TimeInterval(60)
 
 	/**
-	 * The request's username.
 	 * @property username
 	 * @since 0.1.0
 	 */
 	open var username: String?
 
 	/**
-	 * The request's password.
 	 * @property password
 	 * @since 0.1.0
 	 */
 	open var password: String?
 
 	/**
-	 * The request's data.
 	 * @property data
 	 * @since 0.1.0
 	 */
@@ -123,7 +117,6 @@ open class HttpRequest: NSObject, URLSessionDelegate, URLSessionTaskDelegate, UR
 	}
 
 	/**
-	 * Sends the request.
 	 * @method send
 	 * @since 0.1.0
 	 */
@@ -153,7 +146,6 @@ open class HttpRequest: NSObject, URLSessionDelegate, URLSessionTaskDelegate, UR
 	}
 
 	/**
-	 * Aborts the current request.
 	 * @method abort
 	 * @since 0.1.0
 	 */

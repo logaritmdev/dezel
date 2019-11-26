@@ -1,9 +1,9 @@
 /**
  * @class JavaScriptGlobalModule
+ * @super JavaScriptModule
  * @since 0.7.0
- * @hidden
  */
-open class JavaScriptGlobalModule : Module {
+open class JavaScriptGlobalModule : JavaScriptModule {
 
 	//--------------------------------------------------------------------------
 	// MARK: Properties
@@ -49,7 +49,6 @@ open class JavaScriptGlobalModule : Module {
 	//--------------------------------------------------------------------------
 
     /**
-     * @inherited
      * @constructor
      * @since 0.7.0
      */
@@ -63,7 +62,6 @@ open class JavaScriptGlobalModule : Module {
 	}
 
     /**
-     * @inherited
      * @method register
      * @since 0.7.0
      */
@@ -82,9 +80,7 @@ open class JavaScriptGlobalModule : Module {
 		context.global.defineProperty("cancelAnimationFrame", value: context.createFunction(self.cancelAnimationFrame))
 	}
 
-
 	/**
-	 * @inherited
 	 * @method unregister
 	 * @since 0.7.0
 	 */

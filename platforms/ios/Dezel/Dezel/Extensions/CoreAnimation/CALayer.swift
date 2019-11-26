@@ -8,7 +8,6 @@ var kTransitionListener: UInt8 = 0
 internal extension CALayer {
 
 	/**
-	 * The object that manages this layer.
 	 * @property listener
 	 * @since 0.2.0
 	 */

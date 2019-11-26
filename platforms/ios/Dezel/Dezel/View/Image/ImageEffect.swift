@@ -1,5 +1,4 @@
 /**
- * Convenience class to apply core image filters.
  * @class ImageEffect
  * @since 0.5.0
  */
@@ -28,7 +27,6 @@ public class ImageEffect {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Applies a grayscale filter on the source image.
 	 * @method grayscale
 	 * @since 0.5.0
 	 */

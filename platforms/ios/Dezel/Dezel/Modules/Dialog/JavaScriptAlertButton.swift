@@ -1,7 +1,7 @@
 /**
  * @class JavaScriptAlertButton
+ * @super JavaScriptClass
  * @since 0.7.0
- * @hidden
  */
 open class JavaScriptAlertButton: JavaScriptClass {
 
@@ -10,21 +10,18 @@ open class JavaScriptAlertButton: JavaScriptClass {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The alert button's label.
 	 * @property label
 	 * @since 0.7.0
 	 */
 	open lazy var label = JavaScriptProperty(string: "")
 
 	/**
-	 * The alert button's image.
 	 * @property image
 	 * @since 0.7.0
 	 */
 	open lazy var image = JavaScriptProperty()
 
 	/**
-	 * The alert button's style.
 	 * @property style
 	 * @since 0.7.0
 	 */

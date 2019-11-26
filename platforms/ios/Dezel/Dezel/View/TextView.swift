@@ -12,7 +12,6 @@ open class TextView: UIView, Updatable, Clippable, TransitionListener {
 	//----------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @property bounds
 	 * @since 0.7.0
 	 */
@@ -23,7 +22,6 @@ open class TextView: UIView, Updatable, Clippable, TransitionListener {
 	}
 
 	/**
-	 * @inherited
 	 * @property clipsToBounds
 	 * @since 0.7.0
 	 */
@@ -35,7 +33,6 @@ open class TextView: UIView, Updatable, Clippable, TransitionListener {
 	}
 
 	/**
-	 * The text view's font family.
 	 * @property fontFamily
 	 * @since 0.7.0
 	 */
@@ -46,7 +43,6 @@ open class TextView: UIView, Updatable, Clippable, TransitionListener {
 	}
 
 	/**
-	 * The text view's font weight.
 	 * @property fontWeight
 	 * @since 0.7.0
 	 */
@@ -57,7 +53,6 @@ open class TextView: UIView, Updatable, Clippable, TransitionListener {
 	}
 
 	/**
-	 * The text view's font style.
 	 * @property fontStyle
 	 * @since 0.7.0
 	 */
@@ -68,7 +63,6 @@ open class TextView: UIView, Updatable, Clippable, TransitionListener {
 	}
 
 	/**
-	 * The text view's font size.
 	 * @property fontSize
 	 * @since 0.7.0
 	 */
@@ -79,7 +73,6 @@ open class TextView: UIView, Updatable, Clippable, TransitionListener {
 	}
 
 	/**
-	 * The text view's text.
 	 * @property text
 	 * @since 0.7.0
 	 */
@@ -90,7 +83,6 @@ open class TextView: UIView, Updatable, Clippable, TransitionListener {
 	}
 
 	/**
-	 * The text view's text color.
 	 * @property textColor
 	 * @since 0.7.0
 	 */
@@ -101,7 +93,6 @@ open class TextView: UIView, Updatable, Clippable, TransitionListener {
 	}
 
 	/**
-	 * The text view's text alignment.
 	 * @property textAlignment
 	 * @since 0.7.0
 	 */
@@ -112,7 +103,6 @@ open class TextView: UIView, Updatable, Clippable, TransitionListener {
 	}
 
 	/**
-	 * The text view's text location.
 	 * @property textLocation
 	 * @since 0.7.0
 	 */
@@ -123,7 +113,6 @@ open class TextView: UIView, Updatable, Clippable, TransitionListener {
 	}
 
 	/**
-	 * The text view's text baseline.
 	 * @property textBaseline
 	 * @since 0.7.0
 	 */
@@ -134,7 +123,6 @@ open class TextView: UIView, Updatable, Clippable, TransitionListener {
 	}
 
 	/**
-	 * The text view's text kerning.
 	 * @property textKerning
 	 * @since 0.7.0
 	 */
@@ -145,7 +133,6 @@ open class TextView: UIView, Updatable, Clippable, TransitionListener {
 	}
 
 	/**
-	 * The text view's text leading.
 	 * @property textLeading
 	 * @since 0.7.0
 	 */
@@ -156,7 +143,6 @@ open class TextView: UIView, Updatable, Clippable, TransitionListener {
 	}
 
 	/**
-	 * The text view's text shadow blur.
 	 * @property textShadowBlur
 	 * @since 0.7.0
 	 */
@@ -167,7 +153,6 @@ open class TextView: UIView, Updatable, Clippable, TransitionListener {
 	}
 
 	/**
-	 * The text view's text shadow color.
 	 * @property textShadowColor
 	 * @since 0.7.0
 	 */
@@ -178,7 +163,6 @@ open class TextView: UIView, Updatable, Clippable, TransitionListener {
 	}
 
 	/**
-	 * The text view's text shadow offset top.
 	 * @property textShadowOffsetTop
 	 * @since 0.7.0
 	 */
@@ -189,7 +173,6 @@ open class TextView: UIView, Updatable, Clippable, TransitionListener {
 	}
 
 	/**
-	 * The text view's text shadow offset left.
 	 * @property textShadowOffsetLeft
 	 * @since 0.7.0
 	 */
@@ -200,7 +183,6 @@ open class TextView: UIView, Updatable, Clippable, TransitionListener {
 	}
 
 	/**
-	 * The text view's text decoration.
 	 * @property textDecoration
 	 * @since 0.7.0
 	 */
@@ -211,7 +193,6 @@ open class TextView: UIView, Updatable, Clippable, TransitionListener {
 	}
 
 	/**
-	 * The text view's text transform mode.
 	 * @property textTransform
 	 * @since 0.7.0
 	 */
@@ -222,7 +203,6 @@ open class TextView: UIView, Updatable, Clippable, TransitionListener {
 	}
 
 	/**
-	 * The text view's text overflow.
 	 * @property textOverflow
 	 * @since 0.7.0
 	 */
@@ -233,7 +213,6 @@ open class TextView: UIView, Updatable, Clippable, TransitionListener {
 	}
 
 	/**
-	 * The text view's link color.
 	 * @property linkColor
 	 * @since 0.7.0
 	 */
@@ -244,7 +223,6 @@ open class TextView: UIView, Updatable, Clippable, TransitionListener {
 	}
 
 	/**
-	 * The text view's link color.
 	 * @property linkDecoration
 	 * @since 0.7.0
 	 */
@@ -255,7 +233,6 @@ open class TextView: UIView, Updatable, Clippable, TransitionListener {
 	}
 
 	/**
-	 * The text view's maximum amount of lines.
 	 * @property maxLines
 	 * @since 0.7.0
 	 */
@@ -266,7 +243,6 @@ open class TextView: UIView, Updatable, Clippable, TransitionListener {
 	}
 
 	/**
-	 * The text view's padding top.
 	 * @property paddingTop
 	 * @since 0.7.0
 	 */
@@ -277,7 +253,6 @@ open class TextView: UIView, Updatable, Clippable, TransitionListener {
 	}
 
 	/**
-	 * The text view's padding left.
 	 * @property paddingLeft
 	 * @since 0.7.0
 	 */
@@ -288,7 +263,6 @@ open class TextView: UIView, Updatable, Clippable, TransitionListener {
 	}
 
 	/**
-	 * The text view's padding right.
 	 * @property paddingRight
 	 * @since 0.7.0
 	 */
@@ -299,7 +273,6 @@ open class TextView: UIView, Updatable, Clippable, TransitionListener {
 	}
 
 	/**
-	 * The text view's padding bottom.
 	 * @property paddingBottom
 	 * @since 0.7.0
 	 */
@@ -310,7 +283,6 @@ open class TextView: UIView, Updatable, Clippable, TransitionListener {
 	}
 
 	/**
-	 * Indicates whether this view has a valid frame.
 	 * @property hasFrame
 	 * @since 0.7.0
 	 */
@@ -342,7 +314,6 @@ open class TextView: UIView, Updatable, Clippable, TransitionListener {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Required constructor.
 	 * @constructor
 	 * @since 0.7.0
 	 */
@@ -351,7 +322,6 @@ open class TextView: UIView, Updatable, Clippable, TransitionListener {
 	}
 
 	/**
-	 * Required constructor.
 	 * @constructor
 	 * @since 0.7.0
 	 */
@@ -376,7 +346,6 @@ open class TextView: UIView, Updatable, Clippable, TransitionListener {
 	}
 
 	/**
-	 * @inherited
 	 * @method update
 	 * @since 0.7.0
 	 */
@@ -391,7 +360,6 @@ open class TextView: UIView, Updatable, Clippable, TransitionListener {
 	}
 
 	/**
-	 * Updates the text layer frame.
 	 * @method updateTextLayerFrame
 	 * @since 0.7.0
 	 */
@@ -412,7 +380,6 @@ open class TextView: UIView, Updatable, Clippable, TransitionListener {
 	}
 
 	/**
-	 * Measures natural text view size.
 	 * @method measure
 	 * @since 0.7.0
 	 */
@@ -452,7 +419,6 @@ open class TextView: UIView, Updatable, Clippable, TransitionListener {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method touchesBegan
 	 * @since 0.7.0
 	 */
@@ -466,7 +432,6 @@ open class TextView: UIView, Updatable, Clippable, TransitionListener {
 	}
 
 	/**
-	 * @inherited
 	 * @method touchesEnded
 	 * @since 0.7.0
 	 */
@@ -490,7 +455,6 @@ open class TextView: UIView, Updatable, Clippable, TransitionListener {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method action
 	 * @since 0.7.0
 	 */
@@ -503,7 +467,6 @@ open class TextView: UIView, Updatable, Clippable, TransitionListener {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method shouldBeginTransitionAnimation
 	 * @since 0.7.0
 	 */
@@ -518,7 +481,6 @@ open class TextView: UIView, Updatable, Clippable, TransitionListener {
 	}
 
 	/**
-	 * @inherited
 	 * @method willBeginTransitionAnimation
 	 * @since 0.7.0
 	 */
@@ -527,7 +489,6 @@ open class TextView: UIView, Updatable, Clippable, TransitionListener {
 	}
 
 	/**
-	 * @inherited
 	 * @method didCommitTransition
 	 * @since 0.7.0
 	 */
@@ -536,7 +497,6 @@ open class TextView: UIView, Updatable, Clippable, TransitionListener {
 	}
 
 	/**
-	 * @inherited
 	 * @method didFinishTransition
 	 * @since 0.7.0
 	 */

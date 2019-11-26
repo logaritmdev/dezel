@@ -11,21 +11,18 @@ open class JavaScriptPropertyValue {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The property's type.
 	 * @property type
 	 * @since 0.7.0
 	 */
 	public var type: JavaScriptPropertyType = .null
 
 	/**
-	 * The property's unit.
 	 * @property unit
 	 * @since 0.7.0
 	 */
 	public var unit: JavaScriptPropertyUnit = .none
 
 	/**
-	 * The property's string value.
 	 * @property string
 	 * @since 0.7.0
 	 */
@@ -34,7 +31,6 @@ open class JavaScriptPropertyValue {
 	}()
 
 	/**
-	 * The property's number value.
 	 * @property number
 	 * @since 0.7.0
 	 */
@@ -43,7 +39,6 @@ open class JavaScriptPropertyValue {
 	}()
 
 	/**
-	 * The property's boolean value.
 	 * @property boolean
 	 * @since 0.7.0
 	 */
@@ -63,7 +58,6 @@ open class JavaScriptPropertyValue {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Initializes the property storage.
 	 * @constructor
 	 * @since 0.7.0
 	 */
@@ -82,7 +76,6 @@ open class JavaScriptPropertyValue {
 	}
 
 	/**
-	 * Sets the backing JavaScript value.
 	 * @method reset
 	 * @since 0.7.0
 	 */
@@ -91,7 +84,6 @@ open class JavaScriptPropertyValue {
 	}
 
 	/**
-	 * Returns the data as a string.
 	 * @method toString
 	 * @since 0.7.0
 	 */
@@ -100,7 +92,6 @@ open class JavaScriptPropertyValue {
 	}
 
 	/**
-	 * Returns the data as a number.
 	 * @method toNumber
 	 * @since 0.7.0
 	 */
@@ -109,7 +100,6 @@ open class JavaScriptPropertyValue {
 	}
 
 	/**
-	 * Returns the data as a boolean.
 	 * @method toBoolean
 	 * @since 0.7.0
 	 */
@@ -118,7 +108,6 @@ open class JavaScriptPropertyValue {
 	}
 
 	/**
-	 * Indicate whether this property's value is a specified JavaScript value.
 	 * @method equals
 	 * @since 0.7.0
 	 */
@@ -127,7 +116,6 @@ open class JavaScriptPropertyValue {
 	}
 
 	/**
-	 * Indicate whether this property's value is a specified string.
 	 * @method equals
 	 * @since 0.7.0
 	 */
@@ -136,7 +124,6 @@ open class JavaScriptPropertyValue {
 	}
 
 	/**
-	 * Indicate whether this property's value is a specified number.
 	 * @method equals
 	 * @since 0.7.0
 	 */
@@ -145,7 +132,6 @@ open class JavaScriptPropertyValue {
 	}
 
 	/**
-	 * Indicate whether this property's value is a specified number.
 	 * @method equals
 	 * @since 0.7.0
 	 */
@@ -154,7 +140,6 @@ open class JavaScriptPropertyValue {
 	}
 
 	/**
-	 * Indicate whether this property's value is a specified boolean.
 	 * @method equals
 	 * @since 0.7.0
 	 */
@@ -163,7 +148,6 @@ open class JavaScriptPropertyValue {
 	}
 
 	/**
-	 * Casts the property to a specified type
 	 * @method equals
 	 * @since 0.7.0
 	 */

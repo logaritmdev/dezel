@@ -35,7 +35,6 @@ open class ImageLayer: Layer, TransitionListener {
 	@NSManaged public var color: CGColor
 
 	/**
-	 * @inherited
 	 * @property frame
 	 * @since 0.1.0
 	 */
@@ -48,7 +47,6 @@ open class ImageLayer: Layer, TransitionListener {
 	/**
 	 * @property image
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	open var image: CGImage? {
 		didSet {
@@ -60,7 +58,6 @@ open class ImageLayer: Layer, TransitionListener {
 	/**
 	 * @property filter
 	 * @since 0.5.0
-	 * @hidden
 	 */
 	open var filter: ImageFilter = .none {
 		didSet {
@@ -218,7 +215,6 @@ open class ImageLayer: Layer, TransitionListener {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method shouldBeginTransitionAnimation
 	 * @since 0.2.0
 	 */
@@ -233,7 +229,6 @@ open class ImageLayer: Layer, TransitionListener {
 	}
 
 	/**
-	 * @inherited
 	 * @method willBeginTransitionAnimation
 	 * @since 0.2.0
 	 */
@@ -242,7 +237,6 @@ open class ImageLayer: Layer, TransitionListener {
 	}
 
 	/**
-	 * @inherited
 	 * @method didCommitTransition
 	 * @since 0.6.0
 	 */
@@ -251,7 +245,6 @@ open class ImageLayer: Layer, TransitionListener {
 	}
 
 	/**
-	 * @inherited
 	 * @method didFinishTransition
 	 * @since 0.2.0
 	 */

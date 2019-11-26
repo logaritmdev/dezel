@@ -1,5 +1,4 @@
 /**
- * The scrollable view's scrollbars options.
  * @enum Scrollbars
  * @since 0.2.0
  */
@@ -11,7 +10,6 @@ public enum Scrollbars {
 	case horizontal
 
 	/**
-	 * Parses the scrollbars type from a property.
 	 * @method get
 	 * @since 0.2.0
 	 */
@@ -32,7 +30,6 @@ public enum Scrollbars {
 	}
 
 	/**
-	 * Parses the scrollbars type from a string.
 	 * @method get
 	 * @since 0.2.0
 	 */
@@ -55,7 +52,6 @@ public enum Scrollbars {
 	}
 
 	/**
-	 * Parses the scrollbars type from a number.
 	 * @method get
 	 * @since 0.2.0
 	 */
@@ -64,7 +60,6 @@ public enum Scrollbars {
 	}
 
 	/**
-	 * Parses the scrollbars type from a boolean.
 	 * @method get
 	 * @since 0.2.0
 	 */

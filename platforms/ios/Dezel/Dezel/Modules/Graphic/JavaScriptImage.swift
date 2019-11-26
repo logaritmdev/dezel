@@ -1,6 +1,6 @@
 /**
- * An image data manager.
  * @class JavaScriptImage
+ * @super JavaScriptClass
  * @since 0.7.0
  */
 open class JavaScriptImage: JavaScriptClass {
@@ -10,7 +10,6 @@ open class JavaScriptImage: JavaScriptClass {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The image's data.
 	 * @property data
 	 * @since 0.7.0
 	 */
@@ -28,7 +27,6 @@ open class JavaScriptImage: JavaScriptClass {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Loads the image from the specified source.
 	 * @method load
 	 * @since 0.7.0
 	 */
@@ -47,7 +45,6 @@ open class JavaScriptImage: JavaScriptClass {
 	}
 
 	/**
-	 * Sets the image's data.
 	 * @method set
 	 * @since 0.7.0
 	 */
@@ -72,7 +69,6 @@ open class JavaScriptImage: JavaScriptClass {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The image's source.
 	 * @property source
 	 * @since 0.7.0
 	 */
@@ -81,14 +77,12 @@ open class JavaScriptImage: JavaScriptClass {
 	}
 
 	/**
-	 * Whether the image is loading.
 	 * @property loading
 	 * @since 0.7.0
 	 */
 	@objc public lazy var loading = JavaScriptProperty(boolean: false)
 
 	/**
-	 * Whether the image is completely loaded.
 	 * @property complete
 	 * @since 0.7.0
 	 */

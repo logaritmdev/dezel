@@ -1,5 +1,4 @@
 /**
- * Image in memory cache.
  * @class ImageLiveCache
  * @since 0.1.0
  */

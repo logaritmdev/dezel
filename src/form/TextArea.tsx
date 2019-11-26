@@ -53,7 +53,6 @@ export class TextArea extends View {
 	@native public autocapitalize!: boolean
 
 	/**
-	 * The text area's font family.
 	 * @property fontFamily
 	 * @since 0.1.0
 	 */
