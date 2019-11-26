@@ -167,15 +167,6 @@ export class SegmentedBar extends Component {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @property refs
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private refs = {
-		buttons: new Reference<Slot>()
-	}
-
-	/**
 	 * @property selectedIndex
 	 * @since 0.7.0
 	 * @hidden
@@ -188,6 +179,15 @@ export class SegmentedBar extends Component {
 	 * @hidden
 	 */
 	private [$selectedValue]: SegmentedBarButton | null = null
+
+	/**
+	 * @property refs
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private refs = {
+		buttons: new Reference<Slot>()
+	}
 
 	/**
 	 * @method applySelection
