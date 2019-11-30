@@ -12,14 +12,12 @@ open class TestRunner: ApplicationController {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The test runner host.
 	 * @property host
 	 * @since 0.7.0
 	 */
 	private(set) public var host: String!
 
 	/**
-	 * The test runner port.
 	 * @property port
 	 * @since 0.7.0
 	 */
@@ -30,7 +28,6 @@ open class TestRunner: ApplicationController {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Runs the tests using the specified server.
 	 * @method start
 	 * @since 0.7.0
 	 */
@@ -39,7 +36,7 @@ open class TestRunner: ApplicationController {
 		self.host = host
 		self.port = port
 
-		self.viewDidLoad()
+		self.view.isOpaque = true // also call viewDidLoad
 
 		self.context.global.property("KARMA_HOST", string: self.host)
 		self.context.global.property("KARMA_PORT", string: self.port)

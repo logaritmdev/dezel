@@ -1,5 +1,93 @@
-import { setEmitterResponder } from '../../event/private/Emitter'
+import { Dictionary } from 'lodash'
+import { setTouchCanceled } from '../../touch/private/Touch'
+import { setTouchCaptured } from '../../touch/private/Touch'
+import { setTouchId } from '../../touch/private/Touch'
+import { setTouchTarget } from '../../touch/private/Touch'
+import { setTouchX } from '../../touch/private/Touch'
+import { setTouchY } from '../../touch/private/Touch'
+import { native } from '../../native/native'
+import { Touch } from '../../touch/Touch'
 import { TouchEvent } from '../../touch/TouchEvent'
+import { TouchList } from '../../touch/TouchList'
+import { View } from '../../view/View'
+import { $touches } from '../symbol/Application'
+import { Application } from '../Application'
+import { InputTouch } from '../Application'
+
+/**
+ * @function registerTouch
+ * @since 0.7.0
+ * @hidden
+ */
+export function registerTouch(application: Application, input: InputTouch, touch: Touch) {
+
+	if (application[$touches][input.id] == null) {
+		application[$touches][input.id] = touch
+		return
+	}
+
+	throw new Error(
+		`Application error: Touch ${input.id} has already been registered.`
+	)
+}
+
+/**
+ * @method releaseTouch
+ * @since 0.7.0
+ * @hidden
+ */
+export function releaseTouch(application: Application, input: InputTouch) {
+
+	let touch = application[$touches][input.id]
+	if (touch) {
+
+		setTouchTarget(touch, null)
+		setTouchCanceled(touch, false)
+		setTouchCaptured(touch, false)
+		setTouchId(touch, 0)
+		setTouchX(touch, 0)
+		setTouchY(touch, 0)
+
+		delete application[$touches][input.id]
+		return
+	}
+
+	throw new Error(
+		`Application error: Touch ${input.id} has not been registered.`
+	)
+}
+
+/**
+ * @function getTouch
+ * @since 0.7.0
+ * @hidden
+ */
+export function getTouch(application: Application, input: InputTouch) {
+
+	let touch = application[$touches][input.id]
+
+	if (touch &&
+		touch.canceled) {
+		return null
+	}
+
+	return touch
+}
+
+/**
+ * @function mapTouch
+ * @since 0.7.0
+ * @hidden
+ */
+export function mapTouch(touch: Touch, targets: Map<any, any>) {
+
+	let changes = targets.get(touch.target)
+	if (changes == null) {
+		targets.set(touch.target, changes = [])
+	}
+
+	changes.push(touch)
+}
 
 /**
  * @function cancelTouchStart
@@ -21,10 +109,9 @@ export function cancelTouchStart(event: TouchEvent) {
 
 		node.emit(
 			new TouchEvent('touchcancel', {
-				propagable: true,
+				propagable: false,
 				cancelable: false,
 				capturable: false,
-				finishable: false,
 				touches: event.touches,
 				activeTouches: event.activeTouches,
 				targetTouches: event.targetTouches
@@ -63,10 +150,9 @@ export function cancelTouchMove(event: TouchEvent) {
 
 		node.emit(
 			new TouchEvent('touchcancel', {
-				propagable: true,
+				propagable: false,
 				cancelable: false,
 				capturable: false,
-				finishable: false,
 				touches: event.touches,
 				activeTouches: event.activeTouches,
 				targetTouches: event.targetTouches
@@ -106,10 +192,9 @@ export function captureTouchStart(event: TouchEvent) {
 
 		node.emit(
 			new TouchEvent('touchcancel', {
-				propagable: true,
+				propagable: false,
 				cancelable: false,
 				capturable: false,
-				finishable: false,
 				touches: event.touches,
 				activeTouches: event.activeTouches,
 				targetTouches: event.targetTouches
@@ -147,10 +232,9 @@ export function captureTouchMove(event: TouchEvent) {
 
 			node.emit(
 				new TouchEvent('touchcancel', {
-					propagable: true,
+					propagable: false,
 					cancelable: false,
 					capturable: false,
-					finishable: false,
 					touches: event.touches,
 					activeTouches: event.activeTouches,
 					targetTouches: event.targetTouches
@@ -166,4 +250,67 @@ export function captureTouchMove(event: TouchEvent) {
 
 		node = next
 	}
+}
+
+/**
+ * @method updateInputTouches
+ * @since 0.7.0
+ * @hidden
+ */
+export function updateInputTouches(event: TouchEvent, inputs: Array<InputTouch>) {
+
+	let map: Dictionary<InputTouch> = {}
+
+	for (let input of inputs) {
+		if (map[input.id] == null) {
+			map[input.id] = input
+		}
+	}
+
+	for (let touch of event.touches) {
+
+		let input = map[touch.id]
+		if (input == null) {
+			continue
+		}
+
+		if (input.canceled ||
+			input.captured) {
+			continue
+		}
+
+		input.canceled = touch.canceled
+		input.captured = touch.captured
+
+		if (input.captured) {
+			input.receiver = native(event.sender)
+		}
+	}
+}
+
+/**
+ * @function toTouchList
+ * @since 0.5.0
+ * @hidden
+ */
+export function toTouchList(touches: Array<Touch>) {
+	return new TouchList(touches)
+}
+
+/**
+ * @function toActiveTouchList
+ * @since 0.5.0
+ * @hidden
+ */
+export function toActiveTouchList(touches: Dictionary<Touch>) {
+	return new TouchList(Object.values(touches))
+}
+
+/**
+ * @function toTargetTouchList
+ * @since 0.4.0
+ * @hidden
+ */
+export function toTargetTouchList(touches: Dictionary<Touch>, target: View) {
+	return new TouchList(Object.values(touches).filter(touch => touch.target == target))
 }

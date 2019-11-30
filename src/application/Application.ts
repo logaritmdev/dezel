@@ -1,31 +1,37 @@
 import '../index'
 import { Dictionary } from 'lodash'
-import { setEmitterResponder } from '../event/private/Emitter'
 import { setEventTarget } from '../event/private/Event'
 import { setScreenActive } from '../screen/private/Screen'
 import { setScreenPresented } from '../screen/private/Screen'
-import { setTouchCanceled } from '../touch/private/Touch'
-import { setTouchCaptured } from '../touch/private/Touch'
-import { setTouchIdentifier } from '../touch/private/Touch'
-import { setTouchLocationX } from '../touch/private/Touch'
-import { setTouchLocationY } from '../touch/private/Touch'
+import { setTouchId } from '../touch/private/Touch'
 import { setTouchTarget } from '../touch/private/Touch'
+import { setTouchX } from '../touch/private/Touch'
+import { setTouchY } from '../touch/private/Touch'
 import { watch } from '../decorator/watch'
 import { Emitter } from '../event/Emitter'
 import { Event } from '../event/Event'
+import { EventListener } from '../event/Event'
+import { EventOptions } from '../event/Event'
 import { bridge } from '../native/bridge'
 import { native } from '../native/native'
 import { Enclosure } from '../screen/Enclosure'
 import { Screen } from '../screen/Screen'
 import { Touch } from '../touch/Touch'
 import { TouchEvent } from '../touch/TouchEvent'
-import { TouchList } from '../touch/TouchList'
 import { View } from '../view/View'
 import { Window } from '../view/Window'
 import { cancelTouchMove } from './private/Application'
 import { cancelTouchStart } from './private/Application'
 import { captureTouchMove } from './private/Application'
 import { captureTouchStart } from './private/Application'
+import { getTouch } from './private/Application'
+import { mapTouch } from './private/Application'
+import { registerTouch } from './private/Application'
+import { releaseTouch } from './private/Application'
+import { toActiveTouchList } from './private/Application'
+import { toTargetTouchList } from './private/Application'
+import { toTouchList } from './private/Application'
+import { updateInputTouches } from './private/Application'
 import { $touches } from './symbol/Application'
 
 @bridge('dezel.application.Application')
@@ -163,13 +169,13 @@ export class Application extends Emitter {
 
 			let touch = new Touch(target)
 
-			mapTouchTarget(targets, touch)
+			setTouchX(touch, input.x)
+			setTouchY(touch, input.y)
+			setTouchId(touch, input.id)
 
-			setTouchIdentifier(touch, input.pointer)
-			setTouchLocationX(touch, input.x)
-			setTouchLocationY(touch, input.y)
+			mapTouch(touch, targets)
 
-			setTouch(this, input, touch)
+			registerTouch(this, input, touch)
 		}
 
 		for (let [target, touches] of targets) {
@@ -178,9 +184,9 @@ export class Application extends Emitter {
 				propagable: true,
 				capturable: true,
 				cancelable: true,
-				touches: getTouchList(touches),
-				activeTouches: getActiveTouchList(this[$touches]),
-				targetTouches: getTargetTouchList(this[$touches], target)
+				touches: toTouchList(touches),
+				activeTouches: toActiveTouchList(this[$touches]),
+				targetTouches: toTargetTouchList(this[$touches], target)
 			})
 
 			target.emit(event)
@@ -202,6 +208,8 @@ export class Application extends Emitter {
 				}
 			}
 		}
+
+		return this
 	}
 
 	/**
@@ -219,9 +227,10 @@ export class Application extends Emitter {
 				continue
 			}
 
-			mapTouchTarget(targets, touch)
-			setTouchLocationX(touch, input.x)
-			setTouchLocationY(touch, input.y)
+			setTouchX(touch, input.x)
+			setTouchY(touch, input.y)
+
+			mapTouch(touch, targets)
 		}
 
 		for (let [target, touches] of targets) {
@@ -234,9 +243,9 @@ export class Application extends Emitter {
 				propagable: captured == false,
 				capturable: captured == false,
 				cancelable: true,
-				touches: getTouchList(touches),
-				activeTouches: getActiveTouchList(this[$touches]),
-				targetTouches: getTargetTouchList(this[$touches], target)
+				touches: toTouchList(touches),
+				activeTouches: toActiveTouchList(this[$touches]),
+				targetTouches: toTargetTouchList(this[$touches], target)
 			})
 
 			target.emit(event)
@@ -258,6 +267,8 @@ export class Application extends Emitter {
 				}
 			}
 		}
+
+		return this
 	}
 
 	/**
@@ -275,9 +286,10 @@ export class Application extends Emitter {
 				continue
 			}
 
-			mapTouchTarget(targets, touch)
-			setTouchLocationX(touch, input.x)
-			setTouchLocationY(touch, input.y)
+			setTouchX(touch, input.x)
+			setTouchY(touch, input.y)
+
+			mapTouch(touch, targets)
 		}
 
 		for (let [target, touches] of targets) {
@@ -290,15 +302,19 @@ export class Application extends Emitter {
 				propagable: captured == false,
 				capturable: false,
 				cancelable: true,
-				touches: getTouchList(touches),
-				activeTouches: getActiveTouchList(this[$touches]),
-				targetTouches: getTargetTouchList(this[$touches], target)
+				touches: toTouchList(touches),
+				activeTouches: toActiveTouchList(this[$touches]),
+				targetTouches: toTargetTouchList(this[$touches], target)
 			})
 
 			target.emit(event)
 		}
 
-		removeInputTouches(inputs, this)
+		for (let input of inputs) {
+			releaseTouch(this, input)
+		}
+
+		return this
 	}
 
 	/**
@@ -316,9 +332,10 @@ export class Application extends Emitter {
 				continue
 			}
 
-			mapTouchTarget(targets, touch)
-			setTouchLocationX(touch, input.x)
-			setTouchLocationY(touch, input.y)
+			setTouchX(touch, input.x)
+			setTouchY(touch, input.y)
+
+			mapTouch(touch, targets)
 		}
 
 		for (let [target, touches] of targets) {
@@ -331,15 +348,19 @@ export class Application extends Emitter {
 				propagable: captured == false,
 				capturable: false,
 				cancelable: false,
-				touches: getTouchList(touches),
-				activeTouches: getActiveTouchList(this[$touches]),
-				targetTouches: getTargetTouchList(this[$touches], target)
+				touches: toTouchList(touches),
+				activeTouches: toActiveTouchList(this[$touches]),
+				targetTouches: toTargetTouchList(this[$touches], target)
 			})
 
 			target.emit(event)
 		}
 
-		removeInputTouches(inputs, this)
+		for (let input of inputs) {
+			releaseTouch(this, input)
+		}
+
+		return this
 	}
 
 	//--------------------------------------------------------------------------
@@ -505,10 +526,12 @@ export class Application extends Emitter {
 
 				let enclosure = newScreen.enclosure
 				if (enclosure == null) {
+
 					throw new Error(
 						`Application error: ` +
 						`The screen is missing its enclosure.`
 					)
+
 				}
 
 				this.window.remove(enclosure)
@@ -728,7 +751,7 @@ let main: Application | null = null
  * @since 0.7.0
  */
 export interface InputTouch {
-	pointer: number
+	id: number
 	x: number
 	y: number
 	canceled: boolean
@@ -760,129 +783,4 @@ export type ApplicationOpenUniversalURLEvent = {
  */
 export type ApplicationOpenResourceURLEvent = {
 	url: string
-}
-
-/**
- * @function mapTouchTarget
- * @since 0.7.0
- * @hidden
- */
-function mapTouchTarget(targets: Map<any, any>, touch: Touch) {
-
-	let changes = targets.get(touch.target)
-	if (changes == null) {
-		changes = []
-		targets.set(touch.target, changes)
-	}
-
-	changes.push(touch)
-}
-
-/**
- * @function setTouch
- * @since 0.7.0
- * @hidden
- */
-function setTouch(application: Application, input: InputTouch, touch: Touch) {
-
-	if (application[$touches][input.pointer] == null) {
-		application[$touches][input.pointer] = touch
-		return
-	}
-
-	throw new Error(
-		`Application error: ` +
-		`The touch ${input.pointer} has already been registered.`
-	)
-}
-
-/**
- * @function getTouch
- * @since 0.7.0
- * @hidden
- */
-function getTouch(application: Application, input: InputTouch) {
-
-	let touch = application[$touches][input.pointer]
-
-	if (touch &&
-		touch.canceled) {
-		return null
-	}
-
-	return touch
-}
-
-/**
- * @function getTouchList
- * @since 0.5.0
- * @hidden
- */
-function getTouchList(touches: Array<Touch>) {
-	return new TouchList(touches)
-}
-
-/**
- * @function getActiveTouchList
- * @since 0.5.0
- * @hidden
- */
-function getActiveTouchList(touches: Dictionary<Touch>) {
-	return new TouchList(Object.keys(touches).map(key => touches[key]))
-}
-
-/**
- * @function getTargetTouchList
- * @since 0.4.0
- * @hidden
- */
-function getTargetTouchList(touches: Dictionary<Touch>, target: View) {
-	return new TouchList(Object.keys(touches).map(key => touches[key]).filter(touch => touch.target == target))
-}
-
-/**
- * @method updateInputTouches
- * @since 0.7.0
- * @hidden
- */
-function updateInputTouches(event: TouchEvent, inputs: Array<InputTouch>) {
-
-	let map: Dictionary<InputTouch> = {}
-
-	for (let input of inputs) {
-		if (map[input.pointer] == null) {
-			map[input.pointer] = input
-		}
-	}
-
-	for (let touch of event.touches) {
-
-		let input = map[touch.identifier]
-		if (input == null) {
-			continue
-		}
-
-		if (input.canceled ||
-			input.captured) {
-			continue
-		}
-
-		input.canceled = touch.canceled
-		input.captured = touch.captured
-
-		if (input.captured) {
-			input.receiver = native(event.sender)
-		}
-	}
-}
-
-/**
- * @method removeInputTouches
- * @since 0.7.0
- * @hidden
- */
-function removeInputTouches(inputs: Array<InputTouch>, application: Application) {
-	for (let input of inputs) {
-		delete application[$touches][input.pointer]
-	}
 }

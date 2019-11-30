@@ -47,10 +47,6 @@ describe('TextView', () => {
 		expect(view.text).toBe('')
 	})
 
-	it('should have a valid initial textColor property value', () => {
-		expect(view.textColor).toBe('#000')
-	})
-
 	it('should have a valid initial textAlignment property value', () => {
 		expect(view.textAlignment).toBe('start')
 	})
@@ -71,6 +67,22 @@ describe('TextView', () => {
 		expect(view.textLeading).toBe(0)
 	})
 
+	it('should have a valid initial textTransform property value', () => {
+		expect(view.textTransform).toBe('none')
+	})
+
+	it('should have a valid initial textOverflow property value', () => {
+		expect(view.textOverflow).toBe('ellipsis')
+	})
+
+	it('should have a valid initial textColor property value', () => {
+		expect(view.textColor).toBe('#000')
+	})
+
+	it('should have a valid initial textOpacity property value', () => {
+		expect(view.textOpacity).toBe(1)
+	})
+
 	it('should have a valid initial textShadowBlur property value', () => {
 		expect(view.textShadowBlur).toBe(0)
 	})
@@ -89,14 +101,6 @@ describe('TextView', () => {
 
 	it('should have a valid initial textDecoration property value', () => {
 		expect(view.textDecoration).toBe('none')
-	})
-
-	it('should have a valid initial textTransform property value', () => {
-		expect(view.textTransform).toBe('none')
-	})
-
-	it('should have a valid initial textOverflow property value', () => {
-		expect(view.textOverflow).toBe('ellipsis')
 	})
 
 	it('should have a valid initial linkColor property value', () => {

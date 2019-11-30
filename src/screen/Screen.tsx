@@ -1,4 +1,3 @@
-import { viewInsertAfter } from '../view/private/View'
 import { Application } from '../application/Application'
 import { ApplicationKeyboardEvent } from '../application/Application'
 import { Component } from '../component/Component'
@@ -854,8 +853,7 @@ export abstract class Screen<TResult = any> extends Component {
 
 			} else {
 
-				viewInsertAfter(
-					parent,
+				parent.insertAfter(
 					presentedScreenEnclosure,
 					presenterScreen
 				)

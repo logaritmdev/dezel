@@ -1,10 +1,14 @@
 import { Dictionary } from 'lodash'
+import { dispatchEvent } from './private/Emitter'
+import { insertEventListener } from './private/Emitter'
+import { removeEventListener } from './private/Emitter'
 import { setEventSender } from './private/Event'
 import { setEventTarget } from './private/Event'
 import { $listeners } from './symbol/Emitter'
 import { $responder } from './symbol/Emitter'
 import { Event } from './Event'
 import { EventListener } from './Event'
+import { EventListeners } from './Event'
 import { EventOptions } from './Event'
 
 /**
@@ -44,7 +48,7 @@ export class Emitter {
 	 * @since 0.1.0
 	 */
 	public on(type: string, listener: EventListener) {
-		insertItem(this, type, listener)
+		insertEventListener(this, type, listener as any)
 		return this
 	}
 
@@ -53,7 +57,7 @@ export class Emitter {
 	 * @since 0.7.0
 	 */
 	public one(type: string, listener: EventListener) {
-		insertItem(this, type, listener, true)
+		insertEventListener(this, type, listener as any, true)
 		return this
 	}
 
@@ -62,7 +66,7 @@ export class Emitter {
 	 * @since 0.1.0
 	 */
 	public off(type: string, listener: EventListener) {
-		removeItem(this, type, listener)
+		removeEventListener(this, type, listener as any)
 		return this
 	}
 
@@ -114,109 +118,5 @@ export class Emitter {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private [$listeners]: Dictionary<Array<Function>> = {}
-}
-
-
-/**
- * @function insertItem
- * @since 0.7.0
- * @hidden
- */
-function insertItem(emitter: Emitter, type: string, listener: EventListener, one: boolean = false) {
-
-	type = type.toLowerCase()
-
-	let listeners = emitter[$listeners][type]
-	if (listeners == null) {
-		listeners = emitter[$listeners][type] = []
-	}
-
-	if (one) {
-
-		function callback(event: Event) {
-
-			if (emitter) {
-				emitter.off(type, callback)
-			}
-
-			listener(event)
-		}
-
-		listeners.push(callback)
-
-	} else {
-
-		listeners.push(listener)
-
-	}
-}
-
-/**
- * @function removeItem
- * @since 0.7.0
- * @hidden
- */
-function removeItem(emitter: Emitter, type: string, listener: EventListener) {
-
-	type = type.toLowerCase()
-
-	let listeners = emitter[$listeners][type]
-	if (listeners == null) {
-		return
-	}
-
-	let index = listeners.indexOf(listener)
-	if (index > -1) {
-		listeners.splice(index, 1)
-	}
-}
-
-/**
- * @function dispatchEvent
- * @since 0.7.0
- * @hidden
- */
-function dispatchEvent(sender: Emitter, event: Event) {
-
-	setEventSender(event, sender)
-
-	sender.onEvent(event)
-
-	if (event.finished ||
-		event.canceled ||
-		event.captured) {
-		return
-	}
-
-	invokeListeners(sender, event)
-
-	if (event.finished ||
-		event.canceled ||
-		event.captured) {
-		return
-	}
-
-	if (event.propagable == false) {
-		return
-	}
-
-	let responder = sender.responder
-	if (responder) {
-		dispatchEvent(responder, event)
-	}
-}
-
-/**
- * @function invokeListeners
- * @since 0.7.0
- * @hidden
- */
-function invokeListeners(sender: Emitter, event: Event) {
-	let listeners = sender[$listeners][event.type]
-	if (listeners) {
-		listeners.forEach(listener => {
-			listener.call(null, event)
-		})
-	}
+	private [$listeners]: Dictionary<EventListeners> = {}
 }

@@ -419,7 +419,7 @@ export class DataSource<T> extends Emitter {
 }
 
 /**
- * @enum DataSourceOptions
+ * @interface DataSourceOptions
  * @since 0.2.0
  */
 export interface DataSourceOptions<T> {

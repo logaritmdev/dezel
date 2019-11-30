@@ -1,5 +1,6 @@
 /**
  * @class JavaScriptProperty
+ * @super NSObject
  * @since 0.7.0
  */
 public class JavaScriptProperty: NSObject {
@@ -13,6 +14,18 @@ public class JavaScriptProperty: NSObject {
 	 * @since 0.7.0
 	 */
 	public typealias JavaScriptPropertyHandler = (JavaScriptProperty) -> Void
+
+
+	//--------------------------------------------------------------------------
+	// MARK: Static
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @property NullValue
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private static let NullValue: JavaScriptPropertyValue = JavaScriptPropertyValue()
 
 	//--------------------------------------------------------------------------
 	// MARK: Properties
@@ -143,7 +156,7 @@ public class JavaScriptProperty: NSObject {
 	 * @since 0.7.0
 	 */
 	public init(handler: JavaScriptPropertyHandler? = nil) {
-		self.initialValue = JavaScriptPropertyValue()
+		self.initialValue = JavaScriptProperty.NullValue
 		self.currentValue = self.initialValue
 		self.handler = handler
 	}
@@ -509,7 +522,7 @@ public class JavaScriptProperty: NSObject {
 	 * @hidden
 	 */
 	private func update() {
-		self.currentValue = JavaScriptPropertyValue()
+		self.currentValue = JavaScriptProperty.NullValue
 	}
 
 	/**
@@ -527,7 +540,7 @@ public class JavaScriptProperty: NSObject {
 	 * @hidden
 	 */
 	private func update(_ value: JavaScriptValue) {
-		self.currentValue = JavaScriptPropertyRawValue(value: value)
+		self.currentValue = JavaScriptPropertyScriptValue(value: value)
 	}
 
 	/**

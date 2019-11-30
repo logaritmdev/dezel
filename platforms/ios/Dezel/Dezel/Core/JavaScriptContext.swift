@@ -2,7 +2,7 @@
  * @class JavaScriptContext
  * @since 0.1.0
  */
-open class JavaScriptContext: NSObject {
+open class JavaScriptContext {
 
 	//--------------------------------------------------------------------------
 	// MARK: Constants
@@ -82,9 +82,7 @@ open class JavaScriptContext: NSObject {
      * @constructor
      * @since 0.1.0
      */
-	public override init() {
-
-		super.init()
+	public init() {
 
 		self.handle = JavaScriptContextCreate(Bundle.main.bundleIdentifier ?? "Dezel Context")
 

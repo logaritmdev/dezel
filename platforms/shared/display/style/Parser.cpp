@@ -77,11 +77,17 @@ Parser::Parser(Stylesheet* stylesheet, Tokenizer* tokenizer, string file) : styl
 	} while (tokens.hasNextToken());
 }
 
-Parser::Parser(Variable* variable, Tokenizer* tokenizer)
+Parser::Parser(Variable* variable, Tokenizer* tokenizer) : stylesheet(nullptr), tokenizer(tokenizer), file("<anonymous file>")
 {
 	auto tokens = this->tokenizer->getTokens();
 
+	tokens.skipSpace();
+
 	while (true) {
+
+		if (tokens.getCurrTokenType() == kTokenTypeEnd) {
+			break;
+		}
 
 		auto value = this->parseValue(tokens);
 
@@ -538,6 +544,10 @@ Parser::parseValue(TokenList& tokens)
 		return this->parseStringValue(tokens);
 	}
 
+	if (tokens.getCurrTokenType() == kTokenTypeHash) {
+		return this->parseColorValue(tokens);
+	}
+
 	if (tokens.getCurrTokenType() == kTokenTypeVariable) {
 		return this->parseVariableValue(tokens);
 	}
@@ -572,6 +582,15 @@ Parser::parseIdentValue(TokenList& tokens)
 	}
 
 	return this->parseStringValue(tokens);
+}
+
+Value*
+Parser::parseColorValue(TokenList& tokens)
+{
+	string color;
+	color.append("#");
+	color.append(tokens.getCurrTokenName());
+	return new StringValue(color);
 }
 
 Value*
@@ -717,29 +736,26 @@ Parser::parseFunctionValue(TokenList& tokens)
 string
 Parser::toCamelCase(string name)
 {
-// TODO
-// Optimize
-	string tmp;
+	string camelized;
 
-	for (int i = 0; i < name.length(); i++){
+	for (int i = 0; i < name.length(); i++) {
 
-        if (name[i] == '-') {
+		auto character = name[i];
 
-			tmp = name.substr(i + 1, 1);
+		if (character == '-' ||
+			character == '_') {
 
-			transform(
-				tmp.begin(),
-				tmp.end(),
-				tmp.begin(),
-				::toupper
-			);
+			if (i == name.length() - 1) {
+				break;
+			}
 
-            name.erase(i, 2);
-            name.insert(i, tmp);
-       }
-    }
+			character = toupper(name[++i]);
+		}
 
-	return name;
+		camelized.append(1, character);
+	}
+
+	return camelized;
 }
 
 void

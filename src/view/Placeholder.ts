@@ -1,11 +1,16 @@
 import { bound } from '../decorator/bound'
 import { Emitter } from '../event/Emitter'
 import { Event } from '../event/Event'
+import { insertItem } from './private/Placeholder'
+import { insertView } from './private/Placeholder'
+import { removeItem } from './private/Placeholder'
+import { removeView } from './private/Placeholder'
 import { $children } from './symbol/Placeholder'
 import { $offset } from './symbol/Placeholder'
 import { $parent } from './symbol/Placeholder'
 import { View } from './View'
 import { ViewInsertEvent } from './View'
+import { ViewMoveToParentEvent } from './View'
 import { ViewRemoveEvent } from './View'
 
 /**
@@ -65,7 +70,7 @@ export class Placeholder extends Emitter {
 		parent.on('remove', this.onViewRemove)
 		parent.on('destroy', this.onViewDestroy)
 
-		this.emit<PlaceholderMoveToParentEvent>('movetoparent', { data: { parent } })
+		this.emit<ViewMoveToParentEvent>('movetoparent', { data: { parent } })
 
 		return this
 	}
@@ -86,7 +91,7 @@ export class Placeholder extends Emitter {
 			this.remove(child)
 		}
 
-		this.emit<PlaceholderMoveToParentEvent>('movetoparent', { data: { parent: null } })
+		this.emit<ViewMoveToParentEvent>('movetoparent', { data: { parent: null } })
 
 		return super.destroy()
 	}
@@ -104,11 +109,6 @@ export class Placeholder extends Emitter {
 	 * @since 0.7.0
 	 */
 	public insert(child: View, index: number) {
-
-		let parent = this.parent
-		if (parent == null) {
-			return this
-		}
 
 		if (index > this.children.length) {
 			index = this.children.length
@@ -301,70 +301,4 @@ export class Placeholder extends Emitter {
 	 * @hidden
 	 */
 	public __jsxProps: any
-}
-
-/**
- * @function insertItem
- * @since 0.7.0
- * @hidden
- */
-function insertItem(placeholder: Placeholder, child: View, index: number) {
-	placeholder[$children].splice(index, 0, child)
-}
-
-/**
- * @function removeItem
- * @since 0.7.0
- * @hidden
- */
-function removeItem(placeholder: Placeholder, child: View, index: number) {
-	placeholder[$children].splice(index, 1)
-}
-
-/**
- * @function insertView
- * @since 0.7.0
- * @hidden
- */
-function insertView(placeholder: Placeholder, child: View, index: number) {
-	if (placeholder.parent) {
-		placeholder.parent.insert(child, index + placeholder.offset)
-	}
-}
-
-/**
- * @function removeView
- * @since 0.7.0
- * @hidden
- */
-function removeView(placeholder: Placeholder, child: View, index: number) {
-	if (placeholder.parent) {
-		placeholder.parent.remove(child)
-	}
-}
-
-/**
- * @type PlaceholderInsertEvent
- * @since 0.7.0
- */
-export type PlaceholderInsertEvent = {
-	child: View
-	index: number
-}
-
-/**
- * @type PlaceholderRemoveEvent
- * @since 0.7.0
- */
-export type PlaceholderRemoveEvent = {
-	child: View
-	index: number
-}
-
-/**
- * @type PlaceholderMoveToParentEvent
- * @since 0.7.0
- */
-export type PlaceholderMoveToParentEvent = {
-	parent: View | null
 }

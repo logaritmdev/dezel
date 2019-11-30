@@ -1,10 +1,10 @@
 /**
- * @class JavaScriptPropertyRawValue
+ * @class JavaScriptPropertyScriptValue
  * @super JavaScriptPropertyValue
  * @since 0.7.0
  * @hidden
  */
-open class JavaScriptPropertyRawValue : JavaScriptPropertyValue {
+open class JavaScriptPropertyScriptValue : JavaScriptPropertyValue {
 
 	//--------------------------------------------------------------------------
 	// MARK: Properties

@@ -1,6 +1,7 @@
 
 /**
  * @class AlertController
+ * @super UIAlertController
  * @since 0.1.0
  */
 open class AlertController: UIAlertController {

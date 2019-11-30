@@ -111,16 +111,6 @@ export class Button extends Component {
 	}
 
 	/**
-	 * @method onTouchCancel
-	 * @since 0.1.0
-	 */
-	protected onTouchCancel(event: TouchEvent) {
-		if (this.pressed && event.targetTouches.length == 0) {
-			this.pressed = false
-		}
-	}
-
-	/**
 	 * @method onTouchStart
 	 * @since 0.1.0
 	 */
@@ -138,6 +128,16 @@ export class Button extends Component {
 		if (this.pressed && event.targetTouches.length == 0) {
 			this.pressed = false
 			this.press(event)
+		}
+	}
+
+	/**
+	 * @method onTouchCancel
+	 * @since 0.1.0
+	 */
+	protected onTouchCancel(event: TouchEvent) {
+		if (this.pressed && event.targetTouches.length == 0) {
+			this.pressed = false
 		}
 	}
 

@@ -297,7 +297,7 @@ class JavaScriptValueTest: XCTestCase {
 		XCTAssertTrue(expectedCallee!.isFunction)
 		XCTAssertTrue(expectedObject!.equals(obj))
 		XCTAssertTrue(expectedObject!.isObject)
-		XCTAssertTrue(expectedContext! == self.context)
+		XCTAssertTrue(expectedContext! === self.context)
 
 		expectedCallee?.dispose()
 		expectedObject?.dispose()
@@ -423,7 +423,7 @@ class JavaScriptValueTest: XCTestCase {
 		XCTAssertTrue(expectedCallee!.isFunction)
 		XCTAssertTrue(expectedObject!.equals(obj))
 		XCTAssertTrue(expectedObject!.isObject)
-		XCTAssertTrue(expectedContext! == self.context)
+		XCTAssertTrue(expectedContext! === self.context)
 
 		expectedCallee?.dispose()
 		expectedObject?.dispose()
@@ -541,7 +541,7 @@ class JavaScriptValueTest: XCTestCase {
 
 		XCTAssertTrue(expectedCallee!.isFunction)
 		XCTAssertTrue(expectedObject!.isObject)
-		XCTAssertTrue(expectedContext! == self.context)
+		XCTAssertTrue(expectedContext! === self.context)
 
 		expectedCallee?.dispose()
 		expectedObject?.dispose()

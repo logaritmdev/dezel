@@ -424,11 +424,19 @@ open class JavaScriptImageView: JavaScriptView {
 	}
 
 	/**
-	 * @property imageTint
+	 * @property imageOpacity
 	 * @since 0.7.0
 	 */
-	@objc public lazy var imageTint = JavaScriptProperty(string: "transparent") { value in
-		self.view.imageTint = CGColorParse(value.string)
+	@objc public lazy var imageOpacity = JavaScriptProperty(number: 1) { value in
+		self.view.alpha = CGFloat(value.number)
+	}
+
+	/**
+	 * @property tint
+	 * @since 0.7.0
+	 */
+	@objc public lazy var tint = JavaScriptProperty(string: "transparent") { value in
+		self.view.tint = CGColorParse(value.string)
 	}
 
 	//--------------------------------------------------------------------------
@@ -614,20 +622,40 @@ open class JavaScriptImageView: JavaScriptView {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method jsGet_imageTint
+	 * @method jsGet_imageOpacity
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsGet_imageTint(callback: JavaScriptGetterCallback) {
-		callback.returns(self.imageTint)
+	@objc open func jsGet_imageOpacity(callback: JavaScriptGetterCallback) {
+		callback.returns(self.imageOpacity)
 	}
 
 	/**
-	 * @method jsSet_imageTint
+	 * @method jsSet_imageOpacity
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsSet_imageTint(callback: JavaScriptSetterCallback) {
-		self.imageTint.reset(callback.value, lock: self)
+	@objc open func jsSet_imageOpacity(callback: JavaScriptSetterCallback) {
+		self.imageOpacity.reset(callback.value, lock: self)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_tint
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@objc open func jsGet_tint(callback: JavaScriptGetterCallback) {
+		callback.returns(self.tint)
+	}
+
+	/**
+	 * @method jsSet_tint
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@objc open func jsSet_tint(callback: JavaScriptSetterCallback) {
+		self.tint.reset(callback.value, lock: self)
 	}
 }

@@ -86,10 +86,12 @@ export function pushComponent(component: Component) {
 
 	let current = getComponent()
 	if (current == component) {
+
 		throw new Error(
 			`Component error: ` +
 			`Component ${component.constructor.name} is already being rendered.`
 		)
+
 	}
 
 	renderComponentStack.push(component)

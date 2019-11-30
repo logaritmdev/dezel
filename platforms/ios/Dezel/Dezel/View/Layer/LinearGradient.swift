@@ -1,9 +1,8 @@
 /**
  * @class LinearGradient
  * @since 0.1.0
- * @hidden
  */
-public class LinearGradient: NSObject {
+public class LinearGradient {
 
 	//--------------------------------------------------------------------------
 	// MARK: Properties

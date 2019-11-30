@@ -59,10 +59,12 @@ export function createElement(Type: any, properties: any, ...children: Array<Vie
 function create(Type: any, properties: any) {
 
 	if (Type == null) {
+
 		throw new Error(
 			`JSX error: ` +
 			`Unable to create element, type is null.`
 		)
+
 	}
 
 	if (properties == null ||

@@ -1,5 +1,5 @@
-#ifndef String_h
-#define String_h
+#ifndef StringValue_h
+#define StringValue_h
 
 #include "Value.h"
 

@@ -2,7 +2,7 @@ import { Emitter } from '../../event/Emitter'
 import { View } from '../../view/View'
 import { $canceled } from '../symbol/Touch'
 import { $captured } from '../symbol/Touch'
-import { $identifier } from '../symbol/Touch'
+import { $id } from '../symbol/Touch'
 import { $target } from '../symbol/Touch'
 import { $x } from '../symbol/Touch'
 import { $y } from '../symbol/Touch'
@@ -15,15 +15,6 @@ import { Touch } from '../Touch'
  */
 export function setTouchTarget(touch: Touch, target: any) {
 	touch[$target] = target
-}
-
-/**
- * @function setTouchIdentifier
- * @since 0.7.0
- * @hidden
- */
-export function setTouchIdentifier(touch: Touch, identifier: number) {
-	touch[$identifier] = identifier
 }
 
 /**
@@ -45,19 +36,28 @@ export function setTouchCanceled(touch: Touch, canceled: boolean) {
 }
 
 /**
- * @function setTouchLocationX
+ * @function setTouchId
  * @since 0.7.0
  * @hidden
  */
-export function setTouchLocationX(touch: Touch, x: number) {
+export function setTouchId(touch: Touch, id: number) {
+	touch[$id] = id
+}
+
+/**
+ * @function setTouchX
+ * @since 0.7.0
+ * @hidden
+ */
+export function setTouchX(touch: Touch, x: number) {
 	touch[$x] = x
 }
 
 /**
- * @function setTouchLocationY
+ * @function setTouchY
  * @since 0.7.0
  * @hidden
  */
-export function setTouchLocationY(touch: Touch, y: number) {
+export function setTouchY(touch: Touch, y: number) {
 	touch[$y] = y
 }

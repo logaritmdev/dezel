@@ -1,3 +1,4 @@
+import { getEventListeners } from '../event/private/Emitter'
 import { Application } from '../application/Application'
 import { Dezel } from '../core/Dezel'
 import { Event } from '../event/Event'
@@ -6,6 +7,8 @@ import { native } from '../native/native'
 import { TouchEvent } from '../touch/TouchEvent'
 import { TouchList } from '../touch/TouchList'
 import { View } from './View'
+import { ViewMoveToParentEvent } from './View'
+import { ViewMoveToWindowEvent } from './View'
 
 describe('View', () => {
 
@@ -681,7 +684,6 @@ describe('View', () => {
 
 		expect(view.children[0]).toBe(v1)
 		expect(view.children[1]).toBe(v2)
-
 	})
 
 	it('should insert a child view', () => {
@@ -697,7 +699,6 @@ describe('View', () => {
 		expect(view.children[0]).toBe(v1)
 		expect(view.children[1]).toBe(v3)
 		expect(view.children[2]).toBe(v2)
-
 	})
 
 	it('should insert a child view in a valid range', () => {
@@ -773,7 +774,6 @@ describe('View', () => {
 
 		expect(fn1).toHaveBeenCalled()
 		expect(fn2).toHaveBeenCalled()
-
 	})
 
 	it('should remove a child view', () => {
@@ -789,7 +789,6 @@ describe('View', () => {
 
 		expect(view.children[0]).toBeUndefined()
 		expect(view.children[1]).toBeUndefined()
-
 	})
 
 	it('should remove itself from a parent view', () => {
@@ -805,7 +804,6 @@ describe('View', () => {
 
 		expect(view.children[0]).toBeUndefined()
 		expect(view.children[1]).toBeUndefined()
-
 	})
 
 	it('should clear the child view parent when removing', () => {
@@ -816,7 +814,6 @@ describe('View', () => {
 		view.remove(v1)
 
 		expect(v1.parent).toBeNull()
-
 	})
 
 	it('should clear the child view responder when removing', () => {
@@ -827,7 +824,6 @@ describe('View', () => {
 		view.remove(v1)
 
 		expect(v1.responder).toBeNull()
-
 	})
 
 	it('should emit an event when removing', () => {
@@ -856,7 +852,6 @@ describe('View', () => {
 
 		expect(fn1).toHaveBeenCalled()
 		expect(fn2).toHaveBeenCalled()
-
 	})
 
 	it('should remove all views', () => {
@@ -867,25 +862,22 @@ describe('View', () => {
 		view.append(v1)
 		view.append(v2)
 
-		view.empty()
+		view.removeAll()
 
 		expect(view.children[0]).toBeUndefined()
 		expect(view.children[1]).toBeUndefined()
-
 	})
 
-	it('should replace itself with another view', () => {
+	it('should replace a view with another', () => {
 
 		let v1 = new View()
 		let v2 = new View()
 
 		view.append(v1)
-
-		v1.replaceWith(v2)
+		view.replace(v1, v2)
 
 		expect(view.children[0]).toBe(v2)
 		expect(view.children[1]).toBeUndefined()
-
 	})
 
 	it('should check if a view is contained inside another', () => {
@@ -905,7 +897,6 @@ describe('View', () => {
 		expect(view.contains(v2)).toBe(true)
 		expect(view.contains(v3)).toBe(true)
 		expect(view.contains(v4)).toBe(true)
-
 	})
 
 	it('should set a style', () => {
@@ -917,7 +908,6 @@ describe('View', () => {
 		expect(view.styles.has('style1')).toBe(false)
 		expect(view.styles.has('style2')).toBe(true)
 		expect(view.styles.has('style3')).toBe(false)
-
 	})
 
 	it('should set a state', () => {
@@ -929,7 +919,6 @@ describe('View', () => {
 		expect(view.states.has('state1')).toBe(false)
 		expect(view.states.has('state2')).toBe(true)
 		expect(view.states.has('state3')).toBe(false)
-
 	})
 
 	it('should call the native view scheduleRedraw method', () => {
@@ -938,7 +927,6 @@ describe('View', () => {
 		view.scheduleRedraw()
 
 		expect(native(view).scheduleRedraw).toHaveBeenCalled()
-
 	})
 
 	it('should call the native view scheduleLayout method', () => {
@@ -947,25 +935,22 @@ describe('View', () => {
 		view.scheduleLayout()
 
 		expect(native(view).scheduleLayout).toHaveBeenCalled()
-
 	})
 
-	// it('should call the native view measure method', () => {
+	it('should call the native view measure method', () => {
 
-	// 	native(view).measure = jasmine.createSpy()
-	// 	view.measure()
+		native(view).measure = jasmine.createSpy()
+		view.measure()
 
-	// 	expect(native(view).measure).toHaveBeenCalled()
+		expect(native(view).measure).toHaveBeenCalled()
+	})
 
-	// })
-
-	it('should call the native view resolve  method', () => {
+	it('should call the native view resolve method', () => {
 
 		native(view).resolve = jasmine.createSpy()
 		view.resolve()
 
 		expect(native(view).resolve).toHaveBeenCalled()
-
 	})
 
 	it('should call the native view scrollTo method', () => {
@@ -974,7 +959,6 @@ describe('View', () => {
 		view.scrollTo(0, 0)
 
 		expect(native(view).scrollTo).toHaveBeenCalled()
-
 	})
 
 	it('should invoke the internal listeners', () => {
@@ -992,8 +976,6 @@ describe('View', () => {
 		v.onRemove = jasmine.createSpy()
 		v.onMoveToParent = jasmine.createSpy()
 		v.onMoveToWindow = jasmine.createSpy()
-		v.onMount = jasmine.createSpy()
-		v.onUnmount = jasmine.createSpy()
 		v.onScrollStart = jasmine.createSpy()
 		v.onScrollEnd = jasmine.createSpy()
 		v.onScroll = jasmine.createSpy()
@@ -1045,15 +1027,12 @@ describe('View', () => {
 		v.emit(touchEnd)
 
 		v.emit('destroy')
-		v.emit('beforelayout')
 		v.emit('layout')
 		v.emit(new Event('redraw', { data: { canvas } }))
 		v.emit(new Event('insert', { data: { child: view, index: 1 } }))
 		v.emit(new Event('remove', { data: { child: view, index: 1 } }))
 		v.emit(new Event('movetoparent', { data: { parent: view } }))
 		v.emit(new Event('movetowindow', { data: { window: view } }))
-		v.emit('mount')
-		v.emit('unmount')
 		v.emit('scrollstart')
 		v.emit('scrollend')
 		v.emit('scroll')
@@ -1072,8 +1051,6 @@ describe('View', () => {
 		expect(v.onRemove).toHaveBeenCalledWith(view, 1)
 		expect(v.onMoveToParent).toHaveBeenCalledWith(view)
 		expect(v.onMoveToWindow).toHaveBeenCalledWith(view)
-		expect(v.onMount).toHaveBeenCalled()
-		expect(v.onUnmount).toHaveBeenCalled()
 		expect(v.onScrollStart).toHaveBeenCalled()
 		expect(v.onScrollEnd).toHaveBeenCalled()
 		expect(v.onScroll).toHaveBeenCalled()
@@ -1084,7 +1061,99 @@ describe('View', () => {
 		expect(v.onZoomStart).toHaveBeenCalled()
 		expect(v.onZoomEnd).toHaveBeenCalled()
 		expect(v.onZoom).toHaveBeenCalled()
+	})
 
+	it('should invoke onMoveToParent', () => {
+
+		let fn1 = jasmine.createSpy().and.callFake((event: Event<ViewMoveToParentEvent>) => {
+			expect(event.data.parent).toBe(application.window)
+		})
+
+		let fn2 = jasmine.createSpy().and.callFake((event: Event<ViewMoveToParentEvent>) => {
+			expect(event.data.parent).toBe(null)
+		})
+
+		let application = new Application()
+
+		Dezel.registerApplication(application)
+
+		let v1 = new View()
+
+		v1.one('movetoparent', fn1)
+		application.window.append(v1)
+
+		v1.one('movetoparent', fn2)
+		application.window.remove(v1)
+
+		expect(fn1).toHaveBeenCalledTimes(1)
+		expect(fn2).toHaveBeenCalledTimes(1)
+	})
+
+	it('should invoke onMoveToWindow', () => {
+
+		let fn1 = jasmine.createSpy().and.callFake((event: Event<ViewMoveToWindowEvent>) => {
+			expect(event.data.window).toBe(application.window)
+		})
+
+		let fn2 = jasmine.createSpy().and.callFake((event: Event<ViewMoveToWindowEvent>) => {
+			expect(event.data.window).toBe(null)
+		})
+
+		let application = new Application()
+		application.window.id = 'WAT'
+		Dezel.registerApplication(application)
+
+		let v1 = new View()
+		let v2 = new View()
+		let v3 = new View()
+
+		v1.id = "v1"
+		v2.id = "v2"
+		v3.id = "v3"
+
+		v1.one('movetowindow', fn1)
+		v2.one('movetowindow', fn1)
+		v3.one('movetowindow', fn1)
+
+		v1.append(v2)
+		v2.append(v3)
+
+		application.window.append(v1)
+
+		v1.one('movetowindow', fn2)
+		v2.one('movetowindow', fn2)
+		v3.one('movetowindow', fn2)
+
+		application.window.remove(v1)
+
+		expect(fn1).toHaveBeenCalledTimes(3)
+		expect(fn1).toHaveBeenCalledTimes(3)
+	})
+
+	it('should invoke onLayout', () => {
+
+		let fn1 = jasmine.createSpy()
+
+		let application = new Application()
+
+		Dezel.registerApplication(application)
+
+		let v1 = new View()
+		let v2 = new View()
+		let v3 = new View()
+
+		v1.one('layout', fn1)
+		v2.one('layout', fn1)
+		v3.one('layout', fn1)
+
+		v1.append(v2)
+		v2.append(v3)
+
+		application.window.append(v1)
+
+		application.window.resolve()
+
+		expect(fn1).toHaveBeenCalledTimes(2) // Last view is empty, no layout needed
 	})
 
 })

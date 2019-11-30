@@ -316,6 +316,14 @@ open class DisplayNode {
 	}
 
 	/**
+	 * @method hasStyle
+	 * @since 0.7.0
+	 */
+	public func hasStyle(_ style: String) -> Bool {
+		return DisplayNodeHasStyle(self.handle, style)
+	}
+
+	/**
 	 * @method appendState
 	 * @since 0.7.0
 	 */
@@ -329,6 +337,14 @@ open class DisplayNode {
 	 */
 	public func removeState(_ state: String) {
 		DisplayNodeRemoveState(self.handle, state)
+	}
+
+	/**
+	 * @method hasState
+	 * @since 0.7.0
+	 */
+	public func hasState(_ state: String) -> Bool {
+		return DisplayNodeHasState(self.handle, state)
 	}
 
 	/**

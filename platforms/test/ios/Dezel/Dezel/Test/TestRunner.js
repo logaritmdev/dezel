@@ -9379,65 +9379,106 @@ module.exports = yeast;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
+var _a, _b;
+"use strict";
 const native_1 = __webpack_require__(/*! ../native/native */ "../../src/native/native.ts");
+const Dezel_1 = __webpack_require__(/*! ./symbol/Dezel */ "../../src/core/symbol/Dezel.ts");
+const Dezel_2 = __webpack_require__(/*! ./symbol/Dezel */ "../../src/core/symbol/Dezel.ts");
 /**
- * TODO
  * @class Dezel
  * @since 0.7.0
  */
 class Dezel {
     /**
-     * Imports a native class.
      * @method importClass
      * @since 0.7.0
      */
-    static importClass(uid, init = false) {
-        let Class = this.classes[uid];
-        if (Class == null) {
-            Class = this.classes[uid] = importClass(uid);
+    static importClass(name) {
+        let value = this[Dezel_1.$classes][name];
+        if (value == null) {
+            value = this[Dezel_1.$classes][name] = importClass(name);
         }
-        return init ? new Class : Class;
+        return value;
     }
     /**
-     * Imports a native object.
      * @method importObject
      * @since 0.7.0
      */
-    static importObject(uid) {
-        let object = this.objects[uid];
-        if (object == null) {
-            object = this.objects[uid] = importObject(uid);
+    static importObject(name) {
+        let value = this[Dezel_2.$objects][name];
+        if (value == null) {
+            value = this[Dezel_2.$objects][name] = importObject(name);
         }
-        return object;
+        return value;
     }
     /**
-     * Register the main application.
      * @method registerApplication
      * @since 0.7.0
      */
-    static registerApplication(application, uid = '') {
-        if (uid == '') {
-            uid = 'default';
-        }
-        registerApplication(native_1.native(application), uid || 'dezel.application.main');
+    static registerApplication(application) {
+        registerApplication(native_1.native(application));
+        return this;
     }
 }
+_a = Dezel_1.$classes, _b = Dezel_2.$objects;
 //--------------------------------------------------------------------------
 // Private API
 //--------------------------------------------------------------------------
 /**
- * @property classes
+ * @property $classes
  * @since 0.7.0
  * @hidden
  */
-Dezel.classes = {};
+Dezel[_a] = {};
 /**
- * @property objects
+ * @property $objects
  * @since 0.7.0
  * @hidden
  */
-Dezel.objects = {};
+Dezel[_b] = {};
 exports.Dezel = Dezel;
+/**
+ * @const importClass
+ * @since 0.7.0
+ * @hidden
+ */
+const importClass = __util__.importClass.bind(__util__);
+/**
+ * @const importObject
+ * @since 0.7.0
+ * @hidden
+ */
+const importObject = __util__.importObject.bind(__util__);
+/**
+ * @const registerApplication
+ * @since 0.7.0
+ * @hidden
+ */
+const registerApplication = __util__.registerApplication.bind(__util__);
+
+
+/***/ }),
+
+/***/ "../../src/core/symbol/Dezel.ts":
+/*!*****************************************************************!*\
+  !*** /Users/jpdery/Projects/dezel-dev/src/core/symbol/Dezel.ts ***!
+  \*****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * @symbol classes
+ * @since 0.7.0
+ */
+exports.$classes = Symbol('classes');
+/**
+ * @symbol objects
+ * @since 0.7.0
+ */
+exports.$objects = Symbol('objects');
 
 
 /***/ }),
@@ -9481,8 +9522,7 @@ function decorate(prototype, property, descriptor) {
     return descriptor;
 }
 /**
- * TODO: Decorator description
- * @function bound
+ * @decorator bound
  * @since 0.1.0
  */
 function bound(prototype, property, descriptor) {
@@ -9515,7 +9555,6 @@ const bridge_1 = __webpack_require__(/*! ../native/bridge */ "../../src/native/b
 const native_1 = __webpack_require__(/*! ../native/native */ "../../src/native/native.ts");
 let Device = Device_1 = 
 /**
- * Contains informations regarding the current device.
  * @class Device
  * @since 0.4.0
  */
@@ -9524,7 +9563,6 @@ class Device {
     // Static
     //--------------------------------------------------------------------------
     /**
-     * The current device.
      * @property current
      * @since 0.7.0
      */
@@ -9538,7 +9576,6 @@ class Device {
     // Property
     //--------------------------------------------------------------------------
     /**
-     * Returns the device's name.
      * @property name
      * @since 0.4.0
      */
@@ -9549,7 +9586,6 @@ class Device {
     // Methods
     //--------------------------------------------------------------------------
     /**
-     * Plays a device sound.
      * @method sound
      * @since 0.4.0
      */
@@ -9558,7 +9594,6 @@ class Device {
         return this;
     }
     /**
-     * Vibrates the device.
      * @method vibrate
      * @since 0.4.0
      */
@@ -9570,15 +9605,13 @@ class Device {
 Device = Device_1 = __decorate([
     bridge_1.bridge('dezel.device.Device')
     /**
-     * Contains informations regarding the current device.
      * @class Device
      * @since 0.4.0
      */
 ], Device);
 exports.Device = Device;
 /**
- * The current device.
- * @var current
+ * @const current
  * @since 0.7.0
  */
 let current = null;
@@ -9623,12 +9656,8 @@ global.WebSocket = WebSocket_1.WebSocket;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
+const Event_1 = __webpack_require__(/*! ./symbol/Event */ "../../src/global/symbol/Event.ts");
 /**
- * Symbols
- */
-exports.TYPE = Symbol('type');
-/**
- * TODO
  * @class Event
  * @since 0.7.0
  */
@@ -9641,7 +9670,7 @@ class Event {
      * @since 0.7.0
      */
     constructor(type, options) {
-        this[exports.TYPE] = type;
+        this[Event_1.$type] = type;
         if (options) {
             Object.assign(this, options);
         }
@@ -9650,12 +9679,11 @@ class Event {
     // Properties
     //--------------------------------------------------------------------------
     /**
-     * TODO
      * @property type
      * @since 0.7.0
      */
     get type() {
-        return this[exports.TYPE];
+        return this[Event_1.$type];
     }
     /**
      * TODO
@@ -9665,14 +9693,12 @@ class Event {
     preventDefault() {
     }
     /**
-     * TODO
      * @method stopPropagation
      * @since 0.7.0
      */
     stopPropagation() {
     }
     /**
-     * TODO
      * @method stopImmediatePropagation
      * @since 0.7.0
      */
@@ -9724,10 +9750,7 @@ exports.CloseEvent = CloseEvent;
 Object.defineProperty(exports, "__esModule", { value: true });
 var _a;
 "use strict";
-/**
- * Symbols
- */
-exports.LISTENERS = Symbol('listeners');
+const EventTarget_1 = __webpack_require__(/*! ./symbol/EventTarget */ "../../src/global/symbol/EventTarget.ts");
 /**
  * @class EventTarget
  * @since 0.1.0
@@ -9754,9 +9777,9 @@ class EventTarget {
      * @hidden
      */
     addEventListener(type, listener, options) {
-        let listeners = this[exports.LISTENERS][type];
+        let listeners = this[EventTarget_1.$listeners][type];
         if (listeners == null) {
-            listeners = this[exports.LISTENERS][type] = [];
+            listeners = this[EventTarget_1.$listeners][type] = [];
         }
         if (listeners.indexOf(listener) == -1) {
             listeners.push(listener);
@@ -9769,7 +9792,7 @@ class EventTarget {
      * @hidden
      */
     removeEventListener(type, listener, options) {
-        let listeners = this[exports.LISTENERS][type];
+        let listeners = this[EventTarget_1.$listeners][type];
         if (listeners == null) {
             return;
         }
@@ -9778,7 +9801,7 @@ class EventTarget {
             listeners.splice(index, 1);
         }
         if (listeners.length == 0) {
-            delete this[exports.LISTENERS][type];
+            delete this[EventTarget_1.$listeners][type];
         }
         return this;
     }
@@ -9793,7 +9816,7 @@ class EventTarget {
         if (callback) {
             callback.apply(this, arguments);
         }
-        let listeners = this[exports.LISTENERS][event.type];
+        let listeners = this[EventTarget_1.$listeners][event.type];
         if (listeners == null) {
             return false;
         }
@@ -9804,7 +9827,7 @@ class EventTarget {
         return true;
     }
 }
-_a = exports.LISTENERS;
+_a = EventTarget_1.$listeners;
 exports.EventTarget = EventTarget;
 
 
@@ -9900,43 +9923,18 @@ var WebSocket_1, _a, _b, _c, _d, _e, _f;
 "use strict";
 const bridge_1 = __webpack_require__(/*! ../native/bridge */ "../../src/native/bridge.ts");
 const native_1 = __webpack_require__(/*! ../native/native */ "../../src/native/native.ts");
+const WebSocket_2 = __webpack_require__(/*! ./symbol/WebSocket */ "../../src/global/symbol/WebSocket.ts");
+const WebSocket_3 = __webpack_require__(/*! ./symbol/WebSocket */ "../../src/global/symbol/WebSocket.ts");
+const WebSocket_4 = __webpack_require__(/*! ./symbol/WebSocket */ "../../src/global/symbol/WebSocket.ts");
+const WebSocket_5 = __webpack_require__(/*! ./symbol/WebSocket */ "../../src/global/symbol/WebSocket.ts");
+const WebSocket_6 = __webpack_require__(/*! ./symbol/WebSocket */ "../../src/global/symbol/WebSocket.ts");
+const WebSocket_7 = __webpack_require__(/*! ./symbol/WebSocket */ "../../src/global/symbol/WebSocket.ts");
 const Event_1 = __webpack_require__(/*! ./Event */ "../../src/global/Event.ts");
 const Event_2 = __webpack_require__(/*! ./Event */ "../../src/global/Event.ts");
 const EventTarget_1 = __webpack_require__(/*! ./EventTarget */ "../../src/global/EventTarget.ts");
 const Exception_1 = __webpack_require__(/*! ./Exception */ "../../src/global/Exception.ts");
-/**
- * @symbol URL
- * @since 0.7.0
- */
-exports.URL = Symbol('url');
-/**
- * @symbol PROTOCOL
- * @since 0.7.0
- */
-exports.PROTOCOL = Symbol('protocol');
-/**
- * @symbol EXTENSIONS
- * @since 0.7.0
- */
-exports.EXTENSIONS = Symbol('extensions');
-/**
- * @symbol READY_STATE
- * @since 0.7.0
- */
-exports.READY_STATE = Symbol('readyState');
-/**
- * @symbol BINARY_TYPE
- * @since 0.7.0
- */
-exports.BINARY_TYPE = Symbol('binaryType');
-/**
- * @symbol BUFFERED_AMOUNT
- * @since 0.7.0
- */
-exports.BUFFERED_AMOUNT = Symbol('bufferedAmount');
 let WebSocket = WebSocket_1 = 
 /**
- * TODO
  * @class WebSocket
  * @super EventTarget
  * @since 0.7.0
@@ -9946,7 +9944,6 @@ class WebSocket extends EventTarget_1.EventTarget {
     // Methods
     //--------------------------------------------------------------------------
     /**
-     * Todo
      * @constructor
      * @since 0.7.0
      */
@@ -9956,37 +9953,37 @@ class WebSocket extends EventTarget_1.EventTarget {
         // Private API
         //--------------------------------------------------------------------------
         /**
-         * @property URL
+         * @property $url
          * @since 0.7.0
          * @hidden
          */
         this[_a] = '';
         /**
-         * @property PROTOCOL
+         * @property $protocol
          * @since 0.7.0
          * @hidden
          */
         this[_b] = '';
         /**
-         * @property EXTENSIONS
+         * @property $extensions
          * @since 0.7.0
          * @hidden
          */
         this[_c] = '';
         /**
-         * @property READY_STATE
+         * @property $readyState
          * @since 0.7.0
          * @hidden
          */
         this[_d] = 0;
         /**
-         * @property BINARY_TYPE
+         * @property $binaryType
          * @since 0.7.0
          * @hidden
          */
         this[_e] = '';
         /**
-         * @property BUFFERED_AMOUNT
+         * @property $bufferedAmount
          * @since 0.7.0
          * @hidden
          */
@@ -9996,7 +9993,7 @@ class WebSocket extends EventTarget_1.EventTarget {
         }
         if (url.startsWith('ws') == false &&
             url.startsWith('wss') == false) {
-            this[exports.READY_STATE] = WebSocket_1.CLOSED;
+            this[WebSocket_6.$readyState] = WebSocket_1.CLOSED;
             throw Exception_1.Exception.create(Exception_1.Exception.Code.SyntaxError);
         }
         native_1.native(this).open(url, protocols);
@@ -10005,63 +10002,55 @@ class WebSocket extends EventTarget_1.EventTarget {
     // Properties
     //--------------------------------------------------------------------------
     /**
-     * The WebSocket connection's url.
      * @property url
      * @since 0.7.0
      */
     get url() {
-        return this[exports.URL];
+        return this[WebSocket_7.$url];
     }
     /**
-     * The WebSocket connection's protocol.
      * @property protocol
      * @since 0.7.0
      */
     get protocol() {
-        return this[exports.PROTOCOL];
+        return this[WebSocket_5.$protocol];
     }
     /**
-     * The WebSocket connection's protocol.
      * @property extensions
      * @since 0.7.0
      */
     get extensions() {
-        return this[exports.EXTENSIONS];
+        return this[WebSocket_4.$extensions];
     }
     /**
-     * The WebSocket connection's state.
      * @property protocol
      * @since 0.7.0
      */
     get readyState() {
-        return this[exports.READY_STATE];
+        return this[WebSocket_6.$readyState];
     }
     /**
-     * The WebSocket connection's binary type.
      * @property binaryType
      * @since 0.7.0
      */
     get binaryType() {
-        return this[exports.BINARY_TYPE];
+        return this[WebSocket_2.$binaryType];
     }
     /**
-     * The WebSocket connection's binary type.
      * @property binaryType
      * @since 0.7.0
      */
     set binaryType(value) {
-        this[exports.BINARY_TYPE] = value;
+        this[WebSocket_2.$binaryType] = value;
     }
     /**
-     * The WebSocket connection's binary type.
      * @property bufferedAmount
      * @since 0.7.0
      */
     get bufferedAmount() {
-        return this[exports.BUFFERED_AMOUNT];
+        return this[WebSocket_3.$bufferedAmount];
     }
     /**
-     * Todo
      * @method send
      * @since 0.7.0
      */
@@ -10076,7 +10065,6 @@ class WebSocket extends EventTarget_1.EventTarget {
         native_1.native(this).send(data);
     }
     /**
-     * Todo
      * @method send
      * @since 0.7.0
      */
@@ -10085,11 +10073,11 @@ class WebSocket extends EventTarget_1.EventTarget {
             this.readyState == WebSocket_1.CLOSED) {
             return;
         }
-        if (this[exports.READY_STATE] == WebSocket_1.CONNECTING) {
-            this[exports.READY_STATE] = WebSocket_1.CLOSING;
+        if (this[WebSocket_6.$readyState] == WebSocket_1.CONNECTING) {
+            this[WebSocket_6.$readyState] = WebSocket_1.CLOSING;
             return;
         }
-        this[exports.READY_STATE] = WebSocket_1.CLOSING;
+        this[WebSocket_6.$readyState] = WebSocket_1.CLOSING;
         native_1.native(this).close(code, reason);
     }
     //--------------------------------------------------------------------------
@@ -10105,9 +10093,9 @@ class WebSocket extends EventTarget_1.EventTarget {
             this.nativeOnDisconnect();
             return;
         }
-        this[exports.READY_STATE] = WebSocket_1.OPEN;
-        this[exports.PROTOCOL] = protocol;
-        this[exports.EXTENSIONS] = extensions;
+        this[WebSocket_6.$readyState] = WebSocket_1.OPEN;
+        this[WebSocket_5.$protocol] = protocol;
+        this[WebSocket_4.$extensions] = extensions;
         this.dispatchEvent(new Event_1.Event('open'));
     }
     /**
@@ -10134,7 +10122,7 @@ class WebSocket extends EventTarget_1.EventTarget {
      * @hidden
      */
     nativeOnDisconnect() {
-        this[exports.READY_STATE] = WebSocket_1.CLOSED;
+        this[WebSocket_6.$readyState] = WebSocket_1.CLOSED;
     }
     /**
      * @method nativeOnError
@@ -10144,30 +10132,26 @@ class WebSocket extends EventTarget_1.EventTarget {
     nativeOnError() {
     }
 };
-_a = exports.URL, _b = exports.PROTOCOL, _c = exports.EXTENSIONS, _d = exports.READY_STATE, _e = exports.BINARY_TYPE, _f = exports.BUFFERED_AMOUNT;
+_a = WebSocket_7.$url, _b = WebSocket_5.$protocol, _c = WebSocket_4.$extensions, _d = WebSocket_6.$readyState, _e = WebSocket_2.$binaryType, _f = WebSocket_3.$bufferedAmount;
 //--------------------------------------------------------------------------
 // Static
 //--------------------------------------------------------------------------
 /**
- * TODO
  * @const CONNECTING
  * @since 0.7.0
  */
 WebSocket.CONNECTING = 0;
 /**
- * TODO
  * @const OPEN
  * @since 0.7.0
  */
 WebSocket.OPEN = 1;
 /**
- * TODO
  * @const CLOSING
  * @since 0.7.0
  */
 WebSocket.CLOSING = 2;
 /**
- * TODO
  * @const CLOSED
  * @since 0.7.0
  */
@@ -10175,7 +10159,6 @@ WebSocket.CLOSED = 3;
 WebSocket = WebSocket_1 = __decorate([
     bridge_1.bridge('dezel.global.WebSocket')
     /**
-     * TODO
      * @class WebSocket
      * @super EventTarget
      * @since 0.7.0
@@ -10206,102 +10189,33 @@ var XMLHttpRequest_1, _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q
 "use strict";
 const bridge_1 = __webpack_require__(/*! ../native/bridge */ "../../src/native/bridge.ts");
 const native_1 = __webpack_require__(/*! ../native/native */ "../../src/native/native.ts");
+const XMLHttpRequest_2 = __webpack_require__(/*! ./symbol/XMLHttpRequest */ "../../src/global/symbol/XMLHttpRequest.ts");
+const XMLHttpRequest_3 = __webpack_require__(/*! ./symbol/XMLHttpRequest */ "../../src/global/symbol/XMLHttpRequest.ts");
+const XMLHttpRequest_4 = __webpack_require__(/*! ./symbol/XMLHttpRequest */ "../../src/global/symbol/XMLHttpRequest.ts");
+const XMLHttpRequest_5 = __webpack_require__(/*! ./symbol/XMLHttpRequest */ "../../src/global/symbol/XMLHttpRequest.ts");
+const XMLHttpRequest_6 = __webpack_require__(/*! ./symbol/XMLHttpRequest */ "../../src/global/symbol/XMLHttpRequest.ts");
+const XMLHttpRequest_7 = __webpack_require__(/*! ./symbol/XMLHttpRequest */ "../../src/global/symbol/XMLHttpRequest.ts");
+const XMLHttpRequest_8 = __webpack_require__(/*! ./symbol/XMLHttpRequest */ "../../src/global/symbol/XMLHttpRequest.ts");
+const XMLHttpRequest_9 = __webpack_require__(/*! ./symbol/XMLHttpRequest */ "../../src/global/symbol/XMLHttpRequest.ts");
+const XMLHttpRequest_10 = __webpack_require__(/*! ./symbol/XMLHttpRequest */ "../../src/global/symbol/XMLHttpRequest.ts");
+const XMLHttpRequest_11 = __webpack_require__(/*! ./symbol/XMLHttpRequest */ "../../src/global/symbol/XMLHttpRequest.ts");
+const XMLHttpRequest_12 = __webpack_require__(/*! ./symbol/XMLHttpRequest */ "../../src/global/symbol/XMLHttpRequest.ts");
+const XMLHttpRequest_13 = __webpack_require__(/*! ./symbol/XMLHttpRequest */ "../../src/global/symbol/XMLHttpRequest.ts");
+const XMLHttpRequest_14 = __webpack_require__(/*! ./symbol/XMLHttpRequest */ "../../src/global/symbol/XMLHttpRequest.ts");
+const XMLHttpRequest_15 = __webpack_require__(/*! ./symbol/XMLHttpRequest */ "../../src/global/symbol/XMLHttpRequest.ts");
+const XMLHttpRequest_16 = __webpack_require__(/*! ./symbol/XMLHttpRequest */ "../../src/global/symbol/XMLHttpRequest.ts");
+const XMLHttpRequest_17 = __webpack_require__(/*! ./symbol/XMLHttpRequest */ "../../src/global/symbol/XMLHttpRequest.ts");
+const XMLHttpRequest_18 = __webpack_require__(/*! ./symbol/XMLHttpRequest */ "../../src/global/symbol/XMLHttpRequest.ts");
 const Event_1 = __webpack_require__(/*! ./Event */ "../../src/global/Event.ts");
 const Event_2 = __webpack_require__(/*! ./Event */ "../../src/global/Event.ts");
 const EventTarget_1 = __webpack_require__(/*! ./EventTarget */ "../../src/global/EventTarget.ts");
 const Exception_1 = __webpack_require__(/*! ./Exception */ "../../src/global/Exception.ts");
-/**
- * @symbol READY_STATE
- * @since 0.7.0
- */
-exports.READY_STATE = Symbol('readyState');
-/**
- * @symbol URL
- * @since 0.7.0
- */
-exports.URL = Symbol('url');
-/**
- * @symbol METHOD
- * @since 0.7.0
- */
-exports.METHOD = Symbol('method');
-/**
- * @symbol HEADERS
- * @since 0.7.0
- */
-exports.HEADERS = Symbol('headers');
-/**
- * @symbol TIMEOUT
- * @since 0.7.0
- */
-exports.TIMEOUT = Symbol('timeout');
-/**
- * @symbol USERNAME
- * @since 0.7.0
- */
-exports.USERNAME = Symbol('username');
-/**
- * @symbol PASSWORD
- * @since 0.7.0
- */
-exports.PASSWORD = Symbol('password');
-/**
- * @symbol RESPONSE
- * @since 0.7.0
- */
-exports.RESPONSE = Symbol('response');
-/**
- * @symbol RESPONSE_TEXT
- * @since 0.7.0
- */
-exports.RESPONSE_TEXT = Symbol('responseText');
-/**
- * @symbol RESPONSE_TYPE
- * @since 0.7.0
- */
-exports.RESPONSE_TYPE = Symbol('responseType');
-/**
- * @symbol RESPONSE_HEADERS
- * @since 0.7.0
- */
-exports.RESPONSE_HEADERS = Symbol('responseHeader');
-/**
- * @symbol RESPONSE_URL
- * @since 0.7.0
- */
-exports.RESPONSE_URL = Symbol('responseURL');
-/**
- * @symbol STATUS_CODE
- * @since 0.7.0
- */
-exports.STATUS_CODE = Symbol('statusCode');
-/**
- * @symbol STATUS_TEXT
- * @since 0.7.0
- */
-exports.STATUS_TEXT = Symbol('statusText');
-/**
- * @symbol SENT
- * @since 0.7.0
- */
-exports.SENT = Symbol('sent');
-/**
- * @symbol ERROR
- * @since 0.7.0
- */
-exports.ERROR = Symbol('error');
-/**
- * @symbol ABORT
- * @since 0.7.0
- */
-exports.ABORT = Symbol('abort');
 /**
  * @bridge dezel.global.XMLHttpRequest
  * @since 0.7.0
  */
 let XMLHttpRequest = XMLHttpRequest_1 = 
 /**
- * Manages Http requests.
  * @class XMLHttpRequest
  * @super EventTarget
  * @since 0.7.0
@@ -10320,103 +10234,103 @@ class XMLHttpRequest extends EventTarget_1.EventTarget {
         // Private API
         //--------------------------------------------------------------------------
         /**
-         * @property URL
+         * @property $url
          * @since 0.7.0
          * @hidden
          */
         this[_a] = '';
         /**
-         * @property METHOD
+         * @property $method
          * @since 0.7.0
          * @hidden
          */
         this[_b] = '';
         /**
-         * @property HEADERS
+         * @property $headers
          * @since 0.7.0
          * @hidden
          */
         this[_c] = {};
         /**
-         * @property TIMEOUT
+         * @property timeout
          * @since 0.7.0
          * @hidden
          */
         this[_d] = 60000;
         /**
-         * @property USERNAME
+         * @property $username
          * @since 0.7.0
          * @hidden
          */
         this[_e] = '';
         /**
-         * @property PASSWORD
+         * @property $password
          * @since 0.7.0
          * @hidden
          */
         this[_f] = '';
         /**
-         * @property READY_STATE
+         * @property $readyState
          * @since 0.7.0
          * @hidden
          */
         this[_g] = 0;
         /**
-         * @property RESPONSE
+         * @property $response
          * @since 0.7.0
          * @hidden
          */
         this[_h] = '';
         /**
-         * @property RESPONSE_TEXT
+         * @property $responseText
          * @since 0.7.0
          * @hidden
          */
         this[_j] = '';
         /**
-         * @property RESPONSE_TYPE
+         * @property $responseType
          * @since 0.7.0
          * @hidden
          */
         this[_k] = '';
         /**
-         * @property RESPONSE_HEADERS
+         * @property $responseHeaders
          * @since 0.7.0
          * @hidden
          */
         this[_l] = {};
         /**
-         * @property RESPONSE_URL
+         * @property responseUrl
          * @since 0.7.0
          * @hidden
          */
         this[_m] = '';
         /**
-         * @property STATUS
+         * @property statusCode
          * @since 0.7.0
          * @hidden
          */
         this[_o] = 0;
         /**
-         * @property STATUS_TEXT
+         * @property statusText
          * @since 0.7.0
          * @hidden
          */
         this[_p] = '';
         /**
-         * @property SENT
+         * @property $sent
          * @since 0.7.0
          * @hidden
          */
         this[_q] = false;
         /**
-         * @property ERROR
+         * @property $error
          * @since 0.7.0
          * @hidden
          */
         this[_r] = false;
         /**
-         * @property ABORT
+         * @property $abort
          * @since 0.7.0
          * @hidden
          */
@@ -10426,23 +10340,20 @@ class XMLHttpRequest extends EventTarget_1.EventTarget {
     // Properties
     //--------------------------------------------------------------------------
     /**
-     * The state of the request.
      * @property readyState
      * @since 0.7.0
      */
     get readyState() {
-        return this[exports.READY_STATE];
+        return this[XMLHttpRequest_7.$readyState];
     }
     /**
-     * The request's response.
      * @property response
      * @since 0.7.0
      */
     get response() {
-        return this[exports.RESPONSE];
+        return this[XMLHttpRequest_8.$response];
     }
     /**
-     * The request's text response.
      * @property responseText
      * @since 0.7.0
      */
@@ -10451,18 +10362,16 @@ class XMLHttpRequest extends EventTarget_1.EventTarget {
             this.responseType != 'text') {
             throw Exception_1.Exception.create(Exception_1.Exception.Code.InvalidStateError);
         }
-        return this[exports.RESPONSE_TEXT];
+        return this[XMLHttpRequest_10.$responseText];
     }
     /**
-     * The request's response type.
      * @property responseType
      * @since 0.7.0
      */
     get responseType() {
-        return this[exports.RESPONSE_TYPE];
+        return this[XMLHttpRequest_11.$responseType];
     }
     /**
-     * The request's response type.
      * @property responseType
      * @since 0.7.0
      */
@@ -10470,18 +10379,16 @@ class XMLHttpRequest extends EventTarget_1.EventTarget {
         if (this.readyState >= XMLHttpRequest_1.LOADING) {
             throw Exception_1.Exception.create(Exception_1.Exception.Code.InvalidStateError);
         }
-        this[exports.RESPONSE_TYPE] = value;
+        this[XMLHttpRequest_11.$responseType] = value;
     }
     /**
-     * The request's response URL.
      * @property responseURL
      * @since 0.7.0
      */
     get responseURL() {
-        return this[exports.RESPONSE_URL];
+        return this[XMLHttpRequest_12.$responseUrl];
     }
     /**
-     * The request's response XML document.
      * @property responseXML
      * @since 0.7.0
      */
@@ -10489,7 +10396,6 @@ class XMLHttpRequest extends EventTarget_1.EventTarget {
         throw new Error('Property "responseXML" is not supported.');
     }
     /**
-     * The request's status.
      * @property status
      * @since 0.7.0
      */
@@ -10499,10 +10405,9 @@ class XMLHttpRequest extends EventTarget_1.EventTarget {
             this.error) {
             return 0;
         }
-        return this[exports.STATUS_CODE];
+        return this[XMLHttpRequest_14.$statusCode];
     }
     /**
-     * The request's status text.
      * @property statusText
      * @since 0.7.0
      */
@@ -10512,18 +10417,16 @@ class XMLHttpRequest extends EventTarget_1.EventTarget {
             this.error) {
             return "";
         }
-        return this[exports.STATUS_TEXT];
+        return this[XMLHttpRequest_15.$statusText];
     }
     /**
-     * The requests's timeout.
      * @property timeout
      * @since 0.7.0
      */
     get timeout() {
-        return this[exports.TIMEOUT];
+        return this[XMLHttpRequest_16.$timeout];
     }
     /**
-     * The requests's timeout.
      * @property timeout
      * @since 0.7.0
      */
@@ -10531,13 +10434,12 @@ class XMLHttpRequest extends EventTarget_1.EventTarget {
         if (this.readyState != XMLHttpRequest_1.OPENED || this.sent) {
             throw Exception_1.Exception.create(Exception_1.Exception.Code.InvalidStateError);
         }
-        this[exports.TIMEOUT] = value;
+        this[XMLHttpRequest_16.$timeout] = value;
     }
     //--------------------------------------------------------------------------
     // Methods
     //--------------------------------------------------------------------------
     /**
-     * Initializes a request.
      * @method open
      * @since 0.7.0
      */
@@ -10551,37 +10453,35 @@ class XMLHttpRequest extends EventTarget_1.EventTarget {
             method != 'OPTIONS') {
             throw new SyntaxError('Invalid request method');
         }
-        this[exports.URL] = url;
-        this[exports.METHOD] = method;
-        this[exports.USERNAME] = username;
-        this[exports.PASSWORD] = password;
-        this[exports.SENT] = false;
-        this[exports.ERROR] = false;
-        this[exports.ABORT] = false;
+        this[XMLHttpRequest_17.$url] = url;
+        this[XMLHttpRequest_5.$method] = method;
+        this[XMLHttpRequest_18.$username] = username;
+        this[XMLHttpRequest_6.$password] = password;
+        this[XMLHttpRequest_13.$sent] = false;
+        this[XMLHttpRequest_3.$error] = false;
+        this[XMLHttpRequest_2.$abort] = false;
         this.clearRequest();
         this.clearResponse();
         this.changeState(XMLHttpRequest_1.OPENED);
     }
     /**
-     * Aborts the request if it has already been sent.
      * @method open
      * @since 0.7.0
      */
     abort() {
-        this[exports.ABORT] = true;
+        this[XMLHttpRequest_2.$abort] = true;
         this.clearRequest();
         this.clearResponse();
-        if (this[exports.SENT] && this.readyState == XMLHttpRequest_1.OPENED || this.readyState == XMLHttpRequest_1.HEADERS_RECEIVED || this.readyState == XMLHttpRequest_1.LOADING) {
-            this[exports.SENT] = false;
+        if (this[XMLHttpRequest_13.$sent] && this.readyState == XMLHttpRequest_1.OPENED || this.readyState == XMLHttpRequest_1.HEADERS_RECEIVED || this.readyState == XMLHttpRequest_1.LOADING) {
+            this[XMLHttpRequest_13.$sent] = false;
             this.changeState(XMLHttpRequest_1.DONE);
             this.dispatchEvent(new Event_2.ProgressEvent('abort'));
         }
-        if (this[exports.READY_STATE] == XMLHttpRequest_1.DONE) {
-            this[exports.READY_STATE] = XMLHttpRequest_1.UNSENT;
+        if (this[XMLHttpRequest_7.$readyState] == XMLHttpRequest_1.DONE) {
+            this[XMLHttpRequest_7.$readyState] = XMLHttpRequest_1.UNSENT;
         }
     }
     /**
-     * Sends the request.
      * @method open
      * @since 0.7.0
      */
@@ -10589,13 +10489,12 @@ class XMLHttpRequest extends EventTarget_1.EventTarget {
         if (this.readyState != XMLHttpRequest_1.OPENED || this.sent) {
             throw Exception_1.Exception.create(Exception_1.Exception.Code.InvalidStateError);
         }
-        this[exports.SENT] = true;
-        this[exports.ERROR] = false;
-        native_1.native(this).request(this[exports.URL], this[exports.METHOD], this[exports.HEADERS], this[exports.TIMEOUT], this[exports.USERNAME], this[exports.PASSWORD], data);
+        this[XMLHttpRequest_13.$sent] = true;
+        this[XMLHttpRequest_3.$error] = false;
+        native_1.native(this).request(this[XMLHttpRequest_17.$url], this[XMLHttpRequest_5.$method], this[XMLHttpRequest_4.$headers], this[XMLHttpRequest_16.$timeout], this[XMLHttpRequest_18.$username], this[XMLHttpRequest_6.$password], data);
         this.dispatchEvent(new Event_2.ProgressEvent('loadstart'));
     }
     /**
-     * Overrides the MIME type returned by the server.
      * @method overrideMimeType
      * @since 0.7.0
      */
@@ -10607,7 +10506,6 @@ class XMLHttpRequest extends EventTarget_1.EventTarget {
         throw new Error('Not supported.');
     }
     /**
-     * Returns all the response headers.
      * @method getAllResponseHeaders
      * @since 0.7.0
      */
@@ -10616,7 +10514,7 @@ class XMLHttpRequest extends EventTarget_1.EventTarget {
             return '';
         }
         let headers = '';
-        let entries = Object.entries(this[exports.RESPONSE_HEADERS]);
+        let entries = Object.entries(this[XMLHttpRequest_9.$responseHeaders]);
         for (let entry of entries) {
             let key = entry[0];
             let val = entry[1];
@@ -10628,7 +10526,6 @@ class XMLHttpRequest extends EventTarget_1.EventTarget {
         return headers;
     }
     /**
-     * Returns the string containing the text of the specified header.
      * @method getResponseHeader
      * @since 0.7.0
      */
@@ -10636,7 +10533,7 @@ class XMLHttpRequest extends EventTarget_1.EventTarget {
         if (this.readyState < XMLHttpRequest_1.HEADERS_RECEIVED || this.error) {
             return '';
         }
-        return this[exports.RESPONSE_HEADERS][name];
+        return this[XMLHttpRequest_9.$responseHeaders][name];
     }
     /**
      * Sets the value of an HTTP request header.
@@ -10647,7 +10544,7 @@ class XMLHttpRequest extends EventTarget_1.EventTarget {
         if (this.readyState != XMLHttpRequest_1.OPENED || this.sent) {
             throw Exception_1.Exception.create(Exception_1.Exception.Code.InvalidStateError);
         }
-        this[exports.HEADERS][name] = value;
+        this[XMLHttpRequest_4.$headers][name] = value;
     }
     /**
      * @property sent
@@ -10655,7 +10552,7 @@ class XMLHttpRequest extends EventTarget_1.EventTarget {
      * @hidden
      */
     get sent() {
-        return this[exports.SENT];
+        return this[XMLHttpRequest_13.$sent];
     }
     /**
      * @property error
@@ -10663,7 +10560,7 @@ class XMLHttpRequest extends EventTarget_1.EventTarget {
      * @hidden
      */
     get error() {
-        return this[exports.ERROR];
+        return this[XMLHttpRequest_3.$error];
     }
     /**
      * @method changeState
@@ -10674,7 +10571,7 @@ class XMLHttpRequest extends EventTarget_1.EventTarget {
         if (this.readyState == state) {
             return;
         }
-        this[exports.READY_STATE] = state;
+        this[XMLHttpRequest_7.$readyState] = state;
         if (state <= XMLHttpRequest_1.OPENED ||
             state == XMLHttpRequest_1.DONE) {
             this.dispatchEvent(new Event_1.Event('readystatechange'));
@@ -10690,7 +10587,7 @@ class XMLHttpRequest extends EventTarget_1.EventTarget {
      * @hidden
      */
     clearRequest() {
-        this[exports.HEADERS] = {};
+        this[XMLHttpRequest_4.$headers] = {};
     }
     /**
      * @method open
@@ -10698,8 +10595,8 @@ class XMLHttpRequest extends EventTarget_1.EventTarget {
      * @hidden
      */
     clearResponse() {
-        this[exports.RESPONSE] = '';
-        this[exports.RESPONSE_TEXT] = '';
+        this[XMLHttpRequest_8.$response] = '';
+        this[XMLHttpRequest_10.$responseText] = '';
     }
     //--------------------------------------------------------------------------
     // Native API
@@ -10725,13 +10622,13 @@ class XMLHttpRequest extends EventTarget_1.EventTarget {
             this.changeState(XMLHttpRequest_1.HEADERS_RECEIVED);
         }
         headers = Object.assign({}, headers);
-        this[exports.RESPONSE] = data;
-        this[exports.RESPONSE_TEXT] = data;
-        this[exports.RESPONSE_HEADERS] = headers;
-        this[exports.RESPONSE_URL] = url;
-        this[exports.STATUS_CODE] = statusCode;
-        this[exports.STATUS_TEXT] = statusText;
-        this[exports.SENT] = false;
+        this[XMLHttpRequest_8.$response] = data;
+        this[XMLHttpRequest_10.$responseText] = data;
+        this[XMLHttpRequest_9.$responseHeaders] = headers;
+        this[XMLHttpRequest_12.$responseUrl] = url;
+        this[XMLHttpRequest_14.$statusCode] = statusCode;
+        this[XMLHttpRequest_15.$statusText] = statusText;
+        this[XMLHttpRequest_13.$sent] = false;
         this.changeState(XMLHttpRequest_1.DONE);
     }
     /**
@@ -10742,8 +10639,8 @@ class XMLHttpRequest extends EventTarget_1.EventTarget {
     nativeOnTimeout(event) {
         this.clearRequest();
         this.clearResponse();
-        this[exports.SENT] = false;
-        this[exports.ERROR] = true;
+        this[XMLHttpRequest_13.$sent] = false;
+        this[XMLHttpRequest_3.$error] = true;
         this.changeState(XMLHttpRequest_1.DONE);
         this.dispatchEvent(new Event_1.Event('timeout'));
     }
@@ -10759,7 +10656,7 @@ class XMLHttpRequest extends EventTarget_1.EventTarget {
         this.dispatchEvent(new Event_1.Event('error'));
     }
 };
-_a = exports.URL, _b = exports.METHOD, _c = exports.HEADERS, _d = exports.TIMEOUT, _e = exports.USERNAME, _f = exports.PASSWORD, _g = exports.READY_STATE, _h = exports.RESPONSE, _j = exports.RESPONSE_TEXT, _k = exports.RESPONSE_TYPE, _l = exports.RESPONSE_HEADERS, _m = exports.RESPONSE_URL, _o = exports.STATUS_CODE, _p = exports.STATUS_TEXT, _q = exports.SENT, _r = exports.ERROR, _s = exports.ABORT;
+_a = XMLHttpRequest_17.$url, _b = XMLHttpRequest_5.$method, _c = XMLHttpRequest_4.$headers, _d = XMLHttpRequest_16.$timeout, _e = XMLHttpRequest_18.$username, _f = XMLHttpRequest_6.$password, _g = XMLHttpRequest_7.$readyState, _h = XMLHttpRequest_8.$response, _j = XMLHttpRequest_10.$responseText, _k = XMLHttpRequest_11.$responseType, _l = XMLHttpRequest_9.$responseHeaders, _m = XMLHttpRequest_12.$responseUrl, _o = XMLHttpRequest_14.$statusCode, _p = XMLHttpRequest_15.$statusText, _q = XMLHttpRequest_13.$sent, _r = XMLHttpRequest_3.$error, _s = XMLHttpRequest_2.$abort;
 /**
  * @const UNSENT
  * @since 0.7.0
@@ -10788,13 +10685,195 @@ XMLHttpRequest.DONE = 4;
 XMLHttpRequest = XMLHttpRequest_1 = __decorate([
     bridge_1.bridge('dezel.global.XMLHttpRequest')
     /**
-     * Manages Http requests.
      * @class XMLHttpRequest
      * @super EventTarget
      * @since 0.7.0
      */
 ], XMLHttpRequest);
 exports.XMLHttpRequest = XMLHttpRequest;
+
+
+/***/ }),
+
+/***/ "../../src/global/symbol/Event.ts":
+/*!*******************************************************************!*\
+  !*** /Users/jpdery/Projects/dezel-dev/src/global/symbol/Event.ts ***!
+  \*******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * @symbol type
+ * @since 0.1.0
+ * @hidden
+ */
+exports.$type = Symbol('type');
+
+
+/***/ }),
+
+/***/ "../../src/global/symbol/EventTarget.ts":
+/*!*************************************************************************!*\
+  !*** /Users/jpdery/Projects/dezel-dev/src/global/symbol/EventTarget.ts ***!
+  \*************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * @symbol listeners
+ * @since 0.1.0
+ * @hidden
+ */
+exports.$listeners = Symbol('listeners');
+
+
+/***/ }),
+
+/***/ "../../src/global/symbol/WebSocket.ts":
+/*!***********************************************************************!*\
+  !*** /Users/jpdery/Projects/dezel-dev/src/global/symbol/WebSocket.ts ***!
+  \***********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * @symbol URL
+ * @since 0.7.0
+ */
+exports.$url = Symbol('url');
+/**
+ * @symbol PROTOCOL
+ * @since 0.7.0
+ */
+exports.$protocol = Symbol('protocol');
+/**
+ * @symbol EXTENSIONS
+ * @since 0.7.0
+ */
+exports.$extensions = Symbol('extensions');
+/**
+ * @symbol READY_STATE
+ * @since 0.7.0
+ */
+exports.$readyState = Symbol('readyState');
+/**
+ * @symbol BINARY_TYPE
+ * @since 0.7.0
+ */
+exports.$binaryType = Symbol('binaryType');
+/**
+ * @symbol BUFFERED_AMOUNT
+ * @since 0.7.0
+ */
+exports.$bufferedAmount = Symbol('bufferedAmount');
+
+
+/***/ }),
+
+/***/ "../../src/global/symbol/XMLHttpRequest.ts":
+/*!****************************************************************************!*\
+  !*** /Users/jpdery/Projects/dezel-dev/src/global/symbol/XMLHttpRequest.ts ***!
+  \****************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * @symbol readyState
+ * @since 0.7.0
+ */
+exports.$readyState = Symbol('readyState');
+/**
+ * @symbol url
+ * @since 0.7.0
+ */
+exports.$url = Symbol('url');
+/**
+ * @symbol method
+ * @since 0.7.0
+ */
+exports.$method = Symbol('method');
+/**
+ * @symbol headers
+ * @since 0.7.0
+ */
+exports.$headers = Symbol('headers');
+/**
+ * @symbol timeout
+ * @since 0.7.0
+ */
+exports.$timeout = Symbol('timeout');
+/**
+ * @symbol username
+ * @since 0.7.0
+ */
+exports.$username = Symbol('username');
+/**
+ * @symbol password
+ * @since 0.7.0
+ */
+exports.$password = Symbol('password');
+/**
+ * @symbol response
+ * @since 0.7.0
+ */
+exports.$response = Symbol('response');
+/**
+ * @symbol responseText
+ * @since 0.7.0
+ */
+exports.$responseText = Symbol('responseText');
+/**
+ * @symbol responseType
+ * @since 0.7.0
+ */
+exports.$responseType = Symbol('responseType');
+/**
+ * @symbol responseHeaders
+ * @since 0.7.0
+ */
+exports.$responseHeaders = Symbol('responseHeader');
+/**
+ * @symbol responseUrl
+ * @since 0.7.0
+ */
+exports.$responseUrl = Symbol('responseURL');
+/**
+ * @symbol statusCode
+ * @since 0.7.0
+ */
+exports.$statusCode = Symbol('statusCode');
+/**
+ * @symbol statusText
+ * @since 0.7.0
+ */
+exports.$statusText = Symbol('statusText');
+/**
+ * @symbol sent
+ * @since 0.7.0
+ */
+exports.$sent = Symbol('sent');
+/**
+ * @symbol error
+ * @since 0.7.0
+ */
+exports.$error = Symbol('error');
+/**
+ * @symbol abort
+ * @since 0.7.0
+ */
+exports.$abort = Symbol('abort');
 
 
 /***/ }),
@@ -10810,26 +10889,25 @@ exports.XMLHttpRequest = XMLHttpRequest;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const Dezel_1 = __webpack_require__(/*! ../core/Dezel */ "../../src/core/Dezel.ts");
-const symbols_1 = __webpack_require__(/*! ../native/symbols */ "../../src/native/symbols.ts");
+const native_1 = __webpack_require__(/*! ./symbol/native */ "../../src/native/symbol/native.ts");
 /**
  * @function decorate
  * @since 0.1.0
  * @hidden
  */
 function decorate(constructor, className) {
-    let Class = Dezel_1.Dezel.importClass(className);
-    if (Class == null) {
-        throw new Error(`Bridge error: ` +
+    let klass = Dezel_1.Dezel.importClass(className);
+    if (klass == null) {
+        throw new Error(`Dezel error: ` +
             `The native class ${className} does not exist.`);
     }
-    for (let key in Class.statics) {
-        Class[key] = Class.statics[key];
+    for (let key in klass.statics) {
+        klass[key] = klass.statics[key];
     }
-    constructor[symbols_1.NATIVE] = Class;
+    constructor[native_1.$native] = klass;
 }
 /**
- * TODO: Decorator description
- * @function bridge
+ * @decorator bridge
  * @since 0.1.0
  */
 function bridge(classname) {
@@ -10852,7 +10930,39 @@ exports.bridge = bridge;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const symbols_1 = __webpack_require__(/*! ./symbols */ "../../src/native/symbols.ts");
+const native_1 = __webpack_require__(/*! ./symbol/native */ "../../src/native/symbol/native.ts");
+/**
+ * @function create
+ * @since 0.7.0
+ * @hidden
+ */
+function create(object) {
+    let klass = object.constructor[native_1.$native];
+    if (klass == null) {
+        throw new Error(`Class ${object.constructor.name} has not been bridged.`);
+    }
+    return new klass(object);
+}
+/**
+ * @function toNative
+ * @since 0.7.0
+ * @hidden
+ */
+function toNative(object) {
+    let native = object[native_1.$native];
+    if (native == null) {
+        native = object[native_1.$native] = create(object);
+    }
+    return native;
+}
+/**
+ * @function isNative
+ * @since 0.7.0
+ * @hidden
+ */
+function isNative(object) {
+    return object && typeof object == 'object' && object.constructor[native_1.$native];
+}
 /**
  * @function decorate
  * @since 0.1.0
@@ -10860,15 +10970,25 @@ const symbols_1 = __webpack_require__(/*! ./symbols */ "../../src/native/symbols
  */
 function decorate(prototype, property) {
     function get() {
-        return native(this)[property];
+        let object = native(this);
+        if (object == null) {
+            throw new Error(`Dezel error: Unable to retrieve native object.`);
+        }
+        return object[property];
     }
     function set(value) {
-        native(this)[property] = isNative(value) ? toNative(value) : value;
+        let object = native(this);
+        if (object == null) {
+            throw new Error(`Dezel error: Unable to retrieve native object.`);
+        }
+        // TODO
+        // FIXME
+        object['$' + property] = value; // prevents native object from being collected
+        object[property] = isNative(value) ? toNative(value) : value;
     }
     Object.defineProperty(prototype, property, { get, set });
 }
 function native(...args) {
-    LOG('NATIVE PROPERTY');
     if (args.length == 1) {
         let object = args[0];
         if (object == null) {
@@ -10879,49 +10999,14 @@ function native(...args) {
     decorate(args[0], args[1]);
 }
 exports.native = native;
-/**
- * @function connect
- * @since 0.7.0
- * @hidden
- */
-function connect(object) {
-    LOG('CONNECT 1');
-    let Class = object.constructor[symbols_1.NATIVE];
-    if (Class == null) {
-        throw new Error(`Class ${object.constructor.name} has not been bridged.`);
-    }
-    LOG('CONNECT 2');
-    console.log('Create new class');
-    return new Class(object);
-}
-/**
- * @function toNative
- * @since 0.7.0
- * @hidden
- */
-function toNative(object) {
-    let native = object[symbols_1.NATIVE];
-    if (native == null) {
-        native = object[symbols_1.NATIVE] = connect(object);
-    }
-    return native;
-}
-/**
- * @function isNative
- * @since 0.7.0
- * @hidden
- */
-function isNative(object) {
-    return object && typeof object == 'object' && object.constructor[symbols_1.NATIVE];
-}
 
 
 /***/ }),
 
-/***/ "../../src/native/symbols.ts":
-/*!**************************************************************!*\
-  !*** /Users/jpdery/Projects/dezel-dev/src/native/symbols.ts ***!
-  \**************************************************************/
+/***/ "../../src/native/symbol/native.ts":
+/*!********************************************************************!*\
+  !*** /Users/jpdery/Projects/dezel-dev/src/native/symbol/native.ts ***!
+  \********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10929,12 +11014,11 @@ function isNative(object) {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 /**
- * The symbol used to store the natie object.
- * @const NATIVE
+ * @symbol native
  * @since 0.7.0
+ * @hidden
  */
-exports.NATIVE = Symbol('native');
-exports.BRIDGE = Symbol('bridge');
+exports.$native = Symbol('native');
 
 
 /***/ }),
@@ -10961,7 +11045,6 @@ const bridge_1 = __webpack_require__(/*! ../native/bridge */ "../../src/native/b
 const native_1 = __webpack_require__(/*! ../native/native */ "../../src/native/native.ts");
 let Platform = Platform_1 = 
 /**
- * Contains informations regarding the current platform.
  * @class Platform
  * @since 0.1.0
  */
@@ -10970,7 +11053,6 @@ class Platform {
     // Static
     //--------------------------------------------------------------------------
     /**
-     * The current device.
      * @property current
      * @since 0.7.0
      */
@@ -10984,7 +11066,6 @@ class Platform {
     // Property
     //--------------------------------------------------------------------------
     /**
-     * Returns the platform's name.
      * @property name
      * @since 0.1.0
      */
@@ -10992,7 +11073,6 @@ class Platform {
         return native_1.native(this).name;
     }
     /**
-     * Returns the platform's version.
      * @property version
      * @since 0.1.0
      */
@@ -11003,16 +11083,15 @@ class Platform {
 Platform = Platform_1 = __decorate([
     bridge_1.bridge('dezel.platform.Platform')
     /**
-     * Contains informations regarding the current platform.
      * @class Platform
      * @since 0.1.0
      */
 ], Platform);
 exports.Platform = Platform;
 /**
- * The current platform.
- * @var current
+ * @const current
  * @since 0.7.0
+ * @hidden
  */
 let current = null;
 

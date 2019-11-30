@@ -2,7 +2,7 @@
  * @class Synchronizer
  * @since 0.7.0
  */
-public class Synchronizer: NSObject {
+public class Synchronizer {
 
 	//--------------------------------------------------------------------------
 	// MARK: Static
@@ -55,10 +55,7 @@ public class Synchronizer: NSObject {
 	 * @constructor
 	 * @since 0.7.0
 	 */
-	override public init() {
-
-		super.init()
-
+	public init() {
 		self.displayLink = CADisplayLink(target: self, selector: #selector(handleDisplayLink))
 		self.displayLink.setup()
 		self.displayLink.isPaused = true

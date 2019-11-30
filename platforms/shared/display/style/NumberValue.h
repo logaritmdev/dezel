@@ -1,5 +1,5 @@
-#ifndef Number_h
-#define Number_h
+#ifndef NumberValue_h
+#define NumberValue_h
 
 #include "Value.h"
 

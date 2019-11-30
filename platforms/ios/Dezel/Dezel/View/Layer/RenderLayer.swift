@@ -3,7 +3,6 @@ import UIKit
 /**
  * @class RenderLayer
  * @super Layer
- * @since 0.1.0
  */
 public class RenderLayer: Layer, TransitionListener {
 

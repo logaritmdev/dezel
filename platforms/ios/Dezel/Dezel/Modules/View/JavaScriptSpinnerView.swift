@@ -35,58 +35,58 @@ open class JavaScriptSpinnerView: JavaScriptView {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @property active
+	 * @property tint
 	 * @since 0.7.0
 	 */
-	@objc public lazy var active = JavaScriptProperty(boolean: false) { value in
-		self.view.active = value.boolean
-	}
-
-	/**
-	 * @property color
-	 * @since 0.7.0
-	 */
-	@objc public lazy var color = JavaScriptProperty(string: "#000") { value in
+	@objc public lazy var tint = JavaScriptProperty(string: "#000") { value in
 		self.view.color = UIColor(cgColor: value.string.toColor())
 	}
 
-	//--------------------------------------------------------------------------
-
 	/**
-	 * @method jsGet_active
+	 * @property spin
 	 * @since 0.7.0
-	 * @hidden
 	 */
-	@objc open func jsGet_active(callback: JavaScriptGetterCallback) {
-		callback.returns(self.active)
-	}
-
-	/**
-	 * @method jsSet_active
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	@objc open func jsSet_active(callback: JavaScriptSetterCallback) {
-		self.active.reset(callback.value, lock: self)
+	@objc public lazy var spin = JavaScriptProperty(boolean: false) { value in
+		self.view.spin = value.boolean
 	}
 
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method jsGet_color
+	 * @method jsGet_tint
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsGet_color(callback: JavaScriptGetterCallback) {
-		callback.returns(self.color)
+	@objc open func jsGet_tint(callback: JavaScriptGetterCallback) {
+		callback.returns(self.tint)
 	}
 
 	/**
-	 * @method jsSet_color
+	 * @method jsSet_tint
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsSet_color(callback: JavaScriptSetterCallback) {
-		self.color.reset(callback.value, lock: self)
+	@objc open func jsSet_tint(callback: JavaScriptSetterCallback) {
+		self.tint.reset(callback.value, lock: self)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_spin
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@objc open func jsGet_spin(callback: JavaScriptGetterCallback) {
+		callback.returns(self.spin)
+	}
+
+	/**
+	 * @method jsSet_spin
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@objc open func jsSet_spin(callback: JavaScriptSetterCallback) {
+		self.spin.reset(callback.value, lock: self)
 	}
 }

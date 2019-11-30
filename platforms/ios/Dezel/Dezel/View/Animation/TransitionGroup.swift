@@ -1,7 +1,6 @@
 /**
  * @class TransitionGroup
  * @since 0.1.0
- * @hidden
  */
 public final class TransitionGroup {
 

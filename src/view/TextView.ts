@@ -58,12 +58,6 @@ export class TextView extends View {
 	@native public text!: string
 
 	/**
-	 * @property textColor
-	 * @since 0.1.0
-	 */
-	@native public textColor!: string
-
-	/**
 	 * @property textAlignment
 	 * @since 0.1.0
 	 */
@@ -100,24 +94,6 @@ export class TextView extends View {
 	@native public textShadowBlur!: number
 
 	/**
-	 * @property textShadowColor
-	 * @since 0.1.0
-	 */
-	@native public textShadowColor!: string
-
-	/**
-	 * @property textShadowOffsetTop
-	 * @since 0.1.0
-	 */
-	@native public textShadowOffsetTop!: number
-
-	/**
-	 * @property textShadowOffsetLeft
-	 * @since 0.1.0
-	 */
-	@native public textShadowOffsetLeft!: number
-
-	/**
 	 * @property textDecoration
 	 * @since 0.1.0
 	 */
@@ -134,6 +110,36 @@ export class TextView extends View {
 	 * @since 0.1.0
 	 */
 	@native public textOverflow!: 'clip' | 'ellipsis'
+
+	/**
+	 * @property textColor
+	 * @since 0.1.0
+	 */
+	@native public textColor!: string
+
+	/**
+	 * @property textOpacity
+	 * @since 0.7.0
+	 */
+	@native public textOpacity!: number
+
+	/**
+	 * @property textShadowColor
+	 * @since 0.1.0
+	 */
+	@native public textShadowColor!: string
+
+	/**
+	 * @property textShadowOffsetTop
+	 * @since 0.1.0
+	 */
+	@native public textShadowOffsetTop!: number
+
+	/**
+	 * @property textShadowOffsetLeft
+	 * @since 0.1.0
+	 */
+	@native public textShadowOffsetLeft!: number
 
 	/**
 	 * @property linkColor
@@ -179,7 +185,6 @@ export class TextView extends View {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * TODO
 	 * @method setDefaultValue
 	 * @since 0.4.0
 	 */

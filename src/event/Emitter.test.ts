@@ -40,7 +40,6 @@ describe('Emitter', () => {
 		let listeners = getListeners(emitter, 'event')
 		expect(listeners[0]).not.toBeUndefined()
 		expect(listeners[1]).not.toBeUndefined()
-
 	})
 
 	it('should unregister an event listener', () => {
@@ -57,7 +56,6 @@ describe('Emitter', () => {
 		let listeners = getListeners(emitter, 'event')
 		expect(listeners[0]).toBeUndefined()
 		expect(listeners[1]).toBeUndefined()
-
 	})
 
 	it('should emit an event', () => {
@@ -74,7 +72,6 @@ describe('Emitter', () => {
 		expect(l1).toHaveBeenCalledTimes(1)
 		expect(l2).toHaveBeenCalledWith(jasmine.any(Event))
 		expect(l2).toHaveBeenCalledTimes(1)
-
 	})
 
 	it('should emit an event with a specific event object', () => {
@@ -91,21 +88,15 @@ describe('Emitter', () => {
 		expect(l1).toHaveBeenCalledTimes(1)
 		expect(l2).toHaveBeenCalledWith(jasmine.any(Event))
 		expect(l2).toHaveBeenCalledTimes(1)
-
 	})
 
-	it('should execute the listener the right amount of time', () => {
+	it('should execute the listener', () => {
 
 		let l1 = jasmine.createSpy()
 		let l2 = jasmine.createSpy()
-		let l3 = jasmine.createSpy()
-		let l4 = jasmine.createSpy()
 
 		emitter.on('event', l1)
 		emitter.on('EVENT', l2)
-
-		emitter.one('event', l3)
-		emitter.one('EVENT', l4)
 
 		emitter.emit('event')
 		emitter.emit('event')
@@ -115,10 +106,46 @@ describe('Emitter', () => {
 		expect(l1).toHaveBeenCalledTimes(3)
 		expect(l2).toHaveBeenCalledWith(jasmine.any(Event))
 		expect(l2).toHaveBeenCalledTimes(3)
-		expect(l3).toHaveBeenCalledWith(jasmine.any(Event))
-		expect(l3).toHaveBeenCalledTimes(1)
-		expect(l4).toHaveBeenCalledWith(jasmine.any(Event))
-		expect(l4).toHaveBeenCalledTimes(1)
+	})
+
+	it('should execute the listener only once', () => {
+
+		let l1 = jasmine.createSpy()
+		let l2 = jasmine.createSpy()
+
+		emitter.one('event', l1)
+		emitter.one('EVENT', l2)
+
+		emitter.emit('event')
+		emitter.emit('event')
+		emitter.emit('event')
+
+		expect(l1).toHaveBeenCalledWith(jasmine.any(Event))
+		expect(l1).toHaveBeenCalledTimes(1)
+		expect(l2).toHaveBeenCalledWith(jasmine.any(Event))
+		expect(l2).toHaveBeenCalledTimes(1)
+	})
+
+	it('should execute the listener only once when using the same callback', () => {
+
+		let l1 = jasmine.createSpy()
+
+		let em1 = new Emitter()
+		let em2 = new Emitter()
+
+		em1.one('event', l1)
+		em2.one('event', l1)
+
+		em1.emit('event')
+		em1.emit('event')
+		em1.emit('event')
+
+		em2.emit('event')
+		em2.emit('event')
+		em2.emit('event')
+
+		expect(l1).toHaveBeenCalledWith(jasmine.any(Event))
+		expect(l1).toHaveBeenCalledTimes(2)
 	})
 
 	it('should execute the internal onEvent listener', () => {
@@ -160,7 +187,6 @@ describe('Emitter', () => {
 		r2.on('event', l3)
 
 		emitter.emit(new Event('event', { propagable: true }))
-
 	})
 
 	it('should propagate a propagable event', () => {
@@ -186,7 +212,6 @@ describe('Emitter', () => {
 		expect(l2).toHaveBeenCalledTimes(1)
 		expect(l3).toHaveBeenCalledWith(jasmine.any(Event))
 		expect(l3).toHaveBeenCalledTimes(1)
-
 	})
 
 	it('should not propagate a non-propagable event', () => {
@@ -210,7 +235,6 @@ describe('Emitter', () => {
 		expect(l1).toHaveBeenCalledTimes(1)
 		expect(l2).not.toHaveBeenCalled()
 		expect(l3).not.toHaveBeenCalled()
-
 	})
 
 	it('should stop event propagation when the event is canceled', () => {

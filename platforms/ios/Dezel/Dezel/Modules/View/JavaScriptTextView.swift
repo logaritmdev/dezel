@@ -349,14 +349,6 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	}
 
 	/**
-	 * @property textColor
-	 * @since 0.7.0
-	 */
-	@objc public lazy var textColor = JavaScriptProperty(string: "#000") { value in
-		self.view.textColor = CGColorParse(value.string)
-	}
-
-	/**
 	 * @property textAlignment
 	 * @since 0.7.0
 	 */
@@ -415,38 +407,6 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	}
 
 	/**
-	 * @property textShadowBlur
-	 * @since 0.7.0
-	 */
-	@objc public lazy var textShadowBlur = JavaScriptProperty(number: 0) { value in
-		self.view.textShadowBlur = CGFloat(value.number)
-	}
-
-	/**
-	 * @property textShadowColor
-	 * @since 0.7.0
-	 */
-	@objc public lazy var textShadowColor = JavaScriptProperty(string: "#000") { value in
-		self.view.textShadowColor = CGColorParse(value.string)
-	}
-
-	/**
-	 * @property textShadowOffsetTop
-	 * @since 0.7.0
-	 */
-	@objc public lazy var textShadowOffsetTop = JavaScriptProperty(number: 0) { value in
-		self.view.textShadowOffsetTop = CGFloat(value.number)
-	}
-
-	/**
-	 * @property textShadowOffsetLeft
-	 * @since 0.7.0
-	 */
-	@objc public lazy var textShadowOffsetLeft = JavaScriptProperty(number: 0) { value in
-		self.view.textShadowOffsetLeft = CGFloat(value.number)
-	}
-
-	/**
 	 * @property textDecoration
 	 * @since 0.7.0
 	 */
@@ -486,6 +446,54 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 			self.node.isWrappingContentHeight) {
 			self.node.invalidateSize()
 		}
+	}
+
+	/**
+	 * @property textColor
+	 * @since 0.7.0
+	 */
+	@objc public lazy var textColor = JavaScriptProperty(string: "#000") { value in
+		self.view.textColor = CGColorParse(value.string)
+	}
+
+	/**
+	 * @property textOpacity
+	 * @since 0.7.0
+	 */
+	@objc public lazy var textOpacity = JavaScriptProperty(number: 1.0) { value in
+		self.view.alpha = CGFloat(value.number)
+	}
+
+	/**
+	 * @property textShadowBlur
+	 * @since 0.7.0
+	 */
+	@objc public lazy var textShadowBlur = JavaScriptProperty(number: 0) { value in
+		self.view.textShadowBlur = CGFloat(value.number)
+	}
+
+	/**
+	 * @property textShadowColor
+	 * @since 0.7.0
+	 */
+	@objc public lazy var textShadowColor = JavaScriptProperty(string: "#000") { value in
+		self.view.textShadowColor = CGColorParse(value.string)
+	}
+
+	/**
+	 * @property textShadowOffsetTop
+	 * @since 0.7.0
+	 */
+	@objc public lazy var textShadowOffsetTop = JavaScriptProperty(number: 0) { value in
+		self.view.textShadowOffsetTop = CGFloat(value.number)
+	}
+
+	/**
+	 * @property textShadowOffsetLeft
+	 * @since 0.7.0
+	 */
+	@objc public lazy var textShadowOffsetLeft = JavaScriptProperty(number: 0) { value in
+		self.view.textShadowOffsetLeft = CGFloat(value.number)
 	}
 
 	/**
@@ -653,26 +661,6 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method jsGet_textColor
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	@objc open func jsGet_textColor(callback: JavaScriptGetterCallback) {
-		callback.returns(self.textColor)
-	}
-
-	/**
-	 * @method jsSet_textColor
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	@objc open func jsSet_textColor(callback: JavaScriptSetterCallback) {
-		self.textColor.reset(callback.value, lock: self)
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
 	 * @method jsGet_textAlignment
 	 * @since 0.7.0
 	 * @hidden
@@ -813,6 +801,66 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	//--------------------------------------------------------------------------
 
 	/**
+	 * @method jsGet_textOverflow
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@objc open func jsGet_textOverflow(callback: JavaScriptGetterCallback) {
+		callback.returns(self.textOverflow)
+	}
+
+	/**
+	 * @method jsSet_textOverflow
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@objc open func jsSet_textOverflow(callback: JavaScriptSetterCallback) {
+		self.textOverflow.reset(callback.value, lock: self)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_textColor
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@objc open func jsGet_textColor(callback: JavaScriptGetterCallback) {
+		callback.returns(self.textColor)
+	}
+
+	/**
+	 * @method jsSet_textColor
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@objc open func jsSet_textColor(callback: JavaScriptSetterCallback) {
+		self.textColor.reset(callback.value, lock: self)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_textOpacity
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@objc open func jsGet_textOpacity(callback: JavaScriptGetterCallback) {
+		callback.returns(self.textOpacity)
+	}
+
+	/**
+	 * @method jsSet_textOpacity
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@objc open func jsSet_textOpacity(callback: JavaScriptSetterCallback) {
+		self.textOpacity.reset(callback.value, lock: self)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
 	 * @method jsGet_textShadowBlur
 	 * @since 0.7.0
 	 * @hidden
@@ -888,26 +936,6 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 */
 	@objc open func jsSet_textShadowOffsetLeft(callback: JavaScriptSetterCallback) {
 		self.textShadowOffsetLeft.reset(callback.value, lock: self)
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method jsGet_textOverflow
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	@objc open func jsGet_textOverflow(callback: JavaScriptGetterCallback) {
-		callback.returns(self.textOverflow)
-	}
-
-	/**
-	 * @method jsSet_textOverflow
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	@objc open func jsSet_textOverflow(callback: JavaScriptSetterCallback) {
-		self.textOverflow.reset(callback.value, lock: self)
 	}
 
 	//--------------------------------------------------------------------------

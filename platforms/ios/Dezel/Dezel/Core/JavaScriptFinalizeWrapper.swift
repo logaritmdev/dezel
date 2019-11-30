@@ -3,7 +3,7 @@
  * @since 0.1.0
  * @hidden
  */
-internal final class JavaScriptFinalizeWrapper: NSObject {
+internal final class JavaScriptFinalizeWrapper {
 
 	//--------------------------------------------------------------------------
 	// MARK: Properties
@@ -36,8 +36,6 @@ internal final class JavaScriptFinalizeWrapper: NSObject {
 
 		self.context = context
 		self.handler = handler
-
-		super.init()
 
 		JavaScriptValueSetFinalizeHandler(context.handle, handle, javaScriptFinalizeWrapperCallback)
 		JavaScriptValueSetAttribute(context.handle, handle, kFinalizeWrapperKey, Unmanaged.passRetained(self).toOpaque())

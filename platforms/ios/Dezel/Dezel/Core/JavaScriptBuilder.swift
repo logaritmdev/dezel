@@ -5,7 +5,7 @@ import Foundation
 * @since 0.1.0
 * @hidden
 */
-internal class JavaScriptBuilder: NSObject {
+internal class JavaScriptBuilder {
 
 	/**
 	* @enum Type

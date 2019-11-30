@@ -2,6 +2,7 @@ import UIKit
 
 /**
  * @class ShapeLayer
+ * @super CAShapeLayer
  * @since 0.1.0
  */
 open class ShapeLayer: CAShapeLayer, CALayerDelegate, CAAnimationDelegate {

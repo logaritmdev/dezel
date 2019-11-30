@@ -2,13 +2,14 @@
 
 #include "Tokenizer.h"
 #include "TokenizerStream.h"
+#include "Parser.h"
+#include "ParseException.h"
+#include "Variable.h"
 #include "Value.h"
 #include "StringValue.h"
 #include "NumberValue.h"
 #include "BooleanValue.h"
 #include "Stylesheet.h"
-#include "Parser.h"
-#include "ParseException.h"
 
 #include <string>
 
@@ -52,6 +53,29 @@ using namespace Dezel::Style;
 	}
 
 	XCTAssertEqual(stylesheet->getRootDescriptors().size(), 0);
+}
+
+- (void)testSingleVariable {
+
+	auto variable = new Variable("myVar");
+
+	try {
+
+		Parser::parse(variable, "12px");
+
+	} catch (ParseException &e) {
+		[NSException raise:@"ParseException" format: @"%s", e.what()];
+	}
+
+	auto values = variable->getValues();
+
+	XCTAssertEqual(values.size(), 1);
+
+	if (values.size() == 1) {
+		XCTAssertEqual(values[0]->getType(), kValueTypeNumber);
+		XCTAssertEqual(dynamic_cast<NumberValue*>(values[0])->getUnit(), kValueUnitPX);
+		XCTAssertEqual(dynamic_cast<NumberValue*>(values[0])->getValue(), 12.0);
+	}
 }
 
 - (void)testVariable {
@@ -205,7 +229,7 @@ using namespace Dezel::Style;
 	XCTAssertEqual(selector->getHead()->getType(), "TypeDeclaration");
 
 	auto values = properties.get(0)->getValues();
-std::cout << "TEST " << properties.get(0)->getName() << "\n";
+
 	XCTAssertEqual(properties.get(0)->getName(), "prop1");
 	XCTAssertEqual(dynamic_cast<StringValue*>(values[0])->getType(), kValueTypeString);
 	XCTAssertEqual(dynamic_cast<StringValue*>(values[0])->getValue(), "value1");
@@ -299,7 +323,105 @@ std::cout << "TEST " << properties.get(0)->getName() << "\n";
 
 	XCTAssertEqual(properties.get(0)->getName(), "aProperty");
 	XCTAssertEqual(properties.get(1)->getName(), "aPropertyWithLongerName");
+}
 
+-(void)testStringValue {
+
+	string source = R""""(
+
+	Type {
+		property1: value1;
+		property2: "value2";
+	}
+
+	)"""";
+
+	try {
+
+		Parser::parse(stylesheet, source);
+
+	} catch (ParseException &e) {
+		[NSException raise:@"ParseException" format: @"%s", e.what()];
+	}
+
+	auto properties = stylesheet->getRootDescriptors().front()->getProperties();
+
+	XCTAssertEqual(properties.size(), 2);
+
+	XCTAssertEqual(properties.get(0)->getValues().at(0)->getType(), kValueTypeString);
+	XCTAssertEqual(properties.get(1)->getValues().at(0)->getType(), kValueTypeString);
+
+	XCTAssertEqual(dynamic_cast<StringValue*>(properties.get(0)->getValues().at(0))->getValue(), "value1");
+	XCTAssertEqual(dynamic_cast<StringValue*>(properties.get(1)->getValues().at(0))->getValue(), "value2");
+}
+
+-(void)testNumberValue {
+
+	string source = R""""(
+
+	Type {
+		property1: 12.5;
+		property2: 12;
+		property3: 15px;
+	}
+
+	)"""";
+
+	try {
+
+		Parser::parse(stylesheet, source);
+
+	} catch (ParseException &e) {
+		[NSException raise:@"ParseException" format: @"%s", e.what()];
+	}
+
+	auto properties = stylesheet->getRootDescriptors().front()->getProperties();
+
+	XCTAssertEqual(properties.size(), 3);
+
+	XCTAssertEqual(properties.get(0)->getValues().at(0)->getType(), kValueTypeNumber);
+	XCTAssertEqual(properties.get(1)->getValues().at(0)->getType(), kValueTypeNumber);
+	XCTAssertEqual(properties.get(2)->getValues().at(0)->getType(), kValueTypeNumber);
+
+	XCTAssertEqual(dynamic_cast<NumberValue*>(properties.get(0)->getValues().at(0))->getValue(), 12.5);
+	XCTAssertEqual(dynamic_cast<NumberValue*>(properties.get(1)->getValues().at(0))->getValue(), 12.0);
+	XCTAssertEqual(dynamic_cast<NumberValue*>(properties.get(2)->getValues().at(0))->getValue(), 15.0);
+}
+
+-(void)testColorValue {
+
+	string source = R""""(
+
+	Type {
+		property1: #000;
+		property2: #000000;
+		property3: #A00;
+		property4: #AAAAAA;
+	}
+
+	)"""";
+
+	try {
+
+		Parser::parse(stylesheet, source);
+
+	} catch (ParseException &e) {
+		[NSException raise:@"ParseException" format: @"%s", e.what()];
+	}
+
+	auto properties = stylesheet->getRootDescriptors().front()->getProperties();
+
+	XCTAssertEqual(properties.size(), 4);
+
+	XCTAssertEqual(properties.get(0)->getValues().at(0)->getType(), kValueTypeString);
+	XCTAssertEqual(properties.get(1)->getValues().at(0)->getType(), kValueTypeString);
+	XCTAssertEqual(properties.get(2)->getValues().at(0)->getType(), kValueTypeString);
+	XCTAssertEqual(properties.get(3)->getValues().at(0)->getType(), kValueTypeString);
+
+	XCTAssertEqual(dynamic_cast<StringValue*>(properties.get(0)->getValues().at(0))->getValue(), "#000");
+	XCTAssertEqual(dynamic_cast<StringValue*>(properties.get(1)->getValues().at(0))->getValue(), "#000000");
+	XCTAssertEqual(dynamic_cast<StringValue*>(properties.get(2)->getValues().at(0))->getValue(), "#A00");
+	XCTAssertEqual(dynamic_cast<StringValue*>(properties.get(3)->getValues().at(0))->getValue(), "#AAAAAA");
 }
 
 @end

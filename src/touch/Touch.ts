@@ -1,7 +1,7 @@
 import { View } from '../view/View'
 import { $canceled } from './symbol/Touch'
 import { $captured } from './symbol/Touch'
-import { $identifier } from './symbol/Touch'
+import { $id } from './symbol/Touch'
 import { $target } from './symbol/Touch'
 import { $x } from './symbol/Touch'
 import { $y } from './symbol/Touch'
@@ -41,11 +41,11 @@ export class Touch {
 	}
 
 	/**
-	 * @property identifier
-	 * @since 0.1.0
+	 * @property id
+	 * @since 0.7.0
 	 */
-	public get identifier(): number {
-		return this[$identifier]
+	public get id(): number {
+		return this[$id]
 	}
 
 	/**
@@ -130,11 +130,11 @@ export class Touch {
 	private [$captured]: boolean = false
 
 	/**
-	 * @property $identifier
+	 * @property $id
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private [$identifier]: number = 0
+	private [$id]: number = 0
 
 	/**
 	 * @property $x

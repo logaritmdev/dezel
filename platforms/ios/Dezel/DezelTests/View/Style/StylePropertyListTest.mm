@@ -124,7 +124,7 @@ using namespace Dezel::Style;
 		XCTAssertEqual(reinterpret_cast<StringValue*>(properties.get(0)->getValues().at(0))->getValue(), "value1");
 		XCTAssertEqual(reinterpret_cast<StringValue*>(properties.get(1)->getValues().at(0))->getValue(), "value2");
 		XCTAssertEqual(reinterpret_cast<StringValue*>(properties.get(2)->getValues().at(0))->getValue(), "value4");
-		std::cout << "THE PROPERTY IS " << properties.get(3)->toString() << "\n";
+		
 		XCTAssertEqual(reinterpret_cast<StringValue*>(properties.get(3)->getValues().at(0))->getValue(), "super-value3");
 
 		XCTAssertEqual(reinterpret_cast<StringValue*>(properties.get("prop1")->getValues().at(0))->getValue(), "value1");

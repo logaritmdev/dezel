@@ -1,11 +1,17 @@
 import { setEmitterResponder } from '../event/private/Emitter'
 import { Emitter } from '../event/Emitter'
 import { Event } from '../event/Event'
+import { GestureManager } from '../gesture/GestureManager'
 import { Canvas } from '../graphic/Canvas'
 import { Image } from '../graphic/Image'
 import { bridge } from '../native/bridge'
 import { native } from '../native/native'
 import { TouchEvent } from '../touch/TouchEvent'
+import { getClassName } from './private/View'
+import { insertItem } from './private/View'
+import { insertView } from './private/View'
+import { removeItem } from './private/View'
+import { removeView } from './private/View'
 import { $children } from './symbol/View'
 import { $gestures } from './symbol/View'
 import { $states } from './symbol/View'
@@ -162,11 +168,10 @@ export class View extends Emitter {
 	/**
 	 * @property gestures
 	 * @since 0.7.0
-
+	*/
 	public get gestures(): GestureManager {
 		return this[$gestures]
 	}
-	*/
 
 	/**
 	 * @property id
@@ -1136,7 +1141,7 @@ export class View extends Emitter {
 	 * @since 0.1.0
 	 */
 	public destroy() {
-
+		// TODO FIXME put in onDestroy
 		if (this.parent) {
 			this.parent.remove(this)
 		}
@@ -1187,6 +1192,55 @@ export class View extends Emitter {
 	}
 
 	/**
+	 * @method insertBefore
+	 * @since 0.1.0
+	 */
+	public insertBefore(child: View, before: View) {
+
+		let index = this.children.indexOf(before)
+		if (index == -1) {
+			return this
+		}
+
+		this.insert(child, index)
+
+		return this
+	}
+
+	/**
+	 * @method insertAfter
+	 * @since 0.1.0
+	 */
+	public insertAfter(child: View, after: View) {
+
+		let index = this.children.indexOf(after)
+		if (index == -1) {
+			return this
+		}
+
+		this.insert(this, index + 1)
+
+		return this
+	}
+
+	/**
+	 * @method replace
+	 * @since 0.7.0
+	 */
+	public replace(child: View, using: View) {
+
+		let index = this.children.indexOf(child)
+		if (index == -1) {
+			return this
+		}
+
+		this.remove(child)
+		this.insert(using, index)
+
+		return this
+	}
+
+	/**
 	 * @method remove
 	 * @since 0.1.0
 	 */
@@ -1227,33 +1281,13 @@ export class View extends Emitter {
 	}
 
 	/**
-	 * @method empty
+	 * @method removeAll
 	 * @since 0.7.0
 	 */
-	public empty() {
+	public removeAll() {
 
 		while (this.children.length) {
-			this.remove(last(this.children))
-		}
-
-		return this
-	}
-
-	/**
-	 * @method replaceWith
-	 * @since 0.1.0
-	 */
-	public replaceWith(view: View) {
-
-		let parent = this.parent
-		if (parent == null) {
-			return this
-		}
-
-		let index = parent.children.indexOf(this)
-		if (index > -1) {
-			parent.remove(this)
-			parent.insert(view, index)
+			this.remove(this.children[0])
 		}
 
 		return this
@@ -1396,10 +1430,6 @@ export class View extends Emitter {
 
 			switch (event.type) {
 
-				case 'touchcancel':
-					this.onTouchCancel(event)
-					break
-
 				case 'touchstart':
 					this.onTouchStart(event)
 					break
@@ -1411,13 +1441,13 @@ export class View extends Emitter {
 				case 'touchend':
 					this.onTouchEnd(event)
 					break
+
+				case 'touchcancel':
+					this.onTouchCancel(event)
+					break
 			}
 
-			if (event.canceled) {
-				return
-			}
-
-			//this.gestures.dispatchTouchEvent(event)
+			this.gestures.onTouchEvent(event)
 		}
 
 		switch (event.type) {
@@ -1621,14 +1651,6 @@ export class View extends Emitter {
 	}
 
 	/**
-	 * @method onTouchCancel
-	 * @since 0.1.0
-	 */
-	protected onTouchCancel(event: TouchEvent) {
-
-	}
-
-	/**
 	 * @method onTouchStart
 	 * @since 0.1.0
 	 */
@@ -1649,6 +1671,14 @@ export class View extends Emitter {
 	 * @since 0.1.0
 	 */
 	protected onTouchEnd(event: TouchEvent) {
+
+	}
+
+	/**
+	 * @method onTouchCancel
+	 * @since 0.1.0
+	 */
+	protected onTouchCancel(event: TouchEvent) {
 
 	}
 
@@ -1700,7 +1730,6 @@ export class View extends Emitter {
 	}
 
 	/**
-	 * TODO
 	 * @method setDefaultValue
 	 * @since 0.4.0
 	 */
@@ -1728,25 +1757,18 @@ export class View extends Emitter {
 	private [$states]: StateList = new StateList(this)
 
 	/**
+	 * @property $gestures
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private [$gestures]: GestureManager = new GestureManager(this)
+
+	/**
 	 * @property $children
 	 * @since 0.7.0
 	 * @hidden
 	 */
 	private [$children]: Array<View> = []
-
-	/**
-	 * @property $gestures
-	 * @since 0.7.0
-	 * @hidden
-
-	private [$gestures]: GestureManager = new GestureManager(this)
- 	*/
-	/**
-	 * @property cancelScroll
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	private cancelScroll: boolean = false // TODO Symbol ?
 
 	//--------------------------------------------------------------------------
 	// Native API
@@ -1968,100 +1990,4 @@ export type ViewMoveToWindowEvent = {
  */
 export type ViewRedrawEvent = {
 	canvas: Canvas
-}
-
-/**
- * @const classes
- * @since 0.4.0
- * @hidden
- */
-const classes = new Map<any, any>()
-
-/**
- * @function insertItem
- * @since 0.7.0
- * @hidden
- */
-function insertItem(view: View, child: View, index: number) {
-	view[$children].splice(index, 0, child)
-}
-
-/**
- * @function removeItem
- * @since 0.7.0
- * @hidden
- */
-function removeItem(view: View, child: View, index: number) {
-	view[$children].splice(index, 1)
-}
-
-/**
- * @function insertView
- * @since 0.7.0
- * @hidden
- */
-function insertView(view: View, child: View, index: number) {
-	native(view).insert(native(child), index)
-}
-
-/**
- * @function removeView
- * @since 0.7.0
- * @hidden
- */
-function removeView(view: View, child: View, index: number) {
-	native(view).remove(native(child), index)
-}
-
-/**
- * @function last
- * @sinceremoveView
- * @hidden
- */
-function last(list: ReadonlyArray<View>) {
-	return list[list.length - 1]
-}
-
-/**
- * @function getClassList
- * @since 0.2.0
- * @hidden
- */
-function getClassName(view: View) {
-
-	if (view.constructor == View) {
-		return 'View'
-	}
-
-	let className = classes.get(view.constructor)
-	if (className == null) {
-		classes.set(view.constructor, className = getClassList(view))
-	}
-
-	return className
-}
-
-/**
- * @function getClassList
- * @since 0.4.0
- * @hidden
- */
-function getClassList(view: View) {
-
-	let klass = view.constructor.name
-	let proto = view.constructor.prototype
-
-	while (proto) {
-
-		proto = Object.getPrototypeOf(proto)
-
-		let constructor = proto.constructor
-		if (constructor == View) {
-			proto = null
-		}
-
-		klass = klass + ' ' + constructor.name
-	}
-
-	return klass
 }

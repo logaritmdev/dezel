@@ -16,14 +16,15 @@ export class SpinnerView extends View {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @property active
+	 * @property tint
 	 * @since 0.1.0
 	 */
-	@native public active!: boolean
+	@native public tint!: string
 
 	/**
-	 * @property color
+	 * @property spin
 	 * @since 0.1.0
 	 */
-	@native public color!: string
+	@native public spin!: boolean
+
 }

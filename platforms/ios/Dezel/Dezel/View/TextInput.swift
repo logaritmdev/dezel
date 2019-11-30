@@ -1,7 +1,7 @@
 /**
  * @class TextInput
+ * @super UITextField
  * @since 0.7.0
- * @hidden
  */
 open class TextInput: UITextField, UITextFieldDelegate {
 

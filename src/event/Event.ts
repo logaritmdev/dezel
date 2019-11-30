@@ -3,8 +3,6 @@ import { $canceled } from './symbol/Event'
 import { $capturable } from './symbol/Event'
 import { $captured } from './symbol/Event'
 import { $data } from './symbol/Event'
-import { $finishable } from './symbol/Event'
-import { $finished } from './symbol/Event'
 import { $propagable } from './symbol/Event'
 import { $sender } from './symbol/Event'
 import { $target } from './symbol/Event'
@@ -38,14 +36,6 @@ export class Event<T extends any = any> {
 	}
 
 	/**
-	 * @property cancelable
-	 * @since 0.1.0
-	 */
-	public get cancelable(): boolean {
-		return this[$cancelable]
-	}
-
-	/**
 	 * @property capturable
 	 * @since 0.7.0
 	 */
@@ -54,19 +44,11 @@ export class Event<T extends any = any> {
 	}
 
 	/**
-	 * @property finishable
+	 * @property cancelable
 	 * @since 0.1.0
 	 */
-	public get finishable(): boolean {
-		return this[$finishable]
-	}
-
-	/**
-	 * @property canceled
-	 * @since 0.1.0
-	 */
-	public get canceled(): boolean {
-		return this[$canceled]
+	public get cancelable(): boolean {
+		return this[$cancelable]
 	}
 
 	/**
@@ -78,11 +60,11 @@ export class Event<T extends any = any> {
 	}
 
 	/**
-	 * @property finishedù
-	 * @since 0.7.0
+	 * @property canceled
+	 * @since 0.1.0
 	 */
-	public get finished(): boolean {
-		return this[$finished]
+	public get canceled(): boolean {
+		return this[$canceled]
 	}
 
 	/**
@@ -120,10 +102,36 @@ export class Event<T extends any = any> {
 	constructor(type: string, options: EventOptions<T> = {}) {
 		this[$type] = type.toLowerCase()
 		this[$data] = options.data || {} as any
-		this[$propagable] = options.propagable || false
-		this[$cancelable] = options.cancelable || false
-		this[$capturable] = options.capturable || false
-		this[$finishable] = options.finishable || true
+		this[$propagable] = options.propagable != null ? options.propagable : false
+		this[$capturable] = options.capturable != null ? options.capturable : false
+		this[$cancelable] = options.cancelable != null ? options.cancelable : false
+	}
+
+	/**
+	 * @method capture
+	 * @since 0.7.0
+	 */
+	public capture() {
+
+		if (this.captured ||
+			this.canceled) {
+			return this
+		}
+
+		if (this.capturable == false) {
+
+			throw new Error(
+				`Event error: ` +
+				`This event cannot be captured because it is not capturable.`
+			)
+
+		}
+
+		this[$captured] = true
+
+		this.onCapture()
+
+		return this
 	}
 
 	/**
@@ -137,65 +145,17 @@ export class Event<T extends any = any> {
 		}
 
 		if (this.cancelable == false) {
+
 			throw new Error(
-				'Event error: ' +
-				'This event cannot be canceled because it is not cancelable.'
+				`Event error: ` +
+				`This event cannot be canceled because it is not cancelable.`
 			)
+
 		}
 
 		this[$canceled] = true
 
 		this.onCancel()
-
-		return this
-	}
-
-	/**
-	 * @method capture
-	 * @since 0.1.0
-	 */
-	public capture() {
-
-		if (this.captured ||
-			this.canceled) {
-			return this
-		}
-
-		if (this.capturable == false) {
-			throw new Error(
-				'Event error: ' +
-				'This event cannot be captured because it is not capturable.'
-			)
-		}
-
-		this[$captured] = true
-
-		this.onCapture()
-
-		return this
-	}
-
-	/**
-	 * @method finish
-	 * @since 0.7.0
-	 */
-	public finish() {
-
-		if (this.finished ||
-			this.canceled) {
-			return this
-		}
-
-		if (this.finishable == false) {
-			throw new Error(
-				'Event error: ' +
-				'This event cannot be stopped because it is not stoppable.'
-			)
-		}
-
-		this[$finished] = true
-
-		this.onFinish()
 
 		return this
 	}
@@ -217,14 +177,6 @@ export class Event<T extends any = any> {
 	 * @since 0.7.0
 	 */
 	protected onCapture() {
-
-	}
-
-	/**
-	 * @method onFinish
-	 * @since 0.7.0
-	 */
-	protected onFinish() {
 
 	}
 
@@ -261,13 +213,6 @@ export class Event<T extends any = any> {
 	private [$capturable]: boolean = false
 
 	/**
-	 * @property $stoppable
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private [$finishable]: boolean = false
-
-	/**
 	 * @property $canceled
 	 * @since 0.7.0
 	 * @hidden
@@ -280,13 +225,6 @@ export class Event<T extends any = any> {
 	 * @hidden
 	 */
 	private [$captured]: boolean = false
-
-	/**
-	 * @property $finished
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private [$finished]: boolean = false
 
 	/**
 	 * @property $target
@@ -318,12 +256,17 @@ export interface EventOptions<T extends any = any> {
 	propagable?: boolean
 	cancelable?: boolean
 	capturable?: boolean
-	finishable?: boolean
 	data?: T
 }
 
 /**
- * @interface EventListener
+ * @type EventListener
  * @since 0.1.0
  */
-export type EventListener = (event: any) => any | void
+export type EventListener = (event: any) => void
+
+/**
+ * @type EventListeners
+ * @since 0.1.0
+ */
+export type EventListeners = Array<EventListener>

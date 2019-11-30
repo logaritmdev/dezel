@@ -107,10 +107,12 @@ export abstract class Component extends View {
 	public insert(child: View, index: number, slot?: string) {
 
 		if (this.locked) {
+
 			throw new Error(
 				`Component error: ` +
 				`This component is locked and cannot be mutated.`
 			)
+
 		}
 
 		if (slot) {
@@ -151,10 +153,12 @@ export abstract class Component extends View {
 	public remove(child: View, slot?: string) {
 
 		if (this.locked) {
+
 			throw new Error(
 				`Component error: ` +
 				`This component is locked and cannot be mutated.`
 			)
+
 		}
 
 		if (slot) {

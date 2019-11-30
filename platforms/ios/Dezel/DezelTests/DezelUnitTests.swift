@@ -11,7 +11,7 @@ class DezelUnitTests: XCTestCase {
 
     func testAPI() {
      	let expectation = XCTestExpectation(description: "Tests should pass")
-		self.runner.start(host: "192.168.11.115", port: "9876")
+		self.runner.start(host: "192.168.2.115", port: "9876")
 		wait(for: [expectation], timeout: 3600.0)
     }
 }

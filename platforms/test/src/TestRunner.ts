@@ -5,7 +5,6 @@ import { Device } from '../../../src/device/Device'
 import { Platform } from '../../../src/platform/Platform'
 
 /**
- * Karma Test Runner
  * @class TestRunner
  * @since 0.7.0
  */
@@ -16,42 +15,36 @@ export class TestRunner {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The karma server socket.
 	 * @property socket
 	 * @since 0.7.0
 	 */
 	protected socket: SocketIOClient.Socket
 
 	/**
-	 * The karma server host.
 	 * @property host
 	 * @since 0.7.0
 	 */
 	protected host: string
 
 	/**
-	 * The karma server host.
 	 * @property host
 	 * @since 0.7.0
 	 */
 	protected port: string
 
 	/**
-	 * The karma config.
 	 * @property socket
 	 * @since 0.7.0
 	 */
 	protected config: any
 
 	/**
-	 * @property started
 	 * @since 0.7.0
 	 * @hidden
 	 */
 	private started: boolean = false
 
 	/**
-	 * @property running
 	 * @since 0.7.0
 	 * @hidden
 	 */

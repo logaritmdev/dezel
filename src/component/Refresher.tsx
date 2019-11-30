@@ -88,7 +88,7 @@ export class Refresher extends Component {
 
 		}).then(() => {
 
-			this.spinner.active = false
+			this.spinner.spin = false
 
 		}).then(() => {
 
@@ -223,7 +223,7 @@ export class Refresher extends Component {
 		if (this.refreshable) {
 			this.refreshable = false
 
-			this.spinner.active = true
+			this.spinner.spin = true
 			this.view.contentInsetTop = this.measuredHeight
 			this.emit('refresh')
 
@@ -239,7 +239,7 @@ export class Refresher extends Component {
 	 * @hidden
 	 */
 	@bound private onViewTouchStart(event: TouchEvent) {
-		let touch = event.touches.item(0)
+		let touch = event.touches.get(0)
 		this.trackedTouch = touch
 		this.trackedTouchStartX = touch.x
 		this.trackedTouchStartY = touch.y
@@ -267,7 +267,7 @@ export class Refresher extends Component {
 
 		for (let i = 0; i < event.touches.length; i++) {
 
-			let touch = event.touches.item(i)
+			let touch = event.touches.get(i)
 
 			if (touch == tracked) {
 
@@ -282,7 +282,7 @@ export class Refresher extends Component {
 					continue
 				}
 
-				this.spinner.active = true
+				this.spinner.spin = true
 			}
 		}
 	}
@@ -309,7 +309,7 @@ export class Refresher extends Component {
 
 		for (let i = 0; i < event.touches.length; i++) {
 
-			let touch = event.touches.item(i)
+			let touch = event.touches.get(i)
 
 			if (touch == tracked) {
 

@@ -75,7 +75,7 @@ export class Dots extends Component {
 
 		if (property == 'amount') {
 
-			this.empty()
+			this.removeAll()
 
 			let amount = newValue as number
 			if (amount) {

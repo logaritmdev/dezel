@@ -212,7 +212,7 @@ Tokenizer::Tokenizer(TokenizerStream &stream): stream(stream) {
 		this->tokens.push_back(token);
 
 		if (token.getType() == kTokenTypeEnd) {
-			return;
+			break;
 		}
 	}
 }

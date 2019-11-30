@@ -3,7 +3,7 @@
  * @since 0.1.0
  * @hidden
  */
-internal final class JavaScriptSetterWrapper: NSObject {
+internal final class JavaScriptSetterWrapper {
 
 	//--------------------------------------------------------------------------
 	// MARK: Properties
@@ -46,8 +46,6 @@ internal final class JavaScriptSetterWrapper: NSObject {
 		self.context = context
 		self.handler = handler
 		self.function = function
-
-		super.init()
 
 		JavaScriptValueSetFinalizeHandler(context.handle, function, javaScriptSetterWrapperFinalize)
 		JavaScriptValueSetAssociatedObject(context.handle, function, Unmanaged.passRetained(self).toOpaque())

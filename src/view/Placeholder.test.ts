@@ -136,7 +136,7 @@ describe('Placeholder', () => {
 		expect(fn2).toHaveBeenCalled()
 	})
 
-	it('should emit an remove event', () => {
+	it('should emit a remove event', () => {
 
 		let child1 = new View()
 		let child2 = new View()

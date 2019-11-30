@@ -1,8 +1,9 @@
 /**
  * @class JavaScriptValue
+ * @super NSObject
  * @since 0.1.0
  */
-open class JavaScriptValue : NSObject {
+open class JavaScriptValue: NSObject {
 
 	//--------------------------------------------------------------------------
 	// MARK: Class Methods
@@ -256,7 +257,6 @@ open class JavaScriptValue : NSObject {
 		 */
 
 		self.context = context
-		super.init()
 	}
 
 	/**

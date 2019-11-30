@@ -64,6 +64,13 @@ void DisplayNodeAppendStyle(DisplayNodeRef node, const char* style);
 void DisplayNodeRemoveStyle(DisplayNodeRef node, const char* style);
 
 /**
+* @function DisplayNodeHasStyle
+* @since 0.7.0
+* @hidden
+*/
+bool DisplayNodeHasStyle(DisplayNodeRef node, const char* style);
+
+/**
  * @function DisplayNodeAppendState
  * @since 0.7.0
  * @hidden
@@ -76,6 +83,13 @@ void DisplayNodeAppendState(DisplayNodeRef node, const char* state);
  * @hidden
 */
 void DisplayNodeRemoveState(DisplayNodeRef node, const char* state);
+
+/**
+* @function DisplayNodeHasState
+* @since 0.7.0
+* @hidden
+*/
+bool DisplayNodeHasState(DisplayNodeRef node, const char* state);
 
 /**
  * @function DisplayNodeSetAnchorTop

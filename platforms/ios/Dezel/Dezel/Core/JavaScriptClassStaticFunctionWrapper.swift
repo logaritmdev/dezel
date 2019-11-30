@@ -3,7 +3,7 @@
  * @since 0.7.0
  * @hidden
  */
-internal final class JavaScriptClassStaticFunctionWrapper : NSObject {
+internal final class JavaScriptClassStaticFunctionWrapper {
 
 	//--------------------------------------------------------------------------
 	// MARK: Properties
@@ -62,8 +62,6 @@ internal final class JavaScriptClassStaticFunctionWrapper : NSObject {
 		self.cls = cls
 		self.sel = sel
 		self.imp = imp
-
-		super.init()
 
 		JavaScriptValueSetFinalizeHandler(context.handle, function, javaScriptClassStaticFunctionWrapperFinalize)
 		JavaScriptValueSetAssociatedObject(context.handle, function, Unmanaged.passRetained(self).toOpaque())

@@ -3,7 +3,7 @@
  * @since 0.1.0
  * @hidden
  */
-internal final class JavaScriptExceptionWrapper: NSObject {
+internal final class JavaScriptExceptionWrapper {
 
 	//--------------------------------------------------------------------------
 	// MARK: Properties

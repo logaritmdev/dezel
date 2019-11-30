@@ -3,8 +3,12 @@ import { Emitter } from '../event/Emitter'
 import { Event } from '../event/Event'
 import { bridge } from '../native/bridge'
 import { native } from '../native/native'
+import { $buttons } from './symbol/Alert'
+import { $message } from './symbol/Alert'
 import { $presented } from './symbol/Alert'
 import { $selection } from './symbol/Alert'
+import { $style } from './symbol/Alert'
+import { $title } from './symbol/Alert'
 import { AlertButton } from './AlertButton'
 
 @bridge('dezel.dialog.Alert')
@@ -24,25 +28,33 @@ export class Alert extends Emitter {
 	 * @property style
 	 * @since 0.1.0
 	 */
-	public readonly style: 'alert' | 'sheet'
+	public get style(): 'alert' | 'sheet' {
+		return this[$style]
+	}
 
 	/**
 	 * @property title
 	 * @since 0.1.0
 	 */
-	public readonly title: string
+	public get title(): string {
+		return this[$title]
+	}
 
 	/**
 	 * @property message
 	 * @since 0.1.0
 	 */
-	public readonly message: string
+	public get message(): string {
+		return this[$message]
+	}
 
 	/**
 	 * @property buttons
 	 * @since 0.1.0
 	 */
-	public readonly buttons: Array<AlertButton>
+	public get buttons(): Array<AlertButton> {
+		return this[$buttons]
+	}
 
 	/**
 	 * @property presented
@@ -64,10 +76,10 @@ export class Alert extends Emitter {
 
 		super()
 
-		this.style = options.style || 'alert'
-		this.title = options.title || ''
-		this.message = options.message || ''
-		this.buttons = options.buttons || []
+		this[$style] = options.style || 'alert'
+		this[$title] = options.title || ''
+		this[$message] = options.message || ''
+		this[$buttons] = options.buttons || []
 
 		this.buttons.forEach(button => button.on('press', this.onButtonPress))
 	}
@@ -169,15 +181,43 @@ export class Alert extends Emitter {
 	//--------------------------------------------------------------------------
 
 	/**
+	 * @property $style
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private [$style]: 'alert' | 'sheet'
+
+	/**
+	 * @property $title
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private [$title]: string
+
+	/**
+	 * @property $message
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private [$message]: string
+
+	/**
+	 * @property $buttons
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private [$buttons]: Array<AlertButton>
+
+	/**
 	 * @property $presented
-	 * @since 0.3.0
+	 * @since 0.7.0
 	 * @hidden
 	 */
 	private [$presented]: boolean = false
 
 	/**
 	 * @property $selection
-	 * @since 0.4.0
+	 * @since 0.7.0
 	 * @hidden
 	 */
 	private [$selection]: string = ''

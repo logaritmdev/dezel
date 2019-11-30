@@ -373,6 +373,22 @@ public:
 	void appendState(string state);
 	void removeState(string state);
 
+	bool hasStyle(string style) {
+		return find(
+			this->styles.begin(),
+			this->styles.end(),
+			style
+		) != this->styles.end();
+	}
+
+	bool hasState(string state) {
+		return find(
+			this->states.begin(),
+			this->states.end(),
+			state
+		) != this->states.end();
+	}
+
 	const string& getName() const {
 		return this->name;
 	}

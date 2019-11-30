@@ -1,7 +1,7 @@
 /**
  * @class ImageView
+ * @super UIView
  * @since 0.7.0
- * @hidden
  */
 open class ImageView: UIView, Updatable, Clippable, TransitionListener {
 
@@ -90,10 +90,10 @@ open class ImageView: UIView, Updatable, Clippable, TransitionListener {
 	}
 
 	/**
-	 * @property imageTint
+	 * @property tint
 	 * @since 0.7.0
 	 */
-	open var imageTint: CGColor = .transparent {
+	open var tint: CGColor = .transparent {
 		willSet {
 			self.imageLayer.color = newValue
 		}
@@ -145,7 +145,7 @@ open class ImageView: UIView, Updatable, Clippable, TransitionListener {
 
 		self.imageLayer.frame = frame
 		self.imageLayer.listener = self
-		
+
 		self.layer.addSublayer(self.imageLayer)
 	}
 

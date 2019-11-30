@@ -34,11 +34,43 @@ export class TouchList implements Iterable<Touch> {
 	}
 
 	/**
-	 * @method item
-	 * @since 0.4.0
+	 * @method get
+	 * @since 0.7.0
 	 */
-	public item(index: number) {
+	public get(index: number) {
 		return this[$touches][index]
+	}
+
+	/**
+	 * @method has
+	 * @since 0.7.0
+	 */
+	public has(touch: Touch) {
+		return this[$touches].includes(touch)
+	}
+
+	/**
+	 * @method every
+	 * @since 0.7.0
+	 */
+	public every(callback: TouchListCallback) {
+		return this[$touches].every(callback)
+	}
+
+	/**
+	 * @method some
+	 * @since 0.7.0
+	 */
+	public some(callback: TouchListCallback) {
+		return this[$touches].some(callback)
+	}
+
+	/**
+	 * @method each
+	 * @since 0.7.0
+	 */
+	public each(callback: TouchListCallback) {
+		return this[$touches].forEach(callback)
 	}
 
 	/**
@@ -46,13 +78,7 @@ export class TouchList implements Iterable<Touch> {
 	 * @since 0.7.0
 	 */
 	public hits(target: View) {
-
-		let result = this[$touches].find(touch => touch.hits(target))
-		if (result) {
-			return true
-		}
-
-		return false
+		return this[$touches].find(touch => touch.hits(target)) != null
 	}
 
 	//--------------------------------------------------------------------------
@@ -78,3 +104,9 @@ export class TouchList implements Iterable<Touch> {
 	 */
 	private [$touches]: Array<Touch> = []
 }
+
+/**
+ * @type TouchListCallback
+ * @sine 0.7.0
+ */
+export type TouchListCallback = (touch: Touch, index: number, array: ReadonlyArray<Touch>) => boolean

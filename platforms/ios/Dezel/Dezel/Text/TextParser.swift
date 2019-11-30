@@ -2,6 +2,7 @@ import Foundation
 
 /**
  * @class TextParser
+ * @super NSObject
  * @since 0.5.0
  */
 open class TextParser: NSObject, XMLParserDelegate {

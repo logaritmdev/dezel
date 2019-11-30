@@ -1,5 +1,6 @@
 /**
  * @class JavaScriptCallback
+ * @super NSObject
  * @since 0.1.0
  */
 open class JavaScriptCallback: NSObject {

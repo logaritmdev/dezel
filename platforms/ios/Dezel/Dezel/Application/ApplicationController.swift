@@ -47,6 +47,13 @@ open class ApplicationController: UIViewController, StylesheetDelegate {
 	 */
 	private(set) public var application: JavaScriptApplication?
 
+	/**
+	 * @property loaded
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private var loaded: Bool = false
+
 	//--------------------------------------------------------------------------
 	// MARK: Methods
 	//--------------------------------------------------------------------------
@@ -67,6 +74,14 @@ open class ApplicationController: UIViewController, StylesheetDelegate {
 	override init(nibName: String?, bundle:  Bundle?) {
 		super.init(nibName: nibName, bundle: bundle)
 		self.initialize()
+	}
+
+	/**
+	 * @constructor
+	 * @since 0.7.0
+	 */
+	convenience init() {
+		self.init(nibName: nil, bundle: nil)
 	}
 
 	/**
@@ -113,14 +128,6 @@ open class ApplicationController: UIViewController, StylesheetDelegate {
 	}
 
 	/**
-	 * @method regsiter
-	 * @since 0.7.0
-	 */
-	open func register(_ application: JavaScriptApplication) {
-		self.application = application
-	}
-
-	/**
 	 * @method configure
 	 * @since 0.7.0
 	 */
@@ -158,6 +165,27 @@ open class ApplicationController: UIViewController, StylesheetDelegate {
 	 */
 	open func openUniversalURL(_ url: URL) {
 		self.application?.callMethod("nativeOnOpenUniversalURL", arguments: [self.context.createString(url.absoluteString)])
+	}
+
+	/**
+	 * @method regsiter
+	 * @since 0.7.0
+	 */
+	open func register(_ application: JavaScriptApplication) {
+
+		self.application?.destroy()
+		self.application = application
+
+		if (self.loaded == false) {
+			return
+		}
+
+		self.display.window = application.window.node
+
+		application.window.width.reset(Double(UIScreen.main.bounds.width), unit: .px, lock: self)
+		application.window.height.reset(Double(UIScreen.main.bounds.height), unit: .px, lock: self)
+
+		self.view.addSubview(application.window)
 	}
 
 	//--------------------------------------------------------------------------
@@ -229,17 +257,17 @@ open class ApplicationController: UIViewController, StylesheetDelegate {
 			}
 		}
 
-		guard let application = self.application else {
-			return
-			//fatalError("Missing application. Did you forget to call registerApplication ?")
+		if let application = self.application {
+
+			self.display.window = application.window.node
+
+			application.window.width.reset(Double(UIScreen.main.bounds.width), unit: .px, lock: self)
+			application.window.height.reset(Double(UIScreen.main.bounds.height), unit: .px, lock: self)
+
+			self.view.addSubview(application.window)
 		}
 
-		self.display.window = application.window.node
-
-		application.window.width.reset(Double(UIScreen.main.bounds.width), unit: .px, lock: self)
-		application.window.height.reset(Double(UIScreen.main.bounds.height), unit: .px, lock: self)
-
-		self.view.addSubview(application.window)
+		self.loaded = true
 	}
 
 	/**

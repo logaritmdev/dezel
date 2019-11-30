@@ -33,6 +33,11 @@ enum ValueUnit {
 
 class Parser;
 class Stylesheet;
+class StringValue;
+class NumberValue;
+class BooleanValue;
+class FunctionValue;
+class VariableValue;
 
 class Value {
 

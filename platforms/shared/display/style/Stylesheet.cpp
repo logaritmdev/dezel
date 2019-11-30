@@ -130,7 +130,7 @@ void
 Stylesheet::setVariable(string name, string value)
 {
 	auto variable = new Variable(name);
-	Parser::parse(this, value);
+	Parser::parse(variable, value);
 	this->addVariable(variable);
 }
 

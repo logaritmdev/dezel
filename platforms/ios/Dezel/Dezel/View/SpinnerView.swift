@@ -1,7 +1,7 @@
 /**
  * @class SpinnerView
+ * @super UIActivityIndicatorView
  * @since 0.7.0
- * @hidden
  */
 open class SpinnerView: UIActivityIndicatorView {
 
@@ -10,10 +10,10 @@ open class SpinnerView: UIActivityIndicatorView {
 	//----------------------------------------------------------------------
 
 	/**
-	 * @property active
+	 * @property spin
 	 * @since 0.7.0
 	 */
-	open var active: Bool = false {
+	open var spin: Bool = false {
 		willSet {
 			if (newValue) {
 				self.startAnimating()

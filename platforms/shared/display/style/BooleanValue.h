@@ -1,5 +1,5 @@
-#ifndef Boolean_h
-#define Boolean_h
+#ifndef BooleanValue_h
+#define BooleanValue_h
 
 #include "Value.h"
 

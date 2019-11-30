@@ -2,6 +2,7 @@ public typealias ImageLoaderCallback = (UIImage?) -> Void
 
 /**
  * @class ImageLoader
+ * @super NSObject
  * @since 0.1.0
  */
 open class ImageLoader: NSObject {

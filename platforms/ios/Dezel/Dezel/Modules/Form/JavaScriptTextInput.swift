@@ -422,14 +422,6 @@ open class JavaScriptTextInput: JavaScriptView, TextInputDelegate {
 	}
 
 	/**
-	 * @property textColor
-	 * @since 0.7.0
-	 */
-	@objc public lazy var textColor = JavaScriptProperty(string: "#000") { value in
-		self.view.textColor = UIColor(string: value.string)
-	}
-
-	/**
 	 * @property textAlignment
 	 * @since 0.7.0
 	 */
@@ -462,6 +454,30 @@ open class JavaScriptTextInput: JavaScriptView, TextInputDelegate {
 	}
 
 	/**
+	 * @property textDecoration
+	 * @since 0.7.0
+	 */
+	@objc public lazy var textDecoration = JavaScriptProperty(string: "none") { value in
+		self.view.textDecoration = self.getTextDecoration(value.string)
+	}
+
+	/**
+	 * @property textTransform
+	 * @since 0.7.0
+	 */
+	@objc public lazy var textTransform = JavaScriptProperty(string: "none") { value in
+		self.view.textTransform = self.getTextTransform(value.string)
+	}
+
+	/**
+	 * @property textColor
+	 * @since 0.7.0
+	 */
+	@objc public lazy var textColor = JavaScriptProperty(string: "#000") { value in
+		self.view.textColor = UIColor(string: value.string)
+	}
+
+	/**
 	 * @property textShadowBlur
 	 * @since 0.7.0
 	 */
@@ -491,22 +507,6 @@ open class JavaScriptTextInput: JavaScriptView, TextInputDelegate {
 	 */
 	@objc public lazy var textShadowOffsetLeft = JavaScriptProperty(number: 0) { value in
 		self.view.textShadowOffsetLeft = CGFloat(value.number)
-	}
-
-	/**
-	 * @property textDecoration
-	 * @since 0.7.0
-	 */
-	@objc public lazy var textDecoration = JavaScriptProperty(string: "none") { value in
-		self.view.textDecoration = self.getTextDecoration(value.string)
-	}
-
-	/**
-	 * @property textTransform
-	 * @since 0.7.0
-	 */
-	@objc public lazy var textTransform = JavaScriptProperty(string: "none") { value in
-		self.view.textTransform = self.getTextTransform(value.string)
 	}
 
 	/**
@@ -808,26 +808,6 @@ open class JavaScriptTextInput: JavaScriptView, TextInputDelegate {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method jsGet_textColor
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	@objc open func jsGet_textColor(callback: JavaScriptGetterCallback) {
-		callback.returns(self.textColor)
-	}
-
-	/**
-	 * @method jsSet_textColor
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	@objc open func jsSet_textColor(callback: JavaScriptSetterCallback) {
-		self.textColor.reset(callback.value, lock: self)
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
 	 * @method jsGet_textAlignment
 	 * @since 0.7.0
 	 * @hidden
@@ -943,6 +923,26 @@ open class JavaScriptTextInput: JavaScriptView, TextInputDelegate {
 	 */
 	@objc open func jsSet_textTransform(callback: JavaScriptSetterCallback) {
 		self.textTransform.reset(callback.value, lock: self)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_textColor
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@objc open func jsGet_textColor(callback: JavaScriptGetterCallback) {
+		callback.returns(self.textColor)
+	}
+
+	/**
+	 * @method jsSet_textColor
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@objc open func jsSet_textColor(callback: JavaScriptSetterCallback) {
+		self.textColor.reset(callback.value, lock: self)
 	}
 
 	//--------------------------------------------------------------------------

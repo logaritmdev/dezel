@@ -2,8 +2,8 @@ import WebKit
 
 /**
  * @class WebView
+ * @super WKWebView
  * @since 0.7.0
- * @hidden
  */
 public class WebView: WKWebView, WKNavigationDelegate, UIScrollViewDelegate, Scrollable {
 
@@ -509,6 +509,7 @@ public class WebView: WKWebView, WKNavigationDelegate, UIScrollViewDelegate, Scr
 
 	/**
 	 * @class ScrollViewDelegate
+	 * @super NSObject
 	 * @since 0.6.0
 	 * @hidden
 	 */

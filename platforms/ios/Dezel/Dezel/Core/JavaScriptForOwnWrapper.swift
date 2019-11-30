@@ -4,7 +4,7 @@
  * @since 0.7.0
  * @hidden
  */
-internal final class JavaScriptValueForOwnWrapper: NSObject {
+internal final class JavaScriptValueForOwnWrapper {
 
 	/**
 	 * @property context
@@ -28,7 +28,6 @@ internal final class JavaScriptValueForOwnWrapper: NSObject {
 	public init(context: JavaScriptContext, handler: @escaping JavaScriptForOwnHandler) {
 		self.context = context
 		self.handler = handler
-		super.init()
 	}
 
 	/**

@@ -1,14 +1,14 @@
 /**
- * @symbol pointer
- * @since 0.7.0
- */
-export const $identifier = Symbol('pointer')
-
-/**
  * @symbol target
  * @since 0.7.0
  */
 export const $target = Symbol('target')
+
+/**
+ * @symbol id
+ * @since 0.7.0
+ */
+export const $id = Symbol('id')
 
 /**
  * @symbol x

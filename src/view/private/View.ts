@@ -1,26 +1,90 @@
-import { ImageView } from '../ImageView'
+import { native } from '../../native/native'
+import { $children } from '../symbol/View'
 import { View } from '../View'
 
 /**
- * @function viewInsertBefore
+ * @const classNames
  * @since 0.7.0
  * @hidden
  */
-export function viewInsertBefore(view: View, child: View, before: View) {
-	let index = view.children.indexOf(before)
-	if (index > -1) {
-		view.insert(view, index)
-	}
+const classNames = new Map<any, any>()
+
+/**
+ * @function insertItem
+ * @since 0.7.0
+ * @hidden
+ */
+export function insertItem(view: View, child: View, index: number) {
+	view[$children].splice(index, 0, child)
 }
 
 /**
- * @function viewInsertAfter
+ * @function removeItem
  * @since 0.7.0
  * @hidden
  */
-export function viewInsertAfter(view: View, child: View, after: View) {
-	let index = view.children.indexOf(after)
-	if (index > -1) {
-		view.insert(view, index + 1)
+export function removeItem(view: View, child: View, index: number) {
+	view[$children].splice(index, 1)
+}
+
+/**
+ * @function insertView
+ * @since 0.7.0
+ * @hidden
+ */
+export function insertView(view: View, child: View, index: number) {
+	native(view).insert(native(child), index)
+}
+
+/**
+ * @function removeView
+ * @since 0.7.0
+ * @hidden
+ */
+export function removeView(view: View, child: View, index: number) {
+	native(view).remove(native(child), index)
+}
+
+/**
+ * @function getClassName
+ * @since 0.2.0
+ * @hidden
+ */
+export function getClassName(view: View) {
+
+	if (view.constructor == View) {
+		return 'View'
 	}
+
+	let className = classNames.get(view.constructor)
+	if (className == null) {
+		classNames.set(view.constructor, className = getClassList(view))
+	}
+
+	return className
+}
+
+/**
+ * @function getClassList
+ * @since 0.4.0
+ * @hidden
+ */
+export function getClassList(view: View) {
+
+	let klass = view.constructor.name
+	let proto = view.constructor.prototype
+
+	while (proto) {
+
+		proto = Object.getPrototypeOf(proto)
+
+		let constructor = proto.constructor
+		if (constructor == View) {
+			proto = null
+		}
+
+		klass = klass + ' ' + constructor.name
+	}
+
+	return klass
 }

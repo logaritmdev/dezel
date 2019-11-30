@@ -49,8 +49,12 @@ describe('ImageView', () => {
 		expect(view.imageFilter).toBe('none')
 	})
 
-	it('should have a valid initial imageTint property value', () => {
-		expect(view.imageTint).toBe('transparent')
+	it('should have a valid initial imageOpacity property value', () => {
+		expect(view.imageOpacity).toBe(1)
+	})
+
+	it('should have a valid initial tint property value', () => {
+		expect(view.tint).toBe('transparent')
 	})
 
 })

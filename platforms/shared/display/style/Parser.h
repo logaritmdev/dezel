@@ -53,6 +53,7 @@ private:
 
 	Value* parseValue(TokenList& tokens);
 	Value* parseIdentValue(TokenList& tokens);
+	Value* parseColorValue(TokenList& tokens);
 	Value* parseStringValue(TokenList& tokens);
 	Value* parseNumberValue(TokenList& tokens);
 	Value* parseFunctionValue(TokenList& tokens);

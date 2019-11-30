@@ -1,5 +1,6 @@
 /**
  * @class WrapperView
+ * @super UIView
  * @since 0.1.0
  */
 open class WrapperView: UIView, TransitionListener {
@@ -209,7 +210,7 @@ open class WrapperView: UIView, TransitionListener {
 	 */
 	open var backgroundLinearGradient: LinearGradient? {
 		willSet {
-			if (self.backgroundLinearGradient != newValue) {
+			if (self.backgroundLinearGradient !== newValue) {
 				self.bitmapLayer.backgroundLinearGradient = newValue
 			}
 		}

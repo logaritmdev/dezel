@@ -1,7 +1,7 @@
 /**
  * @class ContentTextArea
+ * @super UITextView
  * @since 0.7.0
- * @hidden
  */
 open class TextArea: UITextView, UITextViewDelegate {
 

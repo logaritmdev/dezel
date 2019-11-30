@@ -1,8 +1,8 @@
 
 /**
  * @class View
+ * @super UIScrollView
  * @since 0.7.0
- * @hidden
  */
 open class View : UIScrollView, UIScrollViewDelegate, Scrollable {
 

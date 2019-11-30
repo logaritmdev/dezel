@@ -1,5 +1,5 @@
 /**
- * @class Module
+ * @class JavaScriptModule
  * @since 0.1.0
  */
 open class JavaScriptModule {

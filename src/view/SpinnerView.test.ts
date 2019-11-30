@@ -13,12 +13,12 @@ describe('SpinnerView', () => {
 		expect(native(view)).not.toBeUndefined()
 	})
 
-	it('should have a valid initial active property value', () => {
-		expect(view.active).toBe(false)
+	it('should have a valid initial spin property value', () => {
+		expect(view.spin).toBe(false)
 	})
 
-	it('should have a valid initial fontWeight property value', () => {
-		expect(view.color).toBe('#000')
+	it('should have a valid initial tint property value', () => {
+		expect(view.tint).toBe('#000')
 	})
 
 })

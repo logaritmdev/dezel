@@ -1,7 +1,6 @@
 import UIKit
 
 /**
- * The layer that renders the view's background color and image.
  * @class BitmapLayer
  * @super Layer
  * @since 0.1.0
@@ -88,7 +87,7 @@ public class BitmapLayer: Layer {
 	 */
 	open var backgroundLinearGradient: LinearGradient? {
 		willSet {
-			if (self.backgroundLinearGradient != newValue) {
+			if (self.backgroundLinearGradient !== newValue) {
 				self.setNeedsDisplay()
 			}
 		}

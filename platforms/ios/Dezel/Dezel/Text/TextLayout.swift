@@ -4,7 +4,7 @@ import CoreText
  * @class TextLayout
  * @since 0.5.0
  */
-open class TextLayout: NSObject {
+open class TextLayout {
 
 	//--------------------------------------------------------------------------
 	// MARK: Properties

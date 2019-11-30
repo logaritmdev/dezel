@@ -2,8 +2,8 @@ import UIKit
 
 /**
  * @class TextView
+ * @super UIView
  * @since 0.7.0
- * @hidden
  */
 open class TextView: UIView, Updatable, Clippable, TransitionListener {
 

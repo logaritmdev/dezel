@@ -3,7 +3,6 @@ import Foundation
 /**
  * @class HttpRequest
  * @since 0.1.0
- * @hidden
  */
 open class HttpRequest: NSObject, URLSessionDelegate, URLSessionTaskDelegate, URLSessionDataDelegate {
 

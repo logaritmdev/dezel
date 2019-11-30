@@ -7,7 +7,6 @@ import { native } from '../native/native'
 /**
  * TODO
  * Merge in componetn IMage
- * Manages an image's data.
  * @class Image
  * @super Emitter
  * @since 0.1.0

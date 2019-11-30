@@ -50,10 +50,12 @@ export class Reference<T extends View | Placeholder> {
 
 		let value = this[$value]
 		if (value == null) {
+
 			throw new Error(
 				`Reference error: ` +
 				`Unable to return a null reference.`
 			)
+
 		}
 
 		return value

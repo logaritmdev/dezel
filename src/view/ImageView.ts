@@ -71,10 +71,16 @@ export class ImageView extends View {
 	@native public imageFilter!: 'grayscale' | 'none'
 
 	/**
-	 * @property imageTint
+	 * @property imageOpacity
+	 * @since 0.5.0
+	 */
+	@native public imageOpacity!: number
+
+	/**
+	 * @property tint
 	 * @since 0.1.0
 	 */
-	@native public imageTint!: 'transparent' | string
+	@native public tint!: 'transparent' | string
 
 	//--------------------------------------------------------------------------
 	// Internal API

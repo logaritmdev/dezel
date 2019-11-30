@@ -1485,6 +1485,10 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 */
 	private func moveToParent(_ parent: JavaScriptView?, notify: Bool = true) {
 
+		if (self.parent == parent) {
+			return
+		}
+
 		self.parent = parent
 
 		if (notify) {
@@ -1498,6 +1502,10 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	private func moveToWindow(_ window: JavaScriptWindow?, notify: Bool = true) {
+
+		if (self.window == window) {
+			return
+		}
 
 		self.window = window
 
@@ -6240,6 +6248,20 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
+	 * @method jsFunction_hasStyle
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@objc open func jsFunction_hasStyle(callback: JavaScriptFunctionCallback) {
+
+		if (callback.arguments < 1) {
+			fatalError("Method JavaScriptView.hasStyle() requires 1 argument.")
+		}
+
+		callback.returns(self.node.hasStyle(callback.argument(0).string))
+	}
+
+	/**
 	 * @method jsFunction_appendState
 	 * @since 0.7.0
 	 * @hidden
@@ -6265,6 +6287,20 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 		}
 
 		self.node.removeState(callback.argument(0).string)
+	}
+
+	/**
+	 * @method jsFunction_hasState
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@objc open func jsFunction_hasState(callback: JavaScriptFunctionCallback) {
+
+		if (callback.arguments < 1) {
+			fatalError("Method JavaScriptView.hasState() requires 1 argument.")
+		}
+
+		callback.returns(self.node.hasState(callback.argument(0).string))
 	}
 
 	/**

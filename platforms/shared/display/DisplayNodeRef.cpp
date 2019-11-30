@@ -53,6 +53,12 @@ DisplayNodeRemoveStyle(DisplayNodeRef node, const char* style)
 	reinterpret_cast<DisplayNode*>(node)->removeStyle(std::string(style));
 }
 
+bool
+DisplayNodeHasStyle(DisplayNodeRef node, const char* style)
+{
+	return reinterpret_cast<DisplayNode*>(node)->hasStyle(std::string(style));
+}
+
 void
 DisplayNodeAppendState(DisplayNodeRef node, const char* state)
 {
@@ -63,6 +69,12 @@ void
 DisplayNodeRemoveState(DisplayNodeRef node, const char* state)
 {
 	reinterpret_cast<DisplayNode*>(node)->removeState(std::string(state));
+}
+
+bool
+DisplayNodeHasState(DisplayNodeRef node, const char* state)
+{
+	return reinterpret_cast<DisplayNode*>(node)->hasState(std::string(state));
 }
 
 void
