@@ -12,9 +12,9 @@ import android.widget.LinearLayout
 import android.widget.PopupWindow
 import ca.logaritm.dezel.view.graphic.Color
 
-/**
- * The keyboard state receiver.
+/**.
  * @class KeyboardObserver
+ * @super PopupWindow
  * @since 0.1.0
  */
 open class KeyboardObserver(val activity: Activity, view: View) : PopupWindow(activity) {
@@ -24,7 +24,6 @@ open class KeyboardObserver(val activity: Activity, view: View) : PopupWindow(ac
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The observer's receiver.
 	 * @property listener
 	 * @since 0.1.0
 	 */

@@ -32,7 +32,6 @@ public object Delegates {
 		protected var field: T = init
 
 		/**
-		 * @inherited
 		 * @method getValue
 		 * @since 0.1.0
 		 */
@@ -41,7 +40,6 @@ public object Delegates {
 		}
 
 		/**
-		 * @inherited
 		 * @method setValue
 		 * @since 0.1.0
 		 */
@@ -66,7 +64,6 @@ public object Delegates {
 		protected var field: T? = init
 
 		/**
-		 * @inherited
 		 * @method getValue
 		 * @since 0.1.0
 		 */
@@ -75,7 +72,6 @@ public object Delegates {
 		}
 
 		/**
-		 * @inherited
 		 * @method setValue
 		 * @since 0.1.0
 		 */
@@ -100,7 +96,6 @@ public object Delegates {
 		protected var field: T = init
 
 		/**
-		 * @inherited
 		 * @method getValue
 		 * @since 0.1.0
 		 */
@@ -109,7 +104,6 @@ public object Delegates {
 		}
 
 		/**
-		 * @inherited
 		 * @method setValue
 		 * @since 0.1.0
 		 */
@@ -141,7 +135,6 @@ public object Delegates {
 		protected var field: T? = init
 
 		/**
-		 * @inherited
 		 * @method getValue
 		 * @since 0.1.0
 		 */
@@ -150,7 +143,6 @@ public object Delegates {
 		}
 
 		/**
-		 * @inherited
 		 * @method setValue
 		 * @since 0.1.0
 		 */
@@ -182,7 +174,6 @@ public object Delegates {
 		protected lateinit var field: T
 
 		/**
-		 * @inherited
 		 * @method getValue
 		 * @since 0.1.0
 		 */
@@ -196,7 +187,6 @@ public object Delegates {
 		}
 
 		/**
-		 * @inherited
 		 * @method setValue
 		 * @since 0.1.0
 		 */

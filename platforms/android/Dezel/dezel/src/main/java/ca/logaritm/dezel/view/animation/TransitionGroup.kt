@@ -71,7 +71,7 @@ public class TransitionGroup(val activity: ApplicationActivity): Animator.Animat
 		const val PROP_IMAGE_LEFT = "dezel.ImageView.imageLeft"
 		const val PROP_IMAGE_WIDTH = "dezel.ImageView.imageWidth"
 		const val PROP_IMAGE_HEIGHT = "dezel.ImageView.imageHeight"
-		const val PROP_IMAGE_TINT = "dezel.ImageView.imageTint"
+		const val PROP_IMAGE_TINT = "dezel.ImageView.tint"
 	}
 
 	//--------------------------------------------------------------------------
@@ -297,7 +297,7 @@ public class TransitionGroup(val activity: ApplicationActivity): Animator.Animat
 			transitionValues.values[PROP_IMAGE_LEFT] = content.imageLeft
 			transitionValues.values[PROP_IMAGE_WIDTH] = content.imageWidth
 			transitionValues.values[PROP_IMAGE_HEIGHT] = content.imageHeight
-			transitionValues.values[PROP_IMAGE_TINT] = content.imageTint
+			transitionValues.values[PROP_IMAGE_TINT] = content.tint
 		}
 
 		if (content is Scrollable) {
@@ -357,7 +357,7 @@ public class TransitionGroup(val activity: ApplicationActivity): Animator.Animat
 
 		this.addFloatAnimator(view.content, PROP_CONTENT_TRANSLATION_X, "translationX", startValues, endValues, animators)
 		this.addFloatAnimator(view.content, PROP_CONTENT_TRANSLATION_Y, "translationY", startValues, endValues, animators)
-		
+
 		if (view is JavaScriptTextView) {
 			this.addColorAnimator(view.content, PROP_TEXT_COLOR, "textColor", startValues, endValues, animators)
 			this.addFloatAnimator(view.content, PROP_TEXT_KERNING, "textKerning", startValues, endValues, animators)
@@ -370,7 +370,7 @@ public class TransitionGroup(val activity: ApplicationActivity): Animator.Animat
 			this.addFloatAnimator(view.content, PROP_IMAGE_LEFT, "imageLeft", startValues, endValues, animators)
 			this.addFloatAnimator(view.content, PROP_IMAGE_WIDTH, "imageWidth", startValues, endValues, animators)
 			this.addFloatAnimator(view.content, PROP_IMAGE_HEIGHT, "imageHeight", startValues, endValues, animators)
-			this.addColorAnimator(view.content, PROP_IMAGE_TINT, "imageTint", startValues, endValues, animators)
+			this.addColorAnimator(view.content, PROP_IMAGE_TINT, "tint", startValues, endValues, animators)
 		}
 
 		if (view.content is View) {

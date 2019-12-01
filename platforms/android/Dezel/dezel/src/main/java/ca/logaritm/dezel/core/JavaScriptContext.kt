@@ -3,7 +3,6 @@ package ca.logaritm.dezel.core
 import ca.logaritm.dezel.BuildConfig
 
 /**
- * A JavaScript execution environment.
  * @class JavaScriptContext
  * @since 0.1.0
  */
@@ -25,7 +24,6 @@ open class JavaScriptContext {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The null JavaScript toValue.
 	 * @const jsnull
 	 * @since 0.7.0
 	 */
@@ -34,7 +32,6 @@ open class JavaScriptContext {
 	}
 
 	/**
-	 * The undefined JavaScript toValue.
 	 * @const jsundefined
 	 * @since 0.7.0
 	 */
@@ -47,7 +44,6 @@ open class JavaScriptContext {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The context's execute.
 	 * @property handle
 	 * @since 0.1.0
 	 */
@@ -55,7 +51,6 @@ open class JavaScriptContext {
 		private set
 
 	/**
-	 * The context's global object.
 	 * @property global
 	 * @since 0.1.0
 	 */
@@ -63,15 +58,13 @@ open class JavaScriptContext {
 		private set
 
 	/**
-	 * The context's registered modules.
 	 * @property modules
 	 * @since 0.1.0
 	 */
-	public var modules: MutableMap<String, Module> = mutableMapOf()
+	public var modules: MutableMap<String, JavaScriptModule> = mutableMapOf()
 		internal set
 
 	/**
-	 * The context's registered objects.
 	 * @property objects
 	 * @since 0.1.0
 	 */
@@ -79,7 +72,6 @@ open class JavaScriptContext {
 		internal set
 
 	/**
-	 * The context's registered classes.
 	 * @property classes
 	 * @since 0.1.0
 	 */
@@ -98,7 +90,6 @@ open class JavaScriptContext {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Initializes the context.
 	 * @constructor
 	 * @since 0.1.0
 	 */
@@ -114,7 +105,6 @@ open class JavaScriptContext {
 	}
 
 	/**
-	 * Register multiple modules.
 	 * @method registerModules
 	 * @since 0.7.0
 	 */
@@ -125,7 +115,6 @@ open class JavaScriptContext {
 	}
 
 	/**
-	 * Register multiple objects.
 	 * @method registerObjects
 	 * @since 0.7.0
 	 */
@@ -136,7 +125,6 @@ open class JavaScriptContext {
 	}
 
 	/**
-	 * Register multiple classes.
 	 * @method registerClasses
 	 * @since 0.7.0
 	 */
@@ -147,16 +135,14 @@ open class JavaScriptContext {
 	}
 
 	/**
-	 * Registers a context module.
 	 * @method registerModule
 	 * @since 0.1.0
 	 */
 	open fun registerModule(uid: String, type: Class<*>) {
-		this.modules[uid] = Module.create(type, this)
+		this.modules[uid] = JavaScriptModule.create(type, this)
 	}
 
 	/**
-	 * Registers a context class.
 	 * @method registerObject
 	 * @since 0.1.0
 	 */
@@ -165,7 +151,6 @@ open class JavaScriptContext {
 	}
 
 	/**
-	 * Registers a context class.
 	 * @method registerClass
 	 * @since 0.1.0
 	 */
@@ -174,7 +159,6 @@ open class JavaScriptContext {
 	}
 
 	/**
-	 * Loads the context dependencies.
 	 * @method setup
 	 * @since 0.7.0
 	 */
@@ -196,7 +180,6 @@ open class JavaScriptContext {
 	}
 
 	/**
-	 * Disposes the context.
 	 * @method dispose
 	 * @since 0.1.0
 	 */
@@ -224,7 +207,6 @@ open class JavaScriptContext {
 	}
 
 	/**
-	 * Creates a handle which contains the null JavaScript handle.
 	 * @method createNull
 	 * @since 0.1.0
 	 */
@@ -233,7 +215,6 @@ open class JavaScriptContext {
 	}
 
 	/**
-	 * Creates a handle which contains the undefined JavaScript handle.
 	 * @method createUndefined
 	 * @since 0.1.0
 	 */
@@ -242,7 +223,6 @@ open class JavaScriptContext {
 	}
 
 	/**
-	 * Creates a handle which contains a toString JavaScript handle.
 	 * @method createString
 	 * @since 0.1.0
 	 */
@@ -251,7 +231,6 @@ open class JavaScriptContext {
 	}
 
 	/**
-	 * Creates a handle which contains a numeric JavaScript handle.
 	 * @method createNumber
 	 * @since 0.1.0
 	 */
@@ -260,7 +239,6 @@ open class JavaScriptContext {
 	}
 
 	/**
-	 * Creates a toValue which contains a numeric JavaScript toValue.
 	 * @method createNumber
 	 * @since 0.3.0
 	 */
@@ -269,7 +247,6 @@ open class JavaScriptContext {
 	}
 
 	/**
-	 * Creates a toValue which contains a numeric JavaScript toValue.
 	 * @method createNumber
 	 * @since 0.3.0
 	 */
@@ -278,7 +255,6 @@ open class JavaScriptContext {
 	}
 
 	/**
-	 * Creates a handle which contains a toBoolean JavaScript handle.
 	 * @method createBoolean
 	 * @since 0.1.0
 	 */
@@ -287,7 +263,6 @@ open class JavaScriptContext {
 	}
 
 	/**
-	 * Creates a handle which contains an empty JavaScript object.
 	 * @method createEmptyObject
 	 * @since 0.1.0
 	 */
@@ -296,7 +271,6 @@ open class JavaScriptContext {
 	}
 
 	/**
-	 * Creates a handle which contains an empty JavaScript array.
 	 * @method createEmptyArray
 	 * @since 0.1.0
 	 */
@@ -305,7 +279,6 @@ open class JavaScriptContext {
 	}
 
 	/**
-	 * Creates a toValue bound to a native function.
 	 * @method createFunction
 	 * @since 0.1.0
 	 */
@@ -314,7 +287,6 @@ open class JavaScriptContext {
 	}
 
 	/**
-	 * Creates a toValue bound to a native function.
 	 * @method createFunction
 	 * @since 0.1.0
 	 */
@@ -323,7 +295,6 @@ open class JavaScriptContext {
 	}
 
 	/**
-	 * Creates a toValue bound to an object template instance.
 	 * @method createObject
 	 * @since 0.1.0
 	 */
@@ -332,7 +303,6 @@ open class JavaScriptContext {
 	}
 
 	/**
-	 * Creates a toValue bound to a class template.
 	 * @method createClass
 	 * @since 0.1.0
 	 */
@@ -341,7 +311,6 @@ open class JavaScriptContext {
 	}
 
 	/**
-	 * Creates an empty return handle.
 	 * @method createReturnValue
 	 * @since 0.1.0
 	 */
@@ -350,7 +319,6 @@ open class JavaScriptContext {
 	}
 
 	/**
-	 * Evaluates JavaScript code.
 	 * @method evaluate
 	 * @since 0.1.0
 	 */
@@ -359,7 +327,6 @@ open class JavaScriptContext {
 	}
 
 	/**
-	 * Evaluates JavaScript code with a file indicator.
 	 * @method evaluate
 	 * @since 0.1.0
 	 */
@@ -368,7 +335,6 @@ open class JavaScriptContext {
 	}
 
 	/**
-	 * Assigns a custom attribute to this context.
 	 * @method attribute
 	 * @since 0.1.0
 	 */
@@ -379,7 +345,6 @@ open class JavaScriptContext {
 	}
 
 	/**
-	 * Returns a custom attribute from this context.
 	 * @method attribute
 	 * @since 0.1.0
 	 */
@@ -388,7 +353,6 @@ open class JavaScriptContext {
 	}
 
 	/**
-	 * Assigns a holder to execute when an error is thrown within this context.
 	 * @method handleError
 	 * @since 0.6.0
 	 */
@@ -397,7 +361,6 @@ open class JavaScriptContext {
 	}
 
 	/**
-	 * Requests a garbage collection.
 	 * @method garbageCollect
 	 * @since 0.1.0
 	 */

@@ -5,7 +5,7 @@ import android.graphics.RectF
 import android.util.Log
 import android.util.SizeF
 import android.view.animation.PathInterpolator
-import ca.logaritm.dezel.application.application
+import ca.logaritm.dezel.application.activity
 import ca.logaritm.dezel.core.*
 import ca.logaritm.dezel.extension.*
 import ca.logaritm.dezel.extension.type.*
@@ -30,8 +30,8 @@ import android.view.View as AndroidView
 import android.view.ViewGroup as AndroidViewGroup
 
 /**
- * The base class for view types.
  * @class JavaScriptView
+ * @super JavaScriptClass
  * @since 0.7.0
  */
 open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context), DisplayNodeListener, ScrollableListener, SynchronizerCallback {
@@ -41,21 +41,18 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The view's listener.
 	 * @property listener
 	 * @since 0.7.0
 	 */
 	open var listener: JavaScriptViewListener? = null
 
 	/**
-	 * The view's JavaScript class name.
 	 * @property className
 	 * @since 0.7.0
 	 */
 	public var className: String = "View"
 
 	/**
-	 * The view's JavaScript class list.
 	 * @property classList
 	 * @since 0.7.0
 	 */
@@ -65,7 +62,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The node that manages this view's display properties.
 	 * @property displayNode
 	 * @since 0.7.0
 	 */
@@ -73,7 +69,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 		private set
 
 	/**
-	 * The view's content wrapper view.
 	 * @property wrapper
 	 * @since 0.7.0
 	 */
@@ -81,7 +76,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 		private set
 
 	/**
-	 * The view that displays this view's content.
 	 * @property content
 	 * @since 0.7.0
 	 */
@@ -89,14 +83,12 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 		private set
 
 	/**
-	 * The view's JavaScript root.
 	 * @property window
 	 * @since 0.7.0
 	 */
 	public var window: JavaScriptWindow? = null
 
 	/**
-	 * The view's JavaScript parent.
 	 * @property parent
 	 * @since 0.7.0
 	 */
@@ -104,7 +96,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 		private set
 
 	/**
-	 * The view's children.
 	 * @property children
 	 * @since 0.7.0
 	 */
@@ -334,11 +325,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	/**
 	 * @constructor
 	 * @since 0.7.0
-	 * @hidden
 	 */
 	init {
 
-		this.displayNode = DisplayNode(context.application.display)
+		this.displayNode = DisplayNode(context.activity.display)
 		this.displayNode.listener = this
 
 		this.content = this.createContentView()
@@ -372,7 +362,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * @inherited
 	 * @method dispose
 	 * @since 0.7.0
 	 */
@@ -392,25 +381,22 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * Creates the wrapper view.
 	 * @method createWrapperView
 	 * @since 0.7.0
 	 */
 	open fun createWrapperView(): WrapperView {
-		return WrapperView(this.context.application!!, this.content, this)
+		return WrapperView(this.context.activity!!, this.content, this)
 	}
 
 	/**
-	 * Creates the content view.
 	 * @method createContentView
 	 * @since 0.7.0
 	 */
 	open fun createContentView(): AndroidView {
-		return View(this.context.application)
+		return View(this.context.activity)
 	}
 
 	/**
-	 * Inserts a view.
 	 * @method insert
 	 * @since 0.7.0
 	 */
@@ -430,7 +416,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * Removes a view.
 	 * @method remove
 	 * @since 0.7.0
 	 */
@@ -448,7 +433,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * Inserts this view into a receiving view.
 	 * @method inject
 	 * @since 0.7.0
 	 */
@@ -468,7 +452,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * Resolves this view styles and layoutNode.
 	 * @method resolve
 	 * @since 0.7.0
 	 */
@@ -477,7 +460,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * Measures this view without performing a layout.
 	 * @method measure
 	 * @since 0.7.0
 	 */
@@ -486,7 +468,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * Returns this view within the specified bounds.
 	 * @method measure
 	 * @since 0.7.0
 	 */
@@ -495,7 +476,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * Schedules a layout pass on the next update cycle.
 	 * @method scheduleLayout
 	 * @since 0.7.0
 	 */
@@ -504,7 +484,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * Schedules a redraw pass on the next update cycle.
 	 * @method scheduleRedraw
 	 * @since 0.7.0
 	 */
@@ -523,7 +502,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Schedules an update frame.
 	 * @method scheduleUpdate
 	 * @since 0.7.0
 	 */
@@ -535,7 +513,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * Dispatches the update to the receivers.
 	 * @method performUpdate
 	 * @since 0.7.0
 	 */
@@ -550,7 +527,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * Updates the visual aspects of the view.
 	 * @method update
 	 * @since 0.7.0
 	 */
@@ -608,7 +584,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * Updates the view's frame.
 	 * @method updateFrame
 	 * @since 0.7.0
 	 */
@@ -625,7 +600,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * Updates the view's shadow.
 	 * @method updateShadow
 	 * @since 0.7.0
 	 */
@@ -637,7 +611,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * Update the view's border.
 	 * @method updateBorder
 	 * @since 0.7.0
 	 */
@@ -653,7 +626,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * Updates the view's background color.
 	 * @method updateBitmapColor
 	 * @since 0.7.0
 	 */
@@ -682,7 +654,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * Updates the view's background image.
 	 * @method updateBitmapImage
 	 * @since 0.7.0
 	 */
@@ -812,7 +783,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * Update the view's transform.
 	 * @method updateTransform
 	 * @since 0.7.0
 	 */
@@ -929,7 +899,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * Update the view's content.
 	 * @method updateContent
 	 * @since 0.7.0
 	 */
@@ -939,7 +908,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * Update the view's content order.
 	 * @method updateOrder
 	 * @since 0.7.0
 	 */
@@ -985,7 +953,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Indicates whether the point is contained within this view.
 	 * @method isPointInView
 	 * @since 0.7.0
 	 */
@@ -1006,7 +973,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * Finds the view at the specific point.
 	 * @method findViewAt
 	 * @since 0.7.0
 	 */
@@ -1177,7 +1143,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * Creates the canvas object used to draw inside this view.
 	 * @method createCanvas
 	 * @since 0.7.0
 	 */
@@ -1191,7 +1156,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 
 
 	/**
-	 * @inherited
 	 * @method measure
 	 * @since 0.7.0
 	 */
@@ -1200,7 +1164,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * @inherited
 	 * @method onResolveSize
 	 * @since 0.7.0
 	 */
@@ -1220,7 +1183,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * @inherited
 	 * @method onResolveOrigin
 	 * @since 0.7.0
 	 */
@@ -1240,7 +1202,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * @inherited
 	 * @method onResolveInnerSize
 	 * @since 0.7.0
 	 */
@@ -1260,7 +1221,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * @inherited
 	 * @method onResolveContentSize
 	 * @since 0.7.0
 	 */
@@ -1280,7 +1240,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * @inherited
 	 * @method onResolveMargin
 	 * @since 0.7.0
 	 */
@@ -1308,7 +1267,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * @inherited
 	 * @method onResolveBorder
 	 * @since 0.7.0
 	 */
@@ -1340,7 +1298,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * @inherited
 	 * @method onResolvePadding
 	 * @since 0.7.0
 	 */
@@ -1368,7 +1325,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * @inherited
 	 * @method onInvalidate
 	 * @since 0.7.0
 	 */
@@ -1377,7 +1333,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * @inherited
 	 * @method layoutBegan
 	 * @since 0.7.0
 	 */
@@ -1387,7 +1342,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * @inherited
 	 * @method layoutEnded
 	 * @since 0.7.0
 	 */
@@ -1435,7 +1389,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method onDragStart
 	 * @since 0.7.0
 	 */
@@ -1445,7 +1398,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * @inherited
 	 * @method onDragEnd
 	 * @since 0.7.0
 	 */
@@ -1559,7 +1511,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private var backgroundImageLoader: ImageLoader = ImageLoader(context.application) // TODO make image loader using static method
+	private var backgroundImageLoader: ImageLoader = ImageLoader(context.activity) // TODO make image loader using static method
 
 	/**
 	 * @property canvas
@@ -1698,6 +1650,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	private fun moveToParent(parent: JavaScriptView?, notify: Boolean = true) {
 
+		if (this.parent == parent) {
+			return
+		}
+
 		this.parent = parent
 
 		if (notify) {
@@ -1711,6 +1667,10 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @hidden
 	 */
 	private fun moveToWindow(window: JavaScriptWindow?, notify: Boolean = true) {
+
+		if (this.window == window) {
+			return
+		}
 
 		this.window = window
 
@@ -1931,7 +1891,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The view's id.
 	 * @property id
 	 * @since 0.7.0
 	 */
@@ -1940,7 +1899,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's background color.
 	 * @property backgroundColor
 	 * @since 0.7.0
 	 */
@@ -1951,7 +1909,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's background image.
 	 * @property backgroundImage
 	 * @since 0.7.0
 	 */
@@ -1965,7 +1922,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's background image container fit.
 	 * @property backgroundImageFit
 	 * @since 0.7.0
 	 */
@@ -1976,7 +1932,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's background image top anchor.
 	 * @property backgroundImageAnchorTop
 	 * @since 0.7.0
 	 */
@@ -1987,7 +1942,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's background image left anchor.
 	 * @property backgroundImageAnchorLeft
 	 * @since 0.7.0
 	 */
@@ -1998,7 +1952,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's background image top position.
 	 * @property backgroundImageTop
 	 * @since 0.7.0
 	 */
@@ -2009,7 +1962,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's background image left position.
 	 * @property backgroundImageLeft
 	 * @since 0.7.0
 	 */
@@ -2020,7 +1972,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's background image width.
 	 * @property backgroundImageWidth
 	 * @since 0.7.0
 	 */
@@ -2031,7 +1982,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's background image height.
 	 * @property backgroundImageHeight
 	 * @since 0.7.0
 	 */
@@ -2042,7 +1992,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's background image imageTint.
 	 * @property backgroundImageTint
 	 * @since 0.7.0
 	 */
@@ -2053,7 +2002,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's border.
 	 * @property border
 	 * @since 0.7.0
 	 */
@@ -2086,7 +2034,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's top border.
 	 * @property borderTop
 	 * @since 0.7.0
 	 */
@@ -2105,7 +2052,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's left border.
 	 * @property borderLeft
 	 * @since 0.7.0
 	 */
@@ -2124,7 +2070,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's right border.
 	 * @property borderRight
 	 * @since 0.7.0
 	 */
@@ -2143,7 +2088,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's bottom border.
 	 * @property borderBottom
 	 * @since 0.7.0
 	 */
@@ -2162,7 +2106,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's border width.
 	 * @property borderWidth
 	 * @since 0.7.0
 	 */
@@ -2176,7 +2119,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's border color.
 	 * @property borderColor
 	 * @since 0.7.0
 	 */
@@ -2190,7 +2132,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's border top color.
 	 * @property borderTopColor
 	 * @since 0.7.0
 	 */
@@ -2201,7 +2142,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's border left color.
 	 * @property borderLeftColor
 	 * @since 0.7.0
 	 */
@@ -2212,7 +2152,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's border right color.
 	 * @property borderRightColor
 	 * @since 0.7.0
 	 */
@@ -2223,7 +2162,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's border bottom color.
 	 * @property borderBottomColor
 	 * @since 0.7.0
 	 */
@@ -2234,7 +2172,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's border top width.
 	 * @property borderTopWidth
 	 * @since 0.7.0
 	 */
@@ -2245,7 +2182,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's border left width.
 	 * @property borderLeftWidth
 	 * @since 0.7.0
 	 */
@@ -2256,7 +2192,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's border right width.
 	 * @property borderRightWidth
 	 * @since 0.7.0
 	 */
@@ -2267,7 +2202,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's border bottom width.
 	 * @property borderBottomWidth
 	 * @since 0.7.0
 	 */
@@ -2278,7 +2212,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's absolute minimum border top width.
 	 * @property minBorderTopWidth
 	 * @since 0.7.0
 	 */
@@ -2289,7 +2222,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's absolute maximum border top width.
 	 * @property maxBorderTopWidth
 	 * @since 0.7.0
 	 */
@@ -2300,7 +2232,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's absolute minimum border left width.
 	 * @property minBorderLeftWidth
 	 * @since 0.7.0
 	 */
@@ -2311,7 +2242,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's absolute maximum border left width.
 	 * @property maxBorderLeftWidth
 	 * @since 0.7.0
 	 */
@@ -2322,7 +2252,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's absolute minimum border right width.
 	 * @property minBorderRightWidth
 	 * @since 0.7.0
 	 */
@@ -2333,7 +2262,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's absolute maximum border right width.
 	 * @property maxBorderRightWidth
 	 * @since 0.7.0
 	 */
@@ -2344,7 +2272,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's absolute minimum border bottom width.
 	 * @property minBorderBottomWidth
 	 * @since 0.7.0
 	 */
@@ -2355,7 +2282,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's absolute maximum border bottom width.
 	 * @property maxBorderBottomWidth
 	 * @since 0.7.0
 	 */
@@ -2366,7 +2292,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's border radius.
 	 * @property borderRadius
 	 * @since 0.7.0
 	 */
@@ -2380,7 +2305,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's border top left corner radius.
 	 * @property borderTopLeftRadius
 	 * @since 0.7.0
 	 */
@@ -2391,7 +2315,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's border top right corner radius.
 	 * @property borderTopRightRadius
 	 * @since 0.7.0
 	 */
@@ -2402,7 +2325,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's border bottom left corner radius.
 	 * @property borderBottomLeftRadius
 	 * @since 0.7.0
 	 */
@@ -2413,7 +2335,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's border bottom right corner radius.
 	 * @property borderBottomRightRadius
 	 * @since 0.7.0
 	 */
@@ -2424,7 +2345,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's shadow blur distance.
 	 * @property shadowBlur
 	 * @since 0.7.0
 	 */
@@ -2435,7 +2355,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's shadow color.
 	 * @property shadowColor
 	 * @since 0.7.0
 	 */
@@ -2446,7 +2365,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's shadow's top offset.
 	 * @property shadowOffsetTop
 	 * @since 0.7.0
 	 */
@@ -2457,7 +2375,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's shadow's left offset.
 	 * @property shadowOffsetLeft
 	 * @since 0.7.0
 	 */
@@ -2468,7 +2385,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's top position.
 	 * @property top
 	 * @since 0.7.0
 	 */
@@ -2479,7 +2395,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's left position.
 	 * @property left
 	 * @since 0.7.0
 	 */
@@ -2490,7 +2405,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's right position.
 	 * @property right
 	 * @since 0.7.0
 	 */
@@ -2501,7 +2415,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's bottom position.
 	 * @property bottom
 	 * @since 0.7.0
 	 */
@@ -2512,7 +2425,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's absolute minimum top position.
 	 * @property minTop
 	 * @since 0.7.0
 	 */
@@ -2523,7 +2435,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's absolute maximum top position.
 	 * @property maxTop
 	 * @since 0.7.0
 	 */
@@ -2534,7 +2445,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's absolute minimum left position.
 	 * @property minLeft
 	 * @since 0.7.0
 	 */
@@ -2545,7 +2455,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's absolute maximum left position.
 	 * @property maxLeft
 	 * @since 0.7.0
 	 */
@@ -2556,7 +2465,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's absolute minimum right position.
 	 * @property minRight
 	 * @since 0.7.0
 	 */
@@ -2567,7 +2475,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's absolute maximum right position.
 	 * @property maxRight
 	 * @since 0.7.0
 	 */
@@ -2578,7 +2485,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's absolute minimum bottom position.
 	 * @property minBottom
 	 * @since 0.7.0
 	 */
@@ -2589,7 +2495,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's absolute maximum bottom position.
 	 * @property maxBottom
 	 * @since 0.7.0
 	 */
@@ -2600,7 +2505,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's vertical point from with it will be positioned.
 	 * @property anchorTop
 	 * @since 0.7.0
 	 */
@@ -2611,7 +2515,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's horizontal point from with it will be positioned.
 	 * @property anchorLeft
 	 * @since 0.7.0
 	 */
@@ -2622,7 +2525,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's width.
 	 * @property width
 	 * @since 0.7.0
 	 */
@@ -2633,7 +2535,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's height.
 	 * @property height
 	 * @since 0.7.0
 	 */
@@ -2644,7 +2545,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's absolute minimum width.
 	 * @property minWidth
 	 * @since 0.7.0
 	 */
@@ -2654,8 +2554,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 		}
 	}
 
-	/**b
-	 * The view's absolute maximum width.
+	/**
 	 * @property maxWidth
 	 * @since 0.7.0
 	 */
@@ -2666,7 +2565,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's absolute minimum height.
 	 * @property minHeight
 	 * @since 0.7.0
 	 */
@@ -2677,7 +2575,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's absolute maximum height.
 	 * @property maxHeight
 	 * @since 0.7.0
 	 */
@@ -2688,7 +2585,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's expand factor.
 	 * @property expandFactor
 	 * @since 0.7.0
 	 */
@@ -2699,7 +2595,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's shrink factor.
 	 * @property shrinkFactor
 	 * @since 0.7.0
 	 */
@@ -2710,7 +2605,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's content top.
 	 * @property contentTop
 	 * @since 0.7.0
 	 */
@@ -2721,7 +2615,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's content left.
 	 * @property contentLeft
 	 * @since 0.7.0
 	 */
@@ -2732,7 +2625,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's content width.
 	 * @property contentWidth
 	 * @since 0.7.0
 	 */
@@ -2743,7 +2635,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's content height.
 	 * @property contentHeight
 	 * @since 0.7.0
 	 */
@@ -2754,7 +2645,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's content top inset.
 	 * @property contentInsetTop
 	 * @since 0.7.0
 	 */
@@ -2765,7 +2655,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's content left inset.
 	 * @property contentInsetLeft
 	 * @since 0.7.0
 	 */
@@ -2776,7 +2665,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's content right inset.
 	 * @property contentInsetRight
 	 * @since 0.7.0
 	 */
@@ -2787,7 +2675,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's content bottom inset.
 	 * @property contentInsetBottom
 	 * @since 0.7.0
 	 */
@@ -2798,7 +2685,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's content orientation.
 	 * @property contentDirection
 	 * @since 0.7.0
 	 */
@@ -2809,18 +2695,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's content alignment on the main axis.
-	 * @property contentLocation
-	 * @since 0.7.0
-	 */
-	public val contentLocation by lazy {
-		JavaScriptProperty("start") { value ->
-			this.displayNode.setContentLocation(value)
-		}
-	}
-
-	/**
-	 * The view's content alignment on the cross axis.
 	 * @property contentAlignment
 	 * @since 0.7.0
 	 */
@@ -2831,7 +2705,16 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * Whether this view's content can scroll.
+	 * @property contentDisposition
+	 * @since 0.7.0
+	 */
+	public val contentDisposition by lazy {
+		JavaScriptProperty("start") { value ->
+			this.displayNode.setContentLocation(value)
+		}
+	}
+
+	/**
 	 * @property scrollable
 	 * @since 0.7.0
 	 */
@@ -2842,7 +2725,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * Whether this view's content displays scrollbars.
 	 * @property scrollbars
 	 * @since 0.7.0
 	 */
@@ -2853,7 +2735,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * Whether this view's content can overscroll.
 	 * @property overscroll
 	 * @since 0.7.0
 	 */
@@ -2864,18 +2745,16 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * Whether this view's content scrolls with momentum.
-	 * @property momentum
+	 * @property scrollMomentum
 	 * @since 0.7.0
 	 */
-	public val momentum by lazy {
+	public val scrollMomentum by lazy {
 		JavaScriptProperty(true) { value ->
-			this.scrollableView?.momentum = value.boolean
+			this.scrollableView?.scrollMomentum = value.boolean
 		}
 	}
 
 	/**
-	 * The view's top scroll offset.
 	 * @property scrollTop
 	 * @since 0.7.0
 	 */
@@ -2886,7 +2765,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's left scroll offset.
 	 * @property scrollLeft
 	 * @since 0.7.0
 	 */
@@ -2897,7 +2775,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * Whether this view is scrolling.
 	 * @property scrolling
 	 * @since 0.7.0
 	 */
@@ -2906,7 +2783,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * Whether this view is dragging.
 	 * @property dragging
 	 * @since 0.7.0
 	 */
@@ -2915,7 +2791,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's margin.
 	 * @property margin
 	 * @since 0.7.0
 	 */
@@ -2929,7 +2804,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's top margin.
 	 * @property marginTop
 	 * @since 0.7.0
 	 */
@@ -2940,7 +2814,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's left margin.
 	 * @property marginLeft
 	 * @since 0.7.0
 	 */
@@ -2951,7 +2824,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's right margin.
 	 * @property marginRight
 	 * @since 0.7.0
 	 */
@@ -2962,7 +2834,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's bottom margin.
 	 * @property marginBottom
 	 * @since 0.7.0
 	 */
@@ -2973,7 +2844,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's absolute minimum top margin.
 	 * @property minMarginTop
 	 * @since 0.7.0
 	 */
@@ -2984,7 +2854,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's absolute maximum top margin.
 	 * @property maxMarginTop
 	 * @since 0.7.0
 	 */
@@ -2995,7 +2864,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's absolute minimum left margin.
 	 * @property minMarginLeft
 	 * @since 0.7.0
 	 */
@@ -3006,7 +2874,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's absolute maximum left margin.
 	 * @property maxMarginLeft
 	 * @since 0.7.0
 	 */
@@ -3017,7 +2884,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's absolute minimum right margin.
 	 * @property minMarginRight
 	 * @since 0.7.0
 	 */
@@ -3028,7 +2894,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's absolute maximum right margin.
 	 * @property maxMarginRight
 	 * @since 0.7.0
 	 */
@@ -3039,7 +2904,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's absolute minimum bottom margin.
 	 * @property minMarginBottom
 	 * @since 0.7.0
 	 */
@@ -3050,7 +2914,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's absolute maximum bottom margin.
 	 * @property maxMarginBottom
 	 * @since 0.7.0
 	 */
@@ -3061,7 +2924,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's padding.
 	 * @property padding
 	 * @since 0.7.0
 	 */
@@ -3075,7 +2937,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's top padding.
 	 * @property paddingTop
 	 * @since 0.7.0
 	 */
@@ -3086,7 +2947,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's left padding.
 	 * @property paddingLeft
 	 * @since 0.7.0
 	 */
@@ -3097,7 +2957,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's right padding.
 	 * @property paddingRight
 	 * @since 0.7.0
 	 */
@@ -3108,7 +2967,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's bottom padding.
 	 * @property paddingBottom
 	 * @since 0.7.0
 	 */
@@ -3119,7 +2977,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's absolute minimum top padding.
 	 * @property minPaddingTop
 	 * @since 0.7.0
 	 */
@@ -3130,7 +2987,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's absolute maximum top padding.
 	 * @property maxPaddingTop
 	 * @since 0.7.0
 	 */
@@ -3141,7 +2997,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's absolute minimum left padding.
 	 * @property minPaddingLeft
 	 * @since 0.7.0
 	 */
@@ -3152,7 +3007,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's absolute maximum left padding.
 	 * @property maxPaddingLeft
 	 * @since 0.7.0
 	 */
@@ -3163,7 +3017,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's absolute minimum right padding.
 	 * @property minPaddingRight
 	 * @since 0.7.0
 	 */
@@ -3174,7 +3027,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's absolute maximum right padding.
 	 * @property maxPaddingRight
 	 * @since 0.7.0
 	 */
@@ -3185,7 +3037,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's absolute minimum bottom padding.
 	 * @property minPaddingBottom
 	 * @since 0.7.0
 	 */
@@ -3196,7 +3047,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's absolute maximum bottom padding.
 	 * @property maxPaddingBottom
 	 * @since 0.7.0
 	 */
@@ -3207,7 +3057,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's transformation origin on the x axis.
 	 * @property originX
 	 * @since 0.7.0
 	 */
@@ -3218,7 +3067,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's transformation origin on the y axis.
 	 * @property originY
 	 * @since 0.7.0
 	 */
@@ -3229,7 +3077,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's transformation origin on the z axis.
 	 * @property originZ
 	 * @since 0.7.0
 	 */
@@ -3240,7 +3087,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's translation on the x axis.
 	 * @property translationX
 	 * @since 0.7.0
 	 */
@@ -3251,7 +3097,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's translation on the y axis.
 	 * @property translationY
 	 * @since 0.7.0
 	 */
@@ -3262,10 +3107,8 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's translation on the z axis.
 	 * @property translationZ
 	 * @since 0.7.0
-	 * @hidden
 	 */
 	public val translationZ by lazy {
 		JavaScriptProperty(0.0) {
@@ -3274,7 +3117,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's rotation on the x axis.
 	 * @property rotationX
 	 * @since 0.7.0
 	 */
@@ -3285,7 +3127,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's rotation on the y axis.
 	 * @property rotationY
 	 * @since 0.7.0
 	 */
@@ -3296,7 +3137,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's rotation on the z axis.
 	 * @property rotationZ
 	 * @since 0.7.0
 	 */
@@ -3307,7 +3147,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's scale on the x axis.
 	 * @property scaleX
 	 * @since 0.7.0
 	 */
@@ -3318,7 +3157,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's scale on the y axis.
 	 * @property scaleY
 	 * @since 0.7.0
 	 */
@@ -3329,7 +3167,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's scale on the z axis.
 	 * @property scaleZ
 	 * @since 0.7.0
 	 */
@@ -3340,7 +3177,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's index on the z position relative to its siblings.
 	 * @property zIndex
 	 * @since 0.7.0
 	 */
@@ -3354,7 +3190,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * Whether the view is zoomable.
 	 * @property zoomable
 	 * @since 0.7.0
 	 */
@@ -3365,7 +3200,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's minimum zoom.
 	 * @property minZoom
 	 * @since 0.7.0
 	 */
@@ -3376,7 +3210,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's maximum zoom.
 	 * @property maxZoom
 	 * @since 0.7.0
 	 */
@@ -3387,7 +3220,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view that is zoomed.
 	 * @property zoomedView
 	 * @since 0.7.0
 	 */
@@ -3396,7 +3228,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * Whether this view can interact with touches.
 	 * @property touchable
 	 * @since 0.7.0
 	 */
@@ -3407,7 +3238,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The top offset for this view touchable area.
 	 * @property touchOffsetTop
 	 * @since 0.7.0
 	 */
@@ -3416,7 +3246,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The left offset for this view touchable area.
 	 * @property touchOffsetLeft
 	 * @since 0.7.0
 	 */
@@ -3425,7 +3254,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The right offset for this view touchable area.
 	 * @property touchOffsetRight
 	 * @since 0.7.0
 	 */
@@ -3434,7 +3262,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The bottom offset for this view touchable area.
 	 * @property touchOffsetBottom
 	 * @since 0.7.0
 	 */
@@ -3443,7 +3270,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's visibility status.
 	 * @property visible
 	 * @since 0.7.0
 	 */
@@ -3455,7 +3281,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * The view's opacity.
 	 * @property opacity
 	 * @since 0.7.0
 	 */
@@ -3466,7 +3291,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * Whether this view can be drawn by user.
 	 * @property drawable
 	 * @since 0.7.0
 	 */
@@ -3477,7 +3301,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * Whether this view's content is clipped to its bounds.
 	 * @property clipped
 	 * @since 0.7.0
 	 */
@@ -3488,7 +3311,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	/**
-	 * Whether this view's content is paged.
 	 * @property paged
 	 * @since 0.7.0
 	 */
@@ -5395,23 +5217,23 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method jsGet_contentLocation
+	 * @method jsGet_contentDisposition
 	 * @since 0.7.0
 	 * @hidden
 	 */
 	@Suppress("unused")
-	open fun jsGet_contentLocation(callback: JavaScriptGetterCallback) {
-		callback.returns(this.contentLocation)
+	open fun jsGet_contentDisposition(callback: JavaScriptGetterCallback) {
+		callback.returns(this.contentDisposition)
 	}
 
 	/**
-	 * @method jsSet_contentLocation
+	 * @method jsSet_contentDisposition
 	 * @since 0.7.0
 	 * @hidden
 	 */
 	@Suppress("unused")
-	open fun jsSet_contentLocation(callback: JavaScriptSetterCallback) {
-		this.contentLocation.reset(callback.value, lock = this)
+	open fun jsSet_contentDisposition(callback: JavaScriptSetterCallback) {
+		this.contentDisposition.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5505,23 +5327,23 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method jsGet_momentum
+	 * @method jsGet_scrollMomentum
 	 * @since 0.7.0
 	 * @hidden
 	 */
 	@Suppress("unused")
-	open fun jsGet_momentum(callback: JavaScriptGetterCallback) {
-		callback.returns(this.momentum)
+	open fun jsGet_scrollMomentum(callback: JavaScriptGetterCallback) {
+		callback.returns(this.scrollMomentum)
 	}
 
 	/**
-	 * @method jsSet_momentum
+	 * @method jsSet_scrollMomentum
 	 * @since 0.7.0
 	 * @hidden
 	 */
 	@Suppress("unused")
-	open fun jsSet_momentum(callback: JavaScriptSetterCallback) {
-		this.momentum.reset(callback.value, lock = this)
+	open fun jsSet_scrollMomentum(callback: JavaScriptSetterCallback) {
+		this.scrollMomentum.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -7145,7 +6967,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 				return
 			}
 
-			val activity = callback.context.application
+			val activity = callback.context.activity
 
 			val duration = callback.argument(0).number
 			val equation = PathInterpolator(
@@ -7178,8 +7000,8 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 				}
 			}
 
-			if (callback.context.application.display.resolving) {
-				callback.context.application.display.requestLayoutEndedCallback(animate)
+			if (callback.context.activity.display.resolving) {
+				callback.context.activity.display.requestLayoutEndedCallback(animate)
 				return
 			}
 

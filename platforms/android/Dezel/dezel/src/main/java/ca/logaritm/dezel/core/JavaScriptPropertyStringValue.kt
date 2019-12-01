@@ -4,8 +4,8 @@ import ca.logaritm.dezel.extension.type.toNumber
 
 /**
  * @class JavaScriptPropertyStringValue
+ * @super JavaScriptPropertyValue
  * @since 0.7.0
- * @hidden
  */
 open class JavaScriptPropertyStringValue(value: String): JavaScriptPropertyValue(JavaScriptPropertyType.STRING) {
 
@@ -14,7 +14,7 @@ open class JavaScriptPropertyStringValue(value: String): JavaScriptPropertyValue
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @property data
+	 * @property value
 	 * @since 0.7.0
 	 * @hidden
 	 */
@@ -27,14 +27,12 @@ open class JavaScriptPropertyStringValue(value: String): JavaScriptPropertyValue
 	/**
 	 * @constructor
 	 * @since 0.7.0
-	 * @hidden
 	 */
 	init {
 		this.value = value
 	}
 
 	/**
-	 * @inherited
 	 * @method toString
 	 * @since 0.7.0
 	 */
@@ -43,7 +41,6 @@ open class JavaScriptPropertyStringValue(value: String): JavaScriptPropertyValue
 	}
 
 	/**
-	 * @inherited
 	 * @method toNumber
 	 * @since 0.7.0
 	 */
@@ -52,7 +49,6 @@ open class JavaScriptPropertyStringValue(value: String): JavaScriptPropertyValue
 	}
 
 	/**
-	 * @inherited
 	 * @method toBoolean
 	 * @since 0.7.0
 	 */

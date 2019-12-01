@@ -7,8 +7,8 @@ import ca.logaritm.dezel.core.JavaScriptGetterCallback
 
 /**
  * @class JavaScriptPlatform
+ * @super JavaScriptClass
  * @since 0.7.0
- * @hidden
  */
 open class JavaScriptPlatform(context: JavaScriptContext): JavaScriptClass(context) {
 

@@ -1,7 +1,6 @@
 package ca.logaritm.dezel.core
 
 /**
- * The base class for callbacks.
  * @class JavaScriptCallback
  * @since 0.1.0
  */
@@ -12,7 +11,6 @@ open class JavaScriptCallback(context: JavaScriptContext, target: Long, callee: 
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The handler context.
 	 * @property context
 	 * @since 0.1.0
 	 */
@@ -20,7 +18,6 @@ open class JavaScriptCallback(context: JavaScriptContext, target: Long, callee: 
 		private set
 
 	/**
-	 * The handler object.
 	 * @property target
 	 * @since 0.1.0
 	 */
@@ -29,7 +26,6 @@ open class JavaScriptCallback(context: JavaScriptContext, target: Long, callee: 
 	}
 
 	/**
-	 * The handler function.
 	 * @property callee
 	 * @since 0.1.0
 	 */
@@ -38,7 +34,6 @@ open class JavaScriptCallback(context: JavaScriptContext, target: Long, callee: 
 	}
 
 	/**
-	 * The handler argument length.
 	 * @property arguments
 	 * @since 0.1.0
 	 */
@@ -90,7 +85,6 @@ open class JavaScriptCallback(context: JavaScriptContext, target: Long, callee: 
 	/**
 	 * @constructor
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	init {
 
@@ -105,7 +99,6 @@ open class JavaScriptCallback(context: JavaScriptContext, target: Long, callee: 
 	}
 
 	/**
-	 * Assigns the handler's return toValue using a toValue.
 	 * @method returns
 	 * @since 0.1.0
 	 */
@@ -114,7 +107,6 @@ open class JavaScriptCallback(context: JavaScriptContext, target: Long, callee: 
 	}
 
 	/**
-	 * Assigns the handler's return toValue.
 	 * @method returns
 	 * @since 0.1.0
 	 */
@@ -123,7 +115,6 @@ open class JavaScriptCallback(context: JavaScriptContext, target: Long, callee: 
 	}
 
 	/**
-	 * Assigns the handler's return toValue using a toString.
 	 * @method returns
 	 * @since 0.1.0
 	 */
@@ -132,7 +123,6 @@ open class JavaScriptCallback(context: JavaScriptContext, target: Long, callee: 
 	}
 
 	/**
-	 * Assigns the handler's return toValue using a toNumber.
 	 * @method returns
 	 * @since 0.1.0
 	 */
@@ -141,7 +131,6 @@ open class JavaScriptCallback(context: JavaScriptContext, target: Long, callee: 
 	}
 
 	/**
-	 * Assigns the handler's return toValue using a toNumber.
 	 * @method returns
 	 * @since 0.3.0
 	 */
@@ -150,7 +139,6 @@ open class JavaScriptCallback(context: JavaScriptContext, target: Long, callee: 
 	}
 
 	/**
-	 * Assigns the handler's return toValue using a toNumber.
 	 * @method returns
 	 * @since 0.3.0
 	 */
@@ -159,7 +147,6 @@ open class JavaScriptCallback(context: JavaScriptContext, target: Long, callee: 
 	}
 
 	/**
-	 * Assigns the handler's return toValue using a toBoolean.
 	 * @method returns
 	 * @since 0.1.0
 	 */

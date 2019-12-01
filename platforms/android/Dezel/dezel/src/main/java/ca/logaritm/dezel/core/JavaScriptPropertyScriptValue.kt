@@ -1,19 +1,20 @@
 package ca.logaritm.dezel.core
 
 /**
- * @class JavaScriptPropertyRawValue
+ * @class JavaScriptPropertyScriptValue
+ * @super JavaScriptPropertyValue
  * @since 0.7.0
- * @hidden
  */
-open class JavaScriptPropertyRawValue(value: JavaScriptValue) : JavaScriptPropertyValue() {
+open class JavaScriptPropertyScriptValue(value: JavaScriptValue) : JavaScriptPropertyValue() {
 
 	//--------------------------------------------------------------------------
 	// Properties
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @property data
+	 * @property value
 	 * @since 0.7.0
+	 * @hidden
 	 */
 	private var value: JavaScriptValue
 
@@ -24,7 +25,6 @@ open class JavaScriptPropertyRawValue(value: JavaScriptValue) : JavaScriptProper
 	/**
 	 * @constructor
 	 * @since 0.7.0
-	 * @hidden
 	 */
 	init {
 
@@ -69,7 +69,6 @@ open class JavaScriptPropertyRawValue(value: JavaScriptValue) : JavaScriptProper
 	}
 
 	/**
-	 * @inherited
 	 * @method toBoolean
 	 * @since 0.7.0
 	 */

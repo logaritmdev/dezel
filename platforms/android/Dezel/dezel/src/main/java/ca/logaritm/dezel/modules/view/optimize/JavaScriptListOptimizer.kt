@@ -154,7 +154,6 @@ open class JavaScriptListOptimizer(context: JavaScriptContext) : JavaScriptViewO
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method reload
 	 * @since 0.2.0
 	 */
@@ -280,7 +279,6 @@ open class JavaScriptListOptimizer(context: JavaScriptContext) : JavaScriptViewO
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method didBeginLayout
 	 * @since 0.7.0
 	 */
@@ -359,7 +357,6 @@ open class JavaScriptListOptimizer(context: JavaScriptContext) : JavaScriptViewO
 	}
 
 	/**
-	 * @inherited
 	 * @method didFinishLayout
 	 * @since 0.7.0
 	 */
@@ -369,7 +366,6 @@ open class JavaScriptListOptimizer(context: JavaScriptContext) : JavaScriptViewO
 	}
 
 	/**
-	 * @inherited
 	 * @method didScroll
 	 * @since 0.7.0
 	 */

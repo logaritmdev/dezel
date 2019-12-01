@@ -1,12 +1,11 @@
 package ca.logaritm.dezel.view.graphic
 
 import ca.logaritm.dezel.extension.type.toDeg
-import ca.logaritm.dezel.string.Scanner
+import ca.logaritm.dezel.util.string.Scanner
 
 /**
  * @class LinearGradient
  * @since 0.1.0
- * @hidden
  */
 open class LinearGradient(value: String) {
 
@@ -15,7 +14,6 @@ open class LinearGradient(value: String) {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The gradient's color.
 	 * @property colors
 	 * @since 0.1.0
 	 */
@@ -23,7 +21,6 @@ open class LinearGradient(value: String) {
 		private set
 
 	/**
-	 * The gradient's color locations.
 	 * @property points
 	 * @since 0.1.0
 	 */
@@ -31,7 +28,6 @@ open class LinearGradient(value: String) {
 		private set
 
 	/**
-	 * The gradient's angle.
 	 * @property angle
 	 * @since 0.1.0
 	 */
@@ -51,7 +47,6 @@ open class LinearGradient(value: String) {
 	}
 
 	/**
-	 * Parses the linear gradient toString.
 	 * @method parse
 	 * @since 0.1.0
 	 */

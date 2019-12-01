@@ -6,7 +6,6 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 /**
- * Convenience class to format dates.
  * @class DateFormater
  * @since 0.5.0
  */
@@ -28,7 +27,6 @@ public object DateFormater {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Formats the specified date using a format and a locale.
 	 * @method format
 	 * @since 0.5.0
 	 */
@@ -45,7 +43,6 @@ public object DateFormater {
 	}
 
 	/**
-	 * Convenience method to format a date using the ISO standard.
 	 * @method iso
 	 * @since 0.5.0
 	 */

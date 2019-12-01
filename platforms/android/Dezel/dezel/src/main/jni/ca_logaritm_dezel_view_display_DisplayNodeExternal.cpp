@@ -445,8 +445,8 @@ void Java_ca_logaritm_dezel_view_display_DisplayNodeExternal_setContentDirection
  * Method:    setContentLocation
  * Signature: (JI)V
  */
-void Java_ca_logaritm_dezel_view_display_DisplayNodeExternal_setContentLocation(JNIEnv* env, jclass, jlong displayNodePtr, jint contentLocation) {
-	DisplayNodeSetContentLocation(reinterpret_cast<DisplayNodeRef>(displayNodePtr), static_cast<DisplayNodeContentLocation>(contentLocation));
+void Java_ca_logaritm_dezel_view_display_DisplayNodeExternal_setContentLocation(JNIEnv* env, jclass, jlong displayNodePtr, jint contentDisposition) {
+	DisplayNodeSetContentLocation(reinterpret_cast<DisplayNodeRef>(displayNodePtr), static_cast<DisplayNodeContentLocation>(contentDisposition));
 }
 
 /*

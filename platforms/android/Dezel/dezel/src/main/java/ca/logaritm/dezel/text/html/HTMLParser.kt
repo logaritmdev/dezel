@@ -7,7 +7,6 @@ import org.xml.sax.helpers.XMLReaderFactory
 import java.io.StringReader
 
 /**
- * Convenience object to parse HTML.
  * @class HTMLParser
  * @since 0.5.0
  */
@@ -36,7 +35,6 @@ public object HTMLParser {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Parses the specified toString with a handler.
 	 * @method parse
 	 * @since 0.5.0
 	 */

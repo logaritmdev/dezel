@@ -3,7 +3,6 @@ package ca.logaritm.dezel.timer
 import android.os.Handler
 
 /**
- * Fires a callbac after a time interval.
  * @class Ticker
  * @since 0.7.0
  */

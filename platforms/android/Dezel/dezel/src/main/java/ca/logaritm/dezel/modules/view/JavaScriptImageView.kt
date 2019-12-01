@@ -3,7 +3,7 @@ package ca.logaritm.dezel.modules.view
 import android.graphics.Bitmap
 import android.util.Log
 import android.util.SizeF
-import ca.logaritm.dezel.application.application
+import ca.logaritm.dezel.application.activity
 import ca.logaritm.dezel.core.*
 import ca.logaritm.dezel.extension.Delegates
 import ca.logaritm.dezel.extension.util.ceiled
@@ -15,8 +15,8 @@ import ca.logaritm.dezel.view.type.ImageFilter
 
 /**
  * @class JavaScriptImageView
+ * @super JavaScriptView
  * @since 0.7.0
- * @hidden
  */
 open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(context) {
 
@@ -38,7 +38,7 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private var imageLoader: ImageLoader = ImageLoader(context.application)
+	private var imageLoader: ImageLoader = ImageLoader(context.activity)
 
 	/**
 	 * @property invalidImage
@@ -60,16 +60,14 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method createContentView
 	 * @since 0.7.0
 	 */
 	override fun createContentView(): ImageView {
-		return ImageView(this.context.application)
+		return ImageView(this.context.activity)
 	}
 
 	/**
-	 * @inherited
 	 * @method dispose
 	 * @since 0.7.0
 	 */
@@ -79,7 +77,6 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 	}
 
 	/**
-	 * @inherited
 	 * @method update
 	 * @since 0.7.0
 	 */
@@ -94,7 +91,6 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 	}
 
 	/**
-	 * Updates the image.
 	 * @method updateImage
 	 * @since 0.7.0
 	 */
@@ -224,24 +220,11 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 		this.view.imageHeight = Convert.toPx(imageH)
 	}
 
-	/**
-	 * @method invalidageImage
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	open fun invalidageImage() {
-		if (this.invalidImage == false) {
-			this.invalidImage = true
-			this.scheduleUpdate()
-		}
-	}
-
 	//--------------------------------------------------------------------------
 	// Methods - Layout Node Delegate
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method measure
 	 * @since 0.7.0
 	 */
@@ -371,7 +354,6 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The image view's source.
 	 * @property source
 	 * @since 0.7.0
 	 */
@@ -392,7 +374,6 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 	}
 
 	/**
-	 * The image view's image container fit.
 	 * @property imageFit
 	 * @since 0.7.0
 	 */
@@ -403,7 +384,6 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 	}
 
 	/**
-	 * The image view's image top anchor.
 	 * @property imageAnchorTop
 	 * @since 0.7.0
 	 */
@@ -414,7 +394,6 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 	}
 
 	/**
-	 * The image view's image left anchor.
 	 * @property imageAnchorLeft
 	 * @since 0.7.0
 	 */
@@ -425,7 +404,6 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 	}
 
 	/**
-	 * The image view's image top position.
 	 * @property imageTop
 	 * @since 0.7.0
 	 */
@@ -436,7 +414,6 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 	}
 
 	/**
-	 * The image view's image left position.
 	 * @property imageLeft
 	 * @since 0.7.0
 	 */
@@ -447,7 +424,6 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 	}
 
 	/**
-	 * The image view's image width.
 	 * @property imageWidth
 	 * @since 0.7.0
 	 */
@@ -458,18 +434,16 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 	}
 
 	/**
-	 * The image view's image height.
 	 * @property imageHeight
 	 * @since 0.7.0
 	 */
 	public val imageHeight by lazy {
 		JavaScriptProperty("auto") {
-			this.invalidageImage()
+			this.invalidateImage()
 		}
 	}
 
 	/**
-	 * The image view's image filter.
 	 * @property imageFilter
 	 * @since 0.7.0
 	 */
@@ -480,13 +454,22 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 	}
 
 	/**
-	 * The image view's image imageTint color.
-	 * @property imageTint
+	 * @property imageOpacity
 	 * @since 0.7.0
 	 */
-	public val imageTint by lazy {
+	public val imageOpacity by lazy {
+		JavaScriptProperty(1.0) { value ->
+			this.view.alpha = value.number.toFloat()
+		}
+	}
+
+	/**
+	 * @property tint
+	 * @since 0.7.0
+	 */
+	public val tint by lazy {
 		JavaScriptProperty("transparent") { value ->
-			this.view.imageTint = Color.parse(value.string)
+			this.view.tint = Color.parse(value.string)
 		}
 	}
 
@@ -691,22 +674,44 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method jsGet_imageTint
+	 * @method jsGet_imageOpacity
 	 * @since 0.7.0
 	 * @hidden
 	 */
 	@Suppress("unused")
-	open fun jsGet_imageTint(callback: JavaScriptGetterCallback) {
-		callback.returns(this.imageTint)
+	open fun jsGet_imageOpacity(callback: JavaScriptGetterCallback) {
+		callback.returns(this.imageOpacity)
 	}
 
 	/**
-	 * @method jsSet_imageTint
+	 * @method jsSet_imageOpacity
 	 * @since 0.7.0
 	 * @hidden
 	 */
 	@Suppress("unused")
-	open fun jsSet_imageTint(callback: JavaScriptSetterCallback) {
-		this.imageTint.reset(callback.value, lock = this)
+	open fun jsSet_imageOpacity(callback: JavaScriptSetterCallback) {
+		this.imageOpacity.reset(callback.value, lock = this)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_tint
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@Suppress("unused")
+	open fun jsGet_tint(callback: JavaScriptGetterCallback) {
+		callback.returns(this.tint)
+	}
+
+	/**
+	 * @method jsSet_tint
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@Suppress("unused")
+	open fun jsSet_tint(callback: JavaScriptSetterCallback) {
+		this.tint.reset(callback.value, lock = this)
 	}
 }

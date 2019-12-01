@@ -1,16 +1,16 @@
 package ca.logaritm.dezel.modules.form
 
 import ca.logaritm.dezel.core.JavaScriptContext
-import ca.logaritm.dezel.core.Module
+import ca.logaritm.dezel.core.JavaScriptModule
 
 /**
- * @class FormModule
+ * @class JavaScriptFormModule
+ * @super JavaScriptModule
  * @since 0.1.0
  */
-open class FormModule(context: JavaScriptContext) : Module(context) {
+open class JavaScriptFormModule(context: JavaScriptContext) : JavaScriptModule(context) {
 
 	/**
-	 * @inherited
 	 * @method initialize
 	 * @since 0.1.0
 	 */

@@ -16,12 +16,15 @@ import ca.logaritm.dezel.extension.view.setMeasuredFrame
 import ca.logaritm.dezel.view.graphic.Convert
 import ca.logaritm.dezel.view.type.Overscroll
 import ca.logaritm.dezel.view.type.Scrollbars
+import kotlin.math.ceil
+import kotlin.math.floor
+import kotlin.math.max
 import android.view.View as AndroidView
 
 /**
  * @class View
+ * @super ViewGroup
  * @since 0.7.0
- * @hidden
  */
 open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, Updatable, ScaleGestureDetector.OnScaleGestureListener {
 
@@ -30,7 +33,6 @@ open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, U
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The view's content ordering.
 	 * @property ordering
 	 * @since 0.7.0
 	 */
@@ -39,21 +41,18 @@ open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, U
 	}
 
 	/**
-	 * The scroll view's listener.
 	 * @property scrollableListener
 	 * @since 0.7.0
 	 */
 	override var scrollableListener: ScrollableListener? = null
 
 	/**
-	 * Whether the scroll view is scrollable.
 	 * @property scrollable
 	 * @since 0.7.0
 	 */
 	override var scrollable: Boolean = false
 
 	/**
-	 * Whether the scroll displays scrollbars.
 	 * @property scrollbars
 	 * @since 0.7.0
 	 */
@@ -84,7 +83,6 @@ open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, U
 	}
 
 	/**
-	 * Whether the scrollable view can overscroll.
 	 * @property overscroll
 	 * @since 0.7.0
 	 */
@@ -130,7 +128,6 @@ open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, U
 	}
 
 	/**
-	 * The scrollable view's scroll top.
 	 * @property scrollTop
 	 * @since 0.7.0
 	 */
@@ -141,7 +138,6 @@ open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, U
 		}
 
 	/**
-	 * The scroll view's scroll left.
 	 * @property scrollLeft
 	 * @since 0.7.0
 	 */
@@ -152,7 +148,6 @@ open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, U
 		}
 
 	/**
-	 * The scrollable view's scroll width.
 	 * @property scrollWidth
 	 * @since 0.7.0
 	 */
@@ -161,7 +156,6 @@ open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, U
 	}
 
 	/**
-	 * The scrollable view's scroll height.
 	 * @property scrollHeight
 	 * @since 0.7.0
 	 */
@@ -170,14 +164,12 @@ open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, U
 	}
 
 	/**
-	 * Whether the scroll view has momentum.
-	 * @property momentum
+	 * @property scrollMomentum
 	 * @since 0.7.0
 	 */
-	override var momentum: Boolean = true
+	override var scrollMomentum: Boolean = true
 
 	/**
-	 * The scroll view's top content inset.
 	 * @property contentInsetTop
 	 * @since 0.7.0
 	 */
@@ -188,7 +180,6 @@ open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, U
 	}
 
 	/**
-	 * The scroll view's left content inset.
 	 * @property contentInsetLeft
 	 * @since 0.7.0
 	 */
@@ -199,7 +190,6 @@ open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, U
 	}
 
 	/**
-	 * The scroll view's right content inset.
 	 * @property contentInsetRight
 	 * @since 0.7.0
 	 */
@@ -210,7 +200,6 @@ open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, U
 	}
 
 	/**
-	 * The scroll view's bottom content inset.
 	 * @property contentInsetBottom
 	 * @since 0.7.0
 	 */
@@ -221,7 +210,6 @@ open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, U
 	}
 
 	/**
-	 * Whether the scroll view's is paged.
 	 * @property paged
 	 * @since 0.7.0
 	 */
@@ -231,7 +219,6 @@ open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, U
 	}
 
 	/**
-	 * Whether the scrollable view's is zoomable.
 	 * @property zoomable
 	 * @since 0.7.0
 	 */
@@ -241,7 +228,6 @@ open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, U
 	}
 
 	/**
-	 * The scrollable view min zoom.
 	 * @property minZoom
 	 * @since 0.7.0
 	 */
@@ -250,7 +236,6 @@ open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, U
 	}
 
 	/**
-	 * The scrollable view max zoom.
 	 * @property maxZoom
 	 * @since 0.7.0
 	 */
@@ -259,7 +244,6 @@ open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, U
 	}
 
 	/**
-	 * The view that is zoomed.
 	 * @property zoomedView
 	 * @since 0.7.0
 	 */
@@ -270,7 +254,6 @@ open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, U
 	}
 
 	/**
-	 * Whether the scrollable view's is zooming.
 	 * @property zooming
 	 * @since 0.7.0
 	 */
@@ -278,39 +261,34 @@ open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, U
 		get() = this.scaleGestureDetector.isInProgress
 
 	/**
-	 * The current page on the x axis.
 	 * @property pageX
 	 * @since 0.7.0
 	 */
 	open val pageX: Int
-		get() = Math.floor(Math.max(this.scrollLeft.toDouble(), 0.0) / this.frameWidth.toDouble()).toInt()
+		get() = floor(max(this.scrollLeft.toDouble(), 0.0) / this.frameWidth.toDouble()).toInt()
 
 	/**
-	 * The current page on the y axis.
 	 * @property pageY
 	 * @since 0.7.0
 	 */
 	open val pageY: Int
-		get() = Math.floor(Math.max(this.scrollLeft.toDouble(), 0.0) / this.frameWidth.toDouble()).toInt()
+		get() = floor(max(this.scrollLeft.toDouble(), 0.0) / this.frameWidth.toDouble()).toInt()
 
 	/**
-	 * The amount of horizontal pages.
 	 * @property pageXCount
 	 * @since 0.7.0
 	 */
 	open val pageXCount: Int
-		get() = Math.ceil(this.scrollWidth.toDouble() / this.frameWidth.toDouble()).toInt()
+		get() = ceil(this.scrollWidth.toDouble() / this.frameWidth.toDouble()).toInt()
 
 	/**
-	 * The amount of vertical pages.
 	 * @property pageYCount
 	 * @since 0.7.0
 	 */
 	open val pageYCount: Int
-		get() = Math.ceil(this.scrollHeight.toDouble() / this.frameHeight.toDouble()).toInt()
+		get() = ceil(this.scrollHeight.toDouble() / this.frameHeight.toDouble()).toInt()
 
 	/**
-	 * The offset of the current page on the x axis.
 	 * @property pageXOffset
 	 * @since 0.7.0
 	 */
@@ -320,7 +298,6 @@ open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, U
 	/**
 	 * @property pageYOffset
 	 * @since 0.7.0
-	 * @hidden
 	 */
 	open val pageYOffset: Float
 		get() = (this.scrollTop.toFloat() - (this.frameHeight.toFloat() * this.pageY.toFloat())) / this.frameHeight.toFloat()
@@ -328,7 +305,6 @@ open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, U
 	/**
 	 * @property realScrollY
 	 * @since 0.7.0
-	 * @hidden
 	 */
 	public var realScrollY: Int
 		get() = this.vScrollView.scrollY
@@ -337,9 +313,8 @@ open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, U
 		}
 
 	/**
-	 * The scroll view's scroll left.
 	 * @property realScrollX
-	 * @hidden
+	 * @since 0.7.0
 	 */
 	public var realScrollX: Int
 		get() = this.hScrollView.scrollX
@@ -352,7 +327,7 @@ open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, U
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private var scrollableY: Boolean = false
+	private val scrollableY: Boolean
 		get() = this.scrollHeight > this.frameHeight
 
 	/**
@@ -360,7 +335,7 @@ open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, U
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private var scrollableX: Boolean = false
+	private val scrollableX: Boolean
 		get() = this.scrollWidth > this.frameWidth
 
 	/**
@@ -543,7 +518,6 @@ open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, U
 	/**
 	 * @constructor
 	 * @since 0.7.0
-	 * @hidden
 	 */
 	init {
 
@@ -560,7 +534,6 @@ open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, U
 	}
 
 	/**
-	 * @inherited
 	 * @method getChildDrawingOrder
 	 * @since 0.7.0
 	 */
@@ -569,7 +542,6 @@ open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, U
 	}
 
 	/**
-	 * @inherited
 	 * @method getChildStaticTransformation
 	 * @since 0.7.0
 	 */
@@ -602,7 +574,6 @@ open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, U
 	}
 
 	/**
-	 * @inherited
 	 * @method onResize
 	 * @since 0.7.0
 	 */
@@ -621,7 +592,6 @@ open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, U
 	}
 
 	/**
-	 * @inherited
 	 * @method onMeasure
 	 * @since 0.7.0
 	 */
@@ -633,7 +603,6 @@ open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, U
 	}
 
 	/**
-	 * @inherited
 	 * @method onLayout
 	 * @since 0.7.0
 	 */
@@ -642,7 +611,6 @@ open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, U
 	}
 
 	/**
-	 * @inherited
 	 * @method onTouchEvent
 	 * @since 0.7.0
 	 */
@@ -663,7 +631,6 @@ open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, U
 	}
 
 	/**
-	 * @inherited
 	 * @method update
 	 * @since 0.7.0
 	 */
@@ -788,7 +755,6 @@ open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, U
 	}
 
 	/**
-	 * @inherited
 	 * @method scrollTo
 	 * @since 0.7.0
 	 */
@@ -800,7 +766,6 @@ open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, U
 	}
 
 	/**
-	 * Scrolls to a specific page.
 	 * @method scrollToPage
 	 * @since 0.7.0
 	 */
@@ -811,7 +776,6 @@ open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, U
 	}
 
 	/**
-	 * Manually dispatches the touch cancel event.
 	 * @method dispatchTouchCancel
 	 * @since 0.7.0
 	 */
@@ -1208,7 +1172,6 @@ open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, U
 		//--------------------------------------------------------------------------
 
 		/**
-		 * @inherited
 		 * @method dispatchTouchEvent
 		 * @since 0.7.0
 		 */
@@ -1225,7 +1188,6 @@ open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, U
 		}
 
 		/**
-		 * @inherited
 		 * @method onInterceptTouchEvent
 		 * @since 0.7.0
 		 */
@@ -1240,7 +1202,6 @@ open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, U
 		}
 
 		/**
-		 * @inherited
 		 * @method onTouchEvent
 		 * @since 0.7.0
 		 */
@@ -1285,7 +1246,6 @@ open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, U
 		}
 
 		/**
-		 * Called when a touch cancel event occurs in the scroll view.
 		 * @method onTouchCancel
 		 * @since 0.7.0
 		 */
@@ -1300,7 +1260,6 @@ open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, U
 		}
 
 		/**
-		 * Called when a touch move event occurs in the scroll view.
 		 * @method onTouchStart
 		 * @since 0.7.0
 		 */
@@ -1315,16 +1274,15 @@ open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, U
 		}
 
 		/**
-		 * Called when a touch move event occurs in the scroll view.
 		 * @method onTouchMove
 		 * @since 0.7.0
 		 */
 		public fun onTouchMove(event: MotionEvent) {
 
 			/*
-			 For reasons that I do not yet understand, the ACTION_CANCEL is not called under
-			 certain conditions. This is a hack made to execute the event when the scroll
-			 view starts dragging.
+			 * For reasons that I do not yet understand, the ACTION_CANCEL is not called under
+			 * certain conditions. This is a hack made to execute the event when the scroll
+			 * view starts dragging.
 			 */
 
 			if (this.dragBegan &&
@@ -1336,7 +1294,6 @@ open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, U
 		}
 
 		/**
-		 * Called when a touch end event occurs in the scroll view.
 		 * @method onTouchEnd
 		 * @since 0.7.0
 		 */
@@ -1396,10 +1353,10 @@ open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, U
 				this.scrollEndHandler.postDelayed(this.scrollEndRunnable, 32)
 			}
 
-			/**
+			/*
 			 * The onScrollChanged event seems to be a bit off sync with the current choreographer
-			 * which make views incorrectly positioned for miliseconds. By forcing a layout a display
-			 * refresh the effect is minified.
+			 * which make views incorrectly positioned for milliseconds. By forcing a layout a display
+			 * refresh the effect is minimized.
 			 */
 
 			Synchronizer.main.execute()
@@ -1408,7 +1365,6 @@ open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, U
 		/**
 		 * @method fling
 		 * @since 0.7.0
-		 * @hidden
 		 */
 		override fun fling(velocity: Int) {
 
@@ -1422,7 +1378,7 @@ open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, U
 				return
 			}
 
-			if (this@View.momentum) {
+			if (this@View.scrollMomentum) {
 
 				if (this.velocity == 0) {
 					this.velocity = velocity
@@ -1580,7 +1536,6 @@ open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, U
 		}
 
 		/**
-		 * @inherited
 		 * @method onMeasure
 		 * @since 0.7.0
 		 */
@@ -1592,7 +1547,6 @@ open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, U
 		}
 
 		/**
-		 * @inherited
 		 * @method onLayout
 		 * @since 0.7.0
 		 */
@@ -1603,7 +1557,6 @@ open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, U
 		/**
 		 * @method dispatchTouchEvent
 		 * @since 0.7.0
-		 * @hidden
 		 */
 		override fun dispatchTouchEvent(event: MotionEvent): Boolean {
 
@@ -1620,7 +1573,6 @@ open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, U
 		/**
 		 * @method onInterceptTouchEvent
 		 * @since 0.7.0
-		 * @hidden
 		 */
 		override fun onInterceptTouchEvent(event: MotionEvent): Boolean {
 
@@ -1635,7 +1587,6 @@ open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, U
 		/**
 		 * @method onTouchEvent
 		 * @since 0.7.0
-		 * @hidden
 		 */
 		override fun onTouchEvent(event: MotionEvent): Boolean {
 
@@ -1678,7 +1629,6 @@ open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, U
 		}
 
 		/**
-		 * Called when a touch cancel event occurs in the scroll view.
 		 * @method onTouchCancel
 		 * @since 0.7.0
 		 */
@@ -1695,7 +1645,6 @@ open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, U
 		/**
 		 * @method onTouchStart
 		 * @since 0.7.0
-		 * @hidden
 		 */
 		public fun onTouchStart(event: MotionEvent) {
 
@@ -1708,16 +1657,15 @@ open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, U
 		}
 
 		/**
-		 * Called when a touch move event occurs in the scroll view.
 		 * @method onTouchMove
 		 * @since 0.7.0
 		 */
 		public fun onTouchMove(event: MotionEvent) {
 
 			/*
-			 For reasons that I do not yet understand, the ACTION_CANCEL is not called under
-			 certain conditions. This is a hack made to execute the event when the scroll
-			 view starts dragging.
+			 * For reasons that I do not yet understand, the ACTION_CANCEL is not called under
+			 * certain conditions. This is a hack made to execute the event when the scroll
+			 * view starts dragging.
 			 */
 
 			if (this.dragBegan &&
@@ -1729,7 +1677,6 @@ open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, U
 		}
 
 		/**
-		 * Called when a touch end event occurs in the scroll view.
 		 * @method onTouchEnd
 		 * @since 0.7.0
 		 */
@@ -1755,7 +1702,6 @@ open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, U
 		/**
 		 * @method onScrollChanged
 		 * @since 0.7.0
-		 * @hidden
 		 */
 		override fun onScrollChanged(l: Int, t: Int, oldl: Int, oldt: Int) {
 
@@ -1785,10 +1731,10 @@ open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, U
 				this.scrollEndHandler.postDelayed(this.scrollEndRunnable, 16)
 			}
 
-			/**
+			/*
 			 * The onScrollChanged event seems to be a bit off sync with the current choreographer
-			 * which make views incorrectly positioned for miliseconds. By forcing a layout a display
-			 * refresh the effect is minified.
+			 * which make views incorrectly positioned for milliseconds. By forcing a layout a display
+			 * refresh the effect is minimized.
 			 */
 
 			Synchronizer.main.execute()
@@ -1797,7 +1743,6 @@ open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, U
 		/**
 		 * @method fling
 		 * @since 0.7.0
-		 * @hidden
 		 */
 		override fun fling(velocity: Int) {
 
@@ -1811,7 +1756,7 @@ open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, U
 				return
 			}
 
-			if (this@View.momentum) {
+			if (this@View.scrollMomentum) {
 
 				if (this.velocity == 0) {
 					this.velocity = velocity

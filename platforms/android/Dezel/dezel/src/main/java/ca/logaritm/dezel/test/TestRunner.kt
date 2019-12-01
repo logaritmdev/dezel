@@ -11,7 +11,6 @@ open class TestRunner: ApplicationActivity() {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The test runner host.
 	 * @property host
 	 * @since 0.7.0
 	 */
@@ -19,7 +18,6 @@ open class TestRunner: ApplicationActivity() {
 		private set
 
 	/**
-	 * The test runner port.
 	 * @property port
 	 * @since 0.7.0
 	 */
@@ -31,7 +29,6 @@ open class TestRunner: ApplicationActivity() {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Runs the tests using the specified server.
 	 * @method start
 	 * @since 0.7.0
 	 */
@@ -44,7 +41,6 @@ open class TestRunner: ApplicationActivity() {
 	}
 
 	/**
-	 * @inherited
 	 * @method configure
 	 * @since 0.7.0
 	 */
@@ -54,8 +50,7 @@ open class TestRunner: ApplicationActivity() {
 	}
 
 	/**
-	 * @inherited
-	 * @method configure
+	 * @method onLoad
 	 * @since 0.7.0
 	 */
 	override fun onLoad() {

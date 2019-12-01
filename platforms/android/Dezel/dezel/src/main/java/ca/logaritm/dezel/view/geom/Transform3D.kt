@@ -1,7 +1,6 @@
 package ca.logaritm.dezel.view.geom
 
 /**
- * Provides the transformations methods for a 3d matrix.
  * @class Transform3D
  * @since 0.2.0
  */
@@ -117,7 +116,6 @@ public class Transform3D {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Translates the matrix.
 	 * @method translate
 	 * @since 0.1.0
 	 */
@@ -129,7 +127,6 @@ public class Transform3D {
 	}
 
 	/**
-	 * Scales the matrix.
 	 * @method scale
 	 * @since 0.1.0
 	 */
@@ -164,13 +161,12 @@ public class Transform3D {
 	}
 
 	/**
-	 * Rotates the matrix.
 	 * @method rotate
 	 * @since 0.1.0
 	 */
 	public fun rotate(x: Double, y: Double, z: Double, angle: Double) {
 
-		var angle = angle / 2.0
+		val angle = angle / 2.0
 
 		val sinA = Math.sin(angle)
 		val cosA = Math.cos(angle)
@@ -293,7 +289,6 @@ public class Transform3D {
 	}
 
 	/**
-	 * Add perspective to the matrix.
 	 * @method perspective
 	 * @since 0.1.0
 	 */
@@ -310,7 +305,6 @@ public class Transform3D {
 	}
 
 	/**
-	 * Multiply the matrix with the specified matrix.
 	 * @method concat
 	 * @since 0.1.0
 	 */
@@ -386,7 +380,6 @@ public class Transform3D {
 	}
 
 	/**
-	 * Transforms a point using the matrix.
 	 * @method transform
 	 * @since 0.1.0
 	 */
@@ -403,7 +396,6 @@ public class Transform3D {
 	}
 
 	/**
-	 * Indicates whether the matrix is the identity matrix.
 	 * @method isIdentity
 	 * @since 0.1.0
 	 */

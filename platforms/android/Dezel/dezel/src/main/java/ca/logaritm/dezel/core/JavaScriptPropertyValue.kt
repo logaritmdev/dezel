@@ -1,11 +1,8 @@
 package ca.logaritm.dezel.core
 
-import android.util.Log
-
 /**
  * @class JavaScriptPropertyValue
  * @since 0.7.0
- * @hidden
  */
 open class JavaScriptPropertyValue(type: JavaScriptPropertyType = JavaScriptPropertyType.NULL, unit: JavaScriptPropertyUnit = JavaScriptPropertyUnit.NONE, value: JavaScriptValue? = null) {
 
@@ -14,21 +11,18 @@ open class JavaScriptPropertyValue(type: JavaScriptPropertyType = JavaScriptProp
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The property's type.
 	 * @property type
 	 * @since 0.7.0
 	 */
 	public var type: JavaScriptPropertyType = JavaScriptPropertyType.NULL
 
 	/**
-	 * The property's unit.
 	 * @property unit
 	 * @since 0.7.0
 	 */
 	public var unit: JavaScriptPropertyUnit = JavaScriptPropertyUnit.NONE
 
 	/**
-	 * The property's string value.
 	 * @property string
 	 * @since 0.7.0
 	 */
@@ -37,7 +31,6 @@ open class JavaScriptPropertyValue(type: JavaScriptPropertyType = JavaScriptProp
 	}
 
 	/**
-	 * The property's number value.
 	 * @property number
 	 * @since 0.7.0
 	 */
@@ -46,7 +39,6 @@ open class JavaScriptPropertyValue(type: JavaScriptPropertyType = JavaScriptProp
 	}
 
 	/**
-	 * The property's boolean value.
 	 * @property boolean
 	 * @since 0.7.0
 	 */
@@ -66,7 +58,6 @@ open class JavaScriptPropertyValue(type: JavaScriptPropertyType = JavaScriptProp
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Initializes the property storage.
 	 * @constructor
 	 * @since 0.7.0
 	 */
@@ -85,7 +76,6 @@ open class JavaScriptPropertyValue(type: JavaScriptPropertyType = JavaScriptProp
 	}
 
 	/**
-	 * Stores the backing JavaScript value.
 	 * @method store
 	 * @since 0.7.0
 	 */
@@ -94,7 +84,6 @@ open class JavaScriptPropertyValue(type: JavaScriptPropertyType = JavaScriptProp
 	}
 
 	/**
-	 * Returns the data as a string.
 	 * @method toString
 	 * @since 0.7.0
 	 */
@@ -103,7 +92,6 @@ open class JavaScriptPropertyValue(type: JavaScriptPropertyType = JavaScriptProp
 	}
 
 	/**
-	 * Returns the data as a number.
 	 * @method toNumber
 	 * @since 0.7.0
 	 */
@@ -112,7 +100,6 @@ open class JavaScriptPropertyValue(type: JavaScriptPropertyType = JavaScriptProp
 	}
 
 	/**
-	 * Returns the data as a boolean.
 	 * @method toBoolean
 	 * @since 0.7.0
 	 */
@@ -121,7 +108,6 @@ open class JavaScriptPropertyValue(type: JavaScriptPropertyType = JavaScriptProp
 	}
 
 	/**
-	 * Indicate whether this property's value is a specified JavaScript value.
 	 * @method equals
 	 * @since 0.7.0
 	 */
@@ -130,7 +116,6 @@ open class JavaScriptPropertyValue(type: JavaScriptPropertyType = JavaScriptProp
 	}
 
 	/**
-	 * Indicate whether this property's value is a specified string.
 	 * @method equals
 	 * @since 0.7.0
 	 */
@@ -139,7 +124,6 @@ open class JavaScriptPropertyValue(type: JavaScriptPropertyType = JavaScriptProp
 	}
 
 	/**
-	 * Indicate whether this property's value is a specified number.
 	 * @method equals
 	 * @since 0.7.0
 	 */
@@ -148,7 +132,6 @@ open class JavaScriptPropertyValue(type: JavaScriptPropertyType = JavaScriptProp
 	}
 
 	/**
-	 * Indicate whether this property's value is a specified number.
 	 * @method equals
 	 * @since 0.7.0
 	 */
@@ -157,7 +140,6 @@ open class JavaScriptPropertyValue(type: JavaScriptPropertyType = JavaScriptProp
 	}
 
 	/**
-	 * Indicate whether this property's value is a specified boolean.
 	 * @method equals
 	 * @since 0.7.0
 	 */
@@ -166,7 +148,6 @@ open class JavaScriptPropertyValue(type: JavaScriptPropertyType = JavaScriptProp
 	}
 
 	/**
-	 * Casts the property to a specified type
 	 * @method equals
 	 * @since 0.7.0
 	 */

@@ -9,8 +9,8 @@ import ca.logaritm.dezel.extension.graphics.addOuterRoundedRect
 
 /**
  * @class BorderDrawable
+ * @super Drawable
  * @since 0.1.0
- * @hidden
  */
 open class BorderDrawable : Drawable() {
 
@@ -21,7 +21,6 @@ open class BorderDrawable : Drawable() {
 	/**
 	 * @property borderTopColor
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	public var borderTopColor: Int by Delegates.OnSet(Color.BLACK) {
 		this.invalidateCache()
@@ -30,7 +29,6 @@ open class BorderDrawable : Drawable() {
 	/**
 	 * @property borderLeftColor
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	public var borderLeftColor: Int by Delegates.OnSet(Color.BLACK) {
 		this.invalidateCache()
@@ -39,7 +37,6 @@ open class BorderDrawable : Drawable() {
 	/**
 	 * @property borderRightColor
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	public var borderRightColor: Int by Delegates.OnSet(Color.BLACK) {
 		this.invalidateCache()
@@ -48,7 +45,6 @@ open class BorderDrawable : Drawable() {
 	/**
 	 * @property borderBottomColor
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	public var borderBottomColor: Int by Delegates.OnSet(Color.BLACK) {
 		this.invalidateCache()
@@ -57,7 +53,6 @@ open class BorderDrawable : Drawable() {
 	/**
 	 * @property borderTopWidth
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	public var borderTopWidth: Float by Delegates.OnSet(0f) {
 		this.invalidateCache()
@@ -66,7 +61,6 @@ open class BorderDrawable : Drawable() {
 	/**
 	 * @property borderLeftWidth
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	public var borderLeftWidth: Float by Delegates.OnSet(0f) {
 		this.invalidateCache()
@@ -75,7 +69,6 @@ open class BorderDrawable : Drawable() {
 	/**
 	 * @property borderRightWidth
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	public var borderRightWidth: Float by Delegates.OnSet(0f) {
 		this.invalidateCache()
@@ -84,7 +77,6 @@ open class BorderDrawable : Drawable() {
 	/**
 	 * @property borderBottomWidth
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	public var borderBottomWidth: Float by Delegates.OnSet(0f) {
 		this.invalidateCache()
@@ -93,7 +85,6 @@ open class BorderDrawable : Drawable() {
 	/**
 	 * @property borderTopLeftRadius
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	public var borderTopLeftRadius: Float by Delegates.OnSet(0f) {
 		this.invalidateCache()
@@ -102,7 +93,6 @@ open class BorderDrawable : Drawable() {
 	/**
 	 * @property borderTopRightRadius
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	public var borderTopRightRadius: Float by Delegates.OnSet(0f) {
 		this.invalidateCache()
@@ -111,7 +101,6 @@ open class BorderDrawable : Drawable() {
 	/**
 	 * @property borderBottomLeftRadius
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	public var borderBottomLeftRadius: Float by Delegates.OnSet(0f) {
 		this.invalidateCache()
@@ -120,7 +109,6 @@ open class BorderDrawable : Drawable() {
 	/**
 	 * @property borderBottomRightRadius
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	public var borderBottomRightRadius: Float by Delegates.OnSet(0f) {
 		this.invalidateCache()
@@ -129,7 +117,6 @@ open class BorderDrawable : Drawable() {
 	/**
 	 * @property borderTopLeftInnerRadius
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	public var borderTopLeftInnerRadius: PointF by Delegates.OnSet(PointF(0f, 0f)) {
 		this.invalidateCache()
@@ -138,7 +125,6 @@ open class BorderDrawable : Drawable() {
 	/**
 	 * @property borderTopRightInnerRadius
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	public var borderTopRightInnerRadius: PointF by Delegates.OnSet(PointF(0f, 0f)) {
 		this.invalidateCache()
@@ -147,7 +133,6 @@ open class BorderDrawable : Drawable() {
 	/**
 	 * @property borderBottomLeftInnerRadius
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	public var borderBottomLeftInnerRadius: PointF by Delegates.OnSet(PointF(0f, 0f)) {
 		this.invalidateCache()
@@ -156,7 +141,6 @@ open class BorderDrawable : Drawable() {
 	/**
 	 * @property borderBottomRightInnerRadius
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	public var borderBottomRightInnerRadius: PointF by Delegates.OnSet(PointF(0f, 0f)) {
 		this.invalidateCache()
@@ -267,7 +251,6 @@ open class BorderDrawable : Drawable() {
 	/**
 	 * @constructor
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	init {
 
@@ -282,7 +265,6 @@ open class BorderDrawable : Drawable() {
 	/**
 	 * @method invalidateCache
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	open fun invalidateCache() {
 		this.invalidBorderCache = true
@@ -291,7 +273,6 @@ open class BorderDrawable : Drawable() {
 	/**
 	 * @method setAlpha
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	override fun setAlpha(alpha: Int) {
 
@@ -300,7 +281,6 @@ open class BorderDrawable : Drawable() {
 	/**
 	 * @method setColorFilter
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	override fun setColorFilter(cf: ColorFilter?) {
 
@@ -309,7 +289,6 @@ open class BorderDrawable : Drawable() {
 	/**
 	 * @method getOpacity
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	override fun getOpacity(): Int {
 		return PixelFormat.TRANSLUCENT
@@ -318,7 +297,6 @@ open class BorderDrawable : Drawable() {
 	/**
 	 * @method draw
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	override fun draw(canvas: Canvas) {
 		this.draw(canvas, null)
@@ -327,7 +305,6 @@ open class BorderDrawable : Drawable() {
 	/**
 	 * @method draw
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	open fun draw(canvas: Canvas, xfermode: Xfermode?) {
 

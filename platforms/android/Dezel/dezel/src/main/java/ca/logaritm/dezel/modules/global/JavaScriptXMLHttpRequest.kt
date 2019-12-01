@@ -14,9 +14,9 @@ import ca.logaritm.dezel.networking.HttpRequestListener
 import ca.logaritm.dezel.networking.HttpResponse
 
 /**
- * Bridges the native XMLHttpRequest class.
  * @class JavaScriptXMLHttpRequest
- * @since 0.4.0
+ * @super JavaScriptClass
+ * @since 0.7.0
  */
 open class JavaScriptXMLHttpRequest(context: JavaScriptContext) : JavaScriptClass(context), HttpRequestListener {
 
@@ -36,7 +36,6 @@ open class JavaScriptXMLHttpRequest(context: JavaScriptContext) : JavaScriptClas
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method dispose
 	 * @since 0.6.0
 	 */

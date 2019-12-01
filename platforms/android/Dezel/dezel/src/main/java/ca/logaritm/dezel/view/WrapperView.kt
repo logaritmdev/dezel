@@ -22,8 +22,8 @@ import ca.logaritm.dezel.modules.view.JavaScriptView as ContainerView
 
 /**
  * @class WrapperView
+ * @super ViewGroup
  * @since 0.1.0
- * @hidden
  */
 open class WrapperView(context: Context, content: View, container: ContainerView) : ViewGroup(context), TransitionListener {
 
@@ -32,28 +32,24 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The wrapper's container view.
 	 * @property container
 	 * @since 0.5.0
 	 */
 	public var container: ContainerView = container
 
 	/**
-	 * The wrapper's content view.
 	 * @property content
 	 * @since 0.2.0
 	 */
 	public val content: View = content
 
 	/**
-	 * The wrapper's id.
 	 * @property id
 	 * @since 0.2.0
 	 */
 	open var id: String = ""
 
 	/**
-	 * The wrapper's frame.
 	 * @property frame
 	 * @since 0.1.0
 	 */
@@ -64,7 +60,6 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 	}
 
 	/**
-	 * The wrapper's border top color.
 	 * @property borderTopColor
 	 * @since 0.1.0
 	 */
@@ -74,7 +69,6 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 	}
 
 	/**
-	 * The wrapper's border left color.
 	 * @property borderLeftColor
 	 * @since 0.1.0
 	 */
@@ -84,7 +78,6 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 	}
 
 	/**
-	 * The wrapper's border right color.
 	 * @property borderRightColor
 	 * @since 0.1.0
 	 */
@@ -94,7 +87,6 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 	}
 
 	/**
-	 * The wrapper's border bottom color.
 	 * @property borderBottomColor
 	 * @since 0.1.0
 	 */
@@ -104,7 +96,6 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 	}
 
 	/**
-	 * The wrapper's border top width.
 	 * @property borderTopWidth
 	 * @since 0.1.0
 	 */
@@ -115,7 +106,6 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 	}
 
 	/**
-	 * The wrapper's border left width.
 	 * @property borderLeftWidth
 	 * @since 0.1.0
 	 */
@@ -126,7 +116,6 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 	}
 
 	/**
-	 * The wrapper's border right width.
 	 * @property borderRightWidth
 	 * @since 0.1.0
 	 */
@@ -137,7 +126,6 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 	}
 
 	/**
-	 * The wrapper's border bottom width.
 	 * @property borderBottomWidth
 	 * @since 0.1.0
 	 */
@@ -148,7 +136,6 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 	}
 
 	/**
-	 * The wrapper's border top left corner radius.
 	 * @property borderTopLeftRadius
 	 * @since 0.1.0
 	 */
@@ -157,7 +144,6 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 	}
 
 	/**
-	 * The wrapper's border top right corner radius.
 	 * @property borderTopRightRadius
 	 * @since 0.1.0
 	 */
@@ -166,7 +152,6 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 	}
 
 	/**
-	 * The wrapper's border bottom left corner radius.
 	 * @property borderBottomLeftRadius
 	 * @since 0.1.0
 	 */
@@ -175,7 +160,6 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 	}
 
 	/**
-	 * The wrapper's border bottom right corner radius.
 	 * @property borderBottomRightRadius
 	 * @since 0.1.0
 	 */
@@ -184,7 +168,6 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 	}
 
 	/**
-	 * The wrapper's background color.
 	 * @property backgroundKolor
 	 * @since 0.1.0
 	 */
@@ -194,7 +177,6 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 	}
 
 	/**
-	 * The wrapper's background linear gradient.
 	 * @property backgroundLinearGradient
 	 * @since 0.1.0
 	 */
@@ -204,7 +186,6 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 	}
 
 	/**
-	 * The wrapper's background linear gradient.
 	 * @property backgroundRadialGradient
 	 * @since 0.1.0
 	 */
@@ -214,7 +195,6 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 	}
 
 	/**
-	 * The wrapper's background image.
 	 * @property backgroundImage
 	 * @since 0.1.0
 	 */
@@ -224,7 +204,6 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 	}
 
 	/**
-	 * The wrapper's background image top position.
 	 * @property backgroundImageTop
 	 * @since 0.1.0
 	 */
@@ -234,7 +213,6 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 	}
 
 	/**
-	 * The wrapper's background image left position.
 	 * @property backgroundImageLeft
 	 * @since 0.1.0
 	 */
@@ -244,7 +222,6 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 	}
 
 	/**
-	 * The wrapper's background image width.
 	 * @property backgroundImageWidth
 	 * @since 0.1.0
 	 */
@@ -254,7 +231,6 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 	}
 
 	/**
-	 * The wrapper's background image height.
 	 * @property backgroundImageHeight
 	 * @since 0.1.0
 	 */
@@ -264,7 +240,6 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 	}
 
 	/**
-	 * The wrapper's background image tint.
 	 * @property backgroundImageTint
 	 * @since 0.1.0
 	 */
@@ -274,7 +249,6 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 	}
 
 	/**
-	 * The wrapper's shadow blur distance.
 	 * @property shadowBlur
 	 * @since 0.1.0
 	 */
@@ -284,7 +258,6 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 	}
 
 	/**
-	 * The wrapper's shadow color.
 	 * @property shadowColor
 	 * @since 0.1.0
 	 */
@@ -294,7 +267,6 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 	}
 
 	/**
-	 * The wrapper's shadow's top offset.
 	 * @property shadowOffsetTop
 	 * @since 0.1.0
 	 */
@@ -304,7 +276,6 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 	}
 
 	/**
-	 * The wrapper's shadow's left offset.
 	 * @property shadowOffsetLeft
 	 * @since 0.1.0
 	 */
@@ -314,7 +285,6 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 	}
 
 	/**
-	 * The wrapper's matrix transform.
 	 * @property transform
 	 * @since 0.1.0
 	 */
@@ -330,7 +300,6 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 	}
 
 	/**
-	 * The wrapper's clipping mode
 	 * @property clipped
 	 * @since 0.1.0
 	 */
@@ -339,7 +308,6 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 	}
 
 	/**
-	 * The wrapper's visibility status.
 	 * @property visible
 	 * @since 0.1.0
 	 */
@@ -348,7 +316,6 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 	}
 
 	/**
-	 * The wrapper's drawable status.
 	 * @property drawable
 	 * @since 0.4.0
 	 */
@@ -357,21 +324,18 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 	}
 
 	/**
-	 * The wrapper's drawing handler.
 	 * @property draw
 	 * @since 0.4.0
 	 */
 	open var draw: ((Canvas) -> Unit)? = null
 
 	/**
-	 * Whether the wrapper responds to touch events.
 	 * @property touchable
 	 * @since 0.1.0
 	 */
 	open var touchable: Boolean = true
 
 	/**
-	 * Indicates whether this view has a valid frame.
 	 * @property measured
 	 * @since 0.2.0
 	 */
@@ -382,7 +346,7 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	private var hasDepth: Boolean = false
+	private val hasDepth: Boolean
 		get() = this.translationZ != 0f || this.rotationX != 0f || this.rotationY != 0f
 
 	/**
@@ -390,7 +354,7 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	private var hasShape: Boolean = false
+	private val hasShape: Boolean
 		get() = this.borderTopLeftRadius > 0f || this.borderTopRightRadius > 0f || this.borderBottomLeftRadius > 0f || this.borderBottomRightRadius > 0f
 
 	/**
@@ -524,7 +488,6 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 	}
 
 	/**
-	 * @inherited
 	 * @method requestLayout
 	 * @since 0.5.0
 	 */
@@ -543,16 +506,15 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 	}
 
 	/**
-	 * @inherited
 	 * @method onMeasure
 	 * @since 0.2.0
 	 */
 	override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
 
 		/*
-		 * The frame is used here instead of the paramters because in some
+		 * The frame is used here instead of the parameters because in some
 		 * cases such as the window the given width and height will represent
-		 * the size given by the activitiy view and not the size computed by
+		 * the size given by the activity view and not the size computed by
 		 * our own layout engine.
 		 */
 
@@ -563,7 +525,6 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 	}
 
 	/**
-	 * @inherited
 	 * @method onLayout
 	 * @since 0.1.0
 	 */
@@ -574,7 +535,6 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 	/**
 	 * @method update
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	open fun update() {
 
@@ -594,7 +554,6 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 	}
 
 	/**
-	 * Updates the content view frame.
 	 * @method updateFrame
 	 * @since 0.2.0
 	 */
@@ -659,7 +618,6 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 	}
 
 	/**
-	 * Updates the wrapper node corners.
 	 * @method updateShape
 	 * @since 0.2.0
 	 */
@@ -800,7 +758,6 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 	}
 
 	/**
-	 * Updates whether this view should be drawable.
 	 * @method shouldRedraw
 	 * @since 0.4.0
 	 */
@@ -823,7 +780,6 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 	}
 
 	/**
-	 * Tells to the canvas layer that it needs to be redraw.
 	 * @method scheduleRedraw
 	 * @since 0.4.0
 	 */
@@ -836,7 +792,6 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 	//----------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method clearFocus
 	 * @since 0.6.0
 	 */
@@ -858,7 +813,6 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 	//----------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method onInterceptTouchEvent
 	 * @since 0.1.0
 	 */
@@ -871,7 +825,6 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 	//----------------------------------------------------------------------
 
 	/**
-	 * Executes custom drawing if needed.
 	 * @method drawCanvasIfNeeded
 	 * @since 0.4.0
 	 */
@@ -895,7 +848,6 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 	}
 
 	/**
-	 * @inherited
 	 * @method dispatchDraw
 	 * @since 0.1.0
 	 */
@@ -990,7 +942,6 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 	}
 
 	/**
-	 * @inherited
 	 * @method onDraw
 	 * @since 0.1.0
 	 */
@@ -1130,7 +1081,6 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method onTransitionProperty
 	 * @since 0.6.0
 	 */
@@ -1164,7 +1114,6 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 	}
 
 	/**
-	 * @inherited
 	 * @method onTransitionBegin
 	 * @since 0.2.0
 	 */
@@ -1173,7 +1122,6 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 	}
 
 	/**
-	 * @inherited
 	 * @method onTransitionFinish
 	 * @since 0.2.0
 	 */

@@ -1,7 +1,6 @@
 package ca.logaritm.dezel.core
 
 /**
- * The type of properties.
  * @enum JavaScriptPropertyType
  * @since 0.7.0
  */

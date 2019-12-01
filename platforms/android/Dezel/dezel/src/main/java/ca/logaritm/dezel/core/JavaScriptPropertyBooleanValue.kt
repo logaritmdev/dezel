@@ -2,8 +2,8 @@ package ca.logaritm.dezel.core
 
 /**
  * @class JavaScriptPropertyBooleanValue
+ * @super JavaScriptPropertyValue
  * @since 0.7.0
- * @hidden
  */
 open class JavaScriptPropertyBooleanValue(boolean: Boolean): JavaScriptPropertyValue(JavaScriptPropertyType.BOOLEAN) {
 
@@ -25,14 +25,12 @@ open class JavaScriptPropertyBooleanValue(boolean: Boolean): JavaScriptPropertyV
 	/**
 	 * @constructor
 	 * @since 0.7.0
-	 * @hidden
 	 */
 	init {
 		this.value = boolean
 	}
 
 	/**
-	 * @inherited
 	 * @method toString
 	 * @since 0.7.0
 	 */
@@ -41,7 +39,6 @@ open class JavaScriptPropertyBooleanValue(boolean: Boolean): JavaScriptPropertyV
 	}
 
 	/**
-	 * @inherited
 	 * @method toNumber
 	 * @since 0.7.0
 	 */
@@ -50,7 +47,6 @@ open class JavaScriptPropertyBooleanValue(boolean: Boolean): JavaScriptPropertyV
 	}
 
 	/**
-	 * @inherited
 	 * @method toBoolean
 	 * @since 0.7.0
 	 */

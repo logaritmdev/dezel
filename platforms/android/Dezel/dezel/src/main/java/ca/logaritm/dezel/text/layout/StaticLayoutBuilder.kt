@@ -5,11 +5,10 @@ import android.text.Spanned
 import android.text.StaticLayout
 import android.text.TextPaint
 import android.text.TextUtils
-import ca.logaritm.dezel.geom.Size
+import ca.logaritm.dezel.util.geom.Size
 import ca.logaritm.dezel.view.type.TextOverflow
 
 /**
- * Convenience class to create static layout.
  * @class StaticLayoutBuilder
  * @since 0.5.0
  */
@@ -20,7 +19,6 @@ public object StaticLayoutBuilder {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Creates a layout for the specified bounds.
 	 * @method build
 	 * @since 0.5.0
 	 */

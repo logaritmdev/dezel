@@ -14,7 +14,6 @@ import ca.logaritm.dezel.view.type.ImageFilter
 /**
  * @class ImageView
  * @since 0.7.0
- * @hidden
  */
 open class ImageView(context: Context) : View(context), Clippable {
 
@@ -23,7 +22,6 @@ open class ImageView(context: Context) : View(context), Clippable {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The image view's image.
 	 * @property image
 	 * @since 0.7.0
 	 */
@@ -32,7 +30,6 @@ open class ImageView(context: Context) : View(context), Clippable {
 	}
 
 	/**
-	 * The image view's image top position.
 	 * @property imageTop
 	 * @since 0.7.0
 	 */
@@ -41,7 +38,6 @@ open class ImageView(context: Context) : View(context), Clippable {
 	}
 
 	/**
-	 * The image view's image left position.
 	 * @property imageLeft
 	 * @since 0.7.0
 	 */
@@ -50,7 +46,6 @@ open class ImageView(context: Context) : View(context), Clippable {
 	}
 
 	/**
-	 * The image view's image width.
 	 * @property imageWidth
 	 * @since 0.7.0
 	 */
@@ -59,7 +54,6 @@ open class ImageView(context: Context) : View(context), Clippable {
 	}
 
 	/**
-	 * The image view's image height.
 	 * @property imageHeight
 	 * @since 0.7.0
 	 */
@@ -68,7 +62,6 @@ open class ImageView(context: Context) : View(context), Clippable {
 	}
 
 	/**
-	 * The image view's image filter.
 	 * @property imageFilter
 	 * @since 0.7.0
 	 */
@@ -77,11 +70,10 @@ open class ImageView(context: Context) : View(context), Clippable {
 	}
 
 	/**
-	 * The image view's image color.
-	 * @property imageTint
+	 * @property tint
 	 * @since 0.7.0
 	 */
-	open var imageTint: Int by Delegates.OnSet(Color.TRANSPARENT) {
+	open var tint: Int by Delegates.OnSet(Color.TRANSPARENT) {
 		this.invalidate()
 	}
 
@@ -138,7 +130,6 @@ open class ImageView(context: Context) : View(context), Clippable {
 	}
 
 	/**
-	 * Measures the natural size of this view.
 	 * @method measure
 	 * @since 0.7.0
 	 */
@@ -171,7 +162,6 @@ open class ImageView(context: Context) : View(context), Clippable {
 	/**
 	 * @method onDraw
 	 * @since 0.7.0
-	 * @hidden
 	 */
 	override fun onDraw(canvas: Canvas) {
 
@@ -193,7 +183,7 @@ open class ImageView(context: Context) : View(context), Clippable {
 			imageT + imageH
 		)
 
-		val tint = this.imageTint
+		val tint = this.tint
 		if (tint == Color.TRANSPARENT) {
 			this.paint.colorFilter = null
 		} else {

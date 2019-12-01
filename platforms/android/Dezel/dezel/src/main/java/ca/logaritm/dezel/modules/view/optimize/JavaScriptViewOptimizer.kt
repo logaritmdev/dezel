@@ -129,7 +129,6 @@ open class JavaScriptViewOptimizer(context: JavaScriptContext) : JavaScriptClass
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method onBeginLayout
 	 * @since 0.7.0
 	 */
@@ -138,7 +137,6 @@ open class JavaScriptViewOptimizer(context: JavaScriptContext) : JavaScriptClass
 	}
 
 	/**
-	 * @inherited
 	 * @method onFinishLayout
 	 * @since 0.7.0
 	 */
@@ -147,7 +145,6 @@ open class JavaScriptViewOptimizer(context: JavaScriptContext) : JavaScriptClass
 	}
 
 	/**
-	 * @inherited
 	 * @method onScroll
 	 * @since 0.7.0
 	 */

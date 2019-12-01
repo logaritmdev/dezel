@@ -9,13 +9,12 @@ import android.util.SizeF
 import ca.logaritm.dezel.extension.Delegates
 import ca.logaritm.dezel.extension.text.SpannableString
 import ca.logaritm.dezel.extension.type.max
-import ca.logaritm.dezel.geom.Size
+import ca.logaritm.dezel.util.geom.Size
 import ca.logaritm.dezel.text.layout.StaticLayoutBuilder
 import ca.logaritm.dezel.view.type.TextLocation
 import ca.logaritm.dezel.view.type.TextOverflow
 
 /**
- * Break up text into lines that fits into specified bounds.
  * @class TextLayout
  * @since 0.5.0
  */
@@ -26,7 +25,6 @@ open class TextLayout {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The text layout's text.
 	 * @property text
 	 * @since 0.5.0
 	 */
@@ -35,7 +33,6 @@ open class TextLayout {
 	}
 
 	/**
-	 * The text layout's text kerning.
 	 * @property textKerning
 	 * @since 0.5.0
 	 */
@@ -44,7 +41,6 @@ open class TextLayout {
 	}
 
 	/**
-	 * The text layout's text leading.
 	 * @property textLeading
 	 * @since 0.5.0
 	 */
@@ -53,7 +49,6 @@ open class TextLayout {
 	}
 
 	/**
-	 * The text layout's text baseline offset.
 	 * @property textBaseline
 	 * @since 0.5.0
 	 */
@@ -62,7 +57,6 @@ open class TextLayout {
 	}
 
 	/**
-	 * The text layout's text location.
 	 * @property textLocation
 	 * @since 0.7.0
 	 */
@@ -71,7 +65,6 @@ open class TextLayout {
 	}
 
 	/**
-	 * The text layout's text overflow.
 	 * @property textOverflow
 	 * @since 0.5.0
 	 */
@@ -80,7 +73,6 @@ open class TextLayout {
 	}
 
 	/**
-	 * The text layout's maximum amount of lines.
 	 * @property maxLines
 	 * @since 0.7.0
 	 */
@@ -89,7 +81,6 @@ open class TextLayout {
 	}
 
 	/**
-	 * The text layout size used to build.
 	 * @property bounds
 	 * @since 0.5.0
 	 */
@@ -97,15 +88,13 @@ open class TextLayout {
 		private set
 
 	/**
-	 * The text layout's computed limits.
-	 * @property extent
+	 * @property limits
 	 * @since 0.5.0
 	 */
 	public var limits: Size = Size()
 		private set
 
 	/**
-	 * The text layout's size that is taken.
 	 * @property extent
 	 * @since 0.5.0
 	 */
@@ -113,7 +102,6 @@ open class TextLayout {
 		private set
 
 	/**
-	 * Whether the text layout is invalid.
 	 * @property invalid
 	 * @since 0.5.0
 	 */
@@ -139,7 +127,6 @@ open class TextLayout {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Finds a character at the specified position.
 	 * @method build
 	 * @since 0.5.0
 	 */
@@ -163,7 +150,6 @@ open class TextLayout {
 	}
 
 	/**
-	 * Builds the layout.
 	 * @method build
 	 * @since 0.5.0
 	 */
@@ -172,7 +158,6 @@ open class TextLayout {
 	}
 
 	/**
-	 * Builds the layout.
 	 * @method build
 	 * @since 0.5.0
 	 */
@@ -244,7 +229,6 @@ open class TextLayout {
 	}
 
 	/**
-	 * Invalidates the layout.
 	 * @method invalidate
 	 * @since 0.5.0
 	 */
@@ -253,8 +237,7 @@ open class TextLayout {
 	}
 
 	/**
-	 * Draws the text layout.
-	 * @method invalidate
+	 * @method draw
 	 * @since 0.5.0
 	 */
 	open fun draw(canvas: Canvas) {

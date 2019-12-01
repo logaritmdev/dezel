@@ -3,7 +3,6 @@ package ca.logaritm.dezel.core
 import android.util.Log
 
 /**
- * Contains a JavaScript handle from the current context.
  * @class JavaScriptValue
  * @since 0.1.0
  */
@@ -131,7 +130,6 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The toValue's context.
 	 * @property context
 	 * @since 0.1.0
 	 */
@@ -139,7 +137,6 @@ open class JavaScriptValue(context: JavaScriptContext) {
 		private set
 
 	/**
-	 * The toValue's handle.
 	 * @property handle
 	 * @since 0.1.0
 	 */
@@ -158,7 +155,6 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Indicates whether the value is undefined.
 	 * @property isUndefined
 	 * @since 0.4.0
 	 */
@@ -166,7 +162,6 @@ open class JavaScriptValue(context: JavaScriptContext) {
 		get() = JavaScriptValueExternal.getType(this.context.handle, this.handle) == kJavaScriptValueTypeUndefined
 
 	/**
-	 * Indicates whether the value is null.
 	 * @property isNull
 	 * @since 0.4.0
 	 */
@@ -174,7 +169,6 @@ open class JavaScriptValue(context: JavaScriptContext) {
 		get() = JavaScriptValueExternal.getType(this.context.handle, this.handle) == kJavaScriptValueTypeNull
 
 	/**
-	 * Indicates whether the value is a toBoolean.
 	 * @property isBoolean
 	 * @since 0.4.0
 	 */
@@ -182,7 +176,6 @@ open class JavaScriptValue(context: JavaScriptContext) {
 		get() = JavaScriptValueExternal.getType(this.context.handle, this.handle) == kJavaScriptValueTypeBoolean
 
 	/**
-	 * Indicates whether the value is a toNumber.
 	 * @property isNumber
 	 * @since 0.4.0
 	 */
@@ -190,7 +183,6 @@ open class JavaScriptValue(context: JavaScriptContext) {
 		get() = JavaScriptValueExternal.getType(this.context.handle, this.handle) == kJavaScriptValueTypeNumber
 
 	/**
-	 * Indicates whether the value is a toString.
 	 * @property isString
 	 * @since 0.4.0
 	 */
@@ -198,7 +190,6 @@ open class JavaScriptValue(context: JavaScriptContext) {
 		get() = JavaScriptValueExternal.getType(this.context.handle, this.handle) == kJavaScriptValueTypeString
 
 	/**
-	 * Indicates whether the value is an object.
 	 * @property isObject
 	 * @since 0.4.0
 	 */
@@ -206,7 +197,6 @@ open class JavaScriptValue(context: JavaScriptContext) {
 		get() = JavaScriptValueExternal.getType(this.context.handle, this.handle) == kJavaScriptValueTypeObject
 
 	/**
-	 * Indicates whether the value is an array.
 	 * @property isObject
 	 * @since 0.4.0
 	 */
@@ -214,7 +204,6 @@ open class JavaScriptValue(context: JavaScriptContext) {
 		get() = JavaScriptValueExternal.getType(this.context.handle, this.handle) == kJavaScriptValueTypeArray
 
 	/**
-	 * Indicates whether the value is a function.
 	 * @property isFunction
 	 * @since 0.4.0
 	 */
@@ -226,7 +215,6 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Converts the value to a toString handle.
 	 * @property string
 	 * @since 0.2.0
 	 */
@@ -235,7 +223,6 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	}
 
 	/**
-	 * Converts the value to a double handle.
 	 * @property number
 	 * @since 0.2.0
 	 */
@@ -244,7 +231,6 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	}
 
 	/**
-	 * Converts the value to a toBoolean handle.
 	 * @property boolean
 	 * @since 0.2.0
 	 */
@@ -266,7 +252,6 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	}
 
 	/**
-	 * Increments the value's protection count.
 	 * @method protect
 	 * @since 0.1.0
 	 */
@@ -283,7 +268,6 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	}
 
 	/**
-	 * Decrements the value's protection count.
 	 * @method unprotect
 	 * @since 0.1.0
 	 */
@@ -306,7 +290,6 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	}
 
 	/**
-	 * Disposes the value's.
 	 * @method dispose
 	 * @since 0.1.0
 	 */
@@ -322,7 +305,6 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	}
 
 	/**
-	 * Casts the value to a specified type.
 	 * @method cast
 	 * @since 0.1.0
 	 */
@@ -343,7 +325,6 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	}
 
 	/**
-	 * Executes the value as a function.
 	 * @method call
 	 * @since 0.1.0
 	 */
@@ -352,7 +333,6 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	}
 
 	/**
-	 * Executes the value as a function with arguments.
 	 * @method call
 	 * @since 0.1.0
 	 */
@@ -361,7 +341,6 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	}
 
 	/**
-	 * Executes a holder from the value.
 	 * @method callMethod
 	 * @since 0.1.0
 	 */
@@ -370,7 +349,6 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	}
 
 	/**
-	 * Executes a holder with arguments from the value.
 	 * @method callMethod
 	 * @since 0.1.0
 	 */
@@ -379,7 +357,6 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	}
 
 	/**
-	 * Executes the value as a constructor.
 	 * @method construct
 	 * @since 0.1.0
 	 */
@@ -388,7 +365,6 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	}
 
 	/**
-	 * Executes the value as a constructor with arguments.
 	 * @method construct
 	 * @since 0.1.0
 	 */
@@ -397,7 +373,6 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	}
 
 	/**
-	 * Defines a property on this toValue.
 	 * @method defineProperty
 	 * @since 0.1.0
 	 */
@@ -418,7 +393,6 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	}
 
 	/**
-	 * Assigns the value of a property using a property.
 	 * @method property
 	 * @since 0.1.0
 	 */
@@ -427,7 +401,6 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	}
 
 	/**
-	 * Assigns the value of a property.
 	 * @method property
 	 * @since 0.1.0
 	 */
@@ -436,7 +409,6 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	}
 
 	/**
-	 * Assigns the value of a property using a toString.
 	 * @method property
 	 * @since 0.1.0
 	 */
@@ -445,7 +417,6 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	}
 
 	/**
-	 * Assigns the value of a property using a toNumber.
 	 * @method property
 	 * @since 0.1.0
 	 */
@@ -454,7 +425,6 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	}
 
 	/**
-	 * Assigns the value of a property using a toNumber.
 	 * @method property
 	 * @since 0.4.0
 	 */
@@ -463,7 +433,6 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	}
 
 	/**
-	 * Assigns the value of a property using a toNumber.
 	 * @method property
 	 * @since 0.4.0
 	 */
@@ -472,7 +441,6 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	}
 
 	/**
-	 * Assigns the value of a property using a toBoolean.
 	 * @method property
 	 * @since 0.1.0
 	 */
@@ -481,7 +449,6 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	}
 
 	/**
-	 * Returns the value of a property.
 	 * @method property
 	 * @since 0.1.0
 	 */
@@ -490,7 +457,6 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	}
 
 	/**
-	 * Assigns the value of a property at a specified index.
 	 * @method property
 	 * @since 0.1.0
 	 */
@@ -499,7 +465,6 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	}
 
 	/**
-	 * Assigns the value of a property at a specified index using a toString.
 	 * @method property
 	 * @since 0.1.0
 	 */
@@ -508,7 +473,6 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	}
 
 	/**
-	 * Assigns the value of a property at a specified index using a toNumber.
 	 * @method property
 	 * @since 0.1.0
 	 */
@@ -517,7 +481,6 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	}
 
 	/**
-	 * Assigns the value of a property at a specified index using a toNumber.
 	 * @method property
 	 * @since 0.4.0
 	 */
@@ -526,7 +489,6 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	}
 
 	/**
-	 * Assigns the value of a property at a specified index using a toNumber.
 	 * @method property
 	 * @since 0.4.0
 	 */
@@ -535,7 +497,6 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	}
 
 	/**
-	 * Assigns the value of a property at a specified index using a toBoolean.
 	 * @method property
 	 * @since 0.1.0
 	 */
@@ -544,7 +505,6 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	}
 
 	/**
-	 * Returns the value of a property at a specified index.
 	 * @method property
 	 * @since 0.1.0
 	 */
@@ -553,7 +513,6 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	}
 
 	/**
-	 * Executes a provided function once for each array element.
 	 * @method forEach
 	 * @since 0.1.0
 	 */
@@ -562,7 +521,6 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	}
 
 	/**
-	 * Executes a provided function once for each object properties.
 	 * @method forOwn
 	 * @since 0.7.0
 	 */
@@ -571,7 +529,6 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	}
 
 	/**
-	 * Assigns the internal prototype of this toValue.
 	 * @method prototype
 	 * @since 0.1.0
 	 */
@@ -580,7 +537,6 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	}
 
 	/**
-	 * Returns the internal prototype of this toValue.
 	 * @method prototype
 	 * @since 0.1.0
 	 */
@@ -589,7 +545,6 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	}
 
 	/**
-	 * Indicates the value is equal and the same type as the specified handle.
 	 * @method equals
 	 * @since 0.1.0
 	 */
@@ -598,7 +553,6 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	}
 
 	/**
-	 * Indicates if the value is the specified toString.
 	 * @method equals
 	 * @since 0.1.0
 	 */
@@ -607,7 +561,6 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	}
 
 	/**
-	 * Indicates if the value is the specified toNumber.
 	 * @method equals
 	 * @since 0.1.0
 	 */
@@ -616,7 +569,6 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	}
 
 	/**
-	 * Indicates if the value is the specified toBoolean.
 	 * @method equals
 	 * @since 0.1.0
 	 */
@@ -629,7 +581,6 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Called when the value gets protected.
 	 * @method onProtectValue
 	 * @since 0.4.0
 	 */
@@ -638,7 +589,6 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	}
 
 	/**
-	 * Called when the value gets unprotected.
 	 * @method onUnprotectValue
 	 * @since 0.4.0
 	 */
@@ -647,7 +597,6 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	}
 
 	/**
-	 * Called when the value gets resetted.
 	 * @method onResetValue
 	 * @since 0.4.0
 	 */
@@ -660,7 +609,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method toJs
+	 * @method toHandle
 	 * @since 0.7.0
 	 * @hidden
 	 */
@@ -673,7 +622,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method set
+	 * @method reset
 	 * @since 0.1.0
 	 * @hidden
 	 */

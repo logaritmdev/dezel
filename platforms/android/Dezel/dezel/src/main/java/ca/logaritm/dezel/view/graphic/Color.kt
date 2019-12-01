@@ -1,13 +1,12 @@
 package ca.logaritm.dezel.view.graphic
 
-import ca.logaritm.dezel.string.Scanner
+import ca.logaritm.dezel.util.string.Scanner
 import java.util.*
 import android.graphics.Color as AndroidColor
 
 /**
  * @object Color
  * @since 0.1.0
- * @hidden
  */
 public object Color {
 
@@ -18,33 +17,28 @@ public object Color {
 	/**
 	 * @const TRANSPARENT
 	 * @since 0.1.0
-	 * @hidden
 	 */
-	public val TRANSPARENT = AndroidColor.TRANSPARENT
+	public const val TRANSPARENT = AndroidColor.TRANSPARENT
 
 	/**
 	 * @const BLACK
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	public val BLACK = AndroidColor.argb(255, 0, 0, 0)
 
 	/**
 	 * @const WHITE
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	public val WHITE = AndroidColor.argb(255, 255, 255, 255)
 
 	/**'
 	 * @const GRAY
 	 * @since 0.3.0
-	 * @hidden
 	 */
 	public val GRAY = AndroidColor.argb(255, 68, 68, 68)
 
 	/**
-	 * Color names.
 	 * @property colors
 	 * @since 0.1.0
 	 */
@@ -205,7 +199,6 @@ public object Color {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Creates a color from a toString.
 	 * @method parse
 	 * @since 0.1.0
 	 */
@@ -213,7 +206,7 @@ public object Color {
 
 		var color = from
 
-		color = color.toLowerCase().trim { it <= ' ' }
+		color = color.toLowerCase(Locale.ROOT).trim { it <= ' ' }
 
 		if (color == "transparent" ||
 			color == "none") {
@@ -246,7 +239,6 @@ public object Color {
 	}
 
 	/**
-	 * Creates a color from a RGB toString.
 	 * @method createWithRGB
 	 * @since 0.1.0
 	 */
@@ -273,7 +265,6 @@ public object Color {
 	}
 
 	/**
-	 * Creates a color from a RGBA toString.
 	 * @method createWithRGBA
 	 * @since 0.1.0
 	 */
@@ -301,7 +292,6 @@ public object Color {
 	}
 
 	/**
-	 * Creates a color from an hex toString.
 	 * @method createWithHex
 	 * @since 0.1.0
 	 */
@@ -325,7 +315,6 @@ public object Color {
 	}
 
 	/**
-	 * Returns the alpha component of a color.
 	 * @method alpha
 	 * @since 0.1.0
 	 */

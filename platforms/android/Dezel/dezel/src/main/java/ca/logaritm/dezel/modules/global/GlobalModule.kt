@@ -4,10 +4,10 @@ package ca.logaritm.dezel.modules.global
 import android.view.Choreographer
 import ca.logaritm.dezel.core.JavaScriptContext
 import ca.logaritm.dezel.core.JavaScriptValue
-import ca.logaritm.dezel.core.Module
+import ca.logaritm.dezel.core.JavaScriptModule
 import ca.logaritm.dezel.extension.fatalError
-import ca.logaritm.dezel.timer.Ticker
-import ca.logaritm.dezel.timer.Timer
+import ca.logaritm.dezel.util.timer.Ticker
+import ca.logaritm.dezel.util.timer.Timer
 import kotlin.math.max
 
 /**
@@ -15,7 +15,7 @@ import kotlin.math.max
  * @since 0.7.0
  * @hidden
  */
-open class GlobalModule(context: JavaScriptContext) : Module(context) {
+open class GlobalModule(context: JavaScriptContext) : JavaScriptModule(context) {
 
 	//--------------------------------------------------------------------------
 	// Properties
@@ -216,7 +216,6 @@ open class GlobalModule(context: JavaScriptContext) : Module(context) {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method initialize
 	 * @since 0.7.0
 	 */
@@ -236,7 +235,6 @@ open class GlobalModule(context: JavaScriptContext) : Module(context) {
 	}
 
 	/**
-	 * @inherited
 	 * @method dispose
 	 * @since 0.7.0
 	 */

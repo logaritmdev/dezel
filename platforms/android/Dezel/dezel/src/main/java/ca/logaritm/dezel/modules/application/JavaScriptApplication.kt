@@ -5,7 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.provider.Settings
 import ca.logaritm.dezel.application.ApplicationActivity
-import ca.logaritm.dezel.application.application
+import ca.logaritm.dezel.application.activity
 import ca.logaritm.dezel.core.*
 import ca.logaritm.dezel.modules.view.JavaScriptWindow
 import ca.logaritm.dezel.view.graphic.Color
@@ -13,8 +13,8 @@ import ca.logaritm.dezel.view.graphic.Color
 
 /**
  * @class JavaScriptApplication
+ * @super JavaScriptClass
  * @since 0.7.0
- * @hidden
  */
 open class JavaScriptApplication(context: JavaScriptContext) : JavaScriptClass(context) {
 
@@ -23,7 +23,6 @@ open class JavaScriptApplication(context: JavaScriptContext) : JavaScriptClass(c
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The application's root.
 	 * @property window
 	 * @since 0.7.0
 	 */
@@ -35,7 +34,6 @@ open class JavaScriptApplication(context: JavaScriptContext) : JavaScriptClass(c
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Destroys the application.
 	 * @method destroy
 	 * @since 0.7.0
 	 */
@@ -53,7 +51,7 @@ open class JavaScriptApplication(context: JavaScriptContext) : JavaScriptClass(c
 	 * @hidden
 	 */
 	private fun openApplicationSettings() {
-		this.context.application.startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.fromParts("package", this.context.application.packageName, null)))
+		this.context.activity.startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.fromParts("package", this.context.activity.packageName, null)))
 	}
 
 	/**
@@ -62,7 +60,7 @@ open class JavaScriptApplication(context: JavaScriptContext) : JavaScriptClass(c
 	 * @hidden
 	 */
 	private fun openLocationSettings() {
-		this.context.application.startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
+		this.context.activity.startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
 	}
 
 	/**
@@ -78,49 +76,44 @@ open class JavaScriptApplication(context: JavaScriptContext) : JavaScriptClass(c
 			return
 		}
 
-		this.context.application.startActivity(Intent(Settings.ACTION_BLUETOOTH_SETTINGS))
+		this.context.activity.startActivity(Intent(Settings.ACTION_BLUETOOTH_SETTINGS))
 	}
 
 	//--------------------------------------------------------------------------
 	// JS Properties
 	//--------------------------------------------------------------------------
 
-
 	/**
-	 * The application's status bar visibility.
 	 * @property statusBarVisible
 	 * @since 0.7.0
 	 */
 	public val statusBarVisible by lazy {
 		JavaScriptProperty(true) { value ->
-			this.context.application.statusBarVisible = value.boolean
+			this.context.activity.statusBarVisible = value.boolean
 		}
 	}
 
 	/**
-	 * The application's status bar foreground color.
 	 * @property statusBarForegroundColor
 	 * @since 0.7.0
 	 */
 	public val statusBarForegroundColor by lazy {
 		JavaScriptProperty("black") { value ->
-			this.context.application.statusBarForegroundColor = Color.parse(value.string)
+			this.context.activity.statusBarForegroundColor = Color.parse(value.string)
 		}
 	}
 
 	/**
-	 * The application's status bar background color.
 	 * @property statusBarBackgroundColor
 	 * @since 0.7.0
 	 */
 	public val statusBarBackgroundColor by lazy {
 		JavaScriptProperty("transparent") { value ->
-			this.context.application.statusBarBackgroundColor = Color.parse(value.string)
+			this.context.activity.statusBarBackgroundColor = Color.parse(value.string)
 		}
 	}
 
 	/**
-	 * The application's badge.
 	 * @property badge
 	 * @since 0.7.0
 	 */
@@ -247,7 +240,7 @@ open class JavaScriptApplication(context: JavaScriptContext) : JavaScriptClass(c
 	 */
 	@Suppress("unused")
 	open fun jsGet_state(callback: JavaScriptGetterCallback) {
-		when (this.context.application.state) {
+		when (this.context.activity.state) {
 			ApplicationActivity.State.FOREGROUND -> callback.returns("foreground")
 			ApplicationActivity.State.BACKGROUND -> callback.returns("background")
 		}
@@ -264,7 +257,7 @@ open class JavaScriptApplication(context: JavaScriptContext) : JavaScriptClass(c
 	 */
 	@Suppress("unused")
 	open fun jsFunction_run(callback: JavaScriptFunctionCallback) {
-		this.context.application.launch(this)
+		this.context.activity.launch(this)
 	}
 
 	/**
@@ -283,17 +276,17 @@ open class JavaScriptApplication(context: JavaScriptContext) : JavaScriptClass(c
 
 		if (url.startsWith("http://") ||
 			url.startsWith("https://")) {
-			this.context.application.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+			this.context.activity.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
 			return
 		}
 
 		if (url.startsWith("tel:")) {
-			this.context.application.startActivity(Intent(Intent.ACTION_DIAL, Uri.parse(url)))
+			this.context.activity.startActivity(Intent(Intent.ACTION_DIAL, Uri.parse(url)))
 			return
 		}
 
 		if (url.startsWith("mailto:")) {
-			this.context.application.startActivity(Intent(Intent.ACTION_SENDTO, Uri.parse(url)))
+			this.context.activity.startActivity(Intent(Intent.ACTION_SENDTO, Uri.parse(url)))
 			return
 		}
 

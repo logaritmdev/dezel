@@ -27,7 +27,6 @@ open class TextColorSpan(textColor: Int): CharacterStyle() {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method updateDrawState
 	 * @since 0.5.0
 	 */

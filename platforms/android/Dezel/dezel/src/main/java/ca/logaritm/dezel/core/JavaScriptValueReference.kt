@@ -19,8 +19,7 @@ public class JavaScriptValueReference(referent: JavaScriptValue, queue: Referenc
 		private val refs: MutableMap<Int, JavaScriptValueReference> = mutableMapOf()
 
 		/**
-		 * Registers a JavaScript toValue reference.
-		 * @method register
+		 * @method protect
 		 * @since 0.4.0
 		 */
 		public fun protect(referent: JavaScriptValue) {
@@ -40,8 +39,7 @@ public class JavaScriptValueReference(referent: JavaScriptValue, queue: Referenc
 		}
 
 		/**
-		 * Registers a JavaScript toValue reference.
-		 * @method register
+		 * @method unprotect
 		 * @since 0.4.0
 		 */
 		public fun unprotect(referent: JavaScriptValue) {
@@ -84,7 +82,6 @@ public class JavaScriptValueReference(referent: JavaScriptValue, queue: Referenc
 	private var hash: Int = referent.hashCode()
 
 	/**
-	 * @inherited
 	 * @method finally
 	 * @since 0.4.0
 	 */

@@ -14,11 +14,11 @@ import android.widget.DatePicker
 import android.widget.EditText
 import android.widget.TimePicker
 import ca.logaritm.dezel.application.ApplicationActivity
-import ca.logaritm.dezel.date.DateParser
+import ca.logaritm.dezel.util.date.DateParser
 import ca.logaritm.dezel.extension.Delegates
 import ca.logaritm.dezel.extension.util.format
 import ca.logaritm.dezel.extension.util.iso
-import ca.logaritm.dezel.font.FontManager
+import ca.logaritm.dezel.text.font.FontManager
 import ca.logaritm.dezel.view.graphic.Color
 import ca.logaritm.dezel.view.graphic.Convert
 import ca.logaritm.dezel.view.type.*
@@ -27,8 +27,8 @@ import android.text.InputType as AndroidInputType
 
 /**
  * @class TextInput
+ * @super EditText
  * @since 0.7.0
- * @hidden
  */
 open class TextInput(context: Context, listener: TextInputListener?) : EditText(context), View.OnClickListener, DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
@@ -37,7 +37,6 @@ open class TextInput(context: Context, listener: TextInputListener?) : EditText(
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The text input's input type.
 	 * @property type
 	 * @since 0.7.0
 	 */
@@ -46,7 +45,6 @@ open class TextInput(context: Context, listener: TextInputListener?) : EditText(
 	}
 
 	/**
-	 * The text input's toValue.
 	 * @property value
 	 * @since 0.7.0
 	 */
@@ -59,10 +57,12 @@ open class TextInput(context: Context, listener: TextInputListener?) : EditText(
 
 			this.date = date
 
-			this.setString(date.format(
-				this.format,
-				this.locale
-			))
+			this.setString(
+				date.format(
+					this.format,
+					this.locale
+				)
+			)
 
 		} else {
 
@@ -72,7 +72,6 @@ open class TextInput(context: Context, listener: TextInputListener?) : EditText(
 	}
 
 	/**
-	 * The text input's placeholder.
 	 * @property placeholder
 	 * @since 0.7.0
 	 */
@@ -81,7 +80,6 @@ open class TextInput(context: Context, listener: TextInputListener?) : EditText(
 	}
 
 	/**
-	 * The text input's placeholder color.
 	 * @property placeholderColor
 	 * @since 0.7.0
 	 */
@@ -90,7 +88,6 @@ open class TextInput(context: Context, listener: TextInputListener?) : EditText(
 	}
 
 	/**
-	 * The text input's toValue format.
 	 * @property format
 	 * @since 0.7.0
 	 */
@@ -99,7 +96,6 @@ open class TextInput(context: Context, listener: TextInputListener?) : EditText(
 	}
 
 	/**
-	 * The text input's toValue format locale.
 	 * @property locale
 	 * @since 0.7.0
 	 */
@@ -108,7 +104,6 @@ open class TextInput(context: Context, listener: TextInputListener?) : EditText(
 	}
 
 	/**
-	 * The text input's font family.
 	 * @property fontFamily
 	 * @since 0.7.0
 	 */
@@ -117,7 +112,6 @@ open class TextInput(context: Context, listener: TextInputListener?) : EditText(
 	}
 
 	/**
-	 * The text input's font weight.
 	 * @property fontWeight
 	 * @since 0.7.0
 	 */
@@ -126,7 +120,6 @@ open class TextInput(context: Context, listener: TextInputListener?) : EditText(
 	}
 
 	/**
-	 * The text input's font style.
 	 * @property fontStyle
 	 * @since 0.7.0
 	 */
@@ -135,7 +128,6 @@ open class TextInput(context: Context, listener: TextInputListener?) : EditText(
 	}
 
 	/**
-	 * The text input's font size.
 	 * @property fontSize
 	 * @since 0.7.0
 	 */
@@ -144,7 +136,6 @@ open class TextInput(context: Context, listener: TextInputListener?) : EditText(
 	}
 
 	/**
-	 * The text input's text horizontal alignment.
 	 * @property textAlignment
 	 * @since 0.7.0
 	 */
@@ -153,7 +144,6 @@ open class TextInput(context: Context, listener: TextInputListener?) : EditText(
 	}
 
 	/**
-	 * The text input's text location.
 	 * @property textLocation
 	 * @since 0.7.0
 	 */
@@ -162,7 +152,6 @@ open class TextInput(context: Context, listener: TextInputListener?) : EditText(
 	}
 
 	/**
-	 * The text input's text kerning.
 	 * @property textKerning
 	 * @since 0.7.0
 	 */
@@ -171,7 +160,6 @@ open class TextInput(context: Context, listener: TextInputListener?) : EditText(
 	}
 
 	/**
-	 * The text input's text leading.
 	 * @property textLeading
 	 * @since 0.7.0
 	 */
@@ -180,7 +168,6 @@ open class TextInput(context: Context, listener: TextInputListener?) : EditText(
 	}
 
 	/**
-	 * The text input's text decoration.
 	 * @property textDecoration
 	 * @since 0.7.0
 	 */
@@ -199,7 +186,6 @@ open class TextInput(context: Context, listener: TextInputListener?) : EditText(
 	}
 
 	/**
-	 * The text input's text transform.
 	 * @property textTransform
 	 * @since 0.7.0
 	 */
@@ -208,7 +194,6 @@ open class TextInput(context: Context, listener: TextInputListener?) : EditText(
 	}
 
 	/**
-	 * The text input's text shadow blur distance.
 	 * @property textShadowBlur
 	 * @since 0.7.0
 	 */
@@ -217,7 +202,6 @@ open class TextInput(context: Context, listener: TextInputListener?) : EditText(
 	}
 
 	/**
-	 * The text input's text shadow color.
 	 * @property textShadowColor
 	 * @since 0.7.0
 	 */
@@ -226,7 +210,6 @@ open class TextInput(context: Context, listener: TextInputListener?) : EditText(
 	}
 
 	/**
-	 * The text input's text shadow vertical offset.
 	 * @property textShadowOffsetTop
 	 * @since 0.7.0
 	 */
@@ -235,7 +218,6 @@ open class TextInput(context: Context, listener: TextInputListener?) : EditText(
 	}
 
 	/**
-	 * The text input's text shadow horizontal offset.
 	 * @property textShadowOffsetLeft
 	 * @since 0.7.0
 	 */
@@ -244,7 +226,6 @@ open class TextInput(context: Context, listener: TextInputListener?) : EditText(
 	}
 
 	/**
-	 * The text input's top padding.
 	 * @property paddingTop
 	 * @since 0.7.0
 	 */
@@ -253,7 +234,6 @@ open class TextInput(context: Context, listener: TextInputListener?) : EditText(
 	}
 
 	/**
-	 * The text input's left padding.
 	 * @property paddingLeft
 	 * @since 0.7.0
 	 */
@@ -262,7 +242,6 @@ open class TextInput(context: Context, listener: TextInputListener?) : EditText(
 	}
 
 	/**
-	 * The text input's right padding.
 	 * @property paddingRight
 	 * @since 0.7.0
 	 */
@@ -271,7 +250,6 @@ open class TextInput(context: Context, listener: TextInputListener?) : EditText(
 	}
 
 	/**
-	 * The text input's bottom padding.
 	 * @property paddingBottom
 	 * @since 0.7.0
 	 */
@@ -280,7 +258,6 @@ open class TextInput(context: Context, listener: TextInputListener?) : EditText(
 	}
 
 	/**
-	 * The text input's autocorrect status.
 	 * @property autocorrect
 	 * @since 0.7.0
 	 */
@@ -289,7 +266,6 @@ open class TextInput(context: Context, listener: TextInputListener?) : EditText(
 	}
 
 	/**
-	 * The text input's autocapitalize status.
 	 * @property autocapitalize
 	 * @since 0.7.0
 	 */
@@ -399,7 +375,6 @@ open class TextInput(context: Context, listener: TextInputListener?) : EditText(
 	/**
 	 * @method focus
 	 * @since 0.7.0
-	 * @hidden
 	 */
 	open fun focus() {
 
@@ -424,7 +399,6 @@ open class TextInput(context: Context, listener: TextInputListener?) : EditText(
 	/**
 	 * @method blur
 	 * @since 0.7.0
-	 * @hidden
 	 */
 	open fun blur() {
 
@@ -449,7 +423,6 @@ open class TextInput(context: Context, listener: TextInputListener?) : EditText(
 	/**
 	 * @method onKeyPreIme
 	 * @since 0.7.0
-	 * @hidden
 	 */
 	override fun onKeyPreIme(keyCode: Int, event: KeyEvent): Boolean {
 
@@ -464,7 +437,6 @@ open class TextInput(context: Context, listener: TextInputListener?) : EditText(
 	/**
 	 * @method onTextChanged
 	 * @since 0.7.0
-	 * @hidden
 	 */
 	override fun onTextChanged(text: CharSequence, start: Int, lengthBefore: Int, lengthAfter: Int) {
 
@@ -489,7 +461,6 @@ open class TextInput(context: Context, listener: TextInputListener?) : EditText(
 	/**
 	 * @method onPreDraw
 	 * @since 0.7.0
-	 * @hidden
 	 */
 	override fun onPreDraw(): Boolean {
 
@@ -520,7 +491,6 @@ open class TextInput(context: Context, listener: TextInputListener?) : EditText(
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method onClick
 	 * @since 0.7.0
 	 */
@@ -542,7 +512,6 @@ open class TextInput(context: Context, listener: TextInputListener?) : EditText(
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method onDateSet
 	 * @since 0.7.0
 	 */
@@ -563,7 +532,6 @@ open class TextInput(context: Context, listener: TextInputListener?) : EditText(
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method onTimeSet
 	 * @since 0.7.0
 	 */

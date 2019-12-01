@@ -5,7 +5,6 @@ import java.lang.reflect.Method
 import kotlin.reflect.KClass
 
 /**
- * The JavaScript value type enum
  * @alias JavaScriptFinalizeHandler
  * @since 0.1.0
  */
@@ -19,70 +18,60 @@ const val kJavaScriptValueTypeArray = 7
 const val kJavaScriptValueTypeFunction = 8
 
 /**
- * The type alias for function handler.
  * @alias JavaScriptFinalizeHandler
  * @since 0.1.0
  */
 public typealias JavaScriptFinalizeHandler = (JavaScriptFinalizeCallback) -> Unit
 
 /**
- * The type alias for function handler.
  * @alias JavaScriptFunctionCallback
  * @since 0.1.0
  */
 public typealias JavaScriptFunctionHandler = (JavaScriptFunctionCallback) -> Unit
 
 /**
- * The type alias for property getter handler.
  * @alias JavaScriptGetterHandler
  * @since 0.1.0
  */
 public typealias JavaScriptGetterHandler = (JavaScriptGetterCallback) -> Unit
 
 /**
- * The type alias for property setter handler.
  * @alias JavaScriptSetterHandler
  * @since 0.1.0
  */
 public typealias JavaScriptSetterHandler = (JavaScriptSetterCallback) -> Unit
 
 /**
- * The type alias for the exception handler.
  * @alias JavaScriptExceptionHandler
  * @since 0.1.0
  */
 public typealias JavaScriptExceptionHandler = (JavaScriptValue) -> Unit
 
 /**
- * The type alias for handle arrays.
  * @alias ValueArray
  * @since 0.1.0
  */
 public typealias JavaScriptArguments = Array<JavaScriptValue?>
 
 /**
- * The object for each handler.
  * @alias JavaScriptForOwnHandler
  * @since 0.7.0
  */
 public typealias JavaScriptForOwnHandler = (String, JavaScriptValue) -> Unit
 
 /**
- * The array for each handler.
  * @alias JavaScriptForEachHandler
  * @since 0.7.0
  */
 public typealias JavaScriptForEachHandler = (Int, JavaScriptValue) -> Unit
 
 /**
- * The property change handler.
  * @alias JavaScriptPropertyHandler
  * @since 0.7.0
  */
 public typealias JavaScriptPropertyHandler = (JavaScriptProperty) -> Unit
 
 /**
- * The builder for each handler alias.
  * @alias JavaScriptBuilderForEachHandler
  * @since 0.2.0
  */

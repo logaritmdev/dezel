@@ -1,17 +1,16 @@
 package ca.logaritm.dezel.modules.locale
 
 import ca.logaritm.dezel.core.JavaScriptContext
-import ca.logaritm.dezel.core.Module
+import ca.logaritm.dezel.core.JavaScriptModule
 
 /**
- * @class LocaleModule
- * @since 0.1.0
- * @hidden
+ * @class JavaScriptLocaleModule
+ * @super JavaScriptModule
+ * @since 0.7.0
  */
-open class LocaleModule(context: JavaScriptContext) : Module(context) {
+open class JavaScriptLocaleModule(context: JavaScriptContext) : JavaScriptModule(context) {
 
 	/**
-	 * @inherited
 	 * @method initialize
 	 * @since 0.1.0
 	 */

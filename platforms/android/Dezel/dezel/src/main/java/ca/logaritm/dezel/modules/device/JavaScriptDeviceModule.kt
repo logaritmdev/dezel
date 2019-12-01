@@ -1,17 +1,16 @@
 package ca.logaritm.dezel.modules.device
 
 import ca.logaritm.dezel.core.JavaScriptContext
-import ca.logaritm.dezel.core.Module
+import ca.logaritm.dezel.core.JavaScriptModule
 
 /**
- * @class DeviceModule
- * @since 0.4.0
- * @hidden
+ * @class JavaScriptDeviceModule
+ * @super JavaScriptModule
+ * @since 0.7.0
  */
-open class DeviceModule(context: JavaScriptContext) : Module(context) {
+open class JavaScriptDeviceModule(context: JavaScriptContext) : JavaScriptModule(context) {
 
 	/**
-	 * @inherited
 	 * @method initialize
 	 * @since 0.4.0
 	 */

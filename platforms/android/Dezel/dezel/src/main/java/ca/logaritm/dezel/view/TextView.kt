@@ -14,9 +14,9 @@ import ca.logaritm.dezel.extension.text.SpannableString
 import ca.logaritm.dezel.extension.type.isHTML
 import ca.logaritm.dezel.extension.type.normalize
 import ca.logaritm.dezel.extension.view.setMeasuredFrame
-import ca.logaritm.dezel.font.Font
-import ca.logaritm.dezel.geom.Rect
-import ca.logaritm.dezel.geom.Size
+import ca.logaritm.dezel.text.font.Font
+import ca.logaritm.dezel.util.geom.Rect
+import ca.logaritm.dezel.util.geom.Size
 import ca.logaritm.dezel.text.TextLayout
 import ca.logaritm.dezel.text.TextParser
 import ca.logaritm.dezel.text.span.*
@@ -25,8 +25,8 @@ import ca.logaritm.dezel.view.type.*
 
 /**
  * @class TextView
+ * @super View
  * @since 0.7.0
- * @hidden
  */
 open class TextView(context: Context, listener: TextViewListener?) : View(context), Resizable, Clippable {
 
@@ -35,14 +35,12 @@ open class TextView(context: Context, listener: TextViewListener?) : View(contex
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The text view's text layout.
 	 * @property layout
 	 * @since 0.7.0
 	 */
 	open var layout: TextLayout = TextLayout()
 
 	/**
-	 * The text view's font family.
 	 * @property fontFamily
 	 * @since 0.7.0
 	 */
@@ -53,7 +51,6 @@ open class TextView(context: Context, listener: TextViewListener?) : View(contex
 	}
 
 	/**
-	 * The text view's font weight.
 	 * @property fontWeight
 	 * @since 0.7.0
 	 */
@@ -64,7 +61,6 @@ open class TextView(context: Context, listener: TextViewListener?) : View(contex
 	}
 
 	/**
-	 * The text view's font renderNode.
 	 * @property fontStyle
 	 * @since 0.7.0
 	 */
@@ -75,7 +71,6 @@ open class TextView(context: Context, listener: TextViewListener?) : View(contex
 	}
 
 	/**
-	 * The text view's font viewport.
 	 * @property fontSize
 	 * @since 0.7.0
 	 */
@@ -88,7 +83,6 @@ open class TextView(context: Context, listener: TextViewListener?) : View(contex
 	/**
 	 * @property text
 	 * @since 0.7.0
-	 * @hidden
 	 */
 	open var text: String by Delegates.OnSet("") {
 		this.invalidateSpans()
@@ -99,7 +93,6 @@ open class TextView(context: Context, listener: TextViewListener?) : View(contex
 	/**
 	 * @property textColor
 	 * @since 0.7.0
-	 * @hidden
 	 */
 	open var textColor: Int by Delegates.OnSet(Color.BLACK) {
 		this.invalidateSpans()
@@ -110,7 +103,6 @@ open class TextView(context: Context, listener: TextViewListener?) : View(contex
 	/**
 	 * @property textBaseline
 	 * @since 0.7.0
-	 * @hidden
 	 */
 	open var textBaseline: Float by Delegates.OnSet(0f) { value ->
 		this.layout.textBaseline = value
@@ -120,7 +112,6 @@ open class TextView(context: Context, listener: TextViewListener?) : View(contex
 	/**
 	 * @property textAlignment
 	 * @since 0.7.0
-	 * @hidden
 	 */
 	open var textAlignment: TextAlignment by Delegates.OnSet(TextAlignment.START) {
 		this.invalidateSpans()
@@ -131,7 +122,6 @@ open class TextView(context: Context, listener: TextViewListener?) : View(contex
 	/**
 	 * @property textLocation
 	 * @since 0.7.0
-	 * @hidden
 	 */
 	open var textLocation: TextLocation by Delegates.OnSet(TextLocation.MIDDLE) { value ->
 		this.layout.textLocation = value
@@ -141,7 +131,6 @@ open class TextView(context: Context, listener: TextViewListener?) : View(contex
 	/**
 	 * @property textKerning
 	 * @since 0.7.0
-	 * @hidden
 	 */
 	open var textKerning: Float by Delegates.OnSet(0f) { value ->
 		this.layout.textKerning = value
@@ -153,7 +142,6 @@ open class TextView(context: Context, listener: TextViewListener?) : View(contex
 	/**
 	 * @property textLeading
 	 * @since 0.7.0
-	 * @hidden
 	 */
 	open var textLeading: Float by Delegates.OnSet(0f) { value ->
 		this.layout.textLeading = value
@@ -165,7 +153,6 @@ open class TextView(context: Context, listener: TextViewListener?) : View(contex
 	/**
 	 * @property textOverflow
 	 * @since 0.7.0
-	 * @hidden
 	 */
 	open var textOverflow: TextOverflow by Delegates.OnSet(TextOverflow.ELLIPSIS) { value ->
 		this.layout.textOverflow = value
@@ -175,7 +162,6 @@ open class TextView(context: Context, listener: TextViewListener?) : View(contex
 	/**
 	 * @property textDecoration
 	 * @since 0.7.0
-	 * @hidden
 	 */
 	open var textDecoration: TextDecoration by Delegates.OnSet(TextDecoration.NONE) {
 		this.invalidateSpans()
@@ -186,7 +172,6 @@ open class TextView(context: Context, listener: TextViewListener?) : View(contex
 	/**
 	 * @property textTransform
 	 * @since 0.7.0
-	 * @hidden
 	 */
 	open var textTransform: TextTransform by Delegates.OnSet(TextTransform.NONE) {
 		this.invalidateSpans()
@@ -197,7 +182,6 @@ open class TextView(context: Context, listener: TextViewListener?) : View(contex
 	/**
 	 * @property textShadowBlur
 	 * @since 0.7.0
-	 * @hidden
 	 */
 	open var textShadowBlur: Float by Delegates.OnSet(0f) {
 		this.invalidate()
@@ -206,7 +190,6 @@ open class TextView(context: Context, listener: TextViewListener?) : View(contex
 	/**
 	 * @property textShadowColor
 	 * @since 0.7.0
-	 * @hidden
 	 */
 	open var textShadowColor: Int by Delegates.OnSet(Color.BLACK) {
 		this.invalidate()
@@ -215,7 +198,6 @@ open class TextView(context: Context, listener: TextViewListener?) : View(contex
 	/**
 	 * @property textShadowOffsetTop
 	 * @since 0.7.0
-	 * @hidden
 	 */
 	open var textShadowOffsetTop: Float by Delegates.OnSet(0f) {
 		this.invalidate()
@@ -224,7 +206,6 @@ open class TextView(context: Context, listener: TextViewListener?) : View(contex
 	/**
 	 * @property textShadowOffsetLeft
 	 * @since 0.7.0
-	 * @hidden
 	 */
 	open var textShadowOffsetLeft: Float by Delegates.OnSet(0f) {
 		this.invalidate()
@@ -233,7 +214,6 @@ open class TextView(context: Context, listener: TextViewListener?) : View(contex
 	/**
 	 * @property maxLines
 	 * @since 0.7.0
-	 * @hidden
 	 */
 	open var maxLines: Int by Delegates.OnSet(0) { value ->
 		this.layout.maxLines = value
@@ -243,7 +223,6 @@ open class TextView(context: Context, listener: TextViewListener?) : View(contex
 	/**
 	 * @property linkColor
 	 * @since 0.7.0
-	 * @hidden
 	 */
 	open var linkColor: Int by Delegates.OnSet(Color.BLUE) {
 		this.invalidateSpans()
@@ -254,7 +233,6 @@ open class TextView(context: Context, listener: TextViewListener?) : View(contex
 	/**
 	 * @property linkDecoration
 	 * @since 0.7.0
-	 * @hidden
 	 */
 	private var linkDecoration: TextDecoration by Delegates.OnSet(TextDecoration.UNDERLINE) {
 		this.invalidateSpans()
@@ -265,7 +243,6 @@ open class TextView(context: Context, listener: TextViewListener?) : View(contex
 	/**
 	 * @property paddingTop
 	 * @since 0.7.0
-	 * @hidden
 	 */
 	open var paddingTop: Float by Delegates.OnSet(0f) {
 		this.invalidate()
@@ -274,7 +251,6 @@ open class TextView(context: Context, listener: TextViewListener?) : View(contex
 	/**
 	 * @property paddingLeft
 	 * @since 0.7.0
-	 * @hidden
 	 */
 	open var paddingLeft: Float by Delegates.OnSet(0f) {
 		this.invalidate()
@@ -283,7 +259,6 @@ open class TextView(context: Context, listener: TextViewListener?) : View(contex
 	/**
 	 * @property paddingRight
 	 * @since 0.7.0
-	 * @hidden
 	 */
 	open var paddingRight: Float by Delegates.OnSet(0f) {
 		this.invalidate()
@@ -292,7 +267,6 @@ open class TextView(context: Context, listener: TextViewListener?) : View(contex
 	/**
 	 * @property paddingBottom
 	 * @since 0.7.0
-	 * @hidden
 	 */
 	open var paddingBottom: Float by Delegates.OnSet(0f) {
 		this.invalidate()
@@ -373,7 +347,6 @@ open class TextView(context: Context, listener: TextViewListener?) : View(contex
 	/**
 	 * @constructor
 	 * @since 0.7.0
-	 * @hidden
 	 */
 	init {
 
@@ -391,7 +364,6 @@ open class TextView(context: Context, listener: TextViewListener?) : View(contex
 	}
 
 	/**
-	 * @inherited
 	 * @method onResize
 	 * @since 0.7.0
 	 */
@@ -411,7 +383,6 @@ open class TextView(context: Context, listener: TextViewListener?) : View(contex
 	}
 
 	/**
-	 * Measures the natural viewport of this view.
 	 * @method measure
 	 * @since 0.7.0
 	 */
@@ -455,7 +426,6 @@ open class TextView(context: Context, listener: TextViewListener?) : View(contex
 	/**
 	 * @method update
 	 * @since 0.7.0
-	 * @hidden
 	 */
 	open fun update() {
 		this.update(this.bounds.size)
@@ -464,7 +434,6 @@ open class TextView(context: Context, listener: TextViewListener?) : View(contex
 	/**
 	 * @method update
 	 * @since 0.7.0
-	 * @hidden
 	 */
 	open fun update(size: Size) {
 
@@ -482,7 +451,6 @@ open class TextView(context: Context, listener: TextViewListener?) : View(contex
 	}
 
 	/**
-	 * Updates the spans.
 	 * @method updateSpans
 	 * @since 0.7.0
 	 */
@@ -515,7 +483,6 @@ open class TextView(context: Context, listener: TextViewListener?) : View(contex
 	}
 
 	/**
-	 * Updates the spanned text toString.
 	 * @method updateSpannedText
 	 * @since 0.7.0
 	 */
@@ -547,7 +514,6 @@ open class TextView(context: Context, listener: TextViewListener?) : View(contex
 	/**
 	 * @method onTouchEvent
 	 * @since 0.7.0
-	 * @hidden
 	 */
 	override fun onTouchEvent(event: MotionEvent): Boolean {
 
@@ -575,7 +541,6 @@ open class TextView(context: Context, listener: TextViewListener?) : View(contex
 	/**
 	 * @method onDraw
 	 * @since 0.7.0
-	 * @hidden
 	 */
 	override fun onDraw(canvas: Canvas) {
 

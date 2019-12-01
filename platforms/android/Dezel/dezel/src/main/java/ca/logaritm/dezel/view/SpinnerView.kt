@@ -14,8 +14,8 @@ import ca.logaritm.dezel.view.graphic.Color
 
 /**
  * @class SpinnerView
+ * @super FrameLayout
  * @since 0.7.0
- * @hidden
  */
 open class SpinnerView(context: Context) : FrameLayout(context) {
 
@@ -24,11 +24,10 @@ open class SpinnerView(context: Context) : FrameLayout(context) {
 	//----------------------------------------------------------------------
 
 	/**
-	 * @property active
+	 * @property spin
 	 * @since 0.7.0
-	 * @hidden
 	 */
-	open var active: Boolean by Delegates.OnSet(false) { value ->
+	open var spin: Boolean by Delegates.OnSet(false) { value ->
 		if (value) {
 			this.showActiveDrawable()
 			this.hideCircleDrawable()
@@ -39,11 +38,10 @@ open class SpinnerView(context: Context) : FrameLayout(context) {
 	}
 
 	/**
-	 * @property color
+	 * @property tint
 	 * @since 0.7.0
-	 * @hidden
 	 */
-	open var color: Int by Delegates.OnSet(Color.GRAY) { value ->
+	open var tint: Int by Delegates.OnSet(Color.GRAY) { value ->
 		this.activeSpinnerDrawable.setColorFilter(value, PorterDuff.Mode.SRC_IN)
 		this.circleSpinnerDrawable.setColorFilter(value, PorterDuff.Mode.SRC_IN)
 	}
@@ -83,7 +81,6 @@ open class SpinnerView(context: Context) : FrameLayout(context) {
 	/**
 	 * @constructor
 	 * @since 0.7.0
-	 * @hidden
 	 */
 	init {
 
@@ -102,7 +99,6 @@ open class SpinnerView(context: Context) : FrameLayout(context) {
 	}
 
 	/**
-	 * @inherited
 	 * @method onMeasure
 	 * @since 0.7.0
 	 */
@@ -114,24 +110,21 @@ open class SpinnerView(context: Context) : FrameLayout(context) {
 	/**
 	 * @method onDraw
 	 * @since 0.7.0
-	 * @since 0.7.0
 	 */
 	override fun onDraw(canvas: Canvas) {
+
 		super.onDraw(canvas)
+
 		if (this.circleSpinnerDrawable.isVisible) {
 			this.circleSpinnerDrawable.bounds.set(0, 0, this.width, this.height)
 			this.circleSpinnerDrawable.draw(canvas)
 		}
 	}
 
-	//--------------------------------------------------------------------------
-	// Private API
-	//--------------------------------------------------------------------------
-
 	/**
 	 * @method showActiveDrawable
 	 * @since 0.7.0
-	 * @since 0.7.0
+	 * @hidden
 	 */
 	private fun showActiveDrawable() {
 		this.progressBar.visibility = View.VISIBLE
@@ -144,7 +137,7 @@ open class SpinnerView(context: Context) : FrameLayout(context) {
 	/**
 	 * @method hideActiveDrawable
 	 * @since 0.7.0
-	 * @since 0.7.0
+	 * @hidden
 	 */
 	private fun hideActiveDrawable() {
 		this.progressBar.visibility = View.GONE
@@ -153,7 +146,7 @@ open class SpinnerView(context: Context) : FrameLayout(context) {
 	/**
 	 * @method showCircleDrawable
 	 * @since 0.7.0
-	 * @since 0.7.0
+	 * @hidden
 	 */
 	private fun showCircleDrawable() {
 		this.circleSpinnerDrawable.setVisible(true, false)
@@ -163,7 +156,7 @@ open class SpinnerView(context: Context) : FrameLayout(context) {
 	/**
 	 * @method hideCircleDrawable
 	 * @since 0.7.0
-	 * @since 0.7.0
+	 * @hidden
 	 */
 	private fun hideCircleDrawable() {
 		this.circleSpinnerDrawable.setVisible(false, false)
@@ -173,7 +166,7 @@ open class SpinnerView(context: Context) : FrameLayout(context) {
 	/**
 	 * @method getActiveDrawable
 	 * @since 0.7.0
-	 * @since 0.7.0
+	 * @hidden
 	 */
 	private fun getActiveDrawable(): Drawable {
 		return this.progressBar.indeterminateDrawable
@@ -182,7 +175,7 @@ open class SpinnerView(context: Context) : FrameLayout(context) {
 	/**
 	 * @method getCircleDrawable
 	 * @since 0.7.0
-	 * @since 0.7.0
+	 * @hidden
 	 */
 	private fun getCircleDrawable(): Drawable {
 		return this.context.getDrawable(R.drawable.spinner_view)!!

@@ -6,8 +6,8 @@ import java.lang.ref.ReferenceQueue
 
 /**
  * @class DisplayNodeReference
+ * @super FinalizableReference
  * @since 0.7.0
- * @hidden
  */
 public class DisplayNodeReference(referent: DisplayNode, queue: ReferenceQueue<Any>): FinalizableReference<DisplayNode>(referent, queue) {
 
@@ -21,7 +21,6 @@ public class DisplayNodeReference(referent: DisplayNode, queue: ReferenceQueue<A
 		private val refs: MutableSet<DisplayNodeReference> = mutableSetOf()
 
 		/**
-		 * Registers a layout reference.
 		 * @method register
 		 * @since 0.7.0
 		 */
@@ -38,7 +37,6 @@ public class DisplayNodeReference(referent: DisplayNode, queue: ReferenceQueue<A
 	private val handle = referent.handle
 
 	/**
-	 * @inherited
 	 * @method finally
 	 * @since 0.7.0
 	 */

@@ -6,7 +6,7 @@ import android.media.MediaActionSound
 import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
-import ca.logaritm.dezel.application.application
+import ca.logaritm.dezel.application.activity
 import ca.logaritm.dezel.core.JavaScriptClass
 import ca.logaritm.dezel.core.JavaScriptContext
 import ca.logaritm.dezel.core.JavaScriptFunctionCallback
@@ -16,8 +16,8 @@ import java.util.*
 
 /**
  * @class JavaScriptDevice
+ * @super JavaScriptClass
  * @since 0.4.0
- * @hidden
  */
 open class JavaScriptDevice(context: JavaScriptContext): JavaScriptClass(context) {
 
@@ -26,7 +26,7 @@ open class JavaScriptDevice(context: JavaScriptContext): JavaScriptClass(context
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	private val preferences: SharedPreferences = this.context.application.getSharedPreferences("dezel.device.uuid", android.content.Context.MODE_PRIVATE)
+	private val preferences: SharedPreferences = this.context.activity.getSharedPreferences("dezel.device.uuid", android.content.Context.MODE_PRIVATE)
 
 	//--------------------------------------------------------------------------
 	// JS Functions
@@ -103,7 +103,7 @@ open class JavaScriptDevice(context: JavaScriptContext): JavaScriptClass(context
 		val vibrator: Vibrator
 
 		try {
-			vibrator = this.context.application.getSystemService(VIBRATOR_SERVICE) as Vibrator
+			vibrator = this.context.activity.getSystemService(VIBRATOR_SERVICE) as Vibrator
 		} catch (e: Exception) {
 			return
 		}

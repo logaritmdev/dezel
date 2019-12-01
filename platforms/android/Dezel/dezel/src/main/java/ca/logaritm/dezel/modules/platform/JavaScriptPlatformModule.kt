@@ -1,17 +1,16 @@
 package ca.logaritm.dezel.modules.platform
 
 import ca.logaritm.dezel.core.JavaScriptContext
-import ca.logaritm.dezel.core.Module
+import ca.logaritm.dezel.core.JavaScriptModule
 
 /**
- * @class PlatformModule
- * @since 0.1.0
- * @hidden
+ * @class JavaScriptPlatformModule
+ * @super JavaScriptModule
+ * @since 0.7.0
  */
-public class PlatformModule(context: JavaScriptContext) : Module(context) {
+public class JavaScriptPlatformModule(context: JavaScriptContext) : JavaScriptModule(context) {
 
 	/**
-	 * @inherited
 	 * @method initialize
 	 * @since 0.1.0
 	 */

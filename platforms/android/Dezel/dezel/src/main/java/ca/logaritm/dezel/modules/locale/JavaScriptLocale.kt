@@ -7,8 +7,8 @@ import java.util.*
 
 /**
  * @class JavaScriptLocale
+ * @super JavaScriptClass
  * @since 0.7.0
- * @hidden
  */
 open class JavaScriptLocale(context: JavaScriptContext): JavaScriptClass(context) {
 
@@ -17,32 +17,36 @@ open class JavaScriptLocale(context: JavaScriptContext): JavaScriptClass(context
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The locale's language.
 	 * @property language
 	 * @since 0.7.0
 	 */
-	public val language = JavaScriptProperty()
+	public val language by lazy {
+		JavaScriptProperty()
+	}
 
 	/**
-	 * The locale's region.
 	 * @property region
 	 * @since 0.7.0
 	 */
-	public val region = JavaScriptProperty()
+	public val region by lazy {
+		JavaScriptProperty()
+	}
 
 	/**
-	 * Whether the locale is left to right.
 	 * @property ltr
 	 * @since 0.7.0
 	 */
-	public val ltr = JavaScriptProperty()
+	public val ltr by lazy {
+		JavaScriptProperty()
+	}
 
 	/**
-	 * Whether the locale is right to left.
 	 * @property ltr
 	 * @since 0.7.0
 	 */
-	public val rtl = JavaScriptProperty()
+	public val rtl by lazy {
+		JavaScriptProperty()
+	}
 
 	//--------------------------------------------------------------------------
 
@@ -99,7 +103,6 @@ open class JavaScriptLocale(context: JavaScriptContext): JavaScriptClass(context
 	/**
 	 * @constructor
 	 * @since 0.7.0
-	 * @hidden
 	 */
 	init {
 

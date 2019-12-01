@@ -1,8 +1,8 @@
 package ca.logaritm.dezel.modules.core
 
-import ca.logaritm.dezel.application.application
+import ca.logaritm.dezel.application.activity
 import ca.logaritm.dezel.core.JavaScriptContext
-import ca.logaritm.dezel.core.Module
+import ca.logaritm.dezel.core.JavaScriptModule
 import ca.logaritm.dezel.extension.fatalError
 import ca.logaritm.dezel.extension.type.let
 import ca.logaritm.dezel.modules.application.JavaScriptApplication
@@ -12,7 +12,7 @@ import ca.logaritm.dezel.modules.application.JavaScriptApplication
  * @since 0.7.0
  * @hidden
  */
-open class CoreModule(context: JavaScriptContext) : Module(context) {
+open class CoreModule(context: JavaScriptContext) : JavaScriptModule(context) {
 
 	//--------------------------------------------------------------------------
 	// Properties
@@ -77,7 +77,7 @@ open class CoreModule(context: JavaScriptContext) : Module(context) {
 		val uid = callback.argument(1).string
 
 		app.cast(JavaScriptApplication::class.java).let {
-			this.context.application.launch(it, uid)
+			this.context.activity.launch(it, uid)
 		}
 	}
 	//--------------------------------------------------------------------------
@@ -85,7 +85,6 @@ open class CoreModule(context: JavaScriptContext) : Module(context) {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method initialize
 	 * @since 0.1.0
 	 */

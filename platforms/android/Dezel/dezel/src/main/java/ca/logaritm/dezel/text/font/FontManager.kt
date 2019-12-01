@@ -14,7 +14,6 @@ public object FontManager {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The native fonts.
 	 * @property natives
 	 * @since 0.1.0
 	 */
@@ -54,21 +53,18 @@ public object FontManager {
 	)
 
 	/**
-	 * The font cache.
 	 * @property cache
 	 * @since 0.1.0
 	 */
 	private var cache: MutableMap<String, Typeface> = mutableMapOf()
 
 	/**
-	 * The fonts list.
 	 * @property fonts
 	 * @since 0.1.0
 	 */
 	private var fonts: MutableList<FontFile> = mutableListOf()
 
 	/**
-	 * Loads the fonts from the assets fonts folder.
 	 * @method load
 	 * @since 0.1.0
 	 */
@@ -79,7 +75,6 @@ public object FontManager {
 	}
 
 	/**
-	 * Returns the best typeface for the specified font.
 	 * @method get
 	 * @since 0.1.0
 	 */

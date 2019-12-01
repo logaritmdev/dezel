@@ -3,18 +3,31 @@ package ca.logaritm.dezel.core
 import ca.logaritm.dezel.extension.isLocked
 
 /**
- * A JavaScript property.
  * @class JavaScriptProperty
  * @since 0.7.0
  */
 public class JavaScriptProperty {
 
 	//--------------------------------------------------------------------------
+	// Static
+	//--------------------------------------------------------------------------
+
+	companion object {
+
+		/**
+		 * @property NullValue
+		 * @since 0.7.0
+		 * @hidden
+		 */
+		private val NullValue = JavaScriptPropertyValue()
+
+	}
+
+	//--------------------------------------------------------------------------
 	// Properties
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The property's type.
 	 * @property type
 	 * @since 0.7.0
 	 */
@@ -22,7 +35,6 @@ public class JavaScriptProperty {
 		get() = this.currentValue.type
 	
 	/**
-	 * The property's unit.
 	 * @property unit
 	 * @since 0.7.0
 	 */
@@ -30,7 +42,6 @@ public class JavaScriptProperty {
 		get() = this.currentValue.unit
 
 	/**
-	 * The property's string currentValue.
 	 * @property string
 	 * @since 0.7.0
 	 */
@@ -38,7 +49,6 @@ public class JavaScriptProperty {
 		get() = this.currentValue.string
 
 	/**
-	 * The property's number currentValue.
 	 * @property number
 	 * @since 0.7.0
 	 */
@@ -46,7 +56,6 @@ public class JavaScriptProperty {
 		get() = this.currentValue.number
 
 	/**
-	 * The property's boolean currentValue.
 	 * @property boolean
 	 * @since 0.7.0
 	 */
@@ -54,7 +63,6 @@ public class JavaScriptProperty {
 		get() = this.currentValue.boolean
 
 	/**
-	 * Indicate whether the property is null.
 	 * @property isNull
 	 * @since 0.7.0
 	 */
@@ -62,7 +70,6 @@ public class JavaScriptProperty {
 		get() = this.type == JavaScriptPropertyType.NULL
 
 	/**
-	 * Indicate whether the property is a string.
 	 * @property isString
 	 * @since 0.7.0
 	 */
@@ -70,7 +77,6 @@ public class JavaScriptProperty {
 		get() = this.type == JavaScriptPropertyType.STRING
 
 	/**
-	 * Indicate whether the property is a number.
 	 * @property isNumber
 	 * @since 0.7.0
 	 */
@@ -78,7 +84,6 @@ public class JavaScriptProperty {
 		get() = this.type == JavaScriptPropertyType.NUMBER
 
 	/**
-	 * Indicate whether the property is a boolean.
 	 * @property isBoolean
 	 * @since 0.7.0
 	 */
@@ -86,7 +91,6 @@ public class JavaScriptProperty {
 		get() = this.type == JavaScriptPropertyType.BOOLEAN
 
 	/**
-	 * Indicate whether the property is an object.
 	 * @property isObject
 	 * @since 0.7.0
 	 */
@@ -94,7 +98,6 @@ public class JavaScriptProperty {
 		get() = this.type == JavaScriptPropertyType.OBJECT
 
 	/**
-	 * Indicate whether the property is an array.
 	 * @property isArray
 	 * @since 0.7.0
 	 */
@@ -134,18 +137,16 @@ public class JavaScriptProperty {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Initializes the property to null.
 	 * @constructor
 	 * @since 0.7.0
 	 */
 	public constructor(handler: JavaScriptPropertyHandler? = null) {
-		this.initialValue = JavaScriptPropertyValue()
-		this.currentValue = this.initialValue
+		this.initialValue = NullValue
+		this.currentValue = NullValue
 		this.handler = handler
 	}
 
 	/**
-	 * Initializes the property with a string.
 	 * @constructor
 	 * @since 0.7.0
 	 */
@@ -156,7 +157,6 @@ public class JavaScriptProperty {
 	}
 
 	/**
-	 * Initializes the property with a number.
 	 * @constructor
 	 * @since 0.7.0
 	 */
@@ -167,7 +167,6 @@ public class JavaScriptProperty {
 	}
 
 	/**
-	 * Initializes the property with a number.
 	 * @constructor
 	 * @since 0.7.0
 	 */
@@ -178,7 +177,6 @@ public class JavaScriptProperty {
 	}
 
 	/**
-	 * Initializes the property with a boolean.
 	 * @constructor
 	 * @since 0.7.0
 	 */
@@ -189,7 +187,6 @@ public class JavaScriptProperty {
 	}
 
 	/**
-	 * Initializes the property to null.
 	 * @constructor
 	 * @since 0.7.0
 	 */
@@ -198,7 +195,6 @@ public class JavaScriptProperty {
 	}
 
 	/**
-	 * Initializes the property with a string.
 	 * @constructor
 	 * @since 0.7.0
 	 */
@@ -207,7 +203,6 @@ public class JavaScriptProperty {
 	}
 
 	/**
-	 * Initializes the property with a number.
 	 * @constructor
 	 * @since 0.7.0
 	 */
@@ -216,7 +211,6 @@ public class JavaScriptProperty {
 	}
 
 	/**
-	 * Initializes the property with a number.
 	 * @constructor
 	 * @since 0.7.0
 	 */
@@ -225,7 +219,6 @@ public class JavaScriptProperty {
 	}
 
 	/**
-	 * Initializes the property with a boolean.
 	 * @constructor
 	 * @since 0.7.0
 	 */
@@ -234,7 +227,6 @@ public class JavaScriptProperty {
 	}
 
 	/**
-	 * Parses the string assign its result to the property.
 	 * @method parse
 	 * @since 0.7.0
 	 */
@@ -263,7 +255,6 @@ public class JavaScriptProperty {
 	}
 
 	/**
-	 * Resets this property's value to null.
 	 * @method reset
 	 * @since 0.7.0
 	 */
@@ -293,7 +284,6 @@ public class JavaScriptProperty {
 	}
 
 	/**
-	 * Resets this property's value using a JavaScript currentValue.
 	 * @method reset
 	 * @since 0.7.0
 	 */
@@ -334,7 +324,6 @@ public class JavaScriptProperty {
 	}
 
 	/**
-	 * Resets this property's value using a string.
 	 * @method reset
 	 * @since 0.7.0
 	 */
@@ -353,7 +342,6 @@ public class JavaScriptProperty {
 	}
 
 	/**
-	 * Resets this property's value using a number.
 	 * @method reset
 	 * @since 0.7.0
 	 */
@@ -372,7 +360,6 @@ public class JavaScriptProperty {
 	}
 
 	/**
-	 * Resets this property's value using a number.
 	 * @method reset
 	 * @since 0.7.0
 	 */
@@ -391,7 +378,6 @@ public class JavaScriptProperty {
 	}
 
 	/**
-	 * Resets this property's value using a boolean.
 	 * @method reset
 	 * @since 0.7.0
 	 */
@@ -410,7 +396,6 @@ public class JavaScriptProperty {
 	}
 
 	/**
-	 * Indicate whether this property's value is a specified JavaScript value.
 	 * @method equals
 	 * @since 0.7.0
 	 */
@@ -428,7 +413,6 @@ public class JavaScriptProperty {
 	}
 	
 	/**
-	 * Indicate whether this property's value is a specified JavaScript currentValue.
 	 * @method equals
 	 * @since 0.7.0
 	 */
@@ -437,7 +421,6 @@ public class JavaScriptProperty {
 	}
 
 	/**
-	 * Indicate whether this property's value is a specified string.
 	 * @method equals
 	 * @since 0.7.0
 	 */
@@ -446,7 +429,6 @@ public class JavaScriptProperty {
 	}
 
 	/**
-	 * Indicate whether this property's value is a specified number.
 	 * @method equals
 	 * @since 0.7.0
 	 */
@@ -455,7 +437,6 @@ public class JavaScriptProperty {
 	}
 
 	/**
-	 * Indicate whether this property's value is a specified number.
 	 * @method equals
 	 * @since 0.7.0
 	 */
@@ -464,7 +445,6 @@ public class JavaScriptProperty {
 	}
 
 	/**
-	 * Indicate whether this property's value is a specified boolean.
 	 * @method equals
 	 * @since 0.7.0
 	 */
@@ -473,7 +453,6 @@ public class JavaScriptProperty {
 	}
 
 	/**
-	 * Casts the property to a specified type.
 	 * @method cast
 	 * @since 0.7.0
 	 */
@@ -504,7 +483,7 @@ public class JavaScriptProperty {
 	 * @hidden
 	 */
 	private fun update() {
-		this.currentValue = JavaScriptPropertyValue()
+		this.currentValue = NullValue
 	}
 
 	/**
@@ -522,7 +501,7 @@ public class JavaScriptProperty {
 	 * @hidden
 	 */
 	private fun update(value: JavaScriptValue) {
-		this.currentValue = JavaScriptPropertyRawValue(value)
+		this.currentValue = JavaScriptPropertyScriptValue(value)
 	}
 
 	/**

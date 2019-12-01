@@ -12,7 +12,6 @@ import java.util.*
 /**
  * @class HttpRequest
  * @since 0.7.0
- * @hidden
  */
 open class HttpRequest(url: URL, method: String) : AsyncTask<URL, HttpRequestProgress, HttpResponse>() {
 
@@ -21,42 +20,36 @@ open class HttpRequest(url: URL, method: String) : AsyncTask<URL, HttpRequestPro
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The request's listener.
 	 * @property listener
 	 * @since 0.1.0
 	 */
 	open var listener: HttpRequestListener? = null
 
 	/**
-	 * The request's headers.
 	 * @property headers
 	 * @since 0.1.0
 	 */
 	open var headers: MutableMap<String, String> = mutableMapOf()
 
 	/**
-	 * The request's timeout.
 	 * @property timeout
 	 * @since 0.1.0
 	 */
 	open var timeout: Double = 60.0
 
 	/**
-	 * The request's username.
 	 * @property username
 	 * @since 0.1.0
 	 */
 	open var username: String? = null
 
 	/**
-	 * The request's password.
 	 * @property password
 	 * @since 0.1.0
 	 */
 	open var password: String? = null
 
 	/**
-	 * The request's data.
 	 * @property data
 	 * @since 0.1.0
 	 */
@@ -104,7 +97,6 @@ open class HttpRequest(url: URL, method: String) : AsyncTask<URL, HttpRequestPro
 	}
 
 	/**
-	 * Sends the request.
 	 * @method send
 	 * @since 0.1.0
 	 */
@@ -116,7 +108,6 @@ open class HttpRequest(url: URL, method: String) : AsyncTask<URL, HttpRequestPro
 	}
 
 	/**
-	 * Aborts the current request.
 	 * @method abort
 	 * @since 0.1.0
 	 */

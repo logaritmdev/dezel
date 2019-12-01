@@ -2,7 +2,7 @@ package ca.logaritm.dezel.modules.view
 
 import android.util.Log
 import android.util.SizeF
-import ca.logaritm.dezel.application.application
+import ca.logaritm.dezel.application.activity
 import ca.logaritm.dezel.core.*
 import ca.logaritm.dezel.extension.util.ceiled
 import ca.logaritm.dezel.extension.type.clamp
@@ -16,8 +16,8 @@ import ca.logaritm.dezel.view.type.*
 
 /**
  * @class JavaScriptTextView
+ * @super JavaScriptView
  * @since 0.7.0
- * @hidden
  */
 open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(context), TextViewListener {
 
@@ -45,16 +45,14 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Creates the text view.
 	 * @method createContentView
 	 * @since 0.7.0
 	 */
 	override fun createContentView(): TextView {
-		return TextView(this.context.application, this)
+		return TextView(this.context.activity, this)
 	}
 
 	/**
-	 * @inherited
 	 * @method measure
 	 * @since 0.7.0
 	 */
@@ -75,7 +73,6 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	}
 
 	/**
-	 * @inherited
 	 * @method update
 	 * @since 0.7.0
 	 */
@@ -90,7 +87,6 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	}
 
 	/**
-	 * Resolves the font viewport based on its unit.
 	 * @method updateFontSize
 	 * @since 0.7.0
 	 */
@@ -121,7 +117,6 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @since 0.7.0
 	 * @hidden
 	 */
@@ -134,7 +129,6 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method onResolvePadding
 	 * @since 0.7.0
 	 */
@@ -262,7 +256,6 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The text view's font family.
 	 * @property fontFamily
 	 * @since 0.7.0
 	 */
@@ -280,7 +273,6 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	}
 
 	/**
-	 * The text view's font weight.
 	 * @property fontWeight
 	 * @since 0.7.0
 	 */
@@ -298,7 +290,6 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	}
 
 	/**
-	 * The text view's font stylerNode.
 	 * @property fontStyle
 	 * @since 0.7.0
 	 */
@@ -316,7 +307,6 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	}
 
 	/**
-	 * The text view's font viewport.
 	 * @property fontSize
 	 * @since 0.7.0
 	 */
@@ -327,7 +317,6 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	}
 
 	/**
-	 * The text view's minimum font viewport.
 	 * @property minFontSize
 	 * @since 0.7.0
 	 */
@@ -338,7 +327,6 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	}
 
 	/**
-	 * The text view's maximum font viewport.
 	 * @property maxFontSize
 	 * @since 0.7.0
 	 */
@@ -349,7 +337,6 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	}
 
 	/**
-	 * The text view's text.
 	 * @property text
 	 * @since 0.7.0
 	 */
@@ -367,18 +354,6 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	}
 
 	/**
-	 * The text view's text color.
-	 * @property textColor
-	 * @since 0.7.0
-	 */
-	public val textColor by lazy {
-		JavaScriptProperty("#000") { value ->
-			this.view.textColor = Color.parse(value.string)
-		}
-	}
-
-	/**
-	 * The text view's text alignment.
 	 * @property textAlignment
 	 * @since 0.7.0
 	 */
@@ -389,7 +364,6 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	}
 
 	/**
-	 * The text view's text location.
 	 * @property textLocation
 	 * @since 0.7.0
 	 */
@@ -400,7 +374,6 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	}
 
 	/**
-	 * The text view's text baseline.
 	 * @property textBaseline
 	 * @since 0.7.0
 	 */
@@ -418,7 +391,6 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	}
 
 	/**
-	 * The text view's text kerning.
 	 * @property textKerning
 	 * @since 0.7.0
 	 */
@@ -436,7 +408,6 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	}
 
 	/**
-	 * The text view's text leading.
 	 * @property textLeading
 	 * @since 0.7.0
 	 */
@@ -454,51 +425,6 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	}
 
 	/**
-	 * The text view's text shadow blur.
-	 * @property textShadowBlur
-	 * @since 0.7.0
-	 */
-	public val textShadowBlur by lazy {
-		JavaScriptProperty(0.0) { value ->
-			this.view.textShadowBlur = Convert.toPx(value.number)
-		}
-	}
-
-	/**
-	 * The text view's text shadow color.
-	 * @property textShadowColor
-	 * @since 0.7.0
-	 */
-	public val textShadowColor by lazy {
-		JavaScriptProperty("#000") { value ->
-			this.view.textShadowColor = Color.parse(value.string)
-		}
-	}
-
-	/**
-	 * The text view's text shadow offset top.
-	 * @property textShadowOffsetTop
-	 * @since 0.7.0
-	 */
-	public val textShadowOffsetTop by lazy {
-		JavaScriptProperty(0.0) { value ->
-			this.view.textShadowOffsetTop = Convert.toPx(value.number)
-		}
-	}
-
-	/**
-	 * The text view's text shadow offset left.
-	 * @property textShadowOffsetLeft
-	 * @since 0.7.0
-	 */
-	public val textShadowOffsetLeft by lazy {
-		JavaScriptProperty(0.0) { value ->
-			this.view.textShadowOffsetLeft = Convert.toPx(value.number)
-		}
-	}
-
-	/**
-	 * The text view's text decoration.
 	 * @property textDecoration
 	 * @since 0.7.0
 	 */
@@ -516,7 +442,6 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	}
 
 	/**
-	 * The text view's text transform.
 	 * @property textTransform
 	 * @since 0.7.0
 	 */
@@ -534,7 +459,6 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	}
 
 	/**
-	 * The text view's text overflow.
 	 * @property textOverflow
 	 * @since 0.7.0
 	 */
@@ -551,8 +475,68 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 		}
 	}
 
+
 	/**
-	 * The text view's link color.
+	 * @property textColor
+	 * @since 0.7.0
+	 */
+	public val textColor by lazy {
+		JavaScriptProperty("#000") { value ->
+			this.view.textColor = Color.parse(value.string)
+		}
+	}
+
+	/**
+	 * @property textOpacity
+	 * @since 0.7.0
+	 */
+	public val textOpacity by lazy {
+		JavaScriptProperty(1.0) { value ->
+			this.view.alpha = value.number.toFloat()
+		}
+	}
+
+	/**
+	 * @property textShadowBlur
+	 * @since 0.7.0
+	 */
+	public val textShadowBlur by lazy {
+		JavaScriptProperty(0.0) { value ->
+			this.view.textShadowBlur = Convert.toPx(value.number)
+		}
+	}
+
+	/**
+	 * @property textShadowColor
+	 * @since 0.7.0
+	 */
+	public val textShadowColor by lazy {
+		JavaScriptProperty("#000") { value ->
+			this.view.textShadowColor = Color.parse(value.string)
+		}
+	}
+
+	/**
+	 * @property textShadowOffsetTop
+	 * @since 0.7.0
+	 */
+	public val textShadowOffsetTop by lazy {
+		JavaScriptProperty(0.0) { value ->
+			this.view.textShadowOffsetTop = Convert.toPx(value.number)
+		}
+	}
+
+	/**
+	 * @property textShadowOffsetLeft
+	 * @since 0.7.0
+	 */
+	public val textShadowOffsetLeft by lazy {
+		JavaScriptProperty(0.0) { value ->
+			this.view.textShadowOffsetLeft = Convert.toPx(value.number)
+		}
+	}
+
+	/**
 	 * @property linkColor
 	 * @since 0.7.0
 	 */
@@ -563,7 +547,6 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	}
 
 	/**
-	 * The text view's maximum amount of maxLines.
 	 * @property maxLines
 	 * @since 0.7.0
 	 */
@@ -737,28 +720,6 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method jsGet_textColor
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	@Suppress("unused")
-	open fun jsGet_textColor(callback: JavaScriptGetterCallback) {
-		callback.returns(this.textColor)
-	}
-
-	/**
-	 * @method jsSet_textColor
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	@Suppress("unused")
-	open fun jsSet_textColor(callback: JavaScriptSetterCallback) {
-		this.textColor.reset(callback.value, lock = this)
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
 	 * @method jsGet_textAlignment
 	 * @since 0.7.0
 	 * @hidden
@@ -913,6 +874,72 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	//--------------------------------------------------------------------------
 
 	/**
+	 * @method jsGet_textOverflow
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@Suppress("unused")
+	open fun jsGet_textOverflow(callback: JavaScriptGetterCallback) {
+		callback.returns(this.textOverflow)
+	}
+
+	/**
+	 * @method jsSet_textOverflow
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@Suppress("unused")
+	open fun jsSet_textOverflow(callback: JavaScriptSetterCallback) {
+		this.textOverflow.reset(callback.value, lock = this)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_textColor
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@Suppress("unused")
+	open fun jsGet_textColor(callback: JavaScriptGetterCallback) {
+		callback.returns(this.textColor)
+	}
+
+	/**
+	 * @method jsSet_textColor
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@Suppress("unused")
+	open fun jsSet_textColor(callback: JavaScriptSetterCallback) {
+		this.textColor.reset(callback.value, lock = this)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_textOpacity
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@Suppress("unused")
+	open fun jsGet_textOpacity(callback: JavaScriptGetterCallback) {
+		callback.returns(this.textOpacity)
+	}
+
+	/**
+	 * @method jsSet_textOpacity
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@Suppress("unused")
+	open fun jsSet_textOpacity(callback: JavaScriptSetterCallback) {
+		this.textOpacity.reset(callback.value, lock = this)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
 	 * @method jsGet_textShadowBlur
 	 * @since 0.7.0
 	 * @hidden
@@ -996,28 +1023,6 @@ open class JavaScriptTextView(context: JavaScriptContext) : JavaScriptView(conte
 	@Suppress("unused")
 	open fun jsSet_textShadowOffsetLeft(callback: JavaScriptSetterCallback) {
 		this.textShadowOffsetLeft.reset(callback.value, lock = this)
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method jsGet_textOverflow
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	@Suppress("unused")
-	open fun jsGet_textOverflow(callback: JavaScriptGetterCallback) {
-		callback.returns(this.textOverflow)
-	}
-
-	/**
-	 * @method jsSet_textOverflow
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	@Suppress("unused")
-	open fun jsSet_textOverflow(callback: JavaScriptSetterCallback) {
-		this.textOverflow.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------

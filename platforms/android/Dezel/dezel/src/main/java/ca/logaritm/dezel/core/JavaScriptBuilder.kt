@@ -5,14 +5,12 @@ import java.util.*
 /**
  * @class JavaScriptBuilder
  * @since 0.1.0
- * @hidden
  */
 open class JavaScriptBuilder {
 
 	/**
 	 * @enum JavaScriptType
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	enum class Type {
 		STATIC_FUNCTION,
@@ -28,7 +26,6 @@ open class JavaScriptBuilder {
 		/**
 		 * @method forEach
 		 * @since 0.1.0
-		 * @hidden
 		 */
 		public fun forEach(clazz: Class<*>, callback: JavaScriptBuilderForEachHandler) {
 

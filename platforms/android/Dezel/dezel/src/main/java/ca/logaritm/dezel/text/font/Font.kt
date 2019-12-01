@@ -6,7 +6,6 @@ import android.text.TextPaint
 import ca.logaritm.dezel.view.graphic.Convert
 
 /**
- * The association of a typeface and size.
  * @class Font
  * @since 0.5.0
  */
@@ -19,7 +18,6 @@ open class Font(family: String, weight: String, style: String, size: Float) {
 	companion object {
 
 		/**
-		 * The default font.
 		 * @property DEFAULT
 		 * @since 0.5.0
 		 */
@@ -32,42 +30,36 @@ open class Font(family: String, weight: String, style: String, size: Float) {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The font's family.
 	 * @property family
 	 * @since 0.5.0
 	 */
 	public val family: String = family
 
 	/**
-	 * The font's weight.
 	 * @property weight
 	 * @since 0.5.0
 	 */
 	public val weight: String = weight
 
 	/**
-	 * The font's style.
 	 * @property style
 	 * @since 0.5.0
 	 */
 	public val style: String = style
 
 	/**
-	 * The font's size.
 	 * @property size
 	 * @since 0.5.0
 	 */
 	public val size: Float = size
 
 	/**
-	 * The font's typeface.
 	 * @property typeface
 	 * @since 0.5.0
 	 */
 	public val typeface: Typeface = FontManager.get(family, weight, style)
 
 	/**
-	 * The font's metrics.
 	 * @property metrics
 	 * @since 0.5.0
 	 */
@@ -95,7 +87,6 @@ open class Font(family: String, weight: String, style: String, size: Float) {
 	}
 
 	/**
-	 * Returns the current font with bold weight.
 	 * @method withBold
 	 * @since 0.5.0
 	 */
@@ -104,7 +95,6 @@ open class Font(family: String, weight: String, style: String, size: Float) {
 	}
 
 	/**
-	 * Returns the current font with the italic style.
 	 * @method withItalic
 	 * @since 0.5.0
 	 */

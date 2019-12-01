@@ -27,7 +27,6 @@ open class TextKerningSpan(textKerning: Float): MetricAffectingSpan() {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method updateMeasureState
 	 * @since 0.5.0
 	 */
@@ -38,7 +37,6 @@ open class TextKerningSpan(textKerning: Float): MetricAffectingSpan() {
 	}
 
 	/**
-	 * @inherited
 	 * @method updateDrawState
 	 * @since 0.5.0
 	 */

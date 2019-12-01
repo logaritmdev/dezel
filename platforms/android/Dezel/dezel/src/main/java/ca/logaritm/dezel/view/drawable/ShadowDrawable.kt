@@ -8,8 +8,8 @@ import kotlin.math.ceil
 
 /**
  * @class ShadowDrawable
+ * @super Drawable
  * @since 0.1.0
- * @hidden
  */
 open class ShadowDrawable : Drawable() {
 
@@ -20,7 +20,6 @@ open class ShadowDrawable : Drawable() {
 	/**
 	 * @property shadowColor
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	public var shadowColor: Int by Delegates.OnSet(Color.TRANSPARENT) {
 		this.invalidateCache()
@@ -29,7 +28,6 @@ open class ShadowDrawable : Drawable() {
 	/**
 	 * @property shadowBlur
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	public var shadowBlur: Float by Delegates.OnSet(0f) {
 		this.invalidateCache()
@@ -38,21 +36,18 @@ open class ShadowDrawable : Drawable() {
 	/**
 	 * @property shadowOffsetTop
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	public var shadowOffsetTop: Float = 0f
 
 	/**
 	 * @property shadowOffsetLeft
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	public var shadowOffsetLeft: Float = 0f
 
 	/**
 	 * @property borderTopLeftRadius
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	public var borderTopLeftRadius: Float by Delegates.OnSet(0f) {
 		this.invalidateCache()
@@ -61,7 +56,6 @@ open class ShadowDrawable : Drawable() {
 	/**
 	 * @property borderTopRightRadius
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	public var borderTopRightRadius: Float by Delegates.OnSet(0f) {
 		this.invalidateCache()
@@ -70,7 +64,6 @@ open class ShadowDrawable : Drawable() {
 	/**
 	 * @property borderBottomLeftRadius
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	public var borderBottomLeftRadius: Float by Delegates.OnSet(0f) {
 		this.invalidateCache()
@@ -79,7 +72,6 @@ open class ShadowDrawable : Drawable() {
 	/**
 	 * @property borderBottomRightRadius
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	public var borderBottomRightRadius: Float by Delegates.OnSet(0f) {
 		this.invalidateCache()
@@ -135,7 +127,6 @@ open class ShadowDrawable : Drawable() {
 	/**
 	 * @method invalidateCache
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	open fun invalidateCache() {
 		this.invalidShadowCache = true
@@ -144,7 +135,6 @@ open class ShadowDrawable : Drawable() {
 	/**
 	 * @method setAlpha
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	override fun setAlpha(alpha: Int) {
 
@@ -153,7 +143,6 @@ open class ShadowDrawable : Drawable() {
 	/**
 	 * @method setColorFilter
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	override fun setColorFilter(cf: ColorFilter?) {
 
@@ -162,7 +151,6 @@ open class ShadowDrawable : Drawable() {
 	/**
 	 * @method getOpacity
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	override fun getOpacity() : Int {
 		return PixelFormat.TRANSLUCENT
@@ -171,7 +159,6 @@ open class ShadowDrawable : Drawable() {
 	/**
 	 * @method draw
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	override fun draw(canvas: Canvas) {
 		this.draw(canvas, null)
@@ -180,7 +167,6 @@ open class ShadowDrawable : Drawable() {
 	/**
 	 * @method draw
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	open fun draw(canvas: Canvas, xfermode: Xfermode ?) {
 

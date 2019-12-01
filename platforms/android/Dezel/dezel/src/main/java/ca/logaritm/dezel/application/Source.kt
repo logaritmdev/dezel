@@ -5,22 +5,20 @@ import ca.logaritm.dezel.networking.RemoteFileLoader
 import java.io.IOException
 
 /**
- * A context source file.
  * @class Source
  * @since 0.7.0
  */
-open class Source(context: Context, location: String, category: Category) {
+open class Source(context: Context, type: Type, path: String) {
 
 	//--------------------------------------------------------------------------
 	// Enum
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Source categories.
 	 * @enum Category
 	 * @since 0.7.0
 	 */
-	public enum class Category {
+	public enum class Type {
 		STYLE,
 		SCRIPT
 	}
@@ -30,7 +28,6 @@ open class Source(context: Context, location: String, category: Category) {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The source's context.
 	 * @property context
 	 * @since 0.7.0
 	 */
@@ -38,23 +35,20 @@ open class Source(context: Context, location: String, category: Category) {
 		private set
 
 	/**
-	 * The source's category.
-	 * @property category
+	 * @property type
 	 * @since 0.7.0
 	 */
-	public var category: Category
+	public var type: Type
 		private set
 
 	/**
-	 * The source's location.
-	 * @property location
+	 * @property path
 	 * @since 0.7.0
 	 */
-	public var location: String
+	public var path: String
 		private set
 
 	/**
-	 * The source's data.
 	 * @property data
 	 * @since 0.7.0
 	 */
@@ -73,8 +67,8 @@ open class Source(context: Context, location: String, category: Category) {
 	 */
 	init {
 		this.context = context
-		this.location = location
-		this.category = category
+		this.type = type
+		this.path = path
 	}
 
 	/**
@@ -86,17 +80,17 @@ open class Source(context: Context, location: String, category: Category) {
 
 		try {
 
-			if (this.location.startsWith("http://") ||
-				this.location.startsWith("https://")) {
-				return RemoteFileLoader().execute(this.location).get()
+			if (this.path.startsWith("http://") ||
+				this.path.startsWith("https://")) {
+				return RemoteFileLoader().execute(this.path).get()
 			}
 
-			return this.context.assets.open(this.location).reader().use {
+			return this.context.assets.open(this.path).reader().use {
 				it.readText()
 			}
 
 		} catch (e: IOException) {
-			throw Exception("Cannot load source at location ${this.location}.")
+			throw Exception("Cannot load source at location ${this.path}.")
 		}
 	}
 }

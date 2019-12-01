@@ -8,8 +8,8 @@ import android.graphics.LinearGradient as AndroidLinearGradient
 
 /**
  * @class BitmapDrawable
+ * @super Drawable
  * @since 0.1.0
- * @hidden
  */
 open class BitmapDrawable() : Drawable() {
 
@@ -20,63 +20,54 @@ open class BitmapDrawable() : Drawable() {
 	/**
 	 * @property backgroundColor
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	open var backgroundColor: Int? = null
 
 	/**
 	 * @property backgroundImage
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	open var backgroundImage: Bitmap? = null
 
 	/**
 	 * @property backgroundImageTop
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	open var backgroundImageTop: Float = 0f
 
 	/**
 	 * @property backgroundImageLeft
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	open var backgroundImageLeft: Float = 0f
 
 	/**
 	 * @property backgroundImageWidth
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	open var backgroundImageWidth: Float = 0f
 
 	/**
 	 * @property backgroundImageHeight
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	open var backgroundImageHeight: Float = 0f
 
 	/**
 	 * @property backgroundImageTint
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	open var backgroundImageTint: Int = Color.TRANSPARENT
 
 	/**
 	 * @property backgroundLinearGradient
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	open var backgroundLinearGradient: LinearGradient? = null
 
 	/**
 	 * @property backgroundRadialGradient
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	open var backgroundRadialGradient: RadialGradient? = null
 
@@ -129,7 +120,6 @@ open class BitmapDrawable() : Drawable() {
 	/**
 	 * @method setAlpha
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	override fun setAlpha(alpha: Int) {
 
@@ -138,7 +128,6 @@ open class BitmapDrawable() : Drawable() {
 	/**
 	 * @method setColorFilter
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	override fun setColorFilter(cf: ColorFilter?) {
 
@@ -147,7 +136,6 @@ open class BitmapDrawable() : Drawable() {
 	/**
 	 * @method getOpacity
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	override fun getOpacity() : Int {
 		return PixelFormat.TRANSLUCENT
@@ -156,7 +144,6 @@ open class BitmapDrawable() : Drawable() {
 	/**
 	 * @method draw
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	override fun draw(canvas: Canvas) {
 		this.draw(canvas, null)
@@ -165,7 +152,6 @@ open class BitmapDrawable() : Drawable() {
 	/**
 	 * @method draw
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	open fun draw(canvas: Canvas, xfermode: Xfermode?) {
 
@@ -191,7 +177,6 @@ open class BitmapDrawable() : Drawable() {
 	/**
 	 * @method drawBackgroundColor
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	open fun drawBackgroundColor(canvas: Canvas, xfermode: Xfermode?, backgroundColor: Int) {
 		this.backgroundColorPaint.xfermode = xfermode
@@ -203,7 +188,6 @@ open class BitmapDrawable() : Drawable() {
 	/**
 	 * @method drawBackgroundImage
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	open fun drawBackgroundImage(canvas: Canvas, xfermode: Xfermode?, backgroundImage: Bitmap) {
 
@@ -236,7 +220,6 @@ open class BitmapDrawable() : Drawable() {
 	/**
 	 * @method drawBackgroundLinearGradient
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	open fun drawBackgroundLinearGradient(canvas: Canvas, xfermode: Xfermode?, linearGradient: LinearGradient) {
 
@@ -254,7 +237,9 @@ open class BitmapDrawable() : Drawable() {
 
 		this.backgroundLinearGradientPaint.xfermode = xfermode
 		this.backgroundLinearGradientPaint.shader = shader
+
 		canvas.drawRect(this.bounds, this.backgroundLinearGradientPaint)
+
 		this.backgroundLinearGradientPaint.xfermode = null
 	}
 }

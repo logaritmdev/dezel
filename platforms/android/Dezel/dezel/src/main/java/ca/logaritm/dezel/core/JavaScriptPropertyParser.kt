@@ -6,7 +6,6 @@ import ca.logaritm.dezel.extension.type.last3
 import ca.logaritm.dezel.extension.type.toNumber
 
 /**
- * Parses numeric properties.
  * @class JavaScriptPropertyParser
  * @since 0.7.0
  */
@@ -17,49 +16,42 @@ public object JavaScriptPropertyParser {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The result.
 	 * @struct Result
 	 * @since 0.7.0
 	 */
 	public class Result(type: JavaScriptPropertyType = JavaScriptPropertyType.NULL, unit: JavaScriptPropertyUnit = JavaScriptPropertyUnit.NONE) {
 
 		/**
-		 * The result's type.
 		 * @property type
 		 * @since 0.7.0
 		 */
 		public var type: JavaScriptPropertyType = JavaScriptPropertyType.NULL
 
 		/**
-		 * The result's unit.
 		 * @property unit
 		 * @since 0.7.0
 		 */
 		public var unit: JavaScriptPropertyUnit = JavaScriptPropertyUnit.NONE
 
 		/**
-		 * The result's string.
 		 * @property string
 		 * @since 0.7.0
 		 */
 		public var string: String = ""
 
 		/**
-		 * The result's number.
 		 * @property number
 		 * @since 0.7.0
 		 */
 		public var number: Double = 0.0
 
 		/**
-		 * The result's boolean.
 		 * @property boolean
 		 * @since 0.7.0
 		 */
 		public var boolean: Boolean = false
 
 		/**
-		 * Indicate whether the result is null.
 		 * @property isNull
 		 * @since 0.7.0
 		 */
@@ -67,7 +59,6 @@ public object JavaScriptPropertyParser {
 			get() = this.type == JavaScriptPropertyType.NULL
 
 		/**
-		 * Indicate whether the result is a string.
 		 * @property isString
 		 * @since 0.7.0
 		 */
@@ -75,7 +66,6 @@ public object JavaScriptPropertyParser {
 			get() = this.type == JavaScriptPropertyType.STRING
 
 		/**
-		 * Indicate whether the result is a number.
 		 * @property isNumber
 		 * @since 0.7.0
 		 */
@@ -83,7 +73,6 @@ public object JavaScriptPropertyParser {
 			get() = this.type == JavaScriptPropertyType.NUMBER
 
 		/**
-		 * Indicate whether the result is a boolean.
 		 * @property isBoolean
 		 * @since 0.7.0
 		 */
@@ -91,7 +80,6 @@ public object JavaScriptPropertyParser {
 			get() = this.type == JavaScriptPropertyType.BOOLEAN
 
 		/**
-		 * Initializes the result.
 		 * @constructor
 		 * @since 0.7.0
 		 */
@@ -101,7 +89,6 @@ public object JavaScriptPropertyParser {
 		}
 
 		/**
-		 * Initializes the result.
 		 * @constructor
 		 * @since 0.7.0
 		 */
@@ -110,7 +97,6 @@ public object JavaScriptPropertyParser {
 		}
 
 		/**
-		 * Initializes the result.
 		 * @constructor
 		 * @since 0.7.0
 		 */
@@ -119,7 +105,6 @@ public object JavaScriptPropertyParser {
 		}
 
 		/**
-		 * Initializes the result.
 		 * @constructor
 		 * @since 0.7.0
 		 */
@@ -128,7 +113,6 @@ public object JavaScriptPropertyParser {
 		}
 
 		/**
-		 * Initializes the result.
 		 * @constructor
 		 * @since 0.7.0
 		 */
@@ -142,7 +126,6 @@ public object JavaScriptPropertyParser {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Parses the specified JavaScript value.
 	 * @method parse
 	 * @since 0.7.0
 	 */
@@ -161,7 +144,6 @@ public object JavaScriptPropertyParser {
 	}
 
 	/**
-	 * Parses the specified string.
 	 * @method parse
 	 * @since 0.7.0
 	 */

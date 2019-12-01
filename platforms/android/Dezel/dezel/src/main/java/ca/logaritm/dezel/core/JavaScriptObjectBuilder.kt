@@ -6,19 +6,18 @@ import java.lang.reflect.Method
 
 /**
  * @class JavaScriptObjectBuilder
+ * @super JavaScriptBuilder
  * @since 0.1.0
- * @hidden
  */
-internal class JavaScriptObjectBuilder : JavaScriptBuilder() {
+public class JavaScriptObjectBuilder : JavaScriptBuilder() {
 
 	companion object {
 
 		/**
 		 * @method build
 		 * @since 0.1.0
-		 * @hidden
 		 */
-		internal fun build(context: JavaScriptContext, template: Class<*>): JavaScriptValue {
+		public fun build(context: JavaScriptContext, template: Class<*>): JavaScriptValue {
 
 			val value = context.createEmptyObject()
 

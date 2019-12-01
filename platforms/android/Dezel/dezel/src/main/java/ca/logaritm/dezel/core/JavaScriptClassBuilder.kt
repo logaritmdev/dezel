@@ -5,19 +5,18 @@ import java.lang.reflect.Method
 
 /**
  * @class JavaScriptClassBuilder
+ * @super JavaScriptBuilder
  * @since 0.1.0
- * @hidden
  */
-internal class JavaScriptClassBuilder : JavaScriptBuilder() {
+public class JavaScriptClassBuilder : JavaScriptBuilder() {
 
 	companion object {
 
 		/**
 		 * @method build
 		 * @since 0.1.0
-		 * @hidden
 		 */
-		internal fun build(context: JavaScriptContext, template: Class<*>): JavaScriptValue {
+		public fun build(context: JavaScriptContext, template: Class<*>): JavaScriptValue {
 
 			val statics = context.createEmptyObject()
 			val prototype = context.createEmptyObject()

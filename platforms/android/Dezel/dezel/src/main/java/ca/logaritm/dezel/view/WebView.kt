@@ -18,8 +18,8 @@ import android.webkit.WebView as AndroidWebView
 
 /**
  * @class WebView
+ * @super AndroidWebView
  * @since 0.7.0
- * @hidden
  */
 open class WebView(context: Context, listener: WebViewListener) : AndroidWebView(context), Scrollable {
 
@@ -28,28 +28,18 @@ open class WebView(context: Context, listener: WebViewListener) : AndroidWebView
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @property webViewListener
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	open var webViewListener: WebViewListener? = null
-
-	/**
-	 * The scroll view's listener.
 	 * @property scrollableListener
 	 * @since 0.7.0
 	 */
 	override var scrollableListener: ScrollableListener? = null
 
 	/**
-	 * Whether the scroll view is scrollable.
 	 * @property scrollable
 	 * @since 0.7.0
 	 */
 	override var scrollable: Boolean = false
 
 	/**
-	 * Whether the scroll displays scrollbars.
 	 * @property scrollbars
 	 * @since 0.7.0
 	 */
@@ -80,7 +70,6 @@ open class WebView(context: Context, listener: WebViewListener) : AndroidWebView
 	}
 
 	/**
-	 * Whether the scrollable view can overscroll.
 	 * @property overscroll
 	 * @since 0.7.0
 	 */
@@ -95,7 +84,6 @@ open class WebView(context: Context, listener: WebViewListener) : AndroidWebView
 	}
 
 	/**
-	 * The scrollable view's scroll top.
 	 * @property scrollTop
 	 * @since 0.7.0
 	 */
@@ -106,7 +94,6 @@ open class WebView(context: Context, listener: WebViewListener) : AndroidWebView
 		}
 
 	/**
-	 * The scroll view's scroll left.
 	 * @property scrollLeft
 	 * @since 0.7.0
 	 */
@@ -117,7 +104,6 @@ open class WebView(context: Context, listener: WebViewListener) : AndroidWebView
 		}
 
 	/**
-	 * The scrollable view's scroll width.
 	 * @property scrollWidth
 	 * @since 0.7.0
 	 */
@@ -126,7 +112,6 @@ open class WebView(context: Context, listener: WebViewListener) : AndroidWebView
 	}
 
 	/**
-	 * The scrollable view's scroll height.
 	 * @property scrollHeight
 	 * @since 0.7.0
 	 */
@@ -135,16 +120,14 @@ open class WebView(context: Context, listener: WebViewListener) : AndroidWebView
 	}
 
 	/**
-	 * Whether the scroll view has momentum.
-	 * @property momentum
+	 * @property scrollMomentum
 	 * @since 0.7.0
 	 */
-	override var momentum: Boolean by Delegates.OnSet(true) {
-		Log.i("DEZEL", "JavaScriptWebView momentum is not supported")
+	override var scrollMomentum: Boolean by Delegates.OnSet(true) {
+		Log.i("DEZEL", "JavaScriptWebView scrollMomentum is not supported")
 	}
 
 	/**
-	 * The scroll view's top content inset.
 	 * @property contentInsetTop
 	 * @since 0.7.0
 	 */
@@ -153,7 +136,6 @@ open class WebView(context: Context, listener: WebViewListener) : AndroidWebView
 	}
 
 	/**
-	 * The scroll view's left content inset.
 	 * @property contentInsetLeft
 	 * @since 0.7.0
 	 */
@@ -162,7 +144,6 @@ open class WebView(context: Context, listener: WebViewListener) : AndroidWebView
 	}
 
 	/**
-	 * The scroll view's right content inset.
 	 * @property contentInsetRight
 	 * @since 0.7.0
 	 */
@@ -171,7 +152,6 @@ open class WebView(context: Context, listener: WebViewListener) : AndroidWebView
 	}
 
 	/**
-	 * The scroll view's bottom content inset.
 	 * @property contentInsetBottom
 	 * @since 0.7.0
 	 */
@@ -180,7 +160,6 @@ open class WebView(context: Context, listener: WebViewListener) : AndroidWebView
 	}
 
 	/**
-	 * Whether the scroll view's is paged.
 	 * @property paged
 	 * @since 0.7.0
 	 */
@@ -189,7 +168,6 @@ open class WebView(context: Context, listener: WebViewListener) : AndroidWebView
 	}
 
 	/**
-	 * Whether the scrollable view's is zoomable.
 	 * @property zoomable
 	 * @since 0.7.0
 	 */
@@ -198,7 +176,6 @@ open class WebView(context: Context, listener: WebViewListener) : AndroidWebView
 	}
 
 	/**
-	 * The scrollable view min zoom.
 	 * @property minZoom
 	 * @since 0.7.0
 	 */
@@ -207,7 +184,6 @@ open class WebView(context: Context, listener: WebViewListener) : AndroidWebView
 	}
 
 	/**
-	 * The scrollable view max zoom.
 	 * @property maxZoom
 	 * @since 0.7.0
 	 */
@@ -216,13 +192,19 @@ open class WebView(context: Context, listener: WebViewListener) : AndroidWebView
 	}
 
 	/**
-	 * The view that is zoomed.
 	 * @property zoomedView
 	 * @since 0.7.0
 	 */
 	override var zoomedView: View? by Delegates.OnChangeOptional(null) { _, _ ->
 
 	}
+
+	/**
+	 * @property webViewListener
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	open var webViewListener: WebViewListener? = null
 
 	/**
 	 * @property webViewWebClient
@@ -351,7 +333,6 @@ open class WebView(context: Context, listener: WebViewListener) : AndroidWebView
 	}
 
 	/**
-	 * Measures the natural viewport of this view.
 	 * @method measure
 	 * @since 0.7.0
 	 */
@@ -371,7 +352,6 @@ open class WebView(context: Context, listener: WebViewListener) : AndroidWebView
 	}
 
 	/**
-	 * @inherited
 	 * @method onInterceptTouchEvent
 	 * @since 0.7.0
 	 */

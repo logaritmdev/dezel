@@ -8,8 +8,8 @@ import java.lang.ref.ReferenceQueue
 
 /**
  * @class DisplayReference
+ * @super FinalizableReference
  * @since 0.7.0
- * @hidden
  */
 public class DisplayReference(referent: Display, queue: ReferenceQueue<Any>): FinalizableReference<Display>(referent, queue) {
 
@@ -23,8 +23,7 @@ public class DisplayReference(referent: Display, queue: ReferenceQueue<Any>): Fi
 		private val refs: MutableSet<DisplayReference> = mutableSetOf()
 
 		/**
-		 * Registers a layout reference.
-		 * @method register
+3		 * @method register
 		 * @since 0.7.0
 		 */
 		public fun register(referent: Display) {
@@ -40,7 +39,6 @@ public class DisplayReference(referent: Display, queue: ReferenceQueue<Any>): Fi
 	private val handle = referent.handle
 
 	/**
-	 * @inherited
 	 * @method finally
 	 * @since 0.7.0
 	 */

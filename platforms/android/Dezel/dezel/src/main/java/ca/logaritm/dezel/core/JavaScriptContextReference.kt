@@ -2,11 +2,10 @@ package ca.logaritm.dezel.core
 
 import java.lang.ref.ReferenceQueue
 
-
 /**
  * @class JavaScriptContextReference
+ * @super FinalizableReference
  * @since 0.4.0
- * @hidden
  */
 public class JavaScriptContextReference(referent: JavaScriptContext, queue: ReferenceQueue<Any>): FinalizableReference<JavaScriptContext>(referent, queue) {
 
@@ -20,7 +19,6 @@ public class JavaScriptContextReference(referent: JavaScriptContext, queue: Refe
 		private val refs: MutableSet<JavaScriptContextReference> = mutableSetOf()
 
 		/**
-		 * Registers a JavaScriptContext node reference.
 		 * @method register
 		 * @since 0.4.0
 		 */
@@ -37,7 +35,6 @@ public class JavaScriptContextReference(referent: JavaScriptContext, queue: Refe
 	private val handle = referent.handle
 
 	/**
-	 * @inherited
 	 * @method finally
 	 * @since 0.4.0
 	 */

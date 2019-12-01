@@ -9,8 +9,8 @@ import java.nio.ByteOrder
 
 /**
  * @class NineSliceDrawable
+ * @super NinePatchDrawable
  * @since 0.1.0
- * @hidden
  */
 open class NineSliceDrawable(bitmap:Bitmap, t:Int, l:Int, r:Int, b:Int) : NinePatchDrawable(null, bitmap, getBytesBuffer(t, l, r, b), Rect(), "") {
 

@@ -17,7 +17,6 @@ public class Size(var width: Float = 0f, var height: Float = 0f) {
 	/**
 	 * @method equals
 	 * @since 0.5.0
-	 * @hidden
 	 */
 	public fun equals(size: Size): Boolean {
 		return (
@@ -27,7 +26,6 @@ public class Size(var width: Float = 0f, var height: Float = 0f) {
 	}
 
 	/**
-	 * Ceils the text size's width and height.
 	 * @method ceil
 	 * @since 0.5.0
 	 */
@@ -37,7 +35,6 @@ public class Size(var width: Float = 0f, var height: Float = 0f) {
 	}
 
 	/**
-	 * Returns a new instance with clamped width and height.
 	 * @method clamped
 	 * @since 0.5.0
 	 */

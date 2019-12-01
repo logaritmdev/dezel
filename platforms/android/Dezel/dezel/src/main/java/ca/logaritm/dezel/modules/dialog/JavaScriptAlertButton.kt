@@ -4,8 +4,8 @@ import ca.logaritm.dezel.core.*
 
 /**
  * @class JavaScriptAlertButton
+ * @super JavaScriptClass
  * @since 0.7.0
- * @hidden
  */
 open class JavaScriptAlertButton(context: JavaScriptContext) : JavaScriptClass(context) {
 
@@ -13,9 +13,7 @@ open class JavaScriptAlertButton(context: JavaScriptContext) : JavaScriptClass(c
 	// JS Properties
 	//--------------------------------------------------------------------------
 
-
 	/**
-	 * The alert button's label.
 	 * @property label
 	 * @since 0.7.0
 	 */
@@ -24,7 +22,6 @@ open class JavaScriptAlertButton(context: JavaScriptContext) : JavaScriptClass(c
 	}
 
 	/**
-	 * The alert button's image.
 	 * @property image
 	 * @since 0.7.0
 	 */
@@ -33,7 +30,6 @@ open class JavaScriptAlertButton(context: JavaScriptContext) : JavaScriptClass(c
 	}
 
 	/**
-	 * The alert button's renderNode.
 	 * @property style
 	 * @since 0.7.0
 	 */

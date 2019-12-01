@@ -4,15 +4,14 @@ import java.lang.ref.ReferenceQueue
 
 /**
  * @class Finalizer
+ * @super Thread
  * @since 0.4.0
- * @hidden
  */
 public class Finalizer: Thread() {
 
 	companion object {
 
 		/**
-		 * The actual reference queue.
 		 * @property queue
 		 * @since 0.4.0
 		 */
@@ -28,7 +27,6 @@ public class Finalizer: Thread() {
 		/**
 		 * @constructor
 		 * @since 0.4.0
-		 * @hidden
 		 */
 		init {
 			this.main = Finalizer()
@@ -37,13 +35,12 @@ public class Finalizer: Thread() {
 	}
 
 	/**
-	 * @inherited
 	 * @method run
 	 * @since 0.4.0
 	 */
 	override fun run() {
 
-		while (Thread.interrupted() == false) {
+		while (interrupted() == false) {
 
 			try {
 

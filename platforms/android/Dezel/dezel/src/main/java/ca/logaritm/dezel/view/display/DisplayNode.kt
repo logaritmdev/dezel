@@ -7,6 +7,10 @@ import ca.logaritm.dezel.core.JavaScriptPropertyUnit
 import ca.logaritm.dezel.extension.type.toValidFloat
 import ca.logaritm.dezel.view.graphic.Convert
 
+/**
+ * @class DisplayNode
+ * @since 0.7.0
+ */
 public class DisplayNode(display: Display) {
 
 	//--------------------------------------------------------------------------
@@ -14,14 +18,12 @@ public class DisplayNode(display: Display) {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The display node's listener.
 	 * @property listener
 	 * @since 0.7.0
 	 */
 	public var listener: DisplayNodeListener? = null
 
 	/**
-	 * The display node's display.
 	 * @property display
 	 * @since 0.7.0
 	 */
@@ -29,7 +31,6 @@ public class DisplayNode(display: Display) {
 		private set
 
 	/**
-	 * The display node's id.
 	 * @property id
 	 * @since 0.7.0
 	 */
@@ -39,7 +40,6 @@ public class DisplayNode(display: Display) {
 		}
 
 	/**
-	 * The display node's measured top.
 	 * @property measuredTop
 	 * @since 0.7.0
 	 */
@@ -47,7 +47,6 @@ public class DisplayNode(display: Display) {
 		get() = DisplayNodeExternal.getMeasuredTop(this.handle)
 
 	/**
-	 * The display node's measured left.
 	 * @property measuredLeft
 	 * @since 0.7.0
 	 */
@@ -55,7 +54,6 @@ public class DisplayNode(display: Display) {
 		get() = DisplayNodeExternal.getMeasuredLeft(this.handle)
 
 	/**
-	 * The display node's measured right.
 	 * @property measuredRight
 	 * @since 0.7.0
 	 */
@@ -63,7 +61,6 @@ public class DisplayNode(display: Display) {
 		get() = DisplayNodeExternal.getMeasuredRight(this.handle)
 
 	/**
-	 * The display node's measured bottom.
 	 * @property measuredBottom
 	 * @since 0.7.0
 	 */
@@ -71,7 +68,6 @@ public class DisplayNode(display: Display) {
 		get() = DisplayNodeExternal.getMeasuredBottom(this.handle)
 
 	/**
-	 * The display node's measured width.
 	 * @property measuredWidth
 	 * @since 0.7.0
 	 */
@@ -79,7 +75,6 @@ public class DisplayNode(display: Display) {
 		get() = DisplayNodeExternal.getMeasuredWidth(this.handle)
 
 	/**
-	 * The display node's measured height.
 	 * @property measuredHeight
 	 * @since 0.7.0
 	 */
@@ -87,7 +82,6 @@ public class DisplayNode(display: Display) {
 		get() = DisplayNodeExternal.getMeasuredHeight(this.handle)
 
 	/**
-	 * The display node's measured inner width.
 	 * @property measuredInnerWidth
 	 * @since 0.7.0
 	 */
@@ -95,7 +89,6 @@ public class DisplayNode(display: Display) {
 		get() = DisplayNodeExternal.getMeasuredInnerWidth(this.handle)
 
 	/**
-	 * The display node's measured inner height.
 	 * @property measuredInnerHeight
 	 * @since 0.7.0
 	 */
@@ -103,7 +96,6 @@ public class DisplayNode(display: Display) {
 		get() = DisplayNodeExternal.getMeasuredInnerHeight(this.handle)
 
 	/**
-	 * The display node's measured content width.
 	 * @property measuredContentWidth
 	 * @since 0.7.0
 	 */
@@ -111,7 +103,6 @@ public class DisplayNode(display: Display) {
 		get() = DisplayNodeExternal.getMeasuredContentWidth(this.handle)
 
 	/**
-	 * The display node's measured content height.
 	 * @property measuredContentHeight
 	 * @since 0.7.0
 	 */
@@ -119,7 +110,6 @@ public class DisplayNode(display: Display) {
 		get() = DisplayNodeExternal.getMeasuredContentHeight(this.handle)
 
 	/**
-	 * The display node's measured top margin.
 	 * @property measuredMarginTop
 	 * @since 0.7.0
 	 */
@@ -127,7 +117,6 @@ public class DisplayNode(display: Display) {
 		get() = DisplayNodeExternal.getMeasuredMarginTop(this.handle)
 
 	/**
-	 * The display node's measured left margin.
 	 * @property measuredMarginLeft
 	 * @since 0.7.0
 	 */
@@ -135,7 +124,6 @@ public class DisplayNode(display: Display) {
 		get() = DisplayNodeExternal.getMeasuredMarginLeft(this.handle)
 
 	/**
-	 * The display node's measured right margin.
 	 * @property measuredMarginRight
 	 * @since 0.7.0
 	 */
@@ -143,7 +131,6 @@ public class DisplayNode(display: Display) {
 		get() = DisplayNodeExternal.getMeasuredMarginRight(this.handle)
 
 	/**
-	 * The display node's measured bottom margin.
 	 * @property measuredMarginBottom
 	 * @since 0.7.0
 	 */
@@ -151,7 +138,6 @@ public class DisplayNode(display: Display) {
 		get() = DisplayNodeExternal.getMeasuredMarginBottom(this.handle)
 
 	/**
-	 * The display node's measured top border.
 	 * @property measuredBorderTop
 	 * @since 0.7.0
 	 */
@@ -159,7 +145,6 @@ public class DisplayNode(display: Display) {
 		get() = DisplayNodeExternal.getMeasuredBorderTop(this.handle)
 
 	/**
-	 * The display node's measured left border.
 	 * @property measuredBorderLeft
 	 * @since 0.7.0
 	 */
@@ -167,7 +152,6 @@ public class DisplayNode(display: Display) {
 		get() = DisplayNodeExternal.getMeasuredBorderLeft(this.handle)
 
 	/**
-	 * The display node's measured right border.
 	 * @property measuredBorderRight
 	 * @since 0.7.0
 	 */
@@ -175,7 +159,6 @@ public class DisplayNode(display: Display) {
 		get() = DisplayNodeExternal.getMeasuredBorderRight(this.handle)
 
 	/**
-	 * The display node's measured bottom border.
 	 * @property measuredBorderBottom
 	 * @since 0.7.0
 	 */
@@ -183,7 +166,6 @@ public class DisplayNode(display: Display) {
 		get() = DisplayNodeExternal.getMeasuredBorderBottom(this.handle)
 
 	/**
-	 * The display node's measured top padding.
 	 * @property measuredPaddingTop
 	 * @since 0.7.0
 	 */
@@ -191,7 +173,6 @@ public class DisplayNode(display: Display) {
 		get() = DisplayNodeExternal.getMeasuredPaddingTop(this.handle)
 
 	/**
-	 * The display node's measured left padding.
 	 * @property measuredPaddingLeft
 	 * @since 0.7.0
 	 */
@@ -199,7 +180,6 @@ public class DisplayNode(display: Display) {
 		get() = DisplayNodeExternal.getMeasuredPaddingLeft(this.handle)
 
 	/**
-	 * The display node's measured right padding.
 	 * @property measuredPaddingRight
 	 * @since 0.7.0
 	 */
@@ -207,7 +187,6 @@ public class DisplayNode(display: Display) {
 		get() = DisplayNodeExternal.getMeasuredPaddingRight(this.handle)
 
 	/**
-	 * The display node's measured bottom padding.
 	 * @property measuredPaddingBottom
 	 * @since 0.7.0
 	 */
@@ -215,7 +194,6 @@ public class DisplayNode(display: Display) {
 		get() = DisplayNodeExternal.getMeasuredPaddingBottom(this.handle)
 
 	/**
-	 * Whether the display node should fill the parent's width.
 	 * @property isFillingParentWidth
 	 * @since 0.7.0
 	 */
@@ -223,7 +201,6 @@ public class DisplayNode(display: Display) {
 		get() = DisplayNodeExternal.isFillingParentWidth(this.handle)
 
 	/**
-	 * Whether the display node should fill the parent's height.
 	 * @property isFillingParentHeight
 	 * @since 0.7.0
 	 */
@@ -231,7 +208,6 @@ public class DisplayNode(display: Display) {
 		get() = DisplayNodeExternal.isFillingParentHeight(this.handle)
 
 	/**
-	 * Whether the display node should wraps the content width.
 	 * @property isWrappingContentWidth
 	 * @since 0.7.0
 	 */
@@ -239,7 +215,6 @@ public class DisplayNode(display: Display) {
 		get() = DisplayNodeExternal.isWrappingContentWidth(this.handle)
 
 	/**
-	 * Whether the display node should wraps the content height.
 	 * @property isWrappingContentHeight
 	 * @since 0.7.0
 	 */
@@ -270,7 +245,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's top anchor position.
 	 * @method setAnchorTop
 	 * @since 0.7.0
 	 */
@@ -301,7 +275,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's top anchor position.
 	 * @method setAnchorTop
 	 * @since 0.7.0
 	 */
@@ -310,7 +283,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's left anchor position.
 	 * @method setAnchorLeft
 	 * @since 0.7.0
 	 */
@@ -341,7 +313,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's left anchor position.
 	 * @method setAnchorLeft
 	 * @since 0.7.0
 	 */
@@ -350,7 +321,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's top position specification.
 	 * @method setTop
 	 * @since 0.7.0
 	 */
@@ -386,7 +356,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's top position specification.
 	 * @method setTop
 	 * @since 0.7.0
 	 */
@@ -395,7 +364,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's minimum top position.
 	 * @method setMinTop
 	 * @since 0.7.0
 	 */
@@ -404,7 +372,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's maximum top position.
 	 * @method setMaxTop
 	 * @since 0.7.0
 	 */
@@ -413,7 +380,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's left position specification.
 	 * @method setLeft
 	 * @since 0.7.0
 	 */
@@ -449,7 +415,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's left position specification.
 	 * @method setLeft
 	 * @since 0.7.0
 	 */
@@ -458,7 +423,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's minimum left position.
 	 * @method setMinLeft
 	 * @since 0.7.0
 	 */
@@ -467,7 +431,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's maximum left position.
 	 * @method setMaxLeft
 	 * @since 0.7.0
 	 */
@@ -476,7 +439,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's right position specification.
 	 * @method setRight
 	 * @since 0.7.0
 	 */
@@ -514,14 +476,12 @@ public class DisplayNode(display: Display) {
 	/**
 	 * @method setRight
 	 * @since 0.7.0
-	 * @hidden
 	 */
 	public fun setRight(type: Int, unit: Int, length: Double) {
 		DisplayNodeExternal.setRight(this.handle, type, unit, length)
 	}
 
 	/**
-	 * Assigns the display node's minimum right position.
 	 * @method setMinRight
 	 * @since 0.7.0
 	 */
@@ -530,7 +490,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's maximum right position.
 	 * @method setMaxRight
 	 * @since 0.7.0
 	 */
@@ -539,7 +498,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's bottom position specification.
 	 * @method setBottom
 	 * @since 0.7.0
 	 */
@@ -575,7 +533,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's bottom position specification.
 	 * @method setBottom
 	 * @since 0.7.0
 	 */
@@ -584,7 +541,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's minimum bottom position.
 	 * @method setMinBottom
 	 * @since 0.7.0
 	 */
@@ -593,7 +549,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's maximum bottom position.
 	 * @method setMaxBottom
 	 * @since 0.7.0
 	 */
@@ -602,7 +557,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's width specification.
 	 * @method setWidth
 	 * @since 0.7.0
 	 */
@@ -639,7 +593,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's width specification.
 	 * @method setWidth
 	 * @since 0.7.0
 	 */
@@ -648,7 +601,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's minimum width.
 	 * @method setMinWidth
 	 * @since 0.7.0
 	 */
@@ -657,7 +609,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's maximum width.
 	 * @method setMaxWidth
 	 * @since 0.7.0
 	 */
@@ -666,7 +617,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's height specification.
 	 * @method setHeight
 	 * @since 0.7.0
 	 */
@@ -703,7 +653,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's height specification.
 	 * @method setHeight
 	 * @since 0.7.0
 	 */
@@ -712,7 +661,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's minimum height.
 	 * @method setMinHeight
 	 * @since 0.7.0
 	 */
@@ -721,7 +669,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's maximum height.
 	 * @method setMaxHeight
 	 * @since 0.7.0
 	 */
@@ -730,7 +677,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's content direction specification.
 	 * @method setContentDirection
 	 * @since 0.7.0
 	 */
@@ -750,7 +696,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's content direction specification.
 	 * @method setContentDirection
 	 * @since 0.7.0
 	 */
@@ -759,7 +704,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's content alignment specification.
 	 * @method setContentAlignment
 	 * @since 0.7.0
 	 */
@@ -781,7 +725,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's content alignment specification.
 	 * @method setContentAlignment
 	 * @since 0.7.0
 	 */
@@ -790,7 +733,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's content location specification.
 	 * @method setContentLocation
 	 * @since 0.7.0
 	 */
@@ -814,7 +756,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's content location specification.
 	 * @method setContentLocation
 	 * @since 0.7.0
 	 */
@@ -823,7 +764,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's content top specification.
 	 * @method setContentTop
 	 * @since 0.7.0
 	 */
@@ -843,7 +783,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's content top specification.
 	 * @method setContentTop
 	 * @since 0.7.0
 	 */
@@ -852,7 +791,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's content left specification.
 	 * @method setContentLeft
 	 * @since 0.7.0
 	 */
@@ -872,7 +810,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's content left specification.
 	 * @method setContentLeft
 	 * @since 0.7.0
 	 */
@@ -881,7 +818,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's content width specification.
 	 * @method setContentWidth
 	 * @since 0.7.0
 	 */
@@ -917,7 +853,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's content width specification.
 	 * @method setContentWidth
 	 * @since 0.7.0
 	 */
@@ -926,7 +861,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's content height specification.
 	 * @method setContentHeight
 	 * @since 0.7.0
 	 */
@@ -962,7 +896,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's content height specification.
 	 * @method setContentHeight
 	 * @since 0.7.0
 	 */
@@ -971,7 +904,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's border top specification.
 	 * @method setBorderTop
 	 * @since 0.7.0
 	 */
@@ -1007,7 +939,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's border top specification.
 	 * @method setBorderTop
 	 * @since 0.7.0
 	 */
@@ -1016,7 +947,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's border left specification.
 	 * @method setBorderLeft
 	 * @since 0.7.0
 	 */
@@ -1052,7 +982,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's border left specification.
 	 * @method setBorderLeft
 	 * @since 0.7.0
 	 */
@@ -1061,7 +990,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's border right specification.
 	 * @method setBorderRight
 	 * @since 0.7.0
 	 */
@@ -1097,7 +1025,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's border right specification.
 	 * @method setBorderRight
 	 * @since 0.7.0
 	 */
@@ -1106,7 +1033,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's border right specification.
 	 * @method setBorderRight
 	 * @since 0.7.0
 	 */
@@ -1142,7 +1068,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's border right specification.
 	 * @method setBorderRight
 	 * @since 0.7.0
 	 */
@@ -1151,7 +1076,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's margin top specification.
 	 * @method setMarginTop
 	 * @since 0.7.0
 	 */
@@ -1178,7 +1102,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's margin top specification.
 	 * @method setMarginTop
 	 * @since 0.7.0
 	 */
@@ -1187,7 +1110,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's margin left specification.
 	 * @method setMarginLeft
 	 * @since 0.7.0
 	 */
@@ -1214,7 +1136,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's margin left specification.
 	 * @method setMarginLeft
 	 * @since 0.7.0
 	 */
@@ -1223,7 +1144,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's margin right specification.
 	 * @method setMarginRight
 	 * @since 0.7.0
 	 */
@@ -1250,7 +1170,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's margin right specification.
 	 * @method setMarginRight
 	 * @since 0.7.0
 	 */
@@ -1259,7 +1178,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's margin bottom specification.
 	 * @method setMarginBottom
 	 * @since 0.7.0
 	 */
@@ -1286,7 +1204,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's margin bottom specification.
 	 * @method setMarginBottom
 	 * @since 0.7.0
 	 */
@@ -1295,7 +1212,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's minimum top margin.
 	 * @method setMinMarginTop
 	 * @since 0.7.0
 	 */
@@ -1304,7 +1220,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's maximum top margin.
 	 * @method setMaxMarginTop
 	 * @since 0.7.0
 	 */
@@ -1313,7 +1228,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's minimum left margin.
 	 * @method setMinMarginLeft
 	 * @since 0.7.0
 	 */
@@ -1322,7 +1236,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's maximum left margin.
 	 * @method setMaxMarginLeft
 	 * @since 0.7.0
 	 */
@@ -1331,7 +1244,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's minimum right margin.
 	 * @method setMinMarginRight
 	 * @since 0.7.0
 	 */
@@ -1340,7 +1252,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's maximum right margin.
 	 * @method setMaxMarginRight
 	 * @since 0.7.0
 	 */
@@ -1349,7 +1260,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's minimum bottom margin.
 	 * @method setMinMarginBottom
 	 * @since 0.7.0
 	 */
@@ -1358,7 +1268,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's maximum bottom margin.
 	 * @method setMaxMarginBottom
 	 * @since 0.7.0
 	 */
@@ -1367,7 +1276,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's padding top specification.
 	 * @method setPaddingTop
 	 * @since 0.7.0
 	 */
@@ -1394,7 +1302,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's padding top specification.
 	 * @method setPaddingTop
 	 * @since 0.7.0
 	 */
@@ -1403,7 +1310,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's padding left specification.
 	 * @method setPaddingLeft
 	 * @since 0.7.0
 	 */
@@ -1430,7 +1336,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's padding left specification.
 	 * @method setPaddingLeft
 	 * @since 0.7.0
 	 */
@@ -1439,7 +1344,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's padding right specification.
 	 * @method setPaddingRight
 	 * @since 0.7.0
 	 */
@@ -1466,7 +1370,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's padding right specification.
 	 * @method setPaddingRight
 	 * @since 0.7.0
 	 */
@@ -1475,7 +1378,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's padding bottom specification.
 	 * @method setPaddingBottom
 	 * @since 0.7.0
 	 */
@@ -1502,7 +1404,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's padding bottom specification.
 	 * @method setPaddingBottom
 	 * @since 0.7.0
 	 */
@@ -1511,7 +1412,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's minimum top padding.
 	 * @method setMinPaddingTop
 	 * @since 0.7.0
 	 */
@@ -1520,7 +1420,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's maximum top padding.
 	 * @method setMaxPaddingTop
 	 * @since 0.7.0
 	 */
@@ -1529,7 +1428,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's minimum left padding.
 	 * @method setMinPaddingLeft
 	 * @since 0.7.0
 	 */
@@ -1538,7 +1436,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's maximum left padding.
 	 * @method setMaxPaddingLeft
 	 * @since 0.7.0
 	 */
@@ -1547,7 +1444,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's minimum right padding.
 	 * @method setMinPaddingRight
 	 * @since 0.7.0
 	 */
@@ -1556,7 +1452,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's maximum right padding.
 	 * @method setMaxPaddingRight
 	 * @since 0.7.0
 	 */
@@ -1565,7 +1460,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's minimum bottom padding.
 	 * @method setMinPaddingBottom
 	 * @since 0.7.0
 	 */
@@ -1574,7 +1468,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's maximum bottom padding.
 	 * @method setMaxPaddingBottom
 	 * @since 0.7.0
 	 */
@@ -1583,7 +1476,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the factor by which the display node's will expand to fill remaining space.
 	 * @method setExpandFactor
 	 * @since 0.7.0
 	 */
@@ -1592,7 +1484,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the factor by which the display node's will shrink to fit available space.
 	 * @method setShrinkFactor
 	 * @since 0.7.0
 	 */
@@ -1601,7 +1492,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Assigns the display node's visibility status.
 	 * @method setVisible
 	 * @since 0.7.0
 	 */
@@ -1643,7 +1533,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Resolves the whole hierarchy.
 	 * @method resolve
 	 * @since 0.7.0
 	 */
@@ -1652,7 +1541,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Measures this node.
 	 * @method measure
 	 * @since 0.7.0
 	 */
@@ -1661,7 +1549,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Appends a node to the receiver's children list.
 	 * @method appendChild
 	 * @since 0.7.0
 	 */
@@ -1670,7 +1557,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Inserts a node to the receiver's children list.
 	 * @method insertChild
 	 * @since 0.7.0
 	 */
@@ -1679,7 +1565,6 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * Removes a node from the receiver's children list.
 	 * @method removeChild
 	 * @since 0.7.0
 	 */
@@ -1692,7 +1577,6 @@ public class DisplayNode(display: Display) {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Called when the node needs to be measured manually.
 	 * @method measure
 	 * @since 0.7.0
 	 */

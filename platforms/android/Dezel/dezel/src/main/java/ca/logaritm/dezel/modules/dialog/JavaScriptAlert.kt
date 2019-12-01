@@ -9,7 +9,7 @@ import android.support.design.widget.BottomSheetDialog
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
-import ca.logaritm.dezel.application.application
+import ca.logaritm.dezel.application.activity
 import ca.logaritm.dezel.core.JavaScriptClass
 import ca.logaritm.dezel.core.JavaScriptContext
 import ca.logaritm.dezel.core.JavaScriptFunctionCallback
@@ -21,8 +21,8 @@ import ca.logaritm.dezel.view.graphic.Convert
 
 /**
  * @class JavaScriptAlert
+ * @super JavaScriptClass
  * @since 0.7.0
- * @hidden
  */
 open class JavaScriptAlert(context: JavaScriptContext) : JavaScriptClass(context) {
 
@@ -49,7 +49,7 @@ open class JavaScriptAlert(context: JavaScriptContext) : JavaScriptClass(context
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private var loader: ImageLoader = ImageLoader(context.application)
+	private var loader: ImageLoader = ImageLoader(context.activity)
 
 	//--------------------------------------------------------------------------
 	// JS Functions
@@ -112,7 +112,7 @@ open class JavaScriptAlert(context: JavaScriptContext) : JavaScriptClass(context
 	 */
 	private fun presentAlert(title: String, message: String, buttons: List<JavaScriptAlertButton>) {
 
-		val builder = AlertDialog.Builder(this.context.application)
+		val builder = AlertDialog.Builder(this.context.activity)
 		builder.setTitle(title)
 		builder.setMessage(message)
 
@@ -184,7 +184,7 @@ open class JavaScriptAlert(context: JavaScriptContext) : JavaScriptClass(context
 			}
 		}
 
-		val sheet = BottomSheetDialog(this.context.application)
+		val sheet = BottomSheetDialog(this.context.activity)
 
 		sheet.setOnDismissListener {
 			Handler().postDelayed({
@@ -194,8 +194,8 @@ open class JavaScriptAlert(context: JavaScriptContext) : JavaScriptClass(context
 		}
 
 		val padding = Convert.toPx(12f).toInt()
-		val heading = LinearLayout(this.context.application)
-		val content = LinearLayout(this.context.application)
+		val heading = LinearLayout(this.context.activity)
+		val content = LinearLayout(this.context.activity)
 
 		heading.orientation = LinearLayout.VERTICAL
 		content.orientation = LinearLayout.VERTICAL
@@ -219,7 +219,7 @@ open class JavaScriptAlert(context: JavaScriptContext) : JavaScriptClass(context
 			content.addView(this.createSheetButton(sheet, source, icons))
 		}
 
-		val layout = LinearLayout(this.context.application)
+		val layout = LinearLayout(this.context.activity)
 
 		layout.orientation = LinearLayout.VERTICAL
 
@@ -248,7 +248,7 @@ open class JavaScriptAlert(context: JavaScriptContext) : JavaScriptClass(context
 
 		val padding = Convert.toPx(12f).toInt()
 
-		val textView = TextView(this.context.application)
+		val textView = TextView(this.context.activity)
 		textView.text = text
 		textView.textSize = 17f
 		textView.typeface = Typeface.DEFAULT_BOLD
@@ -272,7 +272,7 @@ open class JavaScriptAlert(context: JavaScriptContext) : JavaScriptClass(context
 
 		val padding = Convert.toPx(12f).toInt()
 
-		val textView = TextView(this.context.application)
+		val textView = TextView(this.context.activity)
 		textView.text = text
 		textView.textSize = 15f
 		textView.typeface = Typeface.DEFAULT
@@ -294,7 +294,7 @@ open class JavaScriptAlert(context: JavaScriptContext) : JavaScriptClass(context
 	 */
 	private fun createSheetButton(sheet: BottomSheetDialog, source: JavaScriptAlertButton, icons: Boolean): Button {
 
-		val button = BottomSheetButton(this.context.application, source.label.string)
+		val button = BottomSheetButton(this.context.activity, source.label.string)
 
 		if (source.style.string == "destructive") {
 			button.setTextColor(Color.argb(255, 255, 0, 0))

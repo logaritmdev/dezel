@@ -23,7 +23,6 @@ open class TextParagraphSpan(textAlignment: TextAlignment): AlignmentSpan {
 	public val textAlignment: TextAlignment = textAlignment
 
 	/**
-	 * @inherited
 	 * @method getAlignment
 	 * @since 0.5.0
 	 */

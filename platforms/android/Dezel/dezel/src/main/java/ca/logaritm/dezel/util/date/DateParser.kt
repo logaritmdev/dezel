@@ -37,7 +37,6 @@ internal object DateParser {
 	}
 
 	/**
-	 * Parses the specified ISO date toString.
 	 * @method parse
 	 * @since 0.5.0
 	 */

@@ -1,20 +1,20 @@
 package ca.logaritm.dezel.modules.application
 
 import ca.logaritm.dezel.core.JavaScriptContext
-import ca.logaritm.dezel.core.Module
+import ca.logaritm.dezel.core.JavaScriptModule
 
 /**
- * @class ApplicationModule
- * @since 0.1.0
+ * @class JavaScriptApplicationModule
+ * @super JavaScriptModule
+ * @since 0.7.0
  */
-open class ApplicationModule(context: JavaScriptContext): Module(context) {
+open class JavaScriptApplicationModule(context: JavaScriptContext): JavaScriptModule(context) {
 
 	//--------------------------------------------------------------------------
 	// Methods
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method initialize
 	 * @since 0.1.0
 	 */

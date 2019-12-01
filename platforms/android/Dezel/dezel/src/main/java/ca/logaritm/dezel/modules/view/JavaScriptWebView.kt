@@ -2,7 +2,7 @@ package ca.logaritm.dezel.modules.view
 
 import android.util.Size
 import android.util.SizeF
-import ca.logaritm.dezel.application.application
+import ca.logaritm.dezel.application.activity
 import ca.logaritm.dezel.core.JavaScriptContext
 import ca.logaritm.dezel.core.JavaScriptFunctionCallback
 import ca.logaritm.dezel.extension.fatalError
@@ -13,8 +13,8 @@ import ca.logaritm.dezel.view.graphic.Convert
 
 /**
  * @class JavaScriptWebView
+ * @super JavaScriptView
  * @since 0.7.0
- * @hidden
  */
 open class JavaScriptWebView(context: JavaScriptContext) : JavaScriptView(context), WebViewListener {
 
@@ -35,16 +35,14 @@ open class JavaScriptWebView(context: JavaScriptContext) : JavaScriptView(contex
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method createContentView
 	 * @since 0.7.0
 	 */
 	override fun createContentView(): WebView {
-		return WebView(this.context.application, this)
+		return WebView(this.context.activity, this)
 	}
 
 	/**
-	 * @inherited
 	 * @method destroy
 	 * @since 0.7.0
 	 */
@@ -55,7 +53,6 @@ open class JavaScriptWebView(context: JavaScriptContext) : JavaScriptView(contex
 	}
 
 	/**
-	 * @inherited
 	 * @method measure
 	 * @since 0.7.0
 	 */

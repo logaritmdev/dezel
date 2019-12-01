@@ -1,8 +1,8 @@
 package ca.logaritm.dezel.core
 
 /**
- * The base class for bridged classes.
  * @class JavaScriptClass
+ * @super JavaScriptObject
  * @since 0.1.0
  */
 open class JavaScriptClass(context: JavaScriptContext) : JavaScriptObject(context) {
@@ -23,7 +23,6 @@ open class JavaScriptClass(context: JavaScriptContext) : JavaScriptObject(contex
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method call
 	 * @since 0.7.0
 	 */
@@ -39,7 +38,6 @@ open class JavaScriptClass(context: JavaScriptContext) : JavaScriptObject(contex
 	}
 
 	/**
-	 * @inherited
 	 * @method call
 	 * @since 0.7.0
 	 */
@@ -55,7 +53,6 @@ open class JavaScriptClass(context: JavaScriptContext) : JavaScriptObject(contex
 	}
 
 	/**
-	 * @inherited
 	 * @method call
 	 * @since 0.7.0
 	 */
@@ -71,7 +68,6 @@ open class JavaScriptClass(context: JavaScriptContext) : JavaScriptObject(contex
 	}
 
 	/**
-	 * @inherited
 	 * @method callMethod
 	 * @since 0.7.0
 	 */
@@ -87,7 +83,6 @@ open class JavaScriptClass(context: JavaScriptContext) : JavaScriptObject(contex
 	}
 
 	/**
-	 * @inherited
 	 * @method callMethod
 	 * @since 0.7.0
 	 */
@@ -103,7 +98,6 @@ open class JavaScriptClass(context: JavaScriptContext) : JavaScriptObject(contex
 	}
 
 	/**
-	 * @inherited
 	 * @method construct
 	 * @since 0.7.0
 	 */
@@ -119,7 +113,6 @@ open class JavaScriptClass(context: JavaScriptContext) : JavaScriptObject(contex
 	}
 
 	/**
-	 * @inherited
 	 * @method construct
 	 * @since 0.7.0
 	 */
@@ -135,7 +128,6 @@ open class JavaScriptClass(context: JavaScriptContext) : JavaScriptObject(contex
 	}
 
 	/**
-	 * @inherited
 	 * @method defineProperty
 	 * @since 0.7.0
 	 */
@@ -151,7 +143,6 @@ open class JavaScriptClass(context: JavaScriptContext) : JavaScriptObject(contex
 	}
 
 	/**
-	 * @inherited
 	 * @method property
 	 * @since 0.7.0
 	 */
@@ -167,7 +158,6 @@ open class JavaScriptClass(context: JavaScriptContext) : JavaScriptObject(contex
 	}
 
 	/**
-	 * @inherited
 	 * @method property
 	 * @since 0.7.0
 	 */
@@ -183,7 +173,6 @@ open class JavaScriptClass(context: JavaScriptContext) : JavaScriptObject(contex
 	}
 
 	/**
-	 * @inherited
 	 * @method property
 	 * @since 0.7.0
 	 */
@@ -199,7 +188,6 @@ open class JavaScriptClass(context: JavaScriptContext) : JavaScriptObject(contex
 	}
 
 	/**
-	 * @inherited
 	 * @method property
 	 * @since 0.7.0
 	 */
@@ -215,7 +203,6 @@ open class JavaScriptClass(context: JavaScriptContext) : JavaScriptObject(contex
 	}
 
 	/**
-	 * @inherited
 	 * @method property
 	 * @since 0.4.0
 	 */
@@ -231,7 +218,6 @@ open class JavaScriptClass(context: JavaScriptContext) : JavaScriptObject(contex
 	}
 
 	/**
-	 * @inherited
 	 * @method property
 	 * @since 0.4.0
 	 */
@@ -247,7 +233,6 @@ open class JavaScriptClass(context: JavaScriptContext) : JavaScriptObject(contex
 	}
 
 	/**
-	 * @inherited
 	 * @method property
 	 * @since 0.7.0
 	 */
@@ -263,7 +248,6 @@ open class JavaScriptClass(context: JavaScriptContext) : JavaScriptObject(contex
 	}
 
 	/**
-	 * @inherited
 	 * @method property
 	 * @since 0.7.0
 	 */
@@ -272,7 +256,6 @@ open class JavaScriptClass(context: JavaScriptContext) : JavaScriptObject(contex
 	}
 
 	/**
-	 * @inherited
 	 * @method property
 	 * @since 0.7.0
 	 */
@@ -288,7 +271,6 @@ open class JavaScriptClass(context: JavaScriptContext) : JavaScriptObject(contex
 	}
 
 	/**
-	 * @inherited
 	 * @method property
 	 * @since 0.7.0
 	 */
@@ -304,7 +286,6 @@ open class JavaScriptClass(context: JavaScriptContext) : JavaScriptObject(contex
 	}
 
 	/**
-	 * @inherited
 	 * @method property
 	 * @since 0.7.0
 	 */
@@ -320,7 +301,6 @@ open class JavaScriptClass(context: JavaScriptContext) : JavaScriptObject(contex
 	}
 
 	/**
-	 * @inherited
 	 * @method property
 	 * @since 0.4.0
 	 */
@@ -336,7 +316,6 @@ open class JavaScriptClass(context: JavaScriptContext) : JavaScriptObject(contex
 	}
 
 	/**
-	 * @inherited
 	 * @method property
 	 * @since 0.4.0
 	 */
@@ -352,7 +331,6 @@ open class JavaScriptClass(context: JavaScriptContext) : JavaScriptObject(contex
 	}
 
 	/**
-	 * @inherited
 	 * @method property
 	 * @since 0.7.0
 	 */
@@ -368,7 +346,6 @@ open class JavaScriptClass(context: JavaScriptContext) : JavaScriptObject(contex
 	}
 
 	/**
-	 * @inherited
 	 * @method property
 	 * @since 0.7.0
 	 */
@@ -377,7 +354,6 @@ open class JavaScriptClass(context: JavaScriptContext) : JavaScriptObject(contex
 	}
 
 	/**
-	 * @inherited
 	 * @method forEach
 	 * @since 0.7.0
 	 */
@@ -393,7 +369,6 @@ open class JavaScriptClass(context: JavaScriptContext) : JavaScriptObject(contex
 	}
 
 	/**
-	 * @inherited
 	 * @method forOwn
 	 * @since 0.7.0
 	 */
@@ -409,7 +384,6 @@ open class JavaScriptClass(context: JavaScriptContext) : JavaScriptObject(contex
 	}
 
 	/**
-	 * @inherited
 	 * @method prototype
 	 * @since 0.7.0
 	 */
@@ -425,7 +399,6 @@ open class JavaScriptClass(context: JavaScriptContext) : JavaScriptObject(contex
 	}
 
 	/**
-	 * @inherited
 	 * @method prototype
 	 * @since 0.7.0
 	 */
@@ -434,7 +407,6 @@ open class JavaScriptClass(context: JavaScriptContext) : JavaScriptObject(contex
 	}
 
 	/**
-	 * @inherited
 	 * @method onProtectValue
 	 * @since 0.6.0
 	 */

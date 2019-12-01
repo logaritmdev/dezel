@@ -2,7 +2,7 @@ package ca.logaritm.dezel.text.span
 
 import android.text.TextPaint
 import android.text.style.MetricAffectingSpan
-import ca.logaritm.dezel.font.Font
+import ca.logaritm.dezel.text.font.Font
 
 /**
  * Applies font properties to a text span.
@@ -27,7 +27,6 @@ open class FontSpan(font: Font): MetricAffectingSpan() {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method updateMeasureState
 	 * @since 0.5.0
 	 */
@@ -37,7 +36,6 @@ open class FontSpan(font: Font): MetricAffectingSpan() {
 	}
 
 	/**
-	 * @inherited
 	 * @method updateDrawState
 	 * @since 0.5.0
 	 */

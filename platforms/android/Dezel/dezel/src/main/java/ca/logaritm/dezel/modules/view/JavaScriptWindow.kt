@@ -10,8 +10,8 @@ import ca.logaritm.dezel.view.geom.Transform3D
 
 
 /**
- * The root view.
  * @class JavaScriptWindow
+ * @super JavaScriptView
  * @since 0.7.0
  */
 open class JavaScriptWindow(context: JavaScriptContext): JavaScriptView(context) {
@@ -21,7 +21,6 @@ open class JavaScriptWindow(context: JavaScriptContext): JavaScriptView(context)
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Removes the root.
 	 * @method remove
 	 * @since 0.7.0
 	 */
@@ -30,11 +29,10 @@ open class JavaScriptWindow(context: JavaScriptContext): JavaScriptView(context)
 	}
 
 	/**
-	 * Finds a view from this window's hierarchy at the specified point.
-	 * @method viewFromPoint
+	 * @method findViewAt
 	 * @since 0.7.0
 	 */
-	open fun viewFromPoint(x: Double, y: Double, visible: Boolean = true, touchable: Boolean = true): JavaScriptView? {
+	open fun findViewAt(x: Double, y: Double, visible: Boolean = true, touchable: Boolean = true): JavaScriptView? {
 		return this.findViewAt(Point3D(x, y, 0.0), Transform3D(), visible, touchable)
 	}
 
@@ -43,15 +41,15 @@ open class JavaScriptWindow(context: JavaScriptContext): JavaScriptView(context)
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method jsFunction_viewFromPoint
+	 * @method jsFunction_findViewAt
 	 * @since 0.7.0
 	 * @hidden
 	 */
 	@Suppress("unused")
-	open fun jsFunction_viewFromPoint(callback: JavaScriptFunctionCallback) {
+	open fun jsFunction_findViewAt(callback: JavaScriptFunctionCallback) {
 
 		if (callback.arguments < 4) {
-			fatalError("Method JavaScriptWindow.viewFromPoint() requires 4 arguments.")
+			fatalError("Method JavaScriptWindow.findViewAt() requires 4 arguments.")
 		}
 
 		val x = callback.argument(0).number
@@ -59,7 +57,7 @@ open class JavaScriptWindow(context: JavaScriptContext): JavaScriptView(context)
 		val v = callback.argument(2).boolean
 		val t = callback.argument(3).boolean
 
-		val view = this.viewFromPoint(x, y, v, t)
+		val view = this.findViewAt(x, y, v, t)
 		if (view == null) {
 			return
 		}

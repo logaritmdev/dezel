@@ -20,23 +20,22 @@ import ca.logaritm.dezel.application.keyboard.KeyboardObserverListener
 import ca.logaritm.dezel.core.*
 import ca.logaritm.dezel.extension.Delegates
 import ca.logaritm.dezel.extension.app.viewport
-import ca.logaritm.dezel.modules.application.ApplicationModule
+import ca.logaritm.dezel.modules.application.JavaScriptApplicationModule
 import ca.logaritm.dezel.modules.application.JavaScriptApplication
 import ca.logaritm.dezel.modules.core.CoreModule
-import ca.logaritm.dezel.modules.device.DeviceModule
-import ca.logaritm.dezel.modules.dialog.DialogModule
-import ca.logaritm.dezel.modules.form.FormModule
+import ca.logaritm.dezel.modules.device.JavaScriptDeviceModule
+import ca.logaritm.dezel.modules.dialog.JavaScriptDialogModule
+import ca.logaritm.dezel.modules.form.JavaScriptFormModule
 import ca.logaritm.dezel.modules.global.GlobalModule
 import ca.logaritm.dezel.modules.graphic.GraphicModule
 import ca.logaritm.dezel.modules.graphic.ImageLoader
-import ca.logaritm.dezel.modules.locale.LocaleModule
-import ca.logaritm.dezel.modules.platform.PlatformModule
-import ca.logaritm.dezel.modules.view.ViewModule
+import ca.logaritm.dezel.modules.locale.JavaScriptLocaleModule
+import ca.logaritm.dezel.modules.platform.JavaScriptPlatformModule
+import ca.logaritm.dezel.modules.view.JavaScriptViewModule
 import ca.logaritm.dezel.view.display.Display
 import ca.logaritm.dezel.view.graphic.Convert
 
 /**
- * The root activity of a Dezel application.
  * @class ApplicationActivity
  * @since 0.7.0
  */
@@ -47,7 +46,6 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The activity state.
 	 * @enum State
 	 * @since 0.7.0
 	 */
@@ -75,7 +73,6 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The application's view.
 	 * @property view
 	 * @since 0.7.0
 	 */
@@ -83,7 +80,6 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 		private set
 
 	/**
-	 * The application's JavaScript context.
 	 * @property context
 	 * @since 0.7.0
 	 */
@@ -91,7 +87,6 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 		private set
 
 	/**
-	 * The application controller's display.
 	 * @property display
 	 * @since 0.7.0
 	 */
@@ -99,8 +94,7 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 		private set
 
 	/**
-	 * The application's JavaScript application object.
-	 * @property application
+	 * @property activity
 	 * @since 0.7.0
 	 */
 	public var application: JavaScriptApplication? = null
@@ -139,7 +133,6 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Creates the application context and required components.
 	 * @method setup
 	 * @since 0.7.0
 	 */
@@ -148,7 +141,6 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 	}
 
 	/**
-	 * Creates the application context and required components.
 	 * @method setup
 	 * @since 0.7.0
 	 */
@@ -199,14 +191,14 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 
 		this.registerModule("dezel.CoreModule", CoreModule::class.java)
 		this.registerModule("dezel.GlobalModule", GlobalModule::class.java)
-		this.registerModule("dezel.LocaleModule", LocaleModule::class.java)
-		this.registerModule("dezel.DeviceModule", DeviceModule::class.java)
-		this.registerModule("dezel.PlatformModule", PlatformModule::class.java)
-		this.registerModule("dezel.DialogModule", DialogModule::class.java)
+		this.registerModule("dezel.LocaleModule", JavaScriptLocaleModule::class.java)
+		this.registerModule("dezel.DeviceModule", JavaScriptDeviceModule::class.java)
+		this.registerModule("dezel.PlatformModule", JavaScriptPlatformModule::class.java)
+		this.registerModule("dezel.DialogModule", JavaScriptDialogModule::class.java)
 		this.registerModule("dezel.GraphicModule", GraphicModule::class.java)
-		this.registerModule("dezel.ViewModule", ViewModule::class.java)
-		this.registerModule("dezel.FormModule", FormModule::class.java)
-		this.registerModule("dezel.ApplicationModule", ApplicationModule::class.java)
+		this.registerModule("dezel.ViewModule", JavaScriptViewModule::class.java)
+		this.registerModule("dezel.FormModule", JavaScriptFormModule::class.java)
+		this.registerModule("dezel.ApplicationModule", JavaScriptApplicationModule::class.java)
 
 		this.configure()
 
@@ -215,9 +207,9 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 		this.context.setup()
 
 		this.sources.forEach { source ->
-			when (source.category) {
+			when (source.type) {
 			//	Source.Category.STYLE  -> this.evaluateStyle(source.data, source.location)
-				Source.Category.SCRIPT -> this.evaluateScript(source.data, source.location)
+				Source.Type.SCRIPT -> this.evaluateScript(source.data, source.path)
 			}
 		}
 
@@ -225,7 +217,6 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 	}
 
 	/**
-	 * Registers a module.
 	 * @method registerModule
 	 * @since 0.7.0
 	 */
@@ -234,7 +225,6 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 	}
 
 	/**
-	 * Registers a class.
 	 * @method registerClass
 	 * @since 0.7.0
 	 */
@@ -243,25 +233,22 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 	}
 
 	/**
-	 * Registers a stylerNode file.
 	 * @method registerStyle
 	 * @since 0.7.0
 	 */
 	open fun registerStyle(location: String) {
-		this.sources.add(Source(this, location, Source.Category.STYLE))
+		this.sources.add(Source(this, location, Source.Type.STYLE))
 	}
 
 	/**
-	 * Registers a script file.
 	 * @method registerScript
 	 * @since 0.7.0
 	 */
 	open fun registerScript(location: String) {
-		this.sources.add(Source(this, location, Source.Category.SCRIPT))
+		this.sources.add(Source(this, location, Source.Type.SCRIPT))
 	}
 
 	/**
-	 * Evaluates a script file.
 	 * @method evaluateScript
 	 * @since 0.7.0
 	 */
@@ -270,7 +257,6 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 	}
 
 	/**
-	 * Launches the specified application.
 	 * @method launch
 	 * @since 0.7.0
 	 */
@@ -290,7 +276,6 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 	}
 
 	/**
-	 * Reloads the current application.
 	 * @method reload
 	 * @since 0.7.0
 	 */
@@ -301,7 +286,6 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 	}
 
 	/**
-	 * Opens a resource URL.
 	 * @method openResourceURL
 	 * @since 0.7.0
 	 */
@@ -310,7 +294,6 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 	}
 
 	/**
-	 * Opens a universal URL.
 	 * @method openUniversalURL
 	 * @since 0.7.0
 	 */
@@ -323,7 +306,6 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Dispatches a native touch event to the JavaScript application.
 	 * @method dispatchTouchEvent
 	 * @since 0.7.0
 	 */
@@ -344,7 +326,6 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 	}
 
 	/**
-	 * Dispatches a touchcancel event to the JavaScript application.
 	 * @method dispatchTouchCancel
 	 * @since 0.7.0
 	 */
@@ -353,7 +334,6 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 	}
 
 	/**
-	 * Dispatches a touchstart event to the JavaScript application.
 	 * @method dispatchTouchStart
 	 * @since 0.7.0
 	 */
@@ -362,7 +342,6 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 	}
 
 	/**
-	 * Dispatches a touchmove event to the JavaScript application.
 	 * @method dispatchTouchMove
 	 * @since 0.7.0
 	 */
@@ -371,7 +350,6 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 	}
 
 	/**
-	 * Dispatches a touchend event to the JavaScript application.
 	 * @method dispatchTouchEnd
 	 * @since 0.7.0
 	 */
@@ -384,7 +362,6 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Notifies the application it has moved to the background.
 	 * @method onEnterBackground
 	 * @since 0.7.0
 	 */
@@ -393,7 +370,6 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 	}
 
 	/**
-	 * Notifies the application it has moved to the foreground.
 	 * @method onEnterForeground
 	 * @since 0.7.0
 	 */
@@ -406,7 +382,6 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Manually present the soft keyboard for the specified view.
 	 * @method presentSoftKeyboard
 	 * @since 0.7.0
 	 */
@@ -419,7 +394,6 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 	}
 
 	/**
-	 * Manually dismiss the soft keyboard.
 	 * @method dismissSoftKeyboard
 	 * @since 0.7.0
 	 */
@@ -436,7 +410,6 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 	}
 
 	/**
-	 * Notifies the application it has moved to the foreground.
 	 * @method onBeforeKeyboardShow
 	 * @since 0.7.0
 	 */
@@ -445,7 +418,6 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 	}
 
 	/**
-	 * Notifies the application it has moved to the foreground.
 	 * @method onKeyboardShow
 	 * @since 0.7.0
 	 */
@@ -454,7 +426,6 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 	}
 
 	/**
-	 * Notifies the application it has moved to the foreground.
 	 * @method onBeforeKeyboardHide
 	 * @since 0.7.0
 	 */
@@ -463,7 +434,6 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 	}
 
 	/**
-	 * Notifies the application it has moved to the foreground.
 	 * @method onKeyboardHide
 	 * @since 0.7.0
 	 */
@@ -472,7 +442,6 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 	}
 
 	/**
-	 * Notifies the application it has moved to the foreground.
 	 * @method onBeforeKeyboardResize
 	 * @since 0.7.0
 	 */
@@ -481,7 +450,6 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 	}
 
 	/**
-	 * Notifies the application it has moved to the foreground.
 	 * @method onKeyboardResize
 	 * @since 0.7.0
 	 */
@@ -494,7 +462,6 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The application's state.
 	 * @property state
 	 * @since 0.7.0
 	 */
@@ -502,7 +469,6 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 		private set
 
 	/**
-	 * @inherited
 	 * @method onCreate
 	 * @since 0.7.0
 	 */
@@ -568,7 +534,6 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 	}
 
 	/**
-	 * @inherited
 	 * @method onPause
 	 * @since 0.7.0
 	 */
@@ -587,7 +552,6 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 	}
 
 	/**
-	 * @inherited
 	 * @method onResume
 	 * @since 0.7.0
 	 */
@@ -606,7 +570,6 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 	}
 
 	/**
-	 * @inherited
 	 * @method onDestroy
 	 * @since 0.7.0
 	 */
@@ -622,7 +585,6 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method onNewIntent
 	 * @since 0.7.0
 	 */
@@ -655,7 +617,6 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method onRequestPermissionsResult
 	 * @since 0.7.0
 	 */
@@ -673,7 +634,6 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method onBackPressed
 	 * @since 0.7.0
 	 */
@@ -760,7 +720,6 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 	/**
 	 * @method onKeyboardHeightChanged
 	 * @since 0.7.0
-	 * @hidden
 	 */
 	override fun onKeyboardHeightChanged(height: Int, orientation: Int) {
 
@@ -802,7 +761,6 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The status bar visibility status.
 	 * @property statusBarVisible
 	 * @since 0.7.0
 	 */
@@ -811,7 +769,6 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 	}
 
 	/**
-	 * The status bar foreground color (white or black)
 	 * @property statusBarForegroundColor
 	 * @since 0.7.0
 	 */
@@ -820,7 +777,6 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 	}
 
 	/**
-	 * The status bar background color.
 	 * @property statusBarBackgroundColor
 	 * @since 0.7.0
 	 */
@@ -895,7 +851,6 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Called when the application controller is loaded.
 	 * @method onLoad
 	 * @since 0.7.0
 	 */
@@ -904,7 +859,6 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 	}
 
 	/**
-	 * Called when a JavaScript error is thrown.
 	 * @method onThrowError
 	 * @since 0.7.0
 	 */
@@ -913,7 +867,6 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 	}
 
 	/**
-	 * Called when a JavaScript application is launched.
 	 * @method onLaunchApplication
 	 * @since 0.7.0
 	 */
@@ -922,7 +875,6 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 	}
 
 	/**
-	 * Called when a JavaScript application is reloaded.
 	 * @method onReloadApplication
 	 * @since 0.7.0
 	 */
@@ -1032,8 +984,8 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 
 /**
  * Convenience property to retrieve the application from the context.
- * @property application
+ * @property activity
  * @since 0.1.0
  */
-public val JavaScriptContext.application: ApplicationActivity
+public val JavaScriptContext.activity: ApplicationActivity
 	get() = this.attribute(ApplicationActivity.kApplicationActivityKey) as ApplicationActivity

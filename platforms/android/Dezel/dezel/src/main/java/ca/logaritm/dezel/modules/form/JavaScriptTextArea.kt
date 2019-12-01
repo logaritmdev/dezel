@@ -2,7 +2,7 @@ package ca.logaritm.dezel.modules.form
 
 import android.util.Log
 import android.util.SizeF
-import ca.logaritm.dezel.application.application
+import ca.logaritm.dezel.application.activity
 import ca.logaritm.dezel.core.*
 import ca.logaritm.dezel.extension.type.clamp
 import ca.logaritm.dezel.extension.type.max
@@ -18,8 +18,8 @@ import ca.logaritm.dezel.view.type.TextLocation
 import ca.logaritm.dezel.view.type.TextTransform
 
 /**
- * An editable text area.
  * @class JavaScriptTextArea
+ * @super JavaScriptView
  * @since 0.7.0
  */
 open class JavaScriptTextArea(context: JavaScriptContext) : JavaScriptView(context), TextAreaListener {
@@ -48,16 +48,14 @@ open class JavaScriptTextArea(context: JavaScriptContext) : JavaScriptView(conte
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method createContentView
 	 * @since 0.7.0
 	 */
 	override fun createContentView(): TextArea {
-		return TextArea(this.context.application, this)
+		return TextArea(this.context.activity, this)
 	}
 
 	/**
-	 * @inherited
 	 * @method update
 	 * @since 0.7.0
 	 */
@@ -72,7 +70,6 @@ open class JavaScriptTextArea(context: JavaScriptContext) : JavaScriptView(conte
 	}
 
 	/**
-	 * Updates the font size based on its utin.
 	 * @method updateFontSize
 	 * @since 0.7.0
 	 */
@@ -220,7 +217,6 @@ open class JavaScriptTextArea(context: JavaScriptContext) : JavaScriptView(conte
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method measure
 	 * @since 0.7.0
 	 */
@@ -235,7 +231,6 @@ open class JavaScriptTextArea(context: JavaScriptContext) : JavaScriptView(conte
 	}
 
 	/**
-	 * @inherited
 	 * @method onResolvePadding
 	 * @since 0.7.0
 	 */
@@ -253,7 +248,6 @@ open class JavaScriptTextArea(context: JavaScriptContext) : JavaScriptView(conte
 
 
 	/**
-	 * The text area's toValue.
 	 * @property value
 	 * @since 0.7.0
 	 */
@@ -264,7 +258,6 @@ open class JavaScriptTextArea(context: JavaScriptContext) : JavaScriptView(conte
 	}
 
 	/**
-	 * The text area's placeholder.
 	 * @property placeholder
 	 * @since 0.7.0
 	 */
@@ -275,7 +268,6 @@ open class JavaScriptTextArea(context: JavaScriptContext) : JavaScriptView(conte
 	}
 
 	/**
-	 * The text area's placeholder color.
 	 * @property placeholderColor
 	 * @since 0.7.0
 	 */
@@ -286,7 +278,6 @@ open class JavaScriptTextArea(context: JavaScriptContext) : JavaScriptView(conte
 	}
 
 	/**
-	 * The text area's autocorrect status.
 	 * @property autocorrect
 	 * @since 0.7.0
 	 */
@@ -297,7 +288,6 @@ open class JavaScriptTextArea(context: JavaScriptContext) : JavaScriptView(conte
 	}
 
 	/**
-	 * The text area's autocapitalize status.
 	 * @property autocapitalize
 	 * @since 0.7.0
 	 */
@@ -308,7 +298,6 @@ open class JavaScriptTextArea(context: JavaScriptContext) : JavaScriptView(conte
 	}
 
 	/**
-	 * The text area's font family.
 	 * @property fontFamily
 	 * @since 0.7.0
 	 */
@@ -319,7 +308,6 @@ open class JavaScriptTextArea(context: JavaScriptContext) : JavaScriptView(conte
 	}
 
 	/**
-	 * The text area's font weight.
 	 * @property fontWeight
 	 * @since 0.7.0
 	 */
@@ -330,7 +318,6 @@ open class JavaScriptTextArea(context: JavaScriptContext) : JavaScriptView(conte
 	}
 
 	/**
-	 * The text area's font stylerNode.
 	 * @property fontStyle
 	 * @since 0.7.0
 	 */
@@ -341,7 +328,6 @@ open class JavaScriptTextArea(context: JavaScriptContext) : JavaScriptView(conte
 	}
 
 	/**
-	 * The text area's font size.
 	 * @property fontSize
 	 * @since 0.7.0
 	 */
@@ -352,7 +338,6 @@ open class JavaScriptTextArea(context: JavaScriptContext) : JavaScriptView(conte
 	}
 
 	/**
-	 * The text area's minimum font size.
 	 * @property minFontSize
 	 * @since 0.7.0
 	 */
@@ -363,7 +348,6 @@ open class JavaScriptTextArea(context: JavaScriptContext) : JavaScriptView(conte
 	}
 
 	/**
-	 * The text area's maximum font size.
 	 * @property maxFontSize
 	 * @since 0.7.0
 	 */
@@ -374,18 +358,6 @@ open class JavaScriptTextArea(context: JavaScriptContext) : JavaScriptView(conte
 	}
 
 	/**
-	 * The text area's text color.
-	 * @property textColor
-	 * @since 0.7.0
-	 */
-	public val textColor by lazy {
-		JavaScriptProperty("#000") { value ->
-			this.view.setTextColor(Color.parse(value.string))
-		}
-	}
-
-	/**
-	 * The text area's text alignment.
 	 * @property textAlignment
 	 * @since 0.7.0
 	 */
@@ -396,7 +368,6 @@ open class JavaScriptTextArea(context: JavaScriptContext) : JavaScriptView(conte
 	}
 
 	/**
-	 * The text area's text location.
 	 * @property textLocation
 	 * @since 0.7.0
 	 */
@@ -407,7 +378,6 @@ open class JavaScriptTextArea(context: JavaScriptContext) : JavaScriptView(conte
 	}
 
 	/**
-	 * The text area's text kerning.
 	 * @property textKerning
 	 * @since 0.7.0
 	 */
@@ -418,7 +388,6 @@ open class JavaScriptTextArea(context: JavaScriptContext) : JavaScriptView(conte
 	}
 
 	/**
-	 * The text area's text leading.
 	 * @property textLeading
 	 * @since 0.7.0
 	 */
@@ -429,51 +398,6 @@ open class JavaScriptTextArea(context: JavaScriptContext) : JavaScriptView(conte
 	}
 
 	/**
-	 * The text area's text shadow blur.
-	 * @property textShadowBlur
-	 * @since 0.7.0
-	 */
-	public val textShadowBlur by lazy {
-		JavaScriptProperty(0.0) { value ->
-			this.view.textShadowBlur = value.number.toFloat()
-		}
-	}
-
-	/**
-	 * The text area's text shadow color.
-	 * @property textShadowColor
-	 * @since 0.7.0
-	 */
-	public val textShadowColor by lazy {
-		JavaScriptProperty("#000") { value ->
-			this.view.textShadowColor = Color.parse(value.string)
-		}
-	}
-
-	/**
-	 * The text area's text shadow offset top.
-	 * @property textShadowOffsetTop
-	 * @since 0.7.0
-	 */
-	public val textShadowOffsetTop by lazy {
-		JavaScriptProperty(0.0) { value ->
-			this.view.textShadowOffsetTop = value.number.toFloat()
-		}
-	}
-
-	/**
-	 * The text area's text shadow offset left.
-	 * @property textShadowOffsetLeft
-	 * @since 0.7.0
-	 */
-	public val textShadowOffsetLeft by lazy {
-		JavaScriptProperty(0.0) { value ->
-			this.view.textShadowOffsetLeft = value.number.toFloat()
-		}
-	}
-
-	/**
-	 * The text area's text decoration.
 	 * @property textDecoration
 	 * @since 0.7.0
 	 */
@@ -484,13 +408,62 @@ open class JavaScriptTextArea(context: JavaScriptContext) : JavaScriptView(conte
 	}
 
 	/**
-	 * The text area's text transform.
 	 * @property textTransform
 	 * @since 0.7.0
 	 */
 	public val textTransform by lazy {
 		JavaScriptProperty("none") { value ->
 			this.view.textTransform = this.getTextTransform(value.string)
+		}
+	}
+
+	/**
+	 * @property textColor
+	 * @since 0.7.0
+	 */
+	public val textColor by lazy {
+		JavaScriptProperty("#000") { value ->
+			this.view.setTextColor(Color.parse(value.string))
+		}
+	}
+
+	/**
+	 * @property textShadowBlur
+	 * @since 0.7.0
+	 */
+	public val textShadowBlur by lazy {
+		JavaScriptProperty(0.0) { value ->
+			this.view.textShadowBlur = value.number.toFloat()
+		}
+	}
+
+	/**
+	 * @property textShadowColor
+	 * @since 0.7.0
+	 */
+	public val textShadowColor by lazy {
+		JavaScriptProperty("#000") { value ->
+			this.view.textShadowColor = Color.parse(value.string)
+		}
+	}
+
+	/**
+	 * @property textShadowOffsetTop
+	 * @since 0.7.0
+	 */
+	public val textShadowOffsetTop by lazy {
+		JavaScriptProperty(0.0) { value ->
+			this.view.textShadowOffsetTop = value.number.toFloat()
+		}
+	}
+
+	/**
+	 * @property textShadowOffsetLeft
+	 * @since 0.7.0
+	 */
+	public val textShadowOffsetLeft by lazy {
+		JavaScriptProperty(0.0) { value ->
+			this.view.textShadowOffsetLeft = value.number.toFloat()
 		}
 	}
 
@@ -739,28 +712,6 @@ open class JavaScriptTextArea(context: JavaScriptContext) : JavaScriptView(conte
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method jsGet_textColor
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	@Suppress("unused")
-	open fun jsGet_textColor(callback: JavaScriptGetterCallback) {
-		callback.returns(this.textColor)
-	}
-
-	/**
-	 * @method jsSet_textColor
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	@Suppress("unused")
-	open fun jsSet_textColor(callback: JavaScriptSetterCallback) {
-		this.textColor.reset(callback.value, this)
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
 	 * @method jsGet_textAlignment
 	 * @since 0.7.0
 	 * @hidden
@@ -888,6 +839,28 @@ open class JavaScriptTextArea(context: JavaScriptContext) : JavaScriptView(conte
 	@Suppress("unused")
 	open fun jsSet_textTransform(callback: JavaScriptSetterCallback) {
 		this.textTransform.reset(callback.value, this)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_textColor
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@Suppress("unused")
+	open fun jsGet_textColor(callback: JavaScriptGetterCallback) {
+		callback.returns(this.textColor)
+	}
+
+	/**
+	 * @method jsSet_textColor
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@Suppress("unused")
+	open fun jsSet_textColor(callback: JavaScriptSetterCallback) {
+		this.textColor.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------

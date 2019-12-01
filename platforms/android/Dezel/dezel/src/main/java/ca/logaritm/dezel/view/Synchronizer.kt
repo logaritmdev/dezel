@@ -4,7 +4,6 @@ import android.view.Choreographer
 import java.lang.ref.WeakReference
 
 /**
- * Synchronizes update with display refresh.
  * @class Synchronizer
  * @since 0.7.0
  */
@@ -17,7 +16,6 @@ public class Synchronizer {
 	companion object {
 
 		/**
-		 * The main update display manager instance.
 		 * @property main
 		 * @sine 0.7.0
 		 */
@@ -47,15 +45,6 @@ public class Synchronizer {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @constructor
-	 * @since 0.7.0
-	 */
-	init {
-
-	}
-
-	/**
-	 * Schedules an update display handler.
 	 * @method schedule
 	 * @since 0.7.0
 	 */
@@ -72,7 +61,6 @@ public class Synchronizer {
 	}
 
 	/**
-	 * Executes scheduled callbacks.
 	 * @method execute
 	 * @since 0.7.0
 	 */
@@ -105,7 +93,6 @@ public class Synchronizer {
 	}
 
 	/**
-	 * Resets the update display manager.
 	 * @method reset
 	 * @since 0.7.0
 	 */

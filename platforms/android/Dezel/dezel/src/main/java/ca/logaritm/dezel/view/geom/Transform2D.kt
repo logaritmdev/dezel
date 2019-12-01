@@ -1,7 +1,6 @@
 package ca.logaritm.dezel.view.geom
 
 /**
- * Provides the transformations methods for a 2d matrix.
  * @class Transform2D
  * @since 0.2.0
  */
@@ -56,7 +55,6 @@ public class Transform2D {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Translates the matrix.
 	 * @method translate
 	 * @since 0.2.0
 	 */
@@ -66,7 +64,6 @@ public class Transform2D {
 	}
 
 	/**
-	 * Scales the matrix.
 	 * @method scale
 	 * @since 0.2.0
 	 */
@@ -78,7 +75,6 @@ public class Transform2D {
 	}
 
 	/**
-	 * Rotates the matrix.
 	 * @method rotate
 	 * @since 0.2.0
 	 */
@@ -99,7 +95,6 @@ public class Transform2D {
 	}
 
 	/**
-	 * Multiply the matrix with the specified matrix.
 	 * @method concat
 	 * @since 0.2.0
 	 */
@@ -121,7 +116,6 @@ public class Transform2D {
 	}
 
 	/**
-	 * Resets the matrix.
 	 * @method reset
 	 * @since 0.2.0
 	 */
@@ -135,7 +129,6 @@ public class Transform2D {
 	}
 
 	/**
-	 * Transforms a point using the matrix.
 	 * @method transform
 	 * @since 0.2.0
 	 */
@@ -147,7 +140,6 @@ public class Transform2D {
 	}
 
 	/**
-	 * Indicates whether the matrix is the identity matrix.
 	 * @method isIdentity
 	 * @since 0.2.0
 	 */

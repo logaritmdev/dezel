@@ -7,15 +7,14 @@ import java.lang.ref.ReferenceQueue
 
 /**
  * @class FinalizableReference
+ * @super PhantomReference
  * @since 0.4.0
- * @hidden
  */
 abstract class FinalizableReference<T: Any>(referent: T, queue: ReferenceQueue<Any>): PhantomReference<T>(referent, queue) {
 
 	companion object {
 
 		/**
-		 * Convenience handler to execute stuff on the main thread.
 		 * @property handler
 		 * @since 0.4.0
 		 */

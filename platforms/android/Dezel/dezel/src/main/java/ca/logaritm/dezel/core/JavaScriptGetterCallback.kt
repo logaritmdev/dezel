@@ -1,7 +1,6 @@
 package ca.logaritm.dezel.core
 
 /**
- * The arguments object provided to a property getter.
  * @class JavaScriptGetterCallback
  * @since 0.1.0
  */

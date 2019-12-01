@@ -1,8 +1,8 @@
 package ca.logaritm.dezel.core
 
 /**
- * The base class for bridged object.
  * @class JavaScriptObject
+ * @super JavaScriptValue
  * @since 0.1.0
  */
 open class JavaScriptObject(context: JavaScriptContext): JavaScriptValue(context) {
@@ -12,7 +12,6 @@ open class JavaScriptObject(context: JavaScriptContext): JavaScriptValue(context
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @overridden
 	 * @method dispose
 	 * @since 0.6.0
 	 */
@@ -27,7 +26,6 @@ open class JavaScriptObject(context: JavaScriptContext): JavaScriptValue(context
 	}
 
 	/**
-	 * Returns an internal attribute from this object.
 	 * @method attribute
 	 * @since 0.1.0
 	 */
@@ -36,7 +34,6 @@ open class JavaScriptObject(context: JavaScriptContext): JavaScriptValue(context
 	}
 
 	/**
-	 * Assigns an internal attribute on this object.
 	 * @method attribute
 	 * @since 0.1.0
 	 */
@@ -47,7 +44,6 @@ open class JavaScriptObject(context: JavaScriptContext): JavaScriptValue(context
 	}
 
 	/**
-	 * Assigns the object's finalize handler.
 	 * @method finalize
 	 * @since 0.4.0
 	 */
@@ -60,56 +56,15 @@ open class JavaScriptObject(context: JavaScriptContext): JavaScriptValue(context
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Assigns a toValue to a JavaScript property.
 	 * @method setProperty
 	 * @since 0.7.0
 	 */
 	open fun setProperty(name: String, value: JavaScriptValue?) {
-		val success = JavaScriptPropertyAccessor.get(this, name).set(this, value)
-		if (success == false) {
-			this.property(name, value)
-		}
+		JavaScriptPropertyAccessor.get(this, name).set(this, value)
 	}
 
 	/**
-	 * Assigns a toValue to a JavaScript property.
-	 * @method setProperty
-	 * @since 0.7.0
-	 */
-	open fun setProperty(name: String, value: String) {
-		val success = JavaScriptPropertyAccessor.get(this, name).set(this, value)
-		if (success == false) {
-			this.property(name, value)
-		}
-	}
-
-	/**
-	 * Assigns a toValue to a JavaScript property.
-	 * @method setProperty
-	 * @since 0.7.0
-	 */
-	open fun setProperty(name: String, value: Double, unit: JavaScriptPropertyUnit = JavaScriptPropertyUnit.NONE) {
-		val success = JavaScriptPropertyAccessor.get(this, name).set(this, value, unit)
-		if (success == false) {
-			this.property(name, value)
-		}
-	}
-
-	/**
-	 * Assigns a toValue to a JavaScript property.
-	 * @method setProperty
-	 * @since 0.7.0
-	 */
-	open fun setProperty(name: String, value: Boolean) {
-		val success = JavaScriptPropertyAccessor.get(this, name).set(this, value)
-		if (success == false) {
-			this.property(name, value)
-		}
-	}
-
-	/**
-	 * Returns a JavaScript property.
-	 * @method getPropert
+	 * @method getProperty
 	 * @since 0.7.0
 	 */
 	open fun getProperty(name: String): JavaScriptProperty? {
@@ -121,7 +76,6 @@ open class JavaScriptObject(context: JavaScriptContext): JavaScriptValue(context
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method onResetValue
 	 * @since 0.4.0
 	 */

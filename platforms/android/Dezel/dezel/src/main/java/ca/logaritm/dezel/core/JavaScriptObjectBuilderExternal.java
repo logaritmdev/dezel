@@ -2,8 +2,8 @@ package ca.logaritm.dezel.core;
 
 /**
  * @class JavaScriptObjectBuilderExternal
- * @hidden
  * @since 0.1.0
+ * @hidden
  */
 public class JavaScriptObjectBuilderExternal {
 

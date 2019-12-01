@@ -27,7 +27,6 @@ open class TextDecorationSpan(textDecoration: TextDecoration): CharacterStyle() 
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method updateDrawState
 	 * @since 0.5.0
 	 */

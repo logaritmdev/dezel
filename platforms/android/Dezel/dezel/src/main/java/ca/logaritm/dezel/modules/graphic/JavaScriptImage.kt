@@ -1,7 +1,7 @@
 package ca.logaritm.dezel.modules.graphic
 
 import android.graphics.Bitmap
-import ca.logaritm.dezel.application.application
+import ca.logaritm.dezel.application.activity
 import ca.logaritm.dezel.core.*
 
 /**
@@ -27,7 +27,7 @@ open class JavaScriptImage(context: JavaScriptContext) : JavaScriptClass(context
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private var loader: ImageLoader = ImageLoader(context.application)
+	private var loader: ImageLoader = ImageLoader(context.activity)
 
 	//--------------------------------------------------------------------------
 	// Methods

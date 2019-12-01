@@ -9,9 +9,9 @@ import ca.logaritm.dezel.extension.fatalError
 import com.neovisionaries.ws.client.*
 
 /**
- * Bridges the native WebSocket class.
  * @class JavaScriptWebSocket
- * @since 0.4.0
+ * @super JavaScriptClass
+ * @since 0.7.0
  */
 open class JavaScriptWebSocket(context: JavaScriptContext) : JavaScriptClass(context) {
 
@@ -20,7 +20,6 @@ open class JavaScriptWebSocket(context: JavaScriptContext) : JavaScriptClass(con
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The WebSocket connection.
 	 * @property socket
 	 * @since 0.7.0
 	 */
@@ -31,7 +30,6 @@ open class JavaScriptWebSocket(context: JavaScriptContext) : JavaScriptClass(con
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method dispose
 	 * @since 0.7.0
 	 */

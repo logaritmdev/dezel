@@ -3,9 +3,7 @@ package ca.logaritm.dezel.view.type
 import ca.logaritm.dezel.core.JavaScriptProperty
 import ca.logaritm.dezel.core.JavaScriptPropertyType
 
-
 /**
- * The scrollable view's overscroll options.
  * @enum Overscroll
  * @since 0.2.0
  */
@@ -20,7 +18,6 @@ public enum class Overscroll {
 	companion object {
 
 		/**
-		 * Parses the overscroll type from a property.
 		 * @method get
 		 * @since 0.2.0
 		 */
@@ -34,7 +31,6 @@ public enum class Overscroll {
 		}
 
 		/**
-		 * Returns the proper overscroll from a toString.
 		 * @method get
 		 * @since 0.2.0
 		 */
@@ -50,7 +46,6 @@ public enum class Overscroll {
 		}
 
 		/**
-		 * Parses the overscroll type from a toNumber.
 		 * @method get
 		 * @since 0.2.0
 		 */
@@ -59,7 +54,6 @@ public enum class Overscroll {
 		}
 
 		/**
-		 * Parses the overscroll type from a toBoolean.
 		 * @method get
 		 * @since 0.2.0
 		 */

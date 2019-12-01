@@ -1,8 +1,8 @@
 package ca.logaritm.dezel.core
 
 /**
- * The arguments object provided to a function.
  * @class JavaScriptFunctionCallback
+ * @super JavascriptCallback
  * @since 0.1.0
  */
 public class JavaScriptFunctionCallback(context: JavaScriptContext, target: Long, callee: Long, argc: Int, argv: LongArray) : JavaScriptCallback(context, target, callee, argc, argv) {
@@ -12,7 +12,6 @@ public class JavaScriptFunctionCallback(context: JavaScriptContext, target: Long
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Returns an argument at a specified index.
 	 * @method argument
 	 * @since 0.1.0
 	 */
@@ -21,7 +20,6 @@ public class JavaScriptFunctionCallback(context: JavaScriptContext, target: Long
 	}
 
 	/**
-	 * Returns an argument at a specified index.
 	 * @method argument
 	 * @since 0.1.0
 	 */

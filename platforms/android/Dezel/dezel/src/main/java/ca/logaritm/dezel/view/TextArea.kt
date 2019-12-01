@@ -9,7 +9,7 @@ import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import ca.logaritm.dezel.application.ApplicationActivity
 import ca.logaritm.dezel.extension.Delegates
-import ca.logaritm.dezel.font.FontManager
+import ca.logaritm.dezel.text.font.FontManager
 import ca.logaritm.dezel.view.graphic.Color
 import ca.logaritm.dezel.view.type.TextAlignment
 import ca.logaritm.dezel.view.type.TextDecoration
@@ -19,8 +19,8 @@ import android.text.InputType as AndroidInputType
 
 /**
  * @class TextArea
+ * @super EditText
  * @since 0.7.0
- * @hidden
  */
 open class TextArea(context: Context, listener: TextAreaListener?) : EditText(context) {
 
@@ -29,7 +29,6 @@ open class TextArea(context: Context, listener: TextAreaListener?) : EditText(co
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The text area's toValue.
 	 * @property value
 	 * @since 0.7.0
 	 */
@@ -38,7 +37,6 @@ open class TextArea(context: Context, listener: TextAreaListener?) : EditText(co
 	}
 
 	/**
-	 * The text area's placeholder.
 	 * @property placeholder
 	 * @since 0.7.0
 	 */
@@ -49,14 +47,12 @@ open class TextArea(context: Context, listener: TextAreaListener?) : EditText(co
 	/**
 	 * @property placeholderColor
 	 * @since 0.7.0
-	 * @hidden
 	 */
 	open var placeholderColor: Int by Delegates.OnSet(Color.parse("gray")) { value ->
 		this.setPlaceholderTextColor(value)
 	}
 
 	/**
-	 * The text area's font family.
 	 * @property fontFamily
 	 * @since 0.7.0
 	 */
@@ -65,7 +61,6 @@ open class TextArea(context: Context, listener: TextAreaListener?) : EditText(co
 	}
 
 	/**
-	 * The text area's font weight.
 	 * @property fontWeight
 	 * @since 0.7.0
 	 */
@@ -74,7 +69,6 @@ open class TextArea(context: Context, listener: TextAreaListener?) : EditText(co
 	}
 
 	/**
-	 * The text area's font style.
 	 * @property fontStyle
 	 * @since 0.7.0
 	 */
@@ -83,7 +77,6 @@ open class TextArea(context: Context, listener: TextAreaListener?) : EditText(co
 	}
 
 	/**
-	 * The text area's font size.
 	 * @property fontSize
 	 * @since 0.7.0
 	 */
@@ -92,7 +85,6 @@ open class TextArea(context: Context, listener: TextAreaListener?) : EditText(co
 	}
 
 	/**
-	 * The text area's text horizontal alignment.
 	 * @property textAlignment
 	 * @since 0.7.0
 	 */
@@ -101,7 +93,6 @@ open class TextArea(context: Context, listener: TextAreaListener?) : EditText(co
 	}
 
 	/**
-	 * The text area's text location.
 	 * @property textLocation
 	 * @since 0.7.0
 	 */
@@ -110,7 +101,6 @@ open class TextArea(context: Context, listener: TextAreaListener?) : EditText(co
 	}
 
 	/**
-	 * The text area's text kerning.
 	 * @property textKerning
 	 * @since 0.7.0
 	 */
@@ -119,7 +109,6 @@ open class TextArea(context: Context, listener: TextAreaListener?) : EditText(co
 	}
 
 	/**
-	 * The text area's text leading.
 	 * @property textLeading
 	 * @since 0.7.0
 	 */
@@ -128,7 +117,6 @@ open class TextArea(context: Context, listener: TextAreaListener?) : EditText(co
 	}
 
 	/**
-	 * The text area's text decoration.
 	 * @property textDecoration
 	 * @since 0.7.0
 	 */
@@ -147,7 +135,6 @@ open class TextArea(context: Context, listener: TextAreaListener?) : EditText(co
 	}
 
 	/**
-	 * The text area's text transform.
 	 * @property textTransform
 	 * @since 0.7.0
 	 */
@@ -156,7 +143,6 @@ open class TextArea(context: Context, listener: TextAreaListener?) : EditText(co
 	}
 
 	/**
-	 * The text area's text shadow blur distance.
 	 * @property textShadowBlur
 	 * @since 0.7.0
 	 */
@@ -165,7 +151,6 @@ open class TextArea(context: Context, listener: TextAreaListener?) : EditText(co
 	}
 
 	/**
-	 * The text area's text shadow color.
 	 * @property textShadowColor
 	 * @since 0.7.0
 	 */
@@ -174,7 +159,6 @@ open class TextArea(context: Context, listener: TextAreaListener?) : EditText(co
 	}
 
 	/**
-	 * The text area's text shadow vertical offset.
 	 * @property textShadowOffsetTop
 	 * @since 0.7.0
 	 */
@@ -183,7 +167,6 @@ open class TextArea(context: Context, listener: TextAreaListener?) : EditText(co
 	}
 
 	/**
-	 * The text area's text shadow horizontal offset.
 	 * @property textShadowOffsetLeft
 	 * @since 0.7.0
 	 */
@@ -192,7 +175,6 @@ open class TextArea(context: Context, listener: TextAreaListener?) : EditText(co
 	}
 
 	/**
-	 * The text area's top padding.
 	 * @property paddingTop
 	 * @since 0.7.0
 	 */
@@ -201,7 +183,6 @@ open class TextArea(context: Context, listener: TextAreaListener?) : EditText(co
 	}
 
 	/**
-	 * The text area's left padding.
 	 * @property paddingLeft
 	 * @since 0.7.0
 	 */
@@ -210,7 +191,6 @@ open class TextArea(context: Context, listener: TextAreaListener?) : EditText(co
 	}
 
 	/**
-	 * The text area's right padding.
 	 * @property paddingRight
 	 * @since 0.7.0
 	 */
@@ -219,7 +199,6 @@ open class TextArea(context: Context, listener: TextAreaListener?) : EditText(co
 	}
 
 	/**
-	 * The text area's bottom padding.
 	 * @property paddingBottom
 	 * @since 0.7.0
 	 */
@@ -228,7 +207,6 @@ open class TextArea(context: Context, listener: TextAreaListener?) : EditText(co
 	}
 
 	/**
-	 * The text area autocorrect status.
 	 * @property autocorrect
 	 * @since 0.7.0
 	 */
@@ -237,7 +215,6 @@ open class TextArea(context: Context, listener: TextAreaListener?) : EditText(co
 	}
 
 	/**
-	 * The text area autocapitalize status.
 	 * @property autocapitalize
 	 * @since 0.7.0
 	 */
@@ -300,7 +277,6 @@ open class TextArea(context: Context, listener: TextAreaListener?) : EditText(co
 	/**
 	 * @constructor
 	 * @since 0.7.0
-	 * @hidden
 	 */
 	init {
 
@@ -331,7 +307,6 @@ open class TextArea(context: Context, listener: TextAreaListener?) : EditText(co
 	/**
 	 * @method focus
 	 * @since 0.7.0
-	 * @hidden
 	 */
 	open fun focus() {
 		if (this.hasFocus() == false) {
@@ -342,7 +317,6 @@ open class TextArea(context: Context, listener: TextAreaListener?) : EditText(co
 	/**
 	 * @method blur
 	 * @since 0.7.0
-	 * @hidden
 	 */
 	open fun blur() {
 
@@ -357,7 +331,6 @@ open class TextArea(context: Context, listener: TextAreaListener?) : EditText(co
 	/**
 	 * @method onKeyPreIme
 	 * @since 0.7.0
-	 * @hidden
 	 */
 	override fun onKeyPreIme(keyCode: Int, event: KeyEvent): Boolean {
 
@@ -372,7 +345,6 @@ open class TextArea(context: Context, listener: TextAreaListener?) : EditText(co
 	/**
 	 * @method onTextChanged
 	 * @since 0.7.0
-	 * @hidden
 	 */
 	override fun onTextChanged(text: CharSequence?, start: Int, lengthBefore: Int, lengthAfter: Int) {
 		if (this.initialized) {
@@ -384,7 +356,6 @@ open class TextArea(context: Context, listener: TextAreaListener?) : EditText(co
 	/**
 	 * @method onPreDraw
 	 * @since 0.7.0
-	 * @hidden
 	 */
 	override fun onPreDraw(): Boolean {
 

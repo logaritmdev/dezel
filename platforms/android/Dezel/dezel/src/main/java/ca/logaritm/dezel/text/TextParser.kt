@@ -5,7 +5,7 @@ import android.text.Spanned
 import ca.logaritm.dezel.extension.text.SpannableString
 import ca.logaritm.dezel.extension.type.append
 import ca.logaritm.dezel.extension.type.last
-import ca.logaritm.dezel.font.Font
+import ca.logaritm.dezel.text.font.Font
 import ca.logaritm.dezel.text.html.HTMLParser
 import ca.logaritm.dezel.text.span.FontSpan
 import ca.logaritm.dezel.text.span.LinkSpan
@@ -17,7 +17,6 @@ import org.xml.sax.Attributes
 import org.xml.sax.helpers.DefaultHandler
 
 /**
- * Parses HTML to create an attributed toString.
  * @class TextParser
  * @since 0.5.0
  */
@@ -28,7 +27,6 @@ open class TextParser(html: String, base: List<Any>, options: Options): DefaultH
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The parsed spanned toString.
 	 * @property string
 	 * @since 0.5.0
 	 */
@@ -36,7 +34,6 @@ open class TextParser(html: String, base: List<Any>, options: Options): DefaultH
 		private set
 
 	/**
-	 * The link text color.
 	 * @property linkTextColor
 	 * @since 0.5.0
 	 */
@@ -44,7 +41,6 @@ open class TextParser(html: String, base: List<Any>, options: Options): DefaultH
 		private set
 
 	/**
-	 * The link text decoration.
 	 * @property linkTextDecoration
 	 * @since 0.5.0
 	 */
@@ -113,7 +109,6 @@ open class TextParser(html: String, base: List<Any>, options: Options): DefaultH
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method startElement
 	 * @since 0.5.0
 	 */
@@ -151,7 +146,6 @@ open class TextParser(html: String, base: List<Any>, options: Options): DefaultH
 	}
 
 	/**
-	 * @inherited
 	 * @method endElement
 	 * @since 0.5.0
 	 */
@@ -192,7 +186,6 @@ open class TextParser(html: String, base: List<Any>, options: Options): DefaultH
 	}
 
 	/**
-	 * @inherited
 	 * @method characters
 	 * @since 0.5.0
 	 */
@@ -210,7 +203,6 @@ open class TextParser(html: String, base: List<Any>, options: Options): DefaultH
 	}
 
 	/**
-	 * The text parser options.
 	 * @class Options
 	 * @since 0.5.0
 	 */
@@ -226,26 +218,22 @@ open class TextParser(html: String, base: List<Any>, options: Options): DefaultH
 	/**
 	 * @class Node
 	 * @since 0.5.0
-	 * @hidden
 	 */
 	open class Node {
 
 		/**
 		 * @property offset
 		 * @since 0.5.0
-		 * @hidden
 		 */
 		public var offset: Int = 0
 
 		/**
 		 * @property length
 		 * @since 0.5.0
-		 * @hidden
 		 */
 		public var length: Int = 0
 
 		/**
-		 * Configures the node.
 		 * @method configure
 		 * @since 0.5.0
 		 */
@@ -254,7 +242,6 @@ open class TextParser(html: String, base: List<Any>, options: Options): DefaultH
 		}
 
 		/**
-		 * Applies the attributes to the toString.
 		 * @method apply
 		 * @since 0.5.0
 		 */
@@ -262,14 +249,14 @@ open class TextParser(html: String, base: List<Any>, options: Options): DefaultH
 	
 		}
 
-		public fun font(string: Spanned): ca.logaritm.dezel.font.Font {
+		public fun font(string: Spanned): ca.logaritm.dezel.text.font.Font {
 
 			val spans = string.getSpans(this.offset, this.length - this.offset, FontSpan::class.java)
 			if (spans.size > 0) {
 				return spans[0].font
 			}
 
-			return ca.logaritm.dezel.font.Font.DEFAULT
+			return ca.logaritm.dezel.text.font.Font.DEFAULT
 		}
 	}
 
@@ -302,7 +289,6 @@ open class TextParser(html: String, base: List<Any>, options: Options): DefaultH
 		private var color: String? = null
 
 		/**
-		 * @inherited
 		 * @method configure
 		 * @since 0.5.0
 		 */
@@ -313,7 +299,6 @@ open class TextParser(html: String, base: List<Any>, options: Options): DefaultH
 		}
 
 		/**
-		 * @inherited
 		 * @method apply
 		 * @since 0.5.0
 		 */
@@ -323,9 +308,9 @@ open class TextParser(html: String, base: List<Any>, options: Options): DefaultH
 		}
 
 		/**
-		 * @inherited
 		 * @method applyFont
 		 * @since 0.5.0
+		 * @hidden
 		 */
 		private fun applyFont(string: SpannableString, parser: TextParser) {
 
@@ -346,9 +331,9 @@ open class TextParser(html: String, base: List<Any>, options: Options): DefaultH
 		}
 
 		/**
-		 * @inherited
 		 * @method applyColor
 		 * @since 0.5.0
+		 * @hidden
 		 */
 		private fun applyColor(string: SpannableString, parser: TextParser) {
 
@@ -381,7 +366,6 @@ open class TextParser(html: String, base: List<Any>, options: Options): DefaultH
 		private var href: String? = null
 
 		/**
-		 * @inherited
 		 * @method configure
 		 * @since 0.5.0
 		 */
@@ -390,7 +374,6 @@ open class TextParser(html: String, base: List<Any>, options: Options): DefaultH
 		}
 
 		/**
-		 * @inherited
 		 * @method apply
 		 * @since 0.5.0
 		 */
@@ -418,7 +401,6 @@ open class TextParser(html: String, base: List<Any>, options: Options): DefaultH
 	open class B: Node() {
 
 		/**
-		 * @inherited
 		 * @method apply
 		 * @since 0.5.0
 		 */
@@ -435,7 +417,6 @@ open class TextParser(html: String, base: List<Any>, options: Options): DefaultH
 	open class I: Node() {
 
 		/**
-		 * @inherited
 		 * @method apply
 		 * @since 0.5.0
 		 */
@@ -452,7 +433,6 @@ open class TextParser(html: String, base: List<Any>, options: Options): DefaultH
 	private class U: Node() {
 
 		/**
-		 * @inherited
 		 * @method apply
 		 * @since 0.5.0
 		 */

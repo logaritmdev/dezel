@@ -1,5 +1,7 @@
 package ca.logaritm.dezel.view.type
 
+import java.util.*
+
 /**
  * @enum TextTransform
  * @since 0.1.0
@@ -33,11 +35,11 @@ enum class TextTransform  {
 		}
 
 		fun uppercase(text:String) : String {
-			return text.toUpperCase()
+			return text.toUpperCase(Locale.ROOT)
 		}
 
 		fun lowercase(text:String) : String {
-			return text.toLowerCase()
+			return text.toLowerCase(Locale.ROOT)
 		}
 	}
 }

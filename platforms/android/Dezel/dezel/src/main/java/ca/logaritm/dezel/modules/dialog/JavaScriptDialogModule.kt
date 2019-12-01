@@ -1,20 +1,20 @@
 package ca.logaritm.dezel.modules.dialog
 
 import ca.logaritm.dezel.core.JavaScriptContext
-import ca.logaritm.dezel.core.Module
+import ca.logaritm.dezel.core.JavaScriptModule
 
 /**
- * @class DialogModule
- * @since 0.1.0
+ * @class JavaScriptDialogModule
+ * @super JavaScriptModule
+ * @since 0.7.0
  */
-open class DialogModule(context: JavaScriptContext): Module(context) {
+open class JavaScriptDialogModule(context: JavaScriptContext): JavaScriptModule(context) {
 
 	//--------------------------------------------------------------------------
 	// Methods
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
 	 * @method initialize
 	 * @since 0.1.0
 	 */

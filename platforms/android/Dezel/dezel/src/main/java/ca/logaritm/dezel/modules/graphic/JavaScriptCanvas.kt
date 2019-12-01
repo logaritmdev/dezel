@@ -10,7 +10,8 @@ import ca.logaritm.dezel.view.graphic.Convert
 import android.graphics.Canvas as AndroidCanvas
 
 /**
- * @class CanvasClass
+ * @class JavaScriptCanvas
+ * @super JavaScriptClass
  * @since 0.7.0
  */
 open class JavaScriptCanvas(context: JavaScriptContext) : JavaScriptClass(context) {
@@ -132,7 +133,6 @@ open class JavaScriptCanvas(context: JavaScriptContext) : JavaScriptClass(contex
 	}
 
 	/**
-	 * Assigns the context to be used.
 	 * @method use
 	 * @since 0.7.0
 	 */
@@ -159,7 +159,6 @@ open class JavaScriptCanvas(context: JavaScriptContext) : JavaScriptClass(contex
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The canvas fill style.
 	 * @property fillStyle
 	 * @since 0.7.0
 	 */
@@ -170,7 +169,6 @@ open class JavaScriptCanvas(context: JavaScriptContext) : JavaScriptClass(contex
 	}
 
 	/**
-	 * The canvas stroke style.
 	 * @property strokeStyle
 	 * @since 0.7.0
 	 */
@@ -181,7 +179,6 @@ open class JavaScriptCanvas(context: JavaScriptContext) : JavaScriptClass(contex
 	}
 
 	/**
-	 * The canvas line cap mode.
 	 * @property lineCap
 	 * @since 0.7.0
 	 */
@@ -196,7 +193,6 @@ open class JavaScriptCanvas(context: JavaScriptContext) : JavaScriptClass(contex
 	}
 
 	/**
-	 * The canvas line join mode.
 	 * @property lineJoin
 	 * @since 0.7.0
 	 */
@@ -211,7 +207,6 @@ open class JavaScriptCanvas(context: JavaScriptContext) : JavaScriptClass(contex
 	}
 
 	/**
-	 * The canvas line width.
 	 * @property lineWidth
 	 * @since 0.7.0
 	 */
@@ -222,7 +217,6 @@ open class JavaScriptCanvas(context: JavaScriptContext) : JavaScriptClass(contex
 	}
 
 	/**
-	 * The canvas horizontal shadow offset.
 	 * @property shadowOffsetX
 	 * @since 0.7.0
 	 */
@@ -235,7 +229,6 @@ open class JavaScriptCanvas(context: JavaScriptContext) : JavaScriptClass(contex
 	}
 
 	/**
-	 * The canvas vertical shadow offset.
 	 * @property shadowOffsetY
 	 * @since 0.7.0
 	 */
@@ -248,7 +241,6 @@ open class JavaScriptCanvas(context: JavaScriptContext) : JavaScriptClass(contex
 	}
 
 	/**
-	 * The canvas shadow blur.
 	 * @property shadowBlur
 	 * @since 0.7.0
 	 */
@@ -261,7 +253,6 @@ open class JavaScriptCanvas(context: JavaScriptContext) : JavaScriptClass(contex
 	}
 
 	/**
-	 * The canvas shadow color.
 	 * @property shadowBlur
 	 * @since 0.7.0
 	 */
@@ -274,7 +265,6 @@ open class JavaScriptCanvas(context: JavaScriptContext) : JavaScriptClass(contex
 	}
 
 	/**
-	 * The canvas global alpha.
 	 * @property globalAlpha
 	 * @since 0.7.0
 	 */
@@ -287,7 +277,6 @@ open class JavaScriptCanvas(context: JavaScriptContext) : JavaScriptClass(contex
 	}
 
 	/**
-	 * The canvas global alpha.
 	 * @property globalAlpha
 	 * @since 0.7.0
 	 */
