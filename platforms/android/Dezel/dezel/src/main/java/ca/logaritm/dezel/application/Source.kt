@@ -1,4 +1,4 @@
-package ca.logaritm.dezel.core
+package ca.logaritm.dezel.application
 
 import android.content.Context
 import ca.logaritm.dezel.networking.RemoteFileLoader

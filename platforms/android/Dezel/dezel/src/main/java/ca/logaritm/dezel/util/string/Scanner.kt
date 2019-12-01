@@ -1,4 +1,4 @@
-package ca.logaritm.dezel.string
+package ca.logaritm.dezel.util.string
 
 public class Scanner(string: String) {
 

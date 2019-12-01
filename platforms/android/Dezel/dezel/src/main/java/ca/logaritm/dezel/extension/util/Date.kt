@@ -1,6 +1,6 @@
 package ca.logaritm.dezel.extension.util
 
-import ca.logaritm.dezel.date.DateFormater
+import ca.logaritm.dezel.util.date.DateFormater
 import java.util.*
 
 /**

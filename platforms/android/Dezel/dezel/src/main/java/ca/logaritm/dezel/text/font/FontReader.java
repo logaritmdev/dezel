@@ -1,4 +1,4 @@
-package ca.logaritm.dezel.font;
+package ca.logaritm.dezel.text.font;
 
 import android.support.annotation.NonNull;
 

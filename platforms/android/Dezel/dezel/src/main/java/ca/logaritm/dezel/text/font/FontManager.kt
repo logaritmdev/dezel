@@ -1,4 +1,4 @@
-package ca.logaritm.dezel.font
+package ca.logaritm.dezel.text.font
 
 import android.content.Context
 import android.graphics.Typeface

@@ -1,4 +1,4 @@
-package ca.logaritm.dezel.geom
+package ca.logaritm.dezel.util.geom
 
 /**
  * @class Rect

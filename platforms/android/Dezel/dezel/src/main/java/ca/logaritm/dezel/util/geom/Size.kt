@@ -1,4 +1,4 @@
-package ca.logaritm.dezel.geom
+package ca.logaritm.dezel.util.geom
 
 import android.graphics.PointF
 import android.util.SizeF

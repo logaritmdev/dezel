@@ -1,4 +1,4 @@
-package ca.logaritm.dezel.timer
+package ca.logaritm.dezel.util.timer
 
 import android.os.Handler
 

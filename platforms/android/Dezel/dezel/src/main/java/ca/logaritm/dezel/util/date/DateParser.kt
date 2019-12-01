@@ -1,4 +1,4 @@
-package ca.logaritm.dezel.date
+package ca.logaritm.dezel.util.date
 
 import ca.logaritm.dezel.extension.type.Timezone
 import java.text.ParseException
