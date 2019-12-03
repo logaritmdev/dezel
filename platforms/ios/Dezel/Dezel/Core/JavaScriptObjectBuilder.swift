@@ -4,7 +4,7 @@
  * @since 0.1.0
  * @hidden
  */
-internal final class JavaScriptObjectBuilder: JavaScriptBuilder {
+public final class JavaScriptObjectBuilder: JavaScriptBuilder {
 
 	//--------------------------------------------------------------------------
 	// MARK: Methods
@@ -15,7 +15,7 @@ internal final class JavaScriptObjectBuilder: JavaScriptBuilder {
 	 * @since 0.1.0
 	 * @hidden
      */
-	internal class func build(_ context: JavaScriptContext, template: AnyClass) -> JavaScriptValue {
+	public class func build(_ context: JavaScriptContext, template: AnyClass) -> JavaScriptValue {
 
 		guard let klass = template as? JavaScriptObject.Type else {
 			fatalError("Error creating object instance. Expected JavaScriptObject, found \(template)")

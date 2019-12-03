@@ -15,7 +15,7 @@ open class JavaScriptPropertyStringValue: JavaScriptPropertyValue {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private var value: String
+	private var data: String
 
 	//--------------------------------------------------------------------------
 	// MARK: Methods
@@ -27,7 +27,7 @@ open class JavaScriptPropertyStringValue: JavaScriptPropertyValue {
 	 * @hidden
 	 */
 	public init(value: String) {
-		self.value = value
+		self.data = value
 		super.init(type: .string)
 	}
 
@@ -36,7 +36,7 @@ open class JavaScriptPropertyStringValue: JavaScriptPropertyValue {
 	 * @since 0.7.0
 	 */
 	override open func toString() -> String {
-		return self.value
+		return self.data
 	}
 
 	/**
@@ -44,7 +44,7 @@ open class JavaScriptPropertyStringValue: JavaScriptPropertyValue {
 	 * @since 0.7.0
 	 */
 	override open func toNumber() -> Double {
-		return self.value.toNumber()
+		return self.data.toNumber()
 	}
 
 	/**
@@ -52,6 +52,6 @@ open class JavaScriptPropertyStringValue: JavaScriptPropertyValue {
 	 * @since 0.7.0
 	 */
 	override open func toBoolean() -> Bool {
-		return self.value.isEmpty == false
+		return self.data.isEmpty == false
 	}
 }

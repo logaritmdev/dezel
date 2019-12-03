@@ -10,10 +10,10 @@ open class JavaScriptGraphicModule: JavaScriptModule {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method register
+	 * @method configure
 	 * @since 0.7.0
 	 */
-	override open func register(context: JavaScriptContext) {
+	override open func configure(context: JavaScriptContext) {
 		context.registerClass("dezel.graphic.Image", with: JavaScriptImage.self)
 		context.registerClass("dezel.graphic.Canvas", with: JavaScriptCanvas.self)
 	}

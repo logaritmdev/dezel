@@ -47,6 +47,15 @@ internal extension String {
 	 * @since 0.7.0
 	 * @hidden
 	 */
+	var last1: String {
+		return self.suffix(1).lowercased()
+	}
+
+	/**
+	 * @property last2
+	 * @since 0.7.0
+	 * @hidden
+	 */
 	var last2: String {
 		return self.suffix(2).lowercased()
 	}

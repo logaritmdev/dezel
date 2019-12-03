@@ -15,7 +15,6 @@ public class JavaScriptProperty: NSObject {
 	 */
 	public typealias JavaScriptPropertyHandler = (JavaScriptProperty) -> Void
 
-
 	//--------------------------------------------------------------------------
 	// MARK: Static
 	//--------------------------------------------------------------------------
@@ -23,13 +22,18 @@ public class JavaScriptProperty: NSObject {
 	/**
 	 * @property NullValue
 	 * @since 0.7.0
-	 * @hidden
 	 */
-	private static let NullValue: JavaScriptPropertyValue = JavaScriptPropertyValue()
+	public static let Null: JavaScriptPropertyValue = JavaScriptPropertyValue()
 
 	//--------------------------------------------------------------------------
 	// MARK: Properties
 	//--------------------------------------------------------------------------
+
+	/**
+	 * @property lock
+	 * @since 0.7.0
+	 */
+	private(set) public var lock: AnyObject?
 
 	/**
 	 * @property type
@@ -72,11 +76,43 @@ public class JavaScriptProperty: NSObject {
 	}
 
 	/**
+	 * @property value
+	 * @since 0.7.0
+	 */
+	public var value: JavaScriptValue? {
+		return self.currentValue.value
+	}
+
+	/**
+	 * @property variable
+	 * @since 0.7.0
+	 */
+	public var variable: JavaScriptPropertyVariableValue? {
+		return self.currentValue as? JavaScriptPropertyVariableValue
+	}
+
+	/**
+	 * @property function
+	 * @since 0.7.0
+	 */
+	public var function: JavaScriptPropertyFunctionValue? {
+		return self.currentValue as? JavaScriptPropertyFunctionValue
+	}
+
+	/**
+	 * @property composite
+	 * @since 0.7.0
+	 */
+	public var composite: JavaScriptPropertyCompositeValue? {
+		return self.currentValue as? JavaScriptPropertyCompositeValue
+	}
+
+	/**
 	 * @property isNull
 	 * @since 0.7.0
 	 */
 	public var isNull: Bool {
-		return self.type == .null
+		return self.currentValue.isNull
 	}
 
 	/**
@@ -84,7 +120,7 @@ public class JavaScriptProperty: NSObject {
 	 * @since 0.7.0
 	 */
 	public var isString: Bool {
-		return self.type == .string
+		return self.currentValue.isString
 	}
 
 	/**
@@ -92,7 +128,7 @@ public class JavaScriptProperty: NSObject {
 	 * @since 0.7.0
 	 */
 	public var isNumber: Bool {
-		return self.type == .number
+		return self.currentValue.isNumber
 	}
 
 	/**
@@ -100,7 +136,7 @@ public class JavaScriptProperty: NSObject {
 	 * @since 0.7.0
 	 */
 	public var isBoolean: Bool {
-		return self.type == .boolean
+		return self.currentValue.isBoolean
 	}
 
 	/**
@@ -108,7 +144,7 @@ public class JavaScriptProperty: NSObject {
 	 * @since 0.7.0
 	 */
 	public var isObject: Bool {
-		return self.type == .object
+		return self.currentValue.isObject
 	}
 
 	/**
@@ -116,25 +152,50 @@ public class JavaScriptProperty: NSObject {
 	 * @since 0.7.0
 	 */
 	public var isArray: Bool {
-		return self.type == .array
+		return self.currentValue.isArray
 	}
 
 	/**
-	 * @property lock
+	 * @property isCallback
 	 * @since 0.7.0
-	 * @hidden
 	 */
-	private var lock: AnyObject?
+	public var isCallback: Bool {
+		return self.currentValue.isCallback
+	}
 
 	/**
-	 * @property initial
+	 * @property isVariable
+	 * @since 0.7.0
+	 */
+	public var isVariable: Bool {
+		return self.currentValue.isVariable
+	}
+
+	/**
+	 * @property isFunction
+	 * @since 0.7.0
+	 */
+	public var isFunction: Bool {
+		return self.currentValue.isFunction
+	}
+
+	/**
+	 * @property isComposite
+	 * @since 0.7.0
+	 */
+	public var isComposite: Bool {
+		return self.currentValue.isComposite
+	}
+
+	/**
+	 * @property initialValue
 	 * @since 0.7.0
 	 * @hidden
 	 */
 	private var initialValue: JavaScriptPropertyValue
 
 	/**
-	 * @property storage
+	 * @property currentValue
 	 * @since 0.7.0
 	 * @hidden
 	 */
@@ -156,8 +217,8 @@ public class JavaScriptProperty: NSObject {
 	 * @since 0.7.0
 	 */
 	public init(handler: JavaScriptPropertyHandler? = nil) {
-		self.initialValue = JavaScriptProperty.NullValue
-		self.currentValue = self.initialValue
+		self.initialValue = JavaScriptProperty.Null
+		self.currentValue = JavaScriptProperty.Null
 		self.handler = handler
 	}
 
@@ -167,7 +228,7 @@ public class JavaScriptProperty: NSObject {
 	 */
 	public init(string: String, handler: JavaScriptPropertyHandler? = nil) {
 		self.initialValue = JavaScriptPropertyStringValue(value: string)
-		self.currentValue = self.initialValue
+		self.currentValue = JavaScriptPropertyStringValue(value: string)
 		self.handler = handler
 	}
 
@@ -177,7 +238,7 @@ public class JavaScriptProperty: NSObject {
 	 */
 	public init(number: Double, handler: JavaScriptPropertyHandler? = nil) {
 		self.initialValue = JavaScriptPropertyNumberValue(value: number)
-		self.currentValue = self.initialValue
+		self.currentValue = JavaScriptPropertyNumberValue(value: number)
 		self.handler = handler
 	}
 
@@ -187,7 +248,7 @@ public class JavaScriptProperty: NSObject {
 	 */
 	public init(number: Double, unit: JavaScriptPropertyUnit, handler: JavaScriptPropertyHandler? = nil) {
 		self.initialValue = JavaScriptPropertyNumberValue(value: number, unit: unit)
-		self.currentValue = self.initialValue
+		self.currentValue = JavaScriptPropertyNumberValue(value: number, unit: unit)
 		self.handler = handler
 	}
 
@@ -197,7 +258,7 @@ public class JavaScriptProperty: NSObject {
 	 */
 	public init(boolean: Bool, handler: JavaScriptPropertyHandler? = nil) {
 		self.initialValue = JavaScriptPropertyBooleanValue(value: boolean)
-		self.currentValue = self.initialValue
+		self.currentValue = JavaScriptPropertyBooleanValue(value: boolean)
 		self.handler = handler
 	}
 
@@ -247,37 +308,6 @@ public class JavaScriptProperty: NSObject {
 	}
 
 	/**
-	 * @method parse
-	 * @since 0.7.0
-	 */
-	public func parse(_ value: String, lock: AnyObject? = nil) {
-
-		if isLocked(self.lock, key: lock) {
-			return
-		}
-
-		self.lock = lock
-
- 		guard let result = JavaScriptPropertyParser.parse(value) else {
-			self.reset(value)
-			return
-		}
-
-		switch (result.type) {
-
-			case .string:
-				self.reset(result.string)
-			case .number:
-				self.reset(result.number, unit: result.unit)
-			case .boolean:
-				self.reset(result.boolean)
-
-			default:
-				break
-		}
-	}
-
-	/**
 	 * @method reset
 	 * @since 0.7.0
 	 */
@@ -310,7 +340,7 @@ public class JavaScriptProperty: NSObject {
 	 * @method reset
 	 * @since 0.7.0
 	 */
-	public func reset(_ value: JavaScriptValue?, lock: AnyObject? = nil) {
+	public func reset(_ value: String, lock: AnyObject? = nil, parse: Bool = false) {
 
 		if isLocked(self.lock, key: lock) {
 			return
@@ -318,51 +348,10 @@ public class JavaScriptProperty: NSObject {
 
 		self.lock = lock
 
-		guard let value = value else {
-			self.reset()
+		if (parse) {
+			self.parse(value)
 			return
 		}
-
-		if let result = JavaScriptPropertyParser.parse(value) {
-
-			switch (result.type) {
-
-				case .null:
-					self.reset(lock: lock)
-				case .string:
-					self.reset(result.string, lock: lock)
-				case .number:
-					self.reset(result.number, unit: result.unit, lock: lock)
-				case .boolean:
-					self.reset(result.boolean, lock: lock)
-
-				default:
-					break
-			}
-
-		} else {
-
-			if (self.equals(value) == false) {
-				self.update(value)
-				self.change()
-			}
-
-		}
-
-		self.currentValue.reset(value)
-	}
-
-	/**
-	 * @method reset
-	 * @since 0.7.0
-	 */
-	public func reset(_ value: String, lock: AnyObject? = nil) {
-
-		if isLocked(self.lock, key: lock) {
-			return
-		}
-
-		self.lock = lock
 
 		if (self.equals(value) == false) {
 			self.update(value)
@@ -425,38 +414,77 @@ public class JavaScriptProperty: NSObject {
 	}
 
 	/**
-	 * @method equals
+	 * @method reset
 	 * @since 0.7.0
 	 */
-	public func equals(_ value: JavaScriptPropertyValue) -> Bool {
+	public func reset(_ value: JavaScriptValue, lock: AnyObject? = nil, parse: Bool = false) {
 
-		switch (self.type) {
-
-			case .null:
-				return value.type == .null
-
-			case .string:
-				return value.equals(self.string)
-
-			case .number:
-				return value.equals(self.number)
-
-			case .boolean:
-				return value.equals(self.boolean)
-
-			default:
-				break;
+		if isLocked(self.lock, key: lock) {
+			return
 		}
 
-		return self.currentValue === value
+		self.lock = lock
+
+		switch (true) {
+
+			case value.isNull:
+				self.reset(lock: lock)
+			case value.isUndefined:
+				self.reset(lock: lock)
+			case value.isString:
+				self.reset(value.string, lock: lock, parse: parse)
+			case value.isNumber:
+				self.reset(value.number, lock: lock)
+			case value.isBoolean:
+				self.reset(value.boolean, lock: lock)
+
+			default:
+
+				if (self.equals(value) == false) {
+					self.update(value)
+					self.change()
+				}
+
+				break
+		}
+
+		self.currentValue.reset(value)
 	}
 
 	/**
-	 * @method equals
+	 * @method reset
 	 * @since 0.7.0
 	 */
-	public func equals(_ value: JavaScriptValue) -> Bool {
-		return self.currentValue.equals(value)
+	public func reset(_ value: JavaScriptProperty, lock: AnyObject? = nil) {
+
+		if isLocked(self.lock, key: lock) {
+			return
+		}
+
+		self.lock = lock
+
+		if (self.equals(value) == false) {
+			self.update(value)
+			self.change()
+		}
+	}
+
+	/**
+	 * @method reset
+	 * @since 0.7.0
+	 */
+	public func reset(_ value: JavaScriptPropertyValue, lock: AnyObject? = nil) {
+
+		if isLocked(self.lock, key: lock) {
+			return
+		}
+
+		self.lock = lock
+
+		if (self.equals(value) == false) {
+			self.update(value)
+			self.change()
+		}
 	}
 
 	/**
@@ -492,6 +520,46 @@ public class JavaScriptProperty: NSObject {
 	}
 
 	/**
+	 * @method equals
+	 * @since 0.7.0
+	 */
+	public func equals(_ value: JavaScriptValue) -> Bool {
+		return self.currentValue.equals(value)
+	}
+
+	/**
+	 * @method equals
+	 * @since 0.7.0
+	 */
+	internal func equals(_ value: JavaScriptProperty) -> Bool {
+		return self.equals(value.currentValue)
+	}
+
+	/**
+	 * @method equals
+	 * @since 0.7.0
+	 */
+	public func equals(_ value: JavaScriptPropertyValue) -> Bool {
+
+		switch (self.type) {
+
+			case .null:
+				return value.type == .null
+			case .string:
+				return value.equals(self.string)
+			case .number:
+				return value.equals(self.number)
+			case .boolean:
+				return value.equals(self.boolean)
+
+			default:
+				break;
+		}
+
+		return self.currentValue === value
+	}
+
+	/**
 	 * @method cast
 	 * @since 0.7.0
 	 */
@@ -502,6 +570,93 @@ public class JavaScriptProperty: NSObject {
 	//--------------------------------------------------------------------------
 	// MARK: Internal API
 	//--------------------------------------------------------------------------
+
+	/**
+	 * @method parse
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	internal func parse(_ value: String) {
+		ValueParse(value, toPtr(self), javaScriptPropertyParse)
+	}
+
+	/**
+	 * @method reset
+	 * @since 0.7.0
+	 */
+	internal func reset(_ value: JavaScriptPropertyVariableValue, lock: AnyObject? = nil) {
+
+		if isLocked(self.lock, key: lock) {
+			return
+		}
+
+		self.lock = lock
+
+		if (self.equals(value) == false) {
+			self.update(value)
+			self.change()
+		}
+	}
+
+	/**
+	 * @method reset
+	 * @since 0.7.0
+	 */
+	internal func reset(_ value: JavaScriptPropertyFunctionValue, lock: AnyObject? = nil) {
+
+		if isLocked(self.lock, key: lock) {
+			return
+		}
+
+		self.lock = lock
+
+		if (self.equals(value) == false) {
+			self.update(value)
+			self.change()
+		}
+	}
+
+	/**
+	 * @method reset
+	 * @since 0.7.0
+	 */
+	internal func reset(_ value: JavaScriptPropertyCompositeValue, lock: AnyObject? = nil) {
+
+		if isLocked(self.lock, key: lock) {
+			return
+		}
+
+		self.lock = lock
+
+		if (self.equals(value) == false) {
+			self.update(value)
+			self.change()
+		}
+	}
+
+	/**
+	 * @method equals
+	 * @since 0.7.0
+	 */
+	internal func equals(_ value: JavaScriptPropertyVariableValue) -> Bool {
+		return self.currentValue === value
+	}
+
+	/**
+	 * @method equals
+	 * @since 0.7.0
+	 */
+	internal func equals(_ value: JavaScriptPropertyFunctionValue) -> Bool {
+		return self.currentValue === value
+	}
+
+	/**
+	 * @method equals
+	 * @since 0.7.0
+	 */
+	internal func equals(_ value: JavaScriptPropertyCompositeValue) -> Bool {
+		return self.currentValue === value
+	}
 
 	/**
 	 * @method toHandle
@@ -522,7 +677,16 @@ public class JavaScriptProperty: NSObject {
 	 * @hidden
 	 */
 	private func update() {
-		self.currentValue = JavaScriptProperty.NullValue
+		self.currentValue = JavaScriptProperty.Null
+	}
+
+	/**
+	 * @method update
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private func update(_ value: JavaScriptProperty) {
+		self.currentValue = value.currentValue
 	}
 
 	/**
@@ -580,6 +744,33 @@ public class JavaScriptProperty: NSObject {
 	}
 
 	/**
+	 * @method update
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private func update(_ value: JavaScriptPropertyVariableValue) {
+		self.currentValue = value
+	}
+
+	/**
+	 * @method update
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private func update(_ value: JavaScriptPropertyFunctionValue) {
+		self.currentValue = value
+	}
+
+	/**
+	 * @method update
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private func update(_ value: JavaScriptPropertyCompositeValue) {
+		self.currentValue = value
+	}
+
+	/**
 	 * @method change
 	 * @since 0.7.0
 	 * @hidden
@@ -587,4 +778,98 @@ public class JavaScriptProperty: NSObject {
 	private func change() {
 		self.handler?(self)
 	}
+}
+
+/**
+ * @function toPtr
+ * @since 0.7.0
+ * @hidden
+ */
+private func toPtr(_ val: JavaScriptProperty) -> UnsafeMutableRawPointer {
+	return Unmanaged.passUnretained(val).toOpaque()
+}
+
+/**
+ * @function toVal
+ * @since 0.7.0
+ * @hidden
+ */
+private func toVal(_ ptr: UnsafeMutableRawPointer) -> JavaScriptProperty {
+	return Unmanaged<JavaScriptProperty>.fromOpaque(ptr).takeUnretainedValue()
+}
+
+/**
+ * @function javaScriptPropertyParse
+ * @since 0.7.0
+ * @hidden
+ */
+private let javaScriptPropertyParse: @convention(c) (UnsafeMutablePointer<ValueRef?>?, Int, UnsafeMutableRawPointer?) -> Void = { values, length, context in
+
+	let values = values!
+	let context = context!
+
+	let property = toVal(context)
+
+	if (length == 1) {
+
+		guard let value = values.pointee else {
+			return
+		}
+
+		switch (ValueGetType(value)) {
+
+			case kValueTypeNull:
+				property.resetWithNull()
+			case kValueTypeString:
+				property.resetWithString(value)
+			case kValueTypeNumber:
+				property.resetWithNumber(value)
+			case kValueTypeBoolean:
+				property.resetWithBoolean(value)
+			case kValueTypeVariable:
+				property.resetWithVariable(value)
+			case kValueTypeFunction:
+				property.resetWithFunction(value)
+
+			default:
+				break;
+		}
+
+		return
+	}
+
+	/*
+	 * The parser returned multiple values. In this case we create a
+	 * composite value and reset the property with it.
+	 */
+
+	var components = [JavaScriptPropertyValue]()
+
+	for i in 0 ..< length {
+
+		guard let value = (values + i).pointee else {
+			continue
+		}
+
+		switch (ValueGetType(value)) {
+
+			case kValueTypeNull:
+				components.append(JavaScriptProperty.Null)
+			case kValueTypeString:
+				components.append(property.createString(value))
+			case kValueTypeNumber:
+				components.append(property.createNumber(value))
+			case kValueTypeBoolean:
+				components.append(property.createBoolean(value))
+			case kValueTypeVariable:
+				components.append(property.createVariable(value))
+			case kValueTypeFunction:
+				components.append(property.createFunction(value))
+
+			default:
+				break
+		}
+	}
+
+	property.reset(JavaScriptPropertyCompositeValue(values: components))
 }

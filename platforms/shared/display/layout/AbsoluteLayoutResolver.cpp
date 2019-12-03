@@ -30,67 +30,67 @@ AbsoluteLayoutResolver::hasInvalidSize(DisplayNode* child)
 		return true;
 	}
 
-	if (child->width.unit == kDisplayNodeSizeUnitPX &&
-		child->height.unit == kDisplayNodeSizeUnitPX) {
+	if (child->width.unit == kSizeUnitPX &&
+		child->height.unit == kSizeUnitPX) {
 		return false;
 	}
 
 	const auto parent = child->parent;
 
 	if (parent->measuredContentWidthChanged || child->hasNewParent()) {
-		if (child->width.unit == kDisplayNodeSizeUnitPC ||
-			child->width.type == kDisplayNodeSizeTypeFill ||
-			child->right.type != kDisplayNodeOriginTypeAuto) {
+		if (child->width.unit == kSizeUnitPC ||
+			child->width.type == kSizeTypeFill ||
+			child->right.type != kOriginTypeAuto) {
 			return true;
 		}
 	}
 
 	if (parent->measuredContentHeightChanged || child->hasNewParent()) {
-		if (child->height.unit == kDisplayNodeSizeUnitPC ||
-			child->height.type == kDisplayNodeSizeTypeFill ||
-			child->bottom.type != kDisplayNodeOriginTypeAuto) {
+		if (child->height.unit == kSizeUnitPC ||
+			child->height.type == kSizeTypeFill ||
+			child->bottom.type != kOriginTypeAuto) {
 			return true;
 		}
 	}
 
 	if (parent->measuredInnerWidthChanged || child->hasNewParent()) {
-		if (child->width.unit == kDisplayNodeSizeUnitPW ||
-			child->height.unit == kDisplayNodeSizeUnitPW) {
+		if (child->width.unit == kSizeUnitPW ||
+			child->height.unit == kSizeUnitPW) {
 			return true;
 		}
 	}
 
 	if (parent->measuredInnerHeightChanged || child->hasNewParent()) {
-		if (child->width.unit == kDisplayNodeSizeUnitPH ||
-			child->height.unit == kDisplayNodeSizeUnitPH) {
+		if (child->width.unit == kSizeUnitPH ||
+			child->height.unit == kSizeUnitPH) {
 			return true;
 		}
 	}
 
 	if (parent->measuredContentWidthChanged || child->hasNewParent()) {
-		if (child->width.unit == kDisplayNodeSizeUnitCW ||
-			child->height.unit == kDisplayNodeSizeUnitCW) {
+		if (child->width.unit == kSizeUnitCW ||
+			child->height.unit == kSizeUnitCW) {
 			return true;
 		}
 	}
 
 	if (parent->measuredContentHeightChanged || child->hasNewParent()) {
-		if (child->width.unit == kDisplayNodeSizeUnitCH ||
-			child->height.unit == kDisplayNodeSizeUnitCH) {
+		if (child->width.unit == kSizeUnitCH ||
+			child->height.unit == kSizeUnitCH) {
 			return true;
 		}
 	}
 
 	if (child->display->hasNewViewportWidth()) {
-		if (child->width.unit == kDisplayNodeSizeUnitVW ||
-			child->height.unit == kDisplayNodeSizeUnitVH) {
+		if (child->width.unit == kSizeUnitVW ||
+			child->height.unit == kSizeUnitVH) {
 			return true;
 		}
 	}
 
 	if (child->display->hasViewportHeightChanged()) {
-		if (child->width.unit == kDisplayNodeSizeUnitVH ||
-			child->height.unit == kDisplayNodeSizeUnitVH) {
+		if (child->width.unit == kSizeUnitVH ||
+			child->height.unit == kSizeUnitVH) {
 			return true;
 		}
 	}
@@ -106,10 +106,10 @@ AbsoluteLayoutResolver::hasInvalidOrigin(DisplayNode* child)
 		return true;
 	}
 
-	if (child->top.unit == kDisplayNodeOriginUnitPX &&
-		child->left.unit == kDisplayNodeOriginUnitPX &&
-		child->right.type == kDisplayNodeOriginTypeAuto &&
-		child->bottom.type == kDisplayNodeOriginTypeAuto) {
+	if (child->top.unit == kOriginUnitPX &&
+		child->left.unit == kOriginUnitPX &&
+		child->right.type == kOriginTypeAuto &&
+		child->bottom.type == kOriginTypeAuto) {
 		return false;
 	}
 
@@ -121,69 +121,69 @@ AbsoluteLayoutResolver::hasInvalidOrigin(DisplayNode* child)
 	const auto parent = child->parent;
 
 	if (parent->measuredContentWidthChanged || child->hasNewParent()) {
-		if (child->left.unit == kDisplayNodeOriginUnitPC ||
-			child->right.unit == kDisplayNodeOriginUnitPC) {
+		if (child->left.unit == kOriginUnitPC ||
+			child->right.unit == kOriginUnitPC) {
 			return true;
 		}
 	}
 
 	if (parent->measuredContentHeightChanged || child->hasNewParent()) {
-		if (child->top.unit == kDisplayNodeOriginUnitPC ||
-			child->bottom.unit == kDisplayNodeOriginUnitPC) {
+		if (child->top.unit == kOriginUnitPC ||
+			child->bottom.unit == kOriginUnitPC) {
 			return true;
 		}
 	}
 
 	if (parent->measuredInnerWidthChanged || child->hasNewParent()) {
-		if (child->top.unit == kDisplayNodeOriginUnitPW ||
-			child->left.unit == kDisplayNodeOriginUnitPW ||
-			child->right.unit == kDisplayNodeOriginUnitPW ||
-			child->bottom.unit == kDisplayNodeOriginUnitPW) {
+		if (child->top.unit == kOriginUnitPW ||
+			child->left.unit == kOriginUnitPW ||
+			child->right.unit == kOriginUnitPW ||
+			child->bottom.unit == kOriginUnitPW) {
 			return true;
 		}
 	}
 
 	if (parent->measuredInnerHeightChanged || child->hasNewParent()) {
-		if (child->top.unit == kDisplayNodeOriginUnitPH ||
-			child->left.unit == kDisplayNodeOriginUnitPH ||
-			child->right.unit == kDisplayNodeOriginUnitPH ||
-			child->bottom.unit == kDisplayNodeOriginUnitPH) {
+		if (child->top.unit == kOriginUnitPH ||
+			child->left.unit == kOriginUnitPH ||
+			child->right.unit == kOriginUnitPH ||
+			child->bottom.unit == kOriginUnitPH) {
 			return true;
 		}
 	}
 
 	if (parent->measuredContentWidthChanged || child->hasNewParent()) {
-		if (child->top.unit == kDisplayNodeOriginUnitCW ||
-			child->left.unit == kDisplayNodeOriginUnitCW ||
-			child->right.unit == kDisplayNodeOriginUnitCW ||
-			child->bottom.unit == kDisplayNodeOriginUnitCW) {
+		if (child->top.unit == kOriginUnitCW ||
+			child->left.unit == kOriginUnitCW ||
+			child->right.unit == kOriginUnitCW ||
+			child->bottom.unit == kOriginUnitCW) {
 			return true;
 		}
 	}
 
 	if (parent->measuredContentHeightChanged || child->hasNewParent()) {
-		if (child->top.unit == kDisplayNodeOriginUnitCH ||
-			child->left.unit == kDisplayNodeOriginUnitCH ||
-			child->right.unit == kDisplayNodeOriginUnitCH ||
-			child->bottom.unit == kDisplayNodeOriginUnitCH) {
+		if (child->top.unit == kOriginUnitCH ||
+			child->left.unit == kOriginUnitCH ||
+			child->right.unit == kOriginUnitCH ||
+			child->bottom.unit == kOriginUnitCH) {
 			return true;
 		}
 	}
 
 	if (child->display->hasNewViewportWidth()) {
-		if (child->top.unit == kDisplayNodeOriginUnitVW ||
-			child->left.unit == kDisplayNodeOriginUnitVW ||
-			child->right.unit == kDisplayNodeOriginUnitVW ||
-			child->bottom.unit == kDisplayNodeOriginUnitVW) {
+		if (child->top.unit == kOriginUnitVW ||
+			child->left.unit == kOriginUnitVW ||
+			child->right.unit == kOriginUnitVW ||
+			child->bottom.unit == kOriginUnitVW) {
 			return true;
 		}
 	}
 
 	if (child->display->hasNewViewportWidth()) {
-		if (child->top.unit == kDisplayNodeOriginUnitVH ||
-			child->left.unit == kDisplayNodeOriginUnitVH ||
-			child->right.unit == kDisplayNodeOriginUnitVH ||
-			child->bottom.unit == kDisplayNodeOriginUnitVH) {
+		if (child->top.unit == kOriginUnitVH ||
+			child->left.unit == kOriginUnitVH ||
+			child->right.unit == kOriginUnitVH ||
+			child->bottom.unit == kOriginUnitVH) {
 			return true;
 		}
 	}
@@ -199,17 +199,17 @@ AbsoluteLayoutResolver::measureTop(DisplayNode* child)
 
 	double value = child->top.length;
 
-	if (type == kDisplayNodeOriginTypeLength) {
+	if (type == kOriginTypeLength) {
 
 		switch (unit) {
 
-			case kDisplayNodeOriginUnitPC: value = scale(value, child->parent->measuredContentHeight); break;
-			case kDisplayNodeOriginUnitPW: value = scale(value, child->parent->measuredInnerWidth); break;
-			case kDisplayNodeOriginUnitPH: value = scale(value, child->parent->measuredInnerHeight); break;
-			case kDisplayNodeOriginUnitCW: value = scale(value, child->parent->measuredContentWidth); break;
-			case kDisplayNodeOriginUnitCH: value = scale(value, child->parent->measuredContentHeight); break;
-			case kDisplayNodeOriginUnitVW: value = scale(value, child->display->viewportWidth); break;
-			case kDisplayNodeOriginUnitVH: value = scale(value, child->display->viewportHeight); break;
+			case kOriginUnitPC: value = scale(value, child->parent->measuredContentHeight); break;
+			case kOriginUnitPW: value = scale(value, child->parent->measuredInnerWidth); break;
+			case kOriginUnitPH: value = scale(value, child->parent->measuredInnerHeight); break;
+			case kOriginUnitCW: value = scale(value, child->parent->measuredContentWidth); break;
+			case kOriginUnitCH: value = scale(value, child->parent->measuredContentHeight); break;
+			case kOriginUnitVW: value = scale(value, child->display->viewportWidth); break;
+			case kOriginUnitVH: value = scale(value, child->display->viewportHeight); break;
 			default: break;
 
 		}
@@ -234,17 +234,17 @@ AbsoluteLayoutResolver::measureLeft(DisplayNode* child)
 
 	double value = child->left.length;
 
-	if (type == kDisplayNodeOriginTypeLength) {
+	if (type == kOriginTypeLength) {
 
 		switch (unit) {
 
-			case kDisplayNodeOriginUnitPC: value = scale(value, child->parent->measuredContentWidth); break;
-			case kDisplayNodeOriginUnitPW: value = scale(value, child->parent->measuredInnerWidth); break;
-			case kDisplayNodeOriginUnitPH: value = scale(value, child->parent->measuredInnerHeight); break;
-			case kDisplayNodeOriginUnitCW: value = scale(value, child->parent->measuredContentWidth); break;
-			case kDisplayNodeOriginUnitCH: value = scale(value, child->parent->measuredContentHeight); break;
-			case kDisplayNodeOriginUnitVW: value = scale(value, child->display->viewportWidth); break;
-			case kDisplayNodeOriginUnitVH: value = scale(value, child->display->viewportHeight); break;
+			case kOriginUnitPC: value = scale(value, child->parent->measuredContentWidth); break;
+			case kOriginUnitPW: value = scale(value, child->parent->measuredInnerWidth); break;
+			case kOriginUnitPH: value = scale(value, child->parent->measuredInnerHeight); break;
+			case kOriginUnitCW: value = scale(value, child->parent->measuredContentWidth); break;
+			case kOriginUnitCH: value = scale(value, child->parent->measuredContentHeight); break;
+			case kOriginUnitVW: value = scale(value, child->display->viewportWidth); break;
+			case kOriginUnitVH: value = scale(value, child->display->viewportHeight); break;
 			default: break;
 
 		}
@@ -269,17 +269,17 @@ AbsoluteLayoutResolver::measureRight(DisplayNode* child)
 
 	double value = child->right.length;
 
-	if (type == kDisplayNodeOriginTypeLength) {
+	if (type == kOriginTypeLength) {
 
 		switch (unit) {
 
-			case kDisplayNodeOriginUnitPC: value = scale(value, child->parent->measuredContentWidth); break;
-			case kDisplayNodeOriginUnitPW: value = scale(value, child->parent->measuredInnerWidth); break;
-			case kDisplayNodeOriginUnitPH: value = scale(value, child->parent->measuredInnerHeight); break;
-			case kDisplayNodeOriginUnitCW: value = scale(value, child->parent->measuredContentWidth); break;
-			case kDisplayNodeOriginUnitCH: value = scale(value, child->parent->measuredContentHeight); break;
-			case kDisplayNodeOriginUnitVW: value = scale(value, child->display->viewportWidth); break;
-			case kDisplayNodeOriginUnitVH: value = scale(value, child->display->viewportHeight); break;
+			case kOriginUnitPC: value = scale(value, child->parent->measuredContentWidth); break;
+			case kOriginUnitPW: value = scale(value, child->parent->measuredInnerWidth); break;
+			case kOriginUnitPH: value = scale(value, child->parent->measuredInnerHeight); break;
+			case kOriginUnitCW: value = scale(value, child->parent->measuredContentWidth); break;
+			case kOriginUnitCH: value = scale(value, child->parent->measuredContentHeight); break;
+			case kOriginUnitVW: value = scale(value, child->display->viewportWidth); break;
+			case kOriginUnitVH: value = scale(value, child->display->viewportHeight); break;
 			default: break;
 
 		}
@@ -304,17 +304,17 @@ AbsoluteLayoutResolver::measureBottom(DisplayNode* child)
 
 	double value = child->bottom.length;
 
-	if (type == kDisplayNodeOriginTypeLength) {
+	if (type == kOriginTypeLength) {
 
 		switch (unit) {
 
-			case kDisplayNodeOriginUnitPC: value = scale(value, child->parent->measuredContentHeight); break;
-			case kDisplayNodeOriginUnitPW: value = scale(value, child->parent->measuredInnerWidth); break;
-			case kDisplayNodeOriginUnitPH: value = scale(value, child->parent->measuredInnerHeight); break;
-			case kDisplayNodeOriginUnitCW: value = scale(value, child->parent->measuredContentWidth); break;
-			case kDisplayNodeOriginUnitCH: value = scale(value, child->parent->measuredContentHeight); break;
-			case kDisplayNodeOriginUnitVW: value = scale(value, child->display->viewportWidth); break;
-			case kDisplayNodeOriginUnitVH: value = scale(value, child->display->viewportHeight); break;
+			case kOriginUnitPC: value = scale(value, child->parent->measuredContentHeight); break;
+			case kOriginUnitPW: value = scale(value, child->parent->measuredInnerWidth); break;
+			case kOriginUnitPH: value = scale(value, child->parent->measuredInnerHeight); break;
+			case kOriginUnitCW: value = scale(value, child->parent->measuredContentWidth); break;
+			case kOriginUnitCH: value = scale(value, child->parent->measuredContentHeight); break;
+			case kOriginUnitVW: value = scale(value, child->display->viewportWidth); break;
+			case kOriginUnitVH: value = scale(value, child->display->viewportHeight); break;
 			default: break;
 
 		}
@@ -347,45 +347,45 @@ AbsoluteLayoutResolver::measureWidth(DisplayNode* child)
 	double nodeL = 0;
 	double nodeR = 0;
 
-	if (l != kDisplayNodeOriginTypeAuto) nodeL = this->measureLeft(child);
-	if (r != kDisplayNodeOriginTypeAuto) nodeR = this->measureRight(child);
+	if (l != kOriginTypeAuto) nodeL = this->measureLeft(child);
+	if (r != kOriginTypeAuto) nodeR = this->measureRight(child);
 
-	if (l != kDisplayNodeOriginTypeAuto &&
-		r != kDisplayNodeOriginTypeAuto) {
+	if (l != kOriginTypeAuto &&
+		r != kOriginTypeAuto) {
 
 		value = child->parent->measuredContentWidth - (nodeL + marginL) - (nodeR + marginR);
 
-	} else if (type == kDisplayNodeSizeTypeFill) {
+	} else if (type == kSizeTypeFill) {
 
-		 if (l == kDisplayNodeOriginTypeAuto &&
-		 	 r == kDisplayNodeOriginTypeAuto) {
+		 if (l == kOriginTypeAuto &&
+		 	 r == kOriginTypeAuto) {
 
 			value = child->parent->measuredContentWidth - marginL - marginR;
 
-		} else if (l != kDisplayNodeOriginTypeAuto) {
+		} else if (l != kOriginTypeAuto) {
 
 			value = child->parent->measuredContentWidth - (nodeL + marginL);
 
-		} else if (r != kDisplayNodeOriginTypeAuto) {
+		} else if (r != kOriginTypeAuto) {
 
 			value = child->parent->measuredContentWidth - (nodeR + marginR);
 
 		}
 
-	} else if (type == kDisplayNodeSizeTypeWrap) {
+	} else if (type == kSizeTypeWrap) {
 
 		throw InvalidOperationException("This method does not measuring wrapped node.");
 
-	} else if (type == kDisplayNodeSizeTypeLength) {
+	} else if (type == kSizeTypeLength) {
 
 		switch (unit) {
-			case kDisplayNodeSizeUnitPC: value = scale(value, child->parent->measuredContentWidth); break;
-			case kDisplayNodeSizeUnitPW: value = scale(value, child->parent->measuredInnerWidth); break;
-			case kDisplayNodeSizeUnitPH: value = scale(value, child->parent->measuredInnerHeight); break;
-			case kDisplayNodeSizeUnitCW: value = scale(value, child->parent->measuredContentWidth); break;
-			case kDisplayNodeSizeUnitCH: value = scale(value, child->parent->measuredContentHeight); break;
-			case kDisplayNodeSizeUnitVW: value = scale(value, child->display->viewportWidth); break;
-			case kDisplayNodeSizeUnitVH: value = scale(value, child->display->viewportHeight); break;
+			case kSizeUnitPC: value = scale(value, child->parent->measuredContentWidth); break;
+			case kSizeUnitPW: value = scale(value, child->parent->measuredInnerWidth); break;
+			case kSizeUnitPH: value = scale(value, child->parent->measuredInnerHeight); break;
+			case kSizeUnitCW: value = scale(value, child->parent->measuredContentWidth); break;
+			case kSizeUnitCH: value = scale(value, child->parent->measuredContentHeight); break;
+			case kSizeUnitVW: value = scale(value, child->display->viewportWidth); break;
+			case kSizeUnitVH: value = scale(value, child->display->viewportHeight); break;
 			default: break;
 		}
 
@@ -416,44 +416,44 @@ AbsoluteLayoutResolver::measureHeight(DisplayNode* child)
 	double nodeB = 0;
 	double value = child->height.length;
 
-	if (t != kDisplayNodeOriginTypeAuto) nodeT = this->measureTop(child);
-	if (b != kDisplayNodeOriginTypeAuto) nodeB = this->measureBottom(child);
+	if (t != kOriginTypeAuto) nodeT = this->measureTop(child);
+	if (b != kOriginTypeAuto) nodeB = this->measureBottom(child);
 
-	if (t != kDisplayNodeOriginTypeAuto &&
-		b != kDisplayNodeOriginTypeAuto) {
+	if (t != kOriginTypeAuto &&
+		b != kOriginTypeAuto) {
 
 		value = child->parent->measuredContentHeight - (nodeT + marginT) - (nodeB + marginB);
 
-	} else if (type == kDisplayNodeSizeTypeFill) {
+	} else if (type == kSizeTypeFill) {
 
-		if (t == kDisplayNodeOriginTypeAuto &&
-			b == kDisplayNodeOriginTypeAuto) {
+		if (t == kOriginTypeAuto &&
+			b == kOriginTypeAuto) {
 
 			value = child->parent->measuredContentHeight - marginT - marginB;
 
-		} else if (t != kDisplayNodeOriginTypeAuto) {
+		} else if (t != kOriginTypeAuto) {
 
 			value = child->parent->measuredContentHeight - (nodeT + marginT);
 
-		} else if (b != kDisplayNodeOriginTypeAuto) {
+		} else if (b != kOriginTypeAuto) {
 
 			value = child->parent->measuredContentHeight - (nodeB + marginB);
 		}
 
-	} else if (type == kDisplayNodeSizeTypeWrap) {
+	} else if (type == kSizeTypeWrap) {
 
 		throw InvalidOperationException("This method does not measuring wrapped node.");
 
-	} else if (type == kDisplayNodeSizeTypeLength) {
+	} else if (type == kSizeTypeLength) {
 
 		switch (unit) {
-			case kDisplayNodeSizeUnitPC: value = scale(value, child->parent->measuredContentHeight); break;
-			case kDisplayNodeSizeUnitPW: value = scale(value, child->parent->measuredInnerWidth); break;
-			case kDisplayNodeSizeUnitPH: value = scale(value, child->parent->measuredInnerHeight); break;
-			case kDisplayNodeSizeUnitCW: value = scale(value, child->parent->measuredContentWidth); break;
-			case kDisplayNodeSizeUnitCH: value = scale(value, child->parent->measuredContentHeight); break;
-			case kDisplayNodeSizeUnitVW: value = scale(value, child->display->viewportWidth); break;
-			case kDisplayNodeSizeUnitVH: value = scale(value, child->display->viewportHeight); break;
+			case kSizeUnitPC: value = scale(value, child->parent->measuredContentHeight); break;
+			case kSizeUnitPW: value = scale(value, child->parent->measuredInnerWidth); break;
+			case kSizeUnitPH: value = scale(value, child->parent->measuredInnerHeight); break;
+			case kSizeUnitCW: value = scale(value, child->parent->measuredContentWidth); break;
+			case kSizeUnitCH: value = scale(value, child->parent->measuredContentHeight); break;
+			case kSizeUnitVW: value = scale(value, child->display->viewportWidth); break;
+			case kSizeUnitVH: value = scale(value, child->display->viewportHeight); break;
 			default: break;
 		}
 
@@ -548,13 +548,13 @@ AbsoluteLayoutResolver::resolve()
 			const auto r = child->right.type;
 			const auto b = child->bottom.type;
 
-			if (l == kDisplayNodeOriginTypeAuto &&
-				r == kDisplayNodeOriginTypeLength) {
+			if (l == kOriginTypeAuto &&
+				r == kOriginTypeLength) {
 				measuredL = child->parent->measuredContentWidth - measuredR - child->measuredWidth;
 			}
 
-			if (t == kDisplayNodeOriginTypeAuto &&
-				b == kDisplayNodeOriginTypeLength) {
+			if (t == kOriginTypeAuto &&
+				b == kOriginTypeLength) {
 				measuredT = child->parent->measuredContentHeight - measuredB - child->measuredHeight;
 			}
 

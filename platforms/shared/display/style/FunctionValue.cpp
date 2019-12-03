@@ -12,6 +12,13 @@ FunctionValue::FunctionValue(string name) : Value(kValueTypeFunction, kValueUnit
 
 }
 
+FunctionValue::~FunctionValue()
+{
+	for (auto argument : this->arguments) {
+		delete argument;
+	}
+}
+
 string
 FunctionValue::toString()
 {

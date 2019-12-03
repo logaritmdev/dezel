@@ -2,6 +2,7 @@
 #define DisplayBase_h
 
 #include <float.h>
+#include <stddef.h>
 
 #define ABS_DBL_MIN -DBL_MAX
 #define ABS_DBL_MAX +DBL_MAX
@@ -28,6 +29,34 @@ typedef struct OpaqueDisplayNode* DisplayNodeRef;
 typedef struct OpaqueProperty* PropertyRef;
 
 /**
+ * @typedef ValueListRef
+ * @since 0.7.0
+ * @hidden
+ */
+typedef struct OpaqueValueList* ValueListRef;
+
+/**
+ * @typedef ValueRef
+ * @since 0.7.0
+ * @hidden
+ */
+typedef struct OpaqueValue* ValueRef;
+
+/**
+ * @typedef VariableValueRef
+ * @since 0.7.0
+ * @hidden
+ */
+typedef struct OpaqueVariableValue* VariableValueRef;
+
+/**
+ * @typedef FunctionValueRef
+ * @since 0.7.0
+ * @hidden
+ */
+typedef struct OpaqueFunctionValue* FunctionValueRef;
+
+/**
  * @typedef StylesheetRef
  * @since 0.7.0
  * @hidden
@@ -47,96 +76,77 @@ typedef struct {
 } ParseError;
 
 /**
- * @type DisplayNodeSizeType
+ * @type SizeType
  * @since 0.7.0
  * @hidden
  */
 typedef enum {
-	kDisplayNodeAnchorTypeLength = 1
-} DisplayNodeAnchorType;
+	kAnchorTypeLength = 1
+} AnchorType;
 
 /**
- * @type DisplayNodeAnchorUnit
+ * @type AnchorUnit
  * @since 0.7.0
  * @hidden
  */
 typedef enum {
-	kDisplayNodeAnchorUnitPC = 1
-} DisplayNodeAnchorUnit;
+	kAnchorUnitPC = 1
+} AnchorUnit;
 
 /**
- * @type DisplayNodeSizeType
+ * @type SizeType
  * @since 0.7.0
  * @hidden
  */
 typedef enum {
-	kDisplayNodeSizeTypeFill = 1,
-	kDisplayNodeSizeTypeWrap = 2,
-	kDisplayNodeSizeTypeLength = 3
-} DisplayNodeSizeType;
+	kSizeTypeFill = 1,
+	kSizeTypeWrap = 2,
+	kSizeTypeLength = 3
+} SizeType;
 
 /**
- * @type DisplayNodeSizeUnit
+ * @type SizeUnit
  * @since 0.7.0
  * @hidden
  */
 typedef enum {
-	kDisplayNodeSizeUnitNone = 1,
-	kDisplayNodeSizeUnitPX = 2,
-	kDisplayNodeSizeUnitPC = 3,
-	kDisplayNodeSizeUnitVW = 4,
-	kDisplayNodeSizeUnitVH = 5,
-	kDisplayNodeSizeUnitPW = 6,
-	kDisplayNodeSizeUnitPH = 7,
-	kDisplayNodeSizeUnitCW = 8,
-	kDisplayNodeSizeUnitCH = 9
-} DisplayNodeSizeUnit;
+	kSizeUnitNone = 1,
+	kSizeUnitPX = 2,
+	kSizeUnitPC = 3,
+	kSizeUnitVW = 4,
+	kSizeUnitVH = 5,
+	kSizeUnitPW = 6,
+	kSizeUnitPH = 7,
+	kSizeUnitCW = 8,
+	kSizeUnitCH = 9
+} SizeUnit;
 
 /**
- * @type DisplayNodeOriginType
+ * @type OriginType
  * @since 0.7.0
  * @hidden
  */
 typedef enum {
-	kDisplayNodeOriginTypeAuto = 1,
-	kDisplayNodeOriginTypeLength = 2
-} DisplayNodeOriginType;
+	kOriginTypeAuto = 1,
+	kOriginTypeLength = 2
+} OriginType;
 
 /**
- * @type DisplayNodeOriginUnit
+ * @type OriginUnit
  * @since 0.7.0
  * @hidden
  */
 typedef enum {
-	kDisplayNodeOriginUnitNone = 1,
-	kDisplayNodeOriginUnitPX = 2,
-	kDisplayNodeOriginUnitPC = 3,
-	kDisplayNodeOriginUnitVW = 4,
-	kDisplayNodeOriginUnitVH = 5,
-	kDisplayNodeOriginUnitPW = 6,
-	kDisplayNodeOriginUnitPH = 7,
-	kDisplayNodeOriginUnitCW = 8,
-	kDisplayNodeOriginUnitCH = 9
-} DisplayNodeOriginUnit;
-
-/**
- * @type DisplayNodeContentSize
- * @since 0.7.0
- * @hidden
- */
-typedef enum {
-	kDisplayNodeContentOriginTypeLength = 1
-} DisplayNodeContentOriginType;
-
-/**
- * @type DisplayNodeContentOriginUnit
- * @since 0.7.0
- * @hidden
- */
-typedef enum {
-	kDisplayNodeContentOriginUnitNone = 1,
-	kDisplayNodeContentOriginUnitPX = 2
-} DisplayNodeContentOriginUnit;
+	kOriginUnitNone = 1,
+	kOriginUnitPX = 2,
+	kOriginUnitPC = 3,
+	kOriginUnitVW = 4,
+	kOriginUnitVH = 5,
+	kOriginUnitPW = 6,
+	kOriginUnitPH = 7,
+	kOriginUnitCW = 8,
+	kOriginUnitCH = 9
+} OriginUnit;
 
 /**
  * @type DisplayNodeContentSize
@@ -144,179 +154,198 @@ typedef enum {
  * @hidden
  */
 typedef enum {
-	kDisplayNodeContentSizeTypeAuto = 1,
-	kDisplayNodeContentSizeTypeLength = 2,
-} DisplayNodeContentSizeType;
+	kContentOriginTypeLength = 1
+} ContentOriginType;
 
 /**
- * @type DisplayNodeContentSizeUnit
+ * @type ContentOriginUnit
  * @since 0.7.0
  * @hidden
  */
 typedef enum {
-	kDisplayNodeContentSizeUnitNone = 1,
-	kDisplayNodeContentSizeUnitPX = 2,
-	kDisplayNodeContentSizeUnitPC = 3,
-	kDisplayNodeContentSizeUnitVW = 4,
-	kDisplayNodeContentSizeUnitVH = 5,
-	kDisplayNodeContentSizeUnitPW = 6,
-	kDisplayNodeContentSizeUnitPH = 7,
-	kDisplayNodeContentSizeUnitCW = 8,
-	kDisplayNodeContentSizeUnitCH = 9
-} DisplayNodeContentSizeUnit;
+	kContentOriginUnitNone = 1,
+	kContentOriginUnitPX = 2
+} ContentOriginUnit;
 
 /**
- * @type DisplayNodeContentDirection
+ * @type DisplayNodeContentSize
  * @since 0.7.0
  * @hidden
  */
 typedef enum {
-	kDisplayNodeContentDirectionVertical = 1,
-	kDisplayNodeContentDirectionHorizontal = 2
-} DisplayNodeContentDirection;
+	kContentSizeTypeAuto = 1,
+	kContentSizeTypeLength = 2,
+} ContentSizeType;
 
 /**
- * @type DisplayNodeContentAlignment
+ * @type ContentSizeUnit
  * @since 0.7.0
  * @hidden
  */
 typedef enum {
-	kDisplayNodeContentDispositionStart = 1,
-	kDisplayNodeContentDispositionCenter = 2,
-	kDisplayNodeContentDispositionEnd = 3,
-	kDisplayNodeContentDispositionSpaceAround = 4,
-	kDisplayNodeContentDispositionSpaceBetween = 5,
-	kDisplayNodeContentDispositionSpaceEvenly = 6
-} DisplayNodeContentDisposition;
+	kContentSizeUnitNone = 1,
+	kContentSizeUnitPX = 2,
+	kContentSizeUnitPC = 3,
+	kContentSizeUnitVW = 4,
+	kContentSizeUnitVH = 5,
+	kContentSizeUnitPW = 6,
+	kContentSizeUnitPH = 7,
+	kContentSizeUnitCW = 8,
+	kContentSizeUnitCH = 9
+} ContentSizeUnit;
 
 /**
- * @type DisplayNodeContentAlignment
+ * @type ContentDirection
  * @since 0.7.0
  * @hidden
  */
 typedef enum {
-	kDisplayNodeContentAlignmentStart = 1,
-	kDisplayNodeContentAlignmentCenter = 2,
-	kDisplayNodeContentAlignmentEnd = 3,
-} DisplayNodeContentAlignment;
+	kContentDirectionVertical = 1,
+	kContentDirectionHorizontal = 2
+} ContentDirection;
 
 /**
- * @type DisplayNodeMarginType
+ * @type ContentAlignment
  * @since 0.7.0
  * @hidden
  */
 typedef enum {
-    kDisplayNodeBorderTypeLength = 1
-} DisplayNodeBorderType;
+	kContentDispositionStart = 1,
+	kContentDispositionCenter = 2,
+	kContentDispositionEnd = 3,
+	kContentDispositionSpaceAround = 4,
+	kContentDispositionSpaceBetween = 5,
+	kContentDispositionSpaceEvenly = 6
+} ContentDisposition;
 
 /**
- * @type DisplayNodeBorderUnit
+ * @type ContentAlignment
  * @since 0.7.0
  * @hidden
  */
 typedef enum {
-    kDisplayNodeBorderUnitPX = 1,
-    kDisplayNodeBorderUnitPC = 2,
-    kDisplayNodeBorderUnitVW = 3,
-    kDisplayNodeBorderUnitVH = 4,
-	kDisplayNodeBorderUnitPW = 5,
-	kDisplayNodeBorderUnitPH = 6,
-	kDisplayNodeBorderUnitCW = 7,
-	kDisplayNodeBorderUnitCH = 8
-} DisplayNodeBorderUnit;
+	kContentAlignmentStart = 1,
+	kContentAlignmentCenter = 2,
+	kContentAlignmentEnd = 3,
+} ContentAlignment;
 
 /**
- * @type DisplayNodeMarginType
+ * @type MarginType
  * @since 0.7.0
  * @hidden
  */
 typedef enum {
-	kDisplayNodeMarginTypeLength = 1
-} DisplayNodeMarginType;
+    kBorderTypeLength = 1
+} BorderType;
 
 /**
- * @type DisplayNodeMarginUnit
+ * @type BorderUnit
  * @since 0.7.0
  * @hidden
  */
 typedef enum {
-	kDisplayNodeMarginUnitPX = 1,
-	kDisplayNodeMarginUnitPC = 2,
-	kDisplayNodeMarginUnitVW = 3,
-	kDisplayNodeMarginUnitVH = 4,
-	kDisplayNodeMarginUnitPW = 5,
-	kDisplayNodeMarginUnitPH = 6,
-	kDisplayNodeMarginUnitCW = 7,
-	kDisplayNodeMarginUnitCH = 8
-} DisplayNodeMarginUnit;
+    kBorderUnitPX = 1,
+    kBorderUnitPC = 2,
+    kBorderUnitVW = 3,
+    kBorderUnitVH = 4,
+	kBorderUnitPW = 5,
+	kBorderUnitPH = 6,
+	kBorderUnitCW = 7,
+	kBorderUnitCH = 8
+} BorderUnit;
 
 /**
- * @type DisplayNodePaddingType
+ * @type MarginType
  * @since 0.7.0
  * @hidden
  */
 typedef enum {
-	kDisplayNodePaddingTypeLength = 1
-} DisplayNodePaddingType;
+	kMarginTypeLength = 1
+} MarginType;
 
 /**
- * @type DisplayNodePaddingUnit
+ * @type MarginUnit
  * @since 0.7.0
  * @hidden
  */
 typedef enum {
-	kDisplayNodePaddingUnitPX = 1,
-	kDisplayNodePaddingUnitPC = 2,
-	kDisplayNodePaddingUnitVW = 3,
-	kDisplayNodePaddingUnitVH = 4,
-	kDisplayNodePaddingUnitPW = 5,
-	kDisplayNodePaddingUnitPH = 6,
-	kDisplayNodePaddingUnitCW = 7,
-	kDisplayNodePaddingUnitCH = 8
-} DisplayNodePaddingUnit;
+	kMarginUnitPX = 1,
+	kMarginUnitPC = 2,
+	kMarginUnitVW = 3,
+	kMarginUnitVH = 4,
+	kMarginUnitPW = 5,
+	kMarginUnitPH = 6,
+	kMarginUnitCW = 7,
+	kMarginUnitCH = 8
+} MarginUnit;
 
 /**
- * @typeOf PropertyValueType
+ * @type PaddingType
  * @since 0.7.0
  * @hidden
  */
 typedef enum {
-	kPropertyValueTypeNull,
-	kPropertyValueTypeString,
-	kPropertyValueTypeNumber,
-	kPropertyValueTypeBoolean,
-	kPropertyValueTypeFunction,
-	kPropertyValueTypeVariable
-} PropertyValueType;
+	kPaddingTypeLength = 1
+} PaddingType;
 
 /**
- * @typeOf PropertyValueUnit
+ * @type PaddingUnit
  * @since 0.7.0
  * @hidden
  */
 typedef enum {
-	kPropertyValueUnitNone,
-	kPropertyValueUnitPX,
-	kPropertyValueUnitPC,
-	kPropertyValueUnitVW,
-	kPropertyValueUnitVH,
-	kPropertyValueUnitPW,
-	kPropertyValueUnitPH,
-	kPropertyValueUnitCW,
-	kPropertyValueUnitCH,
-	kPropertyValueUnitDeg,
-	kPropertyValueUnitRad
-} PropertyValueUnit;
+	kPaddingUnitPX = 1,
+	kPaddingUnitPC = 2,
+	kPaddingUnitVW = 3,
+	kPaddingUnitVH = 4,
+	kPaddingUnitPW = 5,
+	kPaddingUnitPH = 6,
+	kPaddingUnitCW = 7,
+	kPaddingUnitCH = 8
+} PaddingUnit;
 
 /**
- * @typedef DisplayNodeMeasuredSize
+ * @typedef MeasuredSize
  * @since 0.7.0
  * @hidden
  */
 typedef struct {
 	double width;
 	double height;
-} DisplayNodeMeasuredSize;
+} MeasuredSize;
+
+/**
+* @typedef ValueType
+* @since 0.7.0
+* @hidden
+*/
+typedef enum {
+	kValueTypeNull,
+	kValueTypeString,
+	kValueTypeNumber,
+	kValueTypeBoolean,
+	kValueTypeFunction,
+	kValueTypeVariable
+} ValueType;
+
+/**
+* @typedef ValueUnit
+* @since 0.7.0
+* @hidden
+*/
+typedef enum  {
+	kValueUnitNone,
+	kValueUnitPX,
+	kValueUnitPC,
+	kValueUnitVW,
+	kValueUnitVH,
+	kValueUnitPW,
+	kValueUnitPH,
+	kValueUnitCW,
+	kValueUnitCH,
+	kValueUnitDeg,
+	kValueUnitRad
+} ValueUnit;
 
 /**
  * @typedef DisplayResolveCallback
@@ -330,7 +359,7 @@ typedef void (*DisplayCallback)(DisplayRef display);
  * @since 0.7.0
  * @hidden
  */
-typedef void (*DisplayNodeMeasureCallback)(DisplayNodeRef node, DisplayNodeMeasuredSize* size, double w, double h, double minw, double maxw, double minh, double maxh);
+typedef void (*DisplayNodeMeasureCallback)(DisplayNodeRef node, MeasuredSize* size, double w, double h, double minw, double maxw, double minh, double maxh);
 
 /**
  * @typedef DisplayNodeResolveCallback
@@ -344,7 +373,7 @@ typedef void (*DisplayNodeCallback)(DisplayNodeRef node);
  * @since 0.7.0
  * @hidden
  */
-typedef void (*DisplayNodeMeasureCallback)(DisplayNodeRef node, DisplayNodeMeasuredSize* size, double w, double h, double minw, double maxw, double minh, double maxh);
+typedef void (*DisplayNodeMeasureCallback)(DisplayNodeRef node, MeasuredSize* size, double w, double h, double minw, double maxw, double minh, double maxh);
 
 /**
  * @typedef DisplayNodeUpdateCallback
@@ -352,5 +381,12 @@ typedef void (*DisplayNodeMeasureCallback)(DisplayNodeRef node, DisplayNodeMeasu
  * @hidden
  */
 typedef void (*DisplayNodeUpdateCallback)(DisplayNodeRef node, PropertyRef property, const char* name);
+
+/**
+ * @typedef ValueParseCallback
+ * @since 0.7.0
+ * @hidden
+ */
+typedef void (*ValueParseCallback)(ValueRef* values, size_t length, void* context);
 
 #endif

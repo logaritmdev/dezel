@@ -453,7 +453,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @since 0.7.0
 	 */
 	@objc public lazy var textColor = JavaScriptProperty(string: "#000") { value in
-		self.view.textColor = CGColorParse(value.string)
+		self.view.textColor = CGColor.parse(value)
 	}
 
 	/**
@@ -477,7 +477,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @since 0.7.0
 	 */
 	@objc public lazy var textShadowColor = JavaScriptProperty(string: "#000") { value in
-		self.view.textShadowColor = CGColorParse(value.string)
+		self.view.textShadowColor = CGColor.parse(value)
 	}
 
 	/**
@@ -501,7 +501,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @since 0.7.0
 	 */
 	@objc public lazy var linkColor = JavaScriptProperty(string: "blue") { value in
-		self.view.linkColor = CGColorParse(value.string)
+		self.view.linkColor = CGColor.parse(value)
 	}
 
 	/**
@@ -595,7 +595,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @hidden
 	 */
 	@objc open func jsSet_fontSize(callback: JavaScriptSetterCallback) {
-		self.fontSize.reset(callback.value, lock: self)
+		self.fontSize.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -615,7 +615,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @hidden
 	 */
 	@objc open func jsSet_minFontSize(callback: JavaScriptSetterCallback) {
-		self.minFontSize.reset(callback.value, lock: self)
+		self.minFontSize.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -635,7 +635,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @hidden
 	 */
 	@objc open func jsSet_maxFontSize(callback: JavaScriptSetterCallback) {
-		self.maxFontSize.reset(callback.value, lock: self)
+		self.maxFontSize.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -735,7 +735,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @hidden
 	 */
 	@objc open func jsSet_textKerning(callback: JavaScriptSetterCallback) {
-		self.textKerning.reset(callback.value, lock: self)
+		self.textKerning.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -755,7 +755,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @hidden
 	 */
 	@objc open func jsSet_textLeading(callback: JavaScriptSetterCallback) {
-		self.textLeading.reset(callback.value, lock: self)
+		self.textLeading.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -835,7 +835,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @hidden
 	 */
 	@objc open func jsSet_textColor(callback: JavaScriptSetterCallback) {
-		self.textColor.reset(callback.value, lock: self)
+		self.textColor.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -875,7 +875,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @hidden
 	 */
 	@objc open func jsSet_textShadowBlur(callback: JavaScriptSetterCallback) {
-		self.textShadowBlur.reset(callback.value, lock: self)
+		self.textShadowBlur.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -895,7 +895,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @hidden
 	 */
 	@objc open func jsSet_textShadowColor(callback: JavaScriptSetterCallback) {
-		self.textShadowColor.reset(callback.value, lock: self)
+		self.textShadowColor.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -915,7 +915,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @hidden
 	 */
 	@objc open func jsSet_textShadowOffsetTop(callback: JavaScriptSetterCallback) {
-		self.fontFamily.reset(callback.value, lock: self)
+		self.fontFamily.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -935,7 +935,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @hidden
 	 */
 	@objc open func jsSet_textShadowOffsetLeft(callback: JavaScriptSetterCallback) {
-		self.textShadowOffsetLeft.reset(callback.value, lock: self)
+		self.textShadowOffsetLeft.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -955,7 +955,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @hidden
 	 */
 	@objc open func jsSet_linkColor(callback: JavaScriptSetterCallback) {
-		self.linkColor.reset(callback.value, lock: self)
+		self.linkColor.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------

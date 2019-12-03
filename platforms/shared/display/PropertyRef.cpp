@@ -6,16 +6,16 @@
 #include "BooleanValue.h"
 
 #include <string>
+#include <vector>
+
+using std::string;
+using std::vector;
 
 using Dezel::Style::Property;
 using Dezel::Style::Value;
-using Dezel::Style::ValueType;
-using Dezel::Style::ValueUnit;
 using Dezel::Style::StringValue;
 using Dezel::Style::NumberValue;
 using Dezel::Style::BooleanValue;
-
-using std::string;
 
 const char*
 PropertyGetName(PropertyRef property)
@@ -23,50 +23,11 @@ PropertyGetName(PropertyRef property)
 	return reinterpret_cast<Property*>(property)->getName().c_str();
 }
 
-unsigned
-PropertyGetValueCount(PropertyRef property)
+ValueListRef
+PropertyGetValues(PropertyRef property)
 {
-	return static_cast<unsigned>(
-		reinterpret_cast<Property*>(property)->getValues().size()
+	return reinterpret_cast<ValueListRef>(
+		const_cast<vector<Value*>*>(&reinterpret_cast<Property*>(property)->getValues())
 	);
 }
 
-PropertyValueType
-PropertyGetValueType(PropertyRef property, unsigned index)
-{
-	return static_cast<PropertyValueType>(
-		reinterpret_cast<Property*>(property)->getValues().at(index)->getType()
-	);
-}
-
-PropertyValueUnit
-PropertyGetValueUnit(PropertyRef property, unsigned index)
-{
-	return static_cast<PropertyValueUnit>(
-		reinterpret_cast<Property*>(property)->getValues().at(index)->getUnit()
-	);
-}
-
-const char*
-PropertyGetValueAsString(PropertyRef property, unsigned index)
-{
-	return reinterpret_cast<StringValue*>(
-		reinterpret_cast<Property*>(property)->getValues().at(index)
-	)->getValue().c_str();
-}
-
-double
-PropertyGetValueAsNumber(PropertyRef property, unsigned index)
-{
-	return reinterpret_cast<NumberValue*>(
-		reinterpret_cast<Property*>(property)->getValues().at(index)
-	)->getValue();
-}
-
-bool
-PropertyGetValueAsBoolean(PropertyRef property, unsigned index)
-{
-	return reinterpret_cast<BooleanValue*>(
-		reinterpret_cast<Property*>(property)->getValues().at(index)
-	)->getValue();
-}

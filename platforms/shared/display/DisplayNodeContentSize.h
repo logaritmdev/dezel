@@ -9,12 +9,12 @@ class DisplayNodeContentSize {
 
 public:
 
-	DisplayNodeContentSizeType type = kDisplayNodeContentSizeTypeAuto;
-	DisplayNodeContentSizeUnit unit = kDisplayNodeContentSizeUnitNone;
+	ContentSizeType type = kContentSizeTypeAuto;
+	ContentSizeUnit unit = kContentSizeUnitNone;
 
 	double length = 0;
 
-	bool equals(DisplayNodeContentSizeType type, DisplayNodeContentSizeUnit unit, double length) {
+	bool equals(ContentSizeType type, ContentSizeUnit unit, double length) {
 		return (
 			this->type == type &&
 			this->unit == unit &&

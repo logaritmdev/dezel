@@ -9,14 +9,14 @@ class DisplayNodeBorder {
 
 public:
 
-    DisplayNodeBorderType type = kDisplayNodeBorderTypeLength;
-    DisplayNodeBorderUnit unit = kDisplayNodeBorderUnitPX;
+    BorderType type = kBorderTypeLength;
+    BorderUnit unit = kBorderUnitPX;
 
     double length = 0;
     double min = 0;
     double max = ABS_DBL_MAX;
 
-	bool equals(DisplayNodeBorderType type, DisplayNodeBorderUnit unit, double length) {
+	bool equals(BorderType type, BorderUnit unit, double length) {
 		return (
 			this->type == type &&
 			this->unit == unit &&

@@ -55,29 +55,6 @@ using namespace Dezel::Style;
 	XCTAssertEqual(stylesheet->getRootDescriptors().size(), 0);
 }
 
-- (void)testSingleVariable {
-
-	auto variable = new Variable("myVar");
-
-	try {
-
-		Parser::parse(variable, "12px");
-
-	} catch (ParseException &e) {
-		[NSException raise:@"ParseException" format: @"%s", e.what()];
-	}
-
-	auto values = variable->getValues();
-
-	XCTAssertEqual(values.size(), 1);
-
-	if (values.size() == 1) {
-		XCTAssertEqual(values[0]->getType(), kValueTypeNumber);
-		XCTAssertEqual(dynamic_cast<NumberValue*>(values[0])->getUnit(), kValueUnitPX);
-		XCTAssertEqual(dynamic_cast<NumberValue*>(values[0])->getValue(), 12.0);
-	}
-}
-
 - (void)testVariable {
 
 	string source = R""""(

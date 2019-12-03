@@ -9,14 +9,14 @@ class DisplayNodePadding {
 
 public:
 
-	DisplayNodePaddingType type = kDisplayNodePaddingTypeLength;
-	DisplayNodePaddingUnit unit = kDisplayNodePaddingUnitPX;
+	PaddingType type = kPaddingTypeLength;
+	PaddingUnit unit = kPaddingUnitPX;
 
 	double length = 0;
 	double min = 0;
     double max = ABS_DBL_MAX;
 
-	bool equals(DisplayNodePaddingType type, DisplayNodePaddingUnit unit, double length) {
+	bool equals(PaddingType type, PaddingUnit unit, double length) {
 		return (
 			this->type == type &&
 			this->unit == unit &&

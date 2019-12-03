@@ -9,12 +9,12 @@ class DisplayNodeAnchor {
 
 public:
 
-	DisplayNodeAnchorType type = kDisplayNodeAnchorTypeLength;
-	DisplayNodeAnchorUnit unit = kDisplayNodeAnchorUnitPC;
+	AnchorType type = kAnchorTypeLength;
+	AnchorUnit unit = kAnchorUnitPC;
 
 	double length = 0;
 
-	bool equals(DisplayNodeAnchorType type, DisplayNodeAnchorUnit unit, double length) {
+	bool equals(AnchorType type, AnchorUnit unit, double length) {
 		return (
 			this->type == type &&
 			this->unit == unit &&

@@ -4,7 +4,7 @@
  * @since 0.1.0
  * @hidden
  */
-internal final class JavaScriptClassBuilder: JavaScriptBuilder {
+public final class JavaScriptClassBuilder: JavaScriptBuilder {
 
 	//--------------------------------------------------------------------------
 	// MARK: Methods
@@ -15,7 +15,7 @@ internal final class JavaScriptClassBuilder: JavaScriptBuilder {
 	 * @since 0.1.0
 	 * @hidden
      */
-	internal class func build(_ context: JavaScriptContext, template: AnyClass) -> JavaScriptValue {
+	public class func build(_ context: JavaScriptContext, template: AnyClass) -> JavaScriptValue {
 
 		let prototype = context.createEmptyObject()
 		let statics = context.createEmptyObject()

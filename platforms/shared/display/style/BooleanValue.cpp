@@ -12,6 +12,11 @@ BooleanValue::BooleanValue(bool value) : Value(kValueTypeBoolean, kValueUnitNone
 
 }
 
+BooleanValue::~BooleanValue()
+{
+
+}
+
 string
 BooleanValue::toString()
 {

@@ -9,14 +9,14 @@ class DisplayNodeOrigin {
 
 public:
 
-	DisplayNodeOriginType type = kDisplayNodeOriginTypeAuto;
-	DisplayNodeOriginUnit unit = kDisplayNodeOriginUnitNone;
+	OriginType type = kOriginTypeAuto;
+	OriginUnit unit = kOriginUnitNone;
 
 	double length = 0;
 	double min = ABS_DBL_MIN;
 	double max = ABS_DBL_MAX;
 
-	bool equals(DisplayNodeOriginType type, DisplayNodeOriginUnit unit, double length) {
+	bool equals(OriginType type, OriginUnit unit, double length) {
 		return (
 			this->type == type &&
 			this->unit == unit &&

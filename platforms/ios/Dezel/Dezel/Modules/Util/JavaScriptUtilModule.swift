@@ -1,7 +1,6 @@
 /**
  * @class JavaScriptUtilModule
  * @super JavaScriptModule
- * @hidden
  */
 open class JavaScriptUtilModule: JavaScriptModule {
 
@@ -10,10 +9,10 @@ open class JavaScriptUtilModule: JavaScriptModule {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method register
+	 * @method configure
 	 * @since 0.7.0
 	 */
-	override open func register(context: JavaScriptContext) {
+	override open func configure(context: JavaScriptContext) {
 		context.global.defineProperty(
 			"__util__",
 			value: context.createObject(JavaScriptUtil.self),

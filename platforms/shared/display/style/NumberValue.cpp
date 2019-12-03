@@ -20,6 +20,11 @@ NumberValue::NumberValue(string value, ValueUnit unit) : Value(kValueTypeNumber,
 
 }
 
+NumberValue::~NumberValue()
+{
+
+}
+
 string
 NumberValue::toString()
 {

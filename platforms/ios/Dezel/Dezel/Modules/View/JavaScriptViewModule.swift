@@ -10,10 +10,10 @@ open class JavaScriptViewModule: JavaScriptModule {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method register
+	 * @method configure
 	 * @since 0.7.0
 	 */
-	override open func register(context: JavaScriptContext) {
+	override open func configure(context: JavaScriptContext) {
 		context.registerClass("dezel.view.ImageView", with: JavaScriptImageView.self)
 		context.registerClass("dezel.view.SpinnerView", with: JavaScriptSpinnerView.self)
 		context.registerClass("dezel.view.TextView", with: JavaScriptTextView.self)

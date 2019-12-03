@@ -6,10 +6,10 @@
 public class JavaScriptApplicationModule: JavaScriptModule {
 
 	/**
-	 * @method register
+	 * @method configure
 	 * @since 0.7.0
 	 */
-	public override func register(context: JavaScriptContext) {
+	public override func configure(context: JavaScriptContext) {
 		context.registerClass("dezel.application.Application", with: JavaScriptApplication.self)
 	}
 }

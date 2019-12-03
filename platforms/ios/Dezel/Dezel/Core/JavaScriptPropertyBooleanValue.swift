@@ -15,7 +15,7 @@ open class JavaScriptPropertyBooleanValue: JavaScriptPropertyValue {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private var value: Bool
+	private var data: Bool
 
 	//--------------------------------------------------------------------------
 	// MARK: Methods
@@ -27,7 +27,7 @@ open class JavaScriptPropertyBooleanValue: JavaScriptPropertyValue {
 	 * @hidden
 	 */
 	public init(value: Bool) {
-		self.value = value
+		self.data = value
 		super.init(type: .boolean)
 	}
 
@@ -36,7 +36,7 @@ open class JavaScriptPropertyBooleanValue: JavaScriptPropertyValue {
 	 * @since 0.7.0
 	 */
 	override open func toString() -> String {
-		return self.value ? "true" : "false"
+		return self.data ? "true" : "false"
 	}
 
 	/**
@@ -44,7 +44,7 @@ open class JavaScriptPropertyBooleanValue: JavaScriptPropertyValue {
 	 * @since 0.7.0
 	 */
 	override open func toNumber() -> Double {
-		return self.value ? 1.0 : 0.0
+		return self.data ? 1.0 : 0.0
 	}
 
 	/**
@@ -52,6 +52,6 @@ open class JavaScriptPropertyBooleanValue: JavaScriptPropertyValue {
 	 * @since 0.7.0
 	 */
 	override open func toBoolean() -> Bool {
-		return self.value
+		return self.data
 	}
 }

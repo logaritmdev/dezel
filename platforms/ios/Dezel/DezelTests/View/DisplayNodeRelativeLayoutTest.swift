@@ -17,10 +17,10 @@ class DisplayNodeRelativeLayoutTest: XCTestCase {
 		self.display.viewportHeight = 480
 
 		self.window = DisplayNode(display: self.display)
-		self.window.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 320)
-		self.window.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 480)
-		self.window.setContentWidth(type: kDisplayNodeContentSizeTypeLength, unit: kDisplayNodeContentSizeUnitPX, length: 320)
-		self.window.setContentHeight(type: kDisplayNodeContentSizeTypeLength, unit: kDisplayNodeContentSizeUnitPX, length: 480)
+		self.window.setWidth(type: kSizeTypeLength, unit: kSizeUnitPX, length: 320)
+		self.window.setHeight(type: kSizeTypeLength, unit: kSizeUnitPX, length: 480)
+		self.window.setContentWidth(type: kContentSizeTypeLength, unit: kContentSizeUnitPX, length: 320)
+		self.window.setContentHeight(type: kContentSizeTypeLength, unit: kContentSizeUnitPX, length: 480)
 		self.window.setName("Window")
 
 		self.display.window = self.window
@@ -50,11 +50,11 @@ class DisplayNodeRelativeLayoutTest: XCTestCase {
 	func testNodeMarginInPX() {
 
 		let node = DisplayNode(display: self.display)
-		node.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 40)
-		node.setMarginTop(type: kDisplayNodeMarginTypeLength, unit: kDisplayNodeMarginUnitPX, length: 10)
-		node.setMarginLeft(type: kDisplayNodeMarginTypeLength, unit: kDisplayNodeMarginUnitPX, length: 20)
-		node.setMarginRight(type: kDisplayNodeMarginTypeLength, unit: kDisplayNodeMarginUnitPX, length: 30)
-		node.setMarginBottom(type: kDisplayNodeMarginTypeLength, unit: kDisplayNodeMarginUnitPX, length: 40)
+		node.setHeight(type: kSizeTypeLength, unit: kSizeUnitPX, length: 40)
+		node.setMarginTop(type: kMarginTypeLength, unit: kMarginUnitPX, length: 10)
+		node.setMarginLeft(type: kMarginTypeLength, unit: kMarginUnitPX, length: 20)
+		node.setMarginRight(type: kMarginTypeLength, unit: kMarginUnitPX, length: 30)
+		node.setMarginBottom(type: kMarginTypeLength, unit: kMarginUnitPX, length: 40)
 
 		self.window.appendChild(node)
 		self.window.resolve()
@@ -76,10 +76,10 @@ class DisplayNodeRelativeLayoutTest: XCTestCase {
 	func testNodeMarginInPC() {
 
 		let node = DisplayNode(display: self.display)
-		node.setMarginTop(type: kDisplayNodeMarginTypeLength, unit: kDisplayNodeMarginUnitPC, length: 10)
-		node.setMarginLeft(type: kDisplayNodeMarginTypeLength, unit: kDisplayNodeMarginUnitPC, length: 20)
-		node.setMarginRight(type: kDisplayNodeMarginTypeLength, unit: kDisplayNodeMarginUnitPC, length: 30)
-		node.setMarginBottom(type: kDisplayNodeMarginTypeLength, unit: kDisplayNodeMarginUnitPC, length: 40)
+		node.setMarginTop(type: kMarginTypeLength, unit: kMarginUnitPC, length: 10)
+		node.setMarginLeft(type: kMarginTypeLength, unit: kMarginUnitPC, length: 20)
+		node.setMarginRight(type: kMarginTypeLength, unit: kMarginUnitPC, length: 30)
+		node.setMarginBottom(type: kMarginTypeLength, unit: kMarginUnitPC, length: 40)
 
 		self.window.appendChild(node)
 		self.window.resolve()
@@ -101,10 +101,10 @@ class DisplayNodeRelativeLayoutTest: XCTestCase {
 	func testNodeMarginInVW() {
 
 		let node = DisplayNode(display: self.display)
-		node.setMarginTop(type: kDisplayNodeMarginTypeLength, unit: kDisplayNodeMarginUnitVW, length: 10)
-		node.setMarginLeft(type: kDisplayNodeMarginTypeLength, unit: kDisplayNodeMarginUnitVW, length: 20)
-		node.setMarginRight(type: kDisplayNodeMarginTypeLength, unit: kDisplayNodeMarginUnitVW, length: 30)
-		node.setMarginBottom(type: kDisplayNodeMarginTypeLength, unit: kDisplayNodeMarginUnitVW, length: 40)
+		node.setMarginTop(type: kMarginTypeLength, unit: kMarginUnitVW, length: 10)
+		node.setMarginLeft(type: kMarginTypeLength, unit: kMarginUnitVW, length: 20)
+		node.setMarginRight(type: kMarginTypeLength, unit: kMarginUnitVW, length: 30)
+		node.setMarginBottom(type: kMarginTypeLength, unit: kMarginUnitVW, length: 40)
 
 		self.window.appendChild(node)
 		self.window.resolve()
@@ -123,10 +123,10 @@ class DisplayNodeRelativeLayoutTest: XCTestCase {
 	func testNodeMarginInVH() {
 
 		let node = DisplayNode(display: self.display)
-		node.setMarginTop(type: kDisplayNodeMarginTypeLength, unit: kDisplayNodeMarginUnitVH, length: 10)
-		node.setMarginLeft(type: kDisplayNodeMarginTypeLength, unit: kDisplayNodeMarginUnitVH, length: 20)
-		node.setMarginRight(type: kDisplayNodeMarginTypeLength, unit: kDisplayNodeMarginUnitVH, length: 30)
-		node.setMarginBottom(type: kDisplayNodeMarginTypeLength, unit: kDisplayNodeMarginUnitVH, length: 40)
+		node.setMarginTop(type: kMarginTypeLength, unit: kMarginUnitVH, length: 10)
+		node.setMarginLeft(type: kMarginTypeLength, unit: kMarginUnitVH, length: 20)
+		node.setMarginRight(type: kMarginTypeLength, unit: kMarginUnitVH, length: 30)
+		node.setMarginBottom(type: kMarginTypeLength, unit: kMarginUnitVH, length: 40)
 
 		self.window.appendChild(node)
 		self.window.resolve()
@@ -145,7 +145,7 @@ class DisplayNodeRelativeLayoutTest: XCTestCase {
 	func testNodeWidthInPX() {
 
 		let node = DisplayNode(display: self.display)
-		node.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 100)
+		node.setWidth(type: kSizeTypeLength, unit: kSizeUnitPX, length: 100)
 
 		self.window.appendChild(node)
 		self.window.resolve()
@@ -156,7 +156,7 @@ class DisplayNodeRelativeLayoutTest: XCTestCase {
 	func testNodeWidthInPC() {
 
 		let node = DisplayNode(display: self.display)
-		node.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPC, length: 50)
+		node.setWidth(type: kSizeTypeLength, unit: kSizeUnitPC, length: 50)
 
 		self.window.appendChild(node)
 		self.window.resolve()
@@ -167,7 +167,7 @@ class DisplayNodeRelativeLayoutTest: XCTestCase {
 	func testNodeWidthInVW() {
 
 		let node = DisplayNode(display: self.display)
-		node.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitVW, length: 50)
+		node.setWidth(type: kSizeTypeLength, unit: kSizeUnitVW, length: 50)
 
 		self.window.appendChild(node)
 		self.window.resolve()
@@ -178,7 +178,7 @@ class DisplayNodeRelativeLayoutTest: XCTestCase {
 	func testNodeWidthInVH() {
 
 		let node = DisplayNode(display: self.display)
-		node.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitVH, length: 50)
+		node.setWidth(type: kSizeTypeLength, unit: kSizeUnitVH, length: 50)
 
 		self.window.appendChild(node)
 		self.window.resolve()
@@ -189,8 +189,8 @@ class DisplayNodeRelativeLayoutTest: XCTestCase {
 	func testNodeWidthUsingFill() {
 
 		let node = DisplayNode(display: self.display)
-		node.setWidth(type: kDisplayNodeSizeTypeFill, unit: kDisplayNodeSizeUnitNone, length: 0)
-		node.setHeight(type: kDisplayNodeSizeTypeFill, unit: kDisplayNodeSizeUnitNone, length: 0)
+		node.setWidth(type: kSizeTypeFill, unit: kSizeUnitNone, length: 0)
+		node.setHeight(type: kSizeTypeFill, unit: kSizeUnitNone, length: 0)
 
 		self.window.appendChild(node)
 		self.window.resolve()
@@ -201,8 +201,8 @@ class DisplayNodeRelativeLayoutTest: XCTestCase {
 	func testNodeHeightUsingFill() {
 
 		let node = DisplayNode(display: self.display)
-		node.setWidth(type: kDisplayNodeSizeTypeFill, unit: kDisplayNodeSizeUnitNone, length: 0)
-		node.setHeight(type: kDisplayNodeSizeTypeFill, unit: kDisplayNodeSizeUnitNone, length: 0)
+		node.setWidth(type: kSizeTypeFill, unit: kSizeUnitNone, length: 0)
+		node.setHeight(type: kSizeTypeFill, unit: kSizeUnitNone, length: 0)
 
 		self.window.appendChild(node)
 		self.window.resolve()
@@ -213,13 +213,13 @@ class DisplayNodeRelativeLayoutTest: XCTestCase {
 	func testNodeBorderInPX() {
 
 		let node = DisplayNode(display: self.display)
-		node.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 100)
-		node.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 150)
+		node.setWidth(type: kSizeTypeLength, unit: kSizeUnitPX, length: 100)
+		node.setHeight(type: kSizeTypeLength, unit: kSizeUnitPX, length: 150)
 
-		node.setBorderTop(type: kDisplayNodeBorderTypeLength, unit: kDisplayNodeBorderUnitPX, length: 10)
-		node.setBorderLeft(type: kDisplayNodeBorderTypeLength, unit: kDisplayNodeBorderUnitPX, length: 20)
-		node.setBorderRight(type: kDisplayNodeBorderTypeLength, unit: kDisplayNodeBorderUnitPX, length: 30)
-		node.setBorderBottom(type: kDisplayNodeBorderTypeLength, unit: kDisplayNodeBorderUnitPX, length: 40)
+		node.setBorderTop(type: kBorderTypeLength, unit: kBorderUnitPX, length: 10)
+		node.setBorderLeft(type: kBorderTypeLength, unit: kBorderUnitPX, length: 20)
+		node.setBorderRight(type: kBorderTypeLength, unit: kBorderUnitPX, length: 30)
+		node.setBorderBottom(type: kBorderTypeLength, unit: kBorderUnitPX, length: 40)
 
 		self.window.appendChild(node)
 		self.window.resolve()
@@ -233,13 +233,13 @@ class DisplayNodeRelativeLayoutTest: XCTestCase {
 	func testNodeBorderInPC() {
 
 		let node = DisplayNode(display: self.display)
-		node.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 100)
-		node.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 150)
+		node.setWidth(type: kSizeTypeLength, unit: kSizeUnitPX, length: 100)
+		node.setHeight(type: kSizeTypeLength, unit: kSizeUnitPX, length: 150)
 
-		node.setBorderTop(type: kDisplayNodeBorderTypeLength, unit: kDisplayNodeBorderUnitPC, length: 10)
-		node.setBorderLeft(type: kDisplayNodeBorderTypeLength, unit: kDisplayNodeBorderUnitPC, length: 20)
-		node.setBorderRight(type: kDisplayNodeBorderTypeLength, unit: kDisplayNodeBorderUnitPC, length: 30)
-		node.setBorderBottom(type: kDisplayNodeBorderTypeLength, unit: kDisplayNodeBorderUnitPC, length: 40)
+		node.setBorderTop(type: kBorderTypeLength, unit: kBorderUnitPC, length: 10)
+		node.setBorderLeft(type: kBorderTypeLength, unit: kBorderUnitPC, length: 20)
+		node.setBorderRight(type: kBorderTypeLength, unit: kBorderUnitPC, length: 30)
+		node.setBorderBottom(type: kBorderTypeLength, unit: kBorderUnitPC, length: 40)
 
 		self.window.appendChild(node)
 		self.window.resolve()
@@ -253,13 +253,13 @@ class DisplayNodeRelativeLayoutTest: XCTestCase {
 	func testNodeBorderInVW() {
 
 		let node = DisplayNode(display: self.display)
-		node.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 100)
-		node.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 150)
+		node.setWidth(type: kSizeTypeLength, unit: kSizeUnitPX, length: 100)
+		node.setHeight(type: kSizeTypeLength, unit: kSizeUnitPX, length: 150)
 
-		node.setBorderTop(type: kDisplayNodeBorderTypeLength, unit: kDisplayNodeBorderUnitVW, length: 10)
-		node.setBorderLeft(type: kDisplayNodeBorderTypeLength, unit: kDisplayNodeBorderUnitVW, length: 20)
-		node.setBorderRight(type: kDisplayNodeBorderTypeLength, unit: kDisplayNodeBorderUnitVW, length: 30)
-		node.setBorderBottom(type: kDisplayNodeBorderTypeLength, unit: kDisplayNodeBorderUnitVW, length: 40)
+		node.setBorderTop(type: kBorderTypeLength, unit: kBorderUnitVW, length: 10)
+		node.setBorderLeft(type: kBorderTypeLength, unit: kBorderUnitVW, length: 20)
+		node.setBorderRight(type: kBorderTypeLength, unit: kBorderUnitVW, length: 30)
+		node.setBorderBottom(type: kBorderTypeLength, unit: kBorderUnitVW, length: 40)
 
 		self.window.appendChild(node)
 		self.window.resolve()
@@ -273,12 +273,12 @@ class DisplayNodeRelativeLayoutTest: XCTestCase {
 	func testNodeBorderInVH() {
 
 		let node = DisplayNode(display: self.display)
-		node.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 100)
-		node.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 150)
-		node.setBorderTop(type: kDisplayNodeBorderTypeLength, unit: kDisplayNodeBorderUnitVH, length: 10)
-		node.setBorderLeft(type: kDisplayNodeBorderTypeLength, unit: kDisplayNodeBorderUnitVH, length: 20)
-		node.setBorderRight(type: kDisplayNodeBorderTypeLength, unit: kDisplayNodeBorderUnitVH, length: 30)
-		node.setBorderBottom(type: kDisplayNodeBorderTypeLength, unit: kDisplayNodeBorderUnitVH, length: 40)
+		node.setWidth(type: kSizeTypeLength, unit: kSizeUnitPX, length: 100)
+		node.setHeight(type: kSizeTypeLength, unit: kSizeUnitPX, length: 150)
+		node.setBorderTop(type: kBorderTypeLength, unit: kBorderUnitVH, length: 10)
+		node.setBorderLeft(type: kBorderTypeLength, unit: kBorderUnitVH, length: 20)
+		node.setBorderRight(type: kBorderTypeLength, unit: kBorderUnitVH, length: 30)
+		node.setBorderBottom(type: kBorderTypeLength, unit: kBorderUnitVH, length: 40)
 
 		self.window.appendChild(node)
 		self.window.resolve()
@@ -292,13 +292,13 @@ class DisplayNodeRelativeLayoutTest: XCTestCase {
 	func testNodePaddingInPX() {
 
 		let node = DisplayNode(display: self.display)
-		node.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 100)
-		node.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 150)
+		node.setWidth(type: kSizeTypeLength, unit: kSizeUnitPX, length: 100)
+		node.setHeight(type: kSizeTypeLength, unit: kSizeUnitPX, length: 150)
 
-		node.setPaddingTop(type: kDisplayNodePaddingTypeLength, unit: kDisplayNodePaddingUnitPX, length: 10)
-		node.setPaddingLeft(type: kDisplayNodePaddingTypeLength, unit: kDisplayNodePaddingUnitPX, length: 20)
-		node.setPaddingRight(type: kDisplayNodePaddingTypeLength, unit: kDisplayNodePaddingUnitPX, length: 30)
-		node.setPaddingBottom(type: kDisplayNodePaddingTypeLength, unit: kDisplayNodePaddingUnitPX, length: 40)
+		node.setPaddingTop(type: kPaddingTypeLength, unit: kPaddingUnitPX, length: 10)
+		node.setPaddingLeft(type: kPaddingTypeLength, unit: kPaddingUnitPX, length: 20)
+		node.setPaddingRight(type: kPaddingTypeLength, unit: kPaddingUnitPX, length: 30)
+		node.setPaddingBottom(type: kPaddingTypeLength, unit: kPaddingUnitPX, length: 40)
 
 		self.window.appendChild(node)
 		self.window.resolve()
@@ -312,13 +312,13 @@ class DisplayNodeRelativeLayoutTest: XCTestCase {
 	func testNodePaddingInPC() {
 
 		let node = DisplayNode(display: self.display)
-		node.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 100)
-		node.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 150)
+		node.setWidth(type: kSizeTypeLength, unit: kSizeUnitPX, length: 100)
+		node.setHeight(type: kSizeTypeLength, unit: kSizeUnitPX, length: 150)
 
-		node.setPaddingTop(type: kDisplayNodePaddingTypeLength, unit: kDisplayNodePaddingUnitPC, length: 10)
-		node.setPaddingLeft(type: kDisplayNodePaddingTypeLength, unit: kDisplayNodePaddingUnitPC, length: 20)
-		node.setPaddingRight(type: kDisplayNodePaddingTypeLength, unit: kDisplayNodePaddingUnitPC, length: 30)
-		node.setPaddingBottom(type: kDisplayNodePaddingTypeLength, unit: kDisplayNodePaddingUnitPC, length: 40)
+		node.setPaddingTop(type: kPaddingTypeLength, unit: kPaddingUnitPC, length: 10)
+		node.setPaddingLeft(type: kPaddingTypeLength, unit: kPaddingUnitPC, length: 20)
+		node.setPaddingRight(type: kPaddingTypeLength, unit: kPaddingUnitPC, length: 30)
+		node.setPaddingBottom(type: kPaddingTypeLength, unit: kPaddingUnitPC, length: 40)
 
 		self.window.appendChild(node)
 		self.window.resolve()
@@ -332,13 +332,13 @@ class DisplayNodeRelativeLayoutTest: XCTestCase {
 	func testNodePaddingInVW() {
 
 		let node = DisplayNode(display: self.display)
-		node.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 100)
-		node.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 150)
+		node.setWidth(type: kSizeTypeLength, unit: kSizeUnitPX, length: 100)
+		node.setHeight(type: kSizeTypeLength, unit: kSizeUnitPX, length: 150)
 
-		node.setPaddingTop(type: kDisplayNodePaddingTypeLength, unit: kDisplayNodePaddingUnitVW, length: 10)
-		node.setPaddingLeft(type: kDisplayNodePaddingTypeLength, unit: kDisplayNodePaddingUnitVW, length: 20)
-		node.setPaddingRight(type: kDisplayNodePaddingTypeLength, unit: kDisplayNodePaddingUnitVW, length: 30)
-		node.setPaddingBottom(type: kDisplayNodePaddingTypeLength, unit: kDisplayNodePaddingUnitVW, length: 40)
+		node.setPaddingTop(type: kPaddingTypeLength, unit: kPaddingUnitVW, length: 10)
+		node.setPaddingLeft(type: kPaddingTypeLength, unit: kPaddingUnitVW, length: 20)
+		node.setPaddingRight(type: kPaddingTypeLength, unit: kPaddingUnitVW, length: 30)
+		node.setPaddingBottom(type: kPaddingTypeLength, unit: kPaddingUnitVW, length: 40)
 
 		self.window.appendChild(node)
 		self.window.resolve()
@@ -352,13 +352,13 @@ class DisplayNodeRelativeLayoutTest: XCTestCase {
 	func testNodePaddingInVH() {
 
 		let node = DisplayNode(display: self.display)
-		node.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 100)
-		node.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 150)
+		node.setWidth(type: kSizeTypeLength, unit: kSizeUnitPX, length: 100)
+		node.setHeight(type: kSizeTypeLength, unit: kSizeUnitPX, length: 150)
 
-		node.setPaddingTop(type: kDisplayNodePaddingTypeLength, unit: kDisplayNodePaddingUnitVH, length: 10)
-		node.setPaddingLeft(type: kDisplayNodePaddingTypeLength, unit: kDisplayNodePaddingUnitVH, length: 20)
-		node.setPaddingRight(type: kDisplayNodePaddingTypeLength, unit: kDisplayNodePaddingUnitVH, length: 30)
-		node.setPaddingBottom(type: kDisplayNodePaddingTypeLength, unit: kDisplayNodePaddingUnitVH, length: 40)
+		node.setPaddingTop(type: kPaddingTypeLength, unit: kPaddingUnitVH, length: 10)
+		node.setPaddingLeft(type: kPaddingTypeLength, unit: kPaddingUnitVH, length: 20)
+		node.setPaddingRight(type: kPaddingTypeLength, unit: kPaddingUnitVH, length: 30)
+		node.setPaddingBottom(type: kPaddingTypeLength, unit: kPaddingUnitVH, length: 40)
 
 		self.window.appendChild(node)
 		self.window.resolve()
@@ -372,11 +372,11 @@ class DisplayNodeRelativeLayoutTest: XCTestCase {
 	func testAnchorInPC() {
 
 		let node = DisplayNode(display: self.display)
-		node.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 100)
-		node.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
+		node.setWidth(type: kSizeTypeLength, unit: kSizeUnitPX, length: 100)
+		node.setHeight(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
 
-		node.setAnchorTop(type: kDisplayNodeAnchorTypeLength, unit: kDisplayNodeAnchorUnitPC, length: 50)
-		node.setAnchorLeft(type: kDisplayNodeAnchorTypeLength, unit: kDisplayNodeAnchorUnitPC, length: 100)
+		node.setAnchorTop(type: kAnchorTypeLength, unit: kAnchorUnitPC, length: 50)
+		node.setAnchorLeft(type: kAnchorTypeLength, unit: kAnchorUnitPC, length: 100)
 
 		self.window.appendChild(node)
 		self.window.resolve()
@@ -388,8 +388,8 @@ class DisplayNodeRelativeLayoutTest: XCTestCase {
 	func testScaling() {
 
 		let node = DisplayNode(display: self.display)
-		node.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPC, length: 33)
-		node.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPC, length: 33)
+		node.setWidth(type: kSizeTypeLength, unit: kSizeUnitPC, length: 33)
+		node.setHeight(type: kSizeTypeLength, unit: kSizeUnitPC, length: 33)
 
 		self.display.scale = 2;
 		self.window.appendChild(node)
@@ -404,10 +404,10 @@ class DisplayNodeRelativeLayoutTest: XCTestCase {
 	func testPositionInVerticalLayout() {
 
 		let node1 = DisplayNode(display: self.display)
-		node1.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 100)
+		node1.setHeight(type: kSizeTypeLength, unit: kSizeUnitPX, length: 100)
 
 		let node2 = DisplayNode(display: self.display)
-		node2.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
+		node2.setHeight(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
 
 		self.window.appendChild(node1)
 		self.window.appendChild(node2)
@@ -431,14 +431,14 @@ class DisplayNodeRelativeLayoutTest: XCTestCase {
 	func testPositionInHorizontalLayout() {
 
 		let node1 = DisplayNode(display: self.display)
-		node1.setHeight(type: kDisplayNodeSizeTypeFill, unit: kDisplayNodeSizeUnitNone, length: 0)
-		node1.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 100)
+		node1.setHeight(type: kSizeTypeFill, unit: kSizeUnitNone, length: 0)
+		node1.setWidth(type: kSizeTypeLength, unit: kSizeUnitPX, length: 100)
 
 		let node2 = DisplayNode(display: self.display)
-		node2.setHeight(type: kDisplayNodeSizeTypeFill, unit: kDisplayNodeSizeUnitNone, length: 0)
-		node2.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
+		node2.setHeight(type: kSizeTypeFill, unit: kSizeUnitNone, length: 0)
+		node2.setWidth(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
 
-		self.window.setContentDirection(kDisplayNodeContentDirectionHorizontal)
+		self.window.setContentDirection(kContentDirectionHorizontal)
 		self.window.appendChild(node1)
 		self.window.appendChild(node2)
 		self.window.resolve()
@@ -460,21 +460,21 @@ class DisplayNodeRelativeLayoutTest: XCTestCase {
 
 	func testPercentageCarrying() {
 
-		self.window.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 320)
-		self.window.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 485)
+		self.window.setWidth(type: kSizeTypeLength, unit: kSizeUnitPX, length: 320)
+		self.window.setHeight(type: kSizeTypeLength, unit: kSizeUnitPX, length: 485)
 
 		self.display.viewportWidth = 320
 		self.display.viewportHeight = 480
 		self.display.scale = 2
 
 		let node1 = DisplayNode(display: self.display)
-		node1.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPC, length: 33.3333)
+		node1.setHeight(type: kSizeTypeLength, unit: kSizeUnitPC, length: 33.3333)
 
 		let node2 = DisplayNode(display: self.display)
-		node2.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPC, length: 33.3333)
+		node2.setHeight(type: kSizeTypeLength, unit: kSizeUnitPC, length: 33.3333)
 
 		let node3 = DisplayNode(display: self.display)
-		node3.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPC, length: 33.3333)
+		node3.setHeight(type: kSizeTypeLength, unit: kSizeUnitPC, length: 33.3333)
 
 		self.window.appendChild(node1)
 		self.window.appendChild(node2)
@@ -489,16 +489,16 @@ class DisplayNodeRelativeLayoutTest: XCTestCase {
 	func testContentSizeAutoMeasurement() {
 
 		let container = DisplayNode(display: self.display)
-		container.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitNone, length: 200)
-		container.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitNone, length: 200)
+		container.setWidth(type: kSizeTypeLength, unit: kSizeUnitNone, length: 200)
+		container.setHeight(type: kSizeTypeLength, unit: kSizeUnitNone, length: 200)
 
 		let node1 = DisplayNode(display: self.display)
-		node1.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
-		node1.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
+		node1.setWidth(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
+		node1.setHeight(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
 
 		let node2 = DisplayNode(display: self.display)
-		node2.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
-		node2.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
+		node2.setWidth(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
+		node2.setHeight(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
 
 		container.appendChild(node1)
 		container.appendChild(node2)
@@ -513,16 +513,16 @@ class DisplayNodeRelativeLayoutTest: XCTestCase {
 	func testWrappingFromContentSize() {
 
 		let container = DisplayNode(display: self.display)
-		container.setWidth(type: kDisplayNodeSizeTypeWrap, unit: kDisplayNodeSizeUnitNone, length: 0)
-		container.setHeight(type: kDisplayNodeSizeTypeWrap, unit: kDisplayNodeSizeUnitNone, length: 0)
+		container.setWidth(type: kSizeTypeWrap, unit: kSizeUnitNone, length: 0)
+		container.setHeight(type: kSizeTypeWrap, unit: kSizeUnitNone, length: 0)
 
 		let node1 = DisplayNode(display: self.display)
-		node1.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
-		node1.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
+		node1.setWidth(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
+		node1.setHeight(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
 
 		let node2 = DisplayNode(display: self.display)
-		node2.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
-		node2.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
+		node2.setWidth(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
+		node2.setHeight(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
 
 		container.appendChild(node1)
 		container.appendChild(node2)
@@ -549,18 +549,18 @@ class DisplayNodeRelativeLayoutTest: XCTestCase {
 	func testWrappingFromContentSizeWithMin() {
 
 		let container = DisplayNode(display: self.display)
-		container.setWidth(type: kDisplayNodeSizeTypeWrap, unit: kDisplayNodeSizeUnitNone, length: 0)
-		container.setHeight(type: kDisplayNodeSizeTypeWrap, unit: kDisplayNodeSizeUnitNone, length: 0)
+		container.setWidth(type: kSizeTypeWrap, unit: kSizeUnitNone, length: 0)
+		container.setHeight(type: kSizeTypeWrap, unit: kSizeUnitNone, length: 0)
 		container.setMinWidth(250)
 		container.setMinHeight(450)
 
 		let node1 = DisplayNode(display: self.display)
-		node1.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
-		node1.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
+		node1.setWidth(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
+		node1.setHeight(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
 
 		let node2 = DisplayNode(display: self.display)
-		node2.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
-		node2.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
+		node2.setWidth(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
+		node2.setHeight(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
 
 		container.appendChild(node1)
 		container.appendChild(node2)
@@ -587,18 +587,18 @@ class DisplayNodeRelativeLayoutTest: XCTestCase {
 	func testWrappingFromContentSizeWithMax() {
 
 		let container = DisplayNode(display: self.display)
-		container.setWidth(type: kDisplayNodeSizeTypeWrap, unit: kDisplayNodeSizeUnitNone, length: 0)
-		container.setHeight(type: kDisplayNodeSizeTypeWrap, unit: kDisplayNodeSizeUnitNone, length: 0)
+		container.setWidth(type: kSizeTypeWrap, unit: kSizeUnitNone, length: 0)
+		container.setHeight(type: kSizeTypeWrap, unit: kSizeUnitNone, length: 0)
 		container.setMaxWidth(150)
 		container.setMaxHeight(350)
 
 		let node1 = DisplayNode(display: self.display)
-		node1.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
-		node1.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
+		node1.setWidth(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
+		node1.setHeight(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
 
 		let node2 = DisplayNode(display: self.display)
-		node2.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
-		node2.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
+		node2.setWidth(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
+		node2.setHeight(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
 
 		container.appendChild(node1)
 		container.appendChild(node2)
@@ -626,20 +626,20 @@ class DisplayNodeRelativeLayoutTest: XCTestCase {
 
 		let container = DisplayNode(display: self.display)
 
-		container.setWidth(type: kDisplayNodeSizeTypeWrap, unit: kDisplayNodeSizeUnitNone, length: 0)
-		container.setHeight(type: kDisplayNodeSizeTypeWrap, unit: kDisplayNodeSizeUnitNone, length: 0)
-		container.setPaddingTop(type: kDisplayNodePaddingTypeLength, unit: kDisplayNodePaddingUnitPX, length: 10)
-		container.setPaddingLeft(type: kDisplayNodePaddingTypeLength, unit: kDisplayNodePaddingUnitPX, length: 20)
-		container.setPaddingRight(type: kDisplayNodePaddingTypeLength, unit: kDisplayNodePaddingUnitPX, length: 30)
-		container.setPaddingBottom(type: kDisplayNodePaddingTypeLength, unit: kDisplayNodePaddingUnitPX, length: 40)
+		container.setWidth(type: kSizeTypeWrap, unit: kSizeUnitNone, length: 0)
+		container.setHeight(type: kSizeTypeWrap, unit: kSizeUnitNone, length: 0)
+		container.setPaddingTop(type: kPaddingTypeLength, unit: kPaddingUnitPX, length: 10)
+		container.setPaddingLeft(type: kPaddingTypeLength, unit: kPaddingUnitPX, length: 20)
+		container.setPaddingRight(type: kPaddingTypeLength, unit: kPaddingUnitPX, length: 30)
+		container.setPaddingBottom(type: kPaddingTypeLength, unit: kPaddingUnitPX, length: 40)
 
 		let node1 = DisplayNode(display: self.display)
-		node1.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
-		node1.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
+		node1.setWidth(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
+		node1.setHeight(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
 
 		let node2 = DisplayNode(display: self.display)
-		node2.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
-		node2.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
+		node2.setWidth(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
+		node2.setHeight(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
 
 		container.appendChild(node1)
 		container.appendChild(node2)
@@ -666,20 +666,20 @@ class DisplayNodeRelativeLayoutTest: XCTestCase {
 	func testWrappingFromContentSizeAndMargin() {
 
 		let container = DisplayNode(display: self.display)
-		container.setWidth(type: kDisplayNodeSizeTypeWrap, unit: kDisplayNodeSizeUnitNone, length: 0)
-		container.setHeight(type: kDisplayNodeSizeTypeWrap, unit: kDisplayNodeSizeUnitNone, length: 0)
+		container.setWidth(type: kSizeTypeWrap, unit: kSizeUnitNone, length: 0)
+		container.setHeight(type: kSizeTypeWrap, unit: kSizeUnitNone, length: 0)
 
 		let node1 = DisplayNode(display: self.display)
-		node1.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
-		node1.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
-		node1.setMarginRight(type: kDisplayNodeMarginTypeLength, unit: kDisplayNodeMarginUnitPX, length: 30)
-		node1.setMarginBottom(type: kDisplayNodeMarginTypeLength, unit: kDisplayNodeMarginUnitPX, length: 20)
+		node1.setWidth(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
+		node1.setHeight(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
+		node1.setMarginRight(type: kMarginTypeLength, unit: kMarginUnitPX, length: 30)
+		node1.setMarginBottom(type: kMarginTypeLength, unit: kMarginUnitPX, length: 20)
 
 		let node2 = DisplayNode(display: self.display)
-		node2.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
-		node2.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
-		node2.setMarginRight(type: kDisplayNodeMarginTypeLength, unit: kDisplayNodeMarginUnitPX, length: 50)
-		node2.setMarginBottom(type: kDisplayNodeMarginTypeLength, unit: kDisplayNodeMarginUnitPX, length: 40)
+		node2.setWidth(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
+		node2.setHeight(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
+		node2.setMarginRight(type: kMarginTypeLength, unit: kMarginUnitPX, length: 50)
+		node2.setMarginBottom(type: kMarginTypeLength, unit: kMarginUnitPX, length: 40)
 
 		container.appendChild(node1)
 		container.appendChild(node2)
@@ -706,20 +706,20 @@ class DisplayNodeRelativeLayoutTest: XCTestCase {
 	func testWrappedNodePaddingInPX() {
 
 		let container = DisplayNode(display: self.display)
-		container.setWidth(type: kDisplayNodeSizeTypeWrap, unit: kDisplayNodeSizeUnitNone, length: 0)
-		container.setHeight(type: kDisplayNodeSizeTypeWrap, unit: kDisplayNodeSizeUnitNone, length: 0)
-		container.setPaddingTop(type: kDisplayNodePaddingTypeLength, unit: kDisplayNodePaddingUnitPX, length: 20);
-		container.setPaddingLeft(type: kDisplayNodePaddingTypeLength, unit: kDisplayNodePaddingUnitPX, length: 40);
-		container.setPaddingRight(type: kDisplayNodePaddingTypeLength, unit: kDisplayNodePaddingUnitPX, length: 60);
-		container.setPaddingBottom(type: kDisplayNodePaddingTypeLength, unit: kDisplayNodePaddingUnitPX, length: 80);
+		container.setWidth(type: kSizeTypeWrap, unit: kSizeUnitNone, length: 0)
+		container.setHeight(type: kSizeTypeWrap, unit: kSizeUnitNone, length: 0)
+		container.setPaddingTop(type: kPaddingTypeLength, unit: kPaddingUnitPX, length: 20);
+		container.setPaddingLeft(type: kPaddingTypeLength, unit: kPaddingUnitPX, length: 40);
+		container.setPaddingRight(type: kPaddingTypeLength, unit: kPaddingUnitPX, length: 60);
+		container.setPaddingBottom(type: kPaddingTypeLength, unit: kPaddingUnitPX, length: 80);
 
 		let node1 = DisplayNode(display: self.display)
-		node1.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
-		node1.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
+		node1.setWidth(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
+		node1.setHeight(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
 
 		let node2 = DisplayNode(display: self.display)
-		node2.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
-		node2.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
+		node2.setWidth(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
+		node2.setHeight(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
 
 		container.appendChild(node1)
 		container.appendChild(node2)
@@ -751,20 +751,20 @@ class DisplayNodeRelativeLayoutTest: XCTestCase {
 	func testWrappedNodePaddingInPC() {
 
 		let container = DisplayNode(display: self.display)
-		container.setWidth(type: kDisplayNodeSizeTypeWrap, unit: kDisplayNodeSizeUnitNone, length: 0)
-		container.setHeight(type: kDisplayNodeSizeTypeWrap, unit: kDisplayNodeSizeUnitNone, length: 0)
-		container.setPaddingTop(type: kDisplayNodePaddingTypeLength, unit: kDisplayNodePaddingUnitPC, length: 20);
-		container.setPaddingLeft(type: kDisplayNodePaddingTypeLength, unit: kDisplayNodePaddingUnitPC, length: 40);
-		container.setPaddingRight(type: kDisplayNodePaddingTypeLength, unit: kDisplayNodePaddingUnitPC, length: 60);
-		container.setPaddingBottom(type: kDisplayNodePaddingTypeLength, unit: kDisplayNodePaddingUnitPC, length: 80);
+		container.setWidth(type: kSizeTypeWrap, unit: kSizeUnitNone, length: 0)
+		container.setHeight(type: kSizeTypeWrap, unit: kSizeUnitNone, length: 0)
+		container.setPaddingTop(type: kPaddingTypeLength, unit: kPaddingUnitPC, length: 20);
+		container.setPaddingLeft(type: kPaddingTypeLength, unit: kPaddingUnitPC, length: 40);
+		container.setPaddingRight(type: kPaddingTypeLength, unit: kPaddingUnitPC, length: 60);
+		container.setPaddingBottom(type: kPaddingTypeLength, unit: kPaddingUnitPC, length: 80);
 
 		let node1 = DisplayNode(display: self.display)
-		node1.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
-		node1.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
+		node1.setWidth(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
+		node1.setHeight(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
 
 		let node2 = DisplayNode(display: self.display)
-		node2.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
-		node2.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
+		node2.setWidth(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
+		node2.setHeight(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
 
 		container.appendChild(node1)
 		container.appendChild(node2)
@@ -796,20 +796,20 @@ class DisplayNodeRelativeLayoutTest: XCTestCase {
 	func testWrappedNodePaddingInVW() {
 
 		let container = DisplayNode(display: self.display)
-		container.setWidth(type: kDisplayNodeSizeTypeWrap, unit: kDisplayNodeSizeUnitNone, length: 0)
-		container.setHeight(type: kDisplayNodeSizeTypeWrap, unit: kDisplayNodeSizeUnitNone, length: 0)
-		container.setPaddingTop(type: kDisplayNodePaddingTypeLength, unit: kDisplayNodePaddingUnitVW, length: 20);
-		container.setPaddingLeft(type: kDisplayNodePaddingTypeLength, unit: kDisplayNodePaddingUnitVW, length: 40);
-		container.setPaddingRight(type: kDisplayNodePaddingTypeLength, unit: kDisplayNodePaddingUnitVW, length: 60);
-		container.setPaddingBottom(type: kDisplayNodePaddingTypeLength, unit: kDisplayNodePaddingUnitVW, length: 80);
+		container.setWidth(type: kSizeTypeWrap, unit: kSizeUnitNone, length: 0)
+		container.setHeight(type: kSizeTypeWrap, unit: kSizeUnitNone, length: 0)
+		container.setPaddingTop(type: kPaddingTypeLength, unit: kPaddingUnitVW, length: 20);
+		container.setPaddingLeft(type: kPaddingTypeLength, unit: kPaddingUnitVW, length: 40);
+		container.setPaddingRight(type: kPaddingTypeLength, unit: kPaddingUnitVW, length: 60);
+		container.setPaddingBottom(type: kPaddingTypeLength, unit: kPaddingUnitVW, length: 80);
 
 		let node1 = DisplayNode(display: self.display)
-		node1.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
-		node1.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
+		node1.setWidth(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
+		node1.setHeight(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
 
 		let node2 = DisplayNode(display: self.display)
-		node2.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
-		node2.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
+		node2.setWidth(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
+		node2.setHeight(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
 
 		container.appendChild(node1)
 		container.appendChild(node2)
@@ -841,20 +841,20 @@ class DisplayNodeRelativeLayoutTest: XCTestCase {
 	func testWrappedNodePaddingInVH() {
 
 		let container = DisplayNode(display: self.display)
-		container.setWidth(type: kDisplayNodeSizeTypeWrap, unit: kDisplayNodeSizeUnitNone, length: 0)
-		container.setHeight(type: kDisplayNodeSizeTypeWrap, unit: kDisplayNodeSizeUnitNone, length: 0)
-		container.setPaddingTop(type: kDisplayNodePaddingTypeLength, unit: kDisplayNodePaddingUnitVH, length: 20);
-		container.setPaddingLeft(type: kDisplayNodePaddingTypeLength, unit: kDisplayNodePaddingUnitVH, length: 40);
-		container.setPaddingRight(type: kDisplayNodePaddingTypeLength, unit: kDisplayNodePaddingUnitVH, length: 60);
-		container.setPaddingBottom(type: kDisplayNodePaddingTypeLength, unit: kDisplayNodePaddingUnitVH, length: 80);
+		container.setWidth(type: kSizeTypeWrap, unit: kSizeUnitNone, length: 0)
+		container.setHeight(type: kSizeTypeWrap, unit: kSizeUnitNone, length: 0)
+		container.setPaddingTop(type: kPaddingTypeLength, unit: kPaddingUnitVH, length: 20);
+		container.setPaddingLeft(type: kPaddingTypeLength, unit: kPaddingUnitVH, length: 40);
+		container.setPaddingRight(type: kPaddingTypeLength, unit: kPaddingUnitVH, length: 60);
+		container.setPaddingBottom(type: kPaddingTypeLength, unit: kPaddingUnitVH, length: 80);
 
 		let node1 = DisplayNode(display: self.display)
-		node1.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
-		node1.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
+		node1.setWidth(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
+		node1.setHeight(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
 
 		let node2 = DisplayNode(display: self.display)
-		node2.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
-		node2.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
+		node2.setWidth(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
+		node2.setHeight(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
 
 		container.appendChild(node1)
 		container.appendChild(node2)
@@ -886,20 +886,20 @@ class DisplayNodeRelativeLayoutTest: XCTestCase {
 	func testWrappedNodePaddingInPW() {
 
 		let container = DisplayNode(display: self.display)
-		container.setWidth(type: kDisplayNodeSizeTypeWrap, unit: kDisplayNodeSizeUnitNone, length: 0)
-		container.setHeight(type: kDisplayNodeSizeTypeWrap, unit: kDisplayNodeSizeUnitNone, length: 0)
-		container.setPaddingTop(type: kDisplayNodePaddingTypeLength, unit: kDisplayNodePaddingUnitPW, length: 20);
-		container.setPaddingLeft(type: kDisplayNodePaddingTypeLength, unit: kDisplayNodePaddingUnitPW, length: 40);
-		container.setPaddingRight(type: kDisplayNodePaddingTypeLength, unit: kDisplayNodePaddingUnitPW, length: 60);
-		container.setPaddingBottom(type: kDisplayNodePaddingTypeLength, unit: kDisplayNodePaddingUnitPW, length: 80);
+		container.setWidth(type: kSizeTypeWrap, unit: kSizeUnitNone, length: 0)
+		container.setHeight(type: kSizeTypeWrap, unit: kSizeUnitNone, length: 0)
+		container.setPaddingTop(type: kPaddingTypeLength, unit: kPaddingUnitPW, length: 20);
+		container.setPaddingLeft(type: kPaddingTypeLength, unit: kPaddingUnitPW, length: 40);
+		container.setPaddingRight(type: kPaddingTypeLength, unit: kPaddingUnitPW, length: 60);
+		container.setPaddingBottom(type: kPaddingTypeLength, unit: kPaddingUnitPW, length: 80);
 
 		let node1 = DisplayNode(display: self.display)
-		node1.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
-		node1.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
+		node1.setWidth(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
+		node1.setHeight(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
 
 		let node2 = DisplayNode(display: self.display)
-		node2.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
-		node2.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
+		node2.setWidth(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
+		node2.setHeight(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
 
 		container.appendChild(node1)
 		container.appendChild(node2)
@@ -931,20 +931,20 @@ class DisplayNodeRelativeLayoutTest: XCTestCase {
 	func testWrappedNodePaddingInPH() {
 
 		let container = DisplayNode(display: self.display)
-		container.setWidth(type: kDisplayNodeSizeTypeWrap, unit: kDisplayNodeSizeUnitNone, length: 0)
-		container.setHeight(type: kDisplayNodeSizeTypeWrap, unit: kDisplayNodeSizeUnitNone, length: 0)
-		container.setPaddingTop(type: kDisplayNodePaddingTypeLength, unit: kDisplayNodePaddingUnitPH, length: 20);
-		container.setPaddingLeft(type: kDisplayNodePaddingTypeLength, unit: kDisplayNodePaddingUnitPH, length: 40);
-		container.setPaddingRight(type: kDisplayNodePaddingTypeLength, unit: kDisplayNodePaddingUnitPH, length: 60);
-		container.setPaddingBottom(type: kDisplayNodePaddingTypeLength, unit: kDisplayNodePaddingUnitPH, length: 80);
+		container.setWidth(type: kSizeTypeWrap, unit: kSizeUnitNone, length: 0)
+		container.setHeight(type: kSizeTypeWrap, unit: kSizeUnitNone, length: 0)
+		container.setPaddingTop(type: kPaddingTypeLength, unit: kPaddingUnitPH, length: 20);
+		container.setPaddingLeft(type: kPaddingTypeLength, unit: kPaddingUnitPH, length: 40);
+		container.setPaddingRight(type: kPaddingTypeLength, unit: kPaddingUnitPH, length: 60);
+		container.setPaddingBottom(type: kPaddingTypeLength, unit: kPaddingUnitPH, length: 80);
 
 		let node1 = DisplayNode(display: self.display)
-		node1.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
-		node1.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
+		node1.setWidth(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
+		node1.setHeight(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
 
 		let node2 = DisplayNode(display: self.display)
-		node2.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
-		node2.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
+		node2.setWidth(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
+		node2.setHeight(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
 
 		container.appendChild(node1)
 		container.appendChild(node2)
@@ -976,20 +976,20 @@ class DisplayNodeRelativeLayoutTest: XCTestCase {
 	func testWrappedNodePaddingInCW() {
 
 		let container = DisplayNode(display: self.display)
-		container.setWidth(type: kDisplayNodeSizeTypeWrap, unit: kDisplayNodeSizeUnitNone, length: 0)
-		container.setHeight(type: kDisplayNodeSizeTypeWrap, unit: kDisplayNodeSizeUnitNone, length: 0)
-		container.setPaddingTop(type: kDisplayNodePaddingTypeLength, unit: kDisplayNodePaddingUnitCW, length: 20);
-		container.setPaddingLeft(type: kDisplayNodePaddingTypeLength, unit: kDisplayNodePaddingUnitCW, length: 40);
-		container.setPaddingRight(type: kDisplayNodePaddingTypeLength, unit: kDisplayNodePaddingUnitCW, length: 60);
-		container.setPaddingBottom(type: kDisplayNodePaddingTypeLength, unit: kDisplayNodePaddingUnitCW, length: 80);
+		container.setWidth(type: kSizeTypeWrap, unit: kSizeUnitNone, length: 0)
+		container.setHeight(type: kSizeTypeWrap, unit: kSizeUnitNone, length: 0)
+		container.setPaddingTop(type: kPaddingTypeLength, unit: kPaddingUnitCW, length: 20);
+		container.setPaddingLeft(type: kPaddingTypeLength, unit: kPaddingUnitCW, length: 40);
+		container.setPaddingRight(type: kPaddingTypeLength, unit: kPaddingUnitCW, length: 60);
+		container.setPaddingBottom(type: kPaddingTypeLength, unit: kPaddingUnitCW, length: 80);
 
 		let node1 = DisplayNode(display: self.display)
-		node1.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
-		node1.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
+		node1.setWidth(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
+		node1.setHeight(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
 
 		let node2 = DisplayNode(display: self.display)
-		node2.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
-		node2.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
+		node2.setWidth(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
+		node2.setHeight(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
 
 		container.appendChild(node1)
 		container.appendChild(node2)
@@ -1021,20 +1021,20 @@ class DisplayNodeRelativeLayoutTest: XCTestCase {
 	func testWrappedNodePaddingInCH() {
 
 		let container = DisplayNode(display: self.display)
-		container.setWidth(type: kDisplayNodeSizeTypeWrap, unit: kDisplayNodeSizeUnitNone, length: 0)
-		container.setHeight(type: kDisplayNodeSizeTypeWrap, unit: kDisplayNodeSizeUnitNone, length: 0)
-		container.setPaddingTop(type: kDisplayNodePaddingTypeLength, unit: kDisplayNodePaddingUnitCH, length: 20);
-		container.setPaddingLeft(type: kDisplayNodePaddingTypeLength, unit: kDisplayNodePaddingUnitCH, length: 40);
-		container.setPaddingRight(type: kDisplayNodePaddingTypeLength, unit: kDisplayNodePaddingUnitCH, length: 60);
-		container.setPaddingBottom(type: kDisplayNodePaddingTypeLength, unit: kDisplayNodePaddingUnitCH, length: 80);
+		container.setWidth(type: kSizeTypeWrap, unit: kSizeUnitNone, length: 0)
+		container.setHeight(type: kSizeTypeWrap, unit: kSizeUnitNone, length: 0)
+		container.setPaddingTop(type: kPaddingTypeLength, unit: kPaddingUnitCH, length: 20);
+		container.setPaddingLeft(type: kPaddingTypeLength, unit: kPaddingUnitCH, length: 40);
+		container.setPaddingRight(type: kPaddingTypeLength, unit: kPaddingUnitCH, length: 60);
+		container.setPaddingBottom(type: kPaddingTypeLength, unit: kPaddingUnitCH, length: 80);
 
 		let node1 = DisplayNode(display: self.display)
-		node1.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
-		node1.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
+		node1.setWidth(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
+		node1.setHeight(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
 
 		let node2 = DisplayNode(display: self.display)
-		node2.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
-		node2.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
+		node2.setWidth(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
+		node2.setHeight(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
 
 		container.appendChild(node1)
 		container.appendChild(node2)
@@ -1066,20 +1066,20 @@ class DisplayNodeRelativeLayoutTest: XCTestCase {
 	func testWrappedNodeBorderInPX() {
 
 		let container = DisplayNode(display: self.display)
-		container.setWidth(type: kDisplayNodeSizeTypeWrap, unit: kDisplayNodeSizeUnitNone, length: 0)
-		container.setHeight(type: kDisplayNodeSizeTypeWrap, unit: kDisplayNodeSizeUnitNone, length: 0)
-		container.setBorderTop(type: kDisplayNodeBorderTypeLength, unit: kDisplayNodeBorderUnitPX, length: 20);
-		container.setBorderLeft(type: kDisplayNodeBorderTypeLength, unit: kDisplayNodeBorderUnitPX, length: 40);
-		container.setBorderRight(type: kDisplayNodeBorderTypeLength, unit: kDisplayNodeBorderUnitPX, length: 60);
-		container.setBorderBottom(type: kDisplayNodeBorderTypeLength, unit: kDisplayNodeBorderUnitPX, length: 80);
+		container.setWidth(type: kSizeTypeWrap, unit: kSizeUnitNone, length: 0)
+		container.setHeight(type: kSizeTypeWrap, unit: kSizeUnitNone, length: 0)
+		container.setBorderTop(type: kBorderTypeLength, unit: kBorderUnitPX, length: 20);
+		container.setBorderLeft(type: kBorderTypeLength, unit: kBorderUnitPX, length: 40);
+		container.setBorderRight(type: kBorderTypeLength, unit: kBorderUnitPX, length: 60);
+		container.setBorderBottom(type: kBorderTypeLength, unit: kBorderUnitPX, length: 80);
 
 		let node1 = DisplayNode(display: self.display)
-		node1.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
-		node1.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
+		node1.setWidth(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
+		node1.setHeight(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
 
 		let node2 = DisplayNode(display: self.display)
-		node2.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
-		node2.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
+		node2.setWidth(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
+		node2.setHeight(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
 
 		container.appendChild(node1)
 		container.appendChild(node2)
@@ -1111,20 +1111,20 @@ class DisplayNodeRelativeLayoutTest: XCTestCase {
 	func testWrappedNodeBorderInPC() {
 
 		let container = DisplayNode(display: self.display)
-		container.setWidth(type: kDisplayNodeSizeTypeWrap, unit: kDisplayNodeSizeUnitNone, length: 0)
-		container.setHeight(type: kDisplayNodeSizeTypeWrap, unit: kDisplayNodeSizeUnitNone, length: 0)
-		container.setBorderTop(type: kDisplayNodeBorderTypeLength, unit: kDisplayNodeBorderUnitPC, length: 20);
-		container.setBorderLeft(type: kDisplayNodeBorderTypeLength, unit: kDisplayNodeBorderUnitPC, length: 40);
-		container.setBorderRight(type: kDisplayNodeBorderTypeLength, unit: kDisplayNodeBorderUnitPC, length: 60);
-		container.setBorderBottom(type: kDisplayNodeBorderTypeLength, unit: kDisplayNodeBorderUnitPC, length: 80);
+		container.setWidth(type: kSizeTypeWrap, unit: kSizeUnitNone, length: 0)
+		container.setHeight(type: kSizeTypeWrap, unit: kSizeUnitNone, length: 0)
+		container.setBorderTop(type: kBorderTypeLength, unit: kBorderUnitPC, length: 20);
+		container.setBorderLeft(type: kBorderTypeLength, unit: kBorderUnitPC, length: 40);
+		container.setBorderRight(type: kBorderTypeLength, unit: kBorderUnitPC, length: 60);
+		container.setBorderBottom(type: kBorderTypeLength, unit: kBorderUnitPC, length: 80);
 
 		let node1 = DisplayNode(display: self.display)
-		node1.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
-		node1.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
+		node1.setWidth(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
+		node1.setHeight(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
 
 		let node2 = DisplayNode(display: self.display)
-		node2.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
-		node2.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
+		node2.setWidth(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
+		node2.setHeight(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
 
 		container.appendChild(node1)
 		container.appendChild(node2)
@@ -1156,20 +1156,20 @@ class DisplayNodeRelativeLayoutTest: XCTestCase {
 	func testWrappedNodeBorderInPW() {
 
 		let container = DisplayNode(display: self.display)
-		container.setWidth(type: kDisplayNodeSizeTypeWrap, unit: kDisplayNodeSizeUnitNone, length: 0)
-		container.setHeight(type: kDisplayNodeSizeTypeWrap, unit: kDisplayNodeSizeUnitNone, length: 0)
-		container.setBorderTop(type: kDisplayNodeBorderTypeLength, unit: kDisplayNodeBorderUnitPW, length: 20);
-		container.setBorderLeft(type: kDisplayNodeBorderTypeLength, unit: kDisplayNodeBorderUnitPW, length: 40);
-		container.setBorderRight(type: kDisplayNodeBorderTypeLength, unit: kDisplayNodeBorderUnitPW, length: 60);
-		container.setBorderBottom(type: kDisplayNodeBorderTypeLength, unit: kDisplayNodeBorderUnitPW, length: 80);
+		container.setWidth(type: kSizeTypeWrap, unit: kSizeUnitNone, length: 0)
+		container.setHeight(type: kSizeTypeWrap, unit: kSizeUnitNone, length: 0)
+		container.setBorderTop(type: kBorderTypeLength, unit: kBorderUnitPW, length: 20);
+		container.setBorderLeft(type: kBorderTypeLength, unit: kBorderUnitPW, length: 40);
+		container.setBorderRight(type: kBorderTypeLength, unit: kBorderUnitPW, length: 60);
+		container.setBorderBottom(type: kBorderTypeLength, unit: kBorderUnitPW, length: 80);
 
 		let node1 = DisplayNode(display: self.display)
-		node1.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
-		node1.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
+		node1.setWidth(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
+		node1.setHeight(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
 
 		let node2 = DisplayNode(display: self.display)
-		node2.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
-		node2.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
+		node2.setWidth(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
+		node2.setHeight(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
 
 		container.appendChild(node1)
 		container.appendChild(node2)
@@ -1201,20 +1201,20 @@ class DisplayNodeRelativeLayoutTest: XCTestCase {
 	func testWrappedNodeBorderInPH() {
 
 		let container = DisplayNode(display: self.display)
-		container.setWidth(type: kDisplayNodeSizeTypeWrap, unit: kDisplayNodeSizeUnitNone, length: 0)
-		container.setHeight(type: kDisplayNodeSizeTypeWrap, unit: kDisplayNodeSizeUnitNone, length: 0)
-		container.setBorderTop(type: kDisplayNodeBorderTypeLength, unit: kDisplayNodeBorderUnitPH, length: 20);
-		container.setBorderLeft(type: kDisplayNodeBorderTypeLength, unit: kDisplayNodeBorderUnitPH, length: 40);
-		container.setBorderRight(type: kDisplayNodeBorderTypeLength, unit: kDisplayNodeBorderUnitPH, length: 60);
-		container.setBorderBottom(type: kDisplayNodeBorderTypeLength, unit: kDisplayNodeBorderUnitPH, length: 80);
+		container.setWidth(type: kSizeTypeWrap, unit: kSizeUnitNone, length: 0)
+		container.setHeight(type: kSizeTypeWrap, unit: kSizeUnitNone, length: 0)
+		container.setBorderTop(type: kBorderTypeLength, unit: kBorderUnitPH, length: 20);
+		container.setBorderLeft(type: kBorderTypeLength, unit: kBorderUnitPH, length: 40);
+		container.setBorderRight(type: kBorderTypeLength, unit: kBorderUnitPH, length: 60);
+		container.setBorderBottom(type: kBorderTypeLength, unit: kBorderUnitPH, length: 80);
 
 		let node1 = DisplayNode(display: self.display)
-		node1.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
-		node1.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
+		node1.setWidth(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
+		node1.setHeight(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
 
 		let node2 = DisplayNode(display: self.display)
-		node2.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
-		node2.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
+		node2.setWidth(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
+		node2.setHeight(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
 
 		container.appendChild(node1)
 		container.appendChild(node2)
@@ -1246,20 +1246,20 @@ class DisplayNodeRelativeLayoutTest: XCTestCase {
 	func testWrappedNodeBorderInCW() {
 
 		let container = DisplayNode(display: self.display)
-		container.setWidth(type: kDisplayNodeSizeTypeWrap, unit: kDisplayNodeSizeUnitNone, length: 0)
-		container.setHeight(type: kDisplayNodeSizeTypeWrap, unit: kDisplayNodeSizeUnitNone, length: 0)
-		container.setBorderTop(type: kDisplayNodeBorderTypeLength, unit: kDisplayNodeBorderUnitCW, length: 20);
-		container.setBorderLeft(type: kDisplayNodeBorderTypeLength, unit: kDisplayNodeBorderUnitCW, length: 40);
-		container.setBorderRight(type: kDisplayNodeBorderTypeLength, unit: kDisplayNodeBorderUnitCW, length: 60);
-		container.setBorderBottom(type: kDisplayNodeBorderTypeLength, unit: kDisplayNodeBorderUnitCW, length: 80);
+		container.setWidth(type: kSizeTypeWrap, unit: kSizeUnitNone, length: 0)
+		container.setHeight(type: kSizeTypeWrap, unit: kSizeUnitNone, length: 0)
+		container.setBorderTop(type: kBorderTypeLength, unit: kBorderUnitCW, length: 20);
+		container.setBorderLeft(type: kBorderTypeLength, unit: kBorderUnitCW, length: 40);
+		container.setBorderRight(type: kBorderTypeLength, unit: kBorderUnitCW, length: 60);
+		container.setBorderBottom(type: kBorderTypeLength, unit: kBorderUnitCW, length: 80);
 
 		let node1 = DisplayNode(display: self.display)
-		node1.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
-		node1.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
+		node1.setWidth(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
+		node1.setHeight(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
 
 		let node2 = DisplayNode(display: self.display)
-		node2.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
-		node2.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
+		node2.setWidth(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
+		node2.setHeight(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
 
 		container.appendChild(node1)
 		container.appendChild(node2)
@@ -1291,20 +1291,20 @@ class DisplayNodeRelativeLayoutTest: XCTestCase {
 	func testWrappedNodeBorderInCH() {
 
 		let container = DisplayNode(display: self.display)
-		container.setWidth(type: kDisplayNodeSizeTypeWrap, unit: kDisplayNodeSizeUnitNone, length: 0)
-		container.setHeight(type: kDisplayNodeSizeTypeWrap, unit: kDisplayNodeSizeUnitNone, length: 0)
-		container.setBorderTop(type: kDisplayNodeBorderTypeLength, unit: kDisplayNodeBorderUnitCH, length: 20);
-		container.setBorderLeft(type: kDisplayNodeBorderTypeLength, unit: kDisplayNodeBorderUnitCH, length: 40);
-		container.setBorderRight(type: kDisplayNodeBorderTypeLength, unit: kDisplayNodeBorderUnitCH, length: 60);
-		container.setBorderBottom(type: kDisplayNodeBorderTypeLength, unit: kDisplayNodeBorderUnitCH, length: 80);
+		container.setWidth(type: kSizeTypeWrap, unit: kSizeUnitNone, length: 0)
+		container.setHeight(type: kSizeTypeWrap, unit: kSizeUnitNone, length: 0)
+		container.setBorderTop(type: kBorderTypeLength, unit: kBorderUnitCH, length: 20);
+		container.setBorderLeft(type: kBorderTypeLength, unit: kBorderUnitCH, length: 40);
+		container.setBorderRight(type: kBorderTypeLength, unit: kBorderUnitCH, length: 60);
+		container.setBorderBottom(type: kBorderTypeLength, unit: kBorderUnitCH, length: 80);
 
 		let node1 = DisplayNode(display: self.display)
-		node1.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
-		node1.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
+		node1.setWidth(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
+		node1.setHeight(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
 
 		let node2 = DisplayNode(display: self.display)
-		node2.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
-		node2.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
+		node2.setWidth(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
+		node2.setHeight(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
 
 		container.appendChild(node1)
 		container.appendChild(node2)
@@ -1347,38 +1347,38 @@ class DisplayNodeRelativeLayoutTest: XCTestCase {
 
 		let container = DisplayNode(display: self.display)
 		container.delegate = containerd
-		container.setWidth(type: kDisplayNodeSizeTypeWrap, unit: kDisplayNodeSizeUnitNone, length: 0)
-		container.setHeight(type: kDisplayNodeSizeTypeWrap, unit: kDisplayNodeSizeUnitNone, length: 0)
+		container.setWidth(type: kSizeTypeWrap, unit: kSizeUnitNone, length: 0)
+		container.setHeight(type: kSizeTypeWrap, unit: kSizeUnitNone, length: 0)
 
 		let node1 = DisplayNode(display: self.display)
 		node1.delegate = node1d
-		node1.setWidth(type: kDisplayNodeSizeTypeWrap, unit: kDisplayNodeSizeUnitNone, length: 0)
-		node1.setHeight(type: kDisplayNodeSizeTypeWrap, unit: kDisplayNodeSizeUnitNone, length: 0)
+		node1.setWidth(type: kSizeTypeWrap, unit: kSizeUnitNone, length: 0)
+		node1.setHeight(type: kSizeTypeWrap, unit: kSizeUnitNone, length: 0)
 
 		let node2 = DisplayNode(display: self.display)
 		node2.delegate = node2d
-		node2.setWidth(type: kDisplayNodeSizeTypeWrap, unit: kDisplayNodeSizeUnitNone, length: 0)
-		node2.setHeight(type: kDisplayNodeSizeTypeWrap, unit: kDisplayNodeSizeUnitNone, length: 0)
+		node2.setWidth(type: kSizeTypeWrap, unit: kSizeUnitNone, length: 0)
+		node2.setHeight(type: kSizeTypeWrap, unit: kSizeUnitNone, length: 0)
 
 		let node3 = DisplayNode(display: self.display)
 		node3.delegate = node3d
-		node3.setWidth(type: kDisplayNodeSizeTypeWrap, unit: kDisplayNodeSizeUnitNone, length: 0)
-		node3.setHeight(type: kDisplayNodeSizeTypeWrap, unit: kDisplayNodeSizeUnitNone, length: 0)
+		node3.setWidth(type: kSizeTypeWrap, unit: kSizeUnitNone, length: 0)
+		node3.setHeight(type: kSizeTypeWrap, unit: kSizeUnitNone, length: 0)
 
 		let node4 = DisplayNode(display: self.display)
 		node4.delegate = node4d
-		node4.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
-		node4.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
+		node4.setWidth(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
+		node4.setHeight(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
 
 		let node5 = DisplayNode(display: self.display)
 		node5.delegate = node5d
-		node5.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
-		node5.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
+		node5.setWidth(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
+		node5.setHeight(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
 
 		let node6 = DisplayNode(display: self.display)
 		node6.delegate = node6d
-		node6.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
-		node6.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
+		node6.setWidth(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
+		node6.setHeight(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
 
 		container.appendChild(node1)
 		container.appendChild(node2)
@@ -1514,42 +1514,42 @@ class DisplayNodeRelativeLayoutTest: XCTestCase {
 
 		let container = DisplayNode(display: self.display)
 		container.delegate = containerd
-		container.setWidth(type: kDisplayNodeSizeTypeWrap, unit: kDisplayNodeSizeUnitNone, length: 0)
-		container.setHeight(type: kDisplayNodeSizeTypeWrap, unit: kDisplayNodeSizeUnitNone, length: 0)
-		container.setPaddingTop(type: kDisplayNodePaddingTypeLength, unit: kDisplayNodePaddingUnitPX, length: 20);
-		container.setPaddingLeft(type: kDisplayNodePaddingTypeLength, unit: kDisplayNodePaddingUnitPX, length: 20);
-		container.setPaddingRight(type: kDisplayNodePaddingTypeLength, unit: kDisplayNodePaddingUnitPX, length: 20);
-		container.setPaddingBottom(type: kDisplayNodePaddingTypeLength, unit: kDisplayNodePaddingUnitPX, length: 20);
+		container.setWidth(type: kSizeTypeWrap, unit: kSizeUnitNone, length: 0)
+		container.setHeight(type: kSizeTypeWrap, unit: kSizeUnitNone, length: 0)
+		container.setPaddingTop(type: kPaddingTypeLength, unit: kPaddingUnitPX, length: 20);
+		container.setPaddingLeft(type: kPaddingTypeLength, unit: kPaddingUnitPX, length: 20);
+		container.setPaddingRight(type: kPaddingTypeLength, unit: kPaddingUnitPX, length: 20);
+		container.setPaddingBottom(type: kPaddingTypeLength, unit: kPaddingUnitPX, length: 20);
 
 		let node1 = DisplayNode(display: self.display)
 		node1.delegate = node1d
-		node1.setWidth(type: kDisplayNodeSizeTypeWrap, unit: kDisplayNodeSizeUnitNone, length: 0)
-		node1.setHeight(type: kDisplayNodeSizeTypeWrap, unit: kDisplayNodeSizeUnitNone, length: 0)
+		node1.setWidth(type: kSizeTypeWrap, unit: kSizeUnitNone, length: 0)
+		node1.setHeight(type: kSizeTypeWrap, unit: kSizeUnitNone, length: 0)
 
 		let node2 = DisplayNode(display: self.display)
 		node2.delegate = node2d
-		node2.setWidth(type: kDisplayNodeSizeTypeWrap, unit: kDisplayNodeSizeUnitNone, length: 0)
-		node2.setHeight(type: kDisplayNodeSizeTypeWrap, unit: kDisplayNodeSizeUnitNone, length: 0)
+		node2.setWidth(type: kSizeTypeWrap, unit: kSizeUnitNone, length: 0)
+		node2.setHeight(type: kSizeTypeWrap, unit: kSizeUnitNone, length: 0)
 
 		let node3 = DisplayNode(display: self.display)
 		node3.delegate = node3d
-		node3.setWidth(type: kDisplayNodeSizeTypeWrap, unit: kDisplayNodeSizeUnitNone, length: 0)
-		node3.setHeight(type: kDisplayNodeSizeTypeWrap, unit: kDisplayNodeSizeUnitNone, length: 0)
+		node3.setWidth(type: kSizeTypeWrap, unit: kSizeUnitNone, length: 0)
+		node3.setHeight(type: kSizeTypeWrap, unit: kSizeUnitNone, length: 0)
 
 		let node4 = DisplayNode(display: self.display)
 		node4.delegate = node4d
-		node4.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
-		node4.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
+		node4.setWidth(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
+		node4.setHeight(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
 
 		let node5 = DisplayNode(display: self.display)
 		node5.delegate = node5d
-		node5.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
-		node5.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
+		node5.setWidth(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
+		node5.setHeight(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
 
 		let node6 = DisplayNode(display: self.display)
 		node6.delegate = node6d
-		node6.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
-		node6.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
+		node6.setWidth(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
+		node6.setHeight(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
 
 		container.appendChild(node1)
 		container.appendChild(node2)
@@ -1673,14 +1673,14 @@ class DisplayNodeRelativeLayoutTest: XCTestCase {
 	func testNodeMeasure() {
 
 		let node = DisplayNode(display: self.display)
-		node.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 100)
-		node.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 200)
+		node.setWidth(type: kSizeTypeLength, unit: kSizeUnitPX, length: 100)
+		node.setHeight(type: kSizeTypeLength, unit: kSizeUnitPX, length: 200)
 
 		self.window.appendChild(node)
 		self.window.resolve()
 
-		node.setWidth(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 150)
-		node.setHeight(type: kDisplayNodeSizeTypeLength, unit: kDisplayNodeSizeUnitPX, length: 250)
+		node.setWidth(type: kSizeTypeLength, unit: kSizeUnitPX, length: 150)
+		node.setHeight(type: kSizeTypeLength, unit: kSizeUnitPX, length: 250)
 
 		node.measure()
 

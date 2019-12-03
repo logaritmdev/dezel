@@ -412,4 +412,48 @@ public extension CGColor {
 			return CGColorCreateRGBA(r: 0, g: 0, b: 0, a: 0)
 		}
 	}
+
+	/*
+	 * @method parse
+	 * @sine 0.7.0
+	 */
+	static func parse(_ value: JavaScriptProperty) -> CGColor {
+
+		if (value.isString) {
+			return self.parse(value.string)
+		}
+
+		if (value.isFunction) {
+			guard let function = value.function else {
+				return CGColor.black
+			}
+
+			switch (function.name) {
+				case "rgb":
+					break;
+				case "rgba":
+					break
+
+				default: break
+			}
+		}
+
+		return CGColor.black
+	}
+
+	/*
+	 * @method parse
+	 * @sine 0.7.0
+	 */
+	static func parse(_ value: JavaScriptValue) -> CGColor {
+		return self.parse(value.string)
+	}
+
+	/*
+	 * @method parse
+	 * @sine 0.7.0
+	 */
+	static func parse(_ value: String) -> CGColor {
+		return CGColor.black
+	}
 }

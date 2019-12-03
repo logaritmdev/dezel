@@ -212,7 +212,7 @@ class JavaScriptPropertyTest: XCTestCase {
 
 		let property = JavaScriptProperty()
 
-		property.reset(px)
+		property.reset(px, parse: true)
 
 		XCTAssertEqual(property.type, .number)
 		XCTAssertEqual(property.unit, .px)
@@ -223,7 +223,7 @@ class JavaScriptPropertyTest: XCTestCase {
 
 		XCTAssertEqual(property.toHandle(self.context), px.handle)
 
-		property.reset(pc)
+		property.reset(pc, parse: true)
 
 		XCTAssertEqual(property.type, .number)
 		XCTAssertEqual(property.unit, .pc)
@@ -234,7 +234,7 @@ class JavaScriptPropertyTest: XCTestCase {
 
 		XCTAssertEqual(property.toHandle(self.context), pc.handle)
 
-		property.reset(vw)
+		property.reset(vw, parse: true)
 
 		XCTAssertEqual(property.type, .number)
 		XCTAssertEqual(property.unit, .vw)
@@ -245,7 +245,7 @@ class JavaScriptPropertyTest: XCTestCase {
 
 		XCTAssertEqual(property.toHandle(self.context), vw.handle)
 
-		property.reset(vh)
+		property.reset(vh, parse: true)
 
 		XCTAssertEqual(property.type, .number)
 		XCTAssertEqual(property.unit, .vh)
@@ -256,7 +256,7 @@ class JavaScriptPropertyTest: XCTestCase {
 
 		XCTAssertEqual(property.toHandle(self.context), vh.handle)
 
-		property.reset(pw)
+		property.reset(pw, parse: true)
 
 		XCTAssertEqual(property.type, .number)
 		XCTAssertEqual(property.unit, .pw)
@@ -267,7 +267,7 @@ class JavaScriptPropertyTest: XCTestCase {
 
 		XCTAssertEqual(property.toHandle(self.context), pw.handle)
 
-		property.reset(ph)
+		property.reset(ph, parse: true)
 
 		XCTAssertEqual(property.type, .number)
 		XCTAssertEqual(property.unit, .ph)
@@ -278,7 +278,7 @@ class JavaScriptPropertyTest: XCTestCase {
 
 		XCTAssertEqual(property.toHandle(self.context), ph.handle)
 
-		property.reset(cw)
+		property.reset(cw, parse: true)
 
 		XCTAssertEqual(property.type, .number)
 		XCTAssertEqual(property.unit, .cw)
@@ -289,7 +289,7 @@ class JavaScriptPropertyTest: XCTestCase {
 
 		XCTAssertEqual(property.toHandle(self.context), cw.handle)
 
-		property.reset(ch)
+		property.reset(ch, parse: true)
 
 		XCTAssertEqual(property.type, .number)
 		XCTAssertEqual(property.unit, .ch)

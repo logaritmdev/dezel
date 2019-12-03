@@ -21,6 +21,7 @@ public:
 	friend class Stylesheet;
 
 	BooleanValue(bool value);
+	~BooleanValue();
 
 	bool getValue() const {
 		return this->value;

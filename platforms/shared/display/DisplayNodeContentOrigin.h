@@ -9,12 +9,12 @@ class DisplayNodeContentOrigin {
 
 public:
 
-	DisplayNodeContentOriginType type = kDisplayNodeContentOriginTypeLength;
-	DisplayNodeContentOriginUnit unit = kDisplayNodeContentOriginUnitNone;
+	ContentOriginType type = kContentOriginTypeLength;
+	ContentOriginUnit unit = kContentOriginUnitNone;
 
 	double length = 0;
 
-	bool equals(DisplayNodeContentOriginType type, DisplayNodeContentOriginUnit unit, double length) {
+	bool equals(ContentOriginType type, ContentOriginUnit unit, double length) {
 		return (
 			this->type == type &&
 			this->unit == unit &&

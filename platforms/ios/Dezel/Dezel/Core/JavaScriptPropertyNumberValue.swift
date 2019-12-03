@@ -11,11 +11,11 @@ open class JavaScriptPropertyNumberValue: JavaScriptPropertyValue {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @property value
+	 * @property data
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private var value: Double
+	private var data: Double
 
 	//--------------------------------------------------------------------------
 	// MARK: Methods
@@ -27,7 +27,7 @@ open class JavaScriptPropertyNumberValue: JavaScriptPropertyValue {
 	 * @hidden
 	 */
 	public init(value: Double) {
-		self.value = value
+		self.data = value
 		super.init(type: .number)
 	}
 
@@ -37,7 +37,7 @@ open class JavaScriptPropertyNumberValue: JavaScriptPropertyValue {
 	 * @hidden
 	 */
 	public init(value: Double, unit: JavaScriptPropertyUnit) {
-		self.value = value
+		self.data = value
 		super.init(type: .number, unit: unit)
 	}
 
@@ -47,7 +47,7 @@ open class JavaScriptPropertyNumberValue: JavaScriptPropertyValue {
 	 */
 	override open func toString() -> String {
 
-		var string = self.value.toString()
+		var string = self.data.toString()
 
 		switch (self.unit) {
 
@@ -84,7 +84,7 @@ open class JavaScriptPropertyNumberValue: JavaScriptPropertyValue {
 	 * @since 0.7.0
 	 */
 	override open func toNumber() -> Double {
-		return self.value
+		return self.data
 	}
 
 	/**
@@ -92,6 +92,6 @@ open class JavaScriptPropertyNumberValue: JavaScriptPropertyValue {
 	 * @since 0.7.0
 	 */
 	override open func toBoolean() -> Bool {
-		return self.value > 0
+		return self.data > 0
 	}
 }

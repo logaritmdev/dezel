@@ -9,14 +9,14 @@ class DisplayNodeMargin {
 
 public:
 
-	DisplayNodeMarginType type = kDisplayNodeMarginTypeLength;
-	DisplayNodeMarginUnit unit = kDisplayNodeMarginUnitPX;
+	MarginType type = kMarginTypeLength;
+	MarginUnit unit = kMarginUnitPX;
 
 	double length = 0;
 	double min = ABS_DBL_MIN;
 	double max = ABS_DBL_MAX;
 
-	bool equals(DisplayNodeMarginType type, DisplayNodeMarginUnit unit, double length) {
+	bool equals(MarginType type, MarginUnit unit, double length) {
 		return (
 			this->type == type &&
 			this->unit == unit &&

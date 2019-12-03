@@ -129,8 +129,15 @@ Stylesheet::~Stylesheet()
 void
 Stylesheet::setVariable(string name, string value)
 {
+	vector<Value*> values;
+	Parser::parse(values, value);
+
 	auto variable = new Variable(name);
-	Parser::parse(variable, value);
+
+	for (auto value : values) {
+		variable->values.push_back(value);
+	}
+
 	this->addVariable(variable);
 }
 

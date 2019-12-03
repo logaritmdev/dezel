@@ -26,6 +26,7 @@ public:
 
 	StringValue(string value);
 	StringValue(const char* value);
+	~StringValue();
 
 	const string& getValue() const {
 		return this->value;

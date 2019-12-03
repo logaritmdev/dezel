@@ -10,10 +10,10 @@ open class JavaScriptFormModule: JavaScriptModule {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method register
+	 * @method configure
 	 * @since 0.7.0
 	 */
-	override open func register(context: JavaScriptContext) {
+	override open func configure(context: JavaScriptContext) {
 		context.registerClass("dezel.form.TextInput", with: JavaScriptTextInput.self)
 		context.registerClass("dezel.form.TextArea", with: JavaScriptTextArea.self)
 	}

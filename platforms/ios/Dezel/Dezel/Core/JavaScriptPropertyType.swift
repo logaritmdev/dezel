@@ -7,6 +7,10 @@ public enum JavaScriptPropertyType : Int {
 	case string = 1
 	case number = 2
 	case boolean = 3
-	case object = 4
-	case array = 5
+	case array = 4
+	case object = 5
+	case callback = 6
+	case variable = 7
+	case function = 8
+	case composite = 9
 }

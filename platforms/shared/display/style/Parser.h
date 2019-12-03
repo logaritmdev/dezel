@@ -26,7 +26,7 @@ private:
 
 	Parser(Stylesheet* stylesheet, Tokenizer* tokenizer);
 	Parser(Stylesheet* stylesheet, Tokenizer* tokenizer, string file);
-	Parser(Variable* variable, Tokenizer* tokenizer);
+	Parser(vector<Value*>& values, Tokenizer* tokenizer);
 
 	bool parse();
 
@@ -69,7 +69,7 @@ public:
 
 	static void parse(Stylesheet* stylesheet, const string& source);
 	static void parse(Stylesheet* stylesheet, const string& source, const string& url);
-	static void parse(Variable* variable, const string& source);
+	static void parse(vector<Value*>& values, const string& source);
 
 };
 

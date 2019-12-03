@@ -15,7 +15,7 @@ import kotlin.math.max
  * @since 0.7.0
  * @hidden
  */
-open class GlobalModule(context: JavaScriptContext) : JavaScriptModule(context) {
+open class GlobalModule: JavaScriptModule() {
 
 	//--------------------------------------------------------------------------
 	// Properties
@@ -216,22 +216,22 @@ open class GlobalModule(context: JavaScriptContext) : JavaScriptModule(context) 
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method initialize
+	 * @method configure
 	 * @since 0.7.0
 	 */
-	override fun initialize() {
+	override fun configure(context: JavaScriptContext) {
 
-		this.context.registerClass("dezel.global.WebSocket", JavaScriptWebSocket::class.java)
-		this.context.registerClass("dezel.global.XMLHttpRequest", JavaScriptXMLHttpRequest::class.java)
+		context.registerClass("dezel.global.WebSocket", JavaScriptWebSocket::class.java)
+		context.registerClass("dezel.global.XMLHttpRequest", JavaScriptXMLHttpRequest::class.java)
 
-		this.context.global.defineProperty("setImmediate", this.setImmediate)
-		this.context.global.defineProperty("setInterval", this.setInterval)
-		this.context.global.defineProperty("setTimeout", this.setTimeout)
-		this.context.global.defineProperty("clearImmediate", this.clearImmediate)
-		this.context.global.defineProperty("clearInterval", this.clearInterval)
-		this.context.global.defineProperty("clearTimeout", this.clearTimeout)
-		this.context.global.defineProperty("requestAnimationFrame", this.requestAnimationFrame)
-		this.context.global.defineProperty("cancelAnimationFrame", this.cancelAnimationFrame)
+		context.global.defineProperty("setImmediate", this.setImmediate)
+		context.global.defineProperty("setInterval", this.setInterval)
+		context.global.defineProperty("setTimeout", this.setTimeout)
+		context.global.defineProperty("clearImmediate", this.clearImmediate)
+		context.global.defineProperty("clearInterval", this.clearInterval)
+		context.global.defineProperty("clearTimeout", this.clearTimeout)
+		context.global.defineProperty("requestAnimationFrame", this.requestAnimationFrame)
+		context.global.defineProperty("cancelAnimationFrame", this.cancelAnimationFrame)
 	}
 
 	/**

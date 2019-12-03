@@ -12,7 +12,7 @@ import ca.logaritm.dezel.modules.application.JavaScriptApplication
  * @since 0.7.0
  * @hidden
  */
-open class CoreModule(context: JavaScriptContext) : JavaScriptModule(context) {
+open class CoreModule : JavaScriptModule() {
 
 	//--------------------------------------------------------------------------
 	// Properties
@@ -85,8 +85,8 @@ open class CoreModule(context: JavaScriptContext) : JavaScriptModule(context) {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method initialize
-	 * @since 0.1.0
+	 * @method configure
+	 * @since 0.7.0
 	 */
 	override fun initialize() {
 		this.context.global.defineProperty("importClass", this.importClass)

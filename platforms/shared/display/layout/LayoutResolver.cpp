@@ -49,8 +49,8 @@ LayoutResolver::resolve() {
 		}
 	}
 
-	const bool autoContentW = this->node->contentWidth.type == kDisplayNodeContentSizeTypeAuto;
-	const bool autoContentH = this->node->contentHeight.type == kDisplayNodeContentSizeTypeAuto;
+	const bool autoContentW = this->node->contentWidth.type == kContentSizeTypeAuto;
+	const bool autoContentH = this->node->contentHeight.type == kContentSizeTypeAuto;
 	const auto lastContentW = this->node->measuredContentWidth;
 	const auto lastContentH = this->node->measuredContentHeight;
 

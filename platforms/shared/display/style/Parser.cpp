@@ -40,11 +40,11 @@ Parser::parse(Stylesheet* stylesheet, const string& source, const string& url)
 }
 
 void
-Parser::parse(Variable* variable, const string& source)
+Parser::parse(vector<Value*>& values, const string& source)
 {
 	TokenizerStream stream(source);
 	Tokenizer tokenizer(stream);
-	Parser parser(variable, &tokenizer);
+	Parser parser(values, &tokenizer);
 }
 
 Parser::Parser(Stylesheet* stylesheet, Tokenizer* tokenizer) : Parser(stylesheet, tokenizer, "<anonymous file>")
@@ -77,7 +77,7 @@ Parser::Parser(Stylesheet* stylesheet, Tokenizer* tokenizer, string file) : styl
 	} while (tokens.hasNextToken());
 }
 
-Parser::Parser(Variable* variable, Tokenizer* tokenizer) : stylesheet(nullptr), tokenizer(tokenizer), file("<anonymous file>")
+Parser::Parser(vector<Value*>& values, Tokenizer* tokenizer) : stylesheet(nullptr), tokenizer(tokenizer), file("<anonymous file>")
 {
 	auto tokens = this->tokenizer->getTokens();
 
@@ -92,7 +92,7 @@ Parser::Parser(Variable* variable, Tokenizer* tokenizer) : stylesheet(nullptr), 
 		auto value = this->parseValue(tokens);
 
 		if (value) {
-			variable->values.push_back(value);
+			values.push_back(value);
 			tokens.nextToken();
 			continue;
 		}

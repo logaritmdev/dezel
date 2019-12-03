@@ -12,6 +12,11 @@ NullValue::NullValue() : Value(kValueTypeNull, kValueUnitNone)
 
 }
 
+NullValue::~NullValue()
+{
+
+}
+
 string
 NullValue::toString()
 {

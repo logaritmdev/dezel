@@ -436,7 +436,7 @@ open class JavaScriptImageView: JavaScriptView {
 	 * @since 0.7.0
 	 */
 	@objc public lazy var tint = JavaScriptProperty(string: "transparent") { value in
-		self.view.tint = CGColorParse(value.string)
+		self.view.tint = CGColor.parse(value)
 	}
 
 	//--------------------------------------------------------------------------
@@ -496,7 +496,7 @@ open class JavaScriptImageView: JavaScriptView {
 	 * @hidden
 	 */
 	@objc open func jsSet_imageAnchorTop(callback: JavaScriptSetterCallback) {
-		self.imageAnchorTop.reset(callback.value, lock: self)
+		self.imageAnchorTop.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -516,7 +516,7 @@ open class JavaScriptImageView: JavaScriptView {
 	 * @hidden
 	 */
 	@objc open func jsSet_imageAnchorLeft(callback: JavaScriptSetterCallback) {
-		self.imageAnchorLeft.reset(callback.value, lock: self)
+		self.imageAnchorLeft.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -536,7 +536,7 @@ open class JavaScriptImageView: JavaScriptView {
 	 * @hidden
 	 */
 	@objc open func jsSet_imageTop(callback: JavaScriptSetterCallback) {
-		self.imageTop.reset(callback.value, lock: self)
+		self.imageTop.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -556,7 +556,7 @@ open class JavaScriptImageView: JavaScriptView {
 	 * @hidden
 	 */
 	@objc open func jsSet_imageLeft(callback: JavaScriptSetterCallback) {
-		self.imageLeft.reset(callback.value, lock: self)
+		self.imageLeft.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -576,7 +576,7 @@ open class JavaScriptImageView: JavaScriptView {
 	 * @hidden
 	 */
 	@objc open func jsSet_imageWidth(callback: JavaScriptSetterCallback) {
-		self.imageWidth.reset(callback.value, lock: self)
+		self.imageWidth.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -596,7 +596,7 @@ open class JavaScriptImageView: JavaScriptView {
 	 * @hidden
 	 */
 	@objc open func jsSet_imageHeight(callback: JavaScriptSetterCallback) {
-		self.imageHeight.reset(callback.value, lock: self)
+		self.imageHeight.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -656,6 +656,6 @@ open class JavaScriptImageView: JavaScriptView {
 	 * @hidden
 	 */
 	@objc open func jsSet_tint(callback: JavaScriptSetterCallback) {
-		self.tint.reset(callback.value, lock: self)
+		self.tint.reset(callback.value, lock: self, parse: true)
 	}
 }

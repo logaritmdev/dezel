@@ -39,7 +39,7 @@ open class JavaScriptSpinnerView: JavaScriptView {
 	 * @since 0.7.0
 	 */
 	@objc public lazy var tint = JavaScriptProperty(string: "#000") { value in
-		self.view.color = UIColor(cgColor: value.string.toColor())
+		self.view.color = UIColor(cgColor: CGColor.parse(value))
 	}
 
 	/**
@@ -67,7 +67,7 @@ open class JavaScriptSpinnerView: JavaScriptView {
 	 * @hidden
 	 */
 	@objc open func jsSet_tint(callback: JavaScriptSetterCallback) {
-		self.tint.reset(callback.value, lock: self)
+		self.tint.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------

@@ -5,7 +5,7 @@ import Foundation
 * @since 0.1.0
 * @hidden
 */
-internal class JavaScriptBuilder {
+open class JavaScriptBuilder {
 
 	/**
 	* @enum Type

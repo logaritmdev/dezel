@@ -62,10 +62,10 @@ open class JavaScriptGlobalModule : JavaScriptModule {
 	}
 
     /**
-     * @method register
+     * @method configure
      * @since 0.7.0
      */
-	override open func register(context: JavaScriptContext) {
+	override open func configure(context: JavaScriptContext) {
 
 		context.registerClass("dezel.global.WebSocket", with: JavaScriptWebSocket.self)
 		context.registerClass("dezel.global.XMLHttpRequest", with: JavaScriptXMLHttpRequest.self)
@@ -78,17 +78,6 @@ open class JavaScriptGlobalModule : JavaScriptModule {
 		context.global.defineProperty("clearTimeout", value: context.createFunction(self.clearTimeout))
 		context.global.defineProperty("requestAnimationFrame", value: context.createFunction(self.requestAnimationFrame))
 		context.global.defineProperty("cancelAnimationFrame", value: context.createFunction(self.cancelAnimationFrame))
-	}
-
-	/**
-	 * @method unregister
-	 * @since 0.7.0
-	 */
-	override open func unregister(context: JavaScriptContext) {
-		self.scheduledTimers.forEach { $0.value.cancel() }
-		self.scheduledFrames.forEach { $0.value.cancel() }
-		self.scheduledTimers.removeAll()
-		self.scheduledFrames.removeAll()
 	}
 
 	//--------------------------------------------------------------------------

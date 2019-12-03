@@ -58,7 +58,7 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @since 0.7.0
 	 */
 	open lazy var fillStyle = JavaScriptProperty(string: "black") { value in
-		self.ctx?.setFillColor(CGColorParse(value.string))
+		self.ctx?.setFillColor(CGColor.parse(value))
 	}
 
 	/**
@@ -66,7 +66,7 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @since 0.7.0
 	 */
 	open lazy var strokeStyle = JavaScriptProperty(string: "black") { value in
-		self.ctx?.setStrokeColor(CGColorParse(value.string))
+		self.ctx?.setStrokeColor(CGColor.parse(value))
 	}
 
 	/**
@@ -135,7 +135,7 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @since 0.7.0
 	 */
 	open lazy var shadowColor = JavaScriptProperty(number: 0.0) { value in
-		self.computedShadowColor = CGColorParse(value.string)
+		self.computedShadowColor = CGColor.parse(value)
 		self.ctx?.setShadow(offset: self.measuredShadowOffset, blur: self.measuredShadowBlur, color: self.computedShadowColor)
 	}
 

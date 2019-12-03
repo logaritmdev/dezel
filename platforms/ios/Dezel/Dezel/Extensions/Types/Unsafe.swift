@@ -15,14 +15,16 @@ internal extension UnsafePointer where Pointee == Int8 {
 	}
 
 	/**
-	 * @property string
-	 * @since 0.6.0
+	 * @method string
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	var strdup: String { // TODO THIS IS A REALLY BAD NAME because it deallocates the raw point
+	func string(release: Bool) -> String {
 
 		defer {
-			self.deallocate()
+			if (release) {
+				self.deallocate()
+			}
 		}
 
 		return String(cString: self)

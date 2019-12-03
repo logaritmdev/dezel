@@ -1,7 +1,7 @@
 import Dezel
 
 public class DisplayNodeDelegateCounter : DisplayNodeDelegate {
-
+	
 	public var measured: Int = 0
 	public var invalidate: Int = 0
 	public var resolvedSize: Int = 0
@@ -54,18 +54,13 @@ public class DisplayNodeDelegateCounter : DisplayNodeDelegate {
 		self.resolvedLayout += 1
 	}
 
-	open func measure(node: DisplayNode, in bounds: CGSize, min: CGSize, max: CGSize) -> CGSize? {
+	open func measure(node: DisplayNode, bounds: CGSize, min: CGSize, max: CGSize) -> CGSize? {
 		self.measured += 1
 		return CGSize(width: -1, height: -1)
 	}
 
-	public func getProperty(_ name: String) -> JavaScriptProperty? {
+	public func resolve(node: DisplayNode, property: String) -> JavaScriptProperty? {
 		return nil;
 	}
-
-	public func setProperty(_ name: String, value: JavaScriptProperty) {
-
-	}
-
 
 }

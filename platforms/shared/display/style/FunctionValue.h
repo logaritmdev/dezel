@@ -29,6 +29,7 @@ public:
 	friend class Stylesheet;
 
 	FunctionValue(string name);
+	~FunctionValue();
 
 	const string& getName() const {
 		return this->name;

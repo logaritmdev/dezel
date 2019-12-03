@@ -211,6 +211,19 @@
 		C7A48916237D8BA600457D02 /* StylePropertyListTest.mm in Sources */ = {isa = PBXBuildFile; fileRef = C7A48915237D8BA600457D02 /* StylePropertyListTest.mm */; };
 		C7A48919237DA62B00457D02 /* InvalidInvocationException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7A48917237DA62B00457D02 /* InvalidInvocationException.cpp */; };
 		C7A4891A237DA62B00457D02 /* InvalidInvocationException.h in Headers */ = {isa = PBXBuildFile; fileRef = C7A48918237DA62B00457D02 /* InvalidInvocationException.h */; };
+		C7A607FA239550A500B176FC /* JavaScriptPropertyFunctionValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A607F9239550A500B176FC /* JavaScriptPropertyFunctionValue.swift */; };
+		C7A607FC2395568000B176FC /* JavaScriptPropertyVariableValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A607FB2395568000B176FC /* JavaScriptPropertyVariableValue.swift */; };
+		C7A607FF2395575E00B176FC /* ValueRef.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7A607FD2395575E00B176FC /* ValueRef.cpp */; };
+		C7A608002395575E00B176FC /* ValueRef.h in Headers */ = {isa = PBXBuildFile; fileRef = C7A607FE2395575E00B176FC /* ValueRef.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C7A608032395577400B176FC /* FunctionValueRef.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7A608012395577400B176FC /* FunctionValueRef.cpp */; };
+		C7A608042395577400B176FC /* FunctionValueRef.h in Headers */ = {isa = PBXBuildFile; fileRef = C7A608022395577400B176FC /* FunctionValueRef.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C7A608072395578B00B176FC /* VariableValueRef.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7A608052395578B00B176FC /* VariableValueRef.cpp */; };
+		C7A608082395578B00B176FC /* VariableValueRef.h in Headers */ = {isa = PBXBuildFile; fileRef = C7A608062395578B00B176FC /* VariableValueRef.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C7A6080A2395580B00B176FC /* JavaScriptPropertyCompositeValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A608092395580B00B176FC /* JavaScriptPropertyCompositeValue.swift */; };
+		C7A6080D2395797B00B176FC /* ValueListRef.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7A6080B2395797B00B176FC /* ValueListRef.cpp */; };
+		C7A6080E2395797B00B176FC /* ValueListRef.h in Headers */ = {isa = PBXBuildFile; fileRef = C7A6080C2395797B00B176FC /* ValueListRef.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C7A6081023958EA600B176FC /* JavaScriptProperty+Value.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A6080F23958EA600B176FC /* JavaScriptProperty+Value.swift */; };
+		C7A608122395950F00B176FC /* JavaScriptPropertyNumberValue+Value.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A608112395950F00B176FC /* JavaScriptPropertyNumberValue+Value.swift */; };
 		C7AA9370236F6DD500ADF997 /* InvalidStructureException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7AA936E236F6DD500ADF997 /* InvalidStructureException.cpp */; };
 		C7AA9371236F6DD500ADF997 /* InvalidStructureException.h in Headers */ = {isa = PBXBuildFile; fileRef = C7AA936F236F6DD500ADF997 /* InvalidStructureException.h */; };
 		C7AA9374236F730F00ADF997 /* InvalidOperationException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7AA9372236F730F00ADF997 /* InvalidOperationException.cpp */; };
@@ -324,7 +337,6 @@
 		C7FCA0FE2311B4AA00AFBDB6 /* JavaScriptPropertyNumberValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FCA0FD2311B4AA00AFBDB6 /* JavaScriptPropertyNumberValue.swift */; };
 		C7FCA1002311B4BA00AFBDB6 /* JavaScriptPropertyStringValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FCA0FF2311B4BA00AFBDB6 /* JavaScriptPropertyStringValue.swift */; };
 		C7FCA1022311B4C800AFBDB6 /* JavaScriptPropertyScriptValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FCA1012311B4C800AFBDB6 /* JavaScriptPropertyScriptValue.swift */; };
-		C7FCA104231444F600AFBDB6 /* JavaScriptPropertyParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FCA103231444F600AFBDB6 /* JavaScriptPropertyParser.swift */; };
 		C7FCA1082315CD7200AFBDB6 /* Lock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FCA1072315CD7100AFBDB6 /* Lock.swift */; };
 		C7FCA1142316FA0800AFBDB6 /* JavaScriptPropertyTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FCA1132316FA0800AFBDB6 /* JavaScriptPropertyTest.swift */; };
 		C7FCA140231C499C00AFBDB6 /* DisplayNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FCA13F231C499C00AFBDB6 /* DisplayNode.swift */; };
@@ -534,6 +546,19 @@
 		C7A48915237D8BA600457D02 /* StylePropertyListTest.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = StylePropertyListTest.mm; sourceTree = "<group>"; };
 		C7A48917237DA62B00457D02 /* InvalidInvocationException.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = InvalidInvocationException.cpp; path = ../../../../../shared/display/style/InvalidInvocationException.cpp; sourceTree = "<group>"; };
 		C7A48918237DA62B00457D02 /* InvalidInvocationException.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = InvalidInvocationException.h; path = ../../../../../shared/display/style/InvalidInvocationException.h; sourceTree = "<group>"; };
+		C7A607F9239550A500B176FC /* JavaScriptPropertyFunctionValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptPropertyFunctionValue.swift; sourceTree = "<group>"; };
+		C7A607FB2395568000B176FC /* JavaScriptPropertyVariableValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptPropertyVariableValue.swift; sourceTree = "<group>"; };
+		C7A607FD2395575E00B176FC /* ValueRef.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ValueRef.cpp; path = ../../../../../shared/display/ValueRef.cpp; sourceTree = "<group>"; };
+		C7A607FE2395575E00B176FC /* ValueRef.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ValueRef.h; path = ../../../../../shared/display/ValueRef.h; sourceTree = "<group>"; };
+		C7A608012395577400B176FC /* FunctionValueRef.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FunctionValueRef.cpp; path = ../../../../../shared/display/FunctionValueRef.cpp; sourceTree = "<group>"; };
+		C7A608022395577400B176FC /* FunctionValueRef.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FunctionValueRef.h; path = ../../../../../shared/display/FunctionValueRef.h; sourceTree = "<group>"; };
+		C7A608052395578B00B176FC /* VariableValueRef.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = VariableValueRef.cpp; path = ../../../../../shared/display/VariableValueRef.cpp; sourceTree = "<group>"; };
+		C7A608062395578B00B176FC /* VariableValueRef.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VariableValueRef.h; path = ../../../../../shared/display/VariableValueRef.h; sourceTree = "<group>"; };
+		C7A608092395580B00B176FC /* JavaScriptPropertyCompositeValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptPropertyCompositeValue.swift; sourceTree = "<group>"; };
+		C7A6080B2395797B00B176FC /* ValueListRef.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ValueListRef.cpp; path = ../../../../../shared/display/ValueListRef.cpp; sourceTree = "<group>"; };
+		C7A6080C2395797B00B176FC /* ValueListRef.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ValueListRef.h; path = ../../../../../shared/display/ValueListRef.h; sourceTree = "<group>"; };
+		C7A6080F23958EA600B176FC /* JavaScriptProperty+Value.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JavaScriptProperty+Value.swift"; sourceTree = "<group>"; };
+		C7A608112395950F00B176FC /* JavaScriptPropertyNumberValue+Value.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JavaScriptPropertyNumberValue+Value.swift"; sourceTree = "<group>"; };
 		C7AA936E236F6DD500ADF997 /* InvalidStructureException.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = InvalidStructureException.cpp; path = ../../../../../shared/display/InvalidStructureException.cpp; sourceTree = "<group>"; };
 		C7AA936F236F6DD500ADF997 /* InvalidStructureException.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = InvalidStructureException.h; path = ../../../../../shared/display/InvalidStructureException.h; sourceTree = "<group>"; };
 		C7AA9372236F730F00ADF997 /* InvalidOperationException.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = InvalidOperationException.cpp; path = ../../../../../shared/display/InvalidOperationException.cpp; sourceTree = "<group>"; };
@@ -650,7 +675,6 @@
 		C7FCA0FD2311B4AA00AFBDB6 /* JavaScriptPropertyNumberValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptPropertyNumberValue.swift; sourceTree = "<group>"; };
 		C7FCA0FF2311B4BA00AFBDB6 /* JavaScriptPropertyStringValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptPropertyStringValue.swift; sourceTree = "<group>"; };
 		C7FCA1012311B4C800AFBDB6 /* JavaScriptPropertyScriptValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptPropertyScriptValue.swift; sourceTree = "<group>"; };
-		C7FCA103231444F600AFBDB6 /* JavaScriptPropertyParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptPropertyParser.swift; sourceTree = "<group>"; };
 		C7FCA1072315CD7100AFBDB6 /* Lock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lock.swift; sourceTree = "<group>"; };
 		C7FCA1132316FA0800AFBDB6 /* JavaScriptPropertyTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptPropertyTest.swift; sourceTree = "<group>"; };
 		C7FCA13F231C499C00AFBDB6 /* DisplayNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayNode.swift; sourceTree = "<group>"; };
@@ -747,14 +771,22 @@
 		C7429F8623759B8100A29FB7 /* CAPI */ = {
 			isa = PBXGroup;
 			children = (
-				C7429F822375104900A29FB7 /* PropertyRef.cpp */,
-				C7429F832375104900A29FB7 /* PropertyRef.h */,
 				C792E8CC234BDE620022D712 /* DisplayNodeRef.cpp */,
 				C792E8BB234BDE610022D712 /* DisplayNodeRef.h */,
 				C792E8CD234BDE620022D712 /* DisplayRef.cpp */,
 				C792E8D9234BDE630022D712 /* DisplayRef.h */,
 				C7E4817223823CD900730F7A /* StylesheetRef.cpp */,
 				C7E4817323823CD900730F7A /* StylesheetRef.h */,
+				C7A607FD2395575E00B176FC /* ValueRef.cpp */,
+				C7A607FE2395575E00B176FC /* ValueRef.h */,
+				C7A6080B2395797B00B176FC /* ValueListRef.cpp */,
+				C7A6080C2395797B00B176FC /* ValueListRef.h */,
+				C7A608012395577400B176FC /* FunctionValueRef.cpp */,
+				C7A608022395577400B176FC /* FunctionValueRef.h */,
+				C7A608052395578B00B176FC /* VariableValueRef.cpp */,
+				C7A608062395578B00B176FC /* VariableValueRef.h */,
+				C7429F822375104900A29FB7 /* PropertyRef.cpp */,
+				C7429F832375104900A29FB7 /* PropertyRef.h */,
 			);
 			name = CAPI;
 			sourceTree = "<group>";
@@ -1053,6 +1085,15 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		C7A607F62395431B00B176FC /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				C7A6080F23958EA600B176FC /* JavaScriptProperty+Value.swift */,
+				C7A608112395950F00B176FC /* JavaScriptPropertyNumberValue+Value.swift */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
 		C7AA936D236F6DB500ADF997 /* Exception */ = {
 			isa = PBXGroup;
 			children = (
@@ -1079,6 +1120,7 @@
 				C7B9CEA2202CDB8D002409D5 /* ApplicationController.swift */,
 				C7B9CEA5202CDB8D002409D5 /* ApplicationDelegate.swift */,
 				C7B9CEA4202CDB8D002409D5 /* ApplicationWindow.swift */,
+				C7EE2E0122DD6AE200FFF0EE /* Source.swift */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -1213,6 +1255,7 @@
 		C7E8A47720159CC2005139F6 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				C7A607F62395431B00B176FC /* Core */,
 				C7FCA1102316EE0300AFBDB6 /* CoreText */,
 				C7FCA10F2316EDF000AFBDB6 /* CoreGraphic */,
 				C7FCA10E2316EDE300AFBDB6 /* CoreAnimation */,
@@ -1313,11 +1356,12 @@
 				C7FCA0FD2311B4AA00AFBDB6 /* JavaScriptPropertyNumberValue.swift */,
 				C7FCA0FF2311B4BA00AFBDB6 /* JavaScriptPropertyStringValue.swift */,
 				C7FCA1012311B4C800AFBDB6 /* JavaScriptPropertyScriptValue.swift */,
+				C7A607FB2395568000B176FC /* JavaScriptPropertyVariableValue.swift */,
+				C7A607F9239550A500B176FC /* JavaScriptPropertyFunctionValue.swift */,
+				C7A608092395580B00B176FC /* JavaScriptPropertyCompositeValue.swift */,
 				C76864702039146700D1903B /* JavaScriptPropertyType.swift */,
 				C76864722039147100D1903B /* JavaScriptPropertyUnit.swift */,
-				C7FCA103231444F600AFBDB6 /* JavaScriptPropertyParser.swift */,
 				C7E8A506201624A0005139F6 /* JavaScriptModule.swift */,
-				C7EE2E0122DD6AE200FFF0EE /* Source.swift */,
 				C777B63E22DA49B600E75E55 /* WeakReference.swift */,
 			);
 			path = Core;
@@ -1518,15 +1562,18 @@
 				C7A4891A237DA62B00457D02 /* InvalidInvocationException.h in Headers */,
 				C7E8A5032016244F005139F6 /* Runtime.h in Headers */,
 				C792E948234BDEA70022D712 /* TokenizerStream.h in Headers */,
+				C7A608042395577400B176FC /* FunctionValueRef.h in Headers */,
 				C77B0D4C2226D7DC00917D82 /* LRUDiskCache.h in Headers */,
 				C792E8DB234BDE630022D712 /* DisplayNodeRef.h in Headers */,
 				C7E8A546201624FA005139F6 /* JavaScriptContextPrivate.h in Headers */,
 				C792E953234BDEA70022D712 /* Tokenizer.h in Headers */,
 				C7E4817523823CD900730F7A /* StylesheetRef.h in Headers */,
 				C792E943234BDEA70022D712 /* Property.h in Headers */,
+				C7A608082395578B00B176FC /* VariableValueRef.h in Headers */,
 				C7E8A54A201624FA005139F6 /* JavaScriptValuePrivate.h in Headers */,
 				C7AA9375236F730F00ADF997 /* InvalidOperationException.h in Headers */,
 				C792E8F7234BDE630022D712 /* DisplayNode.h in Headers */,
+				C7A608002395575E00B176FC /* ValueRef.h in Headers */,
 				C792E8E5234BDE630022D712 /* DisplayNodeOrigin.h in Headers */,
 				C77B0D7C2226DC4D00917D82 /* WebSocketConnection.h in Headers */,
 				C792E944234BDEA70022D712 /* Fragment.h in Headers */,
@@ -1535,6 +1582,7 @@
 				C792E946234BDEA70022D712 /* NumberValue.h in Headers */,
 				C792E94F234BDEA70022D712 /* Argument.h in Headers */,
 				C7A2C2AC2372F90200219BA5 /* Matcher.h in Headers */,
+				C7A6080E2395797B00B176FC /* ValueListRef.h in Headers */,
 				C7429F852375104900A29FB7 /* PropertyRef.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1677,11 +1725,14 @@
 				C718A0C0206748EB00EFEC15 /* ImageDiskCache.swift in Sources */,
 				C7B9CEAC202CDBB7002409D5 /* JavaScriptApplication.swift in Sources */,
 				C77189B22106AE0A00337263 /* Transform2D.swift in Sources */,
+				C7A608072395578B00B176FC /* VariableValueRef.cpp in Sources */,
 				C792E95A234BDEA70022D712 /* Function.cpp in Sources */,
 				C767544520269DB5003C4D85 /* TextView.swift in Sources */,
 				C7BB7D3E2028F4C5004006C2 /* CGRect.swift in Sources */,
 				C7682A422035395F006EA6D5 /* Layer.swift in Sources */,
+				C7A607FF2395575E00B176FC /* ValueRef.cpp in Sources */,
 				C7FCA1022311B4C800AFBDB6 /* JavaScriptPropertyScriptValue.swift in Sources */,
+				C7A607FC2395568000B176FC /* JavaScriptPropertyVariableValue.swift in Sources */,
 				C74D8DD423870ED1000C8E12 /* Set.swift in Sources */,
 				C7BFD15C207D50A300AAD31C /* JavaScriptFormModule.swift in Sources */,
 				C7EE2E1022DFA84900FFF0EE /* Data.swift in Sources */,
@@ -1699,6 +1750,7 @@
 				C74D8DDF238D9364000C8E12 /* UIResponder.swift in Sources */,
 				C7A3AB77214EC68100D8B15C /* JavaScriptCanvas.swift in Sources */,
 				C7FCA0FE2311B4AA00AFBDB6 /* JavaScriptPropertyNumberValue.swift in Sources */,
+				C7A6080A2395580B00B176FC /* JavaScriptPropertyCompositeValue.swift in Sources */,
 				C767542120269971003C4D85 /* ShadowLayer.swift in Sources */,
 				C792E959234BDEA70022D712 /* Stylesheet.cpp in Sources */,
 				C7BFD16A207D541F00AAD31C /* JavaScriptTextArea.swift in Sources */,
@@ -1720,6 +1772,7 @@
 				C77D6E23220F730D005FAAF8 /* NSRegularExpression.swift in Sources */,
 				C7B9CEB1202CE225002409D5 /* JavaScriptViewModule.swift in Sources */,
 				C792E8E2234BDE630022D712 /* DisplayNodeMargin.cpp in Sources */,
+				C7A608032395577400B176FC /* FunctionValueRef.cpp in Sources */,
 				C767543A20269971003C4D85 /* BitmapLayer.swift in Sources */,
 				C792E8EF234BDE630022D712 /* DisplayNodeAnchor.cpp in Sources */,
 				C7BFD160207D518600AAD31C /* SpinnerView.swift in Sources */,
@@ -1787,6 +1840,7 @@
 				C7FCA0FA2311B49200AFBDB6 /* JavaScriptPropertyBooleanValue.swift in Sources */,
 				C7E8A531201624A2005139F6 /* JavaScriptBuilder.swift in Sources */,
 				C72FF045204E190500FBB36B /* ShapeLayer.swift in Sources */,
+				C7A6081023958EA600B176FC /* JavaScriptProperty+Value.swift in Sources */,
 				C792E8ED234BDE630022D712 /* DisplayRef.cpp in Sources */,
 				C700121621551A9A00CB26D4 /* JavaScriptDeviceModule.swift in Sources */,
 				C77DFEE1208D063900CEC1D9 /* JavaScriptLocaleModule.swift in Sources */,
@@ -1813,6 +1867,7 @@
 				C71A119F2080EB300004D523 /* HttpRequestDelegate.swift in Sources */,
 				C7E8A5022016244F005139F6 /* String.swift in Sources */,
 				C70617A420F7C03100499FDB /* TransitionListener.swift in Sources */,
+				C7A6080D2395797B00B176FC /* ValueListRef.cpp in Sources */,
 				C7BFD168207D541800AAD31C /* JavaScriptTextInput.swift in Sources */,
 				C792E974234D6E6E0022D712 /* ParseException.cpp in Sources */,
 				C7B40F6320B7170E00892C92 /* TextAreaDelegate.swift in Sources */,
@@ -1826,6 +1881,7 @@
 				C75153BF22F3791C007CAA48 /* JavaScriptClassStaticFunctionWrapper.swift in Sources */,
 				C700121821551B5700CB26D4 /* JavaScriptDevice.swift in Sources */,
 				C71A119D2080EB1E0004D523 /* HttpRequest.swift in Sources */,
+				C7A607FA239550A500B176FC /* JavaScriptPropertyFunctionValue.swift in Sources */,
 				C7E8A523201624A2005139F6 /* JavaScriptFunctionWrapper.swift in Sources */,
 				C792E957234BDEA70022D712 /* StringValue.cpp in Sources */,
 				C7E8A535201624A2005139F6 /* JavaScriptClassConstructorWrapper.swift in Sources */,
@@ -1854,6 +1910,7 @@
 				C7BB7D3C2028F4C5004006C2 /* CGColor.swift in Sources */,
 				C73700C42218C00D0095A54B /* ImageFilter.swift in Sources */,
 				C718A0B32066E63300EFEC15 /* ImageLayer.swift in Sources */,
+				C7A608122395950F00B176FC /* JavaScriptPropertyNumberValue+Value.swift in Sources */,
 				C7E8A522201624A2005139F6 /* JavaScriptClassGetterWrapper.swift in Sources */,
 				C7E309792031312700436FA4 /* CGPoint.swift in Sources */,
 				C72E0E9320669C97003BCEF1 /* TextAlignment.swift in Sources */,
@@ -1883,7 +1940,6 @@
 				C7E8A526201624A2005139F6 /* JavaScriptGetterCallback.swift in Sources */,
 				C7EE2E2122E4B21100FFF0EE /* JavaScriptForOwnWrapper.swift in Sources */,
 				C71E6CDF20E65FB6009B86F6 /* Updatable.swift in Sources */,
-				C7FCA104231444F600AFBDB6 /* JavaScriptPropertyParser.swift in Sources */,
 				C7B40F6120B716C800892C92 /* TextArea.swift in Sources */,
 				C792E934234BDEA70022D712 /* NumberValue.cpp in Sources */,
 				C77DFED3208CD91600CEC1D9 /* ImageLoader.swift in Sources */,

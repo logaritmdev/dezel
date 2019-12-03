@@ -34,65 +34,65 @@ RelativeLayoutResolver::hasInvalidSize(DisplayNode* child)
 		return true;
 	}
 
-	if (child->width.unit == kDisplayNodeSizeUnitPX &&
-		child->height.unit == kDisplayNodeSizeUnitPX) {
+	if (child->width.unit == kSizeUnitPX &&
+		child->height.unit == kSizeUnitPX) {
 		return false;
 	}
 
 	auto parent = child->parent;
 
 	if (parent->measuredContentWidthChanged || child->hasNewParent()) {
-		if (child->width.unit == kDisplayNodeSizeUnitPC ||
-			child->width.type == kDisplayNodeSizeTypeFill) {
+		if (child->width.unit == kSizeUnitPC ||
+			child->width.type == kSizeTypeFill) {
 			return true;
 		}
 	}
 
 	if (parent->measuredContentHeightChanged || child->hasNewParent()) {
-		if (child->height.unit == kDisplayNodeSizeUnitPC ||
-			child->height.type == kDisplayNodeSizeTypeFill) {
+		if (child->height.unit == kSizeUnitPC ||
+			child->height.type == kSizeTypeFill) {
 			return true;
 		}
 	}
 
 	if (parent->measuredInnerWidthChanged || child->hasNewParent()) {
-		if (child->width.unit == kDisplayNodeSizeUnitPW ||
-			child->height.unit == kDisplayNodeSizeUnitPW) {
+		if (child->width.unit == kSizeUnitPW ||
+			child->height.unit == kSizeUnitPW) {
 			return true;
 		}
 	}
 
 	if (parent->measuredInnerHeightChanged || child->hasNewParent()) {
-		if (child->width.unit == kDisplayNodeSizeUnitPH ||
-			child->height.unit == kDisplayNodeSizeUnitPH) {
+		if (child->width.unit == kSizeUnitPH ||
+			child->height.unit == kSizeUnitPH) {
 			return true;
 		}
 	}
 
 	if (parent->measuredContentWidthChanged || child->hasNewParent()) {
-		if (child->width.unit == kDisplayNodeSizeUnitCW ||
-			child->height.unit == kDisplayNodeSizeUnitCW) {
+		if (child->width.unit == kSizeUnitCW ||
+			child->height.unit == kSizeUnitCW) {
 			return true;
 		}
 	}
 
 	if (parent->measuredContentHeightChanged || child->hasNewParent()) {
-		if (child->width.unit == kDisplayNodeSizeUnitCH ||
-			child->height.unit == kDisplayNodeSizeUnitCH) {
+		if (child->width.unit == kSizeUnitCH ||
+			child->height.unit == kSizeUnitCH) {
 			return true;
 		}
 	}
 
 	if (child->display->hasNewViewportWidth()) {
-		if (child->width.unit == kDisplayNodeSizeUnitVW ||
-			child->height.unit == kDisplayNodeSizeUnitVH) {
+		if (child->width.unit == kSizeUnitVW ||
+			child->height.unit == kSizeUnitVH) {
 			return true;
 		}
 	}
 
 	if (child->display->hasNewViewportWidth()) {
-		if (child->width.unit == kDisplayNodeSizeUnitVH ||
-			child->height.unit == kDisplayNodeSizeUnitVH) {
+		if (child->width.unit == kSizeUnitVH ||
+			child->height.unit == kSizeUnitVH) {
 			return true;
 		}
 	}
@@ -114,25 +114,25 @@ RelativeLayoutResolver::measureWidth(DisplayNode* child, double remaining)
 
 	double value = child->width.length;
 
-	if (type == kDisplayNodeSizeTypeFill) {
+	if (type == kSizeTypeFill) {
 
 		value = remaining - child->measuredMarginLeft - child->measuredMarginRight;
 
-	} else if (type == kDisplayNodeSizeTypeWrap) {
+	} else if (type == kSizeTypeWrap) {
 
 		cerr << "The routine that handles measuring for this node does not handle the wrap value properly";
 		abort();
 
-	} else if (type == kDisplayNodeSizeTypeLength) {
+	} else if (type == kSizeTypeLength) {
 
 		switch (unit) {
-			case kDisplayNodeSizeUnitPC: value = scale(value, child->parent->measuredContentWidth - child->parent->measuredPaddingLeft - child->parent->measuredPaddingRight); break;
-			case kDisplayNodeSizeUnitPW: value = scale(value, child->parent->measuredInnerWidth); break;
-			case kDisplayNodeSizeUnitPH: value = scale(value, child->parent->measuredInnerHeight); break;
-			case kDisplayNodeSizeUnitCW: value = scale(value, child->parent->measuredContentWidth); break;
-			case kDisplayNodeSizeUnitCH: value = scale(value, child->parent->measuredContentHeight); break;
-			case kDisplayNodeSizeUnitVW: value = scale(value, child->display->viewportWidth); break;
-			case kDisplayNodeSizeUnitVH: value = scale(value, child->display->viewportHeight); break;
+			case kSizeUnitPC: value = scale(value, child->parent->measuredContentWidth - child->parent->measuredPaddingLeft - child->parent->measuredPaddingRight); break;
+			case kSizeUnitPW: value = scale(value, child->parent->measuredInnerWidth); break;
+			case kSizeUnitPH: value = scale(value, child->parent->measuredInnerHeight); break;
+			case kSizeUnitCW: value = scale(value, child->parent->measuredContentWidth); break;
+			case kSizeUnitCH: value = scale(value, child->parent->measuredContentHeight); break;
+			case kSizeUnitVW: value = scale(value, child->display->viewportWidth); break;
+			case kSizeUnitVH: value = scale(value, child->display->viewportHeight); break;
 			default: break;
 		}
 	}
@@ -154,25 +154,25 @@ RelativeLayoutResolver::measureHeight(DisplayNode* child, double remaining)
 
 	double value = child->height.length;
 
-	if (type == kDisplayNodeSizeTypeFill) {
+	if (type == kSizeTypeFill) {
 
 		value = remaining - child->measuredMarginTop - child->measuredMarginBottom;
 
-	} else if (type == kDisplayNodeSizeTypeWrap) {
+	} else if (type == kSizeTypeWrap) {
 
 		cerr << "The routine that handles measuring for this node does not handle the wrap value properly";
 		abort();
 
-	} else if (type == kDisplayNodeSizeTypeLength) {
+	} else if (type == kSizeTypeLength) {
 
 		switch (unit) {
-			case kDisplayNodeSizeUnitPC: value = scale(value, child->parent->measuredContentHeight - child->parent->measuredPaddingTop - child->parent->measuredPaddingBottom); break;
-			case kDisplayNodeSizeUnitPW: value = scale(value, child->parent->measuredInnerWidth); break;
-			case kDisplayNodeSizeUnitPH: value = scale(value, child->parent->measuredInnerHeight); break;
-			case kDisplayNodeSizeUnitCW: value = scale(value, child->parent->measuredContentWidth); break;
-			case kDisplayNodeSizeUnitCH: value = scale(value, child->parent->measuredContentHeight); break;
-			case kDisplayNodeSizeUnitVW: value = scale(value, child->display->viewportWidth); break;
-			case kDisplayNodeSizeUnitVH: value = scale(value, child->display->viewportHeight); break;
+			case kSizeUnitPC: value = scale(value, child->parent->measuredContentHeight - child->parent->measuredPaddingTop - child->parent->measuredPaddingBottom); break;
+			case kSizeUnitPW: value = scale(value, child->parent->measuredInnerWidth); break;
+			case kSizeUnitPH: value = scale(value, child->parent->measuredInnerHeight); break;
+			case kSizeUnitCW: value = scale(value, child->parent->measuredContentWidth); break;
+			case kSizeUnitCH: value = scale(value, child->parent->measuredContentHeight); break;
+			case kSizeUnitVW: value = scale(value, child->display->viewportWidth); break;
+			case kSizeUnitVH: value = scale(value, child->display->viewportHeight); break;
 			default: break;
 		}
 
@@ -196,13 +196,13 @@ RelativeLayoutResolver::resolveAlignment(DisplayNode* child, double remaining)
 
 	switch (child->parent->contentDirection) {
 
-		case kDisplayNodeContentDirectionVertical:
+		case kContentDirectionVertical:
 			size = child->measuredWidth;
 			headOffset = child->measuredMarginLeft;
 			tailOffset = child->measuredMarginRight;
 			break;
 
-		case kDisplayNodeContentDirectionHorizontal:
+		case kContentDirectionHorizontal:
 			size = child->measuredHeight;
 			headOffset = child->measuredMarginTop;
 			tailOffset = child->measuredMarginBottom;
@@ -213,15 +213,15 @@ RelativeLayoutResolver::resolveAlignment(DisplayNode* child, double remaining)
 
 	switch (child->parent->contentAlignment) {
 
-		case kDisplayNodeContentAlignmentStart:
+		case kContentAlignmentStart:
 			offset = headOffset;
 			break;
 
-		case kDisplayNodeContentAlignmentCenter:
+		case kContentAlignmentCenter:
 			offset = this->alignMid(size, remaining) + headOffset - tailOffset;
 			break;
 
-		case kDisplayNodeContentAlignmentEnd:
+		case kContentAlignmentEnd:
 			offset = this->alignEnd(size, remaining) - tailOffset;
 			break;
 	}
@@ -334,12 +334,12 @@ RelativeLayoutResolver::measure(DisplayNode* child, double &remainingW, double &
 
 		switch (child->contentDirection) {
 
-			case kDisplayNodeContentDirectionVertical:
+			case kContentDirectionVertical:
 				if (wrapW == false) measuredW = round(measuredW, scale);
 				if (wrapH == false) measuredH = round(measuredH, scale, remainder);
 				break;
 
-			case kDisplayNodeContentDirectionHorizontal:
+			case kContentDirectionHorizontal:
 				if (wrapW == false) measuredW = round(measuredW, scale, remainder);
 				if (wrapH == false) measuredH = round(measuredH, scale);
 				break;
@@ -410,13 +410,13 @@ RelativeLayoutResolver::resolve()
 
 		switch (this->node->contentDirection) {
 
-			case kDisplayNodeContentDirectionVertical:
+			case kContentDirectionVertical:
 				remainingH -= child->measuredHeight;
 				remainingH -= child->measuredMarginTop;
 				remainingH -= child->measuredMarginBottom;
 				break;
 
-			case kDisplayNodeContentDirectionHorizontal:
+			case kContentDirectionHorizontal:
 				remainingW -= child->measuredWidth;
 				remainingW -= child->measuredMarginLeft;
 				remainingW -= child->measuredMarginRight;
@@ -434,8 +434,8 @@ RelativeLayoutResolver::resolve()
 		}
 	}
 
-	const bool wrapW = this->node->width.type == kDisplayNodeSizeTypeWrap;
-	const bool wrapH = this->node->height.type == kDisplayNodeSizeTypeWrap;
+	const bool wrapW = this->node->width.type == kSizeTypeWrap;
+	const bool wrapH = this->node->height.type == kSizeTypeWrap;
 
 	if (wrapW) remainingW = max(remainingW, 0.0);
 	if (wrapH) remainingH = max(remainingH, 0.0);
@@ -445,12 +445,12 @@ RelativeLayoutResolver::resolve()
 
 	switch (this->node->contentDirection) {
 
-		case kDisplayNodeContentDirectionVertical:
+		case kContentDirectionVertical:
 			directionSpace = remainingH;
 			alignmentSpace = remainingW;
 			break;
 
-		case kDisplayNodeContentDirectionHorizontal:
+		case kContentDirectionHorizontal:
 			directionSpace = remainingW;
 			alignmentSpace = remainingH;
 			break;
@@ -462,11 +462,11 @@ RelativeLayoutResolver::resolve()
 
 			switch (this->node->contentDirection) {
 
-				case kDisplayNodeContentDirectionVertical:
+				case kContentDirectionVertical:
 					this->expandNodesVertically(expandables, remainingH, expandablesWeight);
 					break;
 
-				case kDisplayNodeContentDirectionHorizontal:
+				case kContentDirectionHorizontal:
 					this->expandNodesHorizontally(expandables, remainingW, expandablesWeight);
 					break;
 			}
@@ -480,11 +480,11 @@ RelativeLayoutResolver::resolve()
 
 			switch (this->node->contentDirection) {
 
-				case kDisplayNodeContentDirectionVertical:
+				case kContentDirectionVertical:
 					this->shrinkNodesVertically(shrinkables, remainingH, shrinkablesWeight);
 					break;
 
-				case kDisplayNodeContentDirectionHorizontal:
+				case kContentDirectionHorizontal:
 					this->shrinkNodesHorizontally(shrinkables, remainingW, shrinkablesWeight);
 					break;
 			}
@@ -507,29 +507,29 @@ RelativeLayoutResolver::resolve()
 
 	switch (this->node->contentDisposition) {
 
-		case kDisplayNodeContentDispositionStart:
+		case kContentDispositionStart:
 			offset = 0;
 			break;
 
-		case kDisplayNodeContentDispositionEnd:
+		case kContentDispositionEnd:
 			offset = directionSpace;
 			break;
 
-		case kDisplayNodeContentDispositionCenter:
+		case kContentDispositionCenter:
 			offset = directionSpace / 2;
 			break;
 
-		case kDisplayNodeContentDispositionSpaceBetween:
+		case kContentDispositionSpaceBetween:
 			spacer = directionSpace / (nodes.size() - 1);
 			offset = 0;
 			break;
 
-		case kDisplayNodeContentDispositionSpaceEvenly:
+		case kContentDispositionSpaceEvenly:
 			spacer = directionSpace / (nodes.size() + 1);
 			offset = spacer;
 			break;
 
-		case kDisplayNodeContentDispositionSpaceAround:
+		case kContentDispositionSpaceAround:
 			spacer = directionSpace / (nodes.size() + 1);
 			offset = spacer / 2;
 			break;
@@ -550,7 +550,7 @@ RelativeLayoutResolver::resolve()
 
 		switch (this->node->contentDirection) {
 
-			case kDisplayNodeContentDirectionVertical:
+			case kContentDirectionVertical:
 
 				x = round(x + this->resolveAlignment(child, alignmentSpace), scale);
 				y = round(y + offset + marginT, scale);
@@ -559,7 +559,7 @@ RelativeLayoutResolver::resolve()
 
 				break;
 
-			case kDisplayNodeContentDirectionHorizontal:
+			case kContentDirectionHorizontal:
 
 				x = round(x + offset + marginL, scale);
 				y = round(y + this->resolveAlignment(child, alignmentSpace), scale);

@@ -26,6 +26,8 @@ public:
 	friend class Parser;
 	friend class Stylesheet;
 
+	~Argument();
+
 	const vector<Value*>& getValues() const {
 		return this->values;
 	}

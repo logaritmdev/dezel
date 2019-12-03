@@ -26,6 +26,7 @@ public:
 
 	NumberValue(string value, ValueUnit unit);
 	NumberValue(double value, ValueUnit unit);
+	~NumberValue();
 
 	double getValue() const {
 		return this->value;

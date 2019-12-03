@@ -12,6 +12,11 @@ VariableValue::VariableValue(string name) : Value(kValueTypeVariable, kValueUnit
 
 }
 
+VariableValue::~VariableValue()
+{
+	
+}
+
 string
 VariableValue::toString()
 {

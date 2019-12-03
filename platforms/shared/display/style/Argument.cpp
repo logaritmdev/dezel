@@ -7,6 +7,13 @@ namespace Style {
 // MARK: Public API
 //------------------------------------------------------------------------------
 
+Argument::~Argument()
+{
+	for (auto value : this->values) {
+		delete value;
+	}
+}
+
 string
 Argument::toString()
 {

@@ -16,7 +16,7 @@ public final class JavaScriptFunctionCallback: JavaScriptCallback {
 	final public func argument(_ index: Int) -> JavaScriptValue {
 
 		guard let handle = self.argv[index] else {
-			return self.context.jsundefined
+			return self.context.Undefined
 		}
 
 		return JavaScriptValue.create(self.context, handle: handle)
@@ -29,7 +29,7 @@ public final class JavaScriptFunctionCallback: JavaScriptCallback {
 	final public func argument(_ index: Int, protect: Bool) -> JavaScriptValue {
 
 		guard let handle = self.argv[index] else {
-			return self.context.jsundefined
+			return self.context.Undefined
 		}
 
 		return JavaScriptValue.create(self.context, handle: handle, protect: protect)

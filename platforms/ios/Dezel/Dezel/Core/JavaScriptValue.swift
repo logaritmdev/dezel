@@ -219,7 +219,7 @@ open class JavaScriptValue: NSObject {
 	 * @since 0.2.0
 	 */
 	public lazy var string: String = {
-		return JavaScriptValueToString(self.context.handle, self.handle).strdup
+		return JavaScriptValueToString(self.context.handle, self.handle).string(release: true)
 	}()
 
 	/**
@@ -821,7 +821,7 @@ internal extension JavaScriptValue {
  * @hidden
  */
 internal func toJs(_ value: JavaScriptProperty?, in context: JavaScriptContext) -> JSValueRef? {
-	return value?.toHandle(context) ?? context.jsnull.handle
+	return value?.toHandle(context) ?? context.Null.handle
 }
 
 /**
@@ -830,7 +830,7 @@ internal func toJs(_ value: JavaScriptProperty?, in context: JavaScriptContext) 
  * @hidden
  */
 internal func toJs(_ value: JavaScriptValue?, in context: JavaScriptContext) -> JSValueRef? {
-	return value?.toHandle(context) ?? context.jsnull.handle
+	return value?.toHandle(context) ?? context.Null.handle
 }
 
 /**

@@ -70,18 +70,12 @@ public protocol DisplayNodeDelegate: AnyObject {
 	 * @method measure
 	 * @since 0.7.0
 	 */
-	func measure(node: DisplayNode, in: CGSize, min: CGSize, max: CGSize) -> CGSize?
+	func measure(node: DisplayNode, bounds: CGSize, min: CGSize, max: CGSize) -> CGSize?
 
 	/**
-	 * @method getProperty
+	 * @method resolve
 	 * @since 0.7.0
 	 */
-	func getProperty(_ name: String) -> JavaScriptProperty?
-
-	/**
-	 * @method setProperty
-	 * @since 0.7.0
-	 */
-	func setProperty(_ name: String, value: JavaScriptProperty)
+	func resolve(node: DisplayNode, property: String) -> JavaScriptProperty?
 
 }

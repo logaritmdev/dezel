@@ -349,16 +349,6 @@ open class WrapperView: UIView, TransitionListener {
 	}
 
 	/**
-	 * @property visible
-	 * @since 0.1.0
-	 */
-	open var visible: Bool = true {
-		willSet {
-			self.isHidden = !newValue
-		}
-	}
-
-	/**
 	 * @property drawable
 	 * @since 0.4.0
 	 */

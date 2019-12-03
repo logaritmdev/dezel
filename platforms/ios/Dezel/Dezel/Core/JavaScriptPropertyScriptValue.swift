@@ -7,16 +7,6 @@
 open class JavaScriptPropertyScriptValue : JavaScriptPropertyValue {
 
 	//--------------------------------------------------------------------------
-	// MARK: Properties
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @property data
-	 * @since 0.7.0
-	 */
-	private var value: JavaScriptValue
-
-	//--------------------------------------------------------------------------
 	// MARK: Methods
 	//--------------------------------------------------------------------------
 
@@ -26,8 +16,6 @@ open class JavaScriptPropertyScriptValue : JavaScriptPropertyValue {
 	 * @hidden
 	 */
 	public init(value: JavaScriptValue) {
-
-		self.value = value
 
 		/*
 		 * The value was parsed before being assigned here,
@@ -52,6 +40,8 @@ open class JavaScriptPropertyScriptValue : JavaScriptPropertyValue {
 				type = .object
 			case value.isArray:
 				type = .array
+			case value.isFunction:
+				type = .callback
 
 			default:
 				type = .null
@@ -65,7 +55,7 @@ open class JavaScriptPropertyScriptValue : JavaScriptPropertyValue {
 	 * @since 0.7.0
 	 */
 	override open func toString() -> String {
-		return self.value.string
+		return self.value!.string
 	}
 
 	/**
@@ -73,7 +63,7 @@ open class JavaScriptPropertyScriptValue : JavaScriptPropertyValue {
 	 * @since 0.7.0
 	 */
 	override open func toNumber() -> Double {
-		return self.value.number
+		return self.value!.number
 	}
 
 	/**
@@ -81,6 +71,6 @@ open class JavaScriptPropertyScriptValue : JavaScriptPropertyValue {
 	 * @since 0.7.0
 	 */
 	override open func toBoolean() -> Bool {
-		return self.value.boolean
+		return self.value!.boolean
 	}
 }

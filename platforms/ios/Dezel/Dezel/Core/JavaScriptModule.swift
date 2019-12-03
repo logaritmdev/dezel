@@ -1,6 +1,6 @@
 /**
  * @class JavaScriptModule
- * @since 0.1.0
+ * @since 0.7.0
  */
 open class JavaScriptModule {
 
@@ -9,18 +9,10 @@ open class JavaScriptModule {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method register
+	 * @method configure
 	 * @since 0.7.0
 	 */
-	open func register(context: JavaScriptContext) {
-
-	}
-
-	/**
-	 * @method unregister
-	 * @since 0.7.0
-	 */
-	open func unregister(context: JavaScriptContext) {
+	open func configure(context: JavaScriptContext) {
 
 	}
 }

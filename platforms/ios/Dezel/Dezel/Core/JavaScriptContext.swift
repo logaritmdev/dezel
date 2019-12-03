@@ -9,34 +9,34 @@ open class JavaScriptContext {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @const jsnull
+	 * @const Null
 	 * @since 0.7.0
 	 */
-	private(set) public lazy var jsnull: JavaScriptValue = {
+	private(set) public lazy var Null: JavaScriptValue = {
 		return self.createNull()
 	}()
 
 	/**
-	 * @const jsundefined
+	 * @const Undefined
 	 * @since 0.7.0
 	 */
-	private(set) public lazy var jsundefined: JavaScriptValue = {
+	private(set) public lazy var Undefined: JavaScriptValue = {
 		return self.createUndefined()
 	}()
 
 	/**
-	 * @const jstrue
+	 * @const True
 	 * @since 0.7.0
 	 */
-	private(set) public lazy var jstrue: JavaScriptValue = {
+	private(set) public lazy var True: JavaScriptValue = {
 		return self.createBoolean(true)
 	}()
 
 	/**
-	 * @const jsfalse
+	 * @const False
 	 * @since 0.7.0
 	 */
-	private(set) public lazy var jsfalse: JavaScriptValue = {
+	private(set) public lazy var False: JavaScriptValue = {
 		return self.createBoolean(false)
 	}()
 

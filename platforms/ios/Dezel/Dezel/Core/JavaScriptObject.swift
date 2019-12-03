@@ -58,26 +58,6 @@ open class JavaScriptObject: JavaScriptValue {
 	}
 
 	//--------------------------------------------------------------------------
-	// MARK: Methods - Dynamic Access
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method getProperty
-	 * @since 0.7.0
-	 */
-	open func getProperty(_ name: String) -> JavaScriptProperty? {
-		return self.value(forKey: name) as? JavaScriptProperty
-	}
-
-	/**
-	 * @method setProperty
-	 * @since 0.7.0
-	 */
-	open func setProperty(_ name: String, value: JavaScriptProperty) {
-		self.setValue(value, forKey: name)
-	}
-
-	//--------------------------------------------------------------------------
 	// MARK: Methods - Extensions
 	//--------------------------------------------------------------------------
 

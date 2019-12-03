@@ -25,6 +25,7 @@ public:
 	friend class Stylesheet;
 
 	VariableValue(string name);
+	~VariableValue();
 
 	const string& getName() const {
 		return this->name;

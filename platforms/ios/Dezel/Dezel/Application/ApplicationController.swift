@@ -245,7 +245,7 @@ open class ApplicationController: UIViewController, StylesheetDelegate {
 		self.modules.append(JavaScriptApplicationModule())
 
 		for module in self.modules {
-			module.register(context: self.context)
+			module.configure(context: self.context)
 		}
 
 		for source in self.sources {

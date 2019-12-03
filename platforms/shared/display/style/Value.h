@@ -1,35 +1,14 @@
 #ifndef Value_h
 #define Value_h
 
+#include "DisplayBase.h"
+
 #include <string>
 
 namespace Dezel {
 namespace Style {
 
 using std::string;
-
-enum ValueType {
-	kValueTypeNull,
-	kValueTypeString,
-	kValueTypeNumber,
-	kValueTypeBoolean,
-	kValueTypeFunction,
-	kValueTypeVariable
-};
-
-enum ValueUnit {
-	kValueUnitNone,
-	kValueUnitPX,
-	kValueUnitPC,
-	kValueUnitVW,
-	kValueUnitVH,
-	kValueUnitPW,
-	kValueUnitPH,
-	kValueUnitCW,
-	kValueUnitCH,
-	kValueUnitDeg,
-	kValueUnitRad
-};
 
 class Parser;
 class Stylesheet;
@@ -52,6 +31,8 @@ public:
 	friend class Stylesheet;
 
 	Value(ValueType type, ValueUnit unit);
+
+	virtual ~Value();
 
 	ValueType getType() const {
 		return this->type;

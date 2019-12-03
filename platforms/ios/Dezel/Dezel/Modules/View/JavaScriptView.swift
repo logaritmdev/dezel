@@ -177,42 +177,36 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	/**
 	 * @property resolvedTranslationX
 	 * @since 0.7.0
-	 * @hidden
 	 */
 	private(set) public var resolvedTranslationX: Double = 0.0
 
 	/**
 	 * @property resolvedTranslationY
 	 * @since 0.7.0
-	 * @hidden
 	 */
 	private(set) public var resolvedTranslationY: Double = 0.0
 
 	/**
 	 * @property resolvedTranslationZ
 	 * @since 0.7.0
-	 * @hidden
 	 */
 	private(set) public var resolvedTranslationZ: Double = 0.0
 
 	/**
 	 * @property resolvedRotationX
 	 * @since 0.7.0
-	 * @hidden
 	 */
 	private(set) public var resolvedRotationX: Double = 0.0
 
 	/**
 	 * @property resolvedRotationY
 	 * @since 0.7.0
-	 * @hidden
 	 */
 	private(set) public var resolvedRotationY: Double = 0.0
 
 	/**
 	 * @property resolvedRotationZ
 	 * @since 0.7.0
-	 * @hidden
 	 */
 	private(set) public var resolvedRotationZ: Double = 0.0
 
@@ -350,24 +344,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 
 		if let scrollable = self.content as? Scrollable {
 			scrollable.scrollableDelegate = self
-		}
-
-		self.wrapper.draw = { [weak self] ctx in
-			// TODO
-			// Pass the instance
-			guard let view = self else {
-				return
-			}
-
-			if (view.canvas == nil) {
-				view.canvas = view.createCanvas()
-			}
-
-			let canvas = view.canvas!
-
-			canvas.use(ctx)
-			view.callMethod("nativeOnRedraw", arguments: [canvas])
-			canvas.use(nil)
 		}
 
 		self.scheduleUpdate()
@@ -1362,8 +1338,16 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @method measure
 	 * @since 0.7.0
 	 */
-	open func measure(node: DisplayNode, in bounds: CGSize, min: CGSize, max: CGSize) -> CGSize? {
+	open func measure(node: DisplayNode, bounds: CGSize, min: CGSize, max: CGSize) -> CGSize? {
 		return self.measure(in: bounds, min: min, max: max)
+	}
+
+	/**
+	 * @method resolve
+	 * @since 0.7.0
+	 */
+	open func resolve(node: DisplayNode, property: String) -> JavaScriptProperty? {
+		return self.value(forKey: property) as? JavaScriptProperty
 	}
 
 	//--------------------------------------------------------------------------
@@ -1783,7 +1767,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @since 0.7.0
 	 */
 	@objc public lazy var backgroundImageTint = JavaScriptProperty(string: "none") { value in
-		self.wrapper.backgroundImageTint = CGColorParse(value.string)
+		self.wrapper.backgroundImageTint = CGColor.parse(value)
 	}
 
 	/**
@@ -1792,20 +1776,22 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 */
 	@objc public lazy var border = JavaScriptProperty(string: "0 #000") { value in
 
-		let components = value.string.split(separator: " ")
-		if (components.count < 2) {
+		guard let composite = value.composite else {
 			return
 		}
 
-		let width = String(components[0]).trim()
-		let color = String(components[1]).trim()
-
-		if let width = JavaScriptPropertyParser.parse(width), width.isNumber {
-			self.borderTopWidth.reset(width.number, unit: width.unit)
-			self.borderLeftWidth.reset(width.number, unit: width.unit)
-			self.borderRightWidth.reset(width.number, unit: width.unit)
-			self.borderBottomWidth.reset(width.number, unit: width.unit)
+		let values = composite.values
+		if (values.count < 2) {
+			return
 		}
+
+		let width = values[0]
+		let color = values[1]
+
+		self.borderTopWidth.reset(width)
+		self.borderLeftWidth.reset(width)
+		self.borderRightWidth.reset(width)
+		self.borderBottomWidth.reset(width)
 
 		self.borderTopColor.reset(color)
 		self.borderLeftColor.reset(color)
@@ -1819,13 +1805,17 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 */
 	@objc public lazy var borderTop = JavaScriptProperty(string: "0 #000") { value in
 
-		let components = value.string.split(separator: " ")
-		if (components.count < 2) {
+		guard let composite = value.composite else {
 			return
 		}
 
-		self.borderTopWidth.parse(String(components[0]).trim())
-		self.borderTopColor.reset(String(components[1]).trim())
+		let values = composite.values
+		if (values.count < 2) {
+			return
+		}
+
+		self.borderTopWidth.reset(values[0])
+		self.borderTopColor.reset(values[1])
 	}
 
 	/**
@@ -1834,13 +1824,17 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 */
 	@objc public lazy var borderLeft = JavaScriptProperty(string: "0 #000") { value in
 
-		let components = value.string.split(separator: " ")
-		if (components.count < 2) {
+		guard let composite = value.composite else {
 			return
 		}
 
-		self.borderLeftWidth.parse(String(components[0]).trim())
-		self.borderLeftColor.reset(String(components[1]).trim())
+		let values = composite.values
+		if (values.count < 2) {
+			return
+		}
+
+		self.borderLeftWidth.reset(values[0])
+		self.borderLeftColor.reset(values[1])
 	}
 
 	/**
@@ -1849,13 +1843,17 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 */
 	@objc public lazy var borderRight = JavaScriptProperty(string: "0 #000") { value in
 
-		let components = value.string.split(separator: " ")
-		if (components.count < 2) {
+		guard let composite = value.composite else {
 			return
 		}
 
-		self.borderRightWidth.parse(String(components[0]).trim())
-		self.borderRightColor.reset(String(components[1]).trim())
+		let values = composite.values
+		if (values.count < 2) {
+			return
+		}
+
+		self.borderRightWidth.reset(values[0])
+		self.borderRightColor.reset(values[1])
 	}
 
 	/**
@@ -1864,13 +1862,17 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 */
 	@objc public lazy var borderBottom = JavaScriptProperty(string: "0 #000") { value in
 
-		let components = value.string.split(separator: " ")
-		if (components.count < 2) {
+		guard let composite = value.composite else {
 			return
 		}
 
-		self.borderBottomWidth.parse(String(components[0]).trim())
-		self.borderBottomColor.reset(String(components[1]).trim())
+		let values = composite.values
+		if (values.count < 2) {
+			return
+		}
+
+		self.borderBottomWidth.reset(values[0])
+		self.borderBottomColor.reset(values[1])
 	}
 
 	/**
@@ -1878,10 +1880,10 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @since 0.7.0
 	 */
 	@objc public lazy var borderWidth = JavaScriptProperty(number: 0) { value in
-		self.borderTopWidth.reset(value.number, unit: value.unit)
-		self.borderLeftWidth.reset(value.number, unit: value.unit)
-		self.borderRightWidth.reset(value.number, unit: value.unit)
-		self.borderBottomWidth.reset(value.number, unit: value.unit)
+		self.borderTopWidth.reset(value)
+		self.borderLeftWidth.reset(value)
+		self.borderRightWidth.reset(value)
+		self.borderBottomWidth.reset(value)
 	}
 
 	/**
@@ -1889,10 +1891,10 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @since 0.7.0
 	 */
 	@objc public lazy var borderColor = JavaScriptProperty(string: "#000") { value in
-		self.borderTopColor.reset(value.string)
-		self.borderLeftColor.reset(value.string)
-		self.borderRightColor.reset(value.string)
-		self.borderBottomColor.reset(value.string)
+		self.borderTopColor.reset(value)
+		self.borderLeftColor.reset(value)
+		self.borderRightColor.reset(value)
+		self.borderBottomColor.reset(value)
 	}
 
 	/**
@@ -1900,7 +1902,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @since 0.7.0
 	 */
 	@objc public lazy var borderTopColor = JavaScriptProperty(string: "#000") { value in
-		self.wrapper.borderTopColor = CGColorParse(value.string)
+		self.wrapper.borderTopColor = CGColor.parse(value)
 	}
 
 	/**
@@ -1908,7 +1910,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @since 0.7.0
 	 */
 	@objc public lazy var borderLeftColor = JavaScriptProperty(string: "#000") { value in
-		self.wrapper.borderLeftColor = CGColorParse(value.string)
+		self.wrapper.borderLeftColor = CGColor.parse(value)
 	}
 
 	/**
@@ -1916,7 +1918,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @since 0.7.0
 	 */
 	@objc public lazy var borderRightColor = JavaScriptProperty(string: "#000") { value in
-		self.wrapper.borderRightColor = CGColorParse(value.string)
+		self.wrapper.borderRightColor = CGColor.parse(value)
 	}
 
 	/**
@@ -1924,7 +1926,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @since 0.7.0
 	 */
 	@objc public lazy var borderBottomColor = JavaScriptProperty(string: "#000") { value in
-		self.wrapper.borderBottomColor = CGColorParse(value.string)
+		self.wrapper.borderBottomColor = CGColor.parse(value)
 	}
 
 	/**
@@ -2028,10 +2030,10 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @since 0.7.0
 	 */
 	@objc public lazy var borderRadius = JavaScriptProperty(number: 0) { value in
-		self.borderTopLeftRadius.reset(value.number, unit: value.unit)
-		self.borderTopRightRadius.reset(value.number, unit: value.unit)
-		self.borderBottomLeftRadius.reset(value.number, unit: value.unit)
-		self.borderBottomRightRadius.reset(value.number, unit: value.unit)
+		self.borderTopLeftRadius.reset(value)
+		self.borderTopRightRadius.reset(value)
+		self.borderBottomLeftRadius.reset(value)
+		self.borderBottomRightRadius.reset(value)
 	}
 
 	/**
@@ -2427,10 +2429,10 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @since 0.7.0
 	 */
 	@objc public lazy var margin = JavaScriptProperty(number: 0) { value in
-		self.marginTop.reset(value.number, unit: value.unit)
-		self.marginLeft.reset(value.number, unit: value.unit)
-		self.marginRight.reset(value.number, unit: value.unit)
-		self.marginBottom.reset(value.number, unit: value.unit)
+		self.marginTop.reset(value)
+		self.marginLeft.reset(value)
+		self.marginRight.reset(value)
+		self.marginBottom.reset(value)
 	}
 
 	/**
@@ -2534,10 +2536,10 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @since 0.7.0
 	 */
 	@objc public lazy var padding = JavaScriptProperty(number: 0) { value in
-		self.paddingTop.reset(value.number, unit: value.unit)
-		self.paddingLeft.reset(value.number, unit: value.unit)
-		self.paddingRight.reset(value.number, unit: value.unit)
-		self.paddingBottom.reset(value.number, unit: value.unit)
+		self.paddingTop.reset(value)
+		self.paddingLeft.reset(value)
+		self.paddingRight.reset(value)
+		self.paddingBottom.reset(value)
 	}
 
 	/**
@@ -2801,7 +2803,8 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @since 0.7.0
 	 */
 	@objc public lazy var visible = JavaScriptProperty(boolean: true) { value in
-		self.wrapper.visible = value.boolean
+		self.wrapper.isHidden = !value.boolean
+		self.content.isHidden = !value.boolean
 		self.node.setVisible(value.boolean)
 	}
 
@@ -3037,7 +3040,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_backgroundColor(callback: JavaScriptSetterCallback) {
-		self.backgroundColor.reset(callback.value, lock: self)
+		self.backgroundColor.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3097,7 +3100,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_backgroundImageAnchorTop(callback: JavaScriptSetterCallback) {
-		self.backgroundImageAnchorTop.reset(callback.value, lock: self)
+		self.backgroundImageAnchorTop.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3117,7 +3120,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_backgroundImageAnchorLeft(callback: JavaScriptSetterCallback) {
-		self.backgroundImageAnchorLeft.reset(callback.value, lock: self)
+		self.backgroundImageAnchorLeft.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3137,7 +3140,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_backgroundImageTop(callback: JavaScriptSetterCallback) {
-		self.backgroundImageTop.reset(callback.value, lock: self)
+		self.backgroundImageTop.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3157,7 +3160,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_backgroundImageLeft(callback: JavaScriptSetterCallback) {
-		self.backgroundImageLeft.reset(callback.value, lock: self)
+		self.backgroundImageLeft.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3177,7 +3180,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_backgroundImageWidth(callback: JavaScriptSetterCallback) {
-		self.backgroundImageWidth.reset(callback.value, lock: self)
+		self.backgroundImageWidth.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3197,7 +3200,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_backgroundImageHeight(callback: JavaScriptSetterCallback) {
-		self.backgroundImageHeight.reset(callback.value, lock: self)
+		self.backgroundImageHeight.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3217,7 +3220,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_backgroundImageTint(callback: JavaScriptSetterCallback) {
-		self.backgroundImageTint.reset(callback.value, lock: self)
+		self.backgroundImageTint.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3230,18 +3233,19 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	@objc open func jsGet_border(callback: JavaScriptGetterCallback) {
 
 		let width = self.context.createEmptyObject()
+		let color = self.context.createEmptyObject()
+		let value = self.context.createEmptyObject()
+
 		width.property("top", property: self.borderTopWidth)
 		width.property("left", property: self.borderLeftWidth)
 		width.property("right", property: self.borderRightWidth)
 		width.property("bottom", property: self.borderBottomWidth)
 
-		let color = self.context.createEmptyObject()
 		color.property("top", property: self.borderTopColor)
 		color.property("left", property: self.borderLeftColor)
 		color.property("right", property: self.borderRightColor)
 		color.property("bottom", property: self.borderBottomColor)
 
-		let value = self.context.createEmptyObject()
 		value.property("width", value: width)
 		value.property("color", value: color)
 
@@ -3254,7 +3258,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_border(callback: JavaScriptSetterCallback) {
-		self.border.reset(callback.value, lock: self)
+		self.border.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3274,7 +3278,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_borderTop(callback: JavaScriptSetterCallback) {
-		self.borderTop.reset(callback.value, lock: self)
+		self.borderTop.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3294,7 +3298,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_borderLeft(callback: JavaScriptSetterCallback) {
-		self.borderLeft.reset(callback.value, lock: self)
+		self.borderLeft.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3314,7 +3318,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_borderRight(callback: JavaScriptSetterCallback) {
-		self.borderRight.reset(callback.value, lock: self)
+		self.borderRight.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3334,7 +3338,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_borderBottom(callback: JavaScriptSetterCallback) {
-		self.borderBottom.reset(callback.value, lock: self)
+		self.borderBottom.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3347,6 +3351,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	@objc open func jsGet_borderWidth(callback: JavaScriptGetterCallback) {
 
 		let value = self.context.createEmptyObject()
+
 		value.property("top", property: self.borderTopWidth)
 		value.property("left", property: self.borderLeftWidth)
 		value.property("right", property: self.borderRightWidth)
@@ -3361,7 +3366,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_borderWidth(callback: JavaScriptSetterCallback) {
-		self.borderWidth.reset(callback.value, lock: self)
+		self.borderWidth.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3374,6 +3379,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	@objc open func jsGet_borderColor(callback: JavaScriptGetterCallback) {
 
 		let value = self.context.createEmptyObject()
+
 		value.property("top", property: self.borderTopColor)
 		value.property("left", property: self.borderLeftColor)
 		value.property("right", property: self.borderRightColor)
@@ -3388,7 +3394,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_borderColor(callback: JavaScriptSetterCallback) {
-		self.borderWidth.reset(callback.value, lock: self)
+		self.borderWidth.reset(callback.value, lock: self, parse: true)
 	}
 
 	//-------------------------------------------------------------------------
@@ -3408,7 +3414,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_borderTopColor(callback: JavaScriptSetterCallback) {
-		self.borderTopColor.reset(callback.value, lock: self)
+		self.borderTopColor.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3428,7 +3434,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_borderLeftColor(callback: JavaScriptSetterCallback) {
-		self.borderLeftColor.reset(callback.value, lock: self)
+		self.borderLeftColor.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3448,7 +3454,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_borderRightColor(callback: JavaScriptSetterCallback) {
-		self.borderRightColor.reset(callback.value, lock: self)
+		self.borderRightColor.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3468,7 +3474,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_borderBottomColor(callback: JavaScriptSetterCallback) {
-		self.borderBottomColor.reset(callback.value, lock: self)
+		self.borderBottomColor.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3488,7 +3494,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_borderTopWidth(callback: JavaScriptSetterCallback) {
-		self.borderTopWidth.reset(callback.value, lock: self)
+		self.borderTopWidth.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3508,7 +3514,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_borderLeftWidth(callback: JavaScriptSetterCallback) {
-		self.borderLeftWidth.reset(callback.value, lock: self)
+		self.borderLeftWidth.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3528,7 +3534,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_borderRightWidth(callback: JavaScriptSetterCallback) {
-		self.borderRightWidth.reset(callback.value, lock: self)
+		self.borderRightWidth.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3548,7 +3554,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_borderBottomWidth(callback: JavaScriptSetterCallback) {
-		self.borderBottomWidth.reset(callback.value, lock: self)
+		self.borderBottomWidth.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3568,7 +3574,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_minBorderTopWidth(callback: JavaScriptSetterCallback) {
-		self.minBorderTopWidth.reset(callback.value, lock: self)
+		self.minBorderTopWidth.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3588,7 +3594,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_maxBorderTopWidth(callback: JavaScriptSetterCallback) {
-		self.maxBorderTopWidth.reset(callback.value, lock: self)
+		self.maxBorderTopWidth.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3608,7 +3614,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_minBorderLeftWidth(callback: JavaScriptSetterCallback) {
-		self.minBorderLeftWidth.reset(callback.value, lock: self)
+		self.minBorderLeftWidth.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3628,7 +3634,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_maxBorderLeftWidth(callback: JavaScriptSetterCallback) {
-		self.maxBorderLeftWidth.reset(callback.value, lock: self)
+		self.maxBorderLeftWidth.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3648,7 +3654,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_minBorderRightWidth(callback: JavaScriptSetterCallback) {
-		self.minBorderRightWidth.reset(callback.value, lock: self)
+		self.minBorderRightWidth.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3668,7 +3674,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_maxBorderRightWidth(callback: JavaScriptSetterCallback) {
-		self.maxBorderRightWidth.reset(callback.value, lock: self)
+		self.maxBorderRightWidth.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3688,7 +3694,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_minBorderBottomWidth(callback: JavaScriptSetterCallback) {
-		self.minBorderBottomWidth.reset(callback.value, lock: self)
+		self.minBorderBottomWidth.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3708,7 +3714,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_maxBorderBottomWidth(callback: JavaScriptSetterCallback) {
-		self.maxBorderBottomWidth.reset(callback.value, lock: self)
+		self.maxBorderBottomWidth.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3735,7 +3741,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_borderRadius(callback: JavaScriptSetterCallback) {
-		self.borderRadius.reset(callback.value, lock: self)
+		self.borderRadius.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3755,7 +3761,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_borderTopLeftRadius(callback: JavaScriptSetterCallback) {
-		self.borderTopLeftRadius.reset(callback.value, lock: self)
+		self.borderTopLeftRadius.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3775,7 +3781,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_borderTopRightRadius(callback: JavaScriptSetterCallback) {
-		self.borderTopRightRadius.reset(callback.value, lock: self)
+		self.borderTopRightRadius.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3795,7 +3801,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_borderBottomLeftRadius(callback: JavaScriptSetterCallback) {
-		self.borderBottomLeftRadius.reset(callback.value, lock: self)
+		self.borderBottomLeftRadius.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3815,7 +3821,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_borderBottomRightRadius(callback: JavaScriptSetterCallback) {
-		self.borderBottomRightRadius.reset(callback.value, lock: self)
+		self.borderBottomRightRadius.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3835,7 +3841,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_shadowBlur(callback: JavaScriptSetterCallback) {
-		self.shadowBlur.reset(callback.value, lock: self)
+		self.shadowBlur.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3855,7 +3861,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_shadowColor(callback: JavaScriptSetterCallback) {
-		self.shadowColor.reset(callback.value, lock: self)
+		self.shadowColor.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3875,7 +3881,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_shadowOffsetTop(callback: JavaScriptSetterCallback) {
-		self.shadowOffsetTop.reset(callback.value, lock: self)
+		self.shadowOffsetTop.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3895,7 +3901,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_shadowOffsetLeft(callback: JavaScriptSetterCallback) {
-		self.shadowOffsetLeft.reset(callback.value, lock: self)
+		self.shadowOffsetLeft.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3915,7 +3921,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_top(callback: JavaScriptSetterCallback) {
-		self.top.reset(callback.value, lock: self)
+		self.top.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3935,7 +3941,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_left(callback: JavaScriptSetterCallback) {
-		self.left.reset(callback.value, lock: self)
+		self.left.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3955,7 +3961,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_right(callback: JavaScriptSetterCallback) {
-		self.right.reset(callback.value, lock: self)
+		self.right.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3975,7 +3981,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_bottom(callback: JavaScriptSetterCallback) {
-		self.bottom.reset(callback.value, lock: self)
+		self.bottom.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -3995,7 +4001,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_minTop(callback: JavaScriptSetterCallback) {
-		self.minTop.reset(callback.value, lock: self)
+		self.minTop.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4015,7 +4021,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_maxTop(callback: JavaScriptSetterCallback) {
-		self.maxTop.reset(callback.value, lock: self)
+		self.maxTop.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4035,7 +4041,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_minLeft(callback: JavaScriptSetterCallback) {
-		self.minLeft.reset(callback.value, lock: self)
+		self.minLeft.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4055,7 +4061,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_maxLeft(callback: JavaScriptSetterCallback) {
-		self.maxLeft.reset(callback.value, lock: self)
+		self.maxLeft.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4075,7 +4081,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_minRight(callback: JavaScriptSetterCallback) {
-		self.minRight.reset(callback.value, lock: self)
+		self.minRight.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4095,7 +4101,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_maxRight(callback: JavaScriptSetterCallback) {
-		self.maxRight.reset(callback.value, lock: self)
+		self.maxRight.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4115,7 +4121,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_minBottom(callback: JavaScriptSetterCallback) {
-		self.minBottom.reset(callback.value, lock: self)
+		self.minBottom.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4135,7 +4141,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_maxBottom(callback: JavaScriptSetterCallback) {
-		self.maxBottom.reset(callback.value, lock: self)
+		self.maxBottom.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4155,7 +4161,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_anchorTop(callback: JavaScriptSetterCallback) {
-		self.anchorTop.reset(callback.value, lock: self)
+		self.anchorTop.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4175,7 +4181,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_anchorLeft(callback: JavaScriptSetterCallback) {
-		self.anchorLeft.reset(callback.value, lock: self)
+		self.anchorLeft.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4195,7 +4201,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_width(callback: JavaScriptSetterCallback) {
-		self.width.reset(callback.value, lock: self)
+		self.width.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4215,7 +4221,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_height(callback: JavaScriptSetterCallback) {
-		self.height.reset(callback.value, lock: self)
+		self.height.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4235,7 +4241,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_minWidth(callback: JavaScriptSetterCallback) {
-		self.minWidth.reset(callback.value, lock: self)
+		self.minWidth.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4255,7 +4261,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_maxWidth(callback: JavaScriptSetterCallback) {
-		self.maxWidth.reset(callback.value, lock: self)
+		self.maxWidth.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4275,7 +4281,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_minHeight(callback: JavaScriptSetterCallback) {
-		self.minHeight.reset(callback.value, lock: self)
+		self.minHeight.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4295,7 +4301,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_maxHeight(callback: JavaScriptSetterCallback) {
-		self.maxHeight.reset(callback.value, lock: self)
+		self.maxHeight.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4354,7 +4360,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_contentTop(callback: JavaScriptSetterCallback) {
-		self.contentTop.reset(callback.value, lock: self)
+		self.contentTop.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4374,7 +4380,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_contentLeft(callback: JavaScriptSetterCallback) {
-		self.contentLeft.reset(callback.value, lock: self)
+		self.contentLeft.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4394,7 +4400,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_contentWidth(callback: JavaScriptSetterCallback) {
-		self.contentWidth.reset(callback.value, lock: self)
+		self.contentWidth.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4414,7 +4420,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_contentHeight(callback: JavaScriptSetterCallback) {
-		self.contentHeight.reset(callback.value, lock: self)
+		self.contentHeight.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4434,7 +4440,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_contentInsetTop(callback: JavaScriptSetterCallback) {
-		self.contentInsetTop.reset(callback.value, lock: self)
+		self.contentInsetTop.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4454,7 +4460,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_contentInsetLeft(callback: JavaScriptSetterCallback) {
-		self.contentInsetLeft.reset(callback.value, lock: self)
+		self.contentInsetLeft.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4474,7 +4480,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_contentInsetRight(callback: JavaScriptSetterCallback) {
-		self.contentInsetRight.reset(callback.value, lock: self)
+		self.contentInsetRight.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4494,7 +4500,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_contentInsetBottom(callback: JavaScriptSetterCallback) {
-		self.contentInsetBottom.reset(callback.value, lock: self)
+		self.contentInsetBottom.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4520,6 +4526,26 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	//--------------------------------------------------------------------------
 
 	/**
+	 * @method jsGet_contentAlignment
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@objc open func jsGet_contentAlignment(callback: JavaScriptGetterCallback) {
+		callback.returns(self.contentAlignment)
+	}
+
+	/**
+	 * @method jsSet_contentAlignment
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@objc open func jsSet_contentAlignment(callback: JavaScriptSetterCallback) {
+		self.contentAlignment.reset(callback.value, lock: self)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
 	 * @method jsGet_contentDisposition
 	 * @since 0.7.0
 	 * @hidden
@@ -4540,21 +4566,21 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method jsGet_contentAlignment
+	 * @method jsGet_overscroll
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsGet_contentAlignment(callback: JavaScriptGetterCallback) {
-		callback.returns(self.contentAlignment)
+	@objc open func jsGet_overscroll(callback: JavaScriptGetterCallback) {
+		callback.returns(self.overscroll)
 	}
 
 	/**
-	 * @method jsSet_contentAlignment
+	 * @method jsSet_overscroll
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsSet_contentAlignment(callback: JavaScriptSetterCallback) {
-		self.contentAlignment.reset(callback.value, lock: self)
+	@objc open func jsSet_overscroll(callback: JavaScriptSetterCallback) {
+		self.overscroll.reset(callback.value, lock: self)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4600,26 +4626,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method jsGet_overscroll
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	@objc open func jsGet_overscroll(callback: JavaScriptGetterCallback) {
-		callback.returns(self.overscroll)
-	}
-
-	/**
-	 * @method jsSet_overscroll
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	@objc open func jsSet_overscroll(callback: JavaScriptSetterCallback) {
-		self.overscroll.reset(callback.value, lock: self)
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
      * @method jsGet_scrollMomentum
      * @since 0.7.0
      * @hidden
@@ -4654,7 +4660,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_scrollTop(callback: JavaScriptSetterCallback) {
-		self.scrollTop.reset(callback.value, lock: self)
+		self.scrollTop.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4674,7 +4680,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_scrollLeft(callback: JavaScriptSetterCallback) {
-		self.scrollTop.reset(callback.value, lock: self)
+		self.scrollTop.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4723,7 +4729,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_margin(callback: JavaScriptSetterCallback) {
-		self.margin.reset(callback.value, lock: self)
+		self.margin.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4743,7 +4749,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_marginTop(callback: JavaScriptSetterCallback) {
-		self.marginTop.reset(callback.value, lock: self)
+		self.marginTop.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4763,7 +4769,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_marginLeft(callback: JavaScriptSetterCallback) {
-		self.marginLeft.reset(callback.value, lock: self)
+		self.marginLeft.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4783,7 +4789,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_marginRight(callback: JavaScriptSetterCallback) {
-		self.marginRight.reset(callback.value, lock: self)
+		self.marginRight.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4803,7 +4809,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_marginBottom(callback: JavaScriptSetterCallback) {
-		self.marginBottom.reset(callback.value, lock: self)
+		self.marginBottom.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4823,7 +4829,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_minMarginTop(callback: JavaScriptSetterCallback) {
-		self.minMarginTop.reset(callback.value, lock: self)
+		self.minMarginTop.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4843,7 +4849,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_maxMarginTop(callback: JavaScriptSetterCallback) {
-		self.maxMarginTop.reset(callback.value, lock: self)
+		self.maxMarginTop.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4863,7 +4869,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_minMarginLeft(callback: JavaScriptSetterCallback) {
-		self.minMarginLeft.reset(callback.value, lock: self)
+		self.minMarginLeft.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4883,7 +4889,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_maxMarginLeft(callback: JavaScriptSetterCallback) {
-		self.maxMarginLeft.reset(callback.value, lock: self)
+		self.maxMarginLeft.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4903,7 +4909,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_minMarginRight(callback: JavaScriptSetterCallback) {
-		self.minMarginRight.reset(callback.value, lock: self)
+		self.minMarginRight.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4923,7 +4929,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_maxMarginRight(callback: JavaScriptSetterCallback) {
-		self.maxMarginRight.reset(callback.value, lock: self)
+		self.maxMarginRight.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4943,7 +4949,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_minMarginBottom(callback: JavaScriptSetterCallback) {
-		self.minMarginBottom.reset(callback.value, lock: self)
+		self.minMarginBottom.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4963,7 +4969,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_maxMarginBottom(callback: JavaScriptSetterCallback) {
-		self.maxMarginBottom.reset(callback.value, lock: self)
+		self.maxMarginBottom.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -4990,7 +4996,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_padding(callback: JavaScriptSetterCallback) {
-		self.padding.reset(callback.value, lock: self)
+		self.padding.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5010,7 +5016,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_paddingTop(callback: JavaScriptSetterCallback) {
-		self.paddingTop.reset(callback.value, lock: self)
+		self.paddingTop.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5030,7 +5036,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_paddingLeft(callback: JavaScriptSetterCallback) {
-		self.paddingLeft.reset(callback.value, lock: self)
+		self.paddingLeft.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5050,7 +5056,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_paddingRight(callback: JavaScriptSetterCallback) {
-		self.paddingRight.reset(callback.value, lock: self)
+		self.paddingRight.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5070,7 +5076,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_paddingBottom(callback: JavaScriptSetterCallback) {
-		self.paddingBottom.reset(callback.value, lock: self)
+		self.paddingBottom.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5090,7 +5096,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_minPaddingTop(callback: JavaScriptSetterCallback) {
-		self.minPaddingTop.reset(callback.value, lock: self)
+		self.minPaddingTop.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5110,7 +5116,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_maxPaddingTop(callback: JavaScriptSetterCallback) {
-		self.maxPaddingTop.reset(callback.value, lock: self)
+		self.maxPaddingTop.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5130,7 +5136,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_minPaddingLeft(callback: JavaScriptSetterCallback) {
-		self.minPaddingLeft.reset(callback.value, lock: self)
+		self.minPaddingLeft.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5150,7 +5156,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_maxPaddingLeft(callback: JavaScriptSetterCallback) {
-		self.maxPaddingLeft.reset(callback.value, lock: self)
+		self.maxPaddingLeft.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5170,7 +5176,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_minPaddingRight(callback: JavaScriptSetterCallback) {
-		self.minPaddingRight.reset(callback.value, lock: self)
+		self.minPaddingRight.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5190,7 +5196,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_maxPaddingRight(callback: JavaScriptSetterCallback) {
-		self.maxPaddingRight.reset(callback.value, lock: self)
+		self.maxPaddingRight.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5210,7 +5216,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_minPaddingBottom(callback: JavaScriptSetterCallback) {
-		self.minPaddingBottom.reset(callback.value, lock: self)
+		self.minPaddingBottom.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5230,7 +5236,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_maxPaddingBottom(callback: JavaScriptSetterCallback) {
-		self.maxPaddingBottom.reset(callback.value, lock: self)
+		self.maxPaddingBottom.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5290,7 +5296,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_originX(callback: JavaScriptSetterCallback) {
-		self.originX.reset(callback.value, lock: self)
+		self.originX.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5310,7 +5316,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_originY(callback: JavaScriptSetterCallback) {
-		self.originY.reset(callback.value, lock: self)
+		self.originY.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5330,7 +5336,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_originZ(callback: JavaScriptSetterCallback) {
-		self.originZ.reset(callback.value, lock: self)
+		self.originZ.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5350,7 +5356,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_translationX(callback: JavaScriptSetterCallback) {
-		self.translationX.reset(callback.value, lock: self)
+		self.translationX.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5370,7 +5376,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_translationY(callback: JavaScriptSetterCallback) {
-		self.translationY.reset(callback.value, lock: self)
+		self.translationY.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5390,7 +5396,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_translationZ(callback: JavaScriptSetterCallback) {
-		self.translationZ.reset(callback.value, lock: self)
+		self.translationZ.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5410,7 +5416,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_rotationX(callback: JavaScriptSetterCallback) {
-		self.rotationX.reset(callback.value, lock: self)
+		self.rotationX.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5430,7 +5436,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_rotationY(callback: JavaScriptSetterCallback) {
-		self.rotationY.reset(callback.value, lock: self)
+		self.rotationY.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5450,7 +5456,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_rotationZ(callback: JavaScriptSetterCallback) {
-		self.rotationZ.reset(callback.value, lock: self)
+		self.rotationZ.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5470,7 +5476,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_scaleX(callback: JavaScriptSetterCallback) {
-		self.scaleX.reset(callback.value, lock: self)
+		self.scaleX.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5490,7 +5496,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_scaleY(callback: JavaScriptSetterCallback) {
-		self.scaleY.reset(callback.value, lock: self)
+		self.scaleY.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5510,7 +5516,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_scaleZ(callback: JavaScriptSetterCallback) {
-		self.scaleZ.reset(callback.value, lock: self)
+		self.scaleZ.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5530,7 +5536,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_zIndex(callback: JavaScriptSetterCallback) {
-		self.zIndex.reset(callback.value, lock: self)
+		self.zIndex.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5690,7 +5696,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_touchOffsetTop(callback: JavaScriptSetterCallback) {
-		self.touchOffsetTop.reset(callback.value, lock: self)
+		self.touchOffsetTop.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5710,7 +5716,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_touchOffsetLeft(callback: JavaScriptSetterCallback) {
-		self.touchOffsetLeft.reset(callback.value, lock: self)
+		self.touchOffsetLeft.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5730,7 +5736,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_touchOffsetRight(callback: JavaScriptSetterCallback) {
-		self.touchOffsetRight.reset(callback.value, lock: self)
+		self.touchOffsetRight.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -5750,7 +5756,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @hidden
 	 */
 	@objc open func jsSet_touchOffsetBottom(callback: JavaScriptSetterCallback) {
-		self.touchOffsetBottom.reset(callback.value, lock: self)
+		self.touchOffsetBottom.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------

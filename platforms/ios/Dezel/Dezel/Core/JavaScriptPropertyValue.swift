@@ -14,13 +14,19 @@ open class JavaScriptPropertyValue {
 	 * @property type
 	 * @since 0.7.0
 	 */
-	public var type: JavaScriptPropertyType = .null
+	private(set) public var type: JavaScriptPropertyType = .null
 
 	/**
 	 * @property unit
 	 * @since 0.7.0
 	 */
-	public var unit: JavaScriptPropertyUnit = .none
+	private(set) public var unit: JavaScriptPropertyUnit = .none
+
+	/**
+	 * @property value
+	 * @since 0.7.0
+	 */
+	public var value: JavaScriptValue?
 
 	/**
 	 * @property string
@@ -46,13 +52,6 @@ open class JavaScriptPropertyValue {
 		return self.toBoolean()
 	}()
 
-	/**
-	 * @property value
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private var value: JavaScriptValue?
-
 	//--------------------------------------------------------------------------
 	// MARK: Methods
 	//--------------------------------------------------------------------------
@@ -73,6 +72,86 @@ open class JavaScriptPropertyValue {
 		 */
 
 		self.value = value
+	}
+
+	/**
+	 * @property isNull
+	 * @since 0.7.0
+	 */
+	public var isNull: Bool {
+		return self.type == .null
+	}
+
+	/**
+	 * @property isString
+	 * @since 0.7.0
+	 */
+	public var isString: Bool {
+		return self.type == .string
+	}
+
+	/**
+	 * @property isNumber
+	 * @since 0.7.0
+	 */
+	public var isNumber: Bool {
+		return self.type == .number
+	}
+
+	/**
+	 * @property isBoolean
+	 * @since 0.7.0
+	 */
+	public var isBoolean: Bool {
+		return self.type == .boolean
+	}
+
+	/**
+	 * @property isObject
+	 * @since 0.7.0
+	 */
+	public var isObject: Bool {
+		return self.type == .object
+	}
+
+	/**
+	 * @property isArray
+	 * @since 0.7.0
+	 */
+	public var isArray: Bool {
+		return self.type == .array
+	}
+
+	/**
+	 * @property isCallback
+	 * @since 0.7.0
+	 */
+	public var isCallback: Bool {
+		return self.type == .callback
+	}
+
+	/**
+	 * @property isVariable
+	 * @since 0.7.0
+	 */
+	public var isVariable: Bool {
+		return self.type == .variable
+	}
+
+	/**
+	 * @property isFunction
+	 * @since 0.7.0
+	 */
+	public var isFunction: Bool {
+		return self.type == .function
+	}
+
+	/**
+	 * @property isComposite
+	 * @since 0.7.0
+	 */
+	public var isComposite: Bool {
+		return self.type == .composite
 	}
 
 	/**
@@ -136,7 +215,7 @@ open class JavaScriptPropertyValue {
 	 * @since 0.7.0
 	 */
 	open func equals(_ value: Double, unit: JavaScriptPropertyUnit) -> Bool {
-		return self.type == .number && self.number == value && self.unit == unit
+		return self.type == .number && self.unit == unit && self.number == value
 	}
 
 	/**
@@ -148,7 +227,7 @@ open class JavaScriptPropertyValue {
 	}
 
 	/**
-	 * @method equals
+	 * @method cast
 	 * @since 0.7.0
 	 */
 	open func cast<T>(_ type: T.Type) -> T? {
@@ -175,7 +254,7 @@ open class JavaScriptPropertyValue {
 			switch (self.type) {
 
 				case .null:
-					self.value = context.jsnull
+					self.value = context.Null
 				case .string:
 					self.value = context.createString(self.string)
 				case .number:

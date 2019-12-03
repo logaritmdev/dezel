@@ -92,9 +92,9 @@ private:
 	DisplayNodeSize width;
 	DisplayNodeSize height;
 
-	DisplayNodeContentDirection contentDirection = kDisplayNodeContentDirectionVertical;
-	DisplayNodeContentAlignment contentAlignment = kDisplayNodeContentAlignmentStart;
-	DisplayNodeContentDisposition contentDisposition = kDisplayNodeContentDispositionStart;
+	ContentDirection contentDirection = kContentDirectionVertical;
+	ContentAlignment contentAlignment = kContentAlignmentStart;
+	ContentDisposition contentDisposition = kContentDispositionStart;
 
 	DisplayNodeContentOrigin contentTop;
 	DisplayNodeContentOrigin contentLeft;
@@ -317,7 +317,7 @@ protected:
 		}
 	}
 
-	void measure(DisplayNodeMeasuredSize* size, double w, double h, double minw, double maxw, double minh, double maxh) {
+	void measure(MeasuredSize* size, double w, double h, double minw, double maxw, double minh, double maxh) {
 		if (this->measureCallback) {
 			this->measureCallback(reinterpret_cast<DisplayNodeRef>(this), size, w, h, minw, maxw, minh, maxh);
 		}
@@ -411,13 +411,13 @@ public:
 
 	void setVisible(bool visible);
 
-	void setAnchorTop(DisplayNodeAnchorType type, DisplayNodeAnchorUnit unit, double length);
-	void setAnchorLeft(DisplayNodeAnchorType type, DisplayNodeAnchorUnit unit, double length);
+	void setAnchorTop(AnchorType type, AnchorUnit unit, double length);
+	void setAnchorLeft(AnchorType type, AnchorUnit unit, double length);
 
-	void setTop(DisplayNodeOriginType type, DisplayNodeOriginUnit unit, double length);
-	void setLeft(DisplayNodeOriginType type, DisplayNodeOriginUnit unit, double length);
-	void setRight(DisplayNodeOriginType type, DisplayNodeOriginUnit unit, double length);
-	void setBottom(DisplayNodeOriginType type, DisplayNodeOriginUnit unit, double length);
+	void setTop(OriginType type, OriginUnit unit, double length);
+	void setLeft(OriginType type, OriginUnit unit, double length);
+	void setRight(OriginType type, OriginUnit unit, double length);
+	void setBottom(OriginType type, OriginUnit unit, double length);
 
 	void setMinTop(double min);
 	void setMaxTop(double max);
@@ -428,35 +428,35 @@ public:
 	void setMinBottom(double min);
 	void setMaxBottom(double max);
 
-	void setWidth(DisplayNodeSizeType type, DisplayNodeSizeUnit unit, double length);
-	void setHeight(DisplayNodeSizeType type, DisplayNodeSizeUnit unit, double length);
+	void setWidth(SizeType type, SizeUnit unit, double length);
+	void setHeight(SizeType type, SizeUnit unit, double length);
 
 	void setMinWidth(double min);
 	void setMaxWidth(double max);
 	void setMinHeight(double min);
 	void setMaxHeight(double max);
 
-	void setContentDirection(DisplayNodeContentDirection direction);
-	void setContentAlignment(DisplayNodeContentAlignment alignment);
-	void setContentDisposition(DisplayNodeContentDisposition placement);
+	void setContentDirection(ContentDirection direction);
+	void setContentAlignment(ContentAlignment alignment);
+	void setContentDisposition(ContentDisposition placement);
 
-	void setContentTop(DisplayNodeContentOriginType type, DisplayNodeContentOriginUnit unit, double length);
-	void setContentLeft(DisplayNodeContentOriginType type, DisplayNodeContentOriginUnit unit, double length);
-	void setContentWidth(DisplayNodeContentSizeType type, DisplayNodeContentSizeUnit unit, double length);
-	void setContentHeight(DisplayNodeContentSizeType type, DisplayNodeContentSizeUnit unit, double length);
+	void setContentTop(ContentOriginType type, ContentOriginUnit unit, double length);
+	void setContentLeft(ContentOriginType type, ContentOriginUnit unit, double length);
+	void setContentWidth(ContentSizeType type, ContentSizeUnit unit, double length);
+	void setContentHeight(ContentSizeType type, ContentSizeUnit unit, double length);
 
 	void setExpandFactor(double factor);
 	void setShrinkFactor(double factor);
 
-	void setBorderTop(DisplayNodeBorderType type, DisplayNodeBorderUnit unit, double length);
-	void setBorderLeft(DisplayNodeBorderType type, DisplayNodeBorderUnit unit, double length);
-	void setBorderRight(DisplayNodeBorderType type, DisplayNodeBorderUnit unit, double length);
-	void setBorderBottom(DisplayNodeBorderType type, DisplayNodeBorderUnit unit, double length);
+	void setBorderTop(BorderType type, BorderUnit unit, double length);
+	void setBorderLeft(BorderType type, BorderUnit unit, double length);
+	void setBorderRight(BorderType type, BorderUnit unit, double length);
+	void setBorderBottom(BorderType type, BorderUnit unit, double length);
 
-	void setMarginTop(DisplayNodeMarginType type, DisplayNodeMarginUnit unit, double length);
-	void setMarginLeft(DisplayNodeMarginType type, DisplayNodeMarginUnit unit, double length);
-	void setMarginRight(DisplayNodeMarginType type, DisplayNodeMarginUnit unit, double length);
-	void setMarginBottom(DisplayNodeMarginType type, DisplayNodeMarginUnit unit, double length);
+	void setMarginTop(MarginType type, MarginUnit unit, double length);
+	void setMarginLeft(MarginType type, MarginUnit unit, double length);
+	void setMarginRight(MarginType type, MarginUnit unit, double length);
+	void setMarginBottom(MarginType type, MarginUnit unit, double length);
 
 	void setMinMarginTop(double min);
 	void setMaxMarginTop(double max);
@@ -467,10 +467,10 @@ public:
 	void setMinMarginBottom(double min);
 	void setMaxMarginBottom(double max);
 
-	void setPaddingTop(DisplayNodePaddingType type, DisplayNodePaddingUnit unit, double length);
-	void setPaddingLeft(DisplayNodePaddingType type, DisplayNodePaddingUnit unit, double length);
-	void setPaddingRight(DisplayNodePaddingType type, DisplayNodePaddingUnit unit, double length);
-	void setPaddingBottom(DisplayNodePaddingType type, DisplayNodePaddingUnit unit, double length);
+	void setPaddingTop(PaddingType type, PaddingUnit unit, double length);
+	void setPaddingLeft(PaddingType type, PaddingUnit unit, double length);
+	void setPaddingRight(PaddingType type, PaddingUnit unit, double length);
+	void setPaddingBottom(PaddingType type, PaddingUnit unit, double length);
 
 	void setMinPaddingTop(double min);
 	void setMaxPaddingTop(double max);
@@ -635,36 +635,36 @@ public:
 
 	bool isRelative() const {
 		return (
-			this->top.type == kDisplayNodeOriginTypeAuto &&
-			this->left.type == kDisplayNodeOriginTypeAuto &&
-			this->right.type == kDisplayNodeOriginTypeAuto &&
-			this->bottom.type == kDisplayNodeOriginTypeAuto
+			this->top.type == kOriginTypeAuto &&
+			this->left.type == kOriginTypeAuto &&
+			this->right.type == kOriginTypeAuto &&
+			this->bottom.type == kOriginTypeAuto
 		);
 	}
 
 	bool isAbsolute() const {
 		return (
-			this->top.type == kDisplayNodeOriginTypeLength ||
-			this->left.type == kDisplayNodeOriginTypeLength ||
-			this->right.type == kDisplayNodeOriginTypeLength ||
-			this->bottom.type == kDisplayNodeOriginTypeLength
+			this->top.type == kOriginTypeLength ||
+			this->left.type == kOriginTypeLength ||
+			this->right.type == kOriginTypeLength ||
+			this->bottom.type == kOriginTypeLength
 		);
 	}
 
 	bool isFillingParentWidth() const {
-		return this->width.type == kDisplayNodeSizeTypeFill;
+		return this->width.type == kSizeTypeFill;
 	}
 
 	bool isFillingParentHeight() const {
-		return this->height.type == kDisplayNodeSizeTypeFill;
+		return this->height.type == kSizeTypeFill;
 	}
 
 	bool isWrappingContentWidth() const {
-		return this->width.type == kDisplayNodeSizeTypeWrap;
+		return this->width.type == kSizeTypeWrap;
 	}
 
 	bool isWrappingContentHeight() const {
-		return this->height.type == kDisplayNodeSizeTypeWrap;
+		return this->height.type == kSizeTypeWrap;
 	}
 
 	void invalidateSize();
