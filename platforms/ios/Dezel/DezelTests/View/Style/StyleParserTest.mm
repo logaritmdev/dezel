@@ -16,6 +16,25 @@
 using std::string;
 using namespace Dezel::Style;
 
+static void test(const Function* function, const vector<Argument*>& arguments, vector<Value*>& result)
+{
+ 	for (auto argument : arguments) {
+
+		for (auto value : argument->getValues()) {
+
+			if (value->getType() == kValueTypeString) {
+				result.push_back(new StringValue(dynamic_cast<StringValue*>(value)->getValue()));
+				continue;
+			}
+
+			if (value->getType() == kValueTypeNumber) {
+				result.push_back(new NumberValue(dynamic_cast<NumberValue*>(value)->getValue(), dynamic_cast<NumberValue*>(value)->getUnit()));
+				continue;
+			}
+		}
+	}
+}
+
 @interface StyleParserTest : XCTestCase {
 	Stylesheet* stylesheet;
 }
@@ -205,37 +224,54 @@ using namespace Dezel::Style;
 
 	XCTAssertEqual(selector->getHead()->getType(), "TypeDeclaration");
 
+	XCTAssertEqual(properties.get(0)->getName(), "prop1");
+	XCTAssertEqual(properties.get(1)->getName(), "prop2");
+	XCTAssertEqual(properties.get(2)->getName(), "prop3");
+	XCTAssertEqual(properties.get(3)->getName(), "prop4");
+
 	auto values = properties.get(0)->getValues();
 
-	XCTAssertEqual(properties.get(0)->getName(), "prop1");
-	XCTAssertEqual(dynamic_cast<StringValue*>(values[0])->getType(), kValueTypeString);
-	XCTAssertEqual(dynamic_cast<StringValue*>(values[0])->getValue(), "value1");
+	XCTAssertEqual(values.size(), 1);
+
+	if (values.size() == 1) {
+		XCTAssertEqual(dynamic_cast<StringValue*>(values[0])->getType(), kValueTypeString);
+		XCTAssertEqual(dynamic_cast<StringValue*>(values[0])->getValue(), "value1");
+	}
 
 	values = properties.get(1)->getValues();
 
-	XCTAssertEqual(properties.get(1)->getName(), "prop2");
-	XCTAssertEqual(dynamic_cast<StringValue*>(values[0])->getType(), kValueTypeString);
-	XCTAssertEqual(dynamic_cast<StringValue*>(values[0])->getValue(), "value2");
+	XCTAssertEqual(values.size(), 1);
+
+	if (values.size() == 1) {
+		XCTAssertEqual(dynamic_cast<StringValue*>(values[0])->getType(), kValueTypeString);
+		XCTAssertEqual(dynamic_cast<StringValue*>(values[0])->getValue(), "value2");
+	}
 
 	values = properties.get(2)->getValues();
 
-	XCTAssertEqual(properties.get(2)->getName(), "prop3");
-	XCTAssertEqual(dynamic_cast<StringValue*>(values[0])->getType(), kValueTypeString);
-	XCTAssertEqual(dynamic_cast<StringValue*>(values[0])->getValue(), "value3");
+	XCTAssertEqual(values.size(), 1);
+
+	if (values.size() == 1) {
+		XCTAssertEqual(dynamic_cast<StringValue*>(values[0])->getType(), kValueTypeString);
+		XCTAssertEqual(dynamic_cast<StringValue*>(values[0])->getValue(), "value3");
+	}
 
 	values = properties.get(3)->getValues();
 
-	XCTAssertEqual(properties.get(3)->getName(), "prop4");
-	XCTAssertEqual(dynamic_cast<FunctionValue*>(values[0])->getType(), kValueTypeFunction);
-	XCTAssertEqual(dynamic_cast<FunctionValue*>(values[0])->getName(), "function");
+	if (values.size() == 1) {
+		XCTAssertEqual(dynamic_cast<FunctionValue*>(values[0])->getType(), kValueTypeFunction);
+		XCTAssertEqual(dynamic_cast<FunctionValue*>(values[0])->getName(), "function");
+	}
 
 	auto arguments = dynamic_cast<FunctionValue*>(values[0])->getArguments();
 
 	XCTAssertEqual(arguments.size(), 3);
 
-	XCTAssertEqual(dynamic_cast<StringValue*>(arguments[0]->getValues().at(0))->getValue(), "param1");
-	XCTAssertEqual(dynamic_cast<StringValue*>(arguments[1]->getValues().at(0))->getValue(), "param2");
-	XCTAssertEqual(dynamic_cast<StringValue*>(arguments[2]->getValues().at(0))->getValue(), "param3");
+	if (arguments.size() == 3) {
+		XCTAssertEqual(dynamic_cast<StringValue*>(arguments[0]->getValues().at(0))->getValue(), "param1");
+		XCTAssertEqual(dynamic_cast<StringValue*>(arguments[1]->getValues().at(0))->getValue(), "param2");
+		XCTAssertEqual(dynamic_cast<StringValue*>(arguments[2]->getValues().at(0))->getValue(), "param3");
+	}
 
 	auto children = descriptor->getChildDescriptors();
 
@@ -254,7 +290,7 @@ using namespace Dezel::Style;
 
 	auto state = descriptor->getStateDescriptors().at(0);
 
-	XCTAssertEqual(state->getSelector()->getHead()->getState(), "state-descriptor");
+	XCTAssertEqual(state->getSelector()->getHead()->getStates().at(0), "state-descriptor");
 	XCTAssertEqual(state->getProperties().size(), 2);
 	XCTAssertEqual(state->getProperties().get(0)->getName(), "prop1");
 	XCTAssertEqual(state->getProperties().get(0)->getValues().at(0)->getType(), kValueTypeString);
@@ -263,7 +299,7 @@ using namespace Dezel::Style;
 
 	auto styleDescriptor = descriptor->getStyleDescriptors().at(0);
 
-	XCTAssertEqual(styleDescriptor->getSelector()->getHead()->getStyle(), "style-descriptor");
+	XCTAssertEqual(styleDescriptor->getSelector()->getHead()->getStyles().at(0), "style-descriptor");
 	XCTAssertEqual(styleDescriptor->getProperties().size(), 2);
 	XCTAssertEqual(styleDescriptor->getProperties().get(0)->getName(), "prop1");
 	XCTAssertEqual(styleDescriptor->getProperties().get(0)->getValues().at(0)->getType(), kValueTypeString);
@@ -399,6 +435,234 @@ using namespace Dezel::Style;
 	XCTAssertEqual(dynamic_cast<StringValue*>(properties.get(1)->getValues().at(0))->getValue(), "#000000");
 	XCTAssertEqual(dynamic_cast<StringValue*>(properties.get(2)->getValues().at(0))->getValue(), "#A00");
 	XCTAssertEqual(dynamic_cast<StringValue*>(properties.get(3)->getValues().at(0))->getValue(), "#AAAAAA");
+}
+
+-(void)testVariableDefinition {
+
+	try {
+
+		stylesheet->setVariable("some-variable", "10px solid #fff");
+
+	} catch (ParseException &e) {
+		[NSException raise:@"ParseException" format: @"%s", e.what()];
+	}
+
+	auto variable = stylesheet->getVariable("some-variable");
+
+	if (variable) {
+		XCTAssertEqual(variable->getValues().size(), 3);
+		XCTAssertEqual(dynamic_cast<NumberValue*>(variable->getValues().at(0))->getValue(), 10);
+		XCTAssertEqual(dynamic_cast<StringValue*>(variable->getValues().at(1))->getValue(), "solid");
+		XCTAssertEqual(dynamic_cast<StringValue*>(variable->getValues().at(2))->getValue(), "#fff");
+	} else {
+		XCTFail("Variable cannot be null");
+	}
+}
+
+-(void)testVariables {
+
+	string source = R""""(
+
+	Type {
+		property1: $some-variable;
+	}
+
+	)"""";
+
+	try {
+
+		stylesheet->setVariable("some-variable", "10px solid #fff");
+
+		Parser::parse(stylesheet, source);
+
+	} catch (ParseException &e) {
+		[NSException raise:@"ParseException" format: @"%s", e.what()];
+	}
+
+	auto properties = stylesheet->getRootDescriptors().front()->getProperties();
+
+	XCTAssertEqual(properties.size(), 1);
+	XCTAssertEqual(dynamic_cast<NumberValue*>(properties.get(0)->getValues().at(0))->getValue(), 10);
+	XCTAssertEqual(dynamic_cast<StringValue*>(properties.get(0)->getValues().at(1))->getValue(), "solid");
+	XCTAssertEqual(dynamic_cast<StringValue*>(properties.get(0)->getValues().at(2))->getValue(), "#fff");
+}
+
+-(void)testFunctionCall {
+
+	string source = R""""(
+
+		Type {
+			property1: test(2px, 3px);
+		}
+
+	)"""";
+
+	try {
+
+		stylesheet->addFunction(new Function("test", test));
+
+		Parser::parse(stylesheet, source);
+
+	} catch (ParseException &e) {
+		[NSException raise:@"ParseException" format: @"%s", e.what()];
+	}
+
+	auto properties = stylesheet->getRootDescriptors().front()->getProperties();
+
+	XCTAssertEqual(properties.get(0)->getValues().size(), 2);
+	XCTAssertEqual(dynamic_cast<NumberValue*>(properties.get(0)->getValues().at(0))->getValue(), 2);
+	XCTAssertEqual(dynamic_cast<NumberValue*>(properties.get(0)->getValues().at(1))->getValue(), 3);
+}
+
+-(void)testFunctionCallWithVariables {
+
+	string source = R""""(
+
+	Type {
+		property1: test($a, $b);
+	}
+
+	)"""";
+
+	try {
+
+		stylesheet->addFunction(new Function("test", test));
+		stylesheet->setVariable("a", "2px");
+		stylesheet->setVariable("b", "3px");
+		Parser::parse(stylesheet, source);
+
+	} catch (ParseException &e) {
+		[NSException raise:@"ParseException" format: @"%s", e.what()];
+	}
+
+	auto properties = stylesheet->getRootDescriptors().front()->getProperties();
+
+	XCTAssertEqual(properties.get(0)->getValues().size(), 2);
+	XCTAssertEqual(dynamic_cast<NumberValue*>(properties.get(0)->getValues().at(0))->getValue(), 2);
+	XCTAssertEqual(dynamic_cast<NumberValue*>(properties.get(0)->getValues().at(1))->getValue(), 3);
+}
+
+-(void)testNestedFunctionCall {
+
+	string source = R""""(
+
+	Type {
+		property1: test(2px, test(3px, 10px));
+	}
+
+	)"""";
+
+	try {
+
+		stylesheet->addFunction(new Function("test", test));
+		stylesheet->setVariable("a", "2px");
+		Parser::parse(stylesheet, source);
+
+	} catch (ParseException &e) {
+		[NSException raise:@"ParseException" format: @"%s", e.what()];
+	}
+
+	auto properties = stylesheet->getRootDescriptors().front()->getProperties();
+
+	XCTAssertEqual(dynamic_cast<NumberValue*>(properties.get(0)->getValues().at(0))->getValue(), 2);
+	XCTAssertEqual(dynamic_cast<NumberValue*>(properties.get(0)->getValues().at(1))->getValue(), 3);
+	XCTAssertEqual(dynamic_cast<NumberValue*>(properties.get(0)->getValues().at(2))->getValue(), 10);
+}
+
+-(void)testAddFunction {
+
+	string source = R""""(
+
+	Type {
+		property1: add(10px, 5px);
+	}
+
+	)"""";
+
+	try {
+
+		Parser::parse(stylesheet, source);
+
+	} catch (ParseException &e) {
+		[NSException raise:@"ParseException" format: @"%s", e.what()];
+	}
+
+	auto properties = stylesheet->getRootDescriptors().front()->getProperties();
+
+	XCTAssertEqual(dynamic_cast<NumberValue*>(properties.get(0)->getValues().at(0))->getValue(), 15);
+	XCTAssertEqual(dynamic_cast<NumberValue*>(properties.get(0)->getValues().at(0))->getUnit(), kValueUnitPX);
+}
+
+-(void)testSubFunction {
+
+	string source = R""""(
+
+	Type {
+		property1: sub(10px, 5px);
+	}
+
+	)"""";
+
+	try {
+
+		Parser::parse(stylesheet, source);
+
+	} catch (ParseException &e) {
+		[NSException raise:@"ParseException" format: @"%s", e.what()];
+	}
+
+	auto properties = stylesheet->getRootDescriptors().front()->getProperties();
+
+	XCTAssertEqual(dynamic_cast<NumberValue*>(properties.get(0)->getValues().at(0))->getValue(), 5);
+	XCTAssertEqual(dynamic_cast<NumberValue*>(properties.get(0)->getValues().at(0))->getUnit(), kValueUnitPX);
+}
+
+-(void)testMinFunction {
+
+	string source = R""""(
+
+	Type {
+		property1: min(10px, 5px);
+	}
+
+	)"""";
+
+	try {
+
+		Parser::parse(stylesheet, source);
+
+	} catch (ParseException &e) {
+		[NSException raise:@"ParseException" format: @"%s", e.what()];
+	}
+
+	auto properties = stylesheet->getRootDescriptors().front()->getProperties();
+
+	XCTAssertEqual(dynamic_cast<NumberValue*>(properties.get(0)->getValues().at(0))->getValue(), 5);
+	XCTAssertEqual(dynamic_cast<NumberValue*>(properties.get(0)->getValues().at(0))->getUnit(), kValueUnitPX);
+}
+
+-(void)testMaxFunction {
+
+	string source = R""""(
+
+	Type {
+		property1: max(10px, 5px);
+	}
+
+	)"""";
+
+	try {
+
+		Parser::parse(stylesheet, source);
+
+	} catch (ParseException &e) {
+		[NSException raise:@"ParseException" format: @"%s", e.what()];
+	}
+
+	auto properties = stylesheet->getRootDescriptors().front()->getProperties();
+
+	XCTAssertEqual(dynamic_cast<NumberValue*>(properties.get(0)->getValues().at(0))->getValue(), 10);
+	XCTAssertEqual(dynamic_cast<NumberValue*>(properties.get(0)->getValues().at(0))->getUnit(), kValueUnitPX);
 }
 
 @end

@@ -89,10 +89,9 @@ Parser::Parser(vector<Value*>& values, Tokenizer* tokenizer) : stylesheet(nullpt
 			break;
 		}
 
-		auto value = this->parseValue(tokens);
+		auto parsed = this->parseEvaluatedValue(tokens, values);
 
-		if (value) {
-			values.push_back(value);
+		if (parsed) {
 			tokens.nextToken();
 			continue;
 		}
@@ -210,6 +209,41 @@ Parser::parseProperty(TokenList& tokens, Descriptor* target)
 	return false;
 }
 
+bool
+Parser::parseEvaluatedValue(TokenList& tokens, vector<Value*>& values)
+{
+	auto result = this->parseValue(tokens);
+
+	if (result == nullptr) {
+		return false;
+	}
+
+	if (result->getType() == kValueTypeVariable ||
+		result->getType() == kValueTypeFunction) {
+
+		bool evaluated = false;
+
+		if (this->evaluateVariable(result, values)) evaluated = true;
+		if (this->evaluateFunction(result, values)) evaluated = true;
+
+		if (evaluated) {
+
+			/*
+			 * The parsed value has been replaced by the function or variable
+			 * and we don't need it anymore.
+			 */
+
+			delete result;
+
+			return true;
+		}
+	}
+
+	values.push_back(result);
+
+	return true;
+}
+
 Descriptor*
 Parser::parseDescriptor(TokenList& tokens)
 {
@@ -279,7 +313,7 @@ Parser::parseStyleDescriptor(TokenList& tokens)
 	selector->head = fragment;
 	selector->tail = fragment;
 
-	fragment->style = name;
+	fragment->styles.push_back(name);
 
 	descriptor->selector = selector;
 
@@ -329,7 +363,7 @@ Parser::parseStateDescriptor(TokenList& tokens)
 	selector->head = fragment;
 	selector->tail = fragment;
 
-	fragment->state = name;
+	fragment->states.push_back(name);
 
 	descriptor->selector = selector;
 
@@ -376,10 +410,9 @@ Parser::parseVariable(TokenList& tokens)
 
 	while (true) {
 
-		auto value = this->parseValue(tokens);
+		auto parsed = this->parseEvaluatedValue(tokens, variable->values);
 
-		if (value) {
-			variable->values.push_back(value);
+		if (parsed) {
 			tokens.nextToken();
 			continue;
 		}
@@ -508,10 +541,9 @@ Parser::parseProperty(TokenList& tokens)
 
 	while (true) {
 
-		auto value = this->parseValue(tokens);
+		auto parsed = this->parseEvaluatedValue(tokens, property->values);
 
-		if (value) {
-			property->values.push_back(value);
+		if (parsed) {
 			tokens.nextToken();
 			continue;
 		}
@@ -658,12 +690,7 @@ Parser::parseVariableValue(TokenList& tokens)
 		return nullptr;
 	}
 
-	auto variable = new VariableValue(tokens.getCurrTokenName());
-
-	tokens.nextToken();
-	tokens.skipSpace();
-
-	return variable;
+	return new VariableValue(tokens.getCurrTokenName());
 }
 
 Value*
@@ -709,7 +736,43 @@ Parser::parseFunctionValue(TokenList& tokens)
 		}
 
 		if (tokens.getCurrTokenType() == kTokenTypeVariable) {
-			argument->values.push_back(this->parseVariableValue(tokens));
+
+			auto value = this->parseVariableValue(tokens);
+
+			if (this->evaluateVariable(value, argument->values)) {
+
+				/*
+				 * The parsed value has been replaced by the variable  and we
+				 * don't need it anymore.
+				 */
+
+				delete value;
+
+			} else {
+				argument->values.push_back(value);
+			}
+
+			tokens.nextToken();
+			continue;
+		}
+
+		if (tokens.getCurrTokenType() == kTokenTypeFunction) {
+
+			auto value = this->parseFunctionValue(tokens);
+
+			if (this->evaluateFunction(value, argument->values)) {
+
+				/*
+				 * The parsed value has been replaced by the variable  and we
+				 * don't need it anymore.
+				 */
+
+				delete value;
+
+			} else {
+				argument->values.push_back(value);
+			}
+
 			tokens.nextToken();
 			continue;
 		}
@@ -731,6 +794,18 @@ Parser::parseFunctionValue(TokenList& tokens)
 	}
 
 	return function;
+}
+
+bool
+Parser::evaluateVariable(Value* value, vector<Value*>& result)
+{
+	return value->getType() == kValueTypeVariable ? dynamic_cast<VariableValue*>(value)->evaluate(this->stylesheet, result) : false;
+}
+
+bool
+Parser::evaluateFunction(Value* value, vector<Value*>& result)
+{
+	return value->getType() == kValueTypeFunction ? dynamic_cast<FunctionValue*>(value)->evaluate(this->stylesheet, result) : false;
 }
 
 string

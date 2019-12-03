@@ -89,7 +89,7 @@ Fragment::matchType(DisplayNode* node, Importance& importance)
 bool
 Fragment::matchStyle(DisplayNode* node, Importance& importance)
 {
-	if (this->style == "") {
+	if (this->styles.size() == 0) {
 
 		/*
 		 * This fragment des not specify a style. Consider it a match
@@ -114,25 +114,31 @@ Fragment::matchStyle(DisplayNode* node, Importance& importance)
 	auto beg = styles.begin();
 	auto end = styles.end();
 
-	auto it = find(
-		beg,
-		end,
-		this->style
-	);
+	bool success = false;
 
-	auto matched = it != end;
+	for (auto& style : this->styles) {
 
-	if (matched) {
-		importance.style += 1;
+		auto it = find(
+			beg,
+			end,
+			style
+		);
+
+		auto matched = it != end;
+
+		if (matched) {
+			success = true;
+			importance.style += 1;
+		}
 	}
 
-	return matched;
+	return success;
 }
 
 bool
 Fragment::matchState(DisplayNode* node, Importance& importance)
 {
-	if (this->state == "") {
+	if (this->states.size() == 0) {
 
 		/*
 		 * This fragment des not specify a style. Consider it a match
@@ -157,19 +163,25 @@ Fragment::matchState(DisplayNode* node, Importance& importance)
 	auto beg = states.begin();
 	auto end = states.end();
 
-	auto it = find(
-		beg,
-		end,
-		this->state
-	);
+	bool success = false;
 
-	auto matched = it != end;
+	for (auto& state : this->states) {
 
-	if (matched) {
-		importance.state += 1;
+		auto it = find(
+			beg,
+			end,
+			state
+		);
+
+		auto matched = it != end;
+
+		if (matched) {
+			success = true;
+			importance.state += 1;
+		}
 	}
 
-	return matched;
+	return success;
 }
 
 //------------------------------------------------------------------------------
@@ -214,14 +226,18 @@ Fragment::toString(int depth)
 		output.append(this->name);
 	}
 
-	if (this->style.size()) {
-		output.append("@style ");
-		output.append(this->style);
+	if (this->styles.size()) {
+		for (auto style : this->styles) {
+			output.append(".");
+			output.append(style);
+		}
 	}
 
-	if (this->state.size()) {
-		output.append("@state ");
-		output.append(this->state);
+	if (this->states.size()) {
+		for (auto state : this->states) {
+			output.append(":");
+			output.append(state);
+		}
 	}
 
 	return output;

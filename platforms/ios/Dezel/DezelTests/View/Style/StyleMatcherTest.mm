@@ -464,7 +464,7 @@ using namespace Dezel::Style;
 		XCTAssertEqual(matches[0].importance.state, 0);
 
 		XCTAssertEqual(matches[1].getDescriptor()->getSelector()->getTail()->getName(), "label");
-		XCTAssertEqual(matches[1].getDescriptor()->getSelector()->getParent()->getTail()->getStyle(), "styled");
+		XCTAssertEqual(matches[1].getDescriptor()->getSelector()->getParent()->getTail()->getStyles().at(0), "styled");
 
 		XCTAssertEqual(matches[1].importance.type, 5);
 		XCTAssertEqual(matches[1].importance.name, 1);
@@ -532,7 +532,7 @@ using namespace Dezel::Style;
 		XCTAssertEqual(matches.size(), 2);
 
 		XCTAssertEqual(matches[1].getDescriptor()->getSelector()->getTail()->getName(), "label");
-		XCTAssertEqual(matches[1].getDescriptor()->getSelector()->getParent()->getTail()->getState(), "pressed");
+		XCTAssertEqual(matches[1].getDescriptor()->getSelector()->getParent()->getTail()->getStates().at(0), "pressed");
 
 		XCTAssertEqual(matches[1].importance.type, 5);
 		XCTAssertEqual(matches[1].importance.name, 1);

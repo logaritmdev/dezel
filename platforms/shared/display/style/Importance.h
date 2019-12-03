@@ -1,5 +1,5 @@
-#ifndef Weight_h
-#define Weight_h
+#ifndef Importance_h
+#define Importance_h
 
 #include <string>
 

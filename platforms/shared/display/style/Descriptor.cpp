@@ -36,8 +36,8 @@ Descriptor::matchPath(DisplayNode* node, Importance& importance)
 {
 	auto test = this->selector->getTail();
 
-	if (test->isStyle() ||
-		test->isState()) {
+	if (test->hasStyle() ||
+		test->hasState()) {
 
 		test = test->getParent();
 
@@ -78,8 +78,8 @@ Descriptor::matchPath(DisplayNode* node, Importance& importance)
 			 continue;
 		}
 
-		if (test->isStyle() ||
-			test->isState()) {
+		if (test->hasStyle() ||
+			test->hasState()) {
 
 			test = test->getParent();
 

@@ -1,5 +1,5 @@
-#ifndef Rule_h
-#define Rule_h
+#ifndef Selector_h
+#define Selector_h
 
 #include "Importance.h"
 

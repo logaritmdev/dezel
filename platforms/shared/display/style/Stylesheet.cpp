@@ -24,88 +24,132 @@ using std::min;
 
 namespace Functions {
 
-static void min(const Function* function, const vector<Argument>& arguments, vector<Value*> result)
+static void add(const Function* function, const vector<Argument*>& arguments, vector<Value*>& result)
 {
-	function->assertArgumentCount(arguments, 2);
-
-	auto arg1 = arguments[0].getValues();
-	auto arg2 = arguments[1].getValues();
-
-	if (arg1.size() != arg2.size()) {
-		throw InvalidInvocationException(
-			"The function `min` requires that each argument have the same amount of values."
-		);
+	if (arguments.size() != 2) {
+		throw InvalidInvocationException("The function `add` requires 2 arguments.");
 	}
 
-	auto length = arg1.size();
+	auto aValues = arguments[0]->getValues();
+	auto bValues = arguments[1]->getValues();
 
-	result.reserve(length);
-
-	for (int i = 0; i < length; i++) {
-
-		auto va = arg1[i];
-		auto vb = arg2[i];
-
-		if (va->getType() != kValueTypeNumber ||
-			vb->getType() != kValueTypeNumber) {
-			throw InvalidInvocationException(
-				"The function `min` requires that each argument must be a number."
-			);
-		}
-
-		if (va->getUnit() != vb->getUnit()) {
-			throw InvalidInvocationException(
-				"The function `min` requires that each argument have the same type and unit."
-			);
-		}
-
-		auto na = reinterpret_cast<NumberValue*>(va)->getValue();
-		auto nb = reinterpret_cast<NumberValue*>(va)->getValue();
-
-		result.push_back(new NumberValue(std::min(na, nb), va->getUnit()));
+	if (aValues.size() > 1 ||
+		bValues.size() > 1) {
+		throw InvalidInvocationException("The function `add` can only add a single value for each parameter.");
 	}
+
+	auto aValue = aValues[0];
+	auto bValue = bValues[0];
+
+	if (aValue->getType() != kValueTypeNumber ||
+		bValue->getType() != kValueTypeNumber) {
+		throw InvalidInvocationException("The function `add` can only add numbers.");
+	}
+
+	auto aNumber = reinterpret_cast<NumberValue*>(aValue);
+	auto bNumber = reinterpret_cast<NumberValue*>(bValue);
+
+	if (aNumber->getUnit() != aNumber->getUnit()) {
+		throw InvalidInvocationException("The function `add` can only add a values with the same unit.");
+	}
+
+	result.push_back(new NumberValue(aNumber->getValue() + bNumber->getValue(), aNumber->getUnit()));
 }
 
-static void max(const Function* function, const vector<Argument>& arguments, vector<Value*> result)
+static void sub(const Function* function, const vector<Argument*>& arguments, vector<Value*>& result)
 {
-	function->assertArgumentCount(arguments, 2);
-
-	auto arg1 = arguments[0].getValues();
-	auto arg2 = arguments[1].getValues();
-
-	if (arg1.size() != arg2.size()) {
-		throw InvalidInvocationException(
-			"The function `min` requires that each argument have the same amount of values."
-		);
+	if (arguments.size() != 2) {
+		throw InvalidInvocationException("The function `sub` requires 2 arguments.");
 	}
 
-	auto length = arg1.size();
+	auto aValues = arguments[0]->getValues();
+	auto bValues = arguments[1]->getValues();
 
-	result.reserve(length);
-
-	for (int i = 0; i < length; i++) {
-
-		auto va = arg1[i];
-		auto vb = arg2[i];
-
-		if (va->getType() != kValueTypeNumber ||
-			vb->getType() != kValueTypeNumber) {
-			throw InvalidInvocationException(
-				"The function `min` requires that each argument must be a number."
-			);
-		}
-
-		if (va->getUnit() != vb->getUnit()) {
-			throw InvalidInvocationException(
-				"The function `min` requires that each argument have the same type and unit."
-			);
-		}
-
-		auto na = reinterpret_cast<NumberValue*>(va)->getValue();
-		auto nb = reinterpret_cast<NumberValue*>(va)->getValue();
-
-		result.push_back(new NumberValue(std::max(na, nb), va->getUnit()));
+	if (aValues.size() > 1 ||
+		bValues.size() > 1) {
+		throw InvalidInvocationException("The function `sub` can only add a single value for each parameter.");
 	}
+
+	auto aValue = aValues[0];
+	auto bValue = bValues[0];
+
+	if (aValue->getType() != kValueTypeNumber ||
+		bValue->getType() != kValueTypeNumber) {
+		throw InvalidInvocationException("The function `sub` can only add numbers.");
+	}
+
+	auto aNumber = reinterpret_cast<NumberValue*>(aValue);
+	auto bNumber = reinterpret_cast<NumberValue*>(bValue);
+
+	if (aNumber->getUnit() != aNumber->getUnit()) {
+		throw InvalidInvocationException("The function `sub` can only add a values with the same unit.");
+	}
+
+	result.push_back(new NumberValue(aNumber->getValue() - bNumber->getValue(), aNumber->getUnit()));
+}
+
+static void min(const Function* function, const vector<Argument*>& arguments, vector<Value*>& result)
+{
+	if (arguments.size() != 2) {
+		throw InvalidInvocationException("The function `min` requires 2 arguments.");
+	}
+
+	auto aValues = arguments[0]->getValues();
+	auto bValues = arguments[1]->getValues();
+
+	if (aValues.size() > 1 ||
+		bValues.size() > 1) {
+		throw InvalidInvocationException("The function `min` can only add a single value for each parameter.");
+	}
+
+	auto aValue = aValues[0];
+	auto bValue = bValues[0];
+
+	if (aValue->getType() != kValueTypeNumber ||
+		bValue->getType() != kValueTypeNumber) {
+		throw InvalidInvocationException("The function `min` can only add numbers.");
+	}
+
+	auto aNumber = reinterpret_cast<NumberValue*>(aValue);
+	auto bNumber = reinterpret_cast<NumberValue*>(bValue);
+
+	if (aNumber->getUnit() != aNumber->getUnit()) {
+		throw InvalidInvocationException("The function `min` can only add a values with the same unit.");
+	}
+
+	result.push_back(new NumberValue(std::min(aNumber->getValue(), bNumber->getValue()), aNumber->getUnit()));
+}
+
+static void max(const Function* function, const vector<Argument*>& arguments, vector<Value*>& result)
+{
+	if (arguments.size() != 2) {
+		throw InvalidInvocationException("The function `max` requires 2 arguments.");
+	}
+
+	auto aValues = arguments[0]->getValues();
+	auto bValues = arguments[1]->getValues();
+
+	if (aValues.size() > 1 ||
+		bValues.size() > 1) {
+		throw InvalidInvocationException("The function `max` can only add a single value for each parameter.");
+	}
+
+	auto aValue = aValues[0];
+	auto bValue = bValues[0];
+
+	if (aValue->getType() != kValueTypeNumber ||
+		bValue->getType() != kValueTypeNumber) {
+		throw InvalidInvocationException("The function `max` can only add numbers.");
+	}
+
+	auto aNumber = reinterpret_cast<NumberValue*>(aValue);
+	auto bNumber = reinterpret_cast<NumberValue*>(bValue);
+
+	if (aNumber->getUnit() != aNumber->getUnit()) {
+		throw InvalidInvocationException("The function `max` can only add a values with the same unit.");
+	}
+
+	result.push_back(new NumberValue(std::max(aNumber->getValue(), bNumber->getValue()), aNumber->getUnit()));
 }
 
 }
@@ -116,6 +160,8 @@ static void max(const Function* function, const vector<Argument>& arguments, vec
 
 Stylesheet::Stylesheet()
 {
+	this->addFunction(new Function("add", Functions::add));
+	this->addFunction(new Function("sub", Functions::sub));
 	this->addFunction(new Function("min", Functions::min));
 	this->addFunction(new Function("max", Functions::max));
 }

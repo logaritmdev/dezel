@@ -1,4 +1,5 @@
 #include "VariableValue.h"
+#include "Stylesheet.h"
 
 namespace Dezel {
 namespace Style {
@@ -15,6 +16,25 @@ VariableValue::VariableValue(string name) : Value(kValueTypeVariable, kValueUnit
 VariableValue::~VariableValue()
 {
 	
+}
+
+bool
+VariableValue::evaluate(Stylesheet* stylesheet, vector<Value*>& result)
+{
+	auto variable = stylesheet->getVariable(this->name);
+
+	if (variable) {
+
+		result.insert(
+			result.begin(),
+			variable->getValues().begin(),
+			variable->getValues().end()
+		);
+
+		return true;
+	}
+
+	return false;
 }
 
 string

@@ -1,4 +1,5 @@
 #include "FunctionValue.h"
+#include "Stylesheet.h"
 
 namespace Dezel {
 namespace Style {
@@ -14,9 +15,20 @@ FunctionValue::FunctionValue(string name) : Value(kValueTypeFunction, kValueUnit
 
 FunctionValue::~FunctionValue()
 {
-	for (auto argument : this->arguments) {
-		delete argument;
+	for (auto argument : this->arguments) delete argument;
+}
+
+bool
+FunctionValue::evaluate(Stylesheet* stylesheet, vector<Value*>& result)
+{
+	auto function = stylesheet->getFunction(this->name);
+
+	if (function) {
+		function->invoke(this->arguments, result);
+		return true;
 	}
+
+	return false;
 }
 
 string

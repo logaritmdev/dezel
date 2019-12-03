@@ -17,7 +17,7 @@ class Function {
 
 public:
 
-	typedef void (*Callback)(const Function* function, const vector<Argument>& arguments, vector<Value*> result);
+	typedef void (*Callback)(const Function* function, const vector<Argument*>& arguments, vector<Value*>& result);
 
 private:
 
@@ -39,14 +39,9 @@ public:
 		return this->name;
 	}
 
-	const void invoke(const vector<Argument>& arguments, vector<Value*> result) {
+	const void invoke(const vector<Argument*>& arguments, vector<Value*>& result) const {
 		this->callback(this, arguments, result);
 	}
-
-	void assertArgumentCount(const vector<Argument>& arguments, unsigned count) const;
-	void assertMinArgumentCount(const vector<Argument>& arguments, unsigned count) const;
-	void assertMaxArgumentCount(const vector<Argument>& arguments, unsigned count) const;
-
 };
 
 }

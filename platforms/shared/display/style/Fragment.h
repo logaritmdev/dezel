@@ -1,5 +1,5 @@
-#ifndef Selector_h
-#define Selector_h
+#ifndef Fragment_h
+#define Fragment_h
 
 #include <string>
 #include <vector>
@@ -31,8 +31,8 @@ private:
 
 	string name = "";
 	string type = "";
-	string style = "";
-	string state = "";
+	vector<string> styles;
+	vector<string> states;
 
 	bool matchName(DisplayNode* node, Importance& importance);
 	bool matchType(DisplayNode* node, Importance& importance);
@@ -69,20 +69,20 @@ public:
 		return this->type;
 	}
 
-	const string& getStyle() const {
-		return this->style;
+	const vector<string>& getStyles() const {
+		return this->styles;
 	}
 
-	const string& getState() const {
-		return this->state;
+	const vector<string>& getStates() const {
+		return this->states;
 	}
 
-	bool isStyle() const {
-		return this->style.length() > 0;
+	bool hasStyle() const {
+		return this->styles.size() > 0;
 	}
 
-	bool isState() const {
-		return this->state.length() > 0;
+	bool hasState() const {
+		return this->states.size() > 0;
 	}
 
 	bool match(DisplayNode* node, Importance& importance);

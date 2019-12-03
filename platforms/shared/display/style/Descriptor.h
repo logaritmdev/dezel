@@ -1,5 +1,5 @@
-#ifndef Ruleset_h
-#define Ruleset_h
+#ifndef Descriptor_h
+#define Descriptor_h
 
 #include "Selector.h"
 #include "Fragment.h"

@@ -4,11 +4,13 @@
 #include "DisplayBase.h"
 
 #include <string>
+#include <vector>
 
 namespace Dezel {
 namespace Style {
 
 using std::string;
+using std::vector;
 
 class Parser;
 class Stylesheet;

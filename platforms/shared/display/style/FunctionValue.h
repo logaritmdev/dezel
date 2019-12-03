@@ -39,6 +39,8 @@ public:
 		return this->arguments;
 	}
 
+	bool evaluate(Stylesheet* stylesheet, vector<Value*>& result);
+
 	string toString();
 
 };

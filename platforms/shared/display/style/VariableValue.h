@@ -31,6 +31,8 @@ public:
 		return this->name;
 	}
 
+	bool evaluate(Stylesheet* stylesheet, vector<Value*>& result);
+
 	string toString();
 };
 

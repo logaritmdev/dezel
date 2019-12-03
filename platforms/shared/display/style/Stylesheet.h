@@ -66,6 +66,13 @@ public:
 		return this->functions;
 	}
 
+	Variable* getVariable(string name) const {
+		return this->variables.find(name) != this->variables.end() ? this->variables.at(name) : nullptr;
+	}
+
+	Function* getFunction(string name) const {
+		return this->functions.find(name) != this->functions.end() ? this->functions.at(name) : nullptr;
+	}
 };
 
 }
