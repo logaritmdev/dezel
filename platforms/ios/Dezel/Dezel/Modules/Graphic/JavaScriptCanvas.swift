@@ -17,25 +17,25 @@ open class JavaScriptCanvas: JavaScriptClass {
 	private weak var ctx: CGContext?
 
 	/**
-	 * @property shadowOffset
+	 * @property resolvedShadowOffset
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private var measuredShadowOffset: CGSize = .zero
+	private var resolvedShadowOffset: CGSize = .zero
 
 	/**
 	 * @property shadowBlur
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private var measuredShadowBlur: CGFloat = 0
+	private var resolvedShadowBlur: CGFloat = 0
 
 	/**
 	 * @property shadowColor
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private var computedShadowColor: CGColor = .black
+	private var resolvedShadowColor: UIColor = .black
 
 	//--------------------------------------------------------------------------
 	// MARK: Methods
@@ -58,7 +58,7 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @since 0.7.0
 	 */
 	open lazy var fillStyle = JavaScriptProperty(string: "black") { value in
-		self.ctx?.setFillColor(CGColor.parse(value))
+		self.ctx?.setFillColor(UIColor(color: value).cgColor)
 	}
 
 	/**
@@ -66,7 +66,7 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @since 0.7.0
 	 */
 	open lazy var strokeStyle = JavaScriptProperty(string: "black") { value in
-		self.ctx?.setStrokeColor(CGColor.parse(value))
+		self.ctx?.setStrokeColor(UIColor(color: value).cgColor)
 	}
 
 	/**
@@ -108,8 +108,8 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @since 0.7.0
 	 */
 	open lazy var shadowOffsetX = JavaScriptProperty(number: 0.0) { value in
-		self.measuredShadowOffset.width = CGFloat(value.number)
-		self.ctx?.setShadow(offset: self.measuredShadowOffset, blur: self.measuredShadowBlur, color: self.computedShadowColor)
+		self.resolvedShadowOffset.width = CGFloat(value.number)
+		self.ctx?.setShadow(offset: self.resolvedShadowOffset, blur: self.resolvedShadowBlur, color: self.resolvedShadowColor.cgColor)
 	}
 
 	/**
@@ -117,8 +117,8 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @since 0.7.0
 	 */
 	open lazy var shadowOffsetY = JavaScriptProperty(number: 0.0) { value in
-		self.measuredShadowOffset.height = CGFloat(value.number)
-		self.ctx?.setShadow(offset: self.measuredShadowOffset, blur: self.measuredShadowBlur, color: self.computedShadowColor)
+		self.resolvedShadowOffset.height = CGFloat(value.number)
+		self.ctx?.setShadow(offset: self.resolvedShadowOffset, blur: self.resolvedShadowBlur, color: self.resolvedShadowColor.cgColor)
 	}
 
 	/**
@@ -126,8 +126,8 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @since 0.7.0
 	 */
 	open lazy var shadowBlur = JavaScriptProperty(number: 0.0) { value in
-		self.measuredShadowBlur = CGFloat(value.number)
-		self.ctx?.setShadow(offset: self.measuredShadowOffset, blur: self.measuredShadowBlur, color: self.computedShadowColor)
+		self.resolvedShadowBlur = CGFloat(value.number)
+		self.ctx?.setShadow(offset: self.resolvedShadowOffset, blur: self.resolvedShadowBlur, color: self.resolvedShadowColor.cgColor)
 	}
 
 	/**
@@ -135,8 +135,8 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @since 0.7.0
 	 */
 	open lazy var shadowColor = JavaScriptProperty(number: 0.0) { value in
-		self.computedShadowColor = CGColor.parse(value)
-		self.ctx?.setShadow(offset: self.measuredShadowOffset, blur: self.measuredShadowBlur, color: self.computedShadowColor)
+		self.resolvedShadowColor = UIColor(color: value)
+		self.ctx?.setShadow(offset: self.resolvedShadowOffset, blur: self.resolvedShadowBlur, color: self.resolvedShadowColor.cgColor)
 	}
 
 	/**

@@ -32,7 +32,7 @@ open class ImageLayer: Layer, TransitionListener {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	@NSManaged public var color: CGColor
+	@NSManaged public var tint: CGColor
 
 	/**
 	 * @property frame
@@ -98,7 +98,7 @@ open class ImageLayer: Layer, TransitionListener {
 	 */
 	public required init() {
 		super.init()
-		self.color = CGColor.transparent
+		self.tint = .clear
 		self.shape.listener = self
 	}
 
@@ -111,7 +111,7 @@ open class ImageLayer: Layer, TransitionListener {
 		super.init(layer: layer)
 
 		if let layer = layer as? ImageLayer {
-			self.color = layer.color
+			self.tint = layer.tint
 		}
 	}
 
@@ -144,9 +144,9 @@ open class ImageLayer: Layer, TransitionListener {
 		let tint: CGColor
 
 		if let presentationLayer = self.presentation() {
-			tint = presentationLayer.color
+			tint = presentationLayer.tint
 		} else {
-			tint = self.color
+			tint = self.tint
 		}
 
 		if (tint.alpha > 0) {
@@ -181,7 +181,7 @@ open class ImageLayer: Layer, TransitionListener {
 			switch (key) {
 
 				case "color":
-					animation.fromValue = current!.color
+					animation.fromValue = current!.tint
 
 				default:
 					break

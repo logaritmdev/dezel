@@ -219,7 +219,7 @@ open class TextLayer: Layer {
 	 * @property linkColor
 	 * @since 0.5.0
 	 */
-	open var linkColor: CGColor = CGColorCreateRGBA(r: 0, g: 0, b: 255, a: 1) {
+	open var linkColor: UIColor = .blue {
 		willSet {
 			self.invalidateAttributes()
 			self.invalidateAttributedText()
@@ -302,7 +302,7 @@ open class TextLayer: Layer {
 	 * @hidden
 	 */
 	private var textParserOptions: TextParser.Options = TextParser.Options(
-		linkTextColor: CGColorCreateRGBA(r: 0, g: 0, b: 1, a: 1),
+		linkTextColor: .blue,
 		linkTextDecoration: .underline
 	)
 

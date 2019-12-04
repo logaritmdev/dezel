@@ -349,7 +349,7 @@ public class JavaScriptProperty: NSObject {
 		self.lock = lock
 
 		if (parse) {
-			self.parse(value)
+			self.parse(value, lock: lock)
 			return
 		}
 
@@ -576,8 +576,13 @@ public class JavaScriptProperty: NSObject {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	internal func parse(_ value: String) {
-		ValueParse(value, toPtr(self), javaScriptPropertyParse)
+	internal func parse(_ value: String, lock: AnyObject? = nil) {
+		ParseValue(
+			value,
+			toPointer(self),
+			toPointer(lock),
+			javaScriptPropertyParse
+		)
 	}
 
 	/**
@@ -781,21 +786,17 @@ public class JavaScriptProperty: NSObject {
 }
 
 /**
- * @function toPtr
- * @since 0.7.0
- * @hidden
- */
-private func toPtr(_ val: JavaScriptProperty) -> UnsafeMutableRawPointer {
-	return Unmanaged.passUnretained(val).toOpaque()
-}
+* @function toPointer
+* @since 0.7.0
+* @hidden
+*/
+private func toPointer(_ val: AnyObject?) -> UnsafeMutableRawPointer? {
 
-/**
- * @function toVal
- * @since 0.7.0
- * @hidden
- */
-private func toVal(_ ptr: UnsafeMutableRawPointer) -> JavaScriptProperty {
-	return Unmanaged<JavaScriptProperty>.fromOpaque(ptr).takeUnretainedValue()
+	guard let val = val else {
+		return nil
+	}
+
+	return Unmanaged.passUnretained(val).toOpaque()
 }
 
 /**
@@ -803,73 +804,12 @@ private func toVal(_ ptr: UnsafeMutableRawPointer) -> JavaScriptProperty {
  * @since 0.7.0
  * @hidden
  */
-private let javaScriptPropertyParse: @convention(c) (UnsafeMutablePointer<ValueRef?>?, Int, UnsafeMutableRawPointer?) -> Void = { values, length, context in
+private let javaScriptPropertyParse: @convention(c) (ValueListRef?, UnsafeMutableRawPointer?, UnsafeMutableRawPointer?) -> Void = { values, target, lock in
 
 	let values = values!
-	let context = context!
+	let target = target!
 
-	let property = toVal(context)
-
-	if (length == 1) {
-
-		guard let value = values.pointee else {
-			return
-		}
-
-		switch (ValueGetType(value)) {
-
-			case kValueTypeNull:
-				property.resetWithNull()
-			case kValueTypeString:
-				property.resetWithString(value)
-			case kValueTypeNumber:
-				property.resetWithNumber(value)
-			case kValueTypeBoolean:
-				property.resetWithBoolean(value)
-			case kValueTypeVariable:
-				property.resetWithVariable(value)
-			case kValueTypeFunction:
-				property.resetWithFunction(value)
-
-			default:
-				break;
-		}
-
-		return
+	if let property = target.value as? JavaScriptProperty {
+		property.reset(values, lock: lock?.value)
 	}
-
-	/*
-	 * The parser returned multiple values. In this case we create a
-	 * composite value and reset the property with it.
-	 */
-
-	var components = [JavaScriptPropertyValue]()
-
-	for i in 0 ..< length {
-
-		guard let value = (values + i).pointee else {
-			continue
-		}
-
-		switch (ValueGetType(value)) {
-
-			case kValueTypeNull:
-				components.append(JavaScriptProperty.Null)
-			case kValueTypeString:
-				components.append(property.createString(value))
-			case kValueTypeNumber:
-				components.append(property.createNumber(value))
-			case kValueTypeBoolean:
-				components.append(property.createBoolean(value))
-			case kValueTypeVariable:
-				components.append(property.createVariable(value))
-			case kValueTypeFunction:
-				components.append(property.createFunction(value))
-
-			default:
-				break
-		}
-	}
-
-	property.reset(JavaScriptPropertyCompositeValue(values: components))
 }

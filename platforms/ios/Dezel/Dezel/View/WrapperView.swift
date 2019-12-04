@@ -44,11 +44,9 @@ open class WrapperView: UIView, TransitionListener {
 	 * @property borderTopColor
 	 * @since 0.1.0
 	 */
-	open var borderTopColor: CGColor = .black {
+	open var borderTopColor: UIColor = .black {
 		willSet {
-			if (self.borderTopColor != newValue) {
-				self.borderLayer.borderTopColor = newValue
-			}
+			self.borderLayer.borderTopColor = newValue.cgColor
 		}
 	}
 
@@ -56,11 +54,9 @@ open class WrapperView: UIView, TransitionListener {
 	 * @property borderLeftColor
 	 * @since 0.1.0
 	 */
-	open var borderLeftColor: CGColor = .black {
+	open var borderLeftColor: UIColor = .black {
 		willSet {
-			if (self.borderLeftColor != newValue) {
-				self.borderLayer.borderLeftColor = newValue
-			}
+			self.borderLayer.borderLeftColor = newValue.cgColor
 		}
 	}
 
@@ -68,11 +64,9 @@ open class WrapperView: UIView, TransitionListener {
 	 * @property borderRightColor
 	 * @since 0.1.0
 	 */
-	open var borderRightColor: CGColor = .black {
+	open var borderRightColor: UIColor = .black {
 		willSet {
-			if (self.borderRightColor != newValue) {
-				self.borderLayer.borderRightColor = newValue
-			}
+			self.borderLayer.borderRightColor = newValue.cgColor
 		}
 	}
 
@@ -80,11 +74,9 @@ open class WrapperView: UIView, TransitionListener {
 	 * @property borderBottomColor
 	 * @since 0.1.0
 	 */
-	open var borderBottomColor: CGColor = .black {
+	open var borderBottomColor: UIColor = .black {
 		willSet {
-			if (self.borderBottomColor != newValue) {
-				self.borderLayer.borderBottomColor = newValue
-			}
+			self.borderLayer.borderBottomColor = newValue.cgColor
 		}
 	}
 
@@ -94,11 +86,9 @@ open class WrapperView: UIView, TransitionListener {
 	 */
 	open var borderTopWidth: CGFloat = 0 {
 		willSet {
-			if (self.borderTopWidth != newValue) {
-				self.borderLayer.borderTopWidth = newValue
-				self.invalidateFrame()
-				self.invalidateShape()
-			}
+			self.borderLayer.borderTopWidth = newValue
+			self.invalidateFrame()
+			self.invalidateShape()
 		}
 	}
 
@@ -108,11 +98,9 @@ open class WrapperView: UIView, TransitionListener {
 	 */
 	open var borderLeftWidth: CGFloat = 0 {
 		willSet {
-			if (self.borderLeftWidth != newValue) {
-				self.borderLayer.borderLeftWidth = newValue
-				self.invalidateFrame()
-				self.invalidateShape()
-			}
+			self.borderLayer.borderLeftWidth = newValue
+			self.invalidateFrame()
+			self.invalidateShape()
 		}
 	}
 
@@ -122,11 +110,9 @@ open class WrapperView: UIView, TransitionListener {
 	 */
 	open var borderRightWidth: CGFloat = 0 {
 		willSet {
-			if (self.borderRightWidth != newValue) {
-				self.borderLayer.borderRightWidth = newValue
-				self.invalidateFrame()
-				self.invalidateShape()
-			}
+			self.borderLayer.borderRightWidth = newValue
+			self.invalidateFrame()
+			self.invalidateShape()
 		}
 	}
 
@@ -136,11 +122,9 @@ open class WrapperView: UIView, TransitionListener {
 	 */
 	open var borderBottomWidth: CGFloat = 0 {
 		willSet {
-			if (self.borderBottomWidth != newValue) {
-				self.borderLayer.borderBottomWidth = newValue
-				self.invalidateFrame()
-				self.invalidateShape()
-			}
+			self.borderLayer.borderBottomWidth = newValue
+			self.invalidateFrame()
+			self.invalidateShape()
 		}
 	}
 
@@ -150,9 +134,7 @@ open class WrapperView: UIView, TransitionListener {
 	 */
 	open var borderTopLeftRadius: CGFloat = 0 {
 		willSet {
-			if (self.borderTopLeftRadius != newValue) {
-				self.invalidateShape()
-			}
+			self.invalidateShape()
 		}
 	}
 
@@ -162,9 +144,7 @@ open class WrapperView: UIView, TransitionListener {
 	 */
 	open var borderTopRightRadius: CGFloat = 0 {
 		willSet {
-			if (self.borderTopRightRadius != newValue) {
-				self.invalidateShape()
-			}
+			self.invalidateShape()
 		}
 	}
 
@@ -174,9 +154,7 @@ open class WrapperView: UIView, TransitionListener {
 	 */
 	open var borderBottomLeftRadius: CGFloat = 0 {
 		willSet {
-			if (self.borderBottomLeftRadius != newValue) {
-				self.invalidateShape()
-			}
+			self.invalidateShape()
 		}
 	}
 
@@ -186,9 +164,7 @@ open class WrapperView: UIView, TransitionListener {
 	 */
 	open var borderBottomRightRadius: CGFloat = 0 {
 		willSet {
-			if (self.borderBottomRightRadius != newValue) {
-				self.invalidateShape()
-			}
+			self.invalidateShape()
 		}
 	}
 
@@ -196,11 +172,9 @@ open class WrapperView: UIView, TransitionListener {
 	 * @property backgroundKolor
 	 * @since 0.1.0
 	 */
-	open var backgroundKolor: CGColor? {
+	open var backgroundKolor: UIColor? {
 		willSet {
-			if (self.backgroundKolor != newValue) {
-				self.bitmapLayer.backgroundColor = newValue
-			}
+			self.bitmapLayer.backgroundColor = newValue?.cgColor
 		}
 	}
 
@@ -210,9 +184,7 @@ open class WrapperView: UIView, TransitionListener {
 	 */
 	open var backgroundLinearGradient: LinearGradient? {
 		willSet {
-			if (self.backgroundLinearGradient !== newValue) {
-				self.bitmapLayer.backgroundLinearGradient = newValue
-			}
+			self.bitmapLayer.backgroundLinearGradient = newValue
 		}
 	}
 
@@ -222,9 +194,7 @@ open class WrapperView: UIView, TransitionListener {
 	 */
 	open var backgroundRadialGradient: RadialGradient? {
 		willSet {
-			if (self.backgroundRadialGradient != newValue) {
-				self.bitmapLayer.backgroundRadialGradient = newValue
-			}
+			self.bitmapLayer.backgroundRadialGradient = newValue
 		}
 	}
 
@@ -234,9 +204,7 @@ open class WrapperView: UIView, TransitionListener {
 	 */
 	open var backgroundImage: UIImage? {
 		willSet {
-			if (self.backgroundImage != newValue) {
-				self.bitmapLayer.backgroundImage = newValue
-			}
+			self.bitmapLayer.backgroundImage = newValue
 		}
 	}
 
@@ -246,9 +214,7 @@ open class WrapperView: UIView, TransitionListener {
 	 */
 	open var backgroundImageTop: CGFloat = 0 {
 		willSet {
-			if (self.backgroundImageTop != newValue) {
-				self.bitmapLayer.backgroundImageTop = newValue
-			}
+			self.bitmapLayer.backgroundImageTop = newValue
 		}
 	}
 
@@ -258,9 +224,7 @@ open class WrapperView: UIView, TransitionListener {
 	 */
 	open var backgroundImageLeft: CGFloat = 0 {
 		willSet {
-			if (self.backgroundImageLeft != newValue) {
-				self.bitmapLayer.backgroundImageLeft = newValue
-			}
+			self.bitmapLayer.backgroundImageLeft = newValue
 		}
 	}
 
@@ -270,9 +234,7 @@ open class WrapperView: UIView, TransitionListener {
 	 */
 	open var backgroundImageWidth: CGFloat = 0 {
 		willSet {
-			if (self.backgroundImageWidth != newValue) {
-				self.bitmapLayer.backgroundImageWidth = newValue
-			}
+			self.bitmapLayer.backgroundImageWidth = newValue
 		}
 	}
 
@@ -282,9 +244,7 @@ open class WrapperView: UIView, TransitionListener {
 	 */
 	open var backgroundImageHeight: CGFloat = 0 {
 		willSet {
-			if (self.backgroundImageHeight != newValue) {
-				self.bitmapLayer.backgroundImageHeight = newValue
-			}
+			self.bitmapLayer.backgroundImageHeight = newValue
 		}
 	}
 
@@ -292,11 +252,9 @@ open class WrapperView: UIView, TransitionListener {
 	 * @property backgroundImageTint
 	 * @since 0.1.0
 	 */
-	open var backgroundImageTint: CGColor = CGColor.transparent {
+	open var backgroundImageTint: UIColor = .clear {
 		willSet {
-			if (self.backgroundImageTint != newValue) {
-				self.bitmapLayer.backgroundImageTint = newValue
-			}
+			self.bitmapLayer.backgroundImageTint = newValue.cgColor
 		}
 	}
 
@@ -306,9 +264,7 @@ open class WrapperView: UIView, TransitionListener {
 	 */
 	open var shadowBlur: CGFloat = 0 {
 		willSet {
-			if (self.shadowBlur != newValue) {
-				self.shadowLayer.shadowBlur = newValue
-			}
+			self.shadowLayer.shadowBlur = newValue
 		}
 	}
 
@@ -316,11 +272,9 @@ open class WrapperView: UIView, TransitionListener {
 	 * @property shadowColor
 	 * @since 0.1.0
 	 */
-	open var shadowColor: CGColor = .transparent {
+	open var shadowColor: UIColor = .clear {
 		willSet {
-			if (self.shadowColor != newValue) {
-				self.shadowLayer.shadowColor = newValue
-			}
+			self.shadowLayer.shadowColor = newValue.cgColor
 		}
 	}
 
@@ -330,9 +284,7 @@ open class WrapperView: UIView, TransitionListener {
 	 */
 	open var shadowOffsetTop: CGFloat = 0 {
 		willSet {
-			if (self.shadowOffsetTop != newValue) {
-				self.shadowLayer.shadowOffsetTop = newValue
-			}
+			self.shadowLayer.shadowOffsetTop = newValue
 		}
 	}
 
@@ -342,9 +294,7 @@ open class WrapperView: UIView, TransitionListener {
 	 */
 	open var shadowOffsetLeft: CGFloat = 0 {
 		willSet {
-			if (self.shadowOffsetLeft != newValue) {
-				self.shadowLayer.shadowOffsetLeft = newValue
-			}
+			self.shadowLayer.shadowOffsetLeft = newValue
 		}
 	}
 

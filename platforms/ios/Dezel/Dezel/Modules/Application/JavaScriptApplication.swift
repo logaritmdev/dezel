@@ -45,7 +45,7 @@ open class JavaScriptApplication: JavaScriptClass {
 	 * @since 0.7.0
 	 */
 	@objc public lazy var statusBarForegroundColor = JavaScriptProperty(string: "black") { value in
-		self.context.controller.statusBarForegroundColor = UIColor(string: value.string)
+		self.context.controller.statusBarForegroundColor = UIColor(color: value)
 	}
 
 	/**
@@ -53,7 +53,7 @@ open class JavaScriptApplication: JavaScriptClass {
 	 * @since 0.7.0
 	 */
 	@objc public lazy var statusBarBackgroundColor = JavaScriptProperty(string: "transparent") { value in
-		self.context.controller.statusBarBackgroundColor = UIColor(string: value.string)
+		self.context.controller.statusBarBackgroundColor = UIColor(color: value)
 	}
 
 	/**

@@ -31,6 +31,7 @@
 		C7040DED232980D200DFDBED /* DisplayNodeRelativeLayoutTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7040DEC232980D200DFDBED /* DisplayNodeRelativeLayoutTest.swift */; };
 		C705913B2337B1E8002EF92F /* DisplayStyleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C705913A2337B1E8002EF92F /* DisplayStyleTest.swift */; };
 		C70617A420F7C03100499FDB /* TransitionListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = C70617A320F7C03100499FDB /* TransitionListener.swift */; };
+		C70695FD23974A3300D4DFA1 /* CGColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C70695FC23974A3300D4DFA1 /* CGColor.swift */; };
 		C718A0A92066E24400EFEC15 /* JavaScriptImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C718A0A82066E24400EFEC15 /* JavaScriptImageView.swift */; };
 		C718A0B32066E63300EFEC15 /* ImageLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C718A0B22066E63300EFEC15 /* ImageLayer.swift */; };
 		C718A0B52066ED6100EFEC15 /* JavaScriptImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C718A0B42066ED6100EFEC15 /* JavaScriptImage.swift */; };
@@ -238,7 +239,6 @@
 		C7B9CEAD202CDBB7002409D5 /* JavaScriptApplicationModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B9CEAB202CDBB7002409D5 /* JavaScriptApplicationModule.swift */; };
 		C7B9CEAF202CDBD8002409D5 /* JavaScriptWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B9CEAE202CDBD8002409D5 /* JavaScriptWindow.swift */; };
 		C7B9CEB1202CE225002409D5 /* JavaScriptViewModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B9CEB0202CE225002409D5 /* JavaScriptViewModule.swift */; };
-		C7BB7D3C2028F4C5004006C2 /* CGColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BB7D372028F4C5004006C2 /* CGColor.swift */; };
 		C7BB7D3D2028F4C5004006C2 /* CGFloat.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BB7D382028F4C5004006C2 /* CGFloat.swift */; };
 		C7BB7D3E2028F4C5004006C2 /* CGRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BB7D392028F4C5004006C2 /* CGRect.swift */; };
 		C7BB7D3F2028F4C5004006C2 /* CGSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BB7D3A2028F4C5004006C2 /* CGSize.swift */; };
@@ -366,6 +366,7 @@
 		C7040DEC232980D200DFDBED /* DisplayNodeRelativeLayoutTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayNodeRelativeLayoutTest.swift; sourceTree = "<group>"; };
 		C705913A2337B1E8002EF92F /* DisplayStyleTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayStyleTest.swift; sourceTree = "<group>"; };
 		C70617A320F7C03100499FDB /* TransitionListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionListener.swift; sourceTree = "<group>"; };
+		C70695FC23974A3300D4DFA1 /* CGColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGColor.swift; sourceTree = "<group>"; };
 		C718A0A82066E24400EFEC15 /* JavaScriptImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptImageView.swift; sourceTree = "<group>"; };
 		C718A0B22066E63300EFEC15 /* ImageLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLayer.swift; sourceTree = "<group>"; };
 		C718A0B42066ED6100EFEC15 /* JavaScriptImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptImage.swift; sourceTree = "<group>"; };
@@ -573,7 +574,6 @@
 		C7B9CEAB202CDBB7002409D5 /* JavaScriptApplicationModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JavaScriptApplicationModule.swift; sourceTree = "<group>"; };
 		C7B9CEAE202CDBD8002409D5 /* JavaScriptWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptWindow.swift; sourceTree = "<group>"; };
 		C7B9CEB0202CE225002409D5 /* JavaScriptViewModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptViewModule.swift; sourceTree = "<group>"; };
-		C7BB7D372028F4C5004006C2 /* CGColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGColor.swift; sourceTree = "<group>"; };
 		C7BB7D382028F4C5004006C2 /* CGFloat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGFloat.swift; sourceTree = "<group>"; };
 		C7BB7D392028F4C5004006C2 /* CGRect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGRect.swift; sourceTree = "<group>"; };
 		C7BB7D3A2028F4C5004006C2 /* CGSize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGSize.swift; sourceTree = "<group>"; };
@@ -1448,12 +1448,12 @@
 		C7FCA10F2316EDF000AFBDB6 /* CoreGraphic */ = {
 			isa = PBXGroup;
 			children = (
-				C7BB7D372028F4C5004006C2 /* CGColor.swift */,
 				C7BB7D382028F4C5004006C2 /* CGFloat.swift */,
 				C7BB7D3B2028F4C5004006C2 /* CGPath.swift */,
 				C7E309782031312700436FA4 /* CGPoint.swift */,
 				C7BB7D392028F4C5004006C2 /* CGRect.swift */,
 				C7BB7D3A2028F4C5004006C2 /* CGSize.swift */,
+				C70695FC23974A3300D4DFA1 /* CGColor.swift */,
 			);
 			path = CoreGraphic;
 			sourceTree = "<group>";
@@ -1818,6 +1818,7 @@
 				C7CE4B052208AC4D005D5235 /* DateFormater.swift in Sources */,
 				C7E8A5002016244F005139F6 /* Bundle.swift in Sources */,
 				C7E8A534201624A2005139F6 /* JavaScriptFunctionCallback.swift in Sources */,
+				C70695FD23974A3300D4DFA1 /* CGColor.swift in Sources */,
 				C718A0A92066E24400EFEC15 /* JavaScriptImageView.swift in Sources */,
 				C7E8A529201624A2005139F6 /* JavaScriptClassBuilder.swift in Sources */,
 				C792E908234BDE900022D712 /* AbsoluteLayoutResolver.cpp in Sources */,
@@ -1907,7 +1908,6 @@
 				C7CE4B032208AB53005D5235 /* DateParser.swift in Sources */,
 				C7FCA1002311B4BA00AFBDB6 /* JavaScriptPropertyStringValue.swift in Sources */,
 				C7CE4B072208C93C005D5235 /* UITextField.swift in Sources */,
-				C7BB7D3C2028F4C5004006C2 /* CGColor.swift in Sources */,
 				C73700C42218C00D0095A54B /* ImageFilter.swift in Sources */,
 				C718A0B32066E63300EFEC15 /* ImageLayer.swift in Sources */,
 				C7A608122395950F00B176FC /* JavaScriptPropertyNumberValue+Value.swift in Sources */,

@@ -79,7 +79,7 @@ open class TextInput: UITextField, UITextFieldDelegate {
 	 * @property placeholderColor
 	 * @since 0.7.0
 	 */
-	open var placeholderColor: CGColor = CGColorParse("gray") {
+	open var placeholderColor: UIColor = .gray {
 		didSet {
 			self.attributedPlaceholder = self.getAttributedPlaceholder()
 		}
@@ -243,9 +243,9 @@ open class TextInput: UITextField, UITextFieldDelegate {
 	 * @property textShadowColor
 	 * @since 0.7.0
 	 */
-	open var textShadowColor: CGColor = .black {
+	open var textShadowColor: UIColor = .black {
 		willSet {
-			self.layer.shadowColor = newValue
+			self.layer.shadowColor = newValue.cgColor
 		}
 	}
 
@@ -333,9 +333,9 @@ open class TextInput: UITextField, UITextFieldDelegate {
 	 * @property clearButtonColor
 	 * @since 0.7.0
 	 */
-	open var clearButtonColor: CGColor = CGColorCreateRGBA(r: 128, g: 128, b: 128, a: 1) {
+	open var clearButtonColor: UIColor = UIColor(r: 128, g: 128, b: 128, a: 1) {
 		willSet {
-			self.clearButton.tintColor = UIColor(cgColor: newValue)
+			self.clearButton.tintColor = newValue
 		}
 	}
 

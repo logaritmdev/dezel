@@ -609,7 +609,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 */
 	open func updateShadow() {
 		self.wrapper.shadowBlur = CGFloat(self.shadowBlur.number)
-		self.wrapper.shadowColor = CGColorParse(self.shadowColor.string)
+		self.wrapper.shadowColor = UIColor(color: self.shadowColor)
 		self.wrapper.shadowOffsetTop = CGFloat(self.shadowOffsetTop.number)
 		self.wrapper.shadowOffsetLeft = CGFloat(self.shadowOffsetLeft.number)
 	}
@@ -634,7 +634,9 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @since 0.7.0
 	 */
 	open func updateBitmapColor() {
-
+		// TODO
+		// FIX THIS HIGHER
+		/*
 		let isLinearGradient = self.backgroundColor.string.hasPrefix("linear-gradient")
 		let isRadialGradient = self.backgroundColor.string.hasPrefix("radial-gradient")
 
@@ -645,19 +647,22 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 
 			self.wrapper.backgroundKolor = nil
 
-			if (isLinearGradient) {
-				self.wrapper.backgroundLinearGradient = LinearGradient(value: self.backgroundColor.string)
-				return
-			}
-
-			if (isRadialGradient) {
-				self.wrapper.backgroundRadialGradient = RadialGradient(value: self.backgroundColor.string)
-				return
-			}
+//			if (isLinearGradient) {
+//				self.wrapper.backgroundLinearGradient = LinearGradient(value: self.backgroundColor.string)
+//				return
+//			}
+//
+//			if (isRadialGradient) {
+//				self.wrapper.backgroundRadialGradient = RadialGradient(value: self.backgroundColor.string)
+//				return
+//			}
 
 		} else {
-			self.wrapper.backgroundKolor = CGColorParse(self.backgroundColor.string)
+			*/
+			self.wrapper.backgroundKolor = UIColor(color: self.backgroundColor)
+			/*
 		}
+		*/
 	}
 
 	/**
@@ -1767,7 +1772,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @since 0.7.0
 	 */
 	@objc public lazy var backgroundImageTint = JavaScriptProperty(string: "none") { value in
-		self.wrapper.backgroundImageTint = CGColor.parse(value)
+		self.wrapper.backgroundImageTint = UIColor(color: value)
 	}
 
 	/**
@@ -1902,7 +1907,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @since 0.7.0
 	 */
 	@objc public lazy var borderTopColor = JavaScriptProperty(string: "#000") { value in
-		self.wrapper.borderTopColor = CGColor.parse(value)
+		self.wrapper.borderTopColor = UIColor(color: value)
 	}
 
 	/**
@@ -1910,7 +1915,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @since 0.7.0
 	 */
 	@objc public lazy var borderLeftColor = JavaScriptProperty(string: "#000") { value in
-		self.wrapper.borderLeftColor = CGColor.parse(value)
+		self.wrapper.borderLeftColor = UIColor(color: value)
 	}
 
 	/**
@@ -1918,7 +1923,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @since 0.7.0
 	 */
 	@objc public lazy var borderRightColor = JavaScriptProperty(string: "#000") { value in
-		self.wrapper.borderRightColor = CGColor.parse(value)
+		self.wrapper.borderRightColor = UIColor(color: value)
 	}
 
 	/**
@@ -1926,7 +1931,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @since 0.7.0
 	 */
 	@objc public lazy var borderBottomColor = JavaScriptProperty(string: "#000") { value in
-		self.wrapper.borderBottomColor = CGColor.parse(value)
+		self.wrapper.borderBottomColor = UIColor(color: value)
 	}
 
 	/**

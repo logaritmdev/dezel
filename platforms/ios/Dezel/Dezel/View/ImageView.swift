@@ -93,9 +93,9 @@ open class ImageView: UIView, Updatable, Clippable, TransitionListener {
 	 * @property tint
 	 * @since 0.7.0
 	 */
-	open var tint: CGColor = .transparent {
+	open var tint: UIColor = .clear {
 		willSet {
-			self.imageLayer.color = newValue
+			self.imageLayer.tint = newValue.cgColor
 		}
 	}
 

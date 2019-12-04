@@ -116,6 +116,7 @@ public class Display {
 	 */
 	deinit {
 		DisplayGetData(self.handle).release()
+		DisplaySetData(self.handle, nil)
 		DisplayDelete(self.handle)
 	}
 

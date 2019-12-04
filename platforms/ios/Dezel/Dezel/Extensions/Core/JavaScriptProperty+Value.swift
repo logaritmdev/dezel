@@ -48,6 +48,70 @@ internal extension JavaScriptProperty {
 	 */
 	func reset(_ values: ValueListRef, lock: AnyObject? = nil) {
 
+		let count = ValueListGetCount(values)
+
+		if (count == 1) {
+
+			guard let value = ValueListGetValue(values, 0) else {
+				return
+			}
+
+			switch (ValueGetType(value)) {
+
+				case kValueTypeNull:
+					self.resetWithNull(lock: lock)
+				case kValueTypeString:
+					self.resetWithString(value, lock: lock)
+				case kValueTypeNumber:
+					self.resetWithNumber(value, lock: lock)
+				case kValueTypeBoolean:
+					self.resetWithBoolean(value, lock: lock)
+				case kValueTypeVariable:
+					self.resetWithVariable(value, lock: lock)
+				case kValueTypeFunction:
+					self.resetWithFunction(value, lock: lock)
+
+				default:
+					break;
+			}
+
+			return
+		}
+
+		/*
+		 * The parser returned multiple values. In this case we create a
+		 * composite value and reset the property with it.
+		 */
+
+		var components = [JavaScriptPropertyValue]()
+
+		for i in 0 ..< count {
+
+			guard let value = ValueListGetValue(values, i) else {
+				continue
+			}
+
+			switch (ValueGetType(value)) {
+
+				case kValueTypeNull:
+					components.append(JavaScriptProperty.Null)
+				case kValueTypeString:
+					components.append(self.createString(value))
+				case kValueTypeNumber:
+					components.append(self.createNumber(value))
+				case kValueTypeBoolean:
+					components.append(self.createBoolean(value))
+				case kValueTypeVariable:
+					components.append(self.createVariable(value))
+				case kValueTypeFunction:
+					components.append(self.createFunction(value))
+
+				default:
+					break
+			}
+		}
+
+		self.reset(JavaScriptPropertyCompositeValue(values: components), lock: lock)
 	}
 
 	/**
@@ -55,8 +119,8 @@ internal extension JavaScriptProperty {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	func resetWithNull() {
-		self.reset()
+	func resetWithNull(lock: AnyObject? = nil) {
+		self.reset(lock: lock)
 	}
 
 	/**
@@ -64,8 +128,8 @@ internal extension JavaScriptProperty {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	func resetWithString(_ ptr: ValueRef) {
-		self.reset(ValueGetString(ptr).string)
+	func resetWithString(_ ptr: ValueRef, lock: AnyObject? = nil) {
+		self.reset(ValueGetString(ptr).string, lock: lock)
 	}
 
 	/**
@@ -73,35 +137,35 @@ internal extension JavaScriptProperty {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	func resetWithNumber(_ ptr: ValueRef) {
+	func resetWithNumber(_ ptr: ValueRef, lock: AnyObject? = nil) {
 
 		switch (ValueGetUnit(ptr)) {
 
 			case kValueUnitNone:
-				self.reset(ValueGetNumber(ptr), unit: .none)
+				self.reset(ValueGetNumber(ptr), unit: .none, lock: lock)
 			case kValueUnitPX:
-				self.reset(ValueGetNumber(ptr), unit: .px)
+				self.reset(ValueGetNumber(ptr), unit: .px, lock: lock)
 			case kValueUnitPC:
-				self.reset(ValueGetNumber(ptr), unit: .pc)
+				self.reset(ValueGetNumber(ptr), unit: .pc, lock: lock)
 			case kValueUnitVW:
-				self.reset(ValueGetNumber(ptr), unit: .vw)
+				self.reset(ValueGetNumber(ptr), unit: .vw, lock: lock)
 			case kValueUnitVH:
-				self.reset(ValueGetNumber(ptr), unit: .vh)
+				self.reset(ValueGetNumber(ptr), unit: .vh, lock: lock)
 			case kValueUnitPW:
-				self.reset(ValueGetNumber(ptr), unit: .pw)
+				self.reset(ValueGetNumber(ptr), unit: .pw, lock: lock)
 			case kValueUnitPH:
-				self.reset(ValueGetNumber(ptr), unit: .ph)
+				self.reset(ValueGetNumber(ptr), unit: .ph, lock: lock)
 			case kValueUnitCW:
-				self.reset(ValueGetNumber(ptr), unit: .cw)
+				self.reset(ValueGetNumber(ptr), unit: .cw, lock: lock)
 			case kValueUnitCH:
-				self.reset(ValueGetNumber(ptr), unit: .ch)
+				self.reset(ValueGetNumber(ptr), unit: .ch, lock: lock)
 			case kValueUnitDeg:
-				self.reset(ValueGetNumber(ptr), unit: .deg)
+				self.reset(ValueGetNumber(ptr), unit: .deg, lock: lock)
 			case kValueUnitRad:
-				self.reset(ValueGetNumber(ptr), unit: .rad)
+				self.reset(ValueGetNumber(ptr), unit: .rad, lock: lock)
 
 			default:
-				self.reset(ValueGetNumber(ptr), unit: .none)
+				self.reset(ValueGetNumber(ptr), unit: .none, lock: lock)
 		}
 	}
 
@@ -110,8 +174,8 @@ internal extension JavaScriptProperty {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	func resetWithBoolean(_ ptr: ValueRef) {
-		self.reset(ValueGetBoolean(ptr))
+	func resetWithBoolean(_ ptr: ValueRef, lock: AnyObject? = nil) {
+		self.reset(ValueGetBoolean(ptr), lock: lock)
 	}
 
 	/**
@@ -119,8 +183,8 @@ internal extension JavaScriptProperty {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	func resetWithVariable(_ ptr: ValueRef) {
-		self.reset(self.createVariable(ptr))
+	func resetWithVariable(_ ptr: ValueRef, lock: AnyObject? = nil) {
+		self.reset(self.createVariable(ptr), lock: lock)
 	}
 
 	/**
@@ -128,8 +192,8 @@ internal extension JavaScriptProperty {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	func resetWithFunction(_ ptr: ValueRef) {
-		self.reset(self.createFunction(ptr))
+	func resetWithFunction(_ ptr: ValueRef, lock: AnyObject? = nil) {
+		self.reset(self.createFunction(ptr), lock: lock)
 	}
 
 	/**

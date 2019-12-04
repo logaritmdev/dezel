@@ -1789,13 +1789,7 @@ open class DisplayNode {
 	 * @since 0.7.0
 	 */
 	internal func update(name: String, property: PropertyRef?) {
-
-		guard let prop = self.delegate?.resolve(node: self, property: name) else {
-			return
-		}
-
-		prop.reset(PropertyGetValues(property))
-
+		self.delegate?.resolve(node: self, property: name)?.reset(PropertyGetValues(property))
 	}
 }
 
@@ -1935,9 +1929,7 @@ private let displayNodeMeasureSizeCallback: @convention(c) (DisplayNodeRef?, Uns
  * @hidden
  */
 private let displayNodeUpdateCallback: @convention(c) (DisplayNodeRef?, PropertyRef?, UnsafePointer<Int8>?) -> Void = { ptr, property, name in
-	print("WAT")
-	guard let name = name else { return }
 	if let node = DisplayNodeGetData(ptr).value as? DisplayNode {
-		node.update(name: name.string, property: property)
+		node.update(name: name!.string, property: property)
 	}
 }

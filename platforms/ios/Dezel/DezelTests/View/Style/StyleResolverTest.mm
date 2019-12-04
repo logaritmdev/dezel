@@ -399,4 +399,108 @@ static void imageUpdateCallback(DisplayNodeRef node, PropertyRef property, const
 	}
 }
 
+- (void)testStyleSelectorResolution {
+
+	try {
+
+		string source = R""""(
+
+			Button {
+				@style bold {
+					button-prop-1: value1;
+				}
+			}
+
+			Screen {
+				.bold {
+					button-prop-2: value2;
+				}
+			}
+
+		)"""";
+
+		auto stylesheet = [self parse:source];
+
+		vector<Match> matches;
+
+		auto button = new DisplayNode(display, "Button Component View");
+
+		window->appendChild(screen);
+		screen->appendChild(button);
+
+		button->setUpdateCallback(buttonUpdateCallback);
+		button->appendStyle("bold");
+
+		display->setStylesheet(stylesheet);
+
+		screen->resolve();
+
+		XCTAssertEqual(buttonProperties.size(), 2);
+
+		if (buttonProperties.size() == 2) {
+			auto buttonProperties0Values = PropertyGetValues(buttonProperties[0]);
+			auto buttonProperties1Values = PropertyGetValues(buttonProperties[1]);
+			XCTAssertEqual(strcmp(PropertyGetName(buttonProperties[0]), "buttonProp1"), 0);
+			XCTAssertEqual(strcmp(PropertyGetName(buttonProperties[1]), "buttonProp2"), 0);
+			XCTAssertEqual(strcmp(ValueGetString(ValueListGetValue(buttonProperties0Values, 0)), "value1"), 0);
+			XCTAssertEqual(strcmp(ValueGetString(ValueListGetValue(buttonProperties1Values, 0)), "value2"), 0);
+		}
+
+	} catch (exception &e) {
+		[NSException raise:@"Exception" format: @"%s", e.what()];
+	}
+}
+
+- (void)testStateSelectorResolution {
+
+	try {
+
+		string source = R""""(
+
+			Button {
+				@state bold {
+					button-prop-1: value1;
+				}
+			}
+
+			Screen {
+				:bold {
+					button-prop-2: value2;
+				}
+			}
+
+		)"""";
+
+		auto stylesheet = [self parse:source];
+
+		vector<Match> matches;
+
+		auto button = new DisplayNode(display, "Button Component View");
+
+		window->appendChild(screen);
+		screen->appendChild(button);
+
+		button->setUpdateCallback(buttonUpdateCallback);
+		button->appendState("bold");
+
+		display->setStylesheet(stylesheet);
+
+		screen->resolve();
+
+		XCTAssertEqual(buttonProperties.size(), 2);
+
+		if (buttonProperties.size() == 2) {
+			auto buttonProperties0Values = PropertyGetValues(buttonProperties[0]);
+			auto buttonProperties1Values = PropertyGetValues(buttonProperties[1]);
+			XCTAssertEqual(strcmp(PropertyGetName(buttonProperties[0]), "buttonProp1"), 0);
+			XCTAssertEqual(strcmp(PropertyGetName(buttonProperties[1]), "buttonProp2"), 0);
+			XCTAssertEqual(strcmp(ValueGetString(ValueListGetValue(buttonProperties0Values, 0)), "value1"), 0);
+			XCTAssertEqual(strcmp(ValueGetString(ValueListGetValue(buttonProperties1Values, 0)), "value2"), 0);
+		}
+
+	} catch (exception &e) {
+		[NSException raise:@"Exception" format: @"%s", e.what()];
+	}
+}
+
 @end

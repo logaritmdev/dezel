@@ -86,9 +86,9 @@ open class TextView: UIView, Updatable, Clippable, TransitionListener {
 	 * @property textColor
 	 * @since 0.7.0
 	 */
-	open var textColor: CGColor = .black {
+	open var textColor: UIColor = .black {
 		willSet {
-			self.textLayer.textColor = newValue
+			self.textLayer.textColor = newValue.cgColor
 		}
 	}
 
@@ -156,9 +156,9 @@ open class TextView: UIView, Updatable, Clippable, TransitionListener {
 	 * @property textShadowColor
 	 * @since 0.7.0
 	 */
-	open var textShadowColor: CGColor = .black {
+	open var textShadowColor: UIColor = .black {
 		willSet {
-			self.textLayer.shadowColor = newValue
+			self.textLayer.shadowColor = newValue.cgColor
 		}
 	}
 
@@ -216,7 +216,7 @@ open class TextView: UIView, Updatable, Clippable, TransitionListener {
 	 * @property linkColor
 	 * @since 0.7.0
 	 */
-	open var linkColor: CGColor = CGColorCreateRGBA(r: 0, g: 0, b: 255, a: 1) {
+	open var linkColor: UIColor = .blue {
 		willSet {
 			self.textLayer.linkColor = newValue
 		}

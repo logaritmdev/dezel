@@ -453,7 +453,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @since 0.7.0
 	 */
 	@objc public lazy var textColor = JavaScriptProperty(string: "#000") { value in
-		self.view.textColor = CGColor.parse(value)
+		self.view.textColor = UIColor(color: value)
 	}
 
 	/**
@@ -477,7 +477,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @since 0.7.0
 	 */
 	@objc public lazy var textShadowColor = JavaScriptProperty(string: "#000") { value in
-		self.view.textShadowColor = CGColor.parse(value)
+		self.view.textShadowColor = UIColor(color: value)
 	}
 
 	/**
@@ -501,7 +501,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @since 0.7.0
 	 */
 	@objc public lazy var linkColor = JavaScriptProperty(string: "blue") { value in
-		self.view.linkColor = CGColor.parse(value)
+		self.view.linkColor = UIColor(color: value)
 	}
 
 	/**

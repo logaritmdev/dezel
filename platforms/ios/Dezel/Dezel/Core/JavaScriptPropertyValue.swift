@@ -14,13 +14,13 @@ open class JavaScriptPropertyValue {
 	 * @property type
 	 * @since 0.7.0
 	 */
-	private(set) public var type: JavaScriptPropertyType = .null
+	private(set) public var type: JavaScriptPropertyType
 
 	/**
 	 * @property unit
 	 * @since 0.7.0
 	 */
-	private(set) public var unit: JavaScriptPropertyUnit = .none
+	private(set) public var unit: JavaScriptPropertyUnit 
 
 	/**
 	 * @property value
@@ -190,14 +190,6 @@ open class JavaScriptPropertyValue {
 	 * @method equals
 	 * @since 0.7.0
 	 */
-	open func equals(_ value: JavaScriptValue) -> Bool {
-		return self.value?.equals(value) ?? false
-	}
-
-	/**
-	 * @method equals
-	 * @since 0.7.0
-	 */
 	open func equals(_ value: String) -> Bool {
 		return self.type == .string && self.string == value
 	}
@@ -224,6 +216,14 @@ open class JavaScriptPropertyValue {
 	 */
 	open func equals(_ value: Bool) -> Bool {
 		return self.type == .boolean && self.boolean == value
+	}
+
+	/**
+	 * @method equals
+	 * @since 0.7.0
+	 */
+	open func equals(_ value: JavaScriptValue) -> Bool {
+		return self.value?.equals(value) ?? false
 	}
 
 	/**

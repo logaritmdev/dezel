@@ -37,8 +37,11 @@ open class JavaScriptPropertyNumberValue: JavaScriptPropertyValue {
 	 * @hidden
 	 */
 	public init(value: Double, unit: JavaScriptPropertyUnit) {
+
 		self.data = value
-		super.init(type: .number, unit: unit)
+
+		super.init(
+			type: .number, unit: unit)
 	}
 
 	/**

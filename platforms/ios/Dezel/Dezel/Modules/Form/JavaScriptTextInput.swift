@@ -338,7 +338,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputDelegate {
 	 * @since 0.7.0
 	 */
 	@objc public lazy var placeholderColor = JavaScriptProperty(string: "gray") { value in
-		self.view.placeholderColor = CGColor.parse(value)
+		self.view.placeholderColor = UIColor(color: value)
 	}
 
 	/**
@@ -474,7 +474,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputDelegate {
 	 * @since 0.7.0
 	 */
 	@objc public lazy var textColor = JavaScriptProperty(string: "#000") { value in
-		self.view.textColor = UIColor(string: value.string)
+		self.view.textColor = UIColor(color: value)
 	}
 
 	/**
@@ -490,7 +490,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputDelegate {
 	 * @since 0.7.0
 	 */
 	@objc public lazy var textShadowColor = JavaScriptProperty(string: "#000") { value in
-		self.view.textShadowColor = CGColor.parse(value)
+		self.view.textShadowColor = UIColor(color: value)
 	}
 
 	/**
@@ -522,7 +522,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputDelegate {
 	 * @since 0.7.0
 	 */
 	@objc public lazy var clearButtonColor = JavaScriptProperty(string: "grey") { value in
-		self.view.clearButtonColor = CGColor.parse(value)
+		self.view.clearButtonColor = UIColor(color: value)
 	}
 
 	//--------------------------------------------------------------------------

@@ -198,6 +198,16 @@ static void test(const Function* function, const vector<Argument*>& arguments, v
 				prop-2: value2;
 			}
 		}
+
+		.child-style {
+			prop-1: value1;
+			prop-2: value2;
+		}
+
+		:child-state {
+			prop-1: value1;
+			prop-2: value2;
+		}
 	}
 
 	OtherType {
@@ -275,11 +285,29 @@ static void test(const Function* function, const vector<Argument*>& arguments, v
 
 	auto children = descriptor->getChildDescriptors();
 
-	XCTAssertEqual(children.size(), 3);
+	XCTAssertEqual(children.size(), 5);
 
 	auto child = children[0];
 
 	XCTAssertEqual(child->getSelector()->getHead()->getName(), "id-child-ruleset");
+	XCTAssertEqual(child->getProperties().size(), 2);
+	XCTAssertEqual(child->getProperties().get(0)->getName(), "prop1");
+	XCTAssertEqual(child->getProperties().get(0)->getValues().at(0)->getType(), kValueTypeString);
+	XCTAssertEqual(child->getProperties().get(1)->getName(), "prop2");
+	XCTAssertEqual(child->getProperties().get(1)->getValues().at(0)->getType(), kValueTypeString);
+
+	child = children[3];
+
+	XCTAssertEqual(child->getSelector()->getHead()->getStyles().at(0), "child-style");
+	XCTAssertEqual(child->getProperties().size(), 2);
+	XCTAssertEqual(child->getProperties().get(0)->getName(), "prop1");
+	XCTAssertEqual(child->getProperties().get(0)->getValues().at(0)->getType(), kValueTypeString);
+	XCTAssertEqual(child->getProperties().get(1)->getName(), "prop2");
+	XCTAssertEqual(child->getProperties().get(1)->getValues().at(0)->getType(), kValueTypeString);
+
+	child = children[4];
+
+	XCTAssertEqual(child->getSelector()->getHead()->getStates().at(0), "child-state");
 	XCTAssertEqual(child->getProperties().size(), 2);
 	XCTAssertEqual(child->getProperties().get(0)->getName(), "prop1");
 	XCTAssertEqual(child->getProperties().get(0)->getValues().at(0)->getType(), kValueTypeString);

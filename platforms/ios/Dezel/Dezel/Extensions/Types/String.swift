@@ -210,11 +210,11 @@ public extension String {
 	}
 
 	/**
-	 * @method toNumber
+	 * @method UIColor
 	 * @since 0.7.0
 	 */
-	func toColor() -> CGColor {
-		return CGColorParse(self)
+	func toColor() -> UIColor {
+		return UIColor(color: self)
 	}
 }
 

@@ -21,7 +21,7 @@ open class TextParser: NSObject, XMLParserDelegate {
 	 * @property linkTextColor
 	 * @since 0.5.0
 	 */
-	private(set) public var linkTextColor: CGColor
+	private(set) public var linkTextColor: UIColor
 
 	/**
 	 * @property linkTextDecoration
@@ -206,7 +206,7 @@ open class TextParser: NSObject, XMLParserDelegate {
 	 * @hidden
 	 */
 	public struct Options {
-		public var linkTextColor: CGColor = CGColorCreateRGBA(r: 0, g: 0, b: 1, a: 1)
+		public var linkTextColor: UIColor = .blue
 		public var linkTextDecoration: TextDecoration = .underline
 	}
 
@@ -367,7 +367,7 @@ open class TextParser: NSObject, XMLParserDelegate {
 				return
 			}
 
-			string.addTextColor(CGColorParse(color), range: self.range)
+			string.addTextColor(UIColor(color: color), range: self.range)
 		}
 	}
 

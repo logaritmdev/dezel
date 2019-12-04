@@ -28,7 +28,7 @@ open class JavaScriptPropertyStringValue: JavaScriptPropertyValue {
 	 */
 	public init(value: String) {
 		self.data = value
-		super.init(type: .string)
+		super.init(type: .string, unit: .none)
 	}
 
 	/**

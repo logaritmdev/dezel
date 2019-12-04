@@ -436,7 +436,7 @@ open class JavaScriptImageView: JavaScriptView {
 	 * @since 0.7.0
 	 */
 	@objc public lazy var tint = JavaScriptProperty(string: "transparent") { value in
-		self.view.tint = CGColor.parse(value)
+		self.view.tint = UIColor(color: value)
 	}
 
 	//--------------------------------------------------------------------------

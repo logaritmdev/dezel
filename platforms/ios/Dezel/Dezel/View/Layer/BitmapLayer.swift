@@ -87,9 +87,7 @@ public class BitmapLayer: Layer {
 	 */
 	open var backgroundLinearGradient: LinearGradient? {
 		willSet {
-			if (self.backgroundLinearGradient !== newValue) {
-				self.setNeedsDisplay()
-			}
+			self.setNeedsDisplay()
 		}
 	}
 
@@ -100,9 +98,7 @@ public class BitmapLayer: Layer {
 	 */
 	open var backgroundRadialGradient: RadialGradient? {
 		willSet {
-			if (self.backgroundRadialGradient != newValue) {
-				self.setNeedsDisplay()
-			}
+			self.setNeedsDisplay()
 		}
 	}
 
@@ -111,11 +107,9 @@ public class BitmapLayer: Layer {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	public var backgroundImageTint: CGColor = CGColor.transparent {
+	public var backgroundImageTint: CGColor = .clear {
 		willSet {
-			if (self.backgroundImageTint != newValue) {
-				self.backgroundImageLayer.color = newValue
-			}
+			self.backgroundImageLayer.tint = newValue
 		}
 	}
 

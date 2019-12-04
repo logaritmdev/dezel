@@ -39,7 +39,7 @@ open class JavaScriptSpinnerView: JavaScriptView {
 	 * @since 0.7.0
 	 */
 	@objc public lazy var tint = JavaScriptProperty(string: "#000") { value in
-		self.view.color = UIColor(cgColor: CGColor.parse(value))
+		self.view.color = UIColor(color: value)
 	}
 
 	/**
