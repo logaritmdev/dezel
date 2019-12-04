@@ -12,6 +12,8 @@ enum TokenType {
 	kTokenTypeNone,
 	kTokenTypeSpace,
 	kTokenTypeIdent,
+	kTokenTypeStyleIdent,
+	kTokenTypeStateIdent,
 	kTokenTypeAt,
 	kTokenTypeHash,
 	kTokenTypeUnit,
@@ -87,6 +89,10 @@ public:
 				return "kTokenTypeSpace";
 			case kTokenTypeIdent:
 				return "kTokenTypeIdent";
+			case kTokenTypeStyleIdent:
+				return "kTokenTypeStyleIdent";
+			case kTokenTypeStateIdent:
+				return "kTokenTypeStateIdent";
 			case kTokenTypeAt:
 				return "kTokenTypeAt";
 			case kTokenTypeUnit:

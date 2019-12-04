@@ -20,7 +20,7 @@ using Dezel::Style::Parser;
 using Dezel::Style::ParseException;
 
 void
-ValueParse(const char* source, void* context, ValueParseCallback callback)
+ParseValue(const char* source, void* that, void* lock, ParseValueCallback callback)
 {
 	vector<Value*> values;
 
@@ -36,12 +36,10 @@ ValueParse(const char* source, void* context, ValueParseCallback callback)
 		return;
 	}
 
-	auto value = reinterpret_cast<ValueRef*>(&values[0]);
-
 	callback(
-		value,
-		count,
-		context
+		reinterpret_cast<ValueListRef>(&values),
+		that,
+		lock
 	);
 
 	for (auto value : values) {

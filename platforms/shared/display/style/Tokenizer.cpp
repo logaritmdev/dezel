@@ -405,12 +405,20 @@ Tokenizer::consumePeriod(char c)
 		return this->consumeNumber();
 	}
 
+	if (this->stream.peek<isName>()) {
+		return this->consumeStyleIdent();
+	}
+
 	return Token(kTokenTypeOther, c);
 }
 
 Token
 Tokenizer::consumeColon(char c)
 {
+	if (this->stream.peek<isName>()) {
+		return this->consumeStateIdent();
+	}
+
 	return Token(kTokenTypeColon, c);
 }
 
@@ -445,6 +453,18 @@ Tokenizer::consumeIdent()
 	}
 
 	return Token(kTokenTypeIdent, name);
+}
+
+Token
+Tokenizer::consumeStyleIdent()
+{
+	return Token(kTokenTypeStyleIdent, this->stream.read<isName>());
+}
+
+Token
+Tokenizer::consumeStateIdent()
+{
+	return Token(kTokenTypeStateIdent, this->stream.read<isName>());
 }
 
 Token

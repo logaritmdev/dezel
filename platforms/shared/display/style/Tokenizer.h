@@ -53,6 +53,8 @@ private:
 	Token consumeAmpersand(char c);
 
 	Token consumeIdent();
+	Token consumeStyleIdent();
+	Token consumeStateIdent();
 	Token consumeNumber();
 	Token consumeString(char end);
 

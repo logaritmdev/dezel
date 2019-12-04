@@ -248,7 +248,9 @@ Descriptor*
 Parser::parseDescriptor(TokenList& tokens)
 {
 	if (tokens.getCurrTokenType() != kTokenTypeHash &&
-		tokens.getCurrTokenType() != kTokenTypeIdent) {
+		tokens.getCurrTokenType() != kTokenTypeIdent &&
+		tokens.getCurrTokenType() != kTokenTypeStyleIdent &&
+		tokens.getCurrTokenType() != kTokenTypeStateIdent) {
 		return nullptr;
 	}
 
@@ -430,7 +432,9 @@ Selector*
 Parser::parseSelector(TokenList& tokens)
 {
 	if (tokens.getCurrTokenType() != kTokenTypeHash &&
-		tokens.getCurrTokenType() != kTokenTypeIdent) {
+		tokens.getCurrTokenType() != kTokenTypeIdent &&
+		tokens.getCurrTokenType() != kTokenTypeStyleIdent &&
+		tokens.getCurrTokenType() != kTokenTypeStateIdent) {
 		return nullptr;
 	}
 
@@ -466,7 +470,9 @@ Parser::parseSelector(TokenList& tokens)
 		tokens.skipSpace();
 
 		if (tokens.getCurrTokenType() != kTokenTypeHash &&
-			tokens.getCurrTokenType() != kTokenTypeIdent) {
+			tokens.getCurrTokenType() != kTokenTypeIdent &&
+			tokens.getCurrTokenType() != kTokenTypeStyleIdent &&
+			tokens.getCurrTokenType() != kTokenTypeStateIdent) {
 			break;
 		}
 	}
@@ -478,7 +484,9 @@ Fragment*
 Parser::parseFragment(TokenList& tokens)
 {
 	if (tokens.getCurrTokenType() != kTokenTypeHash &&
-		tokens.getCurrTokenType() != kTokenTypeIdent) {
+		tokens.getCurrTokenType() != kTokenTypeIdent &&
+		tokens.getCurrTokenType() != kTokenTypeStyleIdent &&
+		tokens.getCurrTokenType() != kTokenTypeStateIdent) {
 		return nullptr;
 	}
 
@@ -496,6 +504,14 @@ Parser::parseFragment(TokenList& tokens)
 				fragment->type = tokens.getCurrTokenName();
 				break;
 
+			case kTokenTypeStyleIdent:
+				fragment->styles.push_back(tokens.getCurrTokenName());
+				break;
+
+			case kTokenTypeStateIdent:
+				fragment->states.push_back(tokens.getCurrTokenName());
+				break;
+
 			default:
 				break;
 		}
@@ -503,7 +519,9 @@ Parser::parseFragment(TokenList& tokens)
 		tokens.nextToken();
 
 		if (tokens.getCurrTokenType() != kTokenTypeHash &&
-			tokens.getCurrTokenType() != kTokenTypeIdent) {
+			tokens.getCurrTokenType() != kTokenTypeIdent &&
+			tokens.getCurrTokenType() != kTokenTypeStyleIdent &&
+			tokens.getCurrTokenType() != kTokenTypeStateIdent) {
 			break;
 		}
 	}

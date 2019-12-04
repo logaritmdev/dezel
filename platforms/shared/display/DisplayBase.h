@@ -383,10 +383,10 @@ typedef void (*DisplayNodeMeasureCallback)(DisplayNodeRef node, MeasuredSize* si
 typedef void (*DisplayNodeUpdateCallback)(DisplayNodeRef node, PropertyRef property, const char* name);
 
 /**
- * @typedef ValueParseCallback
+ * @typedef ParseValueCallback
  * @since 0.7.0
  * @hidden
  */
-typedef void (*ValueParseCallback)(ValueRef* values, size_t length, void* context);
+typedef void (*ParseValueCallback)(ValueListRef values, void* self, void* lock);
 
 #endif

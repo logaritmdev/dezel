@@ -8,11 +8,11 @@ extern "C" {
 #endif
 
 /**
- * @function ValueParse
+ * @function ParseValue
  * @since 0.7.0
  * @hidden
  */
-void ValueParse(const char* source, void* context, ValueParseCallback callback);
+void ParseValue(const char* source, void* that, void* lock, ParseValueCallback callback);
 
 /**
  * @function ValueGetType
