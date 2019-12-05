@@ -24,11 +24,11 @@ const char* FunctionValueGetName(FunctionValueRef function);
 size_t FunctionValueGetArgumentCount(FunctionValueRef function);
 
 /**
- * @function FunctionValueGetArgumentValue
+ * @function FunctionValueGetArgument
  * @since 0.7.0
  * @hidden
  */
-ValueRef FunctionValueGetArgumentValue(FunctionValueRef function, size_t index);
+ValueListRef FunctionValueGetArgumentValues(FunctionValueRef function, size_t index);
 
 #if __cplusplus
 }

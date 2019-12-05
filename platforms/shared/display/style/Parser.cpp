@@ -817,12 +817,20 @@ Parser::parseFunctionValue(TokenList& tokens)
 bool
 Parser::evaluateVariable(Value* value, vector<Value*>& result)
 {
+	if (this->stylesheet == nullptr) {
+		return false;
+	}
+
 	return value->getType() == kValueTypeVariable ? dynamic_cast<VariableValue*>(value)->evaluate(this->stylesheet, result) : false;
 }
 
 bool
 Parser::evaluateFunction(Value* value, vector<Value*>& result)
 {
+	if (this->stylesheet == nullptr) {
+		return false;
+	}
+	
 	return value->getType() == kValueTypeFunction ? dynamic_cast<FunctionValue*>(value)->evaluate(this->stylesheet, result) : false;
 }
 

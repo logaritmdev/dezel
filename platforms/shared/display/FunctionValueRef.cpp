@@ -1,7 +1,13 @@
 #include "FunctionValueRef.h"
 #include "FunctionValue.h"
+#include "Value.h"
+
+#include <vector>
+
+using std::vector;
 
 using Dezel::Style::FunctionValue;
+using Dezel::Style::Value;
 
 const char*
 FunctionValueGetName(FunctionValueRef function)
@@ -15,10 +21,12 @@ FunctionValueGetArgumentCount(FunctionValueRef function)
 	return reinterpret_cast<FunctionValue*>(function)->getArguments().size();
 }
 
-ValueRef
-FunctionValueGetArgumentValue(FunctionValueRef function, size_t index)
+ValueListRef
+FunctionValueGetArgumentValues(FunctionValueRef function, size_t index)
 {
-	return reinterpret_cast<ValueRef>(
-		reinterpret_cast<FunctionValue*>(function)->getArguments().at(index)
+	auto values = &reinterpret_cast<FunctionValue*>(function)->getArguments().at(index)->getValues();
+
+	return reinterpret_cast<ValueListRef>(
+		const_cast<vector<Value*>*>(values)
 	);
 }
