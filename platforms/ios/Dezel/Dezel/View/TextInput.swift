@@ -163,29 +163,9 @@ open class TextInput: UITextField, UITextFieldDelegate {
 	 * @property textAlign
 	 * @since 0.7.0
 	 */
-	open var textAlign: TextAlignment = .start {
+	open var textAlign: TextAlign = .middleLeft {
 		willSet {
 			self.invalidateAttributedText()
-		}
-	}
-
-	/**
-	 * @property textLocation
-	 * @since 0.7.0
-	 */
-	open var textLocation: TextLocation = .middle {
-
-		willSet {
-
-			switch (newValue) {
-
-				case .top:
-					self.contentVerticalAlignment = .top
-				case .middle:
-					self.contentVerticalAlignment = .center
-				case .bottom:
-					self.contentVerticalAlignment = .bottom
-			}
 		}
 	}
 
@@ -310,48 +290,11 @@ open class TextInput: UITextField, UITextFieldDelegate {
 	}
 
 	/**
-	 * @property clearable
-	 * @since 0.7.0
-	 */
-	open var clearable: Bool = false {
-
-		willSet {
-
-			if (newValue) {
-				self.rightView = self.clearButton
-				self.rightViewMode = .whileEditing
-			} else {
-				self.rightView = nil
-				self.rightViewMode = .never
-			}
-
-			self.setNeedsLayout()
-		}
-	}
-
-	/**
-	 * @property clearButtonColor
-	 * @since 0.7.0
-	 */
-	open var clearButtonColor: UIColor = UIColor(r: 128, g: 128, b: 128, a: 1) {
-		willSet {
-			self.clearButton.tintColor = newValue
-		}
-	}
-
-	/**
-	 * @property textInputDelegate
+	 * @property observer
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	internal weak var textInputDelegate: TextInputDelegate?
-
-	/**
-	 * @property clearButton
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private var clearButton: UIButton = UIButton(type: .custom)
+	internal weak var observer: TextInputObserver?
 
 	/**
 	 * @property date
@@ -411,7 +354,7 @@ open class TextInput: UITextField, UITextFieldDelegate {
 	 * @constructor
 	 * @since 0.7.0
 	 */
-	public init(frame: CGRect, delegate: TextInputDelegate?) {
+	public init(frame: CGRect, observer: TextInputObserver?) {
 
 		super.init(frame: frame)
 
@@ -421,16 +364,7 @@ open class TextInput: UITextField, UITextFieldDelegate {
 		self.autocorrectionType = .yes
 		self.autocapitalizationType = .sentences
 
-		// TODO
-		// Put in lazy properties
-		let image = UIImage(named: "TextInputClearButtonIcon", in: Bundle(for: TextInput.self), compatibleWith: nil)?.withRenderingMode(.alwaysTemplate)
-
-		self.clearButton.frame = CGRect(x: 0, y: 0, width: 36, height: 24)
-		self.clearButton.setImage(image, for: .normal)
-		self.clearButton.setImage(image, for: .highlighted)
-		self.clearButton.addTarget(self, action: #selector(clear), for: .touchUpInside)
-
-		self.textInputDelegate = delegate
+		self.observer = observer
 	}
 
 	/**
@@ -498,6 +432,15 @@ open class TextInput: UITextField, UITextFieldDelegate {
 			self.attributedPlaceholder = self.getAttributedPlaceholder()
 		}
 
+		switch (self.textAlign) {
+			case .topLeft, .topRight, .topCenter:
+				self.contentVerticalAlignment = .top
+			case .middleLeft, .middleRight, .middleCenter:
+				self.contentVerticalAlignment = .center
+			case .bottomLeft, .bottomRight, .bottomCenter:
+				self.contentVerticalAlignment = .bottom
+		}
+
 		super.draw(rect)
 	}
 
@@ -506,7 +449,7 @@ open class TextInput: UITextField, UITextFieldDelegate {
 	 * @since 0.7.0
 	 */
 	@objc open func clear() {
-		self.textInputDelegate?.didChange(textInput: self, value: "")
+		self.observer?.didChange(textInput: self, value: "")
 	}
 
 	//--------------------------------------------------------------------------
@@ -578,7 +521,7 @@ open class TextInput: UITextField, UITextFieldDelegate {
 			self.timePicker!.date = self.date
 		}
 
-		self.textInputDelegate?.didFocus(textInput: self)
+		self.observer?.didFocus(textInput: self)
 	}
 
 	/**
@@ -600,7 +543,7 @@ open class TextInput: UITextField, UITextFieldDelegate {
 			self.updateValue(self.date.iso)
 		}
 
-		self.textInputDelegate?.didBlur(textInput: self)
+		self.observer?.didBlur(textInput: self)
 	}
 
 	//--------------------------------------------------------------------------
@@ -723,7 +666,7 @@ open class TextInput: UITextField, UITextFieldDelegate {
 
 		self.value = normalized
 
-		self.textInputDelegate?.didChange(textInput: self, value: normalized)
+		self.observer?.didChange(textInput: self, value: normalized)
 	}
 
 	/**
@@ -792,7 +735,7 @@ open class TextInput: UITextField, UITextFieldDelegate {
 		attributes.setTextColor(self.textColor)
 		attributes.setTextKerning(self.textKerning)
 		attributes.setTextLeading(self.textLeading)
-		attributes.setTextAlignment(self.textAlign)
+		attributes.setTextAlign(self.textAlign)
 		attributes.setTextDecoration(self.textDecoration)
 		attributes.setBaselineOffset(0)
 
@@ -834,7 +777,7 @@ open class TextInput: UITextField, UITextFieldDelegate {
 		attributes.setTextColor(self.placeholderColor)
 		attributes.setTextKerning(self.textKerning)
 		attributes.setTextLeading(self.textLeading)
-		attributes.setTextAlignment(self.textAlign)
+		attributes.setTextAlign(self.textAlign)
 		attributes.setTextDecoration(self.textDecoration)
 		attributes.setBaselineOffset(0)
 

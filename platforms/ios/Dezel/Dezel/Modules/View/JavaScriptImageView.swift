@@ -10,29 +10,11 @@ open class JavaScriptImageView: JavaScriptView {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @property imageData
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private var imageData: UIImage? {
-		willSet {
-			self.invalidateImage()
-		}
-	}
-
-	/**
 	 * @property imageLoader
 	 * @since 0.7.0
 	 * @hidden
 	 */
 	private var imageLoader: ImageLoader = ImageLoader()
-
-	/**
-	 * @property invalidImage
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private var invalidImage: Bool = false
 
 	/**
 	 * @property view
@@ -56,6 +38,14 @@ open class JavaScriptImageView: JavaScriptView {
 	}
 
 	/**
+	 * @method measure
+	 * @since 0.7.0
+	 */
+	override open func measure(in bounds: CGSize, min: CGSize, max: CGSize) -> CGSize {
+		return self.view.measure(in: bounds, min: min, max: max)
+	}
+
+	/**
 	 * @method update
 	 * @since 0.7.0
 	 */
@@ -63,175 +53,25 @@ open class JavaScriptImageView: JavaScriptView {
 
 		super.update()
 
-		if (self.invalidImage) {
-			self.invalidImage = false
-			self.updateImage()
-		}
-
 		if (self.view.hasFrame == false && self.resolvedFrame) {
 			self.view.hasFrame = true
 		}
 	}
 
-	/**
-	 * @method updateImage
-	 * @since 0.7.0
-	 */
-	open func updateImage() {
-
-		self.view.image = nil
-
-		guard let image = self.imageData else {
-			return
-		}
-
-		var autoW = false
-		var autoH = false
-		var imageW = 0.0
-		var imageH = 0.0
-		var imageT = 0.0
-		var imageL = 0.0
-
-		if (self.imageWidth.type == .string &&
-			self.imageWidth.string == "auto") {
-
-			autoW = true
-
-		} else {
-
-			switch (self.imageWidth.unit) {
-
-				case .pc: imageW = self.imageWidth.number / 100 * self.resolvedInnerWidth
-				case .vw: imageW = self.imageWidth.number / 100 * self.node.display.viewportWidth
-				case .vh: imageW = self.imageWidth.number / 100 * self.node.display.viewportHeight
-				case .pw: imageW = self.imageWidth.number / 100 * self.resolvedInnerWidth
-				case .ph: imageW = self.imageWidth.number / 100 * self.resolvedInnerHeight
-				case .cw: imageW = self.imageWidth.number / 100 * self.resolvedContentWidth
-				case .ch: imageW = self.imageWidth.number / 100 * self.resolvedContentHeight
-
-				default:
-					imageW = self.imageWidth.number
-					break
-			}
-		}
-
-		if (self.imageHeight.type == .string &&
-			self.imageHeight.string == "auto") {
-
-			autoH = true
-
-		} else {
-
-			switch (self.imageHeight.unit) {
-
-				case .pc: imageH = self.imageHeight.number / 100 * self.resolvedInnerHeight
-				case .vw: imageH = self.imageHeight.number / 100 * self.node.display.viewportWidth
-				case .vh: imageH = self.imageHeight.number / 100 * self.node.display.viewportHeight
-				case .pw: imageH = self.imageHeight.number / 100 * self.resolvedInnerWidth
-				case .ph: imageH = self.imageHeight.number / 100 * self.resolvedInnerHeight
-				case .cw: imageH = self.imageHeight.number / 100 * self.resolvedContentWidth
-				case .ch: imageH = self.imageHeight.number / 100 * self.resolvedContentHeight
-
-				default:
-					imageH = self.imageHeight.number
-					break
-			}
-		}
-
-		switch (self.imageTop.unit) {
-
-			case .pc: imageT = self.imageTop.number / 100 * self.resolvedInnerHeight
-			case .vw: imageT = self.imageTop.number / 100 * self.node.display.viewportWidth
-			case .vh: imageT = self.imageTop.number / 100 * self.node.display.viewportHeight
-			case .pw: imageT = self.imageTop.number / 100 * self.resolvedInnerWidth
-			case .ph: imageT = self.imageTop.number / 100 * self.resolvedInnerHeight
-			case .cw: imageT = self.imageTop.number / 100 * self.resolvedContentWidth
-			case .ch: imageT = self.imageTop.number / 100 * self.resolvedContentHeight
-
-			default:
-				imageT = self.imageTop.number
-				break
-		}
-
-		switch (self.imageLeft.unit) {
-
-			case .pc: imageL = self.imageLeft.number / 100 * self.resolvedInnerWidth
-			case .vw: imageL = self.imageLeft.number / 100 * self.node.display.viewportWidth
-			case .vh: imageL = self.imageLeft.number / 100 * self.node.display.viewportHeight
-			case .pw: imageL = self.imageLeft.number / 100 * self.resolvedInnerWidth
-			case .ph: imageL = self.imageLeft.number / 100 * self.resolvedInnerHeight
-			case .cw: imageL = self.imageLeft.number / 100 * self.resolvedContentWidth
-			case .ch: imageL = self.imageLeft.number / 100 * self.resolvedContentHeight
-
-			default:
-				imageL = self.imageLeft.number
-				break
-		}
-
-		let naturalImageW = Double(image.size.width)
-		let naturalImageH = Double(image.size.height)
-
-		let frameW = self.resolvedInnerWidth
-		let frameH = self.resolvedInnerHeight
-		let scaleX = frameW / naturalImageW
-		let scaleY = frameH / naturalImageH
-
-		if (autoW && autoH) {
-
-			switch (self.imageFit.string) {
-
-				case "none":
-					imageW = naturalImageW
-					imageH = naturalImageH
-
-				case "cover":
-					let scale = max(scaleX, scaleY)
-					imageW = naturalImageW * scale
-					imageH = naturalImageH * scale
-
-				case "contain":
-					let scale = min(scaleX, scaleY)
-					imageW = naturalImageW * scale
-					imageH = naturalImageH * scale
-
-				default: break
-			}
-
-		} else if (autoW) {
-			imageW = imageH * (naturalImageW / naturalImageH)
-		} else if (autoH) {
-			imageH = imageW * (naturalImageH / naturalImageW)
-		}
-
-		let anchorT = self.getImageAnchorTop(self.imageAnchorTop)
-		let anchorL = self.getImageAnchorLeft(self.imageAnchorLeft)
-
-		imageT = imageT - (anchorT * imageH)
-		imageL = imageL - (anchorL * imageW)
-
-		self.view.image = image
-		self.view.imageTop = CGFloat(imageT)
-		self.view.imageLeft = CGFloat(imageL)
-		self.view.imageWidth = CGFloat(imageW)
-		self.view.imageHeight = CGFloat(imageH)
-	}
-
 	//--------------------------------------------------------------------------
-	// MARK: Methods - Layout Node Delegate
+	// MARK: Methods - Display Node Delegate
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method measure
+	 * @method didResolvePadding
 	 * @since 0.7.0
 	 */
-	override open func measure(in bounds: CGSize, min: CGSize, max: CGSize) -> CGSize {
-
-		if (self.invalidImage) {
-			self.invalidImage = false
-			self.updateImage()
-		}
-
-		return self.view.measure(in: bounds, min: min, max: max)
+	override open func didResolvePadding(node: DisplayNode) {
+		super.didResolvePadding(node: node)
+		self.view.paddingTop = CGFloat(self.resolvedPaddingTop)
+		self.view.paddingLeft = CGFloat(self.resolvedPaddingLeft)
+		self.view.paddingRight = CGFloat(self.resolvedPaddingRight)
+		self.view.paddingBottom = CGFloat(self.resolvedPaddingBottom)
 	}
 
 	//--------------------------------------------------------------------------
@@ -239,103 +79,61 @@ open class JavaScriptImageView: JavaScriptView {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method invalidateFrame
+	 * @method getImageFit
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	override internal func invalidateFrame() {
-
-		super.invalidateFrame()
-
-		if (self.imageTop.unit == .pc ||
-			self.imageLeft.unit == .pc ||
-			self.imageWidth.unit == .pc ||
-			self.imageHeight.unit == .pc) {
-			self.invalidateImage()
-		}
-	}
-
-	/**
-	 * @method invalidateImage
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	internal func invalidateImage() {
-		if (self.invalidImage == false) {
-			self.invalidImage = true
-			self.scheduleUpdate()
-		}
-	}
-
-	//--------------------------------------------------------------------------
-	// MARK: Private API - Conversions
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method getImageAnchorTop
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private func getImageAnchorTop(_ prop: JavaScriptProperty) -> Double {
-
-		if (prop.type == .string) {
-
-			switch (prop.string) {
-
-				case "top":    return 0.0
-				case "center": return 0.5
-				case "bottom": return 1.0
-
-				default:
-					NSLog("Unrecognized value for imageAnchorTop: \(prop.string)")
-			}
-		}
-
-		return prop.number
-	}
-
-	/**
-	 * @method getImageAnchorLeft
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private func getImageAnchorLeft(_ prop: JavaScriptProperty) -> Double {
-
-		if (prop.type == .string) {
-
-			switch (prop.string) {
-
-				case "left":   return 0.0
-				case "center": return 0.5
-				case "right":  return 1.0
-
-				default:
-					NSLog("Unrecognized value for imageAnchorLeft: \(prop.string)")
-			}
-		}
-
-		return prop.number
-	}
-
-	/**
-	 * @method getImageFilter
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private func getImageFilter(_ value: String) -> ImageFilter {
+	private func getImageFit(_ value: String) -> ImageFit {
 
 		switch (value) {
 
-			case "none":
-				return .none
-			case "grayscale":
-				return .grayscale
+			case "cover":
+				return .cover
+			case "contain":
+				return .contain
 
 			default:
-				NSLog("Unrecognized value for imageFilter: \(value)")
+				NSLog("Unrecognized value for imageFit: \(value)")
 		}
 
-		return .none
+		return .contain
+	}
+
+	/**
+	 * @method getImagePosition
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private func getImagePosition(_ value: String) -> ImagePosition {
+
+		switch (value) {
+
+			case "top left":
+				return .topLeft
+			case "top right":
+				return .topRight
+			case "top center":
+				return .topCenter
+
+			case "left":
+				return .middleLeft
+			case "right":
+				return .middleRight
+			case "center":
+				return .middleCenter
+
+			case "bottom left":
+				return .bottomLeft
+			case "bottom right":
+				return .bottomRight
+			case "bottom center":
+				return .bottomCenter
+
+			default:
+				NSLog("Unrecognized value for imagePosition: \(value)")
+		}
+
+		return .middleCenter
 	}
 
 	//--------------------------------------------------------------------------
@@ -346,11 +144,11 @@ open class JavaScriptImageView: JavaScriptView {
 	 * @property source
 	 * @since 0.7.0
 	 */
-	@objc public lazy var source = JavaScriptProperty() { value in
+	@objc lazy var source = JavaScriptProperty() { value in
 
 		self.imageLoader.load(value) { image in
 
-			self.imageData = image
+			self.view.image = image
 
 			if (self.node.isWrappingContentWidth ||
 				self.node.isWrappingContentHeight) {
@@ -363,79 +161,23 @@ open class JavaScriptImageView: JavaScriptView {
 	 * @property imageFit
 	 * @since 0.7.0
 	 */
-	@objc public lazy var imageFit = JavaScriptProperty(string: "contain") { value in
-		self.invalidateImage()
+	@objc lazy var imageFit = JavaScriptProperty(string: "contain") { value in
+		self.view.imageFit = self.getImageFit(value.string)
 	}
 
 	/**
-	 * @property imageAnchorTop
+	 * @property imagePosition
 	 * @since 0.7.0
 	 */
-	@objc public lazy var imageAnchorTop = JavaScriptProperty(number: 0.5) { value in
-		self.invalidateImage()
-	}
-
-	/**
-	 * @property imageAnchorLeft
-	 * @since 0.7.0
-	 */
-	@objc public lazy var imageAnchorLeft = JavaScriptProperty(number: 0.5) { value in
-		self.invalidateImage()
-	}
-
-	/**
-	 * @property imageTop
-	 * @since 0.7.0
-	 */
-	@objc public lazy var imageTop = JavaScriptProperty(number: 50, unit: .pc) { value in
-		self.invalidateImage()
-	}
-
-	/**
-	 * @property imageLeft
-	 * @since 0.7.0
-	 */
-	@objc public lazy var imageLeft = JavaScriptProperty(number: 50, unit: .pc) { value in
-		self.invalidateImage()
-	}
-
-	/**
-	 * @property imageWidth
-	 * @since 0.7.0
-	 */
-	@objc public lazy var imageWidth = JavaScriptProperty(string: "auto") { value in
-		self.invalidateImage()
-	}
-
-	/**
-	 * @property imageHeight
-	 * @since 0.7.0
-	 */
-	@objc public lazy var imageHeight = JavaScriptProperty(string: "auto") { value in
-		self.invalidateImage()
-	}
-
-	/**
-	 * @property imageFilter
-	 * @since 0.7.0
-	 */
-	@objc public lazy var imageFilter = JavaScriptProperty(string: "none") { value in
-		self.view.imageFilter = self.getImageFilter(value.string)
-	}
-
-	/**
-	 * @property imageOpacity
-	 * @since 0.7.0
-	 */
-	@objc public lazy var imageOpacity = JavaScriptProperty(number: 1) { value in
-		self.view.alpha = CGFloat(value.number)
+	@objc lazy var imagePosition = JavaScriptProperty(string: "center") { value in
+		self.view.imagePosition = self.getImagePosition(value.string)
 	}
 
 	/**
 	 * @property tint
 	 * @since 0.7.0
 	 */
-	@objc public lazy var tint = JavaScriptProperty(string: "transparent") { value in
+	@objc lazy var tint = JavaScriptProperty(string: "transparent") { value in
 		self.view.tint = UIColor(color: value)
 	}
 
@@ -446,7 +188,7 @@ open class JavaScriptImageView: JavaScriptView {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsGet_source(callback: JavaScriptGetterCallback) {
+	@objc func jsGet_source(callback: JavaScriptGetterCallback) {
 		callback.returns(self.source)
 	}
 
@@ -455,7 +197,7 @@ open class JavaScriptImageView: JavaScriptView {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsSet_source(callback: JavaScriptSetterCallback) {
+	@objc func jsSet_source(callback: JavaScriptSetterCallback) {
 		self.source.reset(callback.value, lock: self)
 	}
 
@@ -466,7 +208,7 @@ open class JavaScriptImageView: JavaScriptView {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsGet_imageFit(callback: JavaScriptGetterCallback) {
+	@objc func jsGet_imageFit(callback: JavaScriptGetterCallback) {
 		callback.returns(self.imageFit)
 	}
 
@@ -475,168 +217,28 @@ open class JavaScriptImageView: JavaScriptView {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsSet_imageFit(callback: JavaScriptSetterCallback) {
+	@objc func jsSet_imageFit(callback: JavaScriptSetterCallback) {
 		self.imageFit.reset(callback.value, lock: self)
 	}
 
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method jsGet_imageAnchorTop
+	 * @method jsGet_imagePosition
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsGet_imageAnchorTop(callback: JavaScriptGetterCallback) {
-		callback.returns(self.imageAnchorTop)
+	@objc func jsGet_imagePosition(callback: JavaScriptGetterCallback) {
+		callback.returns(self.imagePosition)
 	}
 
 	/**
-	 * @method jsSet_imageAnchorTop
+	 * @method jsSet_imageFit
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsSet_imageAnchorTop(callback: JavaScriptSetterCallback) {
-		self.imageAnchorTop.reset(callback.value, lock: self, parse: true)
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method jsGet_imageAnchorLeft
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	@objc open func jsGet_imageAnchorLeft(callback: JavaScriptGetterCallback) {
-		callback.returns(self.imageAnchorLeft)
-	}
-
-	/**
-	 * @method jsSet_imageAnchorLeft
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	@objc open func jsSet_imageAnchorLeft(callback: JavaScriptSetterCallback) {
-		self.imageAnchorLeft.reset(callback.value, lock: self, parse: true)
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method jsGet_imageTop
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	@objc open func jsGet_imageTop(callback: JavaScriptGetterCallback) {
-		callback.returns(self.imageTop)
-	}
-
-	/**
-	 * @method jsSet_imageTop
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	@objc open func jsSet_imageTop(callback: JavaScriptSetterCallback) {
-		self.imageTop.reset(callback.value, lock: self, parse: true)
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method jsGet_imageLeft
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	@objc open func jsGet_imageLeft(callback: JavaScriptGetterCallback) {
-		callback.returns(self.imageLeft)
-	}
-
-	/**
-	 * @method jsSet_imageLeft
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	@objc open func jsSet_imageLeft(callback: JavaScriptSetterCallback) {
-		self.imageLeft.reset(callback.value, lock: self, parse: true)
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method jsGet_imageWidth
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	@objc open func jsGet_imageWidth(callback: JavaScriptGetterCallback) {
-		callback.returns(self.imageWidth)
-	}
-
-	/**
-	 * @method jsSet_imageWidth
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	@objc open func jsSet_imageWidth(callback: JavaScriptSetterCallback) {
-		self.imageWidth.reset(callback.value, lock: self, parse: true)
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method jsGet_imageHeight
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	@objc open func jsGet_imageHeight(callback: JavaScriptGetterCallback) {
-		callback.returns(self.imageHeight)
-	}
-
-	/**
-	 * @method jsSet_imageHeight
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	@objc open func jsSet_imageHeight(callback: JavaScriptSetterCallback) {
-		self.imageHeight.reset(callback.value, lock: self, parse: true)
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method jsGet_imageFilter
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	@objc open func jsGet_imageFilter(callback: JavaScriptGetterCallback) {
-		callback.returns(self.imageFilter)
-	}
-
-	/**
-	 * @method jsSet_imageFilter
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	@objc open func jsSet_imageFilter(callback: JavaScriptSetterCallback) {
-		self.imageFilter.reset(callback.value, lock: self)
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method jsGet_imageOpacity
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	@objc open func jsGet_imageOpacity(callback: JavaScriptGetterCallback) {
-		callback.returns(self.imageOpacity)
-	}
-
-	/**
-	 * @method jsSet_imageOpacity
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	@objc open func jsSet_imageOpacity(callback: JavaScriptSetterCallback) {
-		self.imageOpacity.reset(callback.value, lock: self)
+	@objc func jsSet_imagePosition(callback: JavaScriptSetterCallback) {
+		self.imagePosition.reset(callback.value, lock: self)
 	}
 
 	//--------------------------------------------------------------------------
@@ -646,7 +248,7 @@ open class JavaScriptImageView: JavaScriptView {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsGet_tint(callback: JavaScriptGetterCallback) {
+	@objc func jsGet_tint(callback: JavaScriptGetterCallback) {
 		callback.returns(self.tint)
 	}
 
@@ -655,7 +257,7 @@ open class JavaScriptImageView: JavaScriptView {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsSet_tint(callback: JavaScriptSetterCallback) {
+	@objc func jsSet_tint(callback: JavaScriptSetterCallback) {
 		self.tint.reset(callback.value, lock: self, parse: true)
 	}
 }

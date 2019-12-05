@@ -6,6 +6,15 @@
 internal extension CGFloat {
 
 	/**
+	 * @property pi
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	static var pi: CGFloat {
+		return CGFloat(Double.pi)
+	}
+
+	/**
 	 * @property min
 	 * @since 0.1.0
 	 * @hidden
@@ -46,7 +55,7 @@ internal extension CGFloat {
 	 * @hidden
 	 */
 	func toDeg() -> CGFloat {
-		return self * CGFloat(Double.pi) / 180
+		return self * (180 / .pi)
 	}
 
 	/**
@@ -55,6 +64,6 @@ internal extension CGFloat {
 	 * @hidden
 	 */
 	func toRad() -> CGFloat {
-		return self / CGFloat(Double.pi) * 180
+		return self * (.pi / 180)
 	}
 }

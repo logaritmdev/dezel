@@ -6,41 +6,17 @@
 open class ImageLayer: Layer, TransitionListener {
 
 	//--------------------------------------------------------------------------
-	// MARK: Class Methods
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method needsDisplay
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	override open class func needsDisplay(forKey key: String) -> Bool {
-
-		if (key == "color") {
-			return true
-		}
-
-		return super.needsDisplay(forKey: key)
-	}
-
-	//--------------------------------------------------------------------------
 	// MARK: Properties
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @property color
+	 * @property tint
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	@NSManaged public var tint: CGColor
-
-	/**
-	 * @property frame
-	 * @since 0.1.0
-	 */
-	override open var frame: CGRect {
-		didSet {
-			self.shape.frame = self.bounds
+	open var tint: CGColor = .clear {
+		willSet {
+			self.setNeedsDisplay()
 		}
 	}
 
@@ -49,36 +25,44 @@ open class ImageLayer: Layer, TransitionListener {
 	 * @since 0.1.0
 	 */
 	open var image: CGImage? {
-		didSet {
-			self.filteredImage = nil
+		willSet {
 			self.setNeedsDisplay()
 		}
 	}
 
 	/**
-	 * @property filter
-	 * @since 0.5.0
+	 * @property imageFit
+	 * @since 0.7.0
 	 */
-	open var filter: ImageFilter = .none {
-		didSet {
-			self.filteredImage = nil
-			self.setNeedsDisplay()
+	open var imageFit: ImageFit = .contain {
+		willSet {
+			self.setNeedsLayout()
 		}
 	}
 
 	/**
-	 * @property shape
-	 * @since 0.1.0
-	 * @hidden
+	 * @property imagePosition
+	 * @since 0.7.0
 	 */
-	private var shape: ShapeLayer = ShapeLayer()
+	open var imagePosition: ImagePosition = .middleCenter {
+		willSet {
+			self.setNeedsLayout()
+		}
+	}
 
 	/**
-	 * @property filteredImage
-	 * @since 0.5.0
+	 * @property contentLayer
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private var filteredImage: CGImage?
+	private var contentLayer: Layer = Layer()
+
+	/**
+	 * @property contourLayer
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private var contourLayer: Layer = Layer()
 
 	//----------------------------------------------------------------------
 	// MARK: Methods
@@ -97,22 +81,110 @@ open class ImageLayer: Layer, TransitionListener {
 	 * @since 0.1.0
 	 */
 	public required init() {
-		super.init()
-		self.tint = .clear
-		self.shape.listener = self
-	}
 
+		super.init()
+
+		self.masksToBounds = true
+		self.contentLayer.listener = self
+		self.contourLayer.listener = self
+
+		self.needsDisplayOnBoundsChange = true
+
+		self.addSublayer(self.contentLayer)
+	}
 	/**
 	 * @constructor
 	 * @since 0.1.0
 	 */
 	public override init(layer: Any) {
-
 		super.init(layer: layer)
+	}
 
-		if let layer = layer as? ImageLayer {
-			self.tint = layer.tint
+	/**
+	 * @method layoutSublayers
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	open override func layoutSublayers() {
+
+		guard let image = self.image else {
+			return
 		}
+
+		var imageW = CGFloat(0.0)
+		var imageH = CGFloat(0.0)
+		var imageT = CGFloat(0.0)
+		var imageL = CGFloat(0.0)
+
+		let naturalImageW = CGFloat(image.width)
+		let naturalImageH = CGFloat(image.height)
+
+		let frameW = self.bounds.width
+		let frameH = self.bounds.height
+		let scaleX = frameW / naturalImageW
+		let scaleY = frameH / naturalImageH
+
+		switch (self.imageFit) {
+
+			case .cover:
+				let scale = max(scaleX, scaleY)
+				imageW = naturalImageW * scale
+				imageH = naturalImageH * scale
+
+			case .contain:
+				let scale = min(scaleX, scaleY)
+				imageW = naturalImageW * scale
+				imageH = naturalImageH * scale
+		}
+
+		switch (self.imagePosition) {
+
+			case .topLeft:
+				imageT = 0
+				imageL = 0
+
+			case .topRight:
+				imageT = 0
+				imageL = frameW - imageW
+
+			case .topCenter:
+				imageT = 0
+				imageL = frameW / 2 - imageW / 2
+
+			case .middleLeft:
+				imageT = frameH / 2 - imageH / 2
+				imageL = 0
+
+			case .middleRight:
+				imageT = frameH / 2 - imageH / 2
+				imageL = frameW - imageW
+
+			case .middleCenter:
+				imageT = frameH / 2 - imageH / 2
+				imageL = frameW / 2 - imageW / 2
+
+			case .bottomLeft:
+				imageT = frameH - imageH
+				imageL = 0
+
+			case .bottomRight:
+				imageT = frameH - imageH
+				imageL = frameW - imageW
+
+			case .bottomCenter:
+				imageT = frameH - imageH
+				imageL = frameW / 2 - imageW / 2
+		}
+
+		let frame = CGRect(
+			x: imageL,
+			y: imageT,
+			width: imageW,
+			height: imageH
+		)
+
+		self.contentLayer.frame = frame
+		self.contourLayer.frame = frame
 	}
 
 	/**
@@ -122,92 +194,27 @@ open class ImageLayer: Layer, TransitionListener {
 	 */
 	override open func display() {
 
-		self.mask = nil
-		self.contents = nil
-		self.backgroundColor = nil
+		self.contentLayer.contents = nil
+		self.contourLayer.contents = nil
 
-		guard var image = self.image else {
+		self.maskColor = nil
+		self.maskShape = nil
+
+		guard let image = self.image else {
 			return
 		}
 
-		if (self.filter != .none) {
+		if (self.tint.alpha == 0) {
 
-			if (self.filteredImage == nil) {
-				self.filteredImage = self.createFilteredImage(image, filter: self.filter)
-			}
+			self.contentLayer.contents = image
 
-			if let filtered = self.filteredImage {
-				image = filtered
-			}
-		}
-
-		let tint: CGColor
-
-		if let presentationLayer = self.presentation() {
-			tint = presentationLayer.tint
 		} else {
-			tint = self.tint
+
+			self.contourLayer.contents = image
+
+			self.maskColor = self.tint
+			self.maskShape = self.contourLayer
 		}
-
-		if (tint.alpha > 0) {
-			self.backgroundColor = tint
-			self.shape.contents = image
-			self.mask = self.shape
-		} else {
-			self.contents = image
-		}
-	}
-
-	//--------------------------------------------------------------------------
-	// MARK: Methods - Animations
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method action
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	override open func action(forKey key: String) -> CAAction? {
-
-		if let transition = Transition.current {
-
-			var current = self.presentation()
-			if (current == nil || self.animation(forKey: key) == nil) {
-				current = self
-			}
-
-			let animation = CABasicAnimation(keyPath: key)
-
-			switch (key) {
-
-				case "color":
-					animation.fromValue = current!.tint
-
-				default:
-					break
-			}
-
-			if (animation.fromValue != nil) {
-
-				if (transition.delay > 0) {
-					animation.beginTime = CACurrentMediaTime() + transition.delay
-					animation.fillMode = CAMediaTimingFillMode.both
-				}
-
-				if let listener = self.listener as? TransitionListener {
-					if (listener.shouldBeginTransitionAnimation(animation: animation, for: key, of: self)) {
-						listener.willBeginTransitionAnimation(animation: animation, for: key, of: self)
-						transition.register(listener)
-					} else {
-						return NSNull()
-					}
-				}
-
-				return animation
-			}
-		}
-
-		return super.action(forKey: key)
 	}
 
 	//--------------------------------------------------------------------------
@@ -250,28 +257,5 @@ open class ImageLayer: Layer, TransitionListener {
 	 */
 	open func didFinishTransition() {
 
-	}
-
-	//--------------------------------------------------------------------------
-	// MARK: Private API
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method createFilteredImage
-	 * @since 0.5.0
-	 * @hidden
-	 */
-	private func createFilteredImage(_ source: CGImage, filter: ImageFilter) -> CGImage? {
-
-		switch (filter) {
-
-			case .grayscale:
-				return ImageEffect.grayscale(source)
-
-			default:
-				break
-		}
-
-		return nil
 	}
 }

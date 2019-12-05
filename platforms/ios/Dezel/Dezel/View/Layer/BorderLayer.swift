@@ -46,112 +46,96 @@ public class BorderLayer: Layer {
 	/**
 	 * @property borderTopWidth
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	@NSManaged public var borderTopWidth: CGFloat
 
 	/**
 	 * @property borderLeftWidth
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	@NSManaged public var borderLeftWidth: CGFloat
 
 	/**
 	 * @property borderRightWidth
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	@NSManaged public var borderRightWidth: CGFloat
 
 	/**
 	 * @property borderBottomWidth
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	@NSManaged public var borderBottomWidth: CGFloat
 
 	/**
 	 * @property borderTopColor
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	@NSManaged public var borderTopColor: CGColor
 
 	/**
 	 * @property borderLeftColor
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	@NSManaged public var borderLeftColor: CGColor
 
 	/**
 	 * @property borderRightColor
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	@NSManaged public var borderRightColor: CGColor
 
 	/**
 	 * @property borderBottomColor
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	@NSManaged public var borderBottomColor: CGColor
 
 	/**
 	 * @property borderTopLeftRadius
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	@NSManaged public var borderTopLeftRadius: CGFloat
 
 	/**
 	 * @property borderTopRightRadius
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	@NSManaged public var borderTopRightRadius: CGFloat
 
 	/**
 	 * @property borderBottomLeftRadius
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	@NSManaged public var borderBottomLeftRadius: CGFloat
 
 	/**
 	 * @property borderBottomRightRadius
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	@NSManaged public var borderBottomRightRadius: CGFloat
 
 	/**
 	 * @property borderTopLeftInnerRadius
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	@NSManaged public var borderTopLeftInnerRadius: CGPoint
 
 	/**
 	 * @property borderTopRightInnerRadius
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	@NSManaged public var borderTopRightInnerRadius: CGPoint
 
 	/**
 	 * @property borderBottomLeftInnerRadius
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	@NSManaged public var borderBottomLeftInnerRadius: CGPoint
 
 	/**
 	 * @property borderBottomRightInnerRadius
 	 * @since 0.1.0
-	 * @hidden
 	 */
 	@NSManaged public var borderBottomRightInnerRadius: CGPoint
 
@@ -453,8 +437,7 @@ public class BorderLayer: Layer {
 			if (animation.fromValue != nil) {
 
 				if (transition.delay > 0) {
-					animation.beginTime = CACurrentMediaTime() + transition.delay
-					animation.fillMode = CAMediaTimingFillMode.both
+					animation.delay = transition.delay
 				}
 
 				if let listener = self.listener as? TransitionListener {

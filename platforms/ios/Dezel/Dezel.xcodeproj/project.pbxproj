@@ -32,6 +32,9 @@
 		C705913B2337B1E8002EF92F /* DisplayStyleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C705913A2337B1E8002EF92F /* DisplayStyleTest.swift */; };
 		C70617A420F7C03100499FDB /* TransitionListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = C70617A320F7C03100499FDB /* TransitionListener.swift */; };
 		C70695FD23974A3300D4DFA1 /* CGColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C70695FC23974A3300D4DFA1 /* CGColor.swift */; };
+		C70695FF2397F15700D4DFA1 /* JavaScriptProperty+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = C70695FE2397F15700D4DFA1 /* JavaScriptProperty+Util.swift */; };
+		C7069601239804E600D4DFA1 /* ImageFit.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7069600239804E600D4DFA1 /* ImageFit.swift */; };
+		C7069603239804F100D4DFA1 /* ImagePosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7069602239804F100D4DFA1 /* ImagePosition.swift */; };
 		C718A0A92066E24400EFEC15 /* JavaScriptImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C718A0A82066E24400EFEC15 /* JavaScriptImageView.swift */; };
 		C718A0B32066E63300EFEC15 /* ImageLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C718A0B22066E63300EFEC15 /* ImageLayer.swift */; };
 		C718A0B52066ED6100EFEC15 /* JavaScriptImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C718A0B42066ED6100EFEC15 /* JavaScriptImage.swift */; };
@@ -45,7 +48,7 @@
 		C71A11A72080F7F60004D523 /* JavaScriptWebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71A11A62080F7F60004D523 /* JavaScriptWebSocket.swift */; };
 		C71E6CBC20DD4EE1009B86F6 /* JavaScriptWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71E6CBB20DD4EE1009B86F6 /* JavaScriptWebView.swift */; };
 		C71E6CC020DD4F56009B86F6 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71E6CBF20DD4F56009B86F6 /* WebView.swift */; };
-		C71E6CC220DD50A0009B86F6 /* WebViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71E6CC120DD50A0009B86F6 /* WebViewDelegate.swift */; };
+		C71E6CC220DD50A0009B86F6 /* WebViewObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71E6CC120DD50A0009B86F6 /* WebViewObserver.swift */; };
 		C71E6CD720E3DBA8009B86F6 /* Synchronizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71E6CD620E3DBA8009B86F6 /* Synchronizer.swift */; };
 		C71E6CD920E3DBC4009B86F6 /* SynchronizerCallback.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71E6CD820E3DBC4009B86F6 /* SynchronizerCallback.swift */; };
 		C71E6CDD20E65CCF009B86F6 /* UIEdgeInsets.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71E6CDC20E65CCF009B86F6 /* UIEdgeInsets.swift */; };
@@ -53,15 +56,13 @@
 		C71E6CE120E6617D009B86F6 /* Scrollbars.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71E6CE020E6617D009B86F6 /* Scrollbars.swift */; };
 		C71E6CE320E66188009B86F6 /* Overscroll.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71E6CE220E66188009B86F6 /* Overscroll.swift */; };
 		C72E0E9020668EE1003BCEF1 /* TextLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72E0E8F20668EE1003BCEF1 /* TextLayer.swift */; };
-		C72E0E9320669C97003BCEF1 /* TextAlignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72E0E9220669C97003BCEF1 /* TextAlignment.swift */; };
-		C72E0E9520669CA0003BCEF1 /* TextLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72E0E9420669CA0003BCEF1 /* TextLocation.swift */; };
+		C72E0E9320669C97003BCEF1 /* TextAlign.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72E0E9220669C97003BCEF1 /* TextAlign.swift */; };
 		C72E0E9720669CB8003BCEF1 /* TextDecoration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72E0E9620669CB8003BCEF1 /* TextDecoration.swift */; };
 		C72E0E9920669CBF003BCEF1 /* TextOverflow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72E0E9820669CBF003BCEF1 /* TextOverflow.swift */; };
 		C72E0E9B20669CCD003BCEF1 /* TextTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72E0E9A20669CCD003BCEF1 /* TextTransform.swift */; };
 		C72FF045204E190500FBB36B /* ShapeLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72FF044204E190500FBB36B /* ShapeLayer.swift */; };
 		C732E78820865116006014A0 /* JavaScriptGlobalModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C732E78720865116006014A0 /* JavaScriptGlobalModule.swift */; };
-		C73700C42218C00D0095A54B /* ImageFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C73700C32218C00D0095A54B /* ImageFilter.swift */; };
-		C73700C72219A9370095A54B /* ImageEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = C73700C62219A9370095A54B /* ImageEffect.swift */; };
+		C73AE5E82399816A00B7C12C /* CABasicAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C73AE5E72399816A00B7C12C /* CABasicAnimation.swift */; };
 		C7429F842375104900A29FB7 /* PropertyRef.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7429F822375104900A29FB7 /* PropertyRef.cpp */; };
 		C7429F852375104900A29FB7 /* PropertyRef.h in Headers */ = {isa = PBXBuildFile; fileRef = C7429F832375104900A29FB7 /* PropertyRef.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C7429F8E237B9A2400A29FB7 /* Matches.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7429F8C237B9A2400A29FB7 /* Matches.cpp */; };
@@ -197,7 +198,7 @@
 		C7A19E3220AB725D00367E91 /* JavaScriptPlatform.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A19E3120AB725D00367E91 /* JavaScriptPlatform.swift */; };
 		C7A19E3520ACC4DF00367E91 /* ScrollableDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A19E3420ACC4DF00367E91 /* ScrollableDelegate.swift */; };
 		C7A19E3820ADCB3800367E91 /* TextInputClearButtonIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = C7A19E3720ADCB3800367E91 /* TextInputClearButtonIcon@3x.png */; };
-		C7A19E3A20ADD18200367E91 /* TextInputDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A19E3920ADD18200367E91 /* TextInputDelegate.swift */; };
+		C7A19E3A20ADD18200367E91 /* TextInputObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A19E3920ADD18200367E91 /* TextInputObserver.swift */; };
 		C7A2C2AB2372F90200219BA5 /* Matcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7A2C2A92372F90200219BA5 /* Matcher.cpp */; };
 		C7A2C2AC2372F90200219BA5 /* Matcher.h in Headers */ = {isa = PBXBuildFile; fileRef = C7A2C2AA2372F90200219BA5 /* Matcher.h */; };
 		C7A2C2AF2372F92500219BA5 /* DisplayNodeWalker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7A2C2AD2372F92500219BA5 /* DisplayNodeWalker.cpp */; };
@@ -207,7 +208,6 @@
 		C7A2C2BB2373C75000219BA5 /* Match.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7A2C2B92373C75000219BA5 /* Match.cpp */; };
 		C7A2C2BC2373C75000219BA5 /* Match.h in Headers */ = {isa = PBXBuildFile; fileRef = C7A2C2BA2373C75000219BA5 /* Match.h */; };
 		C7A3AB77214EC68100D8B15C /* JavaScriptCanvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A3AB76214EC68100D8B15C /* JavaScriptCanvas.swift */; };
-		C7A3AB79214ECBA500D8B15C /* CanvasLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A3AB78214ECBA500D8B15C /* CanvasLayer.swift */; };
 		C7A48914237CEB6800457D02 /* StyleResolverTest.mm in Sources */ = {isa = PBXBuildFile; fileRef = C7A48913237CEB6800457D02 /* StyleResolverTest.mm */; };
 		C7A48916237D8BA600457D02 /* StylePropertyListTest.mm in Sources */ = {isa = PBXBuildFile; fileRef = C7A48915237D8BA600457D02 /* StylePropertyListTest.mm */; };
 		C7A48919237DA62B00457D02 /* InvalidInvocationException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7A48917237DA62B00457D02 /* InvalidInvocationException.cpp */; };
@@ -231,7 +231,7 @@
 		C7AA9375236F730F00ADF997 /* InvalidOperationException.h in Headers */ = {isa = PBXBuildFile; fileRef = C7AA9373236F730F00ADF997 /* InvalidOperationException.h */; };
 		C7AA93842372061000ADF997 /* StyleMatcherTest.mm in Sources */ = {isa = PBXBuildFile; fileRef = C7AA93832372061000ADF997 /* StyleMatcherTest.mm */; };
 		C7B40F6120B716C800892C92 /* TextArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B40F6020B716C800892C92 /* TextArea.swift */; };
-		C7B40F6320B7170E00892C92 /* TextAreaDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B40F6220B7170E00892C92 /* TextAreaDelegate.swift */; };
+		C7B40F6320B7170E00892C92 /* TextAreaObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B40F6220B7170E00892C92 /* TextAreaObserver.swift */; };
 		C7B9CEA6202CDB8D002409D5 /* ApplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B9CEA2202CDB8D002409D5 /* ApplicationController.swift */; };
 		C7B9CEA8202CDB8D002409D5 /* ApplicationWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B9CEA4202CDB8D002409D5 /* ApplicationWindow.swift */; };
 		C7B9CEA9202CDB8D002409D5 /* ApplicationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B9CEA5202CDB8D002409D5 /* ApplicationDelegate.swift */; };
@@ -266,7 +266,7 @@
 		C7DECDFC206B351B006EE2A6 /* Clippable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DECDFB206B351B006EE2A6 /* Clippable.swift */; };
 		C7E30977203123DD00436FA4 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E30976203123DD00436FA4 /* UIView.swift */; };
 		C7E309792031312700436FA4 /* CGPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E309782031312700436FA4 /* CGPoint.swift */; };
-		C7E45AEE21DD462C00247465 /* TextViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E45AED21DD462C00247465 /* TextViewDelegate.swift */; };
+		C7E45AEE21DD462C00247465 /* TextViewObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E45AED21DD462C00247465 /* TextViewObserver.swift */; };
 		C7E4817123823C3400730F7A /* Stylesheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E4817023823C3400730F7A /* Stylesheet.swift */; };
 		C7E4817423823CD900730F7A /* StylesheetRef.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7E4817223823CD900730F7A /* StylesheetRef.cpp */; };
 		C7E4817523823CD900730F7A /* StylesheetRef.h in Headers */ = {isa = PBXBuildFile; fileRef = C7E4817323823CD900730F7A /* StylesheetRef.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -367,6 +367,9 @@
 		C705913A2337B1E8002EF92F /* DisplayStyleTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayStyleTest.swift; sourceTree = "<group>"; };
 		C70617A320F7C03100499FDB /* TransitionListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionListener.swift; sourceTree = "<group>"; };
 		C70695FC23974A3300D4DFA1 /* CGColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGColor.swift; sourceTree = "<group>"; };
+		C70695FE2397F15700D4DFA1 /* JavaScriptProperty+Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JavaScriptProperty+Util.swift"; sourceTree = "<group>"; };
+		C7069600239804E600D4DFA1 /* ImageFit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFit.swift; sourceTree = "<group>"; };
+		C7069602239804F100D4DFA1 /* ImagePosition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePosition.swift; sourceTree = "<group>"; };
 		C718A0A82066E24400EFEC15 /* JavaScriptImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptImageView.swift; sourceTree = "<group>"; };
 		C718A0B22066E63300EFEC15 /* ImageLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLayer.swift; sourceTree = "<group>"; };
 		C718A0B42066ED6100EFEC15 /* JavaScriptImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptImage.swift; sourceTree = "<group>"; };
@@ -380,7 +383,7 @@
 		C71A11A62080F7F60004D523 /* JavaScriptWebSocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptWebSocket.swift; sourceTree = "<group>"; };
 		C71E6CBB20DD4EE1009B86F6 /* JavaScriptWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptWebView.swift; sourceTree = "<group>"; };
 		C71E6CBF20DD4F56009B86F6 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
-		C71E6CC120DD50A0009B86F6 /* WebViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewDelegate.swift; sourceTree = "<group>"; };
+		C71E6CC120DD50A0009B86F6 /* WebViewObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewObserver.swift; sourceTree = "<group>"; };
 		C71E6CD620E3DBA8009B86F6 /* Synchronizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Synchronizer.swift; sourceTree = "<group>"; };
 		C71E6CD820E3DBC4009B86F6 /* SynchronizerCallback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SynchronizerCallback.swift; sourceTree = "<group>"; };
 		C71E6CDC20E65CCF009B86F6 /* UIEdgeInsets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIEdgeInsets.swift; sourceTree = "<group>"; };
@@ -388,15 +391,13 @@
 		C71E6CE020E6617D009B86F6 /* Scrollbars.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scrollbars.swift; sourceTree = "<group>"; };
 		C71E6CE220E66188009B86F6 /* Overscroll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Overscroll.swift; sourceTree = "<group>"; };
 		C72E0E8F20668EE1003BCEF1 /* TextLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLayer.swift; sourceTree = "<group>"; };
-		C72E0E9220669C97003BCEF1 /* TextAlignment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextAlignment.swift; sourceTree = "<group>"; };
-		C72E0E9420669CA0003BCEF1 /* TextLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLocation.swift; sourceTree = "<group>"; };
+		C72E0E9220669C97003BCEF1 /* TextAlign.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextAlign.swift; sourceTree = "<group>"; };
 		C72E0E9620669CB8003BCEF1 /* TextDecoration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextDecoration.swift; sourceTree = "<group>"; };
 		C72E0E9820669CBF003BCEF1 /* TextOverflow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextOverflow.swift; sourceTree = "<group>"; };
 		C72E0E9A20669CCD003BCEF1 /* TextTransform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextTransform.swift; sourceTree = "<group>"; };
 		C72FF044204E190500FBB36B /* ShapeLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShapeLayer.swift; sourceTree = "<group>"; };
 		C732E78720865116006014A0 /* JavaScriptGlobalModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptGlobalModule.swift; sourceTree = "<group>"; };
-		C73700C32218C00D0095A54B /* ImageFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFilter.swift; sourceTree = "<group>"; };
-		C73700C62219A9370095A54B /* ImageEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageEffect.swift; sourceTree = "<group>"; };
+		C73AE5E72399816A00B7C12C /* CABasicAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CABasicAnimation.swift; sourceTree = "<group>"; };
 		C7429F822375104900A29FB7 /* PropertyRef.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PropertyRef.cpp; path = ../../../../../shared/display/PropertyRef.cpp; sourceTree = "<group>"; };
 		C7429F832375104900A29FB7 /* PropertyRef.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PropertyRef.h; path = ../../../../../shared/display/PropertyRef.h; sourceTree = "<group>"; };
 		C7429F8C237B9A2400A29FB7 /* Matches.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Matches.cpp; path = ../../../../../shared/display/style/Matches.cpp; sourceTree = "<group>"; };
@@ -532,7 +533,7 @@
 		C7A19E3120AB725D00367E91 /* JavaScriptPlatform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptPlatform.swift; sourceTree = "<group>"; };
 		C7A19E3420ACC4DF00367E91 /* ScrollableDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollableDelegate.swift; sourceTree = "<group>"; };
 		C7A19E3720ADCB3800367E91 /* TextInputClearButtonIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TextInputClearButtonIcon@3x.png"; sourceTree = "<group>"; };
-		C7A19E3920ADD18200367E91 /* TextInputDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextInputDelegate.swift; sourceTree = "<group>"; };
+		C7A19E3920ADD18200367E91 /* TextInputObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextInputObserver.swift; sourceTree = "<group>"; };
 		C7A2C2A92372F90200219BA5 /* Matcher.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Matcher.cpp; path = ../../../../../shared/display/style/Matcher.cpp; sourceTree = "<group>"; };
 		C7A2C2AA2372F90200219BA5 /* Matcher.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Matcher.h; path = ../../../../../shared/display/style/Matcher.h; sourceTree = "<group>"; };
 		C7A2C2AD2372F92500219BA5 /* DisplayNodeWalker.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DisplayNodeWalker.cpp; path = ../../../../../shared/display/DisplayNodeWalker.cpp; sourceTree = "<group>"; };
@@ -542,7 +543,6 @@
 		C7A2C2B92373C75000219BA5 /* Match.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Match.cpp; path = ../../../../../shared/display/style/Match.cpp; sourceTree = "<group>"; };
 		C7A2C2BA2373C75000219BA5 /* Match.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Match.h; path = ../../../../../shared/display/style/Match.h; sourceTree = "<group>"; };
 		C7A3AB76214EC68100D8B15C /* JavaScriptCanvas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptCanvas.swift; sourceTree = "<group>"; };
-		C7A3AB78214ECBA500D8B15C /* CanvasLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasLayer.swift; sourceTree = "<group>"; };
 		C7A48913237CEB6800457D02 /* StyleResolverTest.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = StyleResolverTest.mm; sourceTree = "<group>"; };
 		C7A48915237D8BA600457D02 /* StylePropertyListTest.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = StylePropertyListTest.mm; sourceTree = "<group>"; };
 		C7A48917237DA62B00457D02 /* InvalidInvocationException.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = InvalidInvocationException.cpp; path = ../../../../../shared/display/style/InvalidInvocationException.cpp; sourceTree = "<group>"; };
@@ -566,7 +566,7 @@
 		C7AA9373236F730F00ADF997 /* InvalidOperationException.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = InvalidOperationException.h; path = ../../../../../shared/display/InvalidOperationException.h; sourceTree = "<group>"; };
 		C7AA93832372061000ADF997 /* StyleMatcherTest.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = StyleMatcherTest.mm; sourceTree = "<group>"; };
 		C7B40F6020B716C800892C92 /* TextArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextArea.swift; sourceTree = "<group>"; };
-		C7B40F6220B7170E00892C92 /* TextAreaDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextAreaDelegate.swift; sourceTree = "<group>"; };
+		C7B40F6220B7170E00892C92 /* TextAreaObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextAreaObserver.swift; sourceTree = "<group>"; };
 		C7B9CEA2202CDB8D002409D5 /* ApplicationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationController.swift; sourceTree = "<group>"; };
 		C7B9CEA4202CDB8D002409D5 /* ApplicationWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationWindow.swift; sourceTree = "<group>"; };
 		C7B9CEA5202CDB8D002409D5 /* ApplicationDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationDelegate.swift; sourceTree = "<group>"; };
@@ -601,7 +601,7 @@
 		C7DECDFB206B351B006EE2A6 /* Clippable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clippable.swift; sourceTree = "<group>"; };
 		C7E30976203123DD00436FA4 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		C7E309782031312700436FA4 /* CGPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGPoint.swift; sourceTree = "<group>"; };
-		C7E45AED21DD462C00247465 /* TextViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewDelegate.swift; sourceTree = "<group>"; };
+		C7E45AED21DD462C00247465 /* TextViewObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewObserver.swift; sourceTree = "<group>"; };
 		C7E4817023823C3400730F7A /* Stylesheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stylesheet.swift; sourceTree = "<group>"; };
 		C7E4817223823CD900730F7A /* StylesheetRef.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = StylesheetRef.cpp; path = ../../../../../shared/display/StylesheetRef.cpp; sourceTree = "<group>"; };
 		C7E4817323823CD900730F7A /* StylesheetRef.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = StylesheetRef.h; path = ../../../../../shared/display/StylesheetRef.h; sourceTree = "<group>"; };
@@ -748,24 +748,16 @@
 			isa = PBXGroup;
 			children = (
 				C7BFD165207D539300AAD31C /* InputType.swift */,
-				C73700C32218C00D0095A54B /* ImageFilter.swift */,
-				C72E0E9220669C97003BCEF1 /* TextAlignment.swift */,
+				C7069600239804E600D4DFA1 /* ImageFit.swift */,
+				C7069602239804F100D4DFA1 /* ImagePosition.swift */,
+				C71E6CE220E66188009B86F6 /* Overscroll.swift */,
+				C71E6CE020E6617D009B86F6 /* Scrollbars.swift */,
+				C72E0E9220669C97003BCEF1 /* TextAlign.swift */,
 				C72E0E9620669CB8003BCEF1 /* TextDecoration.swift */,
 				C72E0E9820669CBF003BCEF1 /* TextOverflow.swift */,
-				C72E0E9420669CA0003BCEF1 /* TextLocation.swift */,
 				C72E0E9A20669CCD003BCEF1 /* TextTransform.swift */,
-				C71E6CE020E6617D009B86F6 /* Scrollbars.swift */,
-				C71E6CE220E66188009B86F6 /* Overscroll.swift */,
 			);
 			path = Type;
-			sourceTree = "<group>";
-		};
-		C73700C52219A8CA0095A54B /* Image */ = {
-			isa = PBXGroup;
-			children = (
-				C73700C62219A9370095A54B /* ImageEffect.swift */,
-			);
-			path = Image;
 			sourceTree = "<group>";
 		};
 		C7429F8623759B8100A29FB7 /* CAPI */ = {
@@ -808,13 +800,12 @@
 		C7686476203A2C8F00D1903B /* Layer */ = {
 			isa = PBXGroup;
 			children = (
+				C718B5B3207C3D0D00610F8D /* LinearGradient.swift */,
+				C718B5B5207C41F000610F8D /* RadialGradient.swift */,
 				C7682A412035395F006EA6D5 /* Layer.swift */,
 				C767540220269970003C4D85 /* BitmapLayer.swift */,
 				C76753EC2026996F003C4D85 /* BorderLayer.swift */,
-				C7A3AB78214ECBA500D8B15C /* CanvasLayer.swift */,
 				C718A0B22066E63300EFEC15 /* ImageLayer.swift */,
-				C718B5B3207C3D0D00610F8D /* LinearGradient.swift */,
-				C718B5B5207C41F000610F8D /* RadialGradient.swift */,
 				C767540720269971003C4D85 /* RenderLayer.swift */,
 				C76753E92026996F003C4D85 /* ShadowLayer.swift */,
 				C72FF044204E190500FBB36B /* ShapeLayer.swift */,
@@ -1090,6 +1081,7 @@
 			children = (
 				C7A6080F23958EA600B176FC /* JavaScriptProperty+Value.swift */,
 				C7A608112395950F00B176FC /* JavaScriptPropertyNumberValue+Value.swift */,
+				C70695FE2397F15700D4DFA1 /* JavaScriptProperty+Util.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -1293,26 +1285,25 @@
 				C7FCA126231ABAD100AFBDB6 /* Display */,
 				C77189AC2106ADE000337263 /* Geom */,
 				C7027CD12270DF7F001DD0F7 /* Gesture */,
-				C73700C52219A8CA0095A54B /* Image */,
 				C7BB7D432029061A004006C2 /* Animation */,
 				C7686476203A2C8F00D1903B /* Layer */,
 				C72E0E9120669C7D003BCEF1 /* Type */,
 				C7DECDFB206B351B006EE2A6 /* Clippable.swift */,
-				C7BFD15F207D518600AAD31C /* SpinnerView.swift */,
-				C767544620269DBD003C4D85 /* ImageView.swift */,
-				C7FFB4D4204B2313000D888E /* View.swift */,
-				C7BFD163207D52F000AAD31C /* TextInput.swift */,
-				C7A19E3920ADD18200367E91 /* TextInputDelegate.swift */,
-				C7B40F6020B716C800892C92 /* TextArea.swift */,
-				C7B40F6220B7170E00892C92 /* TextAreaDelegate.swift */,
-				C767544420269DB5003C4D85 /* TextView.swift */,
-				C7E45AED21DD462C00247465 /* TextViewDelegate.swift */,
-				C71E6CBF20DD4F56009B86F6 /* WebView.swift */,
-				C71E6CC120DD50A0009B86F6 /* WebViewDelegate.swift */,
-				C7BCD7472094C5AD0014CD19 /* Scrollable.swift */,
-				C7A19E3420ACC4DF00367E91 /* ScrollableDelegate.swift */,
 				C7E5D07B209CBAE80098C5FD /* Resizable.swift */,
 				C71E6CDE20E65FB6009B86F6 /* Updatable.swift */,
+				C7FFB4D4204B2313000D888E /* View.swift */,
+				C767544620269DBD003C4D85 /* ImageView.swift */,
+				C7BFD163207D52F000AAD31C /* TextInput.swift */,
+				C7A19E3920ADD18200367E91 /* TextInputObserver.swift */,
+				C7B40F6020B716C800892C92 /* TextArea.swift */,
+				C7B40F6220B7170E00892C92 /* TextAreaObserver.swift */,
+				C767544420269DB5003C4D85 /* TextView.swift */,
+				C7E45AED21DD462C00247465 /* TextViewObserver.swift */,
+				C71E6CBF20DD4F56009B86F6 /* WebView.swift */,
+				C71E6CC120DD50A0009B86F6 /* WebViewObserver.swift */,
+				C7BCD7472094C5AD0014CD19 /* Scrollable.swift */,
+				C7A19E3420ACC4DF00367E91 /* ScrollableDelegate.swift */,
+				C7BFD15F207D518600AAD31C /* SpinnerView.swift */,
 				C71E6CD820E3DBC4009B86F6 /* SynchronizerCallback.swift */,
 				C71E6CD620E3DBA8009B86F6 /* Synchronizer.swift */,
 				C7682A3F203538A9006EA6D5 /* WrapperView.swift */,
@@ -1441,6 +1432,7 @@
 			children = (
 				C7EE2E0522DE2D5B00FFF0EE /* CADisplayLink.swift */,
 				C7964D632033E67E00F454F1 /* CALayer.swift */,
+				C73AE5E72399816A00B7C12C /* CABasicAnimation.swift */,
 			);
 			path = CoreAnimation;
 			sourceTree = "<group>";
@@ -1473,10 +1465,10 @@
 				C7BFD16B207D560E00AAD31C /* UIColor.swift */,
 				C71E6CDC20E65CCF009B86F6 /* UIEdgeInsets.swift */,
 				C7D8926420657B0000E85115 /* UIFont.swift */,
-				C7CE4B062208C93C005D5235 /* UITextField.swift */,
-				C7E30976203123DD00436FA4 /* UIView.swift */,
-				C74D8DDC238C7AFE000C8E12 /* UITouch.swift */,
 				C74D8DDE238D9364000C8E12 /* UIResponder.swift */,
+				C7CE4B062208C93C005D5235 /* UITextField.swift */,
+				C74D8DDC238C7AFE000C8E12 /* UITouch.swift */,
+				C7E30976203123DD00436FA4 /* UIView.swift */,
 			);
 			path = UIKit;
 			sourceTree = "<group>";
@@ -1760,8 +1752,7 @@
 				C72E0E9020668EE1003BCEF1 /* TextLayer.swift in Sources */,
 				C7E8A545201624FA005139F6 /* JavaScriptValue.cpp in Sources */,
 				C7BB7D472029062D004006C2 /* Transition.swift in Sources */,
-				C73700C72219A9370095A54B /* ImageEffect.swift in Sources */,
-				C72E0E9520669CA0003BCEF1 /* TextLocation.swift in Sources */,
+				C7069601239804E600D4DFA1 /* ImageFit.swift in Sources */,
 				C7A2C2B32373AA1C00219BA5 /* Importance.cpp in Sources */,
 				C7E8A544201624FA005139F6 /* JavaScriptValuePrivate.cpp in Sources */,
 				C77189B42106AE1300337263 /* Transform3D.swift in Sources */,
@@ -1777,7 +1768,7 @@
 				C792E8EF234BDE630022D712 /* DisplayNodeAnchor.cpp in Sources */,
 				C7BFD160207D518600AAD31C /* SpinnerView.swift in Sources */,
 				C7429F842375104900A29FB7 /* PropertyRef.cpp in Sources */,
-				C7E45AEE21DD462C00247465 /* TextViewDelegate.swift in Sources */,
+				C7E45AEE21DD462C00247465 /* TextViewObserver.swift in Sources */,
 				C7F2260B2081A10000ABC66D /* Unsafe.swift in Sources */,
 				C7E30977203123DD00436FA4 /* UIView.swift in Sources */,
 				C792E93B234BDEA70022D712 /* Descriptor.cpp in Sources */,
@@ -1823,6 +1814,7 @@
 				C7E8A529201624A2005139F6 /* JavaScriptClassBuilder.swift in Sources */,
 				C792E908234BDE900022D712 /* AbsoluteLayoutResolver.cpp in Sources */,
 				C785B0A32016EC17001DAE64 /* JavaScriptCallback.swift in Sources */,
+				C73AE5E82399816A00B7C12C /* CABasicAnimation.swift in Sources */,
 				C7AA9370236F6DD500ADF997 /* InvalidStructureException.cpp in Sources */,
 				C792E95F234CC1E70022D712 /* PropertyList.cpp in Sources */,
 				C7BFD166207D539300AAD31C /* InputType.swift in Sources */,
@@ -1834,6 +1826,7 @@
 				C732E78820865116006014A0 /* JavaScriptGlobalModule.swift in Sources */,
 				C7E4817123823C3400730F7A /* Stylesheet.swift in Sources */,
 				C718A0B52066ED6100EFEC15 /* JavaScriptImage.swift in Sources */,
+				C7069603239804F100D4DFA1 /* ImagePosition.swift in Sources */,
 				C7BFD16C207D560E00AAD31C /* UIColor.swift in Sources */,
 				C792E8F4234BDE630022D712 /* DisplayBase.cpp in Sources */,
 				C792E954234BDEA70022D712 /* FunctionValue.cpp in Sources */,
@@ -1871,12 +1864,11 @@
 				C7A6080D2395797B00B176FC /* ValueListRef.cpp in Sources */,
 				C7BFD168207D541800AAD31C /* JavaScriptTextInput.swift in Sources */,
 				C792E974234D6E6E0022D712 /* ParseException.cpp in Sources */,
-				C7B40F6320B7170E00892C92 /* TextAreaDelegate.swift in Sources */,
+				C7B40F6320B7170E00892C92 /* TextAreaObserver.swift in Sources */,
 				C7D89263206575CB00E85115 /* JavaScriptTextView.swift in Sources */,
 				C7429F8E237B9A2400A29FB7 /* Matches.cpp in Sources */,
 				C7AA9374236F730F00ADF997 /* InvalidOperationException.cpp in Sources */,
 				C7E8A528201624A2005139F6 /* JavaScriptClassSetterWrapper.swift in Sources */,
-				C7A3AB79214ECBA500D8B15C /* CanvasLayer.swift in Sources */,
 				C792E93D234BDEA70022D712 /* VariableValue.cpp in Sources */,
 				C718B5B4207C3D0D00610F8D /* LinearGradient.swift in Sources */,
 				C75153BF22F3791C007CAA48 /* JavaScriptClassStaticFunctionWrapper.swift in Sources */,
@@ -1887,7 +1879,7 @@
 				C792E957234BDEA70022D712 /* StringValue.cpp in Sources */,
 				C7E8A535201624A2005139F6 /* JavaScriptClassConstructorWrapper.swift in Sources */,
 				C7040DE72327D41200DFDBED /* DisplayDelegate.swift in Sources */,
-				C7A19E3A20ADD18200367E91 /* TextInputDelegate.swift in Sources */,
+				C7A19E3A20ADD18200367E91 /* TextInputObserver.swift in Sources */,
 				C792E939234BDEA70022D712 /* Token.cpp in Sources */,
 				C792E8F8234BDE630022D712 /* Display.cpp in Sources */,
 				C7B9CEAD202CDBB7002409D5 /* JavaScriptApplicationModule.swift in Sources */,
@@ -1903,17 +1895,17 @@
 				C792E941234BDEA70022D712 /* BooleanValue.cpp in Sources */,
 				C71E6CDD20E65CCF009B86F6 /* UIEdgeInsets.swift in Sources */,
 				C7E8A527201624A2005139F6 /* JavaScriptGetterWrapper.swift in Sources */,
+				C70695FF2397F15700D4DFA1 /* JavaScriptProperty+Util.swift in Sources */,
 				C7D14EDC21D07058008B51D4 /* Scanner.swift in Sources */,
 				C792E94D234BDEA70022D712 /* Variable.cpp in Sources */,
 				C7CE4B032208AB53005D5235 /* DateParser.swift in Sources */,
 				C7FCA1002311B4BA00AFBDB6 /* JavaScriptPropertyStringValue.swift in Sources */,
 				C7CE4B072208C93C005D5235 /* UITextField.swift in Sources */,
-				C73700C42218C00D0095A54B /* ImageFilter.swift in Sources */,
 				C718A0B32066E63300EFEC15 /* ImageLayer.swift in Sources */,
 				C7A608122395950F00B176FC /* JavaScriptPropertyNumberValue+Value.swift in Sources */,
 				C7E8A522201624A2005139F6 /* JavaScriptClassGetterWrapper.swift in Sources */,
 				C7E309792031312700436FA4 /* CGPoint.swift in Sources */,
-				C72E0E9320669C97003BCEF1 /* TextAlignment.swift in Sources */,
+				C72E0E9320669C97003BCEF1 /* TextAlign.swift in Sources */,
 				C767543F20269971003C4D85 /* RenderLayer.swift in Sources */,
 				C7E8A52A201624A2005139F6 /* JavaScriptContext.swift in Sources */,
 				C7E8A524201624A2005139F6 /* JavaScriptClass.swift in Sources */,
@@ -1932,7 +1924,7 @@
 				C7BFD164207D52F100AAD31C /* TextInput.swift in Sources */,
 				C7E8A525201624A2005139F6 /* JavaScriptClassFunctionWrapper.swift in Sources */,
 				C777B62A22D77B2D00E75E55 /* TestRunner.swift in Sources */,
-				C71E6CC220DD50A0009B86F6 /* WebViewDelegate.swift in Sources */,
+				C71E6CC220DD50A0009B86F6 /* WebViewObserver.swift in Sources */,
 				C7E8A4D52015A792005139F6 /* Double.swift in Sources */,
 				C7DECDFC206B351B006EE2A6 /* Clippable.swift in Sources */,
 				C71A11A72080F7F60004D523 /* JavaScriptWebSocket.swift in Sources */,

@@ -455,7 +455,7 @@ open class ApplicationController: UIViewController, StylesheetDelegate {
 	 * @since 0.7.0
 	 */
 	open func keyboardWillShow(_ notification: Notification) {
-		self.dispatchKeyboardEvent("nativeOnBeforeKeyboardShow", notification: notification)
+		self.dispatchKeyboardEvent("beforekeyboardshow", notification: notification)
 	}
 
 	/**
@@ -463,7 +463,7 @@ open class ApplicationController: UIViewController, StylesheetDelegate {
 	 * @since 0.7.0
 	 */
 	open func keyboardDidShow(_ notification: Notification) {
-		self.dispatchKeyboardEvent("nativeOnKeyboardShow", notification: notification)
+		self.dispatchKeyboardEvent("keyboardshow", notification: notification)
 	}
 
 	/**
@@ -471,7 +471,7 @@ open class ApplicationController: UIViewController, StylesheetDelegate {
 	 * @since 0.7.0
 	 */
 	open func keyboardWillHide(_ notification: Notification) {
-		self.dispatchKeyboardEvent("nativeOnBeforeKeyboardHide", notification: notification)
+		self.dispatchKeyboardEvent("beforekeyboardhide", notification: notification)
 	}
 
 	/**
@@ -479,7 +479,7 @@ open class ApplicationController: UIViewController, StylesheetDelegate {
 	 * @since 0.7.0
 	 */
 	open func keyboardDidHide(_ notification: Notification) {
-		self.dispatchKeyboardEvent("nativeOnKeyboardHide", notification: notification)
+		self.dispatchKeyboardEvent("keyboardhide", notification: notification)
 	}
 
 	/**
@@ -487,7 +487,7 @@ open class ApplicationController: UIViewController, StylesheetDelegate {
 	 * @since 0.7.0
 	 */
 	open func keyboardWillResize(_ notification: Notification) {
-		self.dispatchKeyboardEvent("nativeOnBeforeKeyboardResize", notification: notification)
+		self.dispatchKeyboardEvent("beforekeyboardresize", notification: notification)
 	}
 
 	/**
@@ -495,7 +495,7 @@ open class ApplicationController: UIViewController, StylesheetDelegate {
 	 * @since 0.7.0
 	 */
 	open func keyboardDidResize(_ notification: Notification) {
-		self.dispatchKeyboardEvent("nativeboardResize", notification: notification)
+		self.dispatchKeyboardEvent("keyboardresize", notification: notification)
 	}
 
 	//--------------------------------------------------------------------------
@@ -820,7 +820,7 @@ open class ApplicationController: UIViewController, StylesheetDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private func dispatchKeyboardEvent(_ name: String, notification: Notification) {
+	private func dispatchKeyboardEvent(_ event: String, notification: Notification) {
 
 		guard let application = self.application else {
 			return
@@ -855,7 +855,39 @@ open class ApplicationController: UIViewController, StylesheetDelegate {
 				self.context.createString(equation)
 			]
 
-			application.callMethod(name, arguments: args, result: nil)
+			let method: String
+
+			switch (event) {
+
+				case "beforekeyboardshow":
+					method = "nativeOnBeforeKeyboardShow"
+					break
+
+				case "keyboardshow":
+					method = "nativeOnKeyboardShow"
+					break
+
+				case "beforekeyboardhide":
+					method = "nativeOnBeforeKeyboardHide"
+					break
+
+				case "keyboardhide":
+					method = "nativeOnKeyboardHide"
+					break
+
+				case "beforekeyboardresize":
+					method = "nativeOnBeforeKeyboardResize"
+					break
+
+				case "keyboardresize":
+					method = "nativeOnKeyboardResize"
+					break
+
+				default:
+					fatalError()
+			}
+
+			application.callMethod(method, arguments: args, result: nil)
 		}
 	}
 

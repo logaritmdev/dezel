@@ -72,7 +72,7 @@ open class JavaScriptImage: JavaScriptClass {
 	 * @property source
 	 * @since 0.7.0
 	 */
-	@objc public lazy var source = JavaScriptProperty() { value in
+	@objc lazy var source = JavaScriptProperty() { value in
 		self.load(value.string)
 	}
 
@@ -80,13 +80,13 @@ open class JavaScriptImage: JavaScriptClass {
 	 * @property loading
 	 * @since 0.7.0
 	 */
-	@objc public lazy var loading = JavaScriptProperty(boolean: false)
+	@objc lazy var loading = JavaScriptProperty(boolean: false)
 
 	/**
 	 * @property complete
 	 * @since 0.7.0
 	 */
-	@objc public lazy var complete = JavaScriptProperty(boolean: false)
+	@objc lazy var complete = JavaScriptProperty(boolean: false)
 
 	//--------------------------------------------------------------------------
 
@@ -95,7 +95,7 @@ open class JavaScriptImage: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsGet_width(callback: JavaScriptGetterCallback) {
+	@objc func jsGet_width(callback: JavaScriptGetterCallback) {
 		callback.returns(Double(self.data?.size.width ?? 0))
 	}
 
@@ -106,7 +106,7 @@ open class JavaScriptImage: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsGet_height(callback: JavaScriptGetterCallback) {
+	@objc func jsGet_height(callback: JavaScriptGetterCallback) {
 		callback.returns(Double(self.data?.size.height ?? 0))
 	}
 
@@ -117,7 +117,7 @@ open class JavaScriptImage: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsGet_source(callback: JavaScriptGetterCallback) {
+	@objc func jsGet_source(callback: JavaScriptGetterCallback) {
 		callback.returns(self.source)
 	}
 
@@ -126,7 +126,7 @@ open class JavaScriptImage: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsSet_source(callback: JavaScriptSetterCallback) {
+	@objc func jsSet_source(callback: JavaScriptSetterCallback) {
 		self.source.reset(callback.value, lock: self)
 	}
 
@@ -137,7 +137,7 @@ open class JavaScriptImage: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsGet_loading(callback: JavaScriptGetterCallback) {
+	@objc func jsGet_loading(callback: JavaScriptGetterCallback) {
 		callback.returns(self.loading)
 	}
 
@@ -148,7 +148,7 @@ open class JavaScriptImage: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsGet_complete(callback: JavaScriptGetterCallback) {
+	@objc func jsGet_complete(callback: JavaScriptGetterCallback) {
 		callback.returns(self.complete)
 	}
 }

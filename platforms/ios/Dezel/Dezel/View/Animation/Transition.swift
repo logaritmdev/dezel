@@ -80,6 +80,9 @@ public final class Transition {
 				case "opacity":
 					animation.fromValue = current!.opacity
 
+				case "backgroundColor":
+					animation.fromValue = current!.backgroundColor
+
 				default:
 					break
 			}
@@ -87,8 +90,7 @@ public final class Transition {
 			if (animation.fromValue != nil) {
 
 				if (transition.delay > 0) {
-					animation.beginTime = CACurrentMediaTime() + transition.delay
-					animation.fillMode = CAMediaTimingFillMode.both
+					animation.delay = transition.delay
 				}
 
 				if let listener = layer.listener as? TransitionListener {

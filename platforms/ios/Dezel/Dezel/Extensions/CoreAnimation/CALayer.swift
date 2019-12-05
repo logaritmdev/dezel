@@ -23,6 +23,38 @@ internal extension CALayer {
 	}
 
 	/**
+	 * @method maskColor
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	var maskColor: CGColor? {
+
+		get {
+			return self.backgroundColor
+		}
+
+		set {
+			self.backgroundColor = newValue
+		}
+	}
+
+	/**
+	 * @method maskShape
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	var maskShape: CALayer? {
+
+		get {
+			return self.mask
+		}
+
+		set {
+			self.mask = newValue
+		}
+	}
+
+	/**
 	 * @method createOuterMask
 	 * @since 0.1.0
 	 * @hidden

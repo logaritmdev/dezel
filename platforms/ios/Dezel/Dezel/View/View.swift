@@ -142,10 +142,10 @@ open class View : UIScrollView, UIScrollViewDelegate, Scrollable {
 	}
 
 	/**
-	 * @property scrollMomentum
+	 * @property scrollInertia
 	 * @since 0.7.0
 	 */
-	open var scrollMomentum: Bool = true
+	open var scrollInertia: Bool = true
 
 	/**
 	 * @property contentInsetTop
@@ -290,9 +290,6 @@ open class View : UIScrollView, UIScrollViewDelegate, Scrollable {
 			self.contentInsetAdjustmentBehavior = .never
 		}
 
-		self.layer.contentsScale = UIScreen.main.scale
-		self.layer.rasterizationScale = UIScreen.main.scale
-
 		self.delegate = self
 	}
 
@@ -399,7 +396,7 @@ open class View : UIScrollView, UIScrollViewDelegate, Scrollable {
 	 * @hidden
 	 */
 	open func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        if (self.scrollMomentum == false) {
+        if (self.scrollInertia == false) {
 			targetContentOffset.pointee = scrollView.contentOffset
 			self.didFinishDragging()
 		}

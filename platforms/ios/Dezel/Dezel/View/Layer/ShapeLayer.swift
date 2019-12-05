@@ -53,14 +53,6 @@ open class ShapeLayer: CAShapeLayer, CALayerDelegate, CAAnimationDelegate {
 		self.path = path
 	}
 
-	/**
-	 * @constructor
-	 * @since 0.1.0
-	 */
-	public override init(layer:Any) {
-		super.init(layer:layer)
-	}
-
 	//--------------------------------------------------------------------------
 	// MARK: Methods - Animations
 	//--------------------------------------------------------------------------
@@ -93,8 +85,7 @@ open class ShapeLayer: CAShapeLayer, CALayerDelegate, CAAnimationDelegate {
 			if (animation.fromValue != nil) {
 
 				if (transition.delay > 0) {
-					animation.beginTime = CACurrentMediaTime() + transition.delay
-					animation.fillMode = CAMediaTimingFillMode.both
+					animation.delay = transition.delay
 				}
 
 				if let listener = self.listener as? TransitionListener {

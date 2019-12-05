@@ -30,32 +30,6 @@ open class TextLayer: Layer {
 	//----------------------------------------------------------------------
 
 	/**
-	 * @property bounds
-	 * @since 0.1.0
-	 */
-	override open var bounds: CGRect {
-
-		didSet {
-
-			let oldW = oldValue.size.width
-			let oldH = oldValue.size.height
-			let newW = self.bounds.size.width
-			let newH = self.bounds.size.height
-
-			if (newW != oldW ||
-				newH != oldH) {
-				self.setNeedsDisplay()
-			}
-		}
-	}
-
-	/**
-	 * @property layout
-	 * @since 0.5.0
-	 */
-	private(set) public var layout: TextLayout = TextLayout()
-
-	/**
 	 * @property textColor
 	 * @since 0.1.0
 	 */
@@ -78,6 +52,26 @@ open class TextLayer: Layer {
 	 * @since 0.1.0
 	 */
 	@NSManaged public var textBaseline: CGFloat
+
+	/**
+	 * @property bounds
+	 * @since 0.1.0
+	 */
+	override open var bounds: CGRect {
+
+		didSet {
+
+			let oldW = oldValue.size.width
+			let oldH = oldValue.size.height
+			let newW = self.bounds.size.width
+			let newH = self.bounds.size.height
+
+			if (newW != oldW ||
+				newH != oldH) {
+				self.setNeedsDisplay()
+			}
+		}
+	}
 
 	/**
 	 * @property fontFamily
@@ -147,6 +141,19 @@ open class TextLayer: Layer {
 	}
 
 	/**
+	 * @property textAlign
+	 * @since 0.1.0
+	 */
+	open var textAlign: TextAlign = .middleLeft {
+		willSet {
+			self.layout.textAlign = newValue
+			self.invalidateAttributes()
+			self.invalidateAttributedText()
+			self.setNeedsDisplay()
+		}
+	}
+
+	/**
 	 * @property textDecoration
 	 * @since 0.1.0
 	 */
@@ -171,35 +178,23 @@ open class TextLayer: Layer {
 	}
 
 	/**
-	 * @property textAlignment
-	 * @since 0.1.0
-	 */
-	open var textAlignment: TextAlignment = .start {
-		willSet {
-			self.invalidateAttributes()
-			self.invalidateAttributedText()
-			self.setNeedsDisplay()
-		}
-	}
-
-	/**
-	 * @property textLocation
-	 * @since 0.7.0
-	 */
-	open var textLocation: TextLocation = .middle {
-		willSet {
-			self.layout.textLocation = newValue
-			self.setNeedsDisplay()
-		}
-	}
-
-	/**
 	 * @property textOverflow
 	 * @since 0.1.0
 	 */
 	open var textOverflow: TextOverflow = .ellipsis {
 		willSet {
 			self.layout.textOverflow = newValue
+			self.setNeedsDisplay()
+		}
+	}
+
+	/**
+	 * @property minLines
+	 * @since 0.7.0
+	 */
+	open var minLines: Int = 0 {
+		willSet {
+			self.layout.minLines = newValue
 			self.setNeedsDisplay()
 		}
 	}
@@ -238,6 +233,12 @@ open class TextLayer: Layer {
 			self.setNeedsDisplay()
 		}
 	}
+
+	/**
+	 * @property layout
+	 * @since 0.5.0
+	 */
+	private(set) public var layout: TextLayout = TextLayout()
 
 	/**
 	 * @property font
@@ -324,9 +325,9 @@ open class TextLayer: Layer {
 	 */
 	required public init() {
 		super.init()
-		self.needsDisplayOnBoundsChange = true
-		self.shadowRadius = 0
 		self.shadowOffset = .zero
+		self.shadowRadius = 0
+		self.shadowOpacity = 0
 	}
 
 	/**
@@ -344,12 +345,11 @@ open class TextLayer: Layer {
 			self.fontSize = layer.fontSize
 			self.text = layer.text
 			self.textColor = layer.textColor
+			self.textAlign = layer.textAlign
 			self.textKerning = layer.textKerning
 			self.textLeading = layer.textLeading
 			self.textDecoration = layer.textDecoration
 			self.textTransform = layer.textTransform
-			self.textAlignment = layer.textAlignment
-			self.textLocation = layer.textLocation
 			self.textBaseline = layer.textBaseline
 			self.maxLines = layer.maxLines
 		}
@@ -445,9 +445,9 @@ open class TextLayer: Layer {
 		var attributes = TextAttributes()
 		attributes.setFont(self.font)
 		attributes.setTextColor(textColor)
+		attributes.setTextAlign(self.textAlign)
 		attributes.setTextKerning(textKerning)
 		attributes.setTextLeading(textLeading)
-		attributes.setTextAlignment(self.textAlignment)
 		attributes.setTextDecoration(self.textDecoration)
 		attributes.setBaselineOffset(0)
 
@@ -512,35 +512,26 @@ open class TextLayer: Layer {
 		}
 
 		if (key == "textKerning") {
-
 			self.invalidateAttributes()
 			self.invalidateAttributedText()
 			self.setNeedsDisplay()
-
 			self.layout.textKerning = self.textKerning
-
 			return
 		}
 
 		if (key == "textLeading") {
-
 			self.invalidateAttributes()
 			self.invalidateAttributedText()
 			self.setNeedsDisplay()
-
 			self.layout.textLeading = self.textLeading
-
 			return
 		}
 
 		if (key == "textBaseline") {
-
 			self.invalidateAttributes()
 			self.invalidateAttributedText()
 			self.setNeedsDisplay()
-
 			self.layout.textBaseline = self.textBaseline
-
 			return
 		}
 	}
@@ -607,8 +598,7 @@ open class TextLayer: Layer {
 			if (animation.fromValue != nil) {
 
 				if (transition.delay > 0) {
-					animation.beginTime = CACurrentMediaTime() + transition.delay
-					animation.fillMode = CAMediaTimingFillMode.both
+					animation.delay = transition.delay
 				}
 
 				return animation

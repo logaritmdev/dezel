@@ -1,309 +1,261 @@
-import UIKit
-
 /**
  * @class BitmapLayer
- * @super Layer
  * @since 0.1.0
+ * @hidden
  */
-public class BitmapLayer: Layer {
-
-	//--------------------------------------------------------------------------
-	// MARK: Enums
-	//--------------------------------------------------------------------------
-
-	public enum Mode {
-		case fit
-		case fill
-	}
-
-	//--------------------------------------------------------------------------
-	// MARK: Static
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method needsDisplay
-	 * @since 0.1.0
-	 */
-	override open class func needsDisplay(forKey key: String) -> Bool {
-
-		if (key == "backgroundImageTop" ||
-			key == "backgroundImageLeft" ||
-			key == "backgroundImageWidth" ||
-			key == "backgroundImageHeight" ||
-			key == "backgroundImageTint") {
-			return true
-		}
-
-		return super.needsDisplay(forKey: key)
-	}
+open class BitmapLayer: Layer, TransitionListener {
 
 	//--------------------------------------------------------------------------
 	// MARK: Properties
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @property backgroundImage
+	 * @property tint
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	public var backgroundImage: UIImage? {
-		didSet {
-			self.setNeedsDisplay()
-		}
-	}
-
-	/**
-	 * @property backgroundImageTop
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@NSManaged public var backgroundImageTop: CGFloat
-
-	/**
-	 * @property backgroundImageLeft
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@NSManaged public var backgroundImageLeft: CGFloat
-
-	/**
-	 * @property backgroundImageWidth
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@NSManaged public var backgroundImageWidth: CGFloat
-
-	/**
-	 * @property backgroundImageHeight
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	@NSManaged public var backgroundImageHeight: CGFloat
-
-	/**
-	 * @property backgroundLinearGradient
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	open var backgroundLinearGradient: LinearGradient? {
+	open var tint: CGColor = .clear {
 		willSet {
 			self.setNeedsDisplay()
 		}
 	}
 
 	/**
-	 * @property backgroundRadialGradient
+	 * @property image
 	 * @since 0.1.0
-	 * @hidden
 	 */
-	open var backgroundRadialGradient: RadialGradient? {
+	open var image: CGImage? {
 		willSet {
 			self.setNeedsDisplay()
 		}
 	}
 
 	/**
-	 * @property backgroundImageTint
-	 * @since 0.1.0
-	 * @hidden
+	 * @property imageFit
+	 * @since 0.7.0
 	 */
-	public var backgroundImageTint: CGColor = .clear {
+	open var imageFit: ImageFit = .contain {
 		willSet {
-			self.backgroundImageLayer.tint = newValue
+			self.setNeedsLayout()
 		}
 	}
 
 	/**
-	 * @property backgroundImageLayer
-	 * @since 0.1.0
+	 * @property imagePosition
+	 * @since 0.7.0
+	 */
+	open var imagePosition: ImagePosition = .middleCenter {
+		willSet {
+			self.setNeedsLayout()
+		}
+	}
+
+	/**
+	 * @property contentLayer
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private var backgroundImageLayer: ImageLayer = ImageLayer()
+	private var contentLayer: Layer = Layer()
 
-	//--------------------------------------------------------------------------
+	/**
+	 * @property contourLayer
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private var contourLayer: Layer = Layer()
+
+	//----------------------------------------------------------------------
 	// MARK: Methods
-	//--------------------------------------------------------------------------
+	//----------------------------------------------------------------------
 
 	/**
 	 * @constructor
 	 * @since 0.1.0
-	 * @hidden
 	 */
-	required public init?(coder: NSCoder) {
+	required public init?(coder:NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
 
 	/**
 	 * @constructor
 	 * @since 0.1.0
-	 * @hidden
 	 */
-	required public init() {
-		super.init()
-		self.masksToBounds = true
-		self.needsDisplayOnBoundsChange = true
-		self.addSublayer(self.backgroundImageLayer)
-	}
+	public required init() {
 
+		super.init()
+
+		self.masksToBounds = true
+		self.contentLayer.listener = self
+		self.contourLayer.listener = self
+
+		self.needsDisplayOnBoundsChange = true
+
+		self.addSublayer(self.contentLayer)
+	}
 	/**
 	 * @constructor
 	 * @since 0.1.0
 	 */
-	override init(layer: Any) {
+	public override init(layer: Any) {
+		super.init(layer: layer)
+	}
 
-		super.init(layer: layer as AnyObject)
+	/**
+	 * @method layoutSublayers
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	open override func layoutSublayers() {
 
-		if let layer = layer as? BitmapLayer {
-			self.backgroundImageTop = layer.backgroundImageTop
-			self.backgroundImageLeft = layer.backgroundImageLeft
-			self.backgroundImageWidth = layer.backgroundImageWidth
-			self.backgroundImageHeight = layer.backgroundImageHeight
+		guard let image = self.image else {
+			return
 		}
+
+		var imageW = CGFloat(0.0)
+		var imageH = CGFloat(0.0)
+		var imageT = CGFloat(0.0)
+		var imageL = CGFloat(0.0)
+
+		let naturalImageW = CGFloat(image.width)
+		let naturalImageH = CGFloat(image.height)
+
+		let frameW = self.bounds.width
+		let frameH = self.bounds.height
+		let scaleX = frameW / naturalImageW
+		let scaleY = frameH / naturalImageH
+
+		switch (self.imageFit) {
+
+			case .cover:
+				let scale = max(scaleX, scaleY)
+				imageW = naturalImageW * scale
+				imageH = naturalImageH * scale
+
+			case .contain:
+				let scale = min(scaleX, scaleY)
+				imageW = naturalImageW * scale
+				imageH = naturalImageH * scale
+		}
+
+		switch (self.imagePosition) {
+
+			case .topLeft:
+				imageT = 0
+				imageL = 0
+
+			case .topRight:
+				imageT = 0
+				imageL = frameW - imageW
+
+			case .topCenter:
+				imageT = 0
+				imageL = frameW / 2 - imageW / 2
+
+			case .middleLeft:
+				imageT = frameH / 2 - imageH / 2
+				imageL = 0
+
+			case .middleRight:
+				imageT = frameH / 2 - imageH / 2
+				imageL = frameW - imageW
+
+			case .middleCenter:
+				imageT = frameH / 2 - imageH / 2
+				imageL = frameW / 2 - imageW / 2
+
+			case .bottomLeft:
+				imageT = frameH - imageH
+				imageL = 0
+
+			case .bottomRight:
+				imageT = frameH - imageH
+				imageL = frameW - imageW
+
+			case .bottomCenter:
+				imageT = frameH - imageH
+				imageL = frameW / 2 - imageW / 2
+		}
+
+		let frame = CGRect(
+			x: imageL,
+			y: imageT,
+			width: imageW,
+			height: imageH
+		)
+
+		self.contentLayer.frame = frame
+		self.contourLayer.frame = frame
 	}
 
 	/**
 	 * @method display
 	 * @since 0.1.0
+	 * @hidden
 	 */
-	public override func display() {
+	override open func display() {
 
-		if let backgroundImage = self.backgroundImage {
+		self.contentLayer.contents = nil
+		self.contourLayer.contents = nil
 
-			let backgroundImageT: CGFloat
-			let backgroundImageL: CGFloat
-			let backgroundImageW: CGFloat
-			let backgroundImageH: CGFloat
+		self.maskColor = nil
+		self.maskShape = nil
 
-			if let presentationLayer = self.presentation() {
-				backgroundImageT = presentationLayer.backgroundImageTop
-				backgroundImageL = presentationLayer.backgroundImageLeft
-				backgroundImageW = presentationLayer.backgroundImageWidth
-				backgroundImageH = presentationLayer.backgroundImageHeight
-			} else {
-				backgroundImageT = self.backgroundImageTop
-				backgroundImageL = self.backgroundImageLeft
-				backgroundImageW = self.backgroundImageWidth
-				backgroundImageH = self.backgroundImageHeight
-			}
+		guard let image = self.image else {
+			return
+		}
 
-			self.backgroundImageLayer.isHidden = false
-			self.backgroundImageLayer.image = backgroundImage.cgImage
-			self.backgroundImageLayer.frame = CGRect(
-				x: backgroundImageL,
-				y: backgroundImageT,
-				width: backgroundImageW,
-				height: backgroundImageH
-			)
+		if (self.tint.alpha == 0) {
+
+			self.contentLayer.contents = image
 
 		} else {
-			self.backgroundImageLayer.isHidden = true
+
+			self.contourLayer.contents = image
+
+			self.maskColor = self.tint
+			self.maskShape = self.contourLayer
 		}
-
-		if (self.backgroundLinearGradient == nil &&
-			self.backgroundRadialGradient == nil) {
-			self.locations = nil
-			self.colors = nil
-		}
-
-		if let gradient = self.backgroundLinearGradient {
-			self.displayLinearGradient(gradient)
-			return
-		}
-
-		if let gradient = self.backgroundRadialGradient {
-			self.displayRadialGradient(gradient)
-			return
-		}
-	}
-
-	/**
-	 * Generates coordinates for linear gradient.
-	 * @method displayLinearGradient
-	 * @since 0.1.0
-	 */
-	open func displayLinearGradient(_ gradient: LinearGradient) {
-
-		let pi = CGFloat(Double.pi)
-
-		self.colors = gradient.colors
-		self.locations = gradient.points as [NSNumber]
-
-		let x = (gradient.angle + pi / 2) / (2 * pi)
-
-		let a = pow(sin((2 * pi * ((x + 0.75) / 2))), 2)
-		let b = pow(sin((2 * pi * ((x + 0.00) / 2))), 2)
-		let c = pow(sin((2 * pi * ((x + 0.25) / 2))), 2)
-		let d = pow(sin((2 * pi * ((x + 0.50) / 2))), 2)
-
-		self.startPoint = CGPoint(x: a, y: b)
-		self.endPoint = CGPoint(x: c, y: d)
-	}
-
-	/**
-	 * Generates coordinates for radial gradient.
-	 * @method displayRadialGradient
-	 * @since 0.1.0
-	 */
-	open func displayRadialGradient(_ gradient: RadialGradient) {
-
 	}
 
 	//--------------------------------------------------------------------------
-	// MARK: Methods - Animations
+	// MARK: Methods - Animations Protocol
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method action
-	 * @since 0.1.0
+	 * @method shouldBeginTransitionAnimation
+	 * @since 0.2.0
 	 */
-	public override func action(forKey key: String) -> CAAction? {
+	open func shouldBeginTransitionAnimation(animation: CABasicAnimation, for property: String, of layer: CALayer) -> Bool {
 
-		if let transition = Transition.current {
-
-			var current = self.presentation()
-			if (current == nil || self.animation(forKey: key) == nil) {
-				current = self
-			}
-
-			let animation = CABasicAnimation(keyPath: key)
-
-			switch (key) {
-
-				case "backgroundColor":
-					animation.fromValue = current!.backgroundColor
-				case "backgroundImageTop":
-					animation.fromValue = current!.backgroundImageTop
-				case "backgroundImageLeft":
-					animation.fromValue = current!.backgroundImageLeft
-				case "backgroundImageWidth":
-					animation.fromValue = current!.backgroundImageWidth
-				case "backgroundImageHeight":
-					animation.fromValue = current!.backgroundImageHeight
-
-				default:
-					break
-			}
-
-			if (animation.fromValue != nil) {
-
-				if (transition.delay > 0) {
-					animation.beginTime = CACurrentMediaTime() + transition.delay
-					animation.fillMode = CAMediaTimingFillMode.both
-				}
-
-				if let listener = self.listener as? TransitionListener {
-					if (listener.shouldBeginTransitionAnimation(animation: animation, for: key, of: self)) {
-						listener.willBeginTransitionAnimation(animation: animation, for: key, of: self)
-						transition.register(listener)
-					} else {
-						return NSNull()
-					}
-				}
-
-				return animation
-			}
+		if (property == "bounds" ||
+			property == "position") {
+			return (self.listener as? ImageView)?.hasFrame ?? true
 		}
 
-		return super.action(forKey: key)
+		return true
+	}
+
+	/**
+	 * @method willBeginTransitionAnimation
+	 * @since 0.2.0
+	 */
+	open func willBeginTransitionAnimation(animation: CABasicAnimation, for property: String, of layer: CALayer) {
+
+	}
+
+	/**
+	 * @method didCommitTransition
+	 * @since 0.6.0
+	 */
+	open func didCommitTransition() {
+
+	}
+
+	/**
+	 * @method didFinishTransition
+	 * @since 0.2.0
+	 */
+	open func didFinishTransition() {
+
 	}
 }

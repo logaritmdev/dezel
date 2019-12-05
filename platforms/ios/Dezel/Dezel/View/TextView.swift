@@ -17,18 +17,7 @@ open class TextView: UIView, Updatable, Clippable, TransitionListener {
 	 */
 	override open var bounds: CGRect {
 		willSet {
-			self.textLayerInvalidFrame = true
-		}
-	}
-
-	/**
-	 * @property clipsToBounds
-	 * @since 0.7.0
-	 */
-	override open var clipsToBounds: Bool {
-		set { }
-		get {
-			return true
+			self.invalidTextLayer = true
 		}
 	}
 
@@ -93,22 +82,12 @@ open class TextView: UIView, Updatable, Clippable, TransitionListener {
 	}
 
 	/**
-	 * @property textAlignment
+	 * @property textAlign
 	 * @since 0.7.0
 	 */
-	open var textAlignment: TextAlignment = .start {
+	open var textAlign: TextAlign = .middleLeft {
 		willSet {
-			self.textLayer.textAlignment = newValue
-		}
-	}
-
-	/**
-	 * @property textLocation
-	 * @since 0.7.0
-	 */
-	open var textLocation: TextLocation = .middle {
-		willSet {
-			self.textLayer.textLocation = newValue
+			self.textLayer.textAlign = newValue
 		}
 	}
 
@@ -233,6 +212,16 @@ open class TextView: UIView, Updatable, Clippable, TransitionListener {
 	}
 
 	/**
+	 * @property minLines
+	 * @since 0.7.0
+	 */
+	open var minLines: Int = 0 {
+		willSet {
+			self.textLayer.minLines = newValue
+		}
+	}
+
+	/**
 	 * @property maxLines
 	 * @since 0.7.0
 	 */
@@ -248,7 +237,7 @@ open class TextView: UIView, Updatable, Clippable, TransitionListener {
 	 */
 	open var paddingTop: CGFloat = 0 {
 		willSet {
-			self.textLayerInvalidFrame = true
+			self.invalidTextLayer = true
 		}
 	}
 
@@ -258,7 +247,7 @@ open class TextView: UIView, Updatable, Clippable, TransitionListener {
 	 */
 	open var paddingLeft: CGFloat = 0 {
 		willSet {
-			self.textLayerInvalidFrame = true
+			self.invalidTextLayer = true
 		}
 	}
 
@@ -268,7 +257,7 @@ open class TextView: UIView, Updatable, Clippable, TransitionListener {
 	 */
 	open var paddingRight: CGFloat = 0 {
 		willSet {
-			self.textLayerInvalidFrame = true
+			self.invalidTextLayer = true
 		}
 	}
 
@@ -278,7 +267,7 @@ open class TextView: UIView, Updatable, Clippable, TransitionListener {
 	 */
 	open var paddingBottom: CGFloat = 0 {
 		willSet {
-			self.textLayerInvalidFrame = true
+			self.invalidTextLayer = true
 		}
 	}
 
@@ -286,14 +275,14 @@ open class TextView: UIView, Updatable, Clippable, TransitionListener {
 	 * @property hasFrame
 	 * @since 0.7.0
 	 */
-	open var hasFrame: Bool = false
+	internal var hasFrame: Bool = false
 
 	/**
-	 * @property textViewDelegate
+	 * @property delegate
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	internal weak var textViewDelegate: TextViewDelegate?
+	private weak var observer: TextViewObserver?
 
 	/**
 	 * @property textLayer
@@ -303,11 +292,11 @@ open class TextView: UIView, Updatable, Clippable, TransitionListener {
 	private let textLayer: TextLayer = TextLayer()
 
 	/**
-	 * @property textLayerInvalidFrame
+	 * @property invalidTextLayer
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private var textLayerInvalidFrame: Bool = false
+	private var invalidTextLayer: Bool = false
 
 	//--------------------------------------------------------------------------
 	// MARK: Methods
@@ -325,13 +314,11 @@ open class TextView: UIView, Updatable, Clippable, TransitionListener {
 	 * @constructor
 	 * @since 0.7.0
 	 */
-	public init(frame: CGRect, delegate: TextViewDelegate?) {
+	public init(frame: CGRect, observer: TextViewObserver?) {
 
 		super.init(frame: frame)
 
 		self.layer.masksToBounds = true
-		self.layer.contentsScale = UIScreen.main.scale
-		self.layer.rasterizationScale = UIScreen.main.scale
 
 		self.textLayer.frame = frame
 		self.textLayer.textColor = .black
@@ -342,41 +329,7 @@ open class TextView: UIView, Updatable, Clippable, TransitionListener {
 
 		self.layer.addSublayer(self.textLayer)
 
-		self.textViewDelegate = delegate
-	}
-
-	/**
-	 * @method update
-	 * @since 0.7.0
-	 */
-	open func update() {
-
-		if (self.textLayerInvalidFrame) {
-			self.textLayerInvalidFrame = false
-			self.updateTextLayerFrame()
-		}
-
-		self.textLayer.update()
-	}
-
-	/**
-	 * @method updateTextLayerFrame
-	 * @since 0.7.0
-	 */
-	open func updateTextLayerFrame() {
-
-		let paddingT = self.paddingTop
-		let paddingL = self.paddingLeft
-		let paddingR = self.paddingRight
-		let paddingB = self.paddingBottom
-
-		var bounds = self.bounds
-		bounds.size.width = bounds.size.width - paddingL - paddingR
-		bounds.size.height = bounds.size.height - paddingT - paddingB
-		bounds.origin.x = paddingL
-		bounds.origin.y = paddingT
-
-		self.textLayer.frame = bounds
+		self.observer = observer
 	}
 
 	/**
@@ -414,6 +367,40 @@ open class TextView: UIView, Updatable, Clippable, TransitionListener {
 		return self.textLayer.measure(in: frame, min: min, max: max)
 	}
 
+	/**
+	 * @method update
+	 * @since 0.7.0
+	 */
+	open func update() {
+
+		if (self.invalidTextLayer) {
+			self.invalidTextLayer = false
+			self.updateTextLayer()
+		}
+
+		self.textLayer.update()
+	}
+
+	/**
+	 * @method updateTextLayer
+	 * @since 0.7.0
+	 */
+	open func updateTextLayer() {
+
+		let paddingT = self.paddingTop
+		let paddingL = self.paddingLeft
+		let paddingR = self.paddingRight
+		let paddingB = self.paddingBottom
+
+		var bounds = self.bounds
+		bounds.size.width = bounds.size.width - paddingL - paddingR
+		bounds.size.height = bounds.size.height - paddingT - paddingB
+		bounds.origin.x = paddingL
+		bounds.origin.y = paddingT
+
+		self.textLayer.frame = bounds
+	}
+
 	//--------------------------------------------------------------------------
 	// MARK: Methods - Touches
 	//--------------------------------------------------------------------------
@@ -445,7 +432,7 @@ open class TextView: UIView, Updatable, Clippable, TransitionListener {
 
 		if let character = self.textLayer.find(at: touch.location(in: self)) {
 			if let link = character.link {
-				self.textViewDelegate?.didPressLink(textView: self, url: link)
+				self.observer?.didPressLink(textView: self, url: link)
 			}
 		}
 	}

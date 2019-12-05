@@ -16,7 +16,7 @@ open class JavaScriptDevice: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsGet_uuid(callback: JavaScriptGetterCallback) {
+	@objc func jsGet_uuid(callback: JavaScriptGetterCallback) {
 
 		var uuid = UserDefaults.standard.string(forKey: "dezel.device.uuid")
 		if (uuid == nil) {
@@ -36,7 +36,7 @@ open class JavaScriptDevice: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsFunction_sound(callback: JavaScriptFunctionCallback) {
+	@objc func jsFunction_sound(callback: JavaScriptFunctionCallback) {
 
 		if (callback.arguments < 1) {
 			fatalError("sound requires 1 argument")
@@ -62,7 +62,7 @@ open class JavaScriptDevice: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsFunction_vibrate(callback: JavaScriptFunctionCallback) {
+	@objc func jsFunction_vibrate(callback: JavaScriptFunctionCallback) {
 
 		if (callback.arguments == 0) {
 			AudioServicesPlaySystemSound(SystemSoundID(4095))

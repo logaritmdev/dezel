@@ -69,6 +69,26 @@ open class Layer: CAGradientLayer, CALayerDelegate {
 
 	}
 
+	/**
+	 * @method applyGradient
+	 * @since 0.7.0
+	 */
+	open func applyGradient(colors: [CGColor], points: [CGFloat], start: CGPoint, end: CGPoint) {
+		self.colors = colors
+		self.locations = points as [NSNumber]
+		self.startPoint = start
+		self.endPoint = end
+	}
+
+	/**
+	 * @method clearGradient
+	 * @since 0.7.0
+	 */
+	open func clearGradient() {
+		self.colors = nil
+		self.locations = nil
+	}
+
 	//--------------------------------------------------------------------------
 	// MARK: Methods - Animations
 	//--------------------------------------------------------------------------

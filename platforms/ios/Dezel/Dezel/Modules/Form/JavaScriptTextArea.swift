@@ -3,7 +3,7 @@
  * @super JavaScriptView
  * @since 0.7.0
  */
-open class JavaScriptTextArea: JavaScriptView, TextAreaDelegate {
+open class JavaScriptTextArea: JavaScriptView, TextAreaObserver {
 
 	//--------------------------------------------------------------------------
 	// MARK: Properties
@@ -41,7 +41,7 @@ open class JavaScriptTextArea: JavaScriptView, TextAreaDelegate {
 	 * @since 0.7.0
 	 */
 	override open func createContentView() -> TextArea {
-		return TextArea(frame: .zero, delegate: self)
+		return TextArea(frame: .zero, observer: self)
 	}
 
 	/**
@@ -97,7 +97,7 @@ open class JavaScriptTextArea: JavaScriptView, TextAreaDelegate {
 	}
 
 	//--------------------------------------------------------------------------
-	// MARK: Methods - Layout Node Delegate
+	// MARK: Methods - Display Node Delegate
 	//--------------------------------------------------------------------------
 
 	/**
@@ -180,9 +180,9 @@ open class JavaScriptTextArea: JavaScriptView, TextAreaDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	open func getType(_ value: String) -> InputType {
+	private func getType(_ value: JavaScriptProperty) -> InputType {
 
-		switch (value) {
+		switch (value.string) {
 
 			case "text":
 				return .text
@@ -203,13 +203,50 @@ open class JavaScriptTextArea: JavaScriptView, TextAreaDelegate {
 	}
 
 	/**
+	 * @method getTextAlign
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private func getTextAlign(_ value: String) -> TextAlign {
+
+		switch (value) {
+
+			case "top left":
+				return .topLeft
+			case "top right":
+				return .topRight
+			case "top center":
+				return .topCenter
+
+			case "left":
+				return .middleLeft
+			case "right":
+				return .middleRight
+			case "center":
+				return .middleCenter
+
+			case "bottom left":
+				return .bottomLeft
+			case "bottom right":
+				return .bottomRight
+			case "bottom center":
+				return .bottomCenter
+
+			default:
+				NSLog("Unrecognized value for textAlign: \(value)")
+		}
+
+		return .middleLeft
+	}
+
+	/**
 	 * @method getTextDecoration
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	open func getTextDecoration(_ value: String) -> TextDecoration {
+	private func getTextDecoration(_ value: JavaScriptProperty) -> TextDecoration {
 
-		switch (value) {
+		switch (value.string) {
 
 			case "none":
 				return .none
@@ -228,9 +265,9 @@ open class JavaScriptTextArea: JavaScriptView, TextAreaDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	open func getTextTransform(_ value: String) -> TextTransform {
+	private func getTextTransform(_ value: JavaScriptProperty) -> TextTransform {
 
-		switch (value) {
+		switch (value.string) {
 
 			case "none":
 				return .none
@@ -248,56 +285,6 @@ open class JavaScriptTextArea: JavaScriptView, TextAreaDelegate {
 		return .none
 	}
 
-	/**
-	 * @method getTextAlignment
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	open func getTextAlignment(_ value: String) -> TextAlignment {
-
-		switch (value) {
-
-			case "start":
-				return .start
-			case "end":
-				return .end
-			case "left":
-				return .left
-			case "right":
-				return .right
-			case "center":
-				return .center
-
-			default:
-				NSLog("Unrecognized value for textAlignment: \(value)")
-		}
-
-		return .start
-	}
-
-	/**
-	 * @method getTextLocation
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	open func getTextLocation(_ value: String) -> TextLocation {
-
-		switch (value) {
-
-			case "top":
-				return .top
-			case "middle":
-				return .middle
-			case "bottom":
-				return .bottom
-
-			default:
-				NSLog("Unrecognized value for textLocation: \(value)")
-		}
-
-		return .middle
-	}
-
 	//--------------------------------------------------------------------------
 	// MARK: JS Properties
 	//--------------------------------------------------------------------------
@@ -306,7 +293,7 @@ open class JavaScriptTextArea: JavaScriptView, TextAreaDelegate {
 	 * @property value
 	 * @since 0.7.0
 	 */
-	@objc public lazy var value = JavaScriptProperty(string: "") { value in
+	@objc lazy var value = JavaScriptProperty(string: "") { value in
 		self.view.value = value.string
 	}
 
@@ -314,7 +301,7 @@ open class JavaScriptTextArea: JavaScriptView, TextAreaDelegate {
 	 * @property placeholder
 	 * @since 0.7.0
 	 */
-	@objc public lazy var placeholder = JavaScriptProperty(string: "") { value in
+	@objc lazy var placeholder = JavaScriptProperty(string: "") { value in
 		self.view.placeholder = value.string
 	}
 
@@ -322,7 +309,7 @@ open class JavaScriptTextArea: JavaScriptView, TextAreaDelegate {
 	 * @property placeholderColor
 	 * @since 0.7.0
 	 */
-	@objc public lazy var placeholderColor = JavaScriptProperty(string: "gray") { value in
+	@objc lazy var placeholderColor = JavaScriptProperty(string: "gray") { value in
 		self.view.placeholderColor = UIColor(color: value)
 	}
 
@@ -330,7 +317,7 @@ open class JavaScriptTextArea: JavaScriptView, TextAreaDelegate {
 	 * @property autocorrect
 	 * @since 0.7.0
 	 */
-	@objc public lazy var autocorrect = JavaScriptProperty(boolean: true) { value in
+	@objc lazy var autocorrect = JavaScriptProperty(boolean: true) { value in
 		self.view.autocorrectionType = value.boolean ? .yes : .no
 	}
 
@@ -338,7 +325,7 @@ open class JavaScriptTextArea: JavaScriptView, TextAreaDelegate {
 	 * @property autocapitalize
 	 * @since 0.7.0
 	 */
-	@objc public lazy var autocapitalize = JavaScriptProperty(boolean: true) { value in
+	@objc lazy var autocapitalize = JavaScriptProperty(boolean: true) { value in
 		self.view.autocapitalizationType = value.boolean ? .sentences : .none
 	}
 
@@ -346,7 +333,7 @@ open class JavaScriptTextArea: JavaScriptView, TextAreaDelegate {
 	 * @property fontFamily
 	 * @since 0.7.0
 	 */
-	@objc public lazy var fontFamily = JavaScriptProperty(string: "default") { value in
+	@objc lazy var fontFamily = JavaScriptProperty(string: "default") { value in
 		self.view.fontFamily = value.string
 	}
 
@@ -354,7 +341,7 @@ open class JavaScriptTextArea: JavaScriptView, TextAreaDelegate {
 	 * @property fontWeight
 	 * @since 0.7.0
 	 */
-	@objc public lazy var fontWeight = JavaScriptProperty(string: "normal") { value in
+	@objc lazy var fontWeight = JavaScriptProperty(string: "normal") { value in
 		self.view.fontWeight = value.string
 	}
 
@@ -362,7 +349,7 @@ open class JavaScriptTextArea: JavaScriptView, TextAreaDelegate {
 	 * @property fontStyle
 	 * @since 0.7.0
 	 */
-	@objc public lazy var fontStyle = JavaScriptProperty(string: "normal") { value in
+	@objc lazy var fontStyle = JavaScriptProperty(string: "normal") { value in
 		self.view.fontStyle = value.string
 	}
 
@@ -370,7 +357,7 @@ open class JavaScriptTextArea: JavaScriptView, TextAreaDelegate {
 	 * @property fontSize
 	 * @since 0.7.0
 	 */
-	@objc public lazy var fontSize = JavaScriptProperty(number: 17) { value in
+	@objc lazy var fontSize = JavaScriptProperty(number: 17) { value in
 		self.invalidateFontSize()
 	}
 
@@ -378,7 +365,7 @@ open class JavaScriptTextArea: JavaScriptView, TextAreaDelegate {
 	 * @property minFontSize
 	 * @since 0.7.0
 	 */
-	@objc public lazy var minFontSize = JavaScriptProperty(number: 0) { value in
+	@objc lazy var minFontSize = JavaScriptProperty(number: 0) { value in
 		self.invalidateFontSize()
 	}
 
@@ -386,31 +373,31 @@ open class JavaScriptTextArea: JavaScriptView, TextAreaDelegate {
 	 * @property maxFontSize
 	 * @since 0.7.0
 	 */
-	@objc public lazy var maxFontSize = JavaScriptProperty(number: Double.max) { value in
+	@objc lazy var maxFontSize = JavaScriptProperty(number: Double.max) { value in
 		self.invalidateFontSize()
 	}
 
 	/**
-	 * @property textAlignment
+	 * @property textColor
 	 * @since 0.7.0
 	 */
-	@objc public lazy var textAlignment = JavaScriptProperty(string: "start") { value in
-		self.view.textAlign = self.getTextAlignment(value.string)
+	@objc lazy var textColor = JavaScriptProperty(string: "#000") { value in
+		self.view.textColor = UIColor(color: value)
 	}
 
 	/**
-	 * @property textLocation
+	 * @property textAlign
 	 * @since 0.7.0
 	 */
-	@objc public lazy var textLocation = JavaScriptProperty(string: "top") { value in
-		self.view.textLocation = self.getTextLocation(value.string)
+	@objc lazy var textAlign = JavaScriptProperty(string: "start") { value in
+		self.view.textAlign = self.getTextAlign(value.string)
 	}
 
 	/**
 	 * @property textKerning
 	 * @since 0.7.0
 	 */
-	@objc public lazy var textKerning = JavaScriptProperty(number: 0) { value in
+	@objc lazy var textKerning = JavaScriptProperty(number: 0) { value in
 		self.view.textKerning = CGFloat(value.number)
 	}
 
@@ -418,7 +405,7 @@ open class JavaScriptTextArea: JavaScriptView, TextAreaDelegate {
 	 * @property textLeading
 	 * @since 0.7.0
 	 */
-	@objc public lazy var textLeading = JavaScriptProperty(number: 0) { value in
+	@objc lazy var textLeading = JavaScriptProperty(number: 0) { value in
 		self.view.textLeading = CGFloat(value.number)
 	}
 
@@ -426,31 +413,23 @@ open class JavaScriptTextArea: JavaScriptView, TextAreaDelegate {
 	 * @property textDecoration
 	 * @since 0.7.0
 	 */
-	@objc public lazy var textDecoration = JavaScriptProperty(string: "none") { value in
-		self.view.textDecoration = self.getTextDecoration(value.string)
+	@objc lazy var textDecoration = JavaScriptProperty(string: "none") { value in
+		self.view.textDecoration = self.getTextDecoration(value)
 	}
 
 	/**
 	 * @property textTransform
 	 * @since 0.7.0
 	 */
-	@objc public lazy var textTransform = JavaScriptProperty(string: "none") { value in
-		self.view.textTransform = self.getTextTransform(value.string)
-	}
-
-	/**
-	 * @property textColor
-	 * @since 0.7.0
-	 */
-	@objc public lazy var textColor = JavaScriptProperty(string: "#000") { value in
-		self.view.textColor = UIColor(color: value)
+	@objc lazy var textTransform = JavaScriptProperty(string: "none") { value in
+		self.view.textTransform = self.getTextTransform(value)
 	}
 
 	/**
 	 * @property textShadowBlur
 	 * @since 0.7.0
 	 */
-	@objc public lazy var textShadowBlur = JavaScriptProperty(number: 0) { value in
+	@objc lazy var textShadowBlur = JavaScriptProperty(number: 0) { value in
 		self.view.textShadowBlur = CGFloat(value.number)
 	}
 
@@ -458,7 +437,7 @@ open class JavaScriptTextArea: JavaScriptView, TextAreaDelegate {
 	 * @property textShadowColor
 	 * @since 0.7.0
 	 */
-	@objc public lazy var textShadowColor = JavaScriptProperty(string: "#000") { value in
+	@objc lazy var textShadowColor = JavaScriptProperty(string: "#000") { value in
 		self.view.textShadowColor = UIColor(color: value)
 	}
 
@@ -466,7 +445,7 @@ open class JavaScriptTextArea: JavaScriptView, TextAreaDelegate {
 	 * @property textShadowOffsetTop
 	 * @since 0.7.0
 	 */
-	@objc public lazy var textShadowOffsetTop = JavaScriptProperty(number: 0) { value in
+	@objc lazy var textShadowOffsetTop = JavaScriptProperty(number: 0) { value in
 		self.view.textShadowOffsetTop = CGFloat(value.number)
 	}
 
@@ -474,7 +453,7 @@ open class JavaScriptTextArea: JavaScriptView, TextAreaDelegate {
 	 * @property textShadowOffsetLeft
 	 * @since 0.7.0
 	 */
-	@objc public lazy var textShadowOffsetLeft = JavaScriptProperty(number: 0) { value in
+	@objc lazy var textShadowOffsetLeft = JavaScriptProperty(number: 0) { value in
 		self.view.textShadowOffsetLeft = CGFloat(value.number)
 	}
 
@@ -485,7 +464,7 @@ open class JavaScriptTextArea: JavaScriptView, TextAreaDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsGet_value(callback: JavaScriptGetterCallback) {
+	@objc func jsGet_value(callback: JavaScriptGetterCallback) {
 		callback.returns(self.value)
 	}
 
@@ -494,7 +473,7 @@ open class JavaScriptTextArea: JavaScriptView, TextAreaDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsSet_value(callback: JavaScriptSetterCallback) {
+	@objc func jsSet_value(callback: JavaScriptSetterCallback) {
 		self.value.reset(callback.value, lock: self)
 	}
 
@@ -505,7 +484,7 @@ open class JavaScriptTextArea: JavaScriptView, TextAreaDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsGet_placeholder(callback: JavaScriptGetterCallback) {
+	@objc func jsGet_placeholder(callback: JavaScriptGetterCallback) {
 		callback.returns(self.placeholder)
 	}
 
@@ -514,7 +493,7 @@ open class JavaScriptTextArea: JavaScriptView, TextAreaDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsSet_placeholder(callback: JavaScriptSetterCallback) {
+	@objc func jsSet_placeholder(callback: JavaScriptSetterCallback) {
 		self.placeholder.reset(callback.value, lock: self)
 	}
 
@@ -525,7 +504,7 @@ open class JavaScriptTextArea: JavaScriptView, TextAreaDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsGet_placeholderColor(callback: JavaScriptGetterCallback) {
+	@objc func jsGet_placeholderColor(callback: JavaScriptGetterCallback) {
 		callback.returns(self.placeholderColor)
 	}
 
@@ -534,7 +513,7 @@ open class JavaScriptTextArea: JavaScriptView, TextAreaDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsSet_placeholderColor(callback: JavaScriptSetterCallback) {
+	@objc func jsSet_placeholderColor(callback: JavaScriptSetterCallback) {
 		self.placeholderColor.reset(callback.value, lock: self, parse: true)
 	}
 
@@ -545,7 +524,7 @@ open class JavaScriptTextArea: JavaScriptView, TextAreaDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsGet_autocorrect(callback: JavaScriptGetterCallback) {
+	@objc func jsGet_autocorrect(callback: JavaScriptGetterCallback) {
 		callback.returns(self.autocorrect)
 	}
 
@@ -554,7 +533,7 @@ open class JavaScriptTextArea: JavaScriptView, TextAreaDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsSet_autocorrect(callback: JavaScriptSetterCallback) {
+	@objc func jsSet_autocorrect(callback: JavaScriptSetterCallback) {
 		self.autocorrect.reset(callback.value, lock: self)
 	}
 
@@ -565,7 +544,7 @@ open class JavaScriptTextArea: JavaScriptView, TextAreaDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsGet_autocapitalize(callback: JavaScriptGetterCallback) {
+	@objc func jsGet_autocapitalize(callback: JavaScriptGetterCallback) {
 		callback.returns(self.autocapitalize)
 	}
 
@@ -574,7 +553,7 @@ open class JavaScriptTextArea: JavaScriptView, TextAreaDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsSet_autocapitalize(callback: JavaScriptSetterCallback) {
+	@objc func jsSet_autocapitalize(callback: JavaScriptSetterCallback) {
 		self.autocapitalize.reset(callback.value, lock: self)
 	}
 
@@ -585,7 +564,7 @@ open class JavaScriptTextArea: JavaScriptView, TextAreaDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsGet_fontFamily(callback: JavaScriptGetterCallback) {
+	@objc func jsGet_fontFamily(callback: JavaScriptGetterCallback) {
 		callback.returns(self.fontFamily)
 	}
 
@@ -594,7 +573,7 @@ open class JavaScriptTextArea: JavaScriptView, TextAreaDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsSet_fontFamily(callback: JavaScriptSetterCallback) {
+	@objc func jsSet_fontFamily(callback: JavaScriptSetterCallback) {
 		self.fontFamily.reset(callback.value, lock: self)
 	}
 
@@ -605,7 +584,7 @@ open class JavaScriptTextArea: JavaScriptView, TextAreaDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsGet_fontWeight(callback: JavaScriptGetterCallback) {
+	@objc func jsGet_fontWeight(callback: JavaScriptGetterCallback) {
 		callback.returns(self.fontWeight)
 	}
 
@@ -614,7 +593,7 @@ open class JavaScriptTextArea: JavaScriptView, TextAreaDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsSet_fontWeight(callback: JavaScriptSetterCallback) {
+	@objc func jsSet_fontWeight(callback: JavaScriptSetterCallback) {
 		self.fontWeight.reset(callback.value, lock: self)
 	}
 
@@ -625,7 +604,7 @@ open class JavaScriptTextArea: JavaScriptView, TextAreaDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsGet_fontStyle(callback: JavaScriptGetterCallback) {
+	@objc func jsGet_fontStyle(callback: JavaScriptGetterCallback) {
 		callback.returns(self.fontStyle)
 	}
 
@@ -634,7 +613,7 @@ open class JavaScriptTextArea: JavaScriptView, TextAreaDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsSet_fontStyle(callback: JavaScriptSetterCallback) {
+	@objc func jsSet_fontStyle(callback: JavaScriptSetterCallback) {
 		self.fontStyle.reset(callback.value, lock: self)
 	}
 
@@ -645,7 +624,7 @@ open class JavaScriptTextArea: JavaScriptView, TextAreaDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsGet_fontSize(callback: JavaScriptGetterCallback) {
+	@objc func jsGet_fontSize(callback: JavaScriptGetterCallback) {
 		callback.returns(self.fontSize)
 	}
 
@@ -654,7 +633,7 @@ open class JavaScriptTextArea: JavaScriptView, TextAreaDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsSet_fontSize(callback: JavaScriptSetterCallback) {
+	@objc func jsSet_fontSize(callback: JavaScriptSetterCallback) {
 		self.fontSize.reset(callback.value, lock: self, parse: true)
 	}
 
@@ -665,7 +644,7 @@ open class JavaScriptTextArea: JavaScriptView, TextAreaDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsGet_minFontSize(callback: JavaScriptGetterCallback) {
+	@objc func jsGet_minFontSize(callback: JavaScriptGetterCallback) {
 		callback.returns(self.minFontSize)
 	}
 
@@ -674,7 +653,7 @@ open class JavaScriptTextArea: JavaScriptView, TextAreaDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsSet_minFontSize(callback: JavaScriptSetterCallback) {
+	@objc func jsSet_minFontSize(callback: JavaScriptSetterCallback) {
 		self.minFontSize.reset(callback.value, lock: self, parse: true)
 	}
 
@@ -685,7 +664,7 @@ open class JavaScriptTextArea: JavaScriptView, TextAreaDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsGet_maxFontSize(callback: JavaScriptGetterCallback) {
+	@objc func jsGet_maxFontSize(callback: JavaScriptGetterCallback) {
 		callback.returns(self.maxFontSize)
 	}
 
@@ -694,48 +673,48 @@ open class JavaScriptTextArea: JavaScriptView, TextAreaDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsSet_maxFontSize(callback: JavaScriptSetterCallback) {
+	@objc func jsSet_maxFontSize(callback: JavaScriptSetterCallback) {
 		self.maxFontSize.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method jsGet_textAlignment
+	 * @method jsGet_textColor
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsGet_textAlignment(callback: JavaScriptGetterCallback) {
-		callback.returns(self.textAlignment)
+	@objc func jsGet_textColor(callback: JavaScriptGetterCallback) {
+		callback.returns(self.textColor)
 	}
 
 	/**
-	 * @method jsSet_textAlignment
+	 * @method jsSet_textColor
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsSet_textAlignment(callback: JavaScriptSetterCallback) {
-		self.textAlignment.reset(callback.value, lock: self)
+	@objc func jsSet_textColor(callback: JavaScriptSetterCallback) {
+		self.textColor.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method jsGet_textLocation
+	 * @method jsGet_textAlign
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsGet_textLocation(callback: JavaScriptGetterCallback) {
-		callback.returns(self.textLocation)
+	@objc func jsGet_textAlign(callback: JavaScriptGetterCallback) {
+		callback.returns(self.textAlign)
 	}
 
 	/**
-	 * @method jsSet_textLocation
+	 * @method jsSet_textAlign
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsSet_textLocation(callback: JavaScriptSetterCallback) {
-		self.textLocation.reset(callback.value, lock: self)
+	@objc func jsSet_textAlign(callback: JavaScriptSetterCallback) {
+		self.textAlign.reset(callback.value, lock: self)
 	}
 
 	//--------------------------------------------------------------------------
@@ -745,7 +724,7 @@ open class JavaScriptTextArea: JavaScriptView, TextAreaDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsGet_textKerning(callback: JavaScriptGetterCallback) {
+	@objc func jsGet_textKerning(callback: JavaScriptGetterCallback) {
 		callback.returns(self.textKerning)
 	}
 
@@ -754,7 +733,7 @@ open class JavaScriptTextArea: JavaScriptView, TextAreaDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsSet_textKerning(callback: JavaScriptSetterCallback) {
+	@objc func jsSet_textKerning(callback: JavaScriptSetterCallback) {
 		self.textKerning.reset(callback.value, lock: self, parse: true)
 	}
 
@@ -765,7 +744,7 @@ open class JavaScriptTextArea: JavaScriptView, TextAreaDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsGet_textLeading(callback: JavaScriptGetterCallback) {
+	@objc func jsGet_textLeading(callback: JavaScriptGetterCallback) {
 		callback.returns(self.textLeading)
 	}
 
@@ -774,7 +753,7 @@ open class JavaScriptTextArea: JavaScriptView, TextAreaDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsSet_textLeading(callback: JavaScriptSetterCallback) {
+	@objc func jsSet_textLeading(callback: JavaScriptSetterCallback) {
 		self.textLeading.reset(callback.value, lock: self, parse: true)
 	}
 
@@ -785,7 +764,7 @@ open class JavaScriptTextArea: JavaScriptView, TextAreaDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsGet_textDecoration(callback: JavaScriptGetterCallback) {
+	@objc func jsGet_textDecoration(callback: JavaScriptGetterCallback) {
 		callback.returns(self.textDecoration)
 	}
 
@@ -794,7 +773,7 @@ open class JavaScriptTextArea: JavaScriptView, TextAreaDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsSet_textDecoration(callback: JavaScriptSetterCallback) {
+	@objc func jsSet_textDecoration(callback: JavaScriptSetterCallback) {
 		self.textDecoration.reset(callback.value, lock: self)
 	}
 
@@ -805,7 +784,7 @@ open class JavaScriptTextArea: JavaScriptView, TextAreaDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsGet_textTransform(callback: JavaScriptGetterCallback) {
+	@objc func jsGet_textTransform(callback: JavaScriptGetterCallback) {
 		callback.returns(self.textTransform)
 	}
 
@@ -814,28 +793,8 @@ open class JavaScriptTextArea: JavaScriptView, TextAreaDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsSet_textTransform(callback: JavaScriptSetterCallback) {
+	@objc func jsSet_textTransform(callback: JavaScriptSetterCallback) {
 		self.textTransform.reset(callback.value, lock: self)
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method jsGet_textColor
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	@objc open func jsGet_textColor(callback: JavaScriptGetterCallback) {
-		callback.returns(self.textColor)
-	}
-
-	/**
-	 * @method jsSet_textColor
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	@objc open func jsSet_textColor(callback: JavaScriptSetterCallback) {
-		self.textColor.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
@@ -845,7 +804,7 @@ open class JavaScriptTextArea: JavaScriptView, TextAreaDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsGet_textShadowBlur(callback: JavaScriptGetterCallback) {
+	@objc func jsGet_textShadowBlur(callback: JavaScriptGetterCallback) {
 		callback.returns(self.textShadowBlur)
 	}
 
@@ -854,7 +813,7 @@ open class JavaScriptTextArea: JavaScriptView, TextAreaDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsSet_textShadowBlur(callback: JavaScriptSetterCallback) {
+	@objc func jsSet_textShadowBlur(callback: JavaScriptSetterCallback) {
 		self.textShadowBlur.reset(callback.value, lock: self, parse: true)
 	}
 
@@ -865,7 +824,7 @@ open class JavaScriptTextArea: JavaScriptView, TextAreaDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsGet_textShadowColor(callback: JavaScriptGetterCallback) {
+	@objc func jsGet_textShadowColor(callback: JavaScriptGetterCallback) {
 		callback.returns(self.textShadowColor)
 	}
 
@@ -874,7 +833,7 @@ open class JavaScriptTextArea: JavaScriptView, TextAreaDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsSet_textShadowColor(callback: JavaScriptSetterCallback) {
+	@objc func jsSet_textShadowColor(callback: JavaScriptSetterCallback) {
 		self.textShadowColor.reset(callback.value, lock: self, parse: true)
 	}
 
@@ -885,7 +844,7 @@ open class JavaScriptTextArea: JavaScriptView, TextAreaDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsGet_textShadowOffsetTop(callback: JavaScriptGetterCallback) {
+	@objc func jsGet_textShadowOffsetTop(callback: JavaScriptGetterCallback) {
 		callback.returns(self.textShadowOffsetTop)
 	}
 
@@ -894,7 +853,7 @@ open class JavaScriptTextArea: JavaScriptView, TextAreaDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsSet_textShadowOffsetTop(callback: JavaScriptSetterCallback) {
+	@objc func jsSet_textShadowOffsetTop(callback: JavaScriptSetterCallback) {
 		self.fontFamily.reset(callback.value, lock: self, parse: true)
 	}
 
@@ -905,7 +864,7 @@ open class JavaScriptTextArea: JavaScriptView, TextAreaDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsGet_textShadowOffsetLeft(callback: JavaScriptGetterCallback) {
+	@objc func jsGet_textShadowOffsetLeft(callback: JavaScriptGetterCallback) {
 		callback.returns(self.textShadowOffsetLeft)
 	}
 
@@ -914,7 +873,7 @@ open class JavaScriptTextArea: JavaScriptView, TextAreaDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsSet_textShadowOffsetLeft(callback: JavaScriptSetterCallback) {
+	@objc func jsSet_textShadowOffsetLeft(callback: JavaScriptSetterCallback) {
 		self.textShadowOffsetLeft.reset(callback.value, lock: self, parse: true)
 	}
 
@@ -927,7 +886,7 @@ open class JavaScriptTextArea: JavaScriptView, TextAreaDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsFunction_focus(callback: JavaScriptFunctionCallback) {
+	@objc func jsFunction_focus(callback: JavaScriptFunctionCallback) {
 		self.view.focus()
 	}
 
@@ -936,7 +895,7 @@ open class JavaScriptTextArea: JavaScriptView, TextAreaDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsFunction_blur(callback: JavaScriptFunctionCallback) {
+	@objc func jsFunction_blur(callback: JavaScriptFunctionCallback) {
 		self.view.blur()
 	}
 }

@@ -338,8 +338,7 @@ open class ShadowLayer: Layer {
 			if (animation.fromValue != nil) {
 
 				if (transition.delay > 0) {
-					animation.beginTime = CACurrentMediaTime() + transition.delay
-					animation.fillMode = CAMediaTimingFillMode.both
+					animation.delay = transition.delay
 				}
 
 				if let listener = self.listener as? TransitionListener {

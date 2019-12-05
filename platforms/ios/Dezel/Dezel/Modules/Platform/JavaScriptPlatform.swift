@@ -14,7 +14,7 @@ open class JavaScriptPlatform: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsGet_name(callback: JavaScriptGetterCallback) {
+	@objc func jsGet_name(callback: JavaScriptGetterCallback) {
 		callback.returns("ios")
 	}
 
@@ -23,7 +23,7 @@ open class JavaScriptPlatform: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsGet_version(callback: JavaScriptGetterCallback) {
+	@objc func jsGet_version(callback: JavaScriptGetterCallback) {
 		callback.returns(UIDevice.current.systemVersion)
 	}
 }

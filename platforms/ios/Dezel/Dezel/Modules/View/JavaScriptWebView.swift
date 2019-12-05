@@ -5,20 +5,7 @@ import WebKit
  * @super JavaScriptView
  * @since 0.7.0
  */
-open class JavaScriptWebView: JavaScriptView, WebViewDelegate {
-
-	//--------------------------------------------------------------------------
-	// MARK: Static Methods
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method jsFunction_load
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	public static func warmup() {
-		WKWebView(frame: .zero, configuration: WKWebViewConfiguration()).loadHTMLString("<p>Warmup</p>", baseURL: nil)
-	}
+open class JavaScriptWebView: JavaScriptView, WebViewObserver {
 
 	//--------------------------------------------------------------------------
 	// MARK: Properties
@@ -42,7 +29,7 @@ open class JavaScriptWebView: JavaScriptView, WebViewDelegate {
 	 * @since 0.7.0
 	 */
 	override open func createContentView() -> WebView {
-		return WebView(frame: .zero, delegate: self)
+		return WebView(frame: .zero, observer: self)
 	}
 
 	/**
@@ -50,7 +37,7 @@ open class JavaScriptWebView: JavaScriptView, WebViewDelegate {
 	 * @since 0.6.0
 	 */
 	override open func dispose() {
-		self.view.webViewDelegate = nil
+		self.view.observer = nil
 		self.view.stopLoading()
 		super.dispose()
 	}
@@ -119,7 +106,7 @@ open class JavaScriptWebView: JavaScriptView, WebViewDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsFunction_load(callback: JavaScriptFunctionCallback) {
+	@objc func jsFunction_load(callback: JavaScriptFunctionCallback) {
 
 		if (callback.arguments < 1) {
 			fatalError("Method JavaScriptWebView.load() requires 1 argument.")
@@ -133,7 +120,7 @@ open class JavaScriptWebView: JavaScriptView, WebViewDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsFunction_loadHTML(callback: JavaScriptFunctionCallback) {
+	@objc func jsFunction_loadHTML(callback: JavaScriptFunctionCallback) {
 
 		if (callback.arguments < 1) {
 			fatalError("Method JavaScriptWebView.loadHTML() requires 1 argument.")
@@ -147,7 +134,7 @@ open class JavaScriptWebView: JavaScriptView, WebViewDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsFunction_reload(callback: JavaScriptFunctionCallback) {
+	@objc func jsFunction_reload(callback: JavaScriptFunctionCallback) {
 		self.view.reload()
 	}
 
@@ -156,7 +143,7 @@ open class JavaScriptWebView: JavaScriptView, WebViewDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsFunction_stop(callback: JavaScriptFunctionCallback) {
+	@objc func jsFunction_stop(callback: JavaScriptFunctionCallback) {
 		self.view.stopLoading()
 	}
 
@@ -165,7 +152,7 @@ open class JavaScriptWebView: JavaScriptView, WebViewDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsFunction_back(callback: JavaScriptFunctionCallback) {
+	@objc func jsFunction_back(callback: JavaScriptFunctionCallback) {
 		self.view.goBack()
 	}
 
@@ -174,7 +161,7 @@ open class JavaScriptWebView: JavaScriptView, WebViewDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsFunction_forward() {
+	@objc func jsFunction_forward() {
 		self.view.goForward()
 	}
 }

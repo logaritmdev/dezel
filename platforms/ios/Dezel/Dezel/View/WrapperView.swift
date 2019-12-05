@@ -26,7 +26,6 @@ open class WrapperView: UIView, TransitionListener {
 			self.renderLayer.resize(newValue)
 			self.bitmapLayer.resize(newValue)
 			self.borderLayer.resize(newValue)
-			self.canvasLayer.resize(newValue)
 			self.shadowLayer.resize(newValue)
 
 			self.invalidateFrame()
@@ -169,52 +168,22 @@ open class WrapperView: UIView, TransitionListener {
 	}
 
 	/**
-	 * @property backgroundKolor
-	 * @since 0.1.0
-	 */
-	open var backgroundKolor: UIColor? {
-		willSet {
-			self.bitmapLayer.backgroundColor = newValue?.cgColor
-		}
-	}
-
-	/**
-	 * @property backgroundLinearGradient
-	 * @since 0.1.0
-	 */
-	open var backgroundLinearGradient: LinearGradient? {
-		willSet {
-			self.bitmapLayer.backgroundLinearGradient = newValue
-		}
-	}
-
-	/**
-	 * @property backgroundRadialGradient
-	 * @since 0.1.0
-	 */
-	open var backgroundRadialGradient: RadialGradient? {
-		willSet {
-			self.bitmapLayer.backgroundRadialGradient = newValue
-		}
-	}
-
-	/**
 	 * @property backgroundImage
 	 * @since 0.1.0
 	 */
 	open var backgroundImage: UIImage? {
 		willSet {
-			self.bitmapLayer.backgroundImage = newValue
+			self.bitmapLayer.image = newValue?.cgImage
 		}
 	}
 
 	/**
-	 * @property backgroundImageTop
-	 * @since 0.1.0
+	 * @property backgroundImageFit
+	 * @since 0.7.0
 	 */
-	open var backgroundImageTop: CGFloat = 0 {
+	open var backgroundImageFit: ImageFit = .cover {
 		willSet {
-			self.bitmapLayer.backgroundImageTop = newValue
+			self.bitmapLayer.imageFit = newValue
 		}
 	}
 
@@ -222,39 +191,9 @@ open class WrapperView: UIView, TransitionListener {
 	 * @property backgroundImageLeft
 	 * @since 0.1.0
 	 */
-	open var backgroundImageLeft: CGFloat = 0 {
+	open var backgroundImagePosition: ImagePosition = .middleCenter {
 		willSet {
-			self.bitmapLayer.backgroundImageLeft = newValue
-		}
-	}
-
-	/**
-	 * @property backgroundImageWidth
-	 * @since 0.1.0
-	 */
-	open var backgroundImageWidth: CGFloat = 0 {
-		willSet {
-			self.bitmapLayer.backgroundImageWidth = newValue
-		}
-	}
-
-	/**
-	 * @property backgroundImageHeight
-	 * @since 0.1.0
-	 */
-	open var backgroundImageHeight: CGFloat = 0 {
-		willSet {
-			self.bitmapLayer.backgroundImageHeight = newValue
-		}
-	}
-
-	/**
-	 * @property backgroundImageTint
-	 * @since 0.1.0
-	 */
-	open var backgroundImageTint: UIColor = .clear {
-		willSet {
-			self.bitmapLayer.backgroundImageTint = newValue.cgColor
+			self.bitmapLayer.imagePosition = newValue
 		}
 	}
 
@@ -304,21 +243,15 @@ open class WrapperView: UIView, TransitionListener {
 	 */
 	open var drawable: Bool = false {
 		willSet {
-			self.toggleCanvasLayer(newValue)
+
 		}
 	}
-
-	/**
-	 * @property draw
-	 * @since 0.4.0
-	 */
-	open var draw: WrapperViewDraw?
 
 	/**
 	 * @property hasFrame
 	 * @since 0.2.0
 	 */
-	open var hasFrame: Bool = false
+	internal var hasFrame: Bool = false
 
 	/**
 	 * @property shadowLayer
@@ -347,13 +280,6 @@ open class WrapperView: UIView, TransitionListener {
 	 * @hidden
 	 */
 	internal var borderLayer: BorderLayer = BorderLayer()
-
-	/**
-	 * @property canvasLayer
-	 * @since 0.4.0
-	 * @hidden
-	 */
-	internal var canvasLayer: CanvasLayer = CanvasLayer()
 
 	/**
 	 * @property inner
@@ -419,11 +345,10 @@ open class WrapperView: UIView, TransitionListener {
 
 		super.init(frame: .zero)
 
+		self.layer.listener = self
 		self.layer.addSublayer(self.shadowLayer)
 		self.layer.addSublayer(self.renderLayer)
-		self.clipsToBounds = false
 
-		self.layer.listener = self
 		self.inner.listener = self
 
 		self.shadowLayer.listener = self
@@ -435,10 +360,6 @@ open class WrapperView: UIView, TransitionListener {
 		self.borderLayer.borderLeftColor = .black
 		self.borderLayer.borderRightColor = .black
 		self.borderLayer.borderBottomColor = .black
-
-		self.canvasLayer.drawCanvas = { [unowned self] context in
-			self.draw?(context)
-		}
 
 		self.content.layer.listener = self
 
@@ -525,7 +446,6 @@ open class WrapperView: UIView, TransitionListener {
 			)
 
 			content.didResize(frame: frame)
-			return
 		}
 	}
 
@@ -735,7 +655,7 @@ open class WrapperView: UIView, TransitionListener {
 	 * @since 0.4.0
 	 */
 	open func scheduleRedraw() {
-		self.canvasLayer.setNeedsDisplay()
+
 	}
 
 	//--------------------------------------------------------------------------
@@ -908,30 +828,12 @@ open class WrapperView: UIView, TransitionListener {
 	}
 
 	/**
-	 * @method hasBackgroundColor
-	 * @since 0.2.0
-	 * @hidden
-	 */
-	private func hasBackgroundColor() -> Bool {
-		return self.backgroundKolor != nil && self.backgroundKolor!.alpha > 0
-	}
-
-	/**
 	 * @method hasBackgroundImage
 	 * @since 0.1.0
 	 * @hidden
 	 */
 	private func hasBackgroundImage() -> Bool {
 		return self.backgroundImage != nil
-	}
-
-	/**
-	 * @method hasBackgroundGradient
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	private func hasBackgroundGradient() -> Bool {
-		return self.backgroundLinearGradient != nil || self.backgroundRadialGradient != nil
 	}
 
 	/**
@@ -958,7 +860,7 @@ open class WrapperView: UIView, TransitionListener {
 	 * @hidden
 	 */
 	private func needsBitmapLayer() -> Bool {
-		return self.animatesBitmapLayer || self.hasBackgroundColor() || self.hasBackgroundImage() || self.hasBackgroundGradient()
+		return self.animatesBitmapLayer || self.hasBackgroundImage()
 	}
 
 	/**
@@ -998,20 +900,6 @@ open class WrapperView: UIView, TransitionListener {
 	}
 
 	/**
-	 * @method toggleCanvasLayer
-	 * @since 0.4.0
-	 * @hidden
-	 */
-	private func toggleCanvasLayer(_ toggle: Bool) {
-
-		self.toggleLayer(self.canvasLayer, toggle: toggle, at: 2, in: self.renderLayer)
-
-		if (toggle) {
-			self.scheduleRedraw()
-		}
-	}
-
-	/**
 	 * @method toggleLayer
 	 * @since 0.1.0
 	 * @hidden
@@ -1024,17 +912,6 @@ open class WrapperView: UIView, TransitionListener {
 				parent.insertLayer(layer, at: at)
 			}
 
-			guard let layers = parent.sublayers else {
-				return
-			}
-
-			if (layer == self.borderLayer && layers[0] == self.canvasLayer) {
-				if let index = layers.firstIndex(of: layer) {
-					parent.removeLayer(self.canvasLayer)
-					parent.insertLayer(self.canvasLayer, at: index)
-				}
-			}
-
 		} else {
 
 			if (layer.superlayer == parent) {
@@ -1044,8 +921,3 @@ open class WrapperView: UIView, TransitionListener {
 	}
 }
 
-/**
- * @alias WrapperViewDraw
- * @since 0.4.0
- */
-public typealias WrapperViewDraw = (CGContext) -> (Void)

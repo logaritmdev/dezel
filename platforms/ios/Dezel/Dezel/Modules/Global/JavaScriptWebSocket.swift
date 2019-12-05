@@ -38,7 +38,7 @@ public class JavaScriptWebSocket: JavaScriptClass, WebSocketDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsFunction_open(callback: JavaScriptFunctionCallback) {
+	@objc func jsFunction_open(callback: JavaScriptFunctionCallback) {
 
 		if (callback.arguments < 2) {
 			fatalError("Method JavaScriptWebSocket.open() requires 2 arguments.")
@@ -62,7 +62,7 @@ public class JavaScriptWebSocket: JavaScriptClass, WebSocketDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsFunction_send(callback: JavaScriptFunctionCallback) {
+	@objc func jsFunction_send(callback: JavaScriptFunctionCallback) {
 
 		if (callback.arguments < 1) {
 			fatalError("Method JavaScriptWebSocket.send() requires 1 argument.")
@@ -76,7 +76,7 @@ public class JavaScriptWebSocket: JavaScriptClass, WebSocketDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsFunction_close(callback: JavaScriptFunctionCallback) {
+	@objc func jsFunction_close(callback: JavaScriptFunctionCallback) {
 		self.socket.disconnect()
 	}
 

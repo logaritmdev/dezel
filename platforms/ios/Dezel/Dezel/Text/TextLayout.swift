@@ -31,6 +31,16 @@ open class TextLayout {
 	}
 
 	/**
+	 * @property textAlign
+	 * @since 0.7.0
+	 */
+	open var textAlign: TextAlign = .middleLeft {
+		willSet {
+			self.invalidate()
+		}
+	}
+
+	/**
 	 * @property textKerning
 	 * @since 0.1.0
 	 */
@@ -61,20 +71,20 @@ open class TextLayout {
 	}
 
 	/**
-	 * @property textLocation
-	 * @since 0.7.0
+	 * @property textOverflow
+	 * @since 0.5.0
 	 */
-	open var textLocation: TextLocation = .middle {
+	open var textOverflow: TextOverflow = .ellipsis {
 		willSet {
 			self.invalidate()
 		}
 	}
 
 	/**
-	 * @property textOverflow
-	 * @since 0.5.0
+	 * @property minLines
+	 * @since 0.7.0
 	 */
-	open var textOverflow: TextOverflow = .ellipsis {
+	open var minLines: Int = 0 {
 		willSet {
 			self.invalidate()
 		}
@@ -164,17 +174,19 @@ open class TextLayout {
 		let extent = self.extent
 
 		var offset = self.offset.y
+
 		offset -= bounds.height
 		offset += extent.height
 
-		switch (self.textLocation) {
+		switch (self.textAlign) {
 
-			case .middle:
-				offset += self.extent.alignMiddle(of: bounds).y
-			case .bottom:
-				offset += self.extent.alignBottom(of: bounds).y
+			case .middleLeft, .middleRight, .middleCenter:
+				offset += extent.alignMiddle(of: bounds).y
+			case .bottomLeft, .bottomRight, .bottomCenter:
+				offset += extent.alignBottom(of: bounds).y
 
-			default: break
+			default:
+				break
 		}
 
 		offset = offset + self.textBaseline
@@ -320,14 +332,15 @@ open class TextLayout {
 		offset -= bounds.height
 		offset += extent.height
 
-		switch (self.textLocation) {
+		switch (self.textAlign) {
 
-			case .middle:
+			case .middleLeft, .middleRight, .middleCenter:
 				offset += extent.alignMiddle(of: bounds).y
-			case .bottom:
+			case .bottomLeft, .bottomRight, .bottomCenter:
 				offset += extent.alignBottom(of: bounds).y
 
-			default: break
+			default:
+				break
 		}
 
 		offset = offset + self.textBaseline

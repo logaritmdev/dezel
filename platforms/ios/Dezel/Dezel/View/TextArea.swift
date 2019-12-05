@@ -98,19 +98,9 @@ open class TextArea: UITextView, UITextViewDelegate {
 	 * @property textAlign
 	 * @since 0.7.0
 	 */
-	open var textAlign: TextAlignment = .start {
+	open var textAlign: TextAlign = .middleLeft {
 		willSet {
 			self.invalidateAttributedText()
-		}
-	}
-
-	/**
-	 * @property textLocation
-	 * @since 0.7.0
-	 */
-	open var textLocation: TextLocation = .middle {
-		willSet {
-			print("Text location is not yet supported")
 		}
 	}
 
@@ -245,11 +235,11 @@ open class TextArea: UITextView, UITextViewDelegate {
 	}
 
 	/**
-	 * @property textAreaDelegate
+	 * @property observer
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	internal weak var textAreaDelegate: TextAreaDelegate?
+	internal weak var observer: TextAreaObserver?
 
 	/**
 	 * @property placeholderLabel
@@ -295,7 +285,7 @@ open class TextArea: UITextView, UITextViewDelegate {
 	 * @constructor
 	 * @since 0.7.0
 	 */
-	public init(frame: CGRect, delegate: TextAreaDelegate?) {
+	public init(frame: CGRect, observer: TextAreaObserver?) {
 
 		super.init(frame: frame, textContainer: nil)
 
@@ -310,7 +300,7 @@ open class TextArea: UITextView, UITextViewDelegate {
 		self.placeholderLabel.attributedText = self.getAttributedPlaceholder()
 		self.addSubview(self.placeholderLabel)
 
-		self.textAreaDelegate = delegate
+		self.observer = observer
 	}
 
 	/**
@@ -398,7 +388,7 @@ open class TextArea: UITextView, UITextViewDelegate {
 			let position = textView.position(from: begin, offset: charactersRange.location)
 			let offset = textView.offset(from: begin, to: position!) + string.count
 
-			self.textAreaDelegate?.didChange(textInput: self, value: text.replacingCharacters(in: range, with: string))
+			self.observer?.didChange(textInput: self, value: text.replacingCharacters(in: range, with: string))
 
 			if let cursor = textView.position(from: begin, offset: offset) {
 				textView.selectedTextRange = textView.textRange(
@@ -425,7 +415,7 @@ open class TextArea: UITextView, UITextViewDelegate {
 	 * @hidden
 	 */
 	open func textViewDidBeginEditing(_ textView: UITextView) {
-		self.textAreaDelegate?.didFocus(textInput: self)
+		self.observer?.didFocus(textInput: self)
 	}
 
 	/**
@@ -433,7 +423,7 @@ open class TextArea: UITextView, UITextViewDelegate {
 	 * @hidden
 	 */
 	open func textViewDidEndEditing(_ textView: UITextView) {
-		self.textAreaDelegate?.didBlur(textInput: self)
+		self.observer?.didBlur(textInput: self)
 	}
 
 	//--------------------------------------------------------------------------
@@ -497,7 +487,7 @@ open class TextArea: UITextView, UITextViewDelegate {
 		attributes.setTextColor(self.textColor)
 		attributes.setTextKerning(self.textKerning)
 		attributes.setTextLeading(self.textLeading)
-		attributes.setTextAlignment(self.textAlign)
+		attributes.setTextAlign(self.textAlign)
 		attributes.setTextDecoration(self.textDecoration)
 		attributes.setBaselineOffset(0)
 
@@ -534,7 +524,7 @@ open class TextArea: UITextView, UITextViewDelegate {
 		attributes.setTextColor(self.placeholderColor)
 		attributes.setTextKerning(self.textKerning)
 		attributes.setTextLeading(self.textLeading)
-		attributes.setTextAlignment(self.textAlign)
+		attributes.setTextAlign(self.textAlign)
 		attributes.setTextDecoration(self.textDecoration)
 		attributes.setBaselineOffset(0)
 

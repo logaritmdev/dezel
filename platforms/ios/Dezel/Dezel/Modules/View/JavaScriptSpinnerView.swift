@@ -38,7 +38,7 @@ open class JavaScriptSpinnerView: JavaScriptView {
 	 * @property tint
 	 * @since 0.7.0
 	 */
-	@objc public lazy var tint = JavaScriptProperty(string: "#000") { value in
+	@objc lazy var tint = JavaScriptProperty(string: "#000") { value in
 		self.view.color = UIColor(color: value)
 	}
 
@@ -46,7 +46,7 @@ open class JavaScriptSpinnerView: JavaScriptView {
 	 * @property spin
 	 * @since 0.7.0
 	 */
-	@objc public lazy var spin = JavaScriptProperty(boolean: false) { value in
+	@objc lazy var spin = JavaScriptProperty(boolean: false) { value in
 		self.view.spin = value.boolean
 	}
 
@@ -57,7 +57,7 @@ open class JavaScriptSpinnerView: JavaScriptView {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsGet_tint(callback: JavaScriptGetterCallback) {
+	@objc func jsGet_tint(callback: JavaScriptGetterCallback) {
 		callback.returns(self.tint)
 	}
 
@@ -66,7 +66,7 @@ open class JavaScriptSpinnerView: JavaScriptView {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsSet_tint(callback: JavaScriptSetterCallback) {
+	@objc func jsSet_tint(callback: JavaScriptSetterCallback) {
 		self.tint.reset(callback.value, lock: self, parse: true)
 	}
 
@@ -77,7 +77,7 @@ open class JavaScriptSpinnerView: JavaScriptView {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsGet_spin(callback: JavaScriptGetterCallback) {
+	@objc func jsGet_spin(callback: JavaScriptGetterCallback) {
 		callback.returns(self.spin)
 	}
 
@@ -86,7 +86,7 @@ open class JavaScriptSpinnerView: JavaScriptView {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsSet_spin(callback: JavaScriptSetterCallback) {
+	@objc func jsSet_spin(callback: JavaScriptSetterCallback) {
 		self.spin.reset(callback.value, lock: self)
 	}
 }

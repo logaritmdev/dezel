@@ -216,6 +216,24 @@ internal extension Dictionary where Key == NSAttributedString.Key, Value == Any 
 	}
 
 	/**
+	 * @method setTextAlign
+	 * @since 0.5.0
+	 * @hidden
+	 */
+	mutating func setTextAlign(_ value: TextAlign) {
+
+		switch (value) {
+
+			case .topLeft, .middleLeft, .bottomLeft:
+				self.paragraph().alignment = .left
+			case .topRight, .middleRight, .bottomRight:
+				self.paragraph().alignment = .right
+			case .topCenter, .middleCenter, .bottomCenter:
+				self.paragraph().alignment = .center
+		}
+	}
+
+	/**
 	 * @method setTextKerning
 	 * @since 0.5.0
 	 * @hidden
@@ -240,44 +258,6 @@ internal extension Dictionary where Key == NSAttributedString.Key, Value == Any 
 	 */
 	mutating func setBaselineOffset(_ value: CGFloat) {
 		self[.baselineOffset] = value
-	}
-
-	/**
-	 * @method setTextAlignment
-	 * @since 0.5.0
-	 * @hidden
-	 */
-	mutating func setTextAlignment(_ value: TextAlignment) {
-
-		if (value == .start ||
-			value == .end) {
-
-			let dir = UIApplication.shared.userInterfaceLayoutDirection
-
-			switch (value) {
-
-				case .start:
-					self.paragraph().alignment = dir == .leftToRight ? .left : .right
-				case .end:
-					self.paragraph().alignment = dir == .leftToRight ? .right : .left
-
-				default:
-					break
-			}
-		}
-
-		switch (value) {
-
-			case .left:
-				self.paragraph().alignment = .left
-			case .right:
-				self.paragraph().alignment = .right
-			case .center:
-				self.paragraph().alignment = .center
-
-			default:
-				break
-		}
 	}
 
 	/**

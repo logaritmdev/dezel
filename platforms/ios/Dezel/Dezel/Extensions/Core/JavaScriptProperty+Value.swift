@@ -49,7 +49,6 @@ internal extension JavaScriptProperty {
 	func reset(_ values: ValueListRef, lock: AnyObject? = nil) {
 
 		let count = ValueListGetCount(values)
-
 		if (count == 1) {
 
 			guard let value = ValueListGetValue(values, 0) else {
@@ -72,46 +71,46 @@ internal extension JavaScriptProperty {
 					self.resetWithFunction(value, lock: lock)
 
 				default:
-					break;
-			}
-
-			return
-		}
-
-		/*
-		 * The parser returned multiple values. In this case we create a
-		 * composite value and reset the property with it.
-		 */
-
-		var components = [JavaScriptPropertyValue]()
-
-		for i in 0 ..< count {
-
-			guard let value = ValueListGetValue(values, i) else {
-				continue
-			}
-
-			switch (ValueGetType(value)) {
-
-				case kValueTypeNull:
-					components.append(JavaScriptProperty.Null)
-				case kValueTypeString:
-					components.append(self.createString(value))
-				case kValueTypeNumber:
-					components.append(self.createNumber(value))
-				case kValueTypeBoolean:
-					components.append(self.createBoolean(value))
-				case kValueTypeVariable:
-					components.append(self.createVariable(value))
-				case kValueTypeFunction:
-					components.append(self.createFunction(value))
-
-				default:
 					break
 			}
-		}
 
-		self.reset(JavaScriptPropertyCompositeValue(values: components), lock: lock)
+		} else {
+
+			/*
+			 * The parser returned multiple values. In this case we create a
+			 * composite value and reset the property with it.
+			 */
+
+			var components = [JavaScriptPropertyValue]()
+
+			for i in 0 ..< count {
+
+				guard let value = ValueListGetValue(values, i) else {
+					continue
+				}
+
+				switch (ValueGetType(value)) {
+
+					case kValueTypeNull:
+						components.append(JavaScriptProperty.Null)
+					case kValueTypeString:
+						components.append(self.createString(value))
+					case kValueTypeNumber:
+						components.append(self.createNumber(value))
+					case kValueTypeBoolean:
+						components.append(self.createBoolean(value))
+					case kValueTypeVariable:
+						components.append(self.createVariable(value))
+					case kValueTypeFunction:
+						components.append(self.createFunction(value))
+
+					default:
+						break
+				}
+			}
+
+			self.reset(JavaScriptPropertyCompositeValue(values: components), lock: lock)
+		}
 	}
 
 	/**
@@ -247,27 +246,70 @@ internal extension JavaScriptProperty {
 
 		for i in 0 ..< FunctionValueGetArgumentCount(ptr) {
 
-			guard let value = FunctionValueGetArgumentValue(ptr, i) else {
-				continue
-			}
+			let values = FunctionValueGetArgumentValues(ptr, i)
 
-			switch (ValueGetType(value)) {
+			let count = ValueListGetCount(values)
+			if (count == 1) {
 
-				case kValueTypeNull:
-					arguments.append(JavaScriptProperty.Null)
-				case kValueTypeString:
-					arguments.append(self.createString(value))
-				case kValueTypeNumber:
-					arguments.append(self.createNumber(value))
-				case kValueTypeBoolean:
-					arguments.append(self.createBoolean(value))
-				case kValueTypeVariable:
-					arguments.append(self.createVariable(value))
-				case kValueTypeFunction:
-					arguments.append(self.createFunction(value))
+				guard let value = ValueListGetValue(values, 0) else {
+					continue
+				}
 
-				default:
-					break
+				switch (ValueGetType(value)) {
+
+					case kValueTypeNull:
+						arguments.append(JavaScriptProperty.Null)
+					case kValueTypeString:
+						arguments.append(self.createString(value))
+					case kValueTypeNumber:
+						arguments.append(self.createNumber(value))
+					case kValueTypeBoolean:
+						arguments.append(self.createBoolean(value))
+					case kValueTypeVariable:
+						arguments.append(self.createVariable(value))
+					case kValueTypeFunction:
+						arguments.append(self.createFunction(value))
+
+					default:
+						break;
+				}
+
+			} else {
+
+				/*
+				 * The parser returned multiple values. In this case we create a
+				 * composite value and reset the property with it.
+				 */
+
+				var composite = [JavaScriptPropertyValue]()
+
+				for i in 0 ..< count {
+
+					guard let value = ValueListGetValue(values, i) else {
+						continue
+					}
+
+					switch (ValueGetType(value)) {
+
+						case kValueTypeNull:
+							composite.append(JavaScriptProperty.Null)
+						case kValueTypeString:
+							composite.append(self.createString(value))
+						case kValueTypeNumber:
+							composite.append(self.createNumber(value))
+						case kValueTypeBoolean:
+							composite.append(self.createBoolean(value))
+						case kValueTypeVariable:
+							composite.append(self.createVariable(value))
+						case kValueTypeFunction:
+							composite.append(self.createFunction(value))
+
+						default:
+							break
+					}
+				}
+
+				arguments.append(JavaScriptPropertyCompositeValue(values: composite))
 			}
 		}
 

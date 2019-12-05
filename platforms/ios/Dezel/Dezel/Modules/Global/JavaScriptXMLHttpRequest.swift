@@ -107,7 +107,7 @@ open class JavaScriptXMLHttpRequest: JavaScriptClass, HttpRequestDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsFunction_request(callback: JavaScriptFunctionCallback) {
+	@objc func jsFunction_request(callback: JavaScriptFunctionCallback) {
 
 		self.request?.abort()
 		self.request = nil
@@ -161,7 +161,7 @@ open class JavaScriptXMLHttpRequest: JavaScriptClass, HttpRequestDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsFunction_abort(callback: JavaScriptFunctionCallback) {
+	@objc func jsFunction_abort(callback: JavaScriptFunctionCallback) {
 		self.request?.abort()
 	}
 
@@ -170,7 +170,7 @@ open class JavaScriptXMLHttpRequest: JavaScriptClass, HttpRequestDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsFunction_reset(callback: JavaScriptFunctionCallback) {
+	@objc func jsFunction_reset(callback: JavaScriptFunctionCallback) {
 		self.request?.delegate = nil
 		self.request?.abort()
 	}

@@ -3,7 +3,7 @@
  * @super JavaScriptView
  * @since 0.7.0
  */
-open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
+open class JavaScriptTextView: JavaScriptView, TextViewObserver {
 
 	//--------------------------------------------------------------------------
 	// MARK: Properties
@@ -34,7 +34,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @since 0.7.0
 	 */
 	override open func createContentView() -> TextView {
-		return TextView(frame: .zero, delegate: self)
+		return TextView(frame: .zero, observer: self)
 	}
 
 	/**
@@ -100,7 +100,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	}
 
 	//--------------------------------------------------------------------------
-	// MARK: Methods - Layout Node Delegate
+	// MARK: Methods - Display Node Delegate
 	//--------------------------------------------------------------------------
 
 	/**
@@ -116,7 +116,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	}
 
 	//--------------------------------------------------------------------------
-	// MARK: Methods - Content Text View Delegate
+	// MARK: Methods - Delegate
 	//--------------------------------------------------------------------------
 
 	/**
@@ -143,16 +143,49 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 		}
 	}
 
-	//--------------------------------------------------------------------------
-	// MARK: Private API - Conversions
-	//--------------------------------------------------------------------------
+	/**
+	 * @method getTextAlign
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private func getTextAlign(_ value: String) -> TextAlign {
+
+		switch (value) {
+
+			case "top left":
+				return .topLeft
+			case "top right":
+				return .topRight
+			case "top center":
+				return .topCenter
+
+			case "left":
+				return .middleLeft
+			case "right":
+				return .middleRight
+			case "center":
+				return .middleCenter
+
+			case "bottom left":
+				return .bottomLeft
+			case "bottom right":
+				return .bottomRight
+			case "bottom center":
+				return .bottomCenter
+
+			default:
+				NSLog("Unrecognized value for textAlign: \(value)")
+		}
+
+		return .middleLeft
+	}
 
 	/**
 	 * @method getTextDecoration
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	open func getTextDecoration(_ value: String) -> TextDecoration {
+	private func getTextDecoration(_ value: String) -> TextDecoration {
 
 		switch (value) {
 
@@ -173,7 +206,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	open func getTextTransform(_ value: String) -> TextTransform {
+	private func getTextTransform(_ value: String) -> TextTransform {
 
 		switch (value) {
 
@@ -194,61 +227,11 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	}
 
 	/**
-	 * @method getTextAlignment
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	open func getTextAlignment(_ value: String) -> TextAlignment {
-
-		switch (value) {
-
-			case "start":
-				return .start
-			case "end":
-				return .end
-			case "left":
-				return .left
-			case "right":
-				return .right
-			case "center":
-				return .center
-
-			default:
-				NSLog("Unrecognized value for textAlignment: \(value)")
-		}
-
-		return .start
-	}
-
-	/**
-	 * @method getTextLocation
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	open func getTextLocation(_ value: String) -> TextLocation {
-
-		switch (value) {
-
-			case "top":
-				return .top
-			case "middle":
-				return .middle
-			case "bottom":
-				return .bottom
-
-			default:
-				NSLog("Unrecognized value for textLocation: \(value)")
-		}
-
-		return .middle
-	}
-
-	/**
 	 * @method getTextOverflow
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	open func getTextOverflow(_ value: String) -> TextOverflow {
+	private func getTextOverflow(_ value: String) -> TextOverflow {
 
 		switch (value) {
 
@@ -272,7 +255,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @property fontFamily
 	 * @since 0.7.0
 	 */
-	@objc public lazy var fontFamily = JavaScriptProperty(string: "default") { value in
+	@objc lazy var fontFamily = JavaScriptProperty(string: "default") { value in
 
 		self.view.fontFamily = value.string
 
@@ -286,7 +269,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @property fontWeight
 	 * @since 0.7.0
 	 */
-	@objc public lazy var fontWeight = JavaScriptProperty(string: "normal") { value in
+	@objc lazy var fontWeight = JavaScriptProperty(string: "normal") { value in
 
 		self.view.fontWeight = value.string
 
@@ -300,7 +283,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @property fontStyle
 	 * @since 0.7.0
 	 */
-	@objc public lazy var fontStyle = JavaScriptProperty(string: "normal") { value in
+	@objc lazy var fontStyle = JavaScriptProperty(string: "normal") { value in
 
 		self.view.fontStyle = value.string
 
@@ -314,7 +297,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @property fontSize
 	 * @since 0.7.0
 	 */
-	@objc public lazy var fontSize = JavaScriptProperty(number: 17) { value in
+	@objc lazy var fontSize = JavaScriptProperty(number: 17) { value in
 		self.invalidateFontSize()
 	}
 
@@ -322,7 +305,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @property minFontSize
 	 * @since 0.7.0
 	 */
-	@objc public lazy var minFontSize = JavaScriptProperty(number: 0) { value in
+	@objc lazy var minFontSize = JavaScriptProperty(number: 0) { value in
 		self.invalidateFontSize()
 	}
 
@@ -330,7 +313,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @property maxFontSize
 	 * @since 0.7.0
 	 */
-	@objc public lazy var maxFontSize = JavaScriptProperty(number: Double.max) { value in
+	@objc lazy var maxFontSize = JavaScriptProperty(number: Double.max) { value in
 		self.invalidateFontSize()
 	}
 
@@ -338,7 +321,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @property text
 	 * @since 0.7.0
 	 */
-	@objc public lazy var text = JavaScriptProperty(string: "") { value in
+	@objc lazy var text = JavaScriptProperty(string: "") { value in
 
 		self.view.text = value.string
 
@@ -349,26 +332,26 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	}
 
 	/**
-	 * @property textAlignment
+	 * @property textColor
 	 * @since 0.7.0
 	 */
-	@objc public lazy var textAlignment = JavaScriptProperty(string: "start") { value in
-		self.view.textAlignment = self.getTextAlignment(value.string)
+	@objc lazy var textColor = JavaScriptProperty(string: "#000") { value in
+		self.view.textColor = UIColor(color: value)
 	}
 
 	/**
-	 * @property textLocation
+	 * @property textAlign
 	 * @since 0.7.0
 	 */
-	@objc public lazy var textLocation = JavaScriptProperty(string: "middle") { value in
-		self.view.textLocation = self.getTextLocation(value.string)
+	@objc lazy var textAlign = JavaScriptProperty(string: "start") { value in
+		self.view.textAlign = self.getTextAlign(value.string)
 	}
 
 	/**
 	 * @property textBaseline
 	 * @since 0.7.0
 	 */
-	@objc public lazy var textBaseline = JavaScriptProperty(number: 0) { value in
+	@objc lazy var textBaseline = JavaScriptProperty(number: 0) { value in
 
 		self.view.textBaseline = CGFloat(value.number)
 
@@ -382,7 +365,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @property textKerning
 	 * @since 0.7.0
 	 */
-	@objc public lazy var textKerning = JavaScriptProperty(number: 0) { value in
+	@objc lazy var textKerning = JavaScriptProperty(number: 0) { value in
 
 		self.view.textKerning = CGFloat(value.number)
 
@@ -396,7 +379,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @property textLeading
 	 * @since 0.7.0
 	 */
-	@objc public lazy var textLeading = JavaScriptProperty(number: 0) { value in
+	@objc lazy var textLeading = JavaScriptProperty(number: 0) { value in
 
 		self.view.textLeading = CGFloat(value.number)
 
@@ -410,7 +393,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @property textDecoration
 	 * @since 0.7.0
 	 */
-	@objc public lazy var textDecoration = JavaScriptProperty(string: "none") { value in
+	@objc lazy var textDecoration = JavaScriptProperty(string: "none") { value in
 
 		self.view.textDecoration = self.getTextDecoration(value.string)
 
@@ -424,7 +407,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @property textTransform
 	 * @since 0.7.0
 	 */
-	@objc public lazy var textTransform = JavaScriptProperty(string: "none") { value in
+	@objc lazy var textTransform = JavaScriptProperty(string: "none") { value in
 
 		self.view.textTransform = self.getTextTransform(value.string)
 
@@ -438,7 +421,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @property textOverflow
 	 * @since 0.7.0
 	 */
-	@objc public lazy var textOverflow = JavaScriptProperty(string: "ellipsis") { value in
+	@objc lazy var textOverflow = JavaScriptProperty(string: "ellipsis") { value in
 
 		self.view.textOverflow = self.getTextOverflow(value.string)
 
@@ -449,26 +432,10 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	}
 
 	/**
-	 * @property textColor
-	 * @since 0.7.0
-	 */
-	@objc public lazy var textColor = JavaScriptProperty(string: "#000") { value in
-		self.view.textColor = UIColor(color: value)
-	}
-
-	/**
-	 * @property textOpacity
-	 * @since 0.7.0
-	 */
-	@objc public lazy var textOpacity = JavaScriptProperty(number: 1.0) { value in
-		self.view.alpha = CGFloat(value.number)
-	}
-
-	/**
 	 * @property textShadowBlur
 	 * @since 0.7.0
 	 */
-	@objc public lazy var textShadowBlur = JavaScriptProperty(number: 0) { value in
+	@objc lazy var textShadowBlur = JavaScriptProperty(number: 0) { value in
 		self.view.textShadowBlur = CGFloat(value.number)
 	}
 
@@ -476,7 +443,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @property textShadowColor
 	 * @since 0.7.0
 	 */
-	@objc public lazy var textShadowColor = JavaScriptProperty(string: "#000") { value in
+	@objc lazy var textShadowColor = JavaScriptProperty(string: "#000") { value in
 		self.view.textShadowColor = UIColor(color: value)
 	}
 
@@ -484,7 +451,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @property textShadowOffsetTop
 	 * @since 0.7.0
 	 */
-	@objc public lazy var textShadowOffsetTop = JavaScriptProperty(number: 0) { value in
+	@objc lazy var textShadowOffsetTop = JavaScriptProperty(number: 0) { value in
 		self.view.textShadowOffsetTop = CGFloat(value.number)
 	}
 
@@ -492,7 +459,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @property textShadowOffsetLeft
 	 * @since 0.7.0
 	 */
-	@objc public lazy var textShadowOffsetLeft = JavaScriptProperty(number: 0) { value in
+	@objc lazy var textShadowOffsetLeft = JavaScriptProperty(number: 0) { value in
 		self.view.textShadowOffsetLeft = CGFloat(value.number)
 	}
 
@@ -500,15 +467,43 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @property linkColor
 	 * @since 0.7.0
 	 */
-	@objc public lazy var linkColor = JavaScriptProperty(string: "blue") { value in
+	@objc lazy var linkColor = JavaScriptProperty(string: "blue") { value in
 		self.view.linkColor = UIColor(color: value)
+	}
+
+	/**
+	 * @property linkDecoration
+	 * @since 0.7.0
+	 */
+	@objc lazy var linkDecoration = JavaScriptProperty(string: "underline") { value in
+
+		self.view.linkDecoration = self.getTextDecoration(value.string)
+
+		if (self.node.isWrappingContentWidth ||
+			self.node.isWrappingContentHeight) {
+			self.node.invalidateSize()
+		}
+	}
+
+	/**
+	 * @property minLines
+	 * @since 0.7.0
+	 */
+	@objc lazy var minLines = JavaScriptProperty(number: 0) { value in
+
+		self.view.minLines = Int(value.number)
+
+		if (self.node.isWrappingContentWidth ||
+			self.node.isWrappingContentHeight) {
+			self.node.invalidateSize()
+		}
 	}
 
 	/**
 	 * @property maxLines
 	 * @since 0.7.0
 	 */
-	@objc public lazy var maxLines = JavaScriptProperty(number: 0) { value in
+	@objc lazy var maxLines = JavaScriptProperty(number: 0) { value in
 
 		self.view.maxLines = Int(value.number)
 
@@ -525,7 +520,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsGet_fontFamily(callback: JavaScriptGetterCallback) {
+	@objc func jsGet_fontFamily(callback: JavaScriptGetterCallback) {
 		callback.returns(self.fontFamily)
 	}
 
@@ -534,7 +529,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsSet_fontFamily(callback: JavaScriptSetterCallback) {
+	@objc func jsSet_fontFamily(callback: JavaScriptSetterCallback) {
 		self.fontFamily.reset(callback.value, lock: self)
 	}
 
@@ -545,7 +540,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsGet_fontWeight(callback: JavaScriptGetterCallback) {
+	@objc func jsGet_fontWeight(callback: JavaScriptGetterCallback) {
 		callback.returns(self.fontWeight)
 	}
 
@@ -554,7 +549,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsSet_fontWeight(callback: JavaScriptSetterCallback) {
+	@objc func jsSet_fontWeight(callback: JavaScriptSetterCallback) {
 		self.fontWeight.reset(callback.value, lock: self)
 	}
 
@@ -565,7 +560,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsGet_fontStyle(callback: JavaScriptGetterCallback) {
+	@objc func jsGet_fontStyle(callback: JavaScriptGetterCallback) {
 		callback.returns(self.fontStyle)
 	}
 
@@ -574,7 +569,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsSet_fontStyle(callback: JavaScriptSetterCallback) {
+	@objc func jsSet_fontStyle(callback: JavaScriptSetterCallback) {
 		self.fontStyle.reset(callback.value, lock: self)
 	}
 
@@ -585,7 +580,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsGet_fontSize(callback: JavaScriptGetterCallback) {
+	@objc func jsGet_fontSize(callback: JavaScriptGetterCallback) {
 		callback.returns(self.fontSize)
 	}
 
@@ -594,7 +589,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsSet_fontSize(callback: JavaScriptSetterCallback) {
+	@objc func jsSet_fontSize(callback: JavaScriptSetterCallback) {
 		self.fontSize.reset(callback.value, lock: self, parse: true)
 	}
 
@@ -605,7 +600,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsGet_minFontSize(callback: JavaScriptGetterCallback) {
+	@objc func jsGet_minFontSize(callback: JavaScriptGetterCallback) {
 		callback.returns(self.minFontSize)
 	}
 
@@ -614,7 +609,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsSet_minFontSize(callback: JavaScriptSetterCallback) {
+	@objc func jsSet_minFontSize(callback: JavaScriptSetterCallback) {
 		self.minFontSize.reset(callback.value, lock: self, parse: true)
 	}
 
@@ -625,7 +620,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsGet_maxFontSize(callback: JavaScriptGetterCallback) {
+	@objc func jsGet_maxFontSize(callback: JavaScriptGetterCallback) {
 		callback.returns(self.maxFontSize)
 	}
 
@@ -634,7 +629,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsSet_maxFontSize(callback: JavaScriptSetterCallback) {
+	@objc func jsSet_maxFontSize(callback: JavaScriptSetterCallback) {
 		self.maxFontSize.reset(callback.value, lock: self, parse: true)
 	}
 
@@ -645,7 +640,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsGet_text(callback: JavaScriptGetterCallback) {
+	@objc func jsGet_text(callback: JavaScriptGetterCallback) {
 		callback.returns(self.text)
 	}
 
@@ -654,48 +649,48 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsSet_text(callback: JavaScriptSetterCallback) {
+	@objc func jsSet_text(callback: JavaScriptSetterCallback) {
 		self.text.reset(callback.value, lock: self)
 	}
 
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method jsGet_textAlignment
+	 * @method jsGet_textColor
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsGet_textAlignment(callback: JavaScriptGetterCallback) {
-		callback.returns(self.textAlignment)
+	@objc func jsGet_textColor(callback: JavaScriptGetterCallback) {
+		callback.returns(self.textColor)
 	}
 
 	/**
-	 * @method jsSet_textAlignment
+	 * @method jsSet_textColor
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsSet_textAlignment(callback: JavaScriptSetterCallback) {
-		return self.textAlignment.reset(callback.value, lock: self)
+	@objc func jsSet_textColor(callback: JavaScriptSetterCallback) {
+		self.textColor.reset(callback.value, lock: self, parse: true)
 	}
 
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method jsGet_textLocation
+	 * @method jsGet_textAlign
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsGet_textLocation(callback: JavaScriptGetterCallback) {
-		callback.returns(self.textLocation)
+	@objc func jsGet_textAlign(callback: JavaScriptGetterCallback) {
+		callback.returns(self.textAlign)
 	}
 
 	/**
-	 * @method jsSet_textLocation
+	 * @method jsSet_textAlign
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsSet_textLocation(callback: JavaScriptSetterCallback) {
-		self.textLocation.reset(callback.value, lock: self)
+	@objc func jsSet_textAlign(callback: JavaScriptSetterCallback) {
+		return self.textAlign.reset(callback.value, lock: self)
 	}
 
 	//--------------------------------------------------------------------------
@@ -705,7 +700,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsGet_textBaseline(callback: JavaScriptGetterCallback) {
+	@objc func jsGet_textBaseline(callback: JavaScriptGetterCallback) {
 		callback.returns(self.textBaseline)
 	}
 
@@ -714,7 +709,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsSet_textBaseline(callback: JavaScriptSetterCallback) {
+	@objc func jsSet_textBaseline(callback: JavaScriptSetterCallback) {
 		self.textBaseline.reset(callback.value, lock: self)
 	}
 
@@ -725,7 +720,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsGet_textKerning(callback: JavaScriptGetterCallback) {
+	@objc func jsGet_textKerning(callback: JavaScriptGetterCallback) {
 		callback.returns(self.textKerning)
 	}
 
@@ -734,7 +729,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsSet_textKerning(callback: JavaScriptSetterCallback) {
+	@objc func jsSet_textKerning(callback: JavaScriptSetterCallback) {
 		self.textKerning.reset(callback.value, lock: self, parse: true)
 	}
 
@@ -745,7 +740,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsGet_textLeading(callback: JavaScriptGetterCallback) {
+	@objc func jsGet_textLeading(callback: JavaScriptGetterCallback) {
 		callback.returns(self.textLeading)
 	}
 
@@ -754,7 +749,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsSet_textLeading(callback: JavaScriptSetterCallback) {
+	@objc func jsSet_textLeading(callback: JavaScriptSetterCallback) {
 		self.textLeading.reset(callback.value, lock: self, parse: true)
 	}
 
@@ -765,7 +760,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsGet_textDecoration(callback: JavaScriptGetterCallback) {
+	@objc func jsGet_textDecoration(callback: JavaScriptGetterCallback) {
 		callback.returns(self.textDecoration)
 	}
 
@@ -774,7 +769,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsSet_textDecoration(callback: JavaScriptSetterCallback) {
+	@objc func jsSet_textDecoration(callback: JavaScriptSetterCallback) {
 		self.textDecoration.reset(callback.value, lock: self)
 	}
 
@@ -785,7 +780,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsGet_textTransform(callback: JavaScriptGetterCallback) {
+	@objc func jsGet_textTransform(callback: JavaScriptGetterCallback) {
 		callback.returns(self.textTransform)
 	}
 
@@ -794,7 +789,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsSet_textTransform(callback: JavaScriptSetterCallback) {
+	@objc func jsSet_textTransform(callback: JavaScriptSetterCallback) {
 		self.textTransform.reset(callback.value, lock: self)
 	}
 
@@ -805,7 +800,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsGet_textOverflow(callback: JavaScriptGetterCallback) {
+	@objc func jsGet_textOverflow(callback: JavaScriptGetterCallback) {
 		callback.returns(self.textOverflow)
 	}
 
@@ -814,48 +809,8 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsSet_textOverflow(callback: JavaScriptSetterCallback) {
+	@objc func jsSet_textOverflow(callback: JavaScriptSetterCallback) {
 		self.textOverflow.reset(callback.value, lock: self)
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method jsGet_textColor
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	@objc open func jsGet_textColor(callback: JavaScriptGetterCallback) {
-		callback.returns(self.textColor)
-	}
-
-	/**
-	 * @method jsSet_textColor
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	@objc open func jsSet_textColor(callback: JavaScriptSetterCallback) {
-		self.textColor.reset(callback.value, lock: self, parse: true)
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method jsGet_textOpacity
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	@objc open func jsGet_textOpacity(callback: JavaScriptGetterCallback) {
-		callback.returns(self.textOpacity)
-	}
-
-	/**
-	 * @method jsSet_textOpacity
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	@objc open func jsSet_textOpacity(callback: JavaScriptSetterCallback) {
-		self.textOpacity.reset(callback.value, lock: self)
 	}
 
 	//--------------------------------------------------------------------------
@@ -865,7 +820,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsGet_textShadowBlur(callback: JavaScriptGetterCallback) {
+	@objc func jsGet_textShadowBlur(callback: JavaScriptGetterCallback) {
 		callback.returns(self.textShadowBlur)
 	}
 
@@ -874,7 +829,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsSet_textShadowBlur(callback: JavaScriptSetterCallback) {
+	@objc func jsSet_textShadowBlur(callback: JavaScriptSetterCallback) {
 		self.textShadowBlur.reset(callback.value, lock: self, parse: true)
 	}
 
@@ -885,7 +840,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsGet_textShadowColor(callback: JavaScriptGetterCallback) {
+	@objc func jsGet_textShadowColor(callback: JavaScriptGetterCallback) {
 		callback.returns(self.textShadowColor)
 	}
 
@@ -894,7 +849,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsSet_textShadowColor(callback: JavaScriptSetterCallback) {
+	@objc func jsSet_textShadowColor(callback: JavaScriptSetterCallback) {
 		self.textShadowColor.reset(callback.value, lock: self, parse: true)
 	}
 
@@ -905,7 +860,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsGet_textShadowOffsetTop(callback: JavaScriptGetterCallback) {
+	@objc func jsGet_textShadowOffsetTop(callback: JavaScriptGetterCallback) {
 		callback.returns(self.textShadowOffsetTop)
 	}
 
@@ -914,7 +869,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsSet_textShadowOffsetTop(callback: JavaScriptSetterCallback) {
+	@objc func jsSet_textShadowOffsetTop(callback: JavaScriptSetterCallback) {
 		self.fontFamily.reset(callback.value, lock: self, parse: true)
 	}
 
@@ -925,7 +880,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsGet_textShadowOffsetLeft(callback: JavaScriptGetterCallback) {
+	@objc func jsGet_textShadowOffsetLeft(callback: JavaScriptGetterCallback) {
 		callback.returns(self.textShadowOffsetLeft)
 	}
 
@@ -934,7 +889,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsSet_textShadowOffsetLeft(callback: JavaScriptSetterCallback) {
+	@objc func jsSet_textShadowOffsetLeft(callback: JavaScriptSetterCallback) {
 		self.textShadowOffsetLeft.reset(callback.value, lock: self, parse: true)
 	}
 
@@ -945,7 +900,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsGet_linkColor(callback: JavaScriptGetterCallback) {
+	@objc func jsGet_linkColor(callback: JavaScriptGetterCallback) {
 		callback.returns(self.linkColor)
 	}
 
@@ -954,8 +909,48 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsSet_linkColor(callback: JavaScriptSetterCallback) {
+	@objc func jsSet_linkColor(callback: JavaScriptSetterCallback) {
 		self.linkColor.reset(callback.value, lock: self, parse: true)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_linkDecoration
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@objc func jsGet_linkDecoration(callback: JavaScriptGetterCallback) {
+		callback.returns(self.linkDecoration)
+	}
+
+	/**
+	 * @method jsSet_linkDecoration
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@objc func jsSet_linkDecoration(callback: JavaScriptSetterCallback) {
+		self.linkDecoration.reset(callback.value, lock: self, parse: true)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_minLines
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@objc func jsGet_minLines(callback: JavaScriptGetterCallback) {
+		callback.returns(self.minLines)
+	}
+
+	/**
+	 * @method jsSet_minLines
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@objc func jsSet_minLines(callback: JavaScriptSetterCallback) {
+		self.minLines.reset(callback.value, lock: self)
 	}
 
 	//--------------------------------------------------------------------------
@@ -965,7 +960,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsGet_maxLines(callback: JavaScriptGetterCallback) {
+	@objc func jsGet_maxLines(callback: JavaScriptGetterCallback) {
 		callback.returns(self.maxLines)
 	}
 
@@ -974,7 +969,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewDelegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc open func jsSet_maxLines(callback: JavaScriptSetterCallback) {
+	@objc func jsSet_maxLines(callback: JavaScriptSetterCallback) {
 		self.maxLines.reset(callback.value, lock: self)
 	}
 }

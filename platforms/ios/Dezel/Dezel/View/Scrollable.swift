@@ -53,10 +53,10 @@ public protocol Scrollable: AnyObject {
 	var scrollHeight: CGFloat { get set }
 
 	/**
-	 * @property scrollMomentum
+	 * @property scrollInertia
 	 * @since 0.2.0
 	 */
-	var scrollMomentum: Bool { get set }
+	var scrollInertia: Bool { get set }
 
 	/**
 	 * @property contentInsetTop

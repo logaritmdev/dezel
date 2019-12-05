@@ -20,7 +20,7 @@ public protocol TransitionListener: AnyObject {
 	 * @method didCommitTransition
 	 * @since 0.6.0
 	 */
-	func didCommitTransition()
+	func didCommitTransition() // TODO Remvoe unused
 
 	/**
 	 * @method didFinishTransition

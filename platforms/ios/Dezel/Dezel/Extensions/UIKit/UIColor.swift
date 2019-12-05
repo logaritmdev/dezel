@@ -38,11 +38,11 @@ public extension UIColor {
 			hex = color
 		}
 
+		var value: UInt32 = 0
+
         let scanner = Scanner(string: hex!)
 		scanner.scanLocation = 1
-
-        var value: UInt32 = 0
-        scanner.scanHexInt32(&value)
+		scanner.scanHexInt32(&value)
 
         let r = Int(value >> 16) & 0x000000FF
         let g = Int(value >> 8)  & 0x000000FF
@@ -50,41 +50,52 @@ public extension UIColor {
 
 		self.init(r: r, g: g, b: b, a: 1)
 	}
-
 	/**
 	 * @constructor
 	 * @since 0.7.0
 	 */
 	convenience init(color: JavaScriptProperty) {
 
-		if let fn = color.function {
+		if let function = color.function {
+			self.init(color: function)
+			return
+		}
 
-			if (fn.name == "rgb") {
+		self.init(color: color.string)
+	}
 
-				assert(fn.arguments.count == 3)
+	/**
+	 * @constructor
+	 * @since 0.7.0
+	 */
+	convenience init(color: JavaScriptPropertyValue) {
 
-				let r = fn.arguments[0].number
-				let g = fn.arguments[1].number
-				let b = fn.arguments[2].number
+		if let functions = color as? JavaScriptPropertyFunctionValue {
+
+			if (functions.name == "rgb") {
+
+				assert(functions.arguments.count == 3)
+
+				let r = functions.arguments[0].number
+				let g = functions.arguments[1].number
+				let b = functions.arguments[2].number
 
 				self.init(r: r, g: g, b: b, a: 1)
 				return
 			}
 
-			if (fn.name == "rgba") {
+			if (functions.name == "rgba") {
 
-				assert(fn.arguments.count == 3)
+				assert(functions.arguments.count == 3)
 
-				let r = fn.arguments[0].number
-				let g = fn.arguments[1].number
-				let b = fn.arguments[2].number
-				let a = fn.arguments[3].number
+				let r = functions.arguments[0].number
+				let g = functions.arguments[1].number
+				let b = functions.arguments[2].number
+				let a = functions.arguments[3].number
 
 				self.init(r: r, g: g, b: b, a: a)
 				return
 			}
-
-			fatalError("UIColor: Invalid color function \(fn.name)")
 		}
 
 		self.init(color: color.string)

@@ -143,10 +143,10 @@ public class WebView: WKWebView, WKNavigationDelegate, UIScrollViewDelegate, Scr
 	}
 
 	/**
-	 * @property scrollMomentum
+	 * @property scrollInertia
 	 * @since 0.7.0
 	 */
-	open var scrollMomentum: Bool = true
+	open var scrollInertia: Bool = true
 
 	/**
 	 * @property contentInsetTop
@@ -235,11 +235,11 @@ public class WebView: WKWebView, WKNavigationDelegate, UIScrollViewDelegate, Scr
 	open var zoomedView: UIView?
 
 	/**
-	 * @property webViewDelegate
+	 * @property observer
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	internal weak var webViewDelegate: WebViewDelegate?
+	internal weak var observer: WebViewObserver?
 
 	/**
 	 * @property contentLoaded
@@ -280,12 +280,11 @@ public class WebView: WKWebView, WKNavigationDelegate, UIScrollViewDelegate, Scr
 	 * @since 0.6.0
 	 * @hidden
 	 */
-	public required init(frame: CGRect, delegate: WebViewDelegate?) {
+	public required init(frame: CGRect, observer: WebViewObserver?) {
 
 		super.init(frame: frame, configuration: WKWebViewConfiguration())
 
 		self.navigationDelegate = self
-		self.webViewDelegate = delegate
 		self.translatesAutoresizingMaskIntoConstraints = true
 
 		self.scrollViewDelegate = ScrollViewDelegate(content: self)
@@ -302,6 +301,8 @@ public class WebView: WKWebView, WKNavigationDelegate, UIScrollViewDelegate, Scr
 		self.scrollView.addGestureRecognizer(
 			ScrollViewTouchCancelGesture(scrollView: self.scrollView, target: self, action: #selector(scrollViewDidCancelTouch))
 		)
+
+		self.observer = observer
 	}
 
 	/**
@@ -403,7 +404,7 @@ public class WebView: WKWebView, WKNavigationDelegate, UIScrollViewDelegate, Scr
 						self.contentLoading = false
 						if (self.contentLoaded == false) {
 							self.contentLoaded = true
-							self.webViewDelegate?.didLoad(webView: self)
+							self.observer?.didLoad(webView: self)
 						}
 					}
 				}
@@ -415,7 +416,7 @@ public class WebView: WKWebView, WKNavigationDelegate, UIScrollViewDelegate, Scr
 		if (key == "contentSize") {
 
 			if let value = change?[NSKeyValueChangeKey.newKey] as? CGSize {
-				self.webViewDelegate?.didUpdateContentSize(webView: self, size: value)
+				self.observer?.didUpdateContentSize(webView: self, size: value)
 			}
 
 			return
@@ -460,7 +461,7 @@ public class WebView: WKWebView, WKNavigationDelegate, UIScrollViewDelegate, Scr
 	 */
 	public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
 
-		guard let delegate = self.webViewDelegate else {
+		guard let delegate = self.observer else {
 			decisionHandler(.cancel)
 			return
 		}
@@ -643,7 +644,7 @@ public class WebView: WKWebView, WKNavigationDelegate, UIScrollViewDelegate, Scr
 				return
 			}
 
-			if (content.scrollMomentum == false) {
+			if (content.scrollInertia == false) {
 				targetContentOffset.pointee = scrollView.contentOffset
 				self.didFinishDragging()
 			}

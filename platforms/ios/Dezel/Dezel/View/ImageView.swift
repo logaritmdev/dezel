@@ -15,77 +15,7 @@ open class ImageView: UIView, Updatable, Clippable, TransitionListener {
 	 */
 	override open var bounds: CGRect {
 		willSet {
-			self.imageLayerInvalidFrame = true
-		}
-	}
-
-	/**
-	 * @property clipsToBounds
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	override open var clipsToBounds: Bool {
-		set { }
-		get { return true }
-	}
-
-	/**
-	 * @property image
-	 * @since 0.7.0
-	 */
-	open var image: UIImage? {
-		willSet {
-			self.imageLayer.image = newValue?.cgImage
-		}
-	}
-
-	/**
-	 * @property imageTop
-	 * @since 0.7.0
-	 */
-	open var imageTop: CGFloat = 0 {
-		willSet {
-			self.imageLayerInvalidFrame = true
-		}
-	}
-
-	/**
-	 * @property imageLeft
-	 * @since 0.7.0
-	 */
-	open var imageLeft: CGFloat = 0 {
-		willSet {
-			self.imageLayerInvalidFrame = true
-		}
-	}
-
-	/**
-	 * @property imageWidth
-	 * @since 0.7.0
-	 */
-	open var imageWidth: CGFloat = 0 {
-		willSet {
-			self.imageLayerInvalidFrame = true
-		}
-	}
-
-	/**
-	 * @property imageHeight
-	 * @since 0.7.0
-	 */
-	open var imageHeight: CGFloat = 0 {
-		willSet {
-			self.imageLayerInvalidFrame = true
-		}
-	}
-
-	/**
-	 * @property imageFilter
-	 * @since 0.7.0
-	 */
-	open var imageFilter: ImageFilter = .none {
-		willSet {
-			self.imageLayer.filter = newValue
+			self.invalidImageLayer = true
 		}
 	}
 
@@ -100,10 +30,80 @@ open class ImageView: UIView, Updatable, Clippable, TransitionListener {
 	}
 
 	/**
+	 * @property image
+	 * @since 0.7.0
+	 */
+	open var image: UIImage? {
+		willSet {
+			self.imageLayer.image = newValue?.cgImage
+		}
+	}
+
+	/**
+	 * @property imageFit
+	 * @since 0.7.0
+	 */
+	open var imageFit: ImageFit = .contain {
+		willSet {
+			self.imageLayer.imageFit = newValue
+		}
+	}
+
+	/**
+	 * @property imagePosition
+	 * @since 0.7.0
+	 */
+	open var imagePosition: ImagePosition = .middleCenter {
+		willSet {
+			self.imageLayer.imagePosition = newValue
+		}
+	}
+
+	/**
+	 * @property paddingTop
+	 * @since 0.7.0
+	 */
+	open var paddingTop: CGFloat = 0 {
+		willSet {
+			self.invalidImageLayer = true
+		}
+	}
+
+	/**
+	 * @property paddingLeft
+	 * @since 0.7.0
+	 */
+	open var paddingLeft: CGFloat = 0 {
+		willSet {
+			self.invalidImageLayer = true
+		}
+	}
+
+	/**
+	 * @property paddingRight
+	 * @since 0.7.0
+	 */
+	open var paddingRight: CGFloat = 0 {
+		willSet {
+			self.invalidImageLayer = true
+		}
+	}
+
+	/**
+	 * @property paddingBottom
+	 * @since 0.7.0
+	 */
+	open var paddingBottom: CGFloat = 0 {
+		willSet {
+			self.invalidImageLayer = true
+		}
+	}
+
+	/**
 	 * @property hasFrame
 	 * @since 0.7.0
 	 */
-	open var hasFrame: Bool = false
+	internal var hasFrame: Bool = false
 
 	/**
 	 * @property imageLayer
@@ -113,11 +113,11 @@ open class ImageView: UIView, Updatable, Clippable, TransitionListener {
 	private var imageLayer: ImageLayer = ImageLayer()
 
 	/**
-	 * @property imageLayerInvalidFrame
+	 * @property invalidImageLayer
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private var imageLayerInvalidFrame: Bool = false
+	private var invalidImageLayer: Bool = false
 
 	//----------------------------------------------------------------------
 	// MARK: Methods
@@ -139,38 +139,10 @@ open class ImageView: UIView, Updatable, Clippable, TransitionListener {
 
 		super.init(frame: frame)
 
-		self.layer.masksToBounds = true
-		self.layer.contentsScale = UIScreen.main.scale
-		self.layer.rasterizationScale = UIScreen.main.scale
-
 		self.imageLayer.frame = frame
 		self.imageLayer.listener = self
 
 		self.layer.addSublayer(self.imageLayer)
-	}
-
-	/**
-	 * @method update
-	 * @since 0.7.0
-	 */
-	open func update() {
-		if (self.imageLayerInvalidFrame) {
-			self.imageLayerInvalidFrame = false
-			self.updateImageLayerFrame()
-		}
-	}
-
-	/**
-	 * @method updateImageLayerFrame
-	 * @since 0.7.0
-	 */
-	open func updateImageLayerFrame() {
-		self.imageLayer.frame = CGRect(
-			x: self.imageLeft,
-			y: self.imageTop,
-			width: self.imageWidth,
-			height: self.imageHeight
-		)
 	}
 
 	/**
@@ -202,6 +174,40 @@ open class ImageView: UIView, Updatable, Clippable, TransitionListener {
 		return bounds
 	}
 
+	/**
+	 * @method update
+	 * @since 0.7.0
+	 */
+	open func update() {
+
+		if (self.invalidImageLayer) {
+			self.invalidImageLayer = false
+			self.updateImageLayer()
+		}
+
+		self.imageLayer.update()
+	}
+
+	/**
+	 * @method updateImageLayer
+	 * @since 0.7.0
+	 */
+	open func updateImageLayer() {
+
+		let paddingT = self.paddingTop
+		let paddingL = self.paddingLeft
+		let paddingR = self.paddingRight
+		let paddingB = self.paddingBottom
+
+		var bounds = self.bounds
+		bounds.size.width = bounds.size.width - paddingL - paddingR
+		bounds.size.height = bounds.size.height - paddingT - paddingB
+		bounds.origin.x = paddingL
+		bounds.origin.y = paddingT
+
+		self.imageLayer.frame = bounds
+	}
+
 	//--------------------------------------------------------------------------
 	// MARK: Methods - Animations
 	//--------------------------------------------------------------------------
@@ -211,6 +217,7 @@ open class ImageView: UIView, Updatable, Clippable, TransitionListener {
 	 * @since 0.7.0
 	 */
 	override open func action(for layer: CALayer, forKey event: String) -> CAAction? {
+		// TODO revoir si c'est nécessaire
 		return Transition.action(for: layer, key: event)
 	}
 
