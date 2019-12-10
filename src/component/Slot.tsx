@@ -1,10 +1,10 @@
+import { $container } from './symbol/Slot'
+import { getComponent } from './private/Component'
+import { setComponentSlot } from './private/Component'
 import { Placeholder } from '../view/Placeholder'
 import { View } from '../view/View'
 import { ViewInsertEvent } from '../view/View'
 import { ViewRemoveEvent } from '../view/View'
-import { getComponent } from './private/Component'
-import { setComponentSlot } from './private/Component'
-import { $container } from './symbol/Slot'
 import { Component } from './Component'
 
 /**

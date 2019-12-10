@@ -1,9 +1,9 @@
-import { View } from '../view/View'
 import { $children } from './symbol/Root'
+import { View } from '../view/View'
 
 /**
  * @class Host
- * @sine 0.7.0
+ * @since 0.7.0
  */
 export class Root {
 
@@ -13,7 +13,7 @@ export class Root {
 
 	/**
 	 * @property children
-	 * @hidden
+	 * @since 0.7.0
 	 */
 	public get children(): ReadonlyArray<View> {
 		return this[$children]
@@ -24,12 +24,11 @@ export class Root {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method reset
-	 * @since 0.7.0
+	 * @method append
+	 * @hidden
 	 */
-	public reset(children: Array<View>) {
-		this[$children] = children
-		return this
+	public append(view: View) {
+		this[$children].push(view)
 	}
 
 	//--------------------------------------------------------------------------

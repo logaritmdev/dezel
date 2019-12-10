@@ -1,13 +1,13 @@
 import { Screen } from './Screen'
-import { ScreenTransition } from './ScreenTransition'
-import { ScreenTransitionRegistry } from './ScreenTransitionRegistry'
+import { Segue } from './Segue'
+import { SegueRegistry } from './SegueRegistry'
 
 /**
- * @class ScreenRevealTransition
- * @super ScreenTransition
- * @since 0.2.0
+ * @class RevealSegue
+ * @super Segue
+ * @since 0.7.0
  */
-export class ScreenRevealTransition extends ScreenTransition {
+class RevealSegue extends Segue {
 
 	//--------------------------------------------------------------------------
 	// Methods
@@ -15,7 +15,7 @@ export class ScreenRevealTransition extends ScreenTransition {
 
 	/**
 	 * @method onBeforePresent
-	 * @since 0.2.0
+	 * @since 0.7.0
 	 */
 	protected onBeforePresent(enter?: Screen, leave?: Screen) {
 
@@ -23,7 +23,7 @@ export class ScreenRevealTransition extends ScreenTransition {
 
 	/**
 	 * @method onPresent
-	 * @since 0.2.0
+	 * @since 0.7.0
 	 */
 	protected onPresent(enter?: Screen, leave?: Screen) {
 		if (enter) enter.translationY = '0%'
@@ -31,7 +31,7 @@ export class ScreenRevealTransition extends ScreenTransition {
 
 	/**
 	 * @method onBeforeDismiss
-	 * @since 0.2.0
+	 * @since 0.7.0
 	 */
 	protected onBeforeDismiss(enter?: Screen, leave?: Screen) {
 		if (leave) leave.translationY = '0%'
@@ -39,7 +39,7 @@ export class ScreenRevealTransition extends ScreenTransition {
 
 	/**
 	 * @method onDismiss
-	 * @since 0.2.0
+	 * @since 0.7.0
 	 */
 	protected onDismiss(enter?: Screen, leave?: Screen) {
 		if (leave) leave.translationY = '100%'
@@ -47,7 +47,7 @@ export class ScreenRevealTransition extends ScreenTransition {
 
 	/**
 	 * @method onAfterPresent
-	 * @since 0.2.0
+	 * @since 0.7.0
 	 */
 	protected onAfterPresent(enter?: Screen, leave?: Screen) {
 		if (enter) enter.translationY = 0
@@ -56,7 +56,7 @@ export class ScreenRevealTransition extends ScreenTransition {
 
 	/**
 	 * @method onAfterDismiss
-	 * @since 0.2.0
+	 * @since 0.7.0
 	 */
 	protected onAfterDismiss(enter?: Screen, leave?: Screen) {
 		if (enter) enter.translationY = 0
@@ -64,4 +64,4 @@ export class ScreenRevealTransition extends ScreenTransition {
 	}
 }
 
-ScreenTransitionRegistry.set('cover', ScreenRevealTransition)
+SegueRegistry.set('cover', RevealSegue)

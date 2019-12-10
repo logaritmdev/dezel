@@ -3,7 +3,7 @@ NavigationBar {
 	content-direction: horizontal;
 	content-alignment: center;
 	content-disposition: start;
-	height: 48px + $safe-area-top-inset;
+	height: add(48px, $safe-area-top-inset);
 	padding-top: $safe-area-top-inset;
 	padding-left: 6px;
 	padding-right: 6px;
@@ -31,7 +31,7 @@ NavigationBar {
 		font-weight: 600;
 		height: wrap;
 		text-color: #000;
-		text-alignment: center;
+		text-align: center;
 		width: wrap;
 	}
 }

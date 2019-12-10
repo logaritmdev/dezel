@@ -1,5 +1,5 @@
 Button {
-
+	border: 1px red;
 	content-direction: horizontal;
 	content-alignment: center;
 	content-disposition: center;
@@ -11,13 +11,13 @@ Button {
 	#image {
 		height: wrap;
 		width: wrap;
+		visible: false;
 	}
 
 	#label {
 		font-size: 17px;
 		max-lines: 1;
-		text-color: blue;
-		text-alignment: center;
+		text-align: center;
 		text-overflow: ellipsis;
 	}
 

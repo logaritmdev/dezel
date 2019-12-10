@@ -1,12 +1,9 @@
-import { bound } from '../decorator/bound'
-import { watch } from '../decorator/watch'
-import { Event } from '../event/Event'
-import { Touch } from '../touch/Touch'
-import { TouchEvent } from '../touch/TouchEvent'
-import { Reference } from '../view/Reference'
-import { View } from '../view/View'
 import { $selectedIndex } from './symbol/List'
 import { $selectedValue } from './symbol/List'
+import { bound } from '../decorator/bound'
+import { Event } from '../event/Event'
+import { Reference } from '../view/Reference'
+import { View } from '../view/View'
 import { Component } from './Component'
 import { ListItem } from './ListItem'
 import { Root } from './Root'
@@ -128,6 +125,8 @@ export class List extends Component {
 	protected onInsert(child: View, index: number) {
 		if (child instanceof ListItem) {
 			child.on('press', this.onListItemPress)
+			// TODO
+			// Think about reselecting based on selected index
 		}
 	}
 
@@ -138,6 +137,7 @@ export class List extends Component {
 	protected onRemove(child: View, index: number) {
 		if (child instanceof ListItem) {
 			child.off('press', this.onListItemPress)
+
 		}
 	}
 

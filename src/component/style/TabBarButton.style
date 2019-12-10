@@ -18,7 +18,7 @@ TabBarButton {
 		font-size: 10px;
 		font-weight: 400;
 		text-color: #a3a3a3;
-		text-alignment: center;
+		text-align: center;
 	}
 
 	#badge {
@@ -36,7 +36,7 @@ TabBarButton {
 		min-width: 12px;
 		top: 8px;
 		text-color: #fff;
-		text-alignment: center;
+		text-align: center;
 		width: wrap;
 	}
 

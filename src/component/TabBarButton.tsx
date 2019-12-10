@@ -1,6 +1,6 @@
+import { state } from '../decorator/state'
 import { Image } from '../component/Image'
 import { Label } from '../component/Label'
-import { state } from '../decorator/state'
 import { TouchEvent } from '../touch/TouchEvent'
 import { Reference } from '../view/Reference'
 import { View } from '../view/View'

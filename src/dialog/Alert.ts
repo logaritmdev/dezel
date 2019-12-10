@@ -76,10 +76,16 @@ export class Alert extends Emitter {
 
 		super()
 
-		this[$style] = options.style || 'alert'
-		this[$title] = options.title || ''
-		this[$message] = options.message || ''
-		this[$buttons] = options.buttons || []
+		let opts = Object.assign(
+			{},
+			OPTIONS,
+			options
+		)
+
+		this[$style] = opts.style
+		this[$title] = opts.title
+		this[$message] = opts.message
+		this[$buttons] = opts.buttons
 
 		this.buttons.forEach(button => button.on('press', this.onButtonPress))
 	}
@@ -254,6 +260,18 @@ export class Alert extends Emitter {
 		this[$presented] = false
 		this.emit<AlertDismissEvent>('dismiss', { data: { button: this[$selection] } })
 	}
+}
+
+/**
+ * @const OPTIONS
+ * @since 0.7.0
+ * @hidden
+ */
+const OPTIONS: Required<AlertOptions> = {
+	style: 'alert',
+	title: '',
+	message: '',
+	buttons: []
 }
 
 /**

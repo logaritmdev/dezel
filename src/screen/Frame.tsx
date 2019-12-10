@@ -1,14 +1,15 @@
 import { View } from '../view/View'
-import { $screen } from './symbol/Enclosure'
+import { $screen } from './symbol/Frame'
+import { $frame } from './symbol/Screen'
 import { Screen } from './Screen'
-import './style/Enclosure.style'
+import './style/Frame.style'
 
 /**
- * @class Enclosure
+ * @class Frame
  * @super View
- * @since 0.4.0
+ * @since 0.7.0
  */
-export class Enclosure extends View {
+export class Frame extends View {
 
 	//--------------------------------------------------------------------------
 	// Properties
@@ -16,7 +17,7 @@ export class Enclosure extends View {
 
 	/**
 	 * @property screen
-	 * @since 0.4.0
+	 * @since 0.7.0
 	 */
 	public get screen(): Screen {
 		return this[$screen]
@@ -33,7 +34,7 @@ export class Enclosure extends View {
 	constructor(screen: Screen) {
 		super()
 		this[$screen] = screen
-		this[$screen].enclosure = this
+		this[$screen][$frame] = this
 		this.append(screen)
 	}
 
@@ -53,7 +54,7 @@ export class Enclosure extends View {
 	public destroy() {
 
 		if (this[$screen]) {
-			this[$screen].enclosure = null
+			this[$screen][$frame] = null
 		}
 
 		return super.destroy()

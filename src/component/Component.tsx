@@ -1,16 +1,15 @@
-import { Dictionary } from 'lodash'
-import { render } from '../decorator/render'
-import { Event } from '../event/Event'
-import { native } from '../native/native'
-import { View } from '../view/View'
-import { Window } from '../view/Window'
-import { getComponentBody } from './private/Component'
-import { getComponentSlot } from './private/Component'
 import { $body } from './symbol/Component'
 import { $locked } from './symbol/Component'
 import { $rendered } from './symbol/Component'
 import { $sealed } from './symbol/Component'
 import { $slots } from './symbol/Component'
+import { render } from '../decorator/render'
+import { native } from '../native/native'
+import { getComponentBody } from './private/Component'
+import { getComponentSlot } from './private/Component'
+import { Event } from '../event/Event'
+import { View } from '../view/View'
+import { Window } from '../view/Window'
 import { Root } from './Root'
 import { Slot } from './Slot'
 
@@ -107,12 +106,9 @@ export abstract class Component extends View {
 	public insert(child: View, index: number, slot?: string) {
 
 		if (this.locked) {
-
 			throw new Error(
-				`Component error: ` +
-				`This component is locked and cannot be mutated.`
+				`Component error: This component is locked and cannot be mutated.`
 			)
-
 		}
 
 		if (slot) {
@@ -124,8 +120,7 @@ export abstract class Component extends View {
 			}
 
 			throw new Error(
-				`Component error: ` +
-				`The component ${this.constructor.name} does not have a slot named ${slot}.`
+				`Component error: The component does not have a slot named ${slot}.`
 			)
 		}
 
@@ -138,8 +133,7 @@ export abstract class Component extends View {
 			}
 
 			throw new Error(
-				`Component error: ` +
-				`The component ${this.constructor.name} does not have a main slot.`
+				`Component error: The component is sealed and does not have a main slot.`
 			)
 		}
 
@@ -153,12 +147,9 @@ export abstract class Component extends View {
 	public remove(child: View, slot?: string) {
 
 		if (this.locked) {
-
 			throw new Error(
-				`Component error: ` +
-				`This component is locked and cannot be mutated.`
+				`Component error: This component is locked and cannot be mutated.`
 			)
-
 		}
 
 		if (slot) {
@@ -170,8 +161,7 @@ export abstract class Component extends View {
 			}
 
 			throw new Error(
-				`Component error: ` +
-				`The component ${this.constructor.name} does not have a slot named ${slot}.`
+				`Component error: The component does not have a slot named ${slot}.`
 			)
 		}
 
@@ -184,8 +174,7 @@ export abstract class Component extends View {
 			}
 
 			throw new Error(
-				`Component error: ` +
-				`The component ${this.constructor.name} does not have a main slot.`
+				`Component error: The component is sealed and does not have a main slot.`
 			)
 		}
 

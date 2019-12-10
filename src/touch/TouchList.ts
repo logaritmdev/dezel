@@ -1,6 +1,6 @@
-import { View } from '../view/View'
 import { $touches } from './symbol/TouchList'
 import { iterator } from '../iterator'
+import { View } from '../view/View'
 import { Touch } from './Touch'
 
 /**
@@ -107,6 +107,6 @@ export class TouchList implements Iterable<Touch> {
 
 /**
  * @type TouchListCallback
- * @sine 0.7.0
+ * @since 0.7.0
  */
 export type TouchListCallback = (touch: Touch, index: number, array: ReadonlyArray<Touch>) => boolean

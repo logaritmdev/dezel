@@ -1,8 +1,8 @@
 import { bound } from '../decorator/bound'
 import { state } from '../decorator/state'
-import { Event } from '../event/Event'
 import { bridge } from '../native/bridge'
 import { native } from '../native/native'
+import { Event } from '../event/Event'
 import { View } from '../view/View'
 import { Window } from '../view/Window'
 import './style/TextArea.style'
@@ -83,16 +83,10 @@ export class TextArea extends View {
 	@native public textColor!: string
 
 	/**
-	 * @property textAlignment
+	 * @property textAlign
 	 * @since 0.1.0
 	 */
-	@native public textAlignment!: 'start' | 'end' | 'left' | 'right' | 'center'
-
-	/**
-	 * @property textLocation
-	 * @since 0.1.0
-	 */
-	@native public textLocation!: 'top' | 'middle' | 'bottom'
+	@native public textAlign!: 'top left' | 'top right' | 'top center' | 'left' | 'right' | 'center' | 'bottom left' | 'bottom right' | 'bottom center'
 
 	/**
 	 * @property textKerning

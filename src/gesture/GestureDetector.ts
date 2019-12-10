@@ -1,15 +1,16 @@
-import { bound } from '../decorator/bound'
-import { Emitter } from '../event/Emitter'
-import { Event } from '../event/Event'
-import { EventListener } from '../event/Event'
-import { TouchEvent } from '../touch/TouchEvent'
-import { View } from '../view/View'
 import { $callback } from './symbol/GestureDetector'
+import { $canceled } from './symbol/GestureDetector'
 import { $captured } from './symbol/GestureDetector'
+import { $detected } from './symbol/GestureDetector'
+import { $duration } from './symbol/GestureDetector'
+import { $finished } from './symbol/GestureDetector'
 import { $resolved } from './symbol/GestureDetector'
 import { $state } from './symbol/GestureDetector'
 import { $view } from './symbol/GestureDetector'
-import { GestureManager } from './GestureManager'
+import { setGestureState } from './private/GestureDetector'
+import { Emitter } from '../event/Emitter'
+import { TouchEvent } from '../touch/TouchEvent'
+import { View } from '../view/View'
 
 /**
  * @class GestureDetector
@@ -66,6 +67,14 @@ export abstract class GestureDetector extends Emitter {
 		return this[$resolved]
 	}
 
+	/**
+	 * @property duration
+	 * @since 0.7.0
+	 */
+	public get duration(): number {
+		return this[$duration]
+	}
+
 	//--------------------------------------------------------------------------
 	// Methods
 	//--------------------------------------------------------------------------
@@ -75,10 +84,19 @@ export abstract class GestureDetector extends Emitter {
 	 * @since 0.7.0
 	 */
 	constructor(callback: GestureCallback, options: GestureOptions = {}) {
+
 		super()
+
+		let opts = Object.assign(
+			{},
+			OPTIONS,
+			options
+		)
+
+		this.enabled = opts.enabled
+		this.capture = opts.capture
+
 		this[$callback] = callback
-		this.enabled = options.enabled != null ? options.enabled : true
-		this.capture = options.capture != null ? options.capture : false
 	}
 
 	//--------------------------------------------------------------------------
@@ -90,7 +108,7 @@ export abstract class GestureDetector extends Emitter {
 	 * @since 0.7.0
 	 */
 	protected ignore() {
-		return this.setState(State.Ignored)
+		return setGestureState(this, State.Ignored)
 	}
 
 	/**
@@ -98,7 +116,7 @@ export abstract class GestureDetector extends Emitter {
 	 * @since 0.7.0
 	 */
 	protected detect() {
-		return this.setState(State.Detected)
+		return setGestureState(this, State.Detected)
 	}
 
 	/**
@@ -106,7 +124,7 @@ export abstract class GestureDetector extends Emitter {
 	 * @since 0.5.0
 	 */
 	protected update() {
-		return this.setState(State.Updated)
+		return setGestureState(this, State.Updated)
 	}
 
 	/**
@@ -114,7 +132,7 @@ export abstract class GestureDetector extends Emitter {
 	 * @since 0.7.0
 	 */
 	protected finish() {
-		return this.setState(State.Finished)
+		return setGestureState(this, State.Finished)
 	}
 
 	/**
@@ -122,7 +140,7 @@ export abstract class GestureDetector extends Emitter {
 	 * @since 0.5.0
 	 */
 	protected cancel() {
-		return this.setState(State.Canceled)
+		return setGestureState(this, State.Canceled)
 	}
 
 	//--------------------------------------------------------------------------
@@ -226,6 +244,9 @@ export abstract class GestureDetector extends Emitter {
 		this[$state] = State.Allowed
 		this[$captured] = false
 		this[$resolved] = false
+		this[$detected] = -1
+		this[$canceled] = -1
+		this[$finished] = -1
 
 		this.onReset()
 
@@ -265,6 +286,13 @@ export abstract class GestureDetector extends Emitter {
 	private [$resolved]: boolean = false
 
 	/**
+	 * @property $duration
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private [$duration]: number = -1
+
+	/**
 	 * @property $callback
 	 * @since 0.7.0
 	 * @hidden
@@ -272,60 +300,42 @@ export abstract class GestureDetector extends Emitter {
 	private [$callback]: GestureCallback
 
 	/**
-	 * @method setState
+	 * @property $detectTime
 	 * @since 0.7.0
+	 * @hidden
 	 */
-	private setState(state: State) {
+	private [$detected]: number = 0
 
-		if (this.resolved) {
+	/**
+	 * @property $cancelTime
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private [$canceled]: number = 0
 
-			throw new Error(
-				`Gesture error: ` +
-				`This gesture's state cannot be changed until it is reset.`
-			)
+	/**
+	 * @property $finishTime
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private [$finished]: number = 0
+}
 
-		}
-
-		if (this.state > state) {
-
-			throw new Error(
-				`Gesture error: ` +
-				`This gesture's state cannot be changed to a lower value.`
-			)
-
-		}
-
-		if (this.state == state &&
-			this.state != State.Updated) {
-			return this
-		}
-
-		this[$state] = state
-
-		if (state == State.Ignored ||
-			state == State.Canceled ||
-			state == State.Finished) {
-
-			this[$resolved] = true
-
-		} else {
-
-			if (state == State.Updated ||
-				state == State.Detected) {
-				this[$callback].call(null, this)
-			}
-
-		}
-
-		return this
-	}
+/**
+ * @const OPTIONS
+ * @since 0.7.0
+ * @hidden
+ */
+const OPTIONS: Required<GestureOptions> = {
+	enabled: true,
+	capture: false
 }
 
 /**
  * @interface GestureCallback
  * @since 0.7.0
  */
-export type GestureCallback = (gesture: GestureDetector) => void
+export type GestureCallback = (gesture: any) => void
 
 /**
  * @interface GestureOptions

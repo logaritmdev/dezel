@@ -47,12 +47,12 @@ describe('TextView', () => {
 		expect(view.text).toBe('')
 	})
 
-	it('should have a valid initial textAlignment property value', () => {
-		expect(view.textAlignment).toBe('start')
+	it('should have a valid initial textColor property value', () => {
+		expect(view.textColor).toBe('#000')
 	})
 
-	it('should have a valid initial textLocation property value', () => {
-		expect(view.textLocation).toBe('middle')
+	it('should have a valid initial textAlign property value', () => {
+		expect(view.textAlign).toBe('left')
 	})
 
 	it('should have a valid initial textBaseline property value', () => {
@@ -73,14 +73,6 @@ describe('TextView', () => {
 
 	it('should have a valid initial textOverflow property value', () => {
 		expect(view.textOverflow).toBe('ellipsis')
-	})
-
-	it('should have a valid initial textColor property value', () => {
-		expect(view.textColor).toBe('#000')
-	})
-
-	it('should have a valid initial textOpacity property value', () => {
-		expect(view.textOpacity).toBe(1)
 	})
 
 	it('should have a valid initial textShadowBlur property value', () => {

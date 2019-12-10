@@ -20,5 +20,4 @@ describe('SpinnerView', () => {
 	it('should have a valid initial tint property value', () => {
 		expect(view.tint).toBe('#000')
 	})
-
 })

@@ -4,13 +4,12 @@
  * @hidden
  */
 function decorate(prototype: object, property: string) {
-	// TODO
-	// Inherit existing property descriptor
-	const descriptor = Object.getOwnPropertyDescriptor(prototype, property)
-	const getter = descriptor && descriptor.get
-	const setter = descriptor && descriptor.set
 
-	const key = Symbol()
+	let descriptor = Object.getOwnPropertyDescriptor(prototype, property)
+	let getter = descriptor && descriptor.get
+	let setter = descriptor && descriptor.set
+
+	let key = Symbol()
 	// TODO use a has key to detect if the value has been set
 	let get = function (this: any) {
 		return getter ? getter.call(this) : this[key]
@@ -23,7 +22,11 @@ function decorate(prototype: object, property: string) {
 			return
 		}
 
-		this.setState(property, value)
+		if (value) {
+			this.states.append(property)
+		} else {
+			this.states.remove(property)
+		}
 
 		this[key] = value
 	}

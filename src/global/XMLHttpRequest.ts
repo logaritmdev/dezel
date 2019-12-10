@@ -1,4 +1,3 @@
-import { Dictionary } from 'lodash'
 import { bound } from '../decorator/bound'
 import { bridge } from '../native/bridge'
 import { native } from '../native/native'

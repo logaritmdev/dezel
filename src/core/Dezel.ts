@@ -1,7 +1,7 @@
-import { Application } from '../application/Application'
-import { native } from '../native/native'
 import { $classes } from './symbol/Dezel'
 import { $objects } from './symbol/Dezel'
+import { native } from '../native/native'
+import { Application } from '../application/Application'
 
 /**
  * @class Dezel

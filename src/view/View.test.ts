@@ -54,28 +54,8 @@ describe('View', () => {
 		expect(view.backgroundImageFit).toBe('cover')
 	})
 
-	it('should have a valid initial backgroundImageAnchorTop property value', () => {
-		expect(view.backgroundImageAnchorTop).toBe(0.5)
-	})
-
-	it('should have a valid initial backgroundImageAnchorLeft property value', () => {
-		expect(view.backgroundImageAnchorLeft).toBe(0.5)
-	})
-
-	it('should have a valid initial backgroundImageTop property value', () => {
-		expect(view.backgroundImageTop).toBe('50%')
-	})
-
-	it('should have a valid initial backgroundImageLeft property value', () => {
-		expect(view.backgroundImageLeft).toBe('50%')
-	})
-
-	it('should have a valid initial backgroundImageWidth property value', () => {
-		expect(view.backgroundImageWidth).toBe('auto')
-	})
-
-	it('should have a valid initial backgroundImageHeight property value', () => {
-		expect(view.backgroundImageHeight).toBe('auto')
+	it('should have a valid initial backgroundImagePosition property value', () => {
+		expect(view.backgroundImagePosition).toBe('center')
 	})
 
 	it('should have a valid initial border property value', () => {
@@ -366,8 +346,8 @@ describe('View', () => {
 		expect(view.overscroll).toBe('auto')
 	})
 
-	it('should have a valid initial scrollMomentum property value', () => {
-		expect(view.scrollMomentum).toBe(true)
+	it('should have a valid initial scrollInertia property value', () => {
+		expect(view.scrollInertia).toBe(true)
 	})
 
 	it('should have a valid initial scrollTop property value', () => {

@@ -1,8 +1,8 @@
+import { bridge } from '../native/bridge'
+import { native } from '../native/native'
 import { Emitter } from '../event/Emitter'
 import { Event } from '../event/Event'
 import { Image } from '../graphic/Image'
-import { bridge } from '../native/bridge'
-import { native } from '../native/native'
 
 @bridge('dezel.dialog.AlertButton')
 
@@ -50,11 +50,19 @@ export class AlertButton extends Emitter {
 	 * @since 0.1.0
 	 */
 	constructor(options: AlertButtonOptions) {
+
 		super()
-		this.id = options.id || 'ok'
-		this.image = options.image || null
-		this.label = options.label || 'OK'
-		this.style = options.style || 'normal'
+
+		let opts = Object.assign(
+			{},
+			OPTIONS,
+			options
+		)
+
+		this.id = opts.id
+		this.image = opts.image
+		this.label = opts.label
+		this.style = opts.style
 	}
 
 	//--------------------------------------------------------------------------
@@ -101,12 +109,24 @@ export class AlertButton extends Emitter {
 }
 
 /**
+ * @const OPTIONS
+ * @since 0.7.0
+ * @hidden
+ */
+const OPTIONS: Required<AlertButtonOptions> = {
+	id: 'ok',
+	label: 'OK',
+	image: null,
+	style: 'normal'
+}
+
+/**
  * @interface AlertButtonOptions
  * @since 0.1.0
  */
 export interface AlertButtonOptions {
 	id?: string
 	label?: string
-	image?: string | Image
+	image?: string | Image | null
 	style?: 'normal' | 'cancel' | 'destructive'
 }

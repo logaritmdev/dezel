@@ -3,6 +3,9 @@
 
 import './global'
 
+
+
+
 export { Dezel } from './core/Dezel'
 
 export { Device } from './device/Device'
@@ -19,9 +22,6 @@ export { Header } from './layout/Header'
 export { Footer } from './layout/Footer'
 export { Content } from './layout/Content'
 
-export { ScreenDismissGesture } from './screen/ScreenDismissGesture'
-//export { ScreenSlideDismissGesture } from './screen/ScreenSlideDismissGesture'
-
 export { ScreenBeforeEnterEvent } from './screen/Screen'
 export { ScreenBeforeLeaveEvent } from './screen/Screen'
 export { ScreenEnterEvent } from './screen/Screen'
@@ -34,12 +34,17 @@ export { ScreenDismissEvent } from './screen/Screen'
 // export { SwitcherSelectEvent } from './screen/ScreenSwitcher'
 // export { SwitcherDeselectEvent } from './screen/ScreenSwitcher'
 
-export { ScreenTransition } from './screen/ScreenTransition'
-export { ScreenTransitionRegistry } from './screen/ScreenTransitionRegistry'
-export { ScreenNoneTransition } from './screen/ScreenTransition.None'
-export { ScreenFadeTransition } from './screen/ScreenTransition.Fade'
-export { ScreenSlideTransition } from './screen/ScreenTransition.Slide'
-export { ScreenCoverTransition } from './screen/ScreenTransition.Cover'
+/*
+ * Segues
+ */
+
+export { Segue } from './screen/Segue'
+export { NoneSegue } from './screen/Segue.None'
+export { FadeSegue } from './screen/Segue.Fade'
+export { SlideSegue } from './screen/Segue.Slide'
+export { CoverSegue } from './screen/Segue.Cover'
+
+export { SegueRegistry } from './screen/SegueRegistry'
 
 export { Root } from './component/Root'
 export { Slot } from './component/Slot'
@@ -67,8 +72,8 @@ export { TabBarDeselectEvent } from './component/TabBar'
 export { TabBarButton } from './component/TabBarButton'
 export { Spinner } from './component/Spinner'
 
-export { DataSource } from './data/DataSource'
-export { DataSourceOptions } from './data/DataSource'
+export { Data } from './data/Data'
+export { DataOptions } from './data/Data'
 
 export { bridge } from './native/bridge'
 export { native } from './native/native'

@@ -1,21 +1,22 @@
+import { $children } from './symbol/View'
+import { $gestures } from './symbol/View'
+import { $states } from './symbol/View'
+import { $styles } from './symbol/View'
 import { setEmitterResponder } from '../event/private/Emitter'
-import { Emitter } from '../event/Emitter'
-import { Event } from '../event/Event'
-import { GestureManager } from '../gesture/GestureManager'
-import { Canvas } from '../graphic/Canvas'
-import { Image } from '../graphic/Image'
+import { setValueOf } from '../jsx/symbol/createElement'
 import { bridge } from '../native/bridge'
 import { native } from '../native/native'
-import { TouchEvent } from '../touch/TouchEvent'
 import { getClassName } from './private/View'
 import { insertItem } from './private/View'
 import { insertView } from './private/View'
 import { removeItem } from './private/View'
 import { removeView } from './private/View'
-import { $children } from './symbol/View'
-import { $gestures } from './symbol/View'
-import { $states } from './symbol/View'
-import { $styles } from './symbol/View'
+import { Emitter } from '../event/Emitter'
+import { Event } from '../event/Event'
+import { GestureManager } from '../gesture/GestureManager'
+import { Canvas } from '../graphic/Canvas'
+import { Image } from '../graphic/Image'
+import { TouchEvent } from '../touch/TouchEvent'
 import { Placeholder } from './Placeholder'
 import { StateList } from './StateList'
 import { StyleList } from './StyleList'
@@ -195,49 +196,13 @@ export class View extends Emitter {
 	 * @property backgroundImageFit
 	 * @since 0.4.0
 	 */
-	@native public backgroundImageFit!: 'fit' | 'fill' | 'none'
+	@native public backgroundImageFit!: 'contain' | 'cover'
 
 	/**
-	 * @property backgroundImageAnchorTop
-	 * @since 0.1.0
-	 */
-	@native public backgroundImageAnchorTop!: 'top' | 'center' | 'bottom' | number | string
-
-	/**
-	 * @property backgroundImageAnchorLeft
-	 * @since 0.1.0
-	 */
-	@native public backgroundImageAnchorLeft!: 'left' | 'center' | 'right' | number | string
-
-	/**
-	 * @property backgroundImageTop
-	 * @since 0.1.0
-	 */
-	@native public backgroundImageTop!: number | string
-
-	/**
-	 * @property backgroundImageLeft
-	 * @since 0.1.0
-	 */
-	@native public backgroundImageLeft!: number | string
-
-	/**
-	 * @property backgroundImageWidth
-	 * @since 0.1.0
-	 */
-	@native public backgroundImageWidth!: 'auto' | number
-
-	/**
-	 * @property backgroundImageHeight
-	 * @since 0.1.0
-	 */
-	@native public backgroundImageHeight!: 'auto' | number
-
-	/**
-	 * @property backgroundImageTint
+	 * @property backgroundImagePosition
 	 * @since 0.7.0
 	 */
-	@native public backgroundImageTint!: string | 'none'
+	@native public backgroundImagePosition!: 'top left' | 'top right' | 'top center' | 'left' | 'right' | 'center' | 'bottom left' | 'bottom right' | 'bottom center'
 
 	/**
 	 * @property border
@@ -894,10 +859,10 @@ export class View extends Emitter {
 	@native public scrollLeft!: number
 
 	/**
-	 * @property scrollMomentum
+	 * @property scrollInertia
 	 * @since 0.1.0
 	 */
-	@native public scrollMomentum!: boolean
+	@native public scrollInertia!: boolean
 
 	/**
 	 * @property scrolling
@@ -1166,6 +1131,12 @@ export class View extends Emitter {
 	 */
 	public insert(child: View | Placeholder, index: number) {
 
+		if (child == this) {
+			throw new Error(`
+				View error: Cannot insert inself as a child view.
+			`)
+		}
+
 		if (child instanceof Placeholder) {
 			child.embed(this, index)
 			return this
@@ -1218,7 +1189,7 @@ export class View extends Emitter {
 			return this
 		}
 
-		this.insert(this, index + 1)
+		this.insert(child, index + 1)
 
 		return this
 	}
@@ -1729,13 +1700,16 @@ export class View extends Emitter {
 
 	}
 
+	//--------------------------------------------------------------------------
+	// Internal API
+	//--------------------------------------------------------------------------
+
 	/**
-	 * @method setDefaultValue
-	 * @since 0.4.0
+	 * @property setValueOf
+	 * @since 0.7.0
 	 */
-	public setDefaultValue(value: string | number | boolean) {
-		// TODO
-		// Rename coherce something
+	public [setValueOf] = function (value: number | string | boolean) {
+
 	}
 
 	//--------------------------------------------------------------------------

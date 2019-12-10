@@ -1,6 +1,6 @@
-import { Event } from '../event/Event'
 import { bridge } from '../native/bridge'
 import { native } from '../native/native'
+import { Event } from '../event/Event'
 import { View } from './View'
 
 @bridge('dezel.view.WebView')

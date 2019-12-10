@@ -21,36 +21,8 @@ describe('ImageView', () => {
 		expect(view.imageFit).toBe('contain')
 	})
 
-	it('should have a valid initial imageAnchorTop property value', () => {
-		expect(view.imageAnchorTop).toBe(0.5)
-	})
-
-	it('should have a valid initial imageAnchorLeft property value', () => {
-		expect(view.imageAnchorLeft).toBe(0.5)
-	})
-
-	it('should have a valid initial imageTop property value', () => {
-		expect(view.imageTop).toBe('50%')
-	})
-
-	it('should have a valid initial imageLeft property value', () => {
-		expect(view.imageLeft).toBe('50%')
-	})
-
-	it('should have a valid initial imageWidth property value', () => {
-		expect(view.imageWidth).toBe('auto')
-	})
-
-	it('should have a valid initial imageHeight property value', () => {
-		expect(view.imageHeight).toBe('auto')
-	})
-
-	it('should have a valid initial imageFilter property value', () => {
-		expect(view.imageFilter).toBe('none')
-	})
-
-	it('should have a valid initial imageOpacity property value', () => {
-		expect(view.imageOpacity).toBe(1)
+	it('should have a valid initial imagePosition property value', () => {
+		expect(view.imagePosition).toBe('center')
 	})
 
 	it('should have a valid initial tint property value', () => {

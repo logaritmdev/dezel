@@ -1,5 +1,5 @@
-import { native } from '../native/native'
 import { $view } from './symbol/StateList'
+import { native } from '../native/native'
 import { View } from './View'
 
 /**

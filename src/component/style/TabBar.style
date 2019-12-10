@@ -4,6 +4,6 @@ TabBar {
 	border-top-width: thin;
 	content-direction: horizontal;
 	content-disposition: center;
-	height: 60px + $safe-area-bottom-inset;
+	height: add(60px, $safe-area-bottom-inset);
 	padding-bottom: $safe-area-bottom-inset;
 }

@@ -1,11 +1,10 @@
-import { Touch } from '../touch/Touch'
-import { TouchEvent } from '../touch/TouchEvent'
-import { View } from '../view/View'
+import { $gestures } from './symbol/GestureManager'
+import { $view } from './symbol/GestureManager'
 import { setGestureView } from './private/GestureDetector'
 import { insertItem } from './private/GestureManager'
 import { removeItem } from './private/GestureManager'
-import { $gestures } from './symbol/GestureManager'
-import { $view } from './symbol/GestureManager'
+import { TouchEvent } from '../touch/TouchEvent'
+import { View } from '../view/View'
 import { GestureDetector } from './GestureDetector'
 import { State } from './GestureDetector'
 
@@ -54,12 +53,9 @@ export class GestureManager {
 	public append(gesture: GestureDetector) {
 
 		if (gesture.view) {
-
 			throw new Error(
-				`Gesture error: ` +
-				`This gesture has already been registered to another view.`
+				`Gesture error: This gesture has already been added to another view.`
 			)
-
 		}
 
 		let index = this.gestures.indexOf(gesture)
@@ -107,7 +103,6 @@ export class GestureManager {
 	public onTouchEvent(event: TouchEvent) {
 
 		if (event.canceled) {
-			console.log('Stopped here')
 			return this
 		}
 
@@ -118,10 +113,8 @@ export class GestureManager {
 				gesture.resolved == false
 			)
 		})
-		console.log('WAT', captured)
 
 		if (captured) {
-
 			captured.dispatchTouchEvent(event)
 
 		} else {
@@ -130,7 +123,6 @@ export class GestureManager {
 
 				if (gesture.resolved ||
 					gesture.enabled == false) {
-					console.log('continue here', gesture.resolved, gesture.enabled)
 					continue
 				}
 

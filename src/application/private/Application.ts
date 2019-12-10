@@ -1,4 +1,4 @@
-import { Dictionary } from 'lodash'
+import { setEventTarget } from '../../event/private/Event'
 import { setTouchCanceled } from '../../touch/private/Touch'
 import { setTouchCaptured } from '../../touch/private/Touch'
 import { setTouchId } from '../../touch/private/Touch'
@@ -11,6 +11,7 @@ import { TouchEvent } from '../../touch/TouchEvent'
 import { TouchList } from '../../touch/TouchList'
 import { View } from '../../view/View'
 import { $touches } from '../symbol/Application'
+import { Emitter } from '../..'
 import { Application } from '../Application'
 import { InputTouch } from '../Application'
 
@@ -32,32 +33,6 @@ export function registerTouch(application: Application, input: InputTouch, touch
 }
 
 /**
- * @method releaseTouch
- * @since 0.7.0
- * @hidden
- */
-export function releaseTouch(application: Application, input: InputTouch) {
-
-	let touch = application[$touches][input.id]
-	if (touch) {
-
-		setTouchTarget(touch, null)
-		setTouchCanceled(touch, false)
-		setTouchCaptured(touch, false)
-		setTouchId(touch, 0)
-		setTouchX(touch, 0)
-		setTouchY(touch, 0)
-
-		delete application[$touches][input.id]
-		return
-	}
-
-	throw new Error(
-		`Application error: Touch ${input.id} has not been registered.`
-	)
-}
-
-/**
  * @function getTouch
  * @since 0.7.0
  * @hidden
@@ -65,7 +40,6 @@ export function releaseTouch(application: Application, input: InputTouch) {
 export function getTouch(application: Application, input: InputTouch) {
 
 	let touch = application[$touches][input.id]
-
 	if (touch &&
 		touch.canceled) {
 		return null
@@ -75,11 +49,11 @@ export function getTouch(application: Application, input: InputTouch) {
 }
 
 /**
- * @function mapTouch
+ * @function mapTarget
  * @since 0.7.0
  * @hidden
  */
-export function mapTouch(touch: Touch, targets: Map<any, any>) {
+export function mapTarget(touch: Touch, targets: Map<any, any>) {
 
 	let changes = targets.get(touch.target)
 	if (changes == null) {
@@ -249,6 +223,20 @@ export function captureTouchMove(event: TouchEvent) {
 		}
 
 		node = next
+	}
+}
+
+/**
+ * @method updateEventTarget
+ * @since 0.7.0
+ * @hidden
+ */
+export function updateEventTarget(event: TouchEvent, target: Emitter) {
+
+	setEventTarget(event, event.sender)
+
+	for (let touch of event.touches) {
+		setTouchTarget(touch, event.sender)
 	}
 }
 

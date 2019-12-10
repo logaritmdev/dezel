@@ -13,7 +13,7 @@ SegmentedBarButton {
 		font-size: 15px;
 		max-lines: 1;
 		text-color: #2e84e2;
-		text-alignment: center;
+		text-align: center;
 		width: wrap;
 	}
 

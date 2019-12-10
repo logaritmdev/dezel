@@ -225,7 +225,7 @@ export class WebSocket extends EventTarget {
 
 	/**
 	 * @method nativeOnConnect
-	 * @sine 0.7.0
+	 * @since 0.7.0
 	 * @hidden
 	 */
 	private nativeOnConnect(protocol: string, extensions: string) {
@@ -245,7 +245,7 @@ export class WebSocket extends EventTarget {
 
 	/**
 	 * @method nativeOnReceiveData
-	 * @sine 0.7.0
+	 * @since 0.7.0
 	 * @hidden
 	 */
 	private nativeOnReceiveData(data: any) {
@@ -254,7 +254,7 @@ export class WebSocket extends EventTarget {
 
 	/**
 	 * @method nativeOnReceiveMessage
-	 * @sine 0.7.0
+	 * @since 0.7.0
 	 * @hidden
 	 */
 	private nativeOnReceiveMessage(message: string) {
@@ -268,7 +268,7 @@ export class WebSocket extends EventTarget {
 
 	/**
 	 * @method nativeOnClose
-	 * @sine 0.7.0
+	 * @since 0.7.0
 	 * @hidden
 	 */
 	private nativeOnDisconnect() {
@@ -277,7 +277,7 @@ export class WebSocket extends EventTarget {
 
 	/**
 	 * @method nativeOnError
-	 * @sine 0.7.0
+	 * @since 0.7.0
 	 * @hidden
 	 */
 	private nativeOnError() {

@@ -2,9 +2,9 @@ import { getComponent } from '../component/private/Component'
 import { renderComponent } from '../component/private/Component'
 import { setComponentSlot } from '../component/private/Component'
 import { Component } from '../component/Component'
-import { Root } from '../component/Root'
 import { Slot } from '../component/Slot'
 import { View } from '../view/View'
+import { setValueOf } from './symbol/createElement'
 
 /**
  * @function createElement
@@ -13,12 +13,7 @@ import { View } from '../view/View'
  */
 export function createElement(Type: any, properties: any, ...children: Array<View>) {
 
-	let node = create(Type, properties)
-
-	if (node instanceof Root) {
-		node.reset(children)
-		return node
-	}
+	let node = new Type()
 
 	if (node instanceof Component) {
 		renderComponent(node)
@@ -42,51 +37,30 @@ export function createElement(Type: any, properties: any, ...children: Array<Vie
 				continue
 			}
 
-			assign(node, key, properties[key])
+			if (key == 'ref') {
+				properties[key].set(node)
+				continue
+			}
+
+			setValue(node, key, properties[key])
 		}
 	}
 
-	append(node, children)
+	if (node.onCompose) {
+
+		for (let child of children) {
+			node.onCompose(child)
+		}
+
+		return children
+
+	} else {
+
+		append(node, children)
+
+	}
 
 	return node
-}
-
-/**
- * @const create
- * @since 0.5.0
- * @hidden
- */
-function create(Type: any, properties: any) {
-
-	if (Type == null) {
-
-		throw new Error(
-			`JSX error: ` +
-			`Unable to create element, type is null.`
-		)
-
-	}
-
-	if (properties == null ||
-		properties.init == null) {
-		return new Type()
-	}
-
-	let args = properties.init
-
-	switch (typeof args) {
-
-		case 'number':
-		case 'string':
-		case 'boolean':
-			args = [args]
-			break
-
-		case 'object':
-			args = args && Object.values(args) || []
-	}
-
-	return new Type(...args)
 }
 
 /**
@@ -150,11 +124,11 @@ function setStates(view: View, ...states: Array<string>) {
 }
 
 /**
- * @function set
- * @since 0.4.0
+ * @function setValue
+ * @since 0.7.0
  * @hidden
  */
-function assign(view: any, key: string, value: any) {
+function setValue(view: any, key: string, value: any) {
 
 	let type = typeof value
 
@@ -167,11 +141,9 @@ function assign(view: any, key: string, value: any) {
 	if (event) {
 
 		let type = key.substring(2).toLowerCase()
-		if (type == '') {
-			return
+		if (type) {
+			view.on(type, value)
 		}
-
-		view.on(type, value)
 
 		return
 	}
@@ -186,15 +158,19 @@ function assign(view: any, key: string, value: any) {
 			break
 	}
 
-	let coherse = primitive || value instanceof Array
-	// TODO
-	// Finish this
-	if (coherse) {
+	if (primitive) {
+
 		let receiver = view[key]
-		if (receiver &&
-			receiver.setDefaultValue) {
-			let handled = receiver.setDefaultValue(value)
-			if (handled) {
+
+		/*
+		 * Allow primitive values to be assigned to object for convenience. In
+		 * this case it will invoke the setValueOf symbol of the object with
+		 * the primitive value
+		 */
+
+		if (receiver && typeof receiver == 'object') {
+			if (receiver[setValueOf]) {
+				receiver[setValueOf].call(receiver, value)
 				return
 			}
 		}

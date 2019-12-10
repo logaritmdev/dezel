@@ -1,13 +1,13 @@
 import { Screen } from './Screen'
-import { ScreenTransition } from './ScreenTransition'
-import { ScreenTransitionRegistry } from './ScreenTransitionRegistry'
+import { Segue } from './Segue'
+import { SegueRegistry } from './SegueRegistry'
 
 /**
- * @class ScreenFadeTransition
- * @super ScreenTransition
- * @since 0.2.0
+ * @class FadeSegue
+ * @super Segue
+ * @since 0.7.0
  */
-export class ScreenFadeTransition extends ScreenTransition {
+export class FadeSegue extends Segue {
 
 	//--------------------------------------------------------------------------
 	// Methods
@@ -15,7 +15,7 @@ export class ScreenFadeTransition extends ScreenTransition {
 
 	/**
 	 * @method onBeforePresent
-	 * @since 0.2.0
+	 * @since 0.7.0
 	 */
 	protected onBeforePresent(enter?: Screen, leave?: Screen) {
 		if (enter) enter.opacity = 0
@@ -24,7 +24,7 @@ export class ScreenFadeTransition extends ScreenTransition {
 
 	/**
 	 * @method onPresent
-	 * @since 0.2.0
+	 * @since 0.7.0
 	 */
 	protected onPresent(enter?: Screen, leave?: Screen) {
 		return Promise.resolve()
@@ -34,7 +34,7 @@ export class ScreenFadeTransition extends ScreenTransition {
 
 	/**
 	 * @method onBeforeDismiss
-	 * @since 0.2.0
+	 * @since 0.7.0
 	 */
 	protected onBeforeDismiss(enter?: Screen, leave?: Screen) {
 		if (enter) enter.opacity = 0
@@ -43,7 +43,7 @@ export class ScreenFadeTransition extends ScreenTransition {
 
 	/**
 	 * @method onDismiss
-	 * @since 0.2.0
+	 * @since 0.7.0
 	 */
 	protected onDismiss(enter?: Screen, leave?: Screen) {
 		return Promise.resolve()
@@ -53,7 +53,7 @@ export class ScreenFadeTransition extends ScreenTransition {
 
 	/**
 	 * @method onAfterPresent
-	 * @since 0.2.0
+	 * @since 0.7.0
 	 */
 	protected onAfterPresent(enter?: Screen, leave?: Screen) {
 		if (enter) enter.opacity = 1
@@ -62,7 +62,7 @@ export class ScreenFadeTransition extends ScreenTransition {
 
 	/**
 	 * @method onAfterDismiss
-	 * @since 0.2.0
+	 * @since 0.7.0
 	 */
 	protected onAfterDismiss(enter?: Screen, leave?: Screen) {
 		if (enter) enter.opacity = 1
@@ -70,4 +70,4 @@ export class ScreenFadeTransition extends ScreenTransition {
 	}
 }
 
-ScreenTransitionRegistry.set('fade', ScreenFadeTransition)
+SegueRegistry.set('fade', FadeSegue)

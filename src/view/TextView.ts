@@ -1,3 +1,4 @@
+import { setValueOf } from '../jsx/symbol/createElement'
 import { bridge } from '../native/bridge'
 import { native } from '../native/native'
 import { View } from './View'
@@ -58,16 +59,16 @@ export class TextView extends View {
 	@native public text!: string
 
 	/**
-	 * @property textAlignment
+	 * @property textColor
 	 * @since 0.1.0
 	 */
-	@native public textAlignment!: 'start' | 'end' | 'left' | 'right' | 'center'
+	@native public textColor!: string
 
 	/**
-	 * @property textLocation
-	 * @since 0.7.0
+	 * @property textAlign
+	 * @since 0.1.0
 	 */
-	@native public textLocation!: 'top' | 'middle' | 'bottom'
+	@native public textAlign!: 'top left' | 'top right' | 'top center' | 'left' | 'right' | 'center' | 'bottom left' | 'bottom right' | 'bottom center'
 
 	/**
 	 * @property textBaseline
@@ -110,18 +111,6 @@ export class TextView extends View {
 	 * @since 0.1.0
 	 */
 	@native public textOverflow!: 'clip' | 'ellipsis'
-
-	/**
-	 * @property textColor
-	 * @since 0.1.0
-	 */
-	@native public textColor!: string
-
-	/**
-	 * @property textOpacity
-	 * @since 0.7.0
-	 */
-	@native public textOpacity!: number
 
 	/**
 	 * @property textShadowColor
@@ -182,13 +171,13 @@ export class TextView extends View {
 
 	//--------------------------------------------------------------------------
 	// Internal API
-	//--------------------------------------------------------------------------
+	//------------------------------------------------ --------------------------
 
 	/**
-	 * @method setDefaultValue
-	 * @since 0.4.0
+	 * @property setValueOf
+	 * @since 0.7.0
 	 */
-	public setDefaultValue(value: string | number | boolean) {
+	public [setValueOf] = function (this: TextView, value: number | string | boolean) {
 		this.text = String(value)
 	}
 

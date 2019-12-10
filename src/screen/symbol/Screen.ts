@@ -17,12 +17,6 @@ export const $presentee = Symbol('presentee')
 export const $presented = Symbol('presented')
 
 /**
- * @symbol transition
- * @since 0.7.0
- */
-export const $transition = Symbol('transition')
-
-/**
  * @symbol presenting
  * @since 0.7.0
  */
@@ -35,13 +29,25 @@ export const $presenting = Symbol('presenting')
 export const $dismissing = Symbol('dismissing')
 
 /**
+ * @symbol segue
+ * @since 0.7.0
+ */
+export const $segue = Symbol('segue')
+
+/**
  * @symbol modal
  * @since 0.7.0
  */
 export const $modal = Symbol('modal')
 
 /**
- * @symbol active
+ * @symbol style
  * @since 0.7.0
  */
-export const $active = Symbol('active')
+export const $style = Symbol('style')
+
+/**
+ * @symbol frame
+ * @since 0.7.0
+ */
+export const $frame = Symbol('frame')

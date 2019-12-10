@@ -1,6 +1,7 @@
-import { Image } from '../graphic/Image'
+import { setValueOf } from '../jsx/symbol/createElement'
 import { bridge } from '../native/bridge'
 import { native } from '../native/native'
+import { Image } from '../graphic/Image'
 import { View } from './View'
 
 @bridge('dezel.view.ImageView')
@@ -26,55 +27,13 @@ export class ImageView extends View {
 	 * @property imageFit
 	 * @since 0.4.0
 	 */
-	@native public imageFit!: 'contain' | 'cover' | 'none'
+	@native public imageFit!: 'contain' | 'cover'
 
 	/**
-	 * @property imageAnchorTop
-	 * @since 0.1.0
+	 * @property imagePosition
+	 * @since 0.7.0
 	 */
-	@native public imageAnchorTop!: 'top' | 'center' | 'bottom' | number | string
-
-	/**
-	 * @property imageAnchorLeft
-	 * @since 0.1.0
-	 */
-	@native public imageAnchorLeft!: 'left' | 'center' | 'right' | number | string
-
-	/**
-	 * @property imageTop
-	 * @since 0.1.0
-	 */
-	@native public imageTop!: number | string
-
-	/**
-	 * @property imageLeft
-	 * @since 0.1.0
-	 */
-	@native public imageLeft!: number | string
-
-	/**
-	 * @property imageWidth
-	 * @since 0.1.0
-	 */
-	@native public imageWidth!: 'auto' | number
-
-	/**
-	 * @property imageHeight
-	 * @since 0.1.0
-	 */
-	@native public imageHeight!: 'auto' | number
-
-	/**
-	 * @property imageFilter
-	 * @since 0.5.0
-	 */
-	@native public imageFilter!: 'grayscale' | 'none'
-
-	/**
-	 * @property imageOpacity
-	 * @since 0.5.0
-	 */
-	@native public imageOpacity!: number
+	@native public imagePosition!: 'top left' | 'top right' | 'top center' | 'left' | 'right' | 'center' | 'bottom left' | 'bottom right' | 'bottom center'
 
 	/**
 	 * @property tint
@@ -87,10 +46,10 @@ export class ImageView extends View {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method setDefaultValue
-	 * @since 0.4.0
+	 * @property setValueOf
+	 * @since 0.7.0
 	 */
-	public setDefaultValue(value: string | number | boolean) {
+	public [setValueOf] = function (this: ImageView, value: number | string | boolean) {
 		this.source = String(value)
 	}
 }

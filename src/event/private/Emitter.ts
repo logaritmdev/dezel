@@ -1,9 +1,9 @@
 import { $handler } from '../symbol/Emitter'
 import { $listeners } from '../symbol/Emitter'
 import { $responder } from '../symbol/Emitter'
+import { setEventSender } from './Event'
 import { Emitter } from '../Emitter'
 import { Event } from '../Event'
-import { setEventSender } from './Event'
 
 /**
  * @function setEmitterResponder

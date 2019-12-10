@@ -100,11 +100,18 @@ export class Event<T extends any = any> {
 	 * @since 0.1.0
 	 */
 	constructor(type: string, options: EventOptions<T> = {}) {
+
+		let opts = Object.assign(
+			{},
+			OPTIONS,
+			options
+		)
+
 		this[$type] = type.toLowerCase()
-		this[$data] = options.data || {} as any
-		this[$propagable] = options.propagable != null ? options.propagable : false
-		this[$capturable] = options.capturable != null ? options.capturable : false
-		this[$cancelable] = options.cancelable != null ? options.cancelable : false
+		this[$data] = opts.data
+		this[$propagable] = opts.propagable
+		this[$capturable] = opts.capturable
+		this[$cancelable] = opts.cancelable
 	}
 
 	/**
@@ -119,12 +126,9 @@ export class Event<T extends any = any> {
 		}
 
 		if (this.capturable == false) {
-
 			throw new Error(
-				`Event error: ` +
-				`This event cannot be captured because it is not capturable.`
+				`Event error: This event cannot be captured because it is not capturable.`
 			)
-
 		}
 
 		this[$captured] = true
@@ -145,12 +149,9 @@ export class Event<T extends any = any> {
 		}
 
 		if (this.cancelable == false) {
-
 			throw new Error(
-				`Event error: ` +
-				`This event cannot be canceled because it is not cancelable.`
+				`Event error: This event cannot be canceled because it is not cancelable.`
 			)
-
 		}
 
 		this[$canceled] = true
@@ -246,6 +247,17 @@ export class Event<T extends any = any> {
 	 * @hidden
 	 */
 	private [$data]: T
+}
+
+/**
+ * @const OPTIONS
+ * @since 0.9.0
+ */
+const OPTIONS: Required<EventOptions> = {
+	propagable: false,
+	cancelable: false,
+	capturable: false,
+	data: {} as any
 }
 
 /**

@@ -37,8 +37,7 @@ export class Reference<T extends View | Placeholder> {
 		}
 
 		throw new Error(
-			`Reference error: ` +
-			`Reference has already been set.`
+			`Reference error: Reference has already been set.`
 		)
 	}
 
@@ -49,16 +48,13 @@ export class Reference<T extends View | Placeholder> {
 	public get(): T {
 
 		let value = this[$value]
-		if (value == null) {
-
-			throw new Error(
-				`Reference error: ` +
-				`Unable to return a null reference.`
-			)
-
+		if (value != null) {
+			return value
 		}
 
-		return value
+		throw new Error(
+			`Reference error: Unable to return a null reference.`
+		)
 	}
 
 	//--------------------------------------------------------------------------

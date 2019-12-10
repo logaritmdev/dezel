@@ -66,9 +66,11 @@ export function renderComponent(component: Component) {
 
 	let host = component.render()
 	if (host) {
-		host.children.forEach(child => {
+
+		for (let child of host.children) {
 			component.append(child)
-		})
+		}
+
 	}
 
 	component.emit('render')
@@ -86,12 +88,9 @@ export function pushComponent(component: Component) {
 
 	let current = getComponent()
 	if (current == component) {
-
 		throw new Error(
-			`Component error: ` +
-			`Component ${component.constructor.name} is already being rendered.`
+			`Component error: Component is already being rendered.`
 		)
-
 	}
 
 	renderComponentStack.push(component)
@@ -107,8 +106,7 @@ export function pullComponent(component: Component) {
 	let current = getComponent()
 	if (current != component) {
 		throw new Error(
-			`Component error: ` +
-			`Component ${component.constructor.name} is not being rendered.`
+			`Component error: Component is not being rendered.`
 		)
 	}
 
@@ -133,8 +131,7 @@ export function setComponentSlot(component: Component, slot: Slot) {
 
 	if (slot.name == '') {
 		throw new Error(
-			`Component error: ` +
-			`Component ${component.constructor.name} received a slot with an empty name.`
+			`Component error: Component received a slot with an empty name.`
 		)
 	}
 
@@ -143,8 +140,7 @@ export function setComponentSlot(component: Component, slot: Slot) {
 	} else {
 
 		throw new Error(
-			`Component error: ` +
-			`Component ${component.constructor.name} already have a slot named ${slot.name}.`
+			`Component error: Component already have a slot named ${slot.name}.`
 		)
 
 	}
@@ -156,8 +152,7 @@ export function setComponentSlot(component: Component, slot: Slot) {
 		} else {
 
 			throw new Error(
-				`Component error: ` +
-				`Component ${component.constructor.name} already have a main slot.`
+				`Component error: Component already have a main slot.`
 			)
 
 		}

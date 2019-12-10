@@ -1,38 +1,45 @@
 import '../index'
-import { Dictionary } from 'lodash'
-import { setEventTarget } from '../event/private/Event'
-import { setScreenActive } from '../screen/private/Screen'
+import { $frame } from '../screen/symbol/Screen'
+import { $screen } from './symbol/Application'
+import { $touches } from './symbol/Application'
+import { watch } from '../decorator/watch'
+import { bridge } from '../native/bridge'
+import { native } from '../native/native'
+import { createScreenFrame } from '../screen/private/Screen'
+import { emitBeforeEnter } from '../screen/private/Screen'
+import { emitBeforePresent } from '../screen/private/Screen'
+import { emitEnter } from '../screen/private/Screen'
+import { emitPresent } from '../screen/private/Screen'
+import { getScreenSegue } from '../screen/private/Screen'
 import { setScreenPresented } from '../screen/private/Screen'
+import { setScreenSegue } from '../screen/private/Screen'
+import { setTouchCanceled } from '../touch/private/Touch'
+import { setTouchCaptured } from '../touch/private/Touch'
 import { setTouchId } from '../touch/private/Touch'
 import { setTouchTarget } from '../touch/private/Touch'
 import { setTouchX } from '../touch/private/Touch'
 import { setTouchY } from '../touch/private/Touch'
-import { watch } from '../decorator/watch'
-import { Emitter } from '../event/Emitter'
-import { Event } from '../event/Event'
-import { EventListener } from '../event/Event'
-import { EventOptions } from '../event/Event'
-import { bridge } from '../native/bridge'
-import { native } from '../native/native'
-import { Enclosure } from '../screen/Enclosure'
-import { Screen } from '../screen/Screen'
-import { Touch } from '../touch/Touch'
-import { TouchEvent } from '../touch/TouchEvent'
-import { View } from '../view/View'
-import { Window } from '../view/Window'
 import { cancelTouchMove } from './private/Application'
 import { cancelTouchStart } from './private/Application'
 import { captureTouchMove } from './private/Application'
 import { captureTouchStart } from './private/Application'
 import { getTouch } from './private/Application'
-import { mapTouch } from './private/Application'
+import { mapTarget } from './private/Application'
 import { registerTouch } from './private/Application'
-import { releaseTouch } from './private/Application'
 import { toActiveTouchList } from './private/Application'
 import { toTargetTouchList } from './private/Application'
 import { toTouchList } from './private/Application'
+import { updateEventTarget } from './private/Application'
 import { updateInputTouches } from './private/Application'
-import { $touches } from './symbol/Application'
+import { Emitter } from '../event/Emitter'
+import { Event } from '../event/Event'
+import { Frame } from '../screen/Frame'
+import { Screen } from '../screen/Screen'
+import { NoneSegue } from '../screen/Segue.None'
+import { Touch } from '../touch/Touch'
+import { TouchEvent } from '../touch/TouchEvent'
+import { View } from '../view/View'
+import { Window } from '../view/Window'
 
 @bridge('dezel.application.Application')
 
@@ -97,9 +104,19 @@ export class Application extends Emitter {
 
 	/**
 	 * @property screen
-	 * @since 0.3.0
+	 * @since 0.1.0
 	 */
-	@watch public screen: Screen | null = null
+	public get screen(): Screen {
+
+		let screen = this[$screen]
+		if (screen == null) {
+			throw new Error(`
+				Application error: The application has no screen, did to forget to call present() ?
+			`)
+		}
+
+		return screen
+	}
 
 	//--------------------------------------------------------------------------
 	// Methods
@@ -126,12 +143,49 @@ export class Application extends Emitter {
 	}
 
 	/**
+	 * @method present
+	 * @since 0.7.0
+	 */
+	public present(screen: Screen) {
+
+		if (this[$screen]) {
+			throw new Error(`
+				Application error: The application already has a screen.
+			`)
+		}
+
+		createScreenFrame(screen)
+
+		this.window.append(screen[$frame]!)
+
+		screen.updateStatusBar()
+
+		let segue = new NoneSegue()
+
+		setScreenSegue(screen, segue)
+
+		emitBeforePresent(screen, segue)
+		emitBeforeEnter(screen, segue)
+		emitPresent(screen, segue)
+		emitEnter(screen, segue)
+
+		setScreenPresented(screen, true)
+
+		return this
+	}
+
+	/**
 	 * @method destroy
 	 * @since 0.2.0
 	 */
 	public destroy() {
+
 		this.emit('destroy')
-		this.window.destroy()
+
+		if (this.window) {
+			this.window.destroy()
+		}
+
 		return this
 	}
 
@@ -145,7 +199,7 @@ export class Application extends Emitter {
 	}
 
 	//--------------------------------------------------------------------------
-	// Touches
+	// Internal API
 	//--------------------------------------------------------------------------
 
 	/**
@@ -155,6 +209,12 @@ export class Application extends Emitter {
 	public dispatchTouchStart(inputs: Array<InputTouch>) {
 
 		let targets = new Map()
+
+		/*
+		 * Registers the new touches, find and assign their target and map
+		 * these touches by target so each group of touches with the same
+		 * target will become an event.
+		 */
 
 		for (let input of inputs) {
 
@@ -169,14 +229,19 @@ export class Application extends Emitter {
 
 			let touch = new Touch(target)
 
+			setTouchId(touch, input.id)
 			setTouchX(touch, input.x)
 			setTouchY(touch, input.y)
-			setTouchId(touch, input.id)
-
-			mapTouch(touch, targets)
+			mapTarget(touch, targets)
 
 			registerTouch(this, input, touch)
 		}
+
+		/*
+		 * Dispatches a touchstart event for each group of touches in the
+		 * same target. Updates the touch data on the native side if the
+		 * event has been captured or canceled.
+		 */
 
 		for (let [target, touches] of targets) {
 
@@ -201,10 +266,15 @@ export class Application extends Emitter {
 					case event.captured: captureTouchStart(event); break
 				}
 
-				setEventTarget(event, event.sender)
+				/*
+				 * When captured, all subsequents touch events will be sent
+				 * directly to the target that captured the touch and no one
+				 * else. Update the event target to ensure the next touch
+				 * events are sent to this new target.
+				 */
 
-				for (let touch of event.touches) {
-					setTouchTarget(touch, event.sender)
+				if (event.captured) {
+					updateEventTarget(event, event.sender)
 				}
 			}
 		}
@@ -220,6 +290,12 @@ export class Application extends Emitter {
 
 		let targets = new Map<View, Array<Touch>>()
 
+		/*
+		 * Update the touches position for each inputs. Map these touches by
+		 * targets so each group of touches with the same target will become
+		 * an event.
+		 */
+
 		for (let input of inputs) {
 
 			let touch = getTouch(this, input)
@@ -229,9 +305,14 @@ export class Application extends Emitter {
 
 			setTouchX(touch, input.x)
 			setTouchY(touch, input.y)
-
-			mapTouch(touch, targets)
+			mapTarget(touch, targets)
 		}
+
+		/*
+		 * Dispatches a touchmove event for each group of touches in the
+		 * same target. Updates the touch data on the native side if the
+		 * event has been captured or canceled.
+		 */
 
 		for (let [target, touches] of targets) {
 
@@ -260,10 +341,15 @@ export class Application extends Emitter {
 					case event.captured: captureTouchMove(event); break
 				}
 
-				setEventTarget(event, event.sender)
+				/*
+				 * When captured, all subsequents touch events will be sent
+				 * directly to the target that captured the touch and no one
+				 * else. Update the event target to ensure the next touch
+				 * events are sent to this new target.
+				 */
 
-				for (let touch of event.touches) {
-					setTouchTarget(touch, event.sender)
+				if (event.captured) {
+					updateEventTarget(event, event.sender)
 				}
 			}
 		}
@@ -279,6 +365,14 @@ export class Application extends Emitter {
 
 		let targets = new Map<View, Array<Touch>>()
 
+		/*
+		 * Update the touches position for each inputs. Map these touches by
+		 * targets so each group of touches with the same target will become
+		 * an event.
+		 */
+
+		let ended: Array<Touch> = []
+
 		for (let input of inputs) {
 
 			let touch = getTouch(this, input)
@@ -288,9 +382,18 @@ export class Application extends Emitter {
 
 			setTouchX(touch, input.x)
 			setTouchY(touch, input.y)
+			mapTarget(touch, targets)
 
-			mapTouch(touch, targets)
+			ended.push(touch)
+
+			delete this[$touches][input.id]
 		}
+
+		/*
+		 * Dispatches a touchend event for each group of touches in the
+		 * same target then reset each touches in case they were stored
+		 * elsewhere.
+		 */
 
 		for (let [target, touches] of targets) {
 
@@ -310,8 +413,18 @@ export class Application extends Emitter {
 			target.emit(event)
 		}
 
-		for (let input of inputs) {
-			releaseTouch(this, input)
+		/*
+		 * Reset the touches that were ended just in case the're stored
+		 * somewhere else.
+		 */
+
+		for (let touch of ended) {
+			setTouchTarget(touch, null)
+			setTouchCanceled(touch, false)
+			setTouchCaptured(touch, false)
+			setTouchId(touch, 0)
+			setTouchX(touch, 0)
+			setTouchY(touch, 0)
 		}
 
 		return this
@@ -325,6 +438,14 @@ export class Application extends Emitter {
 
 		let targets = new Map<View, Array<Touch>>()
 
+		/*
+		 * Update the touches position for each inputs. Map these touches by
+		 * targets so each group of touches with the same target will become
+		 * an event.
+		 */
+
+		let ended: Array<Touch> = []
+
 		for (let input of inputs) {
 
 			let touch = getTouch(this, input)
@@ -334,9 +455,16 @@ export class Application extends Emitter {
 
 			setTouchX(touch, input.x)
 			setTouchY(touch, input.y)
+			mapTarget(touch, targets)
 
-			mapTouch(touch, targets)
+			ended.push(touch)
 		}
+
+		/*
+		 * Dispatches a touchend event for each group of touches in the
+		 * same target then reset each touches in case they were stored
+		 * elsewhere.
+		 */
 
 		for (let [target, touches] of targets) {
 
@@ -356,8 +484,18 @@ export class Application extends Emitter {
 			target.emit(event)
 		}
 
-		for (let input of inputs) {
-			releaseTouch(this, input)
+		/*
+		 * Reset the touches that were ended just in case the're stored
+		 * somewhere else.
+		 */
+
+		for (let touch of ended) {
+			setTouchTarget(touch, null)
+			setTouchCanceled(touch, false)
+			setTouchCaptured(touch, false)
+			setTouchId(touch, 0)
+			setTouchX(touch, 0)
+			setTouchY(touch, 0)
 		}
 
 		return this
@@ -511,66 +649,16 @@ export class Application extends Emitter {
 
 	}
 
-	/**
-	 * @method onPropertyChange
-	 * @since 0.4.0
-	 */
-	protected onPropertyChange(property: string, newValue: any, oldValue: any) {
-
-		if (property == 'screen') {
-
-			let newScreen = newValue as Screen
-			let oldScreen = oldValue as Screen
-
-			if (oldScreen) {
-
-				let enclosure = newScreen.enclosure
-				if (enclosure == null) {
-
-					throw new Error(
-						`Application error: ` +
-						`The screen is missing its enclosure.`
-					)
-
-				}
-
-				this.window.remove(enclosure)
-
-				oldScreen.emit('beforedismiss')
-				oldScreen.emit('beforeleave')
-				oldScreen.emit('dismiss')
-				oldScreen.emit('leave')
-
-				oldScreen.destroy()
-			}
-
-			if (newScreen) {
-
-				let enclosure = newScreen.enclosure
-				if (enclosure == null) {
-					enclosure = new Enclosure(newScreen)
-				}
-
-				this.window.append(enclosure)
-
-				this.statusBarVisible = newScreen.statusBarVisible
-				this.statusBarForegroundColor = newScreen.statusBarForegroundColor
-				this.statusBarBackgroundColor = newScreen.statusBarBackgroundColor
-
-				newScreen.emit('beforepresent')
-				newScreen.emit('beforeenter')
-				newScreen.emit('present')
-				newScreen.emit('enter')
-
-				setScreenActive(newScreen, true)
-				setScreenPresented(newScreen, true)
-			}
-		}
-	}
-
 	//--------------------------------------------------------------------------
 	// Private API
 	//--------------------------------------------------------------------------
+
+	/**
+	 * @property $screen
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private [$screen]: Screen | null
 
 	/**
 	 * @property $touches
@@ -582,6 +670,15 @@ export class Application extends Emitter {
 	//--------------------------------------------------------------------------
 	// Native API
 	//--------------------------------------------------------------------------
+
+	/**
+	 * @method nativeOnCreate
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private nativeOnCreate() {
+		this.emit('create')
+	}
 
 	/**
 	 * @method nativeOnDestroy

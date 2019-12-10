@@ -1,8 +1,5 @@
-import { clamp } from 'lodash'
 import { bound } from '../decorator/bound'
-import { watch } from '../decorator/watch'
 import { Event } from '../event/Event'
-import { Locale } from '../locale/Locale'
 import { Reference } from '../view/Reference'
 import { View } from '../view/View'
 import { Component } from './Component'
@@ -95,7 +92,7 @@ export class NavigationBar extends Component {
 	 * @hidden
 	 */
 	@bound private onTitleContainerBeforeLayout(event: Event) {
-
+		/*
 		if (this.title == null) {
 			return
 		}
@@ -143,5 +140,6 @@ export class NavigationBar extends Component {
 		if (titleW > frameW) {
 			this.title.width = frameW
 		}
+		*/
 	}
 }

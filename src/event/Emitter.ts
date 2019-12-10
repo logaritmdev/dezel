@@ -1,11 +1,10 @@
-import { Dictionary } from 'lodash'
+import { $listeners } from './symbol/Emitter'
+import { $responder } from './symbol/Emitter'
 import { dispatchEvent } from './private/Emitter'
 import { insertEventListener } from './private/Emitter'
 import { removeEventListener } from './private/Emitter'
 import { setEventSender } from './private/Event'
 import { setEventTarget } from './private/Event'
-import { $listeners } from './symbol/Emitter'
-import { $responder } from './symbol/Emitter'
 import { Event } from './Event'
 import { EventListener } from './Event'
 import { EventListeners } from './Event'
@@ -78,12 +77,18 @@ export class Emitter {
 
 		if (typeof event == 'string') {
 
-			event = new Event<T>(event, {
-				propagable: options.propagable,
-				cancelable: options.cancelable,
-				data: options.data
-			})
+			let opts = Object.assign(
+				{},
+				OPTIONS,
+				options
+			)
 
+			event = new Event<T>(event, {
+				propagable: opts.propagable,
+				cancelable: opts.cancelable,
+				capturable: opts.capturable,
+				data: opts.data
+			})
 		}
 
 		setEventTarget(event, this)
@@ -119,4 +124,15 @@ export class Emitter {
 	 * @hidden
 	 */
 	private [$listeners]: Dictionary<EventListeners> = {}
+}
+
+/**
+ * @const OPTIONS
+ * @since 0.9.0
+ */
+const OPTIONS: Required<EventOptions> = {
+	propagable: false,
+	cancelable: false,
+	capturable: false,
+	data: {} as any
 }
