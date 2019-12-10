@@ -63,6 +63,7 @@
 		C72FF045204E190500FBB36B /* ShapeLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72FF044204E190500FBB36B /* ShapeLayer.swift */; };
 		C732E78820865116006014A0 /* JavaScriptGlobalModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C732E78720865116006014A0 /* JavaScriptGlobalModule.swift */; };
 		C73AE5E82399816A00B7C12C /* CABasicAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C73AE5E72399816A00B7C12C /* CABasicAnimation.swift */; };
+		C73AE5EA239D1E5600B7C12C /* JavaScriptRecycler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C73AE5E9239D1E5600B7C12C /* JavaScriptRecycler.swift */; };
 		C7429F842375104900A29FB7 /* PropertyRef.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7429F822375104900A29FB7 /* PropertyRef.cpp */; };
 		C7429F852375104900A29FB7 /* PropertyRef.h in Headers */ = {isa = PBXBuildFile; fileRef = C7429F832375104900A29FB7 /* PropertyRef.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C7429F8E237B9A2400A29FB7 /* Matches.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7429F8C237B9A2400A29FB7 /* Matches.cpp */; };
@@ -398,6 +399,7 @@
 		C72FF044204E190500FBB36B /* ShapeLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShapeLayer.swift; sourceTree = "<group>"; };
 		C732E78720865116006014A0 /* JavaScriptGlobalModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptGlobalModule.swift; sourceTree = "<group>"; };
 		C73AE5E72399816A00B7C12C /* CABasicAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CABasicAnimation.swift; sourceTree = "<group>"; };
+		C73AE5E9239D1E5600B7C12C /* JavaScriptRecycler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptRecycler.swift; sourceTree = "<group>"; };
 		C7429F822375104900A29FB7 /* PropertyRef.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PropertyRef.cpp; path = ../../../../../shared/display/PropertyRef.cpp; sourceTree = "<group>"; };
 		C7429F832375104900A29FB7 /* PropertyRef.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PropertyRef.h; path = ../../../../../shared/display/PropertyRef.h; sourceTree = "<group>"; };
 		C7429F8C237B9A2400A29FB7 /* Matches.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Matches.cpp; path = ../../../../../shared/display/style/Matches.cpp; sourceTree = "<group>"; };
@@ -793,6 +795,7 @@
 				C767544C2028DB7B003C4D85 /* JavaScriptView.swift */,
 				C71E6CBB20DD4EE1009B86F6 /* JavaScriptWebView.swift */,
 				C7B9CEAE202CDBD8002409D5 /* JavaScriptWindow.swift */,
+				C73AE5E9239D1E5600B7C12C /* JavaScriptRecycler.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1799,6 +1802,7 @@
 				C7FCA0F82311B48200AFBDB6 /* JavaScriptPropertyValue.swift in Sources */,
 				C767542420269971003C4D85 /* BorderLayer.swift in Sources */,
 				C7FFB4D5204B2313000D888E /* View.swift in Sources */,
+				C73AE5EA239D1E5600B7C12C /* JavaScriptRecycler.swift in Sources */,
 				C75153B922EBA05C007CAA48 /* NSData.swift in Sources */,
 				C7A2C2BB2373C75000219BA5 /* Match.cpp in Sources */,
 				C71E6CBC20DD4EE1009B86F6 /* JavaScriptWebView.swift in Sources */,

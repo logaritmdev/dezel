@@ -41,14 +41,14 @@ open class JavaScriptTextView: JavaScriptView, TextViewObserver {
 	 * @method measure
 	 * @since 0.7.0
 	 */
-	override open func measure(in bounds: CGSize, min: CGSize, max: CGSize) -> CGSize {
+	override open func measure(bounds: CGSize, min: CGSize, max: CGSize) -> CGSize {
 
 		if (self.invalidFontSize) {
 			self.invalidFontSize = false
 			self.updateFontSize()
 		}
 
-		return self.view.measure(in: bounds, min: min, max: max)
+		return self.view.measure(bounds: bounds, min: min, max: max)
 	}
 
 	/**
@@ -343,7 +343,7 @@ open class JavaScriptTextView: JavaScriptView, TextViewObserver {
 	 * @property textAlign
 	 * @since 0.7.0
 	 */
-	@objc lazy var textAlign = JavaScriptProperty(string: "start") { value in
+	@objc lazy var textAlign = JavaScriptProperty(string: "left") { value in
 		self.view.textAlign = self.getTextAlign(value.string)
 	}
 

@@ -407,7 +407,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @method measure
 	 * @since 0.7.0
 	 */
-	open func measure(in bounds: CGSize, min: CGSize, max: CGSize) -> CGSize? {
+	open func measure(bounds: CGSize, min: CGSize, max: CGSize) -> CGSize? {
 		return nil
 	}
 
@@ -1122,7 +1122,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @since 0.7.0
 	 */
 	open func measure(node: DisplayNode, bounds: CGSize, min: CGSize, max: CGSize) -> CGSize? {
-		return self.measure(in: bounds, min: min, max: max)
+		return self.measure(bounds: bounds, min: min, max: max)
 	}
 
 	/**
@@ -5896,7 +5896,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 		if (callback.arguments < 1) {
 			fatalError("Method JavaScriptView.appendState() requires 1 argument.")
 		}
-
+	
 		self.node.appendState(callback.argument(0).string)
 	}
 

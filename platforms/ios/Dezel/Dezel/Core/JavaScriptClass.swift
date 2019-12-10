@@ -462,7 +462,7 @@ open class JavaScriptClass: JavaScriptObject {
      * @since 0.1.0
      * @hidden
      */
-	@objc func jsFunction_constructor(callback: JavaScriptFunctionCallback) {
+	@objc open func jsFunction_constructor(callback: JavaScriptFunctionCallback) {
 
 		if (callback.arguments == 0) {
 

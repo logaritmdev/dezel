@@ -149,7 +149,7 @@ open class ImageView: UIView, Updatable, Clippable, TransitionListener {
 	 * @method measure
 	 * @since 0.7.0
 	 */
-	open func measure(in bounds: CGSize, min: CGSize, max: CGSize) -> CGSize {
+	open func measure(bounds: CGSize, min: CGSize, max: CGSize) -> CGSize {
 
 		guard let image = self.image else {
 			return .zero

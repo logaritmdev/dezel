@@ -368,7 +368,7 @@ open class TextLayer: Layer {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	public func measure(in size: CGSize, min: CGSize, max: CGSize) -> CGSize {
+	public func measure(size: CGSize, min: CGSize, max: CGSize) -> CGSize {
 
 		if (self.text.length == 0) {
 			return .zero

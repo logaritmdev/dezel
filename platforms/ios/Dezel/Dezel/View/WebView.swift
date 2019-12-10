@@ -328,7 +328,7 @@ public class WebView: WKWebView, WKNavigationDelegate, UIScrollViewDelegate, Scr
 	 * @method measure
 	 * @since 0.7.0
 	 */
-	open func measure(in bounds: CGSize, min: CGSize, max: CGSize) -> CGSize {
+	open func measure(bounds: CGSize, min: CGSize, max: CGSize) -> CGSize {
 		return self.scrollView.contentSize.clamp(min: min, max: max)
 	}
 

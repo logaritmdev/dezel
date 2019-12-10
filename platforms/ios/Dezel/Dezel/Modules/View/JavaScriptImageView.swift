@@ -41,8 +41,8 @@ open class JavaScriptImageView: JavaScriptView {
 	 * @method measure
 	 * @since 0.7.0
 	 */
-	override open func measure(in bounds: CGSize, min: CGSize, max: CGSize) -> CGSize {
-		return self.view.measure(in: bounds, min: min, max: max)
+	override open func measure(bounds: CGSize, min: CGSize, max: CGSize) -> CGSize {
+		return self.view.measure(bounds: bounds, min: min, max: max)
 	}
 
 	/**

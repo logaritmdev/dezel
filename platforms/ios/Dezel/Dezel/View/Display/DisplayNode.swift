@@ -253,6 +253,7 @@ open class DisplayNode {
 
 		DisplayNodeSetDisplay(self.handle, display.handle)
 
+		DisplayNodeSetInvalidateCallback(self.handle, displayNodeInvalidateCallback)
 		DisplayNodeSetResolveSizeCallback(self.handle, displayNodeResolveSizeCallback)
 		DisplayNodeSetResolveOriginCallback(self.handle, displayNodeResolveOriginCallback)
 		DisplayNodeSetResolveInnerSizeCallback(self.handle, displayNodeResolveInnerSizeCallback)
@@ -1789,16 +1790,22 @@ open class DisplayNode {
 	 * @since 0.7.0
 	 */
 	internal func update(name: String, property: PropertyRef?) {
-		self.delegate?.resolve(node: self, property: name)?.reset(PropertyGetValues(property))
+		if let prop = self.delegate?.resolve(node: self, property: name)  {
+			if (property == nil) {
+				prop.reset(lock: nil, initial: true)
+			} else {
+				prop.reset(PropertyGetValues(property))
+			}
+ 		}
 	}
 }
 
 /**
- * @const displayNodeDidInvalidateCallback
+ * @const displayNodeInvalidateCallback
  * @since 0.7.0
  * @hidden
  */
-private let displayNodeDidInvalidateCallback: @convention(c) (DisplayNodeRef?) -> Void = { ptr in
+private let displayNodeInvalidateCallback: @convention(c) (DisplayNodeRef?) -> Void = { ptr in
 	if let node = DisplayNodeGetData(ptr).value as? DisplayNode {
 		node.didInvalidate()
 	}

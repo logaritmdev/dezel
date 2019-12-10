@@ -336,7 +336,7 @@ open class TextView: UIView, Updatable, Clippable, TransitionListener {
 	 * @method measure
 	 * @since 0.7.0
 	 */
-	open func measure(in bounds: CGSize, min: CGSize, max: CGSize) -> CGSize {
+	open func measure(bounds: CGSize, min: CGSize, max: CGSize) -> CGSize {
 
 		let paddingT = self.paddingTop
 		let paddingL = self.paddingLeft
@@ -364,7 +364,7 @@ open class TextView: UIView, Updatable, Clippable, TransitionListener {
 			}
 		}
 
-		return self.textLayer.measure(in: frame, min: min, max: max)
+		return self.textLayer.measure(size: frame, min: min, max: max)
 	}
 
 	/**

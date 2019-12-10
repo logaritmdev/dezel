@@ -184,6 +184,7 @@ open class ApplicationController: UIViewController, StylesheetDelegate {
 
 		application.window.width.reset(Double(UIScreen.main.bounds.width), unit: .px, lock: self)
 		application.window.height.reset(Double(UIScreen.main.bounds.height), unit: .px, lock: self)
+		application.callMethod("nativeOnCreate")
 
 		self.view.addSubview(application.window)
 	}
@@ -263,6 +264,7 @@ open class ApplicationController: UIViewController, StylesheetDelegate {
 
 			application.window.width.reset(Double(UIScreen.main.bounds.width), unit: .px, lock: self)
 			application.window.height.reset(Double(UIScreen.main.bounds.height), unit: .px, lock: self)
+			application.callMethod("nativeOnCreate")
 
 			self.view.addSubview(application.window)
 		}

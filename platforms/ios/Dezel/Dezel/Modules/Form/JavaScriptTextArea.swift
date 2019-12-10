@@ -104,7 +104,7 @@ open class JavaScriptTextArea: JavaScriptView, TextAreaObserver {
 	 * @method measure
 	 * @since 0.7.0
 	 */
-	override open func measure(in bounds: CGSize, min: CGSize, max: CGSize) -> CGSize {
+	override open func measure(bounds: CGSize, min: CGSize, max: CGSize) -> CGSize {
 
 		if (self.invalidFontSize) {
 			self.invalidFontSize = false
@@ -389,7 +389,7 @@ open class JavaScriptTextArea: JavaScriptView, TextAreaObserver {
 	 * @property textAlign
 	 * @since 0.7.0
 	 */
-	@objc lazy var textAlign = JavaScriptProperty(string: "start") { value in
+	@objc lazy var textAlign = JavaScriptProperty(string: "left") { value in
 		self.view.textAlign = self.getTextAlign(value.string)
 	}
 
