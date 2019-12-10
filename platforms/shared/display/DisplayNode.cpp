@@ -428,6 +428,7 @@ DisplayNode::invalidate()
 	if (this->invalid == false) {
 		this->invalid = true;
 		this->display->invalidate();
+		this->didInvalidate();
 	}
 }
 
@@ -553,7 +554,7 @@ DisplayNode::invalidateParent()
 
 		while (node != nullptr) {
 
-			node = parent;
+			node = node->parent;
 
 			if (node) {
 
@@ -636,12 +637,12 @@ DisplayNode::inheritsWrappedWidth()
 
 		while (node) {
 
-			if (width.type == kSizeTypeFill) {
+			if (node->width.type == kSizeTypeFill) {
 				node = node->parent;
 				continue;
 			}
 
-			if (width.type == kSizeTypeWrap) {
+			if (node->width.type == kSizeTypeWrap) {
 				return true;
 			}
 
@@ -678,12 +679,12 @@ DisplayNode::inheritsWrappedHeight()
 
 		while (node) {
 
-			if (height.type == kSizeTypeFill) {
+			if (node->height.type == kSizeTypeFill) {
 				node = node->parent;
 				continue;
 			}
 
-			if (height.type == kSizeTypeWrap) {
+			if (node->height.type == kSizeTypeWrap) {
 				return true;
 			}
 

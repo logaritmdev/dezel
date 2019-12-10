@@ -39,6 +39,8 @@ LayoutResolver::resolve() {
 			continue;
 		}
 
+		child->resolveTraits();
+
 		child->inheritedWrappedContentWidth = child->inheritsWrappedWidth();
 		child->inheritedWrappedContentHeight = child->inheritsWrappedHeight();
 

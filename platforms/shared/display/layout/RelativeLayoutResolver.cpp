@@ -347,7 +347,7 @@ RelativeLayoutResolver::measure(DisplayNode* child, double &remainingW, double &
 	}
 
 	if (wrapW || wrapH) {
-
+	
 		child->resolveWrapper(measuredW, measuredH);
 
 	} else {
