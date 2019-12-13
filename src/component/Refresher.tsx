@@ -2,9 +2,9 @@ import { bound } from '../decorator/bound'
 import { state } from '../decorator/state'
 import { watch } from '../decorator/watch'
 import { Event } from '../event/Event'
+import { Touch } from '../event/Touch'
+import { TouchEvent } from '../event/TouchEvent'
 import { Platform } from '../platform/Platform'
-import { Touch } from '../touch/Touch'
-import { TouchEvent } from '../touch/TouchEvent'
 import { Reference } from '../view/Reference'
 import { View } from '../view/View'
 import { Component } from './Component'
@@ -102,7 +102,7 @@ export class Refresher extends Component {
 	 * @since 0.4.0
 	 * @hidden
 	 */
-	protected onPropertyChange(property: string, newValue: any, oldValue: any) {
+	public onPropertyChange(property: string, newValue: any, oldValue: any) {
 
 		if (property == 'view') {
 

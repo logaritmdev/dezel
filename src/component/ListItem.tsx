@@ -1,5 +1,5 @@
 import { state } from '../decorator/state'
-import { TouchEvent } from '../touch/TouchEvent'
+import { TouchEvent } from '../event/TouchEvent'
 import { View } from '../view/View'
 import { Component } from './Component'
 import './style/ListItem.style'
@@ -18,24 +18,28 @@ export abstract class ListItem extends Component {
 	//--------------------------------------------------------------------------
 
 	/**
+	 * Whether the list item is selectable.
 	 * @property selectable
 	 * @since 0.4.0
 	 */
-	public selectable: boolean = true
+	@state public selectable: boolean = true
 
 	/**
+	 * Whether the list item is pressed.
 	 * @property pressed
 	 * @since 0.1.0
 	 */
 	@state public pressed: boolean = false
 
 	/**
+	 * Whether the list item is selected.
 	 * @property selected
 	 * @since 0.1.0
 	 */
 	@state public selected: boolean = false
 
 	/**
+	 * Whether the list item is disabled.
 	 * @property disabled
 	 * @since 0.1.0
 	 */
@@ -46,6 +50,7 @@ export abstract class ListItem extends Component {
 	//--------------------------------------------------------------------------
 
 	/**
+	 * @inherited
 	 * @method render
 	 * @since 0.7.0
 	 */
@@ -58,20 +63,22 @@ export abstract class ListItem extends Component {
 	//--------------------------------------------------------------------------
 
 	/**
+	 * @inherited
 	 * @method onTouchStart
 	 * @since 0.1.0
 	 */
-	protected onTouchStart(event: TouchEvent) {
+	public onTouchStart(event: TouchEvent) {
 		if (this.pressed == false && this.disabled == false && this.selectable) {
 			this.pressed = true
 		}
 	}
 
 	/**
+	 * @inherited
 	 * @method onTouchEnd
 	 * @since 0.1.0
 	 */
-	protected onTouchEnd(event: TouchEvent) {
+	public onTouchEnd(event: TouchEvent) {
 		if (this.pressed && event.targetTouches.length == 0) {
 			this.pressed = false
 			this.press(event)
@@ -79,10 +86,11 @@ export abstract class ListItem extends Component {
 	}
 
 	/**
+	 * @inherited
 	 * @method onTouchCancel
 	 * @since 0.1.0
 	 */
-	protected onTouchCancel(event: TouchEvent) {
+	public onTouchCancel(event: TouchEvent) {
 		if (this.pressed && event.targetTouches.length == 0) {
 			this.pressed = false
 		}
@@ -99,10 +107,13 @@ export abstract class ListItem extends Component {
 	 */
 	private press(event?: TouchEvent) {
 
+		/*
+		TODO
 		if (event &&
 			event.hits(this) == false) {
 			return
 		}
+		*/
 
 		this.emit('press')
 	}

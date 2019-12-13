@@ -1,5 +1,5 @@
-import { setEmitterResponder } from './private/Emitter'
-import { $listeners } from './symbol/Emitter'
+import { $listeners } from './private/Emitter'
+import { $responder } from './private/Emitter'
 import { Emitter } from './Emitter'
 import { Event } from './Event'
 
@@ -274,9 +274,9 @@ function getListeners(emitter: Emitter, type: string) {
 
 function setResponders(emitter: Emitter, responders: Array<Emitter>) {
 
-	setEmitterResponder(emitter, responders[0])
+	emitter[$responder] = responders[0]
 
 	for (let i = 0; i < responders.length - 1; i++) {
-		setEmitterResponder(responders[i], responders[i + 1])
+		responders[i][$responder] = responders[i + 1]
 	}
 }

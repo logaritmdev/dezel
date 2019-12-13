@@ -1,6 +1,19 @@
-import { $gestures } from '../symbol/GestureManager'
 import { GestureDetector } from '../GestureDetector'
 import { GestureManager } from '../GestureManager'
+
+/**
+ * @symbol view
+ * @since 0.7.0
+ * @hidden
+ */
+export const $view = Symbol('view')
+
+/**
+ * @symbol gestures
+ * @since 0.7.0
+ * @hidden
+ */
+export const $gestures = Symbol('gestures')
 
 /**
  * @function insertItem

@@ -17,7 +17,7 @@ class RevealSegue extends Segue {
 	 * @method onBeforePresent
 	 * @since 0.7.0
 	 */
-	protected onBeforePresent(enter?: Screen, leave?: Screen) {
+	public onBeforePresent(enter?: Screen, leave?: Screen) {
 
 	}
 
@@ -25,7 +25,7 @@ class RevealSegue extends Segue {
 	 * @method onPresent
 	 * @since 0.7.0
 	 */
-	protected onPresent(enter?: Screen, leave?: Screen) {
+	public onPresent(enter?: Screen, leave?: Screen) {
 		if (enter) enter.translationY = '0%'
 	}
 
@@ -33,7 +33,7 @@ class RevealSegue extends Segue {
 	 * @method onBeforeDismiss
 	 * @since 0.7.0
 	 */
-	protected onBeforeDismiss(enter?: Screen, leave?: Screen) {
+	public onBeforeDismiss(enter?: Screen, leave?: Screen) {
 		if (leave) leave.translationY = '0%'
 	}
 
@@ -41,7 +41,7 @@ class RevealSegue extends Segue {
 	 * @method onDismiss
 	 * @since 0.7.0
 	 */
-	protected onDismiss(enter?: Screen, leave?: Screen) {
+	public onDismiss(enter?: Screen, leave?: Screen) {
 		if (leave) leave.translationY = '100%'
 	}
 
@@ -49,7 +49,7 @@ class RevealSegue extends Segue {
 	 * @method onAfterPresent
 	 * @since 0.7.0
 	 */
-	protected onAfterPresent(enter?: Screen, leave?: Screen) {
+	public onAfterPresent(enter?: Screen, leave?: Screen) {
 		if (enter) enter.translationY = 0
 		if (leave) leave.translationY = 0
 	}
@@ -58,7 +58,7 @@ class RevealSegue extends Segue {
 	 * @method onAfterDismiss
 	 * @since 0.7.0
 	 */
-	protected onAfterDismiss(enter?: Screen, leave?: Screen) {
+	public onAfterDismiss(enter?: Screen, leave?: Screen) {
 		if (enter) enter.translationY = 0
 		if (leave) leave.translationY = 0
 	}

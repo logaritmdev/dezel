@@ -1,4 +1,4 @@
-import { $view } from './symbol/StateList'
+import { $view } from './private/StateList'
 import { native } from '../native/native'
 import { View } from './View'
 

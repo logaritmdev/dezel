@@ -1,4 +1,4 @@
-import { $view } from './symbol/StyleList'
+import { $view } from './private/StyleList'
 import { native } from '../native/native'
 import { View } from './View'
 

@@ -1,16 +1,6 @@
-import { $dismissing } from '../symbol/Screen'
-import { $frame } from '../symbol/Screen'
-import { $modal } from '../symbol/Screen'
-import { $presented } from '../symbol/Screen'
-import { $presentee } from '../symbol/Screen'
-import { $presenter } from '../symbol/Screen'
-import { $presenting } from '../symbol/Screen'
-import { $segue } from '../symbol/Screen'
-import { $style } from '../symbol/Screen'
-import { $screen } from '../symbol/Segue'
+import { $screen } from './Segue'
 import { getCurrentScreen } from '../../view/private/Window'
 import { getRegisteredSegue } from './Segue'
-import { setSegueScreen } from './Segue'
 import { Frame } from '../Frame'
 import { Screen } from '../Screen'
 import { ScreenBeforeDismissEvent } from '../Screen'
@@ -25,254 +15,164 @@ import { ScreenPresentOptions } from '../Screen'
 import { Segue } from '../Segue'
 
 /**
- * @function setScreenPresenter
+ * @symbol presenter
  * @since 0.7.0
  * @hidden
  */
-export function setScreenPresenter(screen: Screen, presenter: Screen | null) {
-	screen[$presenter] = presenter
-}
+export const $presenter = Symbol('presenter')
 
 /**
- * @function setScreenPresentee
+ * @symbol presentee
  * @since 0.7.0
- * @hidden
  */
-export function setScreenPresentee(screen: Screen, presentee: Screen | null) {
-	screen[$presentee] = presentee
-}
+export const $presentee = Symbol('presentee')
 
 /**
- * @function setScreenPresented
+ * @symbol presented
  * @since 0.7.0
  * @hidden
  */
-export function setScreenPresented(screen: Screen, presented: boolean) {
-	screen[$presented] = presented
-}
+export const $presented = Symbol('presented')
 
 /**
- * @function setScreenPresenting
+ * @symbol presenting
  * @since 0.7.0
  * @hidden
  */
-export function setScreenPresenting(screen: Screen, presenting: boolean) {
-	screen[$presenting] = presenting
-}
+export const $presenting = Symbol('presenting')
 
 /**
- * @function setScreenDismissing
+ * @symbol dismissing
  * @since 0.7.0
  * @hidden
  */
-export function setScreenDismissing(screen: Screen, dismissing: boolean) {
-	screen[$dismissing] = dismissing
-}
+export const $dismissing = Symbol('dismissing')
 
 /**
- * @function setScreenSegue
+ * @symbol segue
  * @since 0.7.0
  * @hidden
  */
-export function setScreenSegue(screen: Screen, segue: Segue | null) {
-	screen[$segue] = segue
-}
+export const $segue = Symbol('segue')
 
 /**
- * @function setScreenModal
+ * @symbol modal
  * @since 0.7.0
  * @hidden
  */
-export function setScreenModal(screen: Screen, modal: boolean) {
-	screen[$modal] = modal
-}
+export const $modal = Symbol('modal')
 
 /**
- * @function setScreenStyle
+ * @symbol style
  * @since 0.7.0
  * @hidden
  */
-export function setScreenStyle(screen: Screen, style: 'normal' | 'overlay') {
-	screen[$style] = style
-}
+export const $style = Symbol('style')
 
 /**
- * @function isScreenModal
+ * @symbol frame
  * @since 0.7.0
  * @hidden
  */
-export function isScreenModal(screen: Screen) {
+export const $frame = Symbol('frame')
+
+/**
+ * @function isModal
+ * @since 0.7.0
+ * @hidden
+ */
+export function isModal(screen: Screen) {
 	return screen[$modal]
 }
 
 /**
- * @function isScreenOverlay
+ * @function isOverlay
  * @since 0.7.0
  * @hidden
  */
-export function isScreenOverlay(screen: Screen) {
+export function isOverlay(screen: Screen) {
 	return screen[$style] == 'overlay'
 }
 
 /**
- * @function isScreenPopover
+ * @function isPopover
  * @since 0.7.0
  * @hidden
  */
-export function isScreenPopover(screen: Screen) {
+export function isPopover(screen: Screen) {
 	return screen[$style] == 'popover'
 }
 
+
 /**
- * @function getScreenSegue
+ * @function getSegue
  * @since 0.7.0
  * @hidden
  */
-export function getScreenSegue(screen: Screen, segue: Segue | string | null) {
+export function getSegue(screen: Screen, segue: Segue | string | null) {
 	return typeof segue == 'string' ? getRegisteredSegue(segue) : segue
 }
 
 /**
- * @function getScreenPresentSegue
+ * @function getPresentSegue
  * @since 0.7.0
  * @hidden
  */
-export function getScreenPresentSegue(screen: Screen, using: Segue | string | null) {
+export function getPresentSegue(screen: Screen, using: Segue | string | null) {
 
-	let segue = getScreenSegue(screen, using) || screen.segue
-	if (segue) {
-
-		/*
-		 * The segue does not need to be configured if he's already bound
-		 * to a screen.
-		 */
-
-		if (segue.screen == screen) {
-			return segue
-		}
-
-		/*
-		 * It's possible to assign a segue that is used by a screen. Throw an
-		 * error immediately to prevent undefined behavior.
-		 */
-
-		if (segue.screen) {
-			throw new Error(
-				`Screen error: This segue is already bound to a screen.`
-			)
-		}
-
-		setSegueScreen(segue, screen)
-
-		segue.configure()
-
-		return segue
-	}
-
-	throw new Error(
-		`Screen error: This screen does not have a segue.`
-	)
-}
-
-/**
- * @function getScreenDismissSegue
- * @since 0.7.0
- * @hidden
- */
-export function getScreenDismissSegue(screen: Screen, using: Segue | string | null) {
-
-	let segue = getScreenSegue(screen, using) || screen.segue
-	if (segue) {
-
-		/*
-		 * The segue does not need to be configured if he's already bound
-		 * to a screen.
-		 */
-
-		if (segue.screen == screen) {
-			return segue
-		}
-
-		/*
-		 * It's possible to assign a segue that is used by a screen. Throw an
-		 * error immediately to prevent undefined behavior.
-		 */
-
-		if (segue.screen) {
-			throw new Error(
-				`Screen error: This segue is already bound to a screen.`
-			)
-		}
-
-		setSegueScreen(segue, screen)
-
-		segue.configure()
-
-		return segue
-	}
-
-	throw new Error(
-		`Screen error: This screen does not have a segue.`
-	)
-}
-
-/**
- * @function getScreenDismissTarget
- * @since 0.7.0
- * @hidden
- */
-export function getScreenDismissTarget(screen: Screen): Screen {
-	return screen.presentee ? getScreenDismissTarget(screen.presentee) : screen
-}
-
-/**
- * @method createScreenFrame
- * @since 0.7.0
- * @hidden
- */
-export function createScreenFrame(screen: Screen) {
-	if (screen[$frame] == null) {
-		screen[$frame] = new Frame(screen)
-	}
-}
-
-/**
- * @method removeScreenFrame
- * @since 0.7.0
- * @hidden
- */
-export function removeScreenFrame(screen: Screen) {
-	screen[$frame]?.removeFromParent()
-}
-
-/**
- * @method destroyScreenFrame
- * @since 0.7.0
- * @hidden
- */
-export function destroyScreenFrame(screen: Screen) {
-	screen[$frame]?.destroy()
-	screen[$frame] = null
-}
-
-/**
- * @method destroyFrame
- * @since 0.7.0
- * @hidden
- */
-export function destroyScreenSegue(screen: Screen) {
-
-	let segue = screen[$segue]
+	let segue = getSegue(screen, using) || screen.segue
 	if (segue == null) {
-		return
+		throw new Error(`Screen error: This screen does not have a segue.`)
 	}
 
-	segue.dispose()
+	if (segue.screen == screen) {
+		return segue
+	}
 
-	setSegueScreen(segue, null)
+	/*
+	 * It's possible to assign a segue that is used by a screen. Throw an
+	 * error immediately to prevent undefined behavior.
+	 */
 
-	screen[$segue] = null
+	if (segue.screen) {
+		throw new Error(`Screen error: This segue is already bound to a screen.`)
+	}
+
+	segue[$screen] = screen
+	segue.configure()
+
+	return segue
 }
+
+/**
+ * @function getDismissSegue
+ * @since 0.7.0
+ * @hidden
+ */
+export function getDismissSegue(screen: Screen, using: Segue | string | null) {
+
+	let segue = getSegue(screen, using) || screen.segue
+	if (segue == null) {
+		throw new Error(`Screen error: This screen does not have a segue.`)
+	}
+
+	if (segue.screen == screen) {
+		return segue
+	}
+
+	if (segue.screen) {
+		throw new Error(`Screen error: This segue is already bound to a screen.`)
+	}
+
+	segue[$screen] = screen
+	segue.configure()
+
+	return segue
+
+}
+
+
+
 
 /**
  * @method insertScreen
@@ -340,13 +240,10 @@ export async function presentScreen(screen: Screen, target: Screen, segue: Segue
 		let presentedScreen = target
 		let dismissedScreen = screen
 
-		setScreenPresentee(presenterScreen, presentedScreen)
-		setScreenPresenter(presentedScreen, presenterScreen)
+		presenterScreen[$presentee] = presentedScreen
+		presentedScreen[$presenter] = presenterScreen
 
-		createScreenFrame(presentedScreen)
-
-		let modal = isScreenModal(presentedScreen)
-
+		let modal = isModal(presentedScreen)
 		if (modal) {
 			dismissedScreen = getCurrentScreen(window)
 		}
@@ -361,7 +258,7 @@ export async function presentScreen(screen: Screen, target: Screen, segue: Segue
 		presentedScreen.visible = true
 		presentedScreen.resolve()
 
-		segue.invokeBeforePresent(
+		segue.onBeforePresent(
 			presentedScreen,
 			dismissedScreen
 		)
@@ -377,21 +274,21 @@ export async function presentScreen(screen: Screen, target: Screen, segue: Segue
 			dismissedScreen
 		)
 
-		segue.invokeAfterPresent(
+		segue.onAfterPresent(
 			presentedScreen,
 			dismissedScreen
 		)
 
-		dismissedScreen.visible = isScreenOverlay(presentedScreen) ? false : false
+		dismissedScreen.visible = isOverlay(presentedScreen)
 
 		await emitLeave(dismissedScreen, segue)
 		await emitPresent(presentedScreen, segue)
 		await emitEnter(presentedScreen, segue)
 
-		setScreenPresented(presentedScreen, true)
-		setScreenPresented(dismissedScreen, false)
-		setScreenPresenting(presentedScreen, false)
-		setScreenDismissing(dismissedScreen, false)
+		presentedScreen[$presented] = true
+		dismissedScreen[$presented] = false
+		presentedScreen[$presenting] = false
+		dismissedScreen[$presenting] = false
 
 		window.touchable = true
 
@@ -415,16 +312,14 @@ export async function dismissScreen(screen: Screen, target: Screen, segue: Segue
 
 		window.touchable = false
 
-		target = getScreenDismissTarget(target)
+		target = getDismissTarget(target)
 
 		let dismisserScreen = screen
 		let dismissedScreen = target
 		let presentedScreen = screen.presenter
 
 		if (presentedScreen == null) {
-			throw new Error(
-				`Screen error: This screen has no presenter screen.`
-			)
+			throw new Error(`Screen error: This screen has no presenter screen.`)
 		}
 
 		let destroy = options.destroy || false
@@ -432,7 +327,7 @@ export async function dismissScreen(screen: Screen, target: Screen, segue: Segue
 		presentedScreen.visible = true
 		presentedScreen.resolve()
 
-		segue.invokeBeforeDismiss(
+		segue.onBeforeDismiss(
 			presentedScreen,
 			dismissedScreen
 		)
@@ -455,7 +350,7 @@ export async function dismissScreen(screen: Screen, target: Screen, segue: Segue
 			dismissedScreen
 		)
 
-		segue.invokeAfterDismiss(
+		segue.onAfterDismiss(
 			presentedScreen,
 			dismissedScreen
 		)
@@ -484,10 +379,10 @@ export async function dismissScreen(screen: Screen, target: Screen, segue: Segue
 			destroy
 		)
 
-		setScreenPresented(presentedScreen, true)
-		setScreenPresented(dismissedScreen, false)
-		setScreenPresenting(presentedScreen, false)
-		setScreenDismissing(dismissedScreen, false)
+		presentedScreen[$presented] = true
+		dismissedScreen[$presented] = false
+		presentedScreen[$presenting] = false
+		dismissedScreen[$presenting] = false
 
 		dismissedScreen.emit('exit')
 
@@ -501,13 +396,22 @@ export async function dismissScreen(screen: Screen, target: Screen, segue: Segue
 }
 
 /**
+ * @function getDismissTarget
+ * @since 0.7.0
+ * @hidden
+ */
+export function getDismissTarget(screen: Screen): Screen {
+	return screen.presentee ? getDismissTarget(screen.presentee) : screen
+}
+
+/**
  * @method emitBeforePresent
  * @since 0.7.0
  * @hidden
  */
 export async function emitBeforePresent(screen: Screen, segue: Segue) {
 	screen.emit<ScreenBeforePresentEvent>('beforepresent', { data: { segue } })
-	await segue.standby()
+	await segue.ready()
 }
 
 /**
@@ -517,7 +421,7 @@ export async function emitBeforePresent(screen: Screen, segue: Segue) {
  */
 export async function emitPresent(screen: Screen, segue: Segue) {
 	screen.emit<ScreenPresentEvent>('present', { data: { segue } })
-	await segue.standby()
+	await segue.ready()
 }
 
 /**
@@ -527,7 +431,7 @@ export async function emitPresent(screen: Screen, segue: Segue) {
  */
 export async function emitDismiss(screen: Screen, segue: Segue) {
 	screen.emit<ScreenBeforeDismissEvent>('dismiss', { data: { segue } })
-	await segue.standby()
+	await segue.ready()
 }
 
 /**
@@ -537,7 +441,7 @@ export async function emitDismiss(screen: Screen, segue: Segue) {
  */
 export async function emitBeforeEnter(screen: Screen, segue: Segue) {
 	screen.emit<ScreenBeforeEnterEvent>('beforeenter', { data: { segue } })
-	await segue.standby()
+	await segue.ready()
 }
 
 /**
@@ -547,7 +451,7 @@ export async function emitBeforeEnter(screen: Screen, segue: Segue) {
  */
 export async function emitEnter(screen: Screen, segue: Segue) {
 	screen.emit<ScreenEnterEvent>('enter', { data: { segue } })
-	await segue.standby()
+	await segue.ready()
 }
 
 /**
@@ -557,7 +461,7 @@ export async function emitEnter(screen: Screen, segue: Segue) {
  */
 export async function emitBeforeLeave(screen: Screen, segue: Segue) {
 	screen.emit<ScreenBeforeLeaveEvent>('beforeleave', { data: { segue } })
-	await segue.standby()
+	await segue.ready()
 }
 
 /**
@@ -567,7 +471,7 @@ export async function emitBeforeLeave(screen: Screen, segue: Segue) {
  */
 export async function emitLeave(screen: Screen, segue: Segue) {
 	screen.emit<ScreenLeaveEvent>('leave', { data: { segue } })
-	await segue.standby()
+	await segue.ready()
 }
 
 /**

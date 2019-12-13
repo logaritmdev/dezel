@@ -1,5 +1,5 @@
-import { setEventSender } from './private/Event'
-import { setEventTarget } from './private/Event'
+import { $sender } from './private/Event'
+import { $target } from './private/Event'
 import { Emitter } from './Emitter'
 import { Event } from './Event'
 import { EventOptions } from './Event'
@@ -98,7 +98,8 @@ describe('Event', () => {
 
 		let value = new Emitter()
 		let event = create('test')
-		setEventSender(event, value)
+
+		event[$sender] = value
 
 		expect(event.sender).toBe(value)
 	})
@@ -107,7 +108,8 @@ describe('Event', () => {
 
 		let value = new Emitter()
 		let event = create('test')
-		setEventTarget(event, value)
+
+		event[$target] = value
 
 		expect(event.target).toBe(value)
 	})

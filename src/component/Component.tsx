@@ -1,12 +1,11 @@
-import { $body } from './symbol/Component'
-import { $locked } from './symbol/Component'
-import { $rendered } from './symbol/Component'
-import { $sealed } from './symbol/Component'
-import { $slots } from './symbol/Component'
+import { $body } from './private/Component'
+import { $locked } from './private/Component'
+import { $rendered } from './private/Component'
+import { $sealed } from './private/Component'
+import { $slots } from './private/Component'
 import { render } from '../decorator/render'
 import { native } from '../native/native'
-import { getComponentBody } from './private/Component'
-import { getComponentSlot } from './private/Component'
+import { getSlot } from './private/Component'
 import { Event } from '../event/Event'
 import { View } from '../view/View'
 import { Window } from '../view/Window'
@@ -25,6 +24,7 @@ export abstract class Component extends View {
 	//--------------------------------------------------------------------------
 
 	/**
+	 * Whether the component is sealed.
 	 * @property sealed
 	 * @since 0.7.0
 	 */
@@ -33,6 +33,7 @@ export abstract class Component extends View {
 	}
 
 	/**
+	 * Whether the component is locked.
 	 * @property locked
 	 * @since 0.7.0
 	 */
@@ -41,6 +42,7 @@ export abstract class Component extends View {
 	}
 
 	/**
+	 * Whether the component is rendered.
 	 * @property rendered
 	 * @since 0.7.0
 	 */
@@ -49,6 +51,7 @@ export abstract class Component extends View {
 	}
 
 	/**
+	 * @inherited
 	 * @property window
 	 * @since 0.7.0
 	 */
@@ -57,6 +60,7 @@ export abstract class Component extends View {
 	}
 
 	/**
+	 * @inherited
 	 * @property parent
 	 * @since 0.7.0
 	 */
@@ -65,6 +69,7 @@ export abstract class Component extends View {
 	}
 
 	/**
+	 * @inherited
 	 * @property children
 	 * @since 0.7.0
 	 */
@@ -77,6 +82,7 @@ export abstract class Component extends View {
 	//--------------------------------------------------------------------------
 
 	/**
+	 * Initialize the component.
 	 * @constructor
 	 * @since 0.7.0
 	 */
@@ -92,6 +98,7 @@ export abstract class Component extends View {
 	public abstract render(): Root | null
 
 	/**
+	 * Renders the component.
 	 * @method append
 	 * @since 0.7.0
 	 */
@@ -100,82 +107,72 @@ export abstract class Component extends View {
 	}
 
 	/**
+	 * Inserts a child into one of the component's slot.
 	 * @method insert
 	 * @since 0.7.0
 	 */
 	public insert(child: View, index: number, slot?: string) {
 
 		if (this.locked) {
-			throw new Error(
-				`Component error: This component is locked and cannot be mutated.`
-			)
+			throw new Error(`Component error: This component is locked.`)
 		}
 
 		if (slot) {
 
-			let container = getComponentSlot(this, slot)
+			let container = getSlot(this, slot)
 			if (container) {
 				container.insert(child, index)
 				return this
 			}
 
-			throw new Error(
-				`Component error: The component does not have a slot named ${slot}.`
-			)
+			throw new Error(`Component error: The component does not have a slot named ${slot}.`)
 		}
 
 		if (this.sealed) {
 
-			let container = getComponentBody(this)
+			let container = this[$body]
 			if (container) {
 				container.insert(child, index)
 				return this
 			}
 
-			throw new Error(
-				`Component error: The component is sealed and does not have a main slot.`
-			)
+			throw new Error(`Component error: The component is sealed.`)
 		}
 
 		return super.insert(child, index)
 	}
 
 	/**
+	 * Removes a child from one of the component's slot.
 	 * @method remove
 	 * @since 0.7.0
 	 */
 	public remove(child: View, slot?: string) {
 
 		if (this.locked) {
-			throw new Error(
-				`Component error: This component is locked and cannot be mutated.`
-			)
+			throw new Error(`Component error: This component is locked.`)
 		}
 
 		if (slot) {
 
-			let container = getComponentSlot(this, slot)
+			let container = getSlot(this, slot)
 			if (container) {
 				container.remove(child)
 				return this
 			}
 
-			throw new Error(
-				`Component error: The component does not have a slot named ${slot}.`
-			)
+			throw new Error(`Component error: The component does not have a slot named ${slot}.`)
 		}
 
 		if (this.sealed) {
 
-			let container = getComponentBody(this)
+			let container = this[$body]
 			if (container) {
 				container.remove(child)
 				return this
 			}
 
-			throw new Error(
-				`Component error: The component is sealed and does not have a main slot.`
-			)
+			throw new Error(`Component error: The component is sealed.`)
 		}
 
 		return super.remove(child)
@@ -186,21 +183,15 @@ export abstract class Component extends View {
 	//--------------------------------------------------------------------------
 
 	/**
+	 * @inherited
 	 * @method onEvent
 	 * @since 0.7.0
 	 */
 	public onEvent(event: Event) {
 
 		switch (event.type) {
-
 			case 'render':
 				this.onRender()
-				break
-
-			case 'moveToParent':
-				break
-
-			case 'moveToWindow':
 				break
 		}
 
@@ -208,10 +199,11 @@ export abstract class Component extends View {
 	}
 
 	/**
+	 * Called when the component is rendered.
 	 * @method onRender
 	 * @since 0.7.0
 	 */
-	protected onRender() {
+	public onRender() {
 
 	}
 

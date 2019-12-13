@@ -1,4 +1,4 @@
-import { $gesture } from './symbol/Tappable'
+import { $gesture } from './private/Tappable'
 import { watch } from '../decorator/watch'
 import { TapGestureDetector } from '../gesture/TapGestureDetector'
 import { View } from '../view/View'
@@ -15,19 +15,22 @@ export class Tappable implements Composable {
 	//--------------------------------------------------------------------------
 
 	/**
+	 * Whether the tap gesture is enabled.
 	 * @property enabled
 	 * @since 0.7.0
 	 */
 	@watch public enabled: boolean = true
 
 	/**
+	 * Whether the tap gesture should capture.
 	 * @property capture
 	 * @since 0.7.0
 	 */
 	@watch public capture: boolean = false
 
 	/**
-	 * @property $gesture
+	 * The tap gesture.
+	 * @property gesture
 	 * @since 0.7.0
 	 */
 	public get gesture(): TapGestureDetector {
@@ -39,6 +42,7 @@ export class Tappable implements Composable {
 	//--------------------------------------------------------------------------
 
 	/**
+	 * The tap gesture callback.
 	 * @property onTap
 	 * @since 0.7.0
 	 */
@@ -63,7 +67,7 @@ export class Tappable implements Composable {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	protected onPropertyChange(property: string, newValue: any, oldValue: any) {
+	public onPropertyChange(property: string, newValue: any, oldValue: any) {
 
 		switch (property) {
 
@@ -91,6 +95,18 @@ export class Tappable implements Composable {
 			this.onTap(gesture as TapGestureDetector)
 		}
 	})
+
+	//--------------------------------------------------------------------------
+	// JSX
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @property __jsxProps
+	 * @since 0.4.0
+	 * @hidden
+	 */
+	public __jsxProps: any
+
 }
 
 /**

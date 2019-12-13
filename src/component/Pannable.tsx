@@ -1,4 +1,4 @@
-import { $gesture } from './symbol/Pannable'
+import { $gesture } from './private/Pannable'
 import { watch } from '../decorator/watch'
 import { PanGestureDetector } from '../gesture/PanGestureDetector'
 import { View } from '../view/View'
@@ -15,18 +15,21 @@ export class Pannable implements Composable {
 	//--------------------------------------------------------------------------
 
 	/**
+	 * Whether the pan gesture is enabled.
 	 * @property enabled
 	 * @since 0.7.0
 	 */
 	@watch public enabled: boolean = true
 
 	/**
+	 * Whether the pan gesture should capture.
 	 * @property capture
 	 * @since 0.7.0
 	 */
 	@watch public capture: boolean = false
 
 	/**
+	 * The pan gesture.
 	 * @property gesture
 	 * @since 0.7.0
 	 */
@@ -39,6 +42,7 @@ export class Pannable implements Composable {
 	//--------------------------------------------------------------------------
 
 	/**
+	 * The pan gesture callback.
 	 * @property onTap
 	 * @since 0.7.0
 	 */
@@ -49,6 +53,7 @@ export class Pannable implements Composable {
 	//--------------------------------------------------------------------------
 
 	/**
+	 * @inherited
 	 * @method onCompose
 	 * @since 0.7.0
 	 */
@@ -59,11 +64,11 @@ export class Pannable implements Composable {
 	}
 
 	/**
+	 * @inherited
 	 * @method onPropertyChange
 	 * @since 0.7.0
-	 * @hidden
 	 */
-	protected onPropertyChange(property: string, newValue: any, oldValue: any) {
+	public onPropertyChange(property: string, newValue: any, oldValue: any) {
 
 		switch (property) {
 
@@ -91,6 +96,17 @@ export class Pannable implements Composable {
 			this.onTap(gesture as PanGestureDetector)
 		}
 	})
+
+	//--------------------------------------------------------------------------
+	// JSX
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @property __jsxProps
+	 * @since 0.4.0
+	 * @hidden
+	 */
+	public __jsxProps: any
 }
 
 /**

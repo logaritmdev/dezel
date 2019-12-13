@@ -1,5 +1,5 @@
-import { Touch } from '../touch/Touch'
-import { TouchEvent } from '../touch/TouchEvent'
+import { Touch } from '../event/Touch'
+import { TouchEvent } from '../event/TouchEvent'
 import { Window } from '../view/Window'
 import { GestureDetector } from './GestureDetector'
 
@@ -15,13 +15,20 @@ export class TapGestureDetector extends GestureDetector {
 	//--------------------------------------------------------------------------
 
 	/**
+	 * @inherited
 	 * @method onTouchStart
 	 * @since 0.7.0
 	 */
-	protected onTouchStart(event: TouchEvent) {
+	public onTouchStart(event: TouchEvent) {
 
 		let touches = event.touches
 		if (touches.length > 1) {
+
+			/*
+			 * Automatically ignore the gesture if the touch event has more
+			 * than a single touch.
+			 */
+
 			this.ignore()
 			return
 		}
@@ -32,41 +39,52 @@ export class TapGestureDetector extends GestureDetector {
 	}
 
 	/**
+	 * @inherited
 	 * @method onTouchEnd
 	 * @since 0.7.0
 	 */
-	protected onTouchEnd(event: TouchEvent) {
+	public onTouchEnd(event: TouchEvent) {
 
 		let touch = this.touch
-		if (touch == null ||
-			event.touches.has(touch) == false) {
+		if (touch == null) {
+			throw new Error('TapGesture error: An error occured.')
+		}
+
+		if (event.touches.has(touch) == false) {
 			return
 		}
 
-		let valid = this.validate(touch)
-		if (valid) {
+		if (this.validate(touch)) {
 			this.detect()
 			this.finish()
 		}
 	}
 
 	/**
+	 * @inherited
 	 * @method onTouchCancel
 	 * @since 0.7.0
 	 */
-	protected onTouchCancel(event: TouchEvent) {
+	public onTouchCancel(event: TouchEvent) {
+
 		let touch = this.touch
-		if (touch == null ||
-			event.touches.has(touch) == false) {
-			this.cancel()
+		if (touch == null) {
+			throw new Error('TapGesture error: An error occured.')
 		}
+
+		if (event.touches.has(touch) == false) {
+			return
+		}
+
+		this.cancel()
 	}
 
 	/**
+	 * @inherited
 	 * @method onReset
 	 * @since 0.7.0
 	 */
-	protected onReset() {
+	public onReset() {
 		this.touch = null
 	}
 
@@ -90,7 +108,7 @@ export class TapGestureDetector extends GestureDetector {
 
 		let view = this.view
 		if (view == null) {
-			return false
+			throw new Error('TapGesture error: An error occured.')
 		}
 
 		if (view instanceof Window) {
@@ -98,21 +116,22 @@ export class TapGestureDetector extends GestureDetector {
 		}
 
 		let window = view.window
-		if (window) {
+		if (window == null) {
+			throw new Error('TapGesture error: An error occured.')
+		}
 
-			let target = window.findViewAt(
-				touch.x,
-				touch.y
-			)
+		let target = window.findViewAt(
+			touch.x,
+			touch.y
+		)
 
-			while (target) {
+		while (target) {
 
-				if (target == this.view) {
-					return true
-				}
-
-				target = target.parent
+			if (target == this.view) {
+				return true
 			}
+
+			target = target.parent
 		}
 
 		return false

@@ -1,18 +1,27 @@
-import { $dismissGestureState } from '../symbol/Segue'
-import { $screen } from '../symbol/Segue'
 import { State } from '../../gesture/GestureDetector'
 import { SegueRegistry } from '../..'
-import { Screen } from '../Screen'
 import { Segue } from '../Segue'
 
 /**
- * @method setSegueScreen
+ * @symbol enter
  * @since 0.7.0
  * @hidden
  */
-export function setSegueScreen(segue: Segue, screen: Screen | null) {
-	segue[$screen] = screen
-}
+export const $screen = Symbol('screen')
+
+/**
+ * @symbol deferred
+ * @since 0.7.0
+ * @hidden
+ */
+export const $waiter = Symbol('waiter')
+
+/**
+ * @symbol dismissGestureState
+ * @since 0.7.0
+ * @hidden
+ */
+export const $dismissGestureState = Symbol('dismissGestureState')
 
 /**
  * @method getRegisteredSegue
@@ -26,9 +35,7 @@ export function getRegisteredSegue(segue: string) {
 		return new Segue()
 	}
 
-	throw new Error(
-		`Segue error: The segue named ${segue} has not been registered.`
-	)
+	throw new Error(`Segue error: The segue named ${segue} has not been registered.`)
 }
 
 /**
@@ -39,9 +46,7 @@ export function getRegisteredSegue(segue: string) {
 export function setDismissGestureState(segue: Segue, state: State) {
 
 	if (segue[$dismissGestureState] > state) {
-		throw new Error(
-			`Gesture error: This gesture's state cannot be changed to a lower value.`
-		)
+		throw new Error(`Gesture error: This gesture's state cannot be changed to a lower value.`)
 	}
 
 	if (segue[$dismissGestureState] == state &&

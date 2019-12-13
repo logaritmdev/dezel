@@ -1,5 +1,5 @@
 import { Dezel } from '../core/Dezel'
-import { TouchEvent } from '../touch/TouchEvent'
+import { TouchEvent } from '../event/TouchEvent'
 import { View } from '../view/View'
 import { Application } from './Application'
 

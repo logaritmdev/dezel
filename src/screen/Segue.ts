@@ -1,16 +1,15 @@
-import { $frame } from './symbol/Screen'
-import { $dismissGestureState } from './symbol/Segue'
-import { $screen } from './symbol/Segue'
-import { $waiter } from './symbol/Segue'
+import { $dismissing } from './private/Screen'
+import { $presented } from './private/Screen'
+import { $presenting } from './private/Screen'
+import { $dismissGestureState } from './private/Segue'
+import { $screen } from './private/Segue'
+import { $waiter } from './private/Segue'
 import { emitBeforeEnter } from './private/Screen'
 import { emitBeforeLeave } from './private/Screen'
 import { emitDismiss } from './private/Screen'
 import { emitEnter } from './private/Screen'
 import { emitLeave } from './private/Screen'
-import { isScreenOverlay } from './private/Screen'
-import { setScreenDismissing } from './private/Screen'
-import { setScreenPresented } from './private/Screen'
-import { setScreenPresenting } from './private/Screen'
+import { isOverlay } from './private/Screen'
 import { setDismissGestureState } from './private/Segue'
 import { Emitter } from '../event/Emitter'
 import { State } from '../gesture/GestureDetector'
@@ -26,6 +25,18 @@ import { Screen } from './Screen'
 export class Segue extends Emitter {
 
 	//--------------------------------------------------------------------------
+	// Static
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method named
+	 * @since 0.7.0
+	 */
+	public static named(name: string) {
+
+	}
+
+	//--------------------------------------------------------------------------
 	// Properties
 	//--------------------------------------------------------------------------
 
@@ -34,20 +45,20 @@ export class Segue extends Emitter {
 	 * @since 0.7.0
 	 */
 	public get screen(): Screen {
-		return this[$screen]!
+		return this[$screen]
 	}
-
-	/**
-	 * @property equation
-	 * @since 0.7.0
-	 */
-	public equation: string = 'default'
 
 	/**
 	 * @property duration
 	 * @since 0.7.0
 	 */
 	public duration: number = 350
+
+	/**
+	 * @property equation
+	 * @since 0.7.0
+	 */
+	public equation: string = 'default'
 
 	//--------------------------------------------------------------------------
 	// Methods
@@ -108,7 +119,7 @@ export class Segue extends Emitter {
 	 */
 	public wait() {
 
-		if (this[$waiter] = null) {
+		if (this[$waiter] == null) {
 			this[$waiter] = new Waiter()
 		}
 
@@ -116,31 +127,27 @@ export class Segue extends Emitter {
 	}
 
 	/**
-	 * @method resume
+	 * @method done
 	 * @since 0.5.0
 	 */
-	public resume() {
-
-		if (this[$waiter]) {
-			this[$waiter]?.clear()
-			this[$waiter] = null
-		}
-
+	public done() {
+		this[$waiter]?.done()
+		this[$waiter] = null
 		return this
 	}
 
 	/**
-	 * @method standby
+	 * @method ready
 	 * @since 0.7.0
 	 */
-	public standby() {
+	public ready() {
 
 		let waiter = this[$waiter]
-		if (waiter == null) {
-			return Promise.resolve()
+		if (waiter) {
+			return waiter.promise
 		}
 
-		return waiter.promise
+		return Promise.resolve()
 	}
 
 	//--------------------------------------------------------------------------
@@ -151,7 +158,7 @@ export class Segue extends Emitter {
 	 * @method detectDismissGesture
 	 * @since 0.7.0
 	 */
-	protected async detectDismissGesture() {
+	public async detectDismissGesture() {
 
 		try {
 
@@ -159,15 +166,13 @@ export class Segue extends Emitter {
 			let presentedScreen = this.screen.presenter
 
 			if (presentedScreen == null) {
-				throw new Error(
-					`Segue error: Missing presenter screen.`
-				)
+				throw new Error(`Segue error: Missing presenter screen.`)
 			}
 
 			setDismissGestureState(this, State.Detected)
 
-			setScreenDismissing(dismissedScreen, true)
-			setScreenPresenting(presentedScreen, true)
+			dismissedScreen[$dismissing] = true
+			presentedScreen[$presenting] = true
 
 			presentedScreen.visible = true
 			presentedScreen.resolve()
@@ -179,7 +184,7 @@ export class Segue extends Emitter {
 
 			presentedScreen.updateStatusBar()
 
-			this.invokeBeforeDismiss(
+			this.onBeforeDismiss(
 				presentedScreen,
 				dismissedScreen
 			)
@@ -196,7 +201,7 @@ export class Segue extends Emitter {
 	 * @method updateDismissGesture
 	 * @since 0.7.0
 	 */
-	protected async updateDismissGesture() {
+	public async updateDismissGesture() {
 
 		try {
 
@@ -204,9 +209,7 @@ export class Segue extends Emitter {
 			let presentedScreen = this.screen.presenter
 
 			if (presentedScreen == null) {
-				throw new Error(
-					`Segue error: Missing presenter screen.`
-				)
+				throw new Error(`Segue error: Missing presenter screen.`)
 			}
 
 			setDismissGestureState(this, State.Updated)
@@ -225,7 +228,7 @@ export class Segue extends Emitter {
 	 * @method cancelDismmissGesture
 	 * @since 0.7.0
 	 */
-	protected async cancelDismmissGesture() {
+	public async cancelDismmissGesture() {
 
 		try {
 
@@ -235,9 +238,7 @@ export class Segue extends Emitter {
 			let presentedScreen = this.screen.presenter
 
 			if (presentedScreen == null) {
-				throw new Error(
-					`Segue error: Missing presenter screen.`
-				)
+				throw new Error(`Segue error: Missing presenter screen.`)
 			}
 
 			setDismissGestureState(this, State.Canceled)
@@ -259,14 +260,14 @@ export class Segue extends Emitter {
 			await emitEnter(dismissedScreen, this)
 			await emitLeave(presentedScreen, this)
 
-			presentedScreen.visible = isScreenOverlay(presentedScreen) ? true : false
+			presentedScreen.visible = isOverlay(presentedScreen) ? true : false
 
-			setScreenDismissing(dismissedScreen, false)
-			setScreenPresenting(presentedScreen, false)
+			dismissedScreen[$dismissing] = false
+			presentedScreen[$presenting] = false
+
+			this[$dismissGestureState] = State.Allowed
 
 			window.touchable = true
-
-			this.resetDismissGesture()
 
 		} catch (e) {
 			console.error(e)
@@ -277,7 +278,7 @@ export class Segue extends Emitter {
 	 * @method finishDismissGesture
 	 * @since 0.7.0
 	 */
-	protected async finishDismissGesture() {
+	public async finishDismissGesture() {
 
 		try {
 
@@ -287,9 +288,7 @@ export class Segue extends Emitter {
 			let presentedScreen = this.screen.presenter
 
 			if (presentedScreen == null) {
-				throw new Error(
-					`Segue error: Missing presenter screen.`
-				)
+				throw new Error(`Segue error: Missing presenter screen.`)
 			}
 
 			window.touchable = false
@@ -299,7 +298,7 @@ export class Segue extends Emitter {
 				dismissedScreen
 			)
 
-			this.invokeAfterDismiss(
+			this.onAfterDismiss(
 				presentedScreen,
 				dismissedScreen
 			)
@@ -310,14 +309,14 @@ export class Segue extends Emitter {
 
 			dismissedScreen.dispose()
 
-			setScreenPresented(dismissedScreen, false)
-			setScreenPresented(presentedScreen, true)
-			setScreenDismissing(dismissedScreen, false)
-			setScreenPresenting(presentedScreen, false)
+			dismissedScreen[$presented] = false
+			presentedScreen[$presented] = true
+			dismissedScreen[$presenting] = false
+			presentedScreen[$presenting] = false
+
+			this[$dismissGestureState] = State.Allowed
 
 			window.touchable = true
-
-			this.resetDismissGesture()
 
 		} catch (e) {
 			console.error(e)
@@ -325,19 +324,10 @@ export class Segue extends Emitter {
 	}
 
 	/**
-	 * @method resetDismissGesture
-	 * @since 0.7.0
-	 */
-	protected resetDismissGesture() {
-		this[$dismissGestureState] = State.Allowed
-		return this
-	}
-
-	/**
 	 * @method onBeforePresent
 	 * @since 0.7.0
 	 */
-	protected onBeforePresent(enter?: Screen, leave?: Screen) {
+	public onBeforePresent(enter?: Screen, leave?: Screen) {
 
 	}
 
@@ -345,7 +335,7 @@ export class Segue extends Emitter {
 	 * @method onBeforeDismiss
 	 * @since 0.7.0
 	 */
-	protected onBeforeDismiss(enter?: Screen, leave?: Screen) {
+	public onBeforeDismiss(enter?: Screen, leave?: Screen) {
 
 	}
 
@@ -353,7 +343,7 @@ export class Segue extends Emitter {
 	 * @method onPresent
 	 * @since 0.7.0
 	 */
-	protected onPresent(enter?: Screen, leave?: Screen) {
+	public onPresent(enter?: Screen, leave?: Screen) {
 
 	}
 
@@ -361,7 +351,7 @@ export class Segue extends Emitter {
 	 * @method onDismiss
 	 * @since 0.7.0
 	 */
-	protected onDismiss(enter?: Screen, leave?: Screen) {
+	public onDismiss(enter?: Screen, leave?: Screen) {
 
 	}
 
@@ -369,7 +359,7 @@ export class Segue extends Emitter {
 	 * @method onAfterPresent
 	 * @since 0.7.0
 	 */
-	protected onAfterPresent(enter?: Screen, leave?: Screen) {
+	public onAfterPresent(enter?: Screen, leave?: Screen) {
 
 	}
 
@@ -377,7 +367,7 @@ export class Segue extends Emitter {
 	 * @method onAfterDismiss
 	 * @since 0.7.0
 	 */
-	protected onAfterDismiss(enter?: Screen, leave?: Screen) {
+	public onAfterDismiss(enter?: Screen, leave?: Screen) {
 
 	}
 
@@ -385,7 +375,7 @@ export class Segue extends Emitter {
 	 * @method onDismissGestureDetect
 	 * @since 0.7.0
 	 */
-	protected onDismissGestureDetect(enter?: Screen, leave?: Screen) {
+	public onDismissGestureDetect(enter?: Screen, leave?: Screen) {
 
 	}
 
@@ -393,7 +383,7 @@ export class Segue extends Emitter {
 	 * @method onDismissGestureUpdate
 	 * @since 0.7.0
 	 */
-	protected onDismissGestureUpdate(enter?: Screen, leave?: Screen) {
+	public onDismissGestureUpdate(enter?: Screen, leave?: Screen) {
 
 	}
 
@@ -401,7 +391,7 @@ export class Segue extends Emitter {
 	 * @method onDismissGestureCancel
 	 * @since 0.7.0
 	 */
-	protected onDismissGestureCancel(enter?: Screen, leave?: Screen) {
+	public onDismissGestureCancel(enter?: Screen, leave?: Screen) {
 
 	}
 
@@ -409,66 +399,8 @@ export class Segue extends Emitter {
 	 * @method onDismissGestureFinish
 	 * @since 0.7.0
 	 */
-	protected onDismissGestureFinish(enter?: Screen, leave?: Screen) {
+	public onDismissGestureFinish(enter?: Screen, leave?: Screen) {
 
-	}
-
-	//--------------------------------------------------------------------------
-	// Internal API
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method invokeBeforePresent
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	public invokeBeforePresent(enter?: Screen, leave?: Screen) {
-		this.onBeforePresent(enter, leave)
-	}
-
-	/**
-	 * @method invokeBeforeDismiss
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	public invokeBeforeDismiss(enter?: Screen, leave?: Screen) {
-		this.onBeforeDismiss(enter, leave)
-	}
-
-	/**
-	 * @method invokePresent
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	public invokePresent(enter?: Screen, leave?: Screen) {
-		this.present(enter, leave)
-	}
-
-	/**
-	 * @method invokeDismiss
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	public invokeDismiss(enter?: Screen, leave?: Screen) {
-		this.onDismiss(enter, leave)
-	}
-
-	/**
-	 * @method invokeAfterPresent
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	public invokeAfterPresent(enter?: Screen, leave?: Screen) {
-		this.onAfterPresent(enter, leave)
-	}
-
-	/**
-	 * @method invokeAfterDismiss
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	public invokeAfterDismiss(enter?: Screen, leave?: Screen) {
-		this.onAfterDismiss(enter, leave)
 	}
 
 	//--------------------------------------------------------------------------
@@ -480,7 +412,7 @@ export class Segue extends Emitter {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private [$screen]: Screen | null = null
+	private [$screen]: Screen
 
 	/**
 	 * @property $waiter

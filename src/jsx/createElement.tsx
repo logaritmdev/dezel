@@ -1,10 +1,11 @@
-import { getComponent } from '../component/private/Component'
+import { getRenderingComponent } from '../component/private/Component'
 import { renderComponent } from '../component/private/Component'
-import { setComponentSlot } from '../component/private/Component'
+import { setSlot } from '../component/private/Component'
+import { setValueOf } from './private/createElement'
 import { Component } from '../component/Component'
 import { Slot } from '../component/Slot'
+import { Emitter } from '../event/Emitter'
 import { View } from '../view/View'
-import { setValueOf } from './symbol/createElement'
 
 /**
  * @function createElement
@@ -86,21 +87,6 @@ function append(view: any, children: Array<any>) {
 			continue
 		}
 
-		if (node instanceof Slot) {
-
-			/*
-			 * When appending a slot to a view we must check first if its
-			 * bound to a containing component. In that case we can safely
-			 * treat this slot as a definition and execute the define
-			 * method from its container.
-			 */
-
-			let component = getComponent()
-			if (component) {
-				setComponentSlot(component, node)
-			}
-		}
-
 		view.append(node)
 	}
 }
@@ -135,7 +121,8 @@ function setValue(view: any, key: string, value: any) {
 	let event = (
 		key[0] == 'o' &&
 		key[1] == 'n' &&
-		type == 'function'
+		type == 'function' &&
+		view instanceof Emitter
 	)
 
 	if (event) {

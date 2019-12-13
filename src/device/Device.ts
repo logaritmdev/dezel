@@ -14,6 +14,7 @@ export class Device {
 	//--------------------------------------------------------------------------
 
 	/**
+	 * The current device.
 	 * @property current
 	 * @since 0.7.0
 	 */

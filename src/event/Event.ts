@@ -1,12 +1,12 @@
-import { $cancelable } from './symbol/Event'
-import { $canceled } from './symbol/Event'
-import { $capturable } from './symbol/Event'
-import { $captured } from './symbol/Event'
-import { $data } from './symbol/Event'
-import { $propagable } from './symbol/Event'
-import { $sender } from './symbol/Event'
-import { $target } from './symbol/Event'
-import { $type } from './symbol/Event'
+import { $cancelable } from './private/Event'
+import { $canceled } from './private/Event'
+import { $capturable } from './private/Event'
+import { $captured } from './private/Event'
+import { $data } from './private/Event'
+import { $propagable } from './private/Event'
+import { $sender } from './private/Event'
+import { $target } from './private/Event'
+import { $type } from './private/Event'
 import { Emitter } from './Emitter'
 
 /**
@@ -120,15 +120,13 @@ export class Event<T extends any = any> {
 	 */
 	public capture() {
 
+		if (this.capturable == false) {
+			throw new Error(`Event error: This event cannot be captured because it is not capturable.`)
+		}
+
 		if (this.captured ||
 			this.canceled) {
 			return this
-		}
-
-		if (this.capturable == false) {
-			throw new Error(
-				`Event error: This event cannot be captured because it is not capturable.`
-			)
 		}
 
 		this[$captured] = true
@@ -144,14 +142,12 @@ export class Event<T extends any = any> {
 	 */
 	public cancel() {
 
-		if (this.canceled) {
-			return this
+		if (this.cancelable == false) {
+			throw new Error(`Event error: This event cannot be canceled because it is not cancelable.`)
 		}
 
-		if (this.cancelable == false) {
-			throw new Error(
-				`Event error: This event cannot be canceled because it is not cancelable.`
-			)
+		if (this.canceled) {
+			return this
 		}
 
 		this[$canceled] = true
@@ -169,7 +165,7 @@ export class Event<T extends any = any> {
 	 * @method onCancel
 	 * @since 0.7.0
 	 */
-	protected onCancel() {
+	public onCancel() {
 
 	}
 
@@ -177,7 +173,7 @@ export class Event<T extends any = any> {
 	 * @method onCapture
 	 * @since 0.7.0
 	 */
-	protected onCapture() {
+	public onCapture() {
 
 	}
 

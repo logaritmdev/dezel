@@ -1,21 +1,32 @@
-import { $data } from './symbol/Recycler'
-import { $onInsertView } from './symbol/Recycler'
-import { $onRemoveView } from './symbol/Recycler'
-import { $view } from './symbol/Recycler'
+import { $responder } from '../event/private/Emitter'
+import { $target } from './private/Collection'
+import { $collection } from './private/Recycler'
+import { $data } from './private/Recycler'
+import { $getViewType } from './private/Recycler'
+import { $onInsertView } from './private/Recycler'
+import { $onRemoveView } from './private/Recycler'
+import { $view } from './private/Recycler'
+import { renderComponent } from '../component/private/Component'
 import { bound } from '../decorator/bound'
-import { setEmitterResponder } from '../event/private/Emitter'
 import { bridge } from '../native/bridge'
 import { native } from '../native/native'
+import { insertView } from './private/Recycler'
+import { removeView } from './private/Recycler'
+import { Component } from '../component/Component'
 import { Data } from '../data/Data'
-import { DataChangeEvent } from '../data/Data'
 import { DataInsertEvent } from '../data/Data'
 import { DataReloadEvent } from '../data/Data'
 import { DataRemoveEvent } from '../data/Data'
+import { DataUpdateEvent } from '../data/Data'
 import { Emitter } from '../event/Emitter'
 import { Event } from '../event/Event'
 import { View } from '../view/View'
 import { ViewInsertEvent } from '../view/View'
+import { ViewMoveToParentEvent } from '../view/View'
+import { ViewMoveToWindowEvent } from '../view/View'
 import { ViewRemoveEvent } from '../view/View'
+import { Collection } from './Collection'
+
 
 @bridge('dezel.view.Recycler')
 
@@ -31,21 +42,9 @@ export class Recycler<T> extends Emitter {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @property view
+	 * @property animated
 	 * @since 0.7.0
 	 */
-	public get view(): View {
-		return this[$view]
-	}
-
-	/**
-	 * @property data
-	 * @since 0.7.0
-	 */
-	public get data(): Data<T> {
-		return this[$data]
-	}
-
 	public animated: boolean = true
 
 	//--------------------------------------------------------------------------
@@ -56,31 +55,32 @@ export class Recycler<T> extends Emitter {
 	 * @constructor
 	 * @since 0.7.0
 	 */
-	constructor(view: View, data: Array<T> | Data<T>, options: RecyclerOptions<T>) {
+	constructor(collection: Collection, data: Data<T>, options: RecyclerOptions<T>) {
 
 		super()
 
-		if (data == null) {
-			data = new Data<T>()
-		} else if (data instanceof Array) {
-			data = new Data(data)
-		}
+		let view = collection[$target]
 
-		this[$view] = view
 		this[$data] = data
+		this[$view] = view
+		this[$collection] = collection
+		this[$getViewType] = options.getViewType
 		this[$onInsertView] = options.onInsertView
 		this[$onRemoveView] = options.onRemoveView
 
-		// native(this).view = native(view)
-		// native(this).length = this.data.length
-		// native(this).estimation = options.estimatedItemSize
+		this[$data].on('reload', this.onDataReload)
+		this[$data].on('insert', this.onDataInsert)
+		this[$data].on('remove', this.onDataRemove)
+		this[$data].on('modify', this.onDataModify)
+		this[$data].on('update', this.onDataUpdate)
+		this[$data].on('commit', this.onDataCommit)
 
-		this.data.on('reload', this.onDataReload)
-		this.data.on('insert', this.onDataInsert)
-		this.data.on('remove', this.onDataRemove)
-		this.data.on('commit', this.onDataCommit)
-		this.data.on('change', this.onDataChange)
-		this.data.on('update', this.onDataUpdate)
+		view = native(view)
+
+		native(this).attach(
+			view,
+			data.length
+		)
 	}
 
 	/**
@@ -89,16 +89,15 @@ export class Recycler<T> extends Emitter {
 	 */
 	public destroy() {
 
-		native(this).destroy()
+		native(this).detach()
 
-		this.data.off('reload', this.onDataReload)
-		this.data.off('insert', this.onDataInsert)
-		this.data.off('remove', this.onDataRemove)
-		this.data.off('commit', this.onDataCommit)
-		this.data.off('change', this.onDataChange)
-		this.data.off('update', this.onDataUpdate)
-
-		this.data.destroy()
+		this[$data].off('reload', this.onDataReload)
+		this[$data].off('insert', this.onDataInsert)
+		this[$data].off('remove', this.onDataRemove)
+		this[$data].off('modify', this.onDataModify)
+		this[$data].off('update', this.onDataUpdate)
+		this[$data].off('commit', this.onDataCommit)
+		this[$data].destroy()
 
 		return super.destroy()
 	}
@@ -112,33 +111,6 @@ export class Recycler<T> extends Emitter {
 		return this
 	}
 
-	/**
-	 * @method getItem
-	 * @since 0.7.0
-	 */
-	public getItem(index: number): View | undefined {
-		return native(this).getItem(index)
-	}
-
-
-	/**
-	 * Returns the item type for the specified index.
-	 * @method defineItem
-	 * @since 0.5.0
-	 */
-	public defineItem(index: number, data: T): any {
-		return undefined
-	}
-
-	/**
-	 * @method cacheItem
-	 * @since 0.7.0
-	 */
-	public cacheItem(item: View) {
-		native(this).cacheItem(native(item))
-		return this
-	}
-
 	//--------------------------------------------------------------------------
 	// Events
 	//--------------------------------------------------------------------------
@@ -147,7 +119,7 @@ export class Recycler<T> extends Emitter {
 	 * @method onReloadData
 	 * @since 0.7.0
 	 */
-	protected onReloadData(event: Event<DataReloadEvent<T>>) {
+	public onReloadData(event: Event<DataReloadEvent<T>>) {
 
 	}
 
@@ -155,50 +127,60 @@ export class Recycler<T> extends Emitter {
 	 * @method onInsertData
 	 * @since 0.7.0
 	 */
-	protected onInsertData(event: Event<DataInsertEvent<T>>) {
-
-		native(this).length = this.data.length
+	public onInsertData(event: Event<DataInsertEvent<T>>) {
 		native(this).insertData(
 			event.data.index,
-			event.data.rows.length,
+			event.data.items.length,
 			this.animated
 		)
-
-		if (this.animated) {
-			//this.performTransition()
-		}
 	}
 
 	/**
 	 * @method onRemoveData
 	 * @since 0.7.0
 	 */
-	protected onRemoveData(event: Event<DataRemoveEvent<T>>) {
-
+	public onRemoveData(event: Event<DataRemoveEvent<T>>) {
+		native(this).removeData(
+			event.data.index,
+			event.data.items.length,
+			this.animated
+		)
 	}
 
 	/**
-	 * @method onCommitData
+	 * @method onModifyData
 	 * @since 0.7.0
 	 */
-	protected onCommitData(event: Event) {
-
-	}
-
-	/**
-	 * @method onChangeData
-	 * @since 0.7.0
-	 */
-	protected onChangeData(event: Event<DataChangeEvent<T>>) {
-
+	public onModifyData(event: Event) {
+		//	this.batching = true
 	}
 
 	/**
 	 * @method onUpdateData
 	 * @since 0.7.0
 	 */
-	protected onUpdateData(event: Event) {
+	public onUpdateData(event: Event<DataUpdateEvent<T>>) {
 
+		let index = event.data.index
+		let value = event.data.value
+
+		let item = this[$collection].get(index)
+		if (item) {
+			this[$onRemoveView].call(null, index, value, item)
+			this[$onInsertView].call(null, index, value, item)
+		}
+	}
+
+	/**
+	 * @method onCommitData
+	 * @since 0.7.0
+	 */
+	public onCommitData(event: Event) {
+		// this.batching = false
+
+		// if (this.animate) {
+		// 	this.performTransition()
+		// }
 	}
 
 	//--------------------------------------------------------------------------
@@ -206,7 +188,7 @@ export class Recycler<T> extends Emitter {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @property $view
+	 * @property $data
 	 * @since 0.7.0
 	 * @hidden
 	 */
@@ -220,18 +202,32 @@ export class Recycler<T> extends Emitter {
 	private [$data]: Data<T>
 
 	/**
+	 * @property $collection
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private [$collection]: Collection
+
+	/**
 	 * @property $onInsertView
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private [$onInsertView]: RecyclerInsertViewCallback<T>
+	private [$getViewType]: GetViewType<T>
+
+	/**
+	 * @property $onInsertView
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private [$onInsertView]: OnInsertView<T>
 
 	/**
 	 * @property $onRemoveView
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private [$onRemoveView]: RecyclerRemoveViewCallback<T>
+	private [$onRemoveView]: OnRemoveView<T>
 
 	/**
 	 * @method onDataReload
@@ -261,12 +257,12 @@ export class Recycler<T> extends Emitter {
 	}
 
 	/**
-	 * @method onDataChange
+	 * @method onDataModify
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@bound private onDataChange(event: Event<DataChangeEvent<T>>) {
-		this.onChangeData(event)
+	@bound private onDataModify(event: Event) {
+		this.onModifyData(event)
 	}
 
 	/**
@@ -274,7 +270,7 @@ export class Recycler<T> extends Emitter {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@bound private onDataUpdate(event: Event) {
+	@bound private onDataUpdate(event: Event<DataUpdateEvent<T>>) {
 		this.onUpdateData(event)
 	}
 
@@ -284,7 +280,7 @@ export class Recycler<T> extends Emitter {
 	 * @hidden
 	 */
 	@bound private onDataCommit(event: Event) {
-
+		this.onCommitData(event)
 	}
 
 	//--------------------------------------------------------------------------
@@ -292,22 +288,48 @@ export class Recycler<T> extends Emitter {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method nativeDefineItem
+	 * @method nativeGetViewType
 	 * @since 0.5.0
 	 * @hidden
 	 */
-	private nativeGetItemType(index: number) {
-		//return this.defineItem(index, this.data.get(index))
+	private nativeGetViewType(index: number) {
+
+		let value = this[$data].get(index)
+		if (value == null) {
+			throw new Error('Unexpected error.')
+		}
+		console.log('nativeGetViewType')
+		return this[$getViewType].call(null, index, value)
 	}
 
 	/**
-	 * @method nativeOnRemoveItem
+	 * @method nativeOnInsertView
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private nativeOnInsertItem(index: number, child: View) {
-		setEmitterResponder(child, this.view)
-		this.view.emit<ViewInsertEvent>('insert', { data: { child, index } })
+	private nativeOnInsertView(index: number, child: View) {
+
+		if (child instanceof Component) {
+			renderComponent(child)
+			console.log('render component')
+		}
+
+		console.log('nativeOnInsertView')
+		let value = this[$data].get(index)
+		if (value == null) {
+			throw new Error('Unexpected error.')
+		}
+
+		insertView(this, child, index)
+
+		let parent = this[$view]
+
+		child[$responder] = parent
+		child.emit<ViewMoveToParentEvent>('movetoparent', { data: { parent: parent } })
+		child.emit<ViewMoveToWindowEvent>('movetowindow', { data: { window: parent.window } })
+		parent.emit<ViewInsertEvent>('insert', { data: { child, index } })
+
+		this[$onInsertView].call(null, index, value, child)
 	}
 
 	/**
@@ -316,8 +338,24 @@ export class Recycler<T> extends Emitter {
 	 * @hidden
 	 */
 	private nativeOnRemoveItem(index: number, child: View) {
-		setEmitterResponder(child, null)
-		this.view.emit<ViewRemoveEvent>('remove', { data: { child, index } })
+		console.log('nativeOnRemoveItem')
+		let value = this[$data].get(index)
+		if (value == null) {
+			throw new Error('Unexpected error.')
+		}
+
+		let item = this[$collection].get(index)
+		if (item) {
+			this[$onRemoveView].call(null, index, this[$data].get(index)!, item)
+		}
+
+		this[$view].emit<ViewInsertEvent>('remove', { data: { child, index } })
+
+		child.emit<ViewMoveToParentEvent>('movetoparent', { data: { parent: null } })
+		child.emit<ViewMoveToWindowEvent>('movetowindow', { data: { window: null } })
+		child[$responder] = null
+
+		removeView(this, child, index)
 	}
 }
 
@@ -326,19 +364,26 @@ export class Recycler<T> extends Emitter {
  * @since 0.7.0
  */
 export interface RecyclerOptions<T> {
-	estimation: number
-	onInsertView: RecyclerInsertViewCallback<T>
-	onRemoveView: RecyclerRemoveViewCallback<T>
+	estimatedItemSize: number
+	getViewType: GetViewType<T>
+	onInsertView: OnInsertView<T>
+	onRemoveView: OnRemoveView<T>
 }
 
 /**
- * @type RecyclerInsertViewCallback
+ * @type GetViewType
  * @since 0.7.0
  */
-export type RecyclerInsertViewCallback<T> = (index: number, data: T, item: View) => void
+export type GetViewType<T> = (index: number, data: T) => void
 
 /**
- * @type RecyclerRemoveViewCallback
+ * @type OnInsertView
  * @since 0.7.0
  */
-export type RecyclerRemoveViewCallback<T> = (index: number, data: T, item: View) => void
+export type OnInsertView<T> = (index: number, data: T, view: View) => void
+
+/**
+ * @type OnRemoveView
+ * @since 0.7.0
+ */
+export type OnRemoveView<T> = (index: number, data: T, view: View) => void

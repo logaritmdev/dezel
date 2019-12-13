@@ -1,15 +1,15 @@
-import { $callback } from './symbol/GestureDetector'
-import { $canceled } from './symbol/GestureDetector'
-import { $captured } from './symbol/GestureDetector'
-import { $detected } from './symbol/GestureDetector'
-import { $duration } from './symbol/GestureDetector'
-import { $finished } from './symbol/GestureDetector'
-import { $resolved } from './symbol/GestureDetector'
-import { $state } from './symbol/GestureDetector'
-import { $view } from './symbol/GestureDetector'
+import { $callback } from './private/GestureDetector'
+import { $canceled } from './private/GestureDetector'
+import { $captured } from './private/GestureDetector'
+import { $detected } from './private/GestureDetector'
+import { $duration } from './private/GestureDetector'
+import { $finished } from './private/GestureDetector'
+import { $resolved } from './private/GestureDetector'
+import { $state } from './private/GestureDetector'
+import { $view } from './private/GestureDetector'
 import { setGestureState } from './private/GestureDetector'
 import { Emitter } from '../event/Emitter'
-import { TouchEvent } from '../touch/TouchEvent'
+import { TouchEvent } from '../event/TouchEvent'
 import { View } from '../view/View'
 
 /**
@@ -99,15 +99,27 @@ export abstract class GestureDetector extends Emitter {
 		this[$callback] = callback
 	}
 
-	//--------------------------------------------------------------------------
-	// Protected API
-	//--------------------------------------------------------------------------
+	/**
+	 * @method attach
+	 * @since 0.7.0
+	 */
+	public attach(view: View) {
+		this[$view] = view
+	}
+
+	/**
+	 * @method detach
+	 * @since 0.7.0
+	 */
+	public detach() {
+		this[$view] = null
+	}
 
 	/**
 	 * @method ignore
 	 * @since 0.7.0
 	 */
-	protected ignore() {
+	public ignore() {
 		return setGestureState(this, State.Ignored)
 	}
 
@@ -115,7 +127,7 @@ export abstract class GestureDetector extends Emitter {
 	 * @method detect
 	 * @since 0.7.0
 	 */
-	protected detect() {
+	public detect() {
 		return setGestureState(this, State.Detected)
 	}
 
@@ -123,7 +135,7 @@ export abstract class GestureDetector extends Emitter {
 	 * @method update
 	 * @since 0.5.0
 	 */
-	protected update() {
+	public update() {
 		return setGestureState(this, State.Updated)
 	}
 
@@ -131,7 +143,7 @@ export abstract class GestureDetector extends Emitter {
 	 * @method finish
 	 * @since 0.7.0
 	 */
-	protected finish() {
+	public finish() {
 		return setGestureState(this, State.Finished)
 	}
 
@@ -139,7 +151,7 @@ export abstract class GestureDetector extends Emitter {
 	 * @method cancel
 	 * @since 0.5.0
 	 */
-	protected cancel() {
+	public cancel() {
 		return setGestureState(this, State.Canceled)
 	}
 
@@ -151,7 +163,7 @@ export abstract class GestureDetector extends Emitter {
 	 * @method onTouchStart
 	 * @since 0.7.0
 	 */
-	protected onTouchStart(event: TouchEvent) {
+	public onTouchStart(event: TouchEvent) {
 
 	}
 
@@ -159,7 +171,7 @@ export abstract class GestureDetector extends Emitter {
 	 * @method onTouchMove
 	 * @since 0.7.0
 	 */
-	protected onTouchMove(event: TouchEvent) {
+	public onTouchMove(event: TouchEvent) {
 
 	}
 
@@ -167,7 +179,7 @@ export abstract class GestureDetector extends Emitter {
 	 * @method onTouchEnd
 	 * @since 0.7.0
 	 */
-	protected onTouchEnd(event: TouchEvent) {
+	public onTouchEnd(event: TouchEvent) {
 
 	}
 
@@ -175,7 +187,7 @@ export abstract class GestureDetector extends Emitter {
 	 * @method onTouchCancel
 	 * @since 0.7.0
 	 */
-	protected onTouchCancel(event: TouchEvent) {
+	public onTouchCancel(event: TouchEvent) {
 		this.cancel()
 	}
 
@@ -183,7 +195,7 @@ export abstract class GestureDetector extends Emitter {
 	 * @method onReset
 	 * @since 0.7.0
 	 */
-	protected onReset() {
+	public onReset() {
 
 	}
 

@@ -1,4 +1,4 @@
-import { $listeners } from './symbol/EventTarget'
+import { $listeners } from './private/EventTarget'
 import { Event } from './Event'
 
 /**

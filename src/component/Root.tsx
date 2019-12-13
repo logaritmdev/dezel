@@ -1,4 +1,4 @@
-import { $children } from './symbol/Root'
+import { $children } from './private/Root'
 import { View } from '../view/View'
 
 /**
@@ -12,6 +12,7 @@ export class Root {
 	//--------------------------------------------------------------------------
 
 	/**
+	 * The root's children.
 	 * @property children
 	 * @since 0.7.0
 	 */
@@ -24,6 +25,7 @@ export class Root {
 	//--------------------------------------------------------------------------
 
 	/**
+	 * Append a view to this root.
 	 * @method append
 	 * @hidden
 	 */

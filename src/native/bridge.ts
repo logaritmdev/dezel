@@ -1,4 +1,4 @@
-import { $native } from './symbol/native'
+import { $native } from './private/native'
 import { Dezel } from '../core/Dezel'
 
 /**
@@ -10,9 +10,7 @@ function decorate(constructor: any, className: string) {
 
 	let klass = Dezel.importClass(className)
 	if (klass == null) {
-		throw new Error(
-			`Dezel error: The native class ${className} does not exist.`
-		)
+		throw new Error(`Dezel error: The native class ${className} does not exist.`)
 	}
 
 	for (let key in klass.statics) {

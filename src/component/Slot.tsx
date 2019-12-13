@@ -1,7 +1,7 @@
-import { $container } from './symbol/Slot'
-import { getComponent } from './private/Component'
-import { setComponentSlot } from './private/Component'
-import { Placeholder } from '../view/Placeholder'
+import { $container } from './private/Slot'
+import { getRenderingComponent } from './private/Component'
+import { setSlot } from './private/Component'
+import { Collection } from '../view/Collection'
 import { View } from '../view/View'
 import { ViewInsertEvent } from '../view/View'
 import { ViewRemoveEvent } from '../view/View'
@@ -9,28 +9,31 @@ import { Component } from './Component'
 
 /**
  * @class Slot
- * @super Placeholder
+ * @super Collection
  * @since 0.7.0
  */
-export class Slot extends Placeholder {
+export class Slot extends Collection {
 
 	//--------------------------------------------------------------------------
 	// Properties
 	//--------------------------------------------------------------------------
 
 	/**
+	 * The slot's name.
 	 * @property name
 	 * @since 0.7.0
 	 */
 	public name: string = ""
 
 	/**
+	 * Whether this slot is the main slot.
 	 * @property main
 	 * @since 0.7.0
 	 */
 	public main: boolean = false
 
 	/**
+	 * The slot's container.
 	 * @property container
 	 * @since 0.7.0
 	 */
@@ -43,45 +46,46 @@ export class Slot extends Placeholder {
 	//--------------------------------------------------------------------------
 
 	/**
+	 * @inherited
 	 * @method onInsert
 	 * @since 0.7.0
 	 */
-	protected onInsert(child: View, index: number) {
+	public onInsert(child: View, index: number) {
 		if (this.container) {
 			this.container.emit<ViewInsertEvent>('insert', { data: { child, index } })
 		}
 	}
 
 	/**
+	 * @inherited
 	 * @method onRemove
 	 * @since 0.7.0
 	 */
-	protected onRemove(child: View, index: number) {
+	public onRemove(child: View, index: number) {
 		if (this.container) {
 			this.container.emit<ViewRemoveEvent>('remove', { data: { child, index } })
 		}
 	}
 
 	/**
+	 * @inherited
 	 * @method onMoveToParent
 	 * @since 0.7.0
 	 */
-	protected onMoveToParent(parent: View | null) {
+	public onMoveToParent(parent: View | null) {
 
-		if (parent) {
-
-			let component = getComponent()
-			if (component == null) {
-				return
-			}
-
-			this[$container] = component
-
-			setComponentSlot(component, this)
-
-		} else {
-			// TODO
+		if (parent == null) {
+			return
 		}
+
+		let component = getRenderingComponent()
+		if (component == null) {
+			return
+		}
+
+		this[$container] = component
+
+		setSlot(component, this)
 	}
 
 	//--------------------------------------------------------------------------

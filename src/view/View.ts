@@ -1,9 +1,9 @@
-import { $children } from './symbol/View'
-import { $gestures } from './symbol/View'
-import { $states } from './symbol/View'
-import { $styles } from './symbol/View'
-import { setEmitterResponder } from '../event/private/Emitter'
-import { setValueOf } from '../jsx/symbol/createElement'
+import { $responder } from '../event/private/Emitter'
+import { $children } from './private/View'
+import { $gestures } from './private/View'
+import { $states } from './private/View'
+import { $styles } from './private/View'
+import { setValueOf } from '../jsx/private/createElement'
 import { bridge } from '../native/bridge'
 import { native } from '../native/native'
 import { getClassName } from './private/View'
@@ -13,11 +13,11 @@ import { removeItem } from './private/View'
 import { removeView } from './private/View'
 import { Emitter } from '../event/Emitter'
 import { Event } from '../event/Event'
+import { TouchEvent } from '../event/TouchEvent'
 import { GestureManager } from '../gesture/GestureManager'
 import { Canvas } from '../graphic/Canvas'
 import { Image } from '../graphic/Image'
-import { TouchEvent } from '../touch/TouchEvent'
-import { Placeholder } from './Placeholder'
+import { Collection } from './Collection'
 import { StateList } from './StateList'
 import { StyleList } from './StyleList'
 import { Window } from './Window'
@@ -143,22 +143,6 @@ export class View extends Emitter {
 	}
 
 	/**
-	 * @property window
-	 * @since 0.1.0
-	 */
-	public get window(): Window | null {
-		return native(this).window
-	}
-
-	/**
-	 * @property parent
-	 * @since 0.1.0
-	 */
-	public get parent(): View | null {
-		return native(this).parent
-	}
-
-	/**
 	 * @property children
 	 * @since 0.1.0
 	 */
@@ -179,6 +163,18 @@ export class View extends Emitter {
 	 * @since 0.1.0
 	 */
 	@native public id!: string
+
+	/**
+	 * @property window
+	 * @since 0.1.0
+	 */
+	@native public readonly window!: Window | null
+
+	/**
+	 * @property parent
+	 * @since 0.1.0
+	 */
+	@native public readonly parent!: View | null
 
 	/**
 	 * @property backgroundColor
@@ -964,129 +960,97 @@ export class View extends Emitter {
 	 * @property measuredTop
 	 * @since 0.1.0
 	 */
-	public get measuredTop(): number {
-		return native(this).measuredTop
-	}
+	@native public readonly measuredTop!: number
 
 	/**
 	 * @property measuredLeft
 	 * @since 0.1.0
 	 */
-	public get measuredLeft(): number {
-		return native(this).measuredLeft
-	}
+	@native public readonly measuredLeft!: number
 
 	/**
 	 * @property measuredWidth
 	 * @since 0.1.0
 	 */
-	public get measuredWidth(): number {
-		return native(this).measuredWidth
-	}
+	@native public readonly measuredWidth!: number
 
 	/**
 	 * @property measuredHeight
 	 * @since 0.1.0
 	 */
-	public get measuredHeight(): number {
-		return native(this).measuredHeight
-	}
+	@native public readonly measuredHeight!: number
 
 	/**
 	 * @property measuredInnerWidth
 	 * @since 0.1.0
 	 */
-	public get measuredInnerWidth(): number {
-		return native(this).measuredInnerWidth
-	}
+	@native public readonly measuredInnerWidth!: number
 
 	/**
 	 * @property measuredInnerHeight
 	 * @since 0.1.0
 	 */
-	public get measuredInnerHeight(): number {
-		return native(this).measuredInnerHeight
-	}
+	@native public readonly measuredInnerHeight!: number
 
 	/**
 	 * @property measuredContentWidth
 	 * @since 0.1.0
 	 */
-	public get measuredContentWidth(): number {
-		return native(this).measuredContentWidth
-	}
+	@native public readonly measuredContentWidth!: number
 
 	/**
 	 * @property measuredContentHeight
 	 * @since 0.1.0
 	 */
-	public get measuredContentHeight(): number {
-		return native(this).measuredContentHeight
-	}
+	@native public readonly measuredContentHeight!: number
 
 	/**
 	 * @property measuredMarginTop
 	 * @since 0.1.0
 	 */
-	public get measuredMarginTop(): number {
-		return native(this).measuredMarginTop
-	}
+	@native public readonly measuredMarginTop!: number
 
 	/**
 	 * @property measuredMarginLeft
 	 * @since 0.1.0
 	 */
-	public get measuredMarginLeft(): number {
-		return native(this).measuredMarginLeft
-	}
+	@native public readonly measuredMarginLeft!: number
 
 	/**
 	 * @property measuredMarginRight
 	 * @since 0.1.0
 	 */
-	public get measuredMarginRight(): number {
-		return native(this).measuredMarginRight
-	}
+	@native public readonly measuredMarginRight!: number
 
 	/**
 	 * @property measuredMarginBottom
 	 * @since 0.1.0
 	 */
-	public get measuredMarginBottom(): number {
-		return native(this).measuredMarginBottom
-	}
+	@native public readonly measuredMarginBottom!: number
 
 	/**
 	 * @property measuredPaddingTop
 	 * @since 0.1.0
 	 */
-	public get measuredPaddingTop(): number {
-		return native(this).measuredPaddingTop
-	}
+	@native public readonly measuredPaddingTop!: number
 
 	/**
 	 * @property measuredPaddingLeft
 	 * @since 0.1.0
 	 */
-	public get measuredPaddingLeft(): number {
-		return native(this).measuredPaddingLeft
-	}
+	@native public readonly measuredPaddingLeft!: number
 
 	/**
 	 * @property measuredPaddingRight
 	 * @since 0.1.0
 	 */
-	public get measuredPaddingRight(): number {
-		return native(this).measuredPaddingRight
-	}
+	@native public readonly measuredPaddingRight!: number
 
 	/**
 	 * @property measuredPaddingBottom
 	 * @since 0.1.0
 	 */
-	public get measuredPaddingBottom(): number {
-		return native(this).measuredPaddingBottom
-	}
+	@native public readonly measuredPaddingBottom!: number
 
 	//--------------------------------------------------------------------------
 	// Methods
@@ -1106,10 +1070,12 @@ export class View extends Emitter {
 	 * @since 0.1.0
 	 */
 	public destroy() {
-		// TODO FIXME put in onDestroy
-		if (this.parent) {
-			this.parent.remove(this)
-		}
+
+		/*
+		 * The native side will trigger the calls to the onDestroy
+		 * for this view and the hierarchy. Do not put anything else
+		 * in this method.
+		 */
 
 		native(this).destroy()
 
@@ -1120,7 +1086,7 @@ export class View extends Emitter {
 	 * @method append
 	 * @since 0.1.0
 	 */
-	public append(child: View | Placeholder) {
+	public append(child: View | Collection) {
 		this.insert(child, this.children.length)
 		return this
 	}
@@ -1129,16 +1095,10 @@ export class View extends Emitter {
 	 * @method insert
 	 * @since 0.1.0
 	 */
-	public insert(child: View | Placeholder, index: number) {
+	public insert(child: View | Collection, index: number) {
 
-		if (child == this) {
-			throw new Error(`
-				View error: Cannot insert inself as a child view.
-			`)
-		}
-
-		if (child instanceof Placeholder) {
-			child.embed(this, index)
+		if (child instanceof Collection) {
+			child.attach(this, index)
 			return this
 		}
 
@@ -1152,7 +1112,7 @@ export class View extends Emitter {
 			index = 0
 		}
 
-		setEmitterResponder(child, this)
+		child[$responder] = this
 
 		insertItem(this, child, index)
 		insertView(this, child, index)
@@ -1215,9 +1175,9 @@ export class View extends Emitter {
 	 * @method remove
 	 * @since 0.1.0
 	 */
-	public remove(child: View | Placeholder) {
+	public remove(child: View | Collection) {
 
-		if (child instanceof Placeholder) {
+		if (child instanceof Collection) {
 			child.destroy()
 			return this
 		}
@@ -1227,12 +1187,12 @@ export class View extends Emitter {
 			return this
 		}
 
-		setEmitterResponder(child, null)
+		this.emit<ViewRemoveEvent>('remove', { data: { child, index } })
 
 		removeItem(this, child, index)
 		removeView(this, child, index)
 
-		this.emit<ViewRemoveEvent>('remove', { data: { child, index } })
+		child[$responder] = null
 
 		return this
 	}
@@ -1295,8 +1255,10 @@ export class View extends Emitter {
 	 * @method onDestroy
 	 * @since 0.4.0
 	 */
-	protected onDestroy() {
-
+	public onDestroy() {
+		if (this.parent) {
+			this.parent.remove(this)
+		}
 	}
 
 	//--------------------------------------------------------------------------
@@ -1390,6 +1352,7 @@ export class View extends Emitter {
 	//--------------------------------------------------------------------------
 
 	/**
+	 * @inherited
 	 * @method onEvent
 	 * @since 0.7.0
 	 */
@@ -1494,50 +1457,56 @@ export class View extends Emitter {
 	}
 
 	/**
+	 * Called the layout is resolved.
 	 * @method onLayout
 	 * @since 0.1.0
 	 */
-	protected onLayout() {
+	public onLayout() {
 
 	}
 
 	/**
+	 * Called when the view needs to be drawn.
 	 * @method onRedraw
 	 * @since 0.4.0
 	 */
-	protected onRedraw(canvas: Canvas) {
+	public onRedraw(canvas: Canvas) {
 
 	}
 
 	/**
+	 * Called when the view inserts a child view.
 	 * @method onInsert
 	 * @since 0.1.0
 	 */
-	protected onInsert(child: View, index: number) {
+	public onInsert(child: View, index: number) {
 
 	}
 
 	/**
+	 * Called when the view removes a child view.
 	 * @method onRemove
 	 * @since 0.1.0
 	 */
-	protected onRemove(child: View, index: number) {
+	public onRemove(child: View, index: number) {
 
 	}
 
 	/**
+	 * Called when the view is inserted to a view connected to a window.
 	 * @method onMoveToWindow
 	 * @since 0.2.0
 	 */
-	protected onMoveToWindow(window: Window | null) {
+	public onMoveToWindow(window: Window | null) {
 
 	}
 
 	/**
+	 * Called when the view is inserted to a window.
 	 * @method onMoveToParent
 	 * @since 0.2.0
 	 */
-	protected onMoveToParent(parent: View | null) {
+	public onMoveToParent(parent: View | null) {
 
 	}
 
@@ -1545,7 +1514,7 @@ export class View extends Emitter {
 	 * @method onScrollStart
 	 * @since 0.1.0
 	 */
-	protected onScrollStart() {
+	public onScrollStart() {
 
 	}
 
@@ -1553,7 +1522,7 @@ export class View extends Emitter {
 	 * @method onScrollEnd
 	 * @since 0.1.0
 	 */
-	protected onScrollEnd() {
+	public onScrollEnd() {
 
 	}
 
@@ -1561,7 +1530,7 @@ export class View extends Emitter {
 	 * @method onScroll
 	 * @since 0.1.0
 	 */
-	protected onScroll() {
+	public onScroll() {
 
 	}
 
@@ -1569,7 +1538,7 @@ export class View extends Emitter {
 	 * @method onOverscroll
 	 * @since 0.1.0
 	 */
-	protected onOverscroll() {
+	public onOverscroll() {
 
 	}
 
@@ -1577,7 +1546,7 @@ export class View extends Emitter {
 	 * @method onDragStart
 	 * @since 0.1.0
 	 */
-	protected onDragStart() {
+	public onDragStart() {
 
 	}
 
@@ -1585,7 +1554,7 @@ export class View extends Emitter {
 	 * @method onDragEnd
 	 * @since 0.1.0
 	 */
-	protected onDragEnd() {
+	public onDragEnd() {
 
 	}
 
@@ -1593,7 +1562,7 @@ export class View extends Emitter {
 	 * @method onDrag
 	 * @since 0.1.0
 	 */
-	protected onDrag() {
+	public onDrag() {
 
 	}
 
@@ -1601,7 +1570,7 @@ export class View extends Emitter {
 	 * @method onZoomStart
 	 * @since 0.3.0
 	 */
-	protected onZoomStart() {
+	public onZoomStart() {
 
 	}
 
@@ -1609,7 +1578,7 @@ export class View extends Emitter {
 	 * @method onZoomEnd
 	 * @since 0.3.0
 	 */
-	protected onZoomEnd() {
+	public onZoomEnd() {
 
 	}
 
@@ -1617,7 +1586,7 @@ export class View extends Emitter {
 	 * @method onZoom
 	 * @since 0.3.0
 	 */
-	protected onZoom() {
+	public onZoom() {
 
 	}
 
@@ -1625,7 +1594,7 @@ export class View extends Emitter {
 	 * @method onTouchStart
 	 * @since 0.1.0
 	 */
-	protected onTouchStart(event: TouchEvent) {
+	public onTouchStart(event: TouchEvent) {
 
 	}
 
@@ -1633,7 +1602,7 @@ export class View extends Emitter {
 	 * @method onTouchMove
 	 * @since 0.1.0
 	 */
-	protected onTouchMove(event: TouchEvent) {
+	public onTouchMove(event: TouchEvent) {
 
 	}
 
@@ -1641,7 +1610,7 @@ export class View extends Emitter {
 	 * @method onTouchEnd
 	 * @since 0.1.0
 	 */
-	protected onTouchEnd(event: TouchEvent) {
+	public onTouchEnd(event: TouchEvent) {
 
 	}
 
@@ -1649,7 +1618,7 @@ export class View extends Emitter {
 	 * @method onTouchCancel
 	 * @since 0.1.0
 	 */
-	protected onTouchCancel(event: TouchEvent) {
+	public onTouchCancel(event: TouchEvent) {
 
 	}
 
@@ -1669,44 +1638,9 @@ export class View extends Emitter {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method dispatchTouchCancel
-	 * @since 0.7.0
-	 */
-	public dispatchTouchCancel(event: TouchEvent) {
-
-	}
-
-	/**
-	 * @method dispatchTouchStart
-	 * @since 0.7.0
-	 */
-	public dispatchTouchStart(event: TouchEvent) {
-
-	}
-
-	/**
-	 * @method dispatchTouchMove
-	 * @since 0.7.0
-	 */
-	public dispatchTouchMove(evnet: TouchEvent) {
-
-	}
-
-	/**
-	 * @method dispatchTouchEnd
-	 * @since 0.7.0
-	 */
-	public dispatchTouchEnd(event: TouchEvent) {
-
-	}
-
-	//--------------------------------------------------------------------------
-	// Internal API
-	//--------------------------------------------------------------------------
-
-	/**
 	 * @property setValueOf
 	 * @since 0.7.0
+	 * @hidden
 	 */
 	public [setValueOf] = function (value: number | string | boolean) {
 

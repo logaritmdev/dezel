@@ -1,14 +1,14 @@
+import { $buttons } from './private/Alert'
+import { $message } from './private/Alert'
+import { $presented } from './private/Alert'
+import { $selection } from './private/Alert'
+import { $style } from './private/Alert'
+import { $title } from './private/Alert'
 import { bound } from '../decorator/bound'
-import { Emitter } from '../event/Emitter'
-import { Event } from '../event/Event'
 import { bridge } from '../native/bridge'
 import { native } from '../native/native'
-import { $buttons } from './symbol/Alert'
-import { $message } from './symbol/Alert'
-import { $presented } from './symbol/Alert'
-import { $selection } from './symbol/Alert'
-import { $style } from './symbol/Alert'
-import { $title } from './symbol/Alert'
+import { Emitter } from '../event/Emitter'
+import { Event } from '../event/Event'
 import { AlertButton } from './AlertButton'
 
 @bridge('dezel.dialog.Alert')
@@ -170,7 +170,7 @@ export class Alert extends Emitter {
 	 * @method onPresent
 	 * @since 0.1.0
 	 */
-	protected onPresent(event: Event) {
+	public onPresent(event: Event) {
 
 	}
 
@@ -178,7 +178,7 @@ export class Alert extends Emitter {
 	 * @method onDismiss
 	 * @since 0.1.0
 	 */
-	protected onDismiss(event: Event<AlertDismissEvent>) {
+	public onDismiss(event: Event<AlertDismissEvent>) {
 
 	}
 

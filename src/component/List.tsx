@@ -1,5 +1,5 @@
-import { $selectedIndex } from './symbol/List'
-import { $selectedValue } from './symbol/List'
+import { $selectedIndex } from './private/List'
+import { $selectedValue } from './private/List'
 import { bound } from '../decorator/bound'
 import { Event } from '../event/Event'
 import { Reference } from '../view/Reference'
@@ -24,6 +24,7 @@ export class List extends Component {
 	//--------------------------------------------------------------------------
 
 	/**
+	 * The list's items.
 	 * @property items
 	 * @since 0.1.0
 	 */
@@ -32,6 +33,7 @@ export class List extends Component {
 	}
 
 	/**
+	 * The list's selected index.
 	 * @property selectedIndex
 	 * @since 0.1.0
 	 */
@@ -44,6 +46,7 @@ export class List extends Component {
 	//--------------------------------------------------------------------------
 
 	/**
+	 * @inhreited
 	 * @method render
 	 * @since 0.7.0
 	 */
@@ -56,6 +59,7 @@ export class List extends Component {
 	}
 
 	/**
+	 * Selects an item at a specified index.
 	 * @method select
 	 * @since 0.1.0
 	 */
@@ -95,34 +99,38 @@ export class List extends Component {
 	//--------------------------------------------------------------------------
 
 	/**
+	 * Called before an item is selected.
 	 * @method onBeforeSelect
 	 * @since 0.7.0
 	 */
-	protected onBeforeSelect(index: number) {
+	public onBeforeSelect(index: number) {
 
 	}
 
 	/**
+	 * Called after an item is selected.
 	 * @method onSelect
 	 * @since 0.7.0
 	 */
-	protected onSelect(index: number) {
+	public onSelect(index: number) {
 
 	}
 
 	/**
+	 * Called after an item is deselected.
 	 * @method onDeselect
 	 * @since 0.7.0
 	 */
-	protected onDeselect(index: number) {
+	public onDeselect(index: number) {
 
 	}
 
 	/**
+	 * @inherited
 	 * @method onInsert
 	 * @since 0.1.0
 	 */
-	protected onInsert(child: View, index: number) {
+	public onInsert(child: View, index: number) {
 		if (child instanceof ListItem) {
 			child.on('press', this.onListItemPress)
 			// TODO
@@ -131,10 +139,11 @@ export class List extends Component {
 	}
 
 	/**
+	 * @inherited
 	 * @method onRemove
 	 * @since 0.1.0
 	 */
-	protected onRemove(child: View, index: number) {
+	public onRemove(child: View, index: number) {
 		if (child instanceof ListItem) {
 			child.off('press', this.onListItemPress)
 
@@ -175,7 +184,7 @@ export class List extends Component {
 	 */
 	private applySelection(index: number) {
 
-		let value = this.items.children[index]
+		let value = this.items.get(index)
 		if (value == null) {
 			return this
 		}
@@ -224,7 +233,7 @@ export class List extends Component {
 	 * @hidden
 	 */
 	@bound private onListItemPress(event: Event) {
-		this.select(this.items.children.indexOf(event.sender as ListItem))
+		this.select(this.items.index(event.sender as ListItem))
 	}
 }
 

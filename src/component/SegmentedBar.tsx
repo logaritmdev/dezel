@@ -1,5 +1,5 @@
-import { $selectedIndex } from './symbol/SegmentedBar'
-import { $selectedValue } from './symbol/SegmentedBar'
+import { $selectedIndex } from './private/SegmentedBar'
+import { $selectedValue } from './private/SegmentedBar'
 import { bound } from '../decorator/bound'
 import { Event } from '../event/Event'
 import { Reference } from '../view/Reference'
@@ -24,6 +24,7 @@ export class SegmentedBar extends Component {
 	//--------------------------------------------------------------------------
 
 	/**
+	 * The segmented bar's buttons.
 	 * @property buttons
 	 * @since 0.1.0
 	 */
@@ -32,6 +33,7 @@ export class SegmentedBar extends Component {
 	}
 
 	/**
+	 * The segmented bar's selected index.
 	 * @property selectedIndex
 	 * @since 0.1.0
 	 */
@@ -44,6 +46,7 @@ export class SegmentedBar extends Component {
 	//--------------------------------------------------------------------------
 
 	/**
+	 * @inherited
 	 * @method render
 	 * @since 0.7.0
 	 */
@@ -56,6 +59,7 @@ export class SegmentedBar extends Component {
 	}
 
 	/**
+	 * Selects a button at a specified index.
 	 * @method select
 	 * @since 0.1.0
 	 */
@@ -95,6 +99,7 @@ export class SegmentedBar extends Component {
 	//--------------------------------------------------------------------------
 
 	/**
+	 * @inherited
 	 * @method onEvent
 	 * @since 0.7.0
 	 */
@@ -119,44 +124,49 @@ export class SegmentedBar extends Component {
 	}
 
 	/**
+	 * Called before a button is selected.
 	 * @method onBeforeSelect
 	 * @since 0.1.0
 	 */
-	protected onBeforeSelect(index: number) {
+	public onBeforeSelect(index: number) {
 
 	}
 
 	/**
+	 * Called after a button is selected.
 	 * @method onSelect
 	 * @since 0.1.0
 	 */
-	protected onSelect(index: number) {
+	public onSelect(index: number) {
 
 	}
 
 	/**
+	 * Called after a button is deselected.
 	 * @method onDeselect
 	 * @since 0.1.0
 	 */
-	protected onDeselect(index: number) {
+	public onDeselect(index: number) {
 
 	}
 
 	/**
+	 * @inherited
 	 * @method onInsert
 	 * @since 0.1.0
 	 */
-	protected onInsert(child: View, index: number) {
+	public onInsert(child: View, index: number) {
 		if (child instanceof SegmentedBarButton) {
 			child.on('press', this.onSegmentedBarButtonPress)
 		}
 	}
 
 	/**
+	 * @inherited
 	 * @method onRemove
 	 * @since 0.1.0
 	 */
-	protected onRemove(child: View, index: number) {
+	public onRemove(child: View, index: number) {
 		if (child instanceof SegmentedBarButton) {
 			child.off('press', this.onSegmentedBarButtonPress)
 		}
@@ -196,7 +206,7 @@ export class SegmentedBar extends Component {
 	 */
 	private applySelection(index: number) {
 
-		let value = this.buttons.children[index]
+		let value = this.buttons.get(index)
 		if (value == null) {
 			return this
 		}
@@ -245,7 +255,7 @@ export class SegmentedBar extends Component {
 	 * @hidden
 	 */
 	@bound private onSegmentedBarButtonPress(event: Event) {
-		this.select(this.buttons.children.indexOf(event.sender as SegmentedBarButton))
+		this.select(this.buttons.index(event.sender as SegmentedBarButton))
 	}
 }
 

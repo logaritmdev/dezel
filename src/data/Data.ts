@@ -1,5 +1,5 @@
 import * as diff from 'fast-array-diff'
-import { $values } from './symbol/Data'
+import { $values } from './private/Data'
 import { iterator } from '../iterator'
 import { Emitter } from '../event/Emitter'
 
@@ -15,6 +15,7 @@ export class Data<T> extends Emitter {
 	//--------------------------------------------------------------------------
 
 	/**
+	 * The data's length.
 	 * @property length
 	 * @since 0.7.0
 	 */
@@ -27,10 +28,11 @@ export class Data<T> extends Emitter {
 	//--------------------------------------------------------------------------
 
 	/**
+	 * Initializes the data.
 	 * @constructor
 	 * @since 0.7.0
 	 */
-	constructor(data?: Array<T> | Data<T>, options?: DataOptions<T>) {
+	constructor(items?: Array<T>, options?: DataOptions<T>) {
 
 		super()
 
@@ -39,27 +41,24 @@ export class Data<T> extends Emitter {
 			if (options.isNewer) this.isNewer = options.isNewer
 		}
 
-		if (data == null) {
-			data = []
+		if (items == null) {
+			items = []
 		}
 
-		if (data instanceof Data) {
-			this[$values] = data[$values].slice(0)
-			return
-		}
-
-		this[$values] = data.slice(0)
+		this[$values] = items.slice(0)
 	}
 
 	/**
+	 * Indicates whether a value exists.
 	 * @method has
 	 * @since 0.7.0
 	 */
-	public has(index: number) {
-		return index > -1 && index < this.length
+	public has(value: T) {
+		return this[$values].includes(value)
 	}
 
 	/**
+	 * Retrieve a value at a specified index.
 	 * @method get
 	 * @since 0.7.0
 	 */
@@ -68,47 +67,56 @@ export class Data<T> extends Emitter {
 	}
 
 	/**
+	 * Indicates whether every values matche the predicate.
+	 * @method every
+	 * @since 0.7.0
+	 */
+	public every(predicate: (value: T, index: number, array: Array<T>) => boolean) {
+		return this[$values].every(predicate)
+	}
+
+	/**
+	 * Indicates whether some values matche the predicate.
+	 * @method some
+	 * @since 0.7.0
+	 */
+	public some(predicate: (value: T, index: number, array: Array<T>) => boolean) {
+		return this[$values].some(predicate)
+	}
+
+	/**
+	 * Finds the first value that matches the predicate.
 	 * @method find
 	 * @since 0.7.0
 	 */
-	public find(predicate: (value: T) => boolean) {
-
-		for (let value of this[$values]) {
-			let found = predicate(value)
-			if (found == true) {
-				return value
-			}
-		}
-
-		return null
+	public find(predicate: (value: T, index: number, array: Array<T>) => boolean) {
+		return this[$values].find(predicate)
 	}
 
 	/**
-	 * @method findIndex
+	 * Loop through each values.
+	 * @method each
 	 * @since 0.7.0
 	 */
-	public findIndex(predicate: (value: T) => boolean) {
-
-		let value = this.find(predicate)
-		if (value) {
-			return this[$values].indexOf(value)
-		}
-
-		return null
+	public each(callback: (value: T, index: number, array: Array<T>) => boolean) {
+		return this[$values].forEach(callback)
 	}
+
 	/**
+	 * Inserts an array of values at the end.
 	 * @method append
 	 * @since 0.7.0
 	 */
-	public append(data: Array<T>) {
-		return this.insert(data, this.length)
+	public append(values: Array<T>) {
+		return this.insert(values, this.length)
 	}
 
 	/**
+	 * Inserts an array of values at a specified index.
 	 * @method insert
 	 * @since 0.7.0
 	 */
-	public insert(rows: Array<T>, index: number) {
+	public insert(values: Array<T>, index: number) {
 
 		if (index > this.length) {
 			index = this.length
@@ -116,55 +124,56 @@ export class Data<T> extends Emitter {
 			index = 0
 		}
 
-		this[$values].splice(index, 0, ...rows)
+		this[$values].splice(index, 0, ...values)
 
-		this.emit<DataInsertEvent<T>>('insert', { data: { index, rows } })
+		this.emit<DataInsertEvent<T>>('insert', { data: { index, items: values } })
 
 		return this
 	}
 
 	/**
+	 * Removes an array of values.
 	 * @method remove
 	 * @since 0.7.0
 	 */
-	public remove(rows: Array<T>) {
+	public remove(values: Array<T>) {
 
-		let index = this[$values].indexOf(rows[0])
+		let index = this[$values].indexOf(values[0])
 		if (index < this.minIndex ||
 			index > this.maxIndex) {
 			return this
 		}
 
-		this[$values].splice(index, rows.length)
+		this[$values].splice(index, values.length)
 
-		this.emit<DataRemoveEvent<T>>('remove', { data: { index, rows } })
+		this.emit<DataRemoveEvent<T>>('remove', { data: { index, items: values } })
 
 		return this
 	}
 
 	/**
+	 * Patches the current values using the specified values.
 	 * @method update
 	 * @since 0.7.0
 	 */
-	public update(data: Array<T>) {
+	public update(values: Array<T>) {
 
 		let length = this.length
 		if (length == 0) {
-			this.reset(data)
-			return this
+			return this.reset(values)
 		}
 
-		let patch = this.patch(data)
+		let patch = this.patch(values)
 		if (patch == null) {
 			return this
 		}
 
 		if (patch.removes == length) {
-			this.reset(data)
+			this.reset(values)
 			return this
 		}
 
-		this.emit('commit', { data: patch.ops })
+		this.emit('modify', { data: patch.ops })
 
 		for (let operation of patch.ops) switch (operation.type) {
 
@@ -189,39 +198,33 @@ export class Data<T> extends Emitter {
 
 			this[$values][index] = newValue
 
-			this.emit<DataChangeEvent<T>>('change', { data: { index, value: newValue } })
+			this.emit<DataUpdateEvent<T>>('update', { data: { index, value: newValue } })
 		}
 
-		this.emit('update')
+		this.emit('commit')
 
 		return this
 	}
 
 	/**
+	 * Resets the values.
 	 * @method reset
 	 * @since 0.7.0
 	 */
-	public reset(data: Array<T>) {
-
-		this[$values] = data.slice(0)
+	public reset(values: Array<T>) {
+		this[$values] = values.slice(0)
 		this.emit<DataReloadEvent<T>>('reload')
-
 		return this
 	}
 
 	/**
+	 * Clear the values.
 	 * @method clear
 	 * @since 0.7.0
 	 */
 	public clear() {
-
-		if (this.length == 0) {
-			return this
-		}
-
 		this[$values] = []
 		this.emit<DataReloadEvent<T>>('reload')
-
 		return this
 	}
 
@@ -329,8 +332,8 @@ export class Data<T> extends Emitter {
 			return null
 		}
 
-		let inserts = patches.filter(op => op.type == 'add').reduce((acc, val) => acc += val.items.length, 0)
-		let removes = patches.filter(op => op.type == 'remove').reduce((acc, val) => acc += val.items.length, 0)
+		let inserts = patches.filter(op => op.type[0] == 'a').reduce((acc, val) => acc += val.items.length, 0)
+		let removes = patches.filter(op => op.type[0] == 'r').reduce((acc, val) => acc += val.items.length, 0)
 
 		return {
 			ops: patches,
@@ -356,7 +359,7 @@ export interface DataOptions<T> {
  */
 export type DataInsertEvent<T> = {
 	index: number
-	rows: Array<T>
+	items: Array<T>
 }
 
 /**
@@ -365,20 +368,20 @@ export type DataInsertEvent<T> = {
  */
 export type DataRemoveEvent<T> = {
 	index: number
-	rows: Array<T>
+	items: Array<T>
 }
 
 /**
- * @type DataChangeEvent
+ * @type DataUpdateEvent
  * @since 0.7.0
  */
-export type DataChangeEvent<T> = {
+export type DataUpdateEvent<T> = {
 	index: number
 	value: T
 }
 
 /**
- * @type DataChangeEvent
+ * @type DataUpdateEvent
  * @since 0.7.0
  */
 export type DataReloadEvent<T> = {

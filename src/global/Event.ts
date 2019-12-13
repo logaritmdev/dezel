@@ -1,4 +1,4 @@
-import { $type } from './symbol/Event'
+import { $type } from './private/Event'
 
 /**
  * @class Event

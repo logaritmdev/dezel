@@ -1,4 +1,4 @@
-import { $native } from './symbol/native'
+import { $native } from './private/native'
 
 /**
  * @function create
@@ -25,6 +25,7 @@ function toNative(object: any) {
 	let native = object[$native]
 	if (native == null) {
 		native = object[$native] = create(object)
+		object['native'] = native // TMP
 	}
 
 	return native

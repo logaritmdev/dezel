@@ -19,7 +19,7 @@ export class Waiter {
 	 * @property done
 	 * @since 0.7.0
 	 */
-	public clear: any
+	public done: any
 
 	//--------------------------------------------------------------------------
 	// Propertis
@@ -31,7 +31,7 @@ export class Waiter {
 	 */
 	public constructor() {
 		this.promise = new Promise(done => {
-			this.clear = done
+			this.done = done
 		})
 	}
 }

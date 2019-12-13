@@ -14,6 +14,7 @@ export class Platform {
 	//--------------------------------------------------------------------------
 
 	/**
+	 * The current platform.
 	 * @property current
 	 * @since 0.7.0
 	 */
@@ -34,17 +35,14 @@ export class Platform {
 	 * @property name
 	 * @since 0.1.0
 	 */
-	public get name(): string {
-		return native(this).name
-	}
+	@native public readonly name!: string
 
 	/**
 	 * @property version
 	 * @since 0.1.0
 	 */
-	public get version(): string {
-		return native(this).version
-	}
+	@native public readonly version!: string
+
 }
 
 /**

@@ -1,4 +1,5 @@
 import { Frame } from '../../screen/Frame'
+import { Screen } from '../../screen/Screen'
 import { Window } from '../Window'
 
 /**
@@ -14,12 +15,10 @@ export function getCurrentScreen(window: Window) {
 
 		let view = window.children[index]
 		if (view instanceof Frame) {
-			return view.screen
+			return view.children[0] as Screen
 		}
 
 	}
 
-	throw new Error(
-		`Window error: Window does not have a screen.`
-	)
+	throw new Error(`Window error: Window does not have a screen.`)
 }

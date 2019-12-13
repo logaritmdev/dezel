@@ -17,7 +17,7 @@ export class CoverSegue extends Segue {
 	 * @method onBeforePresent
 	 * @since 0.7.0
 	 */
-	protected onBeforePresent(enter?: Screen, leave?: Screen) {
+	public onBeforePresent(enter?: Screen, leave?: Screen) {
 
 		if (enter) {
 			enter.translationY = '100%'
@@ -32,7 +32,7 @@ export class CoverSegue extends Segue {
 	 * @method onPresent
 	 * @since 0.7.0
 	 */
-	protected onPresent(enter?: Screen, leave?: Screen) {
+	public onPresent(enter?: Screen, leave?: Screen) {
 
 		if (enter) {
 			enter.translationY = '0%'
@@ -47,7 +47,7 @@ export class CoverSegue extends Segue {
 	 * @method onAfterPresent
 	 * @since 0.7.0
 	 */
-	protected onAfterPresent(enter?: Screen, leave?: Screen) {
+	public onAfterPresent(enter?: Screen, leave?: Screen) {
 
 		if (enter) {
 			enter.translationY = 0
@@ -62,7 +62,7 @@ export class CoverSegue extends Segue {
 	 * @method onBeforeDismiss
 	 * @since 0.7.0
 	 */
-	protected onBeforeDismiss(enter?: Screen, leave?: Screen) {
+	public onBeforeDismiss(enter?: Screen, leave?: Screen) {
 
 		if (enter) {
 			enter.opacity = 0.75
@@ -77,7 +77,7 @@ export class CoverSegue extends Segue {
 	 * @method onDismiss
 	 * @since 0.7.0
 	 */
-	protected onDismiss(enter?: Screen, leave?: Screen) {
+	public onDismiss(enter?: Screen, leave?: Screen) {
 
 		if (enter) {
 			enter.opacity = 1
@@ -92,7 +92,7 @@ export class CoverSegue extends Segue {
 	 * @method onAfterDismiss
 	 * @since 0.7.0
 	 */
-	protected onAfterDismiss(enter?: Screen, leave?: Screen) {
+	public onAfterDismiss(enter?: Screen, leave?: Screen) {
 		if (enter) enter.translationY = 0
 		if (leave) leave.translationY = 0
 	}

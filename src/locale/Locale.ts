@@ -14,6 +14,7 @@ export class Locale {
 	//--------------------------------------------------------------------------
 
 	/**
+	 * The current locale.
 	 * @property current
 	 * @since 0.7.0
 	 */
@@ -34,26 +35,25 @@ export class Locale {
 	 * @property language
 	 * @since 0.4.0
 	 */
-	@native public language!: string
+	@native public readonly language!: string
 
 	/**
 	 * @property region
 	 * @since 0.4.0
 	 */
-	@native public region!: string
+	@native public readonly region!: string
 
 	/**
 	 * @property ltr
 	 * @since 0.7.0
 	 */
-	@native public ltr!: boolean
+	@native public readonly ltr!: boolean
 
 	/**
 	 * @property rtl
 	 * @since 0.7.0
 	 */
-	@native public rtl!: boolean
-
+	@native public readonly rtl!: boolean
 }
 
 /**

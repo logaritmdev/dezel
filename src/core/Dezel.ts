@@ -1,5 +1,5 @@
-import { $classes } from './symbol/Dezel'
-import { $objects } from './symbol/Dezel'
+import { $classes } from './private/Dezel'
+import { $objects } from './private/Dezel'
 import { native } from '../native/native'
 import { Application } from '../application/Application'
 
@@ -10,6 +10,7 @@ import { Application } from '../application/Application'
 export class Dezel {
 
 	/**
+	 * Imports a native class to this context.
 	 * @method importClass
 	 * @since 0.7.0
 	 */
@@ -24,6 +25,7 @@ export class Dezel {
 	}
 
 	/**
+	 * Imports a native object to this context.
 	 * @method importObject
 	 * @since 0.7.0
 	 */
@@ -38,6 +40,7 @@ export class Dezel {
 	}
 
 	/**
+	 * Registers the main application.
 	 * @method registerApplication
 	 * @since 0.7.0
 	 */

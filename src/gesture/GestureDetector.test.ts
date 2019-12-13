@@ -1,4 +1,4 @@
-import { TouchEvent } from '../touch/TouchEvent'
+import { TouchEvent } from '../event/TouchEvent'
 import { GestureDetector } from './GestureDetector'
 import { State } from './GestureDetector'
 

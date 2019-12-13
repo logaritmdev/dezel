@@ -1,7 +1,7 @@
 import { state } from '../decorator/state'
 import { Image } from '../component/Image'
 import { Label } from '../component/Label'
-import { TouchEvent } from '../touch/TouchEvent'
+import { TouchEvent } from '../event/TouchEvent'
 import { Reference } from '../view/Reference'
 import { View } from '../view/View'
 import { Component } from './Component'
@@ -22,6 +22,7 @@ export class TabBarButton extends Component {
 	//--------------------------------------------------------------------------
 
 	/**
+	 * The button's label.
 	 * @property label
 	 * @since 0.1.0
 	 */
@@ -30,6 +31,7 @@ export class TabBarButton extends Component {
 	}
 
 	/**
+	 * The button's image.
 	 * @property image
 	 * @since 0.1.0
 	 */
@@ -38,6 +40,7 @@ export class TabBarButton extends Component {
 	}
 
 	/**
+	 * The button's badge.
 	 * @property badge
 	 * @since 0.1.0
 	 */
@@ -46,18 +49,21 @@ export class TabBarButton extends Component {
 	}
 
 	/**
+	 * Whether the button is pressed.
 	 * @property pressed
 	 * @since 0.1.0
 	 */
 	@state public pressed: boolean = false
 
 	/**
+	 * Whether the button is selected.
 	 * @property selected
 	 * @since 0.1.0
 	 */
 	@state public selected: boolean = false
 
 	/**
+	 * Whether the button is disabled.
 	 * @property disabled
 	 * @since 0.1.0
 	 */
@@ -68,6 +74,7 @@ export class TabBarButton extends Component {
 	//--------------------------------------------------------------------------
 
 	/**
+	 * @inherited
 	 * @method render
 	 * @since 0.3.0
 	 */
@@ -86,20 +93,22 @@ export class TabBarButton extends Component {
 	//--------------------------------------------------------------------------
 
 	/**
+	 * @inherited
 	 * @method onTouchStart
 	 * @since 0.1.0
 	 */
-	protected onTouchStart(event: TouchEvent) {
+	public onTouchStart(event: TouchEvent) {
 		if (this.pressed == false && this.disabled == false) {
 			this.pressed = true
 		}
 	}
 
 	/**
+	 * @inherited
 	 * @method onTouchEnd
 	 * @since 0.1.0
 	 */
-	protected onTouchEnd(event: TouchEvent) {
+	public onTouchEnd(event: TouchEvent) {
 		if (this.pressed && event.targetTouches.length == 0) {
 			this.pressed = false
 			this.press(event)
@@ -107,10 +116,11 @@ export class TabBarButton extends Component {
 	}
 
 	/**
+	 * @inherited
 	 * @method onTouchCancel
 	 * @since 0.1.0
 	 */
-	protected onTouchCancel(event: TouchEvent) {
+	public onTouchCancel(event: TouchEvent) {
 		if (this.pressed && event.targetTouches.length == 0) {
 			this.pressed = false
 		}
@@ -138,10 +148,13 @@ export class TabBarButton extends Component {
 	 */
 	private press(event?: TouchEvent) {
 
+		/*
+		TODO
 		if (event &&
 			event.hits(this) == false) {
 			return
 		}
+		*/
 
 		this.emit('press')
 	}

@@ -1,25 +1,36 @@
-import { $handler } from '../symbol/Emitter'
-import { $listeners } from '../symbol/Emitter'
-import { $responder } from '../symbol/Emitter'
-import { setEventSender } from './Event'
+import { $sender } from './Event'
+import { append } from '../../util/array'
+import { remove } from '../../util/array'
 import { Emitter } from '../Emitter'
 import { Event } from '../Event'
 
 /**
- * @function setEmitterResponder
+ * @symbol responder
  * @since 0.7.0
  * @hidden
  */
-export function setEmitterResponder(emitter: Emitter, responder: Emitter | null) {
-	emitter[$responder] = responder
-}
+export const $responder = Symbol('responder')
 
 /**
- * @function getEventListeners
+ * @symbol listeners
  * @since 0.7.0
  * @hidden
  */
-export function getEventListeners(emitter: Emitter, type: string) {
+export const $listeners = Symbol('listeners')
+
+/**
+ * @symbol callback
+ * @since 0.7.0
+ * @hidden
+ */
+export const $callback = Symbol('callback')
+
+/**
+ * @function getListeners
+ * @since 0.7.0
+ * @hidden
+ */
+export function getListeners(emitter: Emitter, type: string) {
 
 	type = type.toLowerCase()
 
@@ -32,15 +43,15 @@ export function getEventListeners(emitter: Emitter, type: string) {
 }
 
 /**
- * @function insertEventListener
+ * @function insertListener
  * @since 0.7.0
  * @hidden
  */
-export function insertEventListener(emitter: Emitter, type: string, listener: any, one: boolean = false) {
+export function insertListener(emitter: Emitter, type: string, listener: any, single: boolean = false) {
 
-	let listeners = getEventListeners(emitter, type)
+	let listeners = getListeners(emitter, type)
 
-	if (one) {
+	if (single) {
 
 		/*
 		 * Wraps the listener with a function that will remove itself
@@ -48,7 +59,7 @@ export function insertEventListener(emitter: Emitter, type: string, listener: an
 		 * a symbol.
 		 */
 
-		let callback = listener[$handler]
+		let callback = listener[$callback]
 		if (callback == null) {
 			listener = createSingleListener(emitter, type, listener)
 		} else {
@@ -56,34 +67,24 @@ export function insertEventListener(emitter: Emitter, type: string, listener: an
 		}
 	}
 
-	let index = listeners.indexOf(listener)
-	if (index > -1) {
-		return
-	}
-
-	listeners.push(listener)
+	append(listeners, listener)
 }
 
 /**
- * @function removeEventListener
+ * @function removeListener
  * @since 0.7.0
  * @hidden
  */
-export function removeEventListener(emitter: Emitter, type: string, listener: any) {
+export function removeListener(emitter: Emitter, type: string, listener: any) {
 
-	let listeners = getEventListeners(emitter, type)
+	let listeners = getListeners(emitter, type)
 
-	let callback = listener[$handler]
+	let callback = listener[$callback]
 	if (callback) {
 		listener = callback
 	}
 
-	let index = listeners.indexOf(listener)
-	if (index == -1) {
-		return
-	}
-
-	listeners.splice(index, 1)
+	remove(listeners, listener)
 }
 
 /**
@@ -93,7 +94,7 @@ export function removeEventListener(emitter: Emitter, type: string, listener: an
  */
 export function dispatchEvent(emitter: Emitter, event: Event) {
 
-	setEventSender(event, emitter)
+	event[$sender] = emitter
 
 	emitter.onEvent(event)
 
@@ -125,7 +126,7 @@ export function dispatchEvent(emitter: Emitter, event: Event) {
  * @hidden
  */
 export function invokeListeners(emitter: Emitter, event: Event) {
-	getEventListeners(emitter, event.type).forEach(listener => listener.call(emitter, event))
+	getListeners(emitter, event.type).forEach(listener => listener.call(emitter, event))
 }
 
 /**
@@ -135,16 +136,14 @@ export function invokeListeners(emitter: Emitter, event: Event) {
  */
 export function createSingleListener(emitter: Emitter, type: string, listener: any) {
 
-	let callback = listener[$handler]
-
-	if (callback == null) {
-		callback = listener[$handler] = function (event: Event) {
+	if (listener[$callback] == null) {
+		listener[$callback] = function (event: Event) {
 			invokeSingleListener(event.sender, listener, event)
 			removeSingleListener(event.sender, listener, event)
 		}
 	}
 
-	return callback
+	return listener[$callback]
 }
 
 /**
@@ -154,21 +153,14 @@ export function createSingleListener(emitter: Emitter, type: string, listener: a
  */
 export function removeSingleListener(emitter: Emitter, listener: any, event: Event) {
 
-	let listeners = getEventListeners(emitter, event.type)
+	let listeners = getListeners(emitter, event.type)
 
-	let callback = listener[$handler]
+	let callback = listener[$callback]
 	if (callback == null) {
-		throw new Error(
-			`Cannot remove listener.`
-		)
-	}
-
-	let index = listeners.indexOf(callback)
-	if (index == -1) {
 		return
 	}
 
-	listeners.splice(index, 1)
+	remove(listeners, callback)
 }
 
 /**

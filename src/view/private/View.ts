@@ -1,13 +1,40 @@
 import { native } from '../../native/native'
-import { $children } from '../symbol/View'
 import { View } from '../View'
+
+/**
+ * @symbol children
+ * @since 0.7.0
+ * @hidden
+ */
+export const $children = Symbol('children')
+
+/**
+ * @symbol gestures
+ * @since 0.7.0
+ * @hidden
+ */
+export const $gestures = Symbol('gestures')
+
+/**
+ * @symbol states
+ * @since 0.7.0
+ * @hidden
+ */
+export const $states = Symbol('states')
+
+/**
+ * @symbol styles
+ * @since 0.7.0
+ * @hidden
+ */
+export const $styles = Symbol('states')
 
 /**
  * @const classNames
  * @since 0.7.0
  * @hidden
  */
-const classNames = new Map<any, any>()
+export const classNames = new Map<any, any>()
 
 /**
  * @function insertItem

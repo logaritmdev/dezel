@@ -1,28 +1,17 @@
-import { $dismissing } from './symbol/Screen'
-import { $frame } from './symbol/Screen'
-import { $modal } from './symbol/Screen'
-import { $presented } from './symbol/Screen'
-import { $presentee } from './symbol/Screen'
-import { $presenter } from './symbol/Screen'
-import { $presenting } from './symbol/Screen'
-import { $segue } from './symbol/Screen'
-import { $style } from './symbol/Screen'
+import { $dismissing } from './private/Screen'
+import { $frame } from './private/Screen'
+import { $modal } from './private/Screen'
+import { $presented } from './private/Screen'
+import { $presentee } from './private/Screen'
+import { $presenter } from './private/Screen'
+import { $presenting } from './private/Screen'
+import { $segue } from './private/Screen'
+import { $style } from './private/Screen'
 import { bound } from '../decorator/bound'
-import { destroyScreenFrame } from './private/Screen'
-import { destroyScreenSegue } from './private/Screen'
 import { dismissScreenAsync } from './private/Screen'
-import { getScreenDismissSegue } from './private/Screen'
-import { getScreenPresentSegue } from './private/Screen'
-import { getScreenSegue } from './private/Screen'
+import { getDismissSegue } from './private/Screen'
+import { getPresentSegue } from './private/Screen'
 import { presentScreenAsync } from './private/Screen'
-import { removeScreenFrame } from './private/Screen'
-import { setScreenDismissing } from './private/Screen'
-import { setScreenModal } from './private/Screen'
-import { setScreenPresentee } from './private/Screen'
-import { setScreenPresenter } from './private/Screen'
-import { setScreenPresenting } from './private/Screen'
-import { setScreenSegue } from './private/Screen'
-import { setScreenStyle } from './private/Screen'
 import { Application } from '../application/Application'
 import { Component } from '../component/Component'
 import { Event } from '../event/Event'
@@ -45,24 +34,28 @@ export abstract class Screen<TResult = any> extends Component {
 	//--------------------------------------------------------------------------
 
 	/**
+	 * The status bar visibility status.
 	 * @property statusBarVisible
 	 * @since 0.1.0
 	 */
 	public statusBarVisible: boolean = true
 
 	/**
+	 * The status bar foreground color.
 	 * @property statusBarForegroundColor
 	 * @since 0.1.0
 	 */
 	public statusBarForegroundColor: 'white' | 'black' = 'black'
 
 	/**
+	 * The status bar background color.
 	 * @property statusBarBackgroundColor
 	 * @since 0.1.0
 	 */
 	public statusBarBackgroundColor: string = 'transparent'
 
 	/**
+	 * The screen that presents this screen.
 	 * @property presenter
 	 * @since 0.1.0
 	 */
@@ -71,6 +64,7 @@ export abstract class Screen<TResult = any> extends Component {
 	}
 
 	/**
+	 * This screen that is presented by this screen.
 	 * @property presentee
 	 * @since 0.1.0
 	 */
@@ -79,6 +73,7 @@ export abstract class Screen<TResult = any> extends Component {
 	}
 
 	/**
+	 * Whether this screen being presented.
 	 * @property presented
 	 * @since 0.5.0
 	 */
@@ -87,6 +82,7 @@ export abstract class Screen<TResult = any> extends Component {
 	}
 
 	/**
+	 * Whether this screen is presenting.
 	 * @property presenting
 	 * @since 0.4.0
 	 */
@@ -95,6 +91,7 @@ export abstract class Screen<TResult = any> extends Component {
 	}
 
 	/**
+	 * Whether this screen is dismissing.
 	 * @property dismissing
 	 * @since 0.4.0
 	 */
@@ -103,6 +100,7 @@ export abstract class Screen<TResult = any> extends Component {
 	}
 
 	/**
+	 * The screen segue.
 	 * @property segue
 	 * @since 0.7.0
 	 */
@@ -111,6 +109,7 @@ export abstract class Screen<TResult = any> extends Component {
 	}
 
 	/**
+	 * The screen result.
 	 * @property result
 	 * @since 0.1.0
 	 */
@@ -121,6 +120,18 @@ export abstract class Screen<TResult = any> extends Component {
 	//--------------------------------------------------------------------------
 
 	/**
+	 * Initializes the screen.
+	 * @constructor
+	 * @since 0.3.0
+	 */
+	constructor() {
+		super()
+		this[$frame] = new Frame()
+		this[$frame].append(this)
+	}
+
+	/**
+	 * Presents the specified screen with a segue.
 	 * @method present
 	 * @since 0.3.0
 	 */
@@ -132,34 +143,30 @@ export abstract class Screen<TResult = any> extends Component {
 		}
 
 		if (this.presenting) {
-			return Promise.resolve()
+			throw new Error(`Screen error: This screen is being presented.`)
 		}
 
 		if (this.presentee) {
-
-			if (this.presentee.dismissing ||
-				this.presentee.presenting) {
-				return this.presentee.presentAfter(screen, using, options)
-			}
-
-			throw new Error(
-				`Screen error: This screen is already presenting another screen.`
-			)
+			throw new Error(`Screen error: This screen is already presenting another screen.`)
 		}
 
-		setScreenModal(this, options.modal || false)
-		setScreenStyle(this, options.style || 'normal')
+		let opts = Object.assign(
+			{},
+			OPTIONS,
+			options
+		)
 
 		let dismissedScreen = this
 		let presenterScreen = this
 		let presentedScreen = screen
 
-		let presentedScreenSegue = getScreenPresentSegue(screen, using)
+		let presentedScreenSegue = getPresentSegue(screen, using)
 
-		setScreenPresenting(presenterScreen, true)
-		setScreenDismissing(dismissedScreen, true)
-
-		setScreenSegue(presentedScreen, presentedScreenSegue)
+		presentedScreen[$modal] = opts.modal
+		presentedScreen[$style] = opts.style
+		presentedScreen[$segue] = presentedScreenSegue
+		presenterScreen[$presenting] = true
+		dismissedScreen[$dismissing] = true
 
 		return presentScreenAsync(
 			this,
@@ -170,6 +177,7 @@ export abstract class Screen<TResult = any> extends Component {
 	}
 
 	/**
+	 * Dismisses this screen.
 	 * @method dismiss
 	 * @since 0.3.0
 	 */
@@ -184,13 +192,17 @@ export abstract class Screen<TResult = any> extends Component {
 			return Promise.resolve()
 		}
 
-		let presentedScreen = this.presenter!
 		let dismissedScreen = this
+		let presentedScreen = this.presenter
 
-		let dismissedScreenSegue = getScreenDismissSegue(this, using)
+		if (presentedScreen == null) {
+			return Promise.resolve()
+		}
 
-		setScreenDismissing(dismissedScreen, true)
-		setScreenDismissing(presentedScreen, true)
+		let dismissedScreenSegue = getDismissSegue(this, using)
+
+		dismissedScreen[$dismissing] = true
+		presentedScreen[$dismissing] = true
 
 		return dismissScreenAsync(
 			this,
@@ -201,6 +213,7 @@ export abstract class Screen<TResult = any> extends Component {
 	}
 
 	/**
+	 * Present a screen and wait for its result.
 	 * @method prompt
 	 * @since 0.3.0
 	 */
@@ -212,55 +225,15 @@ export abstract class Screen<TResult = any> extends Component {
 		}
 
 		if (this.presenting) {
-			return Promise.reject()
+			throw new Error(`Screen error: This screen is being presented.`)
 		}
 
 		if (this.presentee) {
-
-			if (this.presentee.dismissing ||
-				this.presentee.presenting) {
-				return this.presentee.promptAfter(screen, using, options)
-			}
-
-			throw new Error(
-				`Screen error: This screen is already presenting another screen.`
-			)
+			throw new Error(`Screen error: This screen is already presenting another screen.`)
 		}
 
 		return new Promise(success => {
 			this.present(screen.one('done', () => success(screen.result)), using, options)
-		})
-	}
-
-	/**
-	 * @method presentAfter
-	 * @since 0.3.0
-	 */
-	public presentAfter(screen: Screen, using: Segue | string, options: ScreenPresentOptions = {}): Promise<void> {
-
-		/*
-		 * Returns a promise that will resolve once this screen is disposed
-		 * and the presented screen transition ends.
-		 */
-
-		return new Promise(success => {
-			this.one('exit', () => this.present(screen, using, options).then(success))
-		})
-	}
-
-	/**
-	 * @method promptAfter
-	 * @since 0.3.0
-	 */
-	public promptAfter<R = any>(screen: Screen<R>, using: Segue | string, options: ScreenPresentOptions = {}): Promise<R | undefined | null> {
-
-		/*
-		 * Returns a promise that will resolve once this screen is disposed
-		 * and the presented screen is also disposed.
-		 */
-
-		return new Promise(success => {
-			this.one('exit', () => this.prompt(screen, using, options).then(success))
 		})
 	}
 
@@ -269,16 +242,7 @@ export abstract class Screen<TResult = any> extends Component {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method onDestroy
-	 * @since 0.4.0
-	 */
-	protected onDestroy() {
-		destroyScreenFrame(this)
-		destroyScreenSegue(this)
-		super.onDestroy()
-	}
-
-	/**
+	 * @inherited
 	 * @method onEvent
 	 * @since 0.7.0
 	 */
@@ -347,74 +311,83 @@ export abstract class Screen<TResult = any> extends Component {
 	}
 
 	/**
+	 * Called before this screen is presented.
 	 * @method onBeforePresent
 	 * @since 0.3.0
 	 */
-	protected onBeforePresent(segue: Segue) {
+	public onBeforePresent(segue: Segue) {
 
 	}
 
 	/**
+	 * Called after this screen is presented.
 	 * @method onPresent
 	 * @since 0.3.0
 	 */
-	protected onPresent(segue: Segue) {
+	public onPresent(segue: Segue) {
 
 	}
 
 	/**
+	 * Called before this screen is dismissed.
 	 * @method onBeforeDismiss
 	 * @since 0.3.0
 	 */
-	protected onBeforeDismiss(segue: Segue) {
+	public onBeforeDismiss(segue: Segue) {
 
 	}
 
 	/**
+	 * Called after this screen is dismissed.
 	 * @method onDismiss
 	 * @since 0.3.0
 	 */
-	protected onDismiss(segue: Segue) {
+	public onDismiss(segue: Segue) {
 
 	}
 
 	/**
+	 * Called before this screen enters the main screen.
 	 * @method onBeforeEnter
 	 * @since 0.3.0
 	 */
-	protected onBeforeEnter(segue: Segue) {
+	public onBeforeEnter(segue: Segue) {
 
 	}
 
 	/**
+	 * Called after this screen enters the main screen.
 	 * @method onEnter
 	 * @since 0.3.0
 	 */
-	protected onEnter(segue: Segue) {
+	public onEnter(segue: Segue) {
 
 	}
 
 	/**
+	 * Called before this screen leaves the main screen.
 	 * @method onBeforeLeave
 	 * @since 0.3.0
 	 */
-	protected onBeforeLeave(segue: Segue) {
+	public onBeforeLeave(segue: Segue) {
 
 	}
 
 	/**
+	 * Called after this screen leaves the main screen.
 	 * @method onLeave
 	 * @since 0.3.0
 	 */
-	protected onLeave(segue: Segue) {
+	public onLeave(segue: Segue) {
 
 	}
 
 	/**
+	 * Called when the users presses a generic back button.
 	 * @method onBack
 	 * @since 0.3.0
 	 */
-	protected onBack(event: Event) {
+	public onBack(event: Event) {
 
 		let presentedScreen = this.presentee
 		if (presentedScreen) {
@@ -434,50 +407,56 @@ export abstract class Screen<TResult = any> extends Component {
 	}
 
 	/**
+	 * Called before the software keyboard is displayed.
 	 * @method onBeforeKeyboardShow
 	 * @since 0.3.0
 	 */
-	protected onBeforeKeyboardShow(height: number, duration: number, equation: string) {
+	public onBeforeKeyboardShow(height: number, duration: number, equation: string) {
 
 	}
 
 	/**
+	 * Called after the software keyboard is displayed.
 	 * @method onKeyboardShow
 	 * @since 0.3.0
 	 */
-	protected onKeyboardShow(height: number, duration: number, equation: string) {
+	public onKeyboardShow(height: number, duration: number, equation: string) {
 
 	}
 
 	/**
+	 * Called before the software keyboard is hidden.
 	 * @method onBeforeKeyboardHide
 	 * @since 0.3.0
 	 */
-	protected onBeforeKeyboardHide(height: number, duration: number, equation: string) {
+	public onBeforeKeyboardHide(height: number, duration: number, equation: string) {
 
 	}
 
 	/**
+	 * Called after the software keyboard is hidden.
 	 * @method onKeyboardHide
 	 * @since 0.3.0
 	 */
-	protected onKeyboardHide(height: number, duration: number, equation: string) {
+	public onKeyboardHide(height: number, duration: number, equation: string) {
 
 	}
 
 	/**
+	 * Called when the software keyboard changes is size.
 	 * @method onKeyboardResize
 	 * @since 0.3.0
 	 */
-	protected onKeyboardResize(height: number, duration: number, equation: string) {
+	public onKeyboardResize(height: number, duration: number, equation: string) {
 
 	}
 
 	/**
 	 * @method onMoveToWindowDefault
 	 * @since 0.4.0
+	 * @hidden
 	 */
-	protected onMoveToWindowDefault(event: Event<ViewMoveToWindowEvent>) {
+	public onMoveToWindowDefault(event: Event<ViewMoveToWindowEvent>) {
 
 		let application = Application.main
 		if (application == null) {
@@ -518,20 +497,26 @@ export abstract class Screen<TResult = any> extends Component {
 
 		this.emit('dispose')
 
-		removeScreenFrame(this)
+		let segue = this[$segue]
+		if (segue) {
+			segue.dispose()
+		}
+
+		this[$frame].removeFromParent()
 
 		if (destroy) {
 			this.destroy()
 		}
 
+		this[$modal] = false
+		this[$segue] = null
+
 		if (this.presenter) {
-			setScreenPresentee(this.presenter, null)
+			this.presenter[$presentee] = null
 		}
 
-		setScreenPresenter(this, null)
-		setScreenPresentee(this, null)
-		setScreenModal(this, false)
-		setScreenSegue(this, null)
+		this[$presenter] = null
+		this[$presentee] = null
 
 		this.result = null
 	}
@@ -542,12 +527,15 @@ export abstract class Screen<TResult = any> extends Component {
 	 * @hidden
 	 */
 	public updateStatusBar() {
+
 		let application = Application.main
 		if (application) {
 			application.statusBarVisible = this.statusBarVisible
 			application.statusBarForegroundColor = this.statusBarForegroundColor
 			application.statusBarBackgroundColor = this.statusBarBackgroundColor
 		}
+
+		return this
 	}
 
 	//--------------------------------------------------------------------------
@@ -590,18 +578,18 @@ export abstract class Screen<TResult = any> extends Component {
 	private [$dismissing]: boolean = false
 
 	/**
+	 * @property $frame
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	public [$frame]: Frame
+
+	/**
 	 * @property $segue
 	 * @since 0.7.0
 	 * @hidden
 	 */
 	private [$segue]: Segue | null = null
-
-	/**
-	 * @property $frame
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	public [$frame]: Frame | null = null
 
 	/**
 	 * @property $overlaid
@@ -661,6 +649,16 @@ export abstract class Screen<TResult = any> extends Component {
 	@bound private onApplicationKeyboardResize(event: Event) {
 		this.emit(event)
 	}
+}
+
+/**
+ * @const OPTIONS
+ * @since 0.7.0
+ * @hidden
+ */
+const OPTIONS: Required<ScreenPresentOptions> = {
+	modal: false,
+	style: 'normal'
 }
 
 /**

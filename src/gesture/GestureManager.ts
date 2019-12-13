@@ -1,9 +1,8 @@
-import { $gestures } from './symbol/GestureManager'
-import { $view } from './symbol/GestureManager'
-import { setGestureView } from './private/GestureDetector'
+import { $gestures } from './private/GestureManager'
+import { $view } from './private/GestureManager'
 import { insertItem } from './private/GestureManager'
 import { removeItem } from './private/GestureManager'
-import { TouchEvent } from '../touch/TouchEvent'
+import { TouchEvent } from '../event/TouchEvent'
 import { View } from '../view/View'
 import { GestureDetector } from './GestureDetector'
 import { State } from './GestureDetector'
@@ -53,9 +52,7 @@ export class GestureManager {
 	public append(gesture: GestureDetector) {
 
 		if (gesture.view) {
-			throw new Error(
-				`Gesture error: This gesture has already been added to another view.`
-			)
+			throw new Error(`Gesture error: This gesture has already been added to another view.`)
 		}
 
 		let index = this.gestures.indexOf(gesture)
@@ -63,8 +60,7 @@ export class GestureManager {
 			return this
 		}
 
-		setGestureView(gesture, this.view)
-
+		gesture.attach(this.view)
 		gesture.reset()
 
 		insertItem(this, gesture)
@@ -83,8 +79,7 @@ export class GestureManager {
 			return this
 		}
 
-		setGestureView(gesture, null)
-
+		gesture.detach()
 		gesture.reset()
 
 		removeItem(this, gesture, index)
@@ -174,7 +169,7 @@ export class GestureManager {
 	 * @method reset
 	 * @since 0.7.0
 	 */
-	protected reset() {
+	public reset() {
 		this.gestures.forEach(gesture => gesture.reset())
 		return this
 	}

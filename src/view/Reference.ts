@@ -1,5 +1,5 @@
-import { $value } from './symbol/Reference'
-import { Placeholder } from './Placeholder'
+import { $value } from './private/Reference'
+import { Collection } from './Collection'
 import { View } from './View'
 
 /**
@@ -7,7 +7,7 @@ import { View } from './View'
  * @since 0.7.0
  * @hidden
  */
-export class Reference<T extends View | Placeholder> {
+export class Reference<T extends View | Collection> {
 
 	//--------------------------------------------------------------------------
 	// Properties
@@ -36,9 +36,7 @@ export class Reference<T extends View | Placeholder> {
 			return this
 		}
 
-		throw new Error(
-			`Reference error: Reference has already been set.`
-		)
+		throw new Error(`Reference error: Reference has already been set.`)
 	}
 
 	/**
@@ -52,9 +50,7 @@ export class Reference<T extends View | Placeholder> {
 			return value
 		}
 
-		throw new Error(
-			`Reference error: Unable to return a null reference.`
-		)
+		throw new Error(`Reference error: Unable to return a null reference.`)
 	}
 
 	//--------------------------------------------------------------------------

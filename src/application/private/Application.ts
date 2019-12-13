@@ -1,19 +1,24 @@
-import { setEventTarget } from '../../event/private/Event'
-import { setTouchCanceled } from '../../touch/private/Touch'
-import { setTouchCaptured } from '../../touch/private/Touch'
-import { setTouchId } from '../../touch/private/Touch'
-import { setTouchTarget } from '../../touch/private/Touch'
-import { setTouchX } from '../../touch/private/Touch'
-import { setTouchY } from '../../touch/private/Touch'
 import { native } from '../../native/native'
-import { Touch } from '../../touch/Touch'
-import { TouchEvent } from '../../touch/TouchEvent'
-import { TouchList } from '../../touch/TouchList'
+import { Touch } from '../../event/Touch'
+import { TouchEvent } from '../../event/TouchEvent'
+import { TouchList } from '../../event/TouchList'
 import { View } from '../../view/View'
-import { $touches } from '../symbol/Application'
-import { Emitter } from '../..'
 import { Application } from '../Application'
 import { InputTouch } from '../Application'
+
+/**
+ * @symbol screen
+ * @since 0.7.0
+ * @hidden
+ */
+export const $screen = Symbol('screen')
+
+/**
+ * @symbol touches
+ * @since 0.7.0
+ * @hidden
+ */
+export const $touches = Symbol('touches')
 
 /**
  * @function registerTouch
@@ -27,17 +32,15 @@ export function registerTouch(application: Application, input: InputTouch, touch
 		return
 	}
 
-	throw new Error(
-		`Application error: Touch ${input.id} has already been registered.`
-	)
+	throw new Error(`Application error: Touch ${input.id} has already been registered.`)
 }
 
 /**
- * @function getTouch
+ * @function getRegisteredTouch
  * @since 0.7.0
  * @hidden
  */
-export function getTouch(application: Application, input: InputTouch) {
+export function getRegisteredTouch(application: Application, input: InputTouch) {
 
 	let touch = application[$touches][input.id]
 	if (touch &&
@@ -226,26 +229,13 @@ export function captureTouchMove(event: TouchEvent) {
 	}
 }
 
+
 /**
- * @method updateEventTarget
+ * @method updateEventInputs
  * @since 0.7.0
  * @hidden
  */
-export function updateEventTarget(event: TouchEvent, target: Emitter) {
-
-	setEventTarget(event, event.sender)
-
-	for (let touch of event.touches) {
-		setTouchTarget(touch, event.sender)
-	}
-}
-
-/**
- * @method updateInputTouches
- * @since 0.7.0
- * @hidden
- */
-export function updateInputTouches(event: TouchEvent, inputs: Array<InputTouch>) {
+export function updateEventInputs(event: TouchEvent, inputs: Array<InputTouch>) {
 
 	let map: Dictionary<InputTouch> = {}
 

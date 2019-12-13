@@ -1,11 +1,12 @@
 import { state } from '../decorator/state'
 import { Event } from '../event/Event'
-import { TouchEvent } from '../touch/TouchEvent'
+import { TouchEvent } from '../event/TouchEvent'
 import { Reference } from '../view/Reference'
 import { View } from '../view/View'
 import { Component } from './Component'
 import { Image } from './Image'
 import { Label } from './Label'
+import { Root } from './Root'
 import './style/NavigationBarButton.style'
 import './style/NavigationBarButton.style.android'
 import './style/NavigationBarButton.style.ios'
@@ -65,10 +66,10 @@ export class NavigationBarButton extends Component {
 	 */
 	public render() {
 		return (
-			<View>
+			<Root>
 				<Image ref={this.refs.image} id="image" />
 				<Label ref={this.refs.label} id="label" />
-			</View>
+			</Root>
 		)
 	}
 
@@ -99,7 +100,7 @@ export class NavigationBarButton extends Component {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	protected onTouchStart(event: TouchEvent) {
+	public onTouchStart(event: TouchEvent) {
 		if (this.pressed == false) {
 			this.pressed = true
 		}
@@ -110,7 +111,7 @@ export class NavigationBarButton extends Component {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	protected onTouchEnd(event: TouchEvent) {
+	public onTouchEnd(event: TouchEvent) {
 		if (this.pressed && event.targetTouches.length == 0) {
 			this.pressed = false
 			this.press(event)
@@ -122,7 +123,7 @@ export class NavigationBarButton extends Component {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	protected onTouchCancel(event: TouchEvent) {
+	public onTouchCancel(event: TouchEvent) {
 		if (this.pressed && event.targetTouches.length == 0) {
 			this.pressed = false
 		}
@@ -149,10 +150,13 @@ export class NavigationBarButton extends Component {
 	 */
 	private press(event?: TouchEvent) {
 
+		/*
+		TODO
 		if (event &&
 			event.hits(this) == false) {
 			return
 		}
+		*/
 
 		this.emit('press')
 

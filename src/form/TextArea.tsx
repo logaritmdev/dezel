@@ -225,7 +225,7 @@ export class TextArea extends View {
 	 * @method onInput
 	 * @since 0.1.0
 	 */
-	protected onInput(event: Event) {
+	public onInput(event: Event) {
 
 	}
 
@@ -233,7 +233,7 @@ export class TextArea extends View {
 	 * @method onFocus
 	 * @since 0.1.0
 	 */
-	protected onFocus(event: Event) {
+	public onFocus(event: Event) {
 
 	}
 
@@ -241,7 +241,7 @@ export class TextArea extends View {
 	 * @method onBlur
 	 * @since 0.1.0
 	 */
-	protected onBlur(event: Event) {
+	public onBlur(event: Event) {
 
 	}
 
@@ -249,7 +249,7 @@ export class TextArea extends View {
 	 * @method onMoveToWindow
 	 * @since 0.2.0
 	 */
-	protected onMoveToWindow(window: Window | null) {
+	public onMoveToWindow(window: Window | null) {
 		// TODO
 		// Fix this with gesture
 		// if (this.window) {

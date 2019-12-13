@@ -1,4 +1,4 @@
-import { setValueOf } from '../jsx/symbol/createElement'
+import { setValueOf } from '../jsx/private/createElement'
 import { bridge } from '../native/bridge'
 import { native } from '../native/native'
 import { Image } from '../graphic/Image'

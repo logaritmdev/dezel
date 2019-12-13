@@ -7,6 +7,7 @@ import { View } from '../view/View'
 export interface Composable {
 
 	/**
+	 * Called when the receiver can manage the specifed view.
 	 * @method onCompose
 	 * @since 0.7.0
 	 */

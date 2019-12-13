@@ -87,7 +87,7 @@ export class SlideSegue extends Segue {
 	 * @method onBeforePresent
 	 * @since 0.7.0
 	 */
-	protected onBeforePresent(enter?: Screen, leave?: Screen) {
+	public onBeforePresent(enter?: Screen, leave?: Screen) {
 
 		if (enter) {
 			enter.translationX = '100%'
@@ -103,7 +103,7 @@ export class SlideSegue extends Segue {
 	 * @method onPresent
 	 * @since 0.7.0
 	 */
-	protected onPresent(enter?: Screen, leave?: Screen) {
+	public onPresent(enter?: Screen, leave?: Screen) {
 
 		if (enter) {
 			enter.translationX = '0%'
@@ -119,7 +119,7 @@ export class SlideSegue extends Segue {
 	 * @method onBeforeDismiss
 	 * @since 0.7.0
 	 */
-	protected onBeforeDismiss(enter?: Screen, leave?: Screen) {
+	public onBeforeDismiss(enter?: Screen, leave?: Screen) {
 
 		if (enter) {
 			enter.translationX = '-25%'
@@ -135,7 +135,7 @@ export class SlideSegue extends Segue {
 	 * @method onDismiss
 	 * @since 0.7.0
 	 */
-	protected onDismiss(enter?: Screen, leave?: Screen) {
+	public onDismiss(enter?: Screen, leave?: Screen) {
 
 		if (enter) {
 			enter.translationX = '0%'
@@ -151,7 +151,7 @@ export class SlideSegue extends Segue {
 	 * @method onAfterPresent
 	 * @since 0.7.0
 	 */
-	protected onAfterPresent(enter?: Screen, leave?: Screen) {
+	public onAfterPresent(enter?: Screen, leave?: Screen) {
 
 		if (enter) {
 			enter.translationX = 0
@@ -167,7 +167,7 @@ export class SlideSegue extends Segue {
 	 * @method onAfterDismiss
 	 * @since 0.7.0
 	 */
-	protected onAfterDismiss(enter?: Screen, leave?: Screen) {
+	public onAfterDismiss(enter?: Screen, leave?: Screen) {
 
 		if (enter) {
 			enter.translationX = 0
@@ -182,7 +182,7 @@ export class SlideSegue extends Segue {
 	 * @method onProgress
 	 * @since 0.7.0
 	 */
-	protected onDismissProgress(progress: number, enter?: Screen, leave?: Screen) {
+	public onDismissProgress(progress: number, enter?: Screen, leave?: Screen) {
 
 		if (leave) {
 			leave.translationX = (progress * 100) + '%'

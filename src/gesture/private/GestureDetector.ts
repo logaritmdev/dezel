@@ -1,42 +1,84 @@
-import { $callback } from '../symbol/GestureDetector'
-import { $canceled } from '../symbol/GestureDetector'
-import { $detected } from '../symbol/GestureDetector'
-import { $duration } from '../symbol/GestureDetector'
-import { $finished } from '../symbol/GestureDetector'
-import { $resolved } from '../symbol/GestureDetector'
-import { $state } from '../symbol/GestureDetector'
-import { $view } from '../symbol/GestureDetector'
 import { Event } from '../../event/Event'
 import { View } from '../../view/View'
 import { GestureDetector } from '../GestureDetector'
 import { State } from '../GestureDetector'
 
 /**
- * @function setGestureView
+ * @symbol view
  * @since 0.7.0
  * @hidden
  */
-export function setGestureView(gesture: GestureDetector, view: View | null) {
-	gesture[$view] = view
-}
+export const $view = Symbol('view')
 
 /**
- * @method setGestureState
+ * @symbol state
+ * @since 0.7.0
+ * @hidden
+ */
+export const $state = Symbol('state')
+
+/**
+ * @symbol captured
+ * @since 0.7.0
+ * @hidden
+ */
+export const $captured = Symbol('captured')
+
+/**
+ * @symbol resolved
+ * @since 0.7.0
+ * @hidden
+ */
+export const $resolved = Symbol('resolved')
+
+/**
+ * @symbol duration
+ * @since 0.7.0
+ * @hidden
+ */
+export const $duration = Symbol('duration')
+
+/**
+ * @symbol callback
+ * @since 0.7.0
+ * @hidden
+ */
+export const $callback = Symbol('callback')
+
+/**
+ * @symbol detected
+ * @since 0.7.0
+ * @hidden
+ */
+export const $detected = Symbol('detected')
+
+/**
+ * @symbol canceled
+ * @since 0.7.0
+ * @hidden
+ */
+export const $canceled = Symbol('canceled')
+
+/**
+ * @symbol finished
+ * @since 0.7.0
+ * @hidden
+ */
+export const $finished = Symbol('finished')
+
+/**
+ * @function setGestureState
  * @since 0.7.0
  * @hidden
  */
 export function setGestureState(gesture: GestureDetector, state: State) {
 
 	if (gesture.resolved) {
-		throw new Error(
-			`Gesture error: This gesture's state cannot be changed until it is reset.`
-		)
+		throw new Error(`Gesture error: This gesture's state cannot be changed until it is reset.`)
 	}
 
 	if (gesture.state > state) {
-		throw new Error(
-			`Gesture error: This gesture's state cannot be changed to a lower value.`
-		)
+		throw new Error(`Gesture error: This gesture's state cannot be changed to a lower value.`)
 	}
 
 	if (gesture.state == state &&

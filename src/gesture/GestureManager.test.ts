@@ -1,5 +1,5 @@
-import { Touch } from '../touch/Touch'
-import { TouchList } from '../touch/TouchList'
+import { Touch } from '../event/Touch'
+import { TouchList } from '../event/TouchList'
 import { Window } from '../view/Window'
 import { GestureDetector } from './GestureDetector'
 import { State } from './GestureDetector'
@@ -562,7 +562,7 @@ class TestGestureDetector extends GestureDetector {
 		return this.cancel()
 	}
 
-	protected onTouchStart(event: TouchEvent) {
+	public onTouchStart(event: TouchEvent) {
 
 		if (this.ignoreOnTouchStart) {
 			this.ignore()
@@ -581,7 +581,7 @@ class TestGestureDetector extends GestureDetector {
 		}
 	}
 
-	protected onTouchMove(event: TouchEvent) {
+	public onTouchMove(event: TouchEvent) {
 
 		if (this.ignoreOnTouchMove) {
 			this.ignore()
@@ -600,7 +600,7 @@ class TestGestureDetector extends GestureDetector {
 		}
 	}
 
-	protected onTouchEnd(event: TouchEvent) {
+	public onTouchEnd(event: TouchEvent) {
 
 		if (this.ignoreOnTouchEnd) {
 			this.ignore()
@@ -619,11 +619,11 @@ class TestGestureDetector extends GestureDetector {
 		}
 	}
 
-	protected onTouchCancel(event: TouchEvent) {
+	public onTouchCancel(event: TouchEvent) {
 
 	}
 
-	protected onReset() {
+	public onReset() {
 
 	}
 }

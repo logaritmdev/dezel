@@ -1,14 +1,14 @@
-import { $detectX } from './symbol/PanGestureDetector'
-import { $detectY } from './symbol/PanGestureDetector'
-import { $originX } from './symbol/PanGestureDetector'
-import { $originY } from './symbol/PanGestureDetector'
-import { $touch } from './symbol/PanGestureDetector'
-import { $translationX } from './symbol/PanGestureDetector'
-import { $translationY } from './symbol/PanGestureDetector'
-import { $x } from './symbol/PanGestureDetector'
-import { $y } from './symbol/PanGestureDetector'
-import { Touch } from '../touch/Touch'
-import { TouchEvent } from '../touch/TouchEvent'
+import { $detectX } from './private/PanGestureDetector'
+import { $detectY } from './private/PanGestureDetector'
+import { $originX } from './private/PanGestureDetector'
+import { $originY } from './private/PanGestureDetector'
+import { $touch } from './private/PanGestureDetector'
+import { $translationX } from './private/PanGestureDetector'
+import { $translationY } from './private/PanGestureDetector'
+import { $x } from './private/PanGestureDetector'
+import { $y } from './private/PanGestureDetector'
+import { Touch } from '../event/Touch'
+import { TouchEvent } from '../event/TouchEvent'
 import { GestureDetector } from './GestureDetector'
 import { State } from './GestureDetector'
 
@@ -91,7 +91,7 @@ export class PanGestureDetector extends GestureDetector {
 	 * @method onTouchStart
 	 * @since 0.7.0
 	 */
-	protected onTouchStart(event: TouchEvent) {
+	public onTouchStart(event: TouchEvent) {
 		if (this[$touch] == null) {
 			this[$touch] = event.touches.get(0)
 			this[$originX] = event.touches.get(0).x
@@ -103,7 +103,7 @@ export class PanGestureDetector extends GestureDetector {
 	 * @method onTouchMove
 	 * @since 0.7.0
 	 */
-	protected onTouchMove(event: TouchEvent) {
+	public onTouchMove(event: TouchEvent) {
 
 		let touch = this[$touch]
 		if (touch == null) {
@@ -147,7 +147,7 @@ export class PanGestureDetector extends GestureDetector {
 	 * @method onTouchEnd
 	 * @since 0.7.0
 	 */
-	protected onTouchEnd(event: TouchEvent) {
+	public onTouchEnd(event: TouchEvent) {
 
 		let touch = this[$touch]
 		if (touch == null) {
@@ -168,7 +168,7 @@ export class PanGestureDetector extends GestureDetector {
 	 * @method onTouchCancel
 	 * @since 0.7.0
 	 */
-	protected onTouchCancel(event: TouchEvent) {
+	public onTouchCancel(event: TouchEvent) {
 
 		let touch = this[$touch]
 		if (touch == null) {
@@ -189,7 +189,7 @@ export class PanGestureDetector extends GestureDetector {
 	 * @method onTouchCancel
 	 * @since 0.7.0
 	 */
-	protected onReset() {
+	public onReset() {
 		this[$x] = -1
 		this[$y] = -1
 		this[$originX] = -1

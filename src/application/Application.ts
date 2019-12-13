@@ -1,43 +1,38 @@
-import '../index'
-import { $frame } from '../screen/symbol/Screen'
-import { $screen } from './symbol/Application'
-import { $touches } from './symbol/Application'
-import { watch } from '../decorator/watch'
+import { $canceled } from '../event/private/Touch'
+import { $captured } from '../event/private/Touch'
+import { $id } from '../event/private/Touch'
+import { $x } from '../event/private/Touch'
+import { $y } from '../event/private/Touch'
+import { $frame } from '../screen/private/Screen'
+import { $presented } from '../screen/private/Screen'
+import { $presenting } from '../screen/private/Screen'
+import { $segue } from '../screen/private/Screen'
+import { $screen } from './private/Application'
+import { $touches } from './private/Application'
+import { updateTouchTarget } from '../event/private/TouchEvent'
 import { bridge } from '../native/bridge'
 import { native } from '../native/native'
-import { createScreenFrame } from '../screen/private/Screen'
 import { emitBeforeEnter } from '../screen/private/Screen'
 import { emitBeforePresent } from '../screen/private/Screen'
 import { emitEnter } from '../screen/private/Screen'
 import { emitPresent } from '../screen/private/Screen'
-import { getScreenSegue } from '../screen/private/Screen'
-import { setScreenPresented } from '../screen/private/Screen'
-import { setScreenSegue } from '../screen/private/Screen'
-import { setTouchCanceled } from '../touch/private/Touch'
-import { setTouchCaptured } from '../touch/private/Touch'
-import { setTouchId } from '../touch/private/Touch'
-import { setTouchTarget } from '../touch/private/Touch'
-import { setTouchX } from '../touch/private/Touch'
-import { setTouchY } from '../touch/private/Touch'
 import { cancelTouchMove } from './private/Application'
 import { cancelTouchStart } from './private/Application'
 import { captureTouchMove } from './private/Application'
 import { captureTouchStart } from './private/Application'
-import { getTouch } from './private/Application'
+import { getRegisteredTouch } from './private/Application'
 import { mapTarget } from './private/Application'
 import { registerTouch } from './private/Application'
 import { toActiveTouchList } from './private/Application'
 import { toTargetTouchList } from './private/Application'
 import { toTouchList } from './private/Application'
-import { updateEventTarget } from './private/Application'
-import { updateInputTouches } from './private/Application'
+import { updateEventInputs } from './private/Application'
 import { Emitter } from '../event/Emitter'
 import { Event } from '../event/Event'
-import { Frame } from '../screen/Frame'
+import { Touch } from '../event/Touch'
+import { TouchEvent } from '../event/TouchEvent'
 import { Screen } from '../screen/Screen'
 import { NoneSegue } from '../screen/Segue.None'
-import { Touch } from '../touch/Touch'
-import { TouchEvent } from '../touch/TouchEvent'
 import { View } from '../view/View'
 import { Window } from '../view/Window'
 
@@ -67,42 +62,49 @@ export class Application extends Emitter {
 	//--------------------------------------------------------------------------
 
 	/**
+	 * The application window.
 	 * @property window
 	 * @since 0.1.0
 	 */
 	@native public readonly window: Window
 
 	/**
+	 * The application state.
 	 * @property state
 	 * @since 0.1.0
 	 */
 	@native public readonly state!: 'foreground' | 'background'
 
 	/**
+	 * Whether the status bar is visible.
 	 * @property statusBarVisible
 	 * @since 0.1.0
 	 */
 	@native public statusBarVisible!: boolean
 
 	/**
+	 * The application status bar foreground color.
 	 * @property statusBarForegroundColor
 	 * @since 0.1.0
 	 */
 	@native public statusBarForegroundColor!: 'white' | 'black'
 
 	/**
+	 * The application statis bar background color
 	 * @property statusBarBackgroundColor
 	 * @since 0.1.0
 	 */
 	@native public statusBarBackgroundColor!: string
 
 	/**
+	 * The application badge
 	 * @property badge
 	 * @since 0.1.0
 	 */
 	@native public badge!: number
 
 	/**
+	 * The application main screen.
 	 * @property screen
 	 * @since 0.1.0
 	 */
@@ -110,9 +112,7 @@ export class Application extends Emitter {
 
 		let screen = this[$screen]
 		if (screen == null) {
-			throw new Error(`
-				Application error: The application has no screen, did to forget to call present() ?
-			`)
+			throw new Error(`Application error: The application has no presented xscreen.`)
 		}
 
 		return screen
@@ -123,6 +123,7 @@ export class Application extends Emitter {
 	//--------------------------------------------------------------------------
 
 	/**
+	 * Initialize the application
 	 * @constructor
 	 * @since 0.1.0
 	 */
@@ -143,38 +144,40 @@ export class Application extends Emitter {
 	}
 
 	/**
+	 * Presents the application screen.
 	 * @method present
 	 * @since 0.7.0
 	 */
 	public present(screen: Screen) {
 
 		if (this[$screen]) {
-			throw new Error(`
-				Application error: The application already has a screen.
-			`)
+			throw new Error(`Application error: The application already has a screen.`)
 		}
 
-		createScreenFrame(screen)
+		this[$screen] = screen
 
-		this.window.append(screen[$frame]!)
+		this.window.append(screen[$frame])
 
 		screen.updateStatusBar()
 
 		let segue = new NoneSegue()
 
-		setScreenSegue(screen, segue)
+		screen[$segue] = segue
+		screen[$presented] = true
+		screen[$presenting] = true
 
 		emitBeforePresent(screen, segue)
 		emitBeforeEnter(screen, segue)
 		emitPresent(screen, segue)
 		emitEnter(screen, segue)
 
-		setScreenPresented(screen, true)
+		screen[$presenting] = false
 
 		return this
 	}
 
 	/**
+	 * Terminates the application.
 	 * @method destroy
 	 * @since 0.2.0
 	 */
@@ -190,6 +193,7 @@ export class Application extends Emitter {
 	}
 
 	/**
+	 * Opens an url from the application.
 	 * @method openURL
 	 * @since 0.1.0
 	 */
@@ -203,6 +207,7 @@ export class Application extends Emitter {
 	//--------------------------------------------------------------------------
 
 	/**
+	 * Dispatches a touchstart event to the proper view.
 	 * @method dispatchTouchStart
 	 * @since 0.7.0
 	 */
@@ -229,9 +234,10 @@ export class Application extends Emitter {
 
 			let touch = new Touch(target)
 
-			setTouchId(touch, input.id)
-			setTouchX(touch, input.x)
-			setTouchY(touch, input.y)
+			touch[$x] = input.x
+			touch[$y] = input.y
+			touch[$id] = input.id
+
 			mapTarget(touch, targets)
 
 			registerTouch(this, input, touch)
@@ -259,7 +265,7 @@ export class Application extends Emitter {
 			if (event.canceled ||
 				event.captured) {
 
-				updateInputTouches(event, inputs)
+				updateEventInputs(event, inputs)
 
 				switch (true) {
 					case event.canceled: cancelTouchStart(event); break
@@ -274,7 +280,7 @@ export class Application extends Emitter {
 				 */
 
 				if (event.captured) {
-					updateEventTarget(event, event.sender)
+					updateTouchTarget(event, event.sender as View)
 				}
 			}
 		}
@@ -283,6 +289,7 @@ export class Application extends Emitter {
 	}
 
 	/**
+	 * Dispatches a touchmove event to the proper view.
 	 * @method dispatchTouchMove
 	 * @since 0.7.0
 	 */
@@ -298,13 +305,14 @@ export class Application extends Emitter {
 
 		for (let input of inputs) {
 
-			let touch = getTouch(this, input)
+			let touch = getRegisteredTouch(this, input)
 			if (touch == null) {
 				continue
 			}
 
-			setTouchX(touch, input.x)
-			setTouchY(touch, input.y)
+			touch[$x] = input.x
+			touch[$y] = input.y
+
 			mapTarget(touch, targets)
 		}
 
@@ -334,7 +342,7 @@ export class Application extends Emitter {
 			if (event.canceled ||
 				event.captured) {
 
-				updateInputTouches(event, inputs)
+				updateEventInputs(event, inputs)
 
 				switch (true) {
 					case event.canceled: cancelTouchMove(event); break
@@ -349,7 +357,7 @@ export class Application extends Emitter {
 				 */
 
 				if (event.captured) {
-					updateEventTarget(event, event.sender)
+					updateTouchTarget(event, event.sender as View)
 				}
 			}
 		}
@@ -358,6 +366,7 @@ export class Application extends Emitter {
 	}
 
 	/**
+	 * Dispatches a touchend event to the proper view.
 	 * @method dispatchTouchEnd
 	 * @since 0.7.0
 	 */
@@ -371,20 +380,17 @@ export class Application extends Emitter {
 		 * an event.
 		 */
 
-		let ended: Array<Touch> = []
-
 		for (let input of inputs) {
 
-			let touch = getTouch(this, input)
+			let touch = getRegisteredTouch(this, input)
 			if (touch == null) {
 				continue
 			}
 
-			setTouchX(touch, input.x)
-			setTouchY(touch, input.y)
-			mapTarget(touch, targets)
+			touch[$x] = input.x
+			touch[$y] = input.y
 
-			ended.push(touch)
+			mapTarget(touch, targets)
 
 			delete this[$touches][input.id]
 		}
@@ -418,19 +424,25 @@ export class Application extends Emitter {
 		 * somewhere else.
 		 */
 
-		for (let touch of ended) {
-			setTouchTarget(touch, null)
-			setTouchCanceled(touch, false)
-			setTouchCaptured(touch, false)
-			setTouchId(touch, 0)
-			setTouchX(touch, 0)
-			setTouchY(touch, 0)
+		for (let input of inputs) {
+
+			let touch = getRegisteredTouch(this, input)
+			if (touch == null) {
+				continue
+			}
+
+			touch[$x] = 0
+			touch[$y] = 0
+			touch[$id] = 0
+			touch[$canceled] = false
+			touch[$captured] = false
 		}
 
 		return this
 	}
 
 	/**
+	 * Dispatches a touchcancel event to the proper view.
 	 * @method dispatchTouchCancel
 	 * @since 0.7.0
 	 */
@@ -444,20 +456,17 @@ export class Application extends Emitter {
 		 * an event.
 		 */
 
-		let ended: Array<Touch> = []
-
 		for (let input of inputs) {
 
-			let touch = getTouch(this, input)
+			let touch = getRegisteredTouch(this, input)
 			if (touch == null) {
 				continue
 			}
 
-			setTouchX(touch, input.x)
-			setTouchY(touch, input.y)
-			mapTarget(touch, targets)
+			touch[$x] = input.x
+			touch[$y] = input.y
 
-			ended.push(touch)
+			mapTarget(touch, targets)
 		}
 
 		/*
@@ -489,13 +498,18 @@ export class Application extends Emitter {
 		 * somewhere else.
 		 */
 
-		for (let touch of ended) {
-			setTouchTarget(touch, null)
-			setTouchCanceled(touch, false)
-			setTouchCaptured(touch, false)
-			setTouchId(touch, 0)
-			setTouchX(touch, 0)
-			setTouchY(touch, 0)
+		for (let input of inputs) {
+
+			let touch = getRegisteredTouch(this, input)
+			if (touch == null) {
+				continue
+			}
+
+			touch[$x] = 0
+			touch[$y] = 0
+			touch[$id] = 0
+			touch[$canceled] = false
+			touch[$captured] = false
 		}
 
 		return this
@@ -506,6 +520,7 @@ export class Application extends Emitter {
 	//--------------------------------------------------------------------------
 
 	/**
+	 * @inherited
 	 * @method onEvent
 	 * @since 0.7.0
 	 */
@@ -514,47 +529,47 @@ export class Application extends Emitter {
 		switch (event.type) {
 
 			case 'create':
-				this.onCreate(event)
+				this.onCreate()
 				break
 
 			case 'destroy':
-				this.onDestroy(event)
+				this.onDestroy()
 				break
 
 			case 'enterbackground':
-				this.onEnterBackground(event)
+				this.onEnterBackground()
 				break
 
 			case 'enterforeground':
-				this.onEnterForeground(event)
+				this.onEnterForeground()
 				break
 
 			case 'beforekeyboardshow':
-				this.onBeforeKeyboardShow(event)
+				this.onBeforeKeyboardShow(event.data.height, event.data.duration, event.data.equation)
 				break
 
 			case 'beforekeyboardhide':
-				this.onBeforeKeyboardHide(event)
+				this.onBeforeKeyboardHide(event.data.height, event.data.duration, event.data.equation)
 				break
 
 			case 'keyboardshow':
-				this.onKeyboardShow(event)
+				this.onKeyboardShow(event.data.height, event.data.duration, event.data.equation)
 				break
 
 			case 'keyboardhide':
-				this.onKeyboardHide(event)
+				this.onKeyboardHide(event.data.height, event.data.duration, event.data.equation)
 				break
 
 			case 'keyboardresize':
-				this.onKeyboardResize(event)
+				this.onKeyboardResize(event.data.height, event.data.duration, event.data.equation)
 				break
 
 			case 'openuniversalurl':
-				this.onOpenUniversalURL(event)
+				this.onOpenUniversalURL(event.data.url)
 				break
 
 			case 'openresourceurl':
-				this.onOpenResourceURL(event)
+				this.onOpenResourceURL(event.data.url)
 				break
 		}
 
@@ -562,90 +577,102 @@ export class Application extends Emitter {
 	}
 
 	/**
+	 * Called when the application is created.
 	 * @method onCreate
 	 * @since 0.4.0
 	 */
-	protected onCreate(event: Event) {
+	public onCreate() {
 
 	}
 
 	/**
+	 * Called when the application is destroyed.
 	 * @method onDestroy
 	 * @since 0.4.0
 	 */
-	protected onDestroy(event: Event) {
+	public onDestroy() {
 
 	}
 
 	/**
+	 * Called when the application goes to the background state.
 	 * @method onEnterBackground
 	 * @since 0.4.0
 	 */
-	protected onEnterBackground(event: Event) {
+	public onEnterBackground() {
 
 	}
 
 	/**
+	 * Called when the application goes to the foreground state.
 	 * @method onEnterForeground
 	 * @since 0.4.0
 	 */
-	protected onEnterForeground(event: Event) {
+	public onEnterForeground() {
 
 	}
 
+
 	/**
+	 * Called before the software keyboard is displayed.
 	 * @method onBeforeKeyboardShow
-	 * @since 0.1.0
+	 * @since 0.3.0
 	 */
-	protected onBeforeKeyboardShow(event: Event<ApplicationKeyboardEvent>) {
+	public onBeforeKeyboardShow(height: number, duration: number, equation: string) {
 
 	}
 
 	/**
+	 * Called after the software keyboard is displayed.
 	 * @method onKeyboardShow
-	 * @since 0.1.0
+	 * @since 0.3.0
 	 */
-	protected onKeyboardShow(event: Event<ApplicationKeyboardEvent>) {
+	public onKeyboardShow(height: number, duration: number, equation: string) {
 
 	}
 
 	/**
+	 * Called before the software keyboard is hidden.
 	 * @method onBeforeKeyboardHide
-	 * @since 0.1.0
+	 * @since 0.3.0
 	 */
-	protected onBeforeKeyboardHide(event: Event<ApplicationKeyboardEvent>) {
+	public onBeforeKeyboardHide(height: number, duration: number, equation: string) {
 
 	}
 
 	/**
+	 * Called after the software keyboard is hidden.
 	 * @method onKeyboardHide
-	 * @since 0.1.0
+	 * @since 0.3.0
 	 */
-	protected onKeyboardHide(event: Event<ApplicationKeyboardEvent>) {
+	public onKeyboardHide(height: number, duration: number, equation: string) {
 
 	}
 
 	/**
+	 * Called when the software keyboard changes is size.
 	 * @method onKeyboardResize
-	 * @since 0.1.0
+	 * @since 0.3.0
 	 */
-	protected onKeyboardResize(event: Event<ApplicationKeyboardEvent>) {
+	public onKeyboardResize(height: number, duration: number, equation: string) {
 
 	}
 
 	/**
+	 * Called when an universal url is opened.
 	 * @method onOpenUniversalURL
 	 * @since 0.7.0
 	 */
-	protected onOpenUniversalURL(event: Event<ApplicationOpenUniversalURLEvent>) {
+	public onOpenUniversalURL(url: string) {
 
 	}
 
 	/**
+	 * Called when a file or resource url is opened.
 	 * @method onOpenResourceURL
 	 * @since 0.7.0
 	 */
-	protected onOpenResourceURL(event: Event<ApplicationOpenResourceURLEvent>) {
+	public onOpenResourceURL(url: string) {
 
 	}
 
