@@ -9,13 +9,20 @@ DisplayNodeWalker::DisplayNodeWalker(DisplayNode* root)
 }
 
 bool
-DisplayNodeWalker::next()
+DisplayNodeWalker::hasNext()
 {
 	if (this->queue.size() == 0) {
 		return false;
 	}
 
 	this->consume();
+
+	return true;
+}
+
+void
+DisplayNodeWalker::getNext() {
+
 	this->dequeue();
 
 	auto children = this->node->getChildren();
@@ -23,8 +30,6 @@ DisplayNodeWalker::next()
 	for (auto child : children) if (child->isVisible()) {
 		this->enqueue(child);
 	}
-
-	return true;
 }
 
 }

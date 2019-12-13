@@ -604,7 +604,7 @@ RelativeLayoutResolver::resolve()
 
 		child->resolvedSize = true;
 		child->resolvedOrigin = true;
-		child->resolvedParent = node;
+		child->resolvedParent = this->node;
 	}
 
 	this->extentRight += paddingR;

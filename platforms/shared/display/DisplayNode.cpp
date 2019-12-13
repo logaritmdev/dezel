@@ -751,8 +751,9 @@ DisplayNode::resolveTraits()
 
 		DisplayNodeWalker walker(this);
 
-		while (walker.next()) {
+		while (walker.hasNext()) {
 			walker.getNode()->invalidateTraits();
+			walker.getNext();
 		}
 	}
 
@@ -2616,6 +2617,8 @@ DisplayNode::measure()
 		return;
 	}
 
+	this->resolveTraits();
+
 	this->inheritedWrappedContentWidth = this->inheritsWrappedWidth();
 	this->inheritedWrappedContentHeight = this->inheritsWrappedHeight();
 
@@ -2642,6 +2645,11 @@ DisplayNode::measure()
 
 		this->layout.measureRelativeNode(this, remainingW, remainingH, remainder);
 	}
+
+	this->lastMeasuredWidth = this->measuredWidth;
+	this->lastMeasuredHeight = this->measuredHeight;
+
+	this->didResolveSize();
 
 	this->invalidSize = false;
 }

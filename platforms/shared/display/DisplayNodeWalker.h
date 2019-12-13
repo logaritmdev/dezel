@@ -38,7 +38,8 @@ public:
 		return this->node;
 	}
 
-	bool next();
+	bool hasNext();
+	void getNext();
 
 };
 

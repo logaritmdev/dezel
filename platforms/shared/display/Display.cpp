@@ -93,8 +93,9 @@ Display::resolve()
 
 	DisplayNodeWalker walker(this->window);
 
-	while (walker.next()) {
+	while (walker.hasNext()) {
 		walker.getNode()->resolve();
+		walker.getNext();
 	}
 
 	this->didResolve();

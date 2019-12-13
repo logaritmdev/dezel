@@ -29,6 +29,14 @@ LayoutResolver::prepare()
 void
 LayoutResolver::resolve() {
 
+	/*
+	 * The layout prepare callback is allowed to update the content size
+	 * thus we need to resolve it again in case.
+	 */
+
+	this->node->resolveContentSize();
+	this->node->resolvePadding();
+
 	if (this->node->children.size() == 0) {
 		return;
 	}

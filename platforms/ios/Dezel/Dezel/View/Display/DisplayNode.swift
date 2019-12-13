@@ -261,6 +261,7 @@ open class DisplayNode {
 		DisplayNodeSetResolveMarginCallback(self.handle, displayNodeResolveMarginCallback)
 		DisplayNodeSetResolveBorderCallback(self.handle, displayNodeResolveBorderCallback)
 		DisplayNodeSetResolvePaddingCallback(self.handle, displayNodeResolvePaddingCallback)
+		DisplayNodeSetPrepareLayoutCallback(self.handle, displayNodePrepareLayoutCallback)
 		DisplayNodeSetResolveLayoutCallback(self.handle, displayNodeResolveLayoutCallback)
 		DisplayNodeSetMeasureCallback(self.handle, displayNodeMeasureSizeCallback)
 		DisplayNodeSetUpdateCallback(self.handle, displayNodeUpdateCallback);
