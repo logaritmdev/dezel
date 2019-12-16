@@ -1,11 +1,11 @@
 import { bound } from '../decorator/bound'
+import { ref } from '../decorator/ref'
 import { state } from '../decorator/state'
 import { watch } from '../decorator/watch'
 import { Event } from '../event/Event'
 import { Touch } from '../event/Touch'
 import { TouchEvent } from '../event/TouchEvent'
 import { Platform } from '../platform/Platform'
-import { Reference } from '../view/Reference'
 import { View } from '../view/View'
 import { Component } from './Component'
 import { Root } from './Root'
@@ -32,9 +32,7 @@ export class Refresher extends Component {
 	 * @property spinner
 	 * @since 0.2.0
 	 */
-	public get spinner(): Spinner {
-		return this.refs.spinner.get()
-	}
+	@ref public spinner: Spinner
 
 	/**
 	 * @property view
@@ -65,7 +63,7 @@ export class Refresher extends Component {
 	public render() {
 		return (
 			<Root>
-				<Spinner ref={this.refs.spinner} id="spinner" />
+				<Spinner ref={this.spinner} id="spinner" />
 			</Root>
 		)
 	}
@@ -142,15 +140,6 @@ export class Refresher extends Component {
 	//--------------------------------------------------------------------------
 	// Private API
 	//--------------------------------------------------------------------------
-
-	/**
-	 * @property refs
-	 * @since 0.2.0
-	 * @hidden
-	 */
-	private refs = {
-		spinner: new Reference<Spinner>()
-	}
 
 	/**
 	 * @property trackedTouch

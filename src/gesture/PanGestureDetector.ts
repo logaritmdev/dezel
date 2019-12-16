@@ -17,13 +17,14 @@ import { State } from './GestureDetector'
  * @super GestureDetector
  * @since 0.7.0
  */
-export class PanGestureDetector extends GestureDetector {
+export class PanGestureDetector extends GestureDetector<PanGestureDetector> {
 
 	//--------------------------------------------------------------------------
 	// Properties
 	//--------------------------------------------------------------------------
 
 	/**
+	 * The pointer position on the x axis.
 	 * @property x
 	 * @since 0.7.0
 	 */
@@ -32,6 +33,7 @@ export class PanGestureDetector extends GestureDetector {
 	}
 
 	/**
+	 * The pointer position on the y axis.
 	 * @property y
 	 * @since 0.7.0
 	 */
@@ -40,6 +42,7 @@ export class PanGestureDetector extends GestureDetector {
 	}
 
 	/**
+	 * The pointer position on the x axis when the gesture started.
 	 * @property originX
 	 * @since 0.7.0
 	 */
@@ -48,6 +51,7 @@ export class PanGestureDetector extends GestureDetector {
 	}
 
 	/**
+	 * The pointer position on the y axis when the gesture started.
 	 * @property originY
 	 * @since 0.7.0
 	 */
@@ -56,6 +60,7 @@ export class PanGestureDetector extends GestureDetector {
 	}
 
 	/**
+	 * The pointer translation on the x axis.
 	 * @property translationX
 	 * @since 0.7.0
 	 */
@@ -64,6 +69,7 @@ export class PanGestureDetector extends GestureDetector {
 	}
 
 	/**
+	 * The pointer translation on the y axis.
 	 * @property translationY
 	 * @since 0.7.0
 	 */
@@ -72,12 +78,14 @@ export class PanGestureDetector extends GestureDetector {
 	}
 
 	/**
+	 * The minimum amount of translation to detect the gesture.
 	 * @property threshold
 	 * @since 0.7.0
 	 */
 	public threshold: number = 10
 
 	/**
+	 * The gesture direction to detect.
 	 * @property direction
 	 * @since 0.7.0
 	 */
@@ -88,6 +96,7 @@ export class PanGestureDetector extends GestureDetector {
 	//--------------------------------------------------------------------------
 
 	/**
+	 * @inherited
 	 * @method onTouchStart
 	 * @since 0.7.0
 	 */
@@ -100,6 +109,7 @@ export class PanGestureDetector extends GestureDetector {
 	}
 
 	/**
+	 * @inherited
 	 * @method onTouchMove
 	 * @since 0.7.0
 	 */
@@ -144,6 +154,7 @@ export class PanGestureDetector extends GestureDetector {
 	}
 
 	/**
+	 * @inherited
 	 * @method onTouchEnd
 	 * @since 0.7.0
 	 */
@@ -165,6 +176,7 @@ export class PanGestureDetector extends GestureDetector {
 	}
 
 	/**
+	 * @inherited
 	 * @method onTouchCancel
 	 * @since 0.7.0
 	 */
@@ -186,6 +198,7 @@ export class PanGestureDetector extends GestureDetector {
 	}
 
 	/**
+	 * @inherited
 	 * @method onTouchCancel
 	 * @since 0.7.0
 	 */

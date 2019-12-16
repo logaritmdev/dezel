@@ -9,5 +9,11 @@ import './style/NavigationBarBackButton.style.ios'
  * @since 0.1.0
  */
 export class NavigationBarBackButton extends NavigationBarButton {
+
+	/**
+	 * The default slot whereh this button will be added.
+	 * @property slot
+	 * @since 0.7.0
+	 */
 	public slot: string = 'back'
 }

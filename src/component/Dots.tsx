@@ -1,12 +1,14 @@
+import { $selectedIndex } from './private/Dots'
+import { $selectedValue } from './private/Dots'
 import { watch } from '../decorator/watch'
 import { View } from '../view/View'
 import { Component } from './Component'
 import { Root } from './Root'
+import { Slot } from './Slot'
 import './style/Dots.style'
 import './style/Dots.style.android'
 import './style/Dots.style.ios'
-// TODO
-// Selected index, selected value
+
 /**
  * @class Dots
  * @super Component
@@ -28,8 +30,8 @@ export class Dots extends Component {
 	 * @property selectedIndex
 	 * @since 0.5.0
 	 */
-	public get selectedIndex(): number | undefined {
-		return this.getSelectedIndex()
+	public get selectedIndex(): number | null {
+		return this[$selectedIndex]
 	}
 
 	//--------------------------------------------------------------------------
@@ -42,7 +44,9 @@ export class Dots extends Component {
 	 */
 	public render() {
 		return (
-			<Root />
+			<Root>
+				<Slot main={true} />
+			</Root>
 		)
 	}
 
@@ -91,20 +95,18 @@ export class Dots extends Component {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @property selectedDot
-	 * @since 0.5.0
+	 * @property selectedIndex
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private selectedDot: View | null = null
+	private [$selectedIndex]: number | null = null
 
 	/**
-	 * @method getSelectedDotIndex
-	 * @since 0.5.0
+	 * @property selectedValue
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private getSelectedIndex() {
-		return this.selectedDot ? this.children.indexOf(this.selectedDot) : undefined
-	}
+	private [$selectedValue]: View | null = null
 
 	/**
 	 * @method applySelection
@@ -113,13 +115,15 @@ export class Dots extends Component {
 	 */
 	private applySelection(index: number) {
 
-		let dot = this.children[index]
-		if (dot == null) {
+		let value = this.children[index]
+		if (value == null) {
 			return this
 		}
 
-		this.selectedDot = dot
-		this.selectedDot.states.append('selected')
+		value.states.append('selected')
+
+		this[$selectedIndex] = index
+		this[$selectedValue] = value
 
 		return this
 	}
@@ -131,10 +135,18 @@ export class Dots extends Component {
 	 */
 	private clearSelection() {
 
-		if (this.selectedDot) {
-			this.selectedDot.states.remove('selected')
-			this.selectedDot = null
+		let index = this[$selectedIndex]
+		let value = this[$selectedValue]
+
+		if (value == null ||
+			index == null) {
+			return this
 		}
+
+		value.states.remove('selected')
+
+		this[$selectedIndex] = null
+		this[$selectedValue] = null
 
 		return this
 	}

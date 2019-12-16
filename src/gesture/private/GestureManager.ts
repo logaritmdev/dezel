@@ -20,7 +20,7 @@ export const $gestures = Symbol('gestures')
  * @since 0.7.0
  * @hidden
  */
-export function insertItem(manager: GestureManager, gesture: GestureDetector) {
+export function insertItem<T>(manager: GestureManager, gesture: GestureDetector<T>) {
 	manager[$gestures].push(gesture)
 }
 
@@ -29,6 +29,6 @@ export function insertItem(manager: GestureManager, gesture: GestureDetector) {
  * @since 0.7.0
  * @hidden
  */
-export function removeItem(manager: GestureManager, gesture: GestureDetector, index: number) {
+export function removeItem<T>(manager: GestureManager, gesture: GestureDetector<T>, index: number) {
 	manager[$gestures].splice(index, 1)
 }

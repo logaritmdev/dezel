@@ -45,7 +45,9 @@ function isNative(object: any) {
  * @since 0.1.0
  * @hidden
  */
-function decorate(prototype: object, property: string) {
+function decorate(prototype: object, accessor: string) {
+
+	let property = Symbol(accessor)
 
 	function get(this: any) {
 
@@ -54,7 +56,7 @@ function decorate(prototype: object, property: string) {
 			throw new Error(`Dezel error: Unable to retrieve native object.`)
 		}
 
-		return object[property]
+		return object[accessor]
 	}
 
 	function set(this: any, value: any) {
@@ -64,13 +66,17 @@ function decorate(prototype: object, property: string) {
 			throw new Error(`Dezel error: Unable to retrieve native object.`)
 		}
 
-		// TODO
-		// FIXME
-		object['$' + property] = value // prevents native object from being collected
-		object[property] = isNative(value) ? toNative(value) : value
+		/*
+		 * We need to store the original value to make sure
+		 * the native value doesn't get collected in case this
+		 * is an object.
+		 */
+
+		object[property] = value
+		object[accessor] = isNative(value) ? toNative(value) : value
 	}
 
-	Object.defineProperty(prototype, property, { get, set })
+	Object.defineProperty(prototype, accessor, { get, set })
 }
 
 /**

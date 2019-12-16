@@ -71,7 +71,7 @@ export const $finished = Symbol('finished')
  * @since 0.7.0
  * @hidden
  */
-export function setGestureState(gesture: GestureDetector, state: State) {
+export function setGestureState<T>(gesture: GestureDetector<T>, state: State) {
 
 	if (gesture.resolved) {
 		throw new Error(`Gesture error: This gesture's state cannot be changed until it is reset.`)
@@ -159,7 +159,7 @@ export function setGestureState(gesture: GestureDetector, state: State) {
 
 		if (state == State.Updated ||
 			state == State.Detected) {
-			gesture[$callback].call(null, gesture)
+			gesture[$callback].call(null, gesture as any)
 		}
 
 	}

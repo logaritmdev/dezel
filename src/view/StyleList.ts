@@ -13,6 +13,7 @@ export class StyleList {
 	//--------------------------------------------------------------------------
 
 	/**
+	 * The style list's view.
 	 * @property view
 	 * @since 0.7.0
 	 */
@@ -25,6 +26,7 @@ export class StyleList {
 	//--------------------------------------------------------------------------
 
 	/**
+	 * Initializes the style list.
 	 * @constructor
 	 * @since 0.7.0
 	 */
@@ -33,6 +35,7 @@ export class StyleList {
 	}
 
 	/**
+	 * Indicates whether the view has a style.
 	 * @method has
 	 * @since 0.7.0
 	 */
@@ -41,6 +44,7 @@ export class StyleList {
 	}
 
 	/**
+	 * Appends a style to the view.
 	 * @method append
 	 * @since 0.7.0
 	 */
@@ -50,6 +54,7 @@ export class StyleList {
 	}
 
 	/**
+	 * Removes a style from the view.
 	 * @method remove
 	 * @since 0.7.0
 	 */
@@ -59,6 +64,7 @@ export class StyleList {
 	}
 
 	/**
+	 * Toggles a style from the view.
 	 * @method toggle
 	 * @since 0.7.0
 	 */

@@ -1,14 +1,39 @@
+import { $x } from './private/TapGestureDetector'
+import { $y } from './private/TapGestureDetector'
 import { Touch } from '../event/Touch'
 import { TouchEvent } from '../event/TouchEvent'
 import { Window } from '../view/Window'
 import { GestureDetector } from './GestureDetector'
+import { State } from './GestureDetector'
 
 /**
  * @class TapGestureDetector
  * @super GestureDetector
  * @since 0.7.0
  */
-export class TapGestureDetector extends GestureDetector {
+export class TapGestureDetector extends GestureDetector<TapGestureDetector> {
+
+	//--------------------------------------------------------------------------
+	// Properties
+	//--------------------------------------------------------------------------
+
+	/**
+	 * The pointer position on the x axis.
+	 * @property x
+	 * @since 0.7.0
+	 */
+	public get x(): number {
+		return this[$x]
+	}
+
+	/**
+	 * The pointer position on the y axis.
+	 * @property y
+	 * @since 0.7.0
+	 */
+	public get y(): number {
+		return this[$y]
+	}
 
 	//--------------------------------------------------------------------------
 	// Methods
@@ -21,8 +46,12 @@ export class TapGestureDetector extends GestureDetector {
 	 */
 	public onTouchStart(event: TouchEvent) {
 
-		let touches = event.touches
-		if (touches.length > 1) {
+		if (this.touch) {
+			this.cancel()
+			return
+		}
+
+		if (event.touches.length > 1) {
 
 			/*
 			 * Automatically ignore the gesture if the touch event has more
@@ -34,7 +63,7 @@ export class TapGestureDetector extends GestureDetector {
 		}
 
 		if (this.touch == null) {
-			this.touch = touches.get(0)
+			this.touch = event.touches.get(0)
 		}
 	}
 
@@ -47,16 +76,30 @@ export class TapGestureDetector extends GestureDetector {
 
 		let touch = this.touch
 		if (touch == null) {
-			throw new Error('TapGesture error: An error occured.')
+			throw new Error('Unexpected error.')
 		}
 
 		if (event.touches.has(touch) == false) {
 			return
 		}
 
-		if (this.validate(touch)) {
-			this.detect()
-			this.finish()
+		let target = this.view?.window?.findViewAt(touch.x, touch.y)
+		if (target == null) {
+			return
+		}
+
+		while (target) {
+
+			if (target == this.view) {
+
+				this[$x] = touch.x
+				this[$y] = touch.y
+
+				this.detect()
+				this.finish()
+			}
+
+			target = target.parent
 		}
 	}
 
@@ -69,14 +112,16 @@ export class TapGestureDetector extends GestureDetector {
 
 		let touch = this.touch
 		if (touch == null) {
-			throw new Error('TapGesture error: An error occured.')
+			throw new Error('Unexpected error.')
 		}
 
 		if (event.touches.has(touch) == false) {
 			return
 		}
 
-		this.cancel()
+		if (this.state == State.Detected) {
+			this.cancel()
+		}
 	}
 
 	/**
@@ -93,47 +138,24 @@ export class TapGestureDetector extends GestureDetector {
 	//--------------------------------------------------------------------------
 
 	/**
+	 * @property $x
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private [$x]: number = -1
+
+	/**
+	 * @property $y
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private [$y]: number = -1
+
+	/**
 	 * @property touch
 	 * @since 0.7.0
 	 * @hidden
 	 */
 	private touch: Touch | null = null
 
-	/**
-	 * @method validate
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private validate(touch: Touch) {
-
-		let view = this.view
-		if (view == null) {
-			throw new Error('TapGesture error: An error occured.')
-		}
-
-		if (view instanceof Window) {
-			return true
-		}
-
-		let window = view.window
-		if (window == null) {
-			throw new Error('TapGesture error: An error occured.')
-		}
-
-		let target = window.findViewAt(
-			touch.x,
-			touch.y
-		)
-
-		while (target) {
-
-			if (target == this.view) {
-				return true
-			}
-
-			target = target.parent
-		}
-
-		return false
-	}
 }

@@ -10,7 +10,7 @@ function decorate(prototype: object, property: string) {
 	let setter = descriptor && descriptor.set
 
 	let key = Symbol()
-	// TODO use a has key to detect if the value has been set
+
 	let get = function (this: any) {
 		return getter ? getter.call(this) : this[key]
 	}
@@ -26,6 +26,10 @@ function decorate(prototype: object, property: string) {
 			this.states.append(property)
 		} else {
 			this.states.remove(property)
+		}
+
+		if (setter) {
+			setter.call(this, value)
 		}
 
 		this[key] = value

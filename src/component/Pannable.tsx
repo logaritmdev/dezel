@@ -43,10 +43,10 @@ export class Pannable implements Composable {
 
 	/**
 	 * The pan gesture callback.
-	 * @property onTap
+	 * @property onPan
 	 * @since 0.7.0
 	 */
-	public onTap?: OnTap
+	public onPan?: OnPan
 
 	//--------------------------------------------------------------------------
 	// Methods
@@ -92,8 +92,8 @@ export class Pannable implements Composable {
 	 * @hidden
 	 */
 	private [$gesture]: PanGestureDetector = new PanGestureDetector(gesture => {
-		if (this.onTap) {
-			this.onTap(gesture as PanGestureDetector)
+		if (this.onPan) {
+			this.onPan(gesture as PanGestureDetector)
 		}
 	})
 
@@ -110,7 +110,7 @@ export class Pannable implements Composable {
 }
 
 /**
- * @type OnTap
+ * @type OnPan
  * @since 0.7.0
  */
-export type OnTap = (gesture: PanGestureDetector) => void
+export type OnPan = (gesture: PanGestureDetector) => void

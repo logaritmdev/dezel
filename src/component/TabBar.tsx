@@ -1,8 +1,8 @@
 import { $selectedIndex } from './private/TabBar'
 import { $selectedValue } from './private/TabBar'
 import { bound } from '../decorator/bound'
+import { ref } from '../decorator/ref'
 import { Event } from '../event/Event'
-import { Reference } from '../view/Reference'
 import { View } from '../view/View'
 import { Component } from './Component'
 import { Root } from './Root'
@@ -28,9 +28,7 @@ export class TabBar extends Component {
 	 * @property buttons
 	 * @since 0.1.0
 	 */
-	public get buttons(): Slot {
-		return this.refs.buttons.get()
-	}
+	@ref public buttons: Slot
 
 	/**
 	 * The tab bar's selected index.
@@ -53,7 +51,7 @@ export class TabBar extends Component {
 	public render() {
 		return (
 			<Root>
-				<Slot ref={this.refs.buttons} main={true}></Slot>
+				<Slot ref={this.buttons} main={true}></Slot>
 			</Root>
 		)
 	}
@@ -151,23 +149,61 @@ export class TabBar extends Component {
 	}
 
 	/**
+	 * @inherited
 	 * @method onInsert
 	 * @since 0.1.0
 	 */
 	public onInsert(child: View, index: number) {
-		if (child instanceof TabBarButton) {
-			child.on('press', this.onTabBarButtonPress)
-		}
+		if (child instanceof TabBarButton) this.onInsertButton(child, index)
 	}
 
 	/**
+	 * @inherited
 	 * @method onRemove
 	 * @since 0.1.0
 	 */
 	public onRemove(child: View, index: number) {
-		if (child instanceof TabBarButton) {
-			child.off('press', this.onTabBarButtonPress)
+		if (child instanceof TabBarButton) this.onRemoveButton(child, index)
+	}
+
+	//--------------------------------------------------------------------------
+	// Internal API
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method onInsertItem
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	public onInsertButton(button: TabBarButton, index: number) {
+
+		if (this[$selectedIndex] &&
+			this[$selectedIndex]! >= index) {
+			this[$selectedIndex]!++
 		}
+
+		button.on('press', this.onTabBarButtonPress)
+	}
+
+	/**
+	 * @method onRemoveButton
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	public onRemoveButton(button: TabBarButton, index: number) {
+
+		button.pressed = false
+
+		if (this[$selectedIndex] &&
+			this[$selectedIndex]! > index) {
+			this[$selectedIndex]!--
+		} else if (this[$selectedIndex] == index) {
+			this[$selectedIndex] = null
+			this[$selectedValue] = null
+			button.selected = false
+		}
+
+		button.off('press', this.onTabBarButtonPress)
 	}
 
 	//--------------------------------------------------------------------------
@@ -187,15 +223,6 @@ export class TabBar extends Component {
 	 * @hidden
 	 */
 	private [$selectedValue]: TabBarButton | null = null
-
-	/**
-	 * @property refs
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private refs = {
-		buttons: new Reference<Slot>()
-	}
 
 	/**
 	 * @method applySelection
@@ -246,10 +273,6 @@ export class TabBar extends Component {
 
 		return this
 	}
-
-	//--------------------------------------------------------------------------
-	// Private API - Events
-	//--------------------------------------------------------------------------
 
 	/**
 	 * @method onTabBarButtonTap

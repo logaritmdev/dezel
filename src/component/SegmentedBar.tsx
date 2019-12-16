@@ -1,8 +1,8 @@
 import { $selectedIndex } from './private/SegmentedBar'
 import { $selectedValue } from './private/SegmentedBar'
 import { bound } from '../decorator/bound'
+import { ref } from '../decorator/ref'
 import { Event } from '../event/Event'
-import { Reference } from '../view/Reference'
 import { View } from '../view/View'
 import { Component } from './Component'
 import { Root } from './Root'
@@ -28,9 +28,7 @@ export class SegmentedBar extends Component {
 	 * @property buttons
 	 * @since 0.1.0
 	 */
-	public get buttons(): Slot {
-		return this.refs.buttons.get()
-	}
+	@ref public buttons: Slot
 
 	/**
 	 * The segmented bar's selected index.
@@ -53,7 +51,7 @@ export class SegmentedBar extends Component {
 	public render() {
 		return (
 			<Root>
-				<Slot ref={this.refs.buttons} main={true} />
+				<Slot ref={this.buttons} main={true} />
 			</Root>
 		)
 	}
@@ -156,9 +154,7 @@ export class SegmentedBar extends Component {
 	 * @since 0.1.0
 	 */
 	public onInsert(child: View, index: number) {
-		if (child instanceof SegmentedBarButton) {
-			child.on('press', this.onSegmentedBarButtonPress)
-		}
+		if (child instanceof SegmentedBarButton) this.onInsertButton(child, index)
 	}
 
 	/**
@@ -167,9 +163,47 @@ export class SegmentedBar extends Component {
 	 * @since 0.1.0
 	 */
 	public onRemove(child: View, index: number) {
-		if (child instanceof SegmentedBarButton) {
-			child.off('press', this.onSegmentedBarButtonPress)
+		if (child instanceof SegmentedBarButton) this.onRemoveButton(child, index)
+	}
+
+	//--------------------------------------------------------------------------
+	// Internal API
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method onInsertItem
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	public onInsertButton(button: SegmentedBarButton, index: number) {
+
+		if (this[$selectedIndex] &&
+			this[$selectedIndex]! >= index) {
+			this[$selectedIndex]!++
 		}
+
+		button.on('press', this.onSegmentedBarButtonPress)
+	}
+
+	/**
+	 * @method onRemoveButton
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	public onRemoveButton(button: SegmentedBarButton, index: number) {
+
+		button.pressed = false
+
+		if (this[$selectedIndex] &&
+			this[$selectedIndex]! > index) {
+			this[$selectedIndex]!--
+		} else if (this[$selectedIndex] == index) {
+			this[$selectedIndex] = null
+			this[$selectedValue] = null
+			button.selected = false
+		}
+
+		button.off('press', this.onSegmentedBarButtonPress)
 	}
 
 	//--------------------------------------------------------------------------
@@ -189,15 +223,6 @@ export class SegmentedBar extends Component {
 	 * @hidden
 	 */
 	private [$selectedValue]: SegmentedBarButton | null = null
-
-	/**
-	 * @property refs
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private refs = {
-		buttons: new Reference<Slot>()
-	}
 
 	/**
 	 * @method applySelection

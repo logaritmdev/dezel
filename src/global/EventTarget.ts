@@ -62,9 +62,9 @@ export class EventTarget {
 	 */
 	public dispatchEvent(event: Event): boolean {
 
-		let wat = this as any // TODO
+		let self = this as any
 
-		let callback = wat['on' + event.type]
+		let callback = self['on' + event.type]
 		if (callback) {
 			callback.apply(this, arguments)
 		}

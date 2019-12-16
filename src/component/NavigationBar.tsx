@@ -1,6 +1,6 @@
 import { bound } from '../decorator/bound'
+import { ref } from '../decorator/ref'
 import { Event } from '../event/Event'
-import { Reference } from '../view/Reference'
 import { View } from '../view/View'
 import { Component } from './Component'
 import { Label } from './Label'
@@ -25,25 +25,19 @@ export class NavigationBar extends Component {
 	 * @property title
 	 * @since 0.1.0
 	 */
-	public get title(): Label {
-		return this.refs.title.get()
-	}
+	@ref public title: Label
 
 	/**
 	 * @property mainButtons
 	 * @since 0.4.0
 	 */
-	public get mainButtons(): Slot {
-		return this.refs.mainButtons.get()
-	}
+	@ref public mainButtons: Slot
 
 	/**
 	 * @property sideButtons
 	 * @since 0.4.0
 	 */
-	public get sideButtons(): Slot {
-		return this.refs.sideButtons.get()
-	}
+	@ref public sideButtons: Slot
 
 	//--------------------------------------------------------------------------
 	// Methods
@@ -60,8 +54,8 @@ export class NavigationBar extends Component {
 					<Slot name="back" />
 					<Slot name="side" />
 				</View>
-				<View ref={this.refs.titleContainer} id="title-container" onLayout={this.onTitleContainerBeforeLayout}>
-					<Label ref={this.refs.title} id="title" />
+				<View ref={this.titleContainer} id="title-container" onLayout={this.onTitleContainerBeforeLayout}>
+					<Label ref={this.title} id="title" />
 				</View>
 				<View style="buttons-container">
 					<Slot name="main" main={true} />
@@ -75,16 +69,11 @@ export class NavigationBar extends Component {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @property refs
+	 * @property titleContainer
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private refs = {
-		title: new Reference<Label>(),
-		titleContainer: new Reference<View>(),
-		mainButtons: new Reference<Slot>(),
-		sideButtons: new Reference<Slot>()
-	}
+	@ref private titleContainer: View
 
 	/**
 	 * @method onTitleContainerBeforeLayout

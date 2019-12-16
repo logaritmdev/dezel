@@ -17,7 +17,7 @@ import { View } from '../view/View'
  * @super Emitter
  * @since 0.7.0
  */
-export abstract class GestureDetector extends Emitter {
+export abstract class GestureDetector<T = any> extends Emitter {
 
 	//--------------------------------------------------------------------------
 	// Properties
@@ -83,7 +83,7 @@ export abstract class GestureDetector extends Emitter {
 	 * @constructor
 	 * @since 0.7.0
 	 */
-	constructor(callback: GestureCallback, options: GestureOptions = {}) {
+	constructor(callback: GestureCallback<T>, options: GestureOptions = {}) {
 
 		super()
 
@@ -120,7 +120,7 @@ export abstract class GestureDetector extends Emitter {
 	 * @since 0.7.0
 	 */
 	public ignore() {
-		return setGestureState(this, State.Ignored)
+		return setGestureState<T>(this, State.Ignored)
 	}
 
 	/**
@@ -128,7 +128,7 @@ export abstract class GestureDetector extends Emitter {
 	 * @since 0.7.0
 	 */
 	public detect() {
-		return setGestureState(this, State.Detected)
+		return setGestureState<T>(this, State.Detected)
 	}
 
 	/**
@@ -136,7 +136,7 @@ export abstract class GestureDetector extends Emitter {
 	 * @since 0.5.0
 	 */
 	public update() {
-		return setGestureState(this, State.Updated)
+		return setGestureState<T>(this, State.Updated)
 	}
 
 	/**
@@ -144,7 +144,7 @@ export abstract class GestureDetector extends Emitter {
 	 * @since 0.7.0
 	 */
 	public finish() {
-		return setGestureState(this, State.Finished)
+		return setGestureState<T>(this, State.Finished)
 	}
 
 	/**
@@ -152,7 +152,7 @@ export abstract class GestureDetector extends Emitter {
 	 * @since 0.5.0
 	 */
 	public cancel() {
-		return setGestureState(this, State.Canceled)
+		return setGestureState<T>(this, State.Canceled)
 	}
 
 	//--------------------------------------------------------------------------
@@ -309,7 +309,7 @@ export abstract class GestureDetector extends Emitter {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private [$callback]: GestureCallback
+	private [$callback]: GestureCallback<T>
 
 	/**
 	 * @property $detectTime
@@ -347,7 +347,7 @@ const OPTIONS: Required<GestureOptions> = {
  * @interface GestureCallback
  * @since 0.7.0
  */
-export type GestureCallback = (gesture: any) => void
+export type GestureCallback<T> = (gesture: T) => void
 
 /**
  * @interface GestureOptions

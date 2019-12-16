@@ -27,6 +27,7 @@ export class WebView extends View {
 	}
 
 	/**
+	 * Loads the specified URL.
 	 * @method loadURL
 	 * @since 0.7.0
 	 */
@@ -36,6 +37,7 @@ export class WebView extends View {
 	}
 
 	/**
+	 * Loads the specified HTML.
 	 * @method loadHTML
 	 * @since 0.2.0
 	 */
@@ -45,6 +47,7 @@ export class WebView extends View {
 	}
 
 	/**
+	 * Reloads the page.
 	 * @method reload
 	 * @since 0.2.0
 	 */
@@ -54,6 +57,7 @@ export class WebView extends View {
 	}
 
 	/**
+	 * Stops the page from loading.
 	 * @method stop
 	 * @since 0.2.0
 	 */
@@ -63,6 +67,7 @@ export class WebView extends View {
 	}
 
 	/**
+	 * Go back.
 	 * @method back
 	 * @since 0.2.0
 	 */
@@ -72,6 +77,7 @@ export class WebView extends View {
 	}
 
 	/**
+	 * Go forward.
 	 * @method forward
 	 * @since 0.2.0
 	 */
@@ -85,6 +91,7 @@ export class WebView extends View {
 	//--------------------------------------------------------------------------
 
 	/**
+	 * @inherited
 	 * @method onEvent
 	 * @since 0.7.0
 	 */
@@ -105,6 +112,7 @@ export class WebView extends View {
 	}
 
 	/**
+	 * Called before the page attempts to load.
 	 * @method onBeforeLoad
 	 * @since 0.2.0
 	 */
@@ -113,6 +121,7 @@ export class WebView extends View {
 	}
 
 	/**
+	 * Called after the page is loaded.
 	 * @method onLoad
 	 * @since 0.2.0
 	 */

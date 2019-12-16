@@ -1,11 +1,13 @@
 import { $body } from './private/Component'
 import { $locked } from './private/Component'
-import { $rendered } from './private/Component'
 import { $sealed } from './private/Component'
 import { $slots } from './private/Component'
-import { render } from '../decorator/render'
 import { native } from '../native/native'
+import { validateRefs } from '../view/private/Reference'
 import { getSlot } from './private/Component'
+import { makeComponent } from './private/Component'
+import { pullRenderingComponent } from './private/Component'
+import { pushRenderingComponent } from './private/Component'
 import { Event } from '../event/Event'
 import { View } from '../view/View'
 import { Window } from '../view/Window'
@@ -41,42 +43,6 @@ export abstract class Component extends View {
 		return this[$locked]
 	}
 
-	/**
-	 * Whether the component is rendered.
-	 * @property rendered
-	 * @since 0.7.0
-	 */
-	public get rendered(): boolean {
-		return this[$rendered]
-	}
-
-	/**
-	 * @inherited
-	 * @property window
-	 * @since 0.7.0
-	 */
-	@render public get window(): Window | null {
-		return super.window
-	}
-
-	/**
-	 * @inherited
-	 * @property parent
-	 * @since 0.7.0
-	 */
-	@render public get parent(): View | null {
-		return super.parent
-	}
-
-	/**
-	 * @inherited
-	 * @property children
-	 * @since 0.7.0
-	 */
-	@render public get children(): ReadonlyArray<View> {
-		return super.children
-	}
-
 	//--------------------------------------------------------------------------
 	// Methods
 	//--------------------------------------------------------------------------
@@ -87,22 +53,36 @@ export abstract class Component extends View {
 	 * @since 0.7.0
 	 */
 	constructor() {
+
 		super()
+
 		native(this).setOpaque()
+
+		pushRenderingComponent(this)
+		makeComponent(this)
+		pullRenderingComponent(this)
+
+		this.onRender()
+
+		validateRefs(this)
+
+		this[$sealed] = true
+		this[$locked] = false
 	}
 
 	/**
+	 * Renders the component.
 	 * @method render
 	 * @since 0.6.0
 	 */
 	public abstract render(): Root | null
 
 	/**
-	 * Renders the component.
+	 * Appends a child into one of the component's slot.
 	 * @method append
 	 * @since 0.7.0
 	 */
-	public append(child: View, slot?: string) {
+	public append(child: View, slot: string | null = null) {
 		return this.insert(child, this.children.length, slot)
 	}
 
@@ -111,7 +91,7 @@ export abstract class Component extends View {
 	 * @method insert
 	 * @since 0.7.0
 	 */
-	public insert(child: View, index: number, slot?: string) {
+	public insert(child: View, index: number, slot: string | null = null) {
 
 		if (this.locked) {
 			throw new Error(`Component error: This component is locked.`)
@@ -147,7 +127,7 @@ export abstract class Component extends View {
 	 * @method remove
 	 * @since 0.7.0
 	 */
-	public remove(child: View, slot?: string) {
+	public remove(child: View, slot: string | null = null) {
 
 		if (this.locked) {
 			throw new Error(`Component error: This component is locked.`)
@@ -183,22 +163,6 @@ export abstract class Component extends View {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @inherited
-	 * @method onEvent
-	 * @since 0.7.0
-	 */
-	public onEvent(event: Event) {
-
-		switch (event.type) {
-			case 'render':
-				this.onRender()
-				break
-		}
-
-		super.onEvent(event)
-	}
-
-	/**
 	 * Called when the component is rendered.
 	 * @method onRender
 	 * @since 0.7.0
@@ -216,21 +180,14 @@ export abstract class Component extends View {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private [$sealed]: boolean = false
+	private [$sealed]: boolean
 
 	/**
 	 * @property $locked
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private [$locked]: boolean = false
-
-	/**
-	 * @property $rendered
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private [$rendered]: boolean = false
+	private [$locked]: boolean
 
 	/**
 	 * @property $slots

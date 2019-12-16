@@ -1,9 +1,9 @@
+import { ref } from '../decorator/ref'
 import { state } from '../decorator/state'
 import { Image } from '../component/Image'
 import { Label } from '../component/Label'
+import { Touch } from '../event/Touch'
 import { TouchEvent } from '../event/TouchEvent'
-import { Reference } from '../view/Reference'
-import { View } from '../view/View'
 import { Component } from './Component'
 import { Root } from './Root'
 import './style/TabBarButton.style'
@@ -26,27 +26,21 @@ export class TabBarButton extends Component {
 	 * @property label
 	 * @since 0.1.0
 	 */
-	public get label(): Label {
-		return this.refs.label.get()
-	}
+	@ref public label: Label
 
 	/**
 	 * The button's image.
 	 * @property image
 	 * @since 0.1.0
 	 */
-	public get image(): Image {
-		return this.refs.image.get()
-	}
+	@ref public image: Image
 
 	/**
 	 * The button's badge.
 	 * @property badge
 	 * @since 0.1.0
 	 */
-	public get badge(): Label {
-		return this.refs.badge.get()
-	}
+	@ref public badge: Label
 
 	/**
 	 * Whether the button is pressed.
@@ -81,9 +75,9 @@ export class TabBarButton extends Component {
 	public render() {
 		return (
 			<Root>
-				<Image ref={this.refs.image} id="image" />
-				<Label ref={this.refs.label} id="label" />
-				<Label ref={this.refs.badge} id="badge" visible={false} />
+				<Image ref={this.image} id="image" />
+				<Label ref={this.label} id="label" />
+				<Label ref={this.badge} id="badge" visible={false} />
 			</Root>
 		)
 	}
@@ -98,7 +92,13 @@ export class TabBarButton extends Component {
 	 * @since 0.1.0
 	 */
 	public onTouchStart(event: TouchEvent) {
-		if (this.pressed == false && this.disabled == false) {
+
+		if (this.disabled) {
+			return
+		}
+
+		if (this.tracker == null) {
+			this.tracker = event.touches.get(0)
 			this.pressed = true
 		}
 	}
@@ -109,9 +109,18 @@ export class TabBarButton extends Component {
 	 * @since 0.1.0
 	 */
 	public onTouchEnd(event: TouchEvent) {
-		if (this.pressed && event.targetTouches.length == 0) {
-			this.pressed = false
-			this.press(event)
+
+		if (this.disabled) {
+			return
+		}
+
+		for (let touch of event.touches) {
+			if (this.tracker == touch) {
+				this.tracker = null
+				this.pressed = false
+				this.touched(touch)
+				break
+			}
 		}
 	}
 
@@ -121,8 +130,17 @@ export class TabBarButton extends Component {
 	 * @since 0.1.0
 	 */
 	public onTouchCancel(event: TouchEvent) {
-		if (this.pressed && event.targetTouches.length == 0) {
-			this.pressed = false
+
+		if (this.disabled) {
+			return
+		}
+
+		for (let touch of event.touches) {
+			if (this.tracker == touch) {
+				this.tracker = null
+				this.pressed = false
+				break
+			}
 		}
 	}
 
@@ -131,31 +149,33 @@ export class TabBarButton extends Component {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @property refs
+	 * @method tracker
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private refs = {
-		image: new Reference<Image>(),
-		badge: new Reference<Label>(),
-		label: new Reference<Label>()
-	}
+	private tracker: Touch | null = null
 
 	/**
-	 * @method press
+	 * @method touched
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private press(event?: TouchEvent) {
+	private touched(touch: Touch) {
 
-		/*
-		TODO
-		if (event &&
-			event.hits(this) == false) {
-			return
+		let target = this.window?.findViewAt(
+			touch.x,
+			touch.y
+		)
+
+		if (target == null) {
+			return this
 		}
-		*/
 
-		this.emit('press')
+		let inside = this.contains(target)
+		if (inside) {
+			this.emit('press')
+		}
+
+		return this
 	}
 }

@@ -1,8 +1,8 @@
 import { $selectedIndex } from './private/List'
 import { $selectedValue } from './private/List'
 import { bound } from '../decorator/bound'
+import { ref } from '../decorator/ref'
 import { Event } from '../event/Event'
-import { Reference } from '../view/Reference'
 import { View } from '../view/View'
 import { Component } from './Component'
 import { ListItem } from './ListItem'
@@ -28,9 +28,7 @@ export class List extends Component {
 	 * @property items
 	 * @since 0.1.0
 	 */
-	public get items(): Slot {
-		return this.refs.items.get()
-	}
+	@ref public items: Slot
 
 	/**
 	 * The list's selected index.
@@ -53,7 +51,7 @@ export class List extends Component {
 	public render() {
 		return (
 			<Root>
-				<Slot ref={this.refs.items} main="true" />
+				<Slot ref={this.items} main="true" />
 			</Root>
 		)
 	}
@@ -131,11 +129,7 @@ export class List extends Component {
 	 * @since 0.1.0
 	 */
 	public onInsert(child: View, index: number) {
-		if (child instanceof ListItem) {
-			child.on('press', this.onListItemPress)
-			// TODO
-			// Think about reselecting based on selected index
-		}
+		if (child instanceof ListItem) this.onInsertItem(child, index)
 	}
 
 	/**
@@ -144,10 +138,47 @@ export class List extends Component {
 	 * @since 0.1.0
 	 */
 	public onRemove(child: View, index: number) {
-		if (child instanceof ListItem) {
-			child.off('press', this.onListItemPress)
+		if (child instanceof ListItem) this.onRemoveItem(child, index)
+	}
 
+	//--------------------------------------------------------------------------
+	// Internal API
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method onInsertItem
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	public onInsertItem(item: ListItem, index: number) {
+
+		if (this[$selectedIndex] &&
+			this[$selectedIndex]! >= index) {
+			this[$selectedIndex]!++
 		}
+
+		item.on('press', this.onListItemPress)
+	}
+
+	/**
+	 * @method onRemoveItem
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	public onRemoveItem(item: ListItem, index: number) {
+
+		item.pressed = false
+
+		if (this[$selectedIndex] &&
+			this[$selectedIndex]! > index) {
+			this[$selectedIndex]!--
+		} else if (this[$selectedIndex] == index) {
+			this[$selectedIndex] = null
+			this[$selectedValue] = null
+			item.selected = false
+		}
+
+		item.off('press', this.onListItemPress)
 	}
 
 	//--------------------------------------------------------------------------
@@ -167,15 +198,6 @@ export class List extends Component {
 	 * @hidden
 	 */
 	private [$selectedValue]: ListItem | null = null
-
-	/**
-	 * @property refs
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private refs = {
-		items: new Reference<Slot>()
-	}
 
 	/**
 	 * @method applySelection
@@ -228,7 +250,7 @@ export class List extends Component {
 	}
 
 	/**
-	 * @method onSegmentedBarButtonPress
+	 * @method onListItemPress
 	 * @since 0.7.0
 	 * @hidden
 	 */

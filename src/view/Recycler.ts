@@ -6,7 +6,6 @@ import { $getViewType } from './private/Recycler'
 import { $onInsertView } from './private/Recycler'
 import { $onRemoveView } from './private/Recycler'
 import { $view } from './private/Recycler'
-import { renderComponent } from '../component/private/Component'
 import { bound } from '../decorator/bound'
 import { bridge } from '../native/bridge'
 import { native } from '../native/native'
@@ -26,7 +25,6 @@ import { ViewMoveToParentEvent } from '../view/View'
 import { ViewMoveToWindowEvent } from '../view/View'
 import { ViewRemoveEvent } from '../view/View'
 import { Collection } from './Collection'
-
 
 @bridge('dezel.view.Recycler')
 
@@ -52,6 +50,7 @@ export class Recycler<T> extends Emitter {
 	//--------------------------------------------------------------------------
 
 	/**
+	 * Initializes the recycler.
 	 * @constructor
 	 * @since 0.7.0
 	 */
@@ -84,6 +83,7 @@ export class Recycler<T> extends Emitter {
 	}
 
 	/**
+	 * Destroyes the recycler.
 	 * @method destroy
 	 * @since 0.7.0
 	 */
@@ -103,6 +103,7 @@ export class Recycler<T> extends Emitter {
 	}
 
 	/**
+	 * Resets the recycler.
 	 * @method reset
 	 * @since 0.7.0
 	 */
@@ -116,6 +117,7 @@ export class Recycler<T> extends Emitter {
 	//--------------------------------------------------------------------------
 
 	/**
+	 * Called when the recycler's data is reloaded.
 	 * @method onReloadData
 	 * @since 0.7.0
 	 */
@@ -124,6 +126,7 @@ export class Recycler<T> extends Emitter {
 	}
 
 	/**
+	 * Called when data is inserted.
 	 * @method onInsertData
 	 * @since 0.7.0
 	 */
@@ -136,6 +139,7 @@ export class Recycler<T> extends Emitter {
 	}
 
 	/**
+	 * Called when data is removed.
 	 * @method onRemoveData
 	 * @since 0.7.0
 	 */
@@ -148,6 +152,7 @@ export class Recycler<T> extends Emitter {
 	}
 
 	/**
+	 * Called when a group of data is about to be updated.
 	 * @method onModifyData
 	 * @since 0.7.0
 	 */
@@ -156,6 +161,7 @@ export class Recycler<T> extends Emitter {
 	}
 
 	/**
+	 * Called when data is updated.
 	 * @method onUpdateData
 	 * @since 0.7.0
 	 */
@@ -172,6 +178,7 @@ export class Recycler<T> extends Emitter {
 	}
 
 	/**
+	 * Called when a group of data has been updated.
 	 * @method onCommitData
 	 * @since 0.7.0
 	 */
@@ -298,7 +305,7 @@ export class Recycler<T> extends Emitter {
 		if (value == null) {
 			throw new Error('Unexpected error.')
 		}
-		console.log('nativeGetViewType')
+
 		return this[$getViewType].call(null, index, value)
 	}
 
@@ -309,24 +316,21 @@ export class Recycler<T> extends Emitter {
 	 */
 	private nativeOnInsertView(index: number, child: View) {
 
-		if (child instanceof Component) {
-			renderComponent(child)
-			console.log('render component')
-		}
-
-		console.log('nativeOnInsertView')
 		let value = this[$data].get(index)
 		if (value == null) {
 			throw new Error('Unexpected error.')
 		}
 
+		let parent = this[$view]
+		let window = this[$view].window
+
 		insertView(this, child, index)
 
-		let parent = this[$view]
-
 		child[$responder] = parent
-		child.emit<ViewMoveToParentEvent>('movetoparent', { data: { parent: parent } })
-		child.emit<ViewMoveToWindowEvent>('movetowindow', { data: { window: parent.window } })
+
+		child.emit<ViewMoveToParentEvent>('movetoparent', { data: { parent, former: null } })
+		child.emit<ViewMoveToWindowEvent>('movetowindow', { data: { window, former: null } })
+
 		parent.emit<ViewInsertEvent>('insert', { data: { child, index } })
 
 		this[$onInsertView].call(null, index, value, child)
@@ -337,22 +341,23 @@ export class Recycler<T> extends Emitter {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private nativeOnRemoveItem(index: number, child: View) {
-		console.log('nativeOnRemoveItem')
+	private nativeOnRemoveView(index: number, child: View) {
+
 		let value = this[$data].get(index)
 		if (value == null) {
 			throw new Error('Unexpected error.')
 		}
 
-		let item = this[$collection].get(index)
-		if (item) {
-			this[$onRemoveView].call(null, index, this[$data].get(index)!, item)
-		}
+		let parent = this[$view]
+		let window = this[$view].window
 
-		this[$view].emit<ViewInsertEvent>('remove', { data: { child, index } })
+		this[$onRemoveView].call(null, index, value, child)
 
-		child.emit<ViewMoveToParentEvent>('movetoparent', { data: { parent: null } })
-		child.emit<ViewMoveToWindowEvent>('movetowindow', { data: { window: null } })
+		parent.emit<ViewRemoveEvent>('remove', { data: { child, index } })
+
+		child.emit<ViewMoveToParentEvent>('movetoparent', { data: { parent: null, former: parent } })
+		child.emit<ViewMoveToWindowEvent>('movetowindow', { data: { window: null, former: window } })
+
 		child[$responder] = null
 
 		removeView(this, child, index)

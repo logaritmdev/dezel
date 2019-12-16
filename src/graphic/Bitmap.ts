@@ -1,79 +1,61 @@
-import { Emitter } from '../event/Emitter'
 import { bridge } from '../native/bridge'
 import { native } from '../native/native'
+import { Emitter } from '../event/Emitter'
 
-@bridge('dezel.graphic.Image')
+@bridge('dezel.graphic.Bitmap')
 
 /**
- * TODO
- * Merge in componetn IMage
  * @class Image
  * @super Emitter
- * @since 0.1.0
+ * @since 0.7.0
  */
-export class Image extends Emitter {
-
-	//--------------------------------------------------------------------------
-	// Static Methods
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method load
-	 * @since 0.1.0
-	 */
-	public static load(source: string): Promise<Image> {
-
-		let image = new Image(source)
-		if (image.complete) {
-			return Promise.resolve(image)
-		}
-
-		return new Promise((success, failure) => {
-			image.on('load', () => success(image))
-			image.on('error', () => failure(image))
-		})
-	}
+export class Bitmap extends Emitter {
 
 	//--------------------------------------------------------------------------
 	// Properties
 	//--------------------------------------------------------------------------
 
 	/**
+	 * The bitmap's source.
 	 * @property source
-	 * @since 0.1.0
+	 * @since 0.7.0
 	 */
 	@native public source: string = ''
 
 	/**
+	 * The bitmap's width.
 	 * @property width
-	 * @since 0.1.0
+	 * @since 0.7.0
 	 */
 	public get width(): number {
 		return native(this).width
 	}
 
 	/**
+	 * The bitmap's height.
 	 * @property height
-	 * @since 0.1.0
+	 * @since 0.7.0
 	 */
 	public get height(): number {
 		return native(this).height
 	}
 
 	/**
+	 * Whether the bitmap is loading.
 	 * @property loading
-	 * @since 0.1.0
+	 * @since 0.7.0
 	 */
 	public get loading(): boolean {
 		return native(this).loading
 	}
 
 	/**
-	 * @property complete
-	 * @since 0.1.0
+	 * Whether the bitmap is loaded.
+	 * @property loaded
+	 * @since 0.7.0
 	 */
-	public get complete(): boolean {
-		return native(this).complete
+	public get loaded(): boolean {
+		return native(this).loaded
 	}
 
 	//--------------------------------------------------------------------------
@@ -81,10 +63,11 @@ export class Image extends Emitter {
 	//--------------------------------------------------------------------------
 
 	/**
+	 * Initializes the bitmap.
 	 * @constructor
-	 * @since 0.1.0
+	 * @since 0.7.0
 	 */
-	constructor(source: string) {
+	constructor(source?: string) {
 
 		super()
 

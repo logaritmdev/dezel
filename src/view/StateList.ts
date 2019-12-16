@@ -13,6 +13,7 @@ export class StateList {
 	//--------------------------------------------------------------------------
 
 	/**
+	 * The state list's view.
 	 * @property view
 	 * @since 0.7.0
 	 */
@@ -25,6 +26,7 @@ export class StateList {
 	//--------------------------------------------------------------------------
 
 	/**
+	 * Initializes the state list.
 	 * @constructor
 	 * @since 0.7.0
 	 */
@@ -33,6 +35,7 @@ export class StateList {
 	}
 
 	/**
+	 * Indicates whether the view has a state.
 	 * @method has
 	 * @since 0.7.0
 	 */
@@ -41,6 +44,7 @@ export class StateList {
 	}
 
 	/**
+	 * Appends a state to the view.
 	 * @method append
 	 * @since 0.7.0
 	 */
@@ -50,6 +54,7 @@ export class StateList {
 	}
 
 	/**
+	 * Removes a state from the view.
 	 * @method remove
 	 * @since 0.7.0
 	 */
@@ -59,6 +64,7 @@ export class StateList {
 	}
 
 	/**
+	 * Toggles a state from the view.
 	 * @method toggle
 	 * @since 0.7.0
 	 */

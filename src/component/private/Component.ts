@@ -16,13 +16,6 @@ export const $locked = Symbol('locked')
 export const $sealed = Symbol('sealed')
 
 /**
- * @symbol rendered
- * @since 0.7.0
- * @hidden
- */
-export const $rendered = Symbol('rendered')
-
-/**
  * @symbol slots
  * @since 0.7.0
  * @hidden
@@ -80,29 +73,6 @@ export function setSlot(component: Component, slot: Slot) {
 	}
 
 	throw new Error(`Component error: Component already have a slot named ${slot.name}.`)
-}
-
-/**
- * @function renderComponent
- * @since 0.7.0
- * @hidden
- */
-export function renderComponent(component: Component) {
-
-	if (component.rendered) {
-		return
-	}
-
-	component[$rendered] = true
-
-	pushRenderingComponent(component)
-	makeComponent(component)
-	pullRenderingComponent(component)
-
-	component.emit('render')
-
-	component[$sealed] = true
-	component[$locked] = false
 }
 
 /**

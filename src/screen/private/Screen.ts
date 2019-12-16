@@ -1,7 +1,6 @@
 import { $screen } from './Segue'
 import { getCurrentScreen } from '../../view/private/Window'
 import { getRegisteredSegue } from './Segue'
-import { Frame } from '../Frame'
 import { Screen } from '../Screen'
 import { ScreenBeforeDismissEvent } from '../Screen'
 import { ScreenBeforeEnterEvent } from '../Screen'
@@ -102,7 +101,6 @@ export function isOverlay(screen: Screen) {
 export function isPopover(screen: Screen) {
 	return screen[$style] == 'popover'
 }
-
 
 /**
  * @function getSegue

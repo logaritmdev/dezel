@@ -14,6 +14,7 @@ export class Reference<T extends View | Collection> {
 	//--------------------------------------------------------------------------
 
 	/**
+	 * Returns the referenced value.
 	 * @property value
 	 * @since 0.7.0
 	 */
@@ -26,6 +27,7 @@ export class Reference<T extends View | Collection> {
 	//--------------------------------------------------------------------------
 
 	/**
+	 * Assigns the reference's value.
 	 * @method set
 	 * @since 0.7.0
 	 */
@@ -40,6 +42,7 @@ export class Reference<T extends View | Collection> {
 	}
 
 	/**
+	 * Returns the reference's value.
 	 * @method get
 	 * @since 0.7.0
 	 */

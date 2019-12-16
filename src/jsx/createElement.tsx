@@ -1,10 +1,6 @@
-import { getRenderingComponent } from '../component/private/Component'
-import { renderComponent } from '../component/private/Component'
-import { setSlot } from '../component/private/Component'
 import { setValueOf } from './private/createElement'
-import { Component } from '../component/Component'
-import { Slot } from '../component/Slot'
 import { Emitter } from '../event/Emitter'
+import { Reference } from '../view/Reference'
 import { View } from '../view/View'
 
 /**
@@ -15,10 +11,6 @@ import { View } from '../view/View'
 export function createElement(Type: any, properties: any, ...children: Array<View>) {
 
 	let node = new Type()
-
-	if (node instanceof Component) {
-		renderComponent(node)
-	}
 
 	if (properties) {
 
@@ -39,8 +31,14 @@ export function createElement(Type: any, properties: any, ...children: Array<Vie
 			}
 
 			if (key == 'ref') {
-				properties[key].set(node)
-				continue
+
+				let reference = properties[key]
+				if (reference instanceof Reference) {
+					reference.set(node)
+					continue
+				}
+
+				throw new Error(`Invalid object ${reference.constructor.name} to reference ${node.constructor.name}`)
 			}
 
 			setValue(node, key, properties[key])

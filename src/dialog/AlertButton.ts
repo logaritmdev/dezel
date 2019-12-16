@@ -2,7 +2,6 @@ import { bridge } from '../native/bridge'
 import { native } from '../native/native'
 import { Emitter } from '../event/Emitter'
 import { Event } from '../event/Event'
-import { Image } from '../graphic/Image'
 
 @bridge('dezel.dialog.AlertButton')
 
@@ -33,7 +32,7 @@ export class AlertButton extends Emitter {
 	 * @property image
 	 * @since 0.6.0
 	 */
-	@native public readonly image!: string | Image | null
+	@native public readonly image!: string | null
 
 	/**
 	 * @property style
@@ -127,6 +126,6 @@ const OPTIONS: Required<AlertButtonOptions> = {
 export interface AlertButtonOptions {
 	id?: string
 	label?: string
-	image?: string | Image | null
+	image?: string | null
 	style?: 'normal' | 'cancel' | 'destructive'
 }

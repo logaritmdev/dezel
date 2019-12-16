@@ -16,12 +16,14 @@ export class SpinnerView extends View {
 	//--------------------------------------------------------------------------
 
 	/**
+	 * The spinner view's tint color.
 	 * @property tint
 	 * @since 0.1.0
 	 */
 	@native public tint!: string
 
 	/**
+	 * Whether the spinner view is spinning.
 	 * @property spin
 	 * @since 0.1.0
 	 */

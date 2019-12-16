@@ -15,7 +15,7 @@ import { presentScreenAsync } from './private/Screen'
 import { Application } from '../application/Application'
 import { Component } from '../component/Component'
 import { Event } from '../event/Event'
-import { ViewMoveToWindowEvent } from '../view/View'
+import { Window } from '../view/Window'
 import { Frame } from './Frame'
 import { Segue } from './Segue'
 import './style/Screen.style'
@@ -305,6 +305,10 @@ export abstract class Screen<TResult = any> extends Component {
 			case 'keyboardresize':
 				this.onKeyboardResize(event.data.height, event.data.duration, event.data.equation)
 				break
+
+			case 'movetowindow':
+				this.onMoveToWindowInternal(event.data.window, event.data.former)
+				break
 		}
 
 		return super.onEvent(event)
@@ -452,33 +456,29 @@ export abstract class Screen<TResult = any> extends Component {
 	}
 
 	/**
-	 * @method onMoveToWindowDefault
-	 * @since 0.4.0
+	 * @method onMoveToWindowInternal
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	public onMoveToWindowDefault(event: Event<ViewMoveToWindowEvent>) {
+	private onMoveToWindowInternal(window: Window | null, former: Window | null) {
 
 		let application = Application.main
 		if (application == null) {
 			return
 		}
 
-		if (event.data.window) {
+		if (window) {
 			application.on('beforekeyboardshow', this.onBeforeApplicationKeyboardShow)
 			application.on('beforekeyboardhide', this.onBeforeApplicationKeyboardHide)
 			application.on('keyboardshow', this.onApplicationKeyboardShow)
 			application.on('keyboardhide', this.onApplicationKeyboardHide)
 			application.on('keyboardresize', this.onApplicationKeyboardResize)
-			return
-		}
-
-		if (event.data.window == null) {
+		} else {
 			application.off('beforekeyboardshow', this.onBeforeApplicationKeyboardShow)
 			application.off('beforekeyboardhide', this.onBeforeApplicationKeyboardHide)
 			application.off('keyboardshow', this.onApplicationKeyboardShow)
 			application.off('keyboardhide', this.onApplicationKeyboardHide)
 			application.off('keyboardresize', this.onApplicationKeyboardResize)
-			return
 		}
 	}
 

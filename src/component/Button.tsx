@@ -1,11 +1,11 @@
+import { ref } from '../decorator/ref'
 import { state } from '../decorator/state'
-import { Event } from '../event/Event'
 import { TouchEvent } from '../event/TouchEvent'
-import { Reference } from '../view/Reference'
 import { Component } from './Component'
 import { Image } from './Image'
 import { Label } from './Label'
 import { Root } from './Root'
+import { Touch } from '..'
 import './style/Button.style'
 import './style/Button.style.android'
 import './style/Button.style.ios'
@@ -26,18 +26,14 @@ export class Button extends Component {
 	 * @property label
 	 * @since 0.1.0
 	 */
-	public get label(): Label {
-		return this.refs.label.get()
-	}
+	@ref public label: Label
 
 	/**
 	 * The button's image.
 	 * @property image
 	 * @since 0.1.0
 	 */
-	public get image(): Image {
-		return this.refs.image.get()
-	}
+	@ref public image: Image
 
 	/**
 	 * Whether the button is pressed.
@@ -72,8 +68,8 @@ export class Button extends Component {
 	public render() {
 		return (
 			<Root>
-				<Image ref={this.refs.image} id="image" />
-				<Label ref={this.refs.label} id="label" />
+				<Image ref={this.image} id="image" />
+				<Label ref={this.label} id="label" />
 			</Root>
 		)
 	}
@@ -83,51 +79,60 @@ export class Button extends Component {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method onEvent
-	 * @since 0.7.0
-	 */
-	public onEvent(event: Event) {
-
-		if (this.disabled) switch (event.type) {
-			case 'touchcancel':
-			case 'touchstart':
-			case 'touchmove':
-			case 'touchend':
-				event.cancel()
-				break
-		}
-
-		super.onEvent(event)
-	}
-
-	/**
+	 * @inherited
 	 * @method onTouchStart
 	 * @since 0.1.0
 	 */
 	public onTouchStart(event: TouchEvent) {
-		if (this.pressed == false && this.disabled == false) {
+
+		if (this.disabled) {
+			return
+		}
+
+		if (this.tracker == null) {
+			this.tracker = event.touches.get(0)
 			this.pressed = true
 		}
 	}
 
 	/**
+	 * @inherited
 	 * @method onTouchEnd
 	 * @since 0.1.0
 	 */
 	public onTouchEnd(event: TouchEvent) {
-		if (this.pressed && event.targetTouches.length == 0) {
-			this.pressed = false
-			this.press(event)
+
+		if (this.disabled) {
+			return
+		}
+
+		for (let touch of event.touches) {
+			if (this.tracker == touch) {
+				this.tracker = null
+				this.pressed = false
+				this.touched(touch)
+				break
+			}
 		}
 	}
 
 	/**
+	 * @inherited
 	 * @method onTouchCancel
 	 * @since 0.1.0
 	 */
 	public onTouchCancel(event: TouchEvent) {
-		if (this.pressed && event.targetTouches.length == 0) {
-			this.pressed = false
+
+		if (this.disabled) {
+			return
+		}
+
+		for (let touch of event.touches) {
+			if (this.tracker == touch) {
+				this.tracker = null
+				this.pressed = false
+				break
+			}
 		}
 	}
 
@@ -136,31 +141,32 @@ export class Button extends Component {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @property refs
+	 * @method tracker
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private refs = {
-		label: new Reference<Label>(),
-		image: new Reference<Image>()
-	}
+	private tracker: Touch | null = null
 
 	/**
-	 * @method press
+	 * @method touched
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	public press(event?: TouchEvent) {
+	private touched(touch: Touch) {
 
-		/*
-		TODO
-		if (event &&
-			event.hits(this) == false) {
-			return
+		let target = this.window?.findViewAt(
+			touch.x,
+			touch.y
+		)
+
+		if (target == null) {
+			return this
 		}
-		*/
 
-		this.emit('press')
+		let inside = this.contains(target)
+		if (inside) {
+			this.emit('press')
+		}
 
 		return this
 	}

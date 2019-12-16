@@ -56,7 +56,7 @@ export class Collection extends Emitter {
 		target.on('remove', this.onViewRemove)
 		target.on('destroy', this.onViewDestroy)
 
-		this.emit<ViewMoveToParentEvent>('movetoparent', { data: { parent: target } })
+		this.emit<ViewMoveToParentEvent>('movetoparent', { data: { parent: this[$target], former: null } })
 
 		return this
 	}
@@ -75,12 +75,13 @@ export class Collection extends Emitter {
 
 		this.removeAll()
 
-		this.emit<ViewMoveToParentEvent>('movetoparent', { data: { parent: null } })
+		this.emit<ViewMoveToParentEvent>('movetoparent', { data: { parent: null, former: this[$target] } })
 
 		return super.destroy()
 	}
 
 	/**
+	 * Returns a item at a specified index.
 	 * @method get
 	 * @since 0.7.0
 	 */
@@ -89,6 +90,7 @@ export class Collection extends Emitter {
 	}
 
 	/**
+	 * Returns the index of an item.
 	 * @method index
 	 * @since 0.7.0
 	 */
@@ -97,6 +99,7 @@ export class Collection extends Emitter {
 	}
 
 	/**
+	 * Appends a view to the collection.
 	 * @method append
 	 * @since 0.7.0
 	 */
@@ -105,6 +108,7 @@ export class Collection extends Emitter {
 	}
 
 	/**
+	 * Inserts a view to the collection at a specified index.
 	 * @method insert
 	 * @since 0.7.0
 	 */
@@ -127,6 +131,7 @@ export class Collection extends Emitter {
 	}
 
 	/**
+	 * Removes a view from the colection.
 	 * @method remove
 	 * @since 0.7.0
 	 */
@@ -148,6 +153,7 @@ export class Collection extends Emitter {
 	}
 
 	/**
+	 * Removes all view from the collection.
 	 * @method removeAll
 	 * @since 0.7.0
 	 */
@@ -165,6 +171,7 @@ export class Collection extends Emitter {
 	//--------------------------------------------------------------------------
 
 	/**
+	 * @inherited
 	 * @method onEvent
 	 * @since 0.7.0
 	 */
@@ -179,16 +186,13 @@ export class Collection extends Emitter {
 			case 'remove':
 				this.onRemove(event.data.child, event.data.index)
 				break
-
-			case 'movetoparent':
-				this.onMoveToParent(event.data.parent)
-				break
 		}
 
 		super.onEvent(event)
 	}
 
 	/**
+	 * Called after a view in inserted into the collection.
 	 * @method onInsert
 	 * @since 0.7.0
 	 */
@@ -197,6 +201,7 @@ export class Collection extends Emitter {
 	}
 
 	/**
+	 * Called after a view is removed from the collction.
 	 * @method onRemove
 	 * @since 0.7.0
 	 */
@@ -205,6 +210,7 @@ export class Collection extends Emitter {
 	}
 
 	/**
+	 * Called when the collection is bound to a parent.
 	 * @method onAttach
 	 * @since 0.7.0
 	 */

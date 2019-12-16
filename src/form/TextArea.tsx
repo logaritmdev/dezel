@@ -3,6 +3,7 @@ import { state } from '../decorator/state'
 import { bridge } from '../native/bridge'
 import { native } from '../native/native'
 import { Event } from '../event/Event'
+import { TapGestureDetector } from '../gesture/TapGestureDetector'
 import { View } from '../view/View'
 import { Window } from '../view/Window'
 import './style/TextArea.style'
@@ -23,120 +24,140 @@ export class TextArea extends View {
 	//--------------------------------------------------------------------------
 
 	/**
+	 * The text area's value.
 	 * @property value
 	 * @since 0.1.0
 	 */
 	@native public value!: string
 
 	/**
+	 * The text area's placeholder.
 	 * @property placeholder
 	 * @since 0.1.0
 	 */
 	@native public placeholder!: string
 
 	/**
+	 * The text area's placeholder color.
 	 * @property placeholderColor
 	 * @since 0.1.0
 	 */
 	@native public placeholderColor!: string
 
 	/**
+	 * Whether the text area auto corrects the value.
 	 * @property autocorrect
 	 * @since 0.1.0
 	 */
 	@native public autocorrect!: boolean
 
 	/**
+	 * Whether the text area auto capitalizes the value.
 	 * @property autocapitalize
 	 * @since 0.1.0
 	 */
 	@native public autocapitalize!: boolean
 
 	/**
+	 * The text area's font family.
 	 * @property fontFamily
 	 * @since 0.1.0
 	 */
 	@native public fontFamily!: string
 
 	/**
+	 * The text area's font weight.
 	 * @property fontWeight
 	 * @since 0.1.0
 	 */
 	@native public fontWeight!: string
 
 	/**
+	 * The text area's font style.
 	 * @property fontStyle
 	 * @since 0.1.0
 	 */
 	@native public fontStyle!: string
 
 	/**
+	 * The text area's font size.
 	 * @property fontSize
 	 * @since 0.1.0
 	 */
 	@native public fontSize!: number
 
 	/**
+	 * The text area's text color.
 	 * @property textColor
 	 * @since 0.1.0
 	 */
 	@native public textColor!: string
 
 	/**
+	 * The text area's text alignment.
 	 * @property textAlign
 	 * @since 0.1.0
 	 */
 	@native public textAlign!: 'top left' | 'top right' | 'top center' | 'left' | 'right' | 'center' | 'bottom left' | 'bottom right' | 'bottom center'
 
 	/**
+	 * The text area's text kerning.
 	 * @property textKerning
 	 * @since 0.1.0
 	 */
 	@native public textKerning!: number
 
 	/**
+	 * The text area's text leading.
 	 * @property textLeading
 	 * @since 0.1.0
 	 */
 	@native public textLeading!: number
 
 	/**
+	 * The text area's text decoration.
 	 * @property textDecoration
 	 * @since 0.1.0
 	 */
 	@native public textDecoration!: string
 
 	/**
+	 * The text area's text transform.
 	 * @property textTransform
 	 * @since 0.1.0
 	 */
 	@native public textTransform!: 'none' | 'uppercase' | 'lowercase' | 'capitalize'
 
 	/**
+	 * The text area's text shadow blur size.
 	 * @property textShadowBlur
 	 * @since 0.1.0
 	 */
 	@native public textShadowBlur!: number
 
 	/**
+	 * The text area's text shadow color.
 	 * @property textShadowColor
 	 * @since 0.1.0
 	 */
 	@native public textShadowColor!: string
 
 	/**
+	 * The text area's text shadow top offset.
 	 * @property textShadowOffsetTop
 	 * @since 0.1.0
 	 */
 	@native public textShadowOffsetTop!: number
 
 	/**
+	 * The text area's text shadow left offset.
 	 * @property textShadowOffsetLeft
 	 * @since 0.1.0
 	 */
 	@native public textShadowOffsetLeft!: number
 
 	/**
+	 * Whether the text area is disabled.
 	 * @property disabled
 	 * @since 0.1.0
 	 */
@@ -147,6 +168,7 @@ export class TextArea extends View {
 	//--------------------------------------------------------------------------
 
 	/**
+	 * Moves the focus to this text area.
 	 * @method focus
 	 * @since 0.1.0
 	 */
@@ -156,6 +178,7 @@ export class TextArea extends View {
 	}
 
 	/**
+	 * Removes the focus from this text area.
 	 * @method blur
 	 * @since 0.1.0
 	 */
@@ -165,6 +188,7 @@ export class TextArea extends View {
 	}
 
 	/**
+	 * Select text at range.
 	 * @method selectRange
 	 * @since 0.5.0
 	 */
@@ -196,6 +220,7 @@ export class TextArea extends View {
 	//--------------------------------------------------------------------------
 
 	/**
+	 * @inherited
 	 * @method onEvent
 	 * @since 0.7.0
 	 */
@@ -203,8 +228,8 @@ export class TextArea extends View {
 
 		switch (event.type) {
 
-			case 'input':
-				this.onInput(event)
+			case 'change':
+				this.onChange(event)
 				break
 
 			case 'focus':
@@ -222,14 +247,16 @@ export class TextArea extends View {
 	}
 
 	/**
-	 * @method onInput
+	 * Called when the text area's value changes.
+	 * @method onChange
 	 * @since 0.1.0
 	 */
-	public onInput(event: Event) {
+	public onChange(event: Event) {
 
 	}
 
 	/**
+	 * Called when the text area receives the focus.
 	 * @method onFocus
 	 * @since 0.1.0
 	 */
@@ -238,6 +265,7 @@ export class TextArea extends View {
 	}
 
 	/**
+	 * Called when the text area loses the focus.
 	 * @method onBlur
 	 * @since 0.1.0
 	 */
@@ -246,24 +274,41 @@ export class TextArea extends View {
 	}
 
 	/**
+	 * @inherited
 	 * @method onMoveToWindow
-	 * @since 0.2.0
+	 * @since 0.7.0
 	 */
-	public onMoveToWindow(window: Window | null) {
-		// TODO
-		// Fix this with gesture
-		// if (this.window) {
-		// 	this.window.off('tap', this.onWindowTap)
-		// }
+	public onMoveToWindow(window: Window | null, former: Window | null) {
 
-		// if (window) {
-		// 	window.on('tap', this.onWindowTap)
-		// }
+		if (window) {
+			window.gestures.append(this.gesture)
+			return
+		}
+
+		if (former) {
+			former.gestures.remove(this.gesture)
+			return
+		}
 	}
 
 	//--------------------------------------------------------------------------
 	// Private API
 	//--------------------------------------------------------------------------
+
+	/**
+	 * @property gesture
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private gesture: TapGestureDetector = new TapGestureDetector(callback => {
+
+		let target = this.window?.findViewAt(callback.x, callback.y)
+		if (target == this) {
+			return
+		}
+
+		this.blur()
+	})
 
 	/**
 	 * @method onBlurDefault
@@ -282,22 +327,6 @@ export class TextArea extends View {
 	private onFocusDefault(event: Event) {
 		this.states.append('focused')
 	}
-
-	/**
-	 * @method onWindowTap
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	// @bound private onWindowTap(event: GestureEvent) {
-
-	// 	for (let touch of event.touches) {
-	// 		if (touch.target == this) {
-	// 			return
-	// 		}
-	// 	}
-
-	// 	this.blur()
-	// }
 
 	//--------------------------------------------------------------------------
 	// Native API

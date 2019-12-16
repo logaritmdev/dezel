@@ -36,7 +36,6 @@ export class Event {
 	}
 
 	/**
-	 * TODO
 	 * @method preventDefault
 	 * @since 0.7.0
 	 */

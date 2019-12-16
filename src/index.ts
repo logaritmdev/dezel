@@ -3,7 +3,7 @@
 
 import './global'
 
-
+export { ref } from './decorator/ref'
 
 
 export { Dezel } from './core/Dezel'
@@ -131,8 +131,8 @@ export { TouchEventOptions } from './event/TouchEvent'
 
 export { View } from './view/View'
 export { ViewInsertEvent } from './view/View'
-export { ViewMoveToWindowEvent } from './view/View'
-export { ViewMoveToParentEvent } from './view/View'
+export { ViewMoveToWindowEvent as ViewMoveToWindow } from './view/View'
+export { ViewMoveToParentEvent as ViewMoveToParent } from './view/View'
 export { ViewRedrawEvent } from './view/View'
 export { ViewTransitionOptions } from './view/View'
 export { TextView } from './view/TextView'

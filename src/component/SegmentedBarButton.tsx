@@ -1,8 +1,8 @@
+import { ref } from '../decorator/ref'
 import { state } from '../decorator/state'
 import { Event } from '../event/Event'
+import { Touch } from '../event/Touch'
 import { TouchEvent } from '../event/TouchEvent'
-import { Reference } from '../view/Reference'
-import { View } from '../view/View'
 import { Component } from './Component'
 import { Label } from './Label'
 import { Root } from './Root'
@@ -26,9 +26,7 @@ export class SegmentedBarButton extends Component {
 	 * @property label
 	 * @since 0.1.0
 	 */
-	public get label(): Label {
-		return this.refs.label.get()
-	}
+	@ref public label: Label
 
 	/**
 	 * Whether the button is pressed.
@@ -63,7 +61,7 @@ export class SegmentedBarButton extends Component {
 	public render() {
 		return (
 			<Root>
-				<Label ref={this.refs.label} id="label" />
+				<Label ref={this.label} id="label" />
 			</Root>
 		)
 	}
@@ -74,30 +72,17 @@ export class SegmentedBarButton extends Component {
 
 	/**
 	 * @inherited
-	 * @method onEvent
-	 * @since 0.7.0
-	 */
-	public onEvent(event: Event) {
-
-		if (this.disabled) switch (event.type) {
-			case 'touchcancel':
-			case 'touchstart':
-			case 'touchmove':
-			case 'touchend':
-				event.cancel()
-				break
-		}
-
-		super.onEvent(event)
-	}
-
-	/**
-	 * @inherited
 	 * @method onTouchStart
 	 * @since 0.1.0
 	 */
 	public onTouchStart(event: TouchEvent) {
-		if (this.pressed == false && this.disabled == false) {
+
+		if (this.disabled) {
+			return
+		}
+
+		if (this.tracker == null) {
+			this.tracker = event.touches.get(0)
 			this.pressed = true
 		}
 	}
@@ -108,9 +93,18 @@ export class SegmentedBarButton extends Component {
 	 * @since 0.1.0
 	 */
 	public onTouchEnd(event: TouchEvent) {
-		if (this.pressed && event.targetTouches.length == 0) {
-			this.pressed = false
-			this.press(event)
+
+		if (this.disabled) {
+			return
+		}
+
+		for (let touch of event.touches) {
+			if (this.tracker == touch) {
+				this.tracker = null
+				this.pressed = false
+				this.touched(touch)
+				break
+			}
 		}
 	}
 
@@ -120,8 +114,17 @@ export class SegmentedBarButton extends Component {
 	 * @since 0.1.0
 	 */
 	public onTouchCancel(event: TouchEvent) {
-		if (this.pressed && event.targetTouches.length == 0) {
-			this.pressed = false
+
+		if (this.disabled) {
+			return
+		}
+
+		for (let touch of event.touches) {
+			if (this.tracker == touch) {
+				this.tracker = null
+				this.pressed = false
+				break
+			}
 		}
 	}
 
@@ -130,30 +133,32 @@ export class SegmentedBarButton extends Component {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @property refs
+	 * @method tracker
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private refs = {
-		label: new Reference<Label>()
-	}
+	private tracker: Touch | null = null
 
 	/**
-	 * @method press
+	 * @method touched
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private press(event?: TouchEvent) {
+	private touched(touch: Touch) {
 
-		/*
-		TODO
-		if (event &&
-			event.hits(this) == false) {
-			return
+		let target = this.window?.findViewAt(
+			touch.x,
+			touch.y
+		)
+
+		if (target == null) {
+			return this
 		}
-		*/
 
-		this.emit('press')
+		let inside = this.contains(target)
+		if (inside) {
+			this.emit('press')
+		}
 
 		return this
 	}

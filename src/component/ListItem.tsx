@@ -1,4 +1,5 @@
 import { state } from '../decorator/state'
+import { Touch } from '../event/Touch'
 import { TouchEvent } from '../event/TouchEvent'
 import { View } from '../view/View'
 import { Component } from './Component'
@@ -22,7 +23,7 @@ export abstract class ListItem extends Component {
 	 * @property selectable
 	 * @since 0.4.0
 	 */
-	@state public selectable: boolean = true
+	public selectable: boolean = true
 
 	/**
 	 * Whether the list item is pressed.
@@ -68,7 +69,13 @@ export abstract class ListItem extends Component {
 	 * @since 0.1.0
 	 */
 	public onTouchStart(event: TouchEvent) {
-		if (this.pressed == false && this.disabled == false && this.selectable) {
+
+		if (this.disabled) {
+			return
+		}
+
+		if (this.tracker == null) {
+			this.tracker = event.touches.get(0)
 			this.pressed = true
 		}
 	}
@@ -79,9 +86,18 @@ export abstract class ListItem extends Component {
 	 * @since 0.1.0
 	 */
 	public onTouchEnd(event: TouchEvent) {
-		if (this.pressed && event.targetTouches.length == 0) {
-			this.pressed = false
-			this.press(event)
+
+		if (this.disabled) {
+			return
+		}
+
+		for (let touch of event.touches) {
+			if (this.tracker == touch) {
+				this.tracker = null
+				this.pressed = false
+				this.touched(touch)
+				break
+			}
 		}
 	}
 
@@ -91,8 +107,17 @@ export abstract class ListItem extends Component {
 	 * @since 0.1.0
 	 */
 	public onTouchCancel(event: TouchEvent) {
-		if (this.pressed && event.targetTouches.length == 0) {
-			this.pressed = false
+
+		if (this.disabled) {
+			return
+		}
+
+		for (let touch of event.touches) {
+			if (this.tracker == touch) {
+				this.tracker = null
+				this.pressed = false
+				break
+			}
 		}
 	}
 
@@ -101,20 +126,33 @@ export abstract class ListItem extends Component {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method press
+	 * @method tracker
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private press(event?: TouchEvent) {
+	private tracker: Touch | null = null
 
-		/*
-		TODO
-		if (event &&
-			event.hits(this) == false) {
-			return
+	/**
+	 * @method touched
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private touched(touch: Touch) {
+
+		let target = this.window?.findViewAt(
+			touch.x,
+			touch.y
+		)
+
+		if (target == null) {
+			return this
 		}
-		*/
 
-		this.emit('press')
+		let inside = this.contains(target)
+		if (inside) {
+			this.emit('press')
+		}
+
+		return this
 	}
 }

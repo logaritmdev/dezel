@@ -32,12 +32,14 @@ export class Platform {
 	//--------------------------------------------------------------------------
 
 	/**
+	 * The platform's name.
 	 * @property name
 	 * @since 0.1.0
 	 */
 	@native public readonly name!: string
 
 	/**
+	 * The platform's version.
 	 * @property version
 	 * @since 0.1.0
 	 */
