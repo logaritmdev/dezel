@@ -25,12 +25,6 @@ open class ImageLoader: NSObject {
 	 */
 	private static var diskCache: ImageDiskCache = ImageDiskCache()
 
-	/**
-	 * @property main
-	 * @since 0.6.0
-	 */
-	public static var main: ImageLoader = ImageLoader()
-
 	//--------------------------------------------------------------------------
 	// MARK: Properties
 	//--------------------------------------------------------------------------
@@ -61,12 +55,6 @@ open class ImageLoader: NSObject {
 			self.load(source.string, callback: callback)
 			return
 		}
-
-		if (source.type == .object) {
-			if let image = source.cast(JavaScriptImage.self) {
-				callback(image.data)
-			}
-		}
 	}
 
 	/**
@@ -83,50 +71,50 @@ open class ImageLoader: NSObject {
 		}
 
 		if let image = ImageLoader.liveCache.get(source) {
-			self.loaded(source, image: image)
+			self.didLoad(source, image: image)
 			return
 		}
 
 		if (source.hasPrefix("http://") ||
 			source.hasPrefix("https://")) {
-			self.loadHttpImage(source)
+			self.loadRemoteImage(source)
 			return
 		}
 
 		if (source.hasPrefix("file://")) {
-			self.loadDiskImage(source.replacingOccurrences(of: "file://", with: ""))
+			self.loadLocalImage(source.replacingOccurrences(of: "file://", with: ""))
 			return
 		}
 
-		self.loadDiskImage("app/\(source)")
+		self.loadLocalImage("app/\(source)")
 	}
 
 	/**
-	 * @method loadDiskImage
-	 * @since 0.1.0
+	 * @method loadLocalImage
+	 * @since 0.7.0
 	 */
-	open func loadDiskImage(_ source: String) {
+	open func loadLocalImage(_ source: String) {
 
 		if let image = UIImage(named: source, in: nil, compatibleWith: nil) {
-			self.loaded(source, image: image)
+			self.didLoad(source, image: image)
 			return
 		}
 
-		self.failed(source, error: NSError(domain: "InvalidResource", code: 1, userInfo: nil))
+		self.didFail(source, error: NSError(domain: "InvalidResource", code: 1, userInfo: nil))
 	}
 
 	/**
-	 * @method loadHttpImage
-	 * @since 0.1.0
+	 * @method loadRemoteImage
+	 * @since 0.7.0
 	 */
-	open func loadHttpImage(_ source: String) {
+	open func loadRemoteImage(_ source: String) {
 
 		DispatchQueue.global(qos: .background).async {
 
 			if let image = ImageLoader.diskCache.get(source) {
 
 				DispatchQueue.main.async {
-					self.loaded(source, image: image)
+					self.didLoad(source, image: image)
 				}
 
 				return
@@ -136,7 +124,7 @@ open class ImageLoader: NSObject {
 			if (url == nil) {
 
 				DispatchQueue.main.async {
-					self.failed(source, error: NSError(domain: "InvalidURL", code: 1, userInfo: nil))
+					self.didFail(source, error: NSError(domain: "InvalidURL", code: 1, userInfo: nil))
 				}
 
 				return
@@ -151,7 +139,7 @@ open class ImageLoader: NSObject {
 			} catch {
 
 				DispatchQueue.main.async {
-					self.failed(source, error: NSError(domain: "InvalidRequest", code: 1, userInfo: nil))
+					self.didFail(source, error: NSError(domain: "InvalidRequest", code: 1, userInfo: nil))
 				}
 
 				return
@@ -160,14 +148,14 @@ open class ImageLoader: NSObject {
 			guard let image = UIImage(data: data) else {
 
 				DispatchQueue.main.async {
-					self.failed(source, error: NSError(domain: "InvalidData", code: 1, userInfo: nil))
+					self.didFail(source, error: NSError(domain: "InvalidData", code: 1, userInfo: nil))
 				}
 
 				return
 			}
 
 			DispatchQueue.main.async {
-				self.loaded(source, image: image)
+				self.didLoad(source, image: image)
 			}
 		}
 	}
@@ -177,11 +165,11 @@ open class ImageLoader: NSObject {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method loaded
-	 * @since 0.1.0
+	 * @method didLoad
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private func loaded(_ source: String, image: UIImage) {
+	private func didLoad(_ source: String, image: UIImage) {
 
 		DispatchQueue.global(qos: .background).async {
 			ImageLoader.diskCache.set(source, data: image)
@@ -192,11 +180,11 @@ open class ImageLoader: NSObject {
 	}
 
 	/**
-	 * @method failed
-	 * @since 0.1.0
+	 * @method didFail
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private func failed(_ source: String, error: NSError) {
+	private func didFail(_ source: String, error: NSError) {
 		NSLog("Dezel: Image error: \(source)")
 		self.callback?(nil)
 	}

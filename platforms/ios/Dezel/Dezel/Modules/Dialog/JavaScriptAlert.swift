@@ -66,7 +66,8 @@ open class JavaScriptAlert: JavaScriptClass, AlertControllerDelegate {
 
 				if (button.image.type == .string ||
 					button.image.type == .object) {
-
+					/*
+					TODO
 					ImageLoader.main.load(button.image) { image in
 
 						guard let image = image else {
@@ -90,6 +91,7 @@ open class JavaScriptAlert: JavaScriptClass, AlertControllerDelegate {
 
 						UIGraphicsEndImageContext()
 					}
+					*/
 				}
 
 				alertController.addAction(action)

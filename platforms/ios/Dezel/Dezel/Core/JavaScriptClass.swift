@@ -435,7 +435,7 @@ open class JavaScriptClass: JavaScriptObject {
 		 * When protecting an object from being collected, we also want to
 		 * make sure its holder does not get collected.
 		 */
-
+		
 		self.instance?.protect()
 	}
 

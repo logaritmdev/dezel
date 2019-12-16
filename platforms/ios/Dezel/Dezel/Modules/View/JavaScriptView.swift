@@ -1256,11 +1256,11 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 			return
 		}
 
-		self.parent = parent
-
 		if (notify) {
-			self.callMethod("nativeOnMoveToParent", arguments: [parent])
+			self.callMethod("nativeOnMoveToParent", arguments: [parent, self.parent])
 		}
+
+		self.parent = parent
 	}
 
 	/**
@@ -1274,11 +1274,11 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 			return
 		}
 
-		self.window = window
-
 		if (notify) {
-			self.callMethod("nativeOnMoveToWindow", arguments: [window])
+			self.callMethod("nativeOnMoveToWindow", arguments: [window, self.window])
 		}
+
+		self.window = window
 
 		for view in self.children {
 			view.moveToWindow(window)

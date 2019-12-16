@@ -37,7 +37,7 @@
 		C7069603239804F100D4DFA1 /* ImagePosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7069602239804F100D4DFA1 /* ImagePosition.swift */; };
 		C718A0A92066E24400EFEC15 /* JavaScriptImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C718A0A82066E24400EFEC15 /* JavaScriptImageView.swift */; };
 		C718A0B32066E63300EFEC15 /* ImageLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C718A0B22066E63300EFEC15 /* ImageLayer.swift */; };
-		C718A0B52066ED6100EFEC15 /* JavaScriptImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C718A0B42066ED6100EFEC15 /* JavaScriptImage.swift */; };
+		C718A0B52066ED6100EFEC15 /* JavaScriptBitmap.swift in Sources */ = {isa = PBXBuildFile; fileRef = C718A0B42066ED6100EFEC15 /* JavaScriptBitmap.swift */; };
 		C718A0BE206748DC00EFEC15 /* ImageLiveCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = C718A0BD206748DC00EFEC15 /* ImageLiveCache.swift */; };
 		C718A0C0206748EB00EFEC15 /* ImageDiskCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = C718A0BF206748EB00EFEC15 /* ImageDiskCache.swift */; };
 		C718A0C72067F75900EFEC15 /* JavaScriptGraphicModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C718A0C62067F75900EFEC15 /* JavaScriptGraphicModule.swift */; };
@@ -373,7 +373,7 @@
 		C7069602239804F100D4DFA1 /* ImagePosition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePosition.swift; sourceTree = "<group>"; };
 		C718A0A82066E24400EFEC15 /* JavaScriptImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptImageView.swift; sourceTree = "<group>"; };
 		C718A0B22066E63300EFEC15 /* ImageLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLayer.swift; sourceTree = "<group>"; };
-		C718A0B42066ED6100EFEC15 /* JavaScriptImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptImage.swift; sourceTree = "<group>"; };
+		C718A0B42066ED6100EFEC15 /* JavaScriptBitmap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptBitmap.swift; sourceTree = "<group>"; };
 		C718A0BD206748DC00EFEC15 /* ImageLiveCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLiveCache.swift; sourceTree = "<group>"; };
 		C718A0BF206748EB00EFEC15 /* ImageDiskCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDiskCache.swift; sourceTree = "<group>"; };
 		C718A0C62067F75900EFEC15 /* JavaScriptGraphicModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptGraphicModule.swift; sourceTree = "<group>"; };
@@ -731,7 +731,7 @@
 				C718A0BD206748DC00EFEC15 /* ImageLiveCache.swift */,
 				C718A0BF206748EB00EFEC15 /* ImageDiskCache.swift */,
 				C718A0C62067F75900EFEC15 /* JavaScriptGraphicModule.swift */,
-				C718A0B42066ED6100EFEC15 /* JavaScriptImage.swift */,
+				C718A0B42066ED6100EFEC15 /* JavaScriptBitmap.swift */,
 				C7A3AB76214EC68100D8B15C /* JavaScriptCanvas.swift */,
 			);
 			path = Graphic;
@@ -1829,7 +1829,7 @@
 				C7A2C2AF2372F92500219BA5 /* DisplayNodeWalker.cpp in Sources */,
 				C732E78820865116006014A0 /* JavaScriptGlobalModule.swift in Sources */,
 				C7E4817123823C3400730F7A /* Stylesheet.swift in Sources */,
-				C718A0B52066ED6100EFEC15 /* JavaScriptImage.swift in Sources */,
+				C718A0B52066ED6100EFEC15 /* JavaScriptBitmap.swift in Sources */,
 				C7069603239804F100D4DFA1 /* ImagePosition.swift in Sources */,
 				C7BFD16C207D560E00AAD31C /* UIColor.swift in Sources */,
 				C792E8F4234BDE630022D712 /* DisplayBase.cpp in Sources */,

@@ -12,8 +12,9 @@ open class JavaScriptRecycler : JavaScriptClass, JavaScriptView.Delegate {
 	/**
 	 * @property view
 	 * @since 0.7.0
+	 * @hidden
 	 */
-	private(set) public weak var view: JavaScriptView!
+	private var view: JavaScriptView!
 
 	/**
 	 * @property list
@@ -62,7 +63,7 @@ open class JavaScriptRecycler : JavaScriptClass, JavaScriptView.Delegate {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private var estimatedItemSize: Double = 0
+	private var estimatedItemSize: Double = 50
 
 	/**
 	 * @property direction
@@ -167,10 +168,14 @@ open class JavaScriptRecycler : JavaScriptClass, JavaScriptView.Delegate {
 	 * @method attach
 	 * @since 0.7.0
 	 */
-	open func attach(_ view: JavaScriptView) {
+	open func attach(_ view: JavaScriptView, size: Int) {
+
+		self.size = size
 		self.view = view
 		self.view?.delegate = self
 		self.view?.scheduleLayout()
+
+		self.protect()
 	}
 
 	/**
@@ -181,7 +186,10 @@ open class JavaScriptRecycler : JavaScriptClass, JavaScriptView.Delegate {
 
 		self.view?.delegate = nil
 		self.view?.scheduleLayout()
+		self.view?.unprotect()
 		self.view = nil
+
+		self.unprotect()
 
 		self.cache.values.forEach {
 			$0.forEach {
@@ -192,6 +200,10 @@ open class JavaScriptRecycler : JavaScriptClass, JavaScriptView.Delegate {
 
 		self.views.removeAll()
 		self.cache.removeAll()
+		self.types.removeAll()
+		self.sizes.removeAll()
+		self.insert.removeAll()
+		self.remove.removeAll()
 	}
 
 	//--------------------------------------------------------------------------
@@ -461,7 +473,7 @@ open class JavaScriptRecycler : JavaScriptClass, JavaScriptView.Delegate {
 		let type = self.context.createReturnValue()
 		let view = self.context.createReturnValue()
 
-		self.callMethod("nativeDefineItem", arguments: [self.context.createNumber(index)], result: type)
+		self.callMethod("nativeGetViewType", arguments: [self.context.createNumber(index)], result: type)
 
 		if (type.isNull) {
 			return nil
@@ -863,6 +875,13 @@ open class JavaScriptRecycler : JavaScriptClass, JavaScriptView.Delegate {
 			return
 		}
 
+		/*
+		 * Tells the managed view an item has been remove so it is properly
+		 * managed by the view and prepared for cache.
+		 */
+
+		self.callMethod("nativeOnRemoveView", arguments: [self.context.createNumber(index), view])
+
 		self.cacheView(view)
 
 		self.view.remove(view, notify: false)
@@ -870,12 +889,7 @@ open class JavaScriptRecycler : JavaScriptClass, JavaScriptView.Delegate {
 
 		self.views.removeValue(forKey: index)
 
-		/*
-		 * Tells the managed view an item has been remove so it is properly
-		 * managed by the view and prepared for cache.
-		 */
 
-		self.callMethod("nativeOnRemoveView", arguments: [self.context.createNumber(index), view])
 	}
 
 	/**
@@ -1279,12 +1293,15 @@ open class JavaScriptRecycler : JavaScriptClass, JavaScriptView.Delegate {
 	 */
 	@objc open func jsFunction_attach(callback: JavaScriptFunctionCallback) {
 
-		if (callback.arguments < 1) {
-			fatalError("Method JavaScriptViewOptimizer.attach() requires 1 argument.")
+		if (callback.arguments < 2) {
+			fatalError("Method JavaScriptViewOptimizer.attach() requires 2 arguments.")
 		}
 
-		if let view = callback.argument(0).cast(JavaScriptView.self) {
-			self.attach(view)
+		let view = callback.argument(0)
+		let size = callback.argument(1).number
+
+		if let view = view.cast(JavaScriptView.self) {
+			self.attach(view, size: size.toInt())
 		}
 	}
 
@@ -1322,6 +1339,8 @@ open class JavaScriptRecycler : JavaScriptClass, JavaScriptView.Delegate {
 		let index   = callback.argument(0).number.toInt()
 		let count   = callback.argument(1).number.toInt()
 		let animate = callback.argument(2).boolean
+
+		self.size += count
 
 		let min = index
 		let max = index + count - 1
@@ -1438,6 +1457,8 @@ open class JavaScriptRecycler : JavaScriptClass, JavaScriptView.Delegate {
 		let count   = callback.argument(1).number.toInt()
 		let animate = callback.argument(2).boolean
 
+		self.size -= count
+
 		let min = index
 		let max = index + count - 1
 
@@ -1546,6 +1567,11 @@ open class JavaScriptRecycler : JavaScriptClass, JavaScriptView.Delegate {
 	// MARK: Classes
 	//--------------------------------------------------------------------------
 
+	/**
+	 * @enum Direction
+	 * @since 0.7.0
+	 * @hidden
+	 */
 	private enum Direction {
 		case vertical
 		case horizontal

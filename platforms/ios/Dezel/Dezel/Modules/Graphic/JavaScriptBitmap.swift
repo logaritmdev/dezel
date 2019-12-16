@@ -1,19 +1,19 @@
 /**
- * @class JavaScriptImage
+ * @class JavaScriptBitmap
  * @super JavaScriptClass
  * @since 0.7.0
  */
-open class JavaScriptImage: JavaScriptClass {
+open class JavaScriptBitmap: JavaScriptClass {
 
 	//--------------------------------------------------------------------------
 	// MARK: Properties
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @property data
+	 * @property bitmap
 	 * @since 0.7.0
 	 */
-	open var data: UIImage?
+	open var bitmap: UIImage?
 
 	/**
 	 * @property loader
@@ -32,9 +32,10 @@ open class JavaScriptImage: JavaScriptClass {
 	 */
 	open func load(_ source: String) {
 
-		self.data = nil
+		self.bitmap = nil
+
+		self.loaded.reset(false)
 		self.loading.reset(true)
-		self.complete.reset(false)
 
 		self.protect()
 
@@ -51,16 +52,16 @@ open class JavaScriptImage: JavaScriptClass {
 	open func set(_ image: UIImage?) {
 
 		if let image = image {
-			self.data = image
+			self.bitmap = image
+			self.loaded.reset(true)
 			self.loading.reset(false)
-			self.complete.reset(true)
 			self.callMethod("nativeOnLoad")
 			return
 		}
 
-		self.data = nil
+		self.bitmap = nil
+		self.loaded.reset(false)
 		self.loading.reset(false)
-		self.complete.reset(false)
 		self.callMethod("nativeOnError")
 	}
 
@@ -77,16 +78,16 @@ open class JavaScriptImage: JavaScriptClass {
 	}
 
 	/**
+	 * @property loaded
+	 * @since 0.7.0
+	 */
+	@objc lazy var loaded = JavaScriptProperty(boolean: false)
+
+	/**
 	 * @property loading
 	 * @since 0.7.0
 	 */
 	@objc lazy var loading = JavaScriptProperty(boolean: false)
-
-	/**
-	 * @property complete
-	 * @since 0.7.0
-	 */
-	@objc lazy var complete = JavaScriptProperty(boolean: false)
 
 	//--------------------------------------------------------------------------
 
@@ -96,7 +97,7 @@ open class JavaScriptImage: JavaScriptClass {
 	 * @hidden
 	 */
 	@objc func jsGet_width(callback: JavaScriptGetterCallback) {
-		callback.returns(Double(self.data?.size.width ?? 0))
+		callback.returns(Double(self.bitmap?.size.width ?? 0))
 	}
 
 	//--------------------------------------------------------------------------
@@ -107,7 +108,7 @@ open class JavaScriptImage: JavaScriptClass {
 	 * @hidden
 	 */
 	@objc func jsGet_height(callback: JavaScriptGetterCallback) {
-		callback.returns(Double(self.data?.size.height ?? 0))
+		callback.returns(Double(self.bitmap?.size.height ?? 0))
 	}
 
 	//--------------------------------------------------------------------------
@@ -133,22 +134,22 @@ open class JavaScriptImage: JavaScriptClass {
 	//--------------------------------------------------------------------------
 
 	/**
+	 * @method jsGet_loaded
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@objc func jsGet_loaded(callback: JavaScriptGetterCallback) {
+		callback.returns(self.loaded)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
 	 * @method jsGet_loading
 	 * @since 0.7.0
 	 * @hidden
 	 */
 	@objc func jsGet_loading(callback: JavaScriptGetterCallback) {
 		callback.returns(self.loading)
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method jsGet_complete
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	@objc func jsGet_complete(callback: JavaScriptGetterCallback) {
-		callback.returns(self.complete)
 	}
 }
