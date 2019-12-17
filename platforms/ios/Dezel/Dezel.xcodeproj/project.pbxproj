@@ -326,6 +326,7 @@
 		C7E8A549201624FA005139F6 /* JavaScriptValue.h in Headers */ = {isa = PBXBuildFile; fileRef = C7E8A53F201624FA005139F6 /* JavaScriptValue.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C7E8A54A201624FA005139F6 /* JavaScriptValuePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = C7E8A540201624FA005139F6 /* JavaScriptValuePrivate.h */; };
 		C7E8A54D2016262A005139F6 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7E8A54C2016262A005139F6 /* JavaScriptCore.framework */; };
+		C7ED00EA23A87CA200D44C1D /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ED00E923A87CA200D44C1D /* UIImage.swift */; };
 		C7EE2E0222DD6AE200FFF0EE /* Source.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7EE2E0122DD6AE200FFF0EE /* Source.swift */; };
 		C7EE2E0622DE2D5B00FFF0EE /* CADisplayLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7EE2E0522DE2D5B00FFF0EE /* CADisplayLink.swift */; };
 		C7EE2E1022DFA84900FFF0EE /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7EE2E0F22DFA84900FFF0EE /* Data.swift */; };
@@ -665,6 +666,7 @@
 		C7E8A53F201624FA005139F6 /* JavaScriptValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JavaScriptValue.h; path = ../../../../shared/core/JavaScriptValue.h; sourceTree = "<group>"; };
 		C7E8A540201624FA005139F6 /* JavaScriptValuePrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JavaScriptValuePrivate.h; path = ../../../../shared/core/JavaScriptValuePrivate.h; sourceTree = "<group>"; };
 		C7E8A54C2016262A005139F6 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		C7ED00E923A87CA200D44C1D /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
 		C7EE2E0122DD6AE200FFF0EE /* Source.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Source.swift; sourceTree = "<group>"; };
 		C7EE2E0522DE2D5B00FFF0EE /* CADisplayLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CADisplayLink.swift; sourceTree = "<group>"; };
 		C7EE2E0F22DFA84900FFF0EE /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
@@ -1472,6 +1474,7 @@
 				C7CE4B062208C93C005D5235 /* UITextField.swift */,
 				C74D8DDC238C7AFE000C8E12 /* UITouch.swift */,
 				C7E30976203123DD00436FA4 /* UIView.swift */,
+				C7ED00E923A87CA200D44C1D /* UIImage.swift */,
 			);
 			path = UIKit;
 			sourceTree = "<group>";
@@ -1828,6 +1831,7 @@
 				C72E0E9920669CBF003BCEF1 /* TextOverflow.swift in Sources */,
 				C7A2C2AF2372F92500219BA5 /* DisplayNodeWalker.cpp in Sources */,
 				C732E78820865116006014A0 /* JavaScriptGlobalModule.swift in Sources */,
+				C7ED00EA23A87CA200D44C1D /* UIImage.swift in Sources */,
 				C7E4817123823C3400730F7A /* Stylesheet.swift in Sources */,
 				C718A0B52066ED6100EFEC15 /* JavaScriptBitmap.swift in Sources */,
 				C7069603239804F100D4DFA1 /* ImagePosition.swift in Sources */,
