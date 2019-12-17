@@ -31,6 +31,8 @@ module.exports = function (config) {
       tsconfig: './tsconfig.json',
     },
 
+    captureConsole: true,
+
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
