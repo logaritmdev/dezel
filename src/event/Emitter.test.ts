@@ -34,8 +34,8 @@ describe('Emitter', () => {
 		let l1 = jasmine.createSpy()
 		let l2 = jasmine.createSpy()
 
-		emitter.one('event', l1)
-		emitter.one('EVENT', l2)
+		emitter.once('event', l1)
+		emitter.once('EVENT', l2)
 
 		let listeners = getListeners(emitter, 'event')
 		expect(listeners[0]).not.toBeUndefined()
@@ -113,8 +113,8 @@ describe('Emitter', () => {
 		let l1 = jasmine.createSpy()
 		let l2 = jasmine.createSpy()
 
-		emitter.one('event', l1)
-		emitter.one('EVENT', l2)
+		emitter.once('event', l1)
+		emitter.once('EVENT', l2)
 
 		emitter.emit('event')
 		emitter.emit('event')
@@ -133,8 +133,8 @@ describe('Emitter', () => {
 		let em1 = new Emitter()
 		let em2 = new Emitter()
 
-		em1.one('event', l1)
-		em2.one('event', l1)
+		em1.once('event', l1)
+		em2.once('event', l1)
 
 		em1.emit('event')
 		em1.emit('event')

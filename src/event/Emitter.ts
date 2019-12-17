@@ -52,10 +52,10 @@ export class Emitter {
 	}
 
 	/**
-	 * @method one
+	 * @method once
 	 * @since 0.7.0
 	 */
-	public one(type: string, listener: EventListener) {
+	public once(type: string, listener: EventListener) {
 		insertListener(this, type, listener, true)
 		return this
 	}

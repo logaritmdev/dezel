@@ -138,7 +138,7 @@ export class Alert extends Emitter {
 		}
 
 		return new Promise((success) => {
-			this.present().one('dismiss', (event: Event<AlertDismissEvent>) => success(event.data.button))
+			this.present().once('dismiss', (event: Event<AlertDismissEvent>) => success(event.data.button))
 		})
 	}
 

@@ -128,9 +128,9 @@ describe('Collection', () => {
 			expect(event.data.index).toBe(1)
 		})
 
-		collection.one('insert', fn1)
+		collection.once('insert', fn1)
 		collection.append(child1)
-		collection.one('insert', fn2)
+		collection.once('insert', fn2)
 		collection.append(child2)
 
 		expect(fn1).toHaveBeenCalled()
@@ -155,9 +155,9 @@ describe('Collection', () => {
 		collection.append(child1)
 		collection.append(child2)
 
-		collection.one('remove', fn1)
+		collection.once('remove', fn1)
 		collection.remove(child2)
-		collection.one('remove', fn2)
+		collection.once('remove', fn2)
 		collection.remove(child1)
 
 		expect(fn1).toHaveBeenCalled()

@@ -11,11 +11,12 @@ import { bound } from '../decorator/bound'
 import { dismissScreenAsync } from './private/Screen'
 import { getDismissSegue } from './private/Screen'
 import { getPresentSegue } from './private/Screen'
+import { presentScreenAfter } from './private/Screen'
 import { presentScreenAsync } from './private/Screen'
+import { promptScreenAfter } from './private/Screen'
 import { Application } from '../application/Application'
 import { Component } from '../component/Component'
 import { Event } from '../event/Event'
-import { Window } from '../view/Window'
 import { Frame } from './Frame'
 import { Segue } from './Segue'
 import './style/Screen.style'
@@ -128,6 +129,65 @@ export abstract class Screen<TResult = any> extends Component {
 		super()
 		this[$frame] = new Frame()
 		this[$frame].append(this)
+		this.registerApplicationListeners()
+	}
+
+	/**
+	 * Present a screen and wait for its result.
+	 * @method prompt
+	 * @since 0.3.0
+	 */
+	public prompt(screen: Screen, using: Segue | string, options: ScreenPresentOptions = {}): Promise<TResult | null> {
+
+		if (screen.presenting ||
+			screen.dismissing) {
+			return Promise.resolve(null)
+		}
+
+		if (this.presenting) {
+			throw new Error(`Screen error: This screen is being presented.`)
+		}
+
+		let opts = Object.assign(
+			{},
+			OPTIONS,
+			options
+		)
+
+		let dismissedScreen = this
+		let presenterScreen = this
+		let presentedScreen = screen
+
+		let presentedScreenSegue = getPresentSegue(screen, using)
+
+		if (this.presentee) {
+			return promptScreenAfter(
+				this,
+				presentedScreen,
+				presentedScreenSegue,
+				options
+			)
+		}
+
+		presentedScreen[$modal] = opts.modal
+		presentedScreen[$style] = opts.style
+		presentedScreen[$segue] = presentedScreenSegue
+		presenterScreen[$presenting] = true
+		dismissedScreen[$dismissing] = true
+
+		return new Promise(success => {
+
+			presentedScreen.once('done', () => {
+				success(presentedScreen.result)
+			})
+
+			presentScreenAsync(
+				this,
+				presentedScreen,
+				presentedScreenSegue,
+				options
+			)
+		})
 	}
 
 	/**
@@ -146,10 +206,6 @@ export abstract class Screen<TResult = any> extends Component {
 			throw new Error(`Screen error: This screen is being presented.`)
 		}
 
-		if (this.presentee) {
-			throw new Error(`Screen error: This screen is already presenting another screen.`)
-		}
-
 		let opts = Object.assign(
 			{},
 			OPTIONS,
@@ -161,6 +217,15 @@ export abstract class Screen<TResult = any> extends Component {
 		let presentedScreen = screen
 
 		let presentedScreenSegue = getPresentSegue(screen, using)
+
+		if (this.presentee) {
+			return presentScreenAfter(
+				this,
+				presentedScreen,
+				presentedScreenSegue,
+				options
+			)
+		}
 
 		presentedScreen[$modal] = opts.modal
 		presentedScreen[$style] = opts.style
@@ -210,31 +275,6 @@ export abstract class Screen<TResult = any> extends Component {
 			dismissedScreenSegue,
 			options
 		)
-	}
-
-	/**
-	 * Present a screen and wait for its result.
-	 * @method prompt
-	 * @since 0.3.0
-	 */
-	public prompt<R = any>(screen: Screen<R>, using: Segue | string, options: ScreenPresentOptions = {}): Promise<R | undefined | null> {
-
-		if (screen.presenting ||
-			screen.dismissing) {
-			return Promise.reject()
-		}
-
-		if (this.presenting) {
-			throw new Error(`Screen error: This screen is being presented.`)
-		}
-
-		if (this.presentee) {
-			throw new Error(`Screen error: This screen is already presenting another screen.`)
-		}
-
-		return new Promise(success => {
-			this.present(screen.one('done', () => success(screen.result)), using, options)
-		})
 	}
 
 	//--------------------------------------------------------------------------
@@ -306,8 +346,12 @@ export abstract class Screen<TResult = any> extends Component {
 				this.onKeyboardResize(event.data.height, event.data.duration, event.data.equation)
 				break
 
-			case 'movetowindow':
-				this.onMoveToWindowInternal(event.data.window, event.data.former)
+			case 'memorywarning':
+				this.onMemoryWarning()
+				break
+
+			case 'destroy':
+				this.onDestroyInternal()
 				break
 		}
 
@@ -456,30 +500,12 @@ export abstract class Screen<TResult = any> extends Component {
 	}
 
 	/**
-	 * @method onMoveToWindowInternal
+	 * Called when the application gets low on memory.
+	 * @method onMemoryWarning
 	 * @since 0.7.0
-	 * @hidden
 	 */
-	private onMoveToWindowInternal(window: Window | null, former: Window | null) {
+	public onMemoryWarning() {
 
-		let application = Application.main
-		if (application == null) {
-			return
-		}
-
-		if (window) {
-			application.on('beforekeyboardshow', this.onBeforeApplicationKeyboardShow)
-			application.on('beforekeyboardhide', this.onBeforeApplicationKeyboardHide)
-			application.on('keyboardshow', this.onApplicationKeyboardShow)
-			application.on('keyboardhide', this.onApplicationKeyboardHide)
-			application.on('keyboardresize', this.onApplicationKeyboardResize)
-		} else {
-			application.off('beforekeyboardshow', this.onBeforeApplicationKeyboardShow)
-			application.off('beforekeyboardhide', this.onBeforeApplicationKeyboardHide)
-			application.off('keyboardshow', this.onApplicationKeyboardShow)
-			application.off('keyboardhide', this.onApplicationKeyboardHide)
-			application.off('keyboardresize', this.onApplicationKeyboardResize)
-		}
 	}
 
 	//--------------------------------------------------------------------------
@@ -494,8 +520,6 @@ export abstract class Screen<TResult = any> extends Component {
 	public dispose(destroy: boolean = true) {
 
 		this.removeFromParent()
-
-		this.emit('dispose')
 
 		let segue = this[$segue]
 		if (segue) {
@@ -528,12 +552,9 @@ export abstract class Screen<TResult = any> extends Component {
 	 */
 	public updateStatusBar() {
 
-		let application = Application.main
-		if (application) {
-			application.statusBarVisible = this.statusBarVisible
-			application.statusBarForegroundColor = this.statusBarForegroundColor
-			application.statusBarBackgroundColor = this.statusBarBackgroundColor
-		}
+		Application.main.statusBarVisible = this.statusBarVisible
+		Application.main.statusBarForegroundColor = this.statusBarForegroundColor
+		Application.main.statusBarBackgroundColor = this.statusBarBackgroundColor
 
 		return this
 	}
@@ -606,6 +627,43 @@ export abstract class Screen<TResult = any> extends Component {
 	private [$modal]: boolean = false
 
 	/**
+	 * @method registerApplicationListeners
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private registerApplicationListeners() {
+		Application.main.on('beforekeyboardshow', this.onBeforeApplicationKeyboardShow)
+		Application.main.on('beforekeyboardhide', this.onBeforeApplicationKeyboardHide)
+		Application.main.on('keyboardshow', this.onApplicationKeyboardShow)
+		Application.main.on('keyboardhide', this.onApplicationKeyboardHide)
+		Application.main.on('keyboardresize', this.onApplicationKeyboardResize)
+		Application.main.on('memorywarning', this.onApplicationMemoryWarning)
+	}
+
+	/**
+	 * @method unregisterApplicationListeners
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private unregisterApplicationListeners() {
+		Application.main.off('beforekeyboardshow', this.onBeforeApplicationKeyboardShow)
+		Application.main.off('beforekeyboardhide', this.onBeforeApplicationKeyboardHide)
+		Application.main.off('keyboardshow', this.onApplicationKeyboardShow)
+		Application.main.off('keyboardhide', this.onApplicationKeyboardHide)
+		Application.main.off('keyboardresize', this.onApplicationKeyboardResize)
+		Application.main.off('memorywarning', this.onApplicationMemoryWarning)
+	}
+
+	/**
+	 * @method onDestroyInternal
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private onDestroyInternal() {
+		this.unregisterApplicationListeners()
+	}
+
+	/**
 	 * @method onBeforeApplicationKeyboardShow
 	 * @since 0.3.0
 	 * @hidden
@@ -647,6 +705,15 @@ export abstract class Screen<TResult = any> extends Component {
 	 * @hidden
 	 */
 	@bound private onApplicationKeyboardResize(event: Event) {
+		this.emit(event)
+	}
+
+	/**
+	 * @method onApplicationMemoryWarning
+	 * @since 0.3.0
+	 * @hidden
+	 */
+	@bound private onApplicationMemoryWarning(event: Event) {
 		this.emit(event)
 	}
 }

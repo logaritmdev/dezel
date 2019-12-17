@@ -53,7 +53,12 @@ export class Application extends Emitter {
 	 * @property main
 	 * @since 0.5.0
 	 */
-	public static get main(): Application | null {
+	public static get main(): Application {
+
+		if (main == null) {
+			throw new Error(`Application error: Application has not been started.`)
+		}
+
 		return main
 	}
 
@@ -676,6 +681,15 @@ export class Application extends Emitter {
 
 	}
 
+	/**
+	 * Called when the application gets low on memory.
+	 * @method onMemoryWarning
+	 * @since 0.7.0
+	 */
+	public onMemoryWarning() {
+
+	}
+
 	//--------------------------------------------------------------------------
 	// Private API
 	//--------------------------------------------------------------------------
@@ -860,6 +874,15 @@ export class Application extends Emitter {
 		}
 
 		return event.canceled
+	}
+
+	/**
+	 * @method nativeOnMemoryWarning
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private nativeOnMemoryWarning() {
+		this.emit('memorywarning')
 	}
 }
 

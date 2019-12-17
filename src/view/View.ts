@@ -1570,6 +1570,10 @@ export class View extends Emitter {
 				this.onMoveToWindow(event.data.window, event.data.former)
 				break
 
+			case 'ready':
+				this.onReady()
+				break
+
 			case 'scrollstart':
 				this.onScrollStart()
 				break
@@ -1674,6 +1678,15 @@ export class View extends Emitter {
 	 * @since 0.7.0
 	 */
 	public onMoveToParent(parent: View | null, former: View | null) {
+
+	}
+
+	/**
+	 * Called when the view is in a window tree.
+	 * @method onReady
+	 * @since 0.7.0
+	 */
+	public onReady() {
 
 	}
 
@@ -1887,7 +1900,18 @@ export class View extends Emitter {
 	 * @hidden
 	 */
 	private nativeOnMoveToWindow(window: Window | null, former: Window | null) {
+
 		this.emit<ViewMoveToWindowEvent>('movetowindow', { data: { window, former } })
+
+		/*
+		 * Creates a convenience event to indicates the view is in a
+		 * window. This will be helpful to initialize values especially in
+		 * components.
+		 */
+
+		if (window) {
+			this.emit('ready')
+		}
 	}
 
 	/**

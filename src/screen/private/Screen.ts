@@ -228,9 +228,9 @@ export function dismissScreenAsync(screen: Screen, target: Screen, segue: Segue,
  */
 export async function presentScreen(screen: Screen, target: Screen, segue: Segue, options: ScreenPresentOptions, done: () => void) {
 
-	let window = screen.window!
-
 	try {
+
+		let window = screen.window!
 
 		window.touchable = false
 
@@ -304,9 +304,9 @@ export async function presentScreen(screen: Screen, target: Screen, segue: Segue
  */
 export async function dismissScreen(screen: Screen, target: Screen, segue: Segue, options: ScreenDismissOptions, done: () => void) {
 
-	let window = screen.window!
-
 	try {
+
+		let window = screen.window!
 
 		window.touchable = false
 
@@ -330,8 +330,6 @@ export async function dismissScreen(screen: Screen, target: Screen, segue: Segue
 			dismissedScreen
 		)
 
-		dismissedScreen.emit('done')
-
 		await emitBeforeLeave(dismissedScreen, segue)
 		await emitBeforeEnter(presentedScreen, segue)
 
@@ -341,6 +339,7 @@ export async function dismissScreen(screen: Screen, target: Screen, segue: Segue
 			segue
 		)
 
+		dismissedScreen.emit('done')
 		presentedScreen.updateStatusBar()
 
 		await segue.dismiss(
@@ -382,7 +381,7 @@ export async function dismissScreen(screen: Screen, target: Screen, segue: Segue
 		presentedScreen[$presenting] = false
 		dismissedScreen[$presenting] = false
 
-		dismissedScreen.emit('exit')
+		dismissedScreen.emit('left')
 
 		window.touchable = true
 
@@ -391,6 +390,62 @@ export async function dismissScreen(screen: Screen, target: Screen, segue: Segue
 	} catch (e) {
 		console.error(e)
 	}
+}
+
+/**
+ * @function presentScreenAfter
+ * @since 0.7.0
+ * @hidden
+ */
+export function presentScreenAfter(screen: Screen, target: Screen, segue: Segue, options: ScreenPresentOptions): Promise<void> {
+
+	if (screen.presentee &&
+		screen.presentee.dismissing) {
+
+		return new Promise(success => {
+
+			const present = () => {
+				screen.present(target, segue, options).then(success)
+			}
+
+			if (screen.presentee) {
+				screen.presentee.once('left', present)
+				return
+			}
+
+			present()
+		})
+	}
+
+	throw new Error(`Screen error: This screen is already presenting another screen.`)
+}
+
+/**
+ * @function promptScreenAfter
+ * @since 0.7.0
+ * @hidden
+ */
+export function promptScreenAfter(screen: Screen, target: Screen, segue: Segue, options: ScreenPresentOptions): Promise<any> {
+
+	if (screen.presentee &&
+		screen.presentee.dismissing) {
+
+		return new Promise(success => {
+
+			const prompt = () => {
+				screen.prompt(target, segue, options).then(success)
+			}
+
+			if (screen.presentee) {
+				screen.presentee.once('left', prompt)
+				return
+			}
+
+			prompt()
+		})
+	}
+
+	throw new Error(`Screen error: This screen is already presenting another screen.`)
 }
 
 /**

@@ -747,9 +747,9 @@ describe('View', () => {
 		let v1 = new View()
 		let v2 = new View()
 
-		view.one('insert', fn1)
+		view.once('insert', fn1)
 		view.append(v1)
-		view.one('insert', fn2)
+		view.once('insert', fn2)
 		view.append(v2)
 
 		expect(fn1).toHaveBeenCalled()
@@ -824,10 +824,10 @@ describe('View', () => {
 		view.append(v1)
 		view.append(v2)
 
-		view.one('remove', fn2)
+		view.once('remove', fn2)
 		view.remove(v2)
 
-		view.one('remove', fn1)
+		view.once('remove', fn1)
 		view.remove(v1)
 
 		expect(fn1).toHaveBeenCalled()
@@ -1059,10 +1059,10 @@ describe('View', () => {
 
 		let v1 = new View()
 
-		v1.one('movetoparent', fn1)
+		v1.once('movetoparent', fn1)
 		application.window.append(v1)
 
-		v1.one('movetoparent', fn2)
+		v1.once('movetoparent', fn2)
 		application.window.remove(v1)
 
 		expect(fn1).toHaveBeenCalledTimes(1)
@@ -1091,18 +1091,18 @@ describe('View', () => {
 		v2.id = "v2"
 		v3.id = "v3"
 
-		v1.one('movetowindow', fn1)
-		v2.one('movetowindow', fn1)
-		v3.one('movetowindow', fn1)
+		v1.once('movetowindow', fn1)
+		v2.once('movetowindow', fn1)
+		v3.once('movetowindow', fn1)
 
 		v1.append(v2)
 		v2.append(v3)
 
 		application.window.append(v1)
 
-		v1.one('movetowindow', fn2)
-		v2.one('movetowindow', fn2)
-		v3.one('movetowindow', fn2)
+		v1.once('movetowindow', fn2)
+		v2.once('movetowindow', fn2)
+		v3.once('movetowindow', fn2)
 
 		application.window.remove(v1)
 
@@ -1122,9 +1122,9 @@ describe('View', () => {
 		let v2 = new View()
 		let v3 = new View()
 
-		v1.one('layout', fn1)
-		v2.one('layout', fn1)
-		v3.one('layout', fn1)
+		v1.once('layout', fn1)
+		v2.once('layout', fn1)
+		v3.once('layout', fn1)
 
 		v1.append(v2)
 		v2.append(v3)
