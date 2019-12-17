@@ -18,17 +18,15 @@
   "scripts": {
     "test": "karma start",
     "build": "webpack",
-    "build:styles": "copyfiles --up 1 \"src/**/*.ds\" \"src/**/*.ds.android\" \"src/**/*.ds.ios\" lib"
+    "build:styles": "copyfiles --up 1 \"src/**/*.style\" \"src/**/*.style.android\" \"src/**/*.style.ios\" lib"
   },
   "dependencies": {
     "@ungap/event-target": "^0.1.0",
     "events-polyfill": "^2.1.2",
-    "fast-array-diff": "^0.2.0",
-    "lodash": "^4.17.11"
+    "fast-array-diff": "^0.2.0"
   },
   "devDependencies": {
     "@types/jasmine": "^3.3.13",
-    "@types/lodash": "^4.14.98",
     "@types/socket.io-client": "^1.4.32",
     "copy-webpack-plugin": "^4.5.1",
     "copyfiles": "^2.0.0",
@@ -38,6 +36,6 @@
     "karma-typescript": "^4.1.1",
     "socket.io-client": "^2.2.0",
     "ts-loader": "^4.2.0",
-    "typescript": "^2.8.1"
+    "typescript": "^3.7.3"
   }
 }
