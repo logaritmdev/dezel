@@ -123,7 +123,8 @@ open class ApplicationController: UIViewController, StylesheetDelegate {
 				"Stack Trace:  \n " +
 				"\(stack)"
 
-			fatalError(message)
+			//fatalError(message)
+			print(message)
 		}
 	}
 
@@ -327,6 +328,14 @@ open class ApplicationController: UIViewController, StylesheetDelegate {
 			self.statusBar.frame = UIApplication.shared.statusBarFrame
 
 		}, completion: nil)
+	}
+
+	/**
+	 * @method didReceiveMemoryWarning
+	 * @since 0.7.0
+	 */
+	open override func didReceiveMemoryWarning() {
+		self.application?.callMethod("nativeOnMemoryWarning")
 	}
 
 	//--------------------------------------------------------------------------

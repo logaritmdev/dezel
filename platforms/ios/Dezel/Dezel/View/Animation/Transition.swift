@@ -4,7 +4,11 @@
  */
 public final class Transition {
 
-	public typealias TransitionCallback = (() -> Void)
+	/**
+	 * @type TransitionCalback
+	 * @since 0.1.0
+	 */
+	public typealias Callback = (() -> Void)
 
 	//--------------------------------------------------------------------------
 	// MARK: Static
@@ -22,7 +26,7 @@ public final class Transition {
 	 * @method create
 	 * @since 0.1.0
 	 */
-	public static func create(duration: CFTimeInterval, equation: CAMediaTimingFunction, delay: CFTimeInterval, callback: @escaping TransitionCallback) {
+	public static func create(duration: CFTimeInterval, equation: CAMediaTimingFunction, delay: CFTimeInterval, callback: @escaping Callback) {
 
 		let transition = TransitionGroup()
 
@@ -89,9 +93,7 @@ public final class Transition {
 
 			if (animation.fromValue != nil) {
 
-				if (transition.delay > 0) {
-					animation.delay = transition.delay
-				}
+				animation.delay = transition.delay
 
 				if let listener = layer.listener as? TransitionListener {
 					if (listener.shouldBeginTransitionAnimation(animation: animation, for: key, of: layer)) {

@@ -10,11 +10,11 @@ open class JavaScriptImageView: JavaScriptView {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @property imageLoader
+	 * @property loader
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private var imageLoader: ImageLoader = ImageLoader()
+	private var loader: ImageLoader = ImageLoader()
 
 	/**
 	 * @property view
@@ -146,7 +146,7 @@ open class JavaScriptImageView: JavaScriptView {
 	 */
 	@objc lazy var source = JavaScriptProperty() { value in
 
-		self.imageLoader.load(value) { image in
+		self.loader.load(value.string) { image in
 
 			self.view.image = image
 

@@ -12,8 +12,12 @@ internal extension CABasicAnimation {
 	var delay: CFTimeInterval {
 
 		set {
-			self.beginTime = CACurrentMediaTime() + newValue
-			self.fillMode = CAMediaTimingFillMode.both
+			if (newValue > 0) {
+				self.beginTime = CACurrentMediaTime() + newValue
+				self.fillMode = .both
+			} else {
+				self.beginTime = 0
+			}
 		}
 
 		get {

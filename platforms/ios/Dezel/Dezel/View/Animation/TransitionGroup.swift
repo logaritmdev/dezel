@@ -18,7 +18,7 @@ public final class TransitionGroup {
 	 * @property callback
 	 * @since 0.1.0
 	 */
-	public var callback: Transition.TransitionCallback? {
+	public var callback: Transition.Callback? {
 		willSet(value) {
 			CATransaction.setCompletionBlock(value)
 		}
@@ -76,7 +76,6 @@ public final class TransitionGroup {
 	public func commit() {
 		Synchronizer.main.execute()
 		CATransaction.commit()
-		self.listeners.dispatchCommitEvent()
 	}
 
 	/**

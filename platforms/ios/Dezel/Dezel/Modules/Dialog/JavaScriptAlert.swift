@@ -64,15 +64,9 @@ open class JavaScriptAlert: JavaScriptClass, AlertControllerDelegate {
 					button.callMethod("nativeOnPress")
 				}
 
-				if (button.image.type == .string ||
-					button.image.type == .object) {
-					/*
-					TODO
-					ImageLoader.main.load(button.image) { image in
+				if (button.image.type == .string) {
 
-						guard let image = image else {
-							return
-						}
+					if let image = UIImage(path: button.image.string) {
 
 						let size = CGSize(width: 32, height: 32)
 
@@ -91,7 +85,6 @@ open class JavaScriptAlert: JavaScriptClass, AlertControllerDelegate {
 
 						UIGraphicsEndImageContext()
 					}
-					*/
 				}
 
 				alertController.addAction(action)
