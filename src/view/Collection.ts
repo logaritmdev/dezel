@@ -273,7 +273,7 @@ export class Collection extends Emitter {
 
 		/*
 		 * Only increment when the view has been added before the position
-		 * of the placeholder.
+		 * of the collection.
 		 */
 
 		if (this[$offset] >= index) {
@@ -304,7 +304,7 @@ export class Collection extends Emitter {
 
 		/*
 		 * Only increment when the view has been removed before the position
-		 * of the placeholder.
+		 * of the collection.
 		 */
 
 		if (this[$offset] >= index) {

@@ -54,7 +54,7 @@ describe('Collection', () => {
 
 		view.append(collection)
 
-		expect(collection.get.length).toBe(2)
+		expect(collection.length).toBe(2)
 		expect(collection.get(0)).toBe(child1)
 		expect(collection.get(1)).toBe(child2)
 
