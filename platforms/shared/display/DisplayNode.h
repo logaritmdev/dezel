@@ -253,6 +253,8 @@ protected:
 	double measureContentWidth();
 	double measureContentHeight();
 
+	void reset();
+
 	bool hasNewParent() {
 		return this->resolvedParent != this->parent;
 	}

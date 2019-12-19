@@ -48,6 +48,7 @@ public:
 
 	void merge(const PropertyList& properties);
 	void diffs(const PropertyList& properties, vector<Property*>& inserts, vector<Property*>& updates, vector<Property*>& removes);
+	void clear();
 
 	//--------------------------------------------------------------------------
 	// MARK: Iterator

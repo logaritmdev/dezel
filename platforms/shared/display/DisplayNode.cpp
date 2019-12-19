@@ -2654,6 +2654,16 @@ DisplayNode::measure()
 	this->invalidSize = false;
 }
 
+void
+DisplayNode::reset()
+{
+	for (auto property : this->properties) {
+		this->update(property->getName(), nullptr);
+	}
+
+	this->properties.clear();
+}
+
 string
 DisplayNode::toString()
 {

@@ -60,10 +60,30 @@ Display::setViewportHeight(double value)
 void
 Display::setStylesheet(Stylesheet* stylesheet)
 {
-	if (this->stylesheet != stylesheet) {
-		this->stylesheet = stylesheet;
-		this->invalidate();
+	if (this->stylesheet == stylesheet) {
+		return;
 	}
+
+	if (this->stylesheet) {
+
+		/*
+		 * Resets all the display node properties when the stylesheet
+		 * changes. This can be useful to quickly update the visual
+		 * presentation without reloading the application.
+		 */
+
+		DisplayNodeWalker walker(this->window);
+
+		while (walker.hasNext()) {
+			walker.getNode()->reset();
+			walker.getNode()->invalidateTraits();
+			walker.getNext();
+		}
+	}
+
+	this->stylesheet = stylesheet;
+
+	this->invalidate();
 }
 
 void

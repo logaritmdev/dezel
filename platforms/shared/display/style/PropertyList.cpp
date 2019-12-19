@@ -135,5 +135,13 @@ PropertyList::diffs(const PropertyList& properties, vector<Property*>& inserts, 
 	PropertyList::diff(*this, properties, inserts, updates, removes);
 }
 
+void
+PropertyList::clear()
+{
+	this->keys.clear();
+	this->list.clear();
+	this->data.clear();
+}
+
 }
 }
