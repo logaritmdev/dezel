@@ -117,7 +117,7 @@ export class Application extends Emitter {
 
 		let screen = this[$screen]
 		if (screen == null) {
-			throw new Error(`Application error: The application has no presented xscreen.`)
+			throw new Error(`Application error: The application has no presented screen.`)
 		}
 
 		return screen
@@ -159,11 +159,11 @@ export class Application extends Emitter {
 			throw new Error(`Application error: The application already has a screen.`)
 		}
 
+		screen.updateStatusBar()
+
 		this[$screen] = screen
 
 		this.window.append(screen[$frame])
-
-		screen.updateStatusBar()
 
 		let segue = new NoneSegue()
 
@@ -236,6 +236,8 @@ export class Application extends Emitter {
 			if (target == null) {
 				continue
 			}
+
+			(global as any).$0 = target
 
 			let touch = new Touch(target)
 
@@ -569,6 +571,10 @@ export class Application extends Emitter {
 				this.onKeyboardResize(event.data.height, event.data.duration, event.data.equation)
 				break
 
+			case 'memorywarning':
+				this.onMemoryWarning()
+				break
+
 			case 'openuniversalurl':
 				this.onOpenUniversalURL(event.data.url)
 				break
@@ -617,7 +623,6 @@ export class Application extends Emitter {
 
 	}
 
-
 	/**
 	 * Called before the software keyboard is displayed.
 	 * @method onBeforeKeyboardShow
@@ -664,6 +669,15 @@ export class Application extends Emitter {
 	}
 
 	/**
+	 * Called when the application gets low on memory.
+	 * @method onMemoryWarning
+	 * @since 0.7.0
+	 */
+	public onMemoryWarning() {
+
+	}
+
+	/**
 	 * Called when an universal url is opened.
 	 * @method onOpenUniversalURL
 	 * @since 0.7.0
@@ -678,15 +692,6 @@ export class Application extends Emitter {
 	 * @since 0.7.0
 	 */
 	public onOpenResourceURL(url: string) {
-
-	}
-
-	/**
-	 * Called when the application gets low on memory.
-	 * @method onMemoryWarning
-	 * @since 0.7.0
-	 */
-	public onMemoryWarning() {
 
 	}
 
@@ -857,6 +862,15 @@ export class Application extends Emitter {
 	}
 
 	/**
+	 * @method nativeOnMemoryWarning
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private nativeOnMemoryWarning() {
+		this.emit('memorywarning')
+	}
+
+	/**
 	 * @method nativeOnBack
 	 * @since 0.7.0
 	 * @hidden
@@ -874,15 +888,6 @@ export class Application extends Emitter {
 		}
 
 		return event.canceled
-	}
-
-	/**
-	 * @method nativeOnMemoryWarning
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private nativeOnMemoryWarning() {
-		this.emit('memorywarning')
 	}
 }
 

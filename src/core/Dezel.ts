@@ -49,6 +49,26 @@ export class Dezel {
 		return this
 	}
 
+	/**
+	 * Reloads the whole application.
+	 * @method registerApplication
+	 * @since 0.7.0
+	 */
+	public static reloadApplication() {
+		reloadApplication()
+		return this
+	}
+
+	/**
+	 * Reloads the application styles only.
+	 * @method registerApplication
+	 * @since 0.7.0
+	 */
+	public static reloadApplicationStyles() {
+		reloadApplicationStyles()
+		return this
+	}
+
 	//--------------------------------------------------------------------------
 	// Private API
 	//--------------------------------------------------------------------------
@@ -95,3 +115,17 @@ const importObject = __util__.importObject.bind(__util__)
  * @hidden
  */
 const registerApplication = __util__.registerApplication.bind(__util__)
+
+/**
+ * @const reloadApplication
+ * @since 0.7.0
+ * @hidden
+ */
+const reloadApplication = __util__.reloadApplication.bind(__util__)
+
+/**
+ * @const reloadApplicationStyles
+ * @since 0.7.0
+ * @hidden
+ */
+const reloadApplicationStyles = __util__.reloadApplicationStyles.bind(__util__)

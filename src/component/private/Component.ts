@@ -83,13 +83,15 @@ export function setSlot(component: Component, slot: Slot) {
 export function makeComponent(component: Component) {
 
 	let host = component.render()
-	if (host == null) {
-		return
+	if (host) {
+
+		for (let child of host.children) {
+			component.append(child)
+		}
+
 	}
 
-	for (let child of host.children) {
-		component.append(child)
-	}
+	component.onRender()
 }
 
 /**

@@ -62,8 +62,6 @@ export abstract class Component extends View {
 		makeComponent(this)
 		pullRenderingComponent(this)
 
-		this.onRender()
-
 		validateRefs(this)
 
 		this[$sealed] = true
