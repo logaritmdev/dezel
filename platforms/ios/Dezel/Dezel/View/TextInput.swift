@@ -6,6 +6,18 @@
 open class TextInput: UITextField, UITextFieldDelegate {
 
 	//--------------------------------------------------------------------------
+	// MARK: Layer Class
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @property layerClass
+	 * @since 0.7.0
+	 */
+	open override class var layerClass: AnyClass {
+		return Layer.self
+	}
+
+	//--------------------------------------------------------------------------
 	// MARK: Properties
 	//--------------------------------------------------------------------------
 
@@ -365,14 +377,6 @@ open class TextInput: UITextField, UITextFieldDelegate {
 		self.autocapitalizationType = .sentences
 
 		self.observer = observer
-	}
-
-	/**
-	 * @method action
-	 * @since 0.7.0
-	 */
-	override open func action(for layer: CALayer, forKey event: String) -> CAAction? {
-		return Transition.action(for: layer, key: event)
 	}
 
 	/**

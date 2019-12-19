@@ -1,28 +1,17 @@
 /**
 * @extension CABasicAnimation
-* @since 0.1.0
-* @hidden
+* @since 0.7.0
 */
 internal extension CABasicAnimation {
 
 	/**
-	 * @property delay
+	 * @constructor
 	 * @since 0.7.0
+	 * @hidden
 	 */
-	var delay: CFTimeInterval {
-
-		set {
-			if (newValue > 0) {
-				self.beginTime = CACurrentMediaTime() + newValue
-				self.fillMode = .both
-			} else {
-				self.beginTime = 0
-			}
-		}
-
-		get {
-			return self.beginTime
-		}
+	convenience init(key: String, delay: CFTimeInterval) {
+		self.init(keyPath: key)
+		self.beginTime = CACurrentMediaTime() + delay
+		self.fillMode = .both
 	}
-
 }

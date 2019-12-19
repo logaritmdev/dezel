@@ -45,19 +45,6 @@ open class JavaScriptImageView: JavaScriptView {
 		return self.view.measure(bounds: bounds, min: min, max: max)
 	}
 
-	/**
-	 * @method update
-	 * @since 0.7.0
-	 */
-	override open func update() {
-
-		super.update()
-
-		if (self.view.hasFrame == false && self.resolvedFrame) {
-			self.view.hasFrame = true
-		}
-	}
-
 	//--------------------------------------------------------------------------
 	// MARK: Methods - Display Node Delegate
 	//--------------------------------------------------------------------------

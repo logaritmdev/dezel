@@ -5,7 +5,7 @@ import UIKit
  * @super CAShapeLayer
  * @since 0.1.0
  */
-open class ShapeLayer: CAShapeLayer, CALayerDelegate, CAAnimationDelegate {
+open class ShapeLayer: CAShapeLayer, CALayerDelegate, Transitionable {
 
 	//--------------------------------------------------------------------------
 	// MARK: Class Methods
@@ -36,21 +36,16 @@ open class ShapeLayer: CAShapeLayer, CALayerDelegate, CAAnimationDelegate {
 	 * @since 0.1.0
 	 */
 	public required override init() {
-
 		super.init()
-
-		self.actions = nil
-		self.contentsScale = UIScreen.main.scale
-		self.rasterizationScale = UIScreen.main.scale
+		self.setup()
 	}
 
 	/**
 	 * @constructor
 	 * @since 0.1.0
 	 */
-	public convenience init(path: CGPath) {
-		self.init()
-		self.path = path
+	override init(layer: Any) {
+		super.init(layer: layer)
 	}
 
 	//--------------------------------------------------------------------------
@@ -58,71 +53,76 @@ open class ShapeLayer: CAShapeLayer, CALayerDelegate, CAAnimationDelegate {
 	//--------------------------------------------------------------------------
 
 	/**
+	 * @method willAnimate
+	 * @since 0.7.0
+	 */
+	open func willAnimate(property: String) {
+		(self.listener as? TransitionListener)?.willAnimate(layer: self, property: property)
+	}
+
+	/**
+	 * @method didBeginTransition
+	 * @since 0.7.0
+	 */
+	open func didBeginTransition() {
+		(self.listener as? TransitionListener)?.didBeginTransition(layer: self)
+	}
+
+	/**
+	 * @method didCommitTransition
+	 * @since 0.7.0
+	 */
+	open func didCommitTransition() {
+		(self.listener as? TransitionListener)?.didCommitTransition(layer: self)
+	}
+
+	/**
+	 * @method didFinishTransition
+	 * @since 0.7.0
+	 */
+	open func didFinishTransition() {
+		(self.listener as? TransitionListener)?.didFinishTransition(layer: self)
+	}
+
+	/**
 	 * @method action
 	 * @since 0.1.0
 	 */
 	override open func action(forKey key: String) -> CAAction? {
 
-		if let transition = Transition.current {
+		if let transition = TransitionManager.transition {
 
 			var current = self.presentation()
 			if (current == nil || self.animation(forKey: key) == nil) {
 				current = self
 			}
 
-			let animation = CABasicAnimation(keyPath: key)
+			let animation = CABasicAnimation(key: key, delay: transition.delay)
 
 			switch (key) {
 
+				case "bounds":
+					animation.fromValue = NSValue(cgRect: current!.bounds)
+				case "position":
+					animation.fromValue = NSValue(cgPoint: current!.position)
+				case "transform":
+					animation.fromValue = NSValue(caTransform3D: current!.transform)
+				case "opacity":
+					animation.fromValue = current!.opacity
 				case "path":
 					animation.fromValue = current!.path
-					animation.delegate = self
 
 				default:
-					break
+					return NSNull()
 			}
 
-			if (animation.fromValue != nil) {
+			transition.notify(self)
 
-				if (transition.delay > 0) {
-					animation.delay = transition.delay
-				}
+			self.willAnimate(property: key)
 
-				if let listener = self.listener as? TransitionListener {
-					if (listener.shouldBeginTransitionAnimation(animation: animation, for: key, of: self)) {
-						listener.willBeginTransitionAnimation(animation: animation, for: key, of: self)
-						transition.register(listener)
-					} else {
-						return NSNull()
-					}
-				}
-
-				return animation
-			}
+			return animation
 		}
 
-		return Transition.action(for: self, key: key)
-	}
-
-	//--------------------------------------------------------------------------
-	// MARK: Animation Delegate
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method animationDidStart
-	 * @since 0.1.0
-	 */
-    open func animationDidStart(_ anim: CAAnimation) {
-		//self.observer?.didBeginShapeAnimation()
-	}
-
-	/**
-	 * @method animationDidStop
-	 * @since 0.1.0
-	 */
-    open func animationDidStop(_ anim: CAAnimation, finished: Bool) {
-//		if (finished) {
-//			self.observer?.didFinishShapeAnimation()
-//		}
+		return NSNull()
 	}
 }

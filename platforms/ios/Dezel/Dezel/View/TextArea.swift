@@ -6,6 +6,18 @@
 open class TextArea: UITextView, UITextViewDelegate {
 
 	//--------------------------------------------------------------------------
+	// MARK: Layer Class
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @property layerClass
+	 * @since 0.7.0
+	 */
+	open override class var layerClass: AnyClass {
+		return Layer.self
+	}
+
+	//--------------------------------------------------------------------------
 	// MARK: Properties
 	//--------------------------------------------------------------------------
 
@@ -318,14 +330,6 @@ open class TextArea: UITextView, UITextViewDelegate {
 		self.placeholderLabel.frame.size.width = self.bounds.width - self.paddingLeft - self.paddingRight - carret
 
 		self.textContainerInset = UIEdgeInsets(top: self.paddingTop, left: self.paddingLeft, bottom: self.paddingBottom, right: self.paddingRight)
-	}
-
-	/**
-	 * @method action
-	 * @since 0.7.0
-	 */
-	override open func action(for layer: CALayer, forKey event: String) -> CAAction? {
-		return Transition.action(for: layer, key: event)
 	}
 
 	/**

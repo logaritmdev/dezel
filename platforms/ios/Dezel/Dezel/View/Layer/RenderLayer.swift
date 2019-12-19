@@ -156,41 +156,14 @@ public class RenderLayer: Layer, TransitionListener {
 	}
 
 	//--------------------------------------------------------------------------
-	// MARK: Methods - Animations Protocol
+	// MARK: Methods - Animations
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method shouldBeginTransitionAnimation
-	 * @since 0.2.0
-	 */
-	open func shouldBeginTransitionAnimation(animation: CABasicAnimation, for property: String, of layer: CALayer) -> Bool {
-		return true
-	}
-
-	/**
-	 * @method willBeginTransitionAnimation
-	 * @since 0.2.0
-	 */
-	open func willBeginTransitionAnimation(animation: CABasicAnimation, for property: String, of layer: CALayer) {
-		if (property == "path") {
-			self.mask = self.shape
-			self.shouldRasterize = false
-		}
-	}
-
-	/**
-	 * @method didCommitTransition
-	 * @since 0.6.0
-	 */
-	open func didCommitTransition() {
-
-	}
-
-	/**
 	 * @method didFinishTransition
-	 * @since 0.2.0
+	 * @since 0.7.0
 	 */
-	open func didFinishTransition() {
+	override open func didFinishTransition() {
 
 		if (self.borderTopLeftRadius > 0 ||
 			self.borderTopRightRadius > 0 ||
@@ -208,5 +181,44 @@ public class RenderLayer: Layer, TransitionListener {
 
 		self.mask = nil
 		self.shouldRasterize = false
+	}
+
+	//--------------------------------------------------------------------------
+	// MARK: Methods - Transition Listener
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method willAnimate
+	 * @since 0.7.0
+	 */
+	open func willAnimate(layer: CALayer, property: String) {
+		if (property == "path") {
+			self.mask = self.shape
+			self.shouldRasterize = false
+		}
+	}
+
+	/**
+	 * @method didBeginTransition
+	 * @since 0.7.0
+	 */
+	open func didBeginTransition(layer: CALayer) {
+
+	}
+
+	/**
+	 * @method didCommitTransition
+	 * @since 0.7.0
+	 */
+	open func didCommitTransition(layer: CALayer) {
+
+	}
+
+	/**
+	 * @method didFinishTransition
+	 * @since 0.7.0
+	 */
+	open func didFinishTransition(layer: CALayer) {
+
 	}
 }

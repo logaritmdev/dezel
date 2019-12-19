@@ -59,38 +59,16 @@ internal extension Array where Element == SynchronizerCallback {
  * @since 0.6.0
  * @hidden
  */
-internal extension Array where Element == TransitionListener {
+internal extension Array where Element == CALayer {
 
 	/**
-	 * @method register
-	 * @since 0.6.0
+	 * @method add
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	mutating func register(_ listener: TransitionListener) {
-		if (self.firstIndex(where: { $0 === listener }) == nil) {
-			self.append(listener)
-		}
-	}
-
-	/**
-	 * @method dispatchCommitEvent
-	 * @since 0.6.0
-	 * @hidden
-	 */
-	func dispatchCommitEvent() {
-		self.forEach { listener in
-			listener.didCommitTransition()
-		}
-	}
-
-	/**
-	 * @method dispatchFinishEvent
-	 * @since 0.6.0
-	 * @hidden
-	 */
-	func dispatchFinishEvent() {
-		self.forEach { listener in
-			listener.didFinishTransition()
+	mutating func add(_ layer: CALayer) {
+		if (self.contains(layer) == false) {
+			self.append(layer)
 		}
 	}
 }

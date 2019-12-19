@@ -44,12 +44,4 @@ open class SpinnerView: UIActivityIndicatorView {
 		self.style = .gray
 		self.hidesWhenStopped = false
 	}
-
-	/**
-	 * @method action
-	 * @since 0.7.0
-	 */
-	override open func action(for layer: CALayer, forKey event: String) -> CAAction? {
-		return Transition.action(for: layer, key: event)
-	}
 }

@@ -317,14 +317,6 @@ public class WebView: WKWebView, WKNavigationDelegate, UIScrollViewDelegate, Scr
 	}
 
 	/**
-	 * @method action
-	 * @since 0.7.0
-	 */
-	override open func action(for layer: CALayer, forKey event: String) -> CAAction? {
-		return Transition.action(for: layer, key: event)
-	}
-
-	/**
 	 * @method measure
 	 * @since 0.7.0
 	 */

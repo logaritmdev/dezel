@@ -55,32 +55,14 @@ internal extension CALayer {
 	}
 
 	/**
-	 * @method createOuterMask
+	 * @method setup
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	static func createOuterMask(_ path: CGPath) -> CAShapeLayer {
-		let layer = CAShapeLayer()
-		layer.actions = nil
-		layer.contentsScale = UIScreen.main.scale
-		layer.rasterizationScale = UIScreen.main.scale
-		layer.path = path
-		return layer
-	}
-
-	/**
-	 * @method createInnerMask
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	static func createInnerMask(_ path: CGPath) -> CAShapeLayer {
-		let layer = CAShapeLayer()
-		layer.actions = nil
-		layer.contentsScale = UIScreen.main.scale
-		layer.rasterizationScale = UIScreen.main.scale
-		layer.fillRule = CAShapeLayerFillRule.evenOdd
-		layer.path = path
-		return layer
+	func setup() {
+		self.actions = nil
+		self.contentsScale = UIScreen.main.scale
+		self.rasterizationScale = UIScreen.main.scale
 	}
 
 	/**

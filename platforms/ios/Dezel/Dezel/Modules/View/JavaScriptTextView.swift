@@ -63,10 +63,6 @@ open class JavaScriptTextView: JavaScriptView, TextViewObserver {
 			self.invalidFontSize = false
 			self.updateFontSize()
 		}
-
-		if (self.view.hasFrame == false && self.resolvedFrame) {
-			self.view.hasFrame = true
-		}
 	}
 
 	/**

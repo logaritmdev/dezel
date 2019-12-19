@@ -303,14 +303,18 @@ open class ShadowLayer: Layer {
 	 */
 	override open func action(forKey key: String) -> CAAction? {
 
-		if let transition = Transition.current {
+		if let action = super.action(forKey: key) {
+			return action
+		}
+
+		if let transition = TransitionManager.transition {
 
 			var current = self.presentation()
 			if (current == nil || self.animation(forKey: key) == nil) {
 				current = self
 			}
 
-			let animation = CABasicAnimation(keyPath: key)
+			let animation = CABasicAnimation(key: key, delay: transition.delay)
 
 			switch (key) {
 
@@ -332,28 +336,16 @@ open class ShadowLayer: Layer {
 					animation.fromValue = current!.borderBottomRightRadius
 
 				default:
-					break
+					return NSNull()
 			}
 
-			if (animation.fromValue != nil) {
+			transition.notify(self)
 
-				if (transition.delay > 0) {
-					animation.delay = transition.delay
-				}
+			self.willAnimate(property: key)
 
-				if let listener = self.listener as? TransitionListener {
-					if (listener.shouldBeginTransitionAnimation(animation: animation, for: key, of: self)) {
-						listener.willBeginTransitionAnimation(animation: animation, for: key, of: self)
-						transition.register(listener)
-					} else {
-						return NSNull()
-					}
-				}
-
-				return animation
-			}
+			return animation
 		}
 
-		return super.action(forKey: key)
+		return NSNull()
 	}
 }

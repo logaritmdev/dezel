@@ -512,12 +512,6 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 			self.updateContent()
 		}
 
-		self.content.updateGradient()
-
-		if (self.wrapper.hasFrame == false && self.resolvedFrame) {
-			self.wrapper.hasFrame = true
-		}
-
 		self.updateScheduled = false
 	}
 
@@ -1454,20 +1448,20 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 */
 	@objc lazy var backgroundColor = JavaScriptProperty(string: "transparent") { value in
 
-		self.content.backgroundColor = nil
-		self.content.backgroundLinearGradient = nil
-		self.content.backgroundRadialGradient = nil
+		self.wrapper.backgroundColor = nil
+		self.wrapper.backgroundLinearGradient = nil
+		self.wrapper.backgroundRadialGradient = nil
 
 		if let function = value.function {
 
 			switch (function.name) {
 
 				case "linear-gradient":
-					self.content.backgroundLinearGradient = LinearGradient(property: value)
+					self.wrapper.backgroundLinearGradient = LinearGradient(property: value)
 					return
 
 				case "radial-gradient":
-					self.content.backgroundRadialGradient = RadialGradient(property: value)
+					self.wrapper.backgroundRadialGradient = RadialGradient(property: value)
 					return
 
 				default:
@@ -1480,7 +1474,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 		 * radial graidient returned earlier
 		 */
 
-		self.content.backgroundColor = UIColor(color: value)
+		self.wrapper.backgroundColor = UIColor(color: value)
 	}
 
 	/**
@@ -5766,7 +5760,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 
 		let animate = {
 
-			Transition.create(
+			TransitionManager.begin(
 				duration: duration,
 				equation: equation,
 				delay: delay
@@ -5778,7 +5772,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 			function.call()
 			complete.protect()
 
-			Transition.commit()
+			TransitionManager.commit()
 		}
 
 		if (callback.context.controller.display.resolving) {

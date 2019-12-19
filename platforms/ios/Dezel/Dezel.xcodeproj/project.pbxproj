@@ -244,8 +244,8 @@
 		C7BB7D3E2028F4C5004006C2 /* CGRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BB7D392028F4C5004006C2 /* CGRect.swift */; };
 		C7BB7D3F2028F4C5004006C2 /* CGSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BB7D3A2028F4C5004006C2 /* CGSize.swift */; };
 		C7BB7D402028F4C5004006C2 /* CGPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BB7D3B2028F4C5004006C2 /* CGPath.swift */; };
-		C7BB7D462029062D004006C2 /* TransitionGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BB7D442029062D004006C2 /* TransitionGroup.swift */; };
-		C7BB7D472029062D004006C2 /* Transition.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BB7D452029062D004006C2 /* Transition.swift */; };
+		C7BB7D462029062D004006C2 /* Transition.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BB7D442029062D004006C2 /* Transition.swift */; };
+		C7BB7D472029062D004006C2 /* TransitionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BB7D452029062D004006C2 /* TransitionManager.swift */; };
 		C7BB7D4B20293955004006C2 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BB7D4A20293955004006C2 /* Array.swift */; };
 		C7BCD7482094C5AD0014CD19 /* Scrollable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BCD7472094C5AD0014CD19 /* Scrollable.swift */; };
 		C7BFD15C207D50A300AAD31C /* JavaScriptFormModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BFD15B207D50A300AAD31C /* JavaScriptFormModule.swift */; };
@@ -264,6 +264,7 @@
 		C7D89263206575CB00E85115 /* JavaScriptTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D89262206575CB00E85115 /* JavaScriptTextView.swift */; };
 		C7D8926520657B0000E85115 /* UIFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D8926420657B0000E85115 /* UIFont.swift */; };
 		C7D8926720657B3400E85115 /* NSAttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D8926620657B3400E85115 /* NSAttributedString.swift */; };
+		C7DE1DF023AABA8500DDC245 /* Transitionable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DE1DEF23AABA8500DDC245 /* Transitionable.swift */; };
 		C7DECDFC206B351B006EE2A6 /* Clippable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DECDFB206B351B006EE2A6 /* Clippable.swift */; };
 		C7E30977203123DD00436FA4 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E30976203123DD00436FA4 /* UIView.swift */; };
 		C7E309792031312700436FA4 /* CGPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E309782031312700436FA4 /* CGPoint.swift */; };
@@ -327,6 +328,8 @@
 		C7E8A54A201624FA005139F6 /* JavaScriptValuePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = C7E8A540201624FA005139F6 /* JavaScriptValuePrivate.h */; };
 		C7E8A54D2016262A005139F6 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7E8A54C2016262A005139F6 /* JavaScriptCore.framework */; };
 		C7ED00EA23A87CA200D44C1D /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ED00E923A87CA200D44C1D /* UIImage.swift */; };
+		C7ED00EC23A9BEF400D44C1D /* CAGradientLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ED00EB23A9BEF400D44C1D /* CAGradientLayer.swift */; };
+		C7ED00EE23A9C9AE00D44C1D /* CAShapeLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ED00ED23A9C9AE00D44C1D /* CAShapeLayer.swift */; };
 		C7EE2E0222DD6AE200FFF0EE /* Source.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7EE2E0122DD6AE200FFF0EE /* Source.swift */; };
 		C7EE2E0622DE2D5B00FFF0EE /* CADisplayLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7EE2E0522DE2D5B00FFF0EE /* CADisplayLink.swift */; };
 		C7EE2E1022DFA84900FFF0EE /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7EE2E0F22DFA84900FFF0EE /* Data.swift */; };
@@ -581,8 +584,8 @@
 		C7BB7D392028F4C5004006C2 /* CGRect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGRect.swift; sourceTree = "<group>"; };
 		C7BB7D3A2028F4C5004006C2 /* CGSize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGSize.swift; sourceTree = "<group>"; };
 		C7BB7D3B2028F4C5004006C2 /* CGPath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGPath.swift; sourceTree = "<group>"; };
-		C7BB7D442029062D004006C2 /* TransitionGroup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransitionGroup.swift; sourceTree = "<group>"; };
-		C7BB7D452029062D004006C2 /* Transition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Transition.swift; sourceTree = "<group>"; };
+		C7BB7D442029062D004006C2 /* Transition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Transition.swift; sourceTree = "<group>"; };
+		C7BB7D452029062D004006C2 /* TransitionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransitionManager.swift; sourceTree = "<group>"; };
 		C7BB7D4A20293955004006C2 /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
 		C7BCD7472094C5AD0014CD19 /* Scrollable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scrollable.swift; sourceTree = "<group>"; };
 		C7BFD15B207D50A300AAD31C /* JavaScriptFormModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptFormModule.swift; sourceTree = "<group>"; };
@@ -601,6 +604,7 @@
 		C7D89262206575CB00E85115 /* JavaScriptTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptTextView.swift; sourceTree = "<group>"; };
 		C7D8926420657B0000E85115 /* UIFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIFont.swift; sourceTree = "<group>"; };
 		C7D8926620657B3400E85115 /* NSAttributedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSAttributedString.swift; sourceTree = "<group>"; };
+		C7DE1DEF23AABA8500DDC245 /* Transitionable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transitionable.swift; sourceTree = "<group>"; };
 		C7DECDFB206B351B006EE2A6 /* Clippable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clippable.swift; sourceTree = "<group>"; };
 		C7E30976203123DD00436FA4 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		C7E309782031312700436FA4 /* CGPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGPoint.swift; sourceTree = "<group>"; };
@@ -667,6 +671,8 @@
 		C7E8A540201624FA005139F6 /* JavaScriptValuePrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JavaScriptValuePrivate.h; path = ../../../../shared/core/JavaScriptValuePrivate.h; sourceTree = "<group>"; };
 		C7E8A54C2016262A005139F6 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		C7ED00E923A87CA200D44C1D /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
+		C7ED00EB23A9BEF400D44C1D /* CAGradientLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAGradientLayer.swift; sourceTree = "<group>"; };
+		C7ED00ED23A9C9AE00D44C1D /* CAShapeLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAShapeLayer.swift; sourceTree = "<group>"; };
 		C7EE2E0122DD6AE200FFF0EE /* Source.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Source.swift; sourceTree = "<group>"; };
 		C7EE2E0522DE2D5B00FFF0EE /* CADisplayLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CADisplayLink.swift; sourceTree = "<group>"; };
 		C7EE2E0F22DFA84900FFF0EE /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
@@ -805,6 +811,7 @@
 		C7686476203A2C8F00D1903B /* Layer */ = {
 			isa = PBXGroup;
 			children = (
+				C71E6CDE20E65FB6009B86F6 /* Updatable.swift */,
 				C718B5B3207C3D0D00610F8D /* LinearGradient.swift */,
 				C718B5B5207C41F000610F8D /* RadialGradient.swift */,
 				C7682A412035395F006EA6D5 /* Layer.swift */,
@@ -1131,14 +1138,15 @@
 			path = Util;
 			sourceTree = "<group>";
 		};
-		C7BB7D432029061A004006C2 /* Animation */ = {
+		C7BB7D432029061A004006C2 /* Transition */ = {
 			isa = PBXGroup;
 			children = (
-				C7BB7D452029062D004006C2 /* Transition.swift */,
-				C7BB7D442029062D004006C2 /* TransitionGroup.swift */,
+				C7BB7D442029062D004006C2 /* Transition.swift */,
 				C70617A320F7C03100499FDB /* TransitionListener.swift */,
+				C7BB7D452029062D004006C2 /* TransitionManager.swift */,
+				C7DE1DEF23AABA8500DDC245 /* Transitionable.swift */,
 			);
-			path = Animation;
+			path = Transition;
 			sourceTree = "<group>";
 		};
 		C7BFD155207CECF000AAD31C /* Global */ = {
@@ -1290,12 +1298,11 @@
 				C7FCA126231ABAD100AFBDB6 /* Display */,
 				C77189AC2106ADE000337263 /* Geom */,
 				C7027CD12270DF7F001DD0F7 /* Gesture */,
-				C7BB7D432029061A004006C2 /* Animation */,
+				C7BB7D432029061A004006C2 /* Transition */,
 				C7686476203A2C8F00D1903B /* Layer */,
 				C72E0E9120669C7D003BCEF1 /* Type */,
 				C7DECDFB206B351B006EE2A6 /* Clippable.swift */,
 				C7E5D07B209CBAE80098C5FD /* Resizable.swift */,
-				C71E6CDE20E65FB6009B86F6 /* Updatable.swift */,
 				C7FFB4D4204B2313000D888E /* View.swift */,
 				C767544620269DBD003C4D85 /* ImageView.swift */,
 				C7BFD163207D52F000AAD31C /* TextInput.swift */,
@@ -1435,9 +1442,11 @@
 		C7FCA10E2316EDE300AFBDB6 /* CoreAnimation */ = {
 			isa = PBXGroup;
 			children = (
-				C7EE2E0522DE2D5B00FFF0EE /* CADisplayLink.swift */,
-				C7964D632033E67E00F454F1 /* CALayer.swift */,
 				C73AE5E72399816A00B7C12C /* CABasicAnimation.swift */,
+				C7EE2E0522DE2D5B00FFF0EE /* CADisplayLink.swift */,
+				C7ED00EB23A9BEF400D44C1D /* CAGradientLayer.swift */,
+				C7964D632033E67E00F454F1 /* CALayer.swift */,
+				C7ED00ED23A9C9AE00D44C1D /* CAShapeLayer.swift */,
 			);
 			path = CoreAnimation;
 			sourceTree = "<group>";
@@ -1744,7 +1753,7 @@
 				C76864712039146700D1903B /* JavaScriptPropertyType.swift in Sources */,
 				C74D8DDD238C7AFE000C8E12 /* UITouch.swift in Sources */,
 				C75153BD22F11CAA007CAA48 /* JavaScriptLocale.swift in Sources */,
-				C7BB7D462029062D004006C2 /* TransitionGroup.swift in Sources */,
+				C7BB7D462029062D004006C2 /* Transition.swift in Sources */,
 				C74D8DDF238D9364000C8E12 /* UIResponder.swift in Sources */,
 				C7A3AB77214EC68100D8B15C /* JavaScriptCanvas.swift in Sources */,
 				C7FCA0FE2311B4AA00AFBDB6 /* JavaScriptPropertyNumberValue.swift in Sources */,
@@ -1757,7 +1766,7 @@
 				C7E8A547201624FA005139F6 /* JavaScriptContextPrivate.cpp in Sources */,
 				C72E0E9020668EE1003BCEF1 /* TextLayer.swift in Sources */,
 				C7E8A545201624FA005139F6 /* JavaScriptValue.cpp in Sources */,
-				C7BB7D472029062D004006C2 /* Transition.swift in Sources */,
+				C7BB7D472029062D004006C2 /* TransitionManager.swift in Sources */,
 				C7069601239804E600D4DFA1 /* ImageFit.swift in Sources */,
 				C7A2C2B32373AA1C00219BA5 /* Importance.cpp in Sources */,
 				C7E8A544201624FA005139F6 /* JavaScriptValuePrivate.cpp in Sources */,
@@ -1771,6 +1780,7 @@
 				C792E8E2234BDE630022D712 /* DisplayNodeMargin.cpp in Sources */,
 				C7A608032395577400B176FC /* FunctionValueRef.cpp in Sources */,
 				C767543A20269971003C4D85 /* BitmapLayer.swift in Sources */,
+				C7ED00EC23A9BEF400D44C1D /* CAGradientLayer.swift in Sources */,
 				C792E8EF234BDE630022D712 /* DisplayNodeAnchor.cpp in Sources */,
 				C7BFD160207D518600AAD31C /* SpinnerView.swift in Sources */,
 				C7429F842375104900A29FB7 /* PropertyRef.cpp in Sources */,
@@ -1823,6 +1833,7 @@
 				C785B0A32016EC17001DAE64 /* JavaScriptCallback.swift in Sources */,
 				C73AE5E82399816A00B7C12C /* CABasicAnimation.swift in Sources */,
 				C7AA9370236F6DD500ADF997 /* InvalidStructureException.cpp in Sources */,
+				C7ED00EE23A9C9AE00D44C1D /* CAShapeLayer.swift in Sources */,
 				C792E95F234CC1E70022D712 /* PropertyList.cpp in Sources */,
 				C7BFD166207D539300AAD31C /* InputType.swift in Sources */,
 				C74D8DCF2386D16D000C8E12 /* JavaScriptUtil.swift in Sources */,
@@ -1894,6 +1905,7 @@
 				C7E5D085209DE2290098C5FD /* AlertController.swift in Sources */,
 				C7CE4B09220A7824005D5235 /* Timezone.swift in Sources */,
 				C792E8EB234BDE630022D712 /* DisplayNodePadding.cpp in Sources */,
+				C7DE1DF023AABA8500DDC245 /* Transitionable.swift in Sources */,
 				C7541A8922E6B09800586FC4 /* HttpResponse.swift in Sources */,
 				C792E8EA234BDE630022D712 /* DisplayNodeSize.cpp in Sources */,
 				C7E8A51D201624A2005139F6 /* JavaScriptObjectBuilder.swift in Sources */,

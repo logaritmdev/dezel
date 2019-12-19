@@ -3,7 +3,19 @@
  * @super UIView
  * @since 0.1.0
  */
-open class WrapperView: UIView, TransitionListener {
+open class WrapperView: UIView {
+
+	//--------------------------------------------------------------------------
+	// MARK: Layer Class
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @property layerClass
+	 * @since 0.7.0
+	 */
+	open override class var layerClass: AnyClass {
+		return Layer.self
+	}
 
 	//--------------------------------------------------------------------------
 	// MARK: Properties
@@ -38,6 +50,41 @@ open class WrapperView: UIView, TransitionListener {
 	 * @since 0.1.0
 	 */
 	open var content: UIView
+
+	/**
+	 * @property backgroundColor
+	 * @since 0.7.0
+	 */
+	open override var backgroundColor: UIColor? {
+
+		set {
+			self.renderLayer.backgroundColor = newValue?.cgColor
+		}
+
+		get {
+			return UIColor(color: self.renderLayer.backgroundColor)
+		}
+	}
+
+	/**
+	 * @property backgroundLinearGradient
+	 * @since 0.7.0
+	 */
+	open var backgroundLinearGradient: LinearGradient? {
+		willSet {
+			self.renderLayer.setGradient(newValue)
+		}
+	}
+
+	/**
+	 * @property backgroundRadialGradient
+	 * @since 0.7.0
+	 */
+	open var backgroundRadialGradient: RadialGradient? {
+		   willSet {
+			   self.renderLayer.setGradient(newValue)
+		   }
+	   }
 
 	/**
 	 * @property borderTopColor
@@ -248,12 +295,6 @@ open class WrapperView: UIView, TransitionListener {
 	}
 
 	/**
-	 * @property hasFrame
-	 * @since 0.2.0
-	 */
-	internal var hasFrame: Bool = false
-
-	/**
 	 * @property shadowLayer
 	 * @since 0.1.0
 	 * @hidden
@@ -282,11 +323,11 @@ open class WrapperView: UIView, TransitionListener {
 	internal var borderLayer: BorderLayer = BorderLayer()
 
 	/**
-	 * @property inner
-	 * @since 0.2.0
+	 * @property shape
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private var inner: ShapeLayer = ShapeLayer() // Find a better name ?
+	private var shape: ShapeLayer = ShapeLayer()
 
 	/**
 	 * @property invalidFrame
@@ -345,11 +386,10 @@ open class WrapperView: UIView, TransitionListener {
 
 		super.init(frame: .zero)
 
-		self.layer.listener = self
 		self.layer.addSublayer(self.shadowLayer)
 		self.layer.addSublayer(self.renderLayer)
 
-		self.inner.listener = self
+		self.shape.listener = self
 
 		self.shadowLayer.listener = self
 		self.renderLayer.listener = self
@@ -360,8 +400,6 @@ open class WrapperView: UIView, TransitionListener {
 		self.borderLayer.borderLeftColor = .black
 		self.borderLayer.borderRightColor = .black
 		self.borderLayer.borderBottomColor = .black
-
-		self.content.layer.listener = self
 
 		self.addSubview(content)
 	}
@@ -622,9 +660,9 @@ open class WrapperView: UIView, TransitionListener {
 				innerTL.x, innerTL.y
 			])
 
-			self.inner.path = path
+			self.shape.path = path
 
-			self.content.layer.mask = self.inner
+			self.content.layer.mask = self.shape
 			self.content.layer.shouldRasterize = true
 	
 		} else {
@@ -639,7 +677,7 @@ open class WrapperView: UIView, TransitionListener {
 			 * be active for the duration of the animation only.
 			 */
 
-			self.inner.path = CGOuterRoundedRectPath(
+			self.shape.path = CGOuterRoundedRectPath(
 				contentW,
 				contentH,
 				0.001,
@@ -659,46 +697,14 @@ open class WrapperView: UIView, TransitionListener {
 	}
 
 	//--------------------------------------------------------------------------
-	// MARK: Methods - Animations
+	// MARK: Methods - Transition Listener
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method action
-	 * @since 0.1.0
+	 * @method willAnimate
+	 * @since 0.7.0
 	 */
-	override open func action(for layer: CALayer, forKey event: String) -> CAAction? {
-		return Transition.action(for: layer, key: event)
-	}
-
-	//--------------------------------------------------------------------------
-	// MARK: Methods - Animations Protocol
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method shouldBeginTransitionAnimation
-	 * @since 0.2.0
-	 */
-	open func shouldBeginTransitionAnimation(animation: CABasicAnimation, for property: String, of layer: CALayer) -> Bool {
-
-		if (property == "bounds" ||
-			property == "position") {
-			return self.hasFrame
-		}
-
-		return true
-	}
-
-	/**
-	 * @method willBeginTransitionAnimation
-	 * @since 0.2.0
-	 */
-	open func willBeginTransitionAnimation(animation: CABasicAnimation, for property: String, of layer: CALayer) {
-
-		if (property == "backgroundColor" ||
-			property == "backgroundKolor") {
-			self.animatesBitmapLayer = true
-			return
-		}
+	open func willAnimate(layer: Layer, property: String) {
 
 		if (property == "borderTopWidth" ||
 			property == "borderTopColor" ||
@@ -721,24 +727,32 @@ open class WrapperView: UIView, TransitionListener {
 		}
 
 		if (property == "path") {
-			self.content.layer.mask = self.inner
+			self.content.layer.mask = self.shape
 			self.content.layer.shouldRasterize = false
 		}
 	}
 
 	/**
-	 * @method didCommitTransition
-	 * @since 0.6.0
+	 * @method didBeginTransition
+	 * @since 0.7.0
 	 */
-	open func didCommitTransition() {
+	open func didBeginTransition(layer: Layer) {
+
+	}
+
+	/**
+	 * @method didCommitTransition
+	 * @since 0.7.0
+	 */
+	open func didCommitTransition(layer: Layer) {
 
 	}
 
 	/**
 	 * @method didFinishTransition
-	 * @since 0.2.0
+	 * @since 0.7.0
 	 */
-	open func didFinishTransition() {
+	open func didFinishTransition(layer: Layer) {
 
 		self.animatesBitmapLayer = false
 		self.animatesBorderLayer = false

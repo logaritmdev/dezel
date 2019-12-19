@@ -7,6 +7,18 @@
 open class View : UIScrollView, UIScrollViewDelegate, Scrollable {
 
 	//--------------------------------------------------------------------------
+	// MARK: Layer Class
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @property layerClass
+	 * @since 0.7.0
+	 */
+	open override class var layerClass: AnyClass {
+		return Layer.self
+	}
+
+	//--------------------------------------------------------------------------
 	// MARK: Properties
 	//--------------------------------------------------------------------------
 
@@ -299,18 +311,6 @@ open class View : UIScrollView, UIScrollViewDelegate, Scrollable {
 	 */
 	override open func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
 		UIApplication.shared.window?.dispatchTouchCanceled(touches)
-	}
-
-	//--------------------------------------------------------------------------
-	// MARK: Methods - Animations
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method action
-	 * @since 0.7.0
-	 */
-	override open func action(for layer: CALayer, forKey event: String) -> CAAction? {
-		return Transition.action(for: layer, key: event)
 	}
 
 	//--------------------------------------------------------------------------

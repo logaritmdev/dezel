@@ -8,6 +8,24 @@ import UIKit
 open class ApplicationController: UIViewController, StylesheetDelegate {
 
 	//--------------------------------------------------------------------------
+	// MARK: Statics
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @const reloadNotification
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	public static let reloadNotification = Notification.Name("reload")
+
+	/**
+	 * @const restyleNotification
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	public static let restyleNotification = Notification.Name("restyle")
+
+	//--------------------------------------------------------------------------
 	// MARK: Properties
 	//--------------------------------------------------------------------------
 
@@ -169,10 +187,10 @@ open class ApplicationController: UIViewController, StylesheetDelegate {
 	}
 
 	/**
-	 * @method regsiter
+	 * @method registerApplication
 	 * @since 0.7.0
 	 */
-	open func register(_ application: JavaScriptApplication) {
+	open func registerApplication(_ application: JavaScriptApplication) {
 
 		self.application?.destroy()
 		self.application = application
@@ -188,6 +206,77 @@ open class ApplicationController: UIViewController, StylesheetDelegate {
 		application.callMethod("nativeOnCreate")
 
 		self.view.addSubview(application.window)
+	}
+
+	/**
+	 * @method reloadApplication
+	 * @since 0.7.0
+	 */
+	open func reloadApplication() {
+
+		for module in self.modules {
+			module.reset(context: self.context)
+		}
+
+		self.presentedViewController?.dismiss(animated: false, completion: nil)
+
+		NotificationCenter.default.post(name: ApplicationController.reloadNotification, object: self, userInfo: nil)
+
+		Synchronizer.main.reset()
+
+		self.application?.destroy()
+		self.application?.window.wrapper.removeFromSuperview()
+		self.application = nil
+
+		for source in self.sources {
+			switch (source.type) {
+				case .style:
+					self.evaluateStyle(source.data, url: source.path)
+				case .script:
+					self.evaluateScript(source.data, url: source.path)
+			}
+		}
+
+		if let application = self.application {
+
+			self.display.window = application.window.node
+
+			application.window.width.reset(Double(UIScreen.main.bounds.width), unit: .px, lock: self)
+			application.window.height.reset(Double(UIScreen.main.bounds.height), unit: .px, lock: self)
+			application.callMethod("nativeOnCreate")
+
+			self.view.addSubview(application.window)
+		}
+	}
+
+	/**
+	 * @method reloadApplicationStyles
+	 * @since 0.7.0
+	 */
+	open func reloadApplicationStyles() {
+
+		NotificationCenter.default.post(name: ApplicationController.restyleNotification, object: self, userInfo: nil)
+
+		var insetT: CGFloat = 20
+		var insetB: CGFloat = 0
+
+		if #available(iOS 11.0, *) {
+			if let window = UIApplication.shared.windows.first {
+				insetT = max(window.safeAreaInsets.top, insetT)
+				insetB = max(window.safeAreaInsets.bottom, insetB)
+			}
+		}
+
+		self.stylesheet = Stylesheet()
+		self.stylesheet.delegate = self
+		self.stylesheet.setVariable("safe-area-top-inset", value: "\(insetT)px")
+		self.stylesheet.setVariable("safe-area-bottom-inset", value: "\(insetB)px")
+
+		for source in self.sources where source.type == .style {
+			self.stylesheet.evaluate(source.data, url: source.path)
+		}
+
+		self.display.stylesheet = stylesheet
 	}
 
 	//--------------------------------------------------------------------------
@@ -304,26 +393,24 @@ open class ApplicationController: UIViewController, StylesheetDelegate {
 
 		coordinator.animate(alongsideTransition: { context in
 
+			self.display.viewportWidth = Double(size.width)
+			self.display.viewportHeight = Double(size.height)
+
 			let duration = self.getRotationAnimationDuration(context: context)
 			let equation = self.getRotationAnimationEquation(context: context)
 
-			Transition.create(
+			TransitionManager.begin(
 				duration: duration,
 				equation: equation,
 				delay: 0
 			) { }
 
-			self.display.viewportWidth = Double(size.width)
-			self.display.viewportHeight = Double(size.height)
-
 			if let application = self.application {
-				application.window.width.reset(Double(size.width))
-				application.window.height.reset(Double(size.height))
+				application.window.width.reset(Double(size.width), unit: .px, lock: self)
+				application.window.height.reset(Double(size.height), unit: .px, lock: self)
 			}
 
-			Synchronizer.main.execute()
-
-			Transition.commit()
+			TransitionManager.commit()
 
 			self.statusBar.frame = UIApplication.shared.statusBarFrame
 

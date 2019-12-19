@@ -5,7 +5,19 @@ import UIKit
  * @super UIView
  * @since 0.7.0
  */
-open class TextView: UIView, Updatable, Clippable, TransitionListener {
+open class TextView: UIView, Updatable, Clippable {
+
+	//--------------------------------------------------------------------------
+	// MARK: Layer Class
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @property layerClass
+	 * @since 0.7.0
+	 */
+	open override class var layerClass: AnyClass {
+		return Layer.self
+	}
 
 	//----------------------------------------------------------------------
 	// MARK: Properties
@@ -272,12 +284,6 @@ open class TextView: UIView, Updatable, Clippable, TransitionListener {
 	}
 
 	/**
-	 * @property hasFrame
-	 * @since 0.7.0
-	 */
-	internal var hasFrame: Bool = false
-
-	/**
 	 * @property delegate
 	 * @since 0.7.0
 	 * @hidden
@@ -325,7 +331,6 @@ open class TextView: UIView, Updatable, Clippable, TransitionListener {
 		self.textLayer.textKerning = 0
 		self.textLayer.textLeading = 0
 		self.textLayer.textBaseline = 0
-		self.textLayer.listener = self
 
 		self.layer.addSublayer(self.textLayer)
 
@@ -406,16 +411,33 @@ open class TextView: UIView, Updatable, Clippable, TransitionListener {
 	//--------------------------------------------------------------------------
 
 	/**
+	 * @property trackedTouch
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private var trackedTouch: UITouch?
+
+	/**
+	 * @property trackedPoint
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private var trackedPoint: CGPoint = .zero
+
+	/**
 	 * @method touchesBegan
 	 * @since 0.7.0
 	 */
 	override open func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
 
-		super.touchesBegan(touches, with: event)
+		guard let touch = touches.first else {
+			return
+		}
 
-		// TODO
-		// This needs to be improved but it will have to do for now
-
+		if (self.trackedTouch == nil) {
+			self.trackedTouch = touch
+			self.trackedPoint = touch.location(in: self)
+		}
 	}
 
 	/**
@@ -424,70 +446,24 @@ open class TextView: UIView, Updatable, Clippable, TransitionListener {
 	 */
 	override open func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
 
-		super.touchesEnded(touches, with: event)
+		for touch in touches {
 
-		guard let touch = touches.first else {
-			return
-		}
+			if (self.trackedTouch == touch) {
+				self.trackedTouch = nil
 
-		if let character = self.textLayer.find(at: touch.location(in: self)) {
-			if let link = character.link {
-				self.observer?.didPressLink(textView: self, url: link)
+				let point = touch.location(in: self)
+
+				if (abs(self.trackedPoint.x - point.x) > 10 ||
+					abs(self.trackedPoint.y - point.y) > 10) {
+					return
+				}
+
+				if let character = self.textLayer.string(at: point) {
+					if let link = character.link {
+						self.observer?.didPressLink(textView: self, url: link)
+					}
+				}
 			}
 		}
-	}
-
-	//--------------------------------------------------------------------------
-	// MARK: Methods - Animations
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method action
-	 * @since 0.7.0
-	 */
-	override open func action(for layer: CALayer, forKey event: String) -> CAAction? {
-		return Transition.action(for: layer, key: event)
-	}
-
-	//--------------------------------------------------------------------------
-	// MARK: Methods - Animations Protocol
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method shouldBeginTransitionAnimation
-	 * @since 0.7.0
-	 */
-	open func shouldBeginTransitionAnimation(animation: CABasicAnimation, for property: String, of layer: CALayer) -> Bool {
-
-		if (property == "bounds" ||
-			property == "position") {
-			return self.hasFrame
-		}
-
-		return true
-	}
-
-	/**
-	 * @method willBeginTransitionAnimation
-	 * @since 0.7.0
-	 */
-	open func willBeginTransitionAnimation(animation: CABasicAnimation, for property: String, of layer: CALayer) {
-
-	}
-
-	/**
-	 * @method didCommitTransition
-	 * @since 0.7.0
-	 */
-	open func didCommitTransition() {
-
-	}
-
-	/**
-	 * @method didFinishTransition
-	 * @since 0.7.0
-	 */
-	open func didFinishTransition() {
-
 	}
 }

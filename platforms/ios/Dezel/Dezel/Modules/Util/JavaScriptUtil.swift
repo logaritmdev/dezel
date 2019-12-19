@@ -38,7 +38,25 @@ open class JavaScriptUtil: JavaScriptClass {
 	 */
 	@objc func jsFunction_registerApplication(callback: JavaScriptFunctionCallback) {
 		if let application = callback.argument(0).cast(JavaScriptApplication.self) {
-			self.context.controller.register(application)
+			self.context.controller.registerApplication(application)
 		}
+	}
+
+	/**
+	 * @property jsFunction_reloadApplication
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@objc func jsFunction_reloadApplication(callback: JavaScriptFunctionCallback) {
+		self.context.controller.reloadApplication()
+	}
+
+	/**
+	 * @property jsFunction_reloadApplicationStyles
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@objc func jsFunction_reloadApplicationStyles(callback: JavaScriptFunctionCallback) {
+		self.context.controller.reloadApplicationStyles()
 	}
 }

@@ -3,7 +3,7 @@
  * @since 0.1.0
  * @hidden
  */
-open class ImageLayer: Layer, TransitionListener {
+open class ImageLayer: Layer {
 
 	//--------------------------------------------------------------------------
 	// MARK: Properties
@@ -85,9 +85,6 @@ open class ImageLayer: Layer, TransitionListener {
 		super.init()
 
 		self.masksToBounds = true
-		self.contentLayer.listener = self
-		self.contourLayer.listener = self
-
 		self.needsDisplayOnBoundsChange = true
 
 		self.addSublayer(self.contentLayer)
@@ -215,47 +212,5 @@ open class ImageLayer: Layer, TransitionListener {
 			self.maskColor = self.tint
 			self.maskShape = self.contourLayer
 		}
-	}
-
-	//--------------------------------------------------------------------------
-	// MARK: Methods - Animations Protocol
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method shouldBeginTransitionAnimation
-	 * @since 0.2.0
-	 */
-	open func shouldBeginTransitionAnimation(animation: CABasicAnimation, for property: String, of layer: CALayer) -> Bool {
-
-		if (property == "bounds" ||
-			property == "position") {
-			return (self.listener as? ImageView)?.hasFrame ?? true
-		}
-
-		return true
-	}
-
-	/**
-	 * @method willBeginTransitionAnimation
-	 * @since 0.2.0
-	 */
-	open func willBeginTransitionAnimation(animation: CABasicAnimation, for property: String, of layer: CALayer) {
-
-	}
-
-	/**
-	 * @method didCommitTransition
-	 * @since 0.6.0
-	 */
-	open func didCommitTransition() {
-
-	}
-
-	/**
-	 * @method didFinishTransition
-	 * @since 0.2.0
-	 */
-	open func didFinishTransition() {
-
 	}
 }

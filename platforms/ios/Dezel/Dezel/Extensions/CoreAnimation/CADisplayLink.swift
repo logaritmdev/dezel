@@ -1,7 +1,6 @@
 /**
  * @extension CADisplayLink
  * @since 0.7.0
- * @hidden
  */
 internal extension CADisplayLink {
 

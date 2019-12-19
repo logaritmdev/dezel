@@ -80,6 +80,17 @@ open class JavaScriptGlobalModule : JavaScriptModule {
 		context.global.defineProperty("cancelAnimationFrame", value: context.createFunction(self.cancelAnimationFrame))
 	}
 
+    /**
+     * @method reset
+     * @since 0.7.0
+     */
+	open override func reset(context: JavaScriptContext) {
+		self.scheduledTimers.forEach { $0.value.cancel() }
+		self.scheduledFrames.forEach { $0.value.cancel() }
+		self.scheduledTimers.removeAll()
+		self.scheduledFrames.removeAll()
+	}
+
 	//--------------------------------------------------------------------------
 	// MARK: Methods - Function Callbacks
 	//--------------------------------------------------------------------------
@@ -332,49 +343,42 @@ open class JavaScriptGlobalModule : JavaScriptModule {
 		/**
 		 * @property callback
 		 * @since 0.7.0
-		 * @hidden
 		 */
 		private var callback: JavaScriptValue
 
 		/**
 		 * @property interval
 		 * @since 0.7.0
-		 * @hidden
 		 */
 		private var interval: Double
 
 		/**
 		 * @property repeated
 		 * @since 0.7.0
-		 * @hidden
 		 */
 		private var repeated: Bool
 
 		/**
 		 * @property module
 		 * @since 0.7.0
-		 * @hidden
 		 */
 		private var module: JavaScriptGlobalModule
 
 		/**
 		 * @property handle
 		 * @since 0.7.0
-		 * @hidden
 		 */
 		private var handle: Double
 
 		/**
 		 * @property timer
 		 * @since 0.7.0
-		 * @hidden
 		 */
 		private var timer: Timer?
 
 		/**
 		 * @constructor
 		 * @since 0.7.0
-		 * @hidden
 		 */
 		init(callback: JavaScriptValue, interval: Double, repeated: Bool, module: JavaScriptGlobalModule, handle: Double) {
 
@@ -394,7 +398,6 @@ open class JavaScriptGlobalModule : JavaScriptModule {
 		/**
 		 * @method execute
 		 * @since 0.7.0
-		 * @hidden
 		 */
 		public func execute() {
 
@@ -409,7 +412,6 @@ open class JavaScriptGlobalModule : JavaScriptModule {
 		/**
 		 * @method cancel
 		 * @since 0.7.0
-		 * @hidden
 		 */
 		public func cancel() {
 			self.callback.unprotect()
@@ -420,7 +422,6 @@ open class JavaScriptGlobalModule : JavaScriptModule {
 		/**
 		 * @method remove
 		 * @since 0.7.0
-		 * @hidden
 		 */
 		public func remove() {
 			self.module.scheduledTimers.removeValue(forKey: self.handle)
@@ -429,7 +430,6 @@ open class JavaScriptGlobalModule : JavaScriptModule {
 		/**
 		 * @method handleTimer
 		 * @since 0.7.0
-		 * @hidden
 		 */
 		@objc public func handleTimer() {
 			self.execute()
@@ -446,14 +446,12 @@ open class JavaScriptGlobalModule : JavaScriptModule {
 		/**
 		 * @property callback
 		 * @since 0.7.0
-		 * @hidden
 		 */
 		private var callback: JavaScriptValue
 
 		/**
 		 * @constructor
 		 * @since 0.7.0
-		 * @hidden
 		 */
 		init(callback: JavaScriptValue) {
 			self.callback = callback
@@ -463,7 +461,6 @@ open class JavaScriptGlobalModule : JavaScriptModule {
 		/**
 		 * @method invalidate
 		 * @since 0.7.0
-		 * @hidden
 		 */
 		public func execute() {
 			self.callback.call()
@@ -473,7 +470,6 @@ open class JavaScriptGlobalModule : JavaScriptModule {
 		/**
 		 * @method cancel
 		 * @since 0.7.0
-		 * @hidden
 		 */
 		public func cancel() {
 			self.callback.unprotect()

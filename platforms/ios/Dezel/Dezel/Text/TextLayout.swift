@@ -155,10 +155,10 @@ open class TextLayout {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method find
-	 * @since 0.5.0
+	 * @method string
+	 * @since 0.7.0
 	 */
-	open func find(at point: CGPoint) -> NSAttributedString? {
+	open func string(at point: CGPoint) -> NSAttributedString? {
 
 		if (self.text.length == 0) {
 			return nil

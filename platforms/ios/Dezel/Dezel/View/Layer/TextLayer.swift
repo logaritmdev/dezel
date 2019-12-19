@@ -356,11 +356,11 @@ open class TextLayer: Layer {
 	}
 
 	/**
-	 * @method find
-	 * @since 0.5.0
+	 * @method string
+	 * @since 0.7.0
 	 */
-	open func find(at point: CGPoint) -> NSAttributedString? {
-		return self.layout.find(at: point)
+	open func string(at point: CGPoint) -> NSAttributedString? {
+		return self.layout.string(at: point)
 	}
 
 	/**
@@ -571,14 +571,18 @@ open class TextLayer: Layer {
 	 */
 	override open func action(forKey key: String) -> CAAction? {
 
-		if let transition = Transition.current {
+		if let action = super.action(forKey: key) {
+			return action
+		}
+
+		if let transition = TransitionManager.transition {
 
 			var current = self.presentation()
 			if (current == nil || self.animation(forKey: key) == nil) {
 				current = self
 			}
 
-			let animation = CABasicAnimation(keyPath: key)
+			let animation = CABasicAnimation(key: key, delay: transition.delay)
 
 			switch (key) {
 
@@ -592,20 +596,17 @@ open class TextLayer: Layer {
 					animation.fromValue = current!.textBaseline
 
 				default:
-					break
+					return NSNull()
 			}
 
-			if (animation.fromValue != nil) {
+			transition.notify(self)
 
-				if (transition.delay > 0) {
-					animation.delay = transition.delay
-				}
+			self.willAnimate(property: key)
 
-				return animation
-			}
+			return animation
 		}
 
-		return super.action(forKey: key)
+		return NSNull()
 	}
 
 	//--------------------------------------------------------------------------

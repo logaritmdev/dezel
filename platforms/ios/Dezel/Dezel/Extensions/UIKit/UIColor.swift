@@ -18,6 +18,19 @@ public extension UIColor {
 	 * @constructor
 	 * @since 0.7.0
 	 */
+	convenience init?(color: CGColor?) {
+
+		if let color = color {
+			self.init(cgColor: color)
+		}
+
+		return nil
+	}
+
+	/**
+	 * @constructor
+	 * @since 0.7.0
+	 */
 	convenience init(color: UInt32) {
 
 		let a = (color >> 24) & 0x000000FF
@@ -60,7 +73,7 @@ public extension UIColor {
 
 		switch (color.length - 1) {
 
-			case 3:
+			case 3 :
 
 				var color = UInt32(0xFF000000)
 				color |= UInt32((value & 0xF00) << 12)
@@ -70,8 +83,8 @@ public extension UIColor {
 				color |= UInt32((value & 0xF)   << 4)
 				color |= UInt32((value & 0xF))
 
-			self.init(color: color)
-			return
+				self.init(color: color)
+				return
 
 			case 4:
 
@@ -90,9 +103,11 @@ public extension UIColor {
 
 			case 6:
 				self.init(color: value | 0xFF000000)
+				return
 
 			case 8:
 				self.init(color: value)
+				return
 
 			default:
 				break
@@ -137,7 +152,7 @@ public extension UIColor {
 
 			if (functions.name == "rgba") {
 
-				assert(functions.arguments.count == 3)
+				assert(functions.arguments.count == 4)
 
 				let r = functions.arguments[0].number
 				let g = functions.arguments[1].number

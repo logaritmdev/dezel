@@ -3,7 +3,19 @@
  * @super UIView
  * @since 0.7.0
  */
-open class ImageView: UIView, Updatable, Clippable, TransitionListener {
+open class ImageView: UIView, Updatable, Clippable {
+
+	//--------------------------------------------------------------------------
+	// MARK: Layer Class
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @property layerClass
+	 * @since 0.7.0
+	 */
+	open override class var layerClass: AnyClass {
+		return Layer.self
+	}
 
 	//--------------------------------------------------------------------------
 	// MARK: Properties
@@ -100,12 +112,6 @@ open class ImageView: UIView, Updatable, Clippable, TransitionListener {
 	}
 
 	/**
-	 * @property hasFrame
-	 * @since 0.7.0
-	 */
-	internal var hasFrame: Bool = false
-
-	/**
 	 * @property imageLayer
 	 * @since 0.7.0
 	 * @hidden
@@ -136,12 +142,8 @@ open class ImageView: UIView, Updatable, Clippable, TransitionListener {
 	 * @since 0.7.0
 	 */
 	public override init(frame: CGRect) {
-
 		super.init(frame: frame)
-
 		self.imageLayer.frame = frame
-		self.imageLayer.listener = self
-
 		self.layer.addSublayer(self.imageLayer)
 	}
 
@@ -206,60 +208,5 @@ open class ImageView: UIView, Updatable, Clippable, TransitionListener {
 		bounds.origin.y = paddingT
 
 		self.imageLayer.frame = bounds
-	}
-
-	//--------------------------------------------------------------------------
-	// MARK: Methods - Animations
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method action
-	 * @since 0.7.0
-	 */
-	override open func action(for layer: CALayer, forKey event: String) -> CAAction? {
-		// TODO revoir si c'est nécessaire
-		return Transition.action(for: layer, key: event)
-	}
-
-	//--------------------------------------------------------------------------
-	// MARK: Methods - Animations Protocol
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method shouldBeginTransitionAnimation
-	 * @since 0.7.0
-	 */
-	open func shouldBeginTransitionAnimation(animation: CABasicAnimation, for property: String, of layer: CALayer) -> Bool {
-
-		if (property == "bounds" ||
-			property == "position") {
-			return self.hasFrame
-		}
-
-		return true
-	}
-
-	/**
-	 * @method willBeginTransitionAnimation
-	 * @since 0.7.0
-	 */
-	open func willBeginTransitionAnimation(animation: CABasicAnimation, for property: String, of layer: CALayer) {
-
-	}
-
-	/**
-	 * @method didCommitTransition
-	 * @since 0.6.0
-	 */
-	open func didCommitTransition() {
-
-	}
-
-	/**
-	 * @method didFinishTransition
-	 * @since 0.7.0
-	 */
-	open func didFinishTransition() {
-
 	}
 }
