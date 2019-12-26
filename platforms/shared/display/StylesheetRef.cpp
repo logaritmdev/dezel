@@ -4,6 +4,7 @@
 #include "TokenizerStream.h"
 #include "Parser.h"
 #include "ParseException.h"
+#include "InvalidInvocationException.h"
 
 #include <string>
 
@@ -12,6 +13,7 @@ using Dezel::Style::Tokenizer;
 using Dezel::Style::TokenizerStream;
 using Dezel::Style::Parser;
 using Dezel::Style::ParseException;
+using Dezel::Style::InvalidInvocationException;
 
 StylesheetRef
 StylesheetCreate()
@@ -40,6 +42,14 @@ StylesheetSetVariable(StylesheetRef stylesheet, const char* name, const char* va
 		(*error)->col = static_cast<unsigned>(e.getCol());
 		(*error)->row = static_cast<unsigned>(e.getRow());
 
+	} catch (InvalidInvocationException &e) {
+
+		*error = new ParseError();
+		(*error)->message = strdup(e.what());
+		(*error)->url = "";
+		(*error)->col = 0;
+		(*error)->row = 0;
+
 	}
 }
 
@@ -57,6 +67,14 @@ StylesheetEvaluate(StylesheetRef stylesheet, const char* source, const char* url
 		(*error)->url = strdup(e.getFile().c_str());
 		(*error)->col = static_cast<unsigned>(e.getCol());
 		(*error)->row = static_cast<unsigned>(e.getRow());
+
+	} catch (InvalidInvocationException &e) {
+
+		*error = new ParseError();
+		(*error)->message = strdup(e.what());
+		(*error)->url = "";
+		(*error)->col = 0;
+		(*error)->row = 0;
 
 	}
 }
