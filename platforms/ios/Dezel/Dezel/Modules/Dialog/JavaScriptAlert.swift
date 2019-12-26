@@ -25,7 +25,7 @@ open class JavaScriptAlert: JavaScriptClass, AlertControllerDelegate {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	@objc func jsFunction_present(callback: JavaScriptFunctionCallback) {
+	@objc open func jsFunction_present(callback: JavaScriptFunctionCallback) {
 
 		if (callback.arguments < 4) {
 			fatalError("Method JavaScriptAlert.present() requires 4 arguments.")
@@ -105,7 +105,7 @@ open class JavaScriptAlert: JavaScriptClass, AlertControllerDelegate {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	@objc func jsFunction_dismiss(callback: JavaScriptFunctionCallback) {
+	@objc open func jsFunction_dismiss(callback: JavaScriptFunctionCallback) {
 		if let alertController = self.alertController {
 			alertController.presentingViewController?.dismiss(animated: true, completion: nil)
 		}

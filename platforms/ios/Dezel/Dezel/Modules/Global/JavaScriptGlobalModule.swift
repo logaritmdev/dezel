@@ -92,7 +92,7 @@ open class JavaScriptGlobalModule : JavaScriptModule {
 	}
 
 	//--------------------------------------------------------------------------
-	// MARK: Methods - Function Callbacks
+	// MARK: Function Callbacks
 	//--------------------------------------------------------------------------
 
 	/**
@@ -231,7 +231,7 @@ open class JavaScriptGlobalModule : JavaScriptModule {
 	}
 
 	//--------------------------------------------------------------------------
-	// MARK: Methods - Handlers
+	// MARK: Handlers
 	//--------------------------------------------------------------------------
 
 	/**

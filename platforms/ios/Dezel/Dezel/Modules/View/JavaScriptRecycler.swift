@@ -24,7 +24,7 @@ open class JavaScriptRecycler : JavaScriptClass, JavaScriptView.Delegate {
 	private var list: [JavaScriptView] = []
 
 	/**
-	 * @property length
+	 * @property size
 	 * @since 0.7.0
 	 * @hidden
 	 */
@@ -486,7 +486,8 @@ open class JavaScriptRecycler : JavaScriptClass, JavaScriptView.Delegate {
 		}
 
 		type.construct(nil, result: view)
-
+		// TODO
+		// Ça devrait pas marcher, la propriété native existe pu
 		guard let item = view.property("native").cast(JavaScriptView.self) else {
 			return nil
 		}
@@ -497,7 +498,6 @@ open class JavaScriptRecycler : JavaScriptClass, JavaScriptView.Delegate {
 
 		return item
 	}
-
 
 	/**
 	 * @method cacheView

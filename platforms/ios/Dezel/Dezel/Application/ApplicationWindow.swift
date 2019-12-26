@@ -25,10 +25,6 @@ open class ApplicationWindow: UIWindow {
 		super.sendEvent(event)
 	}
 
-	//--------------------------------------------------------------------------
-	// MARK: Touch Management
-	//--------------------------------------------------------------------------
-
 	/**
      * @method dispatchTouchEvent
      * @since 0.7.0
@@ -107,16 +103,16 @@ open class ApplicationWindow: UIWindow {
 
 		super.sendEvent(event)
 
-		for touch in touches where touch.touchCanceled == false {
-
-			touch.touchCanceled = true
+		for touch in touches where touch.reverted == false {
 
 			if (touch.canceled) {
+				touch.reverted = true
 				touch.view?.dispatchTouchCancel(touch, with: event)
 				continue
 			}
 
 			if (touch.captured) {
+				touch.reverted = true
 				touch.view?.dispatchTouchCancel(touch, with: event, skip: touch.receiver)
 				continue
 			}

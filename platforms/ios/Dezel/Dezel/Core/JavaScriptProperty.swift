@@ -685,32 +685,6 @@ public class JavaScriptProperty: NSObject {
 		self.currentValue = JavaScriptProperty.Null
 	}
 
-	/**
-	 * @method update
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private func update(_ value: JavaScriptProperty) {
-		self.currentValue = value.currentValue
-	}
-
-	/**
-	 * @method update
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private func update(_ value: JavaScriptPropertyValue) {
-		self.currentValue = value
-	}
-
-	/**
-	 * @method update
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private func update(_ value: JavaScriptValue) {
-		self.currentValue = JavaScriptPropertyScriptValue(value: value)
-	}
 
 	/**
 	 * @method update
@@ -746,6 +720,33 @@ public class JavaScriptProperty: NSObject {
 	 */
 	private func update(_ value: Bool) {
 		self.currentValue = JavaScriptPropertyBooleanValue(value: value)
+	}
+
+	/**
+	 * @method update
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private func update(_ value: JavaScriptValue) {
+		self.currentValue = JavaScriptPropertyScriptValue(value: value)
+	}
+
+	/**
+	 * @method update
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private func update(_ value: JavaScriptProperty) {
+		self.currentValue = value.currentValue
+	}
+
+	/**
+	 * @method update
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private func update(_ value: JavaScriptPropertyValue) {
+		self.currentValue = value
 	}
 
 	/**

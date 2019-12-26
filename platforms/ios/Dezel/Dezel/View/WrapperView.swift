@@ -3,7 +3,7 @@
  * @super UIView
  * @since 0.1.0
  */
-open class WrapperView: UIView {
+open class WrapperView: UIView, Animatable {
 
 	//--------------------------------------------------------------------------
 	// MARK: Layer Class
@@ -32,14 +32,11 @@ open class WrapperView: UIView {
 	 * @since 0.1.0
 	 */
 	override open var bounds: CGRect {
-
 		willSet {
-			
 			self.renderLayer.resize(newValue)
 			self.bitmapLayer.resize(newValue)
 			self.borderLayer.resize(newValue)
 			self.shadowLayer.resize(newValue)
-
 			self.invalidateFrame()
 			self.invalidateShape()
 		}
@@ -81,10 +78,40 @@ open class WrapperView: UIView {
 	 * @since 0.7.0
 	 */
 	open var backgroundRadialGradient: RadialGradient? {
-		   willSet {
-			   self.renderLayer.setGradient(newValue)
-		   }
-	   }
+		willSet {
+			self.renderLayer.setGradient(newValue)
+		}
+	}
+
+	/**
+	 * @property backgroundImage
+	 * @since 0.1.0
+	 */
+	open var backgroundImage: UIImage? {
+		willSet {
+			self.bitmapLayer.image = newValue?.cgImage
+		}
+	}
+
+	/**
+	 * @property backgroundImageFit
+	 * @since 0.7.0
+	 */
+	open var backgroundImageFit: ImageFit = .cover {
+		willSet {
+			self.bitmapLayer.imageFit = newValue
+		}
+	}
+
+	/**
+	 * @property backgroundImageLeft
+	 * @since 0.1.0
+	 */
+	open var backgroundImagePosition: ImagePosition = .middleCenter {
+		willSet {
+			self.bitmapLayer.imagePosition = newValue
+		}
+	}
 
 	/**
 	 * @property borderTopColor
@@ -211,36 +238,6 @@ open class WrapperView: UIView {
 	open var borderBottomRightRadius: CGFloat = 0 {
 		willSet {
 			self.invalidateShape()
-		}
-	}
-
-	/**
-	 * @property backgroundImage
-	 * @since 0.1.0
-	 */
-	open var backgroundImage: UIImage? {
-		willSet {
-			self.bitmapLayer.image = newValue?.cgImage
-		}
-	}
-
-	/**
-	 * @property backgroundImageFit
-	 * @since 0.7.0
-	 */
-	open var backgroundImageFit: ImageFit = .cover {
-		willSet {
-			self.bitmapLayer.imageFit = newValue
-		}
-	}
-
-	/**
-	 * @property backgroundImageLeft
-	 * @since 0.1.0
-	 */
-	open var backgroundImagePosition: ImagePosition = .middleCenter {
-		willSet {
-			self.bitmapLayer.imagePosition = newValue
 		}
 	}
 
@@ -697,14 +694,14 @@ open class WrapperView: UIView {
 	}
 
 	//--------------------------------------------------------------------------
-	// MARK: Methods - Transition Listener
+	// MARK: Transition Listener
 	//--------------------------------------------------------------------------
 
 	/**
 	 * @method willAnimate
 	 * @since 0.7.0
 	 */
-	open func willAnimate(layer: Layer, property: String) {
+	open func willAnimate(layer: CALayer, property: String) {
 
 		if (property == "borderTopWidth" ||
 			property == "borderTopColor" ||
@@ -736,7 +733,7 @@ open class WrapperView: UIView {
 	 * @method didBeginTransition
 	 * @since 0.7.0
 	 */
-	open func didBeginTransition(layer: Layer) {
+	open func didBeginTransition(layer: CALayer) {
 
 	}
 
@@ -744,7 +741,7 @@ open class WrapperView: UIView {
 	 * @method didCommitTransition
 	 * @since 0.7.0
 	 */
-	open func didCommitTransition(layer: Layer) {
+	open func didCommitTransition(layer: CALayer) {
 
 	}
 
@@ -752,7 +749,7 @@ open class WrapperView: UIView {
 	 * @method didFinishTransition
 	 * @since 0.7.0
 	 */
-	open func didFinishTransition(layer: Layer) {
+	open func didFinishTransition(layer: CALayer) {
 
 		self.animatesBitmapLayer = false
 		self.animatesBorderLayer = false

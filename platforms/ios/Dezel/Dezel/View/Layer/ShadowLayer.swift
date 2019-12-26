@@ -294,7 +294,7 @@ open class ShadowLayer: Layer {
 	}
 
 	//--------------------------------------------------------------------------
-	// MARK: Methods - Animations
+	// MARK: Animations
 	//--------------------------------------------------------------------------
 
 	/**
@@ -341,7 +341,7 @@ open class ShadowLayer: Layer {
 
 			transition.notify(self)
 
-			self.willAnimate(property: key)
+			self.willAnimate(layer: self, property: key)
 
 			return animation
 		}

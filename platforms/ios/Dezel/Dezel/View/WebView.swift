@@ -416,7 +416,7 @@ public class WebView: WKWebView, WKNavigationDelegate, UIScrollViewDelegate, Scr
 	}
 
 	//--------------------------------------------------------------------------
-	// MARK: Methods - Scrollable
+	// MARK: Scrollable
 	//--------------------------------------------------------------------------
 
 	/**

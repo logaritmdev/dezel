@@ -35,39 +35,19 @@ open class JavaScriptSpinnerView: JavaScriptView {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @property tint
-	 * @since 0.7.0
-	 */
-	@objc lazy var tint = JavaScriptProperty(string: "#000") { value in
-		self.view.color = UIColor(color: value)
-	}
-
-	/**
 	 * @property spin
 	 * @since 0.7.0
 	 */
-	@objc lazy var spin = JavaScriptProperty(boolean: false) { value in
+	@objc open lazy var spin = JavaScriptProperty(boolean: false) { value in
 		self.view.spin = value.boolean
 	}
 
-	//--------------------------------------------------------------------------
-
 	/**
-	 * @method jsGet_tint
+	 * @property tint
 	 * @since 0.7.0
-	 * @hidden
 	 */
-	@objc func jsGet_tint(callback: JavaScriptGetterCallback) {
-		callback.returns(self.tint)
-	}
-
-	/**
-	 * @method jsSet_tint
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	@objc func jsSet_tint(callback: JavaScriptSetterCallback) {
-		self.tint.reset(callback.value, lock: self, parse: true)
+	@objc open lazy var tint = JavaScriptProperty(string: "#000") { value in
+		self.view.color = UIColor(color: value)
 	}
 
 	//--------------------------------------------------------------------------
@@ -77,7 +57,7 @@ open class JavaScriptSpinnerView: JavaScriptView {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsGet_spin(callback: JavaScriptGetterCallback) {
+	@objc open func jsGet_spin(callback: JavaScriptGetterCallback) {
 		callback.returns(self.spin)
 	}
 
@@ -86,7 +66,27 @@ open class JavaScriptSpinnerView: JavaScriptView {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsSet_spin(callback: JavaScriptSetterCallback) {
+	@objc open func jsSet_spin(callback: JavaScriptSetterCallback) {
 		self.spin.reset(callback.value, lock: self)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_tint
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@objc open func jsGet_tint(callback: JavaScriptGetterCallback) {
+		callback.returns(self.tint)
+	}
+
+	/**
+	 * @method jsSet_tint
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@objc open func jsSet_tint(callback: JavaScriptSetterCallback) {
+		self.tint.reset(callback.value, lock: self, parse: true)
 	}
 }

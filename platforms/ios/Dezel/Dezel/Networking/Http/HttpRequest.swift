@@ -153,7 +153,7 @@ open class HttpRequest: NSObject, URLSessionDelegate, URLSessionTaskDelegate, UR
 	}
 
 	//--------------------------------------------------------------------------
-	// MARK: Methods - URLSession Delegate
+	// MARK: URLSession Delegate
 	//--------------------------------------------------------------------------
 
 	/**

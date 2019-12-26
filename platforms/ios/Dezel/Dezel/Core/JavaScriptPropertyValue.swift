@@ -52,28 +52,6 @@ open class JavaScriptPropertyValue {
 		return self.toBoolean()
 	}()
 
-	//--------------------------------------------------------------------------
-	// MARK: Methods
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @constructor
-	 * @since 0.7.0
-	 */
-	public init(type: JavaScriptPropertyType = .null, unit: JavaScriptPropertyUnit = .none, value: JavaScriptValue? = nil) {
-
-		self.type = type
-		self.unit = unit
-
-		/*
-		 * The data parameter is the JavaScript value given initialy. It's
-		 * useful to keep a reference instead of recreating a JavaScript value
-		 * from the primitive values.
-		 */
-
-		self.value = value
-	}
-
 	/**
 	 * @property isNull
 	 * @since 0.7.0
@@ -152,6 +130,28 @@ open class JavaScriptPropertyValue {
 	 */
 	public var isComposite: Bool {
 		return self.type == .composite
+	}
+
+	//--------------------------------------------------------------------------
+	// MARK: Methods
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @constructor
+	 * @since 0.7.0
+	 */
+	public init(type: JavaScriptPropertyType = .null, unit: JavaScriptPropertyUnit = .none, value: JavaScriptValue? = nil) {
+
+		self.type = type
+		self.unit = unit
+
+		/*
+		 * The data parameter is the JavaScript value given initialy. It's
+		 * useful to keep a reference instead of recreating a JavaScript value
+		 * from the primitive values.
+		 */
+
+		self.value = value
 	}
 
 	/**

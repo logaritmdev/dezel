@@ -36,7 +36,7 @@ open class JavaScriptAlertButton: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsGet_label(callback: JavaScriptSetterCallback) {
+	@objc open func jsGet_label(callback: JavaScriptSetterCallback) {
 		callback.returns(self.label)
 	}
 
@@ -45,7 +45,7 @@ open class JavaScriptAlertButton: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsSet_label(callback: JavaScriptSetterCallback) {
+	@objc open func jsSet_label(callback: JavaScriptSetterCallback) {
 		self.label.reset(callback.value, lock: self)
 	}
 
@@ -56,7 +56,7 @@ open class JavaScriptAlertButton: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsGet_image(callback: JavaScriptGetterCallback) {
+	@objc open func jsGet_image(callback: JavaScriptGetterCallback) {
 		callback.returns(self.image)
 	}
 
@@ -65,7 +65,7 @@ open class JavaScriptAlertButton: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsSet_image(callback: JavaScriptSetterCallback) {
+	@objc open func jsSet_image(callback: JavaScriptSetterCallback) {
 		self.image.reset(callback.value, lock: self)
 	}
 
@@ -76,7 +76,7 @@ open class JavaScriptAlertButton: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsGet_style(callback: JavaScriptSetterCallback) {
+	@objc open func jsGet_style(callback: JavaScriptSetterCallback) {
 		callback.returns(self.style)
 	}
 
@@ -85,7 +85,7 @@ open class JavaScriptAlertButton: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsSet_style(callback: JavaScriptSetterCallback) {
+	@objc open func jsSet_style(callback: JavaScriptSetterCallback) {
 		self.style.reset(callback.value, lock: self)
 	}
 }

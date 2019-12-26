@@ -14,7 +14,7 @@ open class JavaScriptUtil: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsFunction_importClass(callback: JavaScriptFunctionCallback) {
+	@objc open func jsFunction_importClass(callback: JavaScriptFunctionCallback) {
 		if let result = self.context.classes[callback.argument(0).string] {
 			callback.returns(result)
 		}
@@ -25,7 +25,7 @@ open class JavaScriptUtil: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsFunction_importObject(callback: JavaScriptFunctionCallback) {
+	@objc open func jsFunction_importObject(callback: JavaScriptFunctionCallback) {
 		if let result = self.context.objects[callback.argument(0).string] {
 			callback.returns(result)
 		}
@@ -36,7 +36,7 @@ open class JavaScriptUtil: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsFunction_registerApplication(callback: JavaScriptFunctionCallback) {
+	@objc open func jsFunction_registerApplication(callback: JavaScriptFunctionCallback) {
 		if let application = callback.argument(0).cast(JavaScriptApplication.self) {
 			self.context.controller.registerApplication(application)
 		}
@@ -47,7 +47,7 @@ open class JavaScriptUtil: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsFunction_reloadApplication(callback: JavaScriptFunctionCallback) {
+	@objc open func jsFunction_reloadApplication(callback: JavaScriptFunctionCallback) {
 		self.context.controller.reloadApplication()
 	}
 
@@ -56,7 +56,7 @@ open class JavaScriptUtil: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsFunction_reloadApplicationStyles(callback: JavaScriptFunctionCallback) {
+	@objc open func jsFunction_reloadApplicationStyles(callback: JavaScriptFunctionCallback) {
 		self.context.controller.reloadApplicationStyles()
 	}
 }

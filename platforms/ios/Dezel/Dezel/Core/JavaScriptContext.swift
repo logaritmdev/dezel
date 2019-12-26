@@ -68,12 +68,6 @@ open class JavaScriptContext {
      */
 	internal(set) public var objects: [String: JavaScriptValue] = [:]
 
-	/**
-     * @property globals
-     * @since 0.7.0
-     */
-	internal(set) public var globals: [String: JavaScriptValue] = [:]
-
 	//--------------------------------------------------------------------------
 	// MARK: Methods
 	//--------------------------------------------------------------------------

@@ -46,7 +46,7 @@ open class JavaScriptImageView: JavaScriptView {
 	}
 
 	//--------------------------------------------------------------------------
-	// MARK: Methods - Display Node Delegate
+	// MARK: Display Node Delegate
 	//--------------------------------------------------------------------------
 
 	/**
@@ -131,7 +131,7 @@ open class JavaScriptImageView: JavaScriptView {
 	 * @property source
 	 * @since 0.7.0
 	 */
-	@objc lazy var source = JavaScriptProperty() { value in
+	@objc open lazy var source = JavaScriptProperty() { value in
 
 		self.loader.load(value.string) { image in
 
@@ -148,7 +148,7 @@ open class JavaScriptImageView: JavaScriptView {
 	 * @property imageFit
 	 * @since 0.7.0
 	 */
-	@objc lazy var imageFit = JavaScriptProperty(string: "contain") { value in
+	@objc open lazy var imageFit = JavaScriptProperty(string: "contain") { value in
 		self.view.imageFit = self.getImageFit(value.string)
 	}
 
@@ -156,7 +156,7 @@ open class JavaScriptImageView: JavaScriptView {
 	 * @property imagePosition
 	 * @since 0.7.0
 	 */
-	@objc lazy var imagePosition = JavaScriptProperty(string: "center") { value in
+	@objc open lazy var imagePosition = JavaScriptProperty(string: "center") { value in
 		self.view.imagePosition = self.getImagePosition(value.string)
 	}
 
@@ -164,7 +164,7 @@ open class JavaScriptImageView: JavaScriptView {
 	 * @property tint
 	 * @since 0.7.0
 	 */
-	@objc lazy var tint = JavaScriptProperty(string: "transparent") { value in
+	@objc open lazy var tint = JavaScriptProperty(string: "transparent") { value in
 		self.view.tint = UIColor(color: value)
 	}
 
@@ -175,7 +175,7 @@ open class JavaScriptImageView: JavaScriptView {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsGet_source(callback: JavaScriptGetterCallback) {
+	@objc open func jsGet_source(callback: JavaScriptGetterCallback) {
 		callback.returns(self.source)
 	}
 
@@ -184,7 +184,7 @@ open class JavaScriptImageView: JavaScriptView {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsSet_source(callback: JavaScriptSetterCallback) {
+	@objc open func jsSet_source(callback: JavaScriptSetterCallback) {
 		self.source.reset(callback.value, lock: self)
 	}
 
@@ -195,7 +195,7 @@ open class JavaScriptImageView: JavaScriptView {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsGet_imageFit(callback: JavaScriptGetterCallback) {
+	@objc open func jsGet_imageFit(callback: JavaScriptGetterCallback) {
 		callback.returns(self.imageFit)
 	}
 
@@ -204,7 +204,7 @@ open class JavaScriptImageView: JavaScriptView {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsSet_imageFit(callback: JavaScriptSetterCallback) {
+	@objc open func jsSet_imageFit(callback: JavaScriptSetterCallback) {
 		self.imageFit.reset(callback.value, lock: self)
 	}
 
@@ -215,7 +215,7 @@ open class JavaScriptImageView: JavaScriptView {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsGet_imagePosition(callback: JavaScriptGetterCallback) {
+	@objc open func jsGet_imagePosition(callback: JavaScriptGetterCallback) {
 		callback.returns(self.imagePosition)
 	}
 
@@ -224,7 +224,7 @@ open class JavaScriptImageView: JavaScriptView {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsSet_imagePosition(callback: JavaScriptSetterCallback) {
+	@objc open func jsSet_imagePosition(callback: JavaScriptSetterCallback) {
 		self.imagePosition.reset(callback.value, lock: self)
 	}
 
@@ -235,7 +235,7 @@ open class JavaScriptImageView: JavaScriptView {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsGet_tint(callback: JavaScriptGetterCallback) {
+	@objc open func jsGet_tint(callback: JavaScriptGetterCallback) {
 		callback.returns(self.tint)
 	}
 
@@ -244,7 +244,7 @@ open class JavaScriptImageView: JavaScriptView {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsSet_tint(callback: JavaScriptSetterCallback) {
+	@objc open func jsSet_tint(callback: JavaScriptSetterCallback) {
 		self.tint.reset(callback.value, lock: self, parse: true)
 	}
 }

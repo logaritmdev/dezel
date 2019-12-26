@@ -377,7 +377,7 @@ open class TextArea: UITextView, UITextViewDelegate {
 	}
 
 	//--------------------------------------------------------------------------
-	// MARK: Methods - Text Field Delegate
+	// MARK: Text Field Delegate
 	//--------------------------------------------------------------------------
 
 	/**

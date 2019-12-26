@@ -97,7 +97,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	}
 
 	//--------------------------------------------------------------------------
-	// MARK: Methods - Display Node Delegate
+	// MARK: Display Node Delegate
 	//--------------------------------------------------------------------------
 
 	/**
@@ -130,7 +130,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	}
 
 	//--------------------------------------------------------------------------
-	// MARK: Methods - Content Text Input Observer
+	// MARK: Content Text Input Observer
 	//--------------------------------------------------------------------------
 
 	/**
@@ -147,6 +147,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @since 0.7.0
 	 */
 	open func didFocus(textInput: TextInput) {
+		self.node.appendState("focus")
 		self.callMethod("nativeOnFocus")
 	}
 
@@ -155,6 +156,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @since 0.7.0
 	 */
 	open func didBlur(textInput: TextInput) {
+		self.node.removeState("focus")
 		self.callMethod("nativeOnBlur")
 	}
 
@@ -296,7 +298,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @property type
 	 * @since 0.7.0
 	 */
-	@objc lazy var type = JavaScriptProperty(string: "text") { value in
+	@objc open lazy var type = JavaScriptProperty(string: "text") { value in
 		self.view.type = self.getType(value.string)
 	}
 
@@ -304,7 +306,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @property value
 	 * @since 0.7.0
 	 */
-	@objc lazy var value = JavaScriptProperty(string: "") { value in
+	@objc open lazy var value = JavaScriptProperty(string: "") { value in
 		self.view.value = value.string
 	}
 
@@ -312,7 +314,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @property placeholder
 	 * @since 0.7.0
 	 */
-	@objc lazy var placeholder = JavaScriptProperty(string: "") { value in
+	@objc open lazy var placeholder = JavaScriptProperty(string: "") { value in
 		self.view.placeholder = value.string
 	}
 
@@ -320,7 +322,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @property placeholderColor
 	 * @since 0.7.0
 	 */
-	@objc lazy var placeholderColor = JavaScriptProperty(string: "gray") { value in
+	@objc open lazy var placeholderColor = JavaScriptProperty(string: "gray") { value in
 		self.view.placeholderColor = UIColor(color: value)
 	}
 
@@ -328,7 +330,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @property format
 	 * @since 0.7.0
 	 */
-	@objc lazy var format = JavaScriptProperty(string: "") { value in
+	@objc open lazy var format = JavaScriptProperty(string: "") { value in
 		self.view.format = value.string
 	}
 
@@ -336,7 +338,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @property locale
 	 * @since 0.7.0
 	 */
-	@objc lazy var locale = JavaScriptProperty(string: "") { value in
+	@objc open lazy var locale = JavaScriptProperty(string: "") { value in
 		self.view.locale = value.string
 	}
 
@@ -344,7 +346,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @property autocorrect
 	 * @since 0.7.0
 	 */
-	@objc lazy var autocorrect = JavaScriptProperty(boolean: true) { value in
+	@objc open lazy var autocorrect = JavaScriptProperty(boolean: true) { value in
 		self.view.autocorrectionType = value.boolean ? .yes : .no
 	}
 
@@ -352,7 +354,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @property autocapitalize
 	 * @since 0.7.0
 	 */
-	@objc lazy var autocapitalize = JavaScriptProperty(boolean: true) { value in
+	@objc open lazy var autocapitalize = JavaScriptProperty(boolean: true) { value in
 		self.view.autocapitalizationType = value.boolean ? .sentences : .none
 	}
 
@@ -360,7 +362,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @property fontFamily
 	 * @since 0.7.0
 	 */
-	@objc lazy var fontFamily = JavaScriptProperty(string: "default") { value in
+	@objc open lazy var fontFamily = JavaScriptProperty(string: "default") { value in
 		self.view.fontFamily = value.string
 	}
 
@@ -368,7 +370,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @property fontWeight
 	 * @since 0.7.0
 	 */
-	@objc lazy var fontWeight = JavaScriptProperty(string: "normal") { value in
+	@objc open lazy var fontWeight = JavaScriptProperty(string: "normal") { value in
 		self.view.fontWeight = value.string
 	}
 
@@ -376,7 +378,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @property fontStyle
 	 * @since 0.7.0
 	 */
-	@objc lazy var fontStyle = JavaScriptProperty(string: "normal") { value in
+	@objc open lazy var fontStyle = JavaScriptProperty(string: "normal") { value in
 		self.view.fontStyle = value.string
 	}
 
@@ -384,7 +386,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @property fontSize
 	 * @since 0.7.0
 	 */
-	@objc lazy var fontSize = JavaScriptProperty(number: 17) { value in
+	@objc open lazy var fontSize = JavaScriptProperty(number: 17) { value in
 		self.invalidateFontSize()
 	}
 
@@ -392,7 +394,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @property minFontSize
 	 * @since 0.7.0
 	 */
-	@objc lazy var minFontSize = JavaScriptProperty(number: 0) { value in
+	@objc open lazy var minFontSize = JavaScriptProperty(number: 0) { value in
 		self.invalidateFontSize()
 	}
 
@@ -400,7 +402,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @property maxFontSize
 	 * @since 0.7.0
 	 */
-	@objc lazy var maxFontSize = JavaScriptProperty(number: Double.max) { value in
+	@objc open lazy var maxFontSize = JavaScriptProperty(number: Double.max) { value in
 		self.invalidateFontSize()
 	}
 
@@ -408,7 +410,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @property textColor
 	 * @since 0.7.0
 	 */
-	@objc lazy var textColor = JavaScriptProperty(string: "#000") { value in
+	@objc open lazy var textColor = JavaScriptProperty(string: "#000") { value in
 		self.view.textColor = UIColor(color: value)
 	}
 
@@ -416,7 +418,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @property textAlign
 	 * @since 0.7.0
 	 */
-	@objc lazy var textAlign = JavaScriptProperty(string: "left") { value in
+	@objc open lazy var textAlign = JavaScriptProperty(string: "left") { value in
 		self.view.textAlign = self.getTextAlign(value.string)
 	}
 
@@ -424,7 +426,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @property textKerning
 	 * @since 0.7.0
 	 */
-	@objc lazy var textKerning = JavaScriptProperty(number: 0) { value in
+	@objc open lazy var textKerning = JavaScriptProperty(number: 0) { value in
 		self.view.textKerning = CGFloat(value.number)
 	}
 
@@ -432,7 +434,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @property textLeading
 	 * @since 0.7.0
 	 */
-	@objc lazy var textLeading = JavaScriptProperty(number: 0) { value in
+	@objc open lazy var textLeading = JavaScriptProperty(number: 0) { value in
 		self.view.textLeading = CGFloat(value.number)
 	}
 
@@ -440,7 +442,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @property textDecoration
 	 * @since 0.7.0
 	 */
-	@objc lazy var textDecoration = JavaScriptProperty(string: "none") { value in
+	@objc open lazy var textDecoration = JavaScriptProperty(string: "none") { value in
 		self.view.textDecoration = self.getTextDecoration(value.string)
 	}
 
@@ -448,7 +450,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @property textTransform
 	 * @since 0.7.0
 	 */
-	@objc lazy var textTransform = JavaScriptProperty(string: "none") { value in
+	@objc open lazy var textTransform = JavaScriptProperty(string: "none") { value in
 		self.view.textTransform = self.getTextTransform(value.string)
 	}
 
@@ -456,7 +458,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @property textShadowBlur
 	 * @since 0.7.0
 	 */
-	@objc lazy var textShadowBlur = JavaScriptProperty(number: 0) { value in
+	@objc open lazy var textShadowBlur = JavaScriptProperty(number: 0) { value in
 		self.view.textShadowBlur = CGFloat(value.number)
 	}
 
@@ -464,7 +466,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @property textShadowColor
 	 * @since 0.7.0
 	 */
-	@objc lazy var textShadowColor = JavaScriptProperty(string: "#000") { value in
+	@objc open lazy var textShadowColor = JavaScriptProperty(string: "#000") { value in
 		self.view.textShadowColor = UIColor(color: value)
 	}
 
@@ -472,7 +474,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @property textShadowOffsetTop
 	 * @since 0.7.0
 	 */
-	@objc lazy var textShadowOffsetTop = JavaScriptProperty(number: 0) { value in
+	@objc open lazy var textShadowOffsetTop = JavaScriptProperty(number: 0) { value in
 		self.view.textShadowOffsetTop = CGFloat(value.number)
 	}
 
@@ -480,7 +482,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @property textShadowOffsetLeft
 	 * @since 0.7.0
 	 */
-	@objc lazy var textShadowOffsetLeft = JavaScriptProperty(number: 0) { value in
+	@objc open lazy var textShadowOffsetLeft = JavaScriptProperty(number: 0) { value in
 		self.view.textShadowOffsetLeft = CGFloat(value.number)
 	}
 
@@ -491,7 +493,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsGet_type(callback: JavaScriptGetterCallback) {
+	@objc open func jsGet_type(callback: JavaScriptGetterCallback) {
 		callback.returns(self.type)
 	}
 
@@ -500,7 +502,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsSet_type(callback: JavaScriptSetterCallback) {
+	@objc open func jsSet_type(callback: JavaScriptSetterCallback) {
 		self.type.reset(callback.value, lock: self)
 	}
 
@@ -511,7 +513,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsGet_value(callback: JavaScriptGetterCallback) {
+	@objc open func jsGet_value(callback: JavaScriptGetterCallback) {
 		callback.returns(self.value)
 	}
 
@@ -520,7 +522,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsSet_value(callback: JavaScriptSetterCallback) {
+	@objc open func jsSet_value(callback: JavaScriptSetterCallback) {
 		self.value.reset(callback.value, lock: self)
 	}
 
@@ -531,7 +533,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsGet_placeholder(callback: JavaScriptGetterCallback) {
+	@objc open func jsGet_placeholder(callback: JavaScriptGetterCallback) {
 		callback.returns(self.placeholder)
 	}
 
@@ -540,7 +542,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsSet_placeholder(callback: JavaScriptSetterCallback) {
+	@objc open func jsSet_placeholder(callback: JavaScriptSetterCallback) {
 		self.placeholder.reset(callback.value, lock: self)
 	}
 
@@ -551,7 +553,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsGet_placeholderColor(callback: JavaScriptGetterCallback) {
+	@objc open func jsGet_placeholderColor(callback: JavaScriptGetterCallback) {
 		callback.returns(self.placeholderColor)
 	}
 
@@ -560,7 +562,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsSet_placeholderColor(callback: JavaScriptSetterCallback) {
+	@objc open func jsSet_placeholderColor(callback: JavaScriptSetterCallback) {
 		self.placeholderColor.reset(callback.value, lock: self, parse: true)
 	}
 
@@ -571,7 +573,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsGet_format(callback: JavaScriptGetterCallback) {
+	@objc open func jsGet_format(callback: JavaScriptGetterCallback) {
 		callback.returns(self.format)
 	}
 
@@ -580,7 +582,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsSet_format(callback: JavaScriptSetterCallback) {
+	@objc open func jsSet_format(callback: JavaScriptSetterCallback) {
 		self.format.reset(callback.value, lock: self)
 	}
 
@@ -591,7 +593,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsGet_locale(callback: JavaScriptGetterCallback) {
+	@objc open func jsGet_locale(callback: JavaScriptGetterCallback) {
 		callback.returns(self.locale)
 	}
 
@@ -600,7 +602,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsSet_locale(callback: JavaScriptSetterCallback) {
+	@objc open func jsSet_locale(callback: JavaScriptSetterCallback) {
 		self.locale.reset(callback.value, lock: self)
 	}
 
@@ -611,7 +613,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsGet_autocorrect(callback: JavaScriptGetterCallback) {
+	@objc open func jsGet_autocorrect(callback: JavaScriptGetterCallback) {
 		callback.returns(self.autocorrect)
 	}
 
@@ -620,7 +622,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsSet_autocorrect(callback: JavaScriptSetterCallback) {
+	@objc open func jsSet_autocorrect(callback: JavaScriptSetterCallback) {
 		self.autocorrect.reset(callback.value, lock: self)
 	}
 
@@ -631,7 +633,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsGet_autocapitalize(callback: JavaScriptGetterCallback) {
+	@objc open func jsGet_autocapitalize(callback: JavaScriptGetterCallback) {
 		callback.returns(self.autocapitalize)
 	}
 
@@ -640,7 +642,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsSet_autocapitalize(callback: JavaScriptSetterCallback) {
+	@objc open func jsSet_autocapitalize(callback: JavaScriptSetterCallback) {
 		self.autocapitalize.reset(callback.value, lock: self)
 	}
 
@@ -651,7 +653,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsGet_fontFamily(callback: JavaScriptGetterCallback) {
+	@objc open func jsGet_fontFamily(callback: JavaScriptGetterCallback) {
 		callback.returns(self.fontFamily)
 	}
 
@@ -660,7 +662,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsSet_fontFamily(callback: JavaScriptSetterCallback) {
+	@objc open func jsSet_fontFamily(callback: JavaScriptSetterCallback) {
 		self.fontFamily.reset(callback.value, lock: self)
 	}
 
@@ -671,7 +673,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsGet_fontWeight(callback: JavaScriptGetterCallback) {
+	@objc open func jsGet_fontWeight(callback: JavaScriptGetterCallback) {
 		callback.returns(self.fontWeight)
 	}
 
@@ -680,7 +682,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsSet_fontWeight(callback: JavaScriptSetterCallback) {
+	@objc open func jsSet_fontWeight(callback: JavaScriptSetterCallback) {
 		self.fontWeight.reset(callback.value, lock: self)
 	}
 
@@ -691,7 +693,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsGet_fontStyle(callback: JavaScriptGetterCallback) {
+	@objc open func jsGet_fontStyle(callback: JavaScriptGetterCallback) {
 		callback.returns(self.fontStyle)
 	}
 
@@ -700,7 +702,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsSet_fontStyle(callback: JavaScriptSetterCallback) {
+	@objc open func jsSet_fontStyle(callback: JavaScriptSetterCallback) {
 		self.fontStyle.reset(callback.value, lock: self)
 	}
 
@@ -711,7 +713,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsGet_fontSize(callback: JavaScriptGetterCallback) {
+	@objc open func jsGet_fontSize(callback: JavaScriptGetterCallback) {
 		callback.returns(self.fontSize)
 	}
 
@@ -720,7 +722,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsSet_fontSize(callback: JavaScriptSetterCallback) {
+	@objc open func jsSet_fontSize(callback: JavaScriptSetterCallback) {
 		self.fontSize.reset(callback.value, lock: self, parse: true)
 	}
 
@@ -731,7 +733,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsGet_minFontSize(callback: JavaScriptGetterCallback) {
+	@objc open func jsGet_minFontSize(callback: JavaScriptGetterCallback) {
 		callback.returns(self.minFontSize)
 	}
 
@@ -740,7 +742,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsSet_minFontSize(callback: JavaScriptSetterCallback) {
+	@objc open func jsSet_minFontSize(callback: JavaScriptSetterCallback) {
 		self.minFontSize.reset(callback.value, lock: self, parse: true)
 	}
 
@@ -751,7 +753,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsGet_maxFontSize(callback: JavaScriptGetterCallback) {
+	@objc open func jsGet_maxFontSize(callback: JavaScriptGetterCallback) {
 		callback.returns(self.maxFontSize)
 	}
 
@@ -760,7 +762,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsSet_maxFontSize(callback: JavaScriptSetterCallback) {
+	@objc open func jsSet_maxFontSize(callback: JavaScriptSetterCallback) {
 		self.maxFontSize.reset(callback.value, lock: self, parse: true)
 	}
 
@@ -771,7 +773,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsGet_textColor(callback: JavaScriptGetterCallback) {
+	@objc open func jsGet_textColor(callback: JavaScriptGetterCallback) {
 		callback.returns(self.textColor)
 	}
 
@@ -780,7 +782,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsSet_textColor(callback: JavaScriptSetterCallback) {
+	@objc open func jsSet_textColor(callback: JavaScriptSetterCallback) {
 		self.textColor.reset(callback.value, lock: self, parse: true)
 	}
 
@@ -791,7 +793,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsGet_textAlign(callback: JavaScriptGetterCallback) {
+	@objc open func jsGet_textAlign(callback: JavaScriptGetterCallback) {
 		callback.returns(self.textAlign)
 	}
 
@@ -800,7 +802,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsSet_textAlign(callback: JavaScriptSetterCallback) {
+	@objc open func jsSet_textAlign(callback: JavaScriptSetterCallback) {
 		self.textAlign.reset(callback.value, lock: self)
 	}
 
@@ -811,7 +813,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsGet_textKerning(callback: JavaScriptGetterCallback) {
+	@objc open func jsGet_textKerning(callback: JavaScriptGetterCallback) {
 		callback.returns(self.textKerning)
 	}
 
@@ -820,7 +822,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsSet_textKerning(callback: JavaScriptSetterCallback) {
+	@objc open func jsSet_textKerning(callback: JavaScriptSetterCallback) {
 		self.textKerning.reset(callback.value, lock: self, parse: true)
 	}
 
@@ -831,7 +833,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsGet_textLeading(callback: JavaScriptGetterCallback) {
+	@objc open func jsGet_textLeading(callback: JavaScriptGetterCallback) {
 		callback.returns(self.textLeading)
 	}
 
@@ -840,7 +842,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsSet_textLeading(callback: JavaScriptSetterCallback) {
+	@objc open func jsSet_textLeading(callback: JavaScriptSetterCallback) {
 		self.textLeading.reset(callback.value, lock: self, parse: true)
 	}
 
@@ -851,7 +853,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsGet_textDecoration(callback: JavaScriptGetterCallback) {
+	@objc open func jsGet_textDecoration(callback: JavaScriptGetterCallback) {
 		callback.returns(self.textDecoration)
 	}
 
@@ -860,7 +862,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsSet_textDecoration(callback: JavaScriptSetterCallback) {
+	@objc open func jsSet_textDecoration(callback: JavaScriptSetterCallback) {
 		self.textDecoration.reset(callback.value, lock: self)
 	}
 
@@ -871,7 +873,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsGet_textTransform(callback: JavaScriptGetterCallback) {
+	@objc open func jsGet_textTransform(callback: JavaScriptGetterCallback) {
 		callback.returns(self.textTransform)
 	}
 
@@ -880,7 +882,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsSet_textTransform(callback: JavaScriptSetterCallback) {
+	@objc open func jsSet_textTransform(callback: JavaScriptSetterCallback) {
 		self.textTransform.reset(callback.value, lock: self)
 	}
 
@@ -891,7 +893,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsGet_textShadowBlur(callback: JavaScriptGetterCallback) {
+	@objc open func jsGet_textShadowBlur(callback: JavaScriptGetterCallback) {
 		callback.returns(self.textShadowBlur)
 	}
 
@@ -900,7 +902,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsSet_textShadowBlur(callback: JavaScriptSetterCallback) {
+	@objc open func jsSet_textShadowBlur(callback: JavaScriptSetterCallback) {
 		self.textShadowBlur.reset(callback.value, lock: self, parse: true)
 	}
 
@@ -911,7 +913,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsGet_textShadowColor(callback: JavaScriptGetterCallback) {
+	@objc open func jsGet_textShadowColor(callback: JavaScriptGetterCallback) {
 		callback.returns(self.textShadowColor)
 	}
 
@@ -920,7 +922,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsSet_textShadowColor(callback: JavaScriptSetterCallback) {
+	@objc open func jsSet_textShadowColor(callback: JavaScriptSetterCallback) {
 		self.textShadowColor.reset(callback.value, lock: self, parse: true)
 	}
 
@@ -931,7 +933,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsGet_textShadowOffsetTop(callback: JavaScriptGetterCallback) {
+	@objc open func jsGet_textShadowOffsetTop(callback: JavaScriptGetterCallback) {
 		callback.returns(self.textShadowOffsetTop)
 	}
 
@@ -940,7 +942,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsSet_textShadowOffsetTop(callback: JavaScriptSetterCallback) {
+	@objc open func jsSet_textShadowOffsetTop(callback: JavaScriptSetterCallback) {
 		self.fontFamily.reset(callback.value, lock: self, parse: true)
 	}
 
@@ -951,7 +953,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsGet_textShadowOffsetLeft(callback: JavaScriptGetterCallback) {
+	@objc open func jsGet_textShadowOffsetLeft(callback: JavaScriptGetterCallback) {
 		callback.returns(self.textShadowOffsetLeft)
 	}
 
@@ -960,7 +962,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsSet_textShadowOffsetLeft(callback: JavaScriptSetterCallback) {
+	@objc open func jsSet_textShadowOffsetLeft(callback: JavaScriptSetterCallback) {
 		self.textShadowOffsetLeft.reset(callback.value, lock: self, parse: true)
 	}
 
@@ -973,7 +975,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsFunction_focus(callback: JavaScriptFunctionCallback) {
+	@objc open func jsFunction_focus(callback: JavaScriptFunctionCallback) {
 		self.view.focus()
 	}
 
@@ -982,7 +984,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsFunction_blur(callback: JavaScriptFunctionCallback) {
+	@objc open func jsFunction_blur(callback: JavaScriptFunctionCallback) {
 		self.view.blur()
 	}
 
@@ -991,7 +993,7 @@ open class JavaScriptTextInput: JavaScriptView, TextInputObserver {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsFunction_selectRange(callback: JavaScriptFunctionCallback) {
+	@objc open func jsFunction_selectRange(callback: JavaScriptFunctionCallback) {
 
 		if (callback.arguments == 0) {
 			self.view.selectedTextRange = self.view.range(start: 0, end: self.view.value.length)

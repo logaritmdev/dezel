@@ -377,7 +377,7 @@ public class BorderLayer: Layer {
 	}
 
 	//--------------------------------------------------------------------------
-	// MARK: Methods - Animations
+	// MARK: Animations
 	//--------------------------------------------------------------------------
 
 	/**
@@ -440,7 +440,7 @@ public class BorderLayer: Layer {
 
 			transition.notify(self)
 
-			self.willAnimate(property: key)
+			self.willAnimate(layer: self, property: key)
 
 			return animation
 		}

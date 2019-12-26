@@ -35,15 +35,7 @@ open class JavaScriptPropertyCompositeValue: JavaScriptPropertyValue {
 	 * @since 0.7.0
 	 */
 	override open func toString() -> String {
-
-		var string = ""
-
-		for value in values {
-			string.append(value.string)
-			string.append(" ")
-		}
-
-		return string
+		fatalError("JavaScriptPropertyCompositeValue is not convertible to type string.")
 	}
 
 	/**
@@ -51,7 +43,7 @@ open class JavaScriptPropertyCompositeValue: JavaScriptPropertyValue {
 	 * @since 0.7.0
 	 */
 	override open func toNumber() -> Double {
-		return .nan
+		fatalError("JavaScriptPropertyCompositeValue is not convertible to type number.")
 	}
 
 	/**
@@ -59,6 +51,6 @@ open class JavaScriptPropertyCompositeValue: JavaScriptPropertyValue {
 	 * @since 0.7.0
 	 */
 	override open func toBoolean() -> Bool {
-		return false
+		fatalError("JavaScriptPropertyFunctionValue is not convertible to type number.")
 	}
 }

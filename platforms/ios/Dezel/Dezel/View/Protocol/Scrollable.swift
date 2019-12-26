@@ -1,6 +1,6 @@
 /**
  * @protocol Scrollable
- * @since 0.1.0
+ * @since 0.2.0
  */
 public protocol Scrollable: AnyObject {
 
@@ -114,7 +114,7 @@ public protocol Scrollable: AnyObject {
 
 	/**
 	 * @method scrollTo
-	 * @since 0.1.0
+	 * @since 0.2.0
 	 */
 	func scrollTo(x: CGFloat, y: CGFloat)
 

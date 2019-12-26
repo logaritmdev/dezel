@@ -314,7 +314,7 @@ open class View : UIScrollView, UIScrollViewDelegate, Scrollable {
 	}
 
 	//--------------------------------------------------------------------------
-	// MARK: Methods - Scrollable View
+	// MARK: Scrollable Interface
 	//--------------------------------------------------------------------------
 
 	/**
@@ -325,8 +325,16 @@ open class View : UIScrollView, UIScrollViewDelegate, Scrollable {
 		self.scrollRectToVisible(CGRect(x: x, y: y, width: 1, height: 1), animated: true)
 	}
 
+	/**
+	 * @method scrollTo
+	 * @since 0.7.0
+	 */
+	open func scrollBy(x: CGFloat, y: CGFloat) {
+		self.scrollRectToVisible(CGRect(x: self.scrollLeft + x, y: self.scrollTop + y, width: 1, height: 1), animated: true)
+	}
+
 	//--------------------------------------------------------------------------
-	// MARK: Methods - Scroll View Delegate
+	// MARK: ScrollView Delegate
 	//--------------------------------------------------------------------------
 
 	/**

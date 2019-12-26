@@ -1,4 +1,4 @@
-var kTransitionListener: UInt8 = 0
+var kAnimatable: UInt8 = 0
 
 /**
  * @extension CALayer
@@ -14,11 +14,11 @@ internal extension CALayer {
 	var listener: AnyObject? {
 
 		get {
-			return objc_getAssociatedObject(self, &kTransitionListener) as AnyObject
+			return objc_getAssociatedObject(self, &kAnimatable) as AnyObject
 		}
 
 		set {
-			objc_setAssociatedObject(self, &kTransitionListener, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_ASSIGN)
+			objc_setAssociatedObject(self, &kAnimatable, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_ASSIGN)
 		}
 	}
 

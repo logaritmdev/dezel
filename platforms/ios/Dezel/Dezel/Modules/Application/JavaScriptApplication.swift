@@ -36,7 +36,7 @@ open class JavaScriptApplication: JavaScriptClass {
 	 * @property statusBarVisible
 	 * @since 0.7.0
 	 */
-	@objc lazy var statusBarVisible = JavaScriptProperty(boolean: true) { value in
+	@objc open lazy var statusBarVisible = JavaScriptProperty(boolean: true) { value in
 		self.context.controller.statusBarVisible = value.boolean
 	}
 
@@ -44,7 +44,7 @@ open class JavaScriptApplication: JavaScriptClass {
 	 * @property statusBarForegroundColor
 	 * @since 0.7.0
 	 */
-	@objc lazy var statusBarForegroundColor = JavaScriptProperty(string: "black") { value in
+	@objc open lazy var statusBarForegroundColor = JavaScriptProperty(string: "black") { value in
 		self.context.controller.statusBarForegroundColor = UIColor(color: value)
 	}
 
@@ -52,7 +52,7 @@ open class JavaScriptApplication: JavaScriptClass {
 	 * @property statusBarBackgroundColor
 	 * @since 0.7.0
 	 */
-	@objc lazy var statusBarBackgroundColor = JavaScriptProperty(string: "transparent") { value in
+	@objc open lazy var statusBarBackgroundColor = JavaScriptProperty(string: "transparent") { value in
 		self.context.controller.statusBarBackgroundColor = UIColor(color: value)
 	}
 
@@ -60,7 +60,7 @@ open class JavaScriptApplication: JavaScriptClass {
 	 * @property badge
 	 * @since 0.7.0
 	 */
-	@objc lazy var badge = JavaScriptProperty(number: 0) { value in
+	@objc open lazy var badge = JavaScriptProperty(number: 0) { value in
 		UIApplication.shared.applicationIconBadgeNumber = value.number.toInt()
 	}
 
@@ -71,7 +71,7 @@ open class JavaScriptApplication: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsGet_window(callback: JavaScriptGetterCallback) {
+	@objc open func jsGet_window(callback: JavaScriptGetterCallback) {
 		callback.returns(self.window)
 	}
 
@@ -80,7 +80,7 @@ open class JavaScriptApplication: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsSet_window(callback: JavaScriptSetterCallback) {
+	@objc open func jsSet_window(callback: JavaScriptSetterCallback) {
 		self.window = callback.value.cast(JavaScriptWindow.self)
 	}
 
@@ -91,7 +91,7 @@ open class JavaScriptApplication: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsGet_statusBarVisible(callback: JavaScriptGetterCallback) {
+	@objc open func jsGet_statusBarVisible(callback: JavaScriptGetterCallback) {
 		callback.returns(self.statusBarVisible)
 	}
 
@@ -100,7 +100,7 @@ open class JavaScriptApplication: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsSet_statusBarVisible(callback: JavaScriptSetterCallback) {
+	@objc open func jsSet_statusBarVisible(callback: JavaScriptSetterCallback) {
 		self.statusBarVisible.reset(callback.value, lock: self)
 	}
 
@@ -111,7 +111,7 @@ open class JavaScriptApplication: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsGet_statusBarForegroundColor(callback: JavaScriptGetterCallback) {
+	@objc open func jsGet_statusBarForegroundColor(callback: JavaScriptGetterCallback) {
 		callback.returns(self.statusBarForegroundColor)
 	}
 
@@ -120,7 +120,7 @@ open class JavaScriptApplication: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsSet_statusBarForegroundColor(callback: JavaScriptSetterCallback) {
+	@objc open func jsSet_statusBarForegroundColor(callback: JavaScriptSetterCallback) {
 		self.statusBarForegroundColor.reset(callback.value, lock: self)
 	}
 
@@ -131,7 +131,7 @@ open class JavaScriptApplication: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsGet_statusBarBackgroundColor(callback: JavaScriptGetterCallback) {
+	@objc open func jsGet_statusBarBackgroundColor(callback: JavaScriptGetterCallback) {
 		callback.returns(self.statusBarBackgroundColor)
 	}
 
@@ -140,7 +140,7 @@ open class JavaScriptApplication: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsSet_statusBarBackgroundColor(callback: JavaScriptSetterCallback) {
+	@objc open func jsSet_statusBarBackgroundColor(callback: JavaScriptSetterCallback) {
 		self.statusBarBackgroundColor.reset(callback.value, lock: self)
 	}
 
@@ -151,7 +151,7 @@ open class JavaScriptApplication: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsGet_badge(callback: JavaScriptGetterCallback) {
+	@objc open func jsGet_badge(callback: JavaScriptGetterCallback) {
 		callback.returns(self.badge)
 	}
 
@@ -160,7 +160,7 @@ open class JavaScriptApplication: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsSet_badge(callback: JavaScriptSetterCallback) {
+	@objc open func jsSet_badge(callback: JavaScriptSetterCallback) {
 		self.badge.reset(callback.value, lock: self)
 	}
 
@@ -171,7 +171,7 @@ open class JavaScriptApplication: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsGet_state(callback: JavaScriptGetterCallback) {
+	@objc open func jsGet_state(callback: JavaScriptGetterCallback) {
 		switch (UIApplication.shared.applicationState) {
 			case .active:
 				callback.returns("foreground")
@@ -193,7 +193,7 @@ open class JavaScriptApplication: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsFunction_openURL(callback: JavaScriptFunctionCallback) {
+	@objc open func jsFunction_openURL(callback: JavaScriptFunctionCallback) {
 
 		if (callback.arguments < 1) {
 			fatalError("openURL requires 1 argument")

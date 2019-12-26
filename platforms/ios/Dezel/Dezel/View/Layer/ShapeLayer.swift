@@ -5,7 +5,7 @@ import UIKit
  * @super CAShapeLayer
  * @since 0.1.0
  */
-open class ShapeLayer: CAShapeLayer, CALayerDelegate, Transitionable {
+open class ShapeLayer: CAShapeLayer, CALayerDelegate, Animatable {
 
 	//--------------------------------------------------------------------------
 	// MARK: Class Methods
@@ -49,39 +49,39 @@ open class ShapeLayer: CAShapeLayer, CALayerDelegate, Transitionable {
 	}
 
 	//--------------------------------------------------------------------------
-	// MARK: Methods - Animations
+	// MARK: Animations
 	//--------------------------------------------------------------------------
 
 	/**
 	 * @method willAnimate
 	 * @since 0.7.0
 	 */
-	open func willAnimate(property: String) {
-		(self.listener as? TransitionListener)?.willAnimate(layer: self, property: property)
+	open func willAnimate(layer: CALayer, property: String) {
+		(self.listener as? Animatable)?.willAnimate(layer: self, property: property)
 	}
 
 	/**
 	 * @method didBeginTransition
 	 * @since 0.7.0
 	 */
-	open func didBeginTransition() {
-		(self.listener as? TransitionListener)?.didBeginTransition(layer: self)
+	open func didBeginTransition(layer: CALayer) {
+		(self.listener as? Animatable)?.didBeginTransition(layer: self)
 	}
 
 	/**
 	 * @method didCommitTransition
 	 * @since 0.7.0
 	 */
-	open func didCommitTransition() {
-		(self.listener as? TransitionListener)?.didCommitTransition(layer: self)
+	open func didCommitTransition(layer: CALayer) {
+		(self.listener as? Animatable)?.didCommitTransition(layer: self)
 	}
 
 	/**
 	 * @method didFinishTransition
 	 * @since 0.7.0
 	 */
-	open func didFinishTransition() {
-		(self.listener as? TransitionListener)?.didFinishTransition(layer: self)
+	open func didFinishTransition(layer: CALayer) {
+		(self.listener as? Animatable)?.didFinishTransition(layer: self)
 	}
 
 	/**
@@ -118,7 +118,7 @@ open class ShapeLayer: CAShapeLayer, CALayerDelegate, Transitionable {
 
 			transition.notify(self)
 
-			self.willAnimate(property: key)
+			self.willAnimate(layer: self, property: key)
 
 			return animation
 		}

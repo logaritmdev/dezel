@@ -8,23 +8,23 @@ public protocol Animatable: AnyObject {
 	 * @method willAnimate
 	 * @since 0.7.0
 	 */
-	func willAnimate(property: String)
+	func willAnimate(layer: CALayer, property: String)
 
 	/**
 	 * @method didBeginTransition
 	 * @since 0.7.0
 	 */
-	func didBeginTransition()
+	func didBeginTransition(layer: CALayer)
 
 	/**
 	 * @method didCommitTransition
 	 * @since 0.7.0
 	 */
-	func didCommitTransition()
+	func didCommitTransition(layer: CALayer)
 
 	/**
 	 * @method didFinishTransition
 	 * @since 0.7.0
 	 */
-	func didFinishTransition()
+	func didFinishTransition(layer: CALayer)
 }

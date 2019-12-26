@@ -237,16 +237,17 @@ open class ApplicationController: UIViewController, StylesheetDelegate {
 			}
 		}
 
-		if let application = self.application {
-
-			self.display.window = application.window.node
-
-			application.window.width.reset(Double(UIScreen.main.bounds.width), unit: .px, lock: self)
-			application.window.height.reset(Double(UIScreen.main.bounds.height), unit: .px, lock: self)
-			application.callMethod("nativeOnCreate")
-
-			self.view.addSubview(application.window)
+		guard let application = self.application else {
+			return
 		}
+
+		self.display.window = application.window.node
+
+		application.window.width.reset(Double(UIScreen.main.bounds.width), unit: .px, lock: self)
+		application.window.height.reset(Double(UIScreen.main.bounds.height), unit: .px, lock: self)
+		application.callMethod("nativeOnCreate")
+
+		self.view.addSubview(application.window)
 	}
 
 	/**
@@ -280,7 +281,7 @@ open class ApplicationController: UIViewController, StylesheetDelegate {
 	}
 
 	//--------------------------------------------------------------------------
-	// MARK: Methods - View Management
+	// MARK: View Management
 	//--------------------------------------------------------------------------
 
 	/**
@@ -314,8 +315,8 @@ open class ApplicationController: UIViewController, StylesheetDelegate {
 		}
 
 		self.stylesheet.delegate = self
-		self.stylesheet.setVariable("safe-area-top-inset", value: "\(insetT)px")
-		self.stylesheet.setVariable("safe-area-bottom-inset", value: "\(insetB)px")
+		self.stylesheet.setVariable("safe-area-inset-top", value: "\(insetT)px")
+		self.stylesheet.setVariable("safe-area-inset-bottom", value: "\(insetB)px")
 
 		self.display.scale = Double(UIScreen.main.scale)
 		self.display.viewportWidth = Double(UIScreen.main.bounds.width)
@@ -348,18 +349,19 @@ open class ApplicationController: UIViewController, StylesheetDelegate {
 			}
 		}
 
-		if let application = self.application {
+		self.loaded = true
 
-			self.display.window = application.window.node
-
-			application.window.width.reset(Double(UIScreen.main.bounds.width), unit: .px, lock: self)
-			application.window.height.reset(Double(UIScreen.main.bounds.height), unit: .px, lock: self)
-			application.callMethod("nativeOnCreate")
-
-			self.view.addSubview(application.window)
+		guard let application = self.application else {
+			return
 		}
 
-		self.loaded = true
+		self.display.window = application.window.node
+
+		application.window.width.reset(Double(UIScreen.main.bounds.width), unit: .px, lock: self)
+		application.window.height.reset(Double(UIScreen.main.bounds.height), unit: .px, lock: self)
+		application.callMethod("nativeOnCreate")
+
+		self.view.addSubview(application.window)
 	}
 
 	/**
@@ -426,7 +428,7 @@ open class ApplicationController: UIViewController, StylesheetDelegate {
 	}
 
 	//--------------------------------------------------------------------------
-	// MARK: Methods - Touch Management
+	// MARK: Touch Management
 	//--------------------------------------------------------------------------
 
 	/**
@@ -502,7 +504,7 @@ open class ApplicationController: UIViewController, StylesheetDelegate {
 				application.callMethod("nativeOnTouchEnd", arguments: [array], result: nil)
 
 			default:
-				break;
+				fatalError()
 		}
 
 		for (i, t) in touches.enumerated() {
@@ -525,7 +527,7 @@ open class ApplicationController: UIViewController, StylesheetDelegate {
 	}
 
 	//--------------------------------------------------------------------------
-	// MARK: Methods - State Management
+	// MARK: State Management
 	//--------------------------------------------------------------------------
 
 	/**
@@ -545,7 +547,7 @@ open class ApplicationController: UIViewController, StylesheetDelegate {
 	}
 
 	//--------------------------------------------------------------------------
-	// MARK: Methods - Keyboard Management
+	// MARK: Keyboard Management
 	//--------------------------------------------------------------------------
 
 	/**
@@ -596,8 +598,84 @@ open class ApplicationController: UIViewController, StylesheetDelegate {
 		self.dispatchKeyboardEvent("keyboardresize", notification: notification)
 	}
 
+	/**
+	 * @method dispatchKeyboardEvent
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private func dispatchKeyboardEvent(_ event: String, notification: Notification) {
+
+		guard let application = self.application else {
+			return
+		}
+
+		if let data = (notification as NSNotification).userInfo {
+
+			let frame = (data[UIResponder.keyboardFrameEndUserInfoKey]! as AnyObject).cgRectValue
+			let curve = data[UIResponder.keyboardAnimationCurveUserInfoKey] as! Int
+			let duration = data[UIResponder.keyboardAnimationDurationUserInfoKey] as! Double
+
+			let equation: String
+
+			switch (curve) {
+				case UIView.AnimationCurve.easeInOut.rawValue:
+					equation = "easeinout"
+				case UIView.AnimationCurve.easeIn.rawValue:
+					equation = "easein"
+				case UIView.AnimationCurve.easeOut.rawValue:
+					equation = "easeout"
+				case UIView.AnimationCurve.linear.rawValue:
+					equation = "linear"
+				default:
+					equation = "cubic-bezier(0.380, 0.700, 0.125, 1.000)"
+			}
+
+			let height = Double((frame?.size.height)!)
+
+			let args = [
+				self.context.createNumber(height),
+				self.context.createNumber(duration * 1000),
+				self.context.createString(equation)
+			]
+
+			let method: String
+
+			switch (event) {
+
+				case "beforekeyboardshow":
+					method = "nativeOnBeforeKeyboardShow"
+					break
+
+				case "keyboardshow":
+					method = "nativeOnKeyboardShow"
+					break
+
+				case "beforekeyboardhide":
+					method = "nativeOnBeforeKeyboardHide"
+					break
+
+				case "keyboardhide":
+					method = "nativeOnKeyboardHide"
+					break
+
+				case "beforekeyboardresize":
+					method = "nativeOnBeforeKeyboardResize"
+					break
+
+				case "keyboardresize":
+					method = "nativeOnKeyboardResize"
+					break
+
+				default:
+					fatalError()
+			}
+
+			application.callMethod(method, arguments: args, result: nil)
+		}
+	}
+
 	//--------------------------------------------------------------------------
-	// MARK: Methods - Status Bar Management
+	// MARK: Status Bar Management
 	//--------------------------------------------------------------------------
 
 	/**
@@ -690,7 +768,7 @@ open class ApplicationController: UIViewController, StylesheetDelegate {
 	}
 
 	//--------------------------------------------------------------------------
-	// MARK: Methods - Handlers
+	// MARK: Handlers
 	//--------------------------------------------------------------------------
 
 	/**
@@ -911,82 +989,6 @@ open class ApplicationController: UIViewController, StylesheetDelegate {
 	 	 */
 
 		return CAMediaTimingFunction(name: .easeInEaseOut)
-	}
-
-	/**
-	 * @method dispatchKeyboardEvent
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private func dispatchKeyboardEvent(_ event: String, notification: Notification) {
-
-		guard let application = self.application else {
-			return
-		}
-
-		if let data = (notification as NSNotification).userInfo {
-
-			let frame = (data[UIResponder.keyboardFrameEndUserInfoKey]! as AnyObject).cgRectValue
-			let curve = data[UIResponder.keyboardAnimationCurveUserInfoKey] as! Int
-			let duration = data[UIResponder.keyboardAnimationDurationUserInfoKey] as! Double
-
-			let equation: String
-
-			switch (curve) {
-				case UIView.AnimationCurve.easeInOut.rawValue:
-					equation = "easeinout"
-				case UIView.AnimationCurve.easeIn.rawValue:
-					equation = "easein"
-				case UIView.AnimationCurve.easeOut.rawValue:
-					equation = "easeout"
-				case UIView.AnimationCurve.linear.rawValue:
-					equation = "linear"
-				default:
-					equation = "cubic-bezier(0.380, 0.700, 0.125, 1.000)"
-			}
-
-			let height = Double((frame?.size.height)!)
-
-			let args = [
-				self.context.createNumber(height),
-				self.context.createNumber(duration * 1000),
-				self.context.createString(equation)
-			]
-
-			let method: String
-
-			switch (event) {
-
-				case "beforekeyboardshow":
-					method = "nativeOnBeforeKeyboardShow"
-					break
-
-				case "keyboardshow":
-					method = "nativeOnKeyboardShow"
-					break
-
-				case "beforekeyboardhide":
-					method = "nativeOnBeforeKeyboardHide"
-					break
-
-				case "keyboardhide":
-					method = "nativeOnKeyboardHide"
-					break
-
-				case "beforekeyboardresize":
-					method = "nativeOnBeforeKeyboardResize"
-					break
-
-				case "keyboardresize":
-					method = "nativeOnKeyboardResize"
-					break
-
-				default:
-					fatalError()
-			}
-
-			application.callMethod(method, arguments: args, result: nil)
-		}
 	}
 
 	/**

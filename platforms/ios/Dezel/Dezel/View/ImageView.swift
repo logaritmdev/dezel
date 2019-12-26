@@ -32,16 +32,6 @@ open class ImageView: UIView, Updatable, Clippable {
 	}
 
 	/**
-	 * @property tint
-	 * @since 0.7.0
-	 */
-	open var tint: UIColor = .clear {
-		willSet {
-			self.imageLayer.tint = newValue.cgColor
-		}
-	}
-
-	/**
 	 * @property image
 	 * @since 0.7.0
 	 */
@@ -108,6 +98,16 @@ open class ImageView: UIView, Updatable, Clippable {
 	open var paddingBottom: CGFloat = 0 {
 		willSet {
 			self.invalidImageLayer = true
+		}
+	}
+
+	/**
+	 * @property tint
+	 * @since 0.7.0
+	 */
+	open var tint: UIColor = .clear {
+		willSet {
+			self.imageLayer.tint = newValue.cgColor
 		}
 	}
 

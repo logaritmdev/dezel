@@ -42,20 +42,7 @@ open class JavaScriptPropertyFunctionValue: JavaScriptPropertyValue {
 	 * @since 0.7.0
 	 */
 	override open func toString() -> String {
-
-		var result = ""
-
-		result.append(self.name)
-		result.append("(")
-
-		for argument in self.arguments {
-			result.append(argument.string)
-			result.append(",")
-		}
-
-		result.append(")")
-
-		return result
+		fatalError("JavaScriptPropertyFunctionValue is not convertible to type string.")
 	}
 
 	/**
@@ -63,7 +50,7 @@ open class JavaScriptPropertyFunctionValue: JavaScriptPropertyValue {
 	 * @since 0.7.0
 	 */
 	override open func toNumber() -> Double {
-		return .nan
+		fatalError("JavaScriptPropertyFunctionValue is not convertible to type number.")
 	}
 
 	/**
@@ -71,6 +58,6 @@ open class JavaScriptPropertyFunctionValue: JavaScriptPropertyValue {
 	 * @since 0.7.0
 	 */
 	override open func toBoolean() -> Bool {
-		return false
+		fatalError("JavaScriptPropertyFunctionValue is not convertible to type boolean.")
 	}
 }

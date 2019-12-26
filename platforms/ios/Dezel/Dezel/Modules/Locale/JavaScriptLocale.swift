@@ -59,7 +59,7 @@ open class JavaScriptLocale: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsGet_language(callback: JavaScriptGetterCallback) {
+	@objc open func jsGet_language(callback: JavaScriptGetterCallback) {
 		callback.returns(self.language)
 	}
 
@@ -70,7 +70,7 @@ open class JavaScriptLocale: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsGet_region(callback: JavaScriptGetterCallback) {
+	@objc open func jsGet_region(callback: JavaScriptGetterCallback) {
 		callback.returns(self.region)
 	}
 
@@ -81,7 +81,7 @@ open class JavaScriptLocale: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsGet_ltr(callback: JavaScriptGetterCallback) {
+	@objc open func jsGet_ltr(callback: JavaScriptGetterCallback) {
 		callback.returns(self.ltr)
 	}
 
@@ -92,7 +92,7 @@ open class JavaScriptLocale: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsGet_rtl(callback: JavaScriptGetterCallback) {
+	@objc open func jsGet_rtl(callback: JavaScriptGetterCallback) {
 		callback.returns(self.rtl)
 	}
 }

@@ -561,7 +561,7 @@ open class TextLayer: Layer {
 	}
 
 	//--------------------------------------------------------------------------
-	// MARK: Methods - Animations
+	// MARK: Animations
 	//--------------------------------------------------------------------------
 
 	/**
@@ -601,7 +601,7 @@ open class TextLayer: Layer {
 
 			transition.notify(self)
 
-			self.willAnimate(property: key)
+			self.willAnimate(layer: self, property: key)
 
 			return animation
 		}

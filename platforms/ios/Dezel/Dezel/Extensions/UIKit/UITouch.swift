@@ -3,7 +3,7 @@ import ObjectiveC
 private var canceledKey: UInt8 = 0
 private var capturedKey: UInt8 = 0
 private var receiverKey: UInt8 = 0
-private var touchCanceledKey: UInt8 = 0
+private var revertedKey: UInt8 = 0
 
 /**
 * @extension UITouch
@@ -45,6 +45,22 @@ extension UITouch {
     }
 
 	/**
+	 * @property reverted
+	 * @since 0.7.0
+	 * @hidden
+	 */
+    var reverted: Bool {
+
+		get {
+			return objc_getAssociatedObject(self, &revertedKey) as? Bool ?? false
+		}
+
+		set {
+			objc_setAssociatedObject(self, &revertedKey, newValue, .OBJC_ASSOCIATION_ASSIGN)
+		}
+	}
+
+	/**
 	 * @property receiver
 	 * @since 0.7.0
 	 * @hidden
@@ -59,20 +75,4 @@ extension UITouch {
             objc_setAssociatedObject(self, &receiverKey, newValue, .OBJC_ASSOCIATION_ASSIGN)
         }
     }
-
-	/**
-	 * @property touchCanceled
-	 * @since 0.7.0
-	 * @hidden
-	 */
-    var touchCanceled: Bool {
-
-		get {
-			return objc_getAssociatedObject(self, &touchCanceledKey) as? Bool ?? false
-		}
-
-		set {
-			objc_setAssociatedObject(self, &touchCanceledKey, newValue, .OBJC_ASSOCIATION_ASSIGN)
-		}
-	}
 }

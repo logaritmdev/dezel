@@ -73,7 +73,7 @@ open class JavaScriptBitmap: JavaScriptClass {
 	 * @property source
 	 * @since 0.7.0
 	 */
-	@objc lazy var source = JavaScriptProperty() { value in
+	@objc open lazy var source = JavaScriptProperty() { value in
 		self.load(value.string)
 	}
 
@@ -81,13 +81,13 @@ open class JavaScriptBitmap: JavaScriptClass {
 	 * @property loaded
 	 * @since 0.7.0
 	 */
-	@objc lazy var loaded = JavaScriptProperty(boolean: false)
+	@objc open lazy var loaded = JavaScriptProperty(boolean: false)
 
 	/**
 	 * @property loading
 	 * @since 0.7.0
 	 */
-	@objc lazy var loading = JavaScriptProperty(boolean: false)
+	@objc open lazy var loading = JavaScriptProperty(boolean: false)
 
 	//--------------------------------------------------------------------------
 
@@ -96,7 +96,7 @@ open class JavaScriptBitmap: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsGet_width(callback: JavaScriptGetterCallback) {
+	@objc open func jsGet_width(callback: JavaScriptGetterCallback) {
 		callback.returns(Double(self.bitmap?.size.width ?? 0))
 	}
 
@@ -107,7 +107,7 @@ open class JavaScriptBitmap: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsGet_height(callback: JavaScriptGetterCallback) {
+	@objc open func jsGet_height(callback: JavaScriptGetterCallback) {
 		callback.returns(Double(self.bitmap?.size.height ?? 0))
 	}
 
@@ -118,7 +118,7 @@ open class JavaScriptBitmap: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsGet_source(callback: JavaScriptGetterCallback) {
+	@objc open func jsGet_source(callback: JavaScriptGetterCallback) {
 		callback.returns(self.source)
 	}
 
@@ -127,7 +127,7 @@ open class JavaScriptBitmap: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsSet_source(callback: JavaScriptSetterCallback) {
+	@objc open func jsSet_source(callback: JavaScriptSetterCallback) {
 		self.source.reset(callback.value, lock: self)
 	}
 
@@ -138,7 +138,7 @@ open class JavaScriptBitmap: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsGet_loaded(callback: JavaScriptGetterCallback) {
+	@objc open func jsGet_loaded(callback: JavaScriptGetterCallback) {
 		callback.returns(self.loaded)
 	}
 
@@ -149,7 +149,7 @@ open class JavaScriptBitmap: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsGet_loading(callback: JavaScriptGetterCallback) {
+	@objc open func jsGet_loading(callback: JavaScriptGetterCallback) {
 		callback.returns(self.loading)
 	}
 }

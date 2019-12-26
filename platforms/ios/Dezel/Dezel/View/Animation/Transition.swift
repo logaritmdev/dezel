@@ -119,7 +119,7 @@ public final class Transition {
 	 */
 	private func dispatchBeginCallback() {
 		self.observers.forEach {
-			($0 as? Transitionable)?.didBeginTransition()
+			($0 as? Animatable)?.didBeginTransition(layer: $0)
 		}
 	}
 
@@ -130,7 +130,7 @@ public final class Transition {
 	 */
 	private func dispatchCommitCallback() {
 		self.observers.forEach {
-			($0 as? Transitionable)?.didCommitTransition()
+			($0 as? Animatable)?.didCommitTransition(layer: $0)
 		}
 	}
 
@@ -141,7 +141,7 @@ public final class Transition {
 	 */
 	private func dispatchFinishCallback() {
 		self.observers.forEach {
-			($0 as? Transitionable)?.didFinishTransition()
+			($0 as? Animatable)?.didFinishTransition(layer: $0)
 		}
 	}
 }

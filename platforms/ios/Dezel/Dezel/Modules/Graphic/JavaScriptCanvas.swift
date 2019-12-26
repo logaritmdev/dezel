@@ -175,7 +175,7 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsGet_fillStyle(callback: JavaScriptSetterCallback) {
+	@objc open func jsGet_fillStyle(callback: JavaScriptSetterCallback) {
 		callback.returns(self.fillStyle)
 	}
 
@@ -184,7 +184,7 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsSet_fillStyle(callback: JavaScriptSetterCallback) {
+	@objc open func jsSet_fillStyle(callback: JavaScriptSetterCallback) {
 		self.fillStyle.reset(callback.value, lock: self)
 	}
 
@@ -195,7 +195,7 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsGet_strokeStyle(callback: JavaScriptSetterCallback) {
+	@objc open func jsGet_strokeStyle(callback: JavaScriptSetterCallback) {
 		callback.returns(self.strokeStyle)
 	}
 
@@ -204,7 +204,7 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsSet_strokeStyle(callback: JavaScriptSetterCallback) {
+	@objc open func jsSet_strokeStyle(callback: JavaScriptSetterCallback) {
 		self.strokeStyle.reset(callback.value, lock: self)
 	}
 
@@ -215,7 +215,7 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsGet_lineCap(callback: JavaScriptSetterCallback) {
+	@objc open func jsGet_lineCap(callback: JavaScriptSetterCallback) {
 		callback.returns(self.lineCap)
 	}
 
@@ -224,7 +224,7 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsSet_lineCap(callback: JavaScriptSetterCallback) {
+	@objc open func jsSet_lineCap(callback: JavaScriptSetterCallback) {
 		self.lineCap.reset(callback.value, lock: self)
 	}
 
@@ -235,7 +235,7 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsGet_lineJoin(callback: JavaScriptSetterCallback) {
+	@objc open func jsGet_lineJoin(callback: JavaScriptSetterCallback) {
 		callback.returns(self.lineJoin)
 	}
 
@@ -244,7 +244,7 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsSet_lineJoin(callback: JavaScriptSetterCallback) {
+	@objc open func jsSet_lineJoin(callback: JavaScriptSetterCallback) {
 		self.lineJoin.reset(callback.value, lock: self)
 	}
 
@@ -255,7 +255,7 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsGet_lineWidth(callback: JavaScriptSetterCallback) {
+	@objc open func jsGet_lineWidth(callback: JavaScriptSetterCallback) {
 		callback.returns(self.lineWidth)
 	}
 
@@ -264,7 +264,7 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsSet_lineWidth(callback: JavaScriptSetterCallback) {
+	@objc open func jsSet_lineWidth(callback: JavaScriptSetterCallback) {
 		self.lineWidth.reset(callback.value, lock: self)
 	}
 
@@ -275,7 +275,7 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsGet_shadowOffsetX(callback: JavaScriptSetterCallback) {
+	@objc open func jsGet_shadowOffsetX(callback: JavaScriptSetterCallback) {
 		callback.returns(self.shadowOffsetX)
 	}
 
@@ -284,7 +284,7 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsSet_shadowOffsetX(callback: JavaScriptSetterCallback) {
+	@objc open func jsSet_shadowOffsetX(callback: JavaScriptSetterCallback) {
 		self.shadowOffsetX.reset(callback.value, lock: self)
 	}
 
@@ -295,7 +295,7 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsGet_shadowOffGetY(callback: JavaScriptGetterCallback) {
+	@objc open func jsGet_shadowOffGetY(callback: JavaScriptGetterCallback) {
 		callback.returns(self.shadowOffsetY)
 	}
 
@@ -304,7 +304,7 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsSet_shadowOffsetY(callback: JavaScriptSetterCallback) {
+	@objc open func jsSet_shadowOffsetY(callback: JavaScriptSetterCallback) {
 		self.shadowOffsetY.reset(callback.value, lock: self)
 	}
 
@@ -315,7 +315,7 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsGet_shadowBlur(callback: JavaScriptGetterCallback) {
+	@objc open func jsGet_shadowBlur(callback: JavaScriptGetterCallback) {
 		callback.returns(self.shadowBlur)
 	}
 
@@ -324,7 +324,7 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsSet_shadowBlur(callback: JavaScriptSetterCallback) {
+	@objc open func jsSet_shadowBlur(callback: JavaScriptSetterCallback) {
 		self.shadowBlur.reset(callback.value, lock: self)
 	}
 
@@ -335,7 +335,7 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsGet_shadowColor(callback: JavaScriptGetterCallback) {
+	@objc open func jsGet_shadowColor(callback: JavaScriptGetterCallback) {
 		callback.returns(self.shadowColor)
 	}
 
@@ -344,7 +344,7 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsSet_shadowColor(callback: JavaScriptSetterCallback) {
+	@objc open func jsSet_shadowColor(callback: JavaScriptSetterCallback) {
 		self.shadowColor.reset(callback.value, lock: self)
 	}
 
@@ -355,7 +355,7 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsGet_globalAlpha(callback: JavaScriptGetterCallback) {
+	@objc open func jsGet_globalAlpha(callback: JavaScriptGetterCallback) {
 		callback.returns(self.globalAlpha)
 	}
 
@@ -364,7 +364,7 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsSet_globalAlpha(callback: JavaScriptSetterCallback) {
+	@objc open func jsSet_globalAlpha(callback: JavaScriptSetterCallback) {
 		self.globalAlpha.reset(callback.value, lock: self)
 	}
 
@@ -375,7 +375,7 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsGet_globalCompositeOperation(callback: JavaScriptGetterCallback) {
+	@objc open func jsGet_globalCompositeOperation(callback: JavaScriptGetterCallback) {
 		callback.returns(self.globalCompositeOperation)
 	}
 
@@ -384,7 +384,7 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsSet_globalCompositeOperation(callback: JavaScriptSetterCallback) {
+	@objc open func jsSet_globalCompositeOperation(callback: JavaScriptSetterCallback) {
 		self.globalCompositeOperation.reset(callback.value, lock: self)
 	}
 
@@ -397,7 +397,7 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsFunction_rect(callback: JavaScriptFunctionCallback) {
+	@objc open func jsFunction_rect(callback: JavaScriptFunctionCallback) {
 
 		if (callback.arguments < 4) {
 			fatalError("Method JavaScriptCanvas.rect' requires 4 arguments.")
@@ -416,7 +416,7 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsFunction_fillRect(callback: JavaScriptFunctionCallback) {
+	@objc open func jsFunction_fillRect(callback: JavaScriptFunctionCallback) {
 
 		if (callback.arguments < 4) {
 			fatalError("Method JavaScriptCanvas.fillRect() requires 4 arguments.")
@@ -435,7 +435,7 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsFunction_strokeRect(callback: JavaScriptFunctionCallback) {
+	@objc open func jsFunction_strokeRect(callback: JavaScriptFunctionCallback) {
 
 		if (callback.arguments < 4) {
 			fatalError("Method JavaScriptCanvas.strokeRect() requires 4 arguments.")
@@ -454,7 +454,7 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsFunction_clearRect(callback: JavaScriptFunctionCallback) {
+	@objc open func jsFunction_clearRect(callback: JavaScriptFunctionCallback) {
 
 		if (callback.arguments < 4) {
 			fatalError("Method JavaScriptCanvas.clearRect() requires 4 arguments.")
@@ -473,7 +473,7 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsFunction_fill(callback: JavaScriptFunctionCallback) {
+	@objc open func jsFunction_fill(callback: JavaScriptFunctionCallback) {
 		self.ctx?.fillPath()
 	}
 
@@ -482,7 +482,7 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsFunction_stroke(callback: JavaScriptFunctionCallback) {
+	@objc open func jsFunction_stroke(callback: JavaScriptFunctionCallback) {
 		self.ctx?.strokePath()
 	}
 
@@ -491,7 +491,7 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsFunction_beginPath(callback: JavaScriptFunctionCallback) {
+	@objc open func jsFunction_beginPath(callback: JavaScriptFunctionCallback) {
 		self.ctx?.beginPath()
 	}
 
@@ -500,7 +500,7 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsFunction_closePath(callback: JavaScriptFunctionCallback) {
+	@objc open func jsFunction_closePath(callback: JavaScriptFunctionCallback) {
 		self.ctx?.closePath()
 	}
 
@@ -509,7 +509,7 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsFunction_moveTo(callback: JavaScriptFunctionCallback) {
+	@objc open func jsFunction_moveTo(callback: JavaScriptFunctionCallback) {
 
 		if (callback.arguments < 2) {
 			fatalError("Method JavaScriptCanvas.moveTo() requires 2 arguments.")
@@ -526,7 +526,7 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsFunction_lineTo(callback: JavaScriptFunctionCallback) {
+	@objc open func jsFunction_lineTo(callback: JavaScriptFunctionCallback) {
 
 		if (callback.arguments < 2) {
 			fatalError("Method JavaScriptCanvas.lineTo() requires 2 arguments.")
@@ -543,7 +543,7 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsFunction_clip(callback: JavaScriptFunctionCallback) {
+	@objc open func jsFunction_clip(callback: JavaScriptFunctionCallback) {
 		self.ctx?.clip()
 	}
 
@@ -552,7 +552,7 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsFunction_quadraticCurveTo(callback: JavaScriptFunctionCallback) {
+	@objc open func jsFunction_quadraticCurveTo(callback: JavaScriptFunctionCallback) {
 
 		if (callback.arguments < 4) {
 			fatalError("Method JavaScriptCanvas.quadraticCurveTo() requires 4 arguments.")
@@ -571,7 +571,7 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsFunction_bezierCurveTo(callback: JavaScriptFunctionCallback) {
+	@objc open func jsFunction_bezierCurveTo(callback: JavaScriptFunctionCallback) {
 
 		if (callback.arguments < 4) {
 			fatalError("Method JavaScriptCanvas.bezierCurveTo() requires 6 arguments.")
@@ -592,7 +592,7 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsFunction_arc(callback: JavaScriptFunctionCallback) {
+	@objc open func jsFunction_arc(callback: JavaScriptFunctionCallback) {
 
 		if (callback.arguments < 6) {
 			fatalError("Method JavaScriptCanvas.arc() requires 6 arguments.")
@@ -613,7 +613,7 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsFunction_arcTo(callback: JavaScriptFunctionCallback) {
+	@objc open func jsFunction_arcTo(callback: JavaScriptFunctionCallback) {
 
 		if (callback.arguments < 6) {
 			fatalError("Method JavaScriptCanvas.arcTo() requires 6 arguments.")
@@ -633,7 +633,7 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsFunction_isPointInPath(callback: JavaScriptFunctionCallback) {
+	@objc open func jsFunction_isPointInPath(callback: JavaScriptFunctionCallback) {
 
 		if (callback.arguments < 2) {
 			fatalError("Method JavaScriptCanvas.isPointInPath() requires 2 arguments.")
@@ -650,7 +650,7 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsFunction_scale(callback: JavaScriptFunctionCallback) {
+	@objc open func jsFunction_scale(callback: JavaScriptFunctionCallback) {
 
 		if (callback.arguments < 2) {
 			fatalError("Method JavaScriptCanvas.scale() requires 2 arguments.")
@@ -667,7 +667,7 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsFunction_rotate(callback: JavaScriptFunctionCallback) {
+	@objc open func jsFunction_rotate(callback: JavaScriptFunctionCallback) {
 
 		if (callback.arguments < 1) {
 			fatalError("Method JavaScriptCanvas.rotate() requires 1 argument.")
@@ -681,7 +681,7 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsFunction_translate(callback: JavaScriptFunctionCallback) {
+	@objc open func jsFunction_translate(callback: JavaScriptFunctionCallback) {
 
 		if (callback.arguments < 2) {
 			fatalError("Method JavaScriptCanvas.translate() requires 2 arguments.")
@@ -698,7 +698,7 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsFunction_transform(callback: JavaScriptFunctionCallback) {
+	@objc open func jsFunction_transform(callback: JavaScriptFunctionCallback) {
 
 		if (callback.arguments < 6) {
 			fatalError("Method JavaScriptCanvas.translate() requires 6 arguments.")
@@ -719,7 +719,7 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsFunction_setTransform(callback: JavaScriptFunctionCallback) {
+	@objc open func jsFunction_setTransform(callback: JavaScriptFunctionCallback) {
 
 		if (callback.arguments < 6) {
 			fatalError("Method JavaScriptCanvas.setTransform() requires 6 arguments.")
@@ -745,7 +745,7 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsFunction_drawImage(callback: JavaScriptFunctionCallback) {
+	@objc open func jsFunction_drawImage(callback: JavaScriptFunctionCallback) {
 
 		/*
 		// TODO
@@ -795,7 +795,7 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsFunction_save(callback: JavaScriptFunctionCallback) {
+	@objc open func jsFunction_save(callback: JavaScriptFunctionCallback) {
 		self.ctx?.saveGState()
 	}
 
@@ -804,7 +804,7 @@ open class JavaScriptCanvas: JavaScriptClass {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsFunction_restore(callback: JavaScriptFunctionCallback) {
+	@objc open func jsFunction_restore(callback: JavaScriptFunctionCallback) {
 		self.ctx?.restoreGState()
 	}
 }

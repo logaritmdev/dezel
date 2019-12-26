@@ -26,7 +26,7 @@ open class JavaScriptWindow: JavaScriptView {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsFunction_findViewAt(callback: JavaScriptFunctionCallback) {
+	@objc open func jsFunction_findViewAt(callback: JavaScriptFunctionCallback) {
 
 		if (callback.arguments < 4) {
 			fatalError("Method JavaScriptWindow.findViewAt() requires 4 arguments.")

@@ -32,10 +32,9 @@ public final class TransitionManager {
 	 */
 	public static func begin(duration: CFTimeInterval, equation: CAMediaTimingFunction, delay: CFTimeInterval, callback: @escaping Callback) {
 
-		let transition = Transition()
-
 		Synchronizer.main.execute()
 
+		let transition = Transition()
 		transition.begin()
 		transition.delay = delay
 		transition.duration = duration

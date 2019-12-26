@@ -457,7 +457,7 @@ open class TextInput: UITextField, UITextFieldDelegate {
 	}
 
 	//--------------------------------------------------------------------------
-	// MARK: Methods - Text Field Delegate
+	// MARK: Text Field Delegate
 	//--------------------------------------------------------------------------
 
 	/**

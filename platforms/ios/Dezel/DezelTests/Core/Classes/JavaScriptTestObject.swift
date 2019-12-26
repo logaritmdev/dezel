@@ -6,15 +6,15 @@ class JavaScriptTestObject: JavaScriptObject {
 	static var testJavaScriptGetterCallback: JavaScriptGetterHandler?
 	static var testJavaScriptSetterCallback: JavaScriptSetterHandler?
 
-	@objc func jsFunction_testFunction(callback: JavaScriptFunctionCallback) {
+	@objc open func jsFunction_testFunction(callback: JavaScriptFunctionCallback) {
 		JavaScriptTestObject.testJavaScriptFunctionCallback?(callback)
 	}
 
-	@objc func jsGet_testProperty(callback: JavaScriptGetterCallback) {
+	@objc open func jsGet_testProperty(callback: JavaScriptGetterCallback) {
 		JavaScriptTestObject.testJavaScriptGetterCallback?(callback)
 	}
 
-	@objc func jsSet_testProperty(callback: JavaScriptSetterCallback) {
+	@objc open func jsSet_testProperty(callback: JavaScriptSetterCallback) {
 		JavaScriptTestObject.testJavaScriptSetterCallback?(callback)
 	}
 }

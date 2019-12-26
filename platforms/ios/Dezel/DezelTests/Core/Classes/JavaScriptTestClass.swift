@@ -12,15 +12,15 @@ class JavaScriptTestClass: JavaScriptClass {
 		JavaScriptTestClass.testConstructorCallback?(callback)
 	}
 
-	@objc func jsFunction_testFunction(callback: JavaScriptFunctionCallback) {
+	@objc open func jsFunction_testFunction(callback: JavaScriptFunctionCallback) {
 		JavaScriptTestClass.testJavaScriptFunctionCallback?(callback)
 	}
 
-	@objc func jsGet_testProperty(callback: JavaScriptGetterCallback) {
+	@objc open func jsGet_testProperty(callback: JavaScriptGetterCallback) {
 		JavaScriptTestClass.testJavaScriptGetterCallback?(callback)
 	}
 
-	@objc func jsSet_testProperty(callback: JavaScriptSetterCallback) {
+	@objc open func jsSet_testProperty(callback: JavaScriptSetterCallback) {
 		JavaScriptTestClass.testJavaScriptSetterCallback?(callback)
 	}
 }

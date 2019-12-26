@@ -106,7 +106,7 @@ open class JavaScriptWebView: JavaScriptView, WebViewObserver {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsFunction_load(callback: JavaScriptFunctionCallback) {
+	@objc open func jsFunction_load(callback: JavaScriptFunctionCallback) {
 
 		if (callback.arguments < 1) {
 			fatalError("Method JavaScriptWebView.load() requires 1 argument.")
@@ -120,7 +120,7 @@ open class JavaScriptWebView: JavaScriptView, WebViewObserver {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsFunction_loadHTML(callback: JavaScriptFunctionCallback) {
+	@objc open func jsFunction_loadHTML(callback: JavaScriptFunctionCallback) {
 
 		if (callback.arguments < 1) {
 			fatalError("Method JavaScriptWebView.loadHTML() requires 1 argument.")
@@ -134,7 +134,7 @@ open class JavaScriptWebView: JavaScriptView, WebViewObserver {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsFunction_reload(callback: JavaScriptFunctionCallback) {
+	@objc open func jsFunction_reload(callback: JavaScriptFunctionCallback) {
 		self.view.reload()
 	}
 
@@ -143,7 +143,7 @@ open class JavaScriptWebView: JavaScriptView, WebViewObserver {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsFunction_stop(callback: JavaScriptFunctionCallback) {
+	@objc open func jsFunction_stop(callback: JavaScriptFunctionCallback) {
 		self.view.stopLoading()
 	}
 
@@ -152,7 +152,7 @@ open class JavaScriptWebView: JavaScriptView, WebViewObserver {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsFunction_back(callback: JavaScriptFunctionCallback) {
+	@objc open func jsFunction_back(callback: JavaScriptFunctionCallback) {
 		self.view.goBack()
 	}
 
@@ -161,7 +161,7 @@ open class JavaScriptWebView: JavaScriptView, WebViewObserver {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	@objc func jsFunction_forward() {
+	@objc open func jsFunction_forward() {
 		self.view.goForward()
 	}
 }

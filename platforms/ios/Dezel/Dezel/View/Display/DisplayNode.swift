@@ -263,7 +263,7 @@ open class DisplayNode {
 		DisplayNodeSetResolvePaddingCallback(self.handle, displayNodeResolvePaddingCallback)
 		DisplayNodeSetPrepareLayoutCallback(self.handle, displayNodePrepareLayoutCallback)
 		DisplayNodeSetResolveLayoutCallback(self.handle, displayNodeResolveLayoutCallback)
-		DisplayNodeSetMeasureCallback(self.handle, displayNodeMeasureSizeCallback)
+		DisplayNodeSetMeasureCallback(self.handle, displayNodeMeasureCallback)
 		DisplayNodeSetUpdateCallback(self.handle, displayNodeUpdateCallback);
 
 		DisplayNodeSetData(self.handle, UnsafeMutableRawPointer(unretained: self))
@@ -1912,11 +1912,11 @@ private let displayNodeResolveLayoutCallback: @convention(c) (DisplayNodeRef?) -
 }
 
 /**
- * @const displayNodeMeasureSizeCallback
+ * @const displayNodeMeasureCallback
  * @since 0.7.0
  * @hidden
  */
-private let displayNodeMeasureSizeCallback: @convention(c) (DisplayNodeRef?, UnsafeMutablePointer<MeasuredSize>?, Double, Double, Double, Double, Double, Double) -> Void = { (ptr, res, w, h, minw, maxw, minh, maxh) in
+private let displayNodeMeasureCallback: @convention(c) (DisplayNodeRef?, UnsafeMutablePointer<MeasuredSize>?, Double, Double, Double, Double, Double, Double) -> Void = { (ptr, res, w, h, minw, maxw, minh, maxh) in
 
 	if let node = DisplayNodeGetData(ptr).value as? DisplayNode {
 

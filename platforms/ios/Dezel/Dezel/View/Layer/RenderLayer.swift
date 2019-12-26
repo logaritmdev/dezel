@@ -4,7 +4,7 @@ import UIKit
  * @class RenderLayer
  * @super Layer
  */
-public class RenderLayer: Layer, TransitionListener {
+public class RenderLayer: Layer {
 
 	//--------------------------------------------------------------------------
 	// MARK: Class Methods
@@ -156,14 +156,41 @@ public class RenderLayer: Layer, TransitionListener {
 	}
 
 	//--------------------------------------------------------------------------
-	// MARK: Methods - Animations
+	// MARK: Animatable
 	//--------------------------------------------------------------------------
+
+	/**
+	 * @method willAnimate
+	 * @since 0.7.0
+	 */
+	override open func willAnimate(layer: CALayer, property: String) {
+		if (property == "path") {
+			self.mask = self.shape
+			self.shouldRasterize = false
+		}
+	}
+
+	/**
+	 * @method didBeginTransition
+	 * @since 0.7.0
+	 */
+	override open func didBeginTransition(layer: CALayer) {
+
+	}
+
+	/**
+	 * @method didCommitTransition
+	 * @since 0.7.0
+	 */
+	override open func didCommitTransition(layer: CALayer) {
+
+	}
 
 	/**
 	 * @method didFinishTransition
 	 * @since 0.7.0
 	 */
-	override open func didFinishTransition() {
+	override open func didFinishTransition(layer: CALayer) {
 
 		if (self.borderTopLeftRadius > 0 ||
 			self.borderTopRightRadius > 0 ||
@@ -181,44 +208,5 @@ public class RenderLayer: Layer, TransitionListener {
 
 		self.mask = nil
 		self.shouldRasterize = false
-	}
-
-	//--------------------------------------------------------------------------
-	// MARK: Methods - Transition Listener
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method willAnimate
-	 * @since 0.7.0
-	 */
-	open func willAnimate(layer: CALayer, property: String) {
-		if (property == "path") {
-			self.mask = self.shape
-			self.shouldRasterize = false
-		}
-	}
-
-	/**
-	 * @method didBeginTransition
-	 * @since 0.7.0
-	 */
-	open func didBeginTransition(layer: CALayer) {
-
-	}
-
-	/**
-	 * @method didCommitTransition
-	 * @since 0.7.0
-	 */
-	open func didCommitTransition(layer: CALayer) {
-
-	}
-
-	/**
-	 * @method didFinishTransition
-	 * @since 0.7.0
-	 */
-	open func didFinishTransition(layer: CALayer) {
-
 	}
 }
