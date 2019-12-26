@@ -1,8 +1,8 @@
 /**
- * @protocol Transitionable
+ * @protocol Animatable
  * @since 0.7.0
  */
-public protocol Transitionable: AnyObject {
+public protocol Animatable: AnyObject {
 
 	/**
 	 * @method willAnimate

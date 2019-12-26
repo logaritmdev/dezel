@@ -23,7 +23,7 @@ public final class TransitionManager {
 	 * @since 0.7.0
 	 */
 	public static var transition: Transition? {
-		return transitions.last
+		return TransitionManager.transitions.last
 	}
 
 	/**
@@ -47,7 +47,7 @@ public final class TransitionManager {
 			callback()
 		}
 
-		TransitionManager.transitions.append(transition)
+		transitions.append(transition)
 	}
 
 	/**
@@ -56,7 +56,7 @@ public final class TransitionManager {
 	 */
 	public static func commit() {
 
-		guard let transition = TransitionManager.transition else {
+		guard let transition = transition else {
 			return
 		}
 
@@ -64,7 +64,7 @@ public final class TransitionManager {
 
 		transition.commit()
 
-		TransitionManager.transitions.removeLast()
+		transitions.removeLast()
 	}
 
 	//--------------------------------------------------------------------------

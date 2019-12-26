@@ -1,11 +1,11 @@
 package ca.logaritm.dezel.view.type
 
 /**
- * @enum TextAlignment
+ * @enum TextAlign
  * @since 0.1.0
  * @hidden
  */
-enum class TextAlignment {
+enum class TextAlign {
 	START,
 	END,
 	LEFT,

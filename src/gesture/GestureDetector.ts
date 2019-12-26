@@ -7,10 +7,12 @@ import { $finished } from './private/GestureDetector'
 import { $resolved } from './private/GestureDetector'
 import { $state } from './private/GestureDetector'
 import { $view } from './private/GestureDetector'
+import { $window } from './private/GestureDetector'
 import { setGestureState } from './private/GestureDetector'
 import { Emitter } from '../event/Emitter'
 import { TouchEvent } from '../event/TouchEvent'
 import { View } from '../view/View'
+import { Window } from '../view/Window'
 
 /**
  * @class GestureDetector
@@ -41,6 +43,14 @@ export abstract class GestureDetector<T = any> extends Emitter {
 	 */
 	public get view(): View | null {
 		return this[$view]
+	}
+
+	/**
+	 * @property window
+	 * @since 0.7.0
+	 */
+	public get window(): Window | null {
+		return this[$window]
 	}
 
 	/**
@@ -105,6 +115,7 @@ export abstract class GestureDetector<T = any> extends Emitter {
 	 */
 	public attach(view: View) {
 		this[$view] = view
+		this[$window] = view instanceof Window ? view : view.window
 	}
 
 	/**
@@ -113,6 +124,7 @@ export abstract class GestureDetector<T = any> extends Emitter {
 	 */
 	public detach() {
 		this[$view] = null
+		this[$window] = null
 	}
 
 	/**
@@ -275,6 +287,13 @@ export abstract class GestureDetector<T = any> extends Emitter {
 	 * @hidden
 	 */
 	private [$view]: View | null = null
+
+	/**
+	 * @property $window
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private [$window]: Window | null = null
 
 	/**
 	 * @property $state

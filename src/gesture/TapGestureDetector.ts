@@ -83,7 +83,10 @@ export class TapGestureDetector extends GestureDetector<TapGestureDetector> {
 			return
 		}
 
-		let target = this.view?.window?.findViewAt(touch.x, touch.y) || null
+		let target = this.window?.findViewAt(
+			touch.x,
+			touch.y
+		) || null
 
 		while (target) {
 

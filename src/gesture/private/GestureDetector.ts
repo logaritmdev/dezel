@@ -11,6 +11,13 @@ import { State } from '../GestureDetector'
 export const $view = Symbol('view')
 
 /**
+ * @symbol window
+ * @since 0.7.0
+ * @hidden
+ */
+export const $window = Symbol('window')
+
+/**
  * @symbol state
  * @since 0.7.0
  * @hidden

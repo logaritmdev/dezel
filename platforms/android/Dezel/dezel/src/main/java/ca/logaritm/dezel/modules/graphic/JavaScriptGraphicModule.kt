@@ -8,18 +8,18 @@ import ca.logaritm.dezel.core.JavaScriptModule
  * @since 0.1.0
  * @hidden
  */
-open class GraphicModule(context: JavaScriptContext): JavaScriptModule(context) {
+open class GraphicModule: JavaScriptModule() {
 
 	//--------------------------------------------------------------------------
 	// Methods
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method initialize
-	 * @since 0.1.0
+	 * @method configure
+	 * @since 0.7.0
 	 */
-	override fun initialize() {
-		this.context.registerClass("dezel.graphic.Image", JavaScriptImage::class.java)
-		this.context.registerClass("dezel.graphic.Canvas", JavaScriptCanvas::class.java)
+	override fun configure(context: JavaScriptContext) {
+		context.registerClass("dezel.graphic.Bitmap", JavaScriptImage::class.java)
+		context.registerClass("dezel.graphic.Canvas", JavaScriptCanvas::class.java)
 	}
 }

@@ -20,7 +20,7 @@ public final class Transition {
 
 	/**
 	 * @property callback
-	 * @since 0.1.0
+	 * @since 0.7.0
 	 */
 	public var callback: Callback? {
 		willSet(value) {
@@ -30,7 +30,7 @@ public final class Transition {
 
 	/**
 	 * @property duration
-	 * @since 0.1.0
+	 * @since 0.7.0
 	 */
 	public var duration: CFTimeInterval = 0.350 {
 		willSet(value) {
@@ -40,7 +40,7 @@ public final class Transition {
 
 	/**
 	 * @property equation
-	 * @since 0.1.0
+	 * @since 0.7.0
 	 */
 	public var equation: CAMediaTimingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.default) {
 		willSet(value) {
@@ -50,9 +50,15 @@ public final class Transition {
 
 	/**
 	 * @property delay
-	 * @since 0.1.0
+	 * @since 0.7.0
 	 */
 	public var delay: CFTimeInterval = 0
+
+	/**
+	 * @property observers
+	 * @since 0.7.0
+	 */
+	private var observers: [CALayer] = []
 
 	//--------------------------------------------------------------------------
 	// MARK: Methods
@@ -60,7 +66,7 @@ public final class Transition {
 
 	/**
 	 * @method begin
-	 * @since 0.1.0
+	 * @since 0.7.0
 	 */
 	public func begin() {
 		self.dispatchBeginCallback()
@@ -69,7 +75,7 @@ public final class Transition {
 
 	/**
 	 * @method commit
-	 * @since 0.1.0
+	 * @since 0.7.0
 	 */
 	public func commit() {
 		self.dispatchCommitCallback()
@@ -78,21 +84,15 @@ public final class Transition {
 
 	/**
 	 * @method notify
-	 * @since 0.2.0
+	 * @since 0.7.0
 	 */
 	public func notify(_ layer: CALayer) {
-		self.layers.add(layer)
+		self.observers.add(layer)
 	}
 
 	//--------------------------------------------------------------------------
 	// MARK: Private API
 	//--------------------------------------------------------------------------
-
-	/**
-	 * @property layers
-	 * @since 0.2.0
-	 */
-	private var layers: [CALayer] = []
 
 	/**
 	 * @method finished
@@ -109,7 +109,7 @@ public final class Transition {
 	 * @hidden
 	 */
 	internal func reset() {
-		self.layers.removeAll()
+		self.observers.removeAll()
 	}
 
 	/**
@@ -118,7 +118,7 @@ public final class Transition {
 	 * @hidden
 	 */
 	private func dispatchBeginCallback() {
-		self.layers.forEach {
+		self.observers.forEach {
 			($0 as? Transitionable)?.didBeginTransition()
 		}
 	}
@@ -129,7 +129,7 @@ public final class Transition {
 	 * @hidden
 	 */
 	private func dispatchCommitCallback() {
-		self.layers.forEach {
+		self.observers.forEach {
 			($0 as? Transitionable)?.didCommitTransition()
 		}
 	}
@@ -140,7 +140,7 @@ public final class Transition {
 	 * @hidden
 	 */
 	private func dispatchFinishCallback() {
-		self.layers.forEach {
+		self.observers.forEach {
 			($0 as? Transitionable)?.didFinishTransition()
 		}
 	}
