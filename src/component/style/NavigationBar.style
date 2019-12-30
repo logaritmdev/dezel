@@ -3,8 +3,8 @@ NavigationBar {
 	content-direction: horizontal;
 	content-alignment: center;
 	content-disposition: start;
-	height: add(48px, $safe-area-top-inset);
-	padding-top: $safe-area-top-inset;
+	height: add(48px, $safe-area-inset-top);
+	padding-top: $safe-area-inset-top;
 	padding-left: 6px;
 	padding-right: 6px;
 
