@@ -315,36 +315,36 @@ typedef struct {
 } MeasuredSize;
 
 /**
-* @typedef ValueType
-* @since 0.7.0
-* @hidden
-*/
+ * @typedef ValueType
+ * @since 0.7.0
+ * @hidden
+ */
 typedef enum {
-	kValueTypeNull,
-	kValueTypeString,
-	kValueTypeNumber,
-	kValueTypeBoolean,
-	kValueTypeFunction,
-	kValueTypeVariable
+	kValueTypeNull = 1,
+	kValueTypeString = 2,
+	kValueTypeNumber = 3,
+	kValueTypeBoolean = 4,
+	kValueTypeFunction = 5,
+	kValueTypeVariable = 6
 } ValueType;
 
 /**
-* @typedef ValueUnit
-* @since 0.7.0
-* @hidden
-*/
+ * @typedef ValueUnit
+ * @since 0.7.0
+ * @hidden
+ */
 typedef enum  {
-	kValueUnitNone,
-	kValueUnitPX,
-	kValueUnitPC,
-	kValueUnitVW,
-	kValueUnitVH,
-	kValueUnitPW,
-	kValueUnitPH,
-	kValueUnitCW,
-	kValueUnitCH,
-	kValueUnitDeg,
-	kValueUnitRad
+	kValueUnitNone = 1,
+	kValueUnitPX = 2,
+	kValueUnitPC = 3,
+	kValueUnitVW = 4 ,
+	kValueUnitVH = 5,
+	kValueUnitPW = 6,
+	kValueUnitPH = 7,
+	kValueUnitCW = 8,
+	kValueUnitCH = 9,
+	kValueUnitDeg = 10,
+	kValueUnitRad = 11
 } ValueUnit;
 
 /**

@@ -19,7 +19,7 @@ static const long long kJavaScriptContextExceptionHandlerKey = reinterpret_cast<
 JSContextRef
 JavaScriptContextCreate(const char* name)
 {
-	JSContextRef context = JSGlobalContextCreate(NULL);
+	JSContextRef context = JSGlobalContextCreate(nullptr);
 	JavaScriptContextSetName(context, name);
 	JavaScriptContextEvaluate(context, "root = this", "");
 	JavaScriptContextEvaluate(context, "global = this", "");
@@ -30,7 +30,7 @@ JavaScriptContextCreate(const char* name)
 void
 JavaScriptContextDelete(JSContextRef context)
 {
-	JavaScriptContextSetAttribute(context, kJavaScriptContextExceptionHandlerKey, NULL);
+	JavaScriptContextSetAttribute(context, kJavaScriptContextExceptionHandlerKey, nullptr);
 	JSGlobalContextRelease(JSContextGetGlobalContext(context));
 }
 
@@ -51,7 +51,7 @@ JavaScriptContextGetGlobalObject(JSContextRef context)
 void
 JavaScriptContextEvaluate(JSContextRef context, const char* code, const char* file)
 {
-	JSValueRef error = NULL;
+	JSValueRef error = nullptr;
 
 	JSStringRef c = JSStringCreateWithUTF8CString(code);
 	JSStringRef f = JSStringCreateWithUTF8CString(file);
@@ -71,7 +71,7 @@ JavaScriptContextSetAttribute(JSContextRef context, long long key, void *value)
 		attributes[context] = unordered_map<long long, void*>();
 	}
 
-	if (value == NULL) {
+	if (value == nullptr) {
 
 		attributes[context].erase(key);
 
@@ -89,7 +89,7 @@ void *
 JavaScriptContextGetAttribute(JSContextRef context, long long key)
 {
 	if (attributes.count(context) == 0) {
-		return NULL;
+		return nullptr;
 	}
 
 	return attributes[context][key];

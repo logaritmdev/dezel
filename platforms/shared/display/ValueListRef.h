@@ -8,6 +8,13 @@ extern "C" {
 #endif
 
 /**
+* @function ValueListDelete
+* @since 0.7.0
+* @hidden
+*/
+void ValueListDelete(ValueListRef values);
+
+/**
  * @function ValueListGetCount
  * @since 0.7.0
  * @hidden

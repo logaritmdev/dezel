@@ -15,6 +15,13 @@ extern "C" {
 void ParseValue(const char* source, void* that, void* lock, ParseValueCallback callback);
 
 /**
+ * @function ValueParse
+ * @since 0.7.0
+ * @hidden
+ */
+ValueListRef ValueParse(const char* source);
+
+/**
  * @function ValueGetType
  * @since 0.7.0
  * @hidden

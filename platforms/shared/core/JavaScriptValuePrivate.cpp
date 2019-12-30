@@ -6,8 +6,8 @@ JavaScriptValueDataCreate(JSContextRef context)
 {
 	JavaScriptValueDataRef data = new JavaScriptValueData;
 	data->context = context;
-	data->finalizeCallback = NULL;
-	data->functionCallback = NULL;
+	data->finalizeCallback = nullptr;
+	data->functionCallback = nullptr;
 	return data;
 }
 
@@ -27,7 +27,7 @@ JSValueRef
 JavaScriptFunctionCallAsFunctionHandler(JSContextRef context, JSObjectRef callee, JSObjectRef object, size_t argc, const JSValueRef argv[], JSValueRef *error)
 {
 	JSValueRef result = JavaScriptValueDataGet(callee)->functionCallback(context, object, callee, argc, argv);
-	if (result == NULL) {
+	if (result == nullptr) {
 		result = JavaScriptValueCreateUndefined(context);
 	}
 
@@ -42,7 +42,7 @@ JavaScriptFunctionCallAsConstructorHandler(JSContextRef context, JSObjectRef cal
 	);
 
 	JSValueRef result = JavaScriptValueDataGet(callee)->functionCallback(context, object, callee, argc, argv);
-	if (result == NULL) {
+	if (result == nullptr) {
 		result = JavaScriptValueCreateUndefined(context);
 	}
 
@@ -54,7 +54,7 @@ JavaScriptFunctionFinalizeHandler(JSObjectRef object)
 {
 	JavaScriptValueDataRef data = JavaScriptValueDataGet(object);
 
-	if (data == NULL) {
+	if (data == nullptr) {
 		return;
 	}
 
@@ -82,7 +82,7 @@ JavaScriptValueFinalizeHandler(JSObjectRef object)
 {
 	JavaScriptValueDataRef data = JavaScriptValueDataGet(object);
 
-	if (data == NULL) {
+	if (data == nullptr) {
 		return;
 	}
 

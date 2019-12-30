@@ -45,8 +45,8 @@ JavaScriptValueCreateEmptyObject(JSContextRef context, JSObjectRef proto)
 	JSClassDefinition def = kJSClassDefinitionEmpty;
 
 	def.finalize = &JavaScriptValueFinalizeHandler;
-	def.callAsFunction = NULL;
-	def.callAsConstructor = NULL;
+	def.callAsFunction = nullptr;
+	def.callAsConstructor = nullptr;
 
 	if (proto) {
 		def.attributes = kJSClassAttributeNoAutomaticPrototype;
@@ -66,8 +66,8 @@ JavaScriptValueCreateEmptyObject(JSContextRef context, JSObjectRef proto)
 JSObjectRef
 JavaScriptValueCreateEmptyArray(JSContextRef context)
 {
-	JSValueRef error = NULL;
-	JSValueRef array = JSObjectMakeArray(context, 0, NULL, &error);
+	JSValueRef error = nullptr;
+	JSValueRef array = JSObjectMakeArray(context, 0, nullptr, &error);
 
 	if (error) {
 		JavaScriptContextHandleError(context, error);
@@ -91,7 +91,7 @@ JavaScriptValueCreateFunction(JSContextRef context, JavaScriptValueFunctionCallb
 	JSClassRef obj = JSClassCreate(&kJSClassDefinitionEmpty);
 	JSClassRef fnc = JSClassCreate(&def);
 	JSObjectRef object = JSObjectMake(context, fnc, data);
-	JSObjectRef cproto = JSObjectMake(context, obj, NULL);
+	JSObjectRef cproto = JSObjectMake(context, obj, nullptr);
 	JSObjectRef parent = JavaScriptValueGetPrototypeOfNativeConstructor(context, "Function");
 
 	data->functionCallback = callback;
@@ -102,13 +102,13 @@ JavaScriptValueCreateFunction(JSContextRef context, JavaScriptValueFunctionCallb
 
 	if (name) {
 
-		JavaScriptValueDefineProperty(context, object, "name", NULL, NULL, JavaScriptValueCreateString(context, name), false, true, true);
+		JavaScriptValueDefineProperty(context, object, "name", nullptr, nullptr, JavaScriptValueCreateString(context, name), false, true, true);
 
 		JSStringRef toStringName = JSStringCreateWithUTF8CString("string");
 		JSObjectRef toStringFunc = JSObjectMakeFunctionWithCallback(context, toStringName, &JavaScriptFunctionConvertToStringHandler);
 		JSStringRelease(toStringName);
 
-		JavaScriptValueDefineProperty(context, object, "string", NULL, NULL, toStringFunc, false, true, true);
+		JavaScriptValueDefineProperty(context, object, "string", nullptr, nullptr, toStringFunc, false, true, true);
 	}
 
 	JSClassRelease(obj);
@@ -133,11 +133,11 @@ void
 JavaScriptValueDefineProperty(JSContextRef context, JSObjectRef target, const char* property, JSValueRef getter, JSValueRef setter, JSValueRef value, bool writable, bool enumerable, bool configurable)
 {
 	JSObjectRef object = JavaScriptValueToObject(context, target);
-	if (object == NULL) {
+	if (object == nullptr) {
 		return;
 	}
 
-	JSObjectRef descriptor = JavaScriptValueCreateEmptyObject(context, NULL);
+	JSObjectRef descriptor = JavaScriptValueCreateEmptyObject(context, nullptr);
 
 	JSValueRef args[3];
 	args[0] = object;
@@ -164,19 +164,19 @@ JavaScriptValueDefineProperty(JSContextRef context, JSObjectRef target, const ch
 void
 JavaScriptValueDefineConstructor(JSContextRef context, JSObjectRef prototype, JSObjectRef function)
 {
-	JavaScriptValueDefineProperty(context, prototype, "constructor", NULL, NULL, function, true, true, true);
+	JavaScriptValueDefineProperty(context, prototype, "constructor", nullptr, nullptr, function, true, true, true);
 }
 
 void
 JavaScriptValueDefineFunction(JSContextRef context, JSObjectRef prototype, const char* name, JSObjectRef function)
 {
-	JavaScriptValueDefineProperty(context, prototype, name, NULL, NULL, function, true, true, true);
+	JavaScriptValueDefineProperty(context, prototype, name, nullptr, nullptr, function, true, true, true);
 }
 
 void
 JavaScriptValueDefinePropertySetter(JSContextRef context, JSObjectRef prototype, const char* name, JSObjectRef function)
 {
-	JSObjectRef descriptor = JavaScriptValueCreateEmptyObject(context, NULL);
+	JSObjectRef descriptor = JavaScriptValueCreateEmptyObject(context, nullptr);
 
 	JSValueRef args[3];
 	args[0] = prototype;
@@ -196,7 +196,7 @@ JavaScriptValueDefinePropertySetter(JSContextRef context, JSObjectRef prototype,
 void
 JavaScriptValueDefinePropertyGetter(JSContextRef context, JSObjectRef prototype, const char* name, JSObjectRef function)
 {
-	JSObjectRef descriptor = JavaScriptValueCreateEmptyObject(context, NULL);
+	JSObjectRef descriptor = JavaScriptValueCreateEmptyObject(context, nullptr);
 
 	JSValueRef args[3];
 	args[0] = prototype;
@@ -217,13 +217,13 @@ void
 JavaScriptValueSetProperty(JSContextRef context, JSObjectRef target, const char* property, JSValueRef value)
 {
 	JSObjectRef object = JavaScriptValueToObject(context, target);
-	if (object == NULL) {
+	if (object == nullptr) {
 		return;
 	}
 
-	JSValueRef error = NULL;
+	JSValueRef error = nullptr;
 
-	if (value == NULL) {
+	if (value == nullptr) {
 
 		JSStringRef string = JSStringCreateWithUTF8CString(property);
 		JSObjectDeleteProperty(context, object, string, &error);
@@ -264,12 +264,12 @@ JSValueRef
 JavaScriptValueGetProperty(JSContextRef context, JSObjectRef target, const char* property)
 {
 	JSObjectRef object = JavaScriptValueToObject(context, target);
-	if (object == NULL) {
-		return NULL;
+	if (object == nullptr) {
+		return nullptr;
 	}
 
 	JSStringRef string = JSStringCreateWithUTF8CString(property);
-	JSValueRef error = NULL;
+	JSValueRef error = nullptr;
 	JSValueRef value = JSObjectGetProperty(context, object, string, &error);
 	JSStringRelease(string);
 
@@ -284,11 +284,11 @@ void
 JavaScriptValueSetPropertyAtIndex(JSContextRef context, JSObjectRef target, unsigned int index, JSValueRef value)
 {
 	JSObjectRef object = JavaScriptValueToObject(context, target);
-	if (object == NULL) {
+	if (object == nullptr) {
 		return;
 	}
 
-	JSValueRef error = NULL;
+	JSValueRef error = nullptr;
 
 	JSObjectSetPropertyAtIndex(context, object, index, value, &error);
 
@@ -319,11 +319,11 @@ JSValueRef
 JavaScriptValueGetPropertyAtIndex(JSContextRef context, JSObjectRef target, unsigned int index)
 {
 	JSObjectRef object = JavaScriptValueToObject(context, target);
-	if (object == NULL) {
-		return NULL;
+	if (object == nullptr) {
+		return nullptr;
 	}
 
-	JSValueRef error = NULL;
+	JSValueRef error = nullptr;
 	JSValueRef value = JSObjectGetPropertyAtIndex(context, object, index, &error);
 
 	if (error) {
@@ -337,11 +337,11 @@ JSValueRef
 JavaScriptValueCall(JSContextRef context, JSObjectRef target, JSObjectRef object, unsigned int argc, const JSValueRef argv[])
 {
 	JSObjectRef function = JavaScriptValueToObject(context, target);
-	if (function == NULL) {
-		return NULL;
+	if (function == nullptr) {
+		return nullptr;
 	}
 
-	JSValueRef error = NULL;
+	JSValueRef error = nullptr;
 	JSValueRef value = JSObjectCallAsFunction(context, function, object ? object : JSContextGetGlobalObject(context), (size_t) argc, argv, &error);
 
 	if (error) {
@@ -355,16 +355,16 @@ JSValueRef
 JavaScriptValueCallMethod(JSContextRef context, JSObjectRef target, const char* method, unsigned int argc, const JSValueRef argv[])
 {
 	JSObjectRef object = JavaScriptValueToObject(context, target);
-	if (object == NULL) {
-		return NULL;
+	if (object == nullptr) {
+		return nullptr;
 	}
 
 	JSObjectRef function = JavaScriptValueToObject(context, JavaScriptValueGetProperty(context, object, method));
-	if (function == NULL) {
-		return NULL;
+	if (function == nullptr) {
+		return nullptr;
 	}
 
-	JSValueRef error = NULL;
+	JSValueRef error = nullptr;
 	JSValueRef value = JSObjectCallAsFunction(context, function, object, argc, argv, &error);
 
 	if (error) {
@@ -378,11 +378,11 @@ JSValueRef
 JavaScriptValueConstruct(JSContextRef context, JSObjectRef target, unsigned int argc, JSValueRef argv[])
 {
 	JSObjectRef function = JavaScriptValueToObject(context, target);
-	if (function == NULL) {
-		return NULL;
+	if (function == nullptr) {
+		return nullptr;
 	}
 
-	JSValueRef error = NULL;
+	JSValueRef error = nullptr;
 	JSValueRef value = JSObjectCallAsConstructor(context, function, argc, argv, &error);
 
 	if (error) {
@@ -396,7 +396,7 @@ void
 JavaScriptValueSetPrototype(JSContextRef context, JSObjectRef target, JSValueRef prototype)
 {
 	JSObjectRef object = JavaScriptValueToObject(context, target);
-	if (object == NULL) {
+	if (object == nullptr) {
 		return;
 	}
 
@@ -407,8 +407,8 @@ JSValueRef
 JavaScriptValueGetPrototype(JSContextRef context, JSObjectRef target)
 {
 	JSObjectRef object = JavaScriptValueToObject(context, target);
-	if (object == NULL) {
-		return NULL;
+	if (object == nullptr) {
+		return nullptr;
 	}
 
 	return JSObjectGetPrototype(context, object);
@@ -417,7 +417,7 @@ JavaScriptValueGetPrototype(JSContextRef context, JSObjectRef target)
 JSObjectRef
 JavaScriptValueGetPrototypeOfConstructor(JSContextRef context, JSObjectRef constructor)
 {
-	JSValueRef error = NULL;
+	JSValueRef error = nullptr;
 	JSValueRef value = JavaScriptValueGetProperty(context, constructor, "prototype");
 
 	JSObjectRef object = JSValueToObject(context, value, &error);
@@ -435,8 +435,8 @@ JavaScriptValueGetPrototypeOfNativeConstructor(JSContextRef context, const char*
 	JSStringRef objstr = JSStringCreateWithUTF8CString(constructor);
 	JSStringRef keystr = JSStringCreateWithUTF8CString("prototype");
 	JSObjectRef global = JSContextGetGlobalObject(context);
-	JSObjectRef object = (JSObjectRef) JSObjectGetProperty(context, global, objstr, NULL);
-	JSObjectRef cproto = (JSObjectRef) JSObjectGetProperty(context, object, keystr, NULL);
+	JSObjectRef object = (JSObjectRef) JSObjectGetProperty(context, global, objstr, nullptr);
+	JSObjectRef cproto = (JSObjectRef) JSObjectGetProperty(context, object, keystr, nullptr);
 	JSStringRelease(objstr);
 	JSStringRelease(keystr);
 	return cproto;
@@ -447,7 +447,7 @@ JavaScriptValueSetAttribute(JSContextRef context, JSObjectRef object, long long 
 {
 	JavaScriptValueDataRef data = JavaScriptValueDataGet(object);
 
-	if (data == NULL) {
+	if (data == nullptr) {
 		cerr << "Attributes is only supported by natively created objects.";
 		return;
 	}
@@ -460,9 +460,9 @@ JavaScriptValueGetAttribute(JSContextRef context, JSObjectRef object, long long 
 {
 	JavaScriptValueDataRef data = JavaScriptValueDataGet(object);
 
-	if (data == NULL) {
+	if (data == nullptr) {
 		cerr << "Attributes is only supported by natively created objects.";
-		return NULL;
+		return nullptr;
 	}
 
 	return JavaScriptValueDataGetAttribute(data, key);
@@ -473,7 +473,7 @@ JavaScriptValueSetAssociatedObject(JSContextRef context, JSObjectRef object, voi
 {
 	JavaScriptValueDataRef data = JavaScriptValueDataGet(object);
 
-	if (data == NULL) {
+	if (data == nullptr) {
 		cerr << "Associated Object is only supported by natively created objects.";
 		return;
 	}
@@ -486,9 +486,9 @@ JavaScriptValueGetAssociatedObject(JSContextRef context, JSObjectRef object)
 {
 	JavaScriptValueDataRef data = JavaScriptValueDataGet(object);
 
-	if (data == NULL) {
+	if (data == nullptr) {
 		cerr << "Associated Object is only supported by natively created objects.";
-		return NULL;
+		return nullptr;
 	}
 
 	return data->associatedObject;
@@ -499,7 +499,7 @@ JavaScriptValueSetFinalizeHandler(JSContextRef context, JSObjectRef object, Java
 {
 	JavaScriptValueDataRef data = JavaScriptValueDataGet(object);
 
-	if (data == NULL) {
+	if (data == nullptr) {
 		cerr << "Finalize holder is only supported by natively created objects.";
 		return;
 	}
@@ -622,12 +622,12 @@ JavaScriptValueGetType(JSContextRef context, JSValueRef value)
 JSObjectRef
 JavaScriptValueToObject(JSContextRef context, JSValueRef value)
 {
-	JSValueRef error = NULL;
+	JSValueRef error = nullptr;
 	JSObjectRef object = JSValueToObject(context, value, &error);
 
 	if (error) {
 		JavaScriptContextHandleError(context, error);
-		return NULL;
+		return nullptr;
 	}
 
 	return object;
@@ -636,7 +636,7 @@ JavaScriptValueToObject(JSContextRef context, JSValueRef value)
 const char*
 JavaScriptValueToString(JSContextRef context, JSValueRef value)
 {
-	JSValueRef error = NULL;
+	JSValueRef error = nullptr;
 
 	JSStringRef string = JSValueToStringCopy(context, value, &error);
 
@@ -655,7 +655,7 @@ JavaScriptValueToString(JSContextRef context, JSValueRef value)
 double
 JavaScriptValueToNumber(JSContextRef context, JSValueRef value)
 {
-	JSValueRef error = NULL;
+	JSValueRef error = nullptr;
 
 	double result = JSValueToNumber(context, value, &error);
 
@@ -675,7 +675,7 @@ JavaScriptValueToBoolean(JSContextRef context, JSValueRef value)
 void
 JavaScriptValueDataSetAttribute(JavaScriptValueDataRef data, long long key, void *value)
 {
-	if (value == NULL) {
+	if (value == nullptr) {
 		data->attributes.erase(key);
 		return;
 	}
@@ -705,12 +705,12 @@ void
 JavaScriptValueForEach(JSContextRef context, JSValueRef value, JavaScriptValueForEachHandler callback, void* data)
 {
 	JSObjectRef object = JavaScriptValueToObject(context, value);
-	if (object == NULL) {
+	if (object == nullptr) {
 		return;
 	}
 
 	JSValueRef length = JavaScriptValueGetProperty(context, object, "length");
-	if (length == NULL) {
+	if (length == nullptr) {
 		return;
 	}
 
@@ -725,7 +725,7 @@ void
 JavaScriptValueForOwn(JSContextRef context, JSValueRef value, JavaScriptValueForOwnHandler callback, void* data)
 {
 	JSObjectRef object = JavaScriptValueToObject(context, value);
-	if (object == NULL) {
+	if (object == nullptr) {
 		return;
 	}
 

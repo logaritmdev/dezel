@@ -9,6 +9,18 @@ using std::vector;
 
 using Dezel::Style::Value;
 
+void
+ValueListDelete(ValueListRef values)
+{
+	auto items = reinterpret_cast<vector<Value*>*>(values);
+
+	for (auto value : *items) {
+		delete value;
+	}
+
+	delete items;
+}
+
 size_t
 ValueListGetCount(ValueListRef values)
 {

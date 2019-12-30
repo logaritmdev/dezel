@@ -47,6 +47,28 @@ ParseValue(const char* source, void* that, void* lock, ParseValueCallback callba
 	}
 }
 
+ValueListRef
+ValueParse(const char* source)
+{
+	auto values = new vector<Value*>();
+
+	try {
+		Parser::parse(*values, string(source));
+	} catch (ParseException& e) {
+		delete values;
+		return nullptr;
+	}
+
+	auto count = values->size();
+
+	if (count == 0) {
+		delete values;
+		return nullptr;
+	}
+
+	return reinterpret_cast<ValueListRef>(values);
+}
+
 ValueType
 ValueGetType(ValueRef value)
 {
