@@ -26,7 +26,6 @@
 		C7004C58213C4CF800138ECC /* Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7004C57213C4CF800138ECC /* Dictionary.swift */; };
 		C7027CD32270DFDA001DD0F7 /* ScrollViewTouchCancelGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7027CD22270DFDA001DD0F7 /* ScrollViewTouchCancelGesture.swift */; };
 		C7040DE52327D40900DFDBED /* Display.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7040DE42327D40900DFDBED /* Display.swift */; };
-		C7040DE72327D41200DFDBED /* DisplayDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7040DE62327D41200DFDBED /* DisplayDelegate.swift */; };
 		C7040DE92327DB2100DFDBED /* DisplayNodeDelegateCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7040DE82327DB2000DFDBED /* DisplayNodeDelegateCounter.swift */; };
 		C7040DED232980D200DFDBED /* DisplayNodeRelativeLayoutTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7040DEC232980D200DFDBED /* DisplayNodeRelativeLayoutTest.swift */; };
 		C705913B2337B1E8002EF92F /* DisplayStyleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C705913A2337B1E8002EF92F /* DisplayStyleTest.swift */; };
@@ -365,7 +364,6 @@
 		C7004C57213C4CF800138ECC /* Dictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dictionary.swift; sourceTree = "<group>"; };
 		C7027CD22270DFDA001DD0F7 /* ScrollViewTouchCancelGesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollViewTouchCancelGesture.swift; sourceTree = "<group>"; };
 		C7040DE42327D40900DFDBED /* Display.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Display.swift; sourceTree = "<group>"; };
-		C7040DE62327D41200DFDBED /* DisplayDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayDelegate.swift; sourceTree = "<group>"; };
 		C7040DE82327DB2000DFDBED /* DisplayNodeDelegateCounter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayNodeDelegateCounter.swift; sourceTree = "<group>"; };
 		C7040DEC232980D200DFDBED /* DisplayNodeRelativeLayoutTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayNodeRelativeLayoutTest.swift; sourceTree = "<group>"; };
 		C705913A2337B1E8002EF92F /* DisplayStyleTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayStyleTest.swift; sourceTree = "<group>"; };
@@ -1175,7 +1173,7 @@
 			path = Date;
 			sourceTree = "<group>";
 		};
-		C7DE1DF123B551D500DDC245 /* Protocol */ = {
+		C7DE1DF123B551D500DDC245 /* Trait */ = {
 			isa = PBXGroup;
 			children = (
 				C7DECDFB206B351B006EE2A6 /* Clippable.swift */,
@@ -1183,16 +1181,7 @@
 				C7BCD7472094C5AD0014CD19 /* Scrollable.swift */,
 				C7A19E3420ACC4DF00367E91 /* ScrollableDelegate.swift */,
 			);
-			path = Protocol;
-			sourceTree = "<group>";
-		};
-		C7E48179238484E000730F7A /* Style */ = {
-			isa = PBXGroup;
-			children = (
-				C7E4817023823C3400730F7A /* Stylesheet.swift */,
-				C7E481772384617100730F7A /* StylesheetDelegate.swift */,
-			);
-			path = Style;
+			path = Trait;
 			sourceTree = "<group>";
 		};
 		C7E5D07F209DDF5B0098C5FD /* Dialog */ = {
@@ -1247,7 +1236,6 @@
 				C7E8A4DD2015AF48005139F6 /* Modules */,
 				C71A119B2080EAFE0004D523 /* Networking */,
 				C7A19E3620ADCA0B00367E91 /* Resources */,
-				C773DA8C21DD0B4800685BDB /* Text */,
 				C777B62822D77B1A00E75E55 /* Test */,
 				C7E8A4DE2015AF5E005139F6 /* View */,
 			);
@@ -1307,8 +1295,8 @@
 				C77189AC2106ADE000337263 /* Geom */,
 				C7027CD12270DF7F001DD0F7 /* Gesture */,
 				C7686476203A2C8F00D1903B /* Layer */,
-				C7DE1DF123B551D500DDC245 /* Protocol */,
-				C7E48179238484E000730F7A /* Style */,
+				C7DE1DF123B551D500DDC245 /* Trait */,
+				C773DA8C21DD0B4800685BDB /* Text */,
 				C72E0E9120669C7D003BCEF1 /* Type */,
 				C767544620269DBD003C4D85 /* ImageView.swift */,
 				C7BFD15F207D518600AAD31C /* SpinnerView.swift */,
@@ -1509,9 +1497,10 @@
 			children = (
 				C792E8B9234BDE480022D712 /* API */,
 				C7040DE42327D40900DFDBED /* Display.swift */,
-				C7040DE62327D41200DFDBED /* DisplayDelegate.swift */,
 				C7FCA13F231C499C00AFBDB6 /* DisplayNode.swift */,
 				C7FCA141231C49A700AFBDB6 /* DisplayNodeDelegate.swift */,
+				C7E4817023823C3400730F7A /* Stylesheet.swift */,
+				C7E481772384617100730F7A /* StylesheetDelegate.swift */,
 			);
 			path = Display;
 			sourceTree = "<group>";
@@ -1901,7 +1890,6 @@
 				C7E8A523201624A2005139F6 /* JavaScriptFunctionWrapper.swift in Sources */,
 				C792E957234BDEA70022D712 /* StringValue.cpp in Sources */,
 				C7E8A535201624A2005139F6 /* JavaScriptClassConstructorWrapper.swift in Sources */,
-				C7040DE72327D41200DFDBED /* DisplayDelegate.swift in Sources */,
 				C7A19E3A20ADD18200367E91 /* TextInputObserver.swift in Sources */,
 				C792E939234BDEA70022D712 /* Token.cpp in Sources */,
 				C792E8F8234BDE630022D712 /* Display.cpp in Sources */,

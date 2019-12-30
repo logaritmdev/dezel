@@ -424,7 +424,7 @@ open class ApplicationController: UIViewController, StylesheetDelegate {
 	 * @since 0.7.0
 	 */
 	open override func didReceiveMemoryWarning() {
-		self.application?.callMethod("nativeOnMemoryWarning")
+		self.application?.callMethod("nativeOnLowMemory")
 	}
 
 	//--------------------------------------------------------------------------

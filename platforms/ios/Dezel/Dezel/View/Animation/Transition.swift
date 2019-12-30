@@ -91,7 +91,7 @@ public final class Transition {
 	}
 
 	//--------------------------------------------------------------------------
-	// MARK: Private API
+	// MARK: Internal API
 	//--------------------------------------------------------------------------
 
 	/**
@@ -111,6 +111,10 @@ public final class Transition {
 	internal func reset() {
 		self.observers.removeAll()
 	}
+
+	//--------------------------------------------------------------------------
+	// MARK: Private API
+	//--------------------------------------------------------------------------
 
 	/**
 	 * @method dispatchBeginCallback

@@ -1791,13 +1791,17 @@ open class DisplayNode {
 	 * @since 0.7.0
 	 */
 	internal func update(name: String, property: PropertyRef?) {
-		if let prop = self.delegate?.resolve(node: self, property: name)  {
-			if (property == nil) {
-				prop.reset(lock: nil, initial: true)
-			} else {
-				prop.reset(PropertyGetValues(property))
-			}
- 		}
+
+		guard let holder = self.delegate?.resolve(node: self, property: name) else {
+			return
+		}
+
+		if (property == nil) {
+			holder.reset(lock: nil, initial: true)
+			return
+		}
+
+		holder.reset(PropertyGetValues(property), lock: nil)
 	}
 }
 

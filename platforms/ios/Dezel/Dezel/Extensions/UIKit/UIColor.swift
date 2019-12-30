@@ -60,8 +60,8 @@ public extension UIColor {
 			return
 		}
 
-		if let color = names[color] {
-			self.init(color: color)
+		if let named = names[color] {
+			self.init(color: named)
 			return
 		}
 

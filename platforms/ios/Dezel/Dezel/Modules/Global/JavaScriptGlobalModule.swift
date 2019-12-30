@@ -78,6 +78,10 @@ open class JavaScriptGlobalModule : JavaScriptModule {
 		context.global.defineProperty("clearTimeout", value: context.createFunction(self.clearTimeout))
 		context.global.defineProperty("requestAnimationFrame", value: context.createFunction(self.requestAnimationFrame))
 		context.global.defineProperty("cancelAnimationFrame", value: context.createFunction(self.cancelAnimationFrame))
+
+		context.global.defineProperty("LOG", value: context.createFunction { callback in
+			
+		})
 	}
 
     /**

@@ -89,11 +89,11 @@ public class Display {
 	private var prepareCallbacks: [(() -> Void)] = []
 
 	/**
-	 * @property dispatchCallback
+	 * @property resolveCallbacks
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private var dispatchCallback: [(() -> Void)] = []
+	private var resolveCallbacks: [(() -> Void)] = []
 
 	//--------------------------------------------------------------------------
 	// MARK: Methods
@@ -141,7 +141,7 @@ public class Display {
 	 * @since 0.7.0
 	 */
 	public func registerResolveCallback(_ callback: @escaping () -> Void) {
-		self.dispatchCallback.append(callback)
+		self.resolveCallbacks.append(callback)
 	}
 
 	//--------------------------------------------------------------------------
@@ -154,7 +154,7 @@ public class Display {
 	 * @hidden
 	 */
 	internal func didPrepare() {
-		self.dispatchLayoutBeganEvent()
+		self.dispatchPrepareCallback()
 	}
 
 	/**
@@ -163,7 +163,7 @@ public class Display {
 	 * @hidden
 	 */
 	internal func didResolve() {
-		self.dispatchLayoutEndedEvent()
+		self.dispatchResolveCallback()
 	}
 
 	/**
@@ -171,7 +171,7 @@ public class Display {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	internal func dispatchLayoutBeganEvent() {
+	internal func dispatchPrepareCallback() {
 		self.prepareCallbacks.forEach { $0() }
 		self.prepareCallbacks.removeAll()
 	}
@@ -181,9 +181,9 @@ public class Display {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	internal func dispatchLayoutEndedEvent() {
-		self.dispatchCallback.forEach { $0() }
-		self.dispatchCallback.removeAll()
+	internal func dispatchResolveCallback() {
+		self.resolveCallbacks.forEach { $0() }
+		self.resolveCallbacks.removeAll()
 	}
 }
 
