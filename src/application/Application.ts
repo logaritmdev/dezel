@@ -571,8 +571,8 @@ export class Application extends Emitter {
 				this.onKeyboardResize(event.data.height, event.data.duration, event.data.equation)
 				break
 
-			case 'memorywarning':
-				this.onMemoryWarning()
+			case 'lowmemory':
+				this.onLowMemory()
 				break
 
 			case 'openuniversalurl':
@@ -670,10 +670,10 @@ export class Application extends Emitter {
 
 	/**
 	 * Called when the application gets low on memory.
-	 * @method onMemoryWarning
+	 * @method onLowMemory
 	 * @since 0.7.0
 	 */
-	public onMemoryWarning() {
+	public onLowMemory() {
 
 	}
 
@@ -862,12 +862,12 @@ export class Application extends Emitter {
 	}
 
 	/**
-	 * @method nativeOnMemoryWarning
+	 * @method nativeOnLowMemory
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private nativeOnMemoryWarning() {
-		this.emit('memorywarning')
+	private nativeOnLowMemory() {
+		this.emit('lowmemory')
 	}
 
 	/**

@@ -346,8 +346,8 @@ export abstract class Screen<TResult = any> extends Component {
 				this.onKeyboardResize(event.data.height, event.data.duration, event.data.equation)
 				break
 
-			case 'memorywarning':
-				this.onMemoryWarning()
+			case 'lowmemory':
+				this.onLowMemory()
 				break
 
 			case 'destroy':
@@ -501,10 +501,10 @@ export abstract class Screen<TResult = any> extends Component {
 
 	/**
 	 * Called when the application gets low on memory.
-	 * @method onMemoryWarning
+	 * @method onLowMemory
 	 * @since 0.7.0
 	 */
-	public onMemoryWarning() {
+	public onLowMemory() {
 
 	}
 
@@ -637,7 +637,7 @@ export abstract class Screen<TResult = any> extends Component {
 		Application.main.on('keyboardshow', this.onApplicationKeyboardShow)
 		Application.main.on('keyboardhide', this.onApplicationKeyboardHide)
 		Application.main.on('keyboardresize', this.onApplicationKeyboardResize)
-		Application.main.on('memorywarning', this.onApplicationMemoryWarning)
+		Application.main.on('lowmemory', this.onApplicationLowMemory)
 	}
 
 	/**
@@ -651,7 +651,7 @@ export abstract class Screen<TResult = any> extends Component {
 		Application.main.off('keyboardshow', this.onApplicationKeyboardShow)
 		Application.main.off('keyboardhide', this.onApplicationKeyboardHide)
 		Application.main.off('keyboardresize', this.onApplicationKeyboardResize)
-		Application.main.off('memorywarning', this.onApplicationMemoryWarning)
+		Application.main.off('lowmemory', this.onApplicationLowMemory)
 	}
 
 	/**
@@ -709,11 +709,11 @@ export abstract class Screen<TResult = any> extends Component {
 	}
 
 	/**
-	 * @method onApplicationMemoryWarning
+	 * @method onApplicationLowMemory
 	 * @since 0.3.0
 	 * @hidden
 	 */
-	@bound private onApplicationMemoryWarning(event: Event) {
+	@bound private onApplicationLowMemory(event: Event) {
 		this.emit(event)
 	}
 }

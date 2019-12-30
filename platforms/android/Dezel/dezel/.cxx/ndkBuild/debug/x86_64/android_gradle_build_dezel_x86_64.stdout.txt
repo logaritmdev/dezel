@@ -1,0 +1,3 @@
+[x86_64] Compile++      : dezel <= ca_logaritm_dezel_view_display_external_ValueExternal.cpp
+[x86_64] Compile++      : dezel <= ca_logaritm_dezel_view_display_external_ValueListExternal.cpp
+[x86_64] SharedLibrary  : libdezel.so

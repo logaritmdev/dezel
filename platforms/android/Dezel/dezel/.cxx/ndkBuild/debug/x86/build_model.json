@@ -1,0 +1,59 @@
+{
+  "variant": {
+    "module": {
+      "rootBuildGradleFolder": "/Users/jpdery/Projects/dezel-dev-example/platforms/android",
+      "sdkFolder": "/Users/jpdery/Library/Android/sdk",
+      "isNativeCompilerSettingsCacheEnabled": false,
+      "isBuildOnlyTargetAbiEnabled": true,
+      "ideBuildTargetAbi": "x86,armeabi-v7a,armeabi",
+      "splitsAbiFilterSet": [],
+      "intermediatesFolder": "/Users/jpdery/Projects/dezel-dev/platforms/android/Dezel/dezel/build/intermediates",
+      "gradleModulePathName": ":dezel",
+      "moduleRootFolder": "/Users/jpdery/Projects/dezel-dev/platforms/android/Dezel/dezel",
+      "makeFile": "/Users/jpdery/Projects/dezel-dev/platforms/android/Dezel/dezel/src/main/jni/Android.mk",
+      "buildSystem": "NDK_BUILD",
+      "compilerSettingsCacheFolder": "/Users/jpdery/Projects/dezel-dev-example/platforms/android/.cxx",
+      "cxxFolder": "/Users/jpdery/Projects/dezel-dev/platforms/android/Dezel/dezel/.cxx",
+      "ndkFolder": "/Users/jpdery/Library/Android/sdk/ndk-bundle",
+      "ndkVersion": "20.1.5948944",
+      "ndkSupportedAbiList": [
+        "ARMEABI_V7A",
+        "ARM64_V8A",
+        "X86",
+        "X86_64"
+      ],
+      "ndkDefaultAbiList": [
+        "ARMEABI_V7A",
+        "ARM64_V8A",
+        "X86",
+        "X86_64"
+      ],
+      "cmakeToolchainFile": "."
+    },
+    "buildSystemArgumentList": [],
+    "cFlagList": [],
+    "cppFlagsList": [],
+    "variantName": "debug",
+    "soFolder": "/Users/jpdery/Projects/dezel-dev/platforms/android/Dezel/dezel/build/intermediates/ndkBuild/debug/lib",
+    "objFolder": "/Users/jpdery/Projects/dezel-dev/platforms/android/Dezel/dezel/build/intermediates/ndkBuild/debug/obj/local",
+    "jsonFolder": "/Users/jpdery/Projects/dezel-dev/platforms/android/Dezel/dezel/.cxx/ndkBuild/debug",
+    "gradleBuildOutputFolder": "/Users/jpdery/Projects/dezel-dev/platforms/android/Dezel/dezel/.cxx/cxx/debug",
+    "isDebuggableEnabled": true,
+    "validAbiList": [
+      "X86",
+      "ARMEABI_V7A"
+    ],
+    "buildTargetSet": []
+  },
+  "abi": "X86",
+  "abiPlatformVersion": 21,
+  "cxxBuildFolder": "/Users/jpdery/Projects/dezel-dev/platforms/android/Dezel/dezel/.cxx/ndkBuild/debug/x86",
+  "jsonFile": "/Users/jpdery/Projects/dezel-dev/platforms/android/Dezel/dezel/.cxx/ndkBuild/debug/x86/android_gradle_build.json",
+  "gradleBuildOutputFolder": "/Users/jpdery/Projects/dezel-dev/platforms/android/Dezel/dezel/.cxx/cxx/debug/x86",
+  "objFolder": "/Users/jpdery/Projects/dezel-dev/platforms/android/Dezel/dezel/build/intermediates/ndkBuild/debug/obj/local/x86",
+  "buildCommandFile": "/Users/jpdery/Projects/dezel-dev/platforms/android/Dezel/dezel/.cxx/ndkBuild/debug/x86/build_command.txt",
+  "buildOutputFile": "/Users/jpdery/Projects/dezel-dev/platforms/android/Dezel/dezel/.cxx/ndkBuild/debug/x86/build_output.txt",
+  "modelOutputFile": "/Users/jpdery/Projects/dezel-dev/platforms/android/Dezel/dezel/.cxx/ndkBuild/debug/x86/build_model.json",
+  "jsonGenerationLoggingRecordFile": "/Users/jpdery/Projects/dezel-dev/platforms/android/Dezel/dezel/.cxx/ndkBuild/debug/x86/json_generation_record.json",
+  "compileCommandsJsonFile": "/Users/jpdery/Projects/dezel-dev/platforms/android/Dezel/dezel/.cxx/ndkBuild/debug/x86/compile_commands.json"
+}

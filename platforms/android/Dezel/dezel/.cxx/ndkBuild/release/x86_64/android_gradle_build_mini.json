@@ -1,0 +1,18 @@
+{
+  "buildFiles": [
+    "/Users/jpdery/Projects/dezel-dev/platforms/android/Dezel/dezel/src/main/jni/Android.mk",
+    "/Users/jpdery/Projects/dezel-dev/platforms/android/Dezel/dezel/src/main/jni/Application.mk"
+  ],
+  "cleanCommands": [
+    "/Users/jpdery/Library/Android/sdk/ndk-bundle/ndk-build NDK_PROJECT_PATH\u003dnull APP_BUILD_SCRIPT\u003d/Users/jpdery/Projects/dezel-dev/platforms/android/Dezel/dezel/src/main/jni/Android.mk NDK_APPLICATION_MK\u003d/Users/jpdery/Projects/dezel-dev/platforms/android/Dezel/dezel/src/main/jni/Application.mk APP_ABI\u003dx86_64 NDK_ALL_ABIS\u003dx86_64 NDK_DEBUG\u003d0 APP_PLATFORM\u003dandroid-21 NDK_OUT\u003d/Users/jpdery/Projects/dezel-dev/platforms/android/Dezel/dezel/build/intermediates/ndkBuild/release/obj NDK_LIBS_OUT\u003d/Users/jpdery/Projects/dezel-dev/platforms/android/Dezel/dezel/build/intermediates/ndkBuild/release/lib clean"
+  ],
+  "buildTargetsCommand": "/Users/jpdery/Library/Android/sdk/ndk-bundle/ndk-build NDK_PROJECT_PATH\u003dnull APP_BUILD_SCRIPT\u003d/Users/jpdery/Projects/dezel-dev/platforms/android/Dezel/dezel/src/main/jni/Android.mk NDK_APPLICATION_MK\u003d/Users/jpdery/Projects/dezel-dev/platforms/android/Dezel/dezel/src/main/jni/Application.mk APP_ABI\u003dx86_64 NDK_ALL_ABIS\u003dx86_64 NDK_DEBUG\u003d0 APP_PLATFORM\u003dandroid-21 NDK_OUT\u003d/Users/jpdery/Projects/dezel-dev/platforms/android/Dezel/dezel/build/intermediates/ndkBuild/release/obj NDK_LIBS_OUT\u003d/Users/jpdery/Projects/dezel-dev/platforms/android/Dezel/dezel/build/intermediates/ndkBuild/release/lib {LIST_OF_TARGETS_TO_BUILD}",
+  "libraries": {
+    "dezel-release-x86_64": {
+      "artifactName": "dezel",
+      "buildCommand": "/Users/jpdery/Library/Android/sdk/ndk-bundle/ndk-build NDK_PROJECT_PATH\u003dnull APP_BUILD_SCRIPT\u003d/Users/jpdery/Projects/dezel-dev/platforms/android/Dezel/dezel/src/main/jni/Android.mk NDK_APPLICATION_MK\u003d/Users/jpdery/Projects/dezel-dev/platforms/android/Dezel/dezel/src/main/jni/Application.mk APP_ABI\u003dx86_64 NDK_ALL_ABIS\u003dx86_64 NDK_DEBUG\u003d0 APP_PLATFORM\u003dandroid-21 NDK_OUT\u003d/Users/jpdery/Projects/dezel-dev/platforms/android/Dezel/dezel/build/intermediates/ndkBuild/release/obj NDK_LIBS_OUT\u003d/Users/jpdery/Projects/dezel-dev/platforms/android/Dezel/dezel/build/intermediates/ndkBuild/release/lib /Users/jpdery/Projects/dezel-dev/platforms/android/Dezel/dezel/build/intermediates/ndkBuild/release/obj/local/x86_64/libdezel.so",
+      "abi": "x86_64",
+      "output": "/Users/jpdery/Projects/dezel-dev/platforms/android/Dezel/dezel/build/intermediates/ndkBuild/release/obj/local/x86_64/libdezel.so"
+    }
+  }
+}
