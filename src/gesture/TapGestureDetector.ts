@@ -83,10 +83,7 @@ export class TapGestureDetector extends GestureDetector<TapGestureDetector> {
 			return
 		}
 
-		let target = this.window?.findViewAt(
-			touch.x,
-			touch.y
-		) || null
+		let target = this.findViewAt(touch.x, touch.y)
 
 		while (target) {
 
@@ -99,7 +96,12 @@ export class TapGestureDetector extends GestureDetector<TapGestureDetector> {
 				this.finish()
 			}
 
-			target = target.parent
+			let parent = target.parent
+			if (parent == null) {
+				break
+			}
+
+			target = parent
 		}
 	}
 
@@ -157,5 +159,32 @@ export class TapGestureDetector extends GestureDetector<TapGestureDetector> {
 	 * @hidden
 	 */
 	private touch: Touch | null = null
+
+	/**
+	 * @method findViewAt
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private findViewAt(x: number, y: number) {
+
+		let view = this.view
+		if (view == null) {
+			throw new Error('Unexpected error.')
+		}
+
+		let window: Window | null
+
+		if (view instanceof Window) {
+			window = view
+		} else {
+			window = view.window
+		}
+
+		if (window == null) {
+			throw new Error('Unexpected error.')
+		}
+
+		return window.findViewAt(x, y)
+	}
 
 }

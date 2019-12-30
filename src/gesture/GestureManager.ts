@@ -31,6 +31,7 @@ export class GestureManager {
 	 */
 	public get gestures(): ReadonlyArray<GestureDetector> {
 		return this[$gestures]
+		// TODO HIDE
 	}
 
 	//--------------------------------------------------------------------------
@@ -111,7 +112,6 @@ export class GestureManager {
 
 		if (captured) {
 			captured.dispatchTouchEvent(event)
-
 		} else {
 
 			for (let gesture of this.gestures) {
