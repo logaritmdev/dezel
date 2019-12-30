@@ -20,7 +20,7 @@ JavaScriptClassStaticFunctionWrapperCallback(JSContextRef context, JSObjectRef o
 		wrapper->env,
 		wrapper->ctx,
 		wrapper->cls,
-		NULL,
+		nullptr,
 		wrapper->callback,
 		object,
 		callee,
@@ -28,7 +28,7 @@ JavaScriptClassStaticFunctionWrapperCallback(JSContextRef context, JSObjectRef o
 		argv
 	);
 
-	return result ? reinterpret_cast<JSValueRef>(result) : NULL;
+	return result ? reinterpret_cast<JSValueRef>(result) : nullptr;
 }
 
 static void

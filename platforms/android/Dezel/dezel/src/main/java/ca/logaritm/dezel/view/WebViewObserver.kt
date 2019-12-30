@@ -3,10 +3,10 @@ package ca.logaritm.dezel.view
 import android.util.Size
 
 /**
- * @protocol WebViewListener
+ * @protocol WebViewObserver
  * @since 0.7.0
  */
-public interface WebViewListener {
+public interface WebViewObserver {
 
 	/**
 	 * @method onBeforeLoad

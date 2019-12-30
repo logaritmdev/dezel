@@ -1,4 +1,4 @@
-package ca.logaritm.dezel.view.transition
+package ca.logaritm.dezel.view.animation
 
 import android.view.animation.Interpolator
 import ca.logaritm.dezel.application.ApplicationActivity
@@ -33,10 +33,9 @@ public object TransitionManager {
 	 */
 	public fun begin(activity: ApplicationActivity, duration: Double, equation: Interpolator, delay: Double, callback: TransitionCallback) {
 
-		val transition = Transition(activity)
-
 		Synchronizer.main.execute()
 
+		val transition = Transition(activity)
 		transition.callback = callback
 		transition.duration = duration
 		transition.equation = equation

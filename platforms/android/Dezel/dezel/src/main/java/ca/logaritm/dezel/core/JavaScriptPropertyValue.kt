@@ -23,6 +23,12 @@ open class JavaScriptPropertyValue(type: JavaScriptPropertyType = JavaScriptProp
 	public var unit: JavaScriptPropertyUnit = JavaScriptPropertyUnit.NONE
 
 	/**
+	 * @property value
+	 * @since 0.7.0
+	 */
+	public var value: JavaScriptValue? = null
+
+	/**
 	 * @property string
 	 * @since 0.7.0
 	 */
@@ -47,11 +53,74 @@ open class JavaScriptPropertyValue(type: JavaScriptPropertyType = JavaScriptProp
 	}
 
 	/**
-	 * @property value
+	 * @property isNull
 	 * @since 0.7.0
-	 * @hidden
 	 */
-	private var value: JavaScriptValue? = null
+	public val isNull: Boolean
+		get() = this.type == JavaScriptPropertyType.NULL
+
+	/**
+	 * @property isString
+	 * @since 0.7.0
+	 */
+	public val isString: Boolean
+		get() = this.type == JavaScriptPropertyType.STRING
+
+	/**
+	 * @property isNumber
+	 * @since 0.7.0
+	 */
+	public val isNumber: Boolean
+		get() = this.type == JavaScriptPropertyType.NUMBER
+
+	/**
+	 * @property isBoolean
+	 * @since 0.7.0
+	 */
+	public val isBoolean: Boolean
+		get() = this.type == JavaScriptPropertyType.BOOLEAN
+
+	/**
+	 * @property isObject
+	 * @since 0.7.0
+	 */
+	public val isObject: Boolean
+		get() = this.type == JavaScriptPropertyType.OBJECT
+
+	/**
+	 * @property isArray
+	 * @since 0.7.0
+	 */
+	public val isArray: Boolean
+		get() = this.type == JavaScriptPropertyType.ARRAY
+
+	/**
+	 * @property isCallback
+	 * @since 0.7.0
+	 */
+	public val isCallback: Boolean
+		get() = this.type == JavaScriptPropertyType.CALLBACK
+
+	/**
+	 * @property isVariable
+	 * @since 0.7.0
+	 */
+	public val isVariable: Boolean
+		get() = this.type == JavaScriptPropertyType.VARIABLE
+
+	/**
+	 * @property isFunction
+	 * @since 0.7.0
+	 */
+	public val isFunction: Boolean
+		get() = this.type == JavaScriptPropertyType.FUNCTION
+
+	/**
+	 * @property isComposite
+	 * @since 0.7.0
+	 */
+	public val isComposite: Boolean
+		get() = this.type == JavaScriptPropertyType.COMPOSITE
 
 	//--------------------------------------------------------------------------
 	// Methods
@@ -76,10 +145,10 @@ open class JavaScriptPropertyValue(type: JavaScriptPropertyType = JavaScriptProp
 	}
 
 	/**
-	 * @method store
+	 * @method reset
 	 * @since 0.7.0
 	 */
-	open fun store(value: JavaScriptValue?) {
+	open fun reset(value: JavaScriptValue?) {
 		this.value = value
 	}
 
@@ -105,14 +174,6 @@ open class JavaScriptPropertyValue(type: JavaScriptPropertyType = JavaScriptProp
 	 */
 	open fun toBoolean(): Boolean {
 		return false
-	}
-
-	/**
-	 * @method equals
-	 * @since 0.7.0
-	 */
-	open fun equals(value: JavaScriptValue): Boolean {
-		return this.value?.equals(value) ?: false
 	}
 
 	/**
@@ -151,6 +212,14 @@ open class JavaScriptPropertyValue(type: JavaScriptPropertyType = JavaScriptProp
 	 * @method equals
 	 * @since 0.7.0
 	 */
+	open fun equals(value: JavaScriptValue): Boolean {
+		return this.value?.equals(value) ?: false
+	}
+
+	/**
+	 * @method equals
+	 * @since 0.7.0
+	 */
 	open fun <T> cast(type: Class<T>): T? {
 		return this.value?.cast(type)
 	}
@@ -174,7 +243,7 @@ open class JavaScriptPropertyValue(type: JavaScriptPropertyType = JavaScriptProp
 		if (this.unit == JavaScriptPropertyUnit.NONE) {
 
 			when (this.type) {
-				JavaScriptPropertyType.NULL    -> this.value = context.jsnull
+				JavaScriptPropertyType.NULL    -> this.value = context.Null
 				JavaScriptPropertyType.STRING  -> this.value = context.createString(this.string)
 				JavaScriptPropertyType.NUMBER  -> this.value = context.createNumber(this.number)
 				JavaScriptPropertyType.BOOLEAN -> this.value = context.createBoolean(this.boolean)

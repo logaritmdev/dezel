@@ -1,47 +1,58 @@
 package ca.logaritm.dezel.view
 
+import android.animation.ObjectAnimator
+import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.*
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import ca.logaritm.dezel.extension.*
+import ca.logaritm.dezel.extension.Delegates
 import ca.logaritm.dezel.extension.graphics.addInnerRoundedRect
 import ca.logaritm.dezel.extension.graphics.addOuterRoundedRect
 import ca.logaritm.dezel.extension.view.setMeasuredFrame
-import ca.logaritm.dezel.view.animation.TransitionListener
-import ca.logaritm.dezel.view.drawable.BitmapDrawable
+import ca.logaritm.dezel.modules.view.JavaScriptView
+import ca.logaritm.dezel.view.animation.animator.TransformAnimator
+import ca.logaritm.dezel.view.animation.Animatable
+import ca.logaritm.dezel.view.drawable.BackgroundImageDrawable
 import ca.logaritm.dezel.view.drawable.BorderDrawable
+import ca.logaritm.dezel.view.drawable.BackgroundColorDrawable
 import ca.logaritm.dezel.view.drawable.ShadowDrawable
 import ca.logaritm.dezel.view.graphic.Color
 import ca.logaritm.dezel.view.graphic.LinearGradient
 import ca.logaritm.dezel.view.graphic.RadialGradient
 import ca.logaritm.dezel.view.graphic.Transform
+import ca.logaritm.dezel.view.trait.Clippable
+import ca.logaritm.dezel.view.trait.Resizable
+import ca.logaritm.dezel.view.type.ImageFit
+import ca.logaritm.dezel.view.type.ImagePosition
+import kotlin.math.abs
 import kotlin.math.ceil
-import ca.logaritm.dezel.modules.view.JavaScriptView as ContainerView
+import kotlin.math.max
+import kotlin.math.min
 
 /**
  * @class WrapperView
  * @super ViewGroup
  * @since 0.1.0
  */
-open class WrapperView(context: Context, content: View, container: ContainerView) : ViewGroup(context), TransitionListener {
+open class WrapperView(context: Context, content: View, manager: JavaScriptView) : ViewGroup(context), Animatable {
 
 	//--------------------------------------------------------------------------
 	// Properties
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @property container
+	 * @property manager
 	 * @since 0.5.0
 	 */
-	public var container: ContainerView = container
+	public var manager: JavaScriptView
 
 	/**
 	 * @property content
 	 * @since 0.2.0
 	 */
-	public val content: View = content
+	public val content: View
 
 	/**
 	 * @property id
@@ -57,6 +68,60 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 		this.invalidate()
 		this.invalidateFrame()
 		this.invalidateShape()
+	}
+
+	/**
+	 * @property backgroundColor
+	 * @since 0.1.0
+	 */
+	open var backgroundColor: Int? by Delegates.OnSetOptional<Int>(null) { value ->
+		this.backgroundColorDrawable.color = value
+		this.invalidate()
+	}
+
+	/**
+	 * @property backgroundLinearGradient
+	 * @since 0.1.0
+	 */
+	open var backgroundLinearGradient: LinearGradient? by Delegates.OnSetOptional<LinearGradient>(null) { value ->
+		this.backgroundColorDrawable.linearGradient = value
+		this.invalidate()
+	}
+
+	/**
+	 * @property backgroundRadialGradient
+	 * @since 0.1.0
+	 */
+	open var backgroundRadialGradient: RadialGradient? by Delegates.OnSetOptional<RadialGradient>(null) { value ->
+		this.backgroundColorDrawable.radialGradient = value
+		this.invalidate()
+	}
+
+	/**
+	 * @property backgroundImage
+	 * @since 0.1.0
+	 */
+	open var backgroundImage: Bitmap? by Delegates.OnSetOptional<Bitmap>(null) { value ->
+		this.backgroundImageDrawable.image = value
+		this.invalidate()
+	}
+
+	/**
+	 * @property backgroundImageFit
+	 * @since 0.7.0
+	 */
+	open var backgroundImageFit: ImageFit by Delegates.OnSet(ImageFit.COVER) { value ->
+		this.backgroundImageDrawable.imageFit = value
+		this.invalidate()
+	}
+
+	/**
+	 * @property backgroundImagePosition
+	 * @since 0.7.0
+	 */
+	open var backgroundImagePosition: ImagePosition by Delegates.OnSet(ImagePosition.MIDDLE_CENTER) { value ->
+		this.backgroundImageDrawable.imagePosition = value
+		this.invalidate()
 	}
 
 	/**
@@ -168,87 +233,6 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 	}
 
 	/**
-	 * @property backgroundKolor
-	 * @since 0.1.0
-	 */
-	open var backgroundKolor: Int by Delegates.OnSet(Color.TRANSPARENT) { value ->
-		this.bitmapDrawable.backgroundColor = value
-		this.invalidate()
-	}
-
-	/**
-	 * @property backgroundLinearGradient
-	 * @since 0.1.0
-	 */
-	open var backgroundLinearGradient: LinearGradient? by Delegates.OnSetOptional<LinearGradient>(null) { value ->
-		this.bitmapDrawable.backgroundLinearGradient = value
-		this.invalidate()
-	}
-
-	/**
-	 * @property backgroundRadialGradient
-	 * @since 0.1.0
-	 */
-	open var backgroundRadialGradient: RadialGradient? by Delegates.OnSetOptional<RadialGradient>(null) { value ->
-		this.bitmapDrawable.backgroundRadialGradient = value
-		this.invalidate()
-	}
-
-	/**
-	 * @property backgroundImage
-	 * @since 0.1.0
-	 */
-	open var backgroundImage: Bitmap? by Delegates.OnSetOptional<Bitmap>(null) { value ->
-		this.bitmapDrawable.backgroundImage = value
-		this.invalidate()
-	}
-
-	/**
-	 * @property backgroundImageTop
-	 * @since 0.1.0
-	 */
-	open var backgroundImageTop: Float by Delegates.OnSet(0f) { value ->
-		this.bitmapDrawable.backgroundImageTop = value
-		this.invalidate()
-	}
-
-	/**
-	 * @property backgroundImageLeft
-	 * @since 0.1.0
-	 */
-	open var backgroundImageLeft: Float by Delegates.OnSet(0f) { value ->
-		this.bitmapDrawable.backgroundImageLeft = value
-		this.invalidate()
-	}
-
-	/**
-	 * @property backgroundImageWidth
-	 * @since 0.1.0
-	 */
-	open var backgroundImageWidth: Float by Delegates.OnSet(0f) { value ->
-		this.bitmapDrawable.backgroundImageWidth = value
-		this.invalidate()
-	}
-
-	/**
-	 * @property backgroundImageHeight
-	 * @since 0.1.0
-	 */
-	open var backgroundImageHeight: Float by Delegates.OnSet(0f) { value ->
-		this.bitmapDrawable.backgroundImageHeight = value
-		this.invalidate()
-	}
-
-	/**
-	 * @property backgroundImageTint
-	 * @since 0.1.0
-	 */
-	open var backgroundImageTint: Int by Delegates.OnSet(Color.TRANSPARENT) { value ->
-		this.bitmapDrawable.backgroundImageTint = value
-		this.invalidate()
-	}
-
-	/**
 	 * @property shadowBlur
 	 * @since 0.1.0
 	 */
@@ -308,14 +292,6 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 	}
 
 	/**
-	 * @property visible
-	 * @since 0.1.0
-	 */
-	open var visible: Boolean by Delegates.OnSet(true) { value ->
-		this.visibility = if (value) View.VISIBLE else View.GONE
-	}
-
-	/**
 	 * @property drawable
 	 * @since 0.4.0
 	 */
@@ -336,12 +312,6 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 	open var touchable: Boolean = true
 
 	/**
-	 * @property measured
-	 * @since 0.2.0
-	 */
-	open var measured: Boolean = false
-
-	/**
 	 * @property hasDepth
 	 * @since 0.1.0
 	 * @hidden
@@ -358,11 +328,18 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 		get() = this.borderTopLeftRadius > 0f || this.borderTopRightRadius > 0f || this.borderBottomLeftRadius > 0f || this.borderBottomRightRadius > 0f
 
 	/**
-	 * @property shadowDrawable
+	 * @property backgroundColorDrawable
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private var backgroundColorDrawable: BackgroundColorDrawable
+
+	/**
+	 * @property backgroundImageDrawable
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	private var shadowDrawable: ShadowDrawable
+	private var backgroundImageDrawable: BackgroundImageDrawable
 
 	/**
 	 * @property borderDrawable
@@ -372,11 +349,11 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 	private var borderDrawable: BorderDrawable
 
 	/**
-	 * @property bitmapDrawable
+	 * @property shadowDrawable
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	private var bitmapDrawable: BitmapDrawable
+	private var shadowDrawable: ShadowDrawable
 
 	/**
 	 * @property hardwareLayerPaint
@@ -442,25 +419,25 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 	private var initialized: Boolean = false
 
 	/**
-	 * @property SRC_IN
-	 * @since 0.1.0
+	 * @property srcInMode
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private val SRC_IN: PorterDuffXfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_IN)
+	private val srcInMode: PorterDuffXfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_IN)
 
 	/**
-	 * @property DST_OVER
-	 * @since 0.1.0
+	 * @property dstOverMode
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private val DST_OVER: PorterDuffXfermode = PorterDuffXfermode(PorterDuff.Mode.DST_OVER)
+	private val dstOverMode: PorterDuffXfermode = PorterDuffXfermode(PorterDuff.Mode.DST_OVER)
 
 	/**
-	 * @property CLEAR
-	 * @since 0.1.0
+	 * @property clearMode
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private val CLEAR: PorterDuffXfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
+	private val clearMode: PorterDuffXfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
 
 	//--------------------------------------------------------------------------
 	// Methods
@@ -472,13 +449,17 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 	 */
 	init {
 
+		this.content = content
+		this.manager = manager
+
 		this.setWillNotDraw(true)
 
 		this.clipChildren = false
 		this.clipToPadding = false
-		this.shadowDrawable = ShadowDrawable()
+		this.backgroundColorDrawable = BackgroundColorDrawable()
+		this.backgroundImageDrawable = BackgroundImageDrawable()
 		this.borderDrawable = BorderDrawable()
-		this.bitmapDrawable = BitmapDrawable()
+		this.shadowDrawable = ShadowDrawable()
 
 		this.hardwareLayerShapePaint.color = Color.BLACK
 
@@ -501,7 +482,7 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 		 */
 
 		if (this.initialized) {
-			this.container.scheduleLayout()
+			this.manager.scheduleLayout()
 		}
 	}
 
@@ -578,11 +559,11 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 		 * why we add the shadow to the view viewport.
 		 */
 
-		val contentShadowOffsetT = Math.max(shadowBlur - shadowOffsetT, 0)
-		val contentShadowOffsetL = Math.max(shadowBlur - shadowOffsetL, 0)
+		val contentShadowOffsetT = max(shadowBlur - shadowOffsetT, 0)
+		val contentShadowOffsetL = max(shadowBlur - shadowOffsetL, 0)
 
-		val adjustedViewW = viewW + (shadowBlur * 2 + Math.abs(shadowOffsetL))
-		val adjustedViewH = viewH + (shadowBlur * 2 + Math.abs(shadowOffsetT))
+		val adjustedViewW = viewW + (shadowBlur * 2 + abs(shadowOffsetL))
+		val adjustedViewH = viewH + (shadowBlur * 2 + abs(shadowOffsetT))
 		val adjustedViewT = viewT - contentShadowOffsetT
 		val adjustedViewL = viewL - contentShadowOffsetL
 
@@ -631,7 +612,7 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 		val shapeW = this.frame.width()
 		val shapeH = this.frame.height()
 
-		val maxRadius = (Math.min(shapeW, shapeH) / 2f)
+		val maxRadius = min(shapeW, shapeH) / 2f
 
 		var outerTL = this.borderTopLeftRadius
 		var outerTR = this.borderTopRightRadius
@@ -643,14 +624,14 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 		if (outerBL > maxRadius) outerBL = maxRadius
 		if (outerBR > maxRadius) outerBR = maxRadius
 
-		var innerRadiusTLY = Math.max(outerTL - borderWidthT, 0f)
-		var innerRadiusTLX = Math.max(outerTL - borderWidthL, 0f)
-		var innerRadiusTRY = Math.max(outerTR - borderWidthT, 0f)
-		var innerRadiusTRX = Math.max(outerTR - borderWidthR, 0f)
-		var innerRadiusBLY = Math.max(outerBL - borderWidthB, 0f)
-		var innerRadiusBLX = Math.max(outerBL - borderWidthL, 0f)
-		var innerRadiusBRY = Math.max(outerBR - borderWidthB, 0f)
-		var innerRadiusBRX = Math.max(outerBR - borderWidthR, 0f)
+		var innerRadiusTLY = max(outerTL - borderWidthT, 0f)
+		var innerRadiusTLX = max(outerTL - borderWidthL, 0f)
+		var innerRadiusTRY = max(outerTR - borderWidthT, 0f)
+		var innerRadiusTRX = max(outerTR - borderWidthR, 0f)
+		var innerRadiusBLY = max(outerBL - borderWidthB, 0f)
+		var innerRadiusBLX = max(outerBL - borderWidthL, 0f)
+		var innerRadiusBRY = max(outerBR - borderWidthB, 0f)
+		var innerRadiusBRX = max(outerBR - borderWidthR, 0f)
 
 		if (innerRadiusTLY == 0f || innerRadiusTLX == 0f) {
 			innerRadiusTLY = 0f
@@ -876,10 +857,10 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 			val borderWidthR = this.borderRightWidth
 			val borderWidthB = this.borderBottomWidth
 
-			val adjustedX = Math.max(shadowBlur - shadowOffsetL, 0f).toInt()
-			val adjustedY = Math.max(shadowBlur - shadowOffsetT, 0f).toInt()
-			val adjustedW = viewW - (shadowBlur * 2 + Math.abs(shadowOffsetL)).toInt()
-			val adjustedH = viewH - (shadowBlur * 2 + Math.abs(shadowOffsetT)).toInt()
+			val adjustedX = max(shadowBlur - shadowOffsetL, 0f).toInt()
+			val adjustedY = max(shadowBlur - shadowOffsetT, 0f).toInt()
+			val adjustedW = viewW - (shadowBlur * 2 + abs(shadowOffsetL)).toInt()
+			val adjustedH = viewH - (shadowBlur * 2 + abs(shadowOffsetT)).toInt()
 
 			val innerL = adjustedX + borderWidthL
 			val innerT = adjustedY + borderWidthT
@@ -959,14 +940,15 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 		val shadowOffsetL = this.shadowOffsetLeft
 		val shadowOffsetT = this.shadowOffsetTop
 
-		val adjustedX = Math.max(shadowBlur - shadowOffsetL, 0f).toInt()
-		val adjustedY = Math.max(shadowBlur - shadowOffsetT, 0f).toInt()
-		val adjustedW = viewW - (shadowBlur * 2 + Math.abs(shadowOffsetL)).toInt()
-		val adjustedH = viewH - (shadowBlur * 2 + Math.abs(shadowOffsetT)).toInt()
+		val adjustedX = max(shadowBlur - shadowOffsetL, 0f).toInt()
+		val adjustedY = max(shadowBlur - shadowOffsetT, 0f).toInt()
+		val adjustedW = viewW - (shadowBlur * 2 + abs(shadowOffsetL)).toInt()
+		val adjustedH = viewH - (shadowBlur * 2 + abs(shadowOffsetT)).toInt()
 
-		val shadow = this.needsShadowDrawable()
-		val bitmap = this.needsBitmapDrawable()
+		val backgroundColor = this.needsBackgroundColor()
+		val backgroundImage = this.needsBackgroundImage()
 		val border = this.needsBorderDrawable()
+		val shadow = this.needsShadowDrawable()
 
 		val rounded = this.hasShape
 		if (rounded) {
@@ -992,9 +974,14 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 				this.hardwareLayerShapePaint
 			)
 
-			if (bitmap) {
-				this.bitmapDrawable.setBounds(0, 0, adjustedW, adjustedH)
-				this.bitmapDrawable.draw(canvas, this.SRC_IN)
+			if (backgroundColor) {
+				this.backgroundColorDrawable.setBounds(0, 0, adjustedW, adjustedH)
+				this.backgroundColorDrawable.draw(canvas, this.srcInMode)
+			}
+
+			if (backgroundImage) {
+				this.backgroundImageDrawable.setBounds(0, 0, adjustedW, adjustedH)
+				this.backgroundImageDrawable.draw(canvas, this.srcInMode)
 			}
 
 			if (border) {
@@ -1008,10 +995,10 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 
 			if (shadow) {
 				this.shadowDrawable.setBounds(0, 0, adjustedW, adjustedH)
-				this.shadowDrawable.draw(canvas, this.DST_OVER)
+				this.shadowDrawable.draw(canvas, this.dstOverMode)
 			}
 
-			if (bitmap == false) {
+			if (backgroundImage == false) {
 
 				val innerL = adjustedX + this.borderLeftWidth
 				val innerT = adjustedY + this.borderTopWidth
@@ -1039,7 +1026,7 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 				this.innerShapeMatrix.postTranslate(innerL, innerT)
 				this.innerShapePath.transform(this.innerShapeMatrix)
 
-				this.innerShapePaint.xfermode = this.CLEAR
+				this.innerShapePaint.xfermode = this.clearMode
 
 				canvas.drawPath(
 					this.innerShapePath,
@@ -1060,9 +1047,14 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 				adjustedY.toFloat()
 			)
 
-			if (bitmap) {
-				this.bitmapDrawable.setBounds(0, 0, adjustedW, adjustedH)
-				this.bitmapDrawable.draw(canvas)
+			if (backgroundColor) {
+				this.backgroundColorDrawable.setBounds(0, 0, adjustedW, adjustedH)
+				this.backgroundColorDrawable.draw(canvas)
+			}
+
+			if (backgroundImage) {
+				this.backgroundImageDrawable.setBounds(0, 0, adjustedW, adjustedH)
+				this.backgroundImageDrawable.draw(canvas)
 			}
 
 			if (border) {
@@ -1077,17 +1069,109 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 	}
 
 	//--------------------------------------------------------------------------
-	// Methods - TransitionListener
+	// Animations
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method onTransitionProperty
-	 * @since 0.6.0
+	 * @property animatable
+	 * @since 0.7.0
 	 */
-	override fun onTransitionProperty(property: String) {
+	override val animatable: List<String> = listOf(
+		"backgroundColor",
+		"borderTopWidth",
+		"borderLeftWidth",
+		"borderRightWidth",
+		"borderBottomWidth",
+		"borderTopColor",
+		"borderLeftColor",
+		"borderRightColor",
+		"borderBottomColor",
+		"borderTopLeftRadius",
+		"borderTopRightRadius",
+		"borderBottomLeftRadius",
+		"borderBottomRightRadius",
+		"shadowBlur",
+		"shadowColor",
+		"shadowOffsetTop",
+		"shadowOffsetLeft",
+		"alpha",
+		"transform"
+	)
 
-		if (property == "backgroundKolor" ||
-			property == "backgroundColor") {
+	/**
+	 * @property animations
+	 * @since 0.7.0
+	 */
+	override var animations: MutableMap<String, ValueAnimator> = mutableMapOf()
+
+	/**
+	 * @method onBeforeAnimate
+	 * @since 0.7.0
+	 */
+	override fun animate(property: String, initialValue: Any, currentValue: Any): ValueAnimator? {
+
+		when (property) {
+
+			"borderTopWidth",
+			"borderLeftWidth",
+			"borderRightWidth",
+			"borderBottomWidth",
+			"borderTopLeftRadius",
+			"borderTopRightRadius",
+			"borderBottomLeftRadius",
+			"borderBottomRightRadius",
+			"shadowBlur",
+			"shadowOffsetTop",
+			"shadowOffsetLeft",
+			"alpha" -> {
+
+				if (initialValue is Float &&
+					currentValue is Float) {
+					return ObjectAnimator.ofFloat(this, property, initialValue, currentValue)
+				}
+
+				throw Exception("Unexpected error.")
+			}
+
+			"borderTopColor",
+			"borderLeftColor",
+			"borderRightColor",
+			"borderBottomColor",
+			"backgroundColor",
+			"shadowColor"-> {
+
+				if (initialValue is Int &&
+					currentValue is Int) {
+					return ObjectAnimator.ofArgb(this, property, initialValue, currentValue)
+				}
+
+				throw Exception("Unexpected error.")
+			}
+
+			"transform" -> {
+
+				if (initialValue is Transform &&
+					currentValue is Transform) {
+					return TransformAnimator(this, initialValue, currentValue)
+				}
+
+				throw Exception("Unexpected error.")
+			}
+
+			else -> {
+			}
+		}
+
+		return null
+	}
+
+	/**
+	 * @method onBeforeAnimate
+	 * @since 0.7.0
+	 */
+	override fun onBeforeAnimate(property: String) {
+
+		if (property == "backgroundColor") {
 			this.setWillNotDraw(false)
 			return
 		}
@@ -1114,18 +1198,26 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 	}
 
 	/**
-	 * @method onTransitionBegin
-	 * @since 0.2.0
+	 * @method onBeginTransition
+	 * @since 0.7.0
 	 */
-	override fun onTransitionBegin() {
+	override fun onBeginTransition() {
 
 	}
 
 	/**
-	 * @method onTransitionFinish
-	 * @since 0.2.0
+	 * @method onCommitTransition
+	 * @since 0.7.0
 	 */
-	override fun onTransitionFinish() {
+	override fun onCommitTransition() {
+
+	}
+
+	/**
+	 * @method onFinishTransition
+	 * @since 0.7.0
+	 */
+	override fun onFinishTransition() {
 		this.update()
 	}
 
@@ -1155,12 +1247,12 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 	}
 
 	/**
-	 * @method needsShadowDrawable
-	 * @since 0.1.0
+	 * @method needsBackgroundColor
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private fun needsShadowDrawable(): Boolean {
-		return this.hasShadow()
+	private fun needsBackgroundColor(): Boolean {
+		return this.hasBackgroundColor()
 	}
 
 	/**
@@ -1168,8 +1260,8 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	private fun needsBitmapDrawable(): Boolean {
-		return this.hasBackgroundColor() || this.hasBackgroundImage()
+	private fun needsBackgroundImage(): Boolean {
+		return this.hasBackgroundImage()
 	}
 
 	/**
@@ -1182,12 +1274,21 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 	}
 
 	/**
+	 * @method needsShadowDrawable
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	private fun needsShadowDrawable(): Boolean {
+		return this.hasShadow()
+	}
+
+	/**
 	 * @method hasBackgroundColor
 	 * @since 0.1.0
 	 * @hidden
 	 */
 	private fun hasBackgroundColor(): Boolean {
-		return (this.backgroundKolor != Color.TRANSPARENT && Color.alpha(this.backgroundKolor) > 0) || this.backgroundLinearGradient != null ||this.backgroundRadialGradient != null
+		return (this.backgroundColor != null && this.backgroundColor != Color.TRANSPARENT && Color.alpha(this.backgroundColor!!) > 0) || this.backgroundLinearGradient != null ||this.backgroundRadialGradient != null
 	}
 
 	/**
@@ -1222,3 +1323,4 @@ open class WrapperView(context: Context, content: View, container: ContainerView
 		)
 	}
 }
+

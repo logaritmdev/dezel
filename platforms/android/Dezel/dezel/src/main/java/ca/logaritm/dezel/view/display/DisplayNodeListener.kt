@@ -1,18 +1,13 @@
 package ca.logaritm.dezel.view.display
 
 import android.util.SizeF
+import ca.logaritm.dezel.core.JavaScriptProperty
 
 /**
  * @protocol DisplayNodeListener
  * @since 0.7.0
  */
 public interface DisplayNodeListener {
-
-	/**
-	 * @method measure
-	 * @since 0.7.0
-	 */
-	fun measure(node: DisplayNode, bounds: SizeF, min: SizeF, max: SizeF): SizeF?
 
 	/**
 	 * @method onInvalidate
@@ -63,14 +58,26 @@ public interface DisplayNodeListener {
 	fun onResolvePadding(node: DisplayNode)
 
 	/**
-	 * @method layoutBegan
+	 * @method onPrepareLayout
 	 * @since 0.7.0
 	 */
-	fun layoutBegan(node: DisplayNode)
+	fun onPrepareLayout(node: DisplayNode)
 
 	/**
-	 * @method layoutEnded
+	 * @method onResolveLayout
 	 * @since 0.7.0
 	 */
-	fun layoutEnded(node: DisplayNode)
+	fun onResolveLayout(node: DisplayNode)
+
+	/**
+	 * @method measure
+	 * @since 0.7.0
+	 */
+	fun measure(node: DisplayNode, bounds: SizeF, min: SizeF, max: SizeF): SizeF?
+
+	/**
+	 * @method resolve
+	 * @since 0.7.0
+	 */
+	fun resolve(node: DisplayNode, property: String): JavaScriptProperty?
 }

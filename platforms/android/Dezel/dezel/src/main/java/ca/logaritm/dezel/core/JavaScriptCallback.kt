@@ -1,5 +1,7 @@
 package ca.logaritm.dezel.core
 
+import ca.logaritm.dezel.core.external.JavaScriptValueExternal
+
 /**
  * @class JavaScriptCallback
  * @since 0.1.0

@@ -4,15 +4,15 @@
 #include <jni.h>
 #include "jni_init.h"
 
+extern jclass SizeFClass2;
 extern jclass DisplayClass;
 extern jclass DisplayNodeClass;
-extern jclass SizeFClass2;
+extern jclass ParseErrorClass;
 
-extern jmethodID DisplayLayoutBeganMethod;
-extern jmethodID DisplayLayoutEndedMethod;
+extern jmethodID DisplayPrepareMethod;
+extern jmethodID DisplayResolveMethod;
 
 extern jmethodID DisplayNodeInvalidateMethod;
-extern jmethodID DisplayNodeMeasureSizeMethod;
 extern jmethodID DisplayNodeResolveSizeMethod;
 extern jmethodID DisplayNodeResolveOriginMethod;
 extern jmethodID DisplayNodeResolveInnerSizeMethod;
@@ -20,11 +20,15 @@ extern jmethodID DisplayNodeResolveContentSizeMethod;
 extern jmethodID DisplayNodeResolveMarginMethod;
 extern jmethodID DisplayNodeResolveBorderMethod;
 extern jmethodID DisplayNodeResolvePaddingMethod;
-extern jmethodID DisplayNodeLayoutBeganMethod;
-extern jmethodID DisplayNodeLayoutEndedMethod;
+extern jmethodID DisplayNodePrepareLayoutMethod;
+extern jmethodID DisplayNodeResolveLayoutMethod;
+extern jmethodID DisplayNodeMeasureMethod;
+extern jmethodID DisplayNodeUpdateMethod;
 
 extern jmethodID SizeFGetWidthMethod;
 extern jmethodID SizeFGetHeightMethod;
+
+extern jmethodID ParseErrorConstructor;
 
 /**
  * Initializes JNI related variables.

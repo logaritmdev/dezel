@@ -1,5 +1,6 @@
 package ca.logaritm.dezel.view
 
+import android.animation.ValueAnimator
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
@@ -14,13 +15,14 @@ import android.widget.DatePicker
 import android.widget.EditText
 import android.widget.TimePicker
 import ca.logaritm.dezel.application.ApplicationActivity
-import ca.logaritm.dezel.util.date.DateParser
 import ca.logaritm.dezel.extension.Delegates
 import ca.logaritm.dezel.extension.util.format
 import ca.logaritm.dezel.extension.util.iso
-import ca.logaritm.dezel.text.font.FontManager
+import ca.logaritm.dezel.view.text.font.FontManager
+import ca.logaritm.dezel.util.date.DateParser
 import ca.logaritm.dezel.view.graphic.Color
 import ca.logaritm.dezel.view.graphic.Convert
+import ca.logaritm.dezel.view.animation.Animatable
 import ca.logaritm.dezel.view.type.*
 import java.util.*
 import android.text.InputType as AndroidInputType
@@ -30,7 +32,7 @@ import android.text.InputType as AndroidInputType
  * @super EditText
  * @since 0.7.0
  */
-open class TextInput(context: Context, listener: TextInputListener?) : EditText(context), View.OnClickListener, DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
+open class TextInput(context: Context, observer: TextInputObserver) : EditText(context), Animatable, View.OnClickListener, DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
 	//--------------------------------------------------------------------------
 	// Properties
@@ -136,18 +138,10 @@ open class TextInput(context: Context, listener: TextInputListener?) : EditText(
 	}
 
 	/**
-	 * @property textAlignment
+	 * @property textAlign
 	 * @since 0.7.0
 	 */
-	open var textAlignment: TextAlignment by Delegates.OnSet(TextAlignment.START) {
-		this.updateGravity()
-	}
-
-	/**
-	 * @property textLocation
-	 * @since 0.7.0
-	 */
-	open var textLocation: TextLocation by Delegates.OnSet(TextLocation.MIDDLE) {
+	open var textAlign: TextAlign by Delegates.OnSet(TextAlign.MIDDLE_LEFT) {
 		this.updateGravity()
 	}
 
@@ -274,11 +268,11 @@ open class TextInput(context: Context, listener: TextInputListener?) : EditText(
 	}
 
 	/**
-	 * @property textInputListener
+	 * @property observer
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	open var textInputListener: TextInputListener? = null
+	private lateinit var observer: TextInputObserver
 
 	/**
 	 * @property date
@@ -322,7 +316,7 @@ open class TextInput(context: Context, listener: TextInputListener?) : EditText(
 				application.presentSoftKeyboard(v)
 			}
 
-			this.textInputListener?.onFocus(this)
+			this.observer.onFocus(this)
 
 		} else {
 
@@ -331,7 +325,7 @@ open class TextInput(context: Context, listener: TextInputListener?) : EditText(
 				application.dismissSoftKeyboard(v)
 			}
 
-			this.textInputListener?.onBlur(this)
+			this.observer.onBlur(this)
 		}
 	}
 
@@ -348,8 +342,6 @@ open class TextInput(context: Context, listener: TextInputListener?) : EditText(
 	 * @hidden
 	 */
 	init {
-
-		this.textInputListener = listener
 
 		this.imeOptions = EditorInfo.IME_FLAG_NO_EXTRACT_UI
 
@@ -368,6 +360,8 @@ open class TextInput(context: Context, listener: TextInputListener?) : EditText(
 		this.setPadding(0, 0, 0, 0)
 
 		this.setOnClickListener(this)
+
+		this.observer = observer
 
 		this.initialized = true
 	}
@@ -487,6 +481,62 @@ open class TextInput(context: Context, listener: TextInputListener?) : EditText(
 	}
 
 	//--------------------------------------------------------------------------
+	// Animations
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @property animatable
+	 * @since 0.7.0
+	 */
+	override val animatable: List<String> = listOf()
+
+	/**
+	 * @property animations
+	 * @since 0.7.0
+	 */
+	override var animations: MutableMap<String, ValueAnimator> = mutableMapOf()
+
+	/**
+	 * @method onBeforeAnimate
+	 * @since 0.7.0
+	 */
+	override fun animate(property: String, initialValue: Any, currentValue: Any): ValueAnimator? {
+		return null
+	}
+
+	/**
+	 * @method onBeforeAnimate
+	 * @since 0.7.0
+	 */
+	override fun onBeforeAnimate(property: String) {
+
+	}
+
+	/**
+	 * @method onBeginTransition
+	 * @since 0.7.0
+	 */
+	override fun onBeginTransition() {
+
+	}
+
+	/**
+	 * @method onCommitTransition
+	 * @since 0.7.0
+	 */
+	override fun onCommitTransition() {
+
+	}
+
+	/**
+	 * @method onFinishTransition
+	 * @since 0.7.0
+	 */
+	override fun onFinishTransition() {
+
+	}
+
+	//--------------------------------------------------------------------------
 	// Click JavaScriptViewListener
 	//--------------------------------------------------------------------------
 
@@ -523,8 +573,10 @@ open class TextInput(context: Context, listener: TextInputListener?) : EditText(
 		calendar.set(Calendar.DAY_OF_MONTH, day)
 
 		this.date = calendar.time
+
 		this.updateValue(this.date.iso)
-		this.textInputListener?.onBlur(this)
+
+		this.observer?.onBlur(this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -542,8 +594,10 @@ open class TextInput(context: Context, listener: TextInputListener?) : EditText(
 		calendar.set(Calendar.MINUTE, minute)
 
 		this.date = calendar.time
+
 		this.updateValue(this.date.iso)
-		this.textInputListener?.onBlur(this)
+
+		this.observer?.onBlur(this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -575,7 +629,7 @@ open class TextInput(context: Context, listener: TextInputListener?) : EditText(
 		)
 
 		picker.setOnCancelListener {
-			this.textInputListener?.onBlur(this)
+			this.observer?.onBlur(this)
 		}
 
 		picker.setOnDismissListener {
@@ -586,7 +640,7 @@ open class TextInput(context: Context, listener: TextInputListener?) : EditText(
 
 		this.datePicker = picker
 
-		this.textInputListener?.onFocus(this)
+		this.observer?.onFocus(this)
 	}
 
 	/**
@@ -614,7 +668,7 @@ open class TextInput(context: Context, listener: TextInputListener?) : EditText(
 		)
 
 		picker.setOnCancelListener {
-			this.textInputListener?.onBlur(this)
+			this.observer?.onBlur(this)
 		}
 
 		picker.setOnDismissListener {
@@ -625,7 +679,7 @@ open class TextInput(context: Context, listener: TextInputListener?) : EditText(
 
 		this.timePicker = picker
 
-		this.textInputListener?.onFocus(this)
+		this.observer?.onFocus(this)
 	}
 
 	/**
@@ -713,7 +767,7 @@ open class TextInput(context: Context, listener: TextInputListener?) : EditText(
 
 		this.value = normalized
 
-		this.textInputListener?.onChange(this, normalized)
+		this.observer?.onChange(this, normalized)
 	}
 
 	/**
@@ -771,18 +825,55 @@ open class TextInput(context: Context, listener: TextInputListener?) : EditText(
 	 */
 	private fun updateGravity() {
 
-		val h = when (this.textAlignment) {
-			TextAlignment.START   -> Gravity.START
-			TextAlignment.END     -> Gravity.END
-			TextAlignment.LEFT    -> Gravity.LEFT
-			TextAlignment.CENTER  -> Gravity.CENTER_HORIZONTAL
-			TextAlignment.RIGHT   -> Gravity.RIGHT
-		}
+		val h: Int
+		val v: Int
 
-		val v = when (this.textLocation) {
-			TextLocation.TOP    -> Gravity.TOP
-			TextLocation.MIDDLE -> Gravity.CENTER_VERTICAL
-			TextLocation.BOTTOM -> Gravity.BOTTOM
+		when (this.textAlign) {
+
+			TextAlign.TOP_LEFT -> {
+				h = Gravity.LEFT
+				v = Gravity.TOP
+			}
+
+			TextAlign.TOP_RIGHT -> {
+				h = Gravity.RIGHT
+				v = Gravity.TOP
+			}
+
+			TextAlign.TOP_CENTER -> {
+				h = Gravity.CENTER
+				v = Gravity.TOP
+			}
+
+			TextAlign.MIDDLE_LEFT -> {
+				h = Gravity.LEFT
+				v = Gravity.CENTER_VERTICAL
+			}
+
+			TextAlign.MIDDLE_RIGHT -> {
+				h = Gravity.RIGHT
+				v = Gravity.CENTER_VERTICAL
+			}
+
+			TextAlign.MIDDLE_CENTER -> {
+				h = Gravity.CENTER
+				v = Gravity.CENTER_VERTICAL
+			}
+
+			TextAlign.BOTTOM_LEFT -> {
+				h = Gravity.LEFT
+				v = Gravity.BOTTOM
+			}
+
+			TextAlign.BOTTOM_RIGHT -> {
+				h = Gravity.RIGHT
+				v = Gravity.BOTTOM
+			}
+
+			TextAlign.BOTTOM_CENTER -> {
+				h = Gravity.CENTER
+				v = Gravity.BOTTOM
+			}
 		}
 
 		this.gravity = v or h

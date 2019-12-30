@@ -5,18 +5,18 @@ package ca.logaritm.dezel.core
  * @super JavaScriptPropertyValue
  * @since 0.7.0
  */
-open class JavaScriptPropertyBooleanValue(boolean: Boolean): JavaScriptPropertyValue(JavaScriptPropertyType.BOOLEAN) {
+open class JavaScriptPropertyBooleanValue(value: Boolean): JavaScriptPropertyValue(JavaScriptPropertyType.BOOLEAN) {
 
 	//--------------------------------------------------------------------------
 	// Properties
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @property value
+	 * @property data
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private var value: Boolean
+	private var data: Boolean
 
 	//--------------------------------------------------------------------------
 	// Methods
@@ -27,7 +27,7 @@ open class JavaScriptPropertyBooleanValue(boolean: Boolean): JavaScriptPropertyV
 	 * @since 0.7.0
 	 */
 	init {
-		this.value = boolean
+		this.data = value
 	}
 
 	/**
@@ -35,7 +35,7 @@ open class JavaScriptPropertyBooleanValue(boolean: Boolean): JavaScriptPropertyV
 	 * @since 0.7.0
 	 */
 	override fun toString(): String {
-		return if (this.value) "true" else "false"
+		return if (this.data) "true" else "false"
 	}
 
 	/**
@@ -43,7 +43,7 @@ open class JavaScriptPropertyBooleanValue(boolean: Boolean): JavaScriptPropertyV
 	 * @since 0.7.0
 	 */
 	override fun toNumber(): Double {
-		return if (this.value) 1.0 else 0.0
+		return if (this.data) 1.0 else 0.0
 	}
 
 	/**
@@ -51,6 +51,6 @@ open class JavaScriptPropertyBooleanValue(boolean: Boolean): JavaScriptPropertyV
 	 * @since 0.7.0
 	 */
 	override fun toBoolean(): Boolean {
-		return this.value
+		return this.data
 	}
 }

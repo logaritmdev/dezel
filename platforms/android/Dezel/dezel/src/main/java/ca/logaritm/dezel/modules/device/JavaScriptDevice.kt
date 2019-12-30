@@ -6,11 +6,11 @@ import android.media.MediaActionSound
 import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
-import ca.logaritm.dezel.application.activity
 import ca.logaritm.dezel.core.JavaScriptClass
 import ca.logaritm.dezel.core.JavaScriptContext
 import ca.logaritm.dezel.core.JavaScriptFunctionCallback
 import ca.logaritm.dezel.core.JavaScriptGetterCallback
+import ca.logaritm.dezel.extension.core.activity
 import ca.logaritm.dezel.extension.fatalError
 import java.util.*
 

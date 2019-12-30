@@ -1,8 +1,8 @@
 package ca.logaritm.dezel.modules.graphic
 
 import android.graphics.Bitmap
-import ca.logaritm.dezel.application.activity
 import ca.logaritm.dezel.core.*
+import ca.logaritm.dezel.extension.core.activity
 
 /**
  * An image image manager.

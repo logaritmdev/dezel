@@ -1,6 +1,7 @@
 package ca.logaritm.dezel.core
 
 import ca.logaritm.dezel.BuildConfig
+import ca.logaritm.dezel.core.external.JavaScriptContextExternal
 
 /**
  * @class JavaScriptContext
@@ -24,19 +25,35 @@ open class JavaScriptContext {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @const jsnull
+	 * @const Null
 	 * @since 0.7.0
 	 */
-	public val jsnull: JavaScriptValue by lazy {
-		JavaScriptNull(this)
+	public val Null: JavaScriptValue by lazy {
+		this.createNull()
 	}
 
 	/**
-	 * @const jsundefined
+	 * @const Undefined
 	 * @since 0.7.0
 	 */
-	public val jsundefined: JavaScriptValue by lazy {
-		JavaScriptUndefined(this)
+	public val Undefined: JavaScriptValue by lazy {
+		this.createUndefined()
+	}
+
+	/**
+	 * @const True
+	 * @since 0.7.0
+	 */
+	public val True: JavaScriptValue by lazy {
+		this.createBoolean(true)
+	}
+
+	/**
+	 * @const False
+	 * @since 0.7.0
+	 */
+	public val False: JavaScriptValue by lazy {
+		this.createBoolean(false)
 	}
 
 	//--------------------------------------------------------------------------
@@ -58,10 +75,10 @@ open class JavaScriptContext {
 		private set
 
 	/**
-	 * @property modules
+	 * @property classes
 	 * @since 0.1.0
 	 */
-	public var modules: MutableMap<String, JavaScriptModule> = mutableMapOf()
+	public var classes: MutableMap<String, JavaScriptValue> = mutableMapOf()
 		internal set
 
 	/**
@@ -70,20 +87,6 @@ open class JavaScriptContext {
 	 */
 	public var objects: MutableMap<String, JavaScriptValue> = mutableMapOf()
 		internal set
-
-	/**
-	 * @property classes
-	 * @since 0.1.0
-	 */
-	public var classes: MutableMap<String, JavaScriptValue> = mutableMapOf()
-		internal set
-
-	/**
-	 * @property running
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	private var running: Boolean = false
 
 	//--------------------------------------------------------------------------
 	// Methods
@@ -97,20 +100,20 @@ open class JavaScriptContext {
 
 		this.handle = JavaScriptContextExternal.create(BuildConfig.APPLICATION_ID)
 
-		JavaScriptContextReference.register(this)
-
 		this.global = JavaScriptValue.create(this, JavaScriptContextExternal.getGlobalObject(this.handle))
 		this.global.defineProperty("global", value = this.global, getter = null, setter = null, writable = false, enumerable = false, configurable = false)
 		this.global.defineProperty("window", value = this.global, getter = null, setter = null, writable = false, enumerable = false, configurable = false)
+
+		JavaScriptContextReference.register(this)
 	}
 
 	/**
-	 * @method registerModules
+	 * @method registerClasses
 	 * @since 0.7.0
 	 */
-	open fun registerModules(modules: Map<String, Class<*>>) {
-		modules.forEach {
-			this.registerModule(it.key, it.value)
+	open fun registerClasses(classes: Map<String, Class<*>>) {
+		classes.forEach {
+			this.registerClass(it.key, it.value)
 		}
 	}
 
@@ -125,21 +128,11 @@ open class JavaScriptContext {
 	}
 
 	/**
-	 * @method registerClasses
-	 * @since 0.7.0
-	 */
-	open fun registerClasses(classes: Map<String, Class<*>>) {
-		classes.forEach {
-			this.registerClass(it.key, it.value)
-		}
-	}
-
-	/**
-	 * @method registerModule
+	 * @method registerClass
 	 * @since 0.1.0
 	 */
-	open fun registerModule(uid: String, type: Class<*>) {
-		this.modules[uid] = JavaScriptModule.create(type, this)
+	open fun registerClass(uid: String, type: Class<*>) {
+		this.classes[uid] = this.createClass(type)
 	}
 
 	/**
@@ -151,59 +144,18 @@ open class JavaScriptContext {
 	}
 
 	/**
-	 * @method registerClass
-	 * @since 0.1.0
-	 */
-	open fun registerClass(uid: String, type: Class<*>) {
-		this.classes[uid] = this.createClass(type)
-	}
-
-	/**
-	 * @method setup
-	 * @since 0.7.0
-	 */
-	open fun setup() {
-
-		if (this.running) {
-			return
-		}
-
-		this.running = true
-
-		this.modules.forEach {
-			it.value.initialize()
-		}
-	}
-
-	open fun reload() {
-		// TODO
-	}
-
-	/**
 	 * @method dispose
 	 * @since 0.1.0
 	 */
 	open fun dispose() {
 
-		if (this.running == false) {
-			return
-		}
-
-		this.modules.forEach {
-			it.value.dispose()
-		}
-
-		this.modules.clear()
 		this.objects.clear()
 		this.classes.clear()
-
 		this.global.dispose()
 
 		this.garbageCollect()
 
 		JavaScriptContextExternal.delete(this.handle)
-
-		this.running = false
 	}
 
 	/**
@@ -322,16 +274,16 @@ open class JavaScriptContext {
 	 * @method evaluate
 	 * @since 0.1.0
 	 */
-	open fun evaluate(code: String) {
-		JavaScriptContextExternal.evaluate(this.handle, code)
+	open fun evaluate(source: String) {
+		JavaScriptContextExternal.evaluate(this.handle, source)
 	}
 
 	/**
 	 * @method evaluate
 	 * @since 0.1.0
 	 */
-	open fun evaluate(code: String, file: String) {
-		JavaScriptContextExternal.evaluate(this.handle, code, file)
+	open fun evaluate(source: String, url: String) {
+		JavaScriptContextExternal.evaluate(this.handle, source, url)
 	}
 
 	/**

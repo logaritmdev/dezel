@@ -5,19 +5,19 @@ import android.content.DialogInterface
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Handler
-import android.support.design.widget.BottomSheetDialog
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
-import ca.logaritm.dezel.application.activity
 import ca.logaritm.dezel.core.JavaScriptClass
 import ca.logaritm.dezel.core.JavaScriptContext
 import ca.logaritm.dezel.core.JavaScriptFunctionCallback
 import ca.logaritm.dezel.core.JavaScriptPropertyType
+import ca.logaritm.dezel.extension.core.activity
 import ca.logaritm.dezel.extension.fatalError
 import ca.logaritm.dezel.extension.widget.BottomSheetButton
 import ca.logaritm.dezel.modules.graphic.ImageLoader
 import ca.logaritm.dezel.view.graphic.Convert
+import com.google.android.material.bottomsheet.BottomSheetDialog
 
 /**
  * @class JavaScriptAlert

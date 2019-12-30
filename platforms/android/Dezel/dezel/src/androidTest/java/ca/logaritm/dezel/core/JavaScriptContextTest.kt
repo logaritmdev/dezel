@@ -17,7 +17,6 @@ class JavaScriptContextTest {
 	fun beforeTest() {
 		this.context.dispose()
 		this.context = JavaScriptContext()
-		this.context.setup()
 		this.expectedCallee = null
 		this.expectedObject = null
 		this.expectedContext = null

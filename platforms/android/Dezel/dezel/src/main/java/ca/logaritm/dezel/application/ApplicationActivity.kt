@@ -1,6 +1,7 @@
 package ca.logaritm.dezel.application
 
 import android.app.Activity
+import android.content.ComponentCallbacks2
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
@@ -8,38 +9,46 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Parcelable
-import android.support.v4.content.LocalBroadcastManager
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.RelativeLayout
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import ca.logaritm.dezel.BuildConfig
 import ca.logaritm.dezel.application.keyboard.KeyboardObserver
 import ca.logaritm.dezel.application.keyboard.KeyboardObserverListener
+import ca.logaritm.dezel.application.touch.Touch
 import ca.logaritm.dezel.core.*
 import ca.logaritm.dezel.extension.Delegates
-import ca.logaritm.dezel.extension.app.viewport
-import ca.logaritm.dezel.modules.application.JavaScriptApplicationModule
+import ca.logaritm.dezel.extension.activity.viewport
+import ca.logaritm.dezel.extension.view.addView
+import ca.logaritm.dezel.extension.view.removeFromParent
 import ca.logaritm.dezel.modules.application.JavaScriptApplication
-import ca.logaritm.dezel.modules.core.CoreModule
+import ca.logaritm.dezel.modules.application.JavaScriptApplicationModule
 import ca.logaritm.dezel.modules.device.JavaScriptDeviceModule
 import ca.logaritm.dezel.modules.dialog.JavaScriptDialogModule
 import ca.logaritm.dezel.modules.form.JavaScriptFormModule
-import ca.logaritm.dezel.modules.global.GlobalModule
-import ca.logaritm.dezel.modules.graphic.GraphicModule
+import ca.logaritm.dezel.modules.global.JavaScriptGlobalModule
 import ca.logaritm.dezel.modules.graphic.ImageLoader
+import ca.logaritm.dezel.modules.graphic.JavaScriptGraphicModule
 import ca.logaritm.dezel.modules.locale.JavaScriptLocaleModule
 import ca.logaritm.dezel.modules.platform.JavaScriptPlatformModule
+import ca.logaritm.dezel.modules.util.JavaScriptUtilModule
+import ca.logaritm.dezel.modules.view.JavaScriptView
 import ca.logaritm.dezel.modules.view.JavaScriptViewModule
+import ca.logaritm.dezel.view.Synchronizer
 import ca.logaritm.dezel.view.display.Display
 import ca.logaritm.dezel.view.graphic.Convert
+import ca.logaritm.dezel.view.display.Stylesheet
+import ca.logaritm.dezel.view.display.StylesheetListener
 
 /**
  * @class ApplicationActivity
  * @since 0.7.0
  */
-open class ApplicationActivity : Activity(), KeyboardObserverListener {
+open class ApplicationActivity : Activity(), StylesheetListener, KeyboardObserverListener {
 
 	//--------------------------------------------------------------------------
 	// Enum
@@ -66,6 +75,16 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 		 * @hidden
 		 */
 		internal val kApplicationActivityKey = Object()
+
+		/**
+		 * @constructor
+		 * @since 0.7.0
+		 * @hidden
+		 */
+		init {
+			System.loadLibrary("jsc")
+			System.loadLibrary("dezel")
+		}
 	}
 
 	//--------------------------------------------------------------------------
@@ -73,17 +92,22 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @property view
+	 * @property sources
 	 * @since 0.7.0
 	 */
-	public lateinit var view: RelativeLayout
-		private set
+	open var sources: MutableList<Source> = mutableListOf()
 
 	/**
-	 * @property context
+	 * @property modules
 	 * @since 0.7.0
 	 */
-	public var context: JavaScriptContext = JavaScriptContext()
+	open var modules: MutableList<JavaScriptModule> = mutableListOf()
+
+	/**
+	 * @property stylesheet
+	 * @since 0.7.0
+	 */
+	public var stylesheet: Stylesheet = Stylesheet()
 		private set
 
 	/**
@@ -94,72 +118,42 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 		private set
 
 	/**
-	 * @property activity
+	 * @property context
+	 * @since 0.7.0
+	 */
+	public var context: JavaScriptContext = JavaScriptContext()
+		private set
+
+	/**
+	 * @property application
 	 * @since 0.7.0
 	 */
 	public var application: JavaScriptApplication? = null
 		private set
 
 	/**
-	 * @property modules
+	 * @property view
 	 * @since 0.7.0
-	 * @hidden
 	 */
-	private var modules: MutableMap<String, Class<*>> = mutableMapOf()
+	public lateinit var view: RelativeLayout
+		private set
 
 	/**
-	 * @property classes
+	 * @property loaded
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private var classes: MutableMap<String, Class<*>> = mutableMapOf()
-
-	/**
-	 * @property sources
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private var sources: MutableList<Source> = mutableListOf()
-
-	/**
-	 * @property running
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private var running: Boolean = false
+	private var loaded: Boolean = false
 
 	//--------------------------------------------------------------------------
 	// Methods
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method setup
+	 * @constructor
 	 * @since 0.7.0
 	 */
-	open fun configure() {
-
-	}
-
-	/**
-	 * @method setup
-	 * @since 0.7.0
-	 */
-	open fun setup() {
-
-		if (this.running) {
-			return
-		}
-
-		this.running = true
-
-		val viewport = this.viewport
-
-		this.display.scale = Convert.density.toDouble()
-		this.display.viewportWidth = viewport.width.toDouble()
-		this.display.viewportHeight = viewport.height.toDouble()
-		// Todo put in stylesheet object
-		this.display.setVariable("safe-area-top-inset", "${this.getSafeAreaTopInset()}px")
-		this.display.setVariable("safe-area-bottom-inset", "${this.getSafeAreaBottomInset()}px")
+	init {
 
 		this.context.attribute(kApplicationActivityKey, this)
 		this.context.global.property("_DEV_", this.isDev())
@@ -179,110 +173,37 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 
 			val message =
 				"${error.string} \n" +
-				"File: $file \n" +
-				"Line: $line \n" +
-				"Stack Trace: \n" +
-				stack
-
-			this.onThrowError(error)
+					"File: $file \n" +
+					"Line: $line \n" +
+					"Stack Trace: \n" +
+					stack
 
 			throw JavaScriptException(message)
 		}
-
-		this.registerModule("dezel.CoreModule", CoreModule::class.java)
-		this.registerModule("dezel.GlobalModule", GlobalModule::class.java)
-		this.registerModule("dezel.LocaleModule", JavaScriptLocaleModule::class.java)
-		this.registerModule("dezel.DeviceModule", JavaScriptDeviceModule::class.java)
-		this.registerModule("dezel.PlatformModule", JavaScriptPlatformModule::class.java)
-		this.registerModule("dezel.DialogModule", JavaScriptDialogModule::class.java)
-		this.registerModule("dezel.GraphicModule", GraphicModule::class.java)
-		this.registerModule("dezel.ViewModule", JavaScriptViewModule::class.java)
-		this.registerModule("dezel.FormModule", JavaScriptFormModule::class.java)
-		this.registerModule("dezel.ApplicationModule", JavaScriptApplicationModule::class.java)
-
-		this.configure()
-
-		this.context.registerModules(this.modules)
-		this.context.registerClasses(this.classes)
-		this.context.setup()
-
-		this.sources.forEach { source ->
-			when (source.type) {
-			//	Source.Category.STYLE  -> this.evaluateStyle(source.data, source.location)
-				Source.Type.SCRIPT -> this.evaluateScript(source.data, source.path)
-			}
-		}
-
-		this.onLoad()
 	}
 
 	/**
-	 * @method registerModule
+	 * @method configure
 	 * @since 0.7.0
 	 */
-	open fun registerModule(uid: String, value: Class<*>) {
-		this.modules[uid] = value
+	open fun configure() {
+
 	}
 
 	/**
-	 * @method registerClass
+	 * @method evaluateStyle
 	 * @since 0.7.0
 	 */
-	open fun registerClass(uid: String, value: Class<*>) {
-		this.classes[uid] = value
-	}
-
-	/**
-	 * @method registerStyle
-	 * @since 0.7.0
-	 */
-	open fun registerStyle(location: String) {
-		this.sources.add(Source(this, location, Source.Type.STYLE))
-	}
-
-	/**
-	 * @method registerScript
-	 * @since 0.7.0
-	 */
-	open fun registerScript(location: String) {
-		this.sources.add(Source(this, location, Source.Type.SCRIPT))
+	open fun evaluateStyle(source: String, url: String) {
+		this.stylesheet.evaluate(source, url)
 	}
 
 	/**
 	 * @method evaluateScript
 	 * @since 0.7.0
 	 */
-	open fun evaluateScript(source: String, file: String) {
-		this.context.evaluate(source, file)
-	}
-
-	/**
-	 * @method launch
-	 * @since 0.7.0
-	 */
-	open fun launch(application: JavaScriptApplication, identifier: String = "default") {
-
-		this.application?.destroy()
-		this.application = application
-
-		val viewport = this.viewport
-		application.window.width.reset(viewport.width.toDouble(), JavaScriptPropertyUnit.PX)
-		application.window.height.reset(viewport.height.toDouble(), JavaScriptPropertyUnit.PX)
-		this.view.addView(application.window.wrapper)
-
-		this.statusBar.bringToFront()
-
-		this.onLaunchApplication(application)
-	}
-
-	/**
-	 * @method reload
-	 * @since 0.7.0
-	 */
-	public fun reload() {
-
-		// TODO
-		// FIX THIS
+	open fun evaluateScript(source: String, url: String) {
+		this.context.evaluate(source, url)
 	}
 
 	/**
@@ -301,25 +222,163 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 		this.application?.callMethod("nativeOnOpenUniversalURL", arrayOf(this.context.createString(url.toString())))
 	}
 
+	/**
+	 * @method registerApplication
+	 * @since 0.7.0
+	 */
+	open fun registerApplication(application: JavaScriptApplication) {
+
+		this.application?.destroy()
+		this.application = application
+
+		if (this.loaded == false) {
+			return
+		}
+
+		val viewport = this.viewport
+
+		this.display.window = application.window.node
+
+		application.window.width.reset(viewport.width.toDouble(), JavaScriptPropertyUnit.PX, lock = this)
+		application.window.height.reset(viewport.height.toDouble(), JavaScriptPropertyUnit.PX, lock = this)
+		application.callMethod("nativeOnCreate")
+
+		this.view.addView(application.window.wrapper)
+	}
+
+	/**
+	 * @method reloadApplication
+	 * @since 0.7.0
+	 */
+	open fun reloadApplication() {
+
+		this.modules.forEach {
+			it.reset(this.context)
+		}
+
+		Synchronizer.main.reset()
+
+		this.application?.destroy()
+		this.application?.window?.wrapper?.removeFromParent()
+		this.application = null
+
+		for (source in this.sources) {
+			when (source.type) {
+				Source.Type.STYLE  -> this.evaluateStyle(source.data, source.path)
+				Source.Type.SCRIPT -> this.evaluateScript(source.data, source.path)
+			}
+		}
+
+		val application = this.application
+		if (application == null) {
+			return
+		}
+
+		val viewport = this.viewport
+
+		this.display.window = application.window.node
+
+		application.window.width.reset(viewport.width.toDouble(), JavaScriptPropertyUnit.PX, lock = this)
+		application.window.height.reset(viewport.height.toDouble(), JavaScriptPropertyUnit.PX, lock = this)
+		application.callMethod("nativeOnCreate")
+
+		this.view.addView(application.window)
+	}
+
+	/**
+	 * @method reloadApplicationStyles
+	 * @since 0.7.0
+	 */
+	open fun reloadApplicationStyles() {
+
+		this.stylesheet = Stylesheet()
+		this.stylesheet.listener = this
+		this.stylesheet.setVariable("safe-area-inset-top", "${this.getSafeAreaTopInset()}px")
+		this.stylesheet.setVariable("safe-area-inset-bottom", "${this.getSafeAreaBottomInset()}px")
+
+		for (source in this.sources) {
+			if (source.type == Source.Type.STYLE) {
+				this.stylesheet.evaluate(source.data, source.path)
+			}
+		}
+
+		this.display.stylesheet = stylesheet
+	}
+
 	//--------------------------------------------------------------------------
-	// Methods - Touch Management
+	// Touch Management
 	//--------------------------------------------------------------------------
+
+	/**
+	 * @property touches
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private var touches: MutableMap<Int, Touch> = mutableMapOf()
 
 	/**
 	 * @method dispatchTouchEvent
 	 * @since 0.7.0
 	 */
-	override fun dispatchTouchEvent(e: MotionEvent) : Boolean {
+	override fun dispatchTouchEvent(event: MotionEvent) : Boolean {
 
-		val dispatch = super.dispatchTouchEvent(e)
+		val pointer = event.getPointerId(event.actionIndex)
 
-		when (e.actionMasked) {
-			MotionEvent.ACTION_CANCEL       -> this.dispatchTouchCancel(e)
-			MotionEvent.ACTION_DOWN         -> this.dispatchTouchStart(e)
-			MotionEvent.ACTION_POINTER_DOWN -> this.dispatchTouchStart(e)
-			MotionEvent.ACTION_MOVE         -> this.dispatchTouchMove(e)
-			MotionEvent.ACTION_UP           -> this.dispatchTouchEnd(e)
-			MotionEvent.ACTION_POINTER_UP   -> this.dispatchTouchEnd(e)
+		val k = event.findPointerIndex(pointer)
+		val x = event.getX(k)
+		val y = event.getY(k)
+
+		val touch: Touch
+
+		if (event.actionMasked == MotionEvent.ACTION_DOWN ||
+			event.actionMasked == MotionEvent.ACTION_POINTER_DOWN) {
+
+			touch = Touch()
+			touch.pointer = pointer
+			touch.x = x
+			touch.y = y
+
+			this.touches[pointer] = touch
+
+		} else {
+
+			touch = this.touches[pointer]!!
+			touch.x = x
+			touch.y = y
+
+		}
+
+		when (event.actionMasked) {
+			MotionEvent.ACTION_CANCEL       -> this.dispatchTouchCancel(listOf(touch))
+			MotionEvent.ACTION_DOWN         -> this.dispatchTouchStart(listOf(touch))
+			MotionEvent.ACTION_POINTER_DOWN -> this.dispatchTouchStart(listOf(touch))
+			MotionEvent.ACTION_MOVE         -> this.dispatchTouchMove(listOf(touch))
+			MotionEvent.ACTION_UP           -> this.dispatchTouchEnd(listOf(touch))
+			MotionEvent.ACTION_POINTER_UP   -> this.dispatchTouchEnd(listOf(touch))
+		}
+
+		val dispatch = super.dispatchTouchEvent(event)
+
+
+		/*
+		for touch in touches where touch.touchCanceled == false {
+
+			if (touch.canceled) {
+				touch.view?.dispatchTouchCancel(touch, with: event)
+				touch.touchCanceled = true
+				continue
+			}
+
+			if (touch.captured) {
+				touch.view?.dispatchTouchCancel(touch, with: event, skip: touch.receiver)
+				touch.touchCanceled = true
+				continue
+			}
+		}
+		*/
+		if (event.actionMasked == MotionEvent.ACTION_UP ||
+			event.actionMasked == MotionEvent.ACTION_POINTER_UP) {
+			this.touches.remove(pointer)
 		}
 
 		return dispatch
@@ -329,36 +388,107 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 	 * @method dispatchTouchCancel
 	 * @since 0.7.0
 	 */
-	open fun dispatchTouchCancel(e: MotionEvent) {
-		this.dispatchTouchEvent("nativeOnTouchCancel", e)
+	open fun dispatchTouchCancel(event: MotionEvent) {
+
+		val touch = this.touches[event.getPointerId(event.actionIndex)]
+		if (touch == null) {
+			return
+		}
+
+		this.dispatchTouchEvent("nativeOnTouchCancel", listOf(touch))
+	}
+
+	/**
+	 * @method dispatchTouchCancel
+	 * @since 0.7.0
+	 */
+	open fun dispatchTouchCancel(touches: List<Touch>) {
+		this.dispatchTouchEvent("touchcancel", touches)
 	}
 
 	/**
 	 * @method dispatchTouchStart
 	 * @since 0.7.0
 	 */
-	open fun dispatchTouchStart(e: MotionEvent) {
-		this.dispatchTouchEvent("nativeOnTouchStart", e)
+	open fun dispatchTouchStart(touches: List<Touch>) {
+		this.dispatchTouchEvent("touchstart", touches)
 	}
 
 	/**
 	 * @method dispatchTouchMove
 	 * @since 0.7.0
 	 */
-	open fun dispatchTouchMove(e: MotionEvent) {
-		this.dispatchTouchEvent("nativeOnTouchMove", e)
+	open fun dispatchTouchMove(touches: List<Touch>) {
+		this.dispatchTouchEvent("touchmove", touches)
 	}
 
 	/**
 	 * @method dispatchTouchEnd
 	 * @since 0.7.0
 	 */
-	open fun dispatchTouchEnd(e: MotionEvent) {
-		this.dispatchTouchEvent("nativeOnTouchEnd", e)
+	open fun dispatchTouchEnd(touches: List<Touch>) {
+		this.dispatchTouchEvent("touchend", touches)
+	}
+
+	/**
+	 * @method dispatchTouchEvent
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private fun dispatchTouchEvent(type: String, touches: List<Touch>) {
+
+		val application = this.application
+		if (application == null) {
+			return
+		}
+
+		val array = context.createEmptyArray()
+
+		for ((i, t) in touches.withIndex()) {
+
+			val touch = this.context.createEmptyObject()
+			touch.property("pointer", t.pointer)
+			touch.property("x", Convert.toDp(t.x).toDouble())
+			touch.property("y", Convert.toDp(t.y).toDouble())
+			touch.property("canceled", t.canceled)
+			touch.property("captured", t.captured)
+
+			array.property(i, touch)
+		}
+
+		when (type) {
+
+			"touchcancel" -> application.callMethod("nativeOnTouchCancel", arrayOf(array))
+			"touchstart"  -> application.callMethod("nativeOnTouchStart", arrayOf(array))
+			"touchmove"   -> application.callMethod("nativeOnTouchMove", arrayOf(array))
+			"touchend"    -> application.callMethod("nativeOnTouchEnd", arrayOf(array))
+
+			else -> {
+				throw Exception("Invalid touch type $type")
+			}
+		}
+
+		for ((i, t) in touches.withIndex()) {
+
+			val touch = array.property(i)
+			t.canceled = touch.property("canceled").boolean
+			t.captured = touch.property("captured").boolean
+
+			val receiver = touch.property("receiver")
+			if (receiver.isNull ||
+				receiver.isUndefined) {
+				continue
+			}
+
+			if (t.captured &&
+				t.receiver == null) {
+				t.receiver = receiver.cast(JavaScriptView::class.java)!!.content
+			}
+		}
 	}
 
 	//--------------------------------------------------------------------------
-	// Methods - State Management
+	// State Management
 	//--------------------------------------------------------------------------
 
 	/**
@@ -378,286 +508,7 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 	}
 
 	//--------------------------------------------------------------------------
-	// Methods - Keyboard Management
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method presentSoftKeyboard
-	 * @since 0.7.0
-	 */
-	open fun presentSoftKeyboard(source: View) {
-		this.keyboardTarget = source
-		if (this.keyboardVisible == false) {
-			this.keyboardManager.showSoftInput(source, InputMethodManager.SHOW_IMPLICIT)
-			this.keyboardPresenting = true
-		}
-	}
-
-	/**
-	 * @method dismissSoftKeyboard
-	 * @since 0.7.0
-	 */
-	open fun dismissSoftKeyboard(source: View) {
-		if (this.keyboardVisible) {
-			this.view.post {
-				if (this.keyboardTarget == source) {
-					this.keyboardTarget = null
-					this.keyboardManager.hideSoftInputFromWindow(this.window.decorView.windowToken, 0)
-					this.keyboardDismissing = true
-				}
-			}
-		}
-	}
-
-	/**
-	 * @method onBeforeKeyboardShow
-	 * @since 0.7.0
-	 */
-	open fun onBeforeKeyboardShow(height: Int) {
-		this.dispatchKeyboardEvent("nativeOnBeforeKeyboardShow", height)
-	}
-
-	/**
-	 * @method onKeyboardShow
-	 * @since 0.7.0
-	 */
-	open fun onKeyboardShow(height: Int) {
-		this.dispatchKeyboardEvent("nativeOnKeyboardShow", height)
-	}
-
-	/**
-	 * @method onBeforeKeyboardHide
-	 * @since 0.7.0
-	 */
-	open fun onBeforeKeyboardHide(height: Int) {
-		this.dispatchKeyboardEvent("nativeOnBeforeKeyboardHide", height)
-	}
-
-	/**
-	 * @method onKeyboardHide
-	 * @since 0.7.0
-	 */
-	open fun onKeyboardHide(height: Int) {
-		this.dispatchKeyboardEvent("nativeOnKeyboardHide", height)
-	}
-
-	/**
-	 * @method onBeforeKeyboardResize
-	 * @since 0.7.0
-	 */
-	open fun onBeforeKeyboardResize(height: Int) {
-		this.dispatchKeyboardEvent("nativeOnBeforeKeyboardResize", height)
-	}
-
-	/**
-	 * @method onKeyboardResize
-	 * @since 0.7.0
-	 */
-	open fun onKeyboardResize(height: Int) {
-		this.dispatchKeyboardEvent("nativeboardResize", height)
-	}
-
-	//--------------------------------------------------------------------------
-	// Methods - Activity Management
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @property state
-	 * @since 0.7.0
-	 */
-	public var state: State = State.FOREGROUND
-		private set
-
-	/**
-	 * @method onCreate
-	 * @since 0.7.0
-	 */
-	override fun onCreate(savedInstanceState: Bundle?) {
-
-		super.onCreate(savedInstanceState)
-
-		Convert.density = this.resources.displayMetrics.density
-
-		ImageLoader.setup(this)
-
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-
-			this.window.setFlags(
-				WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-				WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
-			)
-
-			this.window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-
-		} else {
-
-			this.window.setFlags(
-				WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
-				WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
-			)
-
-			this.window.setFlags(
-				WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION,
-				WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION
-			)
-		}
-
-		this.window.decorView.setOnSystemUiVisibilityChangeListener {
-
-			val viewport = this.viewport
-			this.display.viewportWidth = viewport.width.toDouble()
-			this.display.viewportHeight = viewport.height.toDouble()
-
-			val application = this.application
-			if (application != null) {
-				application.window.width.reset(viewport.width.toDouble(), JavaScriptPropertyUnit.PX)
-				application.window.height.reset(viewport.height.toDouble(), JavaScriptPropertyUnit.PX)
-			}
-		}
-
-		this.view = RelativeLayout(this)
-		this.view.isFocusable = true
-		this.view.isFocusableInTouchMode = true
-		this.view.setBackgroundColor(Color.BLACK)
-
-		this.setContentView(this.view)
-
-		this.keyboardObserver = KeyboardObserver(this, this.view)
-
-		this.statusBar = View(this)
-		this.statusBar.layoutParams = RelativeLayout.LayoutParams(
-			this.getStatusBarWidth(),
-			this.getStatusBarHeight()
-		)
-
-		this.view.addView(this.statusBar)
-	}
-
-	/**
-	 * @method onPause
-	 * @since 0.7.0
-	 */
-	override fun onPause() {
-
-		super.onPause()
-
-		this.keyboardObserver.listener = null
-
-		if (this.state == State.FOREGROUND) {
-			this.state = State.BACKGROUND
-			this.onEnterBackground()
-		}
-
-		LocalBroadcastManager.getInstance(this).sendBroadcastSync(Intent("dezel.application.BACKGROUND"))
-	}
-
-	/**
-	 * @method onResume
-	 * @since 0.7.0
-	 */
-	override fun onResume() {
-
-		super.onResume()
-
-		this.keyboardObserver.listener = this
-
-		if (this.state == State.BACKGROUND) {
-			this.state = State.FOREGROUND
-			this.onEnterForeground()
-		}
-
-		LocalBroadcastManager.getInstance(this).sendBroadcastSync(Intent("dezel.application.FOREGROUND"))
-	}
-
-	/**
-	 * @method onDestroy
-	 * @since 0.7.0
-	 */
-	override fun onDestroy() {
-		this.state = State.BACKGROUND
-		this.keyboardObserver.listener = null
-		this.keyboardObserver.close()
-		super.onDestroy()
-	}
-
-	//--------------------------------------------------------------------------
-	// Methods - Activity Intent Management
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method onNewIntent
-	 * @since 0.7.0
-	 */
-	override fun onNewIntent(intent: Intent?) {
-
-		when (intent?.action) {
-
-			Intent.ACTION_VIEW -> {
-				val uri = intent.data
-				if (uri is Uri) {
-					this.openUniversalURL(uri)
-				}
-			}
-
-			Intent.ACTION_SEND -> {
-				val uri = intent.getParcelableExtra<Parcelable>(Intent.EXTRA_STREAM)
-				if (uri is Uri) {
-					this.openResourceURL(uri)
-				}
-			}
-
-			else -> {
-				// Nothing
-			}
-		}
-	}
-
-	//--------------------------------------------------------------------------
-	// Methods - Activity Permission Management
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method onRequestPermissionsResult
-	 * @since 0.7.0
-	 */
-	override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, results: IntArray) {
-		for (i in 0 until permissions.size) {
-			val intent = Intent("dezel.application.PERMISSION_CHANGED")
-			intent.putExtra("permission", permissions[i])
-			intent.putExtra("result", results[i])
-			LocalBroadcastManager.getInstance(this).sendBroadcastSync(intent)
-		}
-	}
-
-	//--------------------------------------------------------------------------
-	// Methods - Activity Back Management
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method onBackPressed
-	 * @since 0.7.0
-	 */
-	override fun onBackPressed() {
-
-		val application = this.application
-		if (application == null) {
-			super.onBackPressed()
-			return
-		}
-
-		val handled = this.context.createReturnValue()
-
-		application.callMethod("nativeOnBack", null, handled)
-
-		if (handled.boolean == true) {
-			return
-		}
-
-		super.onBackPressed()
-	}
-
-	//--------------------------------------------------------------------------
-	// Methods - Activity Keyboard Management
+	// Keyboard Management
 	//--------------------------------------------------------------------------
 
 	/**
@@ -756,8 +607,400 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 		this.keyboardHeight = height
 	}
 
+	/**
+	 * @method presentSoftKeyboard
+	 * @since 0.7.0
+	 */
+	open fun presentSoftKeyboard(source: View) {
+		this.keyboardTarget = source
+		if (this.keyboardVisible == false) {
+			this.keyboardManager.showSoftInput(source, InputMethodManager.SHOW_IMPLICIT)
+			this.keyboardPresenting = true
+		}
+	}
+
+	/**
+	 * @method dismissSoftKeyboard
+	 * @since 0.7.0
+	 */
+	open fun dismissSoftKeyboard(source: View) {
+		if (this.keyboardVisible) {
+			this.view.post {
+				if (this.keyboardTarget == source) {
+					this.keyboardTarget = null
+					this.keyboardManager.hideSoftInputFromWindow(this.window.decorView.windowToken, 0)
+					this.keyboardDismissing = true
+				}
+			}
+		}
+	}
+
+	/**
+	 * @method onBeforeKeyboardShow
+	 * @since 0.7.0
+	 */
+	open fun onBeforeKeyboardShow(height: Int) {
+		this.dispatchKeyboardEvent("beforekeyboardshow", height)
+	}
+
+	/**
+	 * @method onKeyboardShow
+	 * @since 0.7.0
+	 */
+	open fun onKeyboardShow(height: Int) {
+		this.dispatchKeyboardEvent("keyboardshow", height)
+	}
+
+	/**
+	 * @method onBeforeKeyboardHide
+	 * @since 0.7.0
+	 */
+	open fun onBeforeKeyboardHide(height: Int) {
+		this.dispatchKeyboardEvent("beforekeyboardhide", height)
+	}
+
+	/**
+	 * @method onKeyboardHide
+	 * @since 0.7.0
+	 */
+	open fun onKeyboardHide(height: Int) {
+		this.dispatchKeyboardEvent("keyboardhide", height)
+	}
+
+	/**
+	 * @method onBeforeKeyboardResize
+	 * @since 0.7.0
+	 */
+	open fun onBeforeKeyboardResize(height: Int) {
+		this.dispatchKeyboardEvent("beforekeyboardresize", height)
+	}
+
+	/**
+	 * @method onKeyboardResize
+	 * @since 0.7.0
+	 */
+	open fun onKeyboardResize(height: Int) {
+		this.dispatchKeyboardEvent("keyboardresize", height)
+	}
+
+	/**
+	 * @method dispatchKeyboardEvent
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private fun dispatchKeyboardEvent(name: String, height: Int, delay: Long = 0) {
+
+		val application = this.application
+		if (application == null) {
+			return
+		}
+
+		this.keyboardHandler.postDelayed({
+
+			val args = arrayOf<JavaScriptValue?>(
+				this.context.createNumber(Convert.toDp(height.toFloat())),
+				this.context.createNumber(250.0),
+				this.context.createString("cubic-bezier(0.25,0.1,0.25,1)")
+			)
+
+			val method: String
+
+			when (name) {
+
+				"beforekeyboardshow"   -> method = "nativeOnBeforeKeyboardShow"
+				"keyboardshow"         -> method = "nativeOnKeyboardShow"
+				"beforekeyboardhide"   -> method = "nativeOnBeforeKeyboardHide"
+				"keyboardhide"         -> method = "nativeOnKeyboardHide"
+				"beforekeyboardresize" -> method = "nativeOnBeforeKeyboardResize"
+				"keyboardresize"       -> method = "nativeOnKeyboardResize"
+
+				else -> {
+					throw Exception()
+				}
+			}
+
+			application.callMethod(method, args, null)
+
+		}, delay)
+	}
+
 	//--------------------------------------------------------------------------
-	// Methods - Status Bar Management
+	// Activity
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @property state
+	 * @since 0.7.0
+	 */
+	public var state: State = State.FOREGROUND
+		private set
+
+	/**
+	 * @method onCreate
+	 * @since 0.7.0
+	 */
+	override fun onCreate(savedInstanceState: Bundle?) {
+
+		super.onCreate(savedInstanceState)
+
+		Convert.density = this.resources.displayMetrics.density
+
+		ImageLoader.setup(this)
+
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+
+			this.window.setFlags(
+				WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+				WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+			)
+
+			this.window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+
+		} else {
+
+			this.window.setFlags(
+				WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
+				WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
+			)
+
+			this.window.setFlags(
+				WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION,
+				WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION
+			)
+		}
+
+		this.view = RelativeLayout(this)
+		this.view.isFocusable = true
+		this.view.isFocusableInTouchMode = true
+		this.view.setBackgroundColor(Color.BLACK)
+
+		this.setContentView(this.view)
+
+		this.keyboardObserver = KeyboardObserver(this, this.view)
+
+		this.statusBar = View(this)
+		this.statusBar.layoutParams = RelativeLayout.LayoutParams(
+			this.getStatusBarWidth(),
+			this.getStatusBarHeight()
+		)
+
+		this.view.addView(this.statusBar)
+
+		this.window.decorView.setOnSystemUiVisibilityChangeListener {
+
+			val viewport = this.viewport
+			this.display.viewportWidth = viewport.width.toDouble()
+			this.display.viewportHeight = viewport.height.toDouble()
+
+			val application = this.application
+			if (application != null) {
+				application.window.width.reset(viewport.width.toDouble(), JavaScriptPropertyUnit.PX)
+				application.window.height.reset(viewport.height.toDouble(), JavaScriptPropertyUnit.PX)
+			}
+		}
+
+		val viewport = this.viewport
+
+		this.stylesheet.listener = this
+		this.stylesheet.setVariable("safe-area-inset-top", "${this.getSafeAreaTopInset()}px")
+		this.stylesheet.setVariable("safe-area-inset-bottom", "${this.getSafeAreaBottomInset()}px")
+
+		this.display.scale = Convert.density.toDouble()
+		this.display.viewportWidth = viewport.width.toDouble()
+		this.display.viewportHeight = viewport.height.toDouble()
+		this.display.stylesheet = this.stylesheet
+
+		this.configure()
+
+		this.modules.add(JavaScriptUtilModule())
+		this.modules.add(JavaScriptGlobalModule())
+		this.modules.add(JavaScriptPlatformModule())
+		this.modules.add(JavaScriptLocaleModule())
+		this.modules.add(JavaScriptDeviceModule())
+		this.modules.add(JavaScriptDialogModule())
+		this.modules.add(JavaScriptGraphicModule())
+		this.modules.add(JavaScriptViewModule())
+		this.modules.add(JavaScriptFormModule())
+		this.modules.add(JavaScriptApplicationModule())
+
+		this.modules.forEach {
+			it.configure(this.context)
+		}
+
+		this.sources.forEach {
+			when (it.type) {
+				Source.Type.STYLE  -> this.evaluateStyle(it.data, it.path)
+				Source.Type.SCRIPT -> this.evaluateScript(it.data, it.path)
+			}
+		}
+
+		this.loaded = true
+
+		val application = this.application
+		if (application == null) {
+			return
+		}
+
+		this.display.window = application.window.node
+
+		application.window.width.reset(viewport.width.toDouble(), JavaScriptPropertyUnit.PX, lock = this)
+		application.window.height.reset(viewport.height.toDouble(), JavaScriptPropertyUnit.PX, lock = this)
+		application.callMethod("nativeOnCreate")
+
+		this.view.addView(application.window)
+	}
+
+	/**
+	 * @method onPause
+	 * @since 0.7.0
+	 */
+	override fun onPause() {
+
+		super.onPause()
+
+		this.keyboardObserver.listener = null
+
+		if (this.state == State.FOREGROUND) {
+			this.state = State.BACKGROUND
+			this.onEnterBackground()
+		}
+	}
+
+	/**
+	 * @method onResume
+	 * @since 0.7.0
+	 */
+	override fun onResume() {
+
+		super.onResume()
+
+		this.keyboardObserver.listener = this
+
+		if (this.state == State.BACKGROUND) {
+			this.state = State.FOREGROUND
+			this.onEnterForeground()
+		}
+	}
+
+	/**
+	 * @method onDestroy
+	 * @since 0.7.0
+	 */
+	override fun onDestroy() {
+
+		this.modules.forEach {
+			it.dispose(this.context)
+		}
+
+		this.state = State.BACKGROUND
+
+		this.keyboardObserver.listener = null
+		this.keyboardObserver.close()
+
+		super.onDestroy()
+	}
+
+	/**
+	 * @method onTrimMemory
+	 * @since 0.7.0
+	 */
+	override fun onTrimMemory(level: Int) {
+
+		when (level) {
+
+			ComponentCallbacks2.TRIM_MEMORY_RUNNING_MODERATE,
+			ComponentCallbacks2.TRIM_MEMORY_RUNNING_LOW,
+			ComponentCallbacks2.TRIM_MEMORY_RUNNING_CRITICAL -> {
+				this.application?.callMethod("nativeOnLowMemory")
+			}
+
+			else -> {
+
+			}
+		}
+
+		super.onTrimMemory(level)
+	}
+
+	/**
+	 * @method onNewIntent
+	 * @since 0.7.0
+	 */
+	override fun onNewIntent(intent: Intent?) {
+
+		when (intent?.action) {
+
+			Intent.ACTION_VIEW -> {
+				val uri = intent.data
+				if (uri is Uri) {
+					this.openUniversalURL(uri)
+				}
+			}
+
+			Intent.ACTION_SEND -> {
+				val uri = intent.getParcelableExtra<Parcelable>(Intent.EXTRA_STREAM)
+				if (uri is Uri) {
+					this.openResourceURL(uri)
+				}
+			}
+
+			else -> {
+				// Nothing
+			}
+		}
+	}
+
+	/**
+	 * @method onRequestPermissionsResult
+	 * @since 0.7.0
+	 */
+	override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, results: IntArray) {
+		for (i in permissions.indices) {
+			val intent = Intent("dezel.application.PERMISSION_CHANGED")
+			intent.putExtra("permission", permissions[i])
+			intent.putExtra("result", results[i])
+			LocalBroadcastManager.getInstance(this).sendBroadcastSync(intent)
+		}
+	}
+
+	/**
+	 * @method onBackPressed
+	 * @since 0.7.0
+	 */
+	override fun onBackPressed() {
+
+		val application = this.application
+		if (application == null) {
+			super.onBackPressed()
+			return
+		}
+
+		val handled = this.context.createReturnValue()
+
+		application.callMethod("nativeOnBack", null, handled)
+
+		if (handled.boolean == true) {
+			return
+		}
+
+		super.onBackPressed()
+	}
+
+	//--------------------------------------------------------------------------
+	// Stylesheet Delegate
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method didThrowError
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	override fun onThrowError(stylesheet: Stylesheet, error: String, col: Int, row: Int, url: String) {
+		Log.e("Dezel", "Stylesheet error $error")
+	}
+
+	//--------------------------------------------------------------------------
+	// Status Bar Management
 	//--------------------------------------------------------------------------
 
 	/**
@@ -847,42 +1090,6 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 	}
 
 	//--------------------------------------------------------------------------
-	// Methods - Lifecycle
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method onLoad
-	 * @since 0.7.0
-	 */
-	open fun onLoad() {
-
-	}
-
-	/**
-	 * @method onThrowError
-	 * @since 0.7.0
-	 */
-	open fun onThrowError(error: JavaScriptValue): Boolean {
-		return true
-	}
-
-	/**
-	 * @method onLaunchApplication
-	 * @since 0.7.0
-	 */
-	open fun onLaunchApplication(application: JavaScriptApplication) {
-
-	}
-
-	/**
-	 * @method onReloadApplication
-	 * @since 0.7.0
-	 */
-	open fun onReloadApplication(application: JavaScriptApplication) {
-
-	}
-
-	//--------------------------------------------------------------------------
 	// Variables
 	//--------------------------------------------------------------------------
 
@@ -921,71 +1128,4 @@ open class ApplicationActivity : Activity(), KeyboardObserverListener {
 	private fun isSim(): Boolean {
 		return Build.HARDWARE == "goldfish"
 	}
-
-	/**
-	 * @method dispatchTouchEvent
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private fun dispatchTouchEvent(name: String, event: MotionEvent) {
-
-		val application = this.application
-		if (application == null) {
-			return
-		}
-
-		val array = context.createEmptyArray()
-
-		val identifier = event.getPointerId(event.actionIndex)
-
-		val k = event.findPointerIndex(identifier)
-		val x = event.getX(k)
-		val y = event.getY(k)
-
-		val touch = this.context.createEmptyObject()
-		touch.property("identifier", identifier.toDouble())
-		touch.property("x", Convert.toDp(x).toDouble())
-		touch.property("y", Convert.toDp(y).toDouble())
-
-		array.property(0, touch)
-
-		application.callMethod(name, arrayOf(array))
-	}
-
-	/**
-	 * @method dispatchKeyboardEvent
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private fun dispatchKeyboardEvent(name: String, height: Int, delay: Long = 0) {
-
-		val application = this.application
-		if (application == null) {
-			return
-		}
-
-		this.keyboardHandler.postDelayed({
-
-			val args = arrayOf<JavaScriptValue?>(
-				this.context.createNumber(Convert.toDp(height.toFloat())),
-				this.context.createNumber(250.0),
-				this.context.createString("cubic-bezier(0.25,0.1,0.25,1)")
-			)
-
-			application.callMethod(name, args, null)
-
-		}, delay)
-	}
 }
-
-//--------------------------------------------------------------------------
-// Extensions
-//--------------------------------------------------------------------------
-
-/**
- * Convenience property to retrieve the application from the context.
- * @property activity
- * @since 0.1.0
- */
-public val JavaScriptContext.activity: ApplicationActivity
-	get() = this.attribute(ApplicationActivity.kApplicationActivityKey) as ApplicationActivity

@@ -2,24 +2,27 @@ package ca.logaritm.dezel.modules.form
 
 import android.util.Log
 import android.util.SizeF
-import ca.logaritm.dezel.application.activity
 import ca.logaritm.dezel.core.*
+import ca.logaritm.dezel.extension.core.activity
 import ca.logaritm.dezel.extension.type.clamp
 import ca.logaritm.dezel.extension.type.max
 import ca.logaritm.dezel.modules.view.JavaScriptView
 import ca.logaritm.dezel.view.TextInput
-import ca.logaritm.dezel.view.TextInputListener
+import ca.logaritm.dezel.view.TextInputObserver
 import ca.logaritm.dezel.view.display.DisplayNode
 import ca.logaritm.dezel.view.graphic.Color
 import ca.logaritm.dezel.view.graphic.Convert
-import ca.logaritm.dezel.view.type.*
+import ca.logaritm.dezel.view.type.InputType
+import ca.logaritm.dezel.view.type.TextAlign
+import ca.logaritm.dezel.view.type.TextDecoration
+import ca.logaritm.dezel.view.type.TextTransform
 
 /**
  * @class JavaScriptTextInput
  * @super JavaScriptView
  * @since 0.7.0
  */
-open class JavaScriptTextInput(context: JavaScriptContext) : JavaScriptView(context), TextInputListener {
+open class JavaScriptTextInput(context: JavaScriptContext) : JavaScriptView(context), TextInputObserver {
 
 	//--------------------------------------------------------------------------
 	// Properties
@@ -76,8 +79,8 @@ open class JavaScriptTextInput(context: JavaScriptContext) : JavaScriptView(cont
 
 		when (this.fontSize.unit) {
 			JavaScriptPropertyUnit.PX -> value = Convert.toPx(this.fontSize.number)
-			JavaScriptPropertyUnit.VW -> value = Convert.toPx(this.fontSize.number / 100 * this.displayNode.display.viewportWidth)
-			JavaScriptPropertyUnit.VH -> value = Convert.toPx(this.fontSize.number / 100 * this.displayNode.display.viewportHeight)
+			JavaScriptPropertyUnit.VW -> value = Convert.toPx(this.fontSize.number / 100 * this.node.display.viewportWidth)
+			JavaScriptPropertyUnit.VH -> value = Convert.toPx(this.fontSize.number / 100 * this.node.display.viewportHeight)
 			else                      -> value = Convert.toPx(this.fontSize.number)
 		}
 
@@ -86,10 +89,6 @@ open class JavaScriptTextInput(context: JavaScriptContext) : JavaScriptView(cont
 			Convert.toPx(this.maxFontSize.number)
 		)
 	}
-
-	//--------------------------------------------------------------------------
-	// Methods - Content Text Input JavaScriptViewListener
-	//--------------------------------------------------------------------------
 
 	/**
 	 * @method onChange
@@ -107,6 +106,7 @@ open class JavaScriptTextInput(context: JavaScriptContext) : JavaScriptView(cont
 	 * @hidden
 	 */
 	override fun onFocus(textInput: TextInput) {
+		this.node.appendState("focus")
 		this.callMethod("nativeOnFocus")
 	}
 
@@ -116,6 +116,7 @@ open class JavaScriptTextInput(context: JavaScriptContext) : JavaScriptView(cont
 	 * @hidden
 	 */
 	override fun onBlur(textInput: TextInput) {
+		this.node.removeState("focus")
 		this.callMethod("nativeOnBlur")
 	}
 
@@ -135,26 +136,26 @@ open class JavaScriptTextInput(context: JavaScriptContext) : JavaScriptView(cont
 		}
 	}
 
-	//--------------------------------------------------------------------------
-	// Private API - Conversions
-	//--------------------------------------------------------------------------
-
 	/**
 	 * @method getType
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	open fun getType(value: String): InputType {
+	private fun getType(value: String): InputType {
 
 		when (value) {
+
 			"date"     -> return InputType.DATE
 			"time"     -> return InputType.TIME
 			"text"     -> return InputType.TEXT
-			"toNumber"   -> return InputType.NUMBER
+			"number"   -> return InputType.NUMBER
 			"email"    -> return InputType.EMAIL
 			"phone"    -> return InputType.PHONE
 			"password" -> return InputType.PASSWORD
-			else       -> Log.d("DEZEL", "Unrecognized handle for type: $value")
+
+			else -> {
+				Log.d("DEZEL", "Unrecognized value for type: $value")
+			}
 		}
 
 		return InputType.TEXT
@@ -165,12 +166,16 @@ open class JavaScriptTextInput(context: JavaScriptContext) : JavaScriptView(cont
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	open fun getTextDecoration(value: String): TextDecoration {
+	private fun getTextDecoration(value: String): TextDecoration {
 
 		when (value) {
+
 			"none"      -> return TextDecoration.NONE
 			"underline" -> return TextDecoration.UNDERLINE
-			else        -> Log.d("DEZEL", "Unrecognized handle for textDecoration: $value")
+
+			else -> {
+				Log.d("DEZEL", "Unrecognized value for textDecoration: $value")
+			}
 		}
 
 		return TextDecoration.NONE
@@ -181,53 +186,50 @@ open class JavaScriptTextInput(context: JavaScriptContext) : JavaScriptView(cont
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	open fun getTextTransform(value: String): TextTransform {
+	private fun getTextTransform(value: String): TextTransform {
 
 		when (value) {
+
 			"none"       -> return TextTransform.NONE
 			"uppercase"  -> return TextTransform.UPPERCASE
 			"lowercase"  -> return TextTransform.LOWERCASE
 			"capitalize" -> return TextTransform.CAPITALIZE
-			else         -> Log.d("DEZEL", "Unrecognized handle for textTransform: $value")
+
+			else -> {
+				Log.d("DEZEL", "Unrecognized value for textTransform: $value")
+			}
 		}
 
 		return TextTransform.NONE
 	}
 
 	/**
-	 * @method getTextAlignment
+	 * @method getTextAlign
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	open fun getTextAlignment(value: String): TextAlignment {
+	private fun getTextAlign(value: String): TextAlign {
 
 		when (value) {
-			"start"  -> return TextAlignment.START
-			"end"    -> return TextAlignment.END
-			"left"   -> return TextAlignment.LEFT
-			"right"  -> return TextAlignment.RIGHT
-			"center" -> return TextAlignment.CENTER
-			else     -> Log.d("DEZEL", "Unrecognized handle for textAlignment: $value")
+
+			"top left"   -> return TextAlign.TOP_LEFT
+			"top right"  -> return TextAlign.TOP_RIGHT
+			"top center" -> return TextAlign.TOP_CENTER
+
+			"left"   -> return TextAlign.MIDDLE_LEFT
+			"right"  -> return TextAlign.MIDDLE_RIGHT
+			"center" -> return TextAlign.MIDDLE_CENTER
+
+			"bottom left"   -> return TextAlign.BOTTOM_LEFT
+			"bottom right"  -> return TextAlign.BOTTOM_RIGHT
+			"bottom center" -> return TextAlign.BOTTOM_CENTER
+
+			else -> {
+				Log.e("Dezel", "Unrecognized value for textAlign: $value")
+			}
 		}
 
-		return TextAlignment.START
-	}
-
-	/**
-	 * @method getTextLocation
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	open fun getTextLocation(value: String): TextLocation {
-
-		when (value) {
-			"top"    -> return TextLocation.TOP
-			"middle" -> return TextLocation.MIDDLE
-			"bottom" -> return TextLocation.BOTTOM
-			else     -> Log.d("DEZEL", "Unrecognized handle for textLocation: $value")
-		}
-
-		return TextLocation.MIDDLE
+		return TextAlign.MIDDLE_LEFT
 	}
 
 	//--------------------------------------------------------------------------
@@ -408,22 +410,12 @@ open class JavaScriptTextInput(context: JavaScriptContext) : JavaScriptView(cont
 	}
 
 	/**
-	 * @property textAlignment
+	 * @property textAlign
 	 * @since 0.7.0
 	 */
-	public val textAlignment by lazy {
+	public val textAlign by lazy {
 		JavaScriptProperty("start") { value ->
-			this.view.textAlignment = this.getTextAlignment(value.string)
-		}
-	}
-
-	/**
-	 * @property textLocation
-	 * @since 0.7.0
-	 */
-	public val textLocation by lazy {
-		JavaScriptProperty("middle") { value ->
-			this.view.textLocation = this.getTextLocation(value.string)
+			this.view.textAlign = this.getTextAlign(value.string)
 		}
 	}
 
@@ -828,45 +820,23 @@ open class JavaScriptTextInput(context: JavaScriptContext) : JavaScriptView(cont
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method jsGet_textAlignment
+	 * @method jsGet_textAlign
 	 * @since 0.7.0
 	 * @hidden
 	 */
 	@Suppress("unused")
-	open fun jsGet_textAlignment(callback: JavaScriptGetterCallback) {
-		callback.returns(this.textAlignment)
+	open fun jsGet_textAlign(callback: JavaScriptGetterCallback) {
+		callback.returns(this.textAlign)
 	}
 
 	/**
-	 * @method jsSet_textAlignment
+	 * @method jsSet_textAlign
 	 * @since 0.7.0
 	 * @hidden
 	 */
 	@Suppress("unused")
-	open fun jsSet_textAlignment(callback: JavaScriptSetterCallback) {
-		this.textAlignment.reset(callback.value, this)
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method jsGet_textLocation
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	@Suppress("unused")
-	open fun jsGet_textLocation(callback: JavaScriptGetterCallback) {
-		callback.returns(this.textLocation)
-	}
-
-	/**
-	 * @method jsSet_textLocation
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	@Suppress("unused")
-	open fun jsSet_textLocation(callback: JavaScriptSetterCallback) {
-		this.textLocation.reset(callback.value, this)
+	open fun jsSet_textAlign(callback: JavaScriptSetterCallback) {
+		this.textAlign.reset(callback.value, this)
 	}
 
 	//--------------------------------------------------------------------------

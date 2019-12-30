@@ -10,7 +10,7 @@ JavaScriptFunctionWrapperCallback(JSContextRef context, JSObjectRef object, JSOb
 	auto result = JavaScriptFunctionExecute(
 		wrapper->env,
 		wrapper->ctx,
-		NULL,
+		nullptr,
 		wrapper->callback,
 		JavaScriptFunctionWrapperExecute,
 		object,
@@ -19,7 +19,7 @@ JavaScriptFunctionWrapperCallback(JSContextRef context, JSObjectRef object, JSOb
 		argv
 	);
 
-	return result ? reinterpret_cast<JSValueRef>(result) : NULL;
+	return result ? reinterpret_cast<JSValueRef>(result) : nullptr;
 }
 
 static void

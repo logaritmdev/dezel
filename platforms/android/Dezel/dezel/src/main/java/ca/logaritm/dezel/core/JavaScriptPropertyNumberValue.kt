@@ -18,7 +18,7 @@ open class JavaScriptPropertyNumberValue(value: Double, unit: JavaScriptProperty
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private var value: Double
+	private var data: Double
 
 	//--------------------------------------------------------------------------
 	// Methods
@@ -29,7 +29,7 @@ open class JavaScriptPropertyNumberValue(value: Double, unit: JavaScriptProperty
 	 * @since 0.7.0
 	 */
 	init {
-		this.value = value
+		this.data = value
 	}
 
 	/**
@@ -38,7 +38,7 @@ open class JavaScriptPropertyNumberValue(value: Double, unit: JavaScriptProperty
 	 */
 	override fun toString(): String {
 
-		val string = StringBuilder(this.value.toStr())
+		val string = StringBuilder(this.data.toStr())
 
 		when (this.unit) {
 			JavaScriptPropertyUnit.PX  -> string.append("px")
@@ -62,7 +62,7 @@ open class JavaScriptPropertyNumberValue(value: Double, unit: JavaScriptProperty
 	 * @since 0.7.0
 	 */
 	override fun toNumber(): Double {
-		return this.value
+		return this.data
 	}
 
 	/**
@@ -70,6 +70,6 @@ open class JavaScriptPropertyNumberValue(value: Double, unit: JavaScriptProperty
 	 * @since 0.7.0
 	 */
 	override fun toBoolean(): Boolean {
-		return this.value > 0
+		return this.data > 0
 	}
 }

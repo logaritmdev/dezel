@@ -11200,15 +11200,13 @@ class TestRunner {
     // Karma
     //--------------------------------------------------------------------------
     /**
-     * @inherited
      * @method start
      * @since 0.7.0
      */
     start(data) {
         this.error('Missing Karma adapter');
     }
-    /**
-     * @inherited
+    /**@inherited
      * @method start
      * @since 0.7.0
      */

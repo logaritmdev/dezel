@@ -1,10 +1,10 @@
 package ca.logaritm.dezel.modules.view
 
-import ca.logaritm.dezel.application.activity
 import ca.logaritm.dezel.core.JavaScriptContext
 import ca.logaritm.dezel.core.JavaScriptGetterCallback
 import ca.logaritm.dezel.core.JavaScriptProperty
 import ca.logaritm.dezel.core.JavaScriptSetterCallback
+import ca.logaritm.dezel.extension.core.activity
 import ca.logaritm.dezel.extension.type.toColor
 import ca.logaritm.dezel.view.SpinnerView
 
@@ -47,7 +47,7 @@ open class JavaScriptSpinnerView(context: JavaScriptContext) : JavaScriptView(co
 	 * @property spin
 	 * @since 0.7.0
 	 */
-	public val spin by lazy {
+	val spin by lazy {
 		JavaScriptProperty(false) { value ->
 			this.view.spin = value.boolean
 		}
@@ -57,7 +57,7 @@ open class JavaScriptSpinnerView(context: JavaScriptContext) : JavaScriptView(co
 	 * @property tint
 	 * @since 0.7.0
 	 */
-	public val tint by lazy {
+	val tint by lazy {
 		JavaScriptProperty("#000") { value ->
 			this.view.tint = value.string.toColor()
 		}
@@ -71,7 +71,7 @@ open class JavaScriptSpinnerView(context: JavaScriptContext) : JavaScriptView(co
 	 * @hidden
 	 */
 	@Suppress("unused")
-	open fun jsGet_color(callback: JavaScriptGetterCallback) {
+	fun jsGet_color(callback: JavaScriptGetterCallback) {
 		callback.returns(this.tint)
 	}
 
@@ -81,7 +81,7 @@ open class JavaScriptSpinnerView(context: JavaScriptContext) : JavaScriptView(co
 	 * @hidden
 	 */
 	@Suppress("unused")
-	open fun jsSet_color(callback: JavaScriptSetterCallback) {
+	fun jsSet_color(callback: JavaScriptSetterCallback) {
 		this.tint.reset(callback.value, lock = this)
 	}
 
@@ -93,7 +93,7 @@ open class JavaScriptSpinnerView(context: JavaScriptContext) : JavaScriptView(co
 	 * @hidden
 	 */
 	@Suppress("unused")
-	open fun jsGet_spin(callback: JavaScriptGetterCallback) {
+	fun jsGet_spin(callback: JavaScriptGetterCallback) {
 		callback.returns(this.spin)
 	}
 
@@ -103,7 +103,7 @@ open class JavaScriptSpinnerView(context: JavaScriptContext) : JavaScriptView(co
 	 * @hidden
 	 */
 	@Suppress("unused")
-	open fun jsSet_spin(callback: JavaScriptSetterCallback) {
+	fun jsSet_spin(callback: JavaScriptSetterCallback) {
 		this.spin.reset(callback.value, lock = this)
 	}
 }

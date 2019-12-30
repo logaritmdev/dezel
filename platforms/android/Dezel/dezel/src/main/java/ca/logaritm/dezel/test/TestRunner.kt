@@ -37,23 +37,11 @@ open class TestRunner: ApplicationActivity() {
 		this.host = host
 		this.port = port
 
-		this.setup()
-	}
+		this.onCreate(null)
 
-	/**
-	 * @method configure
-	 * @since 0.7.0
-	 */
-	override fun configure() {
 		this.context.global.property("KARMA_HOST", this.host)
 		this.context.global.property("KARMA_PORT", this.port)
-	}
 
-	/**
-	 * @method onLoad
-	 * @since 0.7.0
-	 */
-	override fun onLoad() {
 		this.context.evaluate(JavaScriptContext::class.getResource("res/raw/test_runner.js").reader().use { it.readText() }, "test_runner.js")
 	}
 }

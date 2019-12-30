@@ -1,9 +1,17 @@
 package ca.logaritm.dezel.extension.core
 
 import android.net.Uri
+import ca.logaritm.dezel.application.ApplicationActivity
 import ca.logaritm.dezel.core.JavaScriptContext
 import ca.logaritm.dezel.core.JavaScriptValue
 import java.net.URL
+
+/**
+ * @property activity
+ * @since 0.7.0
+ */
+public val JavaScriptContext.activity: ApplicationActivity
+	get() = this.attribute(ApplicationActivity.kApplicationActivityKey) as ApplicationActivity
 
 /**
  * @method JavaScriptContext.createObject

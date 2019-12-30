@@ -5,11 +5,10 @@ import android.content.Intent
 import android.net.Uri
 import android.provider.Settings
 import ca.logaritm.dezel.application.ApplicationActivity
-import ca.logaritm.dezel.application.activity
 import ca.logaritm.dezel.core.*
+import ca.logaritm.dezel.extension.core.activity
 import ca.logaritm.dezel.modules.view.JavaScriptWindow
 import ca.logaritm.dezel.view.graphic.Color
-
 
 /**
  * @class JavaScriptApplication
@@ -87,7 +86,7 @@ open class JavaScriptApplication(context: JavaScriptContext) : JavaScriptClass(c
 	 * @property statusBarVisible
 	 * @since 0.7.0
 	 */
-	public val statusBarVisible by lazy {
+	open val statusBarVisible by lazy {
 		JavaScriptProperty(true) { value ->
 			this.context.activity.statusBarVisible = value.boolean
 		}
@@ -97,7 +96,7 @@ open class JavaScriptApplication(context: JavaScriptContext) : JavaScriptClass(c
 	 * @property statusBarForegroundColor
 	 * @since 0.7.0
 	 */
-	public val statusBarForegroundColor by lazy {
+	open val statusBarForegroundColor by lazy {
 		JavaScriptProperty("black") { value ->
 			this.context.activity.statusBarForegroundColor = Color.parse(value.string)
 		}
@@ -107,7 +106,7 @@ open class JavaScriptApplication(context: JavaScriptContext) : JavaScriptClass(c
 	 * @property statusBarBackgroundColor
 	 * @since 0.7.0
 	 */
-	public val statusBarBackgroundColor by lazy {
+	open val statusBarBackgroundColor by lazy {
 		JavaScriptProperty("transparent") { value ->
 			this.context.activity.statusBarBackgroundColor = Color.parse(value.string)
 		}
@@ -117,7 +116,7 @@ open class JavaScriptApplication(context: JavaScriptContext) : JavaScriptClass(c
 	 * @property badge
 	 * @since 0.7.0
 	 */
-	public val badge by lazy {
+	open val badge by lazy {
 		JavaScriptProperty(0.0)
 	}
 
@@ -249,16 +248,6 @@ open class JavaScriptApplication(context: JavaScriptContext) : JavaScriptClass(c
 	//--------------------------------------------------------------------------
 	// JS Functions
 	//--------------------------------------------------------------------------
-
-	/**
-	 * @method jsFunction_run
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	@Suppress("unused")
-	open fun jsFunction_run(callback: JavaScriptFunctionCallback) {
-		this.context.activity.launch(this)
-	}
 
 	/**
 	 * @method jsFunction_openURL

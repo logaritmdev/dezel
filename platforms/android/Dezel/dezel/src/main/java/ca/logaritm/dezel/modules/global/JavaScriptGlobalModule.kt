@@ -1,10 +1,12 @@
 package ca.logaritm.dezel.modules.global
 
 
+import android.util.Log
 import android.view.Choreographer
 import ca.logaritm.dezel.core.JavaScriptContext
-import ca.logaritm.dezel.core.JavaScriptValue
+import ca.logaritm.dezel.core.JavaScriptFunctionCallback
 import ca.logaritm.dezel.core.JavaScriptModule
+import ca.logaritm.dezel.core.JavaScriptValue
 import ca.logaritm.dezel.extension.fatalError
 import ca.logaritm.dezel.util.timer.Ticker
 import ca.logaritm.dezel.util.timer.Timer
@@ -15,7 +17,7 @@ import kotlin.math.max
  * @since 0.7.0
  * @hidden
  */
-open class GlobalModule: JavaScriptModule() {
+open class JavaScriptGlobalModule: JavaScriptModule() {
 
 	//--------------------------------------------------------------------------
 	// Properties
@@ -73,144 +75,6 @@ open class GlobalModule: JavaScriptModule() {
 		}
 	}
 
-	/**
-	 * @property setImmediate
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private val setImmediate = context.createFunction { callback ->
-
-		if (callback.arguments < 1) {
-			fatalError("Function setImmediate() requires 1 argument.")
-		}
-
-		callback.returns(this.scheduleTimeout(callback.argument(0), 0.0))
-	}
-
-	/**
-	 * @property setInterval
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private val setInterval = context.createFunction { callback ->
-
-		if (callback.arguments < 1) {
-			fatalError("Function setInterval() requires at least 1 argument.")
-		}
-
-		if (callback.arguments == 1) {
-			callback.returns(this.scheduleInterval(callback.argument(0), 10.0))
-			return@createFunction
-		}
-
-		if (callback.arguments == 2) {
-
-			val function = callback.argument(0)
-			val interval = callback.argument(1).number
-
-			callback.returns(this.scheduleInterval(function, max(10.0, interval)))
-
-			return@createFunction
-		}
-	}
-
-	/**
-	 * @property setTimeout
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private val setTimeout = context.createFunction { callback ->
-
-		if (callback.arguments < 1) {
-			fatalError("Function setTimeout() requires at least 1 argument.")
-		}
-
-		if (callback.arguments == 1) {
-			callback.returns(this.scheduleTimeout(callback.argument(0), 0.0))
-			return@createFunction
-		}
-
-		if (callback.arguments == 2) {
-			callback.returns(this.scheduleTimeout(callback.argument(0), callback.argument(1).number))
-			return@createFunction
-		}
-	}
-
-	/**
-	 * @property clearImmediate
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private val clearImmediate = context.createFunction { callback ->
-
-		if (callback.arguments < 1) {
-			fatalError("Function clearImmediate() requires 1 argument.")
-		}
-
-		this.removeTimer(callback.argument(0).number)
-	}
-
-	/**
-	 * @property clearTimeout
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private val clearTimeout = context.createFunction("clearTimeout") { callback ->
-
-		if (callback.arguments < 1) {
-			fatalError("Function clearImmediate() requires 1 argument.")
-		}
-
-		this.removeTimer(callback.argument(0).number)
-	}
-
-	/**
-	 * @property clearInterval
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private val clearInterval = context.createFunction { callback ->
-
-		if (callback.arguments < 1) {
-			fatalError("Function clearInterval() requires 1 argument.")
-		}
-
-		this.removeTimer(callback.argument(0).number)
-	}
-
-	/**
-	 * @property requestAnimationFrame
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private val requestAnimationFrame = context.createFunction { callback ->
-
-		if (callback.arguments < 1) {
-			fatalError("Function requestAnimationFrame() requires 1 argument.")
-		}
-
-		if (this.scheduledFrameRequested == false) {
-			this.scheduledFrameRequested = true
-			Choreographer.getInstance().postFrameCallback(this.scheduledFrameCallback)
-		}
-
-		callback.returns(this.scheduleFrame(callback.argument(0)))
-	}
-
-	/**
-	 * @property cancelAnimationFrame
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private val cancelAnimationFrame = context.createFunction { callback ->
-
-		if (callback.arguments < 1) {
-			fatalError("Function cancelAnimationFrame() requires 1 argument.")
-		}
-
-		this.removeFrame(callback.argument(0).number)
-	}
-
 	//--------------------------------------------------------------------------
 	// Methods
 	//--------------------------------------------------------------------------
@@ -224,28 +88,18 @@ open class GlobalModule: JavaScriptModule() {
 		context.registerClass("dezel.global.WebSocket", JavaScriptWebSocket::class.java)
 		context.registerClass("dezel.global.XMLHttpRequest", JavaScriptXMLHttpRequest::class.java)
 
-		context.global.defineProperty("setImmediate", this.setImmediate)
-		context.global.defineProperty("setInterval", this.setInterval)
-		context.global.defineProperty("setTimeout", this.setTimeout)
-		context.global.defineProperty("clearImmediate", this.clearImmediate)
-		context.global.defineProperty("clearInterval", this.clearInterval)
-		context.global.defineProperty("clearTimeout", this.clearTimeout)
-		context.global.defineProperty("requestAnimationFrame", this.requestAnimationFrame)
-		context.global.defineProperty("cancelAnimationFrame", this.cancelAnimationFrame)
-	}
+		context.global.defineProperty("setImmediate", context.createFunction { callback -> this.setImmediate(callback) })
+		context.global.defineProperty("setInterval", context.createFunction { callback -> this.setInterval(callback) })
+		context.global.defineProperty("setTimeout", context.createFunction { callback -> this.setTimeout(callback) })
+		context.global.defineProperty("clearImmediate", context.createFunction { callback -> this.clearImmediate(callback) })
+		context.global.defineProperty("clearInterval", context.createFunction { callback -> this.clearInterval(callback) })
+		context.global.defineProperty("clearTimeout", context.createFunction { callback -> this.clearTimeout(callback) })
+		context.global.defineProperty("requestAnimationFrame", context.createFunction { callback -> this.requestAnimationFrame(callback) })
+		context.global.defineProperty("cancelAnimationFrame", context.createFunction { callback -> this.cancelAnimationFrame(callback) })
 
-	/**
-	 * @method dispose
-	 * @since 0.7.0
-	 */
-	override fun dispose() {
-
-		this.scheduledTimers.forEach { it.value.cancel() }
-		this.scheduledFrames.forEach { it.value.cancel() }
-		this.scheduledTimers.clear()
-		this.scheduledFrames.clear()
-
-		super.dispose()
+		context.global.defineProperty("LOG", context.createFunction { callback ->
+			Log.e("DEZEL", callback.argument(0).string)
+		})
 	}
 
 	//--------------------------------------------------------------------------
@@ -305,6 +159,144 @@ open class GlobalModule: JavaScriptModule() {
 		this.scheduledFrames.remove(identifier)
 	}
 
+	/**
+	 * @property setImmediate
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private fun setImmediate(callback: JavaScriptFunctionCallback) {
+
+		if (callback.arguments < 1) {
+			fatalError("Function setImmediate() requires 1 argument.")
+		}
+
+		callback.returns(this.scheduleTimeout(callback.argument(0), 0.0))
+	}
+
+	/**
+	 * @property setInterval
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private fun setInterval(callback: JavaScriptFunctionCallback) {
+
+		if (callback.arguments < 1) {
+			fatalError("Function setInterval() requires at least 1 argument.")
+		}
+
+		if (callback.arguments == 1) {
+			callback.returns(this.scheduleInterval(callback.argument(0), 10.0))
+			return
+		}
+
+		if (callback.arguments == 2) {
+
+			val function = callback.argument(0)
+			val interval = callback.argument(1).number
+
+			callback.returns(this.scheduleInterval(function, max(10.0, interval)))
+
+			return
+		}
+	}
+
+	/**
+	 * @property setTimeout
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private fun setTimeout(callback: JavaScriptFunctionCallback) {
+
+		if (callback.arguments < 1) {
+			fatalError("Function setTimeout() requires at least 1 argument.")
+		}
+
+		if (callback.arguments == 1) {
+			callback.returns(this.scheduleTimeout(callback.argument(0), 0.0))
+			return
+		}
+
+		if (callback.arguments == 2) {
+			callback.returns(this.scheduleTimeout(callback.argument(0), callback.argument(1).number))
+			return
+		}
+	}
+
+	/**
+	 * @property clearImmediate
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private fun clearImmediate(callback: JavaScriptFunctionCallback) {
+
+		if (callback.arguments < 1) {
+			fatalError("Function clearImmediate() requires 1 argument.")
+		}
+
+		this.removeTimer(callback.argument(0).number)
+	}
+
+	/**
+	 * @property clearTimeout
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private fun clearTimeout(callback: JavaScriptFunctionCallback) {
+
+		if (callback.arguments < 1) {
+			fatalError("Function clearImmediate() requires 1 argument.")
+		}
+
+		this.removeTimer(callback.argument(0).number)
+	}
+
+	/**
+	 * @property clearInterval
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private fun clearInterval(callback: JavaScriptFunctionCallback) {
+
+		if (callback.arguments < 1) {
+			fatalError("Function clearInterval() requires 1 argument.")
+		}
+
+		this.removeTimer(callback.argument(0).number)
+	}
+
+	/**
+	 * @property requestAnimationFrame
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private fun requestAnimationFrame(callback: JavaScriptFunctionCallback) {
+
+		if (callback.arguments < 1) {
+			fatalError("Function requestAnimationFrame() requires 1 argument.")
+		}
+
+		if (this.scheduledFrameRequested == false) {
+			this.scheduledFrameRequested = true
+			Choreographer.getInstance().postFrameCallback(this.scheduledFrameCallback)
+		}
+
+		callback.returns(this.scheduleFrame(callback.argument(0)))
+	}
+
+	/**
+	 * @property cancelAnimationFrame
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private fun cancelAnimationFrame(callback: JavaScriptFunctionCallback) {
+
+		if (callback.arguments < 1) {
+			fatalError("Function cancelAnimationFrame() requires 1 argument.")
+		}
+
+		this.removeFrame(callback.argument(0).number)
+	}
+
 	//--------------------------------------------------------------------------
 	// Classes
 	//--------------------------------------------------------------------------
@@ -312,8 +304,9 @@ open class GlobalModule: JavaScriptModule() {
 	/**
 	 * @class ScheduledTimer
 	 * @since 0.7.0
+	 * @hidden
 	 */
-	private class ScheduledTimer(callback: JavaScriptValue, interval: Double, repeated: Boolean, module: GlobalModule, handle: Double): Ticker {
+	private class ScheduledTimer(callback: JavaScriptValue, interval: Double, repeated: Boolean, module: JavaScriptGlobalModule, handle: Double): Ticker {
 
 		/**
 		 * @property callback
@@ -341,7 +334,7 @@ open class GlobalModule: JavaScriptModule() {
 		 * @since 0.7.0
 		 * @hidden
 		 */
-		private var module: GlobalModule
+		private var module: JavaScriptGlobalModule
 
 		/**
 		 * @property handle
@@ -360,7 +353,6 @@ open class GlobalModule: JavaScriptModule() {
 		/**
 		 * @constructor
 		 * @since 0.7.0
-		 * @hidden
 		 */
 		init {
 
@@ -378,7 +370,6 @@ open class GlobalModule: JavaScriptModule() {
 		/**
 		 * @method execute
 		 * @since 0.7.0
-		 * @hidden
 		 */
 		public fun execute() {
 
@@ -393,7 +384,6 @@ open class GlobalModule: JavaScriptModule() {
 		/**
 		 * @method cancel
 		 * @since 0.7.0
-		 * @hidden
 		 */
 		public fun cancel() {
 			this.callback.unprotect()
@@ -404,7 +394,6 @@ open class GlobalModule: JavaScriptModule() {
 		/**
 		 * @method remove
 		 * @since 0.7.0
-		 * @hidden
 		 */
 		public fun remove() {
 			this.module.scheduledTimers.remove(this.handle)
@@ -413,7 +402,6 @@ open class GlobalModule: JavaScriptModule() {
 		/**
 		 * @method onTick
 		 * @since 0.7.0
-		 * @hidden
 		 */
 		override fun onTick() {
 			this.execute()
@@ -437,7 +425,6 @@ open class GlobalModule: JavaScriptModule() {
 		/**
 		 * @constructor
 		 * @since 0.7.0
-		 * @hidden
 		 */
 		init {
 			this.callback = callback
@@ -447,7 +434,6 @@ open class GlobalModule: JavaScriptModule() {
 		/**
 		 * @method invalidate
 		 * @since 0.7.0
-		 * @hidden
 		 */
 		public fun execute() {
 			this.callback.call()
@@ -457,7 +443,6 @@ open class GlobalModule: JavaScriptModule() {
 		/**
 		 * @method cancel
 		 * @since 0.7.0
-		 * @hidden
 		 */
 		public fun cancel() {
 			this.callback.unprotect()

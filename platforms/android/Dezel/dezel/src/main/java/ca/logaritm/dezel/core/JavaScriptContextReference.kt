@@ -1,5 +1,6 @@
 package ca.logaritm.dezel.core
 
+import ca.logaritm.dezel.core.external.JavaScriptContextExternal
 import java.lang.ref.ReferenceQueue
 
 /**

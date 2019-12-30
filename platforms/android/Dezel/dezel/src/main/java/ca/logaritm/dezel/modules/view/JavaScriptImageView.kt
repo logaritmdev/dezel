@@ -1,17 +1,20 @@
 package ca.logaritm.dezel.modules.view
 
-import android.graphics.Bitmap
 import android.util.Log
 import android.util.SizeF
-import ca.logaritm.dezel.application.activity
-import ca.logaritm.dezel.core.*
-import ca.logaritm.dezel.extension.Delegates
+import ca.logaritm.dezel.core.JavaScriptContext
+import ca.logaritm.dezel.core.JavaScriptGetterCallback
+import ca.logaritm.dezel.core.JavaScriptProperty
+import ca.logaritm.dezel.core.JavaScriptSetterCallback
+import ca.logaritm.dezel.extension.core.activity
 import ca.logaritm.dezel.extension.util.ceiled
 import ca.logaritm.dezel.modules.graphic.ImageLoader
 import ca.logaritm.dezel.view.ImageView
+import ca.logaritm.dezel.view.display.DisplayNode
 import ca.logaritm.dezel.view.graphic.Color
 import ca.logaritm.dezel.view.graphic.Convert
-import ca.logaritm.dezel.view.type.ImageFilter
+import ca.logaritm.dezel.view.type.ImageFit
+import ca.logaritm.dezel.view.type.ImagePosition
 
 /**
  * @class JavaScriptImageView
@@ -25,27 +28,11 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @property imageData
+	 * @property loader
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private var imageData: Bitmap? by Delegates.OnSetOptional<Bitmap>(null) {
-		this.invalidateImage()
-	}
-
-	/**
-	 * @property imageLoader
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private var imageLoader: ImageLoader = ImageLoader(context.activity)
-
-	/**
-	 * @property invalidImage
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private var invalidImage: Boolean = false
+	private var loader: ImageLoader = ImageLoader(context.activity)
 
 	/**
 	 * @property view
@@ -67,161 +54,8 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 		return ImageView(this.context.activity)
 	}
 
-	/**
-	 * @method dispose
-	 * @since 0.7.0
-	 */
-	override fun dispose() {
-		this.imageData = null
-		super.dispose()
-	}
-
-	/**
-	 * @method update
-	 * @since 0.7.0
-	 */
-	override fun update() {
-
-		super.update()
-
-		if (this.invalidImage) {
-			this.invalidImage = false
-			this.updateImage()
-		}
-	}
-
-	/**
-	 * @method updateImage
-	 * @since 0.7.0
-	 */
-	open fun updateImage() {
-
-		this.view.image = null
-
-		val image = this.imageData
-		if (image == null) {
-			return
-		}
-
-		var autoW = false
-		var autoH = false
-		var imageW = 0.0
-		var imageH = 0.0
-		var imageT = 0.0
-		var imageL = 0.0
-
-		if (this.imageWidth.type == JavaScriptPropertyType.STRING &&
-			this.imageWidth.string == "auto") {
-
-			autoW = true
-
-		} else {
-
-			when (this.imageWidth.unit) {
-				JavaScriptPropertyUnit.PC -> imageW = this.imageWidth.number / 100 * this.resolvedWidth
-				JavaScriptPropertyUnit.VW -> imageW = this.imageWidth.number / 100 * this.displayNode.display.viewportWidth
-				JavaScriptPropertyUnit.VH -> imageW = this.imageWidth.number / 100 * this.displayNode.display.viewportHeight
-				JavaScriptPropertyUnit.PW -> imageW = this.imageWidth.number / 100 * this.resolvedInnerWidth
-				JavaScriptPropertyUnit.PH -> imageW = this.imageWidth.number / 100 * this.resolvedInnerHeight
-				JavaScriptPropertyUnit.CW -> imageW = this.imageWidth.number / 100 * this.resolvedContentWidth
-				JavaScriptPropertyUnit.CH -> imageW = this.imageWidth.number / 100 * this.resolvedContentHeight
-				else                      -> imageW = this.imageWidth.number
-			}
-		}
-
-		if (this.imageHeight.type == JavaScriptPropertyType.STRING &&
-			this.imageHeight.string == "auto") {
-
-			autoH = true
-
-		} else {
-
-			when (this.imageHeight.unit) {
-				JavaScriptPropertyUnit.PC -> imageH = this.imageHeight.number / 100 * this.resolvedHeight
-				JavaScriptPropertyUnit.VW -> imageH = this.imageHeight.number / 100 * this.displayNode.display.viewportWidth
-				JavaScriptPropertyUnit.VH -> imageH = this.imageHeight.number / 100 * this.displayNode.display.viewportHeight
-				JavaScriptPropertyUnit.PW -> imageH = this.imageHeight.number / 100 * this.resolvedInnerWidth
-				JavaScriptPropertyUnit.PH -> imageH = this.imageHeight.number / 100 * this.resolvedInnerHeight
-				JavaScriptPropertyUnit.CW -> imageH = this.imageHeight.number / 100 * this.resolvedContentWidth
-				JavaScriptPropertyUnit.CH -> imageH = this.imageHeight.number / 100 * this.resolvedContentHeight
-				else                      -> imageH = this.imageHeight.number
-			}
-		}
-
-		when (this.imageTop.unit) {
-			JavaScriptPropertyUnit.PC -> imageT = this.imageTop.number / 100 * this.resolvedInnerHeight
-			JavaScriptPropertyUnit.VW -> imageT = this.imageTop.number / 100 * this.displayNode.display.viewportWidth
-			JavaScriptPropertyUnit.VH -> imageT = this.imageTop.number / 100 * this.displayNode.display.viewportHeight
-			JavaScriptPropertyUnit.PW -> imageT = this.imageTop.number / 100 * this.resolvedInnerWidth
-			JavaScriptPropertyUnit.PH -> imageT = this.imageTop.number / 100 * this.resolvedInnerHeight
-			JavaScriptPropertyUnit.CW -> imageT = this.imageTop.number / 100 * this.resolvedContentWidth
-			JavaScriptPropertyUnit.CH -> imageT = this.imageTop.number / 100 * this.resolvedContentHeight
-			else                      -> imageT = this.imageTop.number
-		}
-
-		when (this.imageLeft.unit) {
-			JavaScriptPropertyUnit.PC -> imageL = this.imageLeft.number / 100 * this.resolvedInnerWidth
-			JavaScriptPropertyUnit.VW -> imageL = this.imageLeft.number / 100 * this.displayNode.display.viewportWidth
-			JavaScriptPropertyUnit.VH -> imageL = this.imageLeft.number / 100 * this.displayNode.display.viewportHeight
-			JavaScriptPropertyUnit.PW -> imageL = this.imageLeft.number / 100 * this.resolvedInnerWidth
-			JavaScriptPropertyUnit.PH -> imageL = this.imageLeft.number / 100 * this.resolvedInnerHeight
-			JavaScriptPropertyUnit.CW -> imageL = this.imageLeft.number / 100 * this.resolvedContentWidth
-			JavaScriptPropertyUnit.CH -> imageL = this.imageLeft.number / 100 * this.resolvedContentHeight
-			else                      -> imageL = this.imageLeft.number
-		}
-
-		val naturalImageW = image.width.toDouble()
-		val naturalImageH = image.height.toDouble()
-
-		val frameW = this.resolvedInnerWidth
-		val frameH = this.resolvedInnerHeight
-		val scaleX = frameW / naturalImageW
-		val scaleY = frameH / naturalImageH
-
-		if (autoW && autoH) {
-
-			when (this.imageFit.string) {
-
-				"none"    -> {
-					imageW = naturalImageW
-					imageH = naturalImageH
-				}
-
-				"cover"   -> {
-					val scale = Math.max(scaleX, scaleY)
-					imageW = naturalImageW * scale
-					imageH = naturalImageH * scale
-				}
-
-				"contain" -> {
-					val scale = Math.min(scaleX, scaleY)
-					imageW = naturalImageW * scale
-					imageH = naturalImageH * scale
-				}
-
-			}
-
-		} else if (autoW) {
-			imageW = imageH * (naturalImageW / naturalImageH)
-		} else if (autoH) {
-			imageH = imageW * (naturalImageH / naturalImageW)
-		}
-
-		val anchorT = this.getImageAnchorTop(this.imageAnchorTop)
-		val anchorL = this.getImageAnchorLeft(this.imageAnchorLeft)
-
-		imageT = imageT - (anchorT * imageH)
-		imageL = imageL - (anchorL * imageW)
-
-		this.view.image = image
-		this.view.imageTop = Convert.toPx(imageT)
-		this.view.imageLeft = Convert.toPx(imageL)
-		this.view.imageWidth = Convert.toPx(imageW)
-		this.view.imageHeight = Convert.toPx(imageH)
-	}
-
 	//--------------------------------------------------------------------------
-	// Methods - Layout Node Delegate
+	// Layout Node Delegate
 	//--------------------------------------------------------------------------
 
 	/**
@@ -229,11 +63,6 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 	 * @since 0.7.0
 	 */
 	override fun measure(bounds: SizeF, min: SizeF, max: SizeF): SizeF {
-
-		if (this.invalidImage) {
-			this.invalidImage = false
-			this.updateImage()
-		}
 
 		val size = this.view.measure(
 			Convert.toPx(bounds),
@@ -245,108 +74,69 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 	}
 
 	//--------------------------------------------------------------------------
+	// Display Node Delegate
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method onResolvePadding
+	 * @since 0.7.0
+	 */
+	override fun onResolvePadding(node: DisplayNode) {
+		super.onResolvePadding(node)
+		this.view.paddingTop = Convert.toPx(this.resolvedPaddingTop)
+		this.view.paddingLeft = Convert.toPx(this.resolvedPaddingLeft)
+		this.view.paddingRight = Convert.toPx(this.resolvedPaddingRight)
+		this.view.paddingBottom = Convert.toPx(this.resolvedPaddingBottom)
+	}
+
+	//--------------------------------------------------------------------------
 	// Private API
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method invalidateFrame
+	 * @method getImageFit
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	override fun invalidateFrame() {
-
-		super.invalidateFrame()
-
-		if (this.imageTop.unit == JavaScriptPropertyUnit.PC ||
-			this.imageLeft.unit == JavaScriptPropertyUnit.PC ||
-			this.imageWidth.unit == JavaScriptPropertyUnit.PC ||
-			this.imageHeight.unit == JavaScriptPropertyUnit.PC) {
-			this.invalidateImage()
-		}
-	}
-
-	/**
-	 * @method invalidateImage
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	internal open fun invalidateImage() {
-		if (this.invalidImage == false) {
-			this.invalidImage = true
-			this.scheduleUpdate()
-		}
-	}
-
-	//--------------------------------------------------------------------------
-	// Private API - Conversions
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method getImageAnchorTop
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private fun getImageAnchorTop(prop: JavaScriptProperty): Double {
-
-		if (prop.type == JavaScriptPropertyType.STRING) {
-
-			when (prop.string) {
-
-				"top"    -> return 0.0
-				"center" -> return 0.5
-				"bottom" -> return 1.0
-
-				else     -> {
-					Log.d("Dezel", "Unrecognized toValue for imageAnchorTop: ${prop.string}")
-				}
-			}
-		}
-
-		return prop.number
-	}
-
-	/**
-	 * @method getImageAnchorLeft
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private fun getImageAnchorLeft(prop: JavaScriptProperty): Double {
-
-		if (prop.type == JavaScriptPropertyType.STRING) {
-
-			when (prop.string) {
-
-				"left"   -> return 0.0
-				"center" -> return 0.5
-				"right"  -> return 1.0
-
-				else     -> {
-					Log.d("Dezel", "Unrecognized toValue for imageAnchorLeft: ${prop.string}")
-				}
-			}
-		}
-
-		return prop.number
-	}
-
-	/**
-	 * @method getImageFilter
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private fun getImageFilter(value: String): ImageFilter {
+	private fun getImageFit(value: String): ImageFit {
 
 		when (value) {
 
-			"none"      -> return ImageFilter.NONE
-			"grayscale" -> return ImageFilter.GRAYSCALE
+			 "cover"  ->  return ImageFit.COVER
+			 "contain" -> return ImageFit.CONTAIN
 
-			else        -> {
-				Log.d("Dezel", "Unrecognized toValue for imageFilter: $value")
+			else -> {
+				Log.e("Dezel", "Unrecognized value for imageFit: $value")
 			}
 		}
 
-		return ImageFilter.NONE
+		return ImageFit.CONTAIN
+	}
+
+	/**
+	 * @method getImagePosition
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private fun getImagePosition(value: String): ImagePosition {
+
+		when (value) {
+			"top left"      -> return ImagePosition.TOP_LEFT
+			"top right"     -> return ImagePosition.TOP_RIGHT
+			"top center"    -> return ImagePosition.TOP_CENTER
+			"left"          -> return ImagePosition.MIDDLE_LEFT
+			"right"         -> return ImagePosition.MIDDLE_RIGHT
+			"center"        -> return ImagePosition.MIDDLE_CENTER
+			"bottom left"   -> return ImagePosition.BOTTOM_LEFT
+			"bottom right"  -> return ImagePosition.BOTTOM_RIGHT
+			"bottom center" -> return ImagePosition.BOTTOM_CENTER
+
+			else -> {
+				Log.e("Dezel", "Unrecognized value for imagePosition: $value")
+			}
+		}
+
+		return ImagePosition.MIDDLE_CENTER
 	}
 
 	//--------------------------------------------------------------------------
@@ -357,17 +147,17 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 	 * @property source
 	 * @since 0.7.0
 	 */
-	public val source by lazy {
+	val source by lazy {
 
 		JavaScriptProperty { value ->
 
-			this.imageLoader.load(value) { image ->
+			this.loader.load(value) { image ->
 
-				this.imageData = image
+				this.view.image = image
 
-				if (this.displayNode.isWrappingContentWidth ||
-					this.displayNode.isWrappingContentHeight) {
-					this.displayNode.invalidateSize()
+				if (this.node.isWrappingContentWidth ||
+					this.node.isWrappingContentHeight) {
+					this.node.invalidateSize()
 				}
 			}
 		}
@@ -377,89 +167,19 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 	 * @property imageFit
 	 * @since 0.7.0
 	 */
-	public val imageFit by lazy {
-		JavaScriptProperty("contain") {
-			this.invalidateImage()
+	val imageFit by lazy {
+		JavaScriptProperty("contain") { value ->
+			this.view.imageFit = this.getImageFit(value.string)
 		}
 	}
 
 	/**
-	 * @property imageAnchorTop
+	 * @property imagePosition
 	 * @since 0.7.0
 	 */
-	public val imageAnchorTop by lazy {
-		JavaScriptProperty(0.5) {
-			this.invalidateImage()
-		}
-	}
-
-	/**
-	 * @property imageAnchorLeft
-	 * @since 0.7.0
-	 */
-	public val imageAnchorLeft by lazy {
-		JavaScriptProperty(0.5) {
-			this.invalidateImage()
-		}
-	}
-
-	/**
-	 * @property imageTop
-	 * @since 0.7.0
-	 */
-	public val imageTop by lazy {
-		JavaScriptProperty(50.0, JavaScriptPropertyUnit.PC) {
-			this.invalidateImage()
-		}
-	}
-
-	/**
-	 * @property imageLeft
-	 * @since 0.7.0
-	 */
-	public val imageLeft by lazy {
-		JavaScriptProperty(50.0, JavaScriptPropertyUnit.PC) {
-			this.invalidateImage()
-		}
-	}
-
-	/**
-	 * @property imageWidth
-	 * @since 0.7.0
-	 */
-	public val imageWidth by lazy {
-		JavaScriptProperty("auto") {
-			this.invalidateImage()
-		}
-	}
-
-	/**
-	 * @property imageHeight
-	 * @since 0.7.0
-	 */
-	public val imageHeight by lazy {
-		JavaScriptProperty("auto") {
-			this.invalidateImage()
-		}
-	}
-
-	/**
-	 * @property imageFilter
-	 * @since 0.7.0
-	 */
-	public val imageFilter by lazy {
-		JavaScriptProperty("none") { value ->
-			this.view.imageFilter = this.getImageFilter(value.string)
-		}
-	}
-
-	/**
-	 * @property imageOpacity
-	 * @since 0.7.0
-	 */
-	public val imageOpacity by lazy {
-		JavaScriptProperty(1.0) { value ->
-			this.view.alpha = value.number.toFloat()
+	val imagePosition by lazy {
+		JavaScriptProperty("center") { value ->
+			this.view.imagePosition = this.getImagePosition(value.string)
 		}
 	}
 
@@ -467,7 +187,7 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 	 * @property tint
 	 * @since 0.7.0
 	 */
-	public val tint by lazy {
+	val tint by lazy {
 		JavaScriptProperty("transparent") { value ->
 			this.view.tint = Color.parse(value.string)
 		}
@@ -481,7 +201,7 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 	 * @hidden
 	 */
 	@Suppress("unused")
-	open fun jsGet_source(callback: JavaScriptGetterCallback) {
+	fun jsGet_source(callback: JavaScriptGetterCallback) {
 		callback.returns(this.source)
 	}
 
@@ -491,7 +211,7 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 	 * @hidden
 	 */
 	@Suppress("unused")
-	open fun jsSet_source(callback: JavaScriptSetterCallback) {
+	fun jsSet_source(callback: JavaScriptSetterCallback) {
 		this.source.reset(callback.value, lock = this)
 	}
 
@@ -503,7 +223,7 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 	 * @hidden
 	 */
 	@Suppress("unused")
-	open fun jsGet_imageFit(callback: JavaScriptGetterCallback) {
+	fun jsGet_imageFit(callback: JavaScriptGetterCallback) {
 		callback.returns(this.imageFit)
 	}
 
@@ -513,184 +233,30 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 	 * @hidden
 	 */
 	@Suppress("unused")
-	open fun jsSet_imageFit(callback: JavaScriptSetterCallback) {
+	fun jsSet_imageFit(callback: JavaScriptSetterCallback) {
 		this.imageFit.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method jsGet_imageAnchorTop
+	 * @method jsGet_imagePosition
 	 * @since 0.7.0
 	 * @hidden
 	 */
 	@Suppress("unused")
-	open fun jsGet_imageAnchorTop(callback: JavaScriptGetterCallback) {
-		callback.returns(this.imageAnchorTop)
+	fun jsGet_imagePosition(callback: JavaScriptGetterCallback) {
+		callback.returns(this.imagePosition)
 	}
 
 	/**
-	 * @method jsSet_imageAnchorTop
+	 * @method jsSet_imageFit
 	 * @since 0.7.0
 	 * @hidden
 	 */
 	@Suppress("unused")
-	open fun jsSet_imageAnchorTop(callback: JavaScriptSetterCallback) {
-		this.imageAnchorTop.reset(callback.value, lock = this)
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method jsGet_imageAnchorLeft
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	@Suppress("unused")
-	open fun jsGet_imageAnchorLeft(callback: JavaScriptGetterCallback) {
-		callback.returns(this.imageAnchorLeft)
-	}
-
-	/**
-	 * @method jsSet_imageAnchorLeft
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	@Suppress("unused")
-	open fun jsSet_imageAnchorLeft(callback: JavaScriptSetterCallback) {
-		this.imageAnchorLeft.reset(callback.value, lock = this)
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method jsGet_imageTop
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	@Suppress("unused")
-	open fun jsGet_imageTop(callback: JavaScriptGetterCallback) {
-		callback.returns(this.imageTop)
-	}
-
-	/**
-	 * @method jsSet_imageTop
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	@Suppress("unused")
-	open fun jsSet_imageTop(callback: JavaScriptSetterCallback) {
-		this.imageTop.reset(callback.value, lock = this)
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method jsGet_imageLeft
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	@Suppress("unused")
-	open fun jsGet_imageLeft(callback: JavaScriptGetterCallback) {
-		callback.returns(this.imageLeft)
-	}
-
-	/**
-	 * @method jsSet_imageLeft
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	@Suppress("unused")
-	open fun jsSet_imageLeft(callback: JavaScriptSetterCallback) {
-		this.imageLeft.reset(callback.value, lock = this)
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method jsGet_imageWidth
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	@Suppress("unused")
-	open fun jsGet_imageWidth(callback: JavaScriptGetterCallback) {
-		callback.returns(this.imageWidth)
-	}
-
-	/**
-	 * @method jsSet_imageWidth
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	@Suppress("unused")
-	open fun jsSet_imageWidth(callback: JavaScriptSetterCallback) {
-		this.imageWidth.reset(callback.value, lock = this)
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method jsGet_imageHeight
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	@Suppress("unused")
-	open fun jsGet_imageHeight(callback: JavaScriptGetterCallback) {
-		callback.returns(this.imageHeight)
-	}
-
-	/**
-	 * @method jsSet_imageHeight
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	@Suppress("unused")
-	open fun jsSet_imageHeight(callback: JavaScriptSetterCallback) {
-		this.imageHeight.reset(callback.value, lock = this)
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method jsGet_imageFilter
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	@Suppress("unused")
-	open fun jsGet_imageFilter(callback: JavaScriptGetterCallback) {
-		callback.returns(this.imageFilter)
-	}
-
-	/**
-	 * @method jsSet_imageFilter
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	@Suppress("unused")
-	open fun jsSet_imageFilter(callback: JavaScriptSetterCallback) {
-		this.imageFilter.reset(callback.value, lock = this)
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method jsGet_imageOpacity
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	@Suppress("unused")
-	open fun jsGet_imageOpacity(callback: JavaScriptGetterCallback) {
-		callback.returns(this.imageOpacity)
-	}
-
-	/**
-	 * @method jsSet_imageOpacity
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	@Suppress("unused")
-	open fun jsSet_imageOpacity(callback: JavaScriptSetterCallback) {
-		this.imageOpacity.reset(callback.value, lock = this)
+	fun jsSet_imagePosition(callback: JavaScriptSetterCallback) {
+		this.imagePosition.reset(callback.value, lock = this)
 	}
 
 	//--------------------------------------------------------------------------
@@ -701,7 +267,7 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 	 * @hidden
 	 */
 	@Suppress("unused")
-	open fun jsGet_tint(callback: JavaScriptGetterCallback) {
+	fun jsGet_tint(callback: JavaScriptGetterCallback) {
 		callback.returns(this.tint)
 	}
 
@@ -711,7 +277,7 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 	 * @hidden
 	 */
 	@Suppress("unused")
-	open fun jsSet_tint(callback: JavaScriptSetterCallback) {
-		this.tint.reset(callback.value, lock = this)
+	fun jsSet_tint(callback: JavaScriptSetterCallback) {
+		this.tint.reset(callback.value, lock = this, parse = true)
 	}
 }

@@ -1,5 +1,6 @@
 package ca.logaritm.dezel.view
 
+import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
@@ -9,36 +10,36 @@ import android.text.TextPaint
 import android.util.SizeF
 import android.view.MotionEvent
 import android.view.View
-import ca.logaritm.dezel.extension.*
+import ca.logaritm.dezel.extension.Delegates
 import ca.logaritm.dezel.extension.text.SpannableString
 import ca.logaritm.dezel.extension.type.isHTML
 import ca.logaritm.dezel.extension.type.normalize
 import ca.logaritm.dezel.extension.view.setMeasuredFrame
-import ca.logaritm.dezel.text.font.Font
+import ca.logaritm.dezel.view.text.TextLayout
+import ca.logaritm.dezel.view.text.TextParser
+import ca.logaritm.dezel.view.text.font.Font
+import ca.logaritm.dezel.view.text.span.*
 import ca.logaritm.dezel.util.geom.Rect
 import ca.logaritm.dezel.util.geom.Size
-import ca.logaritm.dezel.text.TextLayout
-import ca.logaritm.dezel.text.TextParser
-import ca.logaritm.dezel.text.span.*
 import ca.logaritm.dezel.view.graphic.Convert
-import ca.logaritm.dezel.view.type.*
+import ca.logaritm.dezel.view.animation.Animatable
+import ca.logaritm.dezel.view.trait.Clippable
+import ca.logaritm.dezel.view.trait.Resizable
+import ca.logaritm.dezel.view.type.TextAlign
+import ca.logaritm.dezel.view.type.TextDecoration
+import ca.logaritm.dezel.view.type.TextOverflow
+import ca.logaritm.dezel.view.type.TextTransform
 
 /**
  * @class TextView
  * @super View
  * @since 0.7.0
  */
-open class TextView(context: Context, listener: TextViewListener?) : View(context), Resizable, Clippable {
+open class TextView(context: Context, observer: TextViewObserver) : View(context), Resizable, Clippable, Animatable {
 
 	//--------------------------------------------------------------------------
 	// Properties
 	//--------------------------------------------------------------------------
-
-	/**
-	 * @property layout
-	 * @since 0.7.0
-	 */
-	open var layout: TextLayout = TextLayout()
 
 	/**
 	 * @property fontFamily
@@ -101,30 +102,22 @@ open class TextView(context: Context, listener: TextViewListener?) : View(contex
 	}
 
 	/**
-	 * @property textBaseline
+	 * @property textAlign
 	 * @since 0.7.0
 	 */
-	open var textBaseline: Float by Delegates.OnSet(0f) { value ->
-		this.layout.textBaseline = value
-		this.invalidate()
-	}
-
-	/**
-	 * @property textAlignment
-	 * @since 0.7.0
-	 */
-	open var textAlignment: TextAlignment by Delegates.OnSet(TextAlignment.START) {
+	open var textAlign: TextAlign by Delegates.OnSet(TextAlign.MIDDLE_LEFT) { value ->
+		this.layout.textAlign = value
 		this.invalidateSpans()
 		this.invalidateSpannedText()
 		this.invalidate()
 	}
 
 	/**
-	 * @property textLocation
+	 * @property textBaseline
 	 * @since 0.7.0
 	 */
-	open var textLocation: TextLocation by Delegates.OnSet(TextLocation.MIDDLE) { value ->
-		this.layout.textLocation = value
+	open var textBaseline: Float by Delegates.OnSet(0f) { value ->
+		this.layout.textBaseline = value
 		this.invalidate()
 	}
 
@@ -273,11 +266,18 @@ open class TextView(context: Context, listener: TextViewListener?) : View(contex
 	}
 
 	/**
-	 * @property textViewListener
+	 * @property observer
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	internal var textViewListener: TextViewListener? = null
+	private var observer: TextViewObserver
+
+	/**
+	 * @property layout
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private var layout: TextLayout = TextLayout()
 
 	/**
 	 * @property bounds
@@ -360,7 +360,7 @@ open class TextView(context: Context, listener: TextViewListener?) : View(contex
 
 		this.setWillNotDraw(false)
 
-		this.textViewListener = listener
+		this.observer = observer
 	}
 
 	/**
@@ -476,7 +476,7 @@ open class TextView(context: Context, listener: TextViewListener?) : View(contex
 		spans.add(TextColorSpan(this.textColor))
 		spans.add(TextLeadingSpan(this.textLeading))
 		spans.add(TextKerningSpan(this.textKerning))
-		spans.add(TextParagraphSpan(this.textAlignment))
+		spans.add(TextParagraphSpan(this.textAlign))
 		spans.add(TextDecorationSpan(this.textDecoration))
 
 		this.spans = spans
@@ -520,18 +520,20 @@ open class TextView(context: Context, listener: TextViewListener?) : View(contex
 		val result = super.onTouchEvent(event)
 
 		if (event.action == MotionEvent.ACTION_DOWN) {
+			// TODO
+			// FIX LIKE ON IOS
 			return true
 		}
 
 		if (event.action == MotionEvent.ACTION_UP) {
 
-			val string = this.layout.find(event.x, event.y)
+			val string = this.layout.string(event.x, event.y)
 			if (string == null) {
 				return result
 			}
 
 			string.getSpans(0, string.length, LinkSpan::class.javaObjectType).forEach {
-				this.textViewListener?.onPressLink(this, it.url)
+				this.observer.onPressLink(this, it.url)
 			}
 		}
 
@@ -566,6 +568,68 @@ open class TextView(context: Context, listener: TextViewListener?) : View(contex
 		this.layout.draw(canvas)
 
 		canvas.restore()
+	}
+
+	//--------------------------------------------------------------------------
+	// Animations
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @property animatable
+	 * @since 0.7.0
+	 */
+	override val animatable: List<String> = listOf(
+		"fontSize",
+		"textColor",
+		"textKerning",
+		"textLeading",
+		"textBaseline"		
+	)
+
+	/**
+	 * @property animations
+	 * @since 0.7.0
+	 */
+	override var animations: MutableMap<String, ValueAnimator> = mutableMapOf()
+	
+	/**
+	 * @method onBeforeAnimate
+	 * @since 0.7.0
+	 */
+	override fun animate(property: String, initialValue: Any, currentValue: Any): ValueAnimator? {
+		return null
+	}
+
+	/**
+	 * @method onBeforeAnimate
+	 * @since 0.7.0
+	 */
+	override fun onBeforeAnimate(property: String) {
+
+	}
+
+	/**
+	 * @method onBeginTransition
+	 * @since 0.7.0
+	 */
+	override fun onBeginTransition() {
+
+	}
+
+	/**
+	 * @method onCommitTransition
+	 * @since 0.7.0
+	 */
+	override fun onCommitTransition() {
+
+	}
+
+	/**
+	 * @method onFinishTransition
+	 * @since 0.7.0
+	 */
+	override fun onFinishTransition() {
+
 	}
 
 	//--------------------------------------------------------------------------

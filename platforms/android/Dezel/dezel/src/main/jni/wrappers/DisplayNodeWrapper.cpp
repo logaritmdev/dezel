@@ -1,13 +1,13 @@
 #include "DisplayNodeWrapper.h"
 
-#include "jni_module_view.h"
+#include "jni_module_display.h"
 
 static void
-invalidateCallback(DisplayNodeRef node)
+displayNodeInvalidateCallback(DisplayNodeRef node)
 {
 	const auto wrapper =  reinterpret_cast<DisplayNodeWrapperRef>(DisplayNodeGetData(node));
 
-	if (wrapper == NULL) {
+	if (wrapper == nullptr) {
 		return;
 	}
 
@@ -18,19 +18,162 @@ invalidateCallback(DisplayNodeRef node)
 	);
 }
 
-
 static void
-measureSizeCallback(DisplayNodeRef node, DisplayNodeMeasuredSize *measure, double w, double h, double minw, double maxw, double minh, double maxh)
+displayNodeResolveSizeCallback(DisplayNodeRef node)
 {
 	const auto wrapper = reinterpret_cast<DisplayNodeWrapperRef>(DisplayNodeGetData(node));
 
-	if (wrapper == NULL) {
+	if (wrapper == nullptr) {
+		return;
+	}
+
+	JNI_CALL_VOID_METHOD(
+		wrapper->env,
+		wrapper->object,
+		DisplayNodeResolveSizeMethod
+	);
+}
+
+static void
+displayNodeResolveOriginCallback(DisplayNodeRef node)
+{
+	const auto wrapper = reinterpret_cast<DisplayNodeWrapperRef>(DisplayNodeGetData(node));
+
+	if (wrapper == nullptr) {
+		return;
+	}
+
+	JNI_CALL_VOID_METHOD(
+		wrapper->env,
+		wrapper->object,
+		DisplayNodeResolveOriginMethod
+	);
+}
+
+static void
+displayNodeResolveInnerSizeCallback(DisplayNodeRef node)
+{
+	const auto wrapper = reinterpret_cast<DisplayNodeWrapperRef>(DisplayNodeGetData(node));
+
+	if (wrapper == nullptr) {
+		return;
+	}
+
+	JNI_CALL_VOID_METHOD(
+		wrapper->env,
+		wrapper->object,
+		DisplayNodeResolveInnerSizeMethod
+	);
+}
+
+static void
+displayNodeResolveContentSizeCallback(DisplayNodeRef node)
+{
+	const auto wrapper = reinterpret_cast<DisplayNodeWrapperRef>(DisplayNodeGetData(node));
+
+	if (wrapper == nullptr) {
+		return;
+	}
+
+	JNI_CALL_VOID_METHOD(
+		wrapper->env,
+		wrapper->object,
+		DisplayNodeResolveContentSizeMethod
+	);
+}
+
+static void
+displayNodeResolveMarginCallback(DisplayNodeRef node)
+{
+	const auto wrapper = reinterpret_cast<DisplayNodeWrapperRef>(DisplayNodeGetData(node));
+
+	if (wrapper == nullptr) {
+		return;
+	}
+
+	JNI_CALL_VOID_METHOD(
+		wrapper->env,
+		wrapper->object,
+		DisplayNodeResolveMarginMethod
+	);
+}
+
+static void
+displayNodeResolveBorderCallback(DisplayNodeRef node)
+{
+	const auto wrapper = reinterpret_cast<DisplayNodeWrapperRef>(DisplayNodeGetData(node));
+
+	if (wrapper == nullptr) {
+		return;
+	}
+
+	JNI_CALL_VOID_METHOD(
+		wrapper->env,
+		wrapper->object,
+		DisplayNodeResolveBorderMethod
+	);
+}
+
+static void
+displayNodeResolvePaddingCallback(DisplayNodeRef node)
+{
+	const auto wrapper = reinterpret_cast<DisplayNodeWrapperRef>(DisplayNodeGetData(node));
+
+	if (wrapper == nullptr) {
+		return;
+	}
+
+	JNI_CALL_VOID_METHOD(
+		wrapper->env,
+		wrapper->object,
+		DisplayNodeResolvePaddingMethod
+	);
+}
+
+static void
+displayNodePrepareLayoutCallback(DisplayNodeRef node)
+{
+	const auto wrapper =  reinterpret_cast<DisplayNodeWrapperRef>(DisplayNodeGetData(node));
+
+	if (wrapper == nullptr) {
+		return;
+	}
+
+	JNI_CALL_VOID_METHOD(
+		wrapper->env,
+		wrapper->object,
+		DisplayNodePrepareLayoutMethod
+	);
+}
+
+static void
+displayNodeResolveLayoutCallback(DisplayNodeRef node)
+{
+	const auto wrapper =  reinterpret_cast<DisplayNodeWrapperRef>(DisplayNodeGetData(node));
+
+	if (wrapper == nullptr) {
+		return;
+	}
+
+	JNI_CALL_VOID_METHOD(
+		wrapper->env,
+		wrapper->object,
+		DisplayNodeResolveLayoutMethod
+	);
+}
+
+static void
+displayNodeMeasureCallback(DisplayNodeRef node, MeasuredSize *measure, double w, double h, double minw, double maxw, double minh, double maxh)
+{
+	const auto wrapper = reinterpret_cast<DisplayNodeWrapperRef>(DisplayNodeGetData(node));
+
+	if (wrapper == nullptr) {
 		return;
 	}
 
 	jobject result = wrapper->env->CallObjectMethod(
 		wrapper->object,
-		DisplayNodeMeasureSizeMethod,
+		DisplayNodeMeasureMethod,
 		w, h,
 		minw, maxw,
 		minh, maxh
@@ -46,149 +189,24 @@ measureSizeCallback(DisplayNodeRef node, DisplayNodeMeasuredSize *measure, doubl
 }
 
 static void
-resolveSizeCallback(DisplayNodeRef node)
+displayNodeUpdateCallback(DisplayNodeRef node, PropertyRef property, const char* name)
 {
 	const auto wrapper = reinterpret_cast<DisplayNodeWrapperRef>(DisplayNodeGetData(node));
 
-	if (wrapper == NULL) {
+	if (wrapper == nullptr) {
 		return;
 	}
 
 	JNI_CALL_VOID_METHOD(
 		wrapper->env,
 		wrapper->object,
-		DisplayNodeResolveSizeMethod
+		DisplayNodeUpdateMethod,
+		wrapper->env->NewStringUTF(name),
+		property == nullptr ? 0 : reinterpret_cast<jlong>(property)
 	);
+
+	JNI_CHECK_EXCEPTION(wrapper->env);
 }
-
-static void
-resolveOriginCallback(DisplayNodeRef node)
-{
-	const auto wrapper = reinterpret_cast<DisplayNodeWrapperRef>(DisplayNodeGetData(node));
-
-	if (wrapper == NULL) {
-		return;
-	}
-
-	JNI_CALL_VOID_METHOD(
-		wrapper->env,
-		wrapper->object,
-		DisplayNodeResolveOriginMethod
-	);
-}
-
-static void
-resolveInnerSizeCallback(DisplayNodeRef node)
-{
-	const auto wrapper = reinterpret_cast<DisplayNodeWrapperRef>(DisplayNodeGetData(node));
-
-	if (wrapper == NULL) {
-		return;
-	}
-
-	JNI_CALL_VOID_METHOD(
-		wrapper->env,
-		wrapper->object,
-		DisplayNodeResolveInnerSizeMethod
-	);
-}
-
-static void
-resolveContentSizeCallback(DisplayNodeRef node)
-{
-	const auto wrapper = reinterpret_cast<DisplayNodeWrapperRef>(DisplayNodeGetData(node));
-
-	if (wrapper == NULL) {
-		return;
-	}
-
-	JNI_CALL_VOID_METHOD(
-		wrapper->env,
-		wrapper->object,
-		DisplayNodeResolveContentSizeMethod
-	);
-}
-
-static void
-resolveMarginCallback(DisplayNodeRef node)
-{
-	const auto wrapper = reinterpret_cast<DisplayNodeWrapperRef>(DisplayNodeGetData(node));
-
-	if (wrapper == NULL) {
-		return;
-	}
-
-	JNI_CALL_VOID_METHOD(
-		wrapper->env,
-		wrapper->object,
-		DisplayNodeResolveMarginMethod
-	);
-}
-
-static void
-resolveBorderCallback(DisplayNodeRef node)
-{
-	const auto wrapper = reinterpret_cast<DisplayNodeWrapperRef>(DisplayNodeGetData(node));
-
-	if (wrapper == NULL) {
-		return;
-	}
-
-	JNI_CALL_VOID_METHOD(
-		wrapper->env,
-		wrapper->object,
-		DisplayNodeResolveBorderMethod
-	);
-}
-
-static void
-resolvePaddingCallback(DisplayNodeRef node)
-{
-	const auto wrapper = reinterpret_cast<DisplayNodeWrapperRef>(DisplayNodeGetData(node));
-
-	if (wrapper == NULL) {
-		return;
-	}
-
-	JNI_CALL_VOID_METHOD(
-		wrapper->env,
-		wrapper->object,
-		DisplayNodeResolvePaddingMethod
-	);
-}
-
-static void
-layoutBeganCallback(DisplayNodeRef node)
-{
-	const auto wrapper =  reinterpret_cast<DisplayNodeWrapperRef>(DisplayNodeGetData(node));
-
-	if (wrapper == NULL) {
-		return;
-	}
-
-	JNI_CALL_VOID_METHOD(
-		wrapper->env,
-		wrapper->object,
-		DisplayNodeLayoutBeganMethod
-	);
-}
-
-static void
-layoutEndedCallback(DisplayNodeRef node)
-{
-	const auto wrapper =  reinterpret_cast<DisplayNodeWrapperRef>(DisplayNodeGetData(node));
-
-	if (wrapper == NULL) {
-		return;
-	}
-
-	JNI_CALL_VOID_METHOD(
-		wrapper->env,
-		wrapper->object,
-		DisplayNodeLayoutEndedMethod
-	);
-}
-
 
 DisplayNodeWrapperRef
 DisplayNodeWrapperCreate(JNIEnv* env, jobject object, DisplayNodeRef node)
@@ -197,17 +215,19 @@ DisplayNodeWrapperCreate(JNIEnv* env, jobject object, DisplayNodeRef node)
 	wrapper->env = env;
 	wrapper->object = env->NewWeakGlobalRef(object);
 
-	DisplayNodeSetInvalidateCallback(node, &invalidateCallback);
-	DisplayNodeSetMeasureSizeCallback(node, &measureSizeCallback);
-	DisplayNodeSetResolveSizeCallback(node, &resolveSizeCallback);
-	DisplayNodeSetResolveOriginCallback(node, &resolveOriginCallback);
-	DisplayNodeSetResolveInnerSizeCallback(node, &resolveInnerSizeCallback);
-	DisplayNodeSetResolveContentSizeCallback(node, &resolveContentSizeCallback);
-	DisplayNodeSetResolveMarginCallback(node, &resolveMarginCallback);
-	DisplayNodeSetResolveBorderCallback(node, &resolveBorderCallback);
-	DisplayNodeSetResolvePaddingCallback(node, &resolvePaddingCallback);
-	DisplayNodeSetLayoutBeganCallback(node, &layoutBeganCallback);
-	DisplayNodeSetLayoutEndedCallback(node, &layoutEndedCallback);
+	DisplayNodeSetInvalidateCallback(node, &displayNodeInvalidateCallback);
+
+	DisplayNodeSetResolveSizeCallback(node, &displayNodeResolveSizeCallback);
+	DisplayNodeSetResolveOriginCallback(node, &displayNodeResolveOriginCallback);
+	DisplayNodeSetResolveInnerSizeCallback(node, &displayNodeResolveInnerSizeCallback);
+	DisplayNodeSetResolveContentSizeCallback(node, &displayNodeResolveContentSizeCallback);
+	DisplayNodeSetResolveMarginCallback(node, &displayNodeResolveMarginCallback);
+	DisplayNodeSetResolveBorderCallback(node, &displayNodeResolveBorderCallback);
+	DisplayNodeSetResolvePaddingCallback(node, &displayNodeResolvePaddingCallback);
+	DisplayNodeSetPrepareLayoutCallback(node, &displayNodePrepareLayoutCallback);
+	DisplayNodeSetResolveLayoutCallback(node, &displayNodeResolveLayoutCallback);
+	DisplayNodeSetMeasureCallback(node, &displayNodeMeasureCallback);
+	DisplayNodeSetUpdateCallback(node, &displayNodeUpdateCallback);
 
 	return wrapper;
 }

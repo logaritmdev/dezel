@@ -1,5 +1,9 @@
 package ca.logaritm.dezel.view.graphic
 
+import android.util.Log
+import ca.logaritm.dezel.core.JavaScriptProperty
+import ca.logaritm.dezel.core.JavaScriptPropertyFunctionValue
+import ca.logaritm.dezel.core.JavaScriptPropertyValue
 import ca.logaritm.dezel.util.string.Scanner
 import java.util.*
 import android.graphics.Color as AndroidColor
@@ -18,31 +22,37 @@ public object Color {
 	 * @const TRANSPARENT
 	 * @since 0.1.0
 	 */
-	public const val TRANSPARENT = AndroidColor.TRANSPARENT
+	public const val TRANSPARENT: Int = 0
 
 	/**
 	 * @const BLACK
 	 * @since 0.1.0
 	 */
-	public val BLACK = AndroidColor.argb(255, 0, 0, 0)
+	public const val BLACK: Int = 0xFF000000.toInt()
 
 	/**
 	 * @const WHITE
 	 * @since 0.1.0
 	 */
-	public val WHITE = AndroidColor.argb(255, 255, 255, 255)
+	public const val WHITE: Int = 0xFFFFFFFF.toInt()
 
 	/**'
 	 * @const GRAY
 	 * @since 0.3.0
 	 */
-	public val GRAY = AndroidColor.argb(255, 68, 68, 68)
+	public const val GRAY: Int = 0xFF888888.toInt()
 
 	/**
-	 * @property colors
-	 * @since 0.1.0
+	 * @property cache
+	 * @since 0.7.0
 	 */
-	private val colors: HashMap<String, String> = object : HashMap<String, String>() {
+	private val cache: HashMap<String, Int> = hashMapOf()
+
+	/**
+	 * @property names
+	 * @since 0.7.0
+	 */
+	private val names: HashMap<String, String> = object : HashMap<String, String>() {
 		init {
 			put("aliceblue", "#f0f8ff")
 			put("antiquewhite", "#faebd7")
@@ -200,6 +210,56 @@ public object Color {
 
 	/**
 	 * @method parse
+	 * @since 0.7.0
+	 */	
+	public fun parse(color: JavaScriptProperty): Int {
+
+		val function = color.function
+		if (function == null) {
+			return this.parse(color.string)
+		}
+
+		return this.parse(function)
+	}
+
+	/**
+	 * @method parse
+	 * @since 0.7.0
+	 */
+	public fun parse(color: JavaScriptPropertyValue): Int {
+
+		val functions = color 
+		if (functions is JavaScriptPropertyFunctionValue)  {
+
+			if (functions.name == "rgb") {
+
+				assert(functions.arguments.size == 3)
+
+				val r = functions.arguments[0].number.toInt()
+				val g = functions.arguments[1].number.toInt()
+				val b = functions.arguments[2].number.toInt()
+
+				return AndroidColor.rgb(r, g, b)
+			}
+
+			if (functions.name == "rgba") {
+
+				assert(functions.arguments.size == 4)
+
+				val r = functions.arguments[0].number.toInt()
+				val g = functions.arguments[1].number.toInt()
+				val b = functions.arguments[2].number.toInt()
+				val a = functions.arguments[3].number * 255
+
+				return AndroidColor.argb(a.toInt(), r, g, b)
+			}
+		}
+
+		return this.parse(color.string)
+	}
+
+	/**
+	 * @method parse
 	 * @since 0.1.0
 	 */
 	public fun parse(from: String): Int {
@@ -208,110 +268,52 @@ public object Color {
 
 		color = color.toLowerCase(Locale.ROOT).trim { it <= ' ' }
 
-		if (color == "transparent" ||
-			color == "none") {
+		if (color == "none" ||
+			color == "transparent") {
 			return TRANSPARENT
 		}
 
-		if (color == "random") {
-			val random = Random()
-			color = colors.values.elementAt(random.nextInt(colors.values.size))
+		val cached = cache[color]
+		if (cached != null) {
+			return cached
 		}
 
-		if (color.startsWith("rgba")) {
-			return this.createWithRGBA(color)
+		val named = names[color]
+		if (named != null) {
+			return this.parse(named)
 		}
 
-		if (color.startsWith("rgb")) {
-			return this.createWithRGB(color)
-		}
+		when (color.length - 1) {
 
-		if (color.startsWith("#")) {
-			return this.createWithHex(color)
-		}
+			3 -> {
 
-		val hex = colors[color]
-		if (hex != null) {
-			return this.createWithHex(hex)
-		}
+				val r = color.substring(1, 2)
+				val g = color.substring(2, 3)
+				val b = color.substring(3, 4)
 
-		return AndroidColor.BLACK
-	}
+				return AndroidColor.parseColor("#" + r + r + g + g + b + b)
+			}
 
-	/**
-	 * @method createWithRGB
-	 * @since 0.1.0
-	 */
-	public fun createWithRGB(color: String): Int {
+			4 -> {
 
-		val sp = color.indexOf('(')
-		val ep = color.indexOf(')')
+				val a = color.substring(1, 2)
+				val r = color.substring(2, 3)
+				val g = color.substring(3, 4)
+				val b = color.substring(4, 5)
 
-		if (sp > -1 && ep > -1) {
+				return AndroidColor.parseColor("#" + a + a + r + r + g + g + b + b)
+			}
 
-			val chunks = color.substring(sp + 1, ep).split(",")
+			6 -> {
+				return AndroidColor.parseColor(color)
+			}
 
-			if (chunks.size == 3) {
-
-				val r = chunks[0].trim { it <= ' ' }.toInt()
-				val g = chunks[1].trim { it <= ' ' }.toInt()
-				val b = chunks[2].trim { it <= ' ' }.toInt()
-
-				return AndroidColor.rgb(r, g, b)
+			8 -> {
+				return AndroidColor.parseColor(color)
 			}
 		}
 
-		return AndroidColor.BLACK
-	}
-
-	/**
-	 * @method createWithRGBA
-	 * @since 0.1.0
-	 */
-	public fun createWithRGBA(color: String): Int {
-
-		val sp = color.indexOf('(')
-		val ep = color.indexOf(')')
-
-		if (sp > -1 && ep > -1) {
-
-			val chunks = color.substring(sp + 1, ep).split(",")
-
-			if (chunks.size == 4) {
-
-				val r = chunks[0].trim { it <= ' ' }.toInt()
-				val g = chunks[1].trim { it <= ' ' }.toInt()
-				val b = chunks[2].trim { it <= ' ' }.toInt()
-				val a = chunks[3].trim { it <= ' ' }.toFloat()
-
-				return AndroidColor.argb((a * 255).toInt(), r, g, b)
-			}
-		}
-
-		return AndroidColor.BLACK
-	}
-
-	/**
-	 * @method createWithHex
-	 * @since 0.1.0
-	 */
-	public fun createWithHex(color: String): Int {
-
-		var col = color.substring(1)
-
-		if (col.length == 3) {
-			col = col + col
-		}
-
-		val rr = col.substring(0, 2)
-		val gg = col.substring(2, 4)
-		val bb = col.substring(4, 6)
-
-		val r = Integer.parseInt(rr, 16)
-		val g = Integer.parseInt(gg, 16)
-		val b = Integer.parseInt(bb, 16)
-
-		return AndroidColor.rgb(r, g, b)
+		return BLACK
 	}
 
 	/**
@@ -320,105 +322,5 @@ public object Color {
 	 */
 	public fun alpha(color: Int): Int {
 		return AndroidColor.alpha(color)
-	}
-
-	//--------------------------------------------------------------------------
-	// Static Methods
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @function scanName
-	 * @since 0.4.0
-	 * @hidden
-	 */
-	internal fun scanName(scanner: Scanner): Int {
-
-		val color = scanner.scan(Scanner.ALPHANUM)
-		if (color == null) {
-			return Color.BLACK
-		}
-
-		return Color.parse(color)
-	}
-
-	/**
-	 * @function scanHexString
-	 * @since 0.4.0
-	 * @hidden
-	 */
-	internal fun scanHexString(scanner: Scanner): Int {
-
-		scanner.scan("#")
-
-		val hex = scanner.scanInt(16)
-		if (hex == null) {
-			return Color.BLACK
-		}
-
-		val r = hex shr 16 and 0x000000FF
-		val g = hex shr 8  and 0x000000FF
-		val b = hex        and 0x000000FF
-
-		return AndroidColor.rgb(r, g, b)
-	}
-
-	/**
-	 * @function scanRGBString
-	 * @since 0.4.0
-	 * @hidden
-	 */
-	internal fun scanRGBString(scanner: Scanner): Int {
-
-		var r: Int?
-		var g: Int?
-		var b: Int?
-
-		scanner.scan("rgb(")
-		r = scanner.scanInt()
-		scanner.scan(",")
-		g = scanner.scanInt()
-		scanner.scan(",")
-		b = scanner.scanInt()
-		scanner.scan(")")
-
-		if (r == null ||
-			g == null ||
-			b == null) {
-			return Color.BLACK
-		}
-
-		return AndroidColor.rgb(r, g, b)
-	}
-
-	/**
-	 * @function scanRGBAString
-	 * @since 0.4.0
-	 * @hidden
-	 */
-	internal fun scanRGBAString(scanner: Scanner): Int {
-
-		var r: Int?
-		var g: Int?
-		var b: Int?
-		var a: Float?
-
-		scanner.scan("rgba(")
-		r = scanner.scanInt()
-		scanner.scan(",")
-		g = scanner.scanInt()
-		scanner.scan(",")
-		b = scanner.scanInt()
-		scanner.scan(",")
-		a = scanner.scanFloat()
-		scanner.scan(")")
-
-		if (r == null ||
-			g == null ||
-			b == null ||
-			a == null) {
-			return Color.BLACK
-		}
-
-		return AndroidColor.argb((a * 255).toInt(), r, g, b)
 	}
 }

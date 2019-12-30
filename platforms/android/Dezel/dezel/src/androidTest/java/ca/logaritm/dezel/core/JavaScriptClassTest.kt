@@ -13,7 +13,6 @@ class JavaScriptClassTest {
 	fun beforeTest() {
 		this.context.dispose()
 		this.context = JavaScriptContext()
-		this.context.setup()
 	}
 
 	@Test

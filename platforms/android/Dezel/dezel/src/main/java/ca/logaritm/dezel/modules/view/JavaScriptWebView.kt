@@ -2,13 +2,13 @@ package ca.logaritm.dezel.modules.view
 
 import android.util.Size
 import android.util.SizeF
-import ca.logaritm.dezel.application.activity
 import ca.logaritm.dezel.core.JavaScriptContext
 import ca.logaritm.dezel.core.JavaScriptFunctionCallback
+import ca.logaritm.dezel.extension.core.activity
 import ca.logaritm.dezel.extension.fatalError
 import ca.logaritm.dezel.extension.util.ceiled
 import ca.logaritm.dezel.view.WebView
-import ca.logaritm.dezel.view.WebViewListener
+import ca.logaritm.dezel.view.WebViewObserver
 import ca.logaritm.dezel.view.graphic.Convert
 
 /**
@@ -16,7 +16,7 @@ import ca.logaritm.dezel.view.graphic.Convert
  * @super JavaScriptView
  * @since 0.7.0
  */
-open class JavaScriptWebView(context: JavaScriptContext) : JavaScriptView(context), WebViewListener {
+open class JavaScriptWebView(context: JavaScriptContext) : JavaScriptView(context), WebViewObserver {
 
 	//--------------------------------------------------------------------------
 	// Properties
@@ -47,7 +47,6 @@ open class JavaScriptWebView(context: JavaScriptContext) : JavaScriptView(contex
 	 * @since 0.7.0
 	 */
 	override fun dispose() {
-		this.view.webViewListener = null
 		this.view.stopLoading()
 		super.dispose()
 	}
@@ -102,14 +101,14 @@ open class JavaScriptWebView(context: JavaScriptContext) : JavaScriptView(contex
 		val contentHeight = size.height.toDouble()
 
 		if (this.resolvedContentWidth != contentWidth) {
-			if (this.displayNode.isWrappingContentWidth) {
-				this.displayNode.invalidateLayout()
+			if (this.node.isWrappingContentWidth) {
+				this.node.invalidateLayout()
 			}
 		}
 
 		if (this.resolvedContentHeight != contentHeight) {
-			if (this.displayNode.isWrappingContentHeight) {
-				this.displayNode.invalidateLayout()
+			if (this.node.isWrappingContentHeight) {
+				this.node.invalidateLayout()
 			}
 		}
 	}

@@ -417,7 +417,7 @@ open class JavaScriptClass(context: JavaScriptContext) : JavaScriptObject(contex
 		 * make sure its holder does not get collected.
 		 */
 
-		super.protect()
+		this.instance?.protect()
 	}
 
 	/**
@@ -432,7 +432,7 @@ open class JavaScriptClass(context: JavaScriptContext) : JavaScriptObject(contex
 		 * make sure its holder does not get collected.
 		 */
 
-		super.unprotect()
+		this.instance?.unprotect()
 	}
 
 	//--------------------------------------------------------------------------
@@ -462,7 +462,7 @@ open class JavaScriptClass(context: JavaScriptContext) : JavaScriptObject(contex
 	}
 
 	//--------------------------------------------------------------------------
-	// MARK: Internal API
+	// Internal API
 	//--------------------------------------------------------------------------
 
 	/**

@@ -46,7 +46,7 @@ open class JavaScriptXMLHttpRequest(context: JavaScriptContext) : JavaScriptClas
 	}
 
 	//--------------------------------------------------------------------------
-	// Methods - Request JavaScriptViewListener
+	// Request JavaScriptViewListener
 	//--------------------------------------------------------------------------
 
 	/**

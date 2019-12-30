@@ -6,9 +6,13 @@ package ca.logaritm.dezel.view.type
  * @hidden
  */
 enum class TextAlign {
-	START,
-	END,
-	LEFT,
-	RIGHT,
-	CENTER;
+	TOP_LEFT,
+	TOP_RIGHT,
+	TOP_CENTER,
+	MIDDLE_LEFT,
+	MIDDLE_RIGHT,
+	MIDDLE_CENTER,
+	BOTTOM_LEFT,
+	BOTTOM_RIGHT,
+	BOTTOM_CENTER;
 }

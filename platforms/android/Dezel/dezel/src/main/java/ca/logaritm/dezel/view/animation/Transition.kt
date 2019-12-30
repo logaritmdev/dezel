@@ -1,12 +1,17 @@
-package ca.logaritm.dezel.view.transition
+package ca.logaritm.dezel.view.animation
 
 import android.animation.Animator
 import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
+import android.animation.ValueAnimator
+import android.util.Log
+import android.view.View
 import android.view.animation.Interpolator
 import android.view.animation.PathInterpolator
 import ca.logaritm.dezel.application.ApplicationActivity
 import ca.logaritm.dezel.modules.view.JavaScriptView
 import ca.logaritm.dezel.util.reflect.PropertyAccessor
+import java.lang.Exception
 
 /**
  * @class Transition
@@ -47,7 +52,7 @@ public class Transition(val activity: ApplicationActivity): Animator.AnimatorLis
 	 * @since 0.2.0
 	 * @hidden
 	 */
-	private var observers: MutableSet<Transitionable> = mutableSetOf()
+	private var observers: MutableSet<Animatable> = mutableSetOf()
 
 	/**
 	 * @property animator
@@ -74,14 +79,9 @@ public class Transition(val activity: ApplicationActivity): Animator.AnimatorLis
 	 */
 	public fun begin() {
 
-		this.forEachView {
-
-			this.setup(it.wrapper)
-
-			val content = it.content
-			if (content is Transitionable) {
-				this.setup(content)
-			}
+		this.forEachView { view ->
+			this.captureStartValues(view.wrapper)
+			this.captureStartValues(view.content)
 		}
 
 		this.dispatchBeginCallback()
@@ -93,124 +93,268 @@ public class Transition(val activity: ApplicationActivity): Animator.AnimatorLis
 	 */
 	public fun commit() {
 
-		this.forEachView {
+		this.forEachView { view ->
+			this.captureEndValues(view.wrapper)
+			this.captureEndValues(view.content)
+		}
 
-			this.start(it.wrapper)
+		val animations = mutableListOf<Animator>()
 
-			val content = it.content
-			if (content is Transitionable) {
-				this.start(content)
-			}
+		val views = mutableSetOf<View>()
+		views.addAll(this.endValues.keys)
+		views.addAll(this.startValues.keys)
+
+		for (view in views) {
+			this.animate(view, animations)
 		}
 
 		this.dispatchCommitCallback()
 
-		this.values.clear()
+		this.startValues.clear()
+		this.endValues.clear()
 
-		this.animator.duration = this.duration.toLong()
+		this.animator.duration = this.duration.toLong() // TODO make duration's type long
 		this.animator.interpolator = this.equation
+		this.animator.playTogether(animations)
 		this.animator.start()
 	}
 
 	//--------------------------------------------------------------------------
-	// Mehods - Private API
+	// Methods - Internal API
+	//--------------------------------------------------------------------------
+	
+	/**
+	 * @method reset
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	internal fun reset() {
+		this.observers.clear()
+	}
+	
+	//--------------------------------------------------------------------------
+	// Methods - Private API
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @property values
+	 * @property startValues
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private var values: MutableMap<Transitionable, MutableMap<String, Any?>> = mutableMapOf()
+	private var startValues: MutableMap<View, Values> = mutableMapOf()
 
 	/**
-	 * @method setup
+	 * @property endValues
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private fun setup(view: Transitionable) {
+	private var endValues: MutableMap<View, Values> = mutableMapOf()
 
-		this.setup(view, "top")
-		this.setup(view, "left")
-		this.setup(view, "right")
-		this.setup(view, "bottom")
+	/**
+	 * @method captureStartValues
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private fun captureStartValues(view: View) {
 
-		view.animatable.forEach {
-			this.setup(view, it)
+		if (view is Animatable) {
+
+			this.startValues[view] = Values()
+
+			this.captureStartValue(view, "top")
+			this.captureStartValue(view, "left")
+			this.captureStartValue(view, "right")
+			this.captureStartValue(view, "bottom")
+
+			view.animatable.forEach { property ->
+				this.captureStartValue(view, property)
+			}
 		}
 	}
 
 	/**
-	 * @method setup
+	 * @method captureEndValues
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private fun setup(view: Transitionable, property: String) {
+	private fun captureEndValues(view: View) {
 
-		val animation = view.animations[property]
-		if (animation == null) {
-			this.setInitialValue(view, property, PropertyAccessor.get(view, property))
-			return
-		}
+		if (view is Animatable) {
 
-		/*
-		 * The property was being animated. In this case we cancel the current
-		 * animation and start another from its current point.
-		 */
+			this.endValues[view] = Values()
 
-		animation.cancel()
+			this.captureEndValue(view, "top")
+			this.captureEndValue(view, "left")
+			this.captureEndValue(view, "right")
+			this.captureEndValue(view, "bottom")
 
-		view.animations.remove(property)
-
-		val value = animation.animatedValue
-		if (value == null) {
-			this.setInitialValue(view, property, PropertyAccessor.get(view, property))
-		} else {
-			this.setInitialValue(view, property, value)
+			view.animatable.forEach { property ->
+				this.captureEndValue(view, property)
+			}
 		}
 	}
 
 	/**
-	 * @method start
+	 * @method captureStartValue
 	 * @since 0.7.0
+	 * @hidden
 	 */
-	private fun start(view: Transitionable) {
+	private fun captureStartValue(view: View, property: String) {
 
-		this.start(view, "top")
-		this.start(view, "left")
-		this.start(view, "right")
-		this.start(view, "bottom")
+		val group = this.startValues[view]
+		if (group == null) {
+			throw Exception("Unexpected error.")
+		}
 
-		view.animatable.forEach {
-			this.start(view, it)
+		group.values[property] = this.read(view, property)
+
+		if (view is Animatable) {
+
+			val animation = view.animations[property]
+			if (animation == null) {
+				return
+			}
+
+			/**
+			 * This view is animated. Since this will start another animation
+			 * we must remove it so the next animator can continue from
+			 * where it currently is.
+			 */
+
+			animation.cancel()
+
+			view.animations.remove(property)
 		}
 	}
 
 	/**
-	 * @method start
+	 * @method captureEndValue
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private fun start(view: Transitionable, property: String) {
+	private fun captureEndValue(view: View, property: String) {
 
-		val initialValue = this.getInitialValue(view, property)
-		val currentValue = PropertyAccessor.get(view, property)
+		val group = this.endValues[view]
+		if (group == null) {
+			throw Exception("Unexpected error.")
+		}
 
-		if (initialValue == currentValue) {
+		group.values[property] = this.read(view, property)
+	}
+
+	/**
+	 * @method animate
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private fun animate(view: View, animations: MutableList<Animator>) {
+
+		if (view is Animatable) {
+
+			this.animate(view, "top", animations)
+			this.animate(view, "left", animations)
+			this.animate(view, "right", animations)
+			this.animate(view, "bottom", animations)
+
+			view.animatable.forEach { property ->
+				this.animate(view, property, animations)
+			}
+		}
+	}
+
+	/**
+	 * @method animate
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private fun animate(view: View, property: String, animations: MutableList<Animator>) {
+
+		val s = this.getStartValue(view, property)
+		val e = this.getEndValue(view, property)
+
+		if (s == null ||
+			e == null) {
 			return
 		}
 
-		if (initialValue == null ||
-			currentValue == null) {
+		if (s == e) {
 			return
 		}
 
-		val animation = view.animate(property, initialValue, currentValue)
-		if (animation == null) {
-			return
-		}
+		if (view is Animatable) {
 
-		this.animator.playTogether(animation)
+			var animation: ValueAnimator? = null
+
+			if (property == "top" ||
+				property == "left" ||
+				property == "right" ||
+				property == "bottom") {
+
+				if (s is Int &&
+					e is Int) {
+					animation = ObjectAnimator.ofInt(view, property, s, e)
+				}
+
+			} else {
+				animation = view.animate(property, s, e)
+			}
+
+			if (animation == null) {
+				return
+			}
+
+			this.observers.add(view)
+
+			view.animations[property] = animation
+
+			animation.addListener(object : Animator.AnimatorListener {
+
+				override fun onAnimationStart(animation: Animator?) {
+
+				}
+
+				override fun onAnimationRepeat(animation: Animator?) {
+
+				}
+
+				override fun onAnimationEnd(animation: Animator?) {
+					view.animations.remove(property)
+				}
+
+				override fun onAnimationCancel(animation: Animator?) {
+
+				}
+			})
+
+			animations.add(animation)
+		}
+	}
+
+	/**
+	 * @method read
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private fun read(view: View, property: String): Any? {
+		return PropertyAccessor.get(view, property)
+	}
+
+	/**
+	 * @method getStartValue
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private fun getStartValue(view: View, property: String): Any? {
+		return this.startValues[view]!!.values[property]
+	}
+
+	/**
+	 * @method getEndValue
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private fun getEndValue(view: View, property: String): Any? {
+		return this.endValues[view]!!.values[property]
 	}
 
 	/**
@@ -235,40 +379,13 @@ public class Transition(val activity: ApplicationActivity): Animator.AnimatorLis
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private fun forEachViewOf(root: JavaScriptView, each: (JavaScriptView) -> Unit) {
-		root.children.forEach { view ->
+	private fun forEachViewOf(node: JavaScriptView, each: (JavaScriptView) -> Unit) {
+		node.children.forEach { view ->
 			if (view.visible.boolean) {
+				each.invoke(view)
 				this.forEachViewOf(view, each)
 			}
 		}
-	}
-
-	/**
-	 * @method setInitialValue
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private fun setInitialValue(view: Transitionable, property: String, value: Any?) {
-		val values = this.values.getOrPut(view, { mutableMapOf() })
-		values[property] = value
-	}
-
-	/**
-	 * @method getInitialValue
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private fun getInitialValue(view: Transitionable, property: String): Any? {
-		return this.values.getOrPut(view, { mutableMapOf() }).get(property)
-	}
-
-	/**
-	 * @method reset
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	internal fun reset() {
-		this.observers.clear()
 	}
 
 	/**
@@ -305,7 +422,7 @@ public class Transition(val activity: ApplicationActivity): Animator.AnimatorLis
 	}
 	
 	//--------------------------------------------------------------------------
-	// Mehods - Animator Listener
+	// Methods - Animator Listener
 	//--------------------------------------------------------------------------
 
 	/**
@@ -343,6 +460,25 @@ public class Transition(val activity: ApplicationActivity): Animator.AnimatorLis
 	 */
 	override fun onAnimationCancel(animation: Animator?) {
 
+	}
+
+	//--------------------------------------------------------------------------
+	// Classes
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @class Values
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private class Values {
+
+		/**
+		 * @property values
+		 * @since 0.7.0
+		 * @hidden
+		 */
+		public var values: MutableMap<String, Any?> = mutableMapOf()
 	}
 }
 

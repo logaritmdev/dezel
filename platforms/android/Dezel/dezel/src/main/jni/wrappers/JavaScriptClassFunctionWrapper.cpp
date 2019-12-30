@@ -28,7 +28,7 @@ JavaScriptClassFunctionWrapperCallback(JSContextRef context, JSObjectRef object,
 		argv
 	);
 
-	return result ? reinterpret_cast<JSValueRef>(result) : NULL;
+	return result ? reinterpret_cast<JSValueRef>(result) : nullptr;
 }
 
 static void

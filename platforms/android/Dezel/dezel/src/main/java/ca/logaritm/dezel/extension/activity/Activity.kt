@@ -1,4 +1,4 @@
-package ca.logaritm.dezel.extension.app
+package ca.logaritm.dezel.extension.activity
 
 import android.app.Activity
 import android.graphics.Point

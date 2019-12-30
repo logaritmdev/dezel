@@ -8,17 +8,6 @@ package ca.logaritm.dezel.core
 open class JavaScriptPropertyScriptValue(value: JavaScriptValue) : JavaScriptPropertyValue() {
 
 	//--------------------------------------------------------------------------
-	// Properties
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @property value
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private var value: JavaScriptValue
-
-	//--------------------------------------------------------------------------
 	// Methods
 	//--------------------------------------------------------------------------
 
@@ -27,8 +16,6 @@ open class JavaScriptPropertyScriptValue(value: JavaScriptValue) : JavaScriptPro
 	 * @since 0.7.0
 	 */
 	init {
-
-		this.value = value
 
 		/*
 		 * The value was parsed before being assigned here,
@@ -50,6 +37,9 @@ open class JavaScriptPropertyScriptValue(value: JavaScriptValue) : JavaScriptPro
 		}
 
 		this.type = type
+		this.unit = JavaScriptPropertyUnit.NONE
+
+		this.value = value
 	}
 
 	/**
@@ -57,7 +47,7 @@ open class JavaScriptPropertyScriptValue(value: JavaScriptValue) : JavaScriptPro
 	 * @since 0.7.0
 	 */
 	override fun toString(): String {
-		return this.value.string
+		return this.value!!.string
 	}
 
 	/**
@@ -65,7 +55,7 @@ open class JavaScriptPropertyScriptValue(value: JavaScriptValue) : JavaScriptPro
 	 * @since 0.7.0
 	 */
 	override fun toNumber(): Double {
-		return this.value.number
+		return this.value!!.number
 	}
 
 	/**
@@ -73,6 +63,6 @@ open class JavaScriptPropertyScriptValue(value: JavaScriptValue) : JavaScriptPro
 	 * @since 0.7.0
 	 */
 	override fun toBoolean(): Boolean {
-		return this.value.boolean
+		return this.value!!.boolean
 	}
 }

@@ -1,17 +1,17 @@
-#include "jni_module_view.h"
+#include "jni_module_display.h"
 
 jclass DisplayClass;
 jclass DisplayNodeClass;
 jclass SizeFClass2;
+jclass ParseErrorClass;
 
 jmethodID SizeFGetWidthMethod;
 jmethodID SizeFGetHeightMethod;
 
-jmethodID DisplayLayoutBeganMethod;
-jmethodID DisplayLayoutEndedMethod;
+jmethodID DisplayPrepareMethod;
+jmethodID DisplayResolveMethod;
 
 jmethodID DisplayNodeInvalidateMethod;
-jmethodID DisplayNodeMeasureSizeMethod;
 jmethodID DisplayNodeResolveSizeMethod;
 jmethodID DisplayNodeResolveOriginMethod;
 jmethodID DisplayNodeResolveInnerSizeMethod;
@@ -19,8 +19,12 @@ jmethodID DisplayNodeResolveContentSizeMethod;
 jmethodID DisplayNodeResolveMarginMethod;
 jmethodID DisplayNodeResolveBorderMethod;
 jmethodID DisplayNodeResolvePaddingMethod;
-jmethodID DisplayNodeLayoutBeganMethod;
-jmethodID DisplayNodeLayoutEndedMethod;
+jmethodID DisplayNodePrepareLayoutMethod;
+jmethodID DisplayNodeResolveLayoutMethod;
+jmethodID DisplayNodeMeasureMethod;
+jmethodID DisplayNodeUpdateMethod;
+
+jmethodID ParseErrorConstructor;
 
 void
 JNIDisplayModule(JNIEnv* env)
@@ -40,17 +44,22 @@ JNIDisplayModule(JNIEnv* env)
 		"ca/logaritm/dezel/view/display/DisplayNode"
 	);
 
-	DisplayLayoutBeganMethod = JNIGetMethod(
+	ParseErrorClass = JNIGetClass(
+		env,
+		"ca/logaritm/dezel/view/display/exception/ParseError"
+	);
+
+	DisplayPrepareMethod = JNIGetMethod(
 		env,
 		DisplayClass,
-		"layoutBegan",
+		"onPrepare",
 		"()V"
 	);
 
-	DisplayLayoutEndedMethod = JNIGetMethod(
+	DisplayResolveMethod = JNIGetMethod(
 		env,
 		DisplayClass,
-		"layoutEnded",
+		"onResolve",
 		"()V"
 	);
 
@@ -59,13 +68,6 @@ JNIDisplayModule(JNIEnv* env)
 		DisplayNodeClass,
 		"onInvalidate",
 		"()V"
-	);
-
-	DisplayNodeMeasureSizeMethod = JNIGetMethod(
-		env,
-		DisplayNodeClass,
-		"measure",
-		"(DDDDDD)Landroid/util/SizeF;"
 	);
 
 	DisplayNodeResolveSizeMethod = JNIGetMethod(
@@ -117,18 +119,33 @@ JNIDisplayModule(JNIEnv* env)
 		"()V"
 	);
 
-	DisplayNodeLayoutBeganMethod = JNIGetMethod(
+	DisplayNodePrepareLayoutMethod = JNIGetMethod(
 		env,
 		DisplayNodeClass,
-		"layoutBegan",
+		"onPrepareLayout",
 		"()V"
 	);
 
-	DisplayNodeLayoutEndedMethod = JNIGetMethod(
+	DisplayNodeResolveLayoutMethod = JNIGetMethod(
 		env,
 		DisplayNodeClass,
-		"layoutEnded",
+		"onResolveLayout",
 		"()V"
+	);
+
+
+	DisplayNodeMeasureMethod = JNIGetMethod(
+		env,
+		DisplayNodeClass,
+		"measure",
+		"(DDDDDD)Landroid/util/SizeF;"
+	);
+
+	DisplayNodeUpdateMethod = JNIGetMethod(
+		env,
+		DisplayNodeClass,
+		"update",
+		"(Ljava/lang/String;J)V"
 	);
 
 	SizeFGetWidthMethod = JNIGetMethod(
@@ -145,7 +162,15 @@ JNIDisplayModule(JNIEnv* env)
 		"()F"
 	);
 
+	ParseErrorConstructor = JNIGetMethod(
+		env,
+		ParseErrorClass,
+		"<init>",
+		"(Ljava/lang/String;IILjava/lang/String;)V"
+	);
+	
 	SizeFClass2  = JNIGlobalRef(env, SizeFClass2);
 	DisplayClass = JNIGlobalRef(env, DisplayClass);
 	DisplayNodeClass = JNIGlobalRef(env, DisplayNodeClass);
+	ParseErrorClass = JNIGlobalRef(env, ParseErrorClass);
 }

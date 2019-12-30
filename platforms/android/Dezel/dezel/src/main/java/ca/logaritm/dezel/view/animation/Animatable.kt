@@ -3,7 +3,7 @@ package ca.logaritm.dezel.view.animation
 import android.animation.Animator
 import android.animation.ValueAnimator
 
-public interface Transitionable {
+public interface Animatable {
 
 	/**
 	 * @property animatable
@@ -21,7 +21,7 @@ public interface Transitionable {
 	 * @method willAnimate
 	 * @since 0.7.0
 	 */
-	fun animate(property: String, initialValue: Any, currentValue: Any): Animator?
+	fun animate(property: String, initialValue: Any, currentValue: Any): ValueAnimator?
 
 	/**
 	 * @method onBeforeAnimate

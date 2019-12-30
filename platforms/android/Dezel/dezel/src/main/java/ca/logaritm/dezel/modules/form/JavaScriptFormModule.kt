@@ -8,14 +8,14 @@ import ca.logaritm.dezel.core.JavaScriptModule
  * @super JavaScriptModule
  * @since 0.1.0
  */
-open class JavaScriptFormModule(context: JavaScriptContext) : JavaScriptModule(context) {
+open class JavaScriptFormModule: JavaScriptModule() {
 
 	/**
-	 * @method initialize
-	 * @since 0.1.0
+	 * @method configure
+	 * @since 0.7.0
 	 */
-	override fun initialize() {
-		this.context.registerClass("dezel.form.TextInput", JavaScriptTextInput::class.java)
-		this.context.registerClass("dezel.form.TextArea", JavaScriptTextArea::class.java)
+	override fun configure(context: JavaScriptContext) {
+		context.registerClass("dezel.form.TextInput", JavaScriptTextInput::class.java)
+		context.registerClass("dezel.form.TextArea", JavaScriptTextArea::class.java)
 	}
 }

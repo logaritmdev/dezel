@@ -1,5 +1,6 @@
 package ca.logaritm.dezel.view
 
+import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.PorterDuff
@@ -11,13 +12,14 @@ import android.widget.ProgressBar
 import ca.logaritm.dezel.R
 import ca.logaritm.dezel.extension.Delegates
 import ca.logaritm.dezel.view.graphic.Color
+import ca.logaritm.dezel.view.animation.Animatable
 
 /**
  * @class SpinnerView
  * @super FrameLayout
  * @since 0.7.0
  */
-open class SpinnerView(context: Context) : FrameLayout(context) {
+open class SpinnerView(context: Context) : FrameLayout(context), Animatable {
 
 	//----------------------------------------------------------------------
 	//  Properties
@@ -75,7 +77,7 @@ open class SpinnerView(context: Context) : FrameLayout(context) {
 	private var circleSpinnerDrawableBounds: Rect
 
 	//----------------------------------------------------------------------
-	//  ViewContent Protocol
+	//  Methods
 	//----------------------------------------------------------------------
 
 	/**
@@ -120,6 +122,66 @@ open class SpinnerView(context: Context) : FrameLayout(context) {
 			this.circleSpinnerDrawable.draw(canvas)
 		}
 	}
+
+	//--------------------------------------------------------------------------
+	// Animations
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @property animatable
+	 * @since 0.7.0
+	 */
+	override val animatable: List<String> = listOf()
+
+	/**
+	 * @property animations
+	 * @since 0.7.0
+	 */
+	override var animations: MutableMap<String, ValueAnimator> = mutableMapOf()
+
+	/**
+	 * @method onBeforeAnimate
+	 * @since 0.7.0
+	 */
+	override fun animate(property: String, initialValue: Any, currentValue: Any): ValueAnimator? {
+		return null
+	}
+
+	/**
+	 * @method onBeforeAnimate
+	 * @since 0.7.0
+	 */
+	override fun onBeforeAnimate(property: String) {
+
+	}
+
+	/**
+	 * @method onBeginTransition
+	 * @since 0.7.0
+	 */
+	override fun onBeginTransition() {
+
+	}
+
+	/**
+	 * @method onCommitTransition
+	 * @since 0.7.0
+	 */
+	override fun onCommitTransition() {
+
+	}
+
+	/**
+	 * @method onFinishTransition
+	 * @since 0.7.0
+	 */
+	override fun onFinishTransition() {
+
+	}
+
+	//--------------------------------------------------------------------------
+	// Private API
+	//--------------------------------------------------------------------------
 
 	/**
 	 * @method showActiveDrawable

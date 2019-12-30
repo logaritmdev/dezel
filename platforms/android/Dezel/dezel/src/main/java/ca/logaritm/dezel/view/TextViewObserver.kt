@@ -1,10 +1,10 @@
 package ca.logaritm.dezel.view
 
 /**
- * @interface TextViewListener
+ * @interface TextViewObserver
  * @since 0.7.0
  */
-public interface TextViewListener {
+public interface TextViewObserver {
 
 	/**
 	 * @method onPressLink

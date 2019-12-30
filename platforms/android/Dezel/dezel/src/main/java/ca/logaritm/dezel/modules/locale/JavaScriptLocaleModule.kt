@@ -8,13 +8,13 @@ import ca.logaritm.dezel.core.JavaScriptModule
  * @super JavaScriptModule
  * @since 0.7.0
  */
-open class JavaScriptLocaleModule(context: JavaScriptContext) : JavaScriptModule(context) {
+open class JavaScriptLocaleModule: JavaScriptModule() {
 
 	/**
-	 * @method initialize
-	 * @since 0.1.0
+	 * @method configure
+	 * @since 0.7.0
 	 */
-	override fun initialize() {
-		this.context.registerClass("dezel.locale.Locale", JavaScriptLocale::class.java)
+	override fun configure(context: JavaScriptContext) {
+		context.registerClass("dezel.locale.Locale", JavaScriptLocale::class.java)
 	}
 }

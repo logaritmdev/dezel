@@ -1,6 +1,6 @@
 package ca.logaritm.dezel.core
 
-import android.util.Log
+import ca.logaritm.dezel.core.external.JavaScriptValueExternal
 
 /**
  * @class JavaScriptValue
@@ -577,7 +577,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	}
 
 	//--------------------------------------------------------------------------
-	// Methods - Extensions
+	// Extensions
 	//--------------------------------------------------------------------------
 
 	/**

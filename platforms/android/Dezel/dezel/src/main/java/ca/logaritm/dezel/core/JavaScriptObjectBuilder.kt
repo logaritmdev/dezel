@@ -1,6 +1,8 @@
 package ca.logaritm.dezel.core
 
 import android.util.Log
+import ca.logaritm.dezel.core.external.JavaScriptObjectBuilderExternal
+import ca.logaritm.dezel.core.external.JavaScriptValueExternal
 import java.lang.reflect.InvocationTargetException
 import java.lang.reflect.Method
 

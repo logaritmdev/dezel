@@ -8,17 +8,17 @@ import ca.logaritm.dezel.core.JavaScriptModule
  * @super JavaScriptModule
  * @since 0.7.0
  */
-open class JavaScriptApplicationModule(context: JavaScriptContext): JavaScriptModule(context) {
+open class JavaScriptApplicationModule: JavaScriptModule() {
 
 	//--------------------------------------------------------------------------
 	// Methods
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method initialize
-	 * @since 0.1.0
+	 * @method configure
+	 * @since 0.7.0
 	 */
-	override fun initialize() {
-		this.context.registerClass("dezel.application.Application", JavaScriptApplication::class.java)
+	override fun configure(context: JavaScriptContext) {
+		context.registerClass("dezel.application.Application", JavaScriptApplication::class.java)
 	}
 }

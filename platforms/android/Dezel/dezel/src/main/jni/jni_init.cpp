@@ -1,8 +1,6 @@
 #include "jni_init.h"
 #include "jni_module_core.h"
-#include "jni_module_view.h"
-#include "jni_module_style.h"
-#include "jni_module_layout.h"
+#include "jni_module_display.h"
 #include <string>
 
 jclass Throwable;
@@ -115,7 +113,7 @@ JNIGetClass(JNIEnv* env, const char* name)
 {
 	auto res = env->FindClass(name);
 
-	if (res == NULL) {
+	if (res == nullptr) {
 		LOGE("Unable to find class %s", name);
 	}
 
@@ -131,7 +129,7 @@ JNIGetField(JNIEnv* env, jclass cls, const char* name, const char* sign)
 		sign
 	);
 
-	if (res == NULL) {
+	if (res == nullptr) {
 		LOGE("Unable to find static field %s with signature %s", name, sign);
 	}
 
@@ -147,7 +145,7 @@ JNIGetMethod(JNIEnv* env, jclass cls, const char* name, const char* sign)
 		sign
 	);
 
-	if (res == NULL) {
+	if (res == nullptr) {
 		LOGE("Unable to find method %s with signature %s", name, sign);
 	}
 
@@ -163,7 +161,7 @@ JNIGetStaticMethod(JNIEnv* env, jclass cls, const char* name, const char* sign)
 		sign
 	);
 
-	if (res == NULL) {
+	if (res == nullptr) {
 		LOGE("Unable to find static method %s with signature %s", name, sign);
 	}
 
@@ -207,8 +205,6 @@ JNI_OnLoad(JavaVM* vm, void* reserved)
 
 	JNICoreModule(env);
 	JNIDisplayModule(env);
-	JNI_OnLoad_style(env);
-	JNI_OnLoad_layout(env);
 
 	return JNI_VERSION_1_6;
 }

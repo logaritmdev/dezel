@@ -2,6 +2,18 @@ package ca.logaritm.dezel.extension.view
 
 import android.view.View
 import android.view.ViewGroup
+import ca.logaritm.dezel.modules.view.JavaScriptView
+import ca.logaritm.dezel.modules.view.JavaScriptWindow
+
+/**
+ * @property visible
+ * @since 0.7.0
+ */
+internal var View.visible: Boolean
+	get() = this.visibility != View.GONE
+	set(value) {
+		this.visibility = if (value) View.VISIBLE else View.GONE
+	}
 
 /**
  * @method JavaScriptView.addView
@@ -22,6 +34,24 @@ internal fun View.addView(view: View, index: Int) {
 
 		this.addView(view, index)
 	}
+}
+
+/**
+ * @method JavaScriptView.addView
+ * @since 0.7.0
+ * @hidden
+ */
+internal fun View.addView(view: JavaScriptView, index: Int) {
+	this.addView(view.wrapper, index)
+}
+
+/**
+ * @method JavaScriptView.addView
+ * @since 0.7.0
+ * @hidden
+ */
+internal fun View.addView(view: JavaScriptWindow, index: Int) {
+	this.addView(view.wrapper, index)
 }
 
 /**

@@ -8,7 +8,6 @@ import ca.logaritm.dezel.extension.view.removeFromParent
 import ca.logaritm.dezel.view.geom.Point3D
 import ca.logaritm.dezel.view.geom.Transform3D
 
-
 /**
  * @class JavaScriptWindow
  * @super JavaScriptView
@@ -33,6 +32,8 @@ open class JavaScriptWindow(context: JavaScriptContext): JavaScriptView(context)
 	 * @since 0.7.0
 	 */
 	open fun findViewAt(x: Double, y: Double, visible: Boolean = true, touchable: Boolean = true): JavaScriptView? {
+		// TODO
+		// est-ce que je peux enlever ça
 		return this.findViewAt(Point3D(x, y, 0.0), Transform3D(), visible, touchable)
 	}
 

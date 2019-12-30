@@ -1,6 +1,6 @@
 package ca.logaritm.dezel.extension.util
 
-import ca.logaritm.dezel.util.date.DateFormater
+import ca.logaritm.dezel.util.date.DateFormatter
 import java.util.*
 
 /**
@@ -9,7 +9,7 @@ import java.util.*
  * @hidden
  */
 internal val Date.iso: String
-	get() = DateFormater.iso(this)
+	get() = DateFormatter.iso(this)
 
 /**
  * @property Date.format
@@ -17,5 +17,5 @@ internal val Date.iso: String
  * @hidden
  */
 internal fun Date.format(format: String, locale: String): String {
-	return DateFormater.format(this, format, locale)
+	return DateFormatter.format(this, format, locale)
 }

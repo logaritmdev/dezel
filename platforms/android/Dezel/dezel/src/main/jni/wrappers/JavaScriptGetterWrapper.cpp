@@ -9,7 +9,7 @@ JavaScriptGetterWrapperCallback(JSContextRef context, JSObjectRef object, JSObje
 	auto result = JavaScriptGetterExecute(
 		wrapper->env,
 		wrapper->ctx,
-		NULL,
+		nullptr,
 		wrapper->callback,
 		JavaScriptGetterWrapperExecute,
 		object,
@@ -18,7 +18,7 @@ JavaScriptGetterWrapperCallback(JSContextRef context, JSObjectRef object, JSObje
 		argv
 	);
 
-	return result ? reinterpret_cast<JSValueRef>(result) : NULL;
+	return result ? reinterpret_cast<JSValueRef>(result) : nullptr;
 }
 
 static void

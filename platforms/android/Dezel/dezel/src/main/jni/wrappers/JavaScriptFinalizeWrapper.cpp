@@ -7,7 +7,7 @@ static void
 JavaScriptFinalizeWrapperCallback(JSContextRef context, JavaScriptValueDataRef handle)
 {
 	JavaScriptFinalizeWrapperRef wrapper = (JavaScriptFinalizeWrapperRef) JavaScriptValueDataGetAttribute(handle, kJavaScriptFinalizeWrapperKey);
-	if (wrapper == NULL) {
+	if (wrapper == nullptr) {
 		return;
 	}
 
@@ -29,7 +29,7 @@ JavaScriptFinalizeWrapperCallback(JSContextRef context, JavaScriptValueDataRef h
 	wrapper->env->DeleteGlobalRef(wrapper->ctx);
 	wrapper->env->DeleteGlobalRef(wrapper->callback);
 
-	JavaScriptValueDataSetAttribute(handle, kJavaScriptFinalizeWrapperKey, NULL);
+	JavaScriptValueDataSetAttribute(handle, kJavaScriptFinalizeWrapperKey, nullptr);
 
 	delete wrapper;
 }

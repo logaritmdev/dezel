@@ -1,5 +1,7 @@
 package ca.logaritm.dezel.view.display
 
+import ca.logaritm.dezel.view.display.external.DisplayExternal
+
 /**
  * @class Display
  * @since 0.7.0
@@ -18,6 +20,13 @@ public class Display {
 		set(value) = DisplayExternal.setWindow(this.handle, value?.handle ?: 0)
 
 	/**
+	 * @property scale
+	 * @since 0.7.0
+	 */
+	public var scale: Double = 1.0
+		set(value) = DisplayExternal.setScale(this.handle, value)
+
+	/**
 	 * @property viewportWidth
 	 * @since 0.7.0
 	 */
@@ -32,11 +41,11 @@ public class Display {
 		set(value) = DisplayExternal.setViewportHeight(this.handle, value)
 
 	/**
-	 * @property scale
+	 * @property viewportHeight
 	 * @since 0.7.0
 	 */
-	public var scale: Double = 1.0
-		set(value) = DisplayExternal.setScale(this.handle, value)
+	public var stylesheet: Stylesheet? = null
+		set(value) = DisplayExternal.setStylesheet(this.handle, value?.handle ?: 0)
 
 	/**
 	 * @property invalid
@@ -61,18 +70,18 @@ public class Display {
 		private set
 
 	/**
-	 * @property layoutBeganCallbacks
+	 * @property prepareCallback
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private var layoutBeganCallbacks: MutableList<() -> Unit> = mutableListOf()
+	private var prepareCallback: MutableList<() -> Unit> = mutableListOf()
 
 	/**
-	 * @property layoutEndedCallbacks
+	 * @property resolveCallback
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private var layoutEndedCallbacks: MutableList<() -> Unit> = mutableListOf()
+	private var resolveCallback: MutableList<() -> Unit> = mutableListOf()
 
 	//--------------------------------------------------------------------------
 	// Methods
@@ -81,28 +90,26 @@ public class Display {
 	/**
 	 * @constructor
 	 * @since 0.7.0
-	 * @hidden
 	 */
 	init {
 		this.handle = DisplayExternal.create(this)
 		DisplayReference.register(this)
 	}
 
-
 	/**
-	 * @method requestLayoutBeganCallback
+	 * @method registerPrepareCallback
 	 * @since 0.7.0
 	 */
-	public fun requestLayoutBeganCallback(callback: (() -> Unit)) {
-		this.layoutBeganCallbacks.add(callback)
+	public fun registerPrepareCallback(callback: (() -> Unit)) {
+		this.prepareCallback.add(callback)
 	}
 
 	/**
-	 * @method requestLayoutEndedCallback
+	 * @method registerResolveCallback
 	 * @since 0.7.0
 	 */
-	public fun requestLayoutEndedCallback(callback: (() -> Unit)) {
-		this.layoutEndedCallbacks.add(callback)
+	public fun registerResolveCallback(callback: (() -> Unit)) {
+		this.resolveCallback.add(callback)
 	}
 
 	//--------------------------------------------------------------------------
@@ -110,42 +117,42 @@ public class Display {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @method layoutBegan
+	 * @method onPrepare
 	 * @since 0.7.0
 	 * @hidden
 	 */
 	@Suppress("unused")
-	private fun layoutBegan() {
-		this.dispatchLayoutBeganEvent()
+	private fun onPrepare() {
+		this.dispatchPrepareCallback()
 	}
 
 	/**
-	 * @method layoutEnded
+	 * @method onResolve
 	 * @since 0.7.0
 	 * @hidden
 	 */
 	@Suppress("unused")
-	private fun layoutEnded() {
-		this.dispatchLayoutEndedEvent()
+	private fun onResolve() {
+		this.dispatchResolveCallback()
 	}
 
 	/**
-	 * @method dispatchLayoutBeganEvent
+	 * @method dispatchPrepareCallback
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private fun dispatchLayoutBeganEvent() {
-		this.layoutBeganCallbacks.forEach { it() }
-		this.layoutBeganCallbacks.clear()
+	private fun dispatchPrepareCallback() {
+		this.prepareCallback.forEach { it() }
+		this.prepareCallback.clear()
 	}
 
 	/**
-	 * @method dispatchLayoutEndedEvent
+	 * @method dispatchResolveCallback
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private fun dispatchLayoutEndedEvent() {
-		this.layoutEndedCallbacks.forEach { it() }
-		this.layoutEndedCallbacks.clear()
+	private fun dispatchResolveCallback() {
+		this.resolveCallback.forEach { it() }
+		this.resolveCallback.clear()
 	}
 }

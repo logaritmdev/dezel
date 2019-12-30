@@ -6,14 +6,11 @@ package ca.logaritm.dezel.view.type
  * @hidden
  */
 enum class InputType {
-
 	DATE,
 	TIME,
-
 	TEXT,
 	NUMBER,
 	EMAIL,
 	PHONE,
 	PASSWORD;
-
 }

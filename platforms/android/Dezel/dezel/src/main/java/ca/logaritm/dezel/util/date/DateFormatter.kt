@@ -9,7 +9,7 @@ import java.util.*
  * @class DateFormater
  * @since 0.5.0
  */
-public object DateFormater {
+public object DateFormatter {
 
 	//--------------------------------------------------------------------------
 	//  Properties

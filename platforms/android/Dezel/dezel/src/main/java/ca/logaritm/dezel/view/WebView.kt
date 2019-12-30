@@ -1,10 +1,10 @@
 package ca.logaritm.dezel.view
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.net.http.SslError
-import android.util.Log
 import android.util.Size
 import android.util.SizeF
 import android.view.MotionEvent
@@ -12,6 +12,9 @@ import android.view.View
 import android.webkit.*
 import android.widget.RelativeLayout
 import ca.logaritm.dezel.extension.Delegates
+import ca.logaritm.dezel.extension.fatalError
+import ca.logaritm.dezel.view.trait.Scrollable
+import ca.logaritm.dezel.view.trait.ScrollableListener
 import ca.logaritm.dezel.view.type.Overscroll
 import ca.logaritm.dezel.view.type.Scrollbars
 import android.webkit.WebView as AndroidWebView
@@ -21,7 +24,8 @@ import android.webkit.WebView as AndroidWebView
  * @super AndroidWebView
  * @since 0.7.0
  */
-open class WebView(context: Context, listener: WebViewListener) : AndroidWebView(context), Scrollable {
+@SuppressLint("ViewConstructor")
+open class WebView(context: Context, observer: WebViewObserver) : AndroidWebView(context), Scrollable {
 
 	//--------------------------------------------------------------------------
 	// Properties
@@ -47,17 +51,17 @@ open class WebView(context: Context, listener: WebViewListener) : AndroidWebView
 
 		when (value) {
 
-			Scrollbars.NONE       -> {
+			Scrollbars.NONE -> {
 				this.isVerticalScrollBarEnabled = false
 				this.isHorizontalScrollBarEnabled = false
 			}
 
-			Scrollbars.BOTH       -> {
+			Scrollbars.BOTH -> {
 				this.isVerticalScrollBarEnabled = true
 				this.isHorizontalScrollBarEnabled = true
 			}
 
-			Scrollbars.VERTICAL   -> {
+			Scrollbars.VERTICAL -> {
 				this.isVerticalScrollBarEnabled = true
 				this.isHorizontalScrollBarEnabled = false
 			}
@@ -108,7 +112,7 @@ open class WebView(context: Context, listener: WebViewListener) : AndroidWebView
 	 * @since 0.7.0
 	 */
 	override var scrollWidth: Int by Delegates.OnSet(0) {
-		Log.i("DEZEL", "JavaScriptWebView scrollWidth is not supported")
+		fatalError("JavaScriptWebView scrollWidth is not supported")
 	}
 
 	/**
@@ -116,15 +120,15 @@ open class WebView(context: Context, listener: WebViewListener) : AndroidWebView
 	 * @since 0.7.0
 	 */
 	override var scrollHeight: Int by Delegates.OnSet(0) {
-		Log.i("DEZEL", "JavaScriptWebView scrollHeight is not supported")
+		fatalError("JavaScriptWebView scrollHeight is not supported")
 	}
 
 	/**
-	 * @property scrollMomentum
+	 * @property scrollInertia
 	 * @since 0.7.0
 	 */
-	override var scrollMomentum: Boolean by Delegates.OnSet(true) {
-		Log.i("DEZEL", "JavaScriptWebView scrollMomentum is not supported")
+	override var scrollInertia: Boolean by Delegates.OnSet(true) {
+		fatalError("JavaScriptWebView scrollInertia is not supported")
 	}
 
 	/**
@@ -132,7 +136,7 @@ open class WebView(context: Context, listener: WebViewListener) : AndroidWebView
 	 * @since 0.7.0
 	 */
 	override var contentInsetTop: Int by Delegates.OnSet(0) {
-		Log.i("DEZEL", "JavaScriptWebView contentInsetTop is not supported")
+		fatalError("JavaScriptWebView contentInsetTop is not supported")
 	}
 
 	/**
@@ -140,7 +144,7 @@ open class WebView(context: Context, listener: WebViewListener) : AndroidWebView
 	 * @since 0.7.0
 	 */
 	override var contentInsetLeft: Int by Delegates.OnSet(0) {
-		Log.i("DEZEL", "JavaScriptWebView contentInsetLeft is not supported")
+		fatalError("JavaScriptWebView contentInsetLeft is not supported")
 	}
 
 	/**
@@ -148,7 +152,7 @@ open class WebView(context: Context, listener: WebViewListener) : AndroidWebView
 	 * @since 0.7.0
 	 */
 	override var contentInsetRight: Int by Delegates.OnSet(0) {
-		Log.i("DEZEL", "JavaScriptWebView contentInsetRight is not supported")
+		fatalError("JavaScriptWebView contentInsetRight is not supported")
 	}
 
 	/**
@@ -156,7 +160,7 @@ open class WebView(context: Context, listener: WebViewListener) : AndroidWebView
 	 * @since 0.7.0
 	 */
 	override var contentInsetBottom:  Int by Delegates.OnSet(0) {
-		Log.i("DEZEL", "JavaScriptWebView contentInsetBottom is not supported")
+		fatalError("JavaScriptWebView contentInsetBottom is not supported")
 	}
 
 	/**
@@ -164,7 +168,7 @@ open class WebView(context: Context, listener: WebViewListener) : AndroidWebView
 	 * @since 0.7.0
 	 */
 	override var paged: Boolean by Delegates.OnSet(false) {
-		Log.i("DEZEL", "JavaScriptWebView paged is not supported")
+		fatalError("JavaScriptWebView paged is not supported")
 	}
 
 	/**
@@ -180,7 +184,7 @@ open class WebView(context: Context, listener: WebViewListener) : AndroidWebView
 	 * @since 0.7.0
 	 */
 	override var minZoom: Float by Delegates.OnSet(1.0f) {
-		Log.i("DEZEL", "JavaScriptWebView minZoom is not supported")
+		fatalError("JavaScriptWebView minZoom is not supported")
 	}
 
 	/**
@@ -188,23 +192,23 @@ open class WebView(context: Context, listener: WebViewListener) : AndroidWebView
 	 * @since 0.7.0
 	 */
 	override var maxZoom: Float by Delegates.OnSet(1.0f) {
-		Log.i("DEZEL", "JavaScriptWebView maxZoom is not supported")
+		fatalError("JavaScriptWebView maxZoom is not supported")
 	}
 
 	/**
 	 * @property zoomedView
 	 * @since 0.7.0
 	 */
-	override var zoomedView: View? by Delegates.OnChangeOptional(null) { _, _ ->
-
+	override var zoomedView: View? by Delegates.OnSetOptional(null) {
+		// TODO
 	}
 
 	/**
-	 * @property webViewListener
+	 * @property observer
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	open var webViewListener: WebViewListener? = null
+	private lateinit var observer: WebViewObserver
 
 	/**
 	 * @property webViewWebClient
@@ -221,8 +225,8 @@ open class WebView(context: Context, listener: WebViewListener) : AndroidWebView
 		override fun onPageFinished(view: AndroidWebView, url: String) {
 			val w = this@WebView.computeHorizontalScrollRange()
 			val h = this@WebView.computeVerticalScrollRange()
-			webViewListener?.onUpdateContentSize(this@WebView, Size(w, h))
-			webViewListener?.onLoad(this@WebView)
+			this@WebView.observer.onUpdateContentSize(this@WebView, Size(w, h))
+			this@WebView.observer.onLoad(this@WebView)
 		}
 
 		/**
@@ -269,7 +273,7 @@ open class WebView(context: Context, listener: WebViewListener) : AndroidWebView
 				return true
 			}
 
-			val allow = webViewListener?.onBeforeLoad(this@WebView, url)
+			val allow = this@WebView.observer.onBeforeLoad(this@WebView, url)
 			if (allow == false) {
 				return true
 			}
@@ -305,7 +309,7 @@ open class WebView(context: Context, listener: WebViewListener) : AndroidWebView
 	 */
 	init {
 
-		this.webViewListener = listener
+		this.observer = observer
 
 		this.settings.allowFileAccess = true
 		this.settings.allowFileAccessFromFileURLs = true
@@ -329,7 +333,7 @@ open class WebView(context: Context, listener: WebViewListener) : AndroidWebView
 		this.webViewClient = this.webViewWebClient
 		this.webChromeClient = this.webViewChromeClient
 
-		AndroidWebView.setWebContentsDebuggingEnabled(true);
+
 	}
 
 	/**

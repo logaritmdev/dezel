@@ -16,7 +16,7 @@ import com.neovisionaries.ws.client.*
 open class JavaScriptWebSocket(context: JavaScriptContext) : JavaScriptClass(context) {
 
 	//--------------------------------------------------------------------------
-	// MARK:Properties
+	// Properties
 	//--------------------------------------------------------------------------
 
 	/**

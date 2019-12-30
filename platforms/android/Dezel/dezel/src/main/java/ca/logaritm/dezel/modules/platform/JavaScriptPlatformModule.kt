@@ -8,13 +8,13 @@ import ca.logaritm.dezel.core.JavaScriptModule
  * @super JavaScriptModule
  * @since 0.7.0
  */
-public class JavaScriptPlatformModule(context: JavaScriptContext) : JavaScriptModule(context) {
+public class JavaScriptPlatformModule: JavaScriptModule() {
 
 	/**
-	 * @method initialize
-	 * @since 0.1.0
+	 * @method configure
+	 * @since 0.7.0
 	 */
-	public override fun initialize() {
-		this.context.registerClass("dezel.platform.Platform", JavaScriptPlatform::class.java)
+	override fun configure(context: JavaScriptContext) {
+		context.registerClass("dezel.platform.Platform", JavaScriptPlatform::class.java)
 	}
 }

@@ -1,10 +1,10 @@
 package ca.logaritm.dezel.view
 
 /**
- * @interface TextAreaListener
+ * @interface TextAreaObserver
  * @since 0.7.0
  */
-public interface TextAreaListener {
+public interface TextAreaObserver {
 
 	/**
 	 * @method onChange

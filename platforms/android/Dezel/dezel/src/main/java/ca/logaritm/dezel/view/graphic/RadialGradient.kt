@@ -1,5 +1,7 @@
 package ca.logaritm.dezel.view.graphic
 
-open class RadialGradient(value: String) {
+import ca.logaritm.dezel.core.JavaScriptProperty
+
+open class RadialGradient(value: JavaScriptProperty) {
 
 }

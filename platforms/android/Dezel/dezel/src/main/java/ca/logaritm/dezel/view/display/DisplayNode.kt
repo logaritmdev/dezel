@@ -1,10 +1,15 @@
 package ca.logaritm.dezel.view.display
 
+import android.util.Log
 import android.util.SizeF
 import ca.logaritm.dezel.core.JavaScriptProperty
 import ca.logaritm.dezel.core.JavaScriptPropertyType
 import ca.logaritm.dezel.core.JavaScriptPropertyUnit
+import ca.logaritm.dezel.extension.core.reset
 import ca.logaritm.dezel.extension.type.toValidFloat
+import ca.logaritm.dezel.view.display.external.DisplayNodeExternal
+import ca.logaritm.dezel.view.display.external.PropertyExternal
+import ca.logaritm.dezel.view.display.value.ValueList
 import ca.logaritm.dezel.view.graphic.Convert
 
 /**
@@ -29,15 +34,6 @@ public class DisplayNode(display: Display) {
 	 */
 	public var display: Display = display
 		private set
-
-	/**
-	 * @property id
-	 * @since 0.7.0
-	 */
-	public var id: String = ""
-		set(value) {
-			DisplayNodeExternal.setId(this.handle, value)
-		}
 
 	/**
 	 * @property measuredTop
@@ -243,7 +239,79 @@ public class DisplayNode(display: Display) {
 		DisplayNodeExternal.setDisplay(this.handle, display.handle)
 		DisplayNodeReference.register(this)
 	}
+	
+	/**
+	 * @method setOpaque
+	 * @since 0.7.0
+	 */
+	public fun setOpaque() {
+		DisplayNodeExternal.setOpaque(this.handle)
+	}
 
+	/**
+	 * @method setName
+	 * @since 0.7.0
+	 */
+	public fun setName(name: String) {
+		DisplayNodeExternal.setName(this.handle, name)
+	}
+
+	/**
+	 * @method setType
+	 * @since 0.7.0
+	 */
+	public fun setType(type: String) {
+		DisplayNodeExternal.setType(this.handle, type)
+	}
+
+	/**
+	 * @method appendStyle
+	 * @since 0.7.0
+	 */
+	public fun appendStyle(style: String) {
+		DisplayNodeExternal.appendStyle(this.handle, style)
+	}
+
+	/**
+	 * @method removeStyle
+	 * @since 0.7.0
+	 */
+	public fun removeStyle(style: String) {
+		DisplayNodeExternal.removeStyle(this.handle, style)
+	}
+
+	/**
+	 * @method hasStyle
+	 * @since 0.7.0
+	 */
+	public fun hasStyle(style: String): Boolean {
+		return DisplayNodeExternal.hasStyle(this.handle, style)
+	}
+
+	/**
+	 * @method appendState
+	 * @since 0.7.0
+	 */
+	public fun appendState(state: String) {
+		DisplayNodeExternal.appendState(this.handle, state)
+	}
+
+	/**
+	 * @method removeState
+	 * @since 0.7.0
+	 */
+	public fun removeState(state: String) {
+		DisplayNodeExternal.removeState(this.handle, state)
+	}
+
+	/**
+	 * @method hasState
+	 * @since 0.7.0
+	 */
+	public fun hasState(state: String): Boolean {
+		return DisplayNodeExternal.hasState(this.handle, state)
+	}
+	
 	/**
 	 * @method setAnchorTop
 	 * @since 0.7.0
@@ -253,9 +321,9 @@ public class DisplayNode(display: Display) {
 		if (value.type == JavaScriptPropertyType.STRING) {
 
 			when (value.string) {
-				"top"    -> this.setAnchorTop(kDisplayNodeAnchorTypeLength, kDisplayNodeAnchorUnitPC, 0.0)
-				"center" -> this.setAnchorTop(kDisplayNodeAnchorTypeLength, kDisplayNodeAnchorUnitPC, 50.0)
-				"bottom" -> this.setAnchorTop(kDisplayNodeAnchorTypeLength, kDisplayNodeAnchorUnitPC, 100.0)
+				"top"    -> this.setAnchorTop(kAnchorTypeLength, kAnchorUnitPC, 0.0)
+				"center" -> this.setAnchorTop(kAnchorTypeLength, kAnchorUnitPC, 50.0)
+				"bottom" -> this.setAnchorTop(kAnchorTypeLength, kAnchorUnitPC, 100.0)
 			}
 
 			return
@@ -264,8 +332,8 @@ public class DisplayNode(display: Display) {
 		if (value.type == JavaScriptPropertyType.NUMBER) {
 
 			when (value.unit) {
-				JavaScriptPropertyUnit.PC -> this.setAnchorTop(kDisplayNodeAnchorTypeLength, kDisplayNodeAnchorUnitPC, value.number)
-				else                      -> this.setAnchorTop(kDisplayNodeAnchorTypeLength, kDisplayNodeAnchorUnitPC, value.number * 100)
+				JavaScriptPropertyUnit.PC -> this.setAnchorTop(kAnchorTypeLength, kAnchorUnitPC, value.number)
+				else                      -> this.setAnchorTop(kAnchorTypeLength, kAnchorUnitPC, value.number * 100)
 			}
 
 			return
@@ -291,9 +359,9 @@ public class DisplayNode(display: Display) {
 		if (value.type == JavaScriptPropertyType.STRING) {
 
 			when (value.string) {
-				"left"   -> this.setAnchorLeft(kDisplayNodeAnchorTypeLength, kDisplayNodeAnchorUnitPC, 0.0)
-				"center" -> this.setAnchorLeft(kDisplayNodeAnchorTypeLength, kDisplayNodeAnchorUnitPC, 50.0)
-				"right"  -> this.setAnchorLeft(kDisplayNodeAnchorTypeLength, kDisplayNodeAnchorUnitPC, 100.0)
+				"left"   -> this.setAnchorLeft(kAnchorTypeLength, kAnchorUnitPC, 0.0)
+				"center" -> this.setAnchorLeft(kAnchorTypeLength, kAnchorUnitPC, 50.0)
+				"right"  -> this.setAnchorLeft(kAnchorTypeLength, kAnchorUnitPC, 100.0)
 			}
 
 			return
@@ -302,8 +370,8 @@ public class DisplayNode(display: Display) {
 		if (value.type == JavaScriptPropertyType.NUMBER) {
 
 			when (value.unit) {
-				JavaScriptPropertyUnit.PC -> this.setAnchorLeft(kDisplayNodeAnchorTypeLength, kDisplayNodeAnchorUnitPC, value.number)
-				else                      -> this.setAnchorLeft(kDisplayNodeAnchorTypeLength, kDisplayNodeAnchorUnitPC, value.number * 100)
+				JavaScriptPropertyUnit.PC -> this.setAnchorLeft(kAnchorTypeLength, kAnchorUnitPC, value.number)
+				else                      -> this.setAnchorLeft(kAnchorTypeLength, kAnchorUnitPC, value.number * 100)
 			}
 
 			return
@@ -329,7 +397,7 @@ public class DisplayNode(display: Display) {
 		if (value.type == JavaScriptPropertyType.STRING) {
 
 			when (value.string) {
-				"auto" -> this.setTop(kDisplayNodeOriginTypeAuto, kDisplayNodeOriginUnitNone, 0.0)
+				"auto" -> this.setTop(kOriginTypeAuto, kOriginUnitNone, 0.0)
 			}
 
 			return
@@ -338,21 +406,21 @@ public class DisplayNode(display: Display) {
 		if (value.type == JavaScriptPropertyType.NUMBER) {
 
 			when (value.unit) {
-				JavaScriptPropertyUnit.PX -> this.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, value.number)
-				JavaScriptPropertyUnit.PC -> this.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPC, value.number)
-				JavaScriptPropertyUnit.VW -> this.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitVW, value.number)
-				JavaScriptPropertyUnit.VH -> this.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitVH, value.number)
-				JavaScriptPropertyUnit.PW -> this.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPW, value.number)
-				JavaScriptPropertyUnit.PH -> this.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPH, value.number)
-				JavaScriptPropertyUnit.CW -> this.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitCW, value.number)
-				JavaScriptPropertyUnit.CH -> this.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitCH, value.number)
-				else                      -> this.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, value.number)
+				JavaScriptPropertyUnit.PX -> this.setTop(kOriginTypeLength, kOriginUnitPX, value.number)
+				JavaScriptPropertyUnit.PC -> this.setTop(kOriginTypeLength, kOriginUnitPC, value.number)
+				JavaScriptPropertyUnit.VW -> this.setTop(kOriginTypeLength, kOriginUnitVW, value.number)
+				JavaScriptPropertyUnit.VH -> this.setTop(kOriginTypeLength, kOriginUnitVH, value.number)
+				JavaScriptPropertyUnit.PW -> this.setTop(kOriginTypeLength, kOriginUnitPW, value.number)
+				JavaScriptPropertyUnit.PH -> this.setTop(kOriginTypeLength, kOriginUnitPH, value.number)
+				JavaScriptPropertyUnit.CW -> this.setTop(kOriginTypeLength, kOriginUnitCW, value.number)
+				JavaScriptPropertyUnit.CH -> this.setTop(kOriginTypeLength, kOriginUnitCH, value.number)
+				else                      -> this.setTop(kOriginTypeLength, kOriginUnitPX, value.number)
 			}
 
 			return
 		}
 
-		throw Exception("Invalid property type.")
+		throw Exception("Invalid property type ${value.type} ${value.string}.")
 	}
 
 	/**
@@ -388,7 +456,7 @@ public class DisplayNode(display: Display) {
 		if (value.type == JavaScriptPropertyType.STRING) {
 
 			when (value.string) {
-				"auto" -> this.setLeft(kDisplayNodeOriginTypeAuto, kDisplayNodeOriginUnitNone, 0.0)
+				"auto" -> this.setLeft(kOriginTypeAuto, kOriginUnitNone, 0.0)
 			}
 
 			return
@@ -397,15 +465,15 @@ public class DisplayNode(display: Display) {
 		if (value.type == JavaScriptPropertyType.NUMBER) {
 
 			when (value.unit) {
-				JavaScriptPropertyUnit.PX -> this.setLeft(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, value.number)
-				JavaScriptPropertyUnit.PC -> this.setLeft(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPC, value.number)
-				JavaScriptPropertyUnit.VW -> this.setLeft(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitVW, value.number)
-				JavaScriptPropertyUnit.VH -> this.setLeft(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitVH, value.number)
-				JavaScriptPropertyUnit.PW -> this.setLeft(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPW, value.number)
-				JavaScriptPropertyUnit.PH -> this.setLeft(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPH, value.number)
-				JavaScriptPropertyUnit.CW -> this.setLeft(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitCW, value.number)
-				JavaScriptPropertyUnit.CH -> this.setLeft(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitCH, value.number)
-				else                      -> this.setLeft(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, value.number)
+				JavaScriptPropertyUnit.PX -> this.setLeft(kOriginTypeLength, kOriginUnitPX, value.number)
+				JavaScriptPropertyUnit.PC -> this.setLeft(kOriginTypeLength, kOriginUnitPC, value.number)
+				JavaScriptPropertyUnit.VW -> this.setLeft(kOriginTypeLength, kOriginUnitVW, value.number)
+				JavaScriptPropertyUnit.VH -> this.setLeft(kOriginTypeLength, kOriginUnitVH, value.number)
+				JavaScriptPropertyUnit.PW -> this.setLeft(kOriginTypeLength, kOriginUnitPW, value.number)
+				JavaScriptPropertyUnit.PH -> this.setLeft(kOriginTypeLength, kOriginUnitPH, value.number)
+				JavaScriptPropertyUnit.CW -> this.setLeft(kOriginTypeLength, kOriginUnitCW, value.number)
+				JavaScriptPropertyUnit.CH -> this.setLeft(kOriginTypeLength, kOriginUnitCH, value.number)
+				else                      -> this.setLeft(kOriginTypeLength, kOriginUnitPX, value.number)
 			}
 
 			return
@@ -447,7 +515,7 @@ public class DisplayNode(display: Display) {
 		if (value.type == JavaScriptPropertyType.STRING) {
 
 			when (value.string) {
-				"auto" -> this.setRight(kDisplayNodeOriginTypeAuto, kDisplayNodeOriginUnitNone, 0.0)
+				"auto" -> this.setRight(kOriginTypeAuto, kOriginUnitNone, 0.0)
 			}
 
 			return
@@ -456,15 +524,15 @@ public class DisplayNode(display: Display) {
 		if (value.type == JavaScriptPropertyType.NUMBER) {
 
 			when (value.unit) {
-				JavaScriptPropertyUnit.PX -> this.setRight(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, value.number)
-				JavaScriptPropertyUnit.PC -> this.setRight(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPC, value.number)
-				JavaScriptPropertyUnit.VW -> this.setRight(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitVW, value.number)
-				JavaScriptPropertyUnit.VH -> this.setRight(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitVH, value.number)
-				JavaScriptPropertyUnit.PW -> this.setRight(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPW, value.number)
-				JavaScriptPropertyUnit.PH -> this.setRight(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPH, value.number)
-				JavaScriptPropertyUnit.CW -> this.setRight(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitCW, value.number)
-				JavaScriptPropertyUnit.CH -> this.setRight(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitCH, value.number)
-				else                      -> this.setRight(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, value.number)
+				JavaScriptPropertyUnit.PX -> this.setRight(kOriginTypeLength, kOriginUnitPX, value.number)
+				JavaScriptPropertyUnit.PC -> this.setRight(kOriginTypeLength, kOriginUnitPC, value.number)
+				JavaScriptPropertyUnit.VW -> this.setRight(kOriginTypeLength, kOriginUnitVW, value.number)
+				JavaScriptPropertyUnit.VH -> this.setRight(kOriginTypeLength, kOriginUnitVH, value.number)
+				JavaScriptPropertyUnit.PW -> this.setRight(kOriginTypeLength, kOriginUnitPW, value.number)
+				JavaScriptPropertyUnit.PH -> this.setRight(kOriginTypeLength, kOriginUnitPH, value.number)
+				JavaScriptPropertyUnit.CW -> this.setRight(kOriginTypeLength, kOriginUnitCW, value.number)
+				JavaScriptPropertyUnit.CH -> this.setRight(kOriginTypeLength, kOriginUnitCH, value.number)
+				else                      -> this.setRight(kOriginTypeLength, kOriginUnitPX, value.number)
 			}
 
 			return
@@ -506,7 +574,7 @@ public class DisplayNode(display: Display) {
 		if (value.type == JavaScriptPropertyType.STRING) {
 
 			when (value.string) {
-				"auto" -> this.setBottom(kDisplayNodeOriginTypeAuto, kDisplayNodeOriginUnitNone, 0.0)
+				"auto" -> this.setBottom(kOriginTypeAuto, kOriginUnitNone, 0.0)
 			}
 
 			return
@@ -515,15 +583,15 @@ public class DisplayNode(display: Display) {
 		if (value.type == JavaScriptPropertyType.NUMBER) {
 
 			when (value.unit) {
-				JavaScriptPropertyUnit.PX -> this.setBottom(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, value.number)
-				JavaScriptPropertyUnit.PC -> this.setBottom(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPC, value.number)
-				JavaScriptPropertyUnit.VW -> this.setBottom(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitVW, value.number)
-				JavaScriptPropertyUnit.VH -> this.setBottom(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitVH, value.number)
-				JavaScriptPropertyUnit.PW -> this.setBottom(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPW, value.number)
-				JavaScriptPropertyUnit.PH -> this.setBottom(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPH, value.number)
-				JavaScriptPropertyUnit.CW -> this.setBottom(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitCW, value.number)
-				JavaScriptPropertyUnit.CH -> this.setBottom(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitCH, value.number)
-				else                      -> this.setBottom(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, value.number)
+				JavaScriptPropertyUnit.PX -> this.setBottom(kOriginTypeLength, kOriginUnitPX, value.number)
+				JavaScriptPropertyUnit.PC -> this.setBottom(kOriginTypeLength, kOriginUnitPC, value.number)
+				JavaScriptPropertyUnit.VW -> this.setBottom(kOriginTypeLength, kOriginUnitVW, value.number)
+				JavaScriptPropertyUnit.VH -> this.setBottom(kOriginTypeLength, kOriginUnitVH, value.number)
+				JavaScriptPropertyUnit.PW -> this.setBottom(kOriginTypeLength, kOriginUnitPW, value.number)
+				JavaScriptPropertyUnit.PH -> this.setBottom(kOriginTypeLength, kOriginUnitPH, value.number)
+				JavaScriptPropertyUnit.CW -> this.setBottom(kOriginTypeLength, kOriginUnitCW, value.number)
+				JavaScriptPropertyUnit.CH -> this.setBottom(kOriginTypeLength, kOriginUnitCH, value.number)
+				else                      -> this.setBottom(kOriginTypeLength, kOriginUnitPX, value.number)
 			}
 
 			return
@@ -565,8 +633,8 @@ public class DisplayNode(display: Display) {
 		if (value.type == JavaScriptPropertyType.STRING) {
 
 			when (value.string) {
-				"fill" -> this.setWidth(kDisplayNodeSizeTypeFill, kDisplayNodeSizeUnitNone, 0.0)
-				"wrap" -> this.setWidth(kDisplayNodeSizeTypeWrap, kDisplayNodeSizeUnitNone, 0.0)
+				"fill" -> this.setWidth(kSizeTypeFill, kSizeUnitNone, 0.0)
+				"wrap" -> this.setWidth(kSizeTypeWrap, kSizeUnitNone, 0.0)
 			}
 
 			return
@@ -575,15 +643,15 @@ public class DisplayNode(display: Display) {
 		if (value.type == JavaScriptPropertyType.NUMBER) {
 
 			when (value.unit) {
-				JavaScriptPropertyUnit.PX -> this.setWidth(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, value.number)
-				JavaScriptPropertyUnit.PC -> this.setWidth(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPC, value.number)
-				JavaScriptPropertyUnit.VW -> this.setWidth(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitVW, value.number)
-				JavaScriptPropertyUnit.VH -> this.setWidth(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitVH, value.number)
-				JavaScriptPropertyUnit.PW -> this.setWidth(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPW, value.number)
-				JavaScriptPropertyUnit.PH -> this.setWidth(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPH, value.number)
-				JavaScriptPropertyUnit.CW -> this.setWidth(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitCW, value.number)
-				JavaScriptPropertyUnit.CH -> this.setWidth(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitCH, value.number)
-				else                      -> this.setWidth(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, value.number)
+				JavaScriptPropertyUnit.PX -> this.setWidth(kSizeTypeLength, kSizeUnitPX, value.number)
+				JavaScriptPropertyUnit.PC -> this.setWidth(kSizeTypeLength, kSizeUnitPC, value.number)
+				JavaScriptPropertyUnit.VW -> this.setWidth(kSizeTypeLength, kSizeUnitVW, value.number)
+				JavaScriptPropertyUnit.VH -> this.setWidth(kSizeTypeLength, kSizeUnitVH, value.number)
+				JavaScriptPropertyUnit.PW -> this.setWidth(kSizeTypeLength, kSizeUnitPW, value.number)
+				JavaScriptPropertyUnit.PH -> this.setWidth(kSizeTypeLength, kSizeUnitPH, value.number)
+				JavaScriptPropertyUnit.CW -> this.setWidth(kSizeTypeLength, kSizeUnitCW, value.number)
+				JavaScriptPropertyUnit.CH -> this.setWidth(kSizeTypeLength, kSizeUnitCH, value.number)
+				else                      -> this.setWidth(kSizeTypeLength, kSizeUnitPX, value.number)
 			}
 
 			return
@@ -625,8 +693,8 @@ public class DisplayNode(display: Display) {
 		if (value.type == JavaScriptPropertyType.STRING) {
 
 			when (value.string) {
-				"fill" -> this.setHeight(kDisplayNodeSizeTypeFill, kDisplayNodeSizeUnitNone, 0.0)
-				"wrap" -> this.setHeight(kDisplayNodeSizeTypeWrap, kDisplayNodeSizeUnitNone, 0.0)
+				"fill" -> this.setHeight(kSizeTypeFill, kSizeUnitNone, 0.0)
+				"wrap" -> this.setHeight(kSizeTypeWrap, kSizeUnitNone, 0.0)
 			}
 
 			return
@@ -635,15 +703,15 @@ public class DisplayNode(display: Display) {
 		if (value.type == JavaScriptPropertyType.NUMBER) {
 
 			when (value.unit) {
-				JavaScriptPropertyUnit.PX -> this.setHeight(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, value.number)
-				JavaScriptPropertyUnit.PC -> this.setHeight(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPC, value.number)
-				JavaScriptPropertyUnit.VW -> this.setHeight(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitVW, value.number)
-				JavaScriptPropertyUnit.VH -> this.setHeight(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitVH, value.number)
-				JavaScriptPropertyUnit.PW -> this.setHeight(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPW, value.number)
-				JavaScriptPropertyUnit.PH -> this.setHeight(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPH, value.number)
-				JavaScriptPropertyUnit.CW -> this.setHeight(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitCW, value.number)
-				JavaScriptPropertyUnit.CH -> this.setHeight(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitCH, value.number)
-				else                      -> this.setHeight(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, value.number)
+				JavaScriptPropertyUnit.PX -> this.setHeight(kSizeTypeLength, kSizeUnitPX, value.number)
+				JavaScriptPropertyUnit.PC -> this.setHeight(kSizeTypeLength, kSizeUnitPC, value.number)
+				JavaScriptPropertyUnit.VW -> this.setHeight(kSizeTypeLength, kSizeUnitVW, value.number)
+				JavaScriptPropertyUnit.VH -> this.setHeight(kSizeTypeLength, kSizeUnitVH, value.number)
+				JavaScriptPropertyUnit.PW -> this.setHeight(kSizeTypeLength, kSizeUnitPW, value.number)
+				JavaScriptPropertyUnit.PH -> this.setHeight(kSizeTypeLength, kSizeUnitPH, value.number)
+				JavaScriptPropertyUnit.CW -> this.setHeight(kSizeTypeLength, kSizeUnitCW, value.number)
+				JavaScriptPropertyUnit.CH -> this.setHeight(kSizeTypeLength, kSizeUnitCH, value.number)
+				else                      -> this.setHeight(kSizeTypeLength, kSizeUnitPX, value.number)
 			}
 
 			return
@@ -685,8 +753,8 @@ public class DisplayNode(display: Display) {
 		if (value.type == JavaScriptPropertyType.STRING) {
 
 			when (value.string) {
-				"horizontal" -> this.setContentDirection(kDisplayNodeContentDirectionHorizontal)
-				"vertical"   -> this.setContentDirection(kDisplayNodeContentDirectionVertical)
+				"horizontal" -> this.setContentDirection(kContentDirectionHorizontal)
+				"vertical"   -> this.setContentDirection(kContentDirectionVertical)
 			}
 
 			return
@@ -712,9 +780,9 @@ public class DisplayNode(display: Display) {
 		if (value.type == JavaScriptPropertyType.STRING) {
 
 			when (value.string) {
-				"center" -> this.setContentAlignment(kDisplayNodeContentAlignmentCenter)
-				"start"  -> this.setContentAlignment(kDisplayNodeContentAlignmentStart)
-				"end"    -> this.setContentAlignment(kDisplayNodeContentAlignmentEnd)
+				"center" -> this.setContentAlignment(kContentAlignmentCenter)
+				"start"  -> this.setContentAlignment(kContentAlignmentStart)
+				"end"    -> this.setContentAlignment(kContentAlignmentEnd)
 
 			}
 
@@ -733,20 +801,20 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * @method setContentLocation
+	 * @method setContentDisposition
 	 * @since 0.7.0
 	 */
-	public fun setContentLocation(value: JavaScriptProperty) {
+	public fun setContentDisposition(value: JavaScriptProperty) {
 
 		if (value.type == JavaScriptPropertyType.STRING) {
 
 			when (value.string) {
-				"center"        -> this.setContentLocation(kDisplayNodeContentLocationCenter)
-				"start"         -> this.setContentLocation(kDisplayNodeContentLocationStart)
-				"end"           -> this.setContentLocation(kDisplayNodeContentLocationEnd)
-				"space-around"  -> this.setContentLocation(kDisplayNodeContentLocationSpaceAround)
-				"space-evenly"  -> this.setContentLocation(kDisplayNodeContentLocationSpaceEvenly)
-				"space-between" -> this.setContentLocation(kDisplayNodeContentLocationSpaceBetween)
+				"center"        -> this.setContentDisposition(kContentDispositionCenter)
+				"start"         -> this.setContentDisposition(kContentDispositionStart)
+				"end"           -> this.setContentDisposition(kContentDispositionEnd)
+				"space-around"  -> this.setContentDisposition(kContentDispositionSpaceAround)
+				"space-evenly"  -> this.setContentDisposition(kContentDispositionSpaceEvenly)
+				"space-between" -> this.setContentDisposition(kContentDispositionSpaceBetween)
 			}
 
 			return
@@ -756,11 +824,11 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * @method setContentLocation
+	 * @method setContentDisposition
 	 * @since 0.7.0
 	 */
-	public fun setContentLocation(setContentLocation: Int) {
-		DisplayNodeExternal.setContentLocation(this.handle, setContentLocation)
+	public fun setContentDisposition(setContentDisposition: Int) {
+		DisplayNodeExternal.setContentDisposition(this.handle, setContentDisposition)
 	}
 
 	/**
@@ -772,8 +840,8 @@ public class DisplayNode(display: Display) {
 		if (value.type == JavaScriptPropertyType.NUMBER) {
 
 			when (value.unit) {
-				JavaScriptPropertyUnit.PX -> this.setContentTop(kDisplayNodeContentOriginTypeLength, kDisplayNodeContentOriginUnitPX, value.number)
-				else                      -> this.setContentTop(kDisplayNodeContentOriginTypeLength, kDisplayNodeContentOriginUnitPX, value.number)
+				JavaScriptPropertyUnit.PX -> this.setContentTop(kContentOriginTypeLength, kContentOriginUnitPX, value.number)
+				else                      -> this.setContentTop(kContentOriginTypeLength, kContentOriginUnitPX, value.number)
 			}
 
 			return
@@ -799,8 +867,8 @@ public class DisplayNode(display: Display) {
 		if (value.type == JavaScriptPropertyType.NUMBER) {
 
 			when (value.unit) {
-				JavaScriptPropertyUnit.PX -> this.setContentLeft(kDisplayNodeContentOriginTypeLength, kDisplayNodeContentOriginUnitPX, value.number)
-				else                      -> this.setContentLeft(kDisplayNodeContentOriginTypeLength, kDisplayNodeContentOriginUnitPX, value.number)
+				JavaScriptPropertyUnit.PX -> this.setContentLeft(kContentOriginTypeLength, kContentOriginUnitPX, value.number)
+				else                      -> this.setContentLeft(kContentOriginTypeLength, kContentOriginUnitPX, value.number)
 			}
 
 			return
@@ -826,7 +894,7 @@ public class DisplayNode(display: Display) {
 		if (value.type == JavaScriptPropertyType.STRING) {
 
 			when (value.string) {
-				"auto" -> this.setContentWidth(kDisplayNodeContentSizeTypeAuto, kDisplayNodeContentSizeUnitNone, 0.0)
+				"auto" -> this.setContentWidth(kContentSizeTypeAuto, kContentSizeUnitNone, 0.0)
 			}
 
 			return
@@ -835,15 +903,15 @@ public class DisplayNode(display: Display) {
 		if (value.type == JavaScriptPropertyType.NUMBER) {
 
 			when (value.unit) {
-				JavaScriptPropertyUnit.PX -> this.setContentWidth(kDisplayNodeContentSizeTypeLength, kDisplayNodeContentSizeUnitPX, value.number)
-				JavaScriptPropertyUnit.PC -> this.setContentWidth(kDisplayNodeContentSizeTypeLength, kDisplayNodeContentSizeUnitPC, value.number)
-				JavaScriptPropertyUnit.VW -> this.setContentWidth(kDisplayNodeContentSizeTypeLength, kDisplayNodeContentSizeUnitVW, value.number)
-				JavaScriptPropertyUnit.VH -> this.setContentWidth(kDisplayNodeContentSizeTypeLength, kDisplayNodeContentSizeUnitVH, value.number)
-				JavaScriptPropertyUnit.PW -> this.setContentWidth(kDisplayNodeContentSizeTypeLength, kDisplayNodeContentSizeUnitPW, value.number)
-				JavaScriptPropertyUnit.PH -> this.setContentWidth(kDisplayNodeContentSizeTypeLength, kDisplayNodeContentSizeUnitPH, value.number)
-				JavaScriptPropertyUnit.CW -> this.setContentWidth(kDisplayNodeContentSizeTypeLength, kDisplayNodeContentSizeUnitCW, value.number)
-				JavaScriptPropertyUnit.CH -> this.setContentWidth(kDisplayNodeContentSizeTypeLength, kDisplayNodeContentSizeUnitCH, value.number)
-				else                      -> this.setContentWidth(kDisplayNodeContentSizeTypeLength, kDisplayNodeContentSizeUnitPX, value.number)
+				JavaScriptPropertyUnit.PX -> this.setContentWidth(kContentSizeTypeLength, kContentSizeUnitPX, value.number)
+				JavaScriptPropertyUnit.PC -> this.setContentWidth(kContentSizeTypeLength, kContentSizeUnitPC, value.number)
+				JavaScriptPropertyUnit.VW -> this.setContentWidth(kContentSizeTypeLength, kContentSizeUnitVW, value.number)
+				JavaScriptPropertyUnit.VH -> this.setContentWidth(kContentSizeTypeLength, kContentSizeUnitVH, value.number)
+				JavaScriptPropertyUnit.PW -> this.setContentWidth(kContentSizeTypeLength, kContentSizeUnitPW, value.number)
+				JavaScriptPropertyUnit.PH -> this.setContentWidth(kContentSizeTypeLength, kContentSizeUnitPH, value.number)
+				JavaScriptPropertyUnit.CW -> this.setContentWidth(kContentSizeTypeLength, kContentSizeUnitCW, value.number)
+				JavaScriptPropertyUnit.CH -> this.setContentWidth(kContentSizeTypeLength, kContentSizeUnitCH, value.number)
+				else                      -> this.setContentWidth(kContentSizeTypeLength, kContentSizeUnitPX, value.number)
 			}
 
 			return
@@ -869,7 +937,7 @@ public class DisplayNode(display: Display) {
 		if (value.type == JavaScriptPropertyType.STRING) {
 
 			when (value.string) {
-				"auto" -> this.setContentHeight(kDisplayNodeContentSizeTypeAuto, kDisplayNodeContentSizeUnitNone, 0.0)
+				"auto" -> this.setContentHeight(kContentSizeTypeAuto, kContentSizeUnitNone, 0.0)
 			}
 
 			return
@@ -878,15 +946,15 @@ public class DisplayNode(display: Display) {
 		if (value.type == JavaScriptPropertyType.NUMBER) {
 
 			when (value.unit) {
-				JavaScriptPropertyUnit.PX -> this.setContentHeight(kDisplayNodeContentSizeTypeLength, kDisplayNodeContentSizeUnitPX, value.number)
-				JavaScriptPropertyUnit.PC -> this.setContentHeight(kDisplayNodeContentSizeTypeLength, kDisplayNodeContentSizeUnitPC, value.number)
-				JavaScriptPropertyUnit.VW -> this.setContentHeight(kDisplayNodeContentSizeTypeLength, kDisplayNodeContentSizeUnitVW, value.number)
-				JavaScriptPropertyUnit.VH -> this.setContentHeight(kDisplayNodeContentSizeTypeLength, kDisplayNodeContentSizeUnitVH, value.number)
-				JavaScriptPropertyUnit.PW -> this.setContentHeight(kDisplayNodeContentSizeTypeLength, kDisplayNodeContentSizeUnitPW, value.number)
-				JavaScriptPropertyUnit.PH -> this.setContentHeight(kDisplayNodeContentSizeTypeLength, kDisplayNodeContentSizeUnitPH, value.number)
-				JavaScriptPropertyUnit.CW -> this.setContentHeight(kDisplayNodeContentSizeTypeLength, kDisplayNodeContentSizeUnitCW, value.number)
-				JavaScriptPropertyUnit.CH -> this.setContentHeight(kDisplayNodeContentSizeTypeLength, kDisplayNodeContentSizeUnitCH, value.number)
-				else                      -> this.setContentHeight(kDisplayNodeContentSizeTypeLength, kDisplayNodeContentSizeUnitPX, value.number)
+				JavaScriptPropertyUnit.PX -> this.setContentHeight(kContentSizeTypeLength, kContentSizeUnitPX, value.number)
+				JavaScriptPropertyUnit.PC -> this.setContentHeight(kContentSizeTypeLength, kContentSizeUnitPC, value.number)
+				JavaScriptPropertyUnit.VW -> this.setContentHeight(kContentSizeTypeLength, kContentSizeUnitVW, value.number)
+				JavaScriptPropertyUnit.VH -> this.setContentHeight(kContentSizeTypeLength, kContentSizeUnitVH, value.number)
+				JavaScriptPropertyUnit.PW -> this.setContentHeight(kContentSizeTypeLength, kContentSizeUnitPW, value.number)
+				JavaScriptPropertyUnit.PH -> this.setContentHeight(kContentSizeTypeLength, kContentSizeUnitPH, value.number)
+				JavaScriptPropertyUnit.CW -> this.setContentHeight(kContentSizeTypeLength, kContentSizeUnitCW, value.number)
+				JavaScriptPropertyUnit.CH -> this.setContentHeight(kContentSizeTypeLength, kContentSizeUnitCH, value.number)
+				else                      -> this.setContentHeight(kContentSizeTypeLength, kContentSizeUnitPX, value.number)
 			}
 
 			return
@@ -912,7 +980,7 @@ public class DisplayNode(display: Display) {
 		if (value.type == JavaScriptPropertyType.STRING) {
 
 			when (value.string) {
-				"thin" -> this.setBorderTop(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitPX, 1.0 / Convert.density)
+				"thin" -> this.setBorderTop(kBorderTypeLength, kBorderUnitPX, 1.0 / Convert.density)
 			}
 
 			return
@@ -921,15 +989,15 @@ public class DisplayNode(display: Display) {
 		if (value.type == JavaScriptPropertyType.NUMBER) {
 
 			when (value.unit) {
-				JavaScriptPropertyUnit.PX -> this.setBorderTop(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitPX, value.number)
-				JavaScriptPropertyUnit.PC -> this.setBorderTop(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitPC, value.number)
-				JavaScriptPropertyUnit.VW -> this.setBorderTop(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitVW, value.number)
-				JavaScriptPropertyUnit.VH -> this.setBorderTop(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitVH, value.number)
-				JavaScriptPropertyUnit.PW -> this.setBorderTop(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitPW, value.number)
-				JavaScriptPropertyUnit.PH -> this.setBorderTop(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitPH, value.number)
-				JavaScriptPropertyUnit.CW -> this.setBorderTop(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitCW, value.number)
-				JavaScriptPropertyUnit.CH -> this.setBorderTop(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitCH, value.number)
-				else                      -> this.setBorderTop(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitPX, value.number)
+				JavaScriptPropertyUnit.PX -> this.setBorderTop(kBorderTypeLength, kBorderUnitPX, value.number)
+				JavaScriptPropertyUnit.PC -> this.setBorderTop(kBorderTypeLength, kBorderUnitPC, value.number)
+				JavaScriptPropertyUnit.VW -> this.setBorderTop(kBorderTypeLength, kBorderUnitVW, value.number)
+				JavaScriptPropertyUnit.VH -> this.setBorderTop(kBorderTypeLength, kBorderUnitVH, value.number)
+				JavaScriptPropertyUnit.PW -> this.setBorderTop(kBorderTypeLength, kBorderUnitPW, value.number)
+				JavaScriptPropertyUnit.PH -> this.setBorderTop(kBorderTypeLength, kBorderUnitPH, value.number)
+				JavaScriptPropertyUnit.CW -> this.setBorderTop(kBorderTypeLength, kBorderUnitCW, value.number)
+				JavaScriptPropertyUnit.CH -> this.setBorderTop(kBorderTypeLength, kBorderUnitCH, value.number)
+				else                      -> this.setBorderTop(kBorderTypeLength, kBorderUnitPX, value.number)
 			}
 
 			return
@@ -955,7 +1023,7 @@ public class DisplayNode(display: Display) {
 		if (value.type == JavaScriptPropertyType.STRING) {
 
 			when (value.string) {
-				"thin" -> this.setBorderLeft(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitPX, 1.0 / Convert.density)
+				"thin" -> this.setBorderLeft(kBorderTypeLength, kBorderUnitPX, 1.0 / Convert.density)
 			}
 
 			return
@@ -964,15 +1032,15 @@ public class DisplayNode(display: Display) {
 		if (value.type == JavaScriptPropertyType.NUMBER) {
 
 			when (value.unit) {
-				JavaScriptPropertyUnit.PX -> this.setBorderLeft(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitPX, value.number)
-				JavaScriptPropertyUnit.PC -> this.setBorderLeft(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitPC, value.number)
-				JavaScriptPropertyUnit.VW -> this.setBorderLeft(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitVW, value.number)
-				JavaScriptPropertyUnit.VH -> this.setBorderLeft(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitVH, value.number)
-				JavaScriptPropertyUnit.PW -> this.setBorderLeft(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitPW, value.number)
-				JavaScriptPropertyUnit.PH -> this.setBorderLeft(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitPH, value.number)
-				JavaScriptPropertyUnit.CW -> this.setBorderLeft(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitCW, value.number)
-				JavaScriptPropertyUnit.CH -> this.setBorderLeft(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitCH, value.number)
-				else                      -> this.setBorderLeft(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitPX, value.number)
+				JavaScriptPropertyUnit.PX -> this.setBorderLeft(kBorderTypeLength, kBorderUnitPX, value.number)
+				JavaScriptPropertyUnit.PC -> this.setBorderLeft(kBorderTypeLength, kBorderUnitPC, value.number)
+				JavaScriptPropertyUnit.VW -> this.setBorderLeft(kBorderTypeLength, kBorderUnitVW, value.number)
+				JavaScriptPropertyUnit.VH -> this.setBorderLeft(kBorderTypeLength, kBorderUnitVH, value.number)
+				JavaScriptPropertyUnit.PW -> this.setBorderLeft(kBorderTypeLength, kBorderUnitPW, value.number)
+				JavaScriptPropertyUnit.PH -> this.setBorderLeft(kBorderTypeLength, kBorderUnitPH, value.number)
+				JavaScriptPropertyUnit.CW -> this.setBorderLeft(kBorderTypeLength, kBorderUnitCW, value.number)
+				JavaScriptPropertyUnit.CH -> this.setBorderLeft(kBorderTypeLength, kBorderUnitCH, value.number)
+				else                      -> this.setBorderLeft(kBorderTypeLength, kBorderUnitPX, value.number)
 			}
 
 			return
@@ -998,7 +1066,7 @@ public class DisplayNode(display: Display) {
 		if (value.type == JavaScriptPropertyType.STRING) {
 
 			when (value.string) {
-				"thin" -> this.setBorderRight(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitPX, 1.0 / Convert.density)
+				"thin" -> this.setBorderRight(kBorderTypeLength, kBorderUnitPX, 1.0 / Convert.density)
 			}
 
 			return
@@ -1007,15 +1075,15 @@ public class DisplayNode(display: Display) {
 		if (value.type == JavaScriptPropertyType.NUMBER) {
 
 			when (value.unit) {
-				JavaScriptPropertyUnit.PX -> this.setBorderRight(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitPX, value.number)
-				JavaScriptPropertyUnit.PC -> this.setBorderRight(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitPC, value.number)
-				JavaScriptPropertyUnit.VW -> this.setBorderRight(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitVW, value.number)
-				JavaScriptPropertyUnit.VH -> this.setBorderRight(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitVH, value.number)
-				JavaScriptPropertyUnit.PW -> this.setBorderRight(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitPW, value.number)
-				JavaScriptPropertyUnit.PH -> this.setBorderRight(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitPH, value.number)
-				JavaScriptPropertyUnit.CW -> this.setBorderRight(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitCW, value.number)
-				JavaScriptPropertyUnit.CH -> this.setBorderRight(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitCH, value.number)
-				else                      -> this.setBorderRight(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitPX, value.number)
+				JavaScriptPropertyUnit.PX -> this.setBorderRight(kBorderTypeLength, kBorderUnitPX, value.number)
+				JavaScriptPropertyUnit.PC -> this.setBorderRight(kBorderTypeLength, kBorderUnitPC, value.number)
+				JavaScriptPropertyUnit.VW -> this.setBorderRight(kBorderTypeLength, kBorderUnitVW, value.number)
+				JavaScriptPropertyUnit.VH -> this.setBorderRight(kBorderTypeLength, kBorderUnitVH, value.number)
+				JavaScriptPropertyUnit.PW -> this.setBorderRight(kBorderTypeLength, kBorderUnitPW, value.number)
+				JavaScriptPropertyUnit.PH -> this.setBorderRight(kBorderTypeLength, kBorderUnitPH, value.number)
+				JavaScriptPropertyUnit.CW -> this.setBorderRight(kBorderTypeLength, kBorderUnitCW, value.number)
+				JavaScriptPropertyUnit.CH -> this.setBorderRight(kBorderTypeLength, kBorderUnitCH, value.number)
+				else                      -> this.setBorderRight(kBorderTypeLength, kBorderUnitPX, value.number)
 			}
 
 			return
@@ -1041,7 +1109,7 @@ public class DisplayNode(display: Display) {
 		if (value.type == JavaScriptPropertyType.STRING) {
 
 			when (value.string) {
-				"thin" -> this.setBorderBottom(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitPX, 1.0 / Convert.density)
+				"thin" -> this.setBorderBottom(kBorderTypeLength, kBorderUnitPX, 1.0 / Convert.density)
 			}
 
 			return
@@ -1050,15 +1118,15 @@ public class DisplayNode(display: Display) {
 		if (value.type == JavaScriptPropertyType.NUMBER) {
 
 			when (value.unit) {
-				JavaScriptPropertyUnit.PX -> this.setBorderBottom(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitPX, value.number)
-				JavaScriptPropertyUnit.PC -> this.setBorderBottom(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitPC, value.number)
-				JavaScriptPropertyUnit.VW -> this.setBorderBottom(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitVW, value.number)
-				JavaScriptPropertyUnit.VH -> this.setBorderBottom(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitVH, value.number)
-				JavaScriptPropertyUnit.PW -> this.setBorderBottom(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitPW, value.number)
-				JavaScriptPropertyUnit.PH -> this.setBorderBottom(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitPH, value.number)
-				JavaScriptPropertyUnit.CW -> this.setBorderBottom(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitCW, value.number)
-				JavaScriptPropertyUnit.CH -> this.setBorderBottom(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitCH, value.number)
-				else                      -> this.setBorderBottom(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitPX, value.number)
+				JavaScriptPropertyUnit.PX -> this.setBorderBottom(kBorderTypeLength, kBorderUnitPX, value.number)
+				JavaScriptPropertyUnit.PC -> this.setBorderBottom(kBorderTypeLength, kBorderUnitPC, value.number)
+				JavaScriptPropertyUnit.VW -> this.setBorderBottom(kBorderTypeLength, kBorderUnitVW, value.number)
+				JavaScriptPropertyUnit.VH -> this.setBorderBottom(kBorderTypeLength, kBorderUnitVH, value.number)
+				JavaScriptPropertyUnit.PW -> this.setBorderBottom(kBorderTypeLength, kBorderUnitPW, value.number)
+				JavaScriptPropertyUnit.PH -> this.setBorderBottom(kBorderTypeLength, kBorderUnitPH, value.number)
+				JavaScriptPropertyUnit.CW -> this.setBorderBottom(kBorderTypeLength, kBorderUnitCW, value.number)
+				JavaScriptPropertyUnit.CH -> this.setBorderBottom(kBorderTypeLength, kBorderUnitCH, value.number)
+				else                      -> this.setBorderBottom(kBorderTypeLength, kBorderUnitPX, value.number)
 			}
 
 			return
@@ -1084,15 +1152,15 @@ public class DisplayNode(display: Display) {
 		if (value.type == JavaScriptPropertyType.NUMBER) {
 
 			when (value.unit) {
-				JavaScriptPropertyUnit.PX -> this.setMarginTop(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitPX, value.number)
-				JavaScriptPropertyUnit.PC -> this.setMarginTop(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitPC, value.number)
-				JavaScriptPropertyUnit.VW -> this.setMarginTop(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitVW, value.number)
-				JavaScriptPropertyUnit.VH -> this.setMarginTop(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitVH, value.number)
-				JavaScriptPropertyUnit.PW -> this.setMarginTop(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitPW, value.number)
-				JavaScriptPropertyUnit.PH -> this.setMarginTop(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitPH, value.number)
-				JavaScriptPropertyUnit.CW -> this.setMarginTop(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitCW, value.number)
-				JavaScriptPropertyUnit.CH -> this.setMarginTop(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitCH, value.number)
-				else                      -> this.setMarginTop(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitPX, value.number)
+				JavaScriptPropertyUnit.PX -> this.setMarginTop(kMarginTypeLength, kMarginUnitPX, value.number)
+				JavaScriptPropertyUnit.PC -> this.setMarginTop(kMarginTypeLength, kMarginUnitPC, value.number)
+				JavaScriptPropertyUnit.VW -> this.setMarginTop(kMarginTypeLength, kMarginUnitVW, value.number)
+				JavaScriptPropertyUnit.VH -> this.setMarginTop(kMarginTypeLength, kMarginUnitVH, value.number)
+				JavaScriptPropertyUnit.PW -> this.setMarginTop(kMarginTypeLength, kMarginUnitPW, value.number)
+				JavaScriptPropertyUnit.PH -> this.setMarginTop(kMarginTypeLength, kMarginUnitPH, value.number)
+				JavaScriptPropertyUnit.CW -> this.setMarginTop(kMarginTypeLength, kMarginUnitCW, value.number)
+				JavaScriptPropertyUnit.CH -> this.setMarginTop(kMarginTypeLength, kMarginUnitCH, value.number)
+				else                      -> this.setMarginTop(kMarginTypeLength, kMarginUnitPX, value.number)
 			}
 
 			return
@@ -1118,15 +1186,15 @@ public class DisplayNode(display: Display) {
 		if (value.type == JavaScriptPropertyType.NUMBER) {
 
 			when (value.unit) {
-				JavaScriptPropertyUnit.PX -> this.setMarginLeft(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitPX, value.number)
-				JavaScriptPropertyUnit.PC -> this.setMarginLeft(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitPC, value.number)
-				JavaScriptPropertyUnit.VW -> this.setMarginLeft(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitVW, value.number)
-				JavaScriptPropertyUnit.VH -> this.setMarginLeft(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitVH, value.number)
-				JavaScriptPropertyUnit.PW -> this.setMarginLeft(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitPW, value.number)
-				JavaScriptPropertyUnit.PH -> this.setMarginLeft(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitPH, value.number)
-				JavaScriptPropertyUnit.CW -> this.setMarginLeft(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitCW, value.number)
-				JavaScriptPropertyUnit.CH -> this.setMarginLeft(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitCH, value.number)
-				else                      -> this.setMarginLeft(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitPX, value.number)
+				JavaScriptPropertyUnit.PX -> this.setMarginLeft(kMarginTypeLength, kMarginUnitPX, value.number)
+				JavaScriptPropertyUnit.PC -> this.setMarginLeft(kMarginTypeLength, kMarginUnitPC, value.number)
+				JavaScriptPropertyUnit.VW -> this.setMarginLeft(kMarginTypeLength, kMarginUnitVW, value.number)
+				JavaScriptPropertyUnit.VH -> this.setMarginLeft(kMarginTypeLength, kMarginUnitVH, value.number)
+				JavaScriptPropertyUnit.PW -> this.setMarginLeft(kMarginTypeLength, kMarginUnitPW, value.number)
+				JavaScriptPropertyUnit.PH -> this.setMarginLeft(kMarginTypeLength, kMarginUnitPH, value.number)
+				JavaScriptPropertyUnit.CW -> this.setMarginLeft(kMarginTypeLength, kMarginUnitCW, value.number)
+				JavaScriptPropertyUnit.CH -> this.setMarginLeft(kMarginTypeLength, kMarginUnitCH, value.number)
+				else                      -> this.setMarginLeft(kMarginTypeLength, kMarginUnitPX, value.number)
 			}
 
 			return
@@ -1152,15 +1220,15 @@ public class DisplayNode(display: Display) {
 		if (value.type == JavaScriptPropertyType.NUMBER) {
 
 			when (value.unit) {
-				JavaScriptPropertyUnit.PX -> this.setMarginRight(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitPX, value.number)
-				JavaScriptPropertyUnit.PC -> this.setMarginRight(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitPC, value.number)
-				JavaScriptPropertyUnit.VW -> this.setMarginRight(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitVW, value.number)
-				JavaScriptPropertyUnit.VH -> this.setMarginRight(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitVH, value.number)
-				JavaScriptPropertyUnit.PW -> this.setMarginRight(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitPW, value.number)
-				JavaScriptPropertyUnit.PH -> this.setMarginRight(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitPH, value.number)
-				JavaScriptPropertyUnit.CW -> this.setMarginRight(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitCW, value.number)
-				JavaScriptPropertyUnit.CH -> this.setMarginRight(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitCH, value.number)
-				else                      -> this.setMarginRight(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitPX, value.number)
+				JavaScriptPropertyUnit.PX -> this.setMarginRight(kMarginTypeLength, kMarginUnitPX, value.number)
+				JavaScriptPropertyUnit.PC -> this.setMarginRight(kMarginTypeLength, kMarginUnitPC, value.number)
+				JavaScriptPropertyUnit.VW -> this.setMarginRight(kMarginTypeLength, kMarginUnitVW, value.number)
+				JavaScriptPropertyUnit.VH -> this.setMarginRight(kMarginTypeLength, kMarginUnitVH, value.number)
+				JavaScriptPropertyUnit.PW -> this.setMarginRight(kMarginTypeLength, kMarginUnitPW, value.number)
+				JavaScriptPropertyUnit.PH -> this.setMarginRight(kMarginTypeLength, kMarginUnitPH, value.number)
+				JavaScriptPropertyUnit.CW -> this.setMarginRight(kMarginTypeLength, kMarginUnitCW, value.number)
+				JavaScriptPropertyUnit.CH -> this.setMarginRight(kMarginTypeLength, kMarginUnitCH, value.number)
+				else                      -> this.setMarginRight(kMarginTypeLength, kMarginUnitPX, value.number)
 			}
 
 			return
@@ -1186,15 +1254,15 @@ public class DisplayNode(display: Display) {
 		if (value.type == JavaScriptPropertyType.NUMBER) {
 
 			when (value.unit) {
-				JavaScriptPropertyUnit.PX -> this.setMarginBottom(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitPX, value.number)
-				JavaScriptPropertyUnit.PC -> this.setMarginBottom(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitPC, value.number)
-				JavaScriptPropertyUnit.VW -> this.setMarginBottom(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitVW, value.number)
-				JavaScriptPropertyUnit.VH -> this.setMarginBottom(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitVH, value.number)
-				JavaScriptPropertyUnit.PW -> this.setMarginBottom(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitPW, value.number)
-				JavaScriptPropertyUnit.PH -> this.setMarginBottom(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitPH, value.number)
-				JavaScriptPropertyUnit.CW -> this.setMarginBottom(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitCW, value.number)
-				JavaScriptPropertyUnit.CH -> this.setMarginBottom(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitCH, value.number)
-				else                      -> this.setMarginBottom(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitPX, value.number)
+				JavaScriptPropertyUnit.PX -> this.setMarginBottom(kMarginTypeLength, kMarginUnitPX, value.number)
+				JavaScriptPropertyUnit.PC -> this.setMarginBottom(kMarginTypeLength, kMarginUnitPC, value.number)
+				JavaScriptPropertyUnit.VW -> this.setMarginBottom(kMarginTypeLength, kMarginUnitVW, value.number)
+				JavaScriptPropertyUnit.VH -> this.setMarginBottom(kMarginTypeLength, kMarginUnitVH, value.number)
+				JavaScriptPropertyUnit.PW -> this.setMarginBottom(kMarginTypeLength, kMarginUnitPW, value.number)
+				JavaScriptPropertyUnit.PH -> this.setMarginBottom(kMarginTypeLength, kMarginUnitPH, value.number)
+				JavaScriptPropertyUnit.CW -> this.setMarginBottom(kMarginTypeLength, kMarginUnitCW, value.number)
+				JavaScriptPropertyUnit.CH -> this.setMarginBottom(kMarginTypeLength, kMarginUnitCH, value.number)
+				else                      -> this.setMarginBottom(kMarginTypeLength, kMarginUnitPX, value.number)
 			}
 
 			return
@@ -1284,15 +1352,15 @@ public class DisplayNode(display: Display) {
 		if (value.type == JavaScriptPropertyType.NUMBER) {
 
 			when (value.unit) {
-				JavaScriptPropertyUnit.PX -> this.setPaddingTop(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitPX, value.number)
-				JavaScriptPropertyUnit.PC -> this.setPaddingTop(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitPC, value.number)
-				JavaScriptPropertyUnit.VW -> this.setPaddingTop(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitVW, value.number)
-				JavaScriptPropertyUnit.VH -> this.setPaddingTop(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitVH, value.number)
-				JavaScriptPropertyUnit.PW -> this.setPaddingTop(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitPW, value.number)
-				JavaScriptPropertyUnit.PH -> this.setPaddingTop(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitPH, value.number)
-				JavaScriptPropertyUnit.CW -> this.setPaddingTop(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitCW, value.number)
-				JavaScriptPropertyUnit.CH -> this.setPaddingTop(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitCH, value.number)
-				else                      -> this.setPaddingTop(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitPX, value.number)
+				JavaScriptPropertyUnit.PX -> this.setPaddingTop(kPaddingTypeLength, kPaddingUnitPX, value.number)
+				JavaScriptPropertyUnit.PC -> this.setPaddingTop(kPaddingTypeLength, kPaddingUnitPC, value.number)
+				JavaScriptPropertyUnit.VW -> this.setPaddingTop(kPaddingTypeLength, kPaddingUnitVW, value.number)
+				JavaScriptPropertyUnit.VH -> this.setPaddingTop(kPaddingTypeLength, kPaddingUnitVH, value.number)
+				JavaScriptPropertyUnit.PW -> this.setPaddingTop(kPaddingTypeLength, kPaddingUnitPW, value.number)
+				JavaScriptPropertyUnit.PH -> this.setPaddingTop(kPaddingTypeLength, kPaddingUnitPH, value.number)
+				JavaScriptPropertyUnit.CW -> this.setPaddingTop(kPaddingTypeLength, kPaddingUnitCW, value.number)
+				JavaScriptPropertyUnit.CH -> this.setPaddingTop(kPaddingTypeLength, kPaddingUnitCH, value.number)
+				else                      -> this.setPaddingTop(kPaddingTypeLength, kPaddingUnitPX, value.number)
 			}
 
 			return
@@ -1318,15 +1386,15 @@ public class DisplayNode(display: Display) {
 		if (value.type == JavaScriptPropertyType.NUMBER) {
 
 			when (value.unit) {
-				JavaScriptPropertyUnit.PX -> this.setPaddingLeft(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitPX, value.number)
-				JavaScriptPropertyUnit.PC -> this.setPaddingLeft(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitPC, value.number)
-				JavaScriptPropertyUnit.VW -> this.setPaddingLeft(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitVW, value.number)
-				JavaScriptPropertyUnit.VH -> this.setPaddingLeft(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitVH, value.number)
-				JavaScriptPropertyUnit.PW -> this.setPaddingLeft(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitPW, value.number)
-				JavaScriptPropertyUnit.PH -> this.setPaddingLeft(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitPH, value.number)
-				JavaScriptPropertyUnit.CW -> this.setPaddingLeft(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitCW, value.number)
-				JavaScriptPropertyUnit.CH -> this.setPaddingLeft(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitCH, value.number)
-				else                      -> this.setPaddingLeft(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitPX, value.number)
+				JavaScriptPropertyUnit.PX -> this.setPaddingLeft(kPaddingTypeLength, kPaddingUnitPX, value.number)
+				JavaScriptPropertyUnit.PC -> this.setPaddingLeft(kPaddingTypeLength, kPaddingUnitPC, value.number)
+				JavaScriptPropertyUnit.VW -> this.setPaddingLeft(kPaddingTypeLength, kPaddingUnitVW, value.number)
+				JavaScriptPropertyUnit.VH -> this.setPaddingLeft(kPaddingTypeLength, kPaddingUnitVH, value.number)
+				JavaScriptPropertyUnit.PW -> this.setPaddingLeft(kPaddingTypeLength, kPaddingUnitPW, value.number)
+				JavaScriptPropertyUnit.PH -> this.setPaddingLeft(kPaddingTypeLength, kPaddingUnitPH, value.number)
+				JavaScriptPropertyUnit.CW -> this.setPaddingLeft(kPaddingTypeLength, kPaddingUnitCW, value.number)
+				JavaScriptPropertyUnit.CH -> this.setPaddingLeft(kPaddingTypeLength, kPaddingUnitCH, value.number)
+				else                      -> this.setPaddingLeft(kPaddingTypeLength, kPaddingUnitPX, value.number)
 			}
 
 			return
@@ -1352,15 +1420,15 @@ public class DisplayNode(display: Display) {
 		if (value.type == JavaScriptPropertyType.NUMBER) {
 
 			when (value.unit) {
-				JavaScriptPropertyUnit.PX -> this.setPaddingRight(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitPX, value.number)
-				JavaScriptPropertyUnit.PC -> this.setPaddingRight(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitPC, value.number)
-				JavaScriptPropertyUnit.VW -> this.setPaddingRight(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitVW, value.number)
-				JavaScriptPropertyUnit.VH -> this.setPaddingRight(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitVH, value.number)
-				JavaScriptPropertyUnit.PW -> this.setPaddingRight(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitPW, value.number)
-				JavaScriptPropertyUnit.PH -> this.setPaddingRight(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitPH, value.number)
-				JavaScriptPropertyUnit.CW -> this.setPaddingRight(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitCW, value.number)
-				JavaScriptPropertyUnit.CH -> this.setPaddingRight(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitCH, value.number)
-				else                      -> this.setPaddingRight(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitPX, value.number)
+				JavaScriptPropertyUnit.PX -> this.setPaddingRight(kPaddingTypeLength, kPaddingUnitPX, value.number)
+				JavaScriptPropertyUnit.PC -> this.setPaddingRight(kPaddingTypeLength, kPaddingUnitPC, value.number)
+				JavaScriptPropertyUnit.VW -> this.setPaddingRight(kPaddingTypeLength, kPaddingUnitVW, value.number)
+				JavaScriptPropertyUnit.VH -> this.setPaddingRight(kPaddingTypeLength, kPaddingUnitVH, value.number)
+				JavaScriptPropertyUnit.PW -> this.setPaddingRight(kPaddingTypeLength, kPaddingUnitPW, value.number)
+				JavaScriptPropertyUnit.PH -> this.setPaddingRight(kPaddingTypeLength, kPaddingUnitPH, value.number)
+				JavaScriptPropertyUnit.CW -> this.setPaddingRight(kPaddingTypeLength, kPaddingUnitCW, value.number)
+				JavaScriptPropertyUnit.CH -> this.setPaddingRight(kPaddingTypeLength, kPaddingUnitCH, value.number)
+				else                      -> this.setPaddingRight(kPaddingTypeLength, kPaddingUnitPX, value.number)
 			}
 
 			return
@@ -1386,15 +1454,15 @@ public class DisplayNode(display: Display) {
 		if (value.type == JavaScriptPropertyType.NUMBER) {
 
 			when (value.unit) {
-				JavaScriptPropertyUnit.PX -> this.setPaddingBottom(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitPX, value.number)
-				JavaScriptPropertyUnit.PC -> this.setPaddingBottom(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitPC, value.number)
-				JavaScriptPropertyUnit.VW -> this.setPaddingBottom(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitVW, value.number)
-				JavaScriptPropertyUnit.VH -> this.setPaddingBottom(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitVH, value.number)
-				JavaScriptPropertyUnit.PW -> this.setPaddingBottom(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitPW, value.number)
-				JavaScriptPropertyUnit.PH -> this.setPaddingBottom(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitPH, value.number)
-				JavaScriptPropertyUnit.CW -> this.setPaddingBottom(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitCW, value.number)
-				JavaScriptPropertyUnit.CH -> this.setPaddingBottom(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitCH, value.number)
-				else                      -> this.setPaddingBottom(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitPX, value.number)
+				JavaScriptPropertyUnit.PX -> this.setPaddingBottom(kPaddingTypeLength, kPaddingUnitPX, value.number)
+				JavaScriptPropertyUnit.PC -> this.setPaddingBottom(kPaddingTypeLength, kPaddingUnitPC, value.number)
+				JavaScriptPropertyUnit.VW -> this.setPaddingBottom(kPaddingTypeLength, kPaddingUnitVW, value.number)
+				JavaScriptPropertyUnit.VH -> this.setPaddingBottom(kPaddingTypeLength, kPaddingUnitVH, value.number)
+				JavaScriptPropertyUnit.PW -> this.setPaddingBottom(kPaddingTypeLength, kPaddingUnitPW, value.number)
+				JavaScriptPropertyUnit.PH -> this.setPaddingBottom(kPaddingTypeLength, kPaddingUnitPH, value.number)
+				JavaScriptPropertyUnit.CW -> this.setPaddingBottom(kPaddingTypeLength, kPaddingUnitCW, value.number)
+				JavaScriptPropertyUnit.CH -> this.setPaddingBottom(kPaddingTypeLength, kPaddingUnitCH, value.number)
+				else                      -> this.setPaddingBottom(kPaddingTypeLength, kPaddingUnitPX, value.number)
 			}
 
 			return
@@ -1499,37 +1567,28 @@ public class DisplayNode(display: Display) {
 		DisplayNodeExternal.setVisible(this.handle, value)
 	}
 
-
-	public fun setType(type: String) {
-
-	}
-
-	public fun appendStyle(style: String) {
-
-	}
-
-	public fun removeStyle(style: String) {
-
-	}
-
-	public fun appendState(state: String) {
-
-	}
-
-	public fun removeState(state: String) {
-
-	}
-
+	/**
+	 * @method invalidateSize
+	 * @since 0.7.0
+	 */
 	public fun invalidateSize() {
-// TODO
+		DisplayNodeExternal.invalidateSize(this.handle)
 	}
 
+	/**
+	 * @method invalidateOrigin
+	 * @since 0.7.0
+	 */
 	public fun invalidateOrigin() {
-// TODO
+		DisplayNodeExternal.invalidateOrigin(this.handle)
 	}
 
+	/**
+	 * @method invalidateLayout
+	 * @since 0.7.0
+	 */
 	public fun invalidateLayout() {
-		// TODO
+		DisplayNodeExternal.invalidateLayout(this.handle)
 	}
 
 	/**
@@ -1575,25 +1634,6 @@ public class DisplayNode(display: Display) {
 	//--------------------------------------------------------------------------
 	// Private API
 	//--------------------------------------------------------------------------
-
-	/**
-	 * @method measure
-	 * @since 0.7.0
-	 */
-	@Suppress("unused")
-	private fun measure(w: Double, h: Double, minw: Double, maxw: Double, minh: Double, maxh: Double): SizeF {
-
-		val area = SizeF(w.toValidFloat(), h.toValidFloat())
-		val min = SizeF(minw.toValidFloat(), minh.toValidFloat())
-		val max = SizeF(maxw.toValidFloat(), maxh.toValidFloat())
-
-		val size = this.listener?.measure(this, area, min, max)
-		if (size == null) {
-			return SizeF(-1f, -1f)
-		}
-
-		return size
-	}
 
 	/**
 	 * @method onInvalidate
@@ -1676,100 +1716,57 @@ public class DisplayNode(display: Display) {
 	}
 
 	/**
-	 * @method layoutBegan
+	 * @method onPrepareLayout
 	 * @since 0.7.0
 	 * @hidden
 	 */
 	@Suppress("unused")
-	private fun layoutBegan() {
-		this.listener?.layoutBegan(this)
+	private fun onPrepareLayout() {
+		this.listener?.onPrepareLayout(this)
 	}
 
 	/**
-	 * @method layoutEnded
+	 * @method onResolveLayout
 	 * @since 0.7.0
 	 * @hidden
 	 */
 	@Suppress("unused")
-	private fun layoutEnded() {
-		this.listener?.layoutEnded(this)
+	private fun onResolveLayout() {
+		this.listener?.onResolveLayout(this)
+	}
+
+	/**
+	 * @method measure
+	 * @since 0.7.0
+	 */
+	@Suppress("unused")
+	private fun measure(w: Double, h: Double, minw: Double, maxw: Double, minh: Double, maxh: Double): SizeF {
+
+		return this.listener?.measure(this,
+			SizeF(w.toValidFloat(), h.toValidFloat()),
+			SizeF(minw.toValidFloat(), minh.toValidFloat()),
+			SizeF(maxw.toValidFloat(), maxh.toValidFloat())
+		) ?: SizeF(-1f, -1f)
+
+	}
+
+	/**
+	 * @method update
+	 * @since 0.7.0
+	 */
+	@Suppress("unused")
+	private fun update(name: String, property: Long) {
+
+		val holder = this.listener?.resolve(this, name)
+		if (holder == null) {
+			return
+		}
+
+		if (property == 0L) {
+			holder.reset(lock = null, initial = true)
+			return
+		}
+
+		holder.reset(ValueList(PropertyExternal.getValues(property)), lock = null)
 	}
 }
-
-const val kDisplayNodeAnchorTypeLength = 1
-const val kDisplayNodeAnchorUnitPC = 1
-const val kDisplayNodeSizeTypeFill = 1
-const val kDisplayNodeSizeTypeWrap = 2
-const val kDisplayNodeSizeTypeLength = 3
-const val kDisplayNodeSizeUnitNone = 1
-const val kDisplayNodeSizeUnitPX = 2
-const val kDisplayNodeSizeUnitPC = 3
-const val kDisplayNodeSizeUnitVW = 4
-const val kDisplayNodeSizeUnitVH = 5
-const val kDisplayNodeSizeUnitPW = 6
-const val kDisplayNodeSizeUnitPH = 7
-const val kDisplayNodeSizeUnitCW = 8
-const val kDisplayNodeSizeUnitCH = 9
-const val kDisplayNodeOriginTypeAuto = 1
-const val kDisplayNodeOriginTypeLength = 2
-const val kDisplayNodeOriginUnitNone = 1
-const val kDisplayNodeOriginUnitPX = 2
-const val kDisplayNodeOriginUnitPC = 3
-const val kDisplayNodeOriginUnitVW = 4
-const val kDisplayNodeOriginUnitVH = 5
-const val kDisplayNodeOriginUnitPW = 6
-const val kDisplayNodeOriginUnitPH = 7
-const val kDisplayNodeOriginUnitCW = 8
-const val kDisplayNodeOriginUnitCH = 9
-const val kDisplayNodeContentOriginTypeLength = 1
-const val kDisplayNodeContentOriginUnitNone = 1
-const val kDisplayNodeContentOriginUnitPX = 2
-const val kDisplayNodeContentSizeTypeAuto = 1
-const val kDisplayNodeContentSizeTypeLength = 2
-const val kDisplayNodeContentSizeUnitNone = 1
-const val kDisplayNodeContentSizeUnitPX = 2
-const val kDisplayNodeContentSizeUnitPC = 3
-const val kDisplayNodeContentSizeUnitVW = 4
-const val kDisplayNodeContentSizeUnitVH = 5
-const val kDisplayNodeContentSizeUnitPW = 6
-const val kDisplayNodeContentSizeUnitPH = 7
-const val kDisplayNodeContentSizeUnitCW = 8
-const val kDisplayNodeContentSizeUnitCH = 9
-const val kDisplayNodeContentDirectionVertical = 1
-const val kDisplayNodeContentDirectionHorizontal = 2
-const val kDisplayNodeContentAlignmentStart = 1
-const val kDisplayNodeContentAlignmentCenter = 2
-const val kDisplayNodeContentAlignmentEnd = 3
-const val kDisplayNodeContentLocationStart = 1
-const val kDisplayNodeContentLocationCenter = 2
-const val kDisplayNodeContentLocationEnd = 3
-const val kDisplayNodeContentLocationSpaceAround = 4
-const val kDisplayNodeContentLocationSpaceBetween = 5
-const val kDisplayNodeContentLocationSpaceEvenly = 6
-const val kDisplayNodeBorderTypeLength = 1
-const val kDisplayNodeBorderUnitPX = 1
-const val kDisplayNodeBorderUnitPC = 2
-const val kDisplayNodeBorderUnitVW = 3
-const val kDisplayNodeBorderUnitVH = 4
-const val kDisplayNodeBorderUnitPW = 5
-const val kDisplayNodeBorderUnitPH = 6
-const val kDisplayNodeBorderUnitCW = 7
-const val kDisplayNodeBorderUnitCH = 8
-const val kDisplayNodeMarginTypeLength = 1
-const val kDisplayNodeMarginUnitPX = 1
-const val kDisplayNodeMarginUnitPC = 2
-const val kDisplayNodeMarginUnitVW = 3
-const val kDisplayNodeMarginUnitVH = 4
-const val kDisplayNodeMarginUnitPW = 5
-const val kDisplayNodeMarginUnitPH = 6
-const val kDisplayNodeMarginUnitCW = 7
-const val kDisplayNodeMarginUnitCH = 8
-const val kDisplayNodePaddingTypeLength = 1
-const val kDisplayNodePaddingUnitPX = 1
-const val kDisplayNodePaddingUnitPC = 2
-const val kDisplayNodePaddingUnitVW = 3
-const val kDisplayNodePaddingUnitVH = 4
-const val kDisplayNodePaddingUnitPW = 5
-const val kDisplayNodePaddingUnitPH = 6
-const val kDisplayNodePaddingUnitCW = 7
-const val kDisplayNodePaddingUnitCH = 8

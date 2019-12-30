@@ -1,6 +1,7 @@
 package ca.logaritm.dezel.core
 
 import android.util.Log
+import ca.logaritm.dezel.core.external.JavaScriptClassBuilderExternal
 import java.lang.reflect.Method
 
 /**
@@ -44,17 +45,17 @@ public class JavaScriptClassBuilder : JavaScriptBuilder() {
 				}
 
 				if (type == Type.STATIC_FUNCTION) {
-					this.createStaticFunction(context, prototype.handle, name, method.name, template)
+					this.createStaticFunction(context, statics.handle, name, method.name, template)
 					return
 				}
 
 				if (type == Type.STATIC_GETTER) {
-					this.createStaticGetter(context, prototype.handle, name, method.name, template)
+					this.createStaticGetter(context, statics.handle, name, method.name, template)
 					return
 				}
 
 				if (type == Type.STATIC_SETTER) {
-					this.createStaticSetter(context, prototype.handle, name, method.name, template)
+					this.createStaticSetter(context, statics.handle, name, method.name, template)
 					return
 				}
 

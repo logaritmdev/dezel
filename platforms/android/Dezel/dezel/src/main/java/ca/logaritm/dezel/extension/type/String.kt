@@ -1,7 +1,6 @@
 package ca.logaritm.dezel.extension.type
 
 import ca.logaritm.dezel.view.graphic.Color
-import java.lang.StringBuilder
 import java.security.MessageDigest
 import java.util.*
 import java.util.regex.Pattern

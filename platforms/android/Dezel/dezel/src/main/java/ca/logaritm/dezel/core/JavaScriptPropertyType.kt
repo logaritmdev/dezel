@@ -10,8 +10,12 @@ public enum class JavaScriptPropertyType(val value: Int) {
 	STRING(1),
 	NUMBER(2),
 	BOOLEAN(3),
-	OBJECT(4),
-	ARRAY(5);
+	ARRAY(4),
+	OBJECT(5),
+	CALLBACK(6),
+	VARIABLE(7),
+	FUNCTION(8),
+	COMPOSITE(9);
 
 	companion object {
 		fun from(value: Int): JavaScriptPropertyType? = values().find { it.value == value }

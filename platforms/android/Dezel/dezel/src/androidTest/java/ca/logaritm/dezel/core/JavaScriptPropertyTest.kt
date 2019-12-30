@@ -13,7 +13,6 @@ class JavaScriptPropertyTest {
 	fun beforeTest() {
 		this.context.dispose()
 		this.context = JavaScriptContext()
-		this.context.setup()
 	}
 	
 	@Test
@@ -196,7 +195,7 @@ class JavaScriptPropertyTest {
 
 	@Test
 	fun testResetWithJavaScriptStringValue() {
-Log.e("TEST", "STARGIN TEST ================================")
+
 		val value = this.context.createString("test")
 
 		val property = JavaScriptProperty()

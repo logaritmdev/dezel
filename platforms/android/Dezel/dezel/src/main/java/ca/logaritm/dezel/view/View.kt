@@ -1,5 +1,6 @@
 package ca.logaritm.dezel.view
 
+import android.animation.ValueAnimator
 import android.content.Context
 import android.os.Handler
 import android.view.MotionEvent
@@ -14,6 +15,11 @@ import ca.logaritm.dezel.extension.Delegates
 import ca.logaritm.dezel.extension.view.removeFromParent
 import ca.logaritm.dezel.extension.view.setMeasuredFrame
 import ca.logaritm.dezel.view.graphic.Convert
+import ca.logaritm.dezel.view.animation.Animatable
+import ca.logaritm.dezel.view.trait.Resizable
+import ca.logaritm.dezel.view.trait.Scrollable
+import ca.logaritm.dezel.view.trait.ScrollableListener
+import ca.logaritm.dezel.view.trait.Updatable
 import ca.logaritm.dezel.view.type.Overscroll
 import ca.logaritm.dezel.view.type.Scrollbars
 import kotlin.math.ceil
@@ -26,7 +32,7 @@ import android.view.View as AndroidView
  * @super ViewGroup
  * @since 0.7.0
  */
-open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, Updatable, ScaleGestureDetector.OnScaleGestureListener {
+open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, Updatable, Animatable, ScaleGestureDetector.OnScaleGestureListener {
 
 	//--------------------------------------------------------------------------
 	// Properties
@@ -164,10 +170,10 @@ open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, U
 	}
 
 	/**
-	 * @property scrollMomentum
+	 * @property scrollInertia
 	 * @since 0.7.0
 	 */
-	override var scrollMomentum: Boolean = true
+	override var scrollInertia: Boolean = true
 
 	/**
 	 * @property contentInsetTop
@@ -247,9 +253,7 @@ open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, U
 	 * @property zoomedView
 	 * @since 0.7.0
 	 */
-	override var zoomedView: android.view.View? by Delegates.OnChangeOptional<android.view.View>(null) { newValue, oldValue ->
-		oldValue?.matrix?.reset()
-		newValue?.matrix?.reset()
+	override var zoomedView: android.view.View? by Delegates.OnSetOptional<android.view.View>(null) {
 		this.applyZoom()
 	}
 
@@ -661,8 +665,8 @@ open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, U
 					scrollH > frameH
 				)
 
-				val contentViewW = Math.max(frameW, scrollW)
-				val contentViewH = Math.max(frameH, scrollH)
+				val contentViewW = max(frameW, scrollW)
+				val contentViewH = max(frameH, scrollH)
 
 				if (this.hScrollViewActive) {
 
@@ -673,24 +677,6 @@ open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, U
 					this.hScrollView.scrollX = sx
 					this.hScrollView.scrollY = sy
 
-					/*
-
-					This creates a weird re-acceleration effect, even by accessing the
-					scroller directly.
-
-					if (this.hScrollView.scrolling) {
-
-						var velocity = 0
-						if (this.hScrollView.velocity > 0) velocity = +1
-						if (this.hScrollView.velocity < 0) velocity = -1
-
-						if (velocity != 0) {
-							this.hScrollView.fling(velocity)
-						}
-					}
-
-					*/
-
 					frameT = 0
 					frameL = 0
 				}
@@ -700,27 +686,9 @@ open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, U
 					val sx = this.vScrollView.scrollX
 					val sy = this.vScrollView.scrollY
 
-					this.vScrollView.setMeasuredFrame(frameT, frameL, Math.max(frameW, scrollW), frameH)
+					this.vScrollView.setMeasuredFrame(frameT, frameL, max(frameW, scrollW), frameH)
 					this.vScrollView.scrollX = sx
 					this.vScrollView.scrollY = sy
-
-					/*
-
-					This creates a weird re-acceleration effect, even by accessing the
-					scroller directly.
-
-					if (this.vScrollView.scrolling) {
-
-						var velocity = 0
-						if (this.vScrollView.velocity > 0) velocity = +1
-						if (this.vScrollView.velocity < 0) velocity = -1
-
-						if (velocity != 0) {
-							this.vScrollView.fling(velocity)
-						}
-					}
-
-					*/
 
 					frameT = 0
 					frameL = 0
@@ -784,6 +752,62 @@ open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, U
 		if (application is ApplicationActivity) {
 			application.dispatchTouchCancel(event)
 		}
+	}
+
+	//--------------------------------------------------------------------------
+	// Animations
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @property animatable
+	 * @since 0.7.0
+	 */
+	override val animatable: List<String> = listOf()
+
+	/**
+	 * @property animations
+	 * @since 0.7.0
+	 */
+	override var animations: MutableMap<String, ValueAnimator> = mutableMapOf()
+
+	/**
+	 * @method onBeforeAnimate
+	 * @since 0.7.0
+	 */
+	override fun animate(property: String, initialValue: Any, currentValue: Any): ValueAnimator? {
+		return null
+	}
+
+	/**
+	 * @method onBeforeAnimate
+	 * @since 0.7.0
+	 */
+	override fun onBeforeAnimate(property: String) {
+
+	}
+
+	/**
+	 * @method onBeginTransition
+	 * @since 0.7.0
+	 */
+	override fun onBeginTransition() {
+
+	}
+
+	/**
+	 * @method onCommitTransition
+	 * @since 0.7.0
+	 */
+	override fun onCommitTransition() {
+
+	}
+
+	/**
+	 * @method onFinishTransition
+	 * @since 0.7.0
+	 */
+	override fun onFinishTransition() {
+
 	}
 
 	//--------------------------------------------------------------------------
@@ -1378,7 +1402,7 @@ open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, U
 				return
 			}
 
-			if (this@View.scrollMomentum) {
+			if (this@View.scrollInertia) {
 
 				if (this.velocity == 0) {
 					this.velocity = velocity
@@ -1756,7 +1780,7 @@ open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, U
 				return
 			}
 
-			if (this@View.scrollMomentum) {
+			if (this@View.scrollInertia) {
 
 				if (this.velocity == 0) {
 					this.velocity = velocity

@@ -1,4 +1,4 @@
-package ca.logaritm.dezel.view.animation
+package ca.logaritm.dezel.view.animation.animator
 
 import android.animation.Animator
 import android.animation.ValueAnimator
@@ -44,7 +44,7 @@ internal class OpacityAnimator(view: AndroidView, startValue: Float, finalValue:
 	private var finalValue: Float
 
 	//--------------------------------------------------------------------------
-	// Mehods
+	// Methods
 	//--------------------------------------------------------------------------
 
 	/**
@@ -69,7 +69,7 @@ internal class OpacityAnimator(view: AndroidView, startValue: Float, finalValue:
 	}
 
 	//--------------------------------------------------------------------------
-	// Mehods - Animator JavaScriptViewListener
+	// Methods - Animator JavaScriptViewListener
 	//--------------------------------------------------------------------------
 
 	/**

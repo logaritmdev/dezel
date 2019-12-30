@@ -2,37 +2,37 @@
 #include "DisplayRef.h"
 #include "DisplayNodeRef.h"
 
-#include <jni_module_view.h>
+#include <jni_module_display.h>
 
 static void
-layoutBeganCallback(DisplayRef display)
+displayPrepareCallback(DisplayRef display)
 {
 	const auto wrapper =  reinterpret_cast<DisplayWrapperRef>(DisplayGetData(display));
 	
-	if (wrapper == NULL) {
+	if (wrapper == nullptr) {
 		return;
 	}
 
 	JNI_CALL_VOID_METHOD(
 		wrapper->env,
 		wrapper->object,
-		DisplayLayoutBeganMethod
+		DisplayPrepareMethod
 	);
 }
 
 static void
-layoutEndedCallback(DisplayRef display)
+displayResolveCallback(DisplayRef display)
 {
 	const auto wrapper =  reinterpret_cast<DisplayWrapperRef>(DisplayGetData(display));
 
-	if (wrapper == NULL) {
+	if (wrapper == nullptr) {
 		return;
 	}
 
 	JNI_CALL_VOID_METHOD(
 		wrapper->env,
 		wrapper->object,
-		DisplayLayoutEndedMethod
+		DisplayResolveMethod
 	);
 }
 
@@ -43,8 +43,8 @@ DisplayWrapperCreate(JNIEnv* env, jobject object, DisplayRef display)
 	wrapper->env = env;
 	wrapper->object = env->NewWeakGlobalRef(object);
 
-	DisplaySetLayoutBeganCallback(display, &layoutBeganCallback);
-	DisplaySetLayoutEndedCallback(display, &layoutEndedCallback);
+	DisplaySetPrepareCallback(display, &displayPrepareCallback);
+	DisplaySetResolveCallback(display, &displayResolveCallback);
 
 	return wrapper;
 }

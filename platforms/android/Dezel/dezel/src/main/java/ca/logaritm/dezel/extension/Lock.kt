@@ -11,9 +11,5 @@ fun isLocked(lock: Any?, key: Any?): Boolean {
 		return false
 	}
 
-	if (key != null) {
-		return lock === key
-	}
-
-	return true
+	return lock !== key
 }

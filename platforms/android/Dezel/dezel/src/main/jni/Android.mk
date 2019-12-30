@@ -31,12 +31,17 @@ LOCAL_SRC_FILES := wrappers/JavaScriptFunction.cpp \
                    jni_init.cpp \
                    jni_module_core.cpp \
                    jni_module_display.cpp \
-                   ca_logaritm_dezel_core_JavaScriptClassBuilderExternal.cpp \
-                   ca_logaritm_dezel_core_JavaScriptObjectBuilderExternal.cpp \
-                   ca_logaritm_dezel_core_JavaScriptContextExternal.cpp \
-                   ca_logaritm_dezel_core_JavaScriptValueExternal.cpp \
-                   ca_logaritm_dezel_view_display_DisplayExternal.cpp \
-                   ca_logaritm_dezel_view_display_DisplayNodeExternal.cpp \
+                   ca_logaritm_dezel_core_external_JavaScriptClassBuilderExternal.cpp \
+                   ca_logaritm_dezel_core_external_JavaScriptObjectBuilderExternal.cpp \
+                   ca_logaritm_dezel_core_external_JavaScriptContextExternal.cpp \
+                   ca_logaritm_dezel_core_external_JavaScriptValueExternal.cpp \
+                   ca_logaritm_dezel_view_display_external_DisplayExternal.cpp \
+                   ca_logaritm_dezel_view_display_external_DisplayNodeExternal.cpp \
+                   ca_logaritm_dezel_view_display_external_StylesheetExternal.cpp \
+                   ca_logaritm_dezel_view_display_external_ValueExternal.cpp \
+                   ca_logaritm_dezel_view_display_external_ValueListExternal.cpp \
+                   ca_logaritm_dezel_view_display_external_FunctionValueExternal.cpp \
+                   ca_logaritm_dezel_view_display_external_PropertyExternal.cpp \
                    $(wildcard $(SHARED_PATH)/core/*.cpp) \
                    $(wildcard $(SHARED_PATH)/display/*.cpp) \
                    $(wildcard $(SHARED_PATH)/display/style/*.cpp) \
@@ -44,7 +49,8 @@ LOCAL_SRC_FILES := wrappers/JavaScriptFunction.cpp \
 
 LOCAL_SHARED_LIBRARIES := jsc
 
-LOCAL_CPPFLAGS := -std=c++11 \
+LOCAL_CPPFLAGS := -std=c++17 \
+                  -frtti \
                   -fexceptions \
                   -I$(LOCAL_PATH)/include \
                   -I$(SHARED_PATH)/core \

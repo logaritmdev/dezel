@@ -1,5 +1,7 @@
 package ca.logaritm.dezel.core
 
+import ca.logaritm.dezel.core.external.JavaScriptValueExternal
+
 /**
  * @class JavaScriptObject
  * @super JavaScriptValue
@@ -52,27 +54,7 @@ open class JavaScriptObject(context: JavaScriptContext): JavaScriptValue(context
 	}
 
 	//--------------------------------------------------------------------------
-	// Methods - Dynamic Access
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method setProperty
-	 * @since 0.7.0
-	 */
-	open fun setProperty(name: String, value: JavaScriptValue?) {
-		JavaScriptPropertyAccessor.get(this, name).set(this, value)
-	}
-
-	/**
-	 * @method getProperty
-	 * @since 0.7.0
-	 */
-	open fun getProperty(name: String): JavaScriptProperty? {
-		return JavaScriptPropertyAccessor.get(this, name).get(this)
-	}
-
-	//--------------------------------------------------------------------------
-	// Methods - Extensions
+	// Extensions
 	//--------------------------------------------------------------------------
 
 	/**

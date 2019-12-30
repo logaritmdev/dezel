@@ -67,7 +67,7 @@ open class JavaScriptPropertyAccessor(type: Class<*>, name: String) {
 
 		try {
 
-			this.method = this.type.getMethod("get" + this.name.capitalize(Locale.ROOT))
+			this.method = this.type.getMethod("get" + this.name.capitalize())
 
 		} catch (e: NoSuchMethodException) {
 

@@ -5,6 +5,7 @@ import java.util.*
 /**
  * @class JavaScriptBuilder
  * @since 0.1.0
+ * @hidden
  */
 open class JavaScriptBuilder {
 

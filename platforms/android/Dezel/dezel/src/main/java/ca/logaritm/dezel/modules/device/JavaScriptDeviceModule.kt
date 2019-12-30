@@ -8,13 +8,13 @@ import ca.logaritm.dezel.core.JavaScriptModule
  * @super JavaScriptModule
  * @since 0.7.0
  */
-open class JavaScriptDeviceModule(context: JavaScriptContext) : JavaScriptModule(context) {
+open class JavaScriptDeviceModule: JavaScriptModule() {
 
 	/**
-	 * @method initialize
-	 * @since 0.4.0
+	 * @method configure
+	 * @since 0.7.0
 	 */
-	override fun initialize() {
-		this.context.registerClass("dezel.device.Device", JavaScriptDevice::class.java)
+	override fun configure(context: JavaScriptContext) {
+		context.registerClass("dezel.device.Device", JavaScriptDevice::class.java)
 	}
 }

@@ -2,6 +2,7 @@ package ca.logaritm.dezel.view.display
 
 import ca.logaritm.dezel.core.FinalizableReference
 import ca.logaritm.dezel.core.Finalizer
+import ca.logaritm.dezel.view.display.external.DisplayNodeExternal
 import java.lang.ref.ReferenceQueue
 
 /**

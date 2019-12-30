@@ -8,7 +8,7 @@ import ca.logaritm.dezel.core.JavaScriptModule
  * @since 0.1.0
  * @hidden
  */
-open class GraphicModule: JavaScriptModule() {
+open class JavaScriptGraphicModule: JavaScriptModule() {
 
 	//--------------------------------------------------------------------------
 	// Methods

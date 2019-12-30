@@ -1,6 +1,10 @@
 package ca.logaritm.dezel.core
 
+import android.util.Log
+import ca.logaritm.dezel.extension.core.reset
 import ca.logaritm.dezel.extension.isLocked
+import ca.logaritm.dezel.view.display.external.ValueListExternal
+import ca.logaritm.dezel.view.display.value.Value
 
 /**
  * @class JavaScriptProperty
@@ -15,11 +19,11 @@ public class JavaScriptProperty {
 	companion object {
 
 		/**
-		 * @property NullValue
+		 * @property Null
 		 * @since 0.7.0
 		 * @hidden
 		 */
-		private val NullValue = JavaScriptPropertyValue()
+		public val Null = JavaScriptPropertyValue()
 
 	}
 
@@ -61,6 +65,34 @@ public class JavaScriptProperty {
 	 */
 	public val boolean: Boolean
 		get() = this.currentValue.boolean
+
+	/**
+	 * @property value
+	 * @since 0.7.0
+	 */
+	public val value: JavaScriptValue?
+		get() = this.currentValue.value
+
+	/**
+	 * @property variable
+	 * @since 0.7.0
+	 */
+	public val variable: JavaScriptPropertyVariableValue?
+		get() = this.currentValue as? JavaScriptPropertyVariableValue
+
+	/**
+	 * @property function
+	 * @since 0.7.0
+	 */
+	public val function: JavaScriptPropertyFunctionValue?
+		get() = this.currentValue as? JavaScriptPropertyFunctionValue
+
+	/**
+	 * @property composite
+	 * @since 0.7.0
+	 */
+	public val composite: JavaScriptPropertyCompositeValue?
+		get() = this.currentValue as? JavaScriptPropertyCompositeValue
 
 	/**
 	 * @property isNull
@@ -105,6 +137,34 @@ public class JavaScriptProperty {
 		get() = this.type == JavaScriptPropertyType.ARRAY
 
 	/**
+	 * @property isCallback
+	 * @since 0.7.0
+	 */
+	public val isCallback: Boolean
+		get() = this.type == JavaScriptPropertyType.CALLBACK
+
+	/**
+	 * @property isVariable
+	 * @since 0.7.0
+	 */
+	public val isVariable: Boolean
+		get() = this.type == JavaScriptPropertyType.VARIABLE
+
+	/**
+	 * @property isFunction
+	 * @since 0.7.0
+	 */
+	public val isFunction: Boolean
+		get() = this.type == JavaScriptPropertyType.FUNCTION
+
+	/**
+	 * @property isComposite
+	 * @since 0.7.0
+	 */
+	public val isComposite: Boolean
+		get() = this.type == JavaScriptPropertyType.COMPOSITE
+
+	/**
 	 * @property lock
 	 * @since 0.7.0
 	 * @hidden
@@ -141,8 +201,8 @@ public class JavaScriptProperty {
 	 * @since 0.7.0
 	 */
 	public constructor(handler: JavaScriptPropertyHandler? = null) {
-		this.initialValue = NullValue
-		this.currentValue = NullValue
+		this.initialValue = Null
+		this.currentValue = Null
 		this.handler = handler
 	}
 
@@ -152,7 +212,7 @@ public class JavaScriptProperty {
 	 */
 	public constructor(string: String, handler: JavaScriptPropertyHandler? = null) {
 		this.initialValue = JavaScriptPropertyStringValue(string)
-		this.currentValue = this.initialValue
+		this.currentValue = JavaScriptPropertyStringValue(string)
 		this.handler = handler
 	}
 
@@ -162,7 +222,7 @@ public class JavaScriptProperty {
 	 */
 	public constructor(number: Double, handler: JavaScriptPropertyHandler? = null) {
 		this.initialValue = JavaScriptPropertyNumberValue(number)
-		this.currentValue = this.initialValue
+		this.currentValue = JavaScriptPropertyNumberValue(number)
 		this.handler = handler
 	}
 
@@ -172,7 +232,7 @@ public class JavaScriptProperty {
 	 */
 	public constructor(number: Double, unit: JavaScriptPropertyUnit, handler: JavaScriptPropertyHandler? = null) {
 		this.initialValue = JavaScriptPropertyNumberValue(number, unit)
-		this.currentValue = this.initialValue
+		this.currentValue = JavaScriptPropertyNumberValue(number, unit)
 		this.handler = handler
 	}
 
@@ -182,7 +242,7 @@ public class JavaScriptProperty {
 	 */
 	public constructor(boolean: Boolean, handler: JavaScriptPropertyHandler? = null) {
 		this.initialValue = JavaScriptPropertyBooleanValue(boolean)
-		this.currentValue = this.initialValue
+		this.currentValue = JavaScriptPropertyBooleanValue(boolean)
 		this.handler = handler
 	}
 
@@ -199,7 +259,7 @@ public class JavaScriptProperty {
 	 * @since 0.7.0
 	 */
 	public constructor(string: String, lock: Any, handler: JavaScriptPropertyHandler? = null) : this(string, handler) {
-		this.lock = lock;
+		this.lock = lock
 	}
 
 	/**
@@ -207,7 +267,7 @@ public class JavaScriptProperty {
 	 * @since 0.7.0
 	 */
 	public constructor(number: Double, lock: Any, handler: JavaScriptPropertyHandler? = null) : this(number, handler) {
-		this.lock = lock;
+		this.lock = lock
 	}
 
 	/**
@@ -215,7 +275,7 @@ public class JavaScriptProperty {
 	 * @since 0.7.0
 	 */
 	public constructor(number: Double, unit: JavaScriptPropertyUnit, lock: Any, handler: JavaScriptPropertyHandler? = null) : this(number, unit, handler) {
-		this.lock = lock;
+		this.lock = lock
 	}
 
 	/**
@@ -223,35 +283,7 @@ public class JavaScriptProperty {
 	 * @since 0.7.0
 	 */
 	public constructor(boolean: Boolean, lock: Any, handler: JavaScriptPropertyHandler? = null) : this(boolean, handler) {
-		this.lock = lock;
-	}
-
-	/**
-	 * @method parse
-	 * @since 0.7.0
-	 */
-	public fun parse(value: String, lock: Any? = null) {
-
-		if (isLocked(this.lock, lock)) {
-			return
-		}
-
 		this.lock = lock
-
-		val result = JavaScriptPropertyParser.parse(value)
-		if (result != null) {
-
-			when (result.type) {
-				JavaScriptPropertyType.STRING  -> this.reset(result.string)
-				JavaScriptPropertyType.NUMBER  -> this.reset(result.number, result.unit)
-				JavaScriptPropertyType.BOOLEAN -> this.reset(result.boolean)
-				else                           -> {}
-			}
-
-			return
-		}
-
-		this.reset(value)
 	}
 
 	/**
@@ -287,7 +319,7 @@ public class JavaScriptProperty {
 	 * @method reset
 	 * @since 0.7.0
 	 */
-	public fun reset(value: JavaScriptValue?, lock: Any? = null) {
+	public fun reset(value: String, lock: Any? = null, parse: Boolean = false) {
 
 		if (isLocked(this.lock, lock)) {
 			return
@@ -295,45 +327,10 @@ public class JavaScriptProperty {
 
 		this.lock = lock
 
-		if (value == null) {
-			this.reset()
+		if (parse) {
+			this.parse(value, lock = lock)
 			return
 		}
-
-		val result = JavaScriptPropertyParser.parse(value)
-		if (result != null) {
-
-			when (result.type) {
-				JavaScriptPropertyType.NULL    -> this.reset()
-				JavaScriptPropertyType.STRING  -> this.reset(result.string)
-				JavaScriptPropertyType.NUMBER  -> this.reset(result.number, result.unit)
-				JavaScriptPropertyType.BOOLEAN -> this.reset(result.boolean)
-				else                           -> {}
-			}
-
-		} else {
-
-			if (this.equals(value) == false) {
-				this.update(value)
-				this.change()
-			}
-
-		}
-
-		this.currentValue.store(value)
-	}
-
-	/**
-	 * @method reset
-	 * @since 0.7.0
-	 */
-	public fun reset(value: String, lock: Any? = null) {
-
-		if (isLocked(this.lock, lock)) {
-			return
-		}
-
-		this.lock = lock
 
 		if (this.equals(value) == false) {
 			this.update(value)
@@ -396,28 +393,70 @@ public class JavaScriptProperty {
 	}
 
 	/**
-	 * @method equals
+	 * @method reset
 	 * @since 0.7.0
 	 */
-	public fun equals(value: JavaScriptPropertyValue): Boolean {
+	public fun reset(value: JavaScriptValue, lock: Any? = null, parse: Boolean = false) {
 
-		when (this.type) {
-			JavaScriptPropertyType.NULL    -> return value.type == JavaScriptPropertyType.NULL
-			JavaScriptPropertyType.STRING  -> return value.equals(this.string)
-			JavaScriptPropertyType.NUMBER  -> return value.equals(this.number)
-			JavaScriptPropertyType.BOOLEAN -> return value.equals(this.boolean)
-			else                           -> {}
+		if (isLocked(this.lock, lock)) {
+			return
 		}
 
-		return this.currentValue == value
+		this.lock = lock
+
+		when (true) {
+
+			value.isNull      -> this.reset(lock = lock)
+			value.isUndefined -> this.reset(lock = lock)
+			value.isString    -> this.reset(value.string, lock = lock, parse = parse)
+			value.isNumber    -> this.reset(value.number, lock = lock)
+			value.isBoolean   -> this.reset(value.boolean, lock = lock)
+
+			else -> {
+				if (this.equals(value) == false) {
+					this.update(value)
+					this.change()
+				}
+			}
+		}
+
+		this.currentValue.reset(value)
 	}
-	
+
 	/**
-	 * @method equals
+	 * @method reset
 	 * @since 0.7.0
 	 */
-	public fun equals(value: JavaScriptValue): Boolean {
-		return this.currentValue.equals(value)
+	public fun reset(value: JavaScriptProperty, lock: Any? = null) {
+
+		if (isLocked(this.lock, lock)) {
+			return
+		}
+
+		this.lock = lock
+
+		if (this.equals(value) == false) {
+			this.update(value)
+			this.change()
+		}
+	}
+
+	/**
+	 * @method reset
+	 * @since 0.7.0
+	 */
+	public fun reset(value: JavaScriptPropertyValue, lock: Any? = null) {
+
+		if (isLocked(this.lock, lock)) {
+			return
+		}
+
+		this.lock = lock
+
+		if (this.equals(value) == false) {
+			this.update(value)
+			this.change()
+		}
 	}
 
 	/**
@@ -451,6 +490,44 @@ public class JavaScriptProperty {
 	public fun equals(value: Boolean): Boolean {
 		return this.currentValue.equals(value)
 	}
+	
+	/**
+	 * @method equals
+	 * @since 0.7.0
+	 */
+	public fun equals(value: JavaScriptValue): Boolean {
+		return this.currentValue.equals(value)
+	}
+
+	/**
+	 * @method equals
+	 * @since 0.7.0
+	 */
+	internal fun equals(value: JavaScriptProperty): Boolean {
+		return this.equals(value.currentValue)
+	}
+
+	/**
+	 * @method equals
+	 * @since 0.7.0
+	 */
+	public fun equals(value: JavaScriptPropertyValue): Boolean {
+
+		when (this.type) {
+
+			JavaScriptPropertyType.NULL    -> return value.type == JavaScriptPropertyType.NULL
+			JavaScriptPropertyType.STRING  -> return value.equals(this.string)
+			JavaScriptPropertyType.NUMBER  -> return value.equals(this.number)
+			JavaScriptPropertyType.BOOLEAN -> return value.equals(this.boolean)
+
+			else -> {
+
+			}
+		}
+
+		return this.currentValue === value
+	}
+
 
 	/**
 	 * @method cast
@@ -463,6 +540,101 @@ public class JavaScriptProperty {
 	//--------------------------------------------------------------------------
 	// Internal API
 	//--------------------------------------------------------------------------
+
+	/**
+	 * @method parse
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	internal fun parse(value: String, lock: Any? = null) {
+
+		val values = Value.parse(value)
+		if (values == null) {
+			return
+		}
+
+		this.reset(values, lock = lock)
+
+		values.delete()
+	}
+
+	/**
+	 * @method reset
+	 * @since 0.7.0
+	 */
+	internal fun reset(value: JavaScriptPropertyVariableValue, lock: Any? = null) {
+
+		if (isLocked(this.lock, lock)) {
+			return
+		}
+
+		this.lock = lock
+
+		if (this.equals(value) == false) {
+			this.update(value)
+			this.change()
+		}
+	}
+
+	/**
+	 * @method reset
+	 * @since 0.7.0
+	 */
+	internal fun reset(value: JavaScriptPropertyFunctionValue, lock: Any? = null) {
+
+		if (isLocked(this.lock, lock)) {
+			return
+		}
+
+		this.lock = lock
+
+		if (this.equals(value) == false) {
+			this.update(value)
+			this.change()
+		}
+	}
+
+	/**
+	 * @method reset
+	 * @since 0.7.0
+	 */
+	internal fun reset(value: JavaScriptPropertyCompositeValue, lock: Any? = null) {
+
+		if (isLocked(this.lock, lock)) {
+			return
+		}
+
+		this.lock = lock
+
+		if (this.equals(value) == false) {
+			this.update(value)
+			this.change()
+		}
+	}
+
+	/**
+	 * @method equals
+	 * @since 0.7.0
+	 */
+	internal fun equals(value: JavaScriptPropertyVariableValue): Boolean {
+		return this.currentValue === value
+	}
+
+	/**
+	 * @method equals
+	 * @since 0.7.0
+	 */
+	internal fun equals(value: JavaScriptPropertyFunctionValue): Boolean {
+		return this.currentValue === value
+	}
+
+	/**
+	 * @method equals
+	 * @since 0.7.0
+	 */
+	internal fun equals(value: JavaScriptPropertyCompositeValue): Boolean {
+		return this.currentValue === value
+	}
 
 	/**
 	 * @method toJs
@@ -483,25 +655,7 @@ public class JavaScriptProperty {
 	 * @hidden
 	 */
 	private fun update() {
-		this.currentValue = NullValue
-	}
-
-	/**
-	 * @method update
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private fun update(value: JavaScriptPropertyValue) {
-		this.currentValue = value
-	}
-
-	/**
-	 * @method update
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private fun update(value: JavaScriptValue) {
-		this.currentValue = JavaScriptPropertyScriptValue(value)
+		this.currentValue = Null
 	}
 
 	/**
@@ -538,6 +692,33 @@ public class JavaScriptProperty {
 	 */
 	private fun update(value: Boolean) {
 		this.currentValue = JavaScriptPropertyBooleanValue(value)
+	}
+
+	/**
+	 * @method update
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private fun update(value: JavaScriptValue) {
+		this.currentValue = JavaScriptPropertyScriptValue(value)
+	}
+
+	/**
+	 * @method update
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private fun update(value: JavaScriptPropertyValue) {
+		this.currentValue = value
+	}
+
+	/**
+	 * @method update
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private fun update(value: JavaScriptProperty) {
+		this.currentValue = value.currentValue
 	}
 
 	/**

@@ -1,5 +1,6 @@
 package ca.logaritm.dezel.view
 
+import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.Paint
 import android.view.Gravity
@@ -9,11 +10,11 @@ import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import ca.logaritm.dezel.application.ApplicationActivity
 import ca.logaritm.dezel.extension.Delegates
-import ca.logaritm.dezel.text.font.FontManager
+import ca.logaritm.dezel.view.text.font.FontManager
 import ca.logaritm.dezel.view.graphic.Color
-import ca.logaritm.dezel.view.type.TextAlignment
+import ca.logaritm.dezel.view.animation.Animatable
+import ca.logaritm.dezel.view.type.TextAlign
 import ca.logaritm.dezel.view.type.TextDecoration
-import ca.logaritm.dezel.view.type.TextLocation
 import ca.logaritm.dezel.view.type.TextTransform
 import android.text.InputType as AndroidInputType
 
@@ -22,7 +23,7 @@ import android.text.InputType as AndroidInputType
  * @super EditText
  * @since 0.7.0
  */
-open class TextArea(context: Context, listener: TextAreaListener?) : EditText(context) {
+open class TextArea(context: Context, observer: TextAreaObserver) : EditText(context), Animatable {
 
 	//--------------------------------------------------------------------------
 	// Properties
@@ -85,18 +86,10 @@ open class TextArea(context: Context, listener: TextAreaListener?) : EditText(co
 	}
 
 	/**
-	 * @property textAlignment
+	 * @property textAlign
 	 * @since 0.7.0
 	 */
-	open var textAlignment: TextAlignment by Delegates.OnSet(TextAlignment.START) {
-		this.updateGravity()
-	}
-
-	/**
-	 * @property textLocation
-	 * @since 0.7.0
-	 */
-	open var textLocation: TextLocation by Delegates.OnSet(TextLocation.TOP) {
+	open var textAlign: TextAlign by Delegates.OnSet(TextAlign.TOP_LEFT) {
 		this.updateGravity()
 	}
 
@@ -223,11 +216,11 @@ open class TextArea(context: Context, listener: TextAreaListener?) : EditText(co
 	}
 
 	/**
-	 * @property textAreaListener
+	 * @property observer
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	internal var textAreaListener: TextAreaListener? = null
+	private lateinit var observer: TextAreaObserver
 
 	/**
 	 * @property invalidFont
@@ -250,7 +243,7 @@ open class TextArea(context: Context, listener: TextAreaListener?) : EditText(co
 				application.presentSoftKeyboard(v)
 			}
 
-			this.textAreaListener?.onFocus(this)
+			this.observer.onFocus(this)
 
 		} else {
 
@@ -259,7 +252,7 @@ open class TextArea(context: Context, listener: TextAreaListener?) : EditText(co
 				application.dismissSoftKeyboard(v)
 			}
 
-			this.textAreaListener?.onBlur(this)
+			this.observer.onBlur(this)
 		}
 	}
 
@@ -299,7 +292,7 @@ open class TextArea(context: Context, listener: TextAreaListener?) : EditText(co
 
 		this.updateGravity()
 
-		this.textAreaListener = listener
+		this.observer = observer
 
 		this.initialized = true
 	}
@@ -309,9 +302,13 @@ open class TextArea(context: Context, listener: TextAreaListener?) : EditText(co
 	 * @since 0.7.0
 	 */
 	open fun focus() {
-		if (this.hasFocus() == false) {
-			this.requestFocus()
+
+		val focused = this.hasFocus()
+		if (focused) {
+			return
 		}
+
+		this.requestFocus()
 	}
 
 	/**
@@ -349,7 +346,7 @@ open class TextArea(context: Context, listener: TextAreaListener?) : EditText(co
 	override fun onTextChanged(text: CharSequence?, start: Int, lengthBefore: Int, lengthAfter: Int) {
 		if (this.initialized) {
 			this.value = text.toString()
-			this.textAreaListener?.onChange(this, text.toString())
+			this.observer?.onChange(this, text.toString())
 		}
 	}
 
@@ -379,6 +376,62 @@ open class TextArea(context: Context, listener: TextAreaListener?) : EditText(co
 		)
 
 		return super.onPreDraw()
+	}
+
+	//--------------------------------------------------------------------------
+	// Animations
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @property animatable
+	 * @since 0.7.0
+	 */
+	override val animatable: List<String> = listOf()
+
+	/**
+	 * @property animations
+	 * @since 0.7.0
+	 */
+	override var animations: MutableMap<String, ValueAnimator> = mutableMapOf()
+
+	/**
+	 * @method onBeforeAnimate
+	 * @since 0.7.0
+	 */
+	override fun animate(property: String, initialValue: Any, currentValue: Any): ValueAnimator? {
+		return null
+	}
+
+	/**
+	 * @method onBeforeAnimate
+	 * @since 0.7.0
+	 */
+	override fun onBeforeAnimate(property: String) {
+
+	}
+
+	/**
+	 * @method onBeginTransition
+	 * @since 0.7.0
+	 */
+	override fun onBeginTransition() {
+
+	}
+
+	/**
+	 * @method onCommitTransition
+	 * @since 0.7.0
+	 */
+	override fun onCommitTransition() {
+
+	}
+
+	/**
+	 * @method onFinishTransition
+	 * @since 0.7.0
+	 */
+	override fun onFinishTransition() {
+
 	}
 
 	//--------------------------------------------------------------------------
@@ -462,18 +515,55 @@ open class TextArea(context: Context, listener: TextAreaListener?) : EditText(co
 	 */
 	private fun updateGravity() {
 
-		val h = when (this.textAlignment) {
-			TextAlignment.START   -> Gravity.START
-			TextAlignment.END     -> Gravity.END
-			TextAlignment.LEFT    -> Gravity.LEFT
-			TextAlignment.CENTER  -> Gravity.CENTER
-			TextAlignment.RIGHT   -> Gravity.RIGHT
-		}
+		val h: Int
+		val v: Int
 
-		val v = when (this.textLocation) {
-			TextLocation.TOP    -> Gravity.TOP
-			TextLocation.MIDDLE -> Gravity.CENTER_VERTICAL
-			TextLocation.BOTTOM -> Gravity.BOTTOM
+		when (this.textAlign) {
+
+			TextAlign.TOP_LEFT -> {
+				h = Gravity.LEFT
+				v = Gravity.TOP
+			}
+
+			TextAlign.TOP_RIGHT -> {
+				h = Gravity.RIGHT
+				v = Gravity.TOP
+			}
+
+			TextAlign.TOP_CENTER -> {
+				h = Gravity.CENTER
+				v = Gravity.TOP
+			}
+
+			TextAlign.MIDDLE_LEFT -> {
+				h = Gravity.LEFT
+				v = Gravity.CENTER_VERTICAL
+			}
+
+			TextAlign.MIDDLE_RIGHT -> {
+				h = Gravity.RIGHT
+				v = Gravity.CENTER_VERTICAL
+			}
+
+			TextAlign.MIDDLE_CENTER -> {
+				h = Gravity.CENTER
+				v = Gravity.CENTER_VERTICAL
+			}
+
+			TextAlign.BOTTOM_LEFT -> {
+				h = Gravity.LEFT
+				v = Gravity.BOTTOM
+			}
+
+			TextAlign.BOTTOM_RIGHT -> {
+				h = Gravity.RIGHT
+				v = Gravity.BOTTOM
+			}
+
+			TextAlign.BOTTOM_CENTER -> {
+				h = Gravity.CENTER
+				v = Gravity.BOTTOM
+			}
 		}
 
 		this.gravity = h or v

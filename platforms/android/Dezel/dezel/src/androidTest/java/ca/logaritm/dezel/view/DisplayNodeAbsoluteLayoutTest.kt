@@ -24,10 +24,10 @@ class DisplayNodeAbsoluteLayoutTest {
 		this.display.setViewportHeight(480f)
 
 		this.window = DisplayNode(this.display)
-		this.window.setWidth(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 320.0)
-		this.window.setHeight(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 480.0)
-		this.window.setContentWidth(kDisplayNodeContentSizeTypeLength, kDisplayNodeContentSizeUnitPX, 320.0)
-		this.window.setContentHeight(kDisplayNodeContentSizeTypeLength, kDisplayNodeContentSizeUnitPX, 480.0)
+		this.window.setWidth(kSizeTypeLength, kSizeUnitPX, 320.0)
+		this.window.setHeight(kSizeTypeLength, kSizeUnitPX, 480.0)
+		this.window.setContentWidth(kContentSizeTypeLength, kContentSizeUnitPX, 320.0)
+		this.window.setContentHeight(kContentSizeTypeLength, kContentSizeUnitPX, 480.0)
 		this.window.id = "Window"
 
 		this.display.setWindow(this.window)
@@ -37,10 +37,10 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testNodePositionInPX() {
 
 		val node = DisplayNode(this.display)
-		node.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 10.0)
-		node.setLeft(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 20.0)
-		node.setRight(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 30.0)
-		node.setBottom(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 40.0)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 10.0)
+		node.setLeft(kOriginTypeLength, kOriginUnitPX, 20.0)
+		node.setRight(kOriginTypeLength, kOriginUnitPX, 30.0)
+		node.setBottom(kOriginTypeLength, kOriginUnitPX, 40.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -55,10 +55,10 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testNodePositionInPC() {
 
 		val node = DisplayNode(this.display)
-		node.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPC, 10.0)
-		node.setLeft(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPC, 20.0)
-		node.setRight(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPC, 30.0)
-		node.setBottom(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPC, 40.0)
+		node.setTop(kOriginTypeLength, kOriginUnitPC, 10.0)
+		node.setLeft(kOriginTypeLength, kOriginUnitPC, 20.0)
+		node.setRight(kOriginTypeLength, kOriginUnitPC, 30.0)
+		node.setBottom(kOriginTypeLength, kOriginUnitPC, 40.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -73,10 +73,10 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testNodePositionInVW() {
 
 		val node = DisplayNode(this.display)
-		node.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitVW, 10.0)
-		node.setLeft(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitVW, 20.0)
-		node.setRight(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitVW, 30.0)
-		node.setBottom(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitVW, 40.0)
+		node.setTop(kOriginTypeLength, kOriginUnitVW, 10.0)
+		node.setLeft(kOriginTypeLength, kOriginUnitVW, 20.0)
+		node.setRight(kOriginTypeLength, kOriginUnitVW, 30.0)
+		node.setBottom(kOriginTypeLength, kOriginUnitVW, 40.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -91,10 +91,10 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testNodePositionInVH() {
 
 		val node = DisplayNode(this.display)
-		node.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitVH, 10.0)
-		node.setLeft(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitVH, 20.0)
-		node.setRight(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitVH, 30.0)
-		node.setBottom(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitVH, 40.0)
+		node.setTop(kOriginTypeLength, kOriginUnitVH, 10.0)
+		node.setLeft(kOriginTypeLength, kOriginUnitVH, 20.0)
+		node.setRight(kOriginTypeLength, kOriginUnitVH, 30.0)
+		node.setBottom(kOriginTypeLength, kOriginUnitVH, 40.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -109,10 +109,10 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testNodePositionInPW() {
 
 		val node = DisplayNode(this.display)
-		node.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPW, 10.0)
-		node.setLeft(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPW, 20.0)
-		node.setRight(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPW, 30.0)
-		node.setBottom(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPW, 40.0)
+		node.setTop(kOriginTypeLength, kOriginUnitPW, 10.0)
+		node.setLeft(kOriginTypeLength, kOriginUnitPW, 20.0)
+		node.setRight(kOriginTypeLength, kOriginUnitPW, 30.0)
+		node.setBottom(kOriginTypeLength, kOriginUnitPW, 40.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -127,10 +127,10 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testNodePositionInPH() {
 
 		val node = DisplayNode(this.display)
-		node.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPH, 10.0)
-		node.setLeft(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPH, 20.0)
-		node.setRight(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPH, 30.0)
-		node.setBottom(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPH, 40.0)
+		node.setTop(kOriginTypeLength, kOriginUnitPH, 10.0)
+		node.setLeft(kOriginTypeLength, kOriginUnitPH, 20.0)
+		node.setRight(kOriginTypeLength, kOriginUnitPH, 30.0)
+		node.setBottom(kOriginTypeLength, kOriginUnitPH, 40.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -145,13 +145,13 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testNodePositionInCW() {
 
 		val node = DisplayNode(this.display)
-		node.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitCW, 10.0)
-		node.setLeft(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitCW, 20.0)
-		node.setRight(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitCW, 30.0)
-		node.setBottom(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitCW, 40.0)
+		node.setTop(kOriginTypeLength, kOriginUnitCW, 10.0)
+		node.setLeft(kOriginTypeLength, kOriginUnitCW, 20.0)
+		node.setRight(kOriginTypeLength, kOriginUnitCW, 30.0)
+		node.setBottom(kOriginTypeLength, kOriginUnitCW, 40.0)
 
-		this.window.setContentWidth(kDisplayNodeContentSizeTypeLength, kDisplayNodeContentSizeUnitPX, 3200.0)
-		this.window.setContentHeight(kDisplayNodeContentSizeTypeLength, kDisplayNodeContentSizeUnitPX, 4800.0)
+		this.window.setContentWidth(kContentSizeTypeLength, kContentSizeUnitPX, 3200.0)
+		this.window.setContentHeight(kContentSizeTypeLength, kContentSizeUnitPX, 4800.0)
 		this.window.appendChild(node)
 		this.window.resolve()
 
@@ -165,13 +165,13 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testNodePositionInCH() {
 
 		val node = DisplayNode(this.display)
-		node.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitCH, 10.0)
-		node.setLeft(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitCH, 20.0)
-		node.setRight(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitCH, 30.0)
-		node.setBottom(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitCH, 40.0)
+		node.setTop(kOriginTypeLength, kOriginUnitCH, 10.0)
+		node.setLeft(kOriginTypeLength, kOriginUnitCH, 20.0)
+		node.setRight(kOriginTypeLength, kOriginUnitCH, 30.0)
+		node.setBottom(kOriginTypeLength, kOriginUnitCH, 40.0)
 
-		this.window.setContentWidth(kDisplayNodeContentSizeTypeLength, kDisplayNodeContentSizeUnitPX, 3200.0)
-		this.window.setContentHeight(kDisplayNodeContentSizeTypeLength, kDisplayNodeContentSizeUnitPX, 4800.0)
+		this.window.setContentWidth(kContentSizeTypeLength, kContentSizeUnitPX, 3200.0)
+		this.window.setContentHeight(kContentSizeTypeLength, kContentSizeUnitPX, 4800.0)
 		this.window.appendChild(node)
 		this.window.resolve()
 
@@ -185,15 +185,15 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testNodeMarginInPX() {
 
 		val node = DisplayNode(this.display)
-		node.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 10.0)
-		node.setLeft(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 20.0)
-		node.setRight(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 30.0)
-		node.setBottom(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 40.0)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 10.0)
+		node.setLeft(kOriginTypeLength, kOriginUnitPX, 20.0)
+		node.setRight(kOriginTypeLength, kOriginUnitPX, 30.0)
+		node.setBottom(kOriginTypeLength, kOriginUnitPX, 40.0)
 
-		node.setMarginTop(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitPX, 10.0)
-		node.setMarginLeft(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitPX, 20.0)
-		node.setMarginRight(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitPX, 30.0)
-		node.setMarginBottom(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitPX, 40.0)
+		node.setMarginTop(kMarginTypeLength, kMarginUnitPX, 10.0)
+		node.setMarginLeft(kMarginTypeLength, kMarginUnitPX, 20.0)
+		node.setMarginRight(kMarginTypeLength, kMarginUnitPX, 30.0)
+		node.setMarginBottom(kMarginTypeLength, kMarginUnitPX, 40.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -213,15 +213,15 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testNodeMarginInPC() {
 
 		val node = DisplayNode(this.display)
-		node.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 10.0)
-		node.setLeft(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 20.0)
-		node.setRight(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 30.0)
-		node.setBottom(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 40.0)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 10.0)
+		node.setLeft(kOriginTypeLength, kOriginUnitPX, 20.0)
+		node.setRight(kOriginTypeLength, kOriginUnitPX, 30.0)
+		node.setBottom(kOriginTypeLength, kOriginUnitPX, 40.0)
 
-		node.setMarginTop(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitPC, 10.0)
-		node.setMarginLeft(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitPC, 20.0)
-		node.setMarginRight(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitPC, 30.0)
-		node.setMarginBottom(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitPC, 40.0)
+		node.setMarginTop(kMarginTypeLength, kMarginUnitPC, 10.0)
+		node.setMarginLeft(kMarginTypeLength, kMarginUnitPC, 20.0)
+		node.setMarginRight(kMarginTypeLength, kMarginUnitPC, 30.0)
+		node.setMarginBottom(kMarginTypeLength, kMarginUnitPC, 40.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -241,15 +241,15 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testNodeMarginInVW() {
 
 		val node = DisplayNode(this.display)
-		node.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 10.0)
-		node.setLeft(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 20.0)
-		node.setRight(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 30.0)
-		node.setBottom(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 40.0)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 10.0)
+		node.setLeft(kOriginTypeLength, kOriginUnitPX, 20.0)
+		node.setRight(kOriginTypeLength, kOriginUnitPX, 30.0)
+		node.setBottom(kOriginTypeLength, kOriginUnitPX, 40.0)
 
-		node.setMarginTop(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitVW, 10.0)
-		node.setMarginLeft(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitVW, 20.0)
-		node.setMarginRight(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitVW, 30.0)
-		node.setMarginBottom(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitVW, 40.0)
+		node.setMarginTop(kMarginTypeLength, kMarginUnitVW, 10.0)
+		node.setMarginLeft(kMarginTypeLength, kMarginUnitVW, 20.0)
+		node.setMarginRight(kMarginTypeLength, kMarginUnitVW, 30.0)
+		node.setMarginBottom(kMarginTypeLength, kMarginUnitVW, 40.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -269,15 +269,15 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testNodeMarginInVH() {
 
 		val node = DisplayNode(this.display)
-		node.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 10.0)
-		node.setLeft(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 20.0)
-		node.setRight(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 30.0)
-		node.setBottom(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 40.0)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 10.0)
+		node.setLeft(kOriginTypeLength, kOriginUnitPX, 20.0)
+		node.setRight(kOriginTypeLength, kOriginUnitPX, 30.0)
+		node.setBottom(kOriginTypeLength, kOriginUnitPX, 40.0)
 
-		node.setMarginTop(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitVH, 10.0)
-		node.setMarginLeft(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitVH, 20.0)
-		node.setMarginRight(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitVH, 30.0)
-		node.setMarginBottom(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitVH, 40.0)
+		node.setMarginTop(kMarginTypeLength, kMarginUnitVH, 10.0)
+		node.setMarginLeft(kMarginTypeLength, kMarginUnitVH, 20.0)
+		node.setMarginRight(kMarginTypeLength, kMarginUnitVH, 30.0)
+		node.setMarginBottom(kMarginTypeLength, kMarginUnitVH, 40.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -297,13 +297,13 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testNodeMarginInPW() {
 
 		val node = DisplayNode(this.display)
-		node.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 0.0)
-		node.setLeft(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 0.0)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setLeft(kOriginTypeLength, kOriginUnitPX, 0.0)
 
-		node.setMarginTop(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitPW, 10.0)
-		node.setMarginLeft(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitPW, 20.0)
-		node.setMarginRight(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitPW, 30.0)
-		node.setMarginBottom(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitPW, 40.0)
+		node.setMarginTop(kMarginTypeLength, kMarginUnitPW, 10.0)
+		node.setMarginLeft(kMarginTypeLength, kMarginUnitPW, 20.0)
+		node.setMarginRight(kMarginTypeLength, kMarginUnitPW, 30.0)
+		node.setMarginBottom(kMarginTypeLength, kMarginUnitPW, 40.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -318,13 +318,13 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testNodeMarginInPH() {
 
 		val node = DisplayNode(this.display)
-		node.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 0.0)
-		node.setLeft(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 0.0)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setLeft(kOriginTypeLength, kOriginUnitPX, 0.0)
 
-		node.setMarginTop(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitPH, 10.0)
-		node.setMarginLeft(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitPH, 20.0)
-		node.setMarginRight(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitPH, 30.0)
-		node.setMarginBottom(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitPH, 40.0)
+		node.setMarginTop(kMarginTypeLength, kMarginUnitPH, 10.0)
+		node.setMarginLeft(kMarginTypeLength, kMarginUnitPH, 20.0)
+		node.setMarginRight(kMarginTypeLength, kMarginUnitPH, 30.0)
+		node.setMarginBottom(kMarginTypeLength, kMarginUnitPH, 40.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -339,16 +339,16 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testNodeMarginInCW() {
 
 		val node = DisplayNode(this.display)
-		node.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 0.0)
-		node.setLeft(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 0.0)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setLeft(kOriginTypeLength, kOriginUnitPX, 0.0)
 
-		node.setMarginTop(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitCW, 10.0)
-		node.setMarginLeft(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitCW, 20.0)
-		node.setMarginRight(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitCW, 30.0)
-		node.setMarginBottom(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitCW, 40.0)
+		node.setMarginTop(kMarginTypeLength, kMarginUnitCW, 10.0)
+		node.setMarginLeft(kMarginTypeLength, kMarginUnitCW, 20.0)
+		node.setMarginRight(kMarginTypeLength, kMarginUnitCW, 30.0)
+		node.setMarginBottom(kMarginTypeLength, kMarginUnitCW, 40.0)
 
-		this.window.setContentWidth(kDisplayNodeContentSizeTypeLength, kDisplayNodeContentSizeUnitPX, 3200.0)
-		this.window.setContentHeight(kDisplayNodeContentSizeTypeLength, kDisplayNodeContentSizeUnitPX, 4800.0)
+		this.window.setContentWidth(kContentSizeTypeLength, kContentSizeUnitPX, 3200.0)
+		this.window.setContentHeight(kContentSizeTypeLength, kContentSizeUnitPX, 4800.0)
 		this.window.appendChild(node)
 		this.window.resolve()
 
@@ -362,16 +362,16 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testNodeMarginInCH() {
 
 		val node = DisplayNode(this.display)
-		node.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 0.0)
-		node.setLeft(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 0.0)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setLeft(kOriginTypeLength, kOriginUnitPX, 0.0)
 
-		node.setMarginTop(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitCH, 10.0)
-		node.setMarginLeft(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitCH, 20.0)
-		node.setMarginRight(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitCH, 30.0)
-		node.setMarginBottom(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitCH, 40.0)
+		node.setMarginTop(kMarginTypeLength, kMarginUnitCH, 10.0)
+		node.setMarginLeft(kMarginTypeLength, kMarginUnitCH, 20.0)
+		node.setMarginRight(kMarginTypeLength, kMarginUnitCH, 30.0)
+		node.setMarginBottom(kMarginTypeLength, kMarginUnitCH, 40.0)
 
-		this.window.setContentWidth(kDisplayNodeContentSizeTypeLength, kDisplayNodeContentSizeUnitPX, 3200.0)
-		this.window.setContentHeight(kDisplayNodeContentSizeTypeLength, kDisplayNodeContentSizeUnitPX, 4800.0)
+		this.window.setContentWidth(kContentSizeTypeLength, kContentSizeUnitPX, 3200.0)
+		this.window.setContentHeight(kContentSizeTypeLength, kContentSizeUnitPX, 4800.0)
 		this.window.appendChild(node)
 		this.window.resolve()
 
@@ -385,8 +385,8 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testNodeWidthInPX() {
 
 		val node = DisplayNode(this.display)
-		node.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 10.0)
-		node.setWidth(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 100.0)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 10.0)
+		node.setWidth(kSizeTypeLength, kSizeUnitPX, 100.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -398,8 +398,8 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testNodeWidthInPC() {
 
 		val node = DisplayNode(this.display)
-		node.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 0.0)
-		node.setWidth(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPC, 50.0)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setWidth(kSizeTypeLength, kSizeUnitPC, 50.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -411,8 +411,8 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testNodeWidthInVW() {
 
 		val node = DisplayNode(this.display)
-		node.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 0.0)
-		node.setWidth(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitVW, 50.0)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setWidth(kSizeTypeLength, kSizeUnitVW, 50.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -424,8 +424,8 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testNodeWidthInVH() {
 
 		val node = DisplayNode(this.display)
-		node.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 0.0)
-		node.setWidth(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitVH, 50.0)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setWidth(kSizeTypeLength, kSizeUnitVH, 50.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -437,8 +437,8 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testNodeWidthInPW() {
 
 		val node = DisplayNode(this.display)
-		node.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 0.0)
-		node.setWidth(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPW, 50.0)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setWidth(kSizeTypeLength, kSizeUnitPW, 50.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -450,8 +450,8 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testNodeWidthInPH() {
 
 		val node = DisplayNode(this.display)
-		node.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 0.0)
-		node.setWidth(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPH, 50.0)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setWidth(kSizeTypeLength, kSizeUnitPH, 50.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -463,11 +463,11 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testNodeWidthInCW() {
 
 		val node = DisplayNode(this.display)
-		node.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 0.0)
-		node.setWidth(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitCW, 50.0)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setWidth(kSizeTypeLength, kSizeUnitCW, 50.0)
 
-		this.window.setContentWidth(kDisplayNodeContentSizeTypeLength, kDisplayNodeContentSizeUnitPX, 3200.0)
-		this.window.setContentHeight(kDisplayNodeContentSizeTypeLength, kDisplayNodeContentSizeUnitPX, 4800.0)
+		this.window.setContentWidth(kContentSizeTypeLength, kContentSizeUnitPX, 3200.0)
+		this.window.setContentHeight(kContentSizeTypeLength, kContentSizeUnitPX, 4800.0)
 		this.window.appendChild(node)
 		this.window.resolve()
 
@@ -478,11 +478,11 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testNodeWidthInCH() {
 
 		val node = DisplayNode(this.display)
-		node.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 0.0)
-		node.setWidth(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitCH, 50.0)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setWidth(kSizeTypeLength, kSizeUnitCH, 50.0)
 
-		this.window.setContentWidth(kDisplayNodeContentSizeTypeLength, kDisplayNodeContentSizeUnitPX, 3200.0)
-		this.window.setContentHeight(kDisplayNodeContentSizeTypeLength, kDisplayNodeContentSizeUnitPX, 4800.0)
+		this.window.setContentWidth(kContentSizeTypeLength, kContentSizeUnitPX, 3200.0)
+		this.window.setContentHeight(kContentSizeTypeLength, kContentSizeUnitPX, 4800.0)
 		this.window.appendChild(node)
 		this.window.resolve()
 
@@ -493,9 +493,9 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testNodeWidthUsingFill() {
 
 		val node = DisplayNode(this.display)
-		node.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 0.0)
-		node.setWidth(kDisplayNodeSizeTypeFill, kDisplayNodeSizeUnitNone, 0.0)
-		node.setHeight(kDisplayNodeSizeTypeFill, kDisplayNodeSizeUnitNone, 0.0)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setWidth(kSizeTypeFill, kSizeUnitNone, 0.0)
+		node.setHeight(kSizeTypeFill, kSizeUnitNone, 0.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -507,9 +507,9 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testNodeWidthUsingFillAndLeftPosition() {
 
 		val node = DisplayNode(this.display)
-		node.setLeft(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 10.0)
-		node.setWidth(kDisplayNodeSizeTypeFill, kDisplayNodeSizeUnitNone, 0.0)
-		node.setHeight(kDisplayNodeSizeTypeFill, kDisplayNodeSizeUnitNone, 0.0)
+		node.setLeft(kOriginTypeLength, kOriginUnitPX, 10.0)
+		node.setWidth(kSizeTypeFill, kSizeUnitNone, 0.0)
+		node.setHeight(kSizeTypeFill, kSizeUnitNone, 0.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -521,9 +521,9 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testNodeWidthUsingFillAndRightPosition() {
 
 		val node = DisplayNode(this.display)
-		node.setRight(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 30.0)
-		node.setWidth(kDisplayNodeSizeTypeFill, kDisplayNodeSizeUnitNone, 0.0)
-		node.setHeight(kDisplayNodeSizeTypeFill, kDisplayNodeSizeUnitNone, 0.0)
+		node.setRight(kOriginTypeLength, kOriginUnitPX, 30.0)
+		node.setWidth(kSizeTypeFill, kSizeUnitNone, 0.0)
+		node.setHeight(kSizeTypeFill, kSizeUnitNone, 0.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -535,8 +535,8 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testNodeWidthUsingLeftAndRightPositionInPX() {
 
 		val node = DisplayNode(this.display)
-		node.setLeft(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 20.0)
-		node.setRight(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 30.0)
+		node.setLeft(kOriginTypeLength, kOriginUnitPX, 20.0)
+		node.setRight(kOriginTypeLength, kOriginUnitPX, 30.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -548,8 +548,8 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testNodeWidthUsingLeftAndRightPositionInPC() {
 
 		val node = DisplayNode(this.display)
-		node.setLeft(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPC, 20.0)
-		node.setRight(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPC, 30.0)
+		node.setLeft(kOriginTypeLength, kOriginUnitPC, 20.0)
+		node.setRight(kOriginTypeLength, kOriginUnitPC, 30.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -561,8 +561,8 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testNodeWidthUsingLeftAndRightPositionInVW() {
 
 		val node = DisplayNode(this.display)
-		node.setLeft(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitVW, 20.0)
-		node.setRight(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitVW, 30.0)
+		node.setLeft(kOriginTypeLength, kOriginUnitVW, 20.0)
+		node.setRight(kOriginTypeLength, kOriginUnitVW, 30.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -574,8 +574,8 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testNodeWidthUsingLeftAndRightPositionInVH() {
 
 		val node = DisplayNode(this.display)
-		node.setLeft(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitVH, 20.0)
-		node.setRight(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitVH, 30.0)
+		node.setLeft(kOriginTypeLength, kOriginUnitVH, 20.0)
+		node.setRight(kOriginTypeLength, kOriginUnitVH, 30.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -587,9 +587,9 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testNodeWidthtShouldBeMeasuredFromLeftAndRightInsteadOfLength() {
 
 		val node = DisplayNode(this.display)
-		node.setLeft(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 20.0)
-		node.setRight(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 30.0)
-		node.setWidth(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 100.0)
+		node.setLeft(kOriginTypeLength, kOriginUnitPX, 20.0)
+		node.setRight(kOriginTypeLength, kOriginUnitPX, 30.0)
+		node.setWidth(kSizeTypeLength, kSizeUnitPX, 100.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -601,10 +601,10 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testNodeWidthUsingLeftAndRightPositionInPXIncludingNegativeMargins() {
 
 		val node = DisplayNode(this.display)
-		node.setLeft(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 20.0)
-		node.setRight(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 30.0)
-		node.setMarginLeft(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitPX, -20.0)
-		node.setMarginRight(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitPX, -30.0)
+		node.setLeft(kOriginTypeLength, kOriginUnitPX, 20.0)
+		node.setRight(kOriginTypeLength, kOriginUnitPX, 30.0)
+		node.setMarginLeft(kMarginTypeLength, kMarginUnitPX, -20.0)
+		node.setMarginRight(kMarginTypeLength, kMarginUnitPX, -30.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -616,10 +616,10 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testNodeWidthUsingLeftAndRightPositionInPXIncludingPositiveMargins() {
 
 		val node = DisplayNode(this.display)
-		node.setLeft(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 20.0)
-		node.setRight(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 30.0)
-		node.setMarginLeft(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitPX, 20.0)
-		node.setMarginRight(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitPX, 30.0)
+		node.setLeft(kOriginTypeLength, kOriginUnitPX, 20.0)
+		node.setRight(kOriginTypeLength, kOriginUnitPX, 30.0)
+		node.setMarginLeft(kMarginTypeLength, kMarginUnitPX, 20.0)
+		node.setMarginRight(kMarginTypeLength, kMarginUnitPX, 30.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -631,8 +631,8 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testNodeHeightInPX() {
 
 		val node = DisplayNode(this.display)
-		node.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 10.0)
-		node.setHeight(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 100.0)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 10.0)
+		node.setHeight(kSizeTypeLength, kSizeUnitPX, 100.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -644,8 +644,8 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testNodeHeightInPC() {
 
 		val node = DisplayNode(this.display)
-		node.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 0.0)
-		node.setHeight(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPC, 50.0)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setHeight(kSizeTypeLength, kSizeUnitPC, 50.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -657,8 +657,8 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testNodeHeightInVW() {
 
 		val node = DisplayNode(this.display)
-		node.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 0.0)
-		node.setHeight(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitVW, 50.0)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setHeight(kSizeTypeLength, kSizeUnitVW, 50.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -670,8 +670,8 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testNodeHeightInVH() {
 
 		val node = DisplayNode(this.display)
-		node.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 0.0)
-		node.setHeight(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitVH, 50.0)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setHeight(kSizeTypeLength, kSizeUnitVH, 50.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -683,8 +683,8 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testNodeHeightInPW() {
 
 		val node = DisplayNode(this.display)
-		node.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 0.0)
-		node.setHeight(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPW, 50.0)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setHeight(kSizeTypeLength, kSizeUnitPW, 50.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -696,8 +696,8 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testNodeHeightInPH() {
 
 		val node = DisplayNode(this.display)
-		node.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 0.0)
-		node.setHeight(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPH, 50.0)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setHeight(kSizeTypeLength, kSizeUnitPH, 50.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -709,11 +709,11 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testNodeHeightInCW() {
 
 		val node = DisplayNode(this.display)
-		node.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 0.0)
-		node.setHeight(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitCW, 50.0)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setHeight(kSizeTypeLength, kSizeUnitCW, 50.0)
 
-		this.window.setContentWidth(kDisplayNodeContentSizeTypeLength, kDisplayNodeContentSizeUnitPX, 3200.0)
-		this.window.setContentHeight(kDisplayNodeContentSizeTypeLength, kDisplayNodeContentSizeUnitPX, 4800.0)
+		this.window.setContentWidth(kContentSizeTypeLength, kContentSizeUnitPX, 3200.0)
+		this.window.setContentHeight(kContentSizeTypeLength, kContentSizeUnitPX, 4800.0)
 		this.window.appendChild(node)
 		this.window.resolve()
 
@@ -724,11 +724,11 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testNodeHeightInCH() {
 
 		val node = DisplayNode(this.display)
-		node.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 0.0)
-		node.setHeight(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitCH, 50.0)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setHeight(kSizeTypeLength, kSizeUnitCH, 50.0)
 
-		this.window.setContentWidth(kDisplayNodeContentSizeTypeLength, kDisplayNodeContentSizeUnitPX, 3200.0)
-		this.window.setContentHeight(kDisplayNodeContentSizeTypeLength, kDisplayNodeContentSizeUnitPX, 4800.0)
+		this.window.setContentWidth(kContentSizeTypeLength, kContentSizeUnitPX, 3200.0)
+		this.window.setContentHeight(kContentSizeTypeLength, kContentSizeUnitPX, 4800.0)
 		this.window.appendChild(node)
 		this.window.resolve()
 
@@ -739,9 +739,9 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testNodeHeightUsingFill() {
 
 		val node = DisplayNode(this.display)
-		node.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 0.0)
-		node.setWidth(kDisplayNodeSizeTypeFill, kDisplayNodeSizeUnitNone, 0.0)
-		node.setHeight(kDisplayNodeSizeTypeFill, kDisplayNodeSizeUnitNone, 0.0)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setWidth(kSizeTypeFill, kSizeUnitNone, 0.0)
+		node.setHeight(kSizeTypeFill, kSizeUnitNone, 0.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -753,9 +753,9 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testNodeHeightUsingFillAndTopPosition() {
 
 		val node = DisplayNode(this.display)
-		node.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 10.0)
-		node.setWidth(kDisplayNodeSizeTypeFill, kDisplayNodeSizeUnitNone, 0.0)
-		node.setHeight(kDisplayNodeSizeTypeFill, kDisplayNodeSizeUnitNone, 0.0)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 10.0)
+		node.setWidth(kSizeTypeFill, kSizeUnitNone, 0.0)
+		node.setHeight(kSizeTypeFill, kSizeUnitNone, 0.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -767,9 +767,9 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testNodeHeightUsingFillAndBottomPosition() {
 
 		val node = DisplayNode(this.display)
-		node.setBottom(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 40.0)
-		node.setWidth(kDisplayNodeSizeTypeFill, kDisplayNodeSizeUnitNone, 0.0)
-		node.setHeight(kDisplayNodeSizeTypeFill, kDisplayNodeSizeUnitNone, 0.0)
+		node.setBottom(kOriginTypeLength, kOriginUnitPX, 40.0)
+		node.setWidth(kSizeTypeFill, kSizeUnitNone, 0.0)
+		node.setHeight(kSizeTypeFill, kSizeUnitNone, 0.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -781,8 +781,8 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testNodeHeightUsingTopAndBottomPositionInPX() {
 
 		val node = DisplayNode(this.display)
-		node.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 10.0)
-		node.setBottom(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 40.0)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 10.0)
+		node.setBottom(kOriginTypeLength, kOriginUnitPX, 40.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -794,8 +794,8 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testNodeHeightUsingTopAndBottomPositionInPC() {
 
 		val node = DisplayNode(this.display)
-		node.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPC, 10.0)
-		node.setBottom(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPC, 40.0)
+		node.setTop(kOriginTypeLength, kOriginUnitPC, 10.0)
+		node.setBottom(kOriginTypeLength, kOriginUnitPC, 40.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -807,8 +807,8 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testNodeHeightUsingTopAndBottomPositionInVW() {
 
 		val node = DisplayNode(this.display)
-		node.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitVW, 10.0)
-		node.setBottom(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitVW, 40.0)
+		node.setTop(kOriginTypeLength, kOriginUnitVW, 10.0)
+		node.setBottom(kOriginTypeLength, kOriginUnitVW, 40.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -820,8 +820,8 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testNodeHeightUsingTopAndBottomPositionInVH() {
 
 		val node = DisplayNode(this.display)
-		node.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitVH, 10.0)
-		node.setBottom(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitVH, 40.0)
+		node.setTop(kOriginTypeLength, kOriginUnitVH, 10.0)
+		node.setBottom(kOriginTypeLength, kOriginUnitVH, 40.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -833,9 +833,9 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testNodeHeightShouldBeMeasuredFromTopAndBottomInsteadOfLength() {
 
 		val node = DisplayNode(this.display)
-		node.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 10.0)
-		node.setBottom(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 40.0)
-		node.setHeight(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 150.0)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 10.0)
+		node.setBottom(kOriginTypeLength, kOriginUnitPX, 40.0)
+		node.setHeight(kSizeTypeLength, kSizeUnitPX, 150.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -847,10 +847,10 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testNodeHeightUsingTopAndBottomPositionInPXIncludingNegativeMargins() {
 
 		val node = DisplayNode(this.display)
-		node.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 10.0)
-		node.setBottom(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 40.0)
-		node.setMarginTop(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitPX, -10.0)
-		node.setMarginBottom(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitPX, -40.0)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 10.0)
+		node.setBottom(kOriginTypeLength, kOriginUnitPX, 40.0)
+		node.setMarginTop(kMarginTypeLength, kMarginUnitPX, -10.0)
+		node.setMarginBottom(kMarginTypeLength, kMarginUnitPX, -40.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -862,10 +862,10 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testNodeHeightUsingTopAndBottomPositionInPXIncludingPositiveMargins() {
 
 		val node = DisplayNode(this.display)
-		node.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 10.0)
-		node.setBottom(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 40.0)
-		node.setMarginTop(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitPX, 10.0)
-		node.setMarginBottom(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitPX, 40.0)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 10.0)
+		node.setBottom(kOriginTypeLength, kOriginUnitPX, 40.0)
+		node.setMarginTop(kMarginTypeLength, kMarginUnitPX, 10.0)
+		node.setMarginBottom(kMarginTypeLength, kMarginUnitPX, 40.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -877,14 +877,14 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testNodeBorderInPX() {
 
 		val node = DisplayNode(this.display)
-		node.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 0.0)
-		node.setWidth(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 100.0)
-		node.setHeight(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 150.0)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setWidth(kSizeTypeLength, kSizeUnitPX, 100.0)
+		node.setHeight(kSizeTypeLength, kSizeUnitPX, 150.0)
 
-		node.setBorderTop(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitPX, 10.0)
-		node.setBorderLeft(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitPX, 20.0)
-		node.setBorderRight(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitPX, 30.0)
-		node.setBorderBottom(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitPX, 40.0)
+		node.setBorderTop(kBorderTypeLength, kBorderUnitPX, 10.0)
+		node.setBorderLeft(kBorderTypeLength, kBorderUnitPX, 20.0)
+		node.setBorderRight(kBorderTypeLength, kBorderUnitPX, 30.0)
+		node.setBorderBottom(kBorderTypeLength, kBorderUnitPX, 40.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -899,14 +899,14 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testNodeBorderInPC() {
 
 		val node = DisplayNode(this.display)
-		node.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 0.0)
-		node.setWidth(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 100.0)
-		node.setHeight(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 150.0)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setWidth(kSizeTypeLength, kSizeUnitPX, 100.0)
+		node.setHeight(kSizeTypeLength, kSizeUnitPX, 150.0)
 
-		node.setBorderTop(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitPC, 10.0)
-		node.setBorderLeft(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitPC, 20.0)
-		node.setBorderRight(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitPC, 30.0)
-		node.setBorderBottom(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitPC, 40.0)
+		node.setBorderTop(kBorderTypeLength, kBorderUnitPC, 10.0)
+		node.setBorderLeft(kBorderTypeLength, kBorderUnitPC, 20.0)
+		node.setBorderRight(kBorderTypeLength, kBorderUnitPC, 30.0)
+		node.setBorderBottom(kBorderTypeLength, kBorderUnitPC, 40.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -921,14 +921,14 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testNodeBorderInVW() {
 
 		val node = DisplayNode(this.display)
-		node.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 0.0)
-		node.setWidth(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 100.0)
-		node.setHeight(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 150.0)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setWidth(kSizeTypeLength, kSizeUnitPX, 100.0)
+		node.setHeight(kSizeTypeLength, kSizeUnitPX, 150.0)
 
-		node.setBorderTop(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitVW, 10.0)
-		node.setBorderLeft(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitVW, 20.0)
-		node.setBorderRight(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitVW, 30.0)
-		node.setBorderBottom(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitVW, 40.0)
+		node.setBorderTop(kBorderTypeLength, kBorderUnitVW, 10.0)
+		node.setBorderLeft(kBorderTypeLength, kBorderUnitVW, 20.0)
+		node.setBorderRight(kBorderTypeLength, kBorderUnitVW, 30.0)
+		node.setBorderBottom(kBorderTypeLength, kBorderUnitVW, 40.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -943,14 +943,14 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testNodeBorderInVH() {
 
 		val node = DisplayNode(this.display)
-		node.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 0.0)
-		node.setWidth(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 100.0)
-		node.setHeight(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 150.0)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setWidth(kSizeTypeLength, kSizeUnitPX, 100.0)
+		node.setHeight(kSizeTypeLength, kSizeUnitPX, 150.0)
 
-		node.setBorderTop(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitVH, 10.0)
-		node.setBorderLeft(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitVH, 20.0)
-		node.setBorderRight(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitVH, 30.0)
-		node.setBorderBottom(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitVH, 40.0)
+		node.setBorderTop(kBorderTypeLength, kBorderUnitVH, 10.0)
+		node.setBorderLeft(kBorderTypeLength, kBorderUnitVH, 20.0)
+		node.setBorderRight(kBorderTypeLength, kBorderUnitVH, 30.0)
+		node.setBorderBottom(kBorderTypeLength, kBorderUnitVH, 40.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -965,13 +965,13 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testNodeBorderInPW() {
 
 		val node = DisplayNode(this.display)
-		node.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 0.0)
-		node.setLeft(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 0.0)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setLeft(kOriginTypeLength, kOriginUnitPX, 0.0)
 
-		node.setBorderTop(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitPW, 10.0)
-		node.setBorderLeft(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitPW, 20.0)
-		node.setBorderRight(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitPW, 30.0)
-		node.setBorderBottom(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitPW, 40.0)
+		node.setBorderTop(kBorderTypeLength, kBorderUnitPW, 10.0)
+		node.setBorderLeft(kBorderTypeLength, kBorderUnitPW, 20.0)
+		node.setBorderRight(kBorderTypeLength, kBorderUnitPW, 30.0)
+		node.setBorderBottom(kBorderTypeLength, kBorderUnitPW, 40.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -986,13 +986,13 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testNodeBorderInPH() {
 
 		val node = DisplayNode(this.display)
-		node.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 0.0)
-		node.setLeft(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 0.0)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setLeft(kOriginTypeLength, kOriginUnitPX, 0.0)
 
-		node.setBorderTop(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitPH, 10.0)
-		node.setBorderLeft(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitPH, 20.0)
-		node.setBorderRight(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitPH, 30.0)
-		node.setBorderBottom(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitPH, 40.0)
+		node.setBorderTop(kBorderTypeLength, kBorderUnitPH, 10.0)
+		node.setBorderLeft(kBorderTypeLength, kBorderUnitPH, 20.0)
+		node.setBorderRight(kBorderTypeLength, kBorderUnitPH, 30.0)
+		node.setBorderBottom(kBorderTypeLength, kBorderUnitPH, 40.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -1007,16 +1007,16 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testNodeBorderInCW() {
 
 		val node = DisplayNode(this.display)
-		node.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 0.0)
-		node.setLeft(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 0.0)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setLeft(kOriginTypeLength, kOriginUnitPX, 0.0)
 
-		node.setBorderTop(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitCW, 10.0)
-		node.setBorderLeft(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitCW, 20.0)
-		node.setBorderRight(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitCW, 30.0)
-		node.setBorderBottom(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitCW, 40.0)
+		node.setBorderTop(kBorderTypeLength, kBorderUnitCW, 10.0)
+		node.setBorderLeft(kBorderTypeLength, kBorderUnitCW, 20.0)
+		node.setBorderRight(kBorderTypeLength, kBorderUnitCW, 30.0)
+		node.setBorderBottom(kBorderTypeLength, kBorderUnitCW, 40.0)
 
-		this.window.setContentWidth(kDisplayNodeContentSizeTypeLength, kDisplayNodeContentSizeUnitPX, 3200.0)
-		this.window.setContentHeight(kDisplayNodeContentSizeTypeLength, kDisplayNodeContentSizeUnitPX, 4800.0)
+		this.window.setContentWidth(kContentSizeTypeLength, kContentSizeUnitPX, 3200.0)
+		this.window.setContentHeight(kContentSizeTypeLength, kContentSizeUnitPX, 4800.0)
 		this.window.appendChild(node)
 		this.window.resolve()
 
@@ -1030,16 +1030,16 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testNodeBorderInCH() {
 
 		val node = DisplayNode(this.display)
-		node.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 0.0)
-		node.setLeft(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 0.0)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setLeft(kOriginTypeLength, kOriginUnitPX, 0.0)
 
-		node.setBorderTop(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitCH, 10.0)
-		node.setBorderLeft(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitCH, 20.0)
-		node.setBorderRight(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitCH, 30.0)
-		node.setBorderBottom(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitCH, 40.0)
+		node.setBorderTop(kBorderTypeLength, kBorderUnitCH, 10.0)
+		node.setBorderLeft(kBorderTypeLength, kBorderUnitCH, 20.0)
+		node.setBorderRight(kBorderTypeLength, kBorderUnitCH, 30.0)
+		node.setBorderBottom(kBorderTypeLength, kBorderUnitCH, 40.0)
 
-		this.window.setContentWidth(kDisplayNodeContentSizeTypeLength, kDisplayNodeContentSizeUnitPX, 3200.0)
-		this.window.setContentHeight(kDisplayNodeContentSizeTypeLength, kDisplayNodeContentSizeUnitPX, 4800.0)
+		this.window.setContentWidth(kContentSizeTypeLength, kContentSizeUnitPX, 3200.0)
+		this.window.setContentHeight(kContentSizeTypeLength, kContentSizeUnitPX, 4800.0)
 		this.window.appendChild(node)
 		this.window.resolve()
 
@@ -1053,14 +1053,14 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testNodePaddingInPX() {
 
 		val node = DisplayNode(this.display)
-		node.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 0.0)
-		node.setWidth(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 100.0)
-		node.setHeight(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 150.0)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setWidth(kSizeTypeLength, kSizeUnitPX, 100.0)
+		node.setHeight(kSizeTypeLength, kSizeUnitPX, 150.0)
 
-		node.setPaddingTop(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitPX, 10.0)
-		node.setPaddingLeft(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitPX, 20.0)
-		node.setPaddingRight(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitPX, 30.0)
-		node.setPaddingBottom(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitPX, 40.0)
+		node.setPaddingTop(kPaddingTypeLength, kPaddingUnitPX, 10.0)
+		node.setPaddingLeft(kPaddingTypeLength, kPaddingUnitPX, 20.0)
+		node.setPaddingRight(kPaddingTypeLength, kPaddingUnitPX, 30.0)
+		node.setPaddingBottom(kPaddingTypeLength, kPaddingUnitPX, 40.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -1075,14 +1075,14 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testNodePaddingInPC() {
 
 		val node = DisplayNode(this.display)
-		node.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 0.0)
-		node.setWidth(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 100.0)
-		node.setHeight(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 150.0)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setWidth(kSizeTypeLength, kSizeUnitPX, 100.0)
+		node.setHeight(kSizeTypeLength, kSizeUnitPX, 150.0)
 
-		node.setPaddingTop(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitPC, 10.0)
-		node.setPaddingLeft(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitPC, 20.0)
-		node.setPaddingRight(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitPC, 30.0)
-		node.setPaddingBottom(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitPC, 40.0)
+		node.setPaddingTop(kPaddingTypeLength, kPaddingUnitPC, 10.0)
+		node.setPaddingLeft(kPaddingTypeLength, kPaddingUnitPC, 20.0)
+		node.setPaddingRight(kPaddingTypeLength, kPaddingUnitPC, 30.0)
+		node.setPaddingBottom(kPaddingTypeLength, kPaddingUnitPC, 40.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -1097,14 +1097,14 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testNodePaddingInVW() {
 
 		val node = DisplayNode(this.display)
-		node.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 0.0)
-		node.setWidth(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 100.0)
-		node.setHeight(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 150.0)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setWidth(kSizeTypeLength, kSizeUnitPX, 100.0)
+		node.setHeight(kSizeTypeLength, kSizeUnitPX, 150.0)
 
-		node.setPaddingTop(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitVW, 10.0)
-		node.setPaddingLeft(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitVW, 20.0)
-		node.setPaddingRight(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitVW, 30.0)
-		node.setPaddingBottom(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitVW, 40.0)
+		node.setPaddingTop(kPaddingTypeLength, kPaddingUnitVW, 10.0)
+		node.setPaddingLeft(kPaddingTypeLength, kPaddingUnitVW, 20.0)
+		node.setPaddingRight(kPaddingTypeLength, kPaddingUnitVW, 30.0)
+		node.setPaddingBottom(kPaddingTypeLength, kPaddingUnitVW, 40.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -1119,14 +1119,14 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testNodePaddingInVH() {
 
 		val node = DisplayNode(this.display)
-		node.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 0.0)
-		node.setWidth(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 100.0)
-		node.setHeight(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 150.0)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setWidth(kSizeTypeLength, kSizeUnitPX, 100.0)
+		node.setHeight(kSizeTypeLength, kSizeUnitPX, 150.0)
 
-		node.setPaddingTop(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitVH, 10.0)
-		node.setPaddingLeft(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitVH, 20.0)
-		node.setPaddingRight(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitVH, 30.0)
-		node.setPaddingBottom(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitVH, 40.0)
+		node.setPaddingTop(kPaddingTypeLength, kPaddingUnitVH, 10.0)
+		node.setPaddingLeft(kPaddingTypeLength, kPaddingUnitVH, 20.0)
+		node.setPaddingRight(kPaddingTypeLength, kPaddingUnitVH, 30.0)
+		node.setPaddingBottom(kPaddingTypeLength, kPaddingUnitVH, 40.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -1141,13 +1141,13 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testNodePaddingInPW() {
 
 		val node = DisplayNode(this.display)
-		node.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 0.0)
-		node.setLeft(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 0.0)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setLeft(kOriginTypeLength, kOriginUnitPX, 0.0)
 
-		node.setPaddingTop(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitPW, 10.0)
-		node.setPaddingLeft(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitPW, 20.0)
-		node.setPaddingRight(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitPW, 30.0)
-		node.setPaddingBottom(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitPW, 40.0)
+		node.setPaddingTop(kPaddingTypeLength, kPaddingUnitPW, 10.0)
+		node.setPaddingLeft(kPaddingTypeLength, kPaddingUnitPW, 20.0)
+		node.setPaddingRight(kPaddingTypeLength, kPaddingUnitPW, 30.0)
+		node.setPaddingBottom(kPaddingTypeLength, kPaddingUnitPW, 40.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -1162,13 +1162,13 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testNodePaddingInPH() {
 
 		val node = DisplayNode(this.display)
-		node.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 0.0)
-		node.setLeft(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 0.0)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setLeft(kOriginTypeLength, kOriginUnitPX, 0.0)
 
-		node.setPaddingTop(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitPH, 10.0)
-		node.setPaddingLeft(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitPH, 20.0)
-		node.setPaddingRight(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitPH, 30.0)
-		node.setPaddingBottom(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitPH, 40.0)
+		node.setPaddingTop(kPaddingTypeLength, kPaddingUnitPH, 10.0)
+		node.setPaddingLeft(kPaddingTypeLength, kPaddingUnitPH, 20.0)
+		node.setPaddingRight(kPaddingTypeLength, kPaddingUnitPH, 30.0)
+		node.setPaddingBottom(kPaddingTypeLength, kPaddingUnitPH, 40.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -1183,16 +1183,16 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testNodePaddingInCW() {
 
 		val node = DisplayNode(this.display)
-		node.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 0.0)
-		node.setLeft(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 0.0)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setLeft(kOriginTypeLength, kOriginUnitPX, 0.0)
 
-		node.setPaddingTop(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitCW, 10.0)
-		node.setPaddingLeft(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitCW, 20.0)
-		node.setPaddingRight(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitCW, 30.0)
-		node.setPaddingBottom(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitCW, 40.0)
+		node.setPaddingTop(kPaddingTypeLength, kPaddingUnitCW, 10.0)
+		node.setPaddingLeft(kPaddingTypeLength, kPaddingUnitCW, 20.0)
+		node.setPaddingRight(kPaddingTypeLength, kPaddingUnitCW, 30.0)
+		node.setPaddingBottom(kPaddingTypeLength, kPaddingUnitCW, 40.0)
 
-		this.window.setContentWidth(kDisplayNodeContentSizeTypeLength, kDisplayNodeContentSizeUnitPX, 3200.0)
-		this.window.setContentHeight(kDisplayNodeContentSizeTypeLength, kDisplayNodeContentSizeUnitPX, 4800.0)
+		this.window.setContentWidth(kContentSizeTypeLength, kContentSizeUnitPX, 3200.0)
+		this.window.setContentHeight(kContentSizeTypeLength, kContentSizeUnitPX, 4800.0)
 		this.window.appendChild(node)
 		this.window.resolve()
 
@@ -1206,16 +1206,16 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testNodePaddingInCH() {
 
 		val node = DisplayNode(this.display)
-		node.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 0.0)
-		node.setLeft(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 0.0)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setLeft(kOriginTypeLength, kOriginUnitPX, 0.0)
 
-		node.setPaddingTop(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitCH, 10.0)
-		node.setPaddingLeft(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitCH, 20.0)
-		node.setPaddingRight(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitCH, 30.0)
-		node.setPaddingBottom(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitCH, 40.0)
+		node.setPaddingTop(kPaddingTypeLength, kPaddingUnitCH, 10.0)
+		node.setPaddingLeft(kPaddingTypeLength, kPaddingUnitCH, 20.0)
+		node.setPaddingRight(kPaddingTypeLength, kPaddingUnitCH, 30.0)
+		node.setPaddingBottom(kPaddingTypeLength, kPaddingUnitCH, 40.0)
 
-		this.window.setContentWidth(kDisplayNodeContentSizeTypeLength, kDisplayNodeContentSizeUnitPX, 3200.0)
-		this.window.setContentHeight(kDisplayNodeContentSizeTypeLength, kDisplayNodeContentSizeUnitPX, 4800.0)
+		this.window.setContentWidth(kContentSizeTypeLength, kContentSizeUnitPX, 3200.0)
+		this.window.setContentHeight(kContentSizeTypeLength, kContentSizeUnitPX, 4800.0)
 		this.window.appendChild(node)
 		this.window.resolve()
 
@@ -1229,12 +1229,12 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testAnchorInPC() {
 
 		val node = DisplayNode(this.display)
-		node.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 0.0)
-		node.setWidth(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 100.0)
-		node.setHeight(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setWidth(kSizeTypeLength, kSizeUnitPX, 100.0)
+		node.setHeight(kSizeTypeLength, kSizeUnitPX, 200.0)
 
-		node.setAnchorTop(kDisplayNodeAnchorTypeLength, kDisplayNodeAnchorUnitPC, 50.0)
-		node.setAnchorLeft(kDisplayNodeAnchorTypeLength, kDisplayNodeAnchorUnitPC, 100.0)
+		node.setAnchorTop(kAnchorTypeLength, kAnchorUnitPC, 50.0)
+		node.setAnchorLeft(kAnchorTypeLength, kAnchorUnitPC, 100.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -1248,9 +1248,9 @@ class DisplayNodeAbsoluteLayoutTest {
 
 		// TODO: Test other properites
 		val node = DisplayNode(this.display)
-		node.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 0.0)
-		node.setWidth(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPC, 33.0)
-		node.setHeight(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPC, 33.0)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setWidth(kSizeTypeLength, kSizeUnitPC, 33.0)
+		node.setHeight(kSizeTypeLength, kSizeUnitPC, 33.0)
 
 		this.display.setScale(2f)
 		this.window.appendChild(node)
@@ -1266,17 +1266,17 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testWrappingFromContentSize() {
 
 		val container = DisplayNode(this.display)
-		container.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 0.0)
-		container.setWidth(kDisplayNodeSizeTypeWrap, kDisplayNodeSizeUnitNone, 0.0)
-		container.setHeight(kDisplayNodeSizeTypeWrap, kDisplayNodeSizeUnitNone, 0.0)
+		container.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		container.setWidth(kSizeTypeWrap, kSizeUnitNone, 0.0)
+		container.setHeight(kSizeTypeWrap, kSizeUnitNone, 0.0)
 
 		val node1 = DisplayNode(this.display)
-		node1.setWidth(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
-		node1.setHeight(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
+		node1.setWidth(kSizeTypeLength, kSizeUnitPX, 200.0)
+		node1.setHeight(kSizeTypeLength, kSizeUnitPX, 200.0)
 
 		val node2 = DisplayNode(this.display)
-		node2.setWidth(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
-		node2.setHeight(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
+		node2.setWidth(kSizeTypeLength, kSizeUnitPX, 200.0)
+		node2.setHeight(kSizeTypeLength, kSizeUnitPX, 200.0)
 
 		container.appendChild(node1)
 		container.appendChild(node2)
@@ -1304,19 +1304,19 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testWrappingFromContentSizeWithMin() {
 
 		val container = DisplayNode(this.display)
-		container.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 0.0)
-		container.setWidth(kDisplayNodeSizeTypeWrap, kDisplayNodeSizeUnitNone, 0.0)
-		container.setHeight(kDisplayNodeSizeTypeWrap, kDisplayNodeSizeUnitNone, 0.0)
+		container.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		container.setWidth(kSizeTypeWrap, kSizeUnitNone, 0.0)
+		container.setHeight(kSizeTypeWrap, kSizeUnitNone, 0.0)
 		container.setMinWidth(250.0)
 		container.setMinHeight(450.0)
 
 		val node1 = DisplayNode(this.display)
-		node1.setWidth(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
-		node1.setHeight(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
+		node1.setWidth(kSizeTypeLength, kSizeUnitPX, 200.0)
+		node1.setHeight(kSizeTypeLength, kSizeUnitPX, 200.0)
 
 		val node2 = DisplayNode(this.display)
-		node2.setWidth(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
-		node2.setHeight(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
+		node2.setWidth(kSizeTypeLength, kSizeUnitPX, 200.0)
+		node2.setHeight(kSizeTypeLength, kSizeUnitPX, 200.0)
 
 		container.appendChild(node1)
 		container.appendChild(node2)
@@ -1344,19 +1344,19 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testWrappingFromContentSizeWithMax() {
 
 		val container = DisplayNode(this.display)
-		container.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 0.0)
-		container.setWidth(kDisplayNodeSizeTypeWrap, kDisplayNodeSizeUnitNone, 0.0)
-		container.setHeight(kDisplayNodeSizeTypeWrap, kDisplayNodeSizeUnitNone, 0.0)
+		container.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		container.setWidth(kSizeTypeWrap, kSizeUnitNone, 0.0)
+		container.setHeight(kSizeTypeWrap, kSizeUnitNone, 0.0)
 		container.setMaxWidth(150.0)
 		container.setMaxHeight(350.0)
 
 		val node1 = DisplayNode(this.display)
-		node1.setWidth(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
-		node1.setHeight(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
+		node1.setWidth(kSizeTypeLength, kSizeUnitPX, 200.0)
+		node1.setHeight(kSizeTypeLength, kSizeUnitPX, 200.0)
 
 		val node2 = DisplayNode(this.display)
-		node2.setWidth(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
-		node2.setHeight(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
+		node2.setWidth(kSizeTypeLength, kSizeUnitPX, 200.0)
+		node2.setHeight(kSizeTypeLength, kSizeUnitPX, 200.0)
 
 		container.appendChild(node1)
 		container.appendChild(node2)
@@ -1384,21 +1384,21 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testWrappingFromContentSizeAndPadding() {
 
 		val container = DisplayNode(this.display)
-		container.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 0.0)
-		container.setWidth(kDisplayNodeSizeTypeWrap, kDisplayNodeSizeUnitNone, 0.0)
-		container.setHeight(kDisplayNodeSizeTypeWrap, kDisplayNodeSizeUnitNone, 0.0)
-		container.setPaddingTop(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitPX, 10.0)
-		container.setPaddingLeft(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitPX, 20.0)
-		container.setPaddingRight(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitPX, 30.0)
-		container.setPaddingBottom(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitPX, 40.0)
+		container.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		container.setWidth(kSizeTypeWrap, kSizeUnitNone, 0.0)
+		container.setHeight(kSizeTypeWrap, kSizeUnitNone, 0.0)
+		container.setPaddingTop(kPaddingTypeLength, kPaddingUnitPX, 10.0)
+		container.setPaddingLeft(kPaddingTypeLength, kPaddingUnitPX, 20.0)
+		container.setPaddingRight(kPaddingTypeLength, kPaddingUnitPX, 30.0)
+		container.setPaddingBottom(kPaddingTypeLength, kPaddingUnitPX, 40.0)
 
 		val node1 = DisplayNode(this.display)
-		node1.setWidth(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
-		node1.setHeight(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
+		node1.setWidth(kSizeTypeLength, kSizeUnitPX, 200.0)
+		node1.setHeight(kSizeTypeLength, kSizeUnitPX, 200.0)
 
 		val node2 = DisplayNode(this.display)
-		node2.setWidth(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
-		node2.setHeight(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
+		node2.setWidth(kSizeTypeLength, kSizeUnitPX, 200.0)
+		node2.setHeight(kSizeTypeLength, kSizeUnitPX, 200.0)
 
 		container.appendChild(node1)
 		container.appendChild(node2)
@@ -1426,21 +1426,21 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testWrappingFromContentSizeAndMargin() {
 
 		val container = DisplayNode(this.display)
-		container.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 0.0)
-		container.setWidth(kDisplayNodeSizeTypeWrap, kDisplayNodeSizeUnitNone, 0.0)
-		container.setHeight(kDisplayNodeSizeTypeWrap, kDisplayNodeSizeUnitNone, 0.0)
+		container.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		container.setWidth(kSizeTypeWrap, kSizeUnitNone, 0.0)
+		container.setHeight(kSizeTypeWrap, kSizeUnitNone, 0.0)
 
 		val node1 = DisplayNode(this.display)
-		node1.setWidth(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
-		node1.setHeight(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
-		node1.setMarginRight(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitPX, 30.0)
-		node1.setMarginBottom(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitPX, 20.0)
+		node1.setWidth(kSizeTypeLength, kSizeUnitPX, 200.0)
+		node1.setHeight(kSizeTypeLength, kSizeUnitPX, 200.0)
+		node1.setMarginRight(kMarginTypeLength, kMarginUnitPX, 30.0)
+		node1.setMarginBottom(kMarginTypeLength, kMarginUnitPX, 20.0)
 
 		val node2 = DisplayNode(this.display)
-		node2.setWidth(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
-		node2.setHeight(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
-		node2.setMarginRight(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitPX, 50.0)
-		node2.setMarginBottom(kDisplayNodeMarginTypeLength, kDisplayNodeMarginUnitPX, 40.0)
+		node2.setWidth(kSizeTypeLength, kSizeUnitPX, 200.0)
+		node2.setHeight(kSizeTypeLength, kSizeUnitPX, 200.0)
+		node2.setMarginRight(kMarginTypeLength, kMarginUnitPX, 50.0)
+		node2.setMarginBottom(kMarginTypeLength, kMarginUnitPX, 40.0)
 
 		container.appendChild(node1)
 		container.appendChild(node2)
@@ -1470,17 +1470,17 @@ class DisplayNodeAbsoluteLayoutTest {
 		val counter = DisplayNodeListenerCounter()
 
 		val node1 = DisplayNode(this.display)
-		node1.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 10.0)
-		node1.setLeft(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 20.0)
-		node1.setWidth(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
-		node1.setHeight(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
+		node1.setTop(kOriginTypeLength, kOriginUnitPX, 10.0)
+		node1.setLeft(kOriginTypeLength, kOriginUnitPX, 20.0)
+		node1.setWidth(kSizeTypeLength, kSizeUnitPX, 200.0)
+		node1.setHeight(kSizeTypeLength, kSizeUnitPX, 200.0)
 		node1.listener = counter
 
 		val node2 = DisplayNode(this.display)
-		node2.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 10.0)
-		node2.setLeft(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 20.0)
-		node2.setWidth(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
-		node2.setHeight(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
+		node2.setTop(kOriginTypeLength, kOriginUnitPX, 10.0)
+		node2.setLeft(kOriginTypeLength, kOriginUnitPX, 20.0)
+		node2.setWidth(kSizeTypeLength, kSizeUnitPX, 200.0)
+		node2.setHeight(kSizeTypeLength, kSizeUnitPX, 200.0)
 		node2.listener = counter
 
 		this.window.appendChild(node1)
@@ -1491,10 +1491,10 @@ class DisplayNodeAbsoluteLayoutTest {
 		Assert.assertEquals(counter.resolvedOrigin, 2)
 
 		val node3 = DisplayNode(this.display)
-		node3.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 10.0)
-		node3.setLeft(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 20.0)
-		node3.setWidth(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
-		node3.setHeight(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
+		node3.setTop(kOriginTypeLength, kOriginUnitPX, 10.0)
+		node3.setLeft(kOriginTypeLength, kOriginUnitPX, 20.0)
+		node3.setWidth(kSizeTypeLength, kSizeUnitPX, 200.0)
+		node3.setHeight(kSizeTypeLength, kSizeUnitPX, 200.0)
 		node3.listener = counter
 
 		this.window.appendChild(node3)
@@ -1508,21 +1508,21 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testWrappedNodePaddingInPX() {
 
 		val container = DisplayNode(this.display)
-		container.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 0.0)
-		container.setWidth(kDisplayNodeSizeTypeWrap, kDisplayNodeSizeUnitNone, 0.0)
-		container.setHeight(kDisplayNodeSizeTypeWrap, kDisplayNodeSizeUnitNone, 0.0)
-		container.setPaddingTop(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitPX, 20.0)
-		container.setPaddingLeft(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitPX, 40.0)
-		container.setPaddingRight(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitPX, 60.0)
-		container.setPaddingBottom(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitPX, 80.0)
+		container.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		container.setWidth(kSizeTypeWrap, kSizeUnitNone, 0.0)
+		container.setHeight(kSizeTypeWrap, kSizeUnitNone, 0.0)
+		container.setPaddingTop(kPaddingTypeLength, kPaddingUnitPX, 20.0)
+		container.setPaddingLeft(kPaddingTypeLength, kPaddingUnitPX, 40.0)
+		container.setPaddingRight(kPaddingTypeLength, kPaddingUnitPX, 60.0)
+		container.setPaddingBottom(kPaddingTypeLength, kPaddingUnitPX, 80.0)
 
 		val node1 = DisplayNode(this.display)
-		node1.setWidth(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
-		node1.setHeight(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
+		node1.setWidth(kSizeTypeLength, kSizeUnitPX, 200.0)
+		node1.setHeight(kSizeTypeLength, kSizeUnitPX, 200.0)
 
 		val node2 = DisplayNode(this.display)
-		node2.setWidth(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
-		node2.setHeight(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
+		node2.setWidth(kSizeTypeLength, kSizeUnitPX, 200.0)
+		node2.setHeight(kSizeTypeLength, kSizeUnitPX, 200.0)
 
 		container.appendChild(node1)
 		container.appendChild(node2)
@@ -1555,21 +1555,21 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testWrappedNodePaddingInPC() {
 
 		val container = DisplayNode(this.display)
-		container.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 0.0)
-		container.setWidth(kDisplayNodeSizeTypeWrap, kDisplayNodeSizeUnitNone, 0.0)
-		container.setHeight(kDisplayNodeSizeTypeWrap, kDisplayNodeSizeUnitNone, 0.0)
-		container.setPaddingTop(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitPC, 20.0)
-		container.setPaddingLeft(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitPC, 40.0)
-		container.setPaddingRight(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitPC, 60.0)
-		container.setPaddingBottom(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitPC, 80.0)
+		container.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		container.setWidth(kSizeTypeWrap, kSizeUnitNone, 0.0)
+		container.setHeight(kSizeTypeWrap, kSizeUnitNone, 0.0)
+		container.setPaddingTop(kPaddingTypeLength, kPaddingUnitPC, 20.0)
+		container.setPaddingLeft(kPaddingTypeLength, kPaddingUnitPC, 40.0)
+		container.setPaddingRight(kPaddingTypeLength, kPaddingUnitPC, 60.0)
+		container.setPaddingBottom(kPaddingTypeLength, kPaddingUnitPC, 80.0)
 
 		val node1 = DisplayNode(this.display)
-		node1.setWidth(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
-		node1.setHeight(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
+		node1.setWidth(kSizeTypeLength, kSizeUnitPX, 200.0)
+		node1.setHeight(kSizeTypeLength, kSizeUnitPX, 200.0)
 
 		val node2 = DisplayNode(this.display)
-		node2.setWidth(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
-		node2.setHeight(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
+		node2.setWidth(kSizeTypeLength, kSizeUnitPX, 200.0)
+		node2.setHeight(kSizeTypeLength, kSizeUnitPX, 200.0)
 
 		container.appendChild(node1)
 		container.appendChild(node2)
@@ -1602,21 +1602,21 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testWrappedNodePaddingInVW() {
 
 		val container = DisplayNode(this.display)
-		container.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 0.0)
-		container.setWidth(kDisplayNodeSizeTypeWrap, kDisplayNodeSizeUnitNone, 0.0)
-		container.setHeight(kDisplayNodeSizeTypeWrap, kDisplayNodeSizeUnitNone, 0.0)
-		container.setPaddingTop(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitVW, 20.0)
-		container.setPaddingLeft(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitVW, 40.0)
-		container.setPaddingRight(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitVW, 60.0)
-		container.setPaddingBottom(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitVW, 80.0)
+		container.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		container.setWidth(kSizeTypeWrap, kSizeUnitNone, 0.0)
+		container.setHeight(kSizeTypeWrap, kSizeUnitNone, 0.0)
+		container.setPaddingTop(kPaddingTypeLength, kPaddingUnitVW, 20.0)
+		container.setPaddingLeft(kPaddingTypeLength, kPaddingUnitVW, 40.0)
+		container.setPaddingRight(kPaddingTypeLength, kPaddingUnitVW, 60.0)
+		container.setPaddingBottom(kPaddingTypeLength, kPaddingUnitVW, 80.0)
 
 		val node1 = DisplayNode(this.display)
-		node1.setWidth(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
-		node1.setHeight(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
+		node1.setWidth(kSizeTypeLength, kSizeUnitPX, 200.0)
+		node1.setHeight(kSizeTypeLength, kSizeUnitPX, 200.0)
 
 		val node2 = DisplayNode(this.display)
-		node2.setWidth(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
-		node2.setHeight(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
+		node2.setWidth(kSizeTypeLength, kSizeUnitPX, 200.0)
+		node2.setHeight(kSizeTypeLength, kSizeUnitPX, 200.0)
 
 		container.appendChild(node1)
 		container.appendChild(node2)
@@ -1649,21 +1649,21 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testWrappedNodePaddingInVH() {
 
 		val container = DisplayNode(this.display)
-		container.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 0.0)
-		container.setWidth(kDisplayNodeSizeTypeWrap, kDisplayNodeSizeUnitNone, 0.0)
-		container.setHeight(kDisplayNodeSizeTypeWrap, kDisplayNodeSizeUnitNone, 0.0)
-		container.setPaddingTop(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitVH, 20.0)
-		container.setPaddingLeft(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitVH, 40.0)
-		container.setPaddingRight(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitVH, 60.0)
-		container.setPaddingBottom(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitVH, 80.0)
+		container.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		container.setWidth(kSizeTypeWrap, kSizeUnitNone, 0.0)
+		container.setHeight(kSizeTypeWrap, kSizeUnitNone, 0.0)
+		container.setPaddingTop(kPaddingTypeLength, kPaddingUnitVH, 20.0)
+		container.setPaddingLeft(kPaddingTypeLength, kPaddingUnitVH, 40.0)
+		container.setPaddingRight(kPaddingTypeLength, kPaddingUnitVH, 60.0)
+		container.setPaddingBottom(kPaddingTypeLength, kPaddingUnitVH, 80.0)
 
 		val node1 = DisplayNode(this.display)
-		node1.setWidth(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
-		node1.setHeight(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
+		node1.setWidth(kSizeTypeLength, kSizeUnitPX, 200.0)
+		node1.setHeight(kSizeTypeLength, kSizeUnitPX, 200.0)
 
 		val node2 = DisplayNode(this.display)
-		node2.setWidth(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
-		node2.setHeight(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
+		node2.setWidth(kSizeTypeLength, kSizeUnitPX, 200.0)
+		node2.setHeight(kSizeTypeLength, kSizeUnitPX, 200.0)
 
 		container.appendChild(node1)
 		container.appendChild(node2)
@@ -1696,21 +1696,21 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testWrappedNodePaddingInPW() {
 
 		val container = DisplayNode(this.display)
-		container.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 0.0)
-		container.setWidth(kDisplayNodeSizeTypeWrap, kDisplayNodeSizeUnitNone, 0.0)
-		container.setHeight(kDisplayNodeSizeTypeWrap, kDisplayNodeSizeUnitNone, 0.0)
-		container.setPaddingTop(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitPW, 20.0)
-		container.setPaddingLeft(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitPW, 40.0)
-		container.setPaddingRight(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitPW, 60.0)
-		container.setPaddingBottom(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitPW, 80.0)
+		container.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		container.setWidth(kSizeTypeWrap, kSizeUnitNone, 0.0)
+		container.setHeight(kSizeTypeWrap, kSizeUnitNone, 0.0)
+		container.setPaddingTop(kPaddingTypeLength, kPaddingUnitPW, 20.0)
+		container.setPaddingLeft(kPaddingTypeLength, kPaddingUnitPW, 40.0)
+		container.setPaddingRight(kPaddingTypeLength, kPaddingUnitPW, 60.0)
+		container.setPaddingBottom(kPaddingTypeLength, kPaddingUnitPW, 80.0)
 
 		val node1 = DisplayNode(this.display)
-		node1.setWidth(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
-		node1.setHeight(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
+		node1.setWidth(kSizeTypeLength, kSizeUnitPX, 200.0)
+		node1.setHeight(kSizeTypeLength, kSizeUnitPX, 200.0)
 
 		val node2 = DisplayNode(this.display)
-		node2.setWidth(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
-		node2.setHeight(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
+		node2.setWidth(kSizeTypeLength, kSizeUnitPX, 200.0)
+		node2.setHeight(kSizeTypeLength, kSizeUnitPX, 200.0)
 
 		container.appendChild(node1)
 		container.appendChild(node2)
@@ -1743,21 +1743,21 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testWrappedNodePaddingInPH() {
 
 		val container = DisplayNode(this.display)
-		container.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 0.0)
-		container.setWidth(kDisplayNodeSizeTypeWrap, kDisplayNodeSizeUnitNone, 0.0)
-		container.setHeight(kDisplayNodeSizeTypeWrap, kDisplayNodeSizeUnitNone, 0.0)
-		container.setPaddingTop(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitPH, 20.0)
-		container.setPaddingLeft(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitPH, 40.0)
-		container.setPaddingRight(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitPH, 60.0)
-		container.setPaddingBottom(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitPH, 80.0)
+		container.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		container.setWidth(kSizeTypeWrap, kSizeUnitNone, 0.0)
+		container.setHeight(kSizeTypeWrap, kSizeUnitNone, 0.0)
+		container.setPaddingTop(kPaddingTypeLength, kPaddingUnitPH, 20.0)
+		container.setPaddingLeft(kPaddingTypeLength, kPaddingUnitPH, 40.0)
+		container.setPaddingRight(kPaddingTypeLength, kPaddingUnitPH, 60.0)
+		container.setPaddingBottom(kPaddingTypeLength, kPaddingUnitPH, 80.0)
 
 		val node1 = DisplayNode(this.display)
-		node1.setWidth(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
-		node1.setHeight(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
+		node1.setWidth(kSizeTypeLength, kSizeUnitPX, 200.0)
+		node1.setHeight(kSizeTypeLength, kSizeUnitPX, 200.0)
 
 		val node2 = DisplayNode(this.display)
-		node2.setWidth(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
-		node2.setHeight(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
+		node2.setWidth(kSizeTypeLength, kSizeUnitPX, 200.0)
+		node2.setHeight(kSizeTypeLength, kSizeUnitPX, 200.0)
 
 		container.appendChild(node1)
 		container.appendChild(node2)
@@ -1790,21 +1790,21 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testWrappedNodePaddingInCW() {
 
 		val container = DisplayNode(this.display)
-		container.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 0.0)
-		container.setWidth(kDisplayNodeSizeTypeWrap, kDisplayNodeSizeUnitNone, 0.0)
-		container.setHeight(kDisplayNodeSizeTypeWrap, kDisplayNodeSizeUnitNone, 0.0)
-		container.setPaddingTop(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitCW, 20.0)
-		container.setPaddingLeft(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitCW, 40.0)
-		container.setPaddingRight(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitCW, 60.0)
-		container.setPaddingBottom(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitCW, 80.0)
+		container.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		container.setWidth(kSizeTypeWrap, kSizeUnitNone, 0.0)
+		container.setHeight(kSizeTypeWrap, kSizeUnitNone, 0.0)
+		container.setPaddingTop(kPaddingTypeLength, kPaddingUnitCW, 20.0)
+		container.setPaddingLeft(kPaddingTypeLength, kPaddingUnitCW, 40.0)
+		container.setPaddingRight(kPaddingTypeLength, kPaddingUnitCW, 60.0)
+		container.setPaddingBottom(kPaddingTypeLength, kPaddingUnitCW, 80.0)
 
 		val node1 = DisplayNode(this.display)
-		node1.setWidth(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
-		node1.setHeight(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
+		node1.setWidth(kSizeTypeLength, kSizeUnitPX, 200.0)
+		node1.setHeight(kSizeTypeLength, kSizeUnitPX, 200.0)
 
 		val node2 = DisplayNode(this.display)
-		node2.setWidth(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
-		node2.setHeight(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
+		node2.setWidth(kSizeTypeLength, kSizeUnitPX, 200.0)
+		node2.setHeight(kSizeTypeLength, kSizeUnitPX, 200.0)
 
 		container.appendChild(node1)
 		container.appendChild(node2)
@@ -1837,21 +1837,21 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testWrappedNodePaddingInCH() {
 
 		val container = DisplayNode(this.display)
-		container.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 0.0)
-		container.setWidth(kDisplayNodeSizeTypeWrap, kDisplayNodeSizeUnitNone, 0.0)
-		container.setHeight(kDisplayNodeSizeTypeWrap, kDisplayNodeSizeUnitNone, 0.0)
-		container.setPaddingTop(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitCH, 20.0)
-		container.setPaddingLeft(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitCH, 40.0)
-		container.setPaddingRight(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitCH, 60.0)
-		container.setPaddingBottom(kDisplayNodePaddingTypeLength, kDisplayNodePaddingUnitCH, 80.0)
+		container.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		container.setWidth(kSizeTypeWrap, kSizeUnitNone, 0.0)
+		container.setHeight(kSizeTypeWrap, kSizeUnitNone, 0.0)
+		container.setPaddingTop(kPaddingTypeLength, kPaddingUnitCH, 20.0)
+		container.setPaddingLeft(kPaddingTypeLength, kPaddingUnitCH, 40.0)
+		container.setPaddingRight(kPaddingTypeLength, kPaddingUnitCH, 60.0)
+		container.setPaddingBottom(kPaddingTypeLength, kPaddingUnitCH, 80.0)
 
 		val node1 = DisplayNode(this.display)
-		node1.setWidth(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
-		node1.setHeight(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
+		node1.setWidth(kSizeTypeLength, kSizeUnitPX, 200.0)
+		node1.setHeight(kSizeTypeLength, kSizeUnitPX, 200.0)
 
 		val node2 = DisplayNode(this.display)
-		node2.setWidth(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
-		node2.setHeight(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
+		node2.setWidth(kSizeTypeLength, kSizeUnitPX, 200.0)
+		node2.setHeight(kSizeTypeLength, kSizeUnitPX, 200.0)
 
 		container.appendChild(node1)
 		container.appendChild(node2)
@@ -1884,21 +1884,21 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testWrappedNodeBorderInPX() {
 
 		val container = DisplayNode(this.display)
-		container.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 0.0)
-		container.setWidth(kDisplayNodeSizeTypeWrap, kDisplayNodeSizeUnitNone, 0.0)
-		container.setHeight(kDisplayNodeSizeTypeWrap, kDisplayNodeSizeUnitNone, 0.0)
-		container.setBorderTop(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitPX, 20.0)
-		container.setBorderLeft(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitPX, 40.0)
-		container.setBorderRight(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitPX, 60.0)
-		container.setBorderBottom(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitPX, 80.0)
+		container.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		container.setWidth(kSizeTypeWrap, kSizeUnitNone, 0.0)
+		container.setHeight(kSizeTypeWrap, kSizeUnitNone, 0.0)
+		container.setBorderTop(kBorderTypeLength, kBorderUnitPX, 20.0)
+		container.setBorderLeft(kBorderTypeLength, kBorderUnitPX, 40.0)
+		container.setBorderRight(kBorderTypeLength, kBorderUnitPX, 60.0)
+		container.setBorderBottom(kBorderTypeLength, kBorderUnitPX, 80.0)
 
 		val node1 = DisplayNode(this.display)
-		node1.setWidth(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
-		node1.setHeight(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
+		node1.setWidth(kSizeTypeLength, kSizeUnitPX, 200.0)
+		node1.setHeight(kSizeTypeLength, kSizeUnitPX, 200.0)
 
 		val node2 = DisplayNode(this.display)
-		node2.setWidth(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
-		node2.setHeight(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
+		node2.setWidth(kSizeTypeLength, kSizeUnitPX, 200.0)
+		node2.setHeight(kSizeTypeLength, kSizeUnitPX, 200.0)
 
 		container.appendChild(node1)
 		container.appendChild(node2)
@@ -1931,21 +1931,21 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testWrappedNodeBorderInPC() {
 
 		val container = DisplayNode(this.display)
-		container.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 0.0)
-		container.setWidth(kDisplayNodeSizeTypeWrap, kDisplayNodeSizeUnitNone, 0.0)
-		container.setHeight(kDisplayNodeSizeTypeWrap, kDisplayNodeSizeUnitNone, 0.0)
-		container.setBorderTop(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitPC, 20.0)
-		container.setBorderLeft(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitPC, 40.0)
-		container.setBorderRight(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitPC, 60.0)
-		container.setBorderBottom(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitPC, 80.0)
+		container.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		container.setWidth(kSizeTypeWrap, kSizeUnitNone, 0.0)
+		container.setHeight(kSizeTypeWrap, kSizeUnitNone, 0.0)
+		container.setBorderTop(kBorderTypeLength, kBorderUnitPC, 20.0)
+		container.setBorderLeft(kBorderTypeLength, kBorderUnitPC, 40.0)
+		container.setBorderRight(kBorderTypeLength, kBorderUnitPC, 60.0)
+		container.setBorderBottom(kBorderTypeLength, kBorderUnitPC, 80.0)
 
 		val node1 = DisplayNode(this.display)
-		node1.setWidth(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
-		node1.setHeight(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
+		node1.setWidth(kSizeTypeLength, kSizeUnitPX, 200.0)
+		node1.setHeight(kSizeTypeLength, kSizeUnitPX, 200.0)
 
 		val node2 = DisplayNode(this.display)
-		node2.setWidth(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
-		node2.setHeight(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
+		node2.setWidth(kSizeTypeLength, kSizeUnitPX, 200.0)
+		node2.setHeight(kSizeTypeLength, kSizeUnitPX, 200.0)
 
 		container.appendChild(node1)
 		container.appendChild(node2)
@@ -1978,21 +1978,21 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testWrappedNodeBorderInPW() {
 
 		val container = DisplayNode(this.display)
-		container.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 0.0)
-		container.setWidth(kDisplayNodeSizeTypeWrap, kDisplayNodeSizeUnitNone, 0.0)
-		container.setHeight(kDisplayNodeSizeTypeWrap, kDisplayNodeSizeUnitNone, 0.0)
-		container.setBorderTop(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitPW, 20.0)
-		container.setBorderLeft(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitPW, 40.0)
-		container.setBorderRight(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitPW, 60.0)
-		container.setBorderBottom(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitPW, 80.0)
+		container.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		container.setWidth(kSizeTypeWrap, kSizeUnitNone, 0.0)
+		container.setHeight(kSizeTypeWrap, kSizeUnitNone, 0.0)
+		container.setBorderTop(kBorderTypeLength, kBorderUnitPW, 20.0)
+		container.setBorderLeft(kBorderTypeLength, kBorderUnitPW, 40.0)
+		container.setBorderRight(kBorderTypeLength, kBorderUnitPW, 60.0)
+		container.setBorderBottom(kBorderTypeLength, kBorderUnitPW, 80.0)
 
 		val node1 = DisplayNode(this.display)
-		node1.setWidth(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
-		node1.setHeight(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
+		node1.setWidth(kSizeTypeLength, kSizeUnitPX, 200.0)
+		node1.setHeight(kSizeTypeLength, kSizeUnitPX, 200.0)
 
 		val node2 = DisplayNode(this.display)
-		node2.setWidth(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
-		node2.setHeight(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
+		node2.setWidth(kSizeTypeLength, kSizeUnitPX, 200.0)
+		node2.setHeight(kSizeTypeLength, kSizeUnitPX, 200.0)
 
 		container.appendChild(node1)
 		container.appendChild(node2)
@@ -2025,21 +2025,21 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testWrappedNodeBorderInPH() {
 
 		val container = DisplayNode(this.display)
-		container.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 0.0)
-		container.setWidth(kDisplayNodeSizeTypeWrap, kDisplayNodeSizeUnitNone, 0.0)
-		container.setHeight(kDisplayNodeSizeTypeWrap, kDisplayNodeSizeUnitNone, 0.0)
-		container.setBorderTop(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitPH, 20.0)
-		container.setBorderLeft(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitPH, 40.0)
-		container.setBorderRight(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitPH, 60.0)
-		container.setBorderBottom(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitPH, 80.0)
+		container.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		container.setWidth(kSizeTypeWrap, kSizeUnitNone, 0.0)
+		container.setHeight(kSizeTypeWrap, kSizeUnitNone, 0.0)
+		container.setBorderTop(kBorderTypeLength, kBorderUnitPH, 20.0)
+		container.setBorderLeft(kBorderTypeLength, kBorderUnitPH, 40.0)
+		container.setBorderRight(kBorderTypeLength, kBorderUnitPH, 60.0)
+		container.setBorderBottom(kBorderTypeLength, kBorderUnitPH, 80.0)
 
 		val node1 = DisplayNode(this.display)
-		node1.setWidth(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
-		node1.setHeight(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
+		node1.setWidth(kSizeTypeLength, kSizeUnitPX, 200.0)
+		node1.setHeight(kSizeTypeLength, kSizeUnitPX, 200.0)
 
 		val node2 = DisplayNode(this.display)
-		node2.setWidth(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
-		node2.setHeight(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
+		node2.setWidth(kSizeTypeLength, kSizeUnitPX, 200.0)
+		node2.setHeight(kSizeTypeLength, kSizeUnitPX, 200.0)
 
 		container.appendChild(node1)
 		container.appendChild(node2)
@@ -2072,21 +2072,21 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testWrappedNodeBorderInCW() {
 
 		val container = DisplayNode(this.display)
-		container.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 0.0)
-		container.setWidth(kDisplayNodeSizeTypeWrap, kDisplayNodeSizeUnitNone, 0.0)
-		container.setHeight(kDisplayNodeSizeTypeWrap, kDisplayNodeSizeUnitNone, 0.0)
-		container.setBorderTop(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitCW, 20.0)
-		container.setBorderLeft(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitCW, 40.0)
-		container.setBorderRight(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitCW, 60.0)
-		container.setBorderBottom(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitCW, 80.0)
+		container.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		container.setWidth(kSizeTypeWrap, kSizeUnitNone, 0.0)
+		container.setHeight(kSizeTypeWrap, kSizeUnitNone, 0.0)
+		container.setBorderTop(kBorderTypeLength, kBorderUnitCW, 20.0)
+		container.setBorderLeft(kBorderTypeLength, kBorderUnitCW, 40.0)
+		container.setBorderRight(kBorderTypeLength, kBorderUnitCW, 60.0)
+		container.setBorderBottom(kBorderTypeLength, kBorderUnitCW, 80.0)
 
 		val node1 = DisplayNode(this.display)
-		node1.setWidth(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
-		node1.setHeight(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
+		node1.setWidth(kSizeTypeLength, kSizeUnitPX, 200.0)
+		node1.setHeight(kSizeTypeLength, kSizeUnitPX, 200.0)
 
 		val node2 = DisplayNode(this.display)
-		node2.setWidth(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
-		node2.setHeight(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
+		node2.setWidth(kSizeTypeLength, kSizeUnitPX, 200.0)
+		node2.setHeight(kSizeTypeLength, kSizeUnitPX, 200.0)
 
 		container.appendChild(node1)
 		container.appendChild(node2)
@@ -2119,21 +2119,21 @@ class DisplayNodeAbsoluteLayoutTest {
 	fun testWrappedNodeBorderInCH() {
 
 		val container = DisplayNode(this.display)
-		container.setTop(kDisplayNodeOriginTypeLength, kDisplayNodeOriginUnitPX, 0.0)
-		container.setWidth(kDisplayNodeSizeTypeWrap, kDisplayNodeSizeUnitNone, 0.0)
-		container.setHeight(kDisplayNodeSizeTypeWrap, kDisplayNodeSizeUnitNone, 0.0)
-		container.setBorderTop(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitCH, 20.0)
-		container.setBorderLeft(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitCH, 40.0)
-		container.setBorderRight(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitCH, 60.0)
-		container.setBorderBottom(kDisplayNodeBorderTypeLength, kDisplayNodeBorderUnitCH, 80.0)
+		container.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		container.setWidth(kSizeTypeWrap, kSizeUnitNone, 0.0)
+		container.setHeight(kSizeTypeWrap, kSizeUnitNone, 0.0)
+		container.setBorderTop(kBorderTypeLength, kBorderUnitCH, 20.0)
+		container.setBorderLeft(kBorderTypeLength, kBorderUnitCH, 40.0)
+		container.setBorderRight(kBorderTypeLength, kBorderUnitCH, 60.0)
+		container.setBorderBottom(kBorderTypeLength, kBorderUnitCH, 80.0)
 
 		val node1 = DisplayNode(this.display)
-		node1.setWidth(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
-		node1.setHeight(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
+		node1.setWidth(kSizeTypeLength, kSizeUnitPX, 200.0)
+		node1.setHeight(kSizeTypeLength, kSizeUnitPX, 200.0)
 
 		val node2 = DisplayNode(this.display)
-		node2.setWidth(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
-		node2.setHeight(kDisplayNodeSizeTypeLength, kDisplayNodeSizeUnitPX, 200.0)
+		node2.setWidth(kSizeTypeLength, kSizeUnitPX, 200.0)
+		node2.setHeight(kSizeTypeLength, kSizeUnitPX, 200.0)
 
 		container.appendChild(node1)
 		container.appendChild(node2)

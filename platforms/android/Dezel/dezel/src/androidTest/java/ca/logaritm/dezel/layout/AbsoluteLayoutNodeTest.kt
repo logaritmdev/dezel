@@ -1,53 +1,37 @@
 package ca.logaritm.dezel.layout
 
+import ca.logaritm.dezel.view.display.*
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 
-class AbsoluteLayoutNodeTest {
+class AbsoluteDisplayNodeTest {
 
-	lateinit var layout: Layout
-	lateinit var window: LayoutNode
+	lateinit var display: Display
+	lateinit var window: DisplayNode
 
 	@Before
 	fun beforeTest() {
 
-		this.layout = Layout()
+		this.display = Display()
 
-		this.window = LayoutNode(this.layout)
-		this.window.width(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitPX, 320.0)
-		this.window.height(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitPX, 480.0)
+		this.window = DisplayNode(this.display)
+		this.window.setWidth(kSizeTypeLength, kSizeUnitPX, 320.0)
+		this.window.setHeight(kSizeTypeLength, kSizeUnitPX, 480.0)
 
-		this.layout.root = this.window
-		this.layout.viewportWidth = 320f
-		this.layout.viewportHeight = 480f
+		this.display.window = this.window
+		this.display.viewportWidth = 320.0
+		this.display.viewportHeight = 480.0
 	}
-	
-	@Test
-	fun testLayoutState() {
-
-		val node = LayoutNode(this.layout)
-		node.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 0.0)
-
-		this.window.appendChild(node)
-
-		Assert.assertTrue(this.window.hasInvalidLayout)
-		Assert.assertTrue(node.hasInvalidPosition)
-
-		this.window.resolve()
-
-		Assert.assertFalse(this.window.hasInvalidLayout)
-		Assert.assertFalse(node.hasInvalidPosition)
-	}
-	
+			
 	@Test
 	fun testNodePositionInPX() {
 
-		val node = LayoutNode(this.layout)
-		node.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 10.0)
-		node.left(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 20.0)
-		node.right(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 30.0)
-		node.bottom(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 40.0)
+		val node = DisplayNode(this.display)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 10.0)
+		node.setLeft(kOriginTypeLength, kOriginUnitPX, 20.0)
+		node.setRight(kOriginTypeLength, kOriginUnitPX, 30.0)
+		node.setBottom(kOriginTypeLength, kOriginUnitPX, 40.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -61,11 +45,11 @@ class AbsoluteLayoutNodeTest {
 	@Test
 	fun testNodePositionInPC() {
 
-		val node = LayoutNode(this.layout)
-		node.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPC, 10.0)
-		node.left(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPC, 20.0)
-		node.right(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPC, 30.0)
-		node.bottom(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPC, 40.0)
+		val node = DisplayNode(this.display)
+		node.setTop(kOriginTypeLength, kOriginUnitPC, 10.0)
+		node.setLeft(kOriginTypeLength, kOriginUnitPC, 20.0)
+		node.setRight(kOriginTypeLength, kOriginUnitPC, 30.0)
+		node.setBottom(kOriginTypeLength, kOriginUnitPC, 40.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -79,11 +63,11 @@ class AbsoluteLayoutNodeTest {
 	@Test
 	fun testNodePositionInVW() {
 
-		val node = LayoutNode(this.layout)
-		node.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitVW, 10.0)
-		node.left(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitVW, 20.0)
-		node.right(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitVW, 30.0)
-		node.bottom(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitVW, 40.0)
+		val node = DisplayNode(this.display)
+		node.setTop(kOriginTypeLength, kOriginUnitVW, 10.0)
+		node.setLeft(kOriginTypeLength, kOriginUnitVW, 20.0)
+		node.setRight(kOriginTypeLength, kOriginUnitVW, 30.0)
+		node.setBottom(kOriginTypeLength, kOriginUnitVW, 40.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -97,11 +81,11 @@ class AbsoluteLayoutNodeTest {
 	@Test
 	fun testNodePositionInVH() {
 
-		val node = LayoutNode(this.layout)
-		node.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitVH, 10.0)
-		node.left(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitVH, 20.0)
-		node.right(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitVH, 30.0)
-		node.bottom(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitVH, 40.0)
+		val node = DisplayNode(this.display)
+		node.setTop(kOriginTypeLength, kOriginUnitVH, 10.0)
+		node.setLeft(kOriginTypeLength, kOriginUnitVH, 20.0)
+		node.setRight(kOriginTypeLength, kOriginUnitVH, 30.0)
+		node.setBottom(kOriginTypeLength, kOriginUnitVH, 40.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -115,11 +99,11 @@ class AbsoluteLayoutNodeTest {
 	@Test
 	fun testNodePositionInPW() {
 
-		val node = LayoutNode(this.layout)
-		node.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPW, 10.0)
-		node.left(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPW, 20.0)
-		node.right(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPW, 30.0)
-		node.bottom(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPW, 40.0)
+		val node = DisplayNode(this.display)
+		node.setTop(kOriginTypeLength, kOriginUnitPW, 10.0)
+		node.setLeft(kOriginTypeLength, kOriginUnitPW, 20.0)
+		node.setRight(kOriginTypeLength, kOriginUnitPW, 30.0)
+		node.setBottom(kOriginTypeLength, kOriginUnitPW, 40.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -133,11 +117,11 @@ class AbsoluteLayoutNodeTest {
 	@Test
 	fun testNodePositionInPH() {
 
-		val node = LayoutNode(this.layout)
-		node.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPH, 10.0)
-		node.left(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPH, 20.0)
-		node.right(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPH, 30.0)
-		node.bottom(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPH, 40.0)
+		val node = DisplayNode(this.display)
+		node.setTop(kOriginTypeLength, kOriginUnitPH, 10.0)
+		node.setLeft(kOriginTypeLength, kOriginUnitPH, 20.0)
+		node.setRight(kOriginTypeLength, kOriginUnitPH, 30.0)
+		node.setBottom(kOriginTypeLength, kOriginUnitPH, 40.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -151,14 +135,14 @@ class AbsoluteLayoutNodeTest {
 	@Test
 	fun testNodePositionInCW() {
 
-		val node = LayoutNode(this.layout)
-		node.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitCW, 10.0)
-		node.left(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitCW, 20.0)
-		node.right(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitCW, 30.0)
-		node.bottom(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitCW, 40.0)
+		val node = DisplayNode(this.display)
+		node.setTop(kOriginTypeLength, kOriginUnitCW, 10.0)
+		node.setLeft(kOriginTypeLength, kOriginUnitCW, 20.0)
+		node.setRight(kOriginTypeLength, kOriginUnitCW, 30.0)
+		node.setBottom(kOriginTypeLength, kOriginUnitCW, 40.0)
 
-		this.window.contentWidth(kDLLayoutContentSizeTypeLength, kDLLayoutContentSizeUnitPX, 3200.0)
-		this.window.contentHeight(kDLLayoutContentSizeTypeLength, kDLLayoutContentSizeUnitPX, 4800.0)
+		this.window.setContentWidth(kContentSizeTypeLength, kContentSizeUnitPX, 3200.0)
+		this.window.setContentHeight(kContentSizeTypeLength, kContentSizeUnitPX, 4800.0)
 		this.window.appendChild(node)
 		this.window.resolve()
 
@@ -171,14 +155,14 @@ class AbsoluteLayoutNodeTest {
 	@Test
 	fun testNodePositionInCH() {
 
-		val node = LayoutNode(this.layout)
-		node.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitCH, 10.0)
-		node.left(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitCH, 20.0)
-		node.right(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitCH, 30.0)
-		node.bottom(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitCH, 40.0)
+		val node = DisplayNode(this.display)
+		node.setTop(kOriginTypeLength, kOriginUnitCH, 10.0)
+		node.setLeft(kOriginTypeLength, kOriginUnitCH, 20.0)
+		node.setRight(kOriginTypeLength, kOriginUnitCH, 30.0)
+		node.setBottom(kOriginTypeLength, kOriginUnitCH, 40.0)
 
-		this.window.contentWidth(kDLLayoutContentSizeTypeLength, kDLLayoutContentSizeUnitPX, 3200.0)
-		this.window.contentHeight(kDLLayoutContentSizeTypeLength, kDLLayoutContentSizeUnitPX, 4800.0)
+		this.window.setContentWidth(kContentSizeTypeLength, kContentSizeUnitPX, 3200.0)
+		this.window.setContentHeight(kContentSizeTypeLength, kContentSizeUnitPX, 4800.0)
 		this.window.appendChild(node)
 		this.window.resolve()
 
@@ -191,16 +175,16 @@ class AbsoluteLayoutNodeTest {
 	@Test
 	fun testNodeMarginInPX() {
 
-		val node = LayoutNode(this.layout)
-		node.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 10.0)
-		node.left(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 20.0)
-		node.right(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 30.0)
-		node.bottom(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 40.0)
+		val node = DisplayNode(this.display)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 10.0)
+		node.setLeft(kOriginTypeLength, kOriginUnitPX, 20.0)
+		node.setRight(kOriginTypeLength, kOriginUnitPX, 30.0)
+		node.setBottom(kOriginTypeLength, kOriginUnitPX, 40.0)
 
-		node.marginTop(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitPX, 10.0)
-		node.marginLeft(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitPX, 20.0)
-		node.marginRight(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitPX, 30.0)
-		node.marginBottom(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitPX, 40.0)
+		node.setMarginTop(kMarginTypeLength, kMarginUnitPX, 10.0)
+		node.setMarginLeft(kMarginTypeLength, kMarginUnitPX, 20.0)
+		node.setMarginRight(kMarginTypeLength, kMarginUnitPX, 30.0)
+		node.setMarginBottom(kMarginTypeLength, kMarginUnitPX, 40.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -219,16 +203,16 @@ class AbsoluteLayoutNodeTest {
 	@Test
 	fun testNodeMarginInPC() {
 
-		val node = LayoutNode(this.layout)
-		node.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 10.0)
-		node.left(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 20.0)
-		node.right(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 30.0)
-		node.bottom(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 40.0)
+		val node = DisplayNode(this.display)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 10.0)
+		node.setLeft(kOriginTypeLength, kOriginUnitPX, 20.0)
+		node.setRight(kOriginTypeLength, kOriginUnitPX, 30.0)
+		node.setBottom(kOriginTypeLength, kOriginUnitPX, 40.0)
 
-		node.marginTop(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitPC, 10.0)
-		node.marginLeft(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitPC, 20.0)
-		node.marginRight(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitPC, 30.0)
-		node.marginBottom(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitPC, 40.0)
+		node.setMarginTop(kMarginTypeLength, kMarginUnitPC, 10.0)
+		node.setMarginLeft(kMarginTypeLength, kMarginUnitPC, 20.0)
+		node.setMarginRight(kMarginTypeLength, kMarginUnitPC, 30.0)
+		node.setMarginBottom(kMarginTypeLength, kMarginUnitPC, 40.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -247,16 +231,16 @@ class AbsoluteLayoutNodeTest {
 	@Test
 	fun testNodeMarginInVW() {
 
-		val node = LayoutNode(this.layout)
-		node.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 10.0)
-		node.left(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 20.0)
-		node.right(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 30.0)
-		node.bottom(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 40.0)
+		val node = DisplayNode(this.display)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 10.0)
+		node.setLeft(kOriginTypeLength, kOriginUnitPX, 20.0)
+		node.setRight(kOriginTypeLength, kOriginUnitPX, 30.0)
+		node.setBottom(kOriginTypeLength, kOriginUnitPX, 40.0)
 
-		node.marginTop(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitVW, 10.0)
-		node.marginLeft(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitVW, 20.0)
-		node.marginRight(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitVW, 30.0)
-		node.marginBottom(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitVW, 40.0)
+		node.setMarginTop(kMarginTypeLength, kMarginUnitVW, 10.0)
+		node.setMarginLeft(kMarginTypeLength, kMarginUnitVW, 20.0)
+		node.setMarginRight(kMarginTypeLength, kMarginUnitVW, 30.0)
+		node.setMarginBottom(kMarginTypeLength, kMarginUnitVW, 40.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -275,16 +259,16 @@ class AbsoluteLayoutNodeTest {
 	@Test
 	fun testNodeMarginInVH() {
 
-		val node = LayoutNode(this.layout)
-		node.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 10.0)
-		node.left(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 20.0)
-		node.right(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 30.0)
-		node.bottom(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 40.0)
+		val node = DisplayNode(this.display)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 10.0)
+		node.setLeft(kOriginTypeLength, kOriginUnitPX, 20.0)
+		node.setRight(kOriginTypeLength, kOriginUnitPX, 30.0)
+		node.setBottom(kOriginTypeLength, kOriginUnitPX, 40.0)
 
-		node.marginTop(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitVH, 10.0)
-		node.marginLeft(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitVH, 20.0)
-		node.marginRight(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitVH, 30.0)
-		node.marginBottom(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitVH, 40.0)
+		node.setMarginTop(kMarginTypeLength, kMarginUnitVH, 10.0)
+		node.setMarginLeft(kMarginTypeLength, kMarginUnitVH, 20.0)
+		node.setMarginRight(kMarginTypeLength, kMarginUnitVH, 30.0)
+		node.setMarginBottom(kMarginTypeLength, kMarginUnitVH, 40.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -303,14 +287,14 @@ class AbsoluteLayoutNodeTest {
 	@Test
 	fun testNodeMarginInPW() {
 
-		val node = LayoutNode(this.layout)
-		node.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 0.0)
-		node.left(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 0.0)
+		val node = DisplayNode(this.display)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setLeft(kOriginTypeLength, kOriginUnitPX, 0.0)
 
-		node.marginTop(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitPW, 10.0)
-		node.marginLeft(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitPW, 20.0)
-		node.marginRight(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitPW, 30.0)
-		node.marginBottom(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitPW, 40.0)
+		node.setMarginTop(kMarginTypeLength, kMarginUnitPW, 10.0)
+		node.setMarginLeft(kMarginTypeLength, kMarginUnitPW, 20.0)
+		node.setMarginRight(kMarginTypeLength, kMarginUnitPW, 30.0)
+		node.setMarginBottom(kMarginTypeLength, kMarginUnitPW, 40.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -324,14 +308,14 @@ class AbsoluteLayoutNodeTest {
 	@Test
 	fun testNodeMarginInPH() {
 
-		val node = LayoutNode(this.layout)
-		node.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 0.0)
-		node.left(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 0.0)
+		val node = DisplayNode(this.display)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setLeft(kOriginTypeLength, kOriginUnitPX, 0.0)
 
-		node.marginTop(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitPH, 10.0)
-		node.marginLeft(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitPH, 20.0)
-		node.marginRight(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitPH, 30.0)
-		node.marginBottom(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitPH, 40.0)
+		node.setMarginTop(kMarginTypeLength, kMarginUnitPH, 10.0)
+		node.setMarginLeft(kMarginTypeLength, kMarginUnitPH, 20.0)
+		node.setMarginRight(kMarginTypeLength, kMarginUnitPH, 30.0)
+		node.setMarginBottom(kMarginTypeLength, kMarginUnitPH, 40.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -345,17 +329,17 @@ class AbsoluteLayoutNodeTest {
 	@Test
 	fun testNodeMarginInCW() {
 
-		val node = LayoutNode(this.layout)
-		node.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 0.0)
-		node.left(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 0.0)
+		val node = DisplayNode(this.display)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setLeft(kOriginTypeLength, kOriginUnitPX, 0.0)
 
-		node.marginTop(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitCW, 10.0)
-		node.marginLeft(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitCW, 20.0)
-		node.marginRight(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitCW, 30.0)
-		node.marginBottom(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitCW, 40.0)
+		node.setMarginTop(kMarginTypeLength, kMarginUnitCW, 10.0)
+		node.setMarginLeft(kMarginTypeLength, kMarginUnitCW, 20.0)
+		node.setMarginRight(kMarginTypeLength, kMarginUnitCW, 30.0)
+		node.setMarginBottom(kMarginTypeLength, kMarginUnitCW, 40.0)
 
-		this.window.contentWidth(kDLLayoutContentSizeTypeLength, kDLLayoutContentSizeUnitPX, 3200.0)
-		this.window.contentHeight(kDLLayoutContentSizeTypeLength, kDLLayoutContentSizeUnitPX, 4800.0)
+		this.window.setContentWidth(kContentSizeTypeLength, kContentSizeUnitPX, 3200.0)
+		this.window.setContentHeight(kContentSizeTypeLength, kContentSizeUnitPX, 4800.0)
 		this.window.appendChild(node)
 		this.window.resolve()
 
@@ -368,17 +352,17 @@ class AbsoluteLayoutNodeTest {
 	@Test
 	fun testNodeMarginInCH() {
 
-		val node = LayoutNode(this.layout)
-		node.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 0.0)
-		node.left(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 0.0)
+		val node = DisplayNode(this.display)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setLeft(kOriginTypeLength, kOriginUnitPX, 0.0)
 
-		node.marginTop(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitCH, 10.0)
-		node.marginLeft(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitCH, 20.0)
-		node.marginRight(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitCH, 30.0)
-		node.marginBottom(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitCH, 40.0)
+		node.setMarginTop(kMarginTypeLength, kMarginUnitCH, 10.0)
+		node.setMarginLeft(kMarginTypeLength, kMarginUnitCH, 20.0)
+		node.setMarginRight(kMarginTypeLength, kMarginUnitCH, 30.0)
+		node.setMarginBottom(kMarginTypeLength, kMarginUnitCH, 40.0)
 
-		this.window.contentWidth(kDLLayoutContentSizeTypeLength, kDLLayoutContentSizeUnitPX, 3200.0)
-		this.window.contentHeight(kDLLayoutContentSizeTypeLength, kDLLayoutContentSizeUnitPX, 4800.0)
+		this.window.setContentWidth(kContentSizeTypeLength, kContentSizeUnitPX, 3200.0)
+		this.window.setContentHeight(kContentSizeTypeLength, kContentSizeUnitPX, 4800.0)
 		this.window.appendChild(node)
 		this.window.resolve()
 
@@ -391,9 +375,9 @@ class AbsoluteLayoutNodeTest {
 	@Test
 	fun testNodeWidthInPX() {
 
-		val node = LayoutNode(this.layout)
-		node.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 10.0)
-		node.width(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitPX, 100.0)
+		val node = DisplayNode(this.display)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 10.0)
+		node.setWidth(kSizeTypeLength, kSizeUnitPX, 100.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -404,9 +388,9 @@ class AbsoluteLayoutNodeTest {
 	@Test
 	fun testNodeWidthInPC() {
 
-		val node = LayoutNode(this.layout)
-		node.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 0.0)
-		node.width(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitPC, 50.0)
+		val node = DisplayNode(this.display)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setWidth(kSizeTypeLength, kSizeUnitPC, 50.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -417,9 +401,9 @@ class AbsoluteLayoutNodeTest {
 	@Test
 	fun testNodeWidthInVW() {
 
-		val node = LayoutNode(this.layout)
-		node.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 0.0)
-		node.width(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitVW, 50.0)
+		val node = DisplayNode(this.display)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setWidth(kSizeTypeLength, kSizeUnitVW, 50.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -430,9 +414,9 @@ class AbsoluteLayoutNodeTest {
 	@Test
 	fun testNodeWidthInVH() {
 
-		val node = LayoutNode(this.layout)
-		node.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 0.0)
-		node.width(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitVH, 50.0)
+		val node = DisplayNode(this.display)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setWidth(kSizeTypeLength, kSizeUnitVH, 50.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -443,9 +427,9 @@ class AbsoluteLayoutNodeTest {
 	@Test
 	fun testNodeWidthInPW() {
 
-		val node = LayoutNode(this.layout)
-		node.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 0.0)
-		node.width(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitPW, 50.0)
+		val node = DisplayNode(this.display)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setWidth(kSizeTypeLength, kSizeUnitPW, 50.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -456,9 +440,9 @@ class AbsoluteLayoutNodeTest {
 	@Test
 	fun testNodeWidthInPH() {
 
-		val node = LayoutNode(this.layout)
-		node.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 0.0)
-		node.width(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitPH, 50.0)
+		val node = DisplayNode(this.display)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setWidth(kSizeTypeLength, kSizeUnitPH, 50.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -469,12 +453,12 @@ class AbsoluteLayoutNodeTest {
 	@Test
 	fun testNodeWidthInCW() {
 
-		val node = LayoutNode(this.layout)
-		node.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 0.0)
-		node.width(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitCW, 50.0)
+		val node = DisplayNode(this.display)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setWidth(kSizeTypeLength, kSizeUnitCW, 50.0)
 
-		this.window.contentWidth(kDLLayoutContentSizeTypeLength, kDLLayoutContentSizeUnitPX, 3200.0)
-		this.window.contentHeight(kDLLayoutContentSizeTypeLength, kDLLayoutContentSizeUnitPX, 4800.0)
+		this.window.setContentWidth(kContentSizeTypeLength, kContentSizeUnitPX, 3200.0)
+		this.window.setContentHeight(kContentSizeTypeLength, kContentSizeUnitPX, 4800.0)
 		this.window.appendChild(node)
 		this.window.resolve()
 
@@ -484,12 +468,12 @@ class AbsoluteLayoutNodeTest {
 	@Test
 	fun testNodeWidthInCH() {
 
-		val node = LayoutNode(this.layout)
-		node.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 0.0)
-		node.width(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitCH, 50.0)
+		val node = DisplayNode(this.display)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setWidth(kSizeTypeLength, kSizeUnitCH, 50.0)
 
-		this.window.contentWidth(kDLLayoutContentSizeTypeLength, kDLLayoutContentSizeUnitPX, 3200.0)
-		this.window.contentHeight(kDLLayoutContentSizeTypeLength, kDLLayoutContentSizeUnitPX, 4800.0)
+		this.window.setContentWidth(kContentSizeTypeLength, kContentSizeUnitPX, 3200.0)
+		this.window.setContentHeight(kContentSizeTypeLength, kContentSizeUnitPX, 4800.0)
 		this.window.appendChild(node)
 		this.window.resolve()
 
@@ -499,10 +483,10 @@ class AbsoluteLayoutNodeTest {
 	@Test
 	fun testNodeWidthUsingFill() {
 
-		val node = LayoutNode(this.layout)
-		node.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 0.0)
-		node.width(kDLLayoutSizeTypeFill, kDLLayoutSizeUnitNone, 0.0)
-		node.height(kDLLayoutSizeTypeFill, kDLLayoutSizeUnitNone, 0.0)
+		val node = DisplayNode(this.display)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setWidth(kSizeTypeFill, kSizeUnitNone, 0.0)
+		node.setHeight(kSizeTypeFill, kSizeUnitNone, 0.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -513,10 +497,10 @@ class AbsoluteLayoutNodeTest {
 	@Test
 	fun testNodeWidthUsingFillAndLeftPosition() {
 
-		val node = LayoutNode(this.layout)
-		node.left(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 10.0)
-		node.width(kDLLayoutSizeTypeFill, kDLLayoutSizeUnitNone, 0.0)
-		node.height(kDLLayoutSizeTypeFill, kDLLayoutSizeUnitNone, 0.0)
+		val node = DisplayNode(this.display)
+		node.setLeft(kOriginTypeLength, kOriginUnitPX, 10.0)
+		node.setWidth(kSizeTypeFill, kSizeUnitNone, 0.0)
+		node.setHeight(kSizeTypeFill, kSizeUnitNone, 0.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -527,10 +511,10 @@ class AbsoluteLayoutNodeTest {
 	@Test
 	fun testNodeWidthUsingFillAndRightPosition() {
 
-		val node = LayoutNode(this.layout)
-		node.right(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 30.0)
-		node.width(kDLLayoutSizeTypeFill, kDLLayoutSizeUnitNone, 0.0)
-		node.height(kDLLayoutSizeTypeFill, kDLLayoutSizeUnitNone, 0.0)
+		val node = DisplayNode(this.display)
+		node.setRight(kOriginTypeLength, kOriginUnitPX, 30.0)
+		node.setWidth(kSizeTypeFill, kSizeUnitNone, 0.0)
+		node.setHeight(kSizeTypeFill, kSizeUnitNone, 0.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -541,9 +525,9 @@ class AbsoluteLayoutNodeTest {
 	@Test
 	fun testNodeWidthUsingLeftAndRightPositionInPX() {
 
-		val node = LayoutNode(this.layout)
-		node.left(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 20.0)
-		node.right(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 30.0)
+		val node = DisplayNode(this.display)
+		node.setLeft(kOriginTypeLength, kOriginUnitPX, 20.0)
+		node.setRight(kOriginTypeLength, kOriginUnitPX, 30.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -554,9 +538,9 @@ class AbsoluteLayoutNodeTest {
 	@Test
 	fun testNodeWidthUsingLeftAndRightPositionInPC() {
 
-		val node = LayoutNode(this.layout)
-		node.left(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPC, 20.0)
-		node.right(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPC, 30.0)
+		val node = DisplayNode(this.display)
+		node.setLeft(kOriginTypeLength, kOriginUnitPC, 20.0)
+		node.setRight(kOriginTypeLength, kOriginUnitPC, 30.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -567,9 +551,9 @@ class AbsoluteLayoutNodeTest {
 	@Test
 	fun testNodeWidthUsingLeftAndRightPositionInVW() {
 
-		val node = LayoutNode(this.layout)
-		node.left(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitVW, 20.0)
-		node.right(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitVW, 30.0)
+		val node = DisplayNode(this.display)
+		node.setLeft(kOriginTypeLength, kOriginUnitVW, 20.0)
+		node.setRight(kOriginTypeLength, kOriginUnitVW, 30.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -580,9 +564,9 @@ class AbsoluteLayoutNodeTest {
 	@Test
 	fun testNodeWidthUsingLeftAndRightPositionInVH() {
 
-		val node = LayoutNode(this.layout)
-		node.left(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitVH, 20.0)
-		node.right(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitVH, 30.0)
+		val node = DisplayNode(this.display)
+		node.setLeft(kOriginTypeLength, kOriginUnitVH, 20.0)
+		node.setRight(kOriginTypeLength, kOriginUnitVH, 30.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -593,10 +577,10 @@ class AbsoluteLayoutNodeTest {
 	@Test
 	fun testNodeWidthtShouldBeMeasuredFromLeftAndRightInsteadOfLength() {
 
-		val node = LayoutNode(this.layout)
-		node.left(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 20.0)
-		node.right(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 30.0)
-		node.width(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitPX, 100.0)
+		val node = DisplayNode(this.display)
+		node.setLeft(kOriginTypeLength, kOriginUnitPX, 20.0)
+		node.setRight(kOriginTypeLength, kOriginUnitPX, 30.0)
+		node.setWidth(kSizeTypeLength, kSizeUnitPX, 100.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -607,11 +591,11 @@ class AbsoluteLayoutNodeTest {
 	@Test
 	fun testNodeWidthUsingLeftAndRightPositionInPXIncludingNegativeMargins() {
 
-		val node = LayoutNode(this.layout)
-		node.left(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 20.0)
-		node.right(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 30.0)
-		node.marginLeft(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitPX, -20.0)
-		node.marginRight(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitPX, -30.0)
+		val node = DisplayNode(this.display)
+		node.setLeft(kOriginTypeLength, kOriginUnitPX, 20.0)
+		node.setRight(kOriginTypeLength, kOriginUnitPX, 30.0)
+		node.setMarginLeft(kMarginTypeLength, kMarginUnitPX, -20.0)
+		node.setMarginRight(kMarginTypeLength, kMarginUnitPX, -30.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -622,11 +606,11 @@ class AbsoluteLayoutNodeTest {
 	@Test
 	fun testNodeWidthUsingLeftAndRightPositionInPXIncludingPositiveMargins() {
 
-		val node = LayoutNode(this.layout)
-		node.left(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 20.0)
-		node.right(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 30.0)
-		node.marginLeft(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitPX, 20.0)
-		node.marginRight(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitPX, 30.0)
+		val node = DisplayNode(this.display)
+		node.setLeft(kOriginTypeLength, kOriginUnitPX, 20.0)
+		node.setRight(kOriginTypeLength, kOriginUnitPX, 30.0)
+		node.setMarginLeft(kMarginTypeLength, kMarginUnitPX, 20.0)
+		node.setMarginRight(kMarginTypeLength, kMarginUnitPX, 30.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -637,9 +621,9 @@ class AbsoluteLayoutNodeTest {
 	@Test
 	fun testNodeHeightInPX() {
 
-		val node = LayoutNode(this.layout)
-		node.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 10.0)
-		node.height(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitPX, 100.0)
+		val node = DisplayNode(this.display)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 10.0)
+		node.setHeight(kSizeTypeLength, kSizeUnitPX, 100.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -650,9 +634,9 @@ class AbsoluteLayoutNodeTest {
 	@Test
 	fun testNodeHeightInPC() {
 
-		val node = LayoutNode(this.layout)
-		node.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 0.0)
-		node.height(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitPC, 50.0)
+		val node = DisplayNode(this.display)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setHeight(kSizeTypeLength, kSizeUnitPC, 50.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -663,9 +647,9 @@ class AbsoluteLayoutNodeTest {
 	@Test
 	fun testNodeHeightInVW() {
 
-		val node = LayoutNode(this.layout)
-		node.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 0.0)
-		node.height(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitVW, 50.0)
+		val node = DisplayNode(this.display)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setHeight(kSizeTypeLength, kSizeUnitVW, 50.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -676,9 +660,9 @@ class AbsoluteLayoutNodeTest {
 	@Test
 	fun testNodeHeightInVH() {
 
-		val node = LayoutNode(this.layout)
-		node.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 0.0)
-		node.height(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitVH, 50.0)
+		val node = DisplayNode(this.display)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setHeight(kSizeTypeLength, kSizeUnitVH, 50.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -689,9 +673,9 @@ class AbsoluteLayoutNodeTest {
 	@Test
 	fun testNodeHeightInPW() {
 
-		val node = LayoutNode(this.layout)
-		node.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 0.0)
-		node.height(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitPW, 50.0)
+		val node = DisplayNode(this.display)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setHeight(kSizeTypeLength, kSizeUnitPW, 50.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -702,9 +686,9 @@ class AbsoluteLayoutNodeTest {
 	@Test
 	fun testNodeHeightInPH() {
 
-		val node = LayoutNode(this.layout)
-		node.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 0.0)
-		node.height(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitPH, 50.0)
+		val node = DisplayNode(this.display)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setHeight(kSizeTypeLength, kSizeUnitPH, 50.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -715,12 +699,12 @@ class AbsoluteLayoutNodeTest {
 	@Test
 	fun testNodeHeightInCW() {
 
-		val node = LayoutNode(this.layout)
-		node.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 0.0)
-		node.height(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitCW, 50.0)
+		val node = DisplayNode(this.display)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setHeight(kSizeTypeLength, kSizeUnitCW, 50.0)
 
-		this.window.contentWidth(kDLLayoutContentSizeTypeLength, kDLLayoutContentSizeUnitPX, 3200.0)
-		this.window.contentHeight(kDLLayoutContentSizeTypeLength, kDLLayoutContentSizeUnitPX, 4800.0)
+		this.window.setContentWidth(kContentSizeTypeLength, kContentSizeUnitPX, 3200.0)
+		this.window.setContentHeight(kContentSizeTypeLength, kContentSizeUnitPX, 4800.0)
 		this.window.appendChild(node)
 		this.window.resolve()
 
@@ -730,12 +714,12 @@ class AbsoluteLayoutNodeTest {
 	@Test
 	fun testNodeHeightInCH() {
 
-		val node = LayoutNode(this.layout)
-		node.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 0.0)
-		node.height(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitCH, 50.0)
+		val node = DisplayNode(this.display)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setHeight(kSizeTypeLength, kSizeUnitCH, 50.0)
 
-		this.window.contentWidth(kDLLayoutContentSizeTypeLength, kDLLayoutContentSizeUnitPX, 3200.0)
-		this.window.contentHeight(kDLLayoutContentSizeTypeLength, kDLLayoutContentSizeUnitPX, 4800.0)
+		this.window.setContentWidth(kContentSizeTypeLength, kContentSizeUnitPX, 3200.0)
+		this.window.setContentHeight(kContentSizeTypeLength, kContentSizeUnitPX, 4800.0)
 		this.window.appendChild(node)
 		this.window.resolve()
 
@@ -745,10 +729,10 @@ class AbsoluteLayoutNodeTest {
 	@Test
 	fun testNodeHeightUsingFill() {
 
-		val node = LayoutNode(this.layout)
-		node.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 0.0)
-		node.width(kDLLayoutSizeTypeFill, kDLLayoutSizeUnitNone, 0.0)
-		node.height(kDLLayoutSizeTypeFill, kDLLayoutSizeUnitNone, 0.0)
+		val node = DisplayNode(this.display)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setWidth(kSizeTypeFill, kSizeUnitNone, 0.0)
+		node.setHeight(kSizeTypeFill, kSizeUnitNone, 0.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -759,10 +743,10 @@ class AbsoluteLayoutNodeTest {
 	@Test
 	fun testNodeHeightUsingFillAndTopPosition() {
 
-		val node = LayoutNode(this.layout)
-		node.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 10.0)
-		node.width(kDLLayoutSizeTypeFill, kDLLayoutSizeUnitNone, 0.0)
-		node.height(kDLLayoutSizeTypeFill, kDLLayoutSizeUnitNone, 0.0)
+		val node = DisplayNode(this.display)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 10.0)
+		node.setWidth(kSizeTypeFill, kSizeUnitNone, 0.0)
+		node.setHeight(kSizeTypeFill, kSizeUnitNone, 0.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -773,10 +757,10 @@ class AbsoluteLayoutNodeTest {
 	@Test
 	fun testNodeHeightUsingFillAndBottomPosition() {
 
-		val node = LayoutNode(this.layout)
-		node.bottom(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 40.0)
-		node.width(kDLLayoutSizeTypeFill, kDLLayoutSizeUnitNone, 0.0)
-		node.height(kDLLayoutSizeTypeFill, kDLLayoutSizeUnitNone, 0.0)
+		val node = DisplayNode(this.display)
+		node.setBottom(kOriginTypeLength, kOriginUnitPX, 40.0)
+		node.setWidth(kSizeTypeFill, kSizeUnitNone, 0.0)
+		node.setHeight(kSizeTypeFill, kSizeUnitNone, 0.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -787,9 +771,9 @@ class AbsoluteLayoutNodeTest {
 	@Test
 	fun testNodeHeightUsingTopAndBottomPositionInPX() {
 
-		val node = LayoutNode(this.layout)
-		node.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 10.0)
-		node.bottom(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 40.0)
+		val node = DisplayNode(this.display)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 10.0)
+		node.setBottom(kOriginTypeLength, kOriginUnitPX, 40.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -800,9 +784,9 @@ class AbsoluteLayoutNodeTest {
 	@Test
 	fun testNodeHeightUsingTopAndBottomPositionInPC() {
 
-		val node = LayoutNode(this.layout)
-		node.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPC, 10.0)
-		node.bottom(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPC, 40.0)
+		val node = DisplayNode(this.display)
+		node.setTop(kOriginTypeLength, kOriginUnitPC, 10.0)
+		node.setBottom(kOriginTypeLength, kOriginUnitPC, 40.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -813,9 +797,9 @@ class AbsoluteLayoutNodeTest {
 	@Test
 	fun testNodeHeightUsingTopAndBottomPositionInVW() {
 
-		val node = LayoutNode(this.layout)
-		node.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitVW, 10.0)
-		node.bottom(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitVW, 40.0)
+		val node = DisplayNode(this.display)
+		node.setTop(kOriginTypeLength, kOriginUnitVW, 10.0)
+		node.setBottom(kOriginTypeLength, kOriginUnitVW, 40.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -826,9 +810,9 @@ class AbsoluteLayoutNodeTest {
 	@Test
 	fun testNodeHeightUsingTopAndBottomPositionInVH() {
 
-		val node = LayoutNode(this.layout)
-		node.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitVH, 10.0)
-		node.bottom(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitVH, 40.0)
+		val node = DisplayNode(this.display)
+		node.setTop(kOriginTypeLength, kOriginUnitVH, 10.0)
+		node.setBottom(kOriginTypeLength, kOriginUnitVH, 40.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -839,10 +823,10 @@ class AbsoluteLayoutNodeTest {
 	@Test
 	fun testNodeHeightShouldBeMeasuredFromTopAndBottomInsteadOfLength() {
 
-		val node = LayoutNode(this.layout)
-		node.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 10.0)
-		node.bottom(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 40.0)
-		node.height(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitPX, 150.0)
+		val node = DisplayNode(this.display)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 10.0)
+		node.setBottom(kOriginTypeLength, kOriginUnitPX, 40.0)
+		node.setHeight(kSizeTypeLength, kSizeUnitPX, 150.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -853,11 +837,11 @@ class AbsoluteLayoutNodeTest {
 	@Test
 	fun testNodeHeightUsingTopAndBottomPositionInPXIncludingNegativeMargins() {
 
-		val node = LayoutNode(this.layout)
-		node.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 10.0)
-		node.bottom(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 40.0)
-		node.marginTop(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitPX, -10.0)
-		node.marginBottom(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitPX, -40.0)
+		val node = DisplayNode(this.display)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 10.0)
+		node.setBottom(kOriginTypeLength, kOriginUnitPX, 40.0)
+		node.setMarginTop(kMarginTypeLength, kMarginUnitPX, -10.0)
+		node.setMarginBottom(kMarginTypeLength, kMarginUnitPX, -40.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -868,11 +852,11 @@ class AbsoluteLayoutNodeTest {
 	@Test
 	fun testNodeHeightUsingTopAndBottomPositionInPXIncludingPositiveMargins() {
 
-		val node = LayoutNode(this.layout)
-		node.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 10.0)
-		node.bottom(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 40.0)
-		node.marginTop(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitPX, 10.0)
-		node.marginBottom(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitPX, 40.0)
+		val node = DisplayNode(this.display)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 10.0)
+		node.setBottom(kOriginTypeLength, kOriginUnitPX, 40.0)
+		node.setMarginTop(kMarginTypeLength, kMarginUnitPX, 10.0)
+		node.setMarginBottom(kMarginTypeLength, kMarginUnitPX, 40.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -883,15 +867,15 @@ class AbsoluteLayoutNodeTest {
 	@Test
 	fun testNodeBorderInPX() {
 
-		val node = LayoutNode(this.layout)
-		node.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 0.0)
-		node.width(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitPX, 100.0)
-		node.height(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitPX, 150.0)
+		val node = DisplayNode(this.display)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setWidth(kSizeTypeLength, kSizeUnitPX, 100.0)
+		node.setHeight(kSizeTypeLength, kSizeUnitPX, 150.0)
 
-		node.borderTop(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitPX, 10.0)
-		node.borderLeft(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitPX, 20.0)
-		node.borderRight(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitPX, 30.0)
-		node.borderBottom(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitPX, 40.0)
+		node.setBorderTop(kBorderTypeLength, kBorderUnitPX, 10.0)
+		node.setBorderLeft(kBorderTypeLength, kBorderUnitPX, 20.0)
+		node.setBorderRight(kBorderTypeLength, kBorderUnitPX, 30.0)
+		node.setBorderBottom(kBorderTypeLength, kBorderUnitPX, 40.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -905,15 +889,15 @@ class AbsoluteLayoutNodeTest {
 	@Test
 	fun testNodeBorderInPC() {
 
-		val node = LayoutNode(this.layout)
-		node.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 0.0)
-		node.width(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitPX, 100.0)
-		node.height(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitPX, 150.0)
+		val node = DisplayNode(this.display)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setWidth(kSizeTypeLength, kSizeUnitPX, 100.0)
+		node.setHeight(kSizeTypeLength, kSizeUnitPX, 150.0)
 
-		node.borderTop(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitPC, 10.0)
-		node.borderLeft(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitPC, 20.0)
-		node.borderRight(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitPC, 30.0)
-		node.borderBottom(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitPC, 40.0)
+		node.setBorderTop(kBorderTypeLength, kBorderUnitPC, 10.0)
+		node.setBorderLeft(kBorderTypeLength, kBorderUnitPC, 20.0)
+		node.setBorderRight(kBorderTypeLength, kBorderUnitPC, 30.0)
+		node.setBorderBottom(kBorderTypeLength, kBorderUnitPC, 40.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -927,15 +911,15 @@ class AbsoluteLayoutNodeTest {
 	@Test
 	fun testNodeBorderInVW() {
 
-		val node = LayoutNode(this.layout)
-		node.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 0.0)
-		node.width(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitPX, 100.0)
-		node.height(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitPX, 150.0)
+		val node = DisplayNode(this.display)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setWidth(kSizeTypeLength, kSizeUnitPX, 100.0)
+		node.setHeight(kSizeTypeLength, kSizeUnitPX, 150.0)
 
-		node.borderTop(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitVW, 10.0)
-		node.borderLeft(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitVW, 20.0)
-		node.borderRight(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitVW, 30.0)
-		node.borderBottom(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitVW, 40.0)
+		node.setBorderTop(kBorderTypeLength, kBorderUnitVW, 10.0)
+		node.setBorderLeft(kBorderTypeLength, kBorderUnitVW, 20.0)
+		node.setBorderRight(kBorderTypeLength, kBorderUnitVW, 30.0)
+		node.setBorderBottom(kBorderTypeLength, kBorderUnitVW, 40.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -949,15 +933,15 @@ class AbsoluteLayoutNodeTest {
 	@Test
 	fun testNodeBorderInVH() {
 
-		val node = LayoutNode(this.layout)
-		node.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 0.0)
-		node.width(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitPX, 100.0)
-		node.height(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitPX, 150.0)
+		val node = DisplayNode(this.display)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setWidth(kSizeTypeLength, kSizeUnitPX, 100.0)
+		node.setHeight(kSizeTypeLength, kSizeUnitPX, 150.0)
 
-		node.borderTop(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitVH, 10.0)
-		node.borderLeft(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitVH, 20.0)
-		node.borderRight(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitVH, 30.0)
-		node.borderBottom(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitVH, 40.0)
+		node.setBorderTop(kBorderTypeLength, kBorderUnitVH, 10.0)
+		node.setBorderLeft(kBorderTypeLength, kBorderUnitVH, 20.0)
+		node.setBorderRight(kBorderTypeLength, kBorderUnitVH, 30.0)
+		node.setBorderBottom(kBorderTypeLength, kBorderUnitVH, 40.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -971,14 +955,14 @@ class AbsoluteLayoutNodeTest {
 	@Test
 	fun testNodeBorderInPW() {
 
-		val node = LayoutNode(this.layout)
-		node.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 0.0)
-		node.left(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 0.0)
+		val node = DisplayNode(this.display)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setLeft(kOriginTypeLength, kOriginUnitPX, 0.0)
 
-		node.borderTop(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitPW, 10.0)
-		node.borderLeft(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitPW, 20.0)
-		node.borderRight(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitPW, 30.0)
-		node.borderBottom(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitPW, 40.0)
+		node.setBorderTop(kBorderTypeLength, kBorderUnitPW, 10.0)
+		node.setBorderLeft(kBorderTypeLength, kBorderUnitPW, 20.0)
+		node.setBorderRight(kBorderTypeLength, kBorderUnitPW, 30.0)
+		node.setBorderBottom(kBorderTypeLength, kBorderUnitPW, 40.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -992,14 +976,14 @@ class AbsoluteLayoutNodeTest {
 	@Test
 	fun testNodeBorderInPH() {
 
-		val node = LayoutNode(this.layout)
-		node.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 0.0)
-		node.left(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 0.0)
+		val node = DisplayNode(this.display)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setLeft(kOriginTypeLength, kOriginUnitPX, 0.0)
 
-		node.borderTop(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitPH, 10.0)
-		node.borderLeft(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitPH, 20.0)
-		node.borderRight(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitPH, 30.0)
-		node.borderBottom(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitPH, 40.0)
+		node.setBorderTop(kBorderTypeLength, kBorderUnitPH, 10.0)
+		node.setBorderLeft(kBorderTypeLength, kBorderUnitPH, 20.0)
+		node.setBorderRight(kBorderTypeLength, kBorderUnitPH, 30.0)
+		node.setBorderBottom(kBorderTypeLength, kBorderUnitPH, 40.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -1013,17 +997,17 @@ class AbsoluteLayoutNodeTest {
 	@Test
 	fun testNodeBorderInCW() {
 
-		val node = LayoutNode(this.layout)
-		node.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 0.0)
-		node.left(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 0.0)
+		val node = DisplayNode(this.display)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setLeft(kOriginTypeLength, kOriginUnitPX, 0.0)
 
-		node.borderTop(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitCW, 10.0)
-		node.borderLeft(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitCW, 20.0)
-		node.borderRight(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitCW, 30.0)
-		node.borderBottom(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitCW, 40.0)
+		node.setBorderTop(kBorderTypeLength, kBorderUnitCW, 10.0)
+		node.setBorderLeft(kBorderTypeLength, kBorderUnitCW, 20.0)
+		node.setBorderRight(kBorderTypeLength, kBorderUnitCW, 30.0)
+		node.setBorderBottom(kBorderTypeLength, kBorderUnitCW, 40.0)
 
-		this.window.contentWidth(kDLLayoutContentSizeTypeLength, kDLLayoutContentSizeUnitPX, 3200.0)
-		this.window.contentHeight(kDLLayoutContentSizeTypeLength, kDLLayoutContentSizeUnitPX, 4800.0)
+		this.window.setContentWidth(kContentSizeTypeLength, kContentSizeUnitPX, 3200.0)
+		this.window.setContentHeight(kContentSizeTypeLength, kContentSizeUnitPX, 4800.0)
 		this.window.appendChild(node)
 		this.window.resolve()
 
@@ -1036,17 +1020,17 @@ class AbsoluteLayoutNodeTest {
 	@Test
 	fun testNodeBorderInCH() {
 
-		val node = LayoutNode(this.layout)
-		node.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 0.0)
-		node.left(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 0.0)
+		val node = DisplayNode(this.display)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setLeft(kOriginTypeLength, kOriginUnitPX, 0.0)
 
-		node.borderTop(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitCH, 10.0)
-		node.borderLeft(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitCH, 20.0)
-		node.borderRight(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitCH, 30.0)
-		node.borderBottom(kDLLayoutBorderTypeLength, kDLLayoutBorderUnitCH, 40.0)
+		node.setBorderTop(kBorderTypeLength, kBorderUnitCH, 10.0)
+		node.setBorderLeft(kBorderTypeLength, kBorderUnitCH, 20.0)
+		node.setBorderRight(kBorderTypeLength, kBorderUnitCH, 30.0)
+		node.setBorderBottom(kBorderTypeLength, kBorderUnitCH, 40.0)
 
-		this.window.contentWidth(kDLLayoutContentSizeTypeLength, kDLLayoutContentSizeUnitPX, 3200.0)
-		this.window.contentHeight(kDLLayoutContentSizeTypeLength, kDLLayoutContentSizeUnitPX, 4800.0)
+		this.window.setContentWidth(kContentSizeTypeLength, kContentSizeUnitPX, 3200.0)
+		this.window.setContentHeight(kContentSizeTypeLength, kContentSizeUnitPX, 4800.0)
 		this.window.appendChild(node)
 		this.window.resolve()
 
@@ -1059,15 +1043,15 @@ class AbsoluteLayoutNodeTest {
 	@Test
 	fun testNodePaddingInPX() {
 
-		val node = LayoutNode(this.layout)
-		node.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 0.0)
-		node.width(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitPX, 100.0)
-		node.height(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitPX, 150.0)
+		val node = DisplayNode(this.display)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setWidth(kSizeTypeLength, kSizeUnitPX, 100.0)
+		node.setHeight(kSizeTypeLength, kSizeUnitPX, 150.0)
 
-		node.paddingTop(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitPX, 10.0)
-		node.paddingLeft(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitPX, 20.0)
-		node.paddingRight(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitPX, 30.0)
-		node.paddingBottom(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitPX, 40.0)
+		node.setPaddingTop(kPaddingTypeLength, kPaddingUnitPX, 10.0)
+		node.setPaddingLeft(kPaddingTypeLength, kPaddingUnitPX, 20.0)
+		node.setPaddingRight(kPaddingTypeLength, kPaddingUnitPX, 30.0)
+		node.setPaddingBottom(kPaddingTypeLength, kPaddingUnitPX, 40.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -1081,15 +1065,15 @@ class AbsoluteLayoutNodeTest {
 	@Test
 	fun testNodePaddingInPC() {
 
-		val node = LayoutNode(this.layout)
-		node.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 0.0)
-		node.width(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitPX, 100.0)
-		node.height(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitPX, 150.0)
+		val node = DisplayNode(this.display)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setWidth(kSizeTypeLength, kSizeUnitPX, 100.0)
+		node.setHeight(kSizeTypeLength, kSizeUnitPX, 150.0)
 
-		node.paddingTop(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitPC, 10.0)
-		node.paddingLeft(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitPC, 20.0)
-		node.paddingRight(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitPC, 30.0)
-		node.paddingBottom(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitPC, 40.0)
+		node.setPaddingTop(kPaddingTypeLength, kPaddingUnitPC, 10.0)
+		node.setPaddingLeft(kPaddingTypeLength, kPaddingUnitPC, 20.0)
+		node.setPaddingRight(kPaddingTypeLength, kPaddingUnitPC, 30.0)
+		node.setPaddingBottom(kPaddingTypeLength, kPaddingUnitPC, 40.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -1103,15 +1087,15 @@ class AbsoluteLayoutNodeTest {
 	@Test
 	fun testNodePaddingInVW() {
 
-		val node = LayoutNode(this.layout)
-		node.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 0.0)
-		node.width(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitPX, 100.0)
-		node.height(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitPX, 150.0)
+		val node = DisplayNode(this.display)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setWidth(kSizeTypeLength, kSizeUnitPX, 100.0)
+		node.setHeight(kSizeTypeLength, kSizeUnitPX, 150.0)
 
-		node.paddingTop(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitVW, 10.0)
-		node.paddingLeft(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitVW, 20.0)
-		node.paddingRight(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitVW, 30.0)
-		node.paddingBottom(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitVW, 40.0)
+		node.setPaddingTop(kPaddingTypeLength, kPaddingUnitVW, 10.0)
+		node.setPaddingLeft(kPaddingTypeLength, kPaddingUnitVW, 20.0)
+		node.setPaddingRight(kPaddingTypeLength, kPaddingUnitVW, 30.0)
+		node.setPaddingBottom(kPaddingTypeLength, kPaddingUnitVW, 40.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -1125,15 +1109,15 @@ class AbsoluteLayoutNodeTest {
 	@Test
 	fun testNodePaddingInVH() {
 
-		val node = LayoutNode(this.layout)
-		node.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 0.0)
-		node.width(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitPX, 100.0)
-		node.height(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitPX, 150.0)
+		val node = DisplayNode(this.display)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setWidth(kSizeTypeLength, kSizeUnitPX, 100.0)
+		node.setHeight(kSizeTypeLength, kSizeUnitPX, 150.0)
 
-		node.paddingTop(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitVH, 10.0)
-		node.paddingLeft(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitVH, 20.0)
-		node.paddingRight(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitVH, 30.0)
-		node.paddingBottom(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitVH, 40.0)
+		node.setPaddingTop(kPaddingTypeLength, kPaddingUnitVH, 10.0)
+		node.setPaddingLeft(kPaddingTypeLength, kPaddingUnitVH, 20.0)
+		node.setPaddingRight(kPaddingTypeLength, kPaddingUnitVH, 30.0)
+		node.setPaddingBottom(kPaddingTypeLength, kPaddingUnitVH, 40.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -1148,14 +1132,14 @@ class AbsoluteLayoutNodeTest {
 	@Test
 	fun testNodePaddingInPW() {
 
-		val node = LayoutNode(this.layout)
-		node.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 0.0)
-		node.left(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 0.0)
+		val node = DisplayNode(this.display)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setLeft(kOriginTypeLength, kOriginUnitPX, 0.0)
 
-		node.paddingTop(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitPW, 10.0)
-		node.paddingLeft(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitPW, 20.0)
-		node.paddingRight(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitPW, 30.0)
-		node.paddingBottom(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitPW, 40.0)
+		node.setPaddingTop(kPaddingTypeLength, kPaddingUnitPW, 10.0)
+		node.setPaddingLeft(kPaddingTypeLength, kPaddingUnitPW, 20.0)
+		node.setPaddingRight(kPaddingTypeLength, kPaddingUnitPW, 30.0)
+		node.setPaddingBottom(kPaddingTypeLength, kPaddingUnitPW, 40.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -1169,14 +1153,14 @@ class AbsoluteLayoutNodeTest {
 	@Test
 	fun testNodePaddingInPH() {
 
-		val node = LayoutNode(this.layout)
-		node.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 0.0)
-		node.left(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 0.0)
+		val node = DisplayNode(this.display)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setLeft(kOriginTypeLength, kOriginUnitPX, 0.0)
 
-		node.paddingTop(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitPH, 10.0)
-		node.paddingLeft(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitPH, 20.0)
-		node.paddingRight(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitPH, 30.0)
-		node.paddingBottom(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitPH, 40.0)
+		node.setPaddingTop(kPaddingTypeLength, kPaddingUnitPH, 10.0)
+		node.setPaddingLeft(kPaddingTypeLength, kPaddingUnitPH, 20.0)
+		node.setPaddingRight(kPaddingTypeLength, kPaddingUnitPH, 30.0)
+		node.setPaddingBottom(kPaddingTypeLength, kPaddingUnitPH, 40.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -1190,17 +1174,17 @@ class AbsoluteLayoutNodeTest {
 	@Test
 	fun testNodePaddingInCW() {
 
-		val node = LayoutNode(this.layout)
-		node.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 0.0)
-		node.left(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 0.0)
+		val node = DisplayNode(this.display)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setLeft(kOriginTypeLength, kOriginUnitPX, 0.0)
 
-		node.paddingTop(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitCW, 10.0)
-		node.paddingLeft(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitCW, 20.0)
-		node.paddingRight(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitCW, 30.0)
-		node.paddingBottom(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitCW, 40.0)
+		node.setPaddingTop(kPaddingTypeLength, kPaddingUnitCW, 10.0)
+		node.setPaddingLeft(kPaddingTypeLength, kPaddingUnitCW, 20.0)
+		node.setPaddingRight(kPaddingTypeLength, kPaddingUnitCW, 30.0)
+		node.setPaddingBottom(kPaddingTypeLength, kPaddingUnitCW, 40.0)
 
-		this.window.contentWidth(kDLLayoutContentSizeTypeLength, kDLLayoutContentSizeUnitPX, 3200.0)
-		this.window.contentHeight(kDLLayoutContentSizeTypeLength, kDLLayoutContentSizeUnitPX, 4800.0)
+		this.window.setContentWidth(kContentSizeTypeLength, kContentSizeUnitPX, 3200.0)
+		this.window.setContentHeight(kContentSizeTypeLength, kContentSizeUnitPX, 4800.0)
 		this.window.appendChild(node)
 		this.window.resolve()
 
@@ -1213,17 +1197,17 @@ class AbsoluteLayoutNodeTest {
 	@Test
 	fun testNodePaddingInCH() {
 
-		val node = LayoutNode(this.layout)
-		node.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 0.0)
-		node.left(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 0.0)
+		val node = DisplayNode(this.display)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setLeft(kOriginTypeLength, kOriginUnitPX, 0.0)
 
-		node.paddingTop(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitCH, 10.0)
-		node.paddingLeft(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitCH, 20.0)
-		node.paddingRight(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitCH, 30.0)
-		node.paddingBottom(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitCH, 40.0)
+		node.setPaddingTop(kPaddingTypeLength, kPaddingUnitCH, 10.0)
+		node.setPaddingLeft(kPaddingTypeLength, kPaddingUnitCH, 20.0)
+		node.setPaddingRight(kPaddingTypeLength, kPaddingUnitCH, 30.0)
+		node.setPaddingBottom(kPaddingTypeLength, kPaddingUnitCH, 40.0)
 
-		this.window.contentWidth(kDLLayoutContentSizeTypeLength, kDLLayoutContentSizeUnitPX, 3200.0)
-		this.window.contentHeight(kDLLayoutContentSizeTypeLength, kDLLayoutContentSizeUnitPX, 4800.0)
+		this.window.setContentWidth(kContentSizeTypeLength, kContentSizeUnitPX, 3200.0)
+		this.window.setContentHeight(kContentSizeTypeLength, kContentSizeUnitPX, 4800.0)
 		this.window.appendChild(node)
 		this.window.resolve()
 
@@ -1236,13 +1220,13 @@ class AbsoluteLayoutNodeTest {
 	@Test
 	fun testAnchorInPC() {
 
-		val node = LayoutNode(this.layout)
-		node.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 0.0)
-		node.width(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitPX, 100.0)
-		node.height(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitPX, 200.0)
+		val node = DisplayNode(this.display)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setWidth(kSizeTypeLength, kSizeUnitPX, 100.0)
+		node.setHeight(kSizeTypeLength, kSizeUnitPX, 200.0)
 
-		node.anchorTop(kDLLayoutAnchorTypeLength, kDLLayoutAnchorUnitPC, 50.0)
-		node.anchorLeft(kDLLayoutAnchorTypeLength, kDLLayoutAnchorUnitPC, 100.0)
+		node.setAnchorTop(kAnchorTypeLength, kAnchorUnitPC, 50.0)
+		node.setAnchorLeft(kAnchorTypeLength, kAnchorUnitPC, 100.0)
 
 		this.window.appendChild(node)
 		this.window.resolve()
@@ -1255,12 +1239,12 @@ class AbsoluteLayoutNodeTest {
 	fun testScaling() {
 
 		// TODO: Test other properites
-		val node = LayoutNode(this.layout)
-		node.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 0.0)
-		node.width(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitPC, 33.0)
-		node.height(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitPC, 33.0)
+		val node = DisplayNode(this.display)
+		node.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		node.setWidth(kSizeTypeLength, kSizeUnitPC, 33.0)
+		node.setHeight(kSizeTypeLength, kSizeUnitPC, 33.0)
 
-		this.layout.scale = 2f
+		this.display.scale = 2.0
 		this.window.appendChild(node)
 		this.window.resolve()
 
@@ -1273,18 +1257,18 @@ class AbsoluteLayoutNodeTest {
 	@Test
 	fun testWrappingFromContentSize() {
 
-		val container = LayoutNode(this.layout)
-		container.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 0.0)
-		container.width(kDLLayoutSizeTypeWrap, kDLLayoutSizeUnitNone, 0.0)
-		container.height(kDLLayoutSizeTypeWrap, kDLLayoutSizeUnitNone, 0.0)
+		val container = DisplayNode(this.display)
+		container.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		container.setWidth(kSizeTypeWrap, kSizeUnitNone, 0.0)
+		container.setHeight(kSizeTypeWrap, kSizeUnitNone, 0.0)
 
-		val node1 = LayoutNode(this.layout)
-		node1.width(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitPX, 200.0)
-		node1.height(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitPX, 200.0)
+		val node1 = DisplayNode(this.display)
+		node1.setWidth(kSizeTypeLength, kSizeUnitPX, 200.0)
+		node1.setHeight(kSizeTypeLength, kSizeUnitPX, 200.0)
 
-		val node2 = LayoutNode(this.layout)
-		node2.width(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitPX, 200.0)
-		node2.height(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitPX, 200.0)
+		val node2 = DisplayNode(this.display)
+		node2.setWidth(kSizeTypeLength, kSizeUnitPX, 200.0)
+		node2.setHeight(kSizeTypeLength, kSizeUnitPX, 200.0)
 
 		container.appendChild(node1)
 		container.appendChild(node2)
@@ -1311,20 +1295,20 @@ class AbsoluteLayoutNodeTest {
 	@Test
 	fun testWrappingFromContentSizeWithMin() {
 
-		val container = LayoutNode(this.layout)
-		container.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 0.0)
-		container.width(kDLLayoutSizeTypeWrap, kDLLayoutSizeUnitNone, 0.0)
-		container.height(kDLLayoutSizeTypeWrap, kDLLayoutSizeUnitNone, 0.0)
-		container.minWidth(250.0)
-		container.minHeight(450.0)
+		val container = DisplayNode(this.display)
+		container.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		container.setWidth(kSizeTypeWrap, kSizeUnitNone, 0.0)
+		container.setHeight(kSizeTypeWrap, kSizeUnitNone, 0.0)
+		container.setMinWidth(250.0)
+		container.setMinHeight(450.0)
 
-		val node1 = LayoutNode(this.layout)
-		node1.width(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitPX, 200.0)
-		node1.height(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitPX, 200.0)
+		val node1 = DisplayNode(this.display)
+		node1.setWidth(kSizeTypeLength, kSizeUnitPX, 200.0)
+		node1.setHeight(kSizeTypeLength, kSizeUnitPX, 200.0)
 
-		val node2 = LayoutNode(this.layout)
-		node2.width(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitPX, 200.0)
-		node2.height(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitPX, 200.0)
+		val node2 = DisplayNode(this.display)
+		node2.setWidth(kSizeTypeLength, kSizeUnitPX, 200.0)
+		node2.setHeight(kSizeTypeLength, kSizeUnitPX, 200.0)
 
 		container.appendChild(node1)
 		container.appendChild(node2)
@@ -1351,20 +1335,20 @@ class AbsoluteLayoutNodeTest {
 	@Test
 	fun testWrappingFromContentSizeWithMax() {
 
-		val container = LayoutNode(this.layout)
-		container.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 0.0)
-		container.width(kDLLayoutSizeTypeWrap, kDLLayoutSizeUnitNone, 0.0)
-		container.height(kDLLayoutSizeTypeWrap, kDLLayoutSizeUnitNone, 0.0)
-		container.maxWidth(150.0)
-		container.maxHeight(350.0)
+		val container = DisplayNode(this.display)
+		container.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		container.setWidth(kSizeTypeWrap, kSizeUnitNone, 0.0)
+		container.setHeight(kSizeTypeWrap, kSizeUnitNone, 0.0)
+		container.setMaxWidth(150.0)
+		container.setMaxHeight(350.0)
 
-		val node1 = LayoutNode(this.layout)
-		node1.width(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitPX, 200.0)
-		node1.height(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitPX, 200.0)
+		val node1 = DisplayNode(this.display)
+		node1.setWidth(kSizeTypeLength, kSizeUnitPX, 200.0)
+		node1.setHeight(kSizeTypeLength, kSizeUnitPX, 200.0)
 
-		val node2 = LayoutNode(this.layout)
-		node2.width(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitPX, 200.0)
-		node2.height(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitPX, 200.0)
+		val node2 = DisplayNode(this.display)
+		node2.setWidth(kSizeTypeLength, kSizeUnitPX, 200.0)
+		node2.setHeight(kSizeTypeLength, kSizeUnitPX, 200.0)
 
 		container.appendChild(node1)
 		container.appendChild(node2)
@@ -1391,22 +1375,22 @@ class AbsoluteLayoutNodeTest {
 	@Test
 	fun testWrappingFromContentSizeAndPadding() {
 
-		val container = LayoutNode(this.layout)
-		container.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 0.0)
-		container.width(kDLLayoutSizeTypeWrap, kDLLayoutSizeUnitNone, 0.0)
-		container.height(kDLLayoutSizeTypeWrap, kDLLayoutSizeUnitNone, 0.0)
-		container.paddingTop(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitPX, 10.0)
-		container.paddingLeft(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitPX, 20.0)
-		container.paddingRight(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitPX, 30.0)
-		container.paddingBottom(kDLLayoutPaddingTypeLength, kDLLayoutPaddingUnitPX, 40.0)
+		val container = DisplayNode(this.display)
+		container.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		container.setWidth(kSizeTypeWrap, kSizeUnitNone, 0.0)
+		container.setHeight(kSizeTypeWrap, kSizeUnitNone, 0.0)
+		container.setPaddingTop(kPaddingTypeLength, kPaddingUnitPX, 10.0)
+		container.setPaddingLeft(kPaddingTypeLength, kPaddingUnitPX, 20.0)
+		container.setPaddingRight(kPaddingTypeLength, kPaddingUnitPX, 30.0)
+		container.setPaddingBottom(kPaddingTypeLength, kPaddingUnitPX, 40.0)
 
-		val node1 = LayoutNode(this.layout)
-		node1.width(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitPX, 200.0)
-		node1.height(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitPX, 200.0)
+		val node1 = DisplayNode(this.display)
+		node1.setWidth(kSizeTypeLength, kSizeUnitPX, 200.0)
+		node1.setHeight(kSizeTypeLength, kSizeUnitPX, 200.0)
 
-		val node2 = LayoutNode(this.layout)
-		node2.width(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitPX, 200.0)
-		node2.height(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitPX, 200.0)
+		val node2 = DisplayNode(this.display)
+		node2.setWidth(kSizeTypeLength, kSizeUnitPX, 200.0)
+		node2.setHeight(kSizeTypeLength, kSizeUnitPX, 200.0)
 
 		container.appendChild(node1)
 		container.appendChild(node2)
@@ -1433,25 +1417,22 @@ class AbsoluteLayoutNodeTest {
 	@Test
 	fun testWrappingFromContentSizeAndMargin() {
 
-		val container = LayoutNode(this.layout)
-		container.id = "container"
-		container.top(kDLLayoutPositionTypeLength, kDLLayoutPositionUnitPX, 0.0)
-		container.width(kDLLayoutSizeTypeWrap, kDLLayoutSizeUnitNone, 0.0)
-		container.height(kDLLayoutSizeTypeWrap, kDLLayoutSizeUnitNone, 0.0)
+		val container = DisplayNode(this.display)
+		container.setTop(kOriginTypeLength, kOriginUnitPX, 0.0)
+		container.setWidth(kSizeTypeWrap, kSizeUnitNone, 0.0)
+		container.setHeight(kSizeTypeWrap, kSizeUnitNone, 0.0)
 
-		val node1 = LayoutNode(this.layout)
-		node1.id = "node1"
-		node1.width(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitPX, 200.0)
-		node1.height(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitPX, 200.0)
-		node1.marginRight(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitPX, 30.0)
-		node1.marginBottom(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitPX, 20.0)
+		val node1 = DisplayNode(this.display)
+		node1.setWidth(kSizeTypeLength, kSizeUnitPX, 200.0)
+		node1.setHeight(kSizeTypeLength, kSizeUnitPX, 200.0)
+		node1.setMarginRight(kMarginTypeLength, kMarginUnitPX, 30.0)
+		node1.setMarginBottom(kMarginTypeLength, kMarginUnitPX, 20.0)
 
-		val node2 = LayoutNode(this.layout)
-		node2.id = "node2"
-		node2.width(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitPX, 200.0)
-		node2.height(kDLLayoutSizeTypeLength, kDLLayoutSizeUnitPX, 200.0)
-		node2.marginRight(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitPX, 50.0)
-		node2.marginBottom(kDLLayoutMarginTypeLength, kDLLayoutMarginUnitPX, 40.0)
+		val node2 = DisplayNode(this.display)
+		node2.setWidth(kSizeTypeLength, kSizeUnitPX, 200.0)
+		node2.setHeight(kSizeTypeLength, kSizeUnitPX, 200.0)
+		node2.setMarginRight(kMarginTypeLength, kMarginUnitPX, 50.0)
+		node2.setMarginBottom(kMarginTypeLength, kMarginUnitPX, 40.0)
 
 		container.appendChild(node1)
 		container.appendChild(node2)

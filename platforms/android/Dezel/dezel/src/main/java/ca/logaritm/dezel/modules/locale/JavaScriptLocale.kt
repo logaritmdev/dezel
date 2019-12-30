@@ -2,7 +2,10 @@ package ca.logaritm.dezel.modules.locale
 
 import android.text.TextUtils
 import android.view.View
-import ca.logaritm.dezel.core.*
+import ca.logaritm.dezel.core.JavaScriptClass
+import ca.logaritm.dezel.core.JavaScriptContext
+import ca.logaritm.dezel.core.JavaScriptGetterCallback
+import ca.logaritm.dezel.core.JavaScriptProperty
 import java.util.*
 
 /**

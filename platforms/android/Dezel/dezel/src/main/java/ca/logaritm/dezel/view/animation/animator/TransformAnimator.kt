@@ -1,4 +1,4 @@
-package ca.logaritm.dezel.view.animation
+package ca.logaritm.dezel.view.animation.animator
 
 import android.animation.Animator
 import android.animation.ValueAnimator
@@ -46,7 +46,7 @@ internal class TransformAnimator(view: WrapperView, startValue: Transform, final
 	private var finalValue: Transform
 
 	//--------------------------------------------------------------------------
-	// Mehods
+	// Methods
 	//--------------------------------------------------------------------------
 
 	/**
@@ -86,7 +86,7 @@ internal class TransformAnimator(view: WrapperView, startValue: Transform, final
 	}
 
 	//--------------------------------------------------------------------------
-	// Mehods - Animator JavaScriptViewListener
+	// Methods - Animator JavaScriptViewListener
 	//--------------------------------------------------------------------------
 
 	/**
