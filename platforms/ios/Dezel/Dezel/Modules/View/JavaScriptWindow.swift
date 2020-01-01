@@ -17,6 +17,14 @@ open class JavaScriptWindow: JavaScriptView {
 		self.wrapper.removeFromSuperview()
 	}
 
+	/**
+	 * @method findViewAt
+	 * @since 0.7.0
+	 */
+	open func findViewAt(x: Double, y: Double, visible: Bool = true, touchable: Bool = true) -> JavaScriptView? {
+		return self.findViewAt(point: Point3D(x: x, y: y, z: 0.0), matrix: Transform3D(), visible: visible, touchable: touchable)
+	}
+
 	//--------------------------------------------------------------------------
 	// JavaScript Functions
 	//--------------------------------------------------------------------------

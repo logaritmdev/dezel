@@ -69,7 +69,6 @@
 		C74D8DCF2386D16D000C8E12 /* JavaScriptUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = C74D8DCE2386D16D000C8E12 /* JavaScriptUtil.swift */; };
 		C74D8DD423870ED1000C8E12 /* Set.swift in Sources */ = {isa = PBXBuildFile; fileRef = C74D8DD323870ED1000C8E12 /* Set.swift */; };
 		C74D8DDD238C7AFE000C8E12 /* UITouch.swift in Sources */ = {isa = PBXBuildFile; fileRef = C74D8DDC238C7AFE000C8E12 /* UITouch.swift */; };
-		C74D8DDF238D9364000C8E12 /* UIResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = C74D8DDE238D9364000C8E12 /* UIResponder.swift */; };
 		C75153B322EB4BC3007CAA48 /* HTTPURLResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75153B222EB4BC3007CAA48 /* HTTPURLResponse.swift */; };
 		C75153B922EBA05C007CAA48 /* NSData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75153B822EBA05C007CAA48 /* NSData.swift */; };
 		C75153BD22F11CAA007CAA48 /* JavaScriptLocale.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75153BC22F11CAA007CAA48 /* JavaScriptLocale.swift */; };
@@ -90,6 +89,7 @@
 		C7682A422035395F006EA6D5 /* Layer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7682A412035395F006EA6D5 /* Layer.swift */; };
 		C76864712039146700D1903B /* JavaScriptPropertyType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76864702039146700D1903B /* JavaScriptPropertyType.swift */; };
 		C76864732039147100D1903B /* JavaScriptPropertyUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76864722039147100D1903B /* JavaScriptPropertyUnit.swift */; };
+		C76D062223BD4DAA00C35AA0 /* TouchCancelable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76D062123BD4DAA00C35AA0 /* TouchCancelable.swift */; };
 		C77189AE2106ADF200337263 /* Point2D.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77189AD2106ADF200337263 /* Point2D.swift */; };
 		C77189B02106ADFD00337263 /* Point3D.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77189AF2106ADFD00337263 /* Point3D.swift */; };
 		C77189B22106AE0A00337263 /* Transform2D.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77189B12106AE0A00337263 /* Transform2D.swift */; };
@@ -407,7 +407,6 @@
 		C74D8DCE2386D16D000C8E12 /* JavaScriptUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptUtil.swift; sourceTree = "<group>"; };
 		C74D8DD323870ED1000C8E12 /* Set.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Set.swift; sourceTree = "<group>"; };
 		C74D8DDC238C7AFE000C8E12 /* UITouch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITouch.swift; sourceTree = "<group>"; };
-		C74D8DDE238D9364000C8E12 /* UIResponder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIResponder.swift; sourceTree = "<group>"; };
 		C75153B222EB4BC3007CAA48 /* HTTPURLResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPURLResponse.swift; sourceTree = "<group>"; };
 		C75153B822EBA05C007CAA48 /* NSData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSData.swift; sourceTree = "<group>"; };
 		C75153BC22F11CAA007CAA48 /* JavaScriptLocale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptLocale.swift; sourceTree = "<group>"; };
@@ -428,6 +427,7 @@
 		C7682A412035395F006EA6D5 /* Layer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Layer.swift; sourceTree = "<group>"; };
 		C76864702039146700D1903B /* JavaScriptPropertyType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptPropertyType.swift; sourceTree = "<group>"; };
 		C76864722039147100D1903B /* JavaScriptPropertyUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptPropertyUnit.swift; sourceTree = "<group>"; };
+		C76D062123BD4DAA00C35AA0 /* TouchCancelable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchCancelable.swift; sourceTree = "<group>"; };
 		C77189AD2106ADF200337263 /* Point2D.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Point2D.swift; sourceTree = "<group>"; };
 		C77189AF2106ADFD00337263 /* Point3D.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Point3D.swift; sourceTree = "<group>"; };
 		C77189B12106AE0A00337263 /* Transform2D.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transform2D.swift; sourceTree = "<group>"; };
@@ -817,7 +817,6 @@
 				C76753E92026996F003C4D85 /* ShadowLayer.swift */,
 				C72FF044204E190500FBB36B /* ShapeLayer.swift */,
 				C72E0E8F20668EE1003BCEF1 /* TextLayer.swift */,
-				C71E6CDE20E65FB6009B86F6 /* Updatable.swift */,
 			);
 			path = Layer;
 			sourceTree = "<group>";
@@ -1176,10 +1175,12 @@
 		C7DE1DF123B551D500DDC245 /* Trait */ = {
 			isa = PBXGroup;
 			children = (
+				C71E6CDE20E65FB6009B86F6 /* Updatable.swift */,
 				C7DECDFB206B351B006EE2A6 /* Clippable.swift */,
 				C7E5D07B209CBAE80098C5FD /* Resizable.swift */,
 				C7BCD7472094C5AD0014CD19 /* Scrollable.swift */,
 				C7A19E3420ACC4DF00367E91 /* ScrollableDelegate.swift */,
+				C76D062123BD4DAA00C35AA0 /* TouchCancelable.swift */,
 			);
 			path = Trait;
 			sourceTree = "<group>";
@@ -1472,7 +1473,6 @@
 				C7BFD16B207D560E00AAD31C /* UIColor.swift */,
 				C71E6CDC20E65CCF009B86F6 /* UIEdgeInsets.swift */,
 				C7D8926420657B0000E85115 /* UIFont.swift */,
-				C74D8DDE238D9364000C8E12 /* UIResponder.swift */,
 				C7CE4B062208C93C005D5235 /* UITextField.swift */,
 				C74D8DDC238C7AFE000C8E12 /* UITouch.swift */,
 				C7E30976203123DD00436FA4 /* UIView.swift */,
@@ -1748,7 +1748,6 @@
 				C74D8DDD238C7AFE000C8E12 /* UITouch.swift in Sources */,
 				C75153BD22F11CAA007CAA48 /* JavaScriptLocale.swift in Sources */,
 				C7BB7D462029062D004006C2 /* Transition.swift in Sources */,
-				C74D8DDF238D9364000C8E12 /* UIResponder.swift in Sources */,
 				C7A3AB77214EC68100D8B15C /* JavaScriptCanvas.swift in Sources */,
 				C7FCA0FE2311B4AA00AFBDB6 /* JavaScriptPropertyNumberValue.swift in Sources */,
 				C7A6080A2395580B00B176FC /* JavaScriptPropertyCompositeValue.swift in Sources */,
@@ -1896,6 +1895,7 @@
 				C7B9CEAD202CDBB7002409D5 /* JavaScriptApplicationModule.swift in Sources */,
 				C7E5D085209DE2290098C5FD /* AlertController.swift in Sources */,
 				C7CE4B09220A7824005D5235 /* Timezone.swift in Sources */,
+				C76D062223BD4DAA00C35AA0 /* TouchCancelable.swift in Sources */,
 				C792E8EB234BDE630022D712 /* DisplayNodePadding.cpp in Sources */,
 				C7DE1DF023AABA8500DDC245 /* Animatable.swift in Sources */,
 				C7541A8922E6B09800586FC4 /* HttpResponse.swift in Sources */,

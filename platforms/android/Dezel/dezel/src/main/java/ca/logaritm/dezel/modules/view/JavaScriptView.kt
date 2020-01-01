@@ -3,7 +3,9 @@ package ca.logaritm.dezel.modules.view
 import android.graphics.RectF
 import android.util.Log
 import android.util.SizeF
+import android.view.MotionEvent
 import android.view.animation.PathInterpolator
+import ca.logaritm.dezel.application.touch.Touch
 import ca.logaritm.dezel.core.*
 import ca.logaritm.dezel.extension.Delegates
 import ca.logaritm.dezel.extension.core.activity
@@ -996,14 +998,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 		return this
 	}
 
-	/**
-	 * @method createCanvas
-	 * @since 0.7.0
-	 */
-	open fun createCanvas(): JavaScriptCanvas? {
-		return null // TODO FIXME
-	}
-
 	//--------------------------------------------------------------------------
 	// Display Node Delegate
 	//--------------------------------------------------------------------------
@@ -1246,7 +1240,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	}
 
 	//--------------------------------------------------------------------------
-	// Content JavaScriptView Observer
+	// JavaScriptView Observer
 	//--------------------------------------------------------------------------
 
 	/**
@@ -1344,7 +1338,6 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	//--------------------------------------------------------------------------
 	// Private API
 	//--------------------------------------------------------------------------
-
 
 	/**
 	 * @method insertChild

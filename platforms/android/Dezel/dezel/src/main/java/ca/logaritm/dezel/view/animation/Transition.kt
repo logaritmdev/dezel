@@ -307,24 +307,7 @@ public class Transition(val activity: ApplicationActivity): Animator.AnimatorLis
 
 			view.animations[property] = animation
 
-			animation.addListener(object : Animator.AnimatorListener {
-
-				override fun onAnimationStart(animation: Animator?) {
-
-				}
-
-				override fun onAnimationRepeat(animation: Animator?) {
-
-				}
-
-				override fun onAnimationEnd(animation: Animator?) {
-					view.animations.remove(property)
-				}
-
-				override fun onAnimationCancel(animation: Animator?) {
-
-				}
-			})
+			animation.addListener(Listener(view, property))
 
 			animations.add(animation)
 		}
@@ -480,6 +463,49 @@ public class Transition(val activity: ApplicationActivity): Animator.AnimatorLis
 		 */
 		public var values: MutableMap<String, Any?> = mutableMapOf()
 	}
+
+	/**
+	 * @class Values
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private class Listener(val view: Animatable, val property: String) : Animator.AnimatorListener {
+		
+		/**
+		 * @method onAnimationCancel
+		 * @since 0.7.0
+		 * @hidden
+		 */
+		override fun onAnimationStart(animation: Animator?) {
+
+		}
+
+		/**
+		 * @method onAnimationCancel
+		 * @since 0.7.0
+		 * @hidden
+		 */
+		override fun onAnimationRepeat(animation: Animator?) {
+
+		}
+
+		/**
+		 * @method onAnimationCancel
+		 * @since 0.7.0
+		 * @hidden
+		 */
+		override fun onAnimationEnd(animation: Animator?) {
+			this.view.animations.remove(this.property)
+		}
+
+		/**
+		 * @method onAnimationCancel
+		 * @since 0.7.0
+		 * @hidden
+		 */
+		override fun onAnimationCancel(animation: Animator?) {
+
+		}
+	}
 }
 
-typealias TransitionCallback = (() -> (Unit))?

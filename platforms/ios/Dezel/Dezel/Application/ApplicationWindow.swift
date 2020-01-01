@@ -103,17 +103,22 @@ open class ApplicationWindow: UIWindow {
 
 		super.sendEvent(event)
 
+		/**
+		 * Reverts the original effect of the touch by manually dispatching
+		 * a touch cancel to the targetted view.
+		 */
+
 		for touch in touches where touch.reverted == false {
 
 			if (touch.canceled) {
 				touch.reverted = true
-				touch.view?.dispatchTouchCancel(touch, with: event)
+				self.cancelTouchEvent(target: touch.target, touch: touch, event: event)
 				continue
 			}
 
 			if (touch.captured) {
 				touch.reverted = true
-				touch.view?.dispatchTouchCancel(touch, with: event, skip: touch.receiver)
+				self.cancelTouchEvent(target: touch.target, touch: touch, event: event, skip: touch.receiver)
 				continue
 			}
 		}
@@ -149,5 +154,63 @@ open class ApplicationWindow: UIWindow {
      */
 	open func dispatchTouchCanceled(_ touches: Set<UITouch>) {
 		NotificationCenter.default.post(name: ApplicationDelegate.touchesCanceledNotification, object: self, userInfo: ["touches": touches])
+	}
+
+	//--------------------------------------------------------------------------
+	// MARK: Private API
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method cancelTouchEvent
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private func cancelTouchEvent(target: JavaScriptView, touch: UITouch, event: UIEvent, skip: JavaScriptView? = nil) {
+
+		let touches: Set<UITouch> = [touch]
+
+		/**
+		 * Manually dispatch a touch cancel event starting from the touch
+		 * target and bubbles
+		 */
+
+		var view = target
+
+		while (true) {
+
+			if (view != skip) {
+
+				view.wrapper.gestureRecognizers?.forEach { gesture in
+
+					if (gesture.isEnabled) {
+						gesture.isEnabled = false
+						gesture.isEnabled = true
+						gesture.touchesCancelled(touches, with: event)
+					}
+				}
+
+				view.content.gestureRecognizers?.forEach { gesture in
+
+					if (gesture.isEnabled) {
+						gesture.isEnabled = false
+						gesture.isEnabled = true
+						gesture.touchesCancelled(touches, with: event)
+					}
+				}
+
+				view.wrapper.touchesCancelled(touches, with: event)
+				view.content.touchesCancelled(touches, with: event)
+
+				if let view = view as? TouchCancelable {
+					view.cancelTouchEvent(touches: touches, with: event)
+				}
+			}
+
+			guard let parent = view.parent else {
+				break
+			}
+
+			view = parent
+		}
 	}
 }

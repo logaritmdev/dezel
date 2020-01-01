@@ -444,6 +444,16 @@ open class ApplicationController: UIViewController, StylesheetDelegate {
 	 * @since 0.7.0
 	 */
 	open func dispatchTouchStart(_ touches: Set<UITouch>) {
+
+		for touch in touches {
+
+			let point = touch.location(
+					in: self.view
+				)
+
+			touch.target = self.application?.window.findViewAt(x: Double(point.x), y: Double(point.y))
+		}
+
 		self.dispatchTouchEvent("touchstart", touches: touches)
 	}
 
@@ -483,9 +493,11 @@ open class ApplicationController: UIViewController, StylesheetDelegate {
 			)
 
 			let touch = self.context.createEmptyObject()
-			touch.property("pointer", number: Double(unsafeBitCast(t, to: Int.self)))
+
 			touch.property("x", number: Double(point.x))
 			touch.property("y", number: Double(point.y))
+			touch.property("id", number: t.id)
+			touch.property("target", value: t.target)
 			touch.property("canceled", boolean: t.canceled)
 			touch.property("captured", boolean: t.captured)
 
@@ -521,7 +533,7 @@ open class ApplicationController: UIViewController, StylesheetDelegate {
 
 			if (t.captured &&
 				t.receiver == nil) {
-				t.receiver = receiver.cast(JavaScriptView.self)!.content
+				t.receiver = receiver.cast(JavaScriptView.self)
 			}
 		}
 	}

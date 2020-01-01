@@ -3,6 +3,7 @@ package ca.logaritm.dezel.view
 import android.animation.ValueAnimator
 import android.content.Context
 import android.os.Handler
+import android.util.Log
 import android.view.MotionEvent
 import android.view.ScaleGestureDetector
 import android.view.ViewConfiguration
@@ -11,17 +12,17 @@ import android.view.animation.Transformation
 import android.widget.HorizontalScrollView
 import android.widget.ScrollView
 import ca.logaritm.dezel.application.ApplicationActivity
+import ca.logaritm.dezel.application.touch.Touch
 import ca.logaritm.dezel.extension.Delegates
 import ca.logaritm.dezel.extension.view.removeFromParent
 import ca.logaritm.dezel.extension.view.setMeasuredFrame
 import ca.logaritm.dezel.view.graphic.Convert
 import ca.logaritm.dezel.view.animation.Animatable
-import ca.logaritm.dezel.view.trait.Resizable
-import ca.logaritm.dezel.view.trait.Scrollable
-import ca.logaritm.dezel.view.trait.ScrollableListener
-import ca.logaritm.dezel.view.trait.Updatable
+import ca.logaritm.dezel.view.trait.*
 import ca.logaritm.dezel.view.type.Overscroll
 import ca.logaritm.dezel.view.type.Scrollbars
+import java.lang.Exception
+import kotlin.math.abs
 import kotlin.math.ceil
 import kotlin.math.floor
 import kotlin.math.max
@@ -32,7 +33,7 @@ import android.view.View as AndroidView
  * @super ViewGroup
  * @since 0.7.0
  */
-open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, Updatable, Animatable, ScaleGestureDetector.OnScaleGestureListener {
+open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, Updatable, Animatable, TouchCancelable, ScaleGestureDetector.OnScaleGestureListener {
 
 	//--------------------------------------------------------------------------
 	// Properties
@@ -635,6 +636,17 @@ open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, U
 	}
 
 	/**
+	 * @method cancelTouchEvent
+	 * @since 0.7.0
+	 */
+	override fun cancelTouchEvent(event: MotionEvent) {
+		this.vScrollView.onInterceptTouchEvent(event)
+		this.vScrollView.onTouchEvent(event)
+		this.hScrollView.onInterceptTouchEvent(event)
+		this.hScrollView.onTouchEvent(event)
+	}
+
+	/**
 	 * @method update
 	 * @since 0.7.0
 	 */
@@ -748,9 +760,16 @@ open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, U
 	 * @since 0.7.0
 	 */
 	open fun dispatchTouchCancel(event: MotionEvent) {
+
 		val application = this.context
 		if (application is ApplicationActivity) {
-			application.dispatchTouchCancel(event)
+
+			val touch = Touch.get(event)
+			if (touch == null) {
+				throw Exception("Unexpected error.")
+			}
+
+			application.dispatchTouchCancel(listOf(touch))
 		}
 	}
 
@@ -1256,7 +1275,7 @@ open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, U
 
 			val handled = super.onTouchEvent(event)
 
-			if (this.paged && event.action == MotionEvent.ACTION_UP) {
+			if (this.paged && event.actionMasked == MotionEvent.ACTION_UP) {
 
 				if (this.snapped) {
 					this.snapped = false
@@ -1625,7 +1644,7 @@ open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, U
 			}
 
 			if (this.paged) {
-				when (event.action) {
+				when (event.actionMasked) {
 					MotionEvent.ACTION_DOWN   -> this.dragY1 = event.y
 					MotionEvent.ACTION_UP     -> this.dragY2 = event.y
 					MotionEvent.ACTION_CANCEL -> {
@@ -1639,7 +1658,7 @@ open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, U
 
 			val handled = super.onTouchEvent(event)
 
-			if (this.paged && event.action == MotionEvent.ACTION_UP) {
+			if (this.paged && event.actionMasked == MotionEvent.ACTION_UP) {
 
 				if (this.snapped) {
 					this.snapped = false
@@ -1802,8 +1821,8 @@ open class View(context: Context) : ViewGroup(context), Scrollable, Resizable, U
 
 			val distance = this.dragY1 - this.dragY2
 
-			if (Math.abs(distance) > this@View.minDistance &&
-				Math.abs(velocity) > this@View.minVelocity) {
+			if (abs(distance) > this@View.minDistance &&
+				abs(velocity) > this@View.minVelocity) {
 				pageY = if (velocity > 0) pageY + 1 else pageY
 			} else {
 				pageY = (pageY.toFloat() + this@View.pageYOffset + 0.5).toInt()

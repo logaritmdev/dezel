@@ -43,6 +43,7 @@ import ca.logaritm.dezel.view.display.Display
 import ca.logaritm.dezel.view.graphic.Convert
 import ca.logaritm.dezel.view.display.Stylesheet
 import ca.logaritm.dezel.view.display.StylesheetListener
+import ca.logaritm.dezel.view.trait.TouchCancelable
 
 /**
  * @class ApplicationActivity
@@ -309,12 +310,6 @@ open class ApplicationActivity : Activity(), StylesheetListener, KeyboardObserve
 	// Touch Management
 	//--------------------------------------------------------------------------
 
-	/**
-	 * @property touches
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	private var touches: MutableMap<Int, Touch> = mutableMapOf()
 
 	/**
 	 * @method dispatchTouchEvent
@@ -325,77 +320,72 @@ open class ApplicationActivity : Activity(), StylesheetListener, KeyboardObserve
 		val pointer = event.getPointerId(event.actionIndex)
 
 		val k = event.findPointerIndex(pointer)
-		val x = event.getX(k)
-		val y = event.getY(k)
+		val x = Convert.toDp(event.getX(k)).toDouble()
+		val y = Convert.toDp(event.getY(k)).toDouble()
 
-		val touch: Touch
+		val touch: Touch?
 
 		if (event.actionMasked == MotionEvent.ACTION_DOWN ||
 			event.actionMasked == MotionEvent.ACTION_POINTER_DOWN) {
 
-			touch = Touch()
-			touch.pointer = pointer
-			touch.x = x
-			touch.y = y
+			val target = this.application?.window?.findViewAt(x, y)
+			if (target == null) {
+				throw Exception("Unexpected error.")
+			}
 
-			this.touches[pointer] = touch
+			touch = Touch.acquire(event, target)
 
 		} else {
 
-			touch = this.touches[pointer]!!
-			touch.x = x
-			touch.y = y
+			touch = Touch.get(event)
 
 		}
 
+		if (touch == null) {
+			throw Exception("Unexpected error.")
+		}
+
+		touch.x = x
+		touch.y = y
+
+		val touches = listOf(touch)
+
 		when (event.actionMasked) {
-			MotionEvent.ACTION_CANCEL       -> this.dispatchTouchCancel(listOf(touch))
-			MotionEvent.ACTION_DOWN         -> this.dispatchTouchStart(listOf(touch))
-			MotionEvent.ACTION_POINTER_DOWN -> this.dispatchTouchStart(listOf(touch))
-			MotionEvent.ACTION_MOVE         -> this.dispatchTouchMove(listOf(touch))
-			MotionEvent.ACTION_UP           -> this.dispatchTouchEnd(listOf(touch))
-			MotionEvent.ACTION_POINTER_UP   -> this.dispatchTouchEnd(listOf(touch))
+			MotionEvent.ACTION_CANCEL       -> this.dispatchTouchCancel(touches)
+			MotionEvent.ACTION_DOWN         -> this.dispatchTouchStart(touches)
+			MotionEvent.ACTION_POINTER_DOWN -> this.dispatchTouchStart(touches)
+			MotionEvent.ACTION_MOVE         -> this.dispatchTouchMove(touches)
+			MotionEvent.ACTION_UP           -> this.dispatchTouchEnd(touches)
+			MotionEvent.ACTION_POINTER_UP   -> this.dispatchTouchEnd(touches)
 		}
 
 		val dispatch = super.dispatchTouchEvent(event)
 
+		for (touch in touches) {
 
-		/*
-		for touch in touches where touch.touchCanceled == false {
+			if (touch.reverted) {
+				continue
+			}
 
 			if (touch.canceled) {
-				touch.view?.dispatchTouchCancel(touch, with: event)
-				touch.touchCanceled = true
+				touch.reverted = true
+				this.cancelTouchEvent(touch.target, event)
 				continue
 			}
 
 			if (touch.captured) {
-				touch.view?.dispatchTouchCancel(touch, with: event, skip: touch.receiver)
-				touch.touchCanceled = true
+				touch.reverted = true
+				this.cancelTouchEvent(touch.target, event, skip = touch.receiver)
 				continue
 			}
 		}
-		*/
+
 		if (event.actionMasked == MotionEvent.ACTION_UP ||
 			event.actionMasked == MotionEvent.ACTION_POINTER_UP) {
-			this.touches.remove(pointer)
+			Touch.release(event)
 		}
 
 		return dispatch
-	}
-
-	/**
-	 * @method dispatchTouchCancel
-	 * @since 0.7.0
-	 */
-	open fun dispatchTouchCancel(event: MotionEvent) {
-
-		val touch = this.touches[event.getPointerId(event.actionIndex)]
-		if (touch == null) {
-			return
-		}
-
-		this.dispatchTouchEvent("nativeOnTouchCancel", listOf(touch))
 	}
 
 	/**
@@ -447,9 +437,11 @@ open class ApplicationActivity : Activity(), StylesheetListener, KeyboardObserve
 		for ((i, t) in touches.withIndex()) {
 
 			val touch = this.context.createEmptyObject()
-			touch.property("pointer", t.pointer)
-			touch.property("x", Convert.toDp(t.x).toDouble())
-			touch.property("y", Convert.toDp(t.y).toDouble())
+
+			touch.property("x", t.x)
+			touch.property("y", t.y)
+			touch.property("id", t.id)
+			touch.property("target", t.target)
 			touch.property("canceled", t.canceled)
 			touch.property("captured", t.captured)
 
@@ -482,9 +474,53 @@ open class ApplicationActivity : Activity(), StylesheetListener, KeyboardObserve
 
 			if (t.captured &&
 				t.receiver == null) {
-				t.receiver = receiver.cast(JavaScriptView::class.java)!!.content
+				t.receiver = receiver.cast(JavaScriptView::class.java)
 			}
 		}
+	}
+
+	/**
+	 * @method cancelTouchEvent
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private fun cancelTouchEvent(target: JavaScriptView, event: MotionEvent, skip: JavaScriptView? = null) {
+
+		val cancel = MotionEvent.obtain(event)
+
+		cancel.action = MotionEvent.ACTION_CANCEL
+
+		/**
+		 * Manually dispatch a touch cancel event starting from the touch
+		 * target and bubbles
+		 */
+
+		var view = target
+
+		while (true) {
+
+			if (view != skip) {
+
+				view.wrapper.onInterceptTouchEvent(cancel)
+				view.wrapper.onTouchEvent(cancel)
+				view.wrapper.onInterceptTouchEvent(cancel)
+				view.content.onTouchEvent(cancel)
+
+				val content = view.content
+				if (content is TouchCancelable) {
+					content.cancelTouchEvent(cancel)
+				}
+			}
+
+			val parent = view.parent
+			if (parent == null) {
+				break
+			}
+
+			view = parent
+		}
+
+		cancel.recycle()
 	}
 
 	//--------------------------------------------------------------------------
