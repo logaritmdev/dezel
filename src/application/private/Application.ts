@@ -36,11 +36,11 @@ export function registerTouch(application: Application, input: InputTouch, touch
 }
 
 /**
- * @function getRegisteredTouch
+ * @function getActiveTouch
  * @since 0.7.0
  * @hidden
  */
-export function getRegisteredTouch(application: Application, input: InputTouch) {
+export function getActiveTouch(application: Application, input: InputTouch) {
 
 	let touch = application[$touches][input.id]
 	if (touch &&

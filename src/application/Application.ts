@@ -20,7 +20,7 @@ import { cancelTouchMove } from './private/Application'
 import { cancelTouchStart } from './private/Application'
 import { captureTouchMove } from './private/Application'
 import { captureTouchStart } from './private/Application'
-import { getRegisteredTouch } from './private/Application'
+import { getActiveTouch } from './private/Application'
 import { mapTarget } from './private/Application'
 import { registerTouch } from './private/Application'
 import { toActiveTouchList } from './private/Application'
@@ -228,18 +228,9 @@ export class Application extends Emitter {
 
 		for (let input of inputs) {
 
-			let target = this.window.findViewAt(
-				input.x,
-				input.y
-			)
+			(global as any).$0 = input.target
 
-			if (target == null) {
-				continue
-			}
-
-			(global as any).$0 = target
-
-			let touch = new Touch(target)
+			let touch = new Touch(input.target)
 
 			touch[$x] = input.x
 			touch[$y] = input.y
@@ -312,7 +303,7 @@ export class Application extends Emitter {
 
 		for (let input of inputs) {
 
-			let touch = getRegisteredTouch(this, input)
+			let touch = getActiveTouch(this, input)
 			if (touch == null) {
 				continue
 			}
@@ -389,7 +380,7 @@ export class Application extends Emitter {
 
 		for (let input of inputs) {
 
-			let touch = getRegisteredTouch(this, input)
+			let touch = getActiveTouch(this, input)
 			if (touch == null) {
 				continue
 			}
@@ -398,8 +389,6 @@ export class Application extends Emitter {
 			touch[$y] = input.y
 
 			mapTarget(touch, targets)
-
-			delete this[$touches][input.id]
 		}
 
 		/*
@@ -433,7 +422,7 @@ export class Application extends Emitter {
 
 		for (let input of inputs) {
 
-			let touch = getRegisteredTouch(this, input)
+			let touch = this[$touches][input.id]
 			if (touch == null) {
 				continue
 			}
@@ -443,6 +432,8 @@ export class Application extends Emitter {
 			touch[$id] = 0
 			touch[$canceled] = false
 			touch[$captured] = false
+
+			delete this[$touches][input.id]
 		}
 
 		return this
@@ -465,7 +456,7 @@ export class Application extends Emitter {
 
 		for (let input of inputs) {
 
-			let touch = getRegisteredTouch(this, input)
+			let touch = getActiveTouch(this, input)
 			if (touch == null) {
 				continue
 			}
@@ -507,7 +498,7 @@ export class Application extends Emitter {
 
 		for (let input of inputs) {
 
-			let touch = getRegisteredTouch(this, input)
+			let touch = this[$touches][input.id]
 			if (touch == null) {
 				continue
 			}
@@ -517,6 +508,8 @@ export class Application extends Emitter {
 			touch[$id] = 0
 			touch[$canceled] = false
 			touch[$captured] = false
+
+			delete this[$touches][input.id]
 		}
 
 		return this
@@ -758,8 +751,8 @@ export class Application extends Emitter {
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private nativeOnTouchMove(raw: Array<InputTouch>) {
-		this.dispatchTouchMove(raw)
+	private nativeOnTouchMove(touches: Array<InputTouch>) {
+		this.dispatchTouchMove(touches)
 	}
 
 	/**
@@ -906,6 +899,7 @@ export interface InputTouch {
 	id: number
 	x: number
 	y: number
+	target: View
 	canceled: boolean
 	captured: boolean
 	receiver?: any
