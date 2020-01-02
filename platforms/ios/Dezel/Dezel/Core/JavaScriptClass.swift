@@ -10,11 +10,11 @@ open class JavaScriptClass: JavaScriptObject {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @property instance
+	 * @property wrapper
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	private var instance: JavaScriptValue?
+	private var wrapper: JavaScriptValue?
 
 	//--------------------------------------------------------------------------
 	// MARK: Methods
@@ -26,8 +26,8 @@ open class JavaScriptClass: JavaScriptObject {
 	 */
 	override open func cast<T>(_ type: T.Type) -> T? {
 
-		if let instance = self.instance {
-			return instance.cast(type)
+		if let wrapper = self.wrapper {
+			return wrapper.cast(type)
 		}
 
 		return super.cast(type)
@@ -39,8 +39,8 @@ open class JavaScriptClass: JavaScriptObject {
 	 */
 	override open func call() {
 
-		if let instance = self.instance {
-			instance.call()
+		if let wrapper = self.wrapper {
+			wrapper.call()
 			return
 		}
 
@@ -53,8 +53,8 @@ open class JavaScriptClass: JavaScriptObject {
 	 */
 	override open func call(_ arguments: JavaScriptArguments?, target: JavaScriptValue?, result: JavaScriptValue? = nil) {
 
-		if let instance = self.instance {
-			instance.call(arguments, target: target, result: result)
+		if let wrapper = self.wrapper {
+			wrapper.call(arguments, target: target, result: result)
 			return
 		}
 
@@ -67,8 +67,8 @@ open class JavaScriptClass: JavaScriptObject {
 	 */
 	override open func callMethod(_ method: String) {
 
-		if let instance = self.instance {
-			instance.callMethod(method)
+		if let wrapper = self.wrapper {
+			wrapper.callMethod(method)
 			return
 		}
 
@@ -81,8 +81,8 @@ open class JavaScriptClass: JavaScriptObject {
 	 */
 	override open func callMethod(_ method: String, arguments: JavaScriptArguments?, result: JavaScriptValue? = nil) {
 
-		if let instance = self.instance {
-			instance.callMethod(method, arguments: arguments, result: result)
+		if let wrapper = self.wrapper {
+			wrapper.callMethod(method, arguments: arguments, result: result)
 			return
 		}
 
@@ -95,8 +95,8 @@ open class JavaScriptClass: JavaScriptObject {
 	 */
 	override open func construct() {
 
-		if let instance = self.instance {
-			instance.construct()
+		if let wrapper = self.wrapper {
+			wrapper.construct()
 			return
 		}
 
@@ -109,8 +109,8 @@ open class JavaScriptClass: JavaScriptObject {
 	 */
 	override open func construct(_ arguments: JavaScriptArguments?, result: JavaScriptValue? = nil) {
 
-		if let instance = self.instance {
-			instance.construct(arguments, result: result)
+		if let wrapper = self.wrapper {
+			wrapper.construct(arguments, result: result)
 			return
 		}
 
@@ -123,9 +123,9 @@ open class JavaScriptClass: JavaScriptObject {
 	 */
 	override open func defineProperty(_ property: String, value: JavaScriptValue?, getter: JavaScriptGetterHandler? = nil, setter: JavaScriptSetterHandler? = nil, writable: Bool = true, enumerable: Bool = true, configurable: Bool = true) {
 
-		if let instance = self.instance {
+		if let wrapper = self.wrapper {
 
-			instance.defineProperty(
+			wrapper.defineProperty(
 				property,
 				value: value,
 				getter: getter,
@@ -155,8 +155,8 @@ open class JavaScriptClass: JavaScriptObject {
 	 */
 	override open func property(_ name: String, value: JavaScriptValue?) {
 
-		if let instance = self.instance {
-			instance.property(name, value: value)
+		if let wrapper = self.wrapper {
+			wrapper.property(name, value: value)
 			return
 		}
 
@@ -169,8 +169,8 @@ open class JavaScriptClass: JavaScriptObject {
 	 */
 	override open func property(_ name: String, property: JavaScriptProperty) {
 
-		if let instance = self.instance {
-			instance.property(name, property: property)
+		if let wrapper = self.wrapper {
+			wrapper.property(name, property: property)
 			return
 		}
 
@@ -183,8 +183,8 @@ open class JavaScriptClass: JavaScriptObject {
 	 */
 	override open func property(_ name: String, string value: String) {
 
-		if let instance = self.instance {
-			instance.property(name, string: value)
+		if let wrapper = self.wrapper {
+			wrapper.property(name, string: value)
 			return
 		}
 
@@ -197,8 +197,8 @@ open class JavaScriptClass: JavaScriptObject {
 	 */
 	override open func property(_ name: String, number value: Double) {
 
-		if let instance = self.instance {
-			instance.property(name, number: value)
+		if let wrapper = self.wrapper {
+			wrapper.property(name, number: value)
 			return
 		}
 
@@ -211,8 +211,8 @@ open class JavaScriptClass: JavaScriptObject {
 	 */
 	override open func property(_ name: String, number value: Float) {
 
-		if let instance = self.instance {
-			instance.property(name, number: value)
+		if let wrapper = self.wrapper {
+			wrapper.property(name, number: value)
 			return
 		}
 
@@ -225,8 +225,8 @@ open class JavaScriptClass: JavaScriptObject {
 	 */
 	override open func property(_ name: String, number value: Int) {
 
-		if let instance = self.instance {
-			instance.property(name, number: value)
+		if let wrapper = self.wrapper {
+			wrapper.property(name, number: value)
 			return
 		}
 
@@ -239,8 +239,8 @@ open class JavaScriptClass: JavaScriptObject {
 	 */
 	override open func property(_ name: String, number value: CGFloat) {
 
-		if let instance = self.instance {
-			instance.property(name, number: value)
+		if let wrapper = self.wrapper {
+			wrapper.property(name, number: value)
 			return
 		}
 
@@ -253,8 +253,8 @@ open class JavaScriptClass: JavaScriptObject {
 	 */
 	override open func property(_ name: String, boolean value: Bool) {
 
-		if let instance = self.instance {
-			instance.property(name, boolean: value)
+		if let wrapper = self.wrapper {
+			wrapper.property(name, boolean: value)
 			return
 		}
 
@@ -266,7 +266,7 @@ open class JavaScriptClass: JavaScriptObject {
 	 * @since 0.7.0
 	 */
 	override open func property(_ name: String) -> JavaScriptValue {
-		return self.instance?.property(name) ?? super.property(name)
+		return self.wrapper?.property(name) ?? super.property(name)
 	}
 
 	/**
@@ -275,8 +275,8 @@ open class JavaScriptClass: JavaScriptObject {
 	 */
 	override open func property(_ index: Int, value: JavaScriptValue?) {
 
-		if let instance = self.instance {
-			instance.property(index, value: value)
+		if let wrapper = self.wrapper {
+			wrapper.property(index, value: value)
 			return
 		}
 
@@ -289,8 +289,8 @@ open class JavaScriptClass: JavaScriptObject {
 	 */
 	override open func property(_ index: Int, string value: String) {
 
-		if let instance = self.instance {
-			instance.property(index, string: value)
+		if let wrapper = self.wrapper {
+			wrapper.property(index, string: value)
 			return
 		}
 
@@ -303,8 +303,8 @@ open class JavaScriptClass: JavaScriptObject {
 	 */
 	override open func property(_ index: Int, number value: Double) {
 
-		if let instance = self.instance {
-			instance.property(index, number: value)
+		if let wrapper = self.wrapper {
+			wrapper.property(index, number: value)
 			return
 		}
 
@@ -317,8 +317,8 @@ open class JavaScriptClass: JavaScriptObject {
 	 */
 	override open func property(_ index: Int, number value: Float) {
 
-		if let instance = self.instance {
-			instance.property(index, number: value)
+		if let wrapper = self.wrapper {
+			wrapper.property(index, number: value)
 			return
 		}
 
@@ -331,8 +331,8 @@ open class JavaScriptClass: JavaScriptObject {
 	 */
 	override open func property(_ index: Int, number value: Int) {
 
-		if let instance = self.instance {
-			instance.property(index, number: value)
+		if let wrapper = self.wrapper {
+			wrapper.property(index, number: value)
 			return
 		}
 
@@ -345,8 +345,8 @@ open class JavaScriptClass: JavaScriptObject {
 	 */
 	override open func property(_ index: Int, number value: CGFloat) {
 
-		if let instance = self.instance {
-			instance.property(index, number: value)
+		if let wrapper = self.wrapper {
+			wrapper.property(index, number: value)
 			return
 		}
 
@@ -359,8 +359,8 @@ open class JavaScriptClass: JavaScriptObject {
 	 */
 	override open func property(_ index: Int, boolean value: Bool) {
 
-		if let instance = self.instance {
-			instance.property(index, boolean: value)
+		if let wrapper = self.wrapper {
+			wrapper.property(index, boolean: value)
 			return
 		}
 
@@ -372,7 +372,7 @@ open class JavaScriptClass: JavaScriptObject {
 	 * @since 0.7.0
 	 */
 	override open func property(_ index: Int) -> JavaScriptValue {
-		return self.instance?.property(index) ?? super.property(index)
+		return self.wrapper?.property(index) ?? super.property(index)
 	}
 
 	/**
@@ -381,8 +381,8 @@ open class JavaScriptClass: JavaScriptObject {
 	 */
 	override open func forEach(_ handler: @escaping JavaScriptForEachHandler) {
 
-		if let instance = self.instance {
-			instance.forEach(handler)
+		if let wrapper = self.wrapper {
+			wrapper.forEach(handler)
 			return
 		}
 
@@ -395,8 +395,8 @@ open class JavaScriptClass: JavaScriptObject {
 	 */
 	override open func forOwn(_ handler: @escaping JavaScriptForOwnHandler) {
 
-		if let instance = self.instance {
-			instance.forOwn(handler)
+		if let wrapper = self.wrapper {
+			wrapper.forOwn(handler)
 			return
 		}
 
@@ -409,8 +409,8 @@ open class JavaScriptClass: JavaScriptObject {
 	 */
 	override open func prototype(_ prototype: JavaScriptValue) {
 
-		if let instance = self.instance {
-			instance.prototype(prototype)
+		if let wrapper = self.wrapper {
+			wrapper.prototype(prototype)
 			return
 		}
 
@@ -422,7 +422,7 @@ open class JavaScriptClass: JavaScriptObject {
 	 * @since 0.7.0
 	 */
 	override open func prototype() -> JavaScriptValue {
-		return self.instance?.prototype() ?? super.prototype()
+		return self.wrapper?.prototype() ?? super.prototype()
 	}
 
 	/**
@@ -436,7 +436,7 @@ open class JavaScriptClass: JavaScriptObject {
 		 * make sure its holder does not get collected.
 		 */
 		
-		self.instance?.protect()
+		self.wrapper?.protect()
 	}
 
 	/**
@@ -450,7 +450,7 @@ open class JavaScriptClass: JavaScriptObject {
 		 * make sure its holder does not get collected.
 		 */
 
-		self.instance?.unprotect()
+		self.wrapper?.unprotect()
 	}
 
 	//--------------------------------------------------------------------------
@@ -469,14 +469,14 @@ open class JavaScriptClass: JavaScriptObject {
 			/*
 			 * It's possible this class does not have a native JavaScript
 			 * wrapper class. In this case all class related method will
-			 * be called on this very instance instead.
+			 * be called on this wrapper instead.
 			 */
 
 			return
 		 }
 
-		self.instance = callback.argument(0)
-		self.instance?.unprotect()
+		self.wrapper = callback.argument(0)
+		self.wrapper?.unprotect()
 	}
 
 	//--------------------------------------------------------------------------
@@ -489,6 +489,6 @@ open class JavaScriptClass: JavaScriptObject {
 	 * @hidden
 	 */
 	override open func toHandle(_ context: JavaScriptContext) -> JSValueRef {
-		return self.instance?.toHandle(context) ?? super.toHandle(context)
+		return self.wrapper?.toHandle(context) ?? super.toHandle(context)
 	}
 }

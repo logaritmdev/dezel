@@ -486,9 +486,8 @@ open class JavaScriptRecycler : JavaScriptClass, JavaScriptView.Delegate {
 		}
 
 		type.construct(nil, result: view)
-		// TODO
-		// Ça devrait pas marcher, la propriété native existe pu
-		guard let item = view.property("native").cast(JavaScriptView.self) else {
+
+		guard let item = view.cast(JavaScriptView.self) else {
 			return nil
 		}
 

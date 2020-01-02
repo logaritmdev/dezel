@@ -157,7 +157,7 @@ open class HttpRequest: NSObject, URLSessionDelegate, URLSessionTaskDelegate, UR
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @alias URLSessionCompletionHandler
+	 * @typealias URLSessionCompletionHandler
 	 * @since 0.1.0
 	 * @hidden
 	 */

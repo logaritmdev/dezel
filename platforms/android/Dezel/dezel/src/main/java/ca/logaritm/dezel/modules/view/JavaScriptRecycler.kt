@@ -500,7 +500,7 @@ open class JavaScriptRecycler(context: JavaScriptContext): JavaScriptClass(conte
 
 		type.construct(null, view)
 
-		val item = view.property("native").cast(JavaScriptView::class.java)
+		val item = view.cast(JavaScriptView::class.java)
 		if (item == null) {
 			return null
 		}

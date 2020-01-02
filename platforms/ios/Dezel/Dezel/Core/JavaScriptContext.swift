@@ -40,6 +40,15 @@ open class JavaScriptContext {
 		return self.createBoolean(false)
 	}()
 
+	/**
+	 * @const native
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private(set) internal lazy var native: JavaScriptValue = {
+		return self.createSymbol("native")
+	}()
+
 	//--------------------------------------------------------------------------
 	// MARK: Properties
 	//--------------------------------------------------------------------------
@@ -83,6 +92,13 @@ open class JavaScriptContext {
 		self.global = JavaScriptValue.create(self, handle: JavaScriptContextGetGlobalObject(self.handle))
 		self.global.defineProperty("global", value: self.global, getter: nil, setter: nil, writable: false, enumerable: false, configurable: false)
 		self.global.defineProperty("window", value: self.global, getter: nil, setter: nil, writable: false, enumerable: false, configurable: false)
+
+		/**
+		 * Creates a native symbol that will be used to store native object
+		 * on standard object.
+		 */
+
+		self.global.defineProperty("$native", value: self.native, getter: nil, setter: nil, writable: false, enumerable: false, configurable: false)
 	}
 
 	/**
@@ -209,6 +225,14 @@ open class JavaScriptContext {
 	}
 
 	/**
+	 * @method createSymbol
+	 * @since 0.7.0
+	 */
+	open func createSymbol(_ value: String) -> JavaScriptValue {
+		return JavaScriptValue.createSymbol(self, value: value)
+	}
+
+	/**
 	 * @method createEmptyObject
 	 * @since 0.1.0
 	 */
@@ -317,7 +341,7 @@ open class JavaScriptContext {
 }
 
 /**
- * @alias ExceptionHandler
+ * @typealias ExceptionHandler
  * @since 0.1.0
  */
 public typealias JavaScriptExceptionHandler = (JavaScriptValue) -> (Void)

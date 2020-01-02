@@ -10,7 +10,7 @@ public class JavaScriptProperty: NSObject {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @alias JavaScriptPropertyHandler
+	 * @typealias JavaScriptPropertyHandler
 	 * @since 0.7.0
 	 */
 	public typealias JavaScriptPropertyHandler = (JavaScriptProperty) -> Void

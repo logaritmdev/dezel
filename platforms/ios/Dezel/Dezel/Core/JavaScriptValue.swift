@@ -55,6 +55,15 @@ open class JavaScriptValue: NSObject {
 	}
 
 	/**
+	 * @method createSymbol
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	internal class func createSymbol(_ context: JavaScriptContext, value: String) -> JavaScriptValue {
+		return JavaScriptValue.create(context, handle: JavaScriptValueCreateSymbol(context.handle, value))
+	}
+
+	/**
 	 * @method createEmptyObject
 	 * @since 0.1.0
 	 * @hidden
@@ -113,10 +122,8 @@ open class JavaScriptValue: NSObject {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	internal class func create(_ context: JavaScriptContext, handle: JSValueRef!, protect: Bool = true) -> JavaScriptValue {
-		let value = JavaScriptValue(context: context)
-		value.reset(handle, protect: protect)
-		return value
+	internal class func create(_ context: JavaScriptContext, handle: JSValueRef!, bridge: Bool = false, protect: Bool = true) -> JavaScriptValue {
+		return JavaScriptValue(context: context, handle: handle, bridge: bridge, protect: protect)
 	}
 
 	//--------------------------------------------------------------------------
@@ -260,6 +267,22 @@ open class JavaScriptValue: NSObject {
 	}
 
 	/**
+	 * @constructor
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	internal convenience init(context: JavaScriptContext, handle: JSValueRef!, bridge: Bool = false, protect: Bool = true) {
+
+		self.init(context: context)
+
+		self.reset(
+			handle,
+			bridge: bridge,
+			protect: protect
+		)
+	}
+
+	/**
 	 * @method protect
 	 * @since 0.1.0
 	 */
@@ -336,7 +359,7 @@ open class JavaScriptValue: NSObject {
 		let argv = toArgv(arguments, context: self.context)
 
 		if let value = JavaScriptValueCall(self.context.handle, self.handle, toJs(target, in: self.context), UInt32(argc), argv) {
-			result?.reset(value)
+			result?.reset(value, bridge: true)
 		}
 
 		argv.deallocate()
@@ -360,7 +383,7 @@ open class JavaScriptValue: NSObject {
 		let argv = toArgv(arguments, context: self.context)
 
 		if let value = JavaScriptValueCallMethod(self.context.handle, self.handle, method, UInt32(argc), argv), let result = result {
-			result.reset(value)
+			result.reset(value, bridge: true)
 		}
 
 		argv.deallocate()
@@ -384,7 +407,7 @@ open class JavaScriptValue: NSObject {
 		let argv = toArgv(arguments, context: self.context)
 
 		if let value = JavaScriptValueConstruct(self.context.handle, self.handle, UInt32(argc), argv), let result = result {
-			result.reset(value)
+			result.reset(value, bridge: true)
 		}
 
 		argv.deallocate()
@@ -479,7 +502,7 @@ open class JavaScriptValue: NSObject {
 	 * @since 0.1.0
 	 */
 	open func property(_ name: String) -> JavaScriptValue {
-		return JavaScriptValue.create(self.context, handle: JavaScriptValueGetProperty(self.context.handle, self.handle, name))
+		return JavaScriptValue.create(self.context, handle: JavaScriptValueGetProperty(self.context.handle, self.handle, name), bridge: true)
 	}
 
 	/**
@@ -543,7 +566,23 @@ open class JavaScriptValue: NSObject {
 	 * @since 0.1.0
 	 */
 	open func property(_ index: Int) -> JavaScriptValue {
-		return JavaScriptValue.create(self.context, handle: JavaScriptValueGetPropertyAtIndex(self.context.handle, self.handle, UInt32(index)))
+		return JavaScriptValue.create(self.context, handle: JavaScriptValueGetPropertyAtIndex(self.context.handle, self.handle, UInt32(index)), bridge: true)
+	}
+
+	/**
+	 * @method property
+	 * @since 0.7.0
+	 */
+	open func property(_ symbol: JavaScriptValue, value: JavaScriptValue?) {
+		JavaScriptValueSetPropertyWithSymbol(self.context.handle, self.handle, toJs(symbol, in: self.context), toJs(value, in: self.context))
+	}
+
+	/**
+	 * @method property
+	 * @since 0.7.0
+	 */
+	open func property(_ symbol: JavaScriptValue) -> JavaScriptValue {
+		return JavaScriptValue.create(self.context, handle: JavaScriptValueGetPropertyWithSymbol(self.context.handle, self.handle, toJs(symbol, in: self.context)), bridge: true)
 	}
 
 	/**
@@ -666,9 +705,26 @@ open class JavaScriptValue: NSObject {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	internal func reset(_ handle: JSValueRef, protect: Bool = true) {
+	internal func reset(_ handle: JSValueRef, bridge: Bool = false, protect: Bool = true) {
 
 		self.unprotect()
+
+		var handle = handle
+
+		if (bridge) {
+
+			/*
+			 * Some of the values specified here are wrappers around a native
+			 * object. These objects use a symbol to store their native object
+			 * and in most cases this is the value that we actually want.
+			 */
+
+			 if (JavaScriptValueIsObject(self.context.handle, handle)) {
+				if let native = JavaScriptValueGetPropertyWithSymbol(self.context.handle, handle, self.context.native.handle), JavaScriptValueIsObject(self.context.handle, native) {
+					handle = native
+				}
+			}
+		}
 
 		self.handle = handle
 
@@ -680,47 +736,58 @@ open class JavaScriptValue: NSObject {
 	}
 }
 
+/**
+ * @const kFinalizeWrapperKey
+ * @since 0.2.0
+ * @hidden
+ */
 internal let kFinalizeWrapperKey = Int64(CChar(exactly:0)!.hashValue)
+
+/**
+ * @const kExceptionWrapperKey
+ * @since 0.2.0
+ * @hidden
+ */
 internal let kExceptionWrapperKey = Int64(CChar(exactly: 0)!.hashValue)
 
 /**
- * @alias JavaScriptFinalizeHandler
+ * @typealias JavaScriptFinalizeHandler
  * @since 0.2.0
  */
 public typealias JavaScriptFinalizeHandler = (JavaScriptFinalizeCallback) -> (Void)
 
 /**
- * @alias JavaScriptFunctionHandler
+ * @typealias JavaScriptFunctionHandler
  * @since 0.2.0
  */
 public typealias JavaScriptFunctionHandler = (JavaScriptFunctionCallback) -> (Void)
 
 /**
- * @alias JavaScriptGetterHandler
+ * @typealias JavaScriptGetterHandler
  * @since 0.2.0
  */
 public typealias JavaScriptGetterHandler = (JavaScriptGetterCallback) -> (Void)
 
 /**
- * @alias JavaScriptSetterHandler
+ * @typealias JavaScriptSetterHandler
  * @since 0.2.0
  */
 public typealias JavaScriptSetterHandler = (JavaScriptSetterCallback) -> (Void)
 
 /**
- * @alias JavaScriptArguments
+ * @typealias JavaScriptArguments
  * @since 0.2.0
  */
 public typealias JavaScriptArguments = [JavaScriptValue?]
 
 /**
- * @alias JavaScriptForOwnHandler
+ * @typealias JavaScriptForOwnHandler
  * @since 0.7.0
  */
 public typealias JavaScriptForOwnHandler = (String, JavaScriptValue) -> Void
 
 /**
- * @alias JavaScriptForEachHandler
+ * @typealias JavaScriptForEachHandler
  * @since 0.7.0
  */
 public typealias JavaScriptForEachHandler = (Int, JavaScriptValue) -> Void

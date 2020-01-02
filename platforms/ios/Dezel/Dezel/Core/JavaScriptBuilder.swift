@@ -22,7 +22,7 @@ open class JavaScriptBuilder {
 	}
 
 	/**
-	* @alias ForEachCallback
+	* @typealias ForEachCallback
 	* @since 0.1.0
 	* @hidden
 	*/
