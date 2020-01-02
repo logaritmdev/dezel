@@ -6,6 +6,27 @@
 
 using std::cerr;
 
+static const long long kNewSymbolKey = reinterpret_cast<long long>(new int(0));
+static const long long kSetValueWithSymbolKey = reinterpret_cast<long long>(new int(0));
+static const long long kGetValueWithSymbolKey = reinterpret_cast<long long>(new int(0));
+
+static
+JSObjectRef
+JavaScriptCompatFunction(JSContextRef context, const char* name, const long long key) {
+
+	auto function = reinterpret_cast<JSObjectRef>(JavaScriptContextGetAttribute(context, key));
+
+	if (function) {
+		return function;
+	}
+
+	auto value = JavaScriptValueGetProperty(context, JavaScriptContextGetGlobalObject(context), name);
+
+	JavaScriptContextSetAttribute(context, key, (void*) value);
+
+	return (JSObjectRef) value;
+}
+
 JSValueRef
 JavaScriptValueCreateNull(JSContextRef context)
 {
@@ -115,6 +136,14 @@ JavaScriptValueCreateFunction(JSContextRef context, JavaScriptValueFunctionCallb
 	JSClassRelease(fnc);
 
 	return object;
+}
+
+JSValueRef
+JavaScriptValueCreateSymbol(JSContextRef context, const char* name)
+{
+	JSValueRef argv[1];
+	argv[0] = JavaScriptValueCreateString(context, name);
+	return JavaScriptValueCall(context, JavaScriptCompatFunction(context, "__newSymbol__", kNewSymbolKey), nullptr, 1, argv);
 }
 
 void
@@ -260,6 +289,17 @@ JavaScriptValueSetPropertyWithBoolean(JSContextRef context, JSObjectRef object, 
 	JavaScriptValueSetProperty(context, object, property, JavaScriptValueCreateBoolean(context, value));
 }
 
+void
+JavaScriptValueSetPropertyWithSymbol(JSContextRef context, JSObjectRef object, JSValueRef symbol, JSValueRef value)
+{
+	JSValueRef argv[3];
+	argv[0] = object;
+	argv[1] = symbol;
+	argv[2] = value;
+
+	JavaScriptValueCall(context, JavaScriptCompatFunction(context, "__setValueWithSymbol__", kSetValueWithSymbolKey), nullptr, 3, argv);
+}
+
 JSValueRef
 JavaScriptValueGetProperty(JSContextRef context, JSObjectRef target, const char* property)
 {
@@ -275,6 +315,23 @@ JavaScriptValueGetProperty(JSContextRef context, JSObjectRef target, const char*
 
 	if (error) {
 		JavaScriptContextHandleError(context, error);
+	}
+
+	return value;
+}
+
+JSValueRef
+JavaScriptValueGetPropertyWithSymbol(JSContextRef context, JSObjectRef object, JSValueRef symbol)
+{
+	JSValueRef argv[2];
+	argv[0] = object;
+	argv[1] = symbol;
+
+	auto value = JavaScriptValueCall(context, JavaScriptCompatFunction(context, "__getValueWithSymbol__", kGetValueWithSymbolKey), nullptr, 3, argv);
+
+	if (JavaScriptValueIsNull(context, value) ||
+		JavaScriptValueIsUndefined(context, value)) {
+		return nullptr;
 	}
 
 	return value;

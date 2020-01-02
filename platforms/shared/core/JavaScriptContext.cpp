@@ -21,9 +21,31 @@ JavaScriptContextCreate(const char* name)
 {
 	JSContextRef context = JSGlobalContextCreate(nullptr);
 	JavaScriptContextSetName(context, name);
+
+	JavaScriptContextEvaluate(context, "self = this", "");
 	JavaScriptContextEvaluate(context, "root = this", "");
 	JavaScriptContextEvaluate(context, "global = this", "");
-	JavaScriptContextEvaluate(context, "self = this", "");
+
+	/*
+	 * Creates compatibility with symbol until the JavaScriptCore API
+	 * on iOS 13 becomes mainstream.
+	 */
+
+	JavaScriptContextEvaluate(context,
+		"function __newSymbol__(n) { return Symbol(n); }",
+		""
+	);
+
+	JavaScriptContextEvaluate(context,
+		"function __setValueWithSymbol__(o, s, v) { o[s] = v }",
+		""
+	);
+
+	JavaScriptContextEvaluate(context,
+		"function __getValueWithSymbol__(o, s) { return o[s] }",
+		""
+	);
+
 	return context;
 }
 

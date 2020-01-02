@@ -96,6 +96,13 @@ JSObjectRef JavaScriptValueCreateEmptyArray(JSContextRef context);
 JSObjectRef JavaScriptValueCreateFunction(JSContextRef context, JavaScriptValueFunctionCallback callback, const char* name);
 
 /**
+ * Creates a JavaScript value of the symbol type with the specified name.
+ * @function JavaScriptValueCreateSymbol
+ * @since 0.7.0
+ */
+JSValueRef JavaScriptValueCreateSymbol(JSContextRef context, const char* name);
+
+/**
  * Protect the value from garbage collection.
  * @function JavaScriptValueProtect
  * @since 0.7.0
@@ -173,11 +180,25 @@ void JavaScriptValueSetPropertyWithNumber(JSContextRef context, JSObjectRef obje
 void JavaScriptValueSetPropertyWithBoolean(JSContextRef context, JSObjectRef object, const char* property, bool value);
 
 /**
+ * Sets a property on the specified value using a symbol.
+ * @function JavaScriptValueSetPropertyWithSymbol
+ * @since 0.7.0
+ */
+void JavaScriptValueSetPropertyWithSymbol(JSContextRef context, JSObjectRef object, JSValueRef symbol, JSValueRef value);
+
+/**
  * Returns a property from the specified value.
  * @function JavaScriptValueGetProperty
  * @since 0.7.0
  */
 JSValueRef JavaScriptValueGetProperty(JSContextRef context, JSObjectRef object, const char* property);
+
+/**
+ * Returns a property using the specified symbol.
+ * @function JavaScriptValueGetPropertyWithSymbol
+ * @since 0.7.0
+ */
+JSValueRef JavaScriptValueGetPropertyWithSymbol(JSContextRef context, JSObjectRef object, JSValueRef symbol);
 
 /**
  * Sets a property at a numeric index on the specified value.
