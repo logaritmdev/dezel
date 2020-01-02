@@ -60,6 +60,15 @@ open class JavaScriptValue(context: JavaScriptContext) {
 		}
 
 		/**
+		 * @method createSymbol
+		 * @since 0.1.0
+		 * @hidden
+		 */
+		internal fun createSymbol(context: JavaScriptContext, value: String): JavaScriptValue {
+			return create(context, JavaScriptValueExternal.createSymbol(context.handle, value))
+		}
+
+		/**
 		 * @method createEmptyObject
 		 * @since 0.1.0
 		 * @hidden
@@ -118,10 +127,8 @@ open class JavaScriptValue(context: JavaScriptContext) {
 		 * @since 0.1.0
 		 * @hidden
 		 */
-		internal fun create(context: JavaScriptContext, handle: Long, protect: Boolean = true): JavaScriptValue {
-			val value = JavaScriptValue(context)
-			value.reset(handle, protect)
-			return value
+		internal fun create(context: JavaScriptContext, handle: Long, bridge: Boolean = false, protect: Boolean = true): JavaScriptValue {
+			return JavaScriptValue(context, handle, bridge, protect)
 		}
 	}
 
@@ -249,6 +256,15 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	 */
 	init {
 		this.context = context
+	}
+
+	/**
+	 * @constructor
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	internal constructor(context: JavaScriptContext, handle: Long, bridge: Boolean = false, protect: Boolean = true) : this(context) {
+		this.reset(handle, bridge, protect)
 	}
 
 	/**
@@ -453,7 +469,7 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	 * @since 0.1.0
 	 */
 	open fun property(name: String): JavaScriptValue {
-		return create(this.context, JavaScriptValueExternal.getProperty(this.context.handle, this.handle, name))
+		return create(this.context, JavaScriptValueExternal.getProperty(this.context.handle, this.handle, name), bridge = true)
 	}
 
 	/**
@@ -509,9 +525,25 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	 * @since 0.1.0
 	 */
 	open fun property(index: Int): JavaScriptValue {
-		return create(context, JavaScriptValueExternal.getPropertyAtIndex(this.context.handle, this.handle, index))
+		return create(context, JavaScriptValueExternal.getPropertyAtIndex(this.context.handle, this.handle, index), bridge = true)
 	}
 
+	/**
+	 * @method property
+	 * @since 0.7.0
+	 */
+	open fun property(symbol: JavaScriptValue, value: JavaScriptValue?) {
+		JavaScriptValueExternal.setPropertyWithSymbol(this.context.handle, this.handle, toJs(symbol, this.context), toJs(value, this.context))
+	}
+
+	/**
+	 * @method property
+	 * @since 0.7.0
+	 */
+	open fun property(symbol: JavaScriptValue): JavaScriptValue {
+		return create(this.context, JavaScriptValueExternal.getPropertyWithSymbol(this.context.handle, this.handle, toJs(symbol, this.context)), bridge = true)
+	}
+	
 	/**
 	 * @method forEach
 	 * @since 0.1.0
@@ -626,10 +658,28 @@ open class JavaScriptValue(context: JavaScriptContext) {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	public fun reset(handle: Long, protect: Boolean = true) {
+	public fun reset(handle: Long, bridge: Boolean = false, protect: Boolean = true) {
 
 		this.unprotect()
 
+		var handle = handle
+
+		if (bridge) {
+
+			/*
+			 * Some of the values specified here are wrappers around a native
+			 * object. These objects use a symbol to store their native object
+			 * and in most cases this is the value that we actually want.
+			 */
+
+			if (JavaScriptValueExternal.isObject(this.context.handle, handle)) {
+				val native = JavaScriptValueExternal.getPropertyWithSymbol(this.context.handle, handle, this.context.native.handle)
+				if (native != 0L && JavaScriptValueExternal.isObject(this.context.handle, native)) {
+					handle = native
+				}
+			}
+		}
+		
 		this.handle = handle
 
 		if (protect) {

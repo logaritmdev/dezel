@@ -153,7 +153,7 @@ JNICoreModule(JNIEnv* env)
 		env,
 		JavaScriptValueClass,
 		"reset",
-		"(JZ)V"
+		"(JZZ)V"
 	);
 
 	JavaScriptValueConstructor = JNIGetMethod(

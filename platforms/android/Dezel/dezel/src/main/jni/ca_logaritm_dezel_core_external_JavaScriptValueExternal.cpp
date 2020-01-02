@@ -97,6 +97,18 @@ jlong Java_ca_logaritm_dezel_core_external_JavaScriptValueExternal_createBoolean
 
 /*
  * Class:     ca_logaritm_dezel_core_external_JavaScriptValueExternal
+ * Method:    createSymbol
+ * Signature: (JLjava/lang/String;)J
+ */
+jlong Java_ca_logaritm_dezel_core_external_JavaScriptValueExternal_createSymbol(JNIEnv* env, jclass, jlong contextPtr, jstring valueStr) {
+	JNI_STRING_CREATE(valueStr, value);
+	auto symbol = JavaScriptValueCreateSymbol(reinterpret_cast<JSContextRef>(contextPtr), value);
+	JNI_STRING_DELETE(valueStr, value);
+	return reinterpret_cast<jlong>(symbol);
+}
+
+/*
+ * Class:     ca_logaritm_dezel_core_external_JavaScriptValueExternal
  * Method:    createEmtpyObject
  * Signature: (J)J
  */
@@ -163,7 +175,7 @@ void Java_ca_logaritm_dezel_core_external_JavaScriptValueExternal_call(JNIEnv* e
 	JNI_CHECK_EXCEPTION(env)
 
 	if (result) {
-		JNI_CALL_VOID_METHOD(env, result, JavaScriptValueReset, reinterpret_cast<jlong>(value), true);
+		JNI_CALL_VOID_METHOD(env, result, JavaScriptValueReset, reinterpret_cast<jlong>(value), true, true);
 	}
 }
 
@@ -183,7 +195,7 @@ void Java_ca_logaritm_dezel_core_external_JavaScriptValueExternal_callMethod(JNI
 	JNI_CHECK_EXCEPTION(env)
 
 	if (result) {
-		JNI_CALL_VOID_METHOD(env, result, JavaScriptValueReset, reinterpret_cast<jlong>(value), true);
+		JNI_CALL_VOID_METHOD(env, result, JavaScriptValueReset, reinterpret_cast<jlong>(value), true, true);
 	}
 }
 
@@ -201,7 +213,7 @@ void Java_ca_logaritm_dezel_core_external_JavaScriptValueExternal_construct(JNIE
 	JNI_CHECK_EXCEPTION(env)
 
 	if (result) {
-		JNI_CALL_VOID_METHOD(env, result, JavaScriptValueReset, reinterpret_cast<jlong>(value), true);
+		JNI_CALL_VOID_METHOD(env, result, JavaScriptValueReset, reinterpret_cast<jlong>(value), true, true);
 	}
 }
 
@@ -333,6 +345,24 @@ void Java_ca_logaritm_dezel_core_external_JavaScriptValueExternal_setPropertyAtI
  */
 jlong Java_ca_logaritm_dezel_core_external_JavaScriptValueExternal_getPropertyAtIndex(JNIEnv* env, jclass, jlong contextPtr, jlong valuePtr, jint index) {
 	return reinterpret_cast<jlong>(JavaScriptValueGetPropertyAtIndex(reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSObjectRef>(valuePtr), (unsigned int) index));
+}
+
+/*
+ * Class:     ca_logaritm_dezel_core_external_JavaScriptValueExternal
+ * Method:    setPropertyWithSymbol
+ * Signature: (JJJJ)V
+ */
+void Java_ca_logaritm_dezel_core_external_JavaScriptValueExternal_setPropertyWithSymbol(JNIEnv* env, jclass, jlong contextPtr, jlong valuePtr, jlong symbolPtr, jlong propertyValuePtr) {
+	JavaScriptValueSetPropertyWithSymbol(reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSObjectRef>(valuePtr), reinterpret_cast<JSValueRef>(symbolPtr), reinterpret_cast<JSValueRef>(propertyValuePtr));
+}
+
+/*
+ * Class:     ca_logaritm_dezel_core_external_JavaScriptValueExternal
+ * Method:    getPropertyWithSymbol
+ * Signature: (JJJ)J
+ */
+jlong Java_ca_logaritm_dezel_core_external_JavaScriptValueExternal_getPropertyWithSymbol(JNIEnv* emv, jclass, jlong contextPtr, jlong valuePtr, jlong symbolPtr) {
+	return reinterpret_cast<jlong>(JavaScriptValueGetPropertyWithSymbol(reinterpret_cast<JSContextRef>(contextPtr), reinterpret_cast<JSObjectRef>(valuePtr), reinterpret_cast<JSValueRef>(symbolPtr)));
 }
 
 /*

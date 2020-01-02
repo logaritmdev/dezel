@@ -56,6 +56,14 @@ open class JavaScriptContext {
 		this.createBoolean(false)
 	}
 
+	/**
+	 * @const native
+	 * @since 0.7.0
+	 */
+	public val native: JavaScriptValue by lazy {
+		this.createSymbol("native")
+	}
+
 	//--------------------------------------------------------------------------
 	// Properties
 	//--------------------------------------------------------------------------
@@ -212,6 +220,14 @@ open class JavaScriptContext {
 	 */
 	open fun createBoolean(value: Boolean): JavaScriptValue {
 		return JavaScriptValue.createBoolean(this, value)
+	}
+
+	/**
+	 * @method createSymbol
+	 * @since 0.7.0
+	 */
+	open fun createSymbol(value: String): JavaScriptValue {
+		return JavaScriptValue.createSymbol(this, value)
 	}
 
 	/**

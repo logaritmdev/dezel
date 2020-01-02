@@ -12,25 +12,26 @@ open class JavaScriptClass(context: JavaScriptContext) : JavaScriptObject(contex
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @property instance
+	 * @property wrapper
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	internal var instance: JavaScriptValue? = null
+	private var wrapper: JavaScriptValue? = null
 
 	//--------------------------------------------------------------------------
 	// Methods
 	//--------------------------------------------------------------------------
 
 	/**
+	 * @inherited
 	 * @method call
 	 * @since 0.7.0
 	 */
 	override fun call() {
 		
-		val instance = this.instance
-		if (instance != null) {
-			instance.call()
+		val wrapper = this.wrapper
+		if (wrapper != null) {
+			wrapper.call()
 			return
 		}
 		
@@ -43,9 +44,9 @@ open class JavaScriptClass(context: JavaScriptContext) : JavaScriptObject(contex
 	 */
 	open fun call(arguments: JavaScriptArguments?, target: JavaScriptValue?) {
 
-		val instance = this.instance
-		if (instance != null) {
-			instance.call(arguments, target)
+		val wrapper = this.wrapper
+		if (wrapper != null) {
+			wrapper.call(arguments, target)
 			return
 		}
 		
@@ -58,9 +59,9 @@ open class JavaScriptClass(context: JavaScriptContext) : JavaScriptObject(contex
 	 */
 	override fun call(arguments: JavaScriptArguments?, target: JavaScriptValue?, result: JavaScriptValue?) {
 
-		val instance = this.instance
-		if (instance != null) {
-			instance.call(arguments, target, result)
+		val wrapper = this.wrapper
+		if (wrapper != null) {
+			wrapper.call(arguments, target, result)
 			return
 		}
 
@@ -73,9 +74,9 @@ open class JavaScriptClass(context: JavaScriptContext) : JavaScriptObject(contex
 	 */
 	override fun callMethod(method: String) {
 
-		val instance = this.instance
-		if (instance != null) {
-			instance.callMethod(method)
+		val wrapper = this.wrapper
+		if (wrapper != null) {
+			wrapper.callMethod(method)
 			return
 		}
 		
@@ -88,9 +89,9 @@ open class JavaScriptClass(context: JavaScriptContext) : JavaScriptObject(contex
 	 */
 	override fun callMethod(method: String, arguments: JavaScriptArguments?, result: JavaScriptValue?) {
 
-		val instance = this.instance
-		if (instance != null) {
-			instance.callMethod(method, arguments, result)
+		val wrapper = this.wrapper
+		if (wrapper != null) {
+			wrapper.callMethod(method, arguments, result)
 			return
 		}
 		
@@ -103,9 +104,9 @@ open class JavaScriptClass(context: JavaScriptContext) : JavaScriptObject(contex
 	 */
 	override fun construct() {
 
-		val instance = this.instance
-		if (instance != null) {
-			instance.construct()
+		val wrapper = this.wrapper
+		if (wrapper != null) {
+			wrapper.construct()
 			return
 		}
 		
@@ -118,9 +119,9 @@ open class JavaScriptClass(context: JavaScriptContext) : JavaScriptObject(contex
 	 */
 	override fun construct(arguments: JavaScriptArguments?, result: JavaScriptValue?) {
 
-		val instance = this.instance
-		if (instance != null) {
-			instance.construct(arguments, result)
+		val wrapper = this.wrapper
+		if (wrapper != null) {
+			wrapper.construct(arguments, result)
 			return
 		}
 		
@@ -133,9 +134,9 @@ open class JavaScriptClass(context: JavaScriptContext) : JavaScriptObject(contex
 	 */
 	override fun defineProperty(property: String, value: JavaScriptValue?, getter: JavaScriptGetterHandler?, setter: JavaScriptSetterHandler?, writable: Boolean, enumerable: Boolean, configurable: Boolean) {
 
-		val instance = this.instance
-		if (instance != null) {
-			instance.defineProperty(property, value, getter, setter, writable, enumerable, configurable)
+		val wrapper = this.wrapper
+		if (wrapper != null) {
+			wrapper.defineProperty(property, value, getter, setter, writable, enumerable, configurable)
 			return
 		}		
 		
@@ -148,9 +149,9 @@ open class JavaScriptClass(context: JavaScriptContext) : JavaScriptObject(contex
 	 */
 	override fun property(name: String, value: JavaScriptValue?) {
 
-		val instance = this.instance
-		if (instance != null) {
-			instance.property(name, value)
+		val wrapper = this.wrapper
+		if (wrapper != null) {
+			wrapper.property(name, value)
 			return
 		}		
 		
@@ -163,9 +164,9 @@ open class JavaScriptClass(context: JavaScriptContext) : JavaScriptObject(contex
 	 */
 	override fun property(name: String, property: JavaScriptProperty) {
 
-		val instance = this.instance
-		if (instance != null) {
-			instance.property(name, property)
+		val wrapper = this.wrapper
+		if (wrapper != null) {
+			wrapper.property(name, property)
 			return
 		}
 		
@@ -178,9 +179,9 @@ open class JavaScriptClass(context: JavaScriptContext) : JavaScriptObject(contex
 	 */
 	override fun property(name: String, string: String) {
 
-		val instance = this.instance
-		if (instance != null) {
-			instance.property(name, string)
+		val wrapper = this.wrapper
+		if (wrapper != null) {
+			wrapper.property(name, string)
 			return
 		}		
 		
@@ -193,9 +194,9 @@ open class JavaScriptClass(context: JavaScriptContext) : JavaScriptObject(contex
 	 */
 	override fun property(name: String, number: Double) {
 
-		val instance = this.instance
-		if (instance != null) {
-			instance.property(name, number)
+		val wrapper = this.wrapper
+		if (wrapper != null) {
+			wrapper.property(name, number)
 			return
 		}		
 		
@@ -208,9 +209,9 @@ open class JavaScriptClass(context: JavaScriptContext) : JavaScriptObject(contex
 	 */
 	override fun property(name: String, number: Float) {
 
-		val instance = this.instance
-		if (instance != null) {
-			instance.property(name, number)
+		val wrapper = this.wrapper
+		if (wrapper != null) {
+			wrapper.property(name, number)
 			return
 		}		
 		
@@ -223,9 +224,9 @@ open class JavaScriptClass(context: JavaScriptContext) : JavaScriptObject(contex
 	 */
 	override fun property(name: String, number: Int) {
 
-		val instance = this.instance
-		if (instance != null) {
-			instance.property(name, number)
+		val wrapper = this.wrapper
+		if (wrapper != null) {
+			wrapper.property(name, number)
 			return
 		}		
 		
@@ -238,9 +239,9 @@ open class JavaScriptClass(context: JavaScriptContext) : JavaScriptObject(contex
 	 */
 	override fun property(name: String, boolean: Boolean) {
 
-		val instance = this.instance
-		if (instance != null) {
-			instance.property(name, boolean)
+		val wrapper = this.wrapper
+		if (wrapper != null) {
+			wrapper.property(name, boolean)
 			return
 		}		
 		
@@ -252,7 +253,7 @@ open class JavaScriptClass(context: JavaScriptContext) : JavaScriptObject(contex
 	 * @since 0.7.0
 	 */
 	override fun property(name: String): JavaScriptValue {
-		return this.instance?.property(name) ?: super.property(name)
+		return this.wrapper?.property(name) ?: super.property(name)
 	}
 
 	/**
@@ -261,9 +262,9 @@ open class JavaScriptClass(context: JavaScriptContext) : JavaScriptObject(contex
 	 */
 	override fun property(index: Int, value: JavaScriptValue) {
 
-		val instance = this.instance
-		if (instance != null) {
-			instance.property(index, value)
+		val wrapper = this.wrapper
+		if (wrapper != null) {
+			wrapper.property(index, value)
 			return
 		}		
 		
@@ -276,9 +277,9 @@ open class JavaScriptClass(context: JavaScriptContext) : JavaScriptObject(contex
 	 */
 	override fun property(index: Int, string: String) {
 
-		val instance = this.instance
-		if (instance != null) {
-			instance.property(index, string)
+		val wrapper = this.wrapper
+		if (wrapper != null) {
+			wrapper.property(index, string)
 			return
 		}		
 		
@@ -291,9 +292,9 @@ open class JavaScriptClass(context: JavaScriptContext) : JavaScriptObject(contex
 	 */
 	override fun property(index: Int, number: Double) {
 
-		val instance = this.instance
-		if (instance != null) {
-			instance.property(index, number)
+		val wrapper = this.wrapper
+		if (wrapper != null) {
+			wrapper.property(index, number)
 			return
 		}		
 		
@@ -306,9 +307,9 @@ open class JavaScriptClass(context: JavaScriptContext) : JavaScriptObject(contex
 	 */
 	override fun property(index: Int, number: Float) {
 
-		val instance = this.instance
-		if (instance != null) {
-			instance.property(index, number)
+		val wrapper = this.wrapper
+		if (wrapper != null) {
+			wrapper.property(index, number)
 			return
 		}		
 		
@@ -321,9 +322,9 @@ open class JavaScriptClass(context: JavaScriptContext) : JavaScriptObject(contex
 	 */
 	override fun property(index: Int, number: Int) {
 
-		val instance = this.instance
-		if (instance != null) {
-			instance.property(index, number)
+		val wrapper = this.wrapper
+		if (wrapper != null) {
+			wrapper.property(index, number)
 			return
 		}		
 		
@@ -336,9 +337,9 @@ open class JavaScriptClass(context: JavaScriptContext) : JavaScriptObject(contex
 	 */
 	override fun property(index: Int, boolean: Boolean) {
 
-		val instance = this.instance
-		if (instance != null) {
-			instance.property(index, boolean)
+		val wrapper = this.wrapper
+		if (wrapper != null) {
+			wrapper.property(index, boolean)
 			return
 		}		
 		
@@ -350,7 +351,7 @@ open class JavaScriptClass(context: JavaScriptContext) : JavaScriptObject(contex
 	 * @since 0.7.0
 	 */
 	override fun property(index: Int): JavaScriptValue {
-		return this.instance?.property(index) ?: super.property(index)
+		return this.wrapper?.property(index) ?: super.property(index)
 	}
 
 	/**
@@ -359,9 +360,9 @@ open class JavaScriptClass(context: JavaScriptContext) : JavaScriptObject(contex
 	 */
 	override fun forEach(handler: JavaScriptForEachHandler) {
 
-		val instance = this.instance
-		if (instance != null) {
-			instance.forEach(handler)
+		val wrapper = this.wrapper
+		if (wrapper != null) {
+			wrapper.forEach(handler)
 			return
 		}		
 		
@@ -374,9 +375,9 @@ open class JavaScriptClass(context: JavaScriptContext) : JavaScriptObject(contex
 	 */
 	override fun forOwn(handler: JavaScriptForOwnHandler) {
 
-		val instance = this.instance
-		if (instance != null) {
-			instance.forOwn(handler)
+		val wrapper = this.wrapper
+		if (wrapper != null) {
+			wrapper.forOwn(handler)
 			return
 		}		
 		
@@ -389,9 +390,9 @@ open class JavaScriptClass(context: JavaScriptContext) : JavaScriptObject(contex
 	 */
 	override fun prototype(prototype: JavaScriptValue) {
 
-		val instance = this.instance
-		if (instance != null) {
-			instance.prototype(prototype)
+		val wrapper = this.wrapper
+		if (wrapper != null) {
+			wrapper.prototype(prototype)
 			return
 		}		
 		
@@ -403,7 +404,7 @@ open class JavaScriptClass(context: JavaScriptContext) : JavaScriptObject(contex
 	 * @since 0.7.0
 	 */
 	override fun prototype(): JavaScriptValue {
-		return this.instance?.prototype() ?: super.prototype()
+		return this.wrapper?.prototype() ?: super.prototype()
 	}
 
 	/**
@@ -417,7 +418,7 @@ open class JavaScriptClass(context: JavaScriptContext) : JavaScriptObject(contex
 		 * make sure its holder does not get collected.
 		 */
 
-		this.instance?.protect()
+		this.wrapper?.protect()
 	}
 
 	/**
@@ -432,7 +433,7 @@ open class JavaScriptClass(context: JavaScriptContext) : JavaScriptObject(contex
 		 * make sure its holder does not get collected.
 		 */
 
-		this.instance?.unprotect()
+		this.wrapper?.unprotect()
 	}
 
 	//--------------------------------------------------------------------------
@@ -451,14 +452,14 @@ open class JavaScriptClass(context: JavaScriptContext) : JavaScriptObject(contex
 			/*
 			 * It's possible this class does not have a native JavaScript
 			 * wrapper class. In this case all class related method will
-			 * be called on this very instance instead.
+			 * be called on this wrapper instead.
 			 */
 
 			return
 		}
 
-		this.instance = callback.argument(0)
-		this.instance?.unprotect()
+		this.wrapper = callback.argument(0)
+		this.wrapper?.unprotect()
 	}
 
 	//--------------------------------------------------------------------------
@@ -471,6 +472,6 @@ open class JavaScriptClass(context: JavaScriptContext) : JavaScriptObject(contex
 	 * @hidden
 	 */
 	override fun toHandle(context: JavaScriptContext): Long {
-		return this.instance?.toHandle(context) ?: super.toHandle(context)
+		return this.wrapper?.toHandle(context) ?: super.toHandle(context)
 	}
 }

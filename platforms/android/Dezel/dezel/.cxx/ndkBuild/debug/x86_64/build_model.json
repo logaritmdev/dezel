@@ -1,7 +1,7 @@
 {
   "variant": {
     "module": {
-      "rootBuildGradleFolder": "/Users/jpdery/Projects/dezel-dev-example/platforms/android",
+      "rootBuildGradleFolder": "/Users/jpdery/Projects/dezel-dev/platforms/android/Dezel",
       "sdkFolder": "/Users/jpdery/Library/Android/sdk",
       "isNativeCompilerSettingsCacheEnabled": false,
       "isBuildOnlyTargetAbiEnabled": true,
@@ -11,7 +11,7 @@
       "moduleRootFolder": "/Users/jpdery/Projects/dezel-dev/platforms/android/Dezel/dezel",
       "makeFile": "/Users/jpdery/Projects/dezel-dev/platforms/android/Dezel/dezel/src/main/jni/Android.mk",
       "buildSystem": "NDK_BUILD",
-      "compilerSettingsCacheFolder": "/Users/jpdery/Projects/dezel-dev-example/platforms/android/.cxx",
+      "compilerSettingsCacheFolder": "/Users/jpdery/Projects/dezel-dev/platforms/android/Dezel/.cxx",
       "cxxFolder": "/Users/jpdery/Projects/dezel-dev/platforms/android/Dezel/dezel/.cxx",
       "ndkFolder": "/Users/jpdery/Library/Android/sdk/ndk-bundle",
       "ndkVersion": "20.1.5948944",

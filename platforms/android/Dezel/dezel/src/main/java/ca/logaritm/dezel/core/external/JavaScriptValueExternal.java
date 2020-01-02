@@ -43,6 +43,13 @@ public class JavaScriptValueExternal {
 	static native public long createBoolean(long contextPtr, boolean value);
 
 	/**
+	 * @method createSymbol
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	static native public long createSymbol(long contextPtr, String value);
+
+	/**
 	 * @method createEmtpyObject
 	 * @since 0.1.0
 	 * @hidden
@@ -174,6 +181,20 @@ public class JavaScriptValueExternal {
 	 * @hidden
 	 */
 	static native public long getPropertyAtIndex(long contextPtr, long valuePtr, int index);
+
+	/**
+	 * @method setPropertyWithSymbol
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	static native public void setPropertyWithSymbol(long contextPtr, long valuePtr, long symbolPtr, long propertyValuePtr);
+
+	/**
+	 * @method getPropertyWithSymbol
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	static native public long getPropertyWithSymbol(long contextPtr, long valuePtr, long symbolPtr);
 
 	/**
 	 * @method forEach

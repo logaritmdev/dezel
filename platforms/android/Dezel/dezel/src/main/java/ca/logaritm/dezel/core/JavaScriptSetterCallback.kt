@@ -16,6 +16,6 @@ public class JavaScriptSetterCallback(context: JavaScriptContext, target: Long, 
 	 * @since 0.1.0
 	 */
 	public val value: JavaScriptValue by lazy {
-		JavaScriptValue.create(this.context, this.argv[0])
+		JavaScriptValue.create(this.context, this.argv[0], bridge = true)
 	}
 }

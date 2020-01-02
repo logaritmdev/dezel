@@ -49,6 +49,14 @@ JNIEXPORT jlong JNICALL Java_ca_logaritm_dezel_core_external_JavaScriptValueExte
 
 /*
  * Class:     ca_logaritm_dezel_core_external_JavaScriptValueExternal
+ * Method:    createSymbol
+ * Signature: (JLjava/lang/String;)J
+ */
+JNIEXPORT jlong JNICALL Java_ca_logaritm_dezel_core_external_JavaScriptValueExternal_createSymbol
+  (JNIEnv *, jclass, jlong, jstring);
+
+/*
+ * Class:     ca_logaritm_dezel_core_external_JavaScriptValueExternal
  * Method:    createEmtpyObject
  * Signature: (J)J
  */
@@ -198,6 +206,22 @@ JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_external_JavaScriptValueExter
  */
 JNIEXPORT jlong JNICALL Java_ca_logaritm_dezel_core_external_JavaScriptValueExternal_getPropertyAtIndex
   (JNIEnv *, jclass, jlong, jlong, jint);
+
+/*
+ * Class:     ca_logaritm_dezel_core_external_JavaScriptValueExternal
+ * Method:    setPropertyWithSymbol
+ * Signature: (JJJJ)V
+ */
+JNIEXPORT void JNICALL Java_ca_logaritm_dezel_core_external_JavaScriptValueExternal_setPropertyWithSymbol
+  (JNIEnv *, jclass, jlong, jlong, jlong, jlong);
+
+/*
+ * Class:     ca_logaritm_dezel_core_external_JavaScriptValueExternal
+ * Method:    getPropertyWithSymbol
+ * Signature: (JJJ)J
+ */
+JNIEXPORT jlong JNICALL Java_ca_logaritm_dezel_core_external_JavaScriptValueExternal_getPropertyWithSymbol
+  (JNIEnv *, jclass, jlong, jlong, jlong);
 
 /*
  * Class:     ca_logaritm_dezel_core_external_JavaScriptValueExternal
