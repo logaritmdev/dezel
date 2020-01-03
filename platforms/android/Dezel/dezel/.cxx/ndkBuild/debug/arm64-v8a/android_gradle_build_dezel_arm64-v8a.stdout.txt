@@ -1,3 +1,1 @@
-[arm64-v8a] Compile++      : dezel <= jni_module_core.cpp
-[arm64-v8a] Compile++      : dezel <= ca_logaritm_dezel_core_external_JavaScriptValueExternal.cpp
-[arm64-v8a] SharedLibrary  : libdezel.so
+make: Nothing to be done for `dezel'.

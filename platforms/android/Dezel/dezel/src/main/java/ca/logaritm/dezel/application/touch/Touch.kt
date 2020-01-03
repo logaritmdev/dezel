@@ -95,10 +95,10 @@ public class Touch(pointer: Int, target: JavaScriptView) {
 	public var captured: Boolean = false
 
 	/**
-	 * @property reverted
+	 * @property disposed
 	 * @since 0.7.0
 	 */
-	public var reverted: Boolean = false
+	public var disposed: Boolean = false
 
 	/**
 	 * @property receiver

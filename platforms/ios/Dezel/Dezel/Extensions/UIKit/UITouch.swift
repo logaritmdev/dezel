@@ -71,11 +71,11 @@ extension UITouch {
     }
 
 	/**
-	 * @property reverted
+	 * @property disposed
 	 * @since 0.7.0
 	 * @hidden
 	 */
-    var reverted: Bool {
+    var disposed: Bool {
 
 		get {
 			return objc_getAssociatedObject(self, &revertedKey) as? Bool ?? false

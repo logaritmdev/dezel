@@ -30,7 +30,6 @@
 		C7040DED232980D200DFDBED /* DisplayNodeRelativeLayoutTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7040DEC232980D200DFDBED /* DisplayNodeRelativeLayoutTest.swift */; };
 		C705913B2337B1E8002EF92F /* DisplayStyleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C705913A2337B1E8002EF92F /* DisplayStyleTest.swift */; };
 		C70695FD23974A3300D4DFA1 /* CGColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C70695FC23974A3300D4DFA1 /* CGColor.swift */; };
-		C70695FF2397F15700D4DFA1 /* JavaScriptProperty+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = C70695FE2397F15700D4DFA1 /* JavaScriptProperty+Util.swift */; };
 		C7069601239804E600D4DFA1 /* ImageFit.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7069600239804E600D4DFA1 /* ImageFit.swift */; };
 		C7069603239804F100D4DFA1 /* ImagePosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7069602239804F100D4DFA1 /* ImagePosition.swift */; };
 		C718A0A92066E24400EFEC15 /* JavaScriptImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C718A0A82066E24400EFEC15 /* JavaScriptImageView.swift */; };
@@ -80,7 +79,7 @@
 		C767542120269971003C4D85 /* ShadowLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76753E92026996F003C4D85 /* ShadowLayer.swift */; };
 		C767542420269971003C4D85 /* BorderLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76753EC2026996F003C4D85 /* BorderLayer.swift */; };
 		C767543320269971003C4D85 /* JavaScriptProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76753FB20269970003C4D85 /* JavaScriptProperty.swift */; };
-		C767543A20269971003C4D85 /* BitmapLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C767540220269970003C4D85 /* BitmapLayer.swift */; };
+		C767543A20269971003C4D85 /* BackgroundImageLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C767540220269970003C4D85 /* BackgroundImageLayer.swift */; };
 		C767543F20269971003C4D85 /* RenderLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C767540720269971003C4D85 /* RenderLayer.swift */; };
 		C767544520269DB5003C4D85 /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C767544420269DB5003C4D85 /* TextView.swift */; };
 		C767544720269DBD003C4D85 /* ImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C767544620269DBD003C4D85 /* ImageView.swift */; };
@@ -90,6 +89,7 @@
 		C76864712039146700D1903B /* JavaScriptPropertyType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76864702039146700D1903B /* JavaScriptPropertyType.swift */; };
 		C76864732039147100D1903B /* JavaScriptPropertyUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76864722039147100D1903B /* JavaScriptPropertyUnit.swift */; };
 		C76D062223BD4DAA00C35AA0 /* TouchCancelable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76D062123BD4DAA00C35AA0 /* TouchCancelable.swift */; };
+		C76D062423BED91600C35AA0 /* BackgroundColorLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76D062323BED91600C35AA0 /* BackgroundColorLayer.swift */; };
 		C77189AE2106ADF200337263 /* Point2D.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77189AD2106ADF200337263 /* Point2D.swift */; };
 		C77189B02106ADFD00337263 /* Point3D.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77189AF2106ADFD00337263 /* Point3D.swift */; };
 		C77189B22106AE0A00337263 /* Transform2D.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77189B12106AE0A00337263 /* Transform2D.swift */; };
@@ -222,8 +222,8 @@
 		C7A6080A2395580B00B176FC /* JavaScriptPropertyCompositeValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A608092395580B00B176FC /* JavaScriptPropertyCompositeValue.swift */; };
 		C7A6080D2395797B00B176FC /* ValueListRef.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7A6080B2395797B00B176FC /* ValueListRef.cpp */; };
 		C7A6080E2395797B00B176FC /* ValueListRef.h in Headers */ = {isa = PBXBuildFile; fileRef = C7A6080C2395797B00B176FC /* ValueListRef.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C7A6081023958EA600B176FC /* JavaScriptProperty+Value.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A6080F23958EA600B176FC /* JavaScriptProperty+Value.swift */; };
-		C7A608122395950F00B176FC /* JavaScriptPropertyNumberValue+Value.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A608112395950F00B176FC /* JavaScriptPropertyNumberValue+Value.swift */; };
+		C7A6081023958EA600B176FC /* JavaScriptProperty+Display.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A6080F23958EA600B176FC /* JavaScriptProperty+Display.swift */; };
+		C7A608122395950F00B176FC /* JavaScriptPropertyNumberValue+Display.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A608112395950F00B176FC /* JavaScriptPropertyNumberValue+Display.swift */; };
 		C7AA9370236F6DD500ADF997 /* InvalidStructureException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7AA936E236F6DD500ADF997 /* InvalidStructureException.cpp */; };
 		C7AA9371236F6DD500ADF997 /* InvalidStructureException.h in Headers */ = {isa = PBXBuildFile; fileRef = C7AA936F236F6DD500ADF997 /* InvalidStructureException.h */; };
 		C7AA9374236F730F00ADF997 /* InvalidOperationException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7AA9372236F730F00ADF997 /* InvalidOperationException.cpp */; };
@@ -368,7 +368,6 @@
 		C7040DEC232980D200DFDBED /* DisplayNodeRelativeLayoutTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayNodeRelativeLayoutTest.swift; sourceTree = "<group>"; };
 		C705913A2337B1E8002EF92F /* DisplayStyleTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayStyleTest.swift; sourceTree = "<group>"; };
 		C70695FC23974A3300D4DFA1 /* CGColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGColor.swift; sourceTree = "<group>"; };
-		C70695FE2397F15700D4DFA1 /* JavaScriptProperty+Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JavaScriptProperty+Util.swift"; sourceTree = "<group>"; };
 		C7069600239804E600D4DFA1 /* ImageFit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFit.swift; sourceTree = "<group>"; };
 		C7069602239804F100D4DFA1 /* ImagePosition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePosition.swift; sourceTree = "<group>"; };
 		C718A0A82066E24400EFEC15 /* JavaScriptImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptImageView.swift; sourceTree = "<group>"; };
@@ -418,7 +417,7 @@
 		C76753E92026996F003C4D85 /* ShadowLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShadowLayer.swift; sourceTree = "<group>"; };
 		C76753EC2026996F003C4D85 /* BorderLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorderLayer.swift; sourceTree = "<group>"; };
 		C76753FB20269970003C4D85 /* JavaScriptProperty.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JavaScriptProperty.swift; sourceTree = "<group>"; };
-		C767540220269970003C4D85 /* BitmapLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BitmapLayer.swift; sourceTree = "<group>"; };
+		C767540220269970003C4D85 /* BackgroundImageLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackgroundImageLayer.swift; sourceTree = "<group>"; };
 		C767540720269971003C4D85 /* RenderLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RenderLayer.swift; sourceTree = "<group>"; };
 		C767544420269DB5003C4D85 /* TextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextView.swift; sourceTree = "<group>"; };
 		C767544620269DBD003C4D85 /* ImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageView.swift; sourceTree = "<group>"; };
@@ -428,6 +427,7 @@
 		C76864702039146700D1903B /* JavaScriptPropertyType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptPropertyType.swift; sourceTree = "<group>"; };
 		C76864722039147100D1903B /* JavaScriptPropertyUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptPropertyUnit.swift; sourceTree = "<group>"; };
 		C76D062123BD4DAA00C35AA0 /* TouchCancelable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchCancelable.swift; sourceTree = "<group>"; };
+		C76D062323BED91600C35AA0 /* BackgroundColorLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundColorLayer.swift; sourceTree = "<group>"; };
 		C77189AD2106ADF200337263 /* Point2D.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Point2D.swift; sourceTree = "<group>"; };
 		C77189AF2106ADFD00337263 /* Point3D.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Point3D.swift; sourceTree = "<group>"; };
 		C77189B12106AE0A00337263 /* Transform2D.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transform2D.swift; sourceTree = "<group>"; };
@@ -560,8 +560,8 @@
 		C7A608092395580B00B176FC /* JavaScriptPropertyCompositeValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptPropertyCompositeValue.swift; sourceTree = "<group>"; };
 		C7A6080B2395797B00B176FC /* ValueListRef.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ValueListRef.cpp; path = ../../../../../shared/display/ValueListRef.cpp; sourceTree = "<group>"; };
 		C7A6080C2395797B00B176FC /* ValueListRef.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ValueListRef.h; path = ../../../../../shared/display/ValueListRef.h; sourceTree = "<group>"; };
-		C7A6080F23958EA600B176FC /* JavaScriptProperty+Value.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JavaScriptProperty+Value.swift"; sourceTree = "<group>"; };
-		C7A608112395950F00B176FC /* JavaScriptPropertyNumberValue+Value.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JavaScriptPropertyNumberValue+Value.swift"; sourceTree = "<group>"; };
+		C7A6080F23958EA600B176FC /* JavaScriptProperty+Display.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JavaScriptProperty+Display.swift"; sourceTree = "<group>"; };
+		C7A608112395950F00B176FC /* JavaScriptPropertyNumberValue+Display.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JavaScriptPropertyNumberValue+Display.swift"; sourceTree = "<group>"; };
 		C7AA936E236F6DD500ADF997 /* InvalidStructureException.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = InvalidStructureException.cpp; path = ../../../../../shared/display/InvalidStructureException.cpp; sourceTree = "<group>"; };
 		C7AA936F236F6DD500ADF997 /* InvalidStructureException.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = InvalidStructureException.h; path = ../../../../../shared/display/InvalidStructureException.h; sourceTree = "<group>"; };
 		C7AA9372236F730F00ADF997 /* InvalidOperationException.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = InvalidOperationException.cpp; path = ../../../../../shared/display/InvalidOperationException.cpp; sourceTree = "<group>"; };
@@ -807,12 +807,12 @@
 		C7686476203A2C8F00D1903B /* Layer */ = {
 			isa = PBXGroup;
 			children = (
-				C767540220269970003C4D85 /* BitmapLayer.swift */,
+				C7DE1DF223BE8EA300DDC245 /* Gradient */,
+				C767540220269970003C4D85 /* BackgroundImageLayer.swift */,
+				C76D062323BED91600C35AA0 /* BackgroundColorLayer.swift */,
 				C76753EC2026996F003C4D85 /* BorderLayer.swift */,
 				C718A0B22066E63300EFEC15 /* ImageLayer.swift */,
 				C7682A412035395F006EA6D5 /* Layer.swift */,
-				C718B5B3207C3D0D00610F8D /* LinearGradient.swift */,
-				C718B5B5207C41F000610F8D /* RadialGradient.swift */,
 				C767540720269971003C4D85 /* RenderLayer.swift */,
 				C76753E92026996F003C4D85 /* ShadowLayer.swift */,
 				C72FF044204E190500FBB36B /* ShapeLayer.swift */,
@@ -1086,9 +1086,8 @@
 		C7A607F62395431B00B176FC /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				C7A6080F23958EA600B176FC /* JavaScriptProperty+Value.swift */,
-				C7A608112395950F00B176FC /* JavaScriptPropertyNumberValue+Value.swift */,
-				C70695FE2397F15700D4DFA1 /* JavaScriptProperty+Util.swift */,
+				C7A6080F23958EA600B176FC /* JavaScriptProperty+Display.swift */,
+				C7A608112395950F00B176FC /* JavaScriptPropertyNumberValue+Display.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -1183,6 +1182,15 @@
 				C76D062123BD4DAA00C35AA0 /* TouchCancelable.swift */,
 			);
 			path = Trait;
+			sourceTree = "<group>";
+		};
+		C7DE1DF223BE8EA300DDC245 /* Gradient */ = {
+			isa = PBXGroup;
+			children = (
+				C718B5B3207C3D0D00610F8D /* LinearGradient.swift */,
+				C718B5B5207C41F000610F8D /* RadialGradient.swift */,
+			);
+			path = Gradient;
 			sourceTree = "<group>";
 		};
 		C7E5D07F209DDF5B0098C5FD /* Dialog */ = {
@@ -1772,7 +1780,7 @@
 				C7B9CEB1202CE225002409D5 /* JavaScriptViewModule.swift in Sources */,
 				C792E8E2234BDE630022D712 /* DisplayNodeMargin.cpp in Sources */,
 				C7A608032395577400B176FC /* FunctionValueRef.cpp in Sources */,
-				C767543A20269971003C4D85 /* BitmapLayer.swift in Sources */,
+				C767543A20269971003C4D85 /* BackgroundImageLayer.swift in Sources */,
 				C7ED00EC23A9BEF400D44C1D /* CAGradientLayer.swift in Sources */,
 				C792E8EF234BDE630022D712 /* DisplayNodeAnchor.cpp in Sources */,
 				C7BFD160207D518600AAD31C /* SpinnerView.swift in Sources */,
@@ -1846,7 +1854,7 @@
 				C7FCA0FA2311B49200AFBDB6 /* JavaScriptPropertyBooleanValue.swift in Sources */,
 				C7E8A531201624A2005139F6 /* JavaScriptBuilder.swift in Sources */,
 				C72FF045204E190500FBB36B /* ShapeLayer.swift in Sources */,
-				C7A6081023958EA600B176FC /* JavaScriptProperty+Value.swift in Sources */,
+				C7A6081023958EA600B176FC /* JavaScriptProperty+Display.swift in Sources */,
 				C792E8ED234BDE630022D712 /* DisplayRef.cpp in Sources */,
 				C700121621551A9A00CB26D4 /* JavaScriptDeviceModule.swift in Sources */,
 				C77DFEE1208D063900CEC1D9 /* JavaScriptLocaleModule.swift in Sources */,
@@ -1907,15 +1915,15 @@
 				C792E941234BDEA70022D712 /* BooleanValue.cpp in Sources */,
 				C71E6CDD20E65CCF009B86F6 /* UIEdgeInsets.swift in Sources */,
 				C7E8A527201624A2005139F6 /* JavaScriptGetterWrapper.swift in Sources */,
-				C70695FF2397F15700D4DFA1 /* JavaScriptProperty+Util.swift in Sources */,
 				C7D14EDC21D07058008B51D4 /* Scanner.swift in Sources */,
 				C792E94D234BDEA70022D712 /* Variable.cpp in Sources */,
 				C7CE4B032208AB53005D5235 /* DateParser.swift in Sources */,
 				C7FCA1002311B4BA00AFBDB6 /* JavaScriptPropertyStringValue.swift in Sources */,
 				C7CE4B072208C93C005D5235 /* UITextField.swift in Sources */,
 				C718A0B32066E63300EFEC15 /* ImageLayer.swift in Sources */,
-				C7A608122395950F00B176FC /* JavaScriptPropertyNumberValue+Value.swift in Sources */,
+				C7A608122395950F00B176FC /* JavaScriptPropertyNumberValue+Display.swift in Sources */,
 				C7E8A522201624A2005139F6 /* JavaScriptClassGetterWrapper.swift in Sources */,
+				C76D062423BED91600C35AA0 /* BackgroundColorLayer.swift in Sources */,
 				C7E309792031312700436FA4 /* CGPoint.swift in Sources */,
 				C72E0E9320669C97003BCEF1 /* TextAlign.swift in Sources */,
 				C767543F20269971003C4D85 /* RenderLayer.swift in Sources */,

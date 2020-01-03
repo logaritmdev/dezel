@@ -1,9 +1,9 @@
 /**
- * @class BitmapLayer
- * @since 0.1.0
+ * @class BackgroundImageLayer
+ * @since 0.7.0
  * @hidden
  */
-open class BitmapLayer: Layer {
+open class BackgroundImageLayer: Layer {
 
 	//--------------------------------------------------------------------------
 	// MARK: Properties
@@ -11,7 +11,7 @@ open class BitmapLayer: Layer {
 
 	/**
 	 * @property tint
-	 * @since 0.1.0
+	 * @since 0.7.0
 	 * @hidden
 	 */
 	open var tint: CGColor = .clear {
@@ -22,7 +22,7 @@ open class BitmapLayer: Layer {
 
 	/**
 	 * @property image
-	 * @since 0.1.0
+	 * @since 0.7.0
 	 */
 	open var image: CGImage? {
 		willSet {
@@ -70,7 +70,7 @@ open class BitmapLayer: Layer {
 
 	/**
 	 * @constructor
-	 * @since 0.1.0
+	 * @since 0.7.0
 	 */
 	required public init?(coder:NSCoder) {
 		fatalError("init(coder:) has not been implemented")
@@ -78,7 +78,7 @@ open class BitmapLayer: Layer {
 
 	/**
 	 * @constructor
-	 * @since 0.1.0
+	 * @since 0.7.0
 	 */
 	public required init() {
 
@@ -91,7 +91,7 @@ open class BitmapLayer: Layer {
 	}
 	/**
 	 * @constructor
-	 * @since 0.1.0
+	 * @since 0.7.0
 	 */
 	public override init(layer: Any) {
 		super.init(layer: layer)
@@ -99,7 +99,7 @@ open class BitmapLayer: Layer {
 
 	/**
 	 * @method layoutSublayers
-	 * @since 0.1.0
+	 * @since 0.7.0
 	 */
 	open override func layoutSublayers() {
 
@@ -185,7 +185,7 @@ open class BitmapLayer: Layer {
 
 	/**
 	 * @method display
-	 * @since 0.1.0
+	 * @since 0.7.0
 	 */
 	override open func display() {
 

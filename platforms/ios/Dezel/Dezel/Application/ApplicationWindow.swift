@@ -108,16 +108,16 @@ open class ApplicationWindow: UIWindow {
 		 * a touch cancel to the targetted view.
 		 */
 
-		for touch in touches where touch.reverted == false {
+		for touch in touches where touch.disposed == false {
 
 			if (touch.canceled) {
-				touch.reverted = true
+				touch.disposed = true
 				self.cancelTouchEvent(target: touch.target, touch: touch, event: event)
 				continue
 			}
 
 			if (touch.captured) {
-				touch.reverted = true
+				touch.disposed = true
 				self.cancelTouchEvent(target: touch.target, touch: touch, event: event, skip: touch.receiver)
 				continue
 			}

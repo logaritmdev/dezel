@@ -1188,7 +1188,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 		if (this.invalidFrame == false) {
 
 			/*
- 			 * Its possible the content view itself triggered the layout. In this case the
+ 			 * Its possible the content view itthis.triggered the layout. In this case the
  			 * frame is most likely not to change. However, the onMeasure and onLayout methods
  			 * will have to be called
 			 */
@@ -2074,6 +2074,58 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	public val shadowOffsetLeft by lazy {
 		JavaScriptProperty(0.0) {
 			this.invalidateShadow()
+		}
+	}
+
+	/**
+	 * @property position
+	 * @since 0.7.0
+	 */
+	public val position by lazy {
+
+		JavaScriptProperty("auto") { value ->
+
+			val composite = value.composite
+			if (composite == null) {
+
+				this.top.reset(value)
+				this.left.reset(value)
+				this.right.reset(value)
+				this.bottom.reset(value)
+
+				return@JavaScriptProperty
+			}
+
+			val t: JavaScriptPropertyValue
+			val l: JavaScriptPropertyValue
+			val r: JavaScriptPropertyValue
+			val b: JavaScriptPropertyValue
+
+			when (composite.values.size) {
+
+				2 -> {
+					t = composite.values[0]
+					l = composite.values[1]
+					r = composite.values[1]
+					b = composite.values[0]
+				}
+
+				4 -> {
+					t = composite.values[0]
+					l = composite.values[1]
+					r = composite.values[2]
+					b = composite.values[3]
+				}
+
+				else -> {
+					return@JavaScriptProperty
+				}
+			}
+
+			this.top.reset(t)
+			this.left.reset(l)
+			this.right.reset(r)
+			this.bottom.reset(b)
 		}
 	}
 

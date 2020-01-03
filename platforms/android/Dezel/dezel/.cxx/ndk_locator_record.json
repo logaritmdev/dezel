@@ -7,7 +7,7 @@
     },
     {
       "level": "INFO",
-      "message": "ndk.dir in local.properties is /Users/jpdery/Library/Android/sdk/ndk-bundle"
+      "message": "ndk.dir in local.properties is not set"
     },
     {
       "level": "INFO",
@@ -19,15 +19,11 @@
     },
     {
       "level": "INFO",
-      "message": "Considering /Users/jpdery/Library/Android/sdk/ndk-bundle by ndk.dir"
-    },
-    {
-      "level": "INFO",
       "message": "Considering /Users/jpdery/Library/Android/sdk/ndk-bundle in SDK ndk-bundle folder"
     },
     {
       "level": "INFO",
-      "message": "Found requested ndk.dir (/Users/jpdery/Library/Android/sdk/ndk-bundle) which has version 20.1.5948944"
+      "message": "No user requested version, choosing /Users/jpdery/Library/Android/sdk/ndk-bundle which is version 20.1.5948944"
     }
   ]
 }

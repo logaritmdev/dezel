@@ -10,19 +10,10 @@ internal extension Array where Element: Equatable {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	mutating func remove(_ object: Element) {
-		if let index = self.firstIndex(of: object) {
+	mutating func remove(_ value: Element) {
+		if let index = self.firstIndex(of: value) {
 			self.remove(at: index)
 		}
-	}
-
-	/**
-	 * @method shift
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	mutating func shift() -> Element? {
-		return self.count > 0 ? self.remove(at: 0) : nil
 	}
 
 	/**
@@ -47,8 +38,8 @@ internal extension Array where Element == SynchronizerCallback {
 	 * @since 0.1.0
 	 * @hidden
 	 */
-	mutating func remove(_ callback: SynchronizerCallback) {
-		if let index = self.firstIndex(where: { $0 === callback }) {
+	mutating func remove(_ value: SynchronizerCallback) {
+		if let index = self.firstIndex(where: { $0 === value }) {
 			self.remove(at: index)
 		}
 	}

@@ -363,18 +363,18 @@ open class ApplicationActivity : Activity(), StylesheetListener, KeyboardObserve
 
 		for (touch in touches) {
 
-			if (touch.reverted) {
+			if (touch.disposed) {
 				continue
 			}
 
 			if (touch.canceled) {
-				touch.reverted = true
+				touch.disposed = true
 				this.cancelTouchEvent(touch.target, event)
 				continue
 			}
 
 			if (touch.captured) {
-				touch.reverted = true
+				touch.disposed = true
 				this.cancelTouchEvent(touch.target, event, skip = touch.receiver)
 				continue
 			}

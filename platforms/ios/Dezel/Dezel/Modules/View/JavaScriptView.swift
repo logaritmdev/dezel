@@ -1826,6 +1826,53 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	}
 
 	/**
+	 * @property position
+	 * @since 0.7.0
+	 */
+	@objc open lazy var position = JavaScriptProperty(string: "auto") { value in
+
+		guard let composite = value.composite else {
+
+			self.top.reset(value)
+			self.left.reset(value)
+			self.right.reset(value)
+			self.bottom.reset(value)
+
+			return
+		}
+
+		let t: JavaScriptPropertyValue
+		let l: JavaScriptPropertyValue
+		let r: JavaScriptPropertyValue
+		let b: JavaScriptPropertyValue
+
+		switch (composite.values.count) {
+
+			case 2:
+				t = composite.values[0]
+				l = composite.values[1]
+				r = composite.values[1]
+				b = composite.values[0]
+				break
+
+			case 4:
+				t = composite.values[0]
+				l = composite.values[1]
+				r = composite.values[2]
+				b = composite.values[3]
+				break
+
+			default:
+				return
+		}
+
+		self.top.reset(t)
+		self.left.reset(l)
+		self.right.reset(r)
+		self.bottom.reset(b)
+	}
+
+	/**
 	 * @property top
 	 * @since 0.7.0
 	 */

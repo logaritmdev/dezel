@@ -1,3 +1,1 @@
-[x86_64] Compile++      : dezel <= jni_module_core.cpp
-[x86_64] Compile++      : dezel <= ca_logaritm_dezel_core_external_JavaScriptValueExternal.cpp
-[x86_64] SharedLibrary  : libdezel.so
+make: Nothing to be done for `dezel'.

@@ -1,3 +1,1 @@
-[armeabi-v7a] Compile++ thumb: dezel <= jni_module_core.cpp
-[armeabi-v7a] Compile++ thumb: dezel <= ca_logaritm_dezel_core_external_JavaScriptValueExternal.cpp
-[armeabi-v7a] SharedLibrary  : libdezel.so
+make: Nothing to be done for `dezel'.

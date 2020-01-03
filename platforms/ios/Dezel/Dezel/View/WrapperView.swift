@@ -34,9 +34,10 @@ open class WrapperView: UIView, Animatable {
 	override open var bounds: CGRect {
 		willSet {
 			self.renderLayer.resize(newValue)
-			self.bitmapLayer.resize(newValue)
 			self.borderLayer.resize(newValue)
 			self.shadowLayer.resize(newValue)
+			self.backgroundImageLayer.resize(newValue)
+			self.backgroundColorLayer.resize(newValue)
 			self.invalidateFrame()
 			self.invalidateShape()
 		}
@@ -69,7 +70,7 @@ open class WrapperView: UIView, Animatable {
 	 */
 	open var backgroundLinearGradient: LinearGradient? {
 		willSet {
-			self.renderLayer.setGradient(newValue)
+			self.backgroundColorLayer.linearGradient = newValue
 		}
 	}
 
@@ -79,7 +80,7 @@ open class WrapperView: UIView, Animatable {
 	 */
 	open var backgroundRadialGradient: RadialGradient? {
 		willSet {
-			self.renderLayer.setGradient(newValue)
+			self.backgroundColorLayer.radialGradient = newValue
 		}
 	}
 
@@ -89,7 +90,7 @@ open class WrapperView: UIView, Animatable {
 	 */
 	open var backgroundImage: UIImage? {
 		willSet {
-			self.bitmapLayer.image = newValue?.cgImage
+			self.backgroundImageLayer.image = newValue?.cgImage
 		}
 	}
 
@@ -99,7 +100,7 @@ open class WrapperView: UIView, Animatable {
 	 */
 	open var backgroundImageFit: ImageFit = .cover {
 		willSet {
-			self.bitmapLayer.imageFit = newValue
+			self.backgroundImageLayer.imageFit = newValue
 		}
 	}
 
@@ -109,7 +110,7 @@ open class WrapperView: UIView, Animatable {
 	 */
 	open var backgroundImagePosition: ImagePosition = .middleCenter {
 		willSet {
-			self.bitmapLayer.imagePosition = newValue
+			self.backgroundImageLayer.imagePosition = newValue
 		}
 	}
 
@@ -292,13 +293,6 @@ open class WrapperView: UIView, Animatable {
 	}
 
 	/**
-	 * @property shadowLayer
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	internal var shadowLayer: ShadowLayer = ShadowLayer()
-
-	/**
 	 * @property renderLayer
 	 * @since 0.1.0
 	 * @hidden
@@ -306,18 +300,32 @@ open class WrapperView: UIView, Animatable {
 	internal var renderLayer: RenderLayer = RenderLayer()
 
 	/**
-	 * @property bitmapLayer
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	internal var bitmapLayer: BitmapLayer = BitmapLayer()
-
-	/**
 	 * @property borderLayer
 	 * @since 0.1.0
 	 * @hidden
 	 */
 	internal var borderLayer: BorderLayer = BorderLayer()
+
+	/**
+	 * @property shadowLayer
+	 * @since 0.1.0
+	 * @hidden
+	 */
+	internal var shadowLayer: ShadowLayer = ShadowLayer()
+
+	/**
+	 * @property backgroundColorLayer
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	internal var backgroundColorLayer: BackgroundColorLayer = BackgroundColorLayer()
+
+	/**
+	 * @property backgroundImageLayer
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	internal var backgroundImageLayer: BackgroundImageLayer = BackgroundImageLayer()
 
 	/**
 	 * @property shape
@@ -341,13 +349,6 @@ open class WrapperView: UIView, Animatable {
 	private var invalidShape: Bool = false
 
 	/**
-	 * @property animatesBitmapLayer
-	 * @since 0.2.0
-	 * @hidden
-	 */
-	private var animatesBitmapLayer: Bool = false
-
-	/**
 	 * @property animatesBorderLayer
 	 * @since 0.2.0
 	 * @hidden
@@ -360,6 +361,20 @@ open class WrapperView: UIView, Animatable {
 	 * @hidden
 	 */
 	private var animatesShadowLayer: Bool = false
+
+	/**
+	 * @property animatesBackgroundColorLayer
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private var animatesBackgroundColorLayer: Bool = false
+
+	/**
+	 * @property animatesBackgroundImageLayer
+	 * @since 0.2.0
+	 * @hidden
+	 */
+	private var animatesBackgroundImageLayer: Bool = false
 
 	//--------------------------------------------------------------------------
 	// MARK: Methods
@@ -388,10 +403,11 @@ open class WrapperView: UIView, Animatable {
 
 		self.shape.listener = self
 
-		self.shadowLayer.listener = self
 		self.renderLayer.listener = self
-		self.bitmapLayer.listener = self
 		self.borderLayer.listener = self
+		self.shadowLayer.listener = self
+		self.backgroundColorLayer.listener = self
+		self.backgroundImageLayer.listener = self
 
 		self.borderLayer.borderTopColor = .black
 		self.borderLayer.borderLeftColor = .black
@@ -418,8 +434,9 @@ open class WrapperView: UIView, Animatable {
 		}
 
 		let needsShadowLayer = self.needsShadowLayer()
-		let needsBitmapLayer = self.needsBitmapLayer()
 		let needsBorderLayer = self.needsBorderLayer()
+		let needsBackgroundImageLayer = self.needsBackgroundImageLayer()
+		let needsBackgroundColorLayer = self.needsBackgroundColorLayer()
 
 		self.renderLayer.update()
 
@@ -427,16 +444,21 @@ open class WrapperView: UIView, Animatable {
 			self.shadowLayer.update()
 		}
 
-		if (needsBitmapLayer) {
-			self.bitmapLayer.update()
-		}
-
 		if (needsBorderLayer) {
 			self.borderLayer.update()
 		}
 
+		if (needsBackgroundColorLayer) {
+			self.backgroundColorLayer.update()
+		}
+
+		if (needsBackgroundImageLayer) {
+			self.backgroundImageLayer.update()
+		}
+
 		self.toggleShadowLayer(needsShadowLayer)
-		self.toggleBitmapLayer(needsBitmapLayer)
+		self.toggleBackgroundImageLayer(needsBackgroundImageLayer)
+		self.toggleBackgroundColorLayer(needsBackgroundColorLayer)
 		self.toggleBorderLayer(needsBorderLayer)
 	}
 
@@ -703,6 +725,11 @@ open class WrapperView: UIView, Animatable {
 	 */
 	open func willAnimate(layer: CALayer, property: String) {
 
+		if (property == "backgroundColor") {
+			self.animatesBackgroundColorLayer = true
+			return
+		}
+
 		if (property == "borderTopWidth" ||
 			property == "borderTopColor" ||
 			property == "borderLeftWidth" ||
@@ -751,12 +778,13 @@ open class WrapperView: UIView, Animatable {
 	 */
 	open func didFinishTransition(layer: CALayer) {
 
-		self.animatesBitmapLayer = false
+		self.animatesBackgroundImageLayer = false
+		self.animatesBackgroundColorLayer = false
 		self.animatesBorderLayer = false
 		self.animatesShadowLayer = false
 
 		self.toggleShadowLayer(self.needsShadowLayer())
-		self.toggleBitmapLayer(self.needsBitmapLayer())
+		self.toggleBackgroundImageLayer(self.needsBackgroundImageLayer())
 		self.toggleBorderLayer(self.needsBorderLayer())
 
 		if (self.borderLayer.borderTopLeftInnerRadius != .zero ||
@@ -839,6 +867,15 @@ open class WrapperView: UIView, Animatable {
 	}
 
 	/**
+	 * @method hasBackgroundColor
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	public func hasBackgroundColor() -> Bool {
+		return self.backgroundColor != nil || self.backgroundLinearGradient != nil || self.backgroundRadialGradient != nil
+	}
+
+	/**
 	 * @method hasBackgroundImage
 	 * @since 0.1.0
 	 * @hidden
@@ -866,12 +903,21 @@ open class WrapperView: UIView, Animatable {
 	}
 
 	/**
-	 * @method needsBitmapLayer
-	 * @since 0.1.0
+	 * @method needsBackgroundColorLayer
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private func needsBitmapLayer() -> Bool {
-		return self.animatesBitmapLayer || self.hasBackgroundImage()
+	private func needsBackgroundColorLayer() -> Bool {
+		return self.animatesBackgroundColorLayer || self.hasBackgroundColor()
+	}
+
+	/**
+	 * @method needsBackgroundImageLayer
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	private func needsBackgroundImageLayer() -> Bool {
+		return self.animatesBackgroundImageLayer || self.hasBackgroundImage()
 	}
 
 	/**
@@ -893,12 +939,21 @@ open class WrapperView: UIView, Animatable {
 	}
 
 	/**
-	 * @method toggleBitmapLayer
+	 * @method toggleBackgroundColorLayer
 	 * @since 0.2.0
 	 * @hidden
 	 */
-	private func toggleBitmapLayer(_ toggle: Bool) {
-		self.toggleLayer(self.bitmapLayer, toggle: toggle, at: 0, in: self.renderLayer)
+	private func toggleBackgroundColorLayer(_ toggle: Bool) {
+		self.toggleLayer(self.backgroundImageLayer, toggle: toggle, at: 0, in: self.renderLayer)
+	}
+
+	/**
+	 * @method toggleBackgroundImageLayer
+	 * @since 0.2.0
+	 * @hidden
+	 */
+	private func toggleBackgroundImageLayer(_ toggle: Bool) {
+		self.toggleLayer(self.backgroundImageLayer, toggle: toggle, at: 1, in: self.renderLayer)
 	}
 
 	/**
@@ -907,7 +962,7 @@ open class WrapperView: UIView, Animatable {
 	 * @hidden
 	 */
 	private func toggleBorderLayer(_ toggle: Bool) {
-		self.toggleLayer(self.borderLayer, toggle: toggle, at: 1, in: self.renderLayer)
+		self.toggleLayer(self.borderLayer, toggle: toggle, at: 2, in: self.renderLayer)
 	}
 
 	/**
