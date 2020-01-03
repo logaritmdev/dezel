@@ -19,34 +19,6 @@ using Dezel::Style::BooleanValue;
 using Dezel::Style::Parser;
 using Dezel::Style::ParseException;
 
-void
-ParseValue(const char* source, void* that, void* lock, ParseValueCallback callback)
-{
-	vector<Value*> values;
-
-	try {
-		Parser::parse(values, string(source));
-	} catch (ParseException& e) {
-		return;
-	}
-
-	auto count = values.size();
-
-	if (count == 0) {
-		return;
-	}
-
-	callback(
-		reinterpret_cast<ValueListRef>(&values),
-		that,
-		lock
-	);
-
-	for (auto value : values) {
-		delete value;
-	}
-}
-
 ValueListRef
 ValueParse(const char* source)
 {
