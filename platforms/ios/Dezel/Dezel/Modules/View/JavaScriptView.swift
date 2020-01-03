@@ -1276,7 +1276,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	internal func invalidateFrame() {
+	private func invalidateFrame() {
 
 		if (self.invalidFrame == false) {
 			self.invalidFrame = true
@@ -1294,7 +1294,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	internal func invalidateShadow() {
+	private func invalidateShadow() {
 		if (self.invalidShadow == false) {
 			self.invalidShadow = true
 			self.scheduleUpdate()
@@ -1306,7 +1306,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	internal func invalidateBorder() {
+	private func invalidateBorder() {
 		if (self.invalidBorder == false) {
 			self.invalidBorder = true
 			self.scheduleUpdate()
@@ -1318,7 +1318,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	internal func invalidateTransform() {
+	private func invalidateTransform() {
 		if (self.invalidTransform == false) {
 			self.invalidTransform = true
 			self.scheduleUpdate()
@@ -1330,7 +1330,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	internal func invalidateContent() {
+	private func invalidateContent() {
 		if (self.invalidContent == false) {
 			self.invalidContent = true
 			self.scheduleUpdate()

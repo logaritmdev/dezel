@@ -1422,7 +1422,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	internal open fun invalidateFrame() {
+	private fun invalidateFrame() {
 
 		if (this.invalidFrame == false) {
 			this.invalidFrame = true
@@ -1440,7 +1440,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	internal open fun invalidateShadow() {
+	private fun invalidateShadow() {
 		if (this.invalidShadow == false) {
 			this.invalidShadow = true
 			this.scheduleUpdate()
@@ -1452,7 +1452,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	internal open fun invalidateBorder() {
+	private fun invalidateBorder() {
 		if (this.invalidBorder == false) {
 			this.invalidBorder = true
 			this.scheduleUpdate()
@@ -1464,7 +1464,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	internal open fun invalidateTransform() {
+	private fun invalidateTransform() {
 		if (this.invalidTransform == false) {
 			this.invalidTransform = true
 			this.scheduleUpdate()
@@ -1476,7 +1476,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	internal open fun invalidateContent() {
+	private fun invalidateContent() {
 		if (this.invalidContent == false) {
 			this.invalidContent = true
 			this.scheduleUpdate()
@@ -1488,7 +1488,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	internal open fun invalidateOrder() {
+	private fun invalidateOrder() {
 		if (this.invalidOrder == false) {
 			this.invalidOrder = true
 			this.naturalOrder = false
@@ -1501,7 +1501,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	internal open fun invalidateOrderIfNeeded(view: JavaScriptView) {
+	private fun invalidateOrderIfNeeded(view: JavaScriptView) {
 		if (this.naturalOrder == false || view.ordered) {
 			this.invalidateOrder()
 		}
@@ -1512,7 +1512,7 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 * @since 0.7.0
 	 * @hidden
 	 */
-	internal open fun invalidateOrderIfNeeded() {
+	private fun invalidateOrderIfNeeded() {
 		if (this.naturalOrder == false) {
 			this.invalidateOrder()
 		}
