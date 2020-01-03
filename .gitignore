@@ -2,3 +2,4 @@
 /lib/*
 !/lib/.gitkeep
 /coverage
+/platforms/android/Dezel/dezel/.cxx
