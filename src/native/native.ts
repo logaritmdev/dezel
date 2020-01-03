@@ -1,5 +1,3 @@
-import { $native } from './private/native'
-
 /**
  * @function create
  * @since 0.7.0
@@ -25,7 +23,6 @@ function toNative(object: any) {
 	let native = object[$native]
 	if (native == null) {
 		native = object[$native] = create(object)
-		object['native'] = native // TMP
 	}
 
 	return native

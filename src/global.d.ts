@@ -2,6 +2,9 @@
 // Types
 //------------------------------------------------------------------------------
 
+// TODO
+// REMOVE
+declare var LOG: any
 
 /**
  * @interface Dictionary
@@ -33,6 +36,12 @@ declare const _DEV_: boolean
  * @since 0.1.0
  */
 declare const _SIM_: boolean
+
+/**
+ * @const $native
+ * @since 0.7.0
+ */
+declare const $native: any
 
 //------------------------------------------------------------------------------
 // JSX

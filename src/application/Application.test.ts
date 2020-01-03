@@ -41,6 +41,7 @@ describe('Application', () => {
 			id: 1,
 			x: 10,
 			y: 20,
+			target: application.window,
 			canceled: false,
 			captured: false
 		}])
@@ -77,6 +78,7 @@ describe('Application', () => {
 			id: 1,
 			x: 10,
 			y: 20,
+			target: application.window,
 			canceled: false,
 			captured: false
 		}])
@@ -85,6 +87,7 @@ describe('Application', () => {
 			id: 1,
 			x: 10,
 			y: 20,
+			target: application.window,
 			canceled: false,
 			captured: false
 		}])
@@ -121,6 +124,7 @@ describe('Application', () => {
 			id: 1,
 			x: 10,
 			y: 20,
+			target: application.window,
 			canceled: false,
 			captured: false
 		}])
@@ -129,6 +133,7 @@ describe('Application', () => {
 			id: 1,
 			x: 10,
 			y: 20,
+			target: application.window,
 			canceled: false,
 			captured: false
 		}])
@@ -165,6 +170,7 @@ describe('Application', () => {
 			id: 1,
 			x: 10,
 			y: 20,
+			target: application.window,
 			canceled: false,
 			captured: false
 		}])
@@ -173,6 +179,7 @@ describe('Application', () => {
 			id: 1,
 			x: 10,
 			y: 20,
+			target: application.window,
 			canceled: false,
 			captured: false
 		}])
@@ -225,6 +232,7 @@ describe('Application', () => {
 			id: 1,
 			x: 10,
 			y: 20,
+			target: application.window,
 			canceled: false,
 			captured: false
 		}])
@@ -282,6 +290,7 @@ describe('Application', () => {
 			id: 1,
 			x: 10,
 			y: 20,
+			target: application.window,
 			canceled: false,
 			captured: false
 		}])
@@ -290,6 +299,7 @@ describe('Application', () => {
 			id: 1,
 			x: 40,
 			y: 50,
+			target: application.window,
 			canceled: false,
 			captured: false
 		}])
@@ -343,6 +353,7 @@ describe('Application', () => {
 			id: 1,
 			x: 10,
 			y: 20,
+			target: application.window,
 			canceled: false,
 			captured: false
 		}])
@@ -400,6 +411,7 @@ describe('Application', () => {
 			id: 1,
 			x: 10,
 			y: 20,
+			target: application.window,
 			canceled: false,
 			captured: false
 		}])
@@ -408,6 +420,7 @@ describe('Application', () => {
 			id: 1,
 			x: 10,
 			y: 20,
+			target: application.window,
 			canceled: false,
 			captured: false
 		}])

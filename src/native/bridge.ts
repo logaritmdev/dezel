@@ -1,4 +1,3 @@
-import { $native } from './private/native'
 import { Dezel } from '../core/Dezel'
 
 /**
