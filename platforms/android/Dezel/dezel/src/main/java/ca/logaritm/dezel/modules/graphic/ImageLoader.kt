@@ -119,9 +119,9 @@ open class ImageLoader(val context: Context) {
 		}
 
 		if (source.type == JavaScriptPropertyType.OBJECT) {
-			val image = source.cast(JavaScriptImage::class.java)
+			val image = source.cast(JavaScriptBitmap::class.java)
 			if (image != null) {
-				callback(image.data)
+				callback(image.bitmap)
 			}
 		}
 	}

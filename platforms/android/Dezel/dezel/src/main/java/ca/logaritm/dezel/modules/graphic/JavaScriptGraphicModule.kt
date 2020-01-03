@@ -19,7 +19,7 @@ open class JavaScriptGraphicModule: JavaScriptModule() {
 	 * @since 0.7.0
 	 */
 	override fun configure(context: JavaScriptContext) {
-		context.registerClass("dezel.graphic.Bitmap", JavaScriptImage::class.java)
+		context.registerClass("dezel.graphic.Bitmap", JavaScriptBitmap::class.java)
 		context.registerClass("dezel.graphic.Canvas", JavaScriptCanvas::class.java)
 	}
 }

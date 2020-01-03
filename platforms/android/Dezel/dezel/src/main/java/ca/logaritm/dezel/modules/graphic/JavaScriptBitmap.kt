@@ -5,22 +5,20 @@ import ca.logaritm.dezel.core.*
 import ca.logaritm.dezel.extension.core.activity
 
 /**
- * An image image manager.
- * @class JavaScriptImage
+ * @class JavaScriptBitmap
  * @since 0.7.0
  */
-open class JavaScriptImage(context: JavaScriptContext) : JavaScriptClass(context) {
+open class JavaScriptBitmap(context: JavaScriptContext) : JavaScriptClass(context) {
 
 	//--------------------------------------------------------------------------
 	// Properties
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The image's image.
-	 * @property data
+	 * @property bitmap
 	 * @since 0.7.0
 	 */
-	open var data: Bitmap? = null
+	open var bitmap: Bitmap? = null
 
 	/**
 	 * @property loader
@@ -34,15 +32,14 @@ open class JavaScriptImage(context: JavaScriptContext) : JavaScriptClass(context
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Loads the image from the specified source.
 	 * @method load
 	 * @since 0.7.0
 	 */
 	open fun load(source: String) {
 
-		this.data = null
+		this.bitmap = null
 		this.loading.reset(false)
-		this.complete.reset(false)
+		this.loaded.reset(false)
 
 		this.protect()
 
@@ -53,23 +50,22 @@ open class JavaScriptImage(context: JavaScriptContext) : JavaScriptClass(context
 	}
 
 	/**
-	 * Sets the image's data.
 	 * @method set
 	 * @since 0.7.0
 	 */
 	open fun set(image: Bitmap?) {
 
 		if (image != null) {
-			this.data = image
+			this.bitmap = image
 			this.loading.reset(false)
-			this.complete.reset(true)
+			this.loaded.reset(true)
 			this.callMethod("nativeOnLoad")
 			return
 		}
 
-		this.data = null
+		this.bitmap = null
 		this.loading.reset(false)
-		this.complete.reset(false)
+		this.loaded.reset(false)
 		this.callMethod("nativeOnError")
 	}
 
@@ -78,7 +74,6 @@ open class JavaScriptImage(context: JavaScriptContext) : JavaScriptClass(context
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The image's source.
 	 * @property source
 	 * @since 0.7.0
 	 */
@@ -89,20 +84,18 @@ open class JavaScriptImage(context: JavaScriptContext) : JavaScriptClass(context
 	}
 
 	/**
-	 * Whether the image is loading.
-	 * @property loading
+	 * @property loaded
 	 * @since 0.7.0
 	 */
-	public val loading by lazy {
+	public val loaded by lazy {
 		JavaScriptProperty(false)
 	}
 
 	/**
-	 * Whether the image is completely loaded.
-	 * @property complete
+	 * @property loading
 	 * @since 0.7.0
 	 */
-	public val complete by lazy {
+	public val loading by lazy {
 		JavaScriptProperty(false)
 	}
 
@@ -115,7 +108,7 @@ open class JavaScriptImage(context: JavaScriptContext) : JavaScriptClass(context
 	 */
 	@Suppress("unused")
 	open fun jsGet_width(callback: JavaScriptGetterCallback) {
-		callback.returns(this.data?.width?.toDouble() ?: 0.0)
+		callback.returns(this.bitmap?.width?.toDouble() ?: 0.0)
 	}
 
 	//--------------------------------------------------------------------------
@@ -127,31 +120,7 @@ open class JavaScriptImage(context: JavaScriptContext) : JavaScriptClass(context
 	 */
 	@Suppress("unused")
 	open fun jsGet_height(callback: JavaScriptGetterCallback) {
-		callback.returns(this.data?.height?.toDouble() ?: 0.0)
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method jsGet_loading
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	@Suppress("unused")
-	open fun jsGet_loading(callback: JavaScriptGetterCallback) {
-		callback.returns(this.loading)
-	}
-
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method jsGet_complete
-	 * @since 0.7.0
-	 * @hidden
-	 */
-	@Suppress("unused")
-	open fun jsGet_complete(callback: JavaScriptGetterCallback) {
-		callback.returns(this.complete)
+		callback.returns(this.bitmap?.height?.toDouble() ?: 0.0)
 	}
 
 	//--------------------------------------------------------------------------
@@ -174,5 +143,29 @@ open class JavaScriptImage(context: JavaScriptContext) : JavaScriptClass(context
 	@Suppress("unused")
 	open fun jsSet_source(callback: JavaScriptSetterCallback) {
 		this.source.reset(callback.value, this)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_loaded
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@Suppress("unused")
+	open fun jsGet_loaded(callback: JavaScriptGetterCallback) {
+		callback.returns(this.loaded)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
+	 * @method jsGet_loading
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@Suppress("unused")
+	open fun jsGet_loading(callback: JavaScriptGetterCallback) {
+		callback.returns(this.loading)
 	}
 }
