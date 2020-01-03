@@ -4139,6 +4139,35 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	//--------------------------------------------------------------------------
 
 	/**
+	 * @method jsGet_postion
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@Suppress("unused")
+	open fun jsGet_postion(callback: JavaScriptGetterCallback) {
+
+		val position = this.context.createEmptyObject()
+		position.property("top", this.top.value)
+		position.property("left", this.left.value)
+		position.property("right", this.right.value)
+		position.property("bottom", this.bottom.value)
+
+		callback.returns(position)
+	}
+
+	/**
+	 * @method jsSet_position
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@Suppress("unused")
+	open fun jsSet_position(callback: JavaScriptSetterCallback) {
+		this.position.reset(callback.value, lock = this)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
 	 * @method jsGet_top
 	 * @since 0.7.0
 	 * @hidden

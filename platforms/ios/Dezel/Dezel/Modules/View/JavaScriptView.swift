@@ -3559,6 +3559,33 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	//--------------------------------------------------------------------------
 
 	/**
+	 * @method jsGet_postion
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@objc open func jsGet_postion(callback: JavaScriptGetterCallback) {
+
+		let position = self.context.createEmptyObject()
+		position.property("top", property: self.top)
+		position.property("left", property: self.left)
+		position.property("right", property: self.right)
+		position.property("bottom", property: self.bottom)
+
+		callback.returns(position)
+	}
+
+	/**
+	 * @method jsSet_position
+	 * @since 0.7.0
+	 * @hidden
+	 */
+	@objc open func jsSet_position(callback: JavaScriptSetterCallback) {
+		self.position.reset(callback.value, lock: self)
+	}
+
+	//--------------------------------------------------------------------------
+
+	/**
 	 * @method jsGet_top
 	 * @since 0.7.0
 	 * @hidden
