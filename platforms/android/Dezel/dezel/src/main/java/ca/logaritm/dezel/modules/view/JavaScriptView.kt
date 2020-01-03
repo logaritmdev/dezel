@@ -1647,7 +1647,8 @@ open class JavaScriptView(context: JavaScriptContext) : JavaScriptClass(context)
 	 */
 	public val backgroundImage by lazy {
 		JavaScriptProperty() { value ->
-			this.backgroundImageLoader.load(value) { image ->
+			this.wrapper.backgroundImage = null
+			this.backgroundImageLoader.load(value.string) { image ->
 				this.wrapper.backgroundImage = image
 			}
 		}

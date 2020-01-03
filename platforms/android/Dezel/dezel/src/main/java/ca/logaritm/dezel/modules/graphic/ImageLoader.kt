@@ -30,13 +30,6 @@ open class ImageLoader(val context: Context) {
 	companion object {
 
 		/**
-		 * @property assets
-		 * @since 0.1.0
-		 * @hidden
-		 */
-		private var assets: MutableMap<String, Array<String>> = mutableMapOf()
-
-		/**
 		 * @property liveCache
 		 * @since 0.1.0
 		 * @hidden
@@ -75,7 +68,7 @@ open class ImageLoader(val context: Context) {
 		 * @hidden
 		 */
 		protected fun diskCacheMaxBytes(): Int {
-			return 64 * 1024 * 1024 // 64 MB
+			return 128 * 1024 * 1024 // 64 MB
 		}
 	}
 
@@ -84,259 +77,38 @@ open class ImageLoader(val context: Context) {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @property callback
-	 * @since 0.1.0
+	 * @property task
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private var callback: ((image: Bitmap?) -> Unit)? = null
-
-	/**
-	 * @property downloadTask
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	private var downloadTask: DownloadTask? = null
+	private var task: ImageLoaderTask? = null
 
 	//--------------------------------------------------------------------------
 	// Methods
 	//--------------------------------------------------------------------------
 
 	/**
-	 * Convenience method to load an image from a JavaScriptProperty object.
 	 * @method load
 	 * @since 0.1.0
 	 */
-	open fun load(source: JavaScriptProperty, callback: (image: Bitmap?) -> Unit) {
+	open fun load(source: String, callback: ImageLoaderCallback) {
 
-		if (source.type == JavaScriptPropertyType.NULL) {
+		this.task?.cancel()
+		this.task = null
+
+		val source = source.trim()
+		if (source == "") {
 			callback(null)
 			return
 		}
 
-		if (source.type == JavaScriptPropertyType.STRING) {
-			this.load(source.string, callback)
-			return
-		}
-
-		if (source.type == JavaScriptPropertyType.OBJECT) {
-			val image = source.cast(JavaScriptBitmap::class.java)
-			if (image != null) {
-				callback(image.bitmap)
-			}
-		}
-	}
-
-	/**
-	 * Loads the image from the specified source.
-	 * @method load
-	 * @since 0.1.0
-	 */
-	open fun load(source: String, callback: (image: Bitmap?) -> Unit) {
-
-		this.downloadTask?.cancel(true)
-		this.downloadTask = null
-
-		this.callback = callback
-
-		val source = source.trim()
-		if (source == "") {
-			return
-		}
-
-		val image = ImageLoader.liveCache.get(source)
+		val image = liveCache.get(source)
 		if (image != null) {
-			this.loaded(source, image)
+			callback(image)
 			return
 		}
 
-		if (source.startsWith("http://") ||
-			source.startsWith("https://")) {
-			this.loadHttpImage(source)
-			return
-		}
-
-		this.loadDiskImage(source)
-	}
-
-	/**
-	 * Loads the image from disk.
-	 * @method loadDiskImage
-	 * @since 0.1.0
-	 */
-	open fun loadDiskImage(source: String) {
-
-		/*
-		 * This does not handle relative path starting with ./ very well. This is
-		 * a hopefully temporary hack to remove the first ./ from the beginning
-		 */
-
-		var path = source
-		if (path.startsWith("./")) {
-			path = path.substring(2)
-		}
-
-		var stream: ImageStream? = null
-
-		if (path.startsWith("content://")) {
-
-			try {
-
-				val input = this.context.contentResolver.openInputStream(Uri.parse(path))
-				if (input == null) {
-					throw Error("Invalid content stream.")
-				}
-
-				stream = ImageStream(input, 1)
-
-			} catch (e: Exception) {
-
-			}
-
-		} else {
-			stream = this.getImageStream(this.context, path)
-		}
-
-		if (stream == null) {
-			this.failed(path, Exception("Unable to load image stream for $path"))
-			return
-		}
-
-		val dpi = this.context.resources.displayMetrics.densityDpi
-
-		val options = BitmapFactory.Options()
-		options.inDensity = stream.scale * 160
-		options.inTargetDensity = dpi
-		options.inScreenDensity = dpi
-
-		val bitmap = BitmapFactory.decodeStream(stream, null, options)
-		if (bitmap == null) {
-			return
-		}
-
-		this.loaded(source, bitmap)
-	}
-
-	/**
-	 * Loads the image from the network.
-	 * @method loadHttpImage
-	 * @since 0.1.0
-	 */
-	open fun loadHttpImage(source: String) {
-
-		if (ImageLoader.diskCache.has(source)) {
-			ImageLoader.GetCache().execute(GetCacheData(this, source))
-			return
-		}
-
-		val downloadTask = DownloadTask()
-		downloadTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, DownloadTaskData(this, source))
-		this.downloadTask = downloadTask
-	}
-
-	//--------------------------------------------------------------------------
-	// Private API
-	//--------------------------------------------------------------------------
-
-	/**
-	 * @method loaded
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	private fun loaded(source: String, image: Bitmap) {
-		ImageLoader.SetCache().execute(SetCacheData(this, source, image))
-		this.callback?.invoke(image)
-	}
-
-	/**
-	 * @method failed
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	protected fun failed(source: String, error: Exception) {
-		Log.d("Dezel", "JavaScriptImage failed: $source")
-		this.callback?.invoke(null)
-	}
-
-	/**
-	 * @method getImageStream
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	private fun getImageStream(context: Context, file: String): ImageStream? {
-
-		val dir = file.baseName
-
-		var files = assets[dir]
-		if (files == null) {
-			files = context.assets.list(dir)
-			assets[dir] = files
-		}
-
-		if (files == null) {
-			return null
-		}
-
-		val density = ceil(context.resources.displayMetrics.density).toInt()
-
-		var image = this.getImagePath(file, density, files)
-		var scale = density
-
-		if (image == null) {
-			image = this.getImagePath(file, 4, files)
-			scale = 4
-		}
-
-		if (image == null) {
-			image = this.getImagePath(file, 3, files)
-			scale = 3
-		}
-
-		if (image == null) {
-			image = this.getImagePath(file, 2, files)
-			scale = 2
-		}
-
-		if (image == null) {
-			image = this.getImagePath(file, 1, files)
-			scale = 1
-		}
-
-		if (image == null) {
-			image = file
-			scale = 1
-		}
-
-		val stream: InputStream
-
-		try {
-			stream = context.assets.open(image)
-		} catch (exception: IOException) {
-			return null
-		}
-
-		return ImageStream(stream, scale)
-	}
-
-	/**
-	 * @method getImagePath
-	 * @since 0.1.0
-	 * @hidden
-	 */
-	private fun getImagePath(file: String, density: Int, files: Array<String>): String? {
-
-		val baseName = file.baseName
-		val fileName = file.fileName
-		val fileType = file.fileExt
-
-		val image = "$fileName@${density}x$fileType"
-
-		for (item in files) {
-			if (image == item) {
-				return "$baseName/$image"
-			}
-		}
-
-		return null
+		this.task = ImageLoaderTask(this.context, source, callback)
 	}
 
 	//-------------------------------------------------------------------------
@@ -344,20 +116,104 @@ open class ImageLoader(val context: Context) {
 	//-------------------------------------------------------------------------
 
 	/**
-	 * @class ImageStream
-	 * @since 0.1.0
+	 * @class ImageLoaderTask
+	 * @since 0.7.0
 	 * @hidden
 	 */
-	private class ImageStream(val stream: InputStream, val scale: Int) : InputStream() {
+	private class ImageLoaderTask(context: Context, source: String, callback: ImageLoaderCallback) {
 
 		/**
-		 * @method read
-		 * @since 0.1.0
+		 * @property callback
+		 * @since 0.7.0
 		 * @hidden
 		 */
-		@Throws(IOException::class)
-		override fun read(): Int {
-			return this.stream.read()
+		private var callback: ImageLoaderCallback = callback
+
+		/**
+		 * @property canceled
+		 * @since 0.7.0
+		 * @hidden
+		 */
+		private var canceled: Boolean = false
+
+		/**
+		 * @property downloadTask
+		 * @since 0.7.0
+		 * @hidden
+		 */
+		private var downloadTask: DownloadTask? = null
+
+		/**
+		 * @constructor
+		 * @since 0.7.0
+		 */
+		init {
+
+			if (source.startsWith("http://") ||
+				source.startsWith("https://")) {
+
+				this.load(source)
+
+			} else {
+
+				try {
+
+					ImageReader.read(context, source) { bitmap ->
+						this.onLoad(source, bitmap)
+					}
+
+				} catch (e: Exception) {
+					this.onFail(source, e)
+				}
+			}
+		}
+
+		/**
+		 * @method cancel
+		 * @since 0.7.0
+		 */
+		public fun cancel() {
+			this.canceled = true
+		}
+
+		/**
+		 * @method load
+		 * @since 0.7.0
+		 * @hidden
+		 */
+		private fun load(source: String) {
+
+			if (diskCache.has(source)) {
+				GetCache().execute(GetCacheData(this, source))
+				return
+			}
+
+			val downloadTask = DownloadTask()
+			downloadTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, DownloadTaskData(this, source))
+			this.downloadTask = downloadTask
+		}
+
+		//--------------------------------------------------------------------------
+		// Private API
+		//--------------------------------------------------------------------------
+
+		/**
+		 * @method onLoad
+		 * @since 0.7.0
+		 * @hidden
+		 */
+		internal fun onLoad(source: String, image: Bitmap) {
+			SetCache().execute(SetCacheData(this, source, image))
+			this.callback.invoke(image)
+		}
+
+		/**
+		 * @method onFail
+		 * @since 0.7.0
+		 * @hidden
+		 */
+		internal fun onFail(source: String, error: Exception) {
+			this.callback.invoke(null)
 		}
 	}
 
@@ -414,16 +270,18 @@ open class ImageLoader(val context: Context) {
 			if (bitmap == null) {
 
 				val error = this.error
-				if (error != null) {
-					this.data.loader.failed(this.data.source, error)
+				if (error == null) {
+					return
 				}
+
+				this.data.task.onFail(this.data.source, error)
 
 				return
 			}
 
-			SetCache().execute(SetCacheData(this.data.loader, this.data.source, bitmap))
+			SetCache().execute(SetCacheData(this.data.task, this.data.source, bitmap))
 
-			this.data.loader.loaded(this.data.source, bitmap)
+			this.data.task.onLoad(this.data.source, bitmap)
 		}
 	}
 
@@ -435,8 +293,15 @@ open class ImageLoader(val context: Context) {
 	private class GetCache : AsyncTask<GetCacheData, Void, Bitmap?>() {
 
 		/**
-		 * @property resource
-		 * @since 0.4.0
+		 * @property task
+		 * @since 0.7.0
+		 * @hidden
+		 */
+		private lateinit var task: ImageLoaderTask
+
+		/**
+		 * @property data
+		 * @since 0.7.0
 		 * @hidden
 		 */
 		private lateinit var data: GetCacheData
@@ -448,7 +313,7 @@ open class ImageLoader(val context: Context) {
 		 */
 		override fun doInBackground(vararg params: GetCacheData): Bitmap? {
 			this.data = params[0]
-			return ImageLoader.diskCache.get(this.data.source)
+			return diskCache.get(this.data.source)
 		}
 
 		/**
@@ -457,7 +322,7 @@ open class ImageLoader(val context: Context) {
 		 * @hidden
 		 */
 		override fun onPostExecute(bitmap: Bitmap?) {
-			if (bitmap != null) this.data.loader.loaded(this.data.source, bitmap)
+			if (bitmap != null) this.data.task.onLoad(this.data.source, bitmap)
 		}
 	}
 
@@ -475,29 +340,35 @@ open class ImageLoader(val context: Context) {
 		 */
 		override fun doInBackground(vararg params: SetCacheData) {
 			val data = params[0]
-			ImageLoader.liveCache.set(data.source, data.image)
-			ImageLoader.diskCache.set(data.source, data.image)
+			liveCache.set(data.source, data.image)
+			diskCache.set(data.source, data.image)
 		}
 	}
+
+	/**
+	 * @class DownloadTaskData
+	 * @since 0.4.0
+	 * @hidden
+	 */
+	private data class DownloadTaskData(val task: ImageLoaderTask, val source: String)
 
 	/**
 	 * @class SetCacheData
 	 * @since 0.4.0
 	 * @hidden
 	 */
-	private data class SetCacheData(val loader: ImageLoader, val source: String, val image: Bitmap)
+	private data class SetCacheData(val task: ImageLoaderTask, val source: String, val image: Bitmap)
 
 	/**
 	 * @class GetCacheData
 	 * @since 0.4.0
 	 * @hidden
 	 */
-	private data class GetCacheData(val loader: ImageLoader, val source: String)
-
-	/**
-	 * @class DownloadTaskData
-	* @since 0.4.0
-	* @hidden
-	*/
-	private data class DownloadTaskData(val loader: ImageLoader, val source: String)
+	private data class GetCacheData(val task: ImageLoaderTask, val source: String)
 }
+
+/**
+ * @typealias ImageLoaderCallback
+ * @since 0.7.0
+ */
+typealias ImageLoaderCallback = (image: Bitmap?) -> Unit

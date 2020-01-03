@@ -1474,6 +1474,7 @@ open class JavaScriptView: JavaScriptClass, DisplayNodeDelegate, ScrollableDeleg
 	 * @since 0.7.0
 	 */
 	@objc open lazy var backgroundImage = JavaScriptProperty() { value in
+		self.wrapper.backgroundImage = nil
 		self.backgroundImageLoader.load(value.string) { image in
 			self.wrapper.backgroundImage = image
 		}

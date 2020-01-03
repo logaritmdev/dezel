@@ -151,7 +151,9 @@ open class JavaScriptImageView(context: JavaScriptContext) : JavaScriptView(cont
 
 		JavaScriptProperty { value ->
 
-			this.loader.load(value) { image ->
+			this.view.image = null
+
+			this.loader.load(value.string) { image ->
 
 				this.view.image = image
 

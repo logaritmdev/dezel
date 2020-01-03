@@ -1,0 +1,7 @@
+/Users/jpdery/Projects/dezel-dev/platforms/android/Dezel/dezel/src/main/jni/ca_logaritm_dezel_view_display_external_StylesheetExternal.cpp:26:2: warning: deleting pointer to incomplete type 'struct OpaqueStylesheet' may cause undefined behavior [-Wdelete-incomplete]
+        delete reinterpret_cast<StylesheetRef>(stylesheetPtr);
+        ^      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/jpdery/Projects/dezel-dev/platforms/android/Dezel/dezel/src/main/jni/../../../../../../shared/display/DisplayBase.h:64:16: note: forward declaration of 'OpaqueStylesheet'
+typedef struct OpaqueStylesheet* StylesheetRef;
+               ^
+1 warning generated.

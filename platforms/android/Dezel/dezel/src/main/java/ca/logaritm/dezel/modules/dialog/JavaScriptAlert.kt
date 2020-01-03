@@ -16,6 +16,7 @@ import ca.logaritm.dezel.extension.core.activity
 import ca.logaritm.dezel.extension.fatalError
 import ca.logaritm.dezel.extension.widget.BottomSheetButton
 import ca.logaritm.dezel.modules.graphic.ImageLoader
+import ca.logaritm.dezel.modules.graphic.ImageReader
 import ca.logaritm.dezel.view.graphic.Convert
 import com.google.android.material.bottomsheet.BottomSheetDialog
 
@@ -302,15 +303,9 @@ open class JavaScriptAlert(context: JavaScriptContext) : JavaScriptClass(context
 
 		val size = Convert.toPx(12f).toInt()
 
-		if (source.image.type == JavaScriptPropertyType.STRING ||
-			source.image.type == JavaScriptPropertyType.OBJECT) {
+		if (source.image.type == JavaScriptPropertyType.STRING) {
 
-			this.loader.load(source.image) { image ->
-
-				if (image == null) {
-					return@load
-				}
-
+			ImageReader.read(this.context.activity, source.image.string) { image ->
 				button.setIcon(
 					image,
 					size * 2,

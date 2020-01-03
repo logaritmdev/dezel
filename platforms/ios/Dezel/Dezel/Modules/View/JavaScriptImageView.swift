@@ -133,6 +133,8 @@ open class JavaScriptImageView: JavaScriptView {
 	 */
 	@objc open lazy var source = JavaScriptProperty() { value in
 
+		self.view.image = nil
+
 		self.loader.load(value.string) { image in
 
 			self.view.image = image
