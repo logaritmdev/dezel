@@ -25,9 +25,9 @@
   },
   "devDependencies": {
     "@types/lodash": "^4.14.98",
-    "copy-webpack-plugin": "^4.5.1",
+    "copy-webpack-plugin": "^11.0.0",
     "copyfiles": "^2.0.0",
-    "ts-loader": "^4.2.0",
+    "ts-loader": "^9.4.2",
     "typescript": "^2.8.1"
   }
 }
